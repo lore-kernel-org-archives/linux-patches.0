@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1118811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C85C433C8;
-	Mon, 11 Sep 2023 15:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E921911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623ADC433C7;
+	Mon, 11 Sep 2023 15:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445738;
-	bh=u/X3OcrjH751um0OjopmXEzQUxvMILDPRG1b1cjSR8g=;
+	s=korg; t=1694445741;
+	bh=3YWrChJYS2lLXIbbvfwtNFg/tB/cdNwtOBLaJj+234Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnQF0XlwB0uRXH2RWjWKesPtznX6oxSRdvJsAiHmBfL0TiwGAIFC2+DZulqBpnu8I
-	 AAlrn/4osar5kW4yByAw74cTW7+bOLnhDa0yJl/denHiSzdGhxxl7xAFcEZj8ER0oP
-	 1+6R9JuiGEGddorlvfxLcVpHFkla1SHIckrJ5RpQ=
+	b=v9oUX/KKIZ7jR7bx5kv2tuYvwm9JHDbb59SWCfMLbTD0YSSXFIV+zTtJ/OcbR8ZGe
+	 mO7qAEL1Spw13JDUB7lIJGbkJ+fPEHPRorizCOtFA/RRhx7eEXtYk8JK4pJKc6X1uQ
+	 hzcX4wBsMQYa7WgHpnuNqwJzqU5vxwBcyXK96Y7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ziemba <ian.ziemba@hpe.com>,
 	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 428/600] RDMA/rxe: Split rxe_run_task() into two subroutines
-Date: Mon, 11 Sep 2023 15:47:41 +0200
-Message-ID: <20230911134646.294882728@linuxfoundation.org>
+Subject: [PATCH 6.1 429/600] RDMA/rxe: Fix incomplete state save in rxe_requester
+Date: Mon, 11 Sep 2023 15:47:42 +0200
+Message-ID: <20230911134646.323213321@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,310 +42,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit dccb23f6c312e4480fe32ccbc2afac1a5cac7e5e ]
+[ Upstream commit 5d122db2ff80cd2aed4dcd630befb56b51ddf947 ]
 
-Split rxe_run_task(task, sched) into rxe_run_task(task) and
-rxe_sched_task(task).
+If a send packet is dropped by the IP layer in rxe_requester()
+the call to rxe_xmit_packet() can fail with err == -EAGAIN.
+To recover, the state of the wqe is restored to the state before
+the packet was sent so it can be resent. However, the routines
+that save and restore the state miss a significnt part of the
+variable state in the wqe, the dma struct which is used to process
+through the sge table. And, the state is not saved before the packet
+is built which modifies the dma struct.
 
-Link: https://lore.kernel.org/r/20221021200118.2163-5-rpearsonhpe@gmail.com
-Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
+Under heavy stress testing with many QPs on a fast node sending
+large messages to a slow node dropped packets are observed and
+the resent packets are corrupted because the dma struct was not
+restored. This patch fixes this behavior and allows the test cases
+to succeed.
+
+Fixes: 3050b9985024 ("IB/rxe: Fix race condition between requester and completer")
+Link: https://lore.kernel.org/r/20230721200748.4604-1-rpearsonhpe@gmail.com
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 5d122db2ff80 ("RDMA/rxe: Fix incomplete state save in rxe_requester")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c  | 19 +++++++++++--------
- drivers/infiniband/sw/rxe/rxe_net.c   |  4 ++--
- drivers/infiniband/sw/rxe/rxe_qp.c    | 10 +++++-----
- drivers/infiniband/sw/rxe/rxe_req.c   | 10 +++++-----
- drivers/infiniband/sw/rxe/rxe_resp.c  |  5 ++++-
- drivers/infiniband/sw/rxe/rxe_task.c  | 15 ++++++++++-----
- drivers/infiniband/sw/rxe/rxe_task.h  |  7 +++----
- drivers/infiniband/sw/rxe/rxe_verbs.c |  8 ++++----
- 8 files changed, 44 insertions(+), 34 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_req.c | 45 ++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
-index fb0c008af78cc..d2a2501236174 100644
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -118,7 +118,7 @@ void retransmit_timer(struct timer_list *t)
- 
- 	if (qp->valid) {
- 		qp->comp.timeout = 1;
--		rxe_run_task(&qp->comp.task, 1);
-+		rxe_sched_task(&qp->comp.task);
- 	}
- }
- 
-@@ -132,7 +132,10 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb)
- 	if (must_sched != 0)
- 		rxe_counter_inc(SKB_TO_PKT(skb)->rxe, RXE_CNT_COMPLETER_SCHED);
- 
--	rxe_run_task(&qp->comp.task, must_sched);
-+	if (must_sched)
-+		rxe_sched_task(&qp->comp.task);
-+	else
-+		rxe_run_task(&qp->comp.task);
- }
- 
- static inline enum comp_state get_wqe(struct rxe_qp *qp,
-@@ -305,7 +308,7 @@ static inline enum comp_state check_ack(struct rxe_qp *qp,
- 					qp->comp.psn = pkt->psn;
- 					if (qp->req.wait_psn) {
- 						qp->req.wait_psn = 0;
--						rxe_run_task(&qp->req.task, 0);
-+						rxe_run_task(&qp->req.task);
- 					}
- 				}
- 				return COMPST_ERROR_RETRY;
-@@ -452,7 +455,7 @@ static void do_complete(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	 */
- 	if (qp->req.wait_fence) {
- 		qp->req.wait_fence = 0;
--		rxe_run_task(&qp->req.task, 0);
-+		rxe_run_task(&qp->req.task);
- 	}
- }
- 
-@@ -466,7 +469,7 @@ static inline enum comp_state complete_ack(struct rxe_qp *qp,
- 		if (qp->req.need_rd_atomic) {
- 			qp->comp.timeout_retry = 0;
- 			qp->req.need_rd_atomic = 0;
--			rxe_run_task(&qp->req.task, 0);
-+			rxe_run_task(&qp->req.task);
- 		}
- 	}
- 
-@@ -512,7 +515,7 @@ static inline enum comp_state complete_wqe(struct rxe_qp *qp,
- 
- 		if (qp->req.wait_psn) {
- 			qp->req.wait_psn = 0;
--			rxe_run_task(&qp->req.task, 1);
-+			rxe_sched_task(&qp->req.task);
- 		}
- 	}
- 
-@@ -646,7 +649,7 @@ int rxe_completer(void *arg)
- 
- 			if (qp->req.wait_psn) {
- 				qp->req.wait_psn = 0;
--				rxe_run_task(&qp->req.task, 1);
-+				rxe_sched_task(&qp->req.task);
- 			}
- 
- 			state = COMPST_DONE;
-@@ -714,7 +717,7 @@ int rxe_completer(void *arg)
- 							RXE_CNT_COMP_RETRY);
- 					qp->req.need_retry = 1;
- 					qp->comp.started_retry = 1;
--					rxe_run_task(&qp->req.task, 0);
-+					rxe_run_task(&qp->req.task);
- 				}
- 				goto done;
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
-index 65d16024b3bf6..719432808a063 100644
---- a/drivers/infiniband/sw/rxe/rxe_net.c
-+++ b/drivers/infiniband/sw/rxe/rxe_net.c
-@@ -348,7 +348,7 @@ static void rxe_skb_tx_dtor(struct sk_buff *skb)
- 
- 	if (unlikely(qp->need_req_skb &&
- 		     skb_out < RXE_INFLIGHT_SKBS_PER_QP_LOW))
--		rxe_run_task(&qp->req.task, 1);
-+		rxe_sched_task(&qp->req.task);
- 
- 	rxe_put(qp);
- }
-@@ -435,7 +435,7 @@ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
- 	if ((qp_type(qp) != IB_QPT_RC) &&
- 	    (pkt->mask & RXE_END_MASK)) {
- 		pkt->wqe->state = wqe_state_done;
--		rxe_run_task(&qp->comp.task, 1);
-+		rxe_sched_task(&qp->comp.task);
- 	}
- 
- 	rxe_counter_inc(rxe, RXE_CNT_SENT_PKTS);
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 59b2024b34ef4..709c63e9773c5 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -539,10 +539,10 @@ static void rxe_qp_drain(struct rxe_qp *qp)
- 		if (qp->req.state != QP_STATE_DRAINED) {
- 			qp->req.state = QP_STATE_DRAIN;
- 			if (qp_type(qp) == IB_QPT_RC)
--				rxe_run_task(&qp->comp.task, 1);
-+				rxe_sched_task(&qp->comp.task);
- 			else
- 				__rxe_do_task(&qp->comp.task);
--			rxe_run_task(&qp->req.task, 1);
-+			rxe_sched_task(&qp->req.task);
- 		}
- 	}
- }
-@@ -556,13 +556,13 @@ void rxe_qp_error(struct rxe_qp *qp)
- 	qp->attr.qp_state = IB_QPS_ERR;
- 
- 	/* drain work and packet queues */
--	rxe_run_task(&qp->resp.task, 1);
-+	rxe_sched_task(&qp->resp.task);
- 
- 	if (qp_type(qp) == IB_QPT_RC)
--		rxe_run_task(&qp->comp.task, 1);
-+		rxe_sched_task(&qp->comp.task);
- 	else
- 		__rxe_do_task(&qp->comp.task);
--	rxe_run_task(&qp->req.task, 1);
-+	rxe_sched_task(&qp->req.task);
- }
- 
- /* called by the modify qp verb */
 diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index f637712079705..41f1d84f0acbf 100644
+index 41f1d84f0acbf..2ace1007a4195 100644
 --- a/drivers/infiniband/sw/rxe/rxe_req.c
 +++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -105,7 +105,7 @@ void rnr_nak_timer(struct timer_list *t)
- 	/* request a send queue retry */
- 	qp->req.need_retry = 1;
- 	qp->req.wait_for_rnr_timer = 0;
--	rxe_run_task(&qp->req.task, 1);
-+	rxe_sched_task(&qp->req.task);
+@@ -529,10 +529,11 @@ static void save_state(struct rxe_send_wqe *wqe,
+ 		       struct rxe_send_wqe *rollback_wqe,
+ 		       u32 *rollback_psn)
+ {
+-	rollback_wqe->state     = wqe->state;
++	rollback_wqe->state = wqe->state;
+ 	rollback_wqe->first_psn = wqe->first_psn;
+-	rollback_wqe->last_psn  = wqe->last_psn;
+-	*rollback_psn		= qp->req.psn;
++	rollback_wqe->last_psn = wqe->last_psn;
++	rollback_wqe->dma = wqe->dma;
++	*rollback_psn = qp->req.psn;
  }
  
- static struct rxe_send_wqe *req_next_wqe(struct rxe_qp *qp)
-@@ -608,7 +608,7 @@ static int rxe_do_local_ops(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	 * which can lead to a deadlock. So go ahead and complete
- 	 * it now.
- 	 */
--	rxe_run_task(&qp->comp.task, 1);
-+	rxe_sched_task(&qp->comp.task);
- 
- 	return 0;
+ static void rollback_state(struct rxe_send_wqe *wqe,
+@@ -540,10 +541,11 @@ static void rollback_state(struct rxe_send_wqe *wqe,
+ 			   struct rxe_send_wqe *rollback_wqe,
+ 			   u32 rollback_psn)
+ {
+-	wqe->state     = rollback_wqe->state;
++	wqe->state = rollback_wqe->state;
+ 	wqe->first_psn = rollback_wqe->first_psn;
+-	wqe->last_psn  = rollback_wqe->last_psn;
+-	qp->req.psn    = rollback_psn;
++	wqe->last_psn = rollback_wqe->last_psn;
++	wqe->dma = rollback_wqe->dma;
++	qp->req.psn = rollback_psn;
  }
-@@ -733,7 +733,7 @@ int rxe_requester(void *arg)
- 						       qp->req.wqe_index);
- 			wqe->state = wqe_state_done;
- 			wqe->status = IB_WC_SUCCESS;
--			rxe_run_task(&qp->comp.task, 0);
-+			rxe_run_task(&qp->comp.task);
- 			goto done;
- 		}
- 		payload = mtu;
-@@ -795,7 +795,7 @@ int rxe_requester(void *arg)
+ 
+ static void update_state(struct rxe_qp *qp, struct rxe_pkt_info *pkt)
+@@ -746,6 +748,9 @@ int rxe_requester(void *arg)
+ 	pkt.mask = rxe_opcode[opcode].mask;
+ 	pkt.wqe = wqe;
+ 
++	/* save wqe state before we build and send packet */
++	save_state(wqe, qp, &rollback_wqe, &rollback_psn);
++
+ 	av = rxe_get_av(&pkt, &ah);
+ 	if (unlikely(!av)) {
+ 		pr_err("qp#%d Failed no address vector\n", qp_num(qp));
+@@ -778,29 +783,29 @@ int rxe_requester(void *arg)
+ 	if (ah)
+ 		rxe_put(ah);
+ 
+-	/*
+-	 * To prevent a race on wqe access between requester and completer,
+-	 * wqe members state and psn need to be set before calling
+-	 * rxe_xmit_packet().
+-	 * Otherwise, completer might initiate an unjustified retry flow.
+-	 */
+-	save_state(wqe, qp, &rollback_wqe, &rollback_psn);
++	/* update wqe state as though we had sent it */
+ 	update_wqe_state(qp, wqe, &pkt);
+ 	update_wqe_psn(qp, wqe, &pkt, payload);
+ 
+ 	err = rxe_xmit_packet(qp, &pkt, skb);
+ 	if (err) {
+-		qp->need_req_skb = 1;
++		if (err != -EAGAIN) {
++			wqe->status = IB_WC_LOC_QP_OP_ERR;
++			goto err;
++		}
+ 
++		/* the packet was dropped so reset wqe to the state
++		 * before we sent it so we can try to resend
++		 */
  		rollback_state(wqe, qp, &rollback_wqe, rollback_psn);
  
- 		if (err == -EAGAIN) {
--			rxe_run_task(&qp->req.task, 1);
-+			rxe_sched_task(&qp->req.task);
- 			goto exit;
- 		}
+-		if (err == -EAGAIN) {
+-			rxe_sched_task(&qp->req.task);
+-			goto exit;
+-		}
++		/* force a delay until the dropped packet is freed and
++		 * the send queue is drained below the low water mark
++		 */
++		qp->need_req_skb = 1;
  
-@@ -817,7 +817,7 @@ int rxe_requester(void *arg)
- 	qp->req.wqe_index = queue_next_index(qp->sq.queue, qp->req.wqe_index);
- 	wqe->state = wqe_state_error;
- 	qp->req.state = QP_STATE_ERROR;
--	rxe_run_task(&qp->comp.task, 0);
-+	rxe_run_task(&qp->comp.task);
- exit:
- 	ret = -EAGAIN;
- out:
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 9f65c346d8432..a45202cecf2d7 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -91,7 +91,10 @@ void rxe_resp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb)
- 	must_sched = (pkt->opcode == IB_OPCODE_RC_RDMA_READ_REQUEST) ||
- 			(skb_queue_len(&qp->req_pkts) > 1);
- 
--	rxe_run_task(&qp->resp.task, must_sched);
-+	if (must_sched)
-+		rxe_sched_task(&qp->resp.task);
-+	else
-+		rxe_run_task(&qp->resp.task);
- }
- 
- static inline enum resp_states get_req(struct rxe_qp *qp,
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
-index 182d0532a8ab9..446ee2c3d3813 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.c
-+++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -127,15 +127,20 @@ void rxe_cleanup_task(struct rxe_task *task)
- 	tasklet_kill(&task->tasklet);
- }
- 
--void rxe_run_task(struct rxe_task *task, int sched)
-+void rxe_run_task(struct rxe_task *task)
- {
- 	if (task->destroyed)
- 		return;
- 
--	if (sched)
--		tasklet_schedule(&task->tasklet);
--	else
--		rxe_do_task(&task->tasklet);
-+	rxe_do_task(&task->tasklet);
-+}
-+
-+void rxe_sched_task(struct rxe_task *task)
-+{
-+	if (task->destroyed)
-+		return;
-+
-+	tasklet_schedule(&task->tasklet);
- }
- 
- void rxe_disable_task(struct rxe_task *task)
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
-index b3dfd970d1dc6..590b1c1d7e7ca 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.h
-+++ b/drivers/infiniband/sw/rxe/rxe_task.h
-@@ -52,10 +52,9 @@ int __rxe_do_task(struct rxe_task *task);
-  */
- void rxe_do_task(struct tasklet_struct *t);
- 
--/* run a task, else schedule it to run as a tasklet, The decision
-- * to run or schedule tasklet is based on the parameter sched.
-- */
--void rxe_run_task(struct rxe_task *task, int sched);
-+void rxe_run_task(struct rxe_task *task);
-+
-+void rxe_sched_task(struct rxe_task *task);
- 
- /* keep a task from scheduling */
- void rxe_disable_task(struct rxe_task *task);
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index be13bcb4cc406..065717c11cba5 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -678,9 +678,9 @@ static int rxe_post_send_kernel(struct rxe_qp *qp, const struct ib_send_wr *wr,
- 		wr = next;
+-		wqe->status = IB_WC_LOC_QP_OP_ERR;
+-		goto err;
++		rxe_sched_task(&qp->req.task);
++		goto exit;
  	}
  
--	rxe_run_task(&qp->req.task, 1);
-+	rxe_sched_task(&qp->req.task);
- 	if (unlikely(qp->req.state == QP_STATE_ERROR))
--		rxe_run_task(&qp->comp.task, 1);
-+		rxe_sched_task(&qp->comp.task);
- 
- 	return err;
- }
-@@ -702,7 +702,7 @@ static int rxe_post_send(struct ib_qp *ibqp, const struct ib_send_wr *wr,
- 
- 	if (qp->is_user) {
- 		/* Utilize process context to do protocol processing */
--		rxe_run_task(&qp->req.task, 0);
-+		rxe_run_task(&qp->req.task);
- 		return 0;
- 	} else
- 		return rxe_post_send_kernel(qp, wr, bad_wr);
-@@ -740,7 +740,7 @@ static int rxe_post_recv(struct ib_qp *ibqp, const struct ib_recv_wr *wr,
- 	spin_unlock_irqrestore(&rq->producer_lock, flags);
- 
- 	if (qp->resp.state == QP_STATE_ERROR)
--		rxe_run_task(&qp->resp.task, 1);
-+		rxe_sched_task(&qp->resp.task);
- 
- 	return err;
- }
+ 	update_state(qp, &pkt);
 -- 
 2.40.1
 
