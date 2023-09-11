@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBEF11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D46C433C7;
-	Mon, 11 Sep 2023 15:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4338C11718
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A1CC433C8;
+	Mon, 11 Sep 2023 15:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444614;
-	bh=MLe7MoGD7pg6F48vaOLs89Ysm10EAa7Fxk9/jYXkg08=;
+	s=korg; t=1694444617;
+	bh=lVrotdtn+3HpaV/SDkdMoIPCrvQ5/PNBGQ94r9UeMPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWi5wzEmyXi7x2w6+QvcQSmKrMzi395Ya2QAzhXJF8Z5PifRL7CtOJ3xJT6haqpXV
-	 8fKLqelzxHq0V9c1tKjQdkzDLP4CV3tfmnR5sYxJDbwFirSz8HiTb1E5RpcNlq43Jv
-	 VqEhxdEk9Okijv7fDDd7FJnNQYeg2ka4Pw6Khg38=
+	b=eXV6zSO8N7vL1O0kB8w8l3jAfjuF2n4LBthoU2ot88Vc5L6fYwjberYgB/xFcrEId
+	 GaZvp5IdHH/DxTnyFQT6VlfVL5dFzs4TxTzbq28B8tfSHbxeOZkTAnz38rYzH0IbR2
+	 J63A2IpudQyfkmJDNPtb/9uQo2Gs37QAepvDOOv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/600] s390/dasd: fix hanging device after request requeue
-Date: Mon, 11 Sep 2023 15:40:59 +0200
-Message-ID: <20230911134634.382837503@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 017/600] ksmbd: validate session id and tree id in compound request
+Date: Mon, 11 Sep 2023 15:40:50 +0200
+Message-ID: <20230911134634.124272698@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,220 +41,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 8a2278ce9c25048d999fe1a3561def75d963f471 ]
+[ Upstream commit 3df0411e132ee74a87aa13142dfd2b190275332e ]
 
-The DASD device driver has a function to requeue requests to the
-blocklayer.
-This function is used in various cases when basic settings for the device
-have to be changed like High Performance Ficon related parameters or copy
-pair settings.
+`smb2_get_msg()` in smb2_get_ksmbd_tcon() and smb2_check_user_session()
+will always return the first request smb2 header in a compound request.
+if `SMB2_TREE_CONNECT_HE` is the first command in compound request, will
+return 0, i.e. The tree id check is skipped.
+This patch use ksmbd_req_buf_next() to get current command in compound.
 
-The functions iterates over the device->ccw_queue and also removes the
-requests from the block->ccw_queue.
-In case the device is started on an alias device instead of the base
-device it might be removed from the block->ccw_queue without having it
-canceled properly before. This might lead to a hanging device since the
-request is no longer on a queue and can not be handled properly.
-
-Fix by iterating over the block->ccw_queue instead of the
-device->ccw_queue. This will take care of all blocklayer related requests
-and handle them on all associated DASD devices.
-
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21506
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd.c | 125 +++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 77 deletions(-)
+ fs/smb/server/smb2pdu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index bce3422d85640..04d9b1d4b1ba9 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2926,41 +2926,32 @@ static void _dasd_wake_block_flush_cb(struct dasd_ccw_req *cqr, void *data)
-  * Requeue a request back to the block request queue
-  * only works for block requests
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index ee954c5ab9c2b..74c245809772e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -86,9 +86,9 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn
   */
--static int _dasd_requeue_request(struct dasd_ccw_req *cqr)
-+static void _dasd_requeue_request(struct dasd_ccw_req *cqr)
+ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
  {
--	struct dasd_block *block = cqr->block;
- 	struct request *req;
+-	struct smb2_hdr *req_hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *req_hdr = ksmbd_req_buf_next(work);
+ 	unsigned int cmd = le16_to_cpu(req_hdr->Command);
+-	int tree_id;
++	unsigned int tree_id;
  
--	if (!block)
--		return -EINVAL;
- 	/*
- 	 * If the request is an ERP request there is nothing to requeue.
- 	 * This will be done with the remaining original request.
- 	 */
- 	if (cqr->refers)
--		return 0;
-+		return;
- 	spin_lock_irq(&cqr->dq->lock);
- 	req = (struct request *) cqr->callback_data;
- 	blk_mq_requeue_request(req, true);
- 	spin_unlock_irq(&cqr->dq->lock);
- 
--	return 0;
-+	return;
- }
- 
--/*
-- * Go through all request on the dasd_block request queue, cancel them
-- * on the respective dasd_device, and return them to the generic
-- * block layer.
-- */
--static int dasd_flush_block_queue(struct dasd_block *block)
-+static int _dasd_requests_to_flushqueue(struct dasd_block *block,
-+					struct list_head *flush_queue)
- {
- 	struct dasd_ccw_req *cqr, *n;
--	int rc, i;
--	struct list_head flush_queue;
- 	unsigned long flags;
-+	int rc, i;
- 
--	INIT_LIST_HEAD(&flush_queue);
--	spin_lock_bh(&block->queue_lock);
-+	spin_lock_irqsave(&block->queue_lock, flags);
- 	rc = 0;
- restart:
- 	list_for_each_entry_safe(cqr, n, &block->ccw_queue, blocklist) {
-@@ -2975,13 +2966,32 @@ static int dasd_flush_block_queue(struct dasd_block *block)
- 		 * is returned from the dasd_device layer.
- 		 */
- 		cqr->callback = _dasd_wake_block_flush_cb;
--		for (i = 0; cqr != NULL; cqr = cqr->refers, i++)
--			list_move_tail(&cqr->blocklist, &flush_queue);
-+		for (i = 0; cqr; cqr = cqr->refers, i++)
-+			list_move_tail(&cqr->blocklist, flush_queue);
- 		if (i > 1)
- 			/* moved more than one request - need to restart */
- 			goto restart;
- 	}
--	spin_unlock_bh(&block->queue_lock);
-+	spin_unlock_irqrestore(&block->queue_lock, flags);
-+
-+	return rc;
-+}
-+
-+/*
-+ * Go through all request on the dasd_block request queue, cancel them
-+ * on the respective dasd_device, and return them to the generic
-+ * block layer.
-+ */
-+static int dasd_flush_block_queue(struct dasd_block *block)
-+{
-+	struct dasd_ccw_req *cqr, *n;
-+	struct list_head flush_queue;
-+	unsigned long flags;
-+	int rc;
-+
-+	INIT_LIST_HEAD(&flush_queue);
-+	rc = _dasd_requests_to_flushqueue(block, &flush_queue);
-+
- 	/* Now call the callback function of flushed requests */
- restart_cb:
- 	list_for_each_entry_safe(cqr, n, &flush_queue, blocklist) {
-@@ -3864,75 +3874,36 @@ EXPORT_SYMBOL_GPL(dasd_generic_space_avail);
-  */
- int dasd_generic_requeue_all_requests(struct dasd_device *device)
- {
-+	struct dasd_block *block = device->block;
- 	struct list_head requeue_queue;
- 	struct dasd_ccw_req *cqr, *n;
--	struct dasd_ccw_req *refers;
- 	int rc;
- 
--	INIT_LIST_HEAD(&requeue_queue);
--	spin_lock_irq(get_ccwdev_lock(device->cdev));
--	rc = 0;
--	list_for_each_entry_safe(cqr, n, &device->ccw_queue, devlist) {
--		/* Check status and move request to flush_queue */
--		if (cqr->status == DASD_CQR_IN_IO) {
--			rc = device->discipline->term_IO(cqr);
--			if (rc) {
--				/* unable to terminate requeust */
--				dev_err(&device->cdev->dev,
--					"Unable to terminate request %p "
--					"on suspend\n", cqr);
--				spin_unlock_irq(get_ccwdev_lock(device->cdev));
--				dasd_put_device(device);
--				return rc;
--			}
--		}
--		list_move_tail(&cqr->devlist, &requeue_queue);
--	}
--	spin_unlock_irq(get_ccwdev_lock(device->cdev));
--
--	list_for_each_entry_safe(cqr, n, &requeue_queue, devlist) {
--		wait_event(dasd_flush_wq,
--			   (cqr->status != DASD_CQR_CLEAR_PENDING));
-+	if (!block)
-+		return 0;
- 
--		/*
--		 * requeue requests to blocklayer will only work
--		 * for block device requests
--		 */
--		if (_dasd_requeue_request(cqr))
--			continue;
-+	INIT_LIST_HEAD(&requeue_queue);
-+	rc = _dasd_requests_to_flushqueue(block, &requeue_queue);
- 
--		/* remove requests from device and block queue */
--		list_del_init(&cqr->devlist);
--		while (cqr->refers != NULL) {
--			refers = cqr->refers;
--			/* remove the request from the block queue */
--			list_del(&cqr->blocklist);
--			/* free the finished erp request */
--			dasd_free_erp_request(cqr, cqr->memdev);
--			cqr = refers;
-+	/* Now call the callback function of flushed requests */
-+restart_cb:
-+	list_for_each_entry_safe(cqr, n, &requeue_queue, blocklist) {
-+		wait_event(dasd_flush_wq, (cqr->status < DASD_CQR_QUEUED));
-+		/* Process finished ERP request. */
-+		if (cqr->refers) {
-+			spin_lock_bh(&block->queue_lock);
-+			__dasd_process_erp(block->base, cqr);
-+			spin_unlock_bh(&block->queue_lock);
-+			/* restart list_for_xx loop since dasd_process_erp
-+			 * might remove multiple elements
-+			 */
-+			goto restart_cb;
+ 	if (cmd == SMB2_TREE_CONNECT_HE ||
+ 	    cmd ==  SMB2_CANCEL_HE ||
+@@ -113,7 +113,7 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
+ 			pr_err("The first operation in the compound does not have tcon\n");
+ 			return -EINVAL;
  		}
--
--		/*
--		 * _dasd_requeue_request already checked for a valid
--		 * blockdevice, no need to check again
--		 * all erp requests (cqr->refers) have a cqr->block
--		 * pointer copy from the original cqr
--		 */
-+		_dasd_requeue_request(cqr);
- 		list_del_init(&cqr->blocklist);
- 		cqr->block->base->discipline->free_cp(
- 			cqr, (struct request *) cqr->callback_data);
- 	}
--
--	/*
--	 * if requests remain then they are internal request
--	 * and go back to the device queue
--	 */
--	if (!list_empty(&requeue_queue)) {
--		/* move freeze_queue to start of the ccw_queue */
--		spin_lock_irq(get_ccwdev_lock(device->cdev));
--		list_splice_tail(&requeue_queue, &device->ccw_queue);
--		spin_unlock_irq(get_ccwdev_lock(device->cdev));
--	}
- 	dasd_schedule_device_bh(device);
- 	return rc;
- }
+-		if (work->tcon->id != tree_id) {
++		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
+ 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
+ 					tree_id, work->tcon->id);
+ 			return -EINVAL;
+@@ -565,9 +565,9 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+  */
+ int smb2_check_user_session(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *req_hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *req_hdr = ksmbd_req_buf_next(work);
+ 	struct ksmbd_conn *conn = work->conn;
+-	unsigned int cmd = conn->ops->get_cmd_val(work);
++	unsigned int cmd = le16_to_cpu(req_hdr->Command);
+ 	unsigned long long sess_id;
+ 
+ 	/*
+@@ -593,7 +593,7 @@ int smb2_check_user_session(struct ksmbd_work *work)
+ 			pr_err("The first operation in the compound does not have sess\n");
+ 			return -EINVAL;
+ 		}
+-		if (work->sess->id != sess_id) {
++		if (sess_id != ULLONG_MAX && work->sess->id != sess_id) {
+ 			pr_err("session id(%llu) is different with the first operation(%lld)\n",
+ 					sess_id, work->sess->id);
+ 			return -EINVAL;
 -- 
 2.40.1
 
