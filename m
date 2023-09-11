@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB1CF9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC8BC433C8;
-	Mon, 11 Sep 2023 15:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE85F9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3559AC433CD;
+	Mon, 11 Sep 2023 15:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445586;
-	bh=UerXFj3+NfTYICh8/OJD6GXMOfVp6E4hmBKz3bVhmVI=;
+	s=korg; t=1694445589;
+	bh=lE/Z8szWwnvmmEpjil8VmyOA0C0m9AxcSBZRtkXGGhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3b7aymVFu6coBvhfJqP7RcKm9wQ91J2CsOCGRNk/HEILCIyffzjxCRBKe8/6cKZZ
-	 SGoQYZj6OKDHcrzG3x7e7t2YKEmKc/KbS2SryCaVvCoYw2VKvv+WeASft/A/c9wydI
-	 pSE6OPx63UJ0g7/t4Q51JX2mPWjfyYB5R6tJw7Ss=
+	b=KFPlZGqohJDIOIL8J3+d1UOSVcvfkQeMYBf/3g+/558Gol78gPOisR3uUIadtklzR
+	 6+LxXj0P1TENDpoHpLdRJUgZD8K4EnOtp8p7o2BZ2D+IOs+WfbPJh7S68ifWp3STj6
+	 9OqPhNq84wHUO2D0cU3apnCtT2usmBngHR3vv78Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 393/600] media: i2c: tvp5150: check return value of devm_kasprintf()
-Date: Mon, 11 Sep 2023 15:47:06 +0200
-Message-ID: <20230911134645.276946476@linuxfoundation.org>
+Subject: [PATCH 6.1 402/600] scsi: hisi_sas: Fix warnings detected by sparse
+Date: Mon, 11 Sep 2023 15:47:15 +0200
+Message-ID: <20230911134645.542159385@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,39 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 26ce7054d804be73935b9268d6e0ecf2fbbc8aef ]
+[ Upstream commit c0328cc595124579328462fc45d7a29a084cf357 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+This patch fixes the following warning:
 
-Fixes: 0556f1d580d4 ("media: tvp5150: add input source selection of_graph support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+drivers/scsi/hisi_sas/hisi_sas_v3_hw.c:2168:43: sparse: sparse: restricted __le32 degrades to integer
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304161254.NztCVZIO-lkp@intel.com/
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1684118481-95908-4-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: f5393a5602ca ("scsi: hisi_sas: Fix normally completed I/O analysed as failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tvp5150.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/i2c/tvp5150.c b/drivers/media/i2c/tvp5150.c
-index 859f1cb2fa744..84f87c016f9b5 100644
---- a/drivers/media/i2c/tvp5150.c
-+++ b/drivers/media/i2c/tvp5150.c
-@@ -2068,6 +2068,10 @@ static int tvp5150_parse_dt(struct tvp5150 *decoder, struct device_node *np)
- 		tvpc->ent.name = devm_kasprintf(dev, GFP_KERNEL, "%s %s",
- 						v4l2c->name, v4l2c->label ?
- 						v4l2c->label : "");
-+		if (!tvpc->ent.name) {
-+			ret = -ENOMEM;
-+			goto err_free;
-+		}
- 	}
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index e8a3511040af2..8544c1554f5ff 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -2163,6 +2163,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	u32 trans_tx_fail_type = le32_to_cpu(record->trans_tx_fail_type);
+ 	u16 sipc_rx_err_type = le16_to_cpu(record->sipc_rx_err_type);
+ 	u32 dw3 = le32_to_cpu(complete_hdr->dw3);
++	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
  
- 	ep_np = of_graph_get_endpoint_by_regs(np, TVP5150_PAD_VID_OUT, 0);
+ 	switch (task->task_proto) {
+ 	case SAS_PROTOCOL_SSP:
+@@ -2172,8 +2173,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 			 * but I/O information has been written to the host memory, we examine
+ 			 * response IU.
+ 			 */
+-			if (!(complete_hdr->dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
+-				(complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
++			if (!(dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
++			    (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
+ 				return false;
+ 
+ 			ts->residual = trans_tx_fail_type;
+@@ -2189,7 +2190,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	case SAS_PROTOCOL_SATA:
+ 	case SAS_PROTOCOL_STP:
+ 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
+-		if ((complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK) &&
++		if ((dw0 & CMPLT_HDR_RSPNS_XFRD_MSK) &&
+ 		    (sipc_rx_err_type & RX_FIS_STATUS_ERR_MSK)) {
+ 			ts->stat = SAS_PROTO_RESPONSE;
+ 		} else if (dma_rx_err_type & RX_DATA_LEN_UNDERFLOW_MSK) {
 -- 
 2.40.1
 
