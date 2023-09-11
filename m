@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71DF1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4084CC433C8;
-	Mon, 11 Sep 2023 14:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0C51170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7EBC433C9;
+	Mon, 11 Sep 2023 14:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441848;
-	bh=8UFl4AnrnLbEsv7iJtPYFeoL1rel8kz4vDooVRAS1dY=;
+	s=korg; t=1694441851;
+	bh=4l5843avEpi1/1KbUbU7MnL3t7zrI0ZENmnwQzHCgvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJcAc46YXNjo8mLxggmP4Xy58zv7oSUwsDs6xwz0CtpHn4whEbt/6ByrjmewVKF1m
-	 /G+RUtTesdnf9veT7K1fUlJBsCtGglcOn/Y770x5EkjKylE8504p+xkx6dW8Tu1zrT
-	 J0AWt5I35mS7f4hph2Sk2Ps8Af/AR3pntYFcN7Cs=
+	b=QTgcc4ivDlsBlcgFnl2oppEPFrV+RG2rar5co8eeSp9piZtjq4XGK4vEAJrXoUCXM
+	 d1n2bfycUgGBtKm568dNhCh/5gwkSECFHRQarRNXXAwN1X8zG7j/rdgHjvOtbC/y4F
+	 np7xs/PtoBpoBMMAZASdiiej1fQtlt2Sp90W30Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	linux-f2fs-devel@lists.sourceforge.net,
-	Yangtao Li <frank.li@vivo.com>,
-	Konstantin Vyshetsky <vkon@google.com>,
+	Junhao He <hejunhao3@huawei.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 550/739] f2fs: fix spelling in ABI documentation
-Date: Mon, 11 Sep 2023 15:45:49 +0200
-Message-ID: <20230911134706.453276358@linuxfoundation.org>
+Subject: [PATCH 6.5 559/739] coresight: trbe: Allocate platform data per device
+Date: Mon, 11 Sep 2023 15:45:58 +0200
+Message-ID: <20230911134706.695135989@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -44,62 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit c709d099a0d2befa2b16c249ef8df722b43e6c28 ]
+[ Upstream commit 39744738a67de9153d73e11817937c0004feab2e ]
 
-Correct spelling problems as identified by codespell.
+Coresight TRBE driver shares a single platform data (which is empty btw).
+However, with the commit 4e8fe7e5c3a5
+("coresight: Store pointers to connections rather than an array of them")
+the coresight core would free up the pdata, resulting in multiple attempts
+to free the same pdata for TRBE instances. Fix this by allocating a pdata per
+coresight_device.
 
-Fixes: 9e615dbba41e ("f2fs: add missing description for ipu_policy node")
-Fixes: b2e4a2b300e5 ("f2fs: expose discard related parameters in sysfs")
-Fixes: 846ae671ad36 ("f2fs: expose extension_list sysfs entry")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Chao Yu <chao@kernel.org>
-Cc: linux-f2fs-devel@lists.sourceforge.net
-Cc: Yangtao Li <frank.li@vivo.com>
-Cc: Konstantin Vyshetsky <vkon@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 4e8fe7e5c3a5 ("coresight: Store pointers to connections rather than an array of them")
+Link: https://lore.kernel.org/r/20230814093813.19152-3-hejunhao3@huawei.com
+Reported-by: Junhao He <hejunhao3@huawei.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: James Clark <james.clark@arm.com>
+Tested-by: Junhao He <hejunhao3@huawei.com>
+Link: https://lore.kernel.org/r/20230816141008.535450-2-suzuki.poulose@arm.com
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-f2fs | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwtracing/coresight/coresight-trbe.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
-index 8140fc98f5aee..ad3d76d37c8ba 100644
---- a/Documentation/ABI/testing/sysfs-fs-f2fs
-+++ b/Documentation/ABI/testing/sysfs-fs-f2fs
-@@ -54,9 +54,9 @@ Description:	Controls the in-place-update policy.
- 		0x00  DISABLE         disable IPU(=default option in LFS mode)
- 		0x01  FORCE           all the time
- 		0x02  SSR             if SSR mode is activated
--		0x04  UTIL            if FS utilization is over threashold
-+		0x04  UTIL            if FS utilization is over threshold
- 		0x08  SSR_UTIL        if SSR mode is activated and FS utilization is over
--		                      threashold
-+		                      threshold
- 		0x10  FSYNC           activated in fsync path only for high performance
- 		                      flash storages. IPU will be triggered only if the
- 		                      # of dirty pages over min_fsync_blocks.
-@@ -117,7 +117,7 @@ Date:		December 2021
- Contact:	"Konstantin Vyshetsky" <vkon@google.com>
- Description:	Controls the number of discards a thread will issue at a time.
- 		Higher number will allow the discard thread to finish its work
--		faster, at the cost of higher latency for incomming I/O.
-+		faster, at the cost of higher latency for incoming I/O.
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+index 7720619909d65..8e4eb37e66e82 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.c
++++ b/drivers/hwtracing/coresight/coresight-trbe.c
+@@ -1244,10 +1244,13 @@ static void arm_trbe_register_coresight_cpu(struct trbe_drvdata *drvdata, int cp
+ 	if (!desc.name)
+ 		goto cpu_clear;
  
- What:		/sys/fs/f2fs/<disk>/min_discard_issue_time
- Date:		December 2021
-@@ -334,7 +334,7 @@ Description:	This indicates how many GC can be failed for the pinned
- 		state. 2048 trials is set by default.
++	desc.pdata = coresight_get_platform_data(dev);
++	if (IS_ERR(desc.pdata))
++		goto cpu_clear;
++
+ 	desc.type = CORESIGHT_DEV_TYPE_SINK;
+ 	desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_PERCPU_SYSMEM;
+ 	desc.ops = &arm_trbe_cs_ops;
+-	desc.pdata = dev_get_platdata(dev);
+ 	desc.groups = arm_trbe_groups;
+ 	desc.dev = dev;
+ 	trbe_csdev = coresight_register(&desc);
+@@ -1479,7 +1482,6 @@ static void arm_trbe_remove_irq(struct trbe_drvdata *drvdata)
  
- What:		/sys/fs/f2fs/<disk>/extension_list
--Date:		Feburary 2018
-+Date:		February 2018
- Contact:	"Chao Yu" <yuchao0@huawei.com>
- Description:	Used to control configure extension list:
- 		- Query: cat /sys/fs/f2fs/<disk>/extension_list
+ static int arm_trbe_device_probe(struct platform_device *pdev)
+ {
+-	struct coresight_platform_data *pdata;
+ 	struct trbe_drvdata *drvdata;
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+@@ -1494,12 +1496,7 @@ static int arm_trbe_device_probe(struct platform_device *pdev)
+ 	if (!drvdata)
+ 		return -ENOMEM;
+ 
+-	pdata = coresight_get_platform_data(dev);
+-	if (IS_ERR(pdata))
+-		return PTR_ERR(pdata);
+-
+ 	dev_set_drvdata(dev, drvdata);
+-	dev->platform_data = pdata;
+ 	drvdata->pdev = pdev;
+ 	ret = arm_trbe_probe_irq(pdev, drvdata);
+ 	if (ret)
 -- 
 2.40.1
 
