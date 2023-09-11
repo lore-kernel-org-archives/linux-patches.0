@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DE81170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B430C433C8;
-	Mon, 11 Sep 2023 14:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FB11170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14824C433C8;
+	Mon, 11 Sep 2023 14:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441425;
-	bh=nDX0OgIJdtlZ3rK+oBvNKCSbBF6yvz/3VnHj7PPnZn4=;
+	s=korg; t=1694441428;
+	bh=1MLbwbBH3zbv3sfGQ+MXID2YbBrociFW3O2eiD3MMkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2CUhgCMmTSNmZi21eWVrfRlzvDw+oOdatgeFkEtZhkOptnFEXA9M6RRcQ2DginNm
-	 5kq+Q6HyA0/YwL2naqd5OrNprhIuGcxo4evBxJXcRzSJj6AJPnIjI0TOqaXXnvU0x3
-	 1kuGAlop2bBW8naaZSe0tKW3qtt8wl6lv5Ai6mNU=
+	b=lrC2o041m81Wjg5bEuoPfxFlH52GElMYOK2BQnhqPMMI3iTQOKpWiDSvIkBzYkkmG
+	 SEeMf7mCtczf6juNcf4bGAbEYIH/d6zgVjBJ97CWVyAJOyIcpVHispDW+PMdUHm76a
+	 11UW+LeuY5Q/tm3U+cmwZh9NxcNvWnxvPv2yOrr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 409/739] clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs
-Date: Mon, 11 Sep 2023 15:43:28 +0200
-Message-ID: <20230911134702.605265926@linuxfoundation.org>
+Subject: [PATCH 6.5 410/739] clk: qcom: gcc-qdu1000: Fix gcc_pcie_0_pipe_clk_src clock handling
+Date: Mon, 11 Sep 2023 15:43:29 +0200
+Message-ID: <20230911134702.633090195@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,46 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Imran Shaik <quic_imrashai@quicinc.com>
 
-[ Upstream commit a27ac3806b0a0e6954fb5967223b8635242e5b8f ]
+[ Upstream commit b311f5d3c4749259043a9a458a8db07915210142 ]
 
-Use the floor ops to prevent warnings like this at suspend exit and boot:
+Fix the gcc pcie pipe clock handling as per the clk_regmap_phy_mux_ops
+implementation to let the clock framework automatically park the clock
+at XO when the clock is switched off and restore the parent when the
+clock is switched on.
 
-mmc0: Card appears overclocked; req 800000 Hz, actual 25000000 Hz
-
-Fixes: db0c944ee92b ("clk: qcom: Add clock driver for SM8450")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20230811-topic-8450_clk-v1-1-88031478d548@linaro.org
+Fixes: 1c9efb0bc040 ("clk: qcom: Add QDU1000 and QRU1000 GCC support")
+Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230803105741.2292309-3-quic_imrashai@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8450.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-qdu1000.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
-index 75635d40a12d3..9f4f72553ecf2 100644
---- a/drivers/clk/qcom/gcc-sm8450.c
-+++ b/drivers/clk/qcom/gcc-sm8450.c
-@@ -935,7 +935,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_7,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_7),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
+diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
+index 5051769ad90c7..c00d26a3e6df5 100644
+--- a/drivers/clk/qcom/gcc-qdu1000.c
++++ b/drivers/clk/qcom/gcc-qdu1000.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/clk-provider.h>
+@@ -370,16 +370,6 @@ static const struct clk_parent_data gcc_parent_data_6[] = {
+ 	{ .index = DT_TCXO_IDX },
+ };
+ 
+-static const struct parent_map gcc_parent_map_7[] = {
+-	{ P_PCIE_0_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_7[] = {
+-	{ .index = DT_PCIE_0_PIPE_CLK_IDX },
+-	{ .index = DT_TCXO_IDX },
+-};
+-
+ static const struct parent_map gcc_parent_map_8[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+@@ -439,16 +429,15 @@ static struct clk_regmap_mux gcc_pcie_0_phy_aux_clk_src = {
  	},
  };
  
-@@ -958,7 +958,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
+-static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+ 	.reg = 0x9d064,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_7,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_pcie_0_pipe_clk_src",
+-			.parent_data = gcc_parent_data_7,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_7),
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_PCIE_0_PIPE_CLK_IDX,
++			},
++			.num_parents = 1,
+ 			.ops = &clk_regmap_phy_mux_ops,
+ 		},
  	},
- };
- 
 -- 
 2.40.1
 
