@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770AE1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B05C433C8;
-	Mon, 11 Sep 2023 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0111170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9936CC433C7;
+	Mon, 11 Sep 2023 14:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441624;
-	bh=rciRXfrP9282CovvK/QOa8kAg+YadThOjA8a/yhxOIc=;
+	s=korg; t=1694441627;
+	bh=0eZpFFnQpP8udK6Hjal76/IFBYxySvWY2MrKpm8r12w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXxHtgo445+8u6L07XgtaT4kRbsNLmGru7EMbt6ogxCr/a518DNGQnAt0vIsnrB+8
-	 1Aiw8CXThlzq9msvtbFDFuTceSSwj/0LUELLDd5tN/CGj1wc6/JkTNiSu+Ro13Nbmm
-	 ljyW3z2VtTRfS6+FLf/3JpI7/vmPQpUXLOzR0xkg=
+	b=LwXPOJlWxPJrdtSGFBW7EhzwEa8Oo4kJcKMHHFN33320muuQz2ktjhFVgi/zv5YK0
+	 4tZVBcEwN7KtH+zs+KqvnJOudimI0bYF/AapxKeOwdF0iLsAYMqLTOrRZHhem2ZWSZ
+	 ZqfA7qEYrzdimdTp4NTUNAadwnrbBA7BVfsK0Qts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 479/739] media: mediatek: vcodec: fix resource leaks in vdec_msg_queue_init()
-Date: Mon, 11 Sep 2023 15:44:38 +0200
-Message-ID: <20230911134704.520823265@linuxfoundation.org>
+Subject: [PATCH 6.5 480/739] usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()
+Date: Mon, 11 Sep 2023 15:44:39 +0200
+Message-ID: <20230911134704.548087223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,59 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit cf10b0bb503c974ba049d6f888b21178be20a962 ]
+[ Upstream commit 5eda42aebb7668b4dcff025cd3ccb0d3d7c53da6 ]
 
-If we encounter any error in the vdec_msg_queue_init() then we need
-to set "msg_queue->wdma_addr.size = 0;".  Normally, this is done
-inside the vdec_msg_queue_deinit() function.  However, if the
-first call to allocate &msg_queue->wdma_addr fails, then the
-vdec_msg_queue_deinit() function is a no-op.  For that situation, just
-set the size to zero explicitly and return.
+The function mxs_phy_is_otg_host() will return true if OTG_ID_VALUE is
+0 at USBPHY_CTRL register. However, OTG_ID_VALUE will not reflect the real
+state if the ID pin is float, such as Host-only or Type-C cases. The value
+of OTG_ID_VALUE is always 1 which means device mode.
+This patch will fix the issue by judging the current mode based on
+last_event. The controller will update last_event in time.
 
-There were two other error paths which did not clean up before returning.
-Change those error paths to goto mem_alloc_err.
-
-Fixes: b199fe46f35c ("media: mtk-vcodec: Add msg queue feature for lat and core architecture")
-Fixes: 2f5d0aef37c6 ("media: mediatek: vcodec: support stateless AV1 decoder")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 7b09e67639d6 ("usb: phy: mxs: refine mxs_phy_disconnect_line")
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20230627110353.1879477-2-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/phy/phy-mxs-usb.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index f2d21b5bc5c3a..898f9dbb9f46d 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -308,6 +308,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 	err = mtk_vcodec_mem_alloc(ctx, &msg_queue->wdma_addr);
- 	if (err) {
- 		mtk_v4l2_err("failed to allocate wdma_addr buf");
-+		msg_queue->wdma_addr.size = 0;
- 		return -ENOMEM;
- 	}
- 	msg_queue->wdma_rptr_addr = msg_queue->wdma_addr.dma_addr;
-@@ -339,14 +340,14 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 			err = mtk_vcodec_mem_alloc(ctx, &lat_buf->rd_mv_addr);
- 			if (err) {
- 				mtk_v4l2_err("failed to allocate rd_mv_addr buf[%d]", i);
--				return -ENOMEM;
-+				goto mem_alloc_err;
- 			}
+diff --git a/drivers/usb/phy/phy-mxs-usb.c b/drivers/usb/phy/phy-mxs-usb.c
+index e1a2b2ea098b5..cceabb9d37e98 100644
+--- a/drivers/usb/phy/phy-mxs-usb.c
++++ b/drivers/usb/phy/phy-mxs-usb.c
+@@ -388,14 +388,8 @@ static void __mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool disconnect)
  
- 			lat_buf->tile_addr.size = VDEC_LAT_TILE_SZ;
- 			err = mtk_vcodec_mem_alloc(ctx, &lat_buf->tile_addr);
- 			if (err) {
- 				mtk_v4l2_err("failed to allocate tile_addr buf[%d]", i);
--				return -ENOMEM;
-+				goto mem_alloc_err;
- 			}
- 		}
+ static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
+ {
+-	void __iomem *base = mxs_phy->phy.io_priv;
+-	u32 phyctrl = readl(base + HW_USBPHY_CTRL);
+-
+-	if (IS_ENABLED(CONFIG_USB_OTG) &&
+-			!(phyctrl & BM_USBPHY_CTRL_OTG_ID_VALUE))
+-		return true;
+-
+-	return false;
++	return IS_ENABLED(CONFIG_USB_OTG) &&
++		mxs_phy->phy.last_event == USB_EVENT_ID;
+ }
  
+ static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
 -- 
 2.40.1
 
