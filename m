@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C9C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E989AC433C7;
-	Mon, 11 Sep 2023 14:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502951170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3886C433C8;
+	Mon, 11 Sep 2023 14:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442311;
-	bh=JFQ9nYSXilBDGJ+FApDN/Sb/WuvzmV35KhL6LjskFyk=;
+	s=korg; t=1694442314;
+	bh=OVQVI+yIq9gKABbOZo+7yOreyePT0aRQlf8aCBk8G2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvTV3yzQsqB2J1VHK6SwpYzlaUfjQXemPJyNMudMJS6B0l3PXENeJGNbfKF1AT+5X
-	 nwwBBFD5W5+62QWJORdxF3zfTJsjQPPZ7l/aP/pC8HXN5hTSM51kzzS///6wNcuw/X
-	 RaplGaSFbhJzmtcXgPmhcdms8vcMWPQTM4tv1m3w=
+	b=o5awvYqSZQFK3ulA0xBMkPhjvJwgm5uveVsiRv8XZ69JTTb4aD5acLt2CixEBwNTR
+	 E8/htOaWz2oyKSQWSi1Q6y51l0tNogHM0vZ7im0SHyl9VBjlx+kfR5LRfj5J/h8B+a
+	 u/OjcFTutS3CMjr21z8VRc/9K/8ttaKFfZ1s0Y/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.5 720/739] crypto: stm32 - fix MDMAT condition
-Date: Mon, 11 Sep 2023 15:48:39 +0200
-Message-ID: <20230911134711.193334890@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.5 721/739] cpufreq: brcmstb-avs-cpufreq: Fix -Warray-bounds bug
+Date: Mon, 11 Sep 2023 15:48:40 +0200
+Message-ID: <20230911134711.220515849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,32 +40,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit a4adfbc2544933ac12e7fbd50708290265546dbc upstream.
+commit e520d0b6be950ce3738cf4b9bd3b392be818f1dc upstream.
 
-If IP has MDMAT support, set or reset the bit MDMAT in Control Register.
+Allocate extra space for terminating element at:
 
-Fixes: b56403a25af7 ("crypto: stm32/hash - Support Ux500 hash")
+drivers/cpufreq/brcmstb-avs-cpufreq.c:
+449         table[i].frequency = CPUFREQ_TABLE_END;
+
+and add code comment to make this clear.
+
+This fixes the following -Warray-bounds warning seen after building
+ARM with multi_v7_defconfig (GCC 13):
+In function 'brcm_avs_get_freq_table',
+    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
+drivers/cpufreq/brcmstb-avs-cpufreq.c:449:28: warning: array subscript 5 is outside array bounds of 'void[60]' [-Warray-bounds=]
+  449 |         table[i].frequency = CPUFREQ_TABLE_END;
+In file included from include/linux/node.h:18,
+                 from include/linux/cpu.h:17,
+                 from include/linux/cpufreq.h:12,
+                 from drivers/cpufreq/brcmstb-avs-cpufreq.c:44:
+In function 'devm_kmalloc_array',
+    inlined from 'devm_kcalloc' at include/linux/device.h:328:9,
+    inlined from 'brcm_avs_get_freq_table' at drivers/cpufreq/brcmstb-avs-cpufreq.c:437:10,
+    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
+include/linux/device.h:323:16: note: at offset 60 into object of size 60 allocated by 'devm_kmalloc'
+  323 |         return devm_kmalloc(dev, bytes, flags);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
+routines on memcpy() and help us make progress towards globally
+enabling -Warray-bounds.
+
+Link: https://github.com/KSPP/linux/issues/324
+Fixes: de322e085995 ("cpufreq: brcmstb-avs-cpufreq: AVS CPUfreq driver for Broadcom STB SoCs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/stm32/stm32-hash.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/brcmstb-avs-cpufreq.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/stm32/stm32-hash.c
-+++ b/drivers/crypto/stm32/stm32-hash.c
-@@ -492,7 +492,7 @@ static int stm32_hash_xmit_dma(struct st
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -434,7 +434,11 @@ brcm_avs_get_freq_table(struct device *d
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	reg = stm32_hash_read(hdev, HASH_CR);
- 
--	if (!hdev->pdata->has_mdmat) {
-+	if (hdev->pdata->has_mdmat) {
- 		if (mdma)
- 			reg |= HASH_CR_MDMAT;
- 		else
+-	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1, sizeof(*table),
++	/*
++	 * We allocate space for the 5 different P-STATES AVS,
++	 * plus extra space for a terminating element.
++	 */
++	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1 + 1, sizeof(*table),
+ 			     GFP_KERNEL);
+ 	if (!table)
+ 		return ERR_PTR(-ENOMEM);
 
 
