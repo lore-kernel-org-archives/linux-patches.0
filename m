@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB0C11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:38:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EC0C433C8;
-	Mon, 11 Sep 2023 14:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2D111705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:38:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E53C433CA;
+	Mon, 11 Sep 2023 14:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443091;
-	bh=UfqbVOebIqh+zVZhSoPJo67IozpGguTMEiar23MVdlg=;
+	s=korg; t=1694443094;
+	bh=rOhADxcN4T/4HeOas3SR6QRHhB25peYjjC0kMKeGsyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SV4W5wP1+tdLR5feNA3LSd0RvE/CuyYyvGl5G0JqItrcpPC2o3GQGkUMRPUsRGd4C
-	 T9/aUvjWMeKn1KYUoCuykVlDfaj9avi9HzfHqXTdt1ikmlR38q3YMXp07YhdK6SPsN
-	 xZa2vuzt9GOtjC5aeGkCyX2rWdlAnnTbe/2Q11fQ=
+	b=KP3gEI9BQklcyKyDTPfaqUMtMY/fhbVRFHwbBehHDZ65F6pdL91cus+PeKN5HipWJ
+	 2osvvg/epeUiwOTPuErUOe5Y7PsdilRdUoe+NAQ1dpiHgsOduat+TCBTsg+W5qZZ8G
+	 nkBGRsgRbxwcZo1ZwFdcJtpPyLfmOwqdUoeE+e9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Suman Ghosh <sumang@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 255/737] octeontx2-pf: Refactor schedular queue alloc/free calls
-Date: Mon, 11 Sep 2023 15:41:54 +0200
-Message-ID: <20230911134657.714285016@linuxfoundation.org>
+Subject: [PATCH 6.4 256/737] octeontx2-pf: Fix PFC TX scheduler free
+Date: Mon, 11 Sep 2023 15:41:55 +0200
+Message-ID: <20230911134657.741156714@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,320 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit 6b4b2ded9c4282deea421eef144ab0ced954721c ]
+[ Upstream commit a9ac2e18779597f280d68a5b5f5bdd51a34080fa ]
 
-1. Upon txschq free request, the transmit schedular config in hardware
-is not getting reset. This patch adds necessary changes to do the same.
+During PFC TX schedulers free, flag TXSCHQ_FREE_ALL was being set
+which caused free up all schedulers other than the PFC schedulers.
+This patch fixes that to free only the PFC Tx schedulers.
 
-2. Current implementation calls txschq alloc during interface
-initialization and in response handler updates the default txschq array.
-This creates a problem for htb offload where txsch alloc will be called
-for every tc class. This patch addresses the issue by reading txschq
-response in mbox caller function instead in the response handler.
-
-3. Current otx2_txschq_stop routine tries to free all txschq nodes
-allocated to the interface. This creates a problem for htb offload.
-This patch introduces the otx2_txschq_free_one to free txschq in a
-given level.
-
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: a9ac2e187795 ("octeontx2-pf: Fix PFC TX scheduler free")
+Fixes: 99c969a83d82 ("octeontx2-pf: Add egress PFC support")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230824081032.436432-2-sumang@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 45 +++++++++++++
- .../marvell/octeontx2/nic/otx2_common.c       | 67 ++++++++++++-------
- .../marvell/octeontx2/nic/otx2_common.h       |  3 +-
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 13 +---
- .../ethernet/marvell/octeontx2/nic/otx2_vf.c  |  4 --
- 5 files changed, 94 insertions(+), 38 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_common.c  |  1 +
+ .../ethernet/marvell/octeontx2/nic/otx2_dcbnl.c   | 15 ++++-----------
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 49c1dbe5ec788..43f6d1b50d2ad 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -1691,6 +1691,42 @@ handle_txschq_shaper_update(struct rvu *rvu, int blkaddr, int nixlf,
- 	return true;
- }
- 
-+static void nix_reset_tx_schedule(struct rvu *rvu, int blkaddr,
-+				  int lvl, int schq)
-+{
-+	u64 tlx_parent = 0, tlx_schedule = 0;
-+
-+	switch (lvl) {
-+	case NIX_TXSCH_LVL_TL2:
-+		tlx_parent   = NIX_AF_TL2X_PARENT(schq);
-+		tlx_schedule = NIX_AF_TL2X_SCHEDULE(schq);
-+		break;
-+	case NIX_TXSCH_LVL_TL3:
-+		tlx_parent   = NIX_AF_TL3X_PARENT(schq);
-+		tlx_schedule = NIX_AF_TL3X_SCHEDULE(schq);
-+		break;
-+	case NIX_TXSCH_LVL_TL4:
-+		tlx_parent   = NIX_AF_TL4X_PARENT(schq);
-+		tlx_schedule = NIX_AF_TL4X_SCHEDULE(schq);
-+		break;
-+	case NIX_TXSCH_LVL_MDQ:
-+		/* no need to reset SMQ_CFG as HW clears this CSR
-+		 * on SMQ flush
-+		 */
-+		tlx_parent   = NIX_AF_MDQX_PARENT(schq);
-+		tlx_schedule = NIX_AF_MDQX_SCHEDULE(schq);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	if (tlx_parent)
-+		rvu_write64(rvu, blkaddr, tlx_parent, 0x0);
-+
-+	if (tlx_schedule)
-+		rvu_write64(rvu, blkaddr, tlx_schedule, 0x0);
-+}
-+
- /* Disable shaping of pkts by a scheduler queue
-  * at a given scheduler level.
-  */
-@@ -2040,6 +2076,7 @@ int rvu_mbox_handler_nix_txsch_alloc(struct rvu *rvu,
- 				pfvf_map[schq] = TXSCH_MAP(pcifunc, 0);
- 			nix_reset_tx_linkcfg(rvu, blkaddr, lvl, schq);
- 			nix_reset_tx_shaping(rvu, blkaddr, nixlf, lvl, schq);
-+			nix_reset_tx_schedule(rvu, blkaddr, lvl, schq);
- 		}
- 
- 		for (idx = 0; idx < req->schq[lvl]; idx++) {
-@@ -2049,6 +2086,7 @@ int rvu_mbox_handler_nix_txsch_alloc(struct rvu *rvu,
- 				pfvf_map[schq] = TXSCH_MAP(pcifunc, 0);
- 			nix_reset_tx_linkcfg(rvu, blkaddr, lvl, schq);
- 			nix_reset_tx_shaping(rvu, blkaddr, nixlf, lvl, schq);
-+			nix_reset_tx_schedule(rvu, blkaddr, lvl, schq);
- 		}
- 	}
- 
-@@ -2144,6 +2182,7 @@ static int nix_txschq_free(struct rvu *rvu, u16 pcifunc)
- 				continue;
- 			nix_reset_tx_linkcfg(rvu, blkaddr, lvl, schq);
- 			nix_clear_tx_xoff(rvu, blkaddr, lvl, schq);
-+			nix_reset_tx_shaping(rvu, blkaddr, nixlf, lvl, schq);
- 		}
- 	}
- 	nix_clear_tx_xoff(rvu, blkaddr, NIX_TXSCH_LVL_TL1,
-@@ -2182,6 +2221,7 @@ static int nix_txschq_free(struct rvu *rvu, u16 pcifunc)
- 		for (schq = 0; schq < txsch->schq.max; schq++) {
- 			if (TXSCH_MAP_FUNC(txsch->pfvf_map[schq]) != pcifunc)
- 				continue;
-+			nix_reset_tx_schedule(rvu, blkaddr, lvl, schq);
- 			rvu_free_rsrc(&txsch->schq, schq);
- 			txsch->pfvf_map[schq] = TXSCH_MAP(0, NIX_TXSCHQ_FREE);
- 		}
-@@ -2241,6 +2281,9 @@ static int nix_txschq_free_one(struct rvu *rvu,
- 	 */
- 	nix_clear_tx_xoff(rvu, blkaddr, lvl, schq);
- 
-+	nix_reset_tx_linkcfg(rvu, blkaddr, lvl, schq);
-+	nix_reset_tx_shaping(rvu, blkaddr, nixlf, lvl, schq);
-+
- 	/* Flush if it is a SMQ. Onus of disabling
- 	 * TL2/3 queue links before SMQ flush is on user
- 	 */
-@@ -2250,6 +2293,8 @@ static int nix_txschq_free_one(struct rvu *rvu,
- 		goto err;
- 	}
- 
-+	nix_reset_tx_schedule(rvu, blkaddr, lvl, schq);
-+
- 	/* Free the resource */
- 	rvu_free_rsrc(&txsch->schq, schq);
- 	txsch->pfvf_map[schq] = TXSCH_MAP(0, NIX_TXSCHQ_FREE);
 diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 8a41ad8ca04f1..dd97731f81698 100644
+index dd97731f81698..011355e73696e 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -716,7 +716,8 @@ EXPORT_SYMBOL(otx2_smq_flush);
- int otx2_txsch_alloc(struct otx2_nic *pfvf)
- {
- 	struct nix_txsch_alloc_req *req;
--	int lvl;
-+	struct nix_txsch_alloc_rsp *rsp;
-+	int lvl, schq, rc;
+@@ -773,6 +773,7 @@ void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq)
  
- 	/* Get memory to put this msg */
- 	req = otx2_mbox_alloc_msg_nix_txsch_alloc(&pfvf->mbox);
-@@ -726,33 +727,68 @@ int otx2_txsch_alloc(struct otx2_nic *pfvf)
- 	/* Request one schq per level */
- 	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++)
- 		req->schq[lvl] = 1;
-+	rc = otx2_sync_mbox_msg(&pfvf->mbox);
-+	if (rc)
-+		return rc;
- 
--	return otx2_sync_mbox_msg(&pfvf->mbox);
-+	rsp = (struct nix_txsch_alloc_rsp *)
-+	      otx2_mbox_get_rsp(&pfvf->mbox.mbox, 0, &req->hdr);
-+	if (IS_ERR(rsp))
-+		return PTR_ERR(rsp);
-+
-+	/* Setup transmit scheduler list */
-+	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++)
-+		for (schq = 0; schq < rsp->schq[lvl]; schq++)
-+			pfvf->hw.txschq_list[lvl][schq] =
-+				rsp->schq_list[lvl][schq];
-+
-+	pfvf->hw.txschq_link_cfg_lvl = rsp->link_cfg_lvl;
-+
-+	return 0;
- }
- 
--int otx2_txschq_stop(struct otx2_nic *pfvf)
-+void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq)
- {
- 	struct nix_txsch_free_req *free_req;
--	int lvl, schq, err;
-+	int err;
- 
- 	mutex_lock(&pfvf->mbox.lock);
--	/* Free the transmit schedulers */
-+
- 	free_req = otx2_mbox_alloc_msg_nix_txsch_free(&pfvf->mbox);
- 	if (!free_req) {
- 		mutex_unlock(&pfvf->mbox.lock);
--		return -ENOMEM;
-+		netdev_err(pfvf->netdev,
-+			   "Failed alloc txschq free req\n");
-+		return;
- 	}
- 
--	free_req->flags = TXSCHQ_FREE_ALL;
-+	free_req->schq_lvl = lvl;
-+	free_req->schq = schq;
-+
- 	err = otx2_sync_mbox_msg(&pfvf->mbox);
-+	if (err) {
-+		netdev_err(pfvf->netdev,
-+			   "Failed stop txschq %d at level %d\n", schq, lvl);
-+	}
-+
  	mutex_unlock(&pfvf->mbox.lock);
-+}
-+
-+void otx2_txschq_stop(struct otx2_nic *pfvf)
-+{
-+	int lvl, schq;
-+
-+	/* free non QOS TLx nodes */
-+	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++)
-+		otx2_txschq_free_one(pfvf, lvl,
-+				     pfvf->hw.txschq_list[lvl][0]);
- 
- 	/* Clear the txschq list */
- 	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++) {
- 		for (schq = 0; schq < MAX_TXSCHQ_PER_FUNC; schq++)
- 			pfvf->hw.txschq_list[lvl][schq] = 0;
- 	}
--	return err;
-+
  }
++EXPORT_SYMBOL(otx2_txschq_free_one);
  
- void otx2_sqb_flush(struct otx2_nic *pfvf)
-@@ -1629,21 +1665,6 @@ void mbox_handler_cgx_fec_stats(struct otx2_nic *pfvf,
- 	pfvf->hw.cgx_fec_uncorr_blks += rsp->fec_uncorr_blks;
- }
- 
--void mbox_handler_nix_txsch_alloc(struct otx2_nic *pf,
--				  struct nix_txsch_alloc_rsp *rsp)
--{
--	int lvl, schq;
--
--	/* Setup transmit scheduler list */
--	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++)
--		for (schq = 0; schq < rsp->schq[lvl]; schq++)
--			pf->hw.txschq_list[lvl][schq] =
--				rsp->schq_list[lvl][schq];
--
--	pf->hw.txschq_link_cfg_lvl = rsp->link_cfg_lvl;
--}
--EXPORT_SYMBOL(mbox_handler_nix_txsch_alloc);
--
- void mbox_handler_npa_lf_alloc(struct otx2_nic *pfvf,
- 			       struct npa_lf_alloc_rsp *rsp)
+ void otx2_txschq_stop(struct otx2_nic *pfvf)
  {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index 0c8fc66ade82d..53cf964fc3e14 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -920,7 +920,8 @@ int otx2_config_nix(struct otx2_nic *pfvf);
- int otx2_config_nix_queues(struct otx2_nic *pfvf);
- int otx2_txschq_config(struct otx2_nic *pfvf, int lvl, int prio, bool pfc_en);
- int otx2_txsch_alloc(struct otx2_nic *pfvf);
--int otx2_txschq_stop(struct otx2_nic *pfvf);
-+void otx2_txschq_stop(struct otx2_nic *pfvf);
-+void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq);
- void otx2_sqb_flush(struct otx2_nic *pfvf);
- int __otx2_alloc_rbuf(struct otx2_nic *pfvf, struct otx2_pool *pool,
- 		      dma_addr_t *dma);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 384d26bee9b23..fb951e953df34 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -791,10 +791,6 @@ static void otx2_process_pfaf_mbox_msg(struct otx2_nic *pf,
- 	case MBOX_MSG_NIX_LF_ALLOC:
- 		mbox_handler_nix_lf_alloc(pf, (struct nix_lf_alloc_rsp *)msg);
- 		break;
--	case MBOX_MSG_NIX_TXSCH_ALLOC:
--		mbox_handler_nix_txsch_alloc(pf,
--					     (struct nix_txsch_alloc_rsp *)msg);
--		break;
- 	case MBOX_MSG_NIX_BP_ENABLE:
- 		mbox_handler_nix_bp_enable(pf, (struct nix_bp_cfg_rsp *)msg);
- 		break;
-@@ -1517,8 +1513,7 @@ static int otx2_init_hw_resources(struct otx2_nic *pf)
- 	otx2_free_cq_res(pf);
- 	otx2_ctx_disable(mbox, NIX_AQ_CTYPE_RQ, false);
- err_free_txsch:
--	if (otx2_txschq_stop(pf))
--		dev_err(pf->dev, "%s failed to stop TX schedulers\n", __func__);
-+	otx2_txschq_stop(pf);
- err_free_sq_ptrs:
- 	otx2_sq_free_sqbs(pf);
- err_free_rq_ptrs:
-@@ -1553,15 +1548,13 @@ static void otx2_free_hw_resources(struct otx2_nic *pf)
- 	struct mbox *mbox = &pf->mbox;
- 	struct otx2_cq_queue *cq;
- 	struct msg_req *req;
--	int qidx, err;
-+	int qidx;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+index ccaf97bb1ce03..6492749dd7c89 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+@@ -125,19 +125,12 @@ int otx2_pfc_txschq_alloc(struct otx2_nic *pfvf)
  
- 	/* Ensure all SQE are processed */
- 	otx2_sqb_flush(pf);
+ static int otx2_pfc_txschq_stop_one(struct otx2_nic *pfvf, u8 prio)
+ {
+-	struct nix_txsch_free_req *free_req;
++	int lvl;
  
- 	/* Stop transmission */
--	err = otx2_txschq_stop(pf);
--	if (err)
--		dev_err(pf->dev, "RVUPF: Failed to stop/free TX schedulers\n");
-+	otx2_txschq_stop(pf);
+-	mutex_lock(&pfvf->mbox.lock);
+ 	/* free PFC TLx nodes */
+-	free_req = otx2_mbox_alloc_msg_nix_txsch_free(&pfvf->mbox);
+-	if (!free_req) {
+-		mutex_unlock(&pfvf->mbox.lock);
+-		return -ENOMEM;
+-	}
+-
+-	free_req->flags = TXSCHQ_FREE_ALL;
+-	otx2_sync_mbox_msg(&pfvf->mbox);
+-	mutex_unlock(&pfvf->mbox.lock);
++	for (lvl = 0; lvl < pfvf->hw.txschq_link_cfg_lvl; lvl++)
++		otx2_txschq_free_one(pfvf, lvl,
++				     pfvf->pfc_schq_list[lvl][prio]);
  
- #ifdef CONFIG_DCB
- 	if (pf->pfc_en)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-index 53366dbfbf27c..f8f0c01f62a14 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -70,10 +70,6 @@ static void otx2vf_process_vfaf_mbox_msg(struct otx2_nic *vf,
- 	case MBOX_MSG_NIX_LF_ALLOC:
- 		mbox_handler_nix_lf_alloc(vf, (struct nix_lf_alloc_rsp *)msg);
- 		break;
--	case MBOX_MSG_NIX_TXSCH_ALLOC:
--		mbox_handler_nix_txsch_alloc(vf,
--					     (struct nix_txsch_alloc_rsp *)msg);
--		break;
- 	case MBOX_MSG_NIX_BP_ENABLE:
- 		mbox_handler_nix_bp_enable(vf, (struct nix_bp_cfg_rsp *)msg);
- 		break;
+ 	pfvf->pfc_alloc_status[prio] = false;
+ 	return 0;
 -- 
 2.40.1
 
