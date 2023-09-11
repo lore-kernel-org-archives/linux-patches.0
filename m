@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7D01170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62501C433C8;
-	Mon, 11 Sep 2023 14:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A981170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4DBC433C7;
+	Mon, 11 Sep 2023 14:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442530;
-	bh=sGJz9kwHEOTPPnt5sj64k99d2Ycuy77Yr4nKzK8UJkU=;
+	s=korg; t=1694442533;
+	bh=XkZiuzUmiRGP9YdpGRCM0LeHWToPWWz6HyiBmlUTr2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8fLqdifND+nyoAFwL6YUpInKWAwWxSHP1Z9btgfnPOatM/1/f2rn5RQgb3OxKG9S
-	 PiYSClUgr5lbL8D2l/XbGUjVkWnM63qYeO+L93RKNIyhmxxFw8CxhmFQVIL78toqLq
-	 L1cOKLcAcHt2IpPZyPWqaOmIFasnOaNVP2k8U8sg=
+	b=H6JgLsITr2m0Ny5xtDZpYRfL/e9AXES/gmQfl4iW8iF7OS9Ygzrujpx5fsMwsIAJe
+	 46ct/Ouh+/PARaiByaLZpNzLMVgci7EsDcqe0LVQuZNGuVvyqJVfWzTx911JVIfgwj
+	 C4dZuei3lcwWmYWeEmth6GeHLBOKYRt/jASrqhVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 056/737] powerpc/powermac: Use early_* IO variants in via_calibrate_decr()
-Date: Mon, 11 Sep 2023 15:38:35 +0200
-Message-ID: <20230911134652.051314768@linuxfoundation.org>
+Subject: [PATCH 6.4 023/737] s390/dasd: fix hanging device after request requeue
+Date: Mon, 11 Sep 2023 15:38:02 +0200
+Message-ID: <20230911134651.002491894@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,66 +41,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 86582e6189dd8f9f52c25d46c70fe5d111da6345 ]
+[ Upstream commit 8a2278ce9c25048d999fe1a3561def75d963f471 ]
 
-On a powermac platform, via the call path:
+The DASD device driver has a function to requeue requests to the
+blocklayer.
+This function is used in various cases when basic settings for the device
+have to be changed like High Performance Ficon related parameters or copy
+pair settings.
 
-  start_kernel()
-    time_init()
-      ppc_md.calibrate_decr() (pmac_calibrate_decr)
-        via_calibrate_decr()
+The functions iterates over the device->ccw_queue and also removes the
+requests from the block->ccw_queue.
+In case the device is started on an alias device instead of the base
+device it might be removed from the block->ccw_queue without having it
+canceled properly before. This might lead to a hanging device since the
+request is no longer on a queue and can not be handled properly.
 
-ioremap() and iounmap() are called. The unmap can enable interrupts
-unexpectedly (cond_resched() in vunmap_pmd_range()), which causes a
-warning later in the boot sequence in start_kernel().
+Fix by iterating over the block->ccw_queue instead of the
+device->ccw_queue. This will take care of all blocklayer related requests
+and handle them on all associated DASD devices.
 
-Use the early_* variants of these IO functions to prevent this.
-
-The issue is pre-existing, but is surfaced by commit 721255b9826b
-("genirq: Use a maple tree for interrupt descriptor management").
-
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230706010816.72682-1-bgray@linux.ibm.com
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powermac/time.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/s390/block/dasd.c | 125 +++++++++++++++-----------------------
+ 1 file changed, 48 insertions(+), 77 deletions(-)
 
-diff --git a/arch/powerpc/platforms/powermac/time.c b/arch/powerpc/platforms/powermac/time.c
-index 4c5790aff1b54..8633891b7aa58 100644
---- a/arch/powerpc/platforms/powermac/time.c
-+++ b/arch/powerpc/platforms/powermac/time.c
-@@ -26,8 +26,8 @@
- #include <linux/rtc.h>
- #include <linux/of_address.h>
+diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
+index 9fbfce735d565..50c48a48fcae3 100644
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -2938,41 +2938,32 @@ static void _dasd_wake_block_flush_cb(struct dasd_ccw_req *cqr, void *data)
+  * Requeue a request back to the block request queue
+  * only works for block requests
+  */
+-static int _dasd_requeue_request(struct dasd_ccw_req *cqr)
++static void _dasd_requeue_request(struct dasd_ccw_req *cqr)
+ {
+-	struct dasd_block *block = cqr->block;
+ 	struct request *req;
  
-+#include <asm/early_ioremap.h>
- #include <asm/sections.h>
--#include <asm/io.h>
- #include <asm/machdep.h>
- #include <asm/time.h>
- #include <asm/nvram.h>
-@@ -182,7 +182,7 @@ static int __init via_calibrate_decr(void)
- 		return 0;
+-	if (!block)
+-		return -EINVAL;
+ 	/*
+ 	 * If the request is an ERP request there is nothing to requeue.
+ 	 * This will be done with the remaining original request.
+ 	 */
+ 	if (cqr->refers)
+-		return 0;
++		return;
+ 	spin_lock_irq(&cqr->dq->lock);
+ 	req = (struct request *) cqr->callback_data;
+ 	blk_mq_requeue_request(req, true);
+ 	spin_unlock_irq(&cqr->dq->lock);
+ 
+-	return 0;
++	return;
+ }
+ 
+-/*
+- * Go through all request on the dasd_block request queue, cancel them
+- * on the respective dasd_device, and return them to the generic
+- * block layer.
+- */
+-static int dasd_flush_block_queue(struct dasd_block *block)
++static int _dasd_requests_to_flushqueue(struct dasd_block *block,
++					struct list_head *flush_queue)
+ {
+ 	struct dasd_ccw_req *cqr, *n;
+-	int rc, i;
+-	struct list_head flush_queue;
+ 	unsigned long flags;
++	int rc, i;
+ 
+-	INIT_LIST_HEAD(&flush_queue);
+-	spin_lock_bh(&block->queue_lock);
++	spin_lock_irqsave(&block->queue_lock, flags);
+ 	rc = 0;
+ restart:
+ 	list_for_each_entry_safe(cqr, n, &block->ccw_queue, blocklist) {
+@@ -2987,13 +2978,32 @@ static int dasd_flush_block_queue(struct dasd_block *block)
+ 		 * is returned from the dasd_device layer.
+ 		 */
+ 		cqr->callback = _dasd_wake_block_flush_cb;
+-		for (i = 0; cqr != NULL; cqr = cqr->refers, i++)
+-			list_move_tail(&cqr->blocklist, &flush_queue);
++		for (i = 0; cqr; cqr = cqr->refers, i++)
++			list_move_tail(&cqr->blocklist, flush_queue);
+ 		if (i > 1)
+ 			/* moved more than one request - need to restart */
+ 			goto restart;
  	}
- 	of_node_put(vias);
--	via = ioremap(rsrc.start, resource_size(&rsrc));
-+	via = early_ioremap(rsrc.start, resource_size(&rsrc));
- 	if (via == NULL) {
- 		printk(KERN_ERR "Failed to map VIA for timer calibration !\n");
- 		return 0;
-@@ -207,7 +207,7 @@ static int __init via_calibrate_decr(void)
+-	spin_unlock_bh(&block->queue_lock);
++	spin_unlock_irqrestore(&block->queue_lock, flags);
++
++	return rc;
++}
++
++/*
++ * Go through all request on the dasd_block request queue, cancel them
++ * on the respective dasd_device, and return them to the generic
++ * block layer.
++ */
++static int dasd_flush_block_queue(struct dasd_block *block)
++{
++	struct dasd_ccw_req *cqr, *n;
++	struct list_head flush_queue;
++	unsigned long flags;
++	int rc;
++
++	INIT_LIST_HEAD(&flush_queue);
++	rc = _dasd_requests_to_flushqueue(block, &flush_queue);
++
+ 	/* Now call the callback function of flushed requests */
+ restart_cb:
+ 	list_for_each_entry_safe(cqr, n, &flush_queue, blocklist) {
+@@ -3878,75 +3888,36 @@ EXPORT_SYMBOL_GPL(dasd_generic_space_avail);
+  */
+ int dasd_generic_requeue_all_requests(struct dasd_device *device)
+ {
++	struct dasd_block *block = device->block;
+ 	struct list_head requeue_queue;
+ 	struct dasd_ccw_req *cqr, *n;
+-	struct dasd_ccw_req *refers;
+ 	int rc;
  
- 	ppc_tb_freq = (dstart - dend) * 100 / 6;
+-	INIT_LIST_HEAD(&requeue_queue);
+-	spin_lock_irq(get_ccwdev_lock(device->cdev));
+-	rc = 0;
+-	list_for_each_entry_safe(cqr, n, &device->ccw_queue, devlist) {
+-		/* Check status and move request to flush_queue */
+-		if (cqr->status == DASD_CQR_IN_IO) {
+-			rc = device->discipline->term_IO(cqr);
+-			if (rc) {
+-				/* unable to terminate requeust */
+-				dev_err(&device->cdev->dev,
+-					"Unable to terminate request %p "
+-					"on suspend\n", cqr);
+-				spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-				dasd_put_device(device);
+-				return rc;
+-			}
+-		}
+-		list_move_tail(&cqr->devlist, &requeue_queue);
+-	}
+-	spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-
+-	list_for_each_entry_safe(cqr, n, &requeue_queue, devlist) {
+-		wait_event(dasd_flush_wq,
+-			   (cqr->status != DASD_CQR_CLEAR_PENDING));
++	if (!block)
++		return 0;
  
--	iounmap(via);
-+	early_iounmap((void *)via, resource_size(&rsrc));
+-		/*
+-		 * requeue requests to blocklayer will only work
+-		 * for block device requests
+-		 */
+-		if (_dasd_requeue_request(cqr))
+-			continue;
++	INIT_LIST_HEAD(&requeue_queue);
++	rc = _dasd_requests_to_flushqueue(block, &requeue_queue);
  
- 	return 1;
+-		/* remove requests from device and block queue */
+-		list_del_init(&cqr->devlist);
+-		while (cqr->refers != NULL) {
+-			refers = cqr->refers;
+-			/* remove the request from the block queue */
+-			list_del(&cqr->blocklist);
+-			/* free the finished erp request */
+-			dasd_free_erp_request(cqr, cqr->memdev);
+-			cqr = refers;
++	/* Now call the callback function of flushed requests */
++restart_cb:
++	list_for_each_entry_safe(cqr, n, &requeue_queue, blocklist) {
++		wait_event(dasd_flush_wq, (cqr->status < DASD_CQR_QUEUED));
++		/* Process finished ERP request. */
++		if (cqr->refers) {
++			spin_lock_bh(&block->queue_lock);
++			__dasd_process_erp(block->base, cqr);
++			spin_unlock_bh(&block->queue_lock);
++			/* restart list_for_xx loop since dasd_process_erp
++			 * might remove multiple elements
++			 */
++			goto restart_cb;
+ 		}
+-
+-		/*
+-		 * _dasd_requeue_request already checked for a valid
+-		 * blockdevice, no need to check again
+-		 * all erp requests (cqr->refers) have a cqr->block
+-		 * pointer copy from the original cqr
+-		 */
++		_dasd_requeue_request(cqr);
+ 		list_del_init(&cqr->blocklist);
+ 		cqr->block->base->discipline->free_cp(
+ 			cqr, (struct request *) cqr->callback_data);
+ 	}
+-
+-	/*
+-	 * if requests remain then they are internal request
+-	 * and go back to the device queue
+-	 */
+-	if (!list_empty(&requeue_queue)) {
+-		/* move freeze_queue to start of the ccw_queue */
+-		spin_lock_irq(get_ccwdev_lock(device->cdev));
+-		list_splice_tail(&requeue_queue, &device->ccw_queue);
+-		spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-	}
+ 	dasd_schedule_device_bh(device);
+ 	return rc;
  }
 -- 
 2.40.1
