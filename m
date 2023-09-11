@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A491170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7CBC433C8;
-	Mon, 11 Sep 2023 14:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE99C433C7;
+	Mon, 11 Sep 2023 14:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442328;
-	bh=Lp16CY7BhTg1fEmg2r5b3rzImD8J7Bs9rBTRaVD8XFQ=;
+	s=korg; t=1694442331;
+	bh=GQS+OrgjP/ZfJNMjtCeHhUdk5Melgb+1OVuHAhU/Stc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXOhTn05Uh8cn/ZoVqWaYEtx4F8s2qPMXI0w7QXoA+qPbckY1BAgTlaYir+b7wCck
-	 eFJHZ/1NacL1azrB+im9FIflu0su5d1jK07Hmvz6IlNXEoZ3plWvEXE002rJsWrmKL
-	 abESeTgFR/ZMCggxX+6BXCeKbk1JtQsFYutsV4E4=
+	b=1fv9we5aL3i6sF6db/IxyMgrSphhfHBHpFUQNEr+vorV5cs28ZhJOhHsgyBbgEi9A
+	 PvS+Hm9ni5hVc0P53BX7fjHXTYdVxCnIwR1PADKp8L5wTp/3gSshtl6bbMNfq80qgg
+	 HROThhgTwEzQqncq8CNtbPLxsJNP5XNSYuYYAbKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Marson <bmarson@redhat.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.5 699/739] dlm: fix plock lookup when using multiple lockspaces
-Date: Mon, 11 Sep 2023 15:48:18 +0200
-Message-ID: <20230911134710.616768642@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.5 726/739] x86/build: Fix linker fill bytes quirk/incompatibility for ld.lld
+Date: Mon, 11 Sep 2023 15:48:45 +0200
+Message-ID: <20230911134711.351686864@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,57 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Song Liu <song@kernel.org>
 
-commit 7c53e847ff5e97f033fdd31f71949807633d506b upstream.
+commit 65e710899fd19f435f40268f3a92dfaa11f14470 upstream.
 
-All posix lock ops, for all lockspaces (gfs2 file systems) are
-sent to userspace (dlm_controld) through a single misc device.
-The dlm_controld daemon reads the ops from the misc device
-and sends them to other cluster nodes using separate, per-lockspace
-cluster api communication channels.  The ops for a single lockspace
-are ordered at this level, so that the results are received in
-the same sequence that the requests were sent.  When the results
-are sent back to the kernel via the misc device, they are again
-funneled through the single misc device for all lockspaces.  When
-the dlm code in the kernel processes the results from the misc
-device, these results will be returned in the same sequence that
-the requests were sent, on a per-lockspace basis.  A recent change
-in this request/reply matching code missed the "per-lockspace"
-check (fsid comparison) when matching request and reply, so replies
-could be incorrectly matched to requests from other lockspaces.
+With ":text =0xcccc", ld.lld fills unused text area with 0xcccc0000.
+Example objdump -D output:
 
-Cc: stable@vger.kernel.org
-Reported-by: Barry Marson <bmarson@redhat.com>
-Fixes: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+	ffffffff82b04203:       00 00                   add    %al,(%rax)
+	ffffffff82b04205:       cc                      int3
+	ffffffff82b04206:       cc                      int3
+	ffffffff82b04207:       00 00                   add    %al,(%rax)
+	ffffffff82b04209:       cc                      int3
+	ffffffff82b0420a:       cc                      int3
+
+Replace it with ":text =0xcccccccc", so we get the following instead:
+
+	ffffffff82b04203:       cc                      int3
+	ffffffff82b04204:       cc                      int3
+	ffffffff82b04205:       cc                      int3
+	ffffffff82b04206:       cc                      int3
+	ffffffff82b04207:       cc                      int3
+	ffffffff82b04208:       cc                      int3
+
+gcc/ld doesn't seem to have the same issue. The generated code stays the
+same for gcc/ld.
+
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 7705dc855797 ("x86/vmlinux: Use INT3 instead of NOP for linker fill bytes")
+Link: https://lore.kernel.org/r/20230906175215.2236033-1-song@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/plock.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/vmlinux.lds.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -456,7 +456,8 @@ static ssize_t dev_write(struct file *fi
- 		}
- 	} else {
- 		list_for_each_entry(iter, &recv_list, list) {
--			if (!iter->info.wait) {
-+			if (!iter->info.wait &&
-+			    iter->info.fsid == info.fsid) {
- 				op = iter;
- 				break;
- 			}
-@@ -468,8 +469,7 @@ static ssize_t dev_write(struct file *fi
- 		if (info.wait)
- 			WARN_ON(op->info.optype != DLM_PLOCK_OP_LOCK);
- 		else
--			WARN_ON(op->info.fsid != info.fsid ||
--				op->info.number != info.number ||
-+			WARN_ON(op->info.number != info.number ||
- 				op->info.owner != info.owner ||
- 				op->info.optype != info.optype);
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -156,7 +156,7 @@ SECTIONS
+ 		ALIGN_ENTRY_TEXT_END
+ 		*(.gnu.warning)
  
+-	} :text =0xcccc
++	} :text = 0xcccccccc
+ 
+ 	/* End of text section, which should occupy whole number of pages */
+ 	_etext = .;
 
 
