@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9553013AC1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D4FC433CD;
-	Mon, 11 Sep 2023 15:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE51E13FEA
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC0DC433CA;
+	Mon, 11 Sep 2023 15:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446150;
-	bh=mLi0Uu84ne3seEo7ESlfczfWxXikSNQ5gb5bUL/CuEA=;
+	s=korg; t=1694446153;
+	bh=BYBoTa/NVobh/y2awNs+dMx0y92LO6Yloj+/x318meg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iv/QJcHTtkpZGZ/2bjqqELg0NRlxAHXAOJlEzkZT54+hpvZXJI3KroepFUEGxKoe/
-	 yhf8MFPd/pErVWCjvAgEcW93yqWenUzzhGE7kIKUd9xEXm5DVal1FNI8qbkDpu7uRU
-	 in9YrPsSonmuGExTQ3DIugcXkgGyr54Sg1DzBWDs=
+	b=HasEYLQBAS/aaiWB3HgyXuLVhCPqljn2CRGUcRRk+vxgZjLCPcb2pESAEhgw90uBu
+	 F2kKeZFbf1qt/XvHP72K1Xv2ZhhT72VyoFqKUwicOxQMEqpJEnRv8BiUsVjMoYOZOI
+	 XxHr6CcDAZwLGU43jLQo/k+zppY6cWEUddkgdvDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
-	Rob Herring <robh@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 599/600] treewide: Fix probing of devices in DT overlays
-Date: Mon, 11 Sep 2023 15:50:32 +0200
-Message-ID: <20230911134651.343027257@linuxfoundation.org>
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	James Morse <james.morse@arm.com>,
+	Mihai Carabas <mihai.carabas@oracle.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 574/600] arm64: sdei: abort running SDEI handlers during crash
+Date: Mon, 11 Sep 2023 15:50:07 +0200
+Message-ID: <20230911134650.559685924@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,125 +41,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-commit 1a50d9403fb90cbe4dea0ec9fd0351d2ecbd8924 upstream.
+commit 5cd474e57368f0957c343bb21e309cf82826b1ef upstream.
 
-When loading a DT overlay that creates a device, the device is not
-probed, unless the DT overlay is unloaded and reloaded again.
+Interrupts are blocked in SDEI context, per the SDEI spec: "The client
+interrupts cannot preempt the event handler." If we crashed in the SDEI
+handler-running context (as with ACPI's AGDI) then we need to clean up the
+SDEI state before proceeding to the crash kernel so that the crash kernel
+can have working interrupts.
 
-After the recent refactoring to improve fw_devlink, it no longer depends
-on the "compatible" property to identify which device tree nodes will
-become struct devices.   fw_devlink now picks up dangling consumers
-(consumers pointing to descendent device tree nodes of a device that
-aren't converted to child devices) when a device is successfully bound
-to a driver.  See __fw_devlink_pickup_dangling_consumers().
+Track the active SDEI handler per-cpu so that we can COMPLETE_AND_RESUME
+the handler, discarding the interrupted context.
 
-However, during DT overlay, a device's device tree node can have
-sub-nodes added/removed without unbinding/rebinding the driver.  This
-difference in behavior between the normal device instantiation and
-probing flow vs. the DT overlay flow has a bunch of implications that
-are pointed out elsewhere[1].  One of them is that the fw_devlink logic
-to pick up dangling consumers is never exercised.
-
-This patch solves the fw_devlink issue by marking all DT nodes added by
-DT overlays with FWNODE_FLAG_NOT_DEVICE (fwnode that won't become
-device), and by clearing the flag when a struct device is actually
-created for the DT node.  This way, fw_devlink knows not to have
-consumers waiting on these newly added DT nodes, and to propagate the
-dependency to an ancestor DT node that has the corresponding struct
-device.
-
-Based on a patch by Saravana Kannan, which covered only platform and spi
-devices.
-
-[1] https://lore.kernel.org/r/CAGETcx_bkuFaLCiPrAWCPQz+w79ccDp6=9e881qmK=vx3hBMyg@mail.gmail.com
-
-Fixes: 4a032827daa89350 ("of: property: Simplify of_link_to_phandle()")
-Link: https://lore.kernel.org/r/CAGETcx_+rhHvaC_HJXGrr5_WAd2+k5f=rWYnkCZ6z5bGX-wj4w@mail.gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Mark Brown <broonie@kernel.org>
-Acked-by: Wolfram Sang <wsa@kernel.org> # for I2C
-Acked-by: Shawn Guo <shawnguo@kernel.org>
-Acked-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
-Link: https://lore.kernel.org/r/e1fa546682ea4c8474ff997ab6244c5e11b6f8bc.1680182615.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: f5df26961853 ("arm64: kernel: Add arch-specific SDEI entry code and CPU masking")
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: James Morse <james.morse@arm.com>
+Tested-by: Mihai Carabas <mihai.carabas@oracle.com>
+Link: https://lore.kernel.org/r/20230627002939.2758-1-scott@os.amperecomputing.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/imx-weim.c    |    6 ++++++
- drivers/i2c/i2c-core-of.c |    5 +++++
- drivers/of/dynamic.c      |    1 +
- drivers/of/platform.c     |    5 +++++
- drivers/spi/spi.c         |    5 +++++
- 5 files changed, 22 insertions(+)
+ arch/arm64/include/asm/sdei.h |    6 ++++++
+ arch/arm64/kernel/entry.S     |   27 +++++++++++++++++++++++++--
+ arch/arm64/kernel/sdei.c      |    3 +++
+ arch/arm64/kernel/smp.c       |    8 ++++----
+ drivers/firmware/arm_sdei.c   |   19 +++++++++++++++++++
+ include/linux/arm_sdei.h      |    2 ++
+ 6 files changed, 59 insertions(+), 6 deletions(-)
 
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -331,6 +331,12 @@ static int of_weim_notify(struct notifie
- 				 "Failed to setup timing for '%pOF'\n", rd->dn);
+--- a/arch/arm64/include/asm/sdei.h
++++ b/arch/arm64/include/asm/sdei.h
+@@ -17,6 +17,9 @@
  
- 		if (!of_node_check_flag(rd->dn, OF_POPULATED)) {
-+			/*
-+			 * Clear the flag before adding the device so that
-+			 * fw_devlink doesn't skip adding consumers to this
-+			 * device.
-+			 */
-+			rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
- 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
- 				dev_err(&pdev->dev,
- 					"Failed to create child device '%pOF'\n",
---- a/drivers/i2c/i2c-core-of.c
-+++ b/drivers/i2c/i2c-core-of.c
-@@ -244,6 +244,11 @@ static int of_i2c_notify(struct notifier
- 			return NOTIFY_OK;
- 		}
+ #include <asm/virt.h>
  
-+		/*
-+		 * Clear the flag before adding the device so that fw_devlink
-+		 * doesn't skip adding consumers to this device.
-+		 */
-+		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
- 		client = of_i2c_register_device(adap, rd->dn);
- 		if (IS_ERR(client)) {
- 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -225,6 +225,7 @@ static void __of_attach_node(struct devi
- 	np->sibling = np->parent->child;
- 	np->parent->child = np;
- 	of_node_clear_flag(np, OF_DETACHED);
-+	np->fwnode.flags |= FWNODE_FLAG_NOT_DEVICE;
++DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
++DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
++
+ extern unsigned long sdei_exit_mode;
+ 
+ /* Software Delegated Exception entry point from firmware*/
+@@ -29,6 +32,9 @@ asmlinkage void __sdei_asm_entry_trampol
+ 						   unsigned long pc,
+ 						   unsigned long pstate);
+ 
++/* Abort a running handler. Context is discarded. */
++void __sdei_handler_abort(void);
++
+ /*
+  * The above entry point does the minimum to call C code. This function does
+  * anything else, before calling the driver.
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -993,9 +993,13 @@ SYM_CODE_START(__sdei_asm_handler)
+ 
+ 	mov	x19, x1
+ 
+-#if defined(CONFIG_VMAP_STACK) || defined(CONFIG_SHADOW_CALL_STACK)
++	/* Store the registered-event for crash_smp_send_stop() */
+ 	ldrb	w4, [x19, #SDEI_EVENT_PRIORITY]
+-#endif
++	cbnz	w4, 1f
++	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
++	b	2f
++1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
++2:	str	x19, [x5]
+ 
+ #ifdef CONFIG_VMAP_STACK
+ 	/*
+@@ -1062,6 +1066,14 @@ SYM_CODE_START(__sdei_asm_handler)
+ 
+ 	ldr_l	x2, sdei_exit_mode
+ 
++	/* Clear the registered-event seen by crash_smp_send_stop() */
++	ldrb	w3, [x4, #SDEI_EVENT_PRIORITY]
++	cbnz	w3, 1f
++	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
++	b	2f
++1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
++2:	str	xzr, [x5]
++
+ alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
+ 	sdei_handler_exit exit_mode=x2
+ alternative_else_nop_endif
+@@ -1072,4 +1084,15 @@ alternative_else_nop_endif
+ #endif
+ SYM_CODE_END(__sdei_asm_handler)
+ NOKPROBE(__sdei_asm_handler)
++
++SYM_CODE_START(__sdei_handler_abort)
++	mov_q	x0, SDEI_1_0_FN_SDEI_EVENT_COMPLETE_AND_RESUME
++	adr	x1, 1f
++	ldr_l	x2, sdei_exit_mode
++	sdei_handler_exit exit_mode=x2
++	// exit the handler and jump to the next instruction.
++	// Exit will stomp x0-x17, PSTATE, ELR_ELx, and SPSR_ELx.
++1:	ret
++SYM_CODE_END(__sdei_handler_abort)
++NOKPROBE(__sdei_handler_abort)
+ #endif /* CONFIG_ARM_SDE_INTERFACE */
+--- a/arch/arm64/kernel/sdei.c
++++ b/arch/arm64/kernel/sdei.c
+@@ -47,6 +47,9 @@ DEFINE_PER_CPU(unsigned long *, sdei_sha
+ DEFINE_PER_CPU(unsigned long *, sdei_shadow_call_stack_critical_ptr);
+ #endif
+ 
++DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
++DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
++
+ static void _free_sdei_stack(unsigned long * __percpu *ptr, int cpu)
+ {
+ 	unsigned long *p;
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -1047,10 +1047,8 @@ void crash_smp_send_stop(void)
+ 	 * If this cpu is the only one alive at this point in time, online or
+ 	 * not, there are no stop messages to be sent around, so just back out.
+ 	 */
+-	if (num_other_online_cpus() == 0) {
+-		sdei_mask_local_cpu();
+-		return;
+-	}
++	if (num_other_online_cpus() == 0)
++		goto skip_ipi;
+ 
+ 	cpumask_copy(&mask, cpu_online_mask);
+ 	cpumask_clear_cpu(smp_processor_id(), &mask);
+@@ -1069,7 +1067,9 @@ void crash_smp_send_stop(void)
+ 		pr_warn("SMP: failed to stop secondary CPUs %*pbl\n",
+ 			cpumask_pr_args(&mask));
+ 
++skip_ipi:
+ 	sdei_mask_local_cpu();
++	sdei_handler_abort();
  }
  
- /**
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -741,6 +741,11 @@ static int of_platform_notify(struct not
- 		if (of_node_check_flag(rd->dn, OF_POPULATED))
- 			return NOTIFY_OK;
+ bool smp_crash_stop_failed(void)
+--- a/drivers/firmware/arm_sdei.c
++++ b/drivers/firmware/arm_sdei.c
+@@ -1095,3 +1095,22 @@ int sdei_event_handler(struct pt_regs *r
+ 	return err;
+ }
+ NOKPROBE_SYMBOL(sdei_event_handler);
++
++void sdei_handler_abort(void)
++{
++	/*
++	 * If the crash happened in an SDEI event handler then we need to
++	 * finish the handler with the firmware so that we can have working
++	 * interrupts in the crash kernel.
++	 */
++	if (__this_cpu_read(sdei_active_critical_event)) {
++	        pr_warn("still in SDEI critical event context, attempting to finish handler.\n");
++	        __sdei_handler_abort();
++	        __this_cpu_write(sdei_active_critical_event, NULL);
++	}
++	if (__this_cpu_read(sdei_active_normal_event)) {
++	        pr_warn("still in SDEI normal event context, attempting to finish handler.\n");
++	        __sdei_handler_abort();
++	        __this_cpu_write(sdei_active_normal_event, NULL);
++	}
++}
+--- a/include/linux/arm_sdei.h
++++ b/include/linux/arm_sdei.h
+@@ -47,10 +47,12 @@ int sdei_unregister_ghes(struct ghes *gh
+ int sdei_mask_local_cpu(void);
+ int sdei_unmask_local_cpu(void);
+ void __init sdei_init(void);
++void sdei_handler_abort(void);
+ #else
+ static inline int sdei_mask_local_cpu(void) { return 0; }
+ static inline int sdei_unmask_local_cpu(void) { return 0; }
+ static inline void sdei_init(void) { }
++static inline void sdei_handler_abort(void) { }
+ #endif /* CONFIG_ARM_SDE_INTERFACE */
  
-+		/*
-+		 * Clear the flag before adding the device so that fw_devlink
-+		 * doesn't skip adding consumers to this device.
-+		 */
-+		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
- 		/* pdev_parent may be NULL when no bus platform device */
- 		pdev_parent = of_find_device_by_node(rd->dn->parent);
- 		pdev = of_platform_device_create(rd->dn, NULL,
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -4370,6 +4370,11 @@ static int of_spi_notify(struct notifier
- 			return NOTIFY_OK;
- 		}
- 
-+		/*
-+		 * Clear the flag before adding the device so that fw_devlink
-+		 * doesn't skip adding consumers to this device.
-+		 */
-+		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
- 		spi = of_register_spi_device(ctlr, rd->dn);
- 		put_device(&ctlr->dev);
  
 
 
