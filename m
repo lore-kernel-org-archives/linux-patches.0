@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7F51170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A7DC433C8;
-	Mon, 11 Sep 2023 13:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816901170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E72C433C8;
+	Mon, 11 Sep 2023 13:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440534;
-	bh=3kCuX8xAZjFK53YHKqAZV3eGZ8Fl29KLWfu/YY08Y3E=;
+	s=korg; t=1694440537;
+	bh=EtCQ270Lx5fX9Ipapv/hb5GV7tKpAX8wtyiye1V0xsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMs22f+uDPfbyPMrlsOSVEGDtFipTT27Yv7NAcu7+/BNnM1RQ74mHKf/vLZiNL9CD
-	 jifA7sy63jD5EigTrOl+f1XcikD/Mrr/hU+JaQRtNLW/B3gICGpphBCVhzinDNHmbQ
-	 3KEr0IWkEFoBYfAt2VApulQ7UDFP5KV0XfK8cQ7E=
+	b=JmGfu4vkrCVDjbYy5l4fnw8ttuhBbf+hnj5NFU6YiJ/EKaVqNzXcvun8hsIbxQr6r
+	 wGFHi0qH238HjP+LEh9q+i3npik2zla3cgKXngxE+P7s/b8Fy3mdJo8HBiZMl81ceQ
+	 lUlqjGT1ervRuI+uKFuY9apXv51vmc1MbLHulDcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 078/739] regmap: rbtree: Use alloc_flags for memory allocations
-Date: Mon, 11 Sep 2023 15:37:57 +0200
-Message-ID: <20230911134653.294709134@linuxfoundation.org>
+Subject: [PATCH 6.5 096/739] wifi: mt76: testmode: add nla_policy for MT76_TM_ATTR_TX_LENGTH
+Date: Mon, 11 Sep 2023 15:38:15 +0200
+Message-ID: <20230911134653.784519155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,96 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 0c8b0bf42c8cef56f7cd9cd876fbb7ece9217064 ]
+[ Upstream commit 74f12d511625e603fac8c0c2b6872e687e56dd61 ]
 
-The kunit tests discovered a sleeping in atomic bug.  The allocations
-in the regcache-rbtree code should use the map->alloc_flags instead of
-GFP_KERNEL.
+It seems that the nla_policy in mt76_tm_policy is missed for attribute
+MT76_TM_ATTR_TX_LENGTH. This patch adds the correct description to make
+sure the
 
-[    5.005510] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-[    5.005960] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 117, name: kunit_try_catch
-[    5.006219] preempt_count: 1, expected: 0
-[    5.006414] 1 lock held by kunit_try_catch/117:
-[    5.006590]  #0: 833b9010 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
-[    5.007493] irq event stamp: 162
-[    5.007627] hardirqs last  enabled at (161): [<80786738>] crng_make_state+0x1a0/0x294
-[    5.007871] hardirqs last disabled at (162): [<80c531ec>] _raw_spin_lock_irqsave+0x7c/0x80
-[    5.008119] softirqs last  enabled at (0): [<801110ac>] copy_process+0x810/0x2138
-[    5.008356] softirqs last disabled at (0): [<00000000>] 0x0
-[    5.008688] CPU: 0 PID: 117 Comm: kunit_try_catch Tainted: G                 N 6.4.4-rc3-g0e8d2fdfb188 #1
-[    5.009011] Hardware name: Generic DT based system
-[    5.009277]  unwind_backtrace from show_stack+0x18/0x1c
-[    5.009497]  show_stack from dump_stack_lvl+0x38/0x5c
-[    5.009676]  dump_stack_lvl from __might_resched+0x188/0x2d0
-[    5.009860]  __might_resched from __kmem_cache_alloc_node+0x1dc/0x25c
-[    5.010061]  __kmem_cache_alloc_node from kmalloc_trace+0x30/0xc8
-[    5.010254]  kmalloc_trace from regcache_rbtree_write+0x26c/0x468
-[    5.010446]  regcache_rbtree_write from _regmap_write+0x88/0x140
-[    5.010634]  _regmap_write from regmap_write+0x44/0x68
-[    5.010803]  regmap_write from basic_read_write+0x8c/0x270
-[    5.010980]  basic_read_write from kunit_try_run_case+0x48/0xa0
+  u32 val = nla_get_u32(tb[MT76_TM_ATTR_TX_LENGTH]);
 
-Fixes: 28644c809f44 ("regmap: Add the rbtree cache support")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/ee59d128-413c-48ad-a3aa-d9d350c80042@roeck-us.net/
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/58f12a07-5f4b-4a8f-ab84-0a42d1908cb9@moroto.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
+in function mt76_testmode_cmd() is safe and will not result in
+out-of-attribute read.
+
+Fixes: f0efa8621550 ("mt76: add API for testmode support")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-rbtree.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/testmode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
-index 584bcc55f56e3..06788965aa293 100644
---- a/drivers/base/regmap/regcache-rbtree.c
-+++ b/drivers/base/regmap/regcache-rbtree.c
-@@ -277,7 +277,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
- 
- 	blk = krealloc(rbnode->block,
- 		       blklen * map->cache_word_size,
--		       GFP_KERNEL);
-+		       map->alloc_flags);
- 	if (!blk)
- 		return -ENOMEM;
- 
-@@ -286,7 +286,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
- 	if (BITS_TO_LONGS(blklen) > BITS_TO_LONGS(rbnode->blklen)) {
- 		present = krealloc(rbnode->cache_present,
- 				   BITS_TO_LONGS(blklen) * sizeof(*present),
--				   GFP_KERNEL);
-+				   map->alloc_flags);
- 		if (!present)
- 			return -ENOMEM;
- 
-@@ -320,7 +320,7 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
- 	const struct regmap_range *range;
- 	int i;
- 
--	rbnode = kzalloc(sizeof(*rbnode), GFP_KERNEL);
-+	rbnode = kzalloc(sizeof(*rbnode), map->alloc_flags);
- 	if (!rbnode)
- 		return NULL;
- 
-@@ -346,13 +346,13 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
- 	}
- 
- 	rbnode->block = kmalloc_array(rbnode->blklen, map->cache_word_size,
--				      GFP_KERNEL);
-+				      map->alloc_flags);
- 	if (!rbnode->block)
- 		goto err_free;
- 
- 	rbnode->cache_present = kcalloc(BITS_TO_LONGS(rbnode->blklen),
- 					sizeof(*rbnode->cache_present),
--					GFP_KERNEL);
-+					map->alloc_flags);
- 	if (!rbnode->cache_present)
- 		goto err_free_block;
- 
+diff --git a/drivers/net/wireless/mediatek/mt76/testmode.c b/drivers/net/wireless/mediatek/mt76/testmode.c
+index 0accc71a91c9a..4644dace9bb34 100644
+--- a/drivers/net/wireless/mediatek/mt76/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/testmode.c
+@@ -8,6 +8,7 @@ const struct nla_policy mt76_tm_policy[NUM_MT76_TM_ATTRS] = {
+ 	[MT76_TM_ATTR_RESET] = { .type = NLA_FLAG },
+ 	[MT76_TM_ATTR_STATE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_COUNT] = { .type = NLA_U32 },
++	[MT76_TM_ATTR_TX_LENGTH] = { .type = NLA_U32 },
+ 	[MT76_TM_ATTR_TX_RATE_MODE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_NSS] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_IDX] = { .type = NLA_U8 },
 -- 
 2.40.1
 
