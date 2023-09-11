@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693B211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB183C433C7;
-	Mon, 11 Sep 2023 15:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3806A11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFB0C433C9;
+	Mon, 11 Sep 2023 15:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445954;
-	bh=AUyhWozpU99LGAh9x6zoUdhupXeOB50YW8ddBKJCJ24=;
+	s=korg; t=1694445957;
+	bh=MnTRiWOyPhb00LxmvR61I2NrXyPDalLAkiVqziNVNB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=an2G+IlZQTU2zTpoPFPOIvF52HT9SlKJytRK6+Se0IG0agOEcNauWm9YWCpWt+LcY
-	 s+Sz4AKF4a+UZ61qxqRBlXe6aHUytGesoqJOD9XGhhUHDE2bs+56ylWrk6CAkKhQMl
-	 ff8pEfZkwooZeSNmRupuPAI/lLYi/k0klrVvey0w=
+	b=B8FlWZcCy7Sfbw1/D+Hd7j62GzkZtm4b+zi4sU/1kw8GO/dIUmq/JeVg8rZWkRy7N
+	 qe/zBGOxbiMtP4JzDyMqzhN0Y0wCXtmvNJCB+hAPTyc1YqcZ4nwAhKMtpNENN3pbLr
+	 ef7fgv3Op6IQFdsGVMItXrt3T9vwVGobKXiPYrXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yu Liao <liaoyu15@huawei.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 6.1 530/600] cpu/hotplug: Prevent self deadlock on CPU hot-unplug
-Date: Mon, 11 Sep 2023 15:49:23 +0200
-Message-ID: <20230911134649.268679116@linuxfoundation.org>
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 531/600] media: i2c: ccs: Check rules is non-NULL
+Date: Mon, 11 Sep 2023 15:49:24 +0200
+Message-ID: <20230911134649.297880718@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,92 +40,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 2b8272ff4a70b866106ae13c36be7ecbef5d5da2 upstream.
+commit 607bcc4213d998d051541d8f10b5bbb7d546c0be upstream.
 
-Xiongfeng reported and debugged a self deadlock of the task which initiates
-and controls a CPU hot-unplug operation vs. the CFS bandwidth timer.
+Fix the following smatch warning:
 
-    CPU1      			                 	 CPU2
+drivers/media/i2c/ccs/ccs-data.c:524 ccs_data_parse_rules() warn: address
+of NULL pointer 'rules'
 
-T1 sets cfs_quota
-   starts hrtimer cfs_bandwidth 'period_timer'
-T1 is migrated to CPU2
-						T1 initiates offlining of CPU1
-Hotplug operation starts
-  ...
-'period_timer' expires and is re-enqueued on CPU1
-  ...
-take_cpu_down()
-  CPU1 shuts down and does not handle timers
-  anymore. They have to be migrated in the
-  post dead hotplug steps by the control task.
+The CCS static data rule parser does not check an if rule has been
+obtained before checking for other rule types (which depend on the if
+rule). In practice this means parsing invalid CCS static data could lead
+to dereferencing a NULL pointer.
 
-						T1 runs the post dead offline operation
-					      	T1 is scheduled out
-						T1 waits for 'period_timer' to expire
-
-T1 waits there forever if it is scheduled out before it can execute the hrtimer
-offline callback hrtimers_dead_cpu().
-
-Cure this by delegating the hotplug control operation to a worker thread on
-an online CPU. This takes the initiating user space task, which might be
-affected by the bandwidth timer, completely out of the picture.
-
-Reported-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Yu Liao <liaoyu15@huawei.com>
-Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/8e785777-03aa-99e1-d20e-e956f5685be6@huawei.com
-Link: https://lore.kernel.org/r/87h6oqdq0i.ffs@tglx
+Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: a6b396f410b1 ("media: ccs: Add CCS static data parser library")
+Cc: stable@vger.kernel.org # for 5.11 and up
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |   24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ccs/ccs-data.c |  101 +++++++++++++++++++++------------------
+ 1 file changed, 56 insertions(+), 45 deletions(-)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1215,8 +1215,22 @@ out:
- 	return ret;
- }
+--- a/drivers/media/i2c/ccs/ccs-data.c
++++ b/drivers/media/i2c/ccs/ccs-data.c
+@@ -464,8 +464,7 @@ static int ccs_data_parse_rules(struct b
+ 		rule_payload = __rule_type + 1;
+ 		rule_plen2 = rule_plen - sizeof(*__rule_type);
  
-+struct cpu_down_work {
-+	unsigned int		cpu;
-+	enum cpuhp_state	target;
-+};
+-		switch (*__rule_type) {
+-		case CCS_DATA_BLOCK_RULE_ID_IF: {
++		if (*__rule_type == CCS_DATA_BLOCK_RULE_ID_IF) {
+ 			const struct __ccs_data_block_rule_if *__if_rules =
+ 				rule_payload;
+ 			const size_t __num_if_rules =
+@@ -514,49 +513,61 @@ static int ccs_data_parse_rules(struct b
+ 				rules->if_rules = if_rule;
+ 				rules->num_if_rules = __num_if_rules;
+ 			}
+-			break;
+-		}
+-		case CCS_DATA_BLOCK_RULE_ID_READ_ONLY_REGS:
+-			rval = ccs_data_parse_reg_rules(bin, &rules->read_only_regs,
+-							&rules->num_read_only_regs,
+-							rule_payload,
+-							rule_payload + rule_plen2,
+-							dev);
+-			if (rval)
+-				return rval;
+-			break;
+-		case CCS_DATA_BLOCK_RULE_ID_FFD:
+-			rval = ccs_data_parse_ffd(bin, &rules->frame_format,
+-						  rule_payload,
+-						  rule_payload + rule_plen2,
+-						  dev);
+-			if (rval)
+-				return rval;
+-			break;
+-		case CCS_DATA_BLOCK_RULE_ID_MSR:
+-			rval = ccs_data_parse_reg_rules(bin,
+-							&rules->manufacturer_regs,
+-							&rules->num_manufacturer_regs,
+-							rule_payload,
+-							rule_payload + rule_plen2,
+-							dev);
+-			if (rval)
+-				return rval;
+-			break;
+-		case CCS_DATA_BLOCK_RULE_ID_PDAF_READOUT:
+-			rval = ccs_data_parse_pdaf_readout(bin,
+-							   &rules->pdaf_readout,
+-							   rule_payload,
+-							   rule_payload + rule_plen2,
+-							   dev);
+-			if (rval)
+-				return rval;
+-			break;
+-		default:
+-			dev_dbg(dev,
+-				"Don't know how to handle rule type %u!\n",
+-				*__rule_type);
+-			return -EINVAL;
++		} else {
++			/* Check there was an if rule before any other rules */
++			if (bin->base && !rules)
++				return -EINVAL;
 +
-+static long __cpu_down_maps_locked(void *arg)
-+{
-+	struct cpu_down_work *work = arg;
-+
-+	return _cpu_down(work->cpu, 0, work->target);
-+}
-+
- static int cpu_down_maps_locked(unsigned int cpu, enum cpuhp_state target)
- {
-+	struct cpu_down_work work = { .cpu = cpu, .target = target, };
-+
- 	/*
- 	 * If the platform does not support hotplug, report it explicitly to
- 	 * differentiate it from a transient offlining failure.
-@@ -1225,7 +1239,15 @@ static int cpu_down_maps_locked(unsigned
- 		return -EOPNOTSUPP;
- 	if (cpu_hotplug_disabled)
- 		return -EBUSY;
--	return _cpu_down(cpu, 0, target);
-+
-+	/*
-+	 * Ensure that the control task does not run on the to be offlined
-+	 * CPU to prevent a deadlock against cfs_b->period_timer.
-+	 */
-+	cpu = cpumask_any_but(cpu_online_mask, cpu);
-+	if (cpu >= nr_cpu_ids)
-+		return -EBUSY;
-+	return work_on_cpu(cpu, __cpu_down_maps_locked, &work);
- }
- 
- static int cpu_down(unsigned int cpu, enum cpuhp_state target)
++			switch (*__rule_type) {
++			case CCS_DATA_BLOCK_RULE_ID_READ_ONLY_REGS:
++				rval = ccs_data_parse_reg_rules(bin,
++								rules ?
++								&rules->read_only_regs : NULL,
++								rules ?
++								&rules->num_read_only_regs : NULL,
++								rule_payload,
++								rule_payload + rule_plen2,
++								dev);
++				if (rval)
++					return rval;
++				break;
++			case CCS_DATA_BLOCK_RULE_ID_FFD:
++				rval = ccs_data_parse_ffd(bin, rules ?
++							  &rules->frame_format : NULL,
++							  rule_payload,
++							  rule_payload + rule_plen2,
++							  dev);
++				if (rval)
++					return rval;
++				break;
++			case CCS_DATA_BLOCK_RULE_ID_MSR:
++				rval = ccs_data_parse_reg_rules(bin,
++								rules ?
++								&rules->manufacturer_regs : NULL,
++								rules ?
++								&rules->num_manufacturer_regs : NULL,
++								rule_payload,
++								rule_payload + rule_plen2,
++								dev);
++				if (rval)
++					return rval;
++				break;
++			case CCS_DATA_BLOCK_RULE_ID_PDAF_READOUT:
++				rval = ccs_data_parse_pdaf_readout(bin,
++								   rules ?
++								   &rules->pdaf_readout : NULL,
++								   rule_payload,
++								   rule_payload + rule_plen2,
++								   dev);
++				if (rval)
++					return rval;
++				break;
++			default:
++				dev_dbg(dev,
++					"Don't know how to handle rule type %u!\n",
++					*__rule_type);
++				return -EINVAL;
++			}
+ 		}
+ 		__next_rule = __next_rule + rule_hlen + rule_plen;
+ 	}
 
 
