@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3264B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B96C433C8;
-	Mon, 11 Sep 2023 13:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166C91170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C67C433C8;
+	Mon, 11 Sep 2023 13:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440346;
-	bh=BSOJ9h+sCSu8MUzd+wySrv4cioS4i83j26G23kPqPSA=;
+	s=korg; t=1694440348;
+	bh=P0r4nJxCRfFdwFZWMfIv4+OmByslTC7txPZi1Yz+hWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Su3xKKKrf8xrR2Mas1UTY+cMl5BoHxqyhkBqaT3edPMC35+fz0aFp77MqReVHwsKw
-	 czVAzkYMRvgWmZUtctOITaTr4lhoANcAhFyYR0ZKAmiu7257NLWe5lVxJV7ATy2RVz
-	 Is9XPMFbhzitZI5kimMLtszzKluigqKimiGK2+dE=
+	b=SStVv2+alwpPyuAPU5k+kT4xfKcQOoU2XoAvH1AnxlH2ujefZiq6LkXRAzzOpW3/G
+	 e5J3kboKE9XXAl60wYd3z+R4/ncfEOAcOx2C8rnApVTUmFq+bwvXqENos5DSPQpY0f
+	 6q+wCFUN3ZsYBsToRytxXwkhu8otxdKFNIAQ1IGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 029/739] OPP: Fix potential null ptr dereference in dev_pm_opp_get_required_pstate()
-Date: Mon, 11 Sep 2023 15:37:08 +0200
-Message-ID: <20230911134651.882937623@linuxfoundation.org>
+Subject: [PATCH 6.5 030/739] OPP: Fix passing 0 to PTR_ERR in _opp_attach_genpd()
+Date: Mon, 11 Sep 2023 15:37:09 +0200
+Message-ID: <20230911134651.923938278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,53 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7ddd8deb1c3c0363a7e14fafb5df26e2089a69a5 ]
+[ Upstream commit d920920f85a82c1c806a4143871a0e8f534732f2 ]
 
-"opp" pointer is dereferenced before the IS_ERR_OR_NULL() check. Fix it by
-removing the dereference to cache opp_table and dereference it directly
-where opp_table is used.
+If dev_pm_domain_attach_by_name() returns NULL, then 0 will be passed to
+PTR_ERR() as reported by the smatch warning below:
 
-This fixes the following smatch warning:
+drivers/opp/core.c:2456 _opp_attach_genpd() warn: passing zero to 'PTR_ERR'
 
-drivers/opp/core.c:232 dev_pm_opp_get_required_pstate() warn: variable
-dereferenced before IS_ERR check 'opp' (see line 230)
+Fix it by checking for the non-NULL virt_dev pointer before passing it to
+PTR_ERR. Otherwise return -ENODEV.
 
-Fixes: 84cb7ff35fcf ("OPP: pstate is only valid for genpd OPP tables")
+Fixes: 4ea9496cbc95 ("opp: Fix error check in dev_pm_opp_attach_genpd()")
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/opp/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 3f46e499d615f..98633ccd170a3 100644
+index 98633ccd170a3..ae359ed6a1611 100644
 --- a/drivers/opp/core.c
 +++ b/drivers/opp/core.c
-@@ -227,20 +227,18 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_get_level);
- unsigned int dev_pm_opp_get_required_pstate(struct dev_pm_opp *opp,
- 					    unsigned int index)
- {
--	struct opp_table *opp_table = opp->opp_table;
--
- 	if (IS_ERR_OR_NULL(opp) || !opp->available ||
--	    index >= opp_table->required_opp_count) {
-+	    index >= opp->opp_table->required_opp_count) {
- 		pr_err("%s: Invalid parameters\n", __func__);
- 		return 0;
- 	}
+@@ -2377,7 +2377,7 @@ static int _opp_attach_genpd(struct opp_table *opp_table, struct device *dev,
  
- 	/* required-opps not fully initialized yet */
--	if (lazy_linking_pending(opp_table))
-+	if (lazy_linking_pending(opp->opp_table))
- 		return 0;
- 
- 	/* The required OPP table must belong to a genpd */
--	if (unlikely(!opp_table->required_opp_tables[index]->is_genpd)) {
-+	if (unlikely(!opp->opp_table->required_opp_tables[index]->is_genpd)) {
- 		pr_err("%s: Performance state is only valid for genpds.\n", __func__);
- 		return 0;
- 	}
+ 		virt_dev = dev_pm_domain_attach_by_name(dev, *name);
+ 		if (IS_ERR_OR_NULL(virt_dev)) {
+-			ret = PTR_ERR(virt_dev) ? : -ENODEV;
++			ret = virt_dev ? PTR_ERR(virt_dev) : -ENODEV;
+ 			dev_err(dev, "Couldn't attach to pm_domain: %d\n", ret);
+ 			goto err;
+ 		}
 -- 
 2.40.1
 
