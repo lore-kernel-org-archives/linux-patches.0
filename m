@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E90211706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E73C433C8;
-	Mon, 11 Sep 2023 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C316A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452D7C433C8;
+	Mon, 11 Sep 2023 15:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444506;
-	bh=gPjyesZZ/t769mjN2hyEQUuXhQqHVE/8RRftuUGBXCU=;
+	s=korg; t=1694444509;
+	bh=YPqmbEIYTFvLj3mW8HCOa37jnQRf5cjRssdqFc3OEH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IDHoh0/KAna9zSh1TKfE0XWrIx2UnnOT3x/PK0K7VKERUQ7yU/cFWud1eZ2vninN
-	 8r9Tkh5woglByRDjaRaqG1WO7UVGq3sMw4rQF7g2Yz5Al6mduKrPjZiortfnLhn+TT
-	 M/O3//zZw0psI92bunN8FVPIwy6FTsA1hTGlgJDg=
+	b=Q9rURQd7MGdZr4wcSogmSR1gRVF6kQjMJGuJTRv86v21ITQmf93B5+ZOQ1AuSxtWd
+	 HzEWXQPD+2mMV4AX71ODtjYirKRZtHLW+bnLMQvp3/E2N/KU7XfPN8/aMgb9khoFFs
+	 vJWqzs8Zb99/XHhWS0uk/yybrP6XnVNxTR4A8mTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Daniel Miess <daniel.miess@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/600] Partially revert "drm/amd/display: Fix possible underflow for displays with large vblank"
-Date: Mon, 11 Sep 2023 15:40:35 +0200
-Message-ID: <20230911134633.699445714@linuxfoundation.org>
+Subject: [PATCH 6.1 003/600] scsi: ufs: Try harder to change the power mode
+Date: Mon, 11 Sep 2023 15:40:36 +0200
+Message-ID: <20230911134633.727473100@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,43 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Miess <daniel.miess@amd.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit a99a4ff6ef205d125002fc7e0857074e4e6597b6 ]
+[ Upstream commit 579a4e9dbd53978cad8df88dc612837cdd210ce0 ]
 
-This partially reverts commit de231189e7bf ("drm/amd/display: Fix
-possible underflow for displays with large vblank").
+Instead of only retrying the START STOP UNIT command if a unit attention is
+reported, repeat it if any SCSI error is reported by the device or if the
+command timed out.
 
-[Why]
-The increased value of VBlankNomDefaultUS causes underflow at the
-desktop of an IP KVM setup
-
-[How]
-Change the value from 800 back to 668
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Daniel Miess <daniel.miess@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221018202958.1902564-8-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: fe8637f7708c ("scsi: ufs: core: Increase the START STOP UNIT timeout from one to ten seconds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-index 8a88605827a84..551a63f7064bb 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -32,7 +32,7 @@
- #include "dml/display_mode_vba.h"
- 
- struct _vcs_dpi_ip_params_st dcn3_14_ip = {
--	.VBlankNomDefaultUS = 800,
-+	.VBlankNomDefaultUS = 668,
- 	.gpuvm_enable = 1,
- 	.gpuvm_max_page_table_levels = 1,
- 	.hostvm_enable = 1,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 977bd4b9dd0b4..36437d39b93c8 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8830,9 +8830,11 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
+ 	for (retries = 3; retries > 0; --retries) {
+ 		ret = scsi_execute(sdp, cmd, DMA_NONE, NULL, 0, NULL, &sshdr,
+ 				   HZ, 0, 0, RQF_PM, NULL);
+-		if (!scsi_status_is_check_condition(ret) ||
+-				!scsi_sense_valid(&sshdr) ||
+-				sshdr.sense_key != UNIT_ATTENTION)
++		/*
++		 * scsi_execute() only returns a negative value if the request
++		 * queue is dying.
++		 */
++		if (ret <= 0)
+ 			break;
+ 	}
+ 	if (ret) {
 -- 
 2.40.1
 
