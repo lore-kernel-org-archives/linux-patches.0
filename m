@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386531170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85460C433C7;
-	Mon, 11 Sep 2023 13:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC00B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC83C433C9;
+	Mon, 11 Sep 2023 13:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440696;
-	bh=sKM4NzcPuRQ3vSF6ZfwfaqQtRmkCo5csv0gnUxvIL3E=;
+	s=korg; t=1694440698;
+	bh=wFz8VkyA+LhA40IUrwxxMX8GkqpRUT5A76CmuDfDnmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOc3A8S/scCgb/cmrS4Csb+fO9Q9JzKMEe/p33ZmAn3Z8SimK9tDQmCX7B+A9XESm
-	 cnI2n0iVoYGd56i60aE5XBKzSWpz7nPSEP9JMUIQyo+bRcgiCZ++ZogN6/UOmz9AdD
-	 frQPmaL5szPRdUBNRlhn3zK2IyAoHEqIgZTQ1Okc=
+	b=CuycfLjaYkxFKFJvdjGaDVI2yvnq6K8werH9NmUsirv5wksdEd/TTB0tHITLo5/m+
+	 SiX9/Lot8v7T9+o6zrq0IaYUIZ5eRKEL9Q3FoTsQ9skgw20w7zLpKXAr1s2uYiJ8zT
+	 eGVIAkACZKotWJJdECl4CTwGUCTCghTf0gJOD0mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 153/739] fs: ocfs2: namei: check return value of ocfs2_add_entry()
-Date: Mon, 11 Sep 2023 15:39:12 +0200
-Message-ID: <20230911134655.413761672@linuxfoundation.org>
+Subject: [PATCH 6.5 154/739] net: lan966x: Fix return value check for vcap_get_rule()
+Date: Mon, 11 Sep 2023 15:39:13 +0200
+Message-ID: <20230911134655.444407013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -48,48 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
+[ Upstream commit ab104318f63997113b0ce7ac288e51359925ed79 ]
 
-Process result of ocfs2_add_entry() in case we have an error
-value.
+As Simon Horman suggests, update vcap_get_rule() to always
+return an ERR_PTR() and update the error detection conditions to
+use IS_ERR(), so use IS_ERR() to fix the return value issue.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 72df3489fb10 ("net: lan966x: Add ptp trap rules")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Suggested-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index 17c52225b87d4..03bccfd183f3c 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -1535,6 +1535,10 @@ static int ocfs2_rename(struct mnt_idmap *idmap,
- 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
- 					 OCFS2_I(old_inode)->ip_blkno,
- 					 new_dir_bh, &target_insert);
-+		if (status < 0) {
-+			mlog_errno(status);
-+			goto bail;
-+		}
- 	}
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index 266a21a2d1246..1da2b1f82ae93 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -59,7 +59,7 @@ static int lan966x_ptp_add_trap(struct lan966x_port *port,
+ 	int err;
  
- 	old_inode->i_ctime = current_time(old_inode);
+ 	vrule = vcap_get_rule(lan966x->vcap_ctrl, rule_id);
+-	if (vrule) {
++	if (!IS_ERR(vrule)) {
+ 		u32 value, mask;
+ 
+ 		/* Just modify the ingress port mask and exit */
+@@ -106,7 +106,7 @@ static int lan966x_ptp_del_trap(struct lan966x_port *port,
+ 	int err;
+ 
+ 	vrule = vcap_get_rule(lan966x->vcap_ctrl, rule_id);
+-	if (!vrule)
++	if (IS_ERR(vrule))
+ 		return -EEXIST;
+ 
+ 	vcap_rule_get_key_u32(vrule, VCAP_KF_IF_IGR_PORT_MASK, &value, &mask);
 -- 
 2.40.1
 
