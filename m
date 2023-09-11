@@ -1,41 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B76E57C;
-	Mon, 11 Sep 2023 15:05:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF5BC433C9;
-	Mon, 11 Sep 2023 15:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27D01173C
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3066EC433CA;
+	Mon, 11 Sep 2023 15:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444721;
-	bh=ZW+Q1JOHZ/uDaaroiW9oP5TW2ELU1qx2psiVBuG2scQ=;
+	s=korg; t=1694444724;
+	bh=KTe6XUlOxy3mYQvleNBaw/jhQicexNNR0UGLG/P4WHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFzQEkS/HF0zKqCIdwlTu/T50chShWZjHXyfSt98Ubj9+pA7qH3pSyZTkFsn3dGV5
-	 fMtUR9T59JoSLujFOQa8PBxN3pPjBlgglscoA7eG+apOR4tABcbix4QKW01y3nwvlV
-	 jSETHIRks23rdXqmTQCMcAjCCBDYHV4BTIVJohe8=
+	b=lQ4ufM9olH0iqVK48gtyYmD9hm4kE8Z/Fi4C4fqHFB612aHc9Osa3XPc6D7B9d5e3
+	 3gpRT2ihTo+FRZRro2aqlVjLamAqxC6fxo1965Cj6IJzqIn3Hq6GWFA/IiuXyZB/Qo
+	 xoa0UMJdB7+0CfOkbmq4ssu7K3mImbN1z2L++xB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
+	Shen Jiamin <shen_jiamin@comp.nus.edu.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
-	Tom Rix <trix@redhat.com>,
-	bpf@vger.kernel.org,
-	llvm@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 093/600] tools lib subcmd: Add dependency test to install_headers
-Date: Mon, 11 Sep 2023 15:42:06 +0200
-Message-ID: <20230911134636.353908314@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 094/600] tools/resolve_btfids: Use pkg-config to locate libelf
+Date: Mon, 11 Sep 2023 15:42:07 +0200
+Message-ID: <20230911134636.382707711@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -54,78 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Shen Jiamin <shen_jiamin@comp.nus.edu.sg>
 
-commit 5d890591db6bed8ca69bd4bfe0cdaca372973033 upstream.
+commit 0e43662e61f2569500ab83b8188c065603530785 upstream.
 
-Compute the headers to be installed from their source headers and make
-each have its own build target to install it. Using dependencies
-avoids headers being reinstalled and getting a new timestamp which
-then causes files that depend on the header to be rebuilt.
+When libelf was not installed in the standard location, it cannot be
+located by the current building config.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: bpf@vger.kernel.org
-Cc: llvm@lists.linux.dev
-Link: https://lore.kernel.org/r/20221202045743.2639466-4-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Use pkg-config to help locate libelf in such cases.
+
+Signed-off-by: Shen Jiamin <shen_jiamin@comp.nus.edu.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20221215044703.400139-1-shen_jiamin@comp.nus.edu.sg
 Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/subcmd/Makefile |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ tools/bpf/resolve_btfids/Makefile |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/tools/lib/subcmd/Makefile
-+++ b/tools/lib/subcmd/Makefile
-@@ -89,10 +89,10 @@ define do_install_mkdir
- endef
+--- a/tools/bpf/resolve_btfids/Makefile
++++ b/tools/bpf/resolve_btfids/Makefile
+@@ -56,13 +56,17 @@ $(BPFOBJ): $(wildcard $(LIBBPF_SRC)/*.[c
+ 		    DESTDIR=$(LIBBPF_DESTDIR) prefix= EXTRA_CFLAGS="$(CFLAGS)" \
+ 		    $(abspath $@) install_headers
  
- define do_install
--	if [ ! -d '$(DESTDIR_SQ)$2' ]; then             \
--		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$2'; \
-+	if [ ! -d '$2' ]; then             \
-+		$(INSTALL) -d -m 755 '$2'; \
- 	fi;                                             \
--	$(INSTALL) $1 $(if $3,-m $3,) '$(DESTDIR_SQ)$2'
-+	$(INSTALL) $1 $(if $3,-m $3,) '$2'
- endef
- 
- install_lib: $(LIBFILE)
-@@ -100,13 +100,16 @@ install_lib: $(LIBFILE)
- 		$(call do_install_mkdir,$(libdir_SQ)); \
- 		cp -fpR $(LIBFILE) $(DESTDIR)$(libdir_SQ)
- 
--install_headers:
--	$(call QUIET_INSTALL, libsubcmd_headers) \
--		$(call do_install,exec-cmd.h,$(prefix)/include/subcmd,644); \
--		$(call do_install,help.h,$(prefix)/include/subcmd,644); \
--		$(call do_install,pager.h,$(prefix)/include/subcmd,644); \
--		$(call do_install,parse-options.h,$(prefix)/include/subcmd,644); \
--		$(call do_install,run-command.h,$(prefix)/include/subcmd,644);
-+HDRS := exec-cmd.h help.h pager.h parse-options.h run-command.h
-+INSTALL_HDRS_PFX := $(DESTDIR)$(prefix)/include/subcmd
-+INSTALL_HDRS := $(addprefix $(INSTALL_HDRS_PFX)/, $(HDRS))
++LIBELF_FLAGS := $(shell $(HOSTPKG_CONFIG) libelf --cflags 2>/dev/null)
++LIBELF_LIBS  := $(shell $(HOSTPKG_CONFIG) libelf --libs 2>/dev/null || echo -lelf)
 +
-+$(INSTALL_HDRS): $(INSTALL_HDRS_PFX)/%.h: %.h
-+	$(call QUIET_INSTALL, $@) \
-+		$(call do_install,$<,$(INSTALL_HDRS_PFX)/,644)
-+
-+install_headers: $(INSTALL_HDRS)
-+	$(call QUIET_INSTALL, libsubcmd_headers)
+ CFLAGS += -g \
+           -I$(srctree)/tools/include \
+           -I$(srctree)/tools/include/uapi \
+           -I$(LIBBPF_INCLUDE) \
+-          -I$(SUBCMD_SRC)
++          -I$(SUBCMD_SRC) \
++          $(LIBELF_FLAGS)
  
- install: install_lib install_headers
+-LIBS = -lelf -lz
++LIBS = $(LIBELF_LIBS) -lz
  
+ export srctree OUTPUT CFLAGS Q
+ include $(srctree)/tools/build/Makefile.include
 
 
