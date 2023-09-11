@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4101170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826C8C433C8;
-	Mon, 11 Sep 2023 14:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3B71170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B631C433C9;
+	Mon, 11 Sep 2023 14:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441968;
-	bh=B5DJW/CxBafnzKHzV8xpdc9WmN/mhniQi4cnwkc3oTI=;
+	s=korg; t=1694441971;
+	bh=95obcNaR33gsGKV0eKqUxu6hgJrybVLrURpk0qdtMhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NtiLw8/FwX2tpL7TimJ314MrGMpJKNMyYXEZvHD8CnulDjdz2KvU8Z2ZgcWK1+HQl
-	 AZULuFxvMsrrvt7aF3SCiIHVnuFcxQMjJS48AMmo1EPMFDbAGlFpCBemYvSj2bGWSl
-	 j4gYxhiL1Cu/VABTe5jKWMlcfm5Rs+JPDxOsEQoI=
+	b=aU6pzTvQNDzd0qLno6fjPq7uu9nVBB6eBUnAqW314nz5+G1zrE+IbeT/SMUDxbeDL
+	 tu6hCBt/a8MMRpVnmPtvWw46BiLhnalcfI177GG644ddDNLtzr3OrfoNQtdeK/yTih
+	 4pD7et6XvE0pVKKb8gUpjVLg0w3kqyBf01AqVaUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 599/739] phy/rockchip: inno-hdmi: do not power on rk3328 post pll on reg write
-Date: Mon, 11 Sep 2023 15:46:38 +0200
-Message-ID: <20230911134707.832367809@linuxfoundation.org>
+Subject: [PATCH 6.5 600/739] rpmsg: glink: Add check for kstrdup
+Date: Mon, 11 Sep 2023 15:46:39 +0200
+Message-ID: <20230911134707.860064863@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,53 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 19a1d46bd699940a496d3b0d4e142ef99834988c ]
+[ Upstream commit b5c9ee8296a3760760c7b5d2e305f91412adc795 ]
 
-inno_write is used to configure 0xaa reg, that also hold the
-POST_PLL_POWER_DOWN bit.
-When POST_PLL_REFCLK_SEL_TMDS is configured the power down bit is not
-taken into consideration.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Fix this by keeping the power down bit until configuration is complete.
-Also reorder the reg write order for consistency.
-
-Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20230615171005.2251032-5-jonas@kwiboo.se
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20230619030631.12361-1-jiasheng@iscas.ac.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
-index 7d412f771f6c3..fbdc23953b52e 100644
---- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
-+++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
-@@ -1023,9 +1023,10 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 1beb40a1d3df2..e4015db99899d 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -221,6 +221,10 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
  
- 	inno_write(inno, 0xac, RK3328_POST_PLL_FB_DIV_7_0(cfg->fbdiv));
- 	if (cfg->postdiv == 1) {
--		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS);
- 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
- 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
-+		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS |
-+			   RK3328_POST_PLL_POWER_DOWN);
- 	} else {
- 		v = (cfg->postdiv / 2) - 1;
- 		v &= RK3328_POST_PLL_POST_DIV_MASK;
-@@ -1033,7 +1034,8 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
- 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
- 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
- 		inno_write(inno, 0xaa, RK3328_POST_PLL_POST_DIV_ENABLE |
--			   RK3328_POST_PLL_REFCLK_SEL_TMDS);
-+			   RK3328_POST_PLL_REFCLK_SEL_TMDS |
-+			   RK3328_POST_PLL_POWER_DOWN);
- 	}
+ 	channel->glink = glink;
+ 	channel->name = kstrdup(name, GFP_KERNEL);
++	if (!channel->name) {
++		kfree(channel);
++		return ERR_PTR(-ENOMEM);
++	}
  
- 	for (v = 0; v < 14; v++)
+ 	init_completion(&channel->open_req);
+ 	init_completion(&channel->open_ack);
 -- 
 2.40.1
 
