@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8B34C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6ABC433C7;
-	Mon, 11 Sep 2023 14:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E43E57C
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55D1C433C8;
+	Mon, 11 Sep 2023 14:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442857;
-	bh=5zOmlCbZrPaOrIgOGPRrEvssBlEVDdJ5qRLc82X4hwA=;
+	s=korg; t=1694442860;
+	bh=2Bb/GxSXDVplnPhgILAxUaI/krpr6yilIYLH+Erxzh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6F8EV+miVeTCDaSK+ky2v2hO8ft7LskwaAu+A7EcJ0T7zJVHOEfney9m6zJwZZ6Z
-	 GE8JZn3L8MT0sNaaWdF9rwd+1Z9fghB7zQR7V4aAc04saWn8G/dXh0khyFMJ8cyczt
-	 oaDcexS9MHlp7vQu1s0ajDprx9gMRR8MHHWmkExE=
+	b=DdW6SCI4Q56IsTAq2KsWl11P8+0hNm+qNYdbw4wamKsdXMBaIhBw7x7w9SiH1fWUr
+	 xk3VHifb16TtPY94hcZF/+A4gle2tYIc0m1MoRdrNNfd+0COtvYwc1T3yBUZWsxVa7
+	 nPS5vKtjUgKrrfg7tPa9pTQEx0A5aVzDo7K2bgfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 172/737] wifi: mt76: mt7915: fix capabilities in non-AP mode
-Date: Mon, 11 Sep 2023 15:40:31 +0200
-Message-ID: <20230911134655.332460567@linuxfoundation.org>
+Subject: [PATCH 6.4 173/737] wifi: mt76: mt7915: remove VHT160 capability on MT7915
+Date: Mon, 11 Sep 2023 15:40:32 +0200
+Message-ID: <20230911134655.362254526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,200 +41,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 02a894046d5ab7d0010f39ea54fde7e167919d04 ]
+[ Upstream commit 3ec5ac12ac8a4e6b1e085374325a5fbd1b650fd5 ]
 
-Capabilities in vif->bss_conf are only initialized in AP mode.
-For other modes, they should be enabled by default, in order to avoid a
-mismatch.
+The IEEE80211_VHT_CAP_EXT_NSS_BW value already indicates support for half-NSS
+160 MHz support, so it is wrong to also advertise full 160 MHz support.
 
-Fixes: 885f7af7e544 ("wifi: mt76: mt7915: remove mt7915_mcu_beacon_check_caps()")
+Fixes: c2f73eacee3b ("wifi: mt76: mt7915: add back 160MHz channel width support for MT7915")
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7915/main.c  | 21 +++++++++++++++
- .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 27 ++++++++++---------
- .../wireless/mediatek/mt76/mt7915/mt7915.h    | 14 ++++++++++
- 3 files changed, 50 insertions(+), 12 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 13d429bd44e28..ed345a0b931e0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -269,6 +269,7 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
- 	vif->offload_flags |= IEEE80211_OFFLOAD_ENCAP_4ADDR;
- 
- 	mt7915_init_bitrate_mask(vif);
-+	memset(&mvif->cap, -1, sizeof(mvif->cap));
- 
- 	mt7915_mcu_add_bss_info(phy, vif, true);
- 	mt7915_mcu_add_sta(dev, vif, NULL, true);
-@@ -657,6 +658,24 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
- 	mutex_unlock(&dev->mt76.mutex);
- }
- 
-+static void
-+mt7915_vif_check_caps(struct mt7915_phy *phy, struct ieee80211_vif *vif)
-+{
-+	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
-+	struct mt7915_vif_cap *vc = &mvif->cap;
-+
-+	vc->ht_ldpc = vif->bss_conf.ht_ldpc;
-+	vc->vht_ldpc = vif->bss_conf.vht_ldpc;
-+	vc->vht_su_ebfer = vif->bss_conf.vht_su_beamformer;
-+	vc->vht_su_ebfee = vif->bss_conf.vht_su_beamformee;
-+	vc->vht_mu_ebfer = vif->bss_conf.vht_mu_beamformer;
-+	vc->vht_mu_ebfee = vif->bss_conf.vht_mu_beamformee;
-+	vc->he_ldpc = vif->bss_conf.he_ldpc;
-+	vc->he_su_ebfer = vif->bss_conf.he_su_beamformer;
-+	vc->he_su_ebfee = vif->bss_conf.he_su_beamformee;
-+	vc->he_mu_ebfer = vif->bss_conf.he_mu_beamformer;
-+}
-+
- static int
- mt7915_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		struct ieee80211_bss_conf *link_conf)
-@@ -667,6 +686,8 @@ mt7915_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 
- 	mutex_lock(&dev->mt76.mutex);
- 
-+	mt7915_vif_check_caps(phy, vif);
-+
- 	err = mt7915_mcu_add_bss_info(phy, vif, true);
- 	if (err)
- 		goto out;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 8da9c87e98042..a325066bf57e9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -710,6 +710,7 @@ static void
- mt7915_mcu_sta_he_tlv(struct sk_buff *skb, struct ieee80211_sta *sta,
- 		      struct ieee80211_vif *vif)
- {
-+	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
- 	struct ieee80211_he_cap_elem *elem = &sta->deflink.he_cap.he_cap_elem;
- 	struct ieee80211_he_mcs_nss_supp mcs_map;
- 	struct sta_rec_he *he;
-@@ -743,7 +744,7 @@ mt7915_mcu_sta_he_tlv(struct sk_buff *skb, struct ieee80211_sta *sta,
- 	     IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_RU_MAPPING_IN_5G))
- 		cap |= STA_REC_HE_CAP_BW20_RU242_SUPPORT;
- 
--	if (vif->bss_conf.he_ldpc &&
-+	if (mvif->cap.he_ldpc &&
- 	    (elem->phy_cap_info[1] &
- 	     IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
- 		cap |= STA_REC_HE_CAP_LDPC;
-@@ -852,6 +853,7 @@ static void
- mt7915_mcu_sta_muru_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
- 			struct ieee80211_sta *sta, struct ieee80211_vif *vif)
- {
-+	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
- 	struct ieee80211_he_cap_elem *elem = &sta->deflink.he_cap.he_cap_elem;
- 	struct sta_rec_muru *muru;
- 	struct tlv *tlv;
-@@ -864,9 +866,9 @@ mt7915_mcu_sta_muru_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
- 
- 	muru = (struct sta_rec_muru *)tlv;
- 
--	muru->cfg.mimo_dl_en = vif->bss_conf.he_mu_beamformer ||
--			       vif->bss_conf.vht_mu_beamformer ||
--			       vif->bss_conf.vht_mu_beamformee;
-+	muru->cfg.mimo_dl_en = mvif->cap.he_mu_ebfer ||
-+			       mvif->cap.vht_mu_ebfer ||
-+			       mvif->cap.vht_mu_ebfee;
- 	if (!is_mt7915(&dev->mt76))
- 		muru->cfg.mimo_ul_en = true;
- 	muru->cfg.ofdma_dl_en = true;
-@@ -999,8 +1001,8 @@ mt7915_mcu_sta_wtbl_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
- 	mt76_connac_mcu_wtbl_hdr_trans_tlv(skb, vif, wcid, tlv, wtbl_hdr);
- 	if (sta)
- 		mt76_connac_mcu_wtbl_ht_tlv(&dev->mt76, skb, sta, tlv,
--					    wtbl_hdr, vif->bss_conf.ht_ldpc,
--					    vif->bss_conf.vht_ldpc);
-+					    wtbl_hdr, mvif->cap.ht_ldpc,
-+					    mvif->cap.vht_ldpc);
- 
- 	return 0;
- }
-@@ -1009,6 +1011,7 @@ static inline bool
- mt7915_is_ebf_supported(struct mt7915_phy *phy, struct ieee80211_vif *vif,
- 			struct ieee80211_sta *sta, bool bfee)
- {
-+	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
- 	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
- 
- 	if (vif->type != NL80211_IFTYPE_STATION &&
-@@ -1022,10 +1025,10 @@ mt7915_is_ebf_supported(struct mt7915_phy *phy, struct ieee80211_vif *vif,
- 		struct ieee80211_he_cap_elem *pe = &sta->deflink.he_cap.he_cap_elem;
- 
- 		if (bfee)
--			return vif->bss_conf.he_su_beamformee &&
-+			return mvif->cap.he_su_ebfee &&
- 			       HE_PHY(CAP3_SU_BEAMFORMER, pe->phy_cap_info[3]);
- 		else
--			return vif->bss_conf.he_su_beamformer &&
-+			return mvif->cap.he_su_ebfer &&
- 			       HE_PHY(CAP4_SU_BEAMFORMEE, pe->phy_cap_info[4]);
- 	}
- 
-@@ -1033,10 +1036,10 @@ mt7915_is_ebf_supported(struct mt7915_phy *phy, struct ieee80211_vif *vif,
- 		u32 cap = sta->deflink.vht_cap.cap;
- 
- 		if (bfee)
--			return vif->bss_conf.vht_su_beamformee &&
-+			return mvif->cap.vht_su_ebfee &&
- 			       (cap & IEEE80211_VHT_CAP_SU_BEAMFORMER_CAPABLE);
- 		else
--			return vif->bss_conf.vht_su_beamformer &&
-+			return mvif->cap.vht_su_ebfer &&
- 			       (cap & IEEE80211_VHT_CAP_SU_BEAMFORMEE_CAPABLE);
- 	}
- 
-@@ -1531,7 +1534,7 @@ mt7915_mcu_sta_rate_ctrl_tlv(struct sk_buff *skb, struct mt7915_dev *dev,
- 			cap |= STA_CAP_TX_STBC;
- 		if (sta->deflink.ht_cap.cap & IEEE80211_HT_CAP_RX_STBC)
- 			cap |= STA_CAP_RX_STBC;
--		if (vif->bss_conf.ht_ldpc &&
-+		if (mvif->cap.ht_ldpc &&
- 		    (sta->deflink.ht_cap.cap & IEEE80211_HT_CAP_LDPC_CODING))
- 			cap |= STA_CAP_LDPC;
- 
-@@ -1557,7 +1560,7 @@ mt7915_mcu_sta_rate_ctrl_tlv(struct sk_buff *skb, struct mt7915_dev *dev,
- 			cap |= STA_CAP_VHT_TX_STBC;
- 		if (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXSTBC_1)
- 			cap |= STA_CAP_VHT_RX_STBC;
--		if (vif->bss_conf.vht_ldpc &&
-+		if (mvif->cap.vht_ldpc &&
- 		    (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXLDPC))
- 			cap |= STA_CAP_VHT_LDPC;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-index 3053f4abf7dbe..0f76733c9c1ac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-@@ -147,9 +147,23 @@ struct mt7915_sta {
- 	} twt;
- };
- 
-+struct mt7915_vif_cap {
-+	bool ht_ldpc:1;
-+	bool vht_ldpc:1;
-+	bool he_ldpc:1;
-+	bool vht_su_ebfer:1;
-+	bool vht_su_ebfee:1;
-+	bool vht_mu_ebfer:1;
-+	bool vht_mu_ebfee:1;
-+	bool he_su_ebfer:1;
-+	bool he_su_ebfee:1;
-+	bool he_mu_ebfer:1;
-+};
-+
- struct mt7915_vif {
- 	struct mt76_vif mt76; /* must be first */
- 
-+	struct mt7915_vif_cap cap;
- 	struct mt7915_sta sta;
- 	struct mt7915_phy *phy;
- 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 927a98a315ae8..9defd2b3c2f8d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -414,7 +414,6 @@ mt7915_init_wiphy(struct mt7915_phy *phy)
+ 			if (!dev->dbdc_support)
+ 				vht_cap->cap |=
+ 					IEEE80211_VHT_CAP_SHORT_GI_160 |
+-					IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ |
+ 					FIELD_PREP(IEEE80211_VHT_CAP_EXT_NSS_BW_MASK, 1);
+ 		} else {
+ 			vht_cap->cap |=
 -- 
 2.40.1
 
