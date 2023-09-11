@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535461170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FD7C433C7;
-	Mon, 11 Sep 2023 14:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2681170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2029C433C7;
+	Mon, 11 Sep 2023 14:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441135;
-	bh=Wj/t95xlibhjbIuvAw3fE4jVlxFM9TOS9F1JRVhpXN0=;
+	s=korg; t=1694441138;
+	bh=VvUOTrbQQPycn5pjl9ipF8pwAnqHRWW8D87Y27N6a1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPsFmZ8a2R8r3noBnPxhgltgkkrvZ+j7QhEDZ3USA/FYZeTDJbsqpSIBbf+36zrbd
-	 nV0Plltrfojp1ZpBFp0pXnxgK67ltBX6pBtGsPKzWu7ygoUvbqf2uS+cvRhpMuFxhL
-	 DyvDqwhccFGJQcZFnYLIz2RM68CqpsxMkGPpfOiU=
+	b=CpbPzbOaKcMNsK5x8tY9JHF86oy4flPXe0YoMAgwyXFK3N/AR8rBC7tD95SH2h6Fo
+	 7px9wxXhQkFin4YM2Kn3UmxP/KZwGFfKKx+gSjmvD/Kn/7PZAVBglq0rE2kfYd9hHk
+	 mUfitTf3SHWH9221T3DSvYTLSqSArdX8n6rQXdlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Chen Jiahao <chenjiahao16@huawei.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 307/739] arm64: dts: qcom: sm8550-mtp: Add missing supply for L1B regulator
-Date: Mon, 11 Sep 2023 15:41:46 +0200
-Message-ID: <20230911134659.695130234@linuxfoundation.org>
+Subject: [PATCH 6.5 308/739] soc: qcom: smem: Fix incompatible types in comparison
+Date: Mon, 11 Sep 2023 15:41:47 +0200
+Message-ID: <20230911134659.722436957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,35 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Chen Jiahao <chenjiahao16@huawei.com>
 
-[ Upstream commit 2c9e45dfeed126488aa73e7b82b3576c4c6f1036 ]
+[ Upstream commit 5f908786cf44fcb397cfe0f322ef2f41b0909e2a ]
 
-Even though currently there is no consumer for L1B, add the supply
-for it anyway.
+This patch fixes the following sparse error:
 
-Fixes: 71342fb91eae ("arm64: dts: qcom: Add base SM8550 MTP dts")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230801095246.2884770-1-abel.vesa@linaro.org
+drivers/soc/qcom/smem.c:738:30: error: incompatible types in comparison expression (different add        ress spaces):
+drivers/soc/qcom/smem.c:738:30:    void *
+drivers/soc/qcom/smem.c:738:30:    void [noderef] __iomem *
+
+In addr_in_range(), "base" is of type void __iomem *, converting
+void *addr to the same type to fix above sparse error.
+
+Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
+Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
+Link: https://lore.kernel.org/r/20230801094807.4146779-1-chenjiahao16@huawei.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index ec86c5f380450..714a2f9497adc 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -186,6 +186,7 @@ regulators-0 {
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index b0d59e815c3b7..a516b8b5efac9 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -724,7 +724,7 @@ EXPORT_SYMBOL_GPL(qcom_smem_get_free_space);
  
- 		vdd-bob1-supply = <&vph_pwr>;
- 		vdd-bob2-supply = <&vph_pwr>;
-+		vdd-l1-l4-l10-supply = <&vreg_s6g_1p8>;
- 		vdd-l2-l13-l14-supply = <&vreg_bob1>;
- 		vdd-l3-supply = <&vreg_s4g_1p3>;
- 		vdd-l5-l16-supply = <&vreg_bob1>;
+ static bool addr_in_range(void __iomem *base, size_t size, void *addr)
+ {
+-	return base && (addr >= base && addr < base + size);
++	return base && ((void __iomem *)addr >= base && (void __iomem *)addr < base + size);
+ }
+ 
+ /**
 -- 
 2.40.1
 
