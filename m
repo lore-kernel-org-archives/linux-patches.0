@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD35511706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42322C433C8;
-	Mon, 11 Sep 2023 15:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE1F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB24C433C8;
+	Mon, 11 Sep 2023 15:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444560;
-	bh=Khniuww7dWpYkvCDWlP6N5IidQ3iZwBXbLWQn0MC/OU=;
+	s=korg; t=1694444563;
+	bh=f5MTWx4+KxIor/GEt8KFBn6SP3bpqjTLNGZhbOYFPU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLcE6S/SVxDFKU+CEItj9+4zdBhGLTFAX2FQO241IwW7w1NJE71cIIfodbykVebSI
-	 UAVWcd522X5/arqYrIAwgxmNgfdm2SrEqsdZdP1REiIGe5Ey6enB09UImwAMR84l6H
-	 KKqqZlzTqqPN/2EUDaWMdQ5F5kXYxOYj8jxpv9bA=
+	b=EckRQ5i8J+NiT7QZeDsE16Bk6A7jYE+X5NdGbgGpQnhPqlwtqi+N/BDCLFOCrPLeM
+	 loH8VBz3Ovro1HwiLhK6EuB9QL8F3TWriUv4/ZMBoMM3CQ/VudOUeb2TFD0aQ9wvFg
+	 t2JnNytAtzQrCpPWU/Lb6ocnCnf+FLtkXDWCstPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/600] platform/x86: think-lmi: Use kfree_sensitive instead of kfree
-Date: Mon, 11 Sep 2023 15:41:09 +0200
-Message-ID: <20230911134634.667447458@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 019/600] ksmbd: fix out of bounds in init_smb2_rsp_hdr()
+Date: Mon, 11 Sep 2023 15:40:52 +0200
+Message-ID: <20230911134634.182889121@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,41 +41,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Ming <machel@vivo.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1da0893aed2e48e2bdf37c29b029f2e060d25927 ]
+[ Upstream commit 536bb492d39bb6c080c92f31e8a55fe9934f452b ]
 
-key might contain private part of the key, so better use
-kfree_sensitive to free it.
+If client send smb2 negotiate request and then send smb1 negotiate
+request, init_smb2_rsp_hdr is called for smb1 negotiate request since
+need_neg is set to false. This patch ignore smb1 packets after ->need_neg
+is set to false.
 
-Signed-off-by: Wang Ming <machel@vivo.com>
-Link: https://lore.kernel.org/r/20230717101114.18966-1-machel@vivo.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21541
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/server.c     |  7 ++++++-
+ fs/smb/server/smb_common.c | 19 +++++++++++--------
+ fs/smb/server/smb_common.h |  2 +-
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 3cbb92b6c5215..f6290221d139d 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -719,12 +719,12 @@ static ssize_t cert_to_password_store(struct kobject *kobj,
- 	/* Format: 'Password,Signature' */
- 	auth_str = kasprintf(GFP_KERNEL, "%s,%s", passwd, setting->signature);
- 	if (!auth_str) {
--		kfree(passwd);
-+		kfree_sensitive(passwd);
- 		return -ENOMEM;
- 	}
- 	ret = tlmi_simple_call(LENOVO_CERT_TO_PASSWORD_GUID, auth_str);
- 	kfree(auth_str);
--	kfree(passwd);
-+	kfree_sensitive(passwd);
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 847ee62afb8a1..9804cabe72a84 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -286,6 +286,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
+ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ {
+ 	struct ksmbd_work *work;
++	int err;
  
- 	return ret ?: count;
+ 	work = ksmbd_alloc_work_struct();
+ 	if (!work) {
+@@ -297,7 +298,11 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ 	work->request_buf = conn->request_buf;
+ 	conn->request_buf = NULL;
+ 
+-	ksmbd_init_smb_server(work);
++	err = ksmbd_init_smb_server(work);
++	if (err) {
++		ksmbd_free_work_struct(work);
++		return 0;
++	}
+ 
+ 	ksmbd_conn_enqueue_request(work);
+ 	atomic_inc(&conn->r_count);
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index d937e2f45c829..a4421d9458d90 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -388,26 +388,29 @@ static struct smb_version_cmds smb1_server_cmds[1] = {
+ 	[SMB_COM_NEGOTIATE_EX]	= { .proc = smb1_negotiate, },
+ };
+ 
+-static void init_smb1_server(struct ksmbd_conn *conn)
++static int init_smb1_server(struct ksmbd_conn *conn)
+ {
+ 	conn->ops = &smb1_server_ops;
+ 	conn->cmds = smb1_server_cmds;
+ 	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
++	return 0;
  }
+ 
+-void ksmbd_init_smb_server(struct ksmbd_work *work)
++int ksmbd_init_smb_server(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	__le32 proto;
+ 
+-	if (conn->need_neg == false)
+-		return;
+-
+ 	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
++	if (conn->need_neg == false) {
++		if (proto == SMB1_PROTO_NUMBER)
++			return -EINVAL;
++		return 0;
++	}
++
+ 	if (proto == SMB1_PROTO_NUMBER)
+-		init_smb1_server(conn);
+-	else
+-		init_smb3_11_server(conn);
++		return init_smb1_server(conn);
++	return init_smb3_11_server(conn);
+ }
+ 
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index e63d2a4f466b5..1cbb492cdefec 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -427,7 +427,7 @@ bool ksmbd_smb_request(struct ksmbd_conn *conn);
+ 
+ int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
+ 
+-void ksmbd_init_smb_server(struct ksmbd_work *work);
++int ksmbd_init_smb_server(struct ksmbd_work *work);
+ 
+ struct ksmbd_kstat;
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
 -- 
 2.40.1
 
