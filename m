@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFBC1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF4FC433C7;
-	Mon, 11 Sep 2023 14:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA4B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C1EC433C7;
+	Mon, 11 Sep 2023 14:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442031;
-	bh=hih7oWQEowbhj05IJcgrs4jky0w55+eSnGOLkqMd9vg=;
+	s=korg; t=1694442034;
+	bh=BQLeg2oWhFRDM6wy3TbXfPADIPdMlC3UURX75Gt4QGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhQX8MDpnRTCbOYPhdFMf4fJfclip0DOHd83spWjrmIoz+7xRQvdtl+SBDrNZggJs
-	 wOCT+uLhtQ2Wn5ag96ZtDQkShTbOA+0W7enFLRJmTUPhE2aRfr2zR7PiysyoB8sNRr
-	 s/kLF7yXBP91v1OyXdLEmaVZeijvrmKIJXRVyQcw=
+	b=NwEHYtGIO66dfY8TKxzNsiQAAfUpH3gD1PKPojm7M9U/GixFnLnxKFzuV77vW60zA
+	 11yQWzP4OD+ZEFULGPFpPPKhrBXG6CQzFHrTF/rZJmszxUUEBne7AwPz2LsBXPpZsh
+	 G6EG/AXnHsK911t3YLJIvdEEAvesrRAxuulTPa/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 622/739] dmaengine: idxd: Allow ATS disable update only for configurable devices
-Date: Mon, 11 Sep 2023 15:47:01 +0200
-Message-ID: <20230911134708.472522791@linuxfoundation.org>
+Subject: [PATCH 6.5 623/739] dmaengine: idxd: Fix issues with PRS disable sysfs knob
+Date: Mon, 11 Sep 2023 15:47:02 +0200
+Message-ID: <20230911134708.499475281@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,43 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Fenghua Yu <fenghua.yu@intel.com>
 
-[ Upstream commit 0056a7f07b0a63e6cee815a789eabba6f3a710f0 ]
+[ Upstream commit 8cae66574398326134a41513b419e00ad4e380ca ]
 
-ATS disable status in a WQ is read-only if the device is not configurable.
-This change ensures that the ATS disable attribute can be modified via
-sysfs only on configurable devices.
+There are two issues in the current PRS disable sysfs store function
+wq_prs_disable_store():
 
-Fixes: 92de5fa2dc39 ("dmaengine: idxd: add ATS disable knob for work queues")
+1. Since PRS disable knob is invisible if PRS disable is not supported
+   in WQ, it's redundant to check PRS support again in the store function
+   again. Remove the redundant PRS support check.
+2. Since PRS disable is read-only when the device is not configurable,
+   PRS disable cannot be changed on the device. Add device configurable
+   check in the store function.
+
+Fixes: f2dc327131b5 ("dmaengine: idxd: add per wq PRS disable")
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230811012635.535413-1-fenghua.yu@intel.com
+Link: https://lore.kernel.org/r/20230811012635.535413-2-fenghua.yu@intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/idxd/sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index d16c16445c4f9..66c89b07b3f7b 100644
+index 66c89b07b3f7b..a5c3eb4348325 100644
 --- a/drivers/dma/idxd/sysfs.c
 +++ b/drivers/dma/idxd/sysfs.c
-@@ -1088,12 +1088,16 @@ static ssize_t wq_ats_disable_store(struct device *dev, struct device_attribute
- 				    const char *buf, size_t count)
- {
- 	struct idxd_wq *wq = confdev_to_wq(dev);
-+	struct idxd_device *idxd = wq->idxd;
- 	bool ats_dis;
- 	int rc;
- 
+@@ -1131,8 +1131,8 @@ static ssize_t wq_prs_disable_store(struct device *dev, struct device_attribute
  	if (wq->state != IDXD_WQ_DISABLED)
  		return -EPERM;
  
+-	if (!idxd->hw.wq_cap.wq_prs_support)
+-		return -EOPNOTSUPP;
 +	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
 +		return -EPERM;
-+
- 	rc = kstrtobool(buf, &ats_dis);
+ 
+ 	rc = kstrtobool(buf, &prs_dis);
  	if (rc < 0)
- 		return rc;
 -- 
 2.40.1
 
