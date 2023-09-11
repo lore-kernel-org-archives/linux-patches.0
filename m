@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E842F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91D4C433C7;
-	Mon, 11 Sep 2023 14:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64794F9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71414C433C7;
+	Mon, 11 Sep 2023 14:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442744;
-	bh=0p49XxBF8dgaYqUHoN3DgzKigf3U/06afSfBfmz9HWE=;
+	s=korg; t=1694442747;
+	bh=RDCfUwRAp51vTNk+cePv/sCPgTIV5CfZUttaiCEOP/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8PHJms6L0j7KZ4MOT3S920gmKiG2CCxkOjReWNTGbZSaG9oYmvbiJBDxlm1GLuOa
-	 GIjSLJC4MNAL+zLhXcfoHunxLodG1zuxaNXWD6MRZMYwloMHUrjwOoPsevrWzURvsW
-	 Ltf1/x89+F4+sQYGsK5daLiRO9dTWaQOf1qHx2u0=
+	b=TOPsBXsXZ3mq9lhFDirExccxxbhO72LD+JJck6HIt4r3hLqbBMlTFJRVVpxHae4DT
+	 +/Hl4RvmH1cQA8VUibT4+BBywa4K1i1wrzYNB6wd3vUJwXM74EHSvAijPbl90F+ogD
+	 bVMo5iTE6K7nzASgSdd1c2pl5pbewZpcfy8ETcMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Meng Li <li.meng@amd.com>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Swapnil Sapkal <swapnil.sapkal@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 133/737] thermal/of: Fix potential uninitialized value access
-Date: Mon, 11 Sep 2023 15:39:52 +0200
-Message-ID: <20230911134654.216443442@linuxfoundation.org>
+Subject: [PATCH 6.4 134/737] cpufreq: amd-pstate-ut: Remove module parameter access
+Date: Mon, 11 Sep 2023 15:39:53 +0200
+Message-ID: <20230911134654.243650425@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,60 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Swapnil Sapkal <swapnil.sapkal@amd.com>
 
-[ Upstream commit f96801f0cfcefc0a16b146596577c53c75ee9773 ]
+[ Upstream commit 8d6e5e8268e89979d86501dbb8385ce2e6154de1 ]
 
-If of_parse_phandle_with_args() called from __thermal_of_bind() or
-__thermal_of_unbind() fails, cooling_spec.np will not be initialized,
-so move the of_node_put() calls below the respective return value checks
-to avoid dereferencing an uninitialized pointer.
+In amd-pstate-ut, shared memory-based systems call
+get_shared_mem() as part of amd_pstate_ut_check_enabled()
+function. This function was written when CONFIG_X86_AMD_PSTATE
+was tristate config and amd_pstate can be built as a module.
 
-Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-[ rjw: Subject and changelog edits ]
+Currently CONFIG_X86_AMD_PSTATE is a boolean config and module
+parameter shared_mem is removed. But amd-pstate-ut code still
+accesses this module parameter. Remove those accesses.
+
+Fixes: 456ca88d8a52 ("cpufreq: amd-pstate: change amd-pstate driver to be built-in type")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Meng Li <li.meng@amd.com>
+Reviewed-by: Wyes Karny <wyes.karny@amd.com>
+Suggested-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
+[ rjw: Subject edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_of.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate-ut.c | 22 ++--------------------
+ 1 file changed, 2 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
-index bc07ae1c284cf..22272f9c5934a 100644
---- a/drivers/thermal/thermal_of.c
-+++ b/drivers/thermal/thermal_of.c
-@@ -292,13 +292,13 @@ static int __thermal_of_unbind(struct device_node *map_np, int index, int trip_i
- 	ret = of_parse_phandle_with_args(map_np, "cooling-device", "#cooling-cells",
- 					 index, &cooling_spec);
- 
--	of_node_put(cooling_spec.np);
+diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
+index 7f3fe20489818..cf07ee77d3ccf 100644
+--- a/drivers/cpufreq/amd-pstate-ut.c
++++ b/drivers/cpufreq/amd-pstate-ut.c
+@@ -64,27 +64,9 @@ static struct amd_pstate_ut_struct amd_pstate_ut_cases[] = {
+ static bool get_shared_mem(void)
+ {
+ 	bool result = false;
+-	char path[] = "/sys/module/amd_pstate/parameters/shared_mem";
+-	char buf[5] = {0};
+-	struct file *filp = NULL;
+-	loff_t pos = 0;
+-	ssize_t ret;
 -
- 	if (ret < 0) {
- 		pr_err("Invalid cooling-device entry\n");
- 		return ret;
- 	}
+-	if (!boot_cpu_has(X86_FEATURE_CPPC)) {
+-		filp = filp_open(path, O_RDONLY, 0);
+-		if (IS_ERR(filp))
+-			pr_err("%s unable to open %s file!\n", __func__, path);
+-		else {
+-			ret = kernel_read(filp, &buf, sizeof(buf), &pos);
+-			if (ret < 0)
+-				pr_err("%s read %s file fail ret=%ld!\n",
+-					__func__, path, (long)ret);
+-			filp_close(filp, NULL);
+-		}
  
-+	of_node_put(cooling_spec.np);
-+
- 	if (cooling_spec.args_count < 2) {
- 		pr_err("wrong reference to cooling device, missing limits\n");
- 		return -EINVAL;
-@@ -325,13 +325,13 @@ static int __thermal_of_bind(struct device_node *map_np, int index, int trip_id,
- 	ret = of_parse_phandle_with_args(map_np, "cooling-device", "#cooling-cells",
- 					 index, &cooling_spec);
+-		if ('Y' == *buf)
+-			result = true;
+-	}
++	if (!boot_cpu_has(X86_FEATURE_CPPC))
++		result = true;
  
--	of_node_put(cooling_spec.np);
--
- 	if (ret < 0) {
- 		pr_err("Invalid cooling-device entry\n");
- 		return ret;
- 	}
- 
-+	of_node_put(cooling_spec.np);
-+
- 	if (cooling_spec.args_count < 2) {
- 		pr_err("wrong reference to cooling device, missing limits\n");
- 		return -EINVAL;
+ 	return result;
+ }
 -- 
 2.40.1
 
