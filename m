@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A691511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC37C433C8;
-	Mon, 11 Sep 2023 15:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AC811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DBBC433C7;
+	Mon, 11 Sep 2023 15:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445974;
-	bh=FVXqiLA4EbEBl7cvLOgMNg/s7HUC0KAofYoVnZkzG+c=;
+	s=korg; t=1694445977;
+	bh=78Gvc+FV32NtYLsJitFpqXSj2QS+qAPVJEEmPu1B5bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdFRWEiTY3aXD3ZlfB6zR4o4wlZOQ/h7BZr3KzBVAgVktvWwHLGFW9z2KhM/0rxRY
-	 uvYFYUf5FCanCrjnfaCwNhlLKDbuFo4oykpBpA8znZ9Sfw7UiaqnX9b0fMh2PvyJ2D
-	 x/CcTNa1h6YkmiwleaF8LdA+iT1YZx8MV4+kZGEs=
+	b=zhtME26sbZXiWSgSNMSShAos5K038D+gHat+WOtK6i6cR6FwtVyhqVlENmHqdoGZc
+	 Cq2h9JlsQYTdnEU83LBe1rxQ0i7iRjlbGhkG96G0HvFXmM9jpB8yOM+NAqTAn7MUwd
+	 28wrATAMrTWw/GtI1Hafc+t2YRpQslJCsiCkvI8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 537/600] io_uring: break iopolling on signal
-Date: Mon, 11 Sep 2023 15:49:30 +0200
-Message-ID: <20230911134649.474622261@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Lee Jones <lee@kernel.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	linux-sh@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 6.1 538/600] backlight/gpio_backlight: Compare against struct fb_info.device
+Date: Mon, 11 Sep 2023 15:49:31 +0200
+Message-ID: <20230911134649.503409040@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,35 +47,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit dc314886cb3d0e4ab2858003e8de2917f8a3ccbd upstream.
+commit 7b91d017f77c1bda56f27c2f4bbb70de7c6eca08 upstream.
 
-Don't keep spinning iopoll with a signal set. It'll eventually return
-back, e.g. by virtue of need_resched(), but it's not a nice user
-experience.
+Struct gpio_backlight_platform_data refers to a platform device within
+the Linux device hierarchy. The test in gpio_backlight_check_fb()
+compares it against the fbdev device in struct fb_info.dev, which
+is different. Fix the test by comparing to struct fb_info.device.
 
-Cc: stable@vger.kernel.org
-Fixes: def596e9557c9 ("io_uring: support for IO polling")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/eeba551e82cad12af30c3220125eb6cb244cc94c.1691594339.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes a bug in the backlight driver and prepares fbdev for making
+struct fb_info.dev optional.
+
+v2:
+	* move renames into separate patch (Javier, Sam, Michael)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 8b770e3c9824 ("backlight: Add GPIO-based backlight driver")
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Rich Felker <dalias@libc.org>
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-sh@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.12+
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-4-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/backlight/gpio_backlight.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1457,6 +1457,9 @@ static int io_iopoll_check(struct io_rin
- 			break;
- 		nr_events += ret;
- 		ret = 0;
-+
-+		if (task_sigpending(current))
-+			return -EINTR;
- 	} while (nr_events < min && !need_resched());
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -35,7 +35,7 @@ static int gpio_backlight_check_fb(struc
+ {
+ 	struct gpio_backlight *gbl = bl_get_data(bl);
  
- 	return ret;
+-	return gbl->fbdev == NULL || gbl->fbdev == info->dev;
++	return gbl->fbdev == NULL || gbl->fbdev == info->device;
+ }
+ 
+ static const struct backlight_ops gpio_backlight_ops = {
 
 
