@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A09711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:51:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC836C433C9;
-	Mon, 11 Sep 2023 14:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B25D11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:51:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5299C433C8;
+	Mon, 11 Sep 2023 14:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443884;
-	bh=mzL2IYMeLbZ+OBh+qz84XrEEhBd0XLVgCimzSDu/2MM=;
+	s=korg; t=1694443887;
+	bh=OoMV89SS0EkmBPqsOVJetTz+MLmZ0CqLxQ092TtGPE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+RIJiMY2c8MOk4ZCSSS8pM1OE702yyhwrtqzkBWjTHE9zRbqCJBNse0QNx9xEtQD
-	 xHSJwJfHw62QdMAhx60u6M1wA3erkMRZPpe5VQUNnMvUg47dEj497S9g3qZComlaJJ
-	 EbqwyOKWfipPODroizaxNSzwhbd1Pgvn/triNf7U=
+	b=V6n+oVlBpBDnd4v9mgsTF3d2GhX8n57RJ285AgEM7S13KfAzpmyrilsGiUHPY8TUW
+	 mRc6edOJC+WgeOXfsM+oaWwh7jgNoHzDMPy+OMSwxiCywgJVM9/ak6bK0YJUp6rfyJ
+	 YS7/gfpCykh/jk9VTDvNg7BqOTD7HjkjCjnok9t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chengci.Xu" <chengci.xu@mediatek.com>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 535/737] iommu/mediatek: Fix two IOMMU share pagetable issue
-Date: Mon, 11 Sep 2023 15:46:34 +0200
-Message-ID: <20230911134705.512962095@linuxfoundation.org>
+Subject: [PATCH 6.4 518/737] serial: sprd: Fix DMA buffer leak issue
+Date: Mon, 11 Sep 2023 15:46:17 +0200
+Message-ID: <20230911134705.021528806@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,98 +40,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengci.Xu <chengci.xu@mediatek.com>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-[ Upstream commit cf69ef46dbd980a0b1c956d668e066a73e0acd0f ]
+[ Upstream commit cd119fdc3ee1450fbf7f78862b5de44c42b6e47f ]
 
-Prepare for mt8188 to fix a two IOMMU HWs share pagetable issue.
+Release DMA buffer when _probe() returns failure to avoid memory leak.
 
-We have two MM IOMMU HWs in mt8188, one is VPP-IOMMU, the other is
-VDO-IOMMU. The 2 MM IOMMU HWs share pagetable don't work in this case:
- a) VPP-IOMMU probe firstly.
- b) VDO-IOMMU probe.
- c) The master for VDO-IOMMU probe (means frstdata is vpp-iommu).
- d) The master in another domain probe. No matter it is vdo or vpp.
-Then it still create a new pagetable in step d). The problem is
-"frstdata->bank[0]->m4u_dom" was not initialized. Then when d) enter, it
-still create a new one.
-
-In this patch, we create a new variable "share_dom" for this share
-pgtable case, it should be helpful for readable. and put all the share
-pgtable logic in the mtk_iommu_domain_finalise.
-
-In mt8195, the master of VPP-IOMMU probes before than VDO-IOMMU
-from its dtsi node sequence, we don't see this issue in it. Prepare for
-mt8188.
-
-Fixes: 645b87c190c9 ("iommu/mediatek: Fix 2 HW sharing pgtable issue")
-Signed-off-by: Chengci.Xu <chengci.xu@mediatek.com>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://lore.kernel.org/r/20230602090227.7264-3-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: f4487db58eb7 ("serial: sprd: Add DMA mode support")
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230725064053.235448-2-chunyan.zhang@unisoc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/tty/serial/sprd_serial.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index e93906d6e112e..c2764891a779c 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -258,6 +258,8 @@ struct mtk_iommu_data {
- 	struct device			*smicomm_dev;
- 
- 	struct mtk_iommu_bank_data	*bank;
-+	struct mtk_iommu_domain		*share_dom; /* For 2 HWs share pgtable */
-+
- 	struct regmap			*pericfg;
- 	struct mutex			mutex; /* Protect m4u_group/m4u_dom above */
- 
-@@ -620,15 +622,14 @@ static int mtk_iommu_domain_finalise(struct mtk_iommu_domain *dom,
- 				     struct mtk_iommu_data *data,
- 				     unsigned int region_id)
- {
-+	struct mtk_iommu_domain	*share_dom = data->share_dom;
- 	const struct mtk_iommu_iova_region *region;
--	struct mtk_iommu_domain	*m4u_dom;
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index fc1377029021b..99da964e8bd44 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -364,7 +364,7 @@ static void sprd_rx_free_buf(struct sprd_uart_port *sp)
+ 	if (sp->rx_dma.virt)
+ 		dma_free_coherent(sp->port.dev, SPRD_UART_RX_SIZE,
+ 				  sp->rx_dma.virt, sp->rx_dma.phys_addr);
 -
--	/* Always use bank0 in sharing pgtable case */
--	m4u_dom = data->bank[0].m4u_dom;
--	if (m4u_dom) {
--		dom->iop = m4u_dom->iop;
--		dom->cfg = m4u_dom->cfg;
--		dom->domain.pgsize_bitmap = m4u_dom->cfg.pgsize_bitmap;
-+
-+	/* Always use share domain in sharing pgtable case */
-+	if (MTK_IOMMU_HAS_FLAG(data->plat_data, SHARE_PGTABLE) && share_dom) {
-+		dom->iop = share_dom->iop;
-+		dom->cfg = share_dom->cfg;
-+		dom->domain.pgsize_bitmap = share_dom->cfg.pgsize_bitmap;
- 		goto update_iova_region;
++	sp->rx_dma.virt = NULL;
+ }
+ 
+ static int sprd_rx_dma_config(struct uart_port *port, u32 burst)
+@@ -1203,7 +1203,7 @@ static int sprd_probe(struct platform_device *pdev)
+ 		ret = uart_register_driver(&sprd_uart_driver);
+ 		if (ret < 0) {
+ 			pr_err("Failed to register SPRD-UART driver\n");
+-			return ret;
++			goto free_rx_buf;
+ 		}
  	}
  
-@@ -658,6 +659,9 @@ static int mtk_iommu_domain_finalise(struct mtk_iommu_domain *dom,
- 	/* Update our support page sizes bitmap */
- 	dom->domain.pgsize_bitmap = dom->cfg.pgsize_bitmap;
- 
-+	if (MTK_IOMMU_HAS_FLAG(data->plat_data, SHARE_PGTABLE))
-+		data->share_dom = dom;
-+
- update_iova_region:
- 	/* Update the iova region for this domain */
- 	region = data->plat_data->iova_region + region_id;
-@@ -708,7 +712,9 @@ static int mtk_iommu_attach_device(struct iommu_domain *domain,
- 		/* Data is in the frstdata in sharing pgtable case. */
- 		frstdata = mtk_iommu_get_frst_data(hw_list);
- 
-+		mutex_lock(&frstdata->mutex);
- 		ret = mtk_iommu_domain_finalise(dom, frstdata, region_id);
-+		mutex_unlock(&frstdata->mutex);
- 		if (ret) {
- 			mutex_unlock(&dom->mutex);
- 			return ret;
+@@ -1222,6 +1222,7 @@ static int sprd_probe(struct platform_device *pdev)
+ 	sprd_port[index] = NULL;
+ 	if (--sprd_ports_num == 0)
+ 		uart_unregister_driver(&sprd_uart_driver);
++free_rx_buf:
+ 	sprd_rx_free_buf(sport);
+ 	return ret;
+ }
 -- 
 2.40.1
 
