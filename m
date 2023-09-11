@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9919811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBBDC433CA;
-	Mon, 11 Sep 2023 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5745511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD720C433C8;
+	Mon, 11 Sep 2023 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445212;
-	bh=dzoIkLjYPgFClvgJRQUWaDVjdZYO/dDo0nlEC/iwcLY=;
+	s=korg; t=1694445215;
+	bh=BdQ+B2wcSQbbLJoklQBMdwEjSiiPicRz1wlBTCEOzYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RK4ON1HIs7IXbAbRWCCD93VfKcJB4h8qdJGqRMn4+2jm+Ijr7hkBN29gv5L6ZouAE
-	 qvp0g8ms3mmQHTMTo687cilmbh/Jgvj2NokljK/gqIpQk7to/taeelOi5ofFqeqBcR
-	 8nU/uYGRonXJkrkcIvwitdykLa7E2yRIjLNDl51M=
+	b=e8OAHs/1E1WQ9H7pSk6Mv6OWSNxcXc1hlXy7R9aoiLtb6f9UUggMIu7ZU7NNMWiKX
+	 z+Xi4KFbxdWi43P3U8AFFV4kNc4/40iZmXCGTN0gtQ8xuXQ4rVOn4u3GANkAoq/vHm
+	 wdw7CfB0nn47ljRxrMIcCLfZUfh+WH88K2X3VFZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 268/600] ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)
-Date: Mon, 11 Sep 2023 15:45:01 +0200
-Message-ID: <20230911134641.519801149@linuxfoundation.org>
+Subject: [PATCH 6.1 251/600] ARM: dts: BCM53573: Drop nonexistent #usb-cells
+Date: Mon, 11 Sep 2023 15:44:44 +0200
+Message-ID: <20230911134641.007964933@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -34,40 +34,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 982655cb0e7f18934d7532c32366e574ad61dbd7 ]
+[ Upstream commit 05d2c3d552b8c92fc397377d9d1112fc58e2cd59 ]
 
-The davicom,dm9000 Ethernet Controller accepts two reg addresses.
+Such property simply doesn't exist (is not documented or used anywhere).
 
-Fixes: b672b27d232e ("ARM: dts: Add Device tree for s5pc110/s5pv210 boards")
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20230713152926.82884-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This fixes:
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: usb@d000: Unevaluated properties are not allowed ('#usb-cells' was unexpected)
+        From schema: Documentation/devicetree/bindings/usb/generic-ohci.yaml
+
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230707114004.2740-2-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s5pv210-smdkv210.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/bcm53573.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-index 6e26c67e0a26e..901e7197b1368 100644
---- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
-+++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-@@ -41,7 +41,7 @@ pmic_ap_clk: clock-0 {
+diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
+index 3f03a381db0f2..3cb71829e8597 100644
+--- a/arch/arm/boot/dts/bcm53573.dtsi
++++ b/arch/arm/boot/dts/bcm53573.dtsi
+@@ -156,8 +156,6 @@ ehci_port2: port@2 {
+ 			};
  
- 	ethernet@a8000000 {
- 		compatible = "davicom,dm9000";
--		reg = <0xA8000000 0x2 0xA8000002 0x2>;
-+		reg = <0xa8000000 0x2>, <0xa8000002 0x2>;
- 		interrupt-parent = <&gph1>;
- 		interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
- 		local-mac-address = [00 00 de ad be ef];
+ 			ohci: usb@d000 {
+-				#usb-cells = <0>;
+-
+ 				compatible = "generic-ohci";
+ 				reg = <0xd000 0x1000>;
+ 				interrupt-parent = <&gic>;
 -- 
 2.40.1
 
