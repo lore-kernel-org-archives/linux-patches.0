@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABF011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BFBC433C7;
-	Mon, 11 Sep 2023 15:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A86B1172F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07B7C433C9;
+	Mon, 11 Sep 2023 15:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445920;
-	bh=cSI3DgVwsEhcKPNlpkURsZZaToyzp1MyWRmH0jPWxTU=;
+	s=korg; t=1694445923;
+	bh=eBHw5kdM/WHSJk2Yu1FRPJ3qIYZm5bbBLz6ZB2RF6JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/tq9385XpR9Ft+8SNbEJAh7lRZ9sqNUqXO4u+P4sUrhthHjRe5OKya7695KwmHWa
-	 GMW3y+7EuJNXxwkHBWxFahc+5WNcbsmduUDxcosQs0M2Vv8gzT9sUm/7xiCDL/gpjQ
-	 bst1gZ8hmSv1KRja0Bstk1MtIDlXz4SPyxJX+9iw=
+	b=FW47I3o9Zj6xTeMsplFPNHfoWj67j/vkoxCVBO6ELPIzNMb8me0XPGq0Yj0WAUcfK
+	 /2wMTNvUCDu+kIJqzbSibn48z/4pe0isj7hOKXvRlYi1yIdVtDJR0b7UqdTya7GHHQ
+	 CLzGR/LjX1KbWvxmcmF1pxMz0dF7uRStCG4XCZSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 511/600] mtd: rawnand: fsmc: handle clk prepare error in fsmc_nand_resume()
-Date: Mon, 11 Sep 2023 15:49:04 +0200
-Message-ID: <20230911134648.703112216@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 520/600] netfilter: xt_u32: validate user space input
+Date: Mon, 11 Sep 2023 15:49:13 +0200
+Message-ID: <20230911134648.955635800@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,44 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit a5a88125d00612586e941ae13e7fcf36ba8f18a7 ]
+commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
 
-In fsmc_nand_resume(), the return value of clk_prepare_enable() should be
-checked since it might fail.
+The xt_u32 module doesn't validate the fields in the xt_u32 structure.
+An attacker may take advantage of this to trigger an OOB read by setting
+the size fields with a value beyond the arrays boundaries.
 
-Fixes: e25da1c07dfb ("mtd: fsmc_nand: Add clk_{un}prepare() support")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230817115839.10192-1-yiyang13@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a checkentry function to validate the structure.
+
+This was originally reported by the ZDI project (ZDI-CAN-18408).
+
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/fsmc_nand.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/fsmc_nand.c b/drivers/mtd/nand/raw/fsmc_nand.c
-index 6b2bda815b880..17786e1331e6d 100644
---- a/drivers/mtd/nand/raw/fsmc_nand.c
-+++ b/drivers/mtd/nand/raw/fsmc_nand.c
-@@ -1202,9 +1202,14 @@ static int fsmc_nand_suspend(struct device *dev)
- static int fsmc_nand_resume(struct device *dev)
- {
- 	struct fsmc_nand_data *host = dev_get_drvdata(dev);
-+	int ret;
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -96,11 +96,32 @@ static bool u32_mt(const struct sk_buff
+ 	return ret ^ data->invert;
+ }
  
- 	if (host) {
--		clk_prepare_enable(host->clk);
-+		ret = clk_prepare_enable(host->clk);
-+		if (ret) {
-+			dev_err(dev, "failed to enable clk\n");
-+			return ret;
-+		}
- 		if (host->dev_timings)
- 			fsmc_nand_setup(host, host->dev_timings);
- 		nand_reset(&host->nand, 0);
--- 
-2.40.1
-
++static int u32_mt_checkentry(const struct xt_mtchk_param *par)
++{
++	const struct xt_u32 *data = par->matchinfo;
++	const struct xt_u32_test *ct;
++	unsigned int i;
++
++	if (data->ntests > ARRAY_SIZE(data->tests))
++		return -EINVAL;
++
++	for (i = 0; i < data->ntests; ++i) {
++		ct = &data->tests[i];
++
++		if (ct->nnums > ARRAY_SIZE(ct->location) ||
++		    ct->nvalues > ARRAY_SIZE(ct->value))
++			return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static struct xt_match xt_u32_mt_reg __read_mostly = {
+ 	.name       = "u32",
+ 	.revision   = 0,
+ 	.family     = NFPROTO_UNSPEC,
+ 	.match      = u32_mt,
++	.checkentry = u32_mt_checkentry,
+ 	.matchsize  = sizeof(struct xt_u32),
+ 	.me         = THIS_MODULE,
+ };
 
 
