@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C340111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B10C433C8;
-	Mon, 11 Sep 2023 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA8211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13527C433C7;
+	Mon, 11 Sep 2023 15:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444543;
-	bh=DdHjVRpVGvdBCpwTsJpgYfJxIp/LYTH8Gt5QjyIge6w=;
+	s=korg; t=1694444546;
+	bh=pXeiyDJYmNY3Jtw6VjkAeQ1/TPTEVQmLKMyi+mWaQS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrbM/gdPIIcKRW8TXm/JOnAOGyNgacesqjyRJMk4akMMk/HLGCksPG47r1TE4vyrb
-	 NJKfHMF/S82Fsx/7jP8KlVGT+s7myrGQlAQkXRohQqd0YwAfruBewjXNMW7Hd56qEZ
-	 tZhYAZ5DMEupiT1nBLC9GSTTp2RMfobzkYf9Eczc=
+	b=B6INyiyDH2AtuahKG2ZHFIoEBJu//+2vUZgGpGry2MXpgTlF3cGDPC2WNvniycabG
+	 MUOpvp22aTBzyaLReui0IFSw9Kr1Ctz3RqEjtjmrzkrlnjo8kd+NXF09McvB7n53IX
+	 P4mY+6kO2zJCVRkc7oIkFu0RM768SyhWelRO9hT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/600] ASoC: rt711: fix for JD event handling in ClockStop Mode0
-Date: Mon, 11 Sep 2023 15:41:03 +0200
-Message-ID: <20230911134634.497756717@linuxfoundation.org>
+Subject: [PATCH 6.1 031/600] ASoC: rt711-sdca: fix for JD event handling in ClockStop Mode0
+Date: Mon, 11 Sep 2023 15:41:04 +0200
+Message-ID: <20230911134634.526020098@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,26 +43,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit b69de265bd0e877015a00fbba453ef72af162e0f ]
+[ Upstream commit 23adeb7056acd4fd866969f4afb91441776cc4f5 ]
 
-When the system suspends, peripheral Imp-defined interrupt is disabled.
-When system level resume is invoked, the peripheral Imp-defined interrupts
+When the system suspends, peripheral SDCA interrupts are disabled.
+When system level resume is invoked, the peripheral SDCA interrupts
 should be enabled to handle JD events.
+Enable SDCA interrupts in resume sequence when ClockStop Mode0 is applied.
 
 Signed-off-by: Shuming Fan <shumingf@realtek.com>
 Reported-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20230721090654.128230-1-shumingf@realtek.com
+Link: https://lore.kernel.org/r/20230721090711.128247-1-shumingf@realtek.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdw.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt711-sdca-sdw.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt711-sdw.c b/sound/soc/codecs/rt711-sdw.c
-index 4fe68bcf2a7c2..9545b8a7eb192 100644
---- a/sound/soc/codecs/rt711-sdw.c
-+++ b/sound/soc/codecs/rt711-sdw.c
-@@ -541,8 +541,15 @@ static int __maybe_unused rt711_dev_resume(struct device *dev)
+diff --git a/sound/soc/codecs/rt711-sdca-sdw.c b/sound/soc/codecs/rt711-sdca-sdw.c
+index e23cec4c457de..487d3010ddc19 100644
+--- a/sound/soc/codecs/rt711-sdca-sdw.c
++++ b/sound/soc/codecs/rt711-sdca-sdw.c
+@@ -442,8 +442,16 @@ static int __maybe_unused rt711_sdca_dev_resume(struct device *dev)
  	if (!rt711->first_hw_init)
  		return 0;
  
@@ -70,7 +71,8 @@ index 4fe68bcf2a7c2..9545b8a7eb192 100644
 +	if (!slave->unattach_request) {
 +		if (rt711->disable_irq == true) {
 +			mutex_lock(&rt711->disable_irq_lock);
-+			sdw_write_no_pm(slave, SDW_SCP_INTMASK1, SDW_SCP_INT1_IMPL_DEF);
++			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_0);
++			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
 +			rt711->disable_irq = false;
 +			mutex_unlock(&rt711->disable_irq_lock);
 +		}
