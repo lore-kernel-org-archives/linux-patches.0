@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66F5F9E5
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BC2C433C7;
-	Mon, 11 Sep 2023 14:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15608472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26717C433C8;
+	Mon, 11 Sep 2023 14:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442769;
-	bh=46rK/ggphDCRyuXAAyFkOvF26WBXrKgqQu11JSnSSQc=;
+	s=korg; t=1694442772;
+	bh=NTIRju0cH5CcSpwrXf9WPAHpjWRJ1RuZw14y2j/A4Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YJgmDWBHUAgwHHulAqiG7RrIvKXD96Yqs8Fbrx98oEZZQ0oTnzGvr8bLeko/d+9g
-	 y7pl20PoRlLdY7vI3vI/FaQKGShIvKU5bD3Bv6I10YW5NDYbuJf08ZyJy5R+UFgqM3
-	 Y9npbEEixdFKSvC3BZa/7qLqRjTzvqqbaG9MHlG8=
+	b=Olsl6B6VvtX+1lPdmSX/Y98U/GZRJAN/AeQsG1aXrDUDoONeNo8tg5UlgiFX0ORXj
+	 x+iN39lUO21rFgMU68323tGl/5Y9taRXjHBOGrCPT1fiRIduAdZfbOgQRwChR5uIpx
+	 J7oWDW5gl+WGOtMAtT6L8AfVoxT88U9Nsb0Y7dqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexander Lobakin <alobakin@pm.me>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 141/737] libbpf: only reset sec_def handler when necessary
-Date: Mon, 11 Sep 2023 15:40:00 +0200
-Message-ID: <20230911134654.436391168@linuxfoundation.org>
+Subject: [PATCH 6.4 142/737] bpftool: use a local copy of perf_event to fix accessing :: Bpf_cookie
+Date: Mon, 11 Sep 2023 15:40:01 +0200
+Message-ID: <20230911134654.465858766@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,88 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit c628747cc8800cf6d33d09f7f42c8b6f91e64dc7 ]
+[ Upstream commit 4cbeeb0dc02f8ac7b975b2ab0080ace53d43d62a ]
 
-Don't reset recorded sec_def handler unconditionally on
-bpf_program__set_type(). There are two situations where this is wrong.
+When CONFIG_PERF_EVENTS is not set, struct perf_event remains empty.
+However, the structure is being used by bpftool indirectly via BTF.
+This leads to:
 
-First, if the program type didn't actually change. In that case original
-SEC handler should work just fine.
+skeleton/pid_iter.bpf.c:49:30: error: no member named 'bpf_cookie' in 'struct perf_event'
+        return BPF_CORE_READ(event, bpf_cookie);
+               ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
 
-Second, catch-all custom SEC handler is supposed to work with any BPF
-program type and SEC() annotation, so it also doesn't make sense to
-reset that.
+...
 
-This patch fixes both issues. This was reported recently in the context
-of breaking perf tool, which uses custom catch-all handler for fancy BPF
-prologue generation logic. This patch should fix the issue.
+skeleton/pid_iter.bpf.c:49:9: error: returning 'void' from a function with incompatible result type '__u64' (aka 'unsigned long long')
+        return BPF_CORE_READ(event, bpf_cookie);
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  [0] https://lore.kernel.org/linux-perf-users/ab865e6d-06c5-078e-e404-7f90686db50d@amd.com/
+Tools and samples can't use any CONFIG_ definitions, so the fields
+used there should always be present.
+Define struct perf_event___local with the `preserve_access_index`
+attribute inside the pid_iter BPF prog to allow compiling on any
+configs. CO-RE will substitute it with the real struct perf_event
+accesses later on.
 
-Fixes: d6e6286a12e7 ("libbpf: disassociate section handler on explicit bpf_program__set_type() call")
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20230707231156.1711948-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20230707095425.168126-2-quentin@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index a27f6e9ccce75..57c040a9c3705 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -8534,13 +8534,31 @@ enum bpf_prog_type bpf_program__type(const struct bpf_program *prog)
- 	return prog->type;
- }
- 
-+static size_t custom_sec_def_cnt;
-+static struct bpf_sec_def *custom_sec_defs;
-+static struct bpf_sec_def custom_fallback_def;
-+static bool has_custom_fallback_def;
-+static int last_custom_sec_def_handler_id;
-+
- int bpf_program__set_type(struct bpf_program *prog, enum bpf_prog_type type)
- {
- 	if (prog->obj->loaded)
- 		return libbpf_err(-EBUSY);
- 
-+	/* if type is not changed, do nothing */
-+	if (prog->type == type)
-+		return 0;
-+
- 	prog->type = type;
--	prog->sec_def = NULL;
-+
-+	/* If a program type was changed, we need to reset associated SEC()
-+	 * handler, as it will be invalid now. The only exception is a generic
-+	 * fallback handler, which by definition is program type-agnostic and
-+	 * is a catch-all custom handler, optionally set by the application,
-+	 * so should be able to handle any type of BPF program.
-+	 */
-+	if (prog->sec_def != &custom_fallback_def)
-+		prog->sec_def = NULL;
- 	return 0;
- }
- 
-@@ -8716,13 +8734,6 @@ static const struct bpf_sec_def section_defs[] = {
- 	SEC_DEF("netfilter",		NETFILTER, BPF_NETFILTER, SEC_NONE),
+diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+index eb05ea53afb12..e2af8e5fb29ec 100644
+--- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
++++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+@@ -15,6 +15,10 @@ enum bpf_obj_type {
+ 	BPF_OBJ_BTF,
  };
  
--static size_t custom_sec_def_cnt;
--static struct bpf_sec_def *custom_sec_defs;
--static struct bpf_sec_def custom_fallback_def;
--static bool has_custom_fallback_def;
--
--static int last_custom_sec_def_handler_id;
--
- int libbpf_register_prog_handler(const char *sec,
- 				 enum bpf_prog_type prog_type,
- 				 enum bpf_attach_type exp_attach_type,
++struct perf_event___local {
++	u64 bpf_cookie;
++} __attribute__((preserve_access_index));
++
+ extern const void bpf_link_fops __ksym;
+ extern const void bpf_map_fops __ksym;
+ extern const void bpf_prog_fops __ksym;
+@@ -41,8 +45,8 @@ static __always_inline __u32 get_obj_id(void *ent, enum bpf_obj_type type)
+ /* could be used only with BPF_LINK_TYPE_PERF_EVENT links */
+ static __u64 get_bpf_cookie(struct bpf_link *link)
+ {
++	struct perf_event___local *event;
+ 	struct bpf_perf_link *perf_link;
+-	struct perf_event *event;
+ 
+ 	perf_link = container_of(link, struct bpf_perf_link, link);
+ 	event = BPF_CORE_READ(perf_link, perf_file, private_data);
 -- 
 2.40.1
 
