@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920BAE543
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA94C433C8;
-	Mon, 11 Sep 2023 13:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49143E543
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD7FC433C7;
+	Mon, 11 Sep 2023 13:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440288;
-	bh=twQAd1X5gu6nYc/u9rxH7DxtpMUqYki2AuBfzGLDJLo=;
+	s=korg; t=1694440291;
+	bh=ECdngAJW9TKCUUeerofdjFMMtIdoE0S2LsKTFIc+F6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaB3IEwwOfSs5gj7iODKTWR20Nh8E7l+N9YY3HgMSzOYQwrzlQwqjGzU5sgq/b6za
-	 RNFWhOeufRAYK+EuSi1EcgofEvYehPNaYbtYIoOEEFyR/i6RQjoNNRJK2NXPjIsI8x
-	 L7AU4wUi7gV5oy495ztpSf8KynRIPiVbjVrkrXTo=
+	b=wVN+b1DKzECiWsfz9GIe9MxZAXlRDdVjZH8r61+js0CW1ZUCc04adNyjn+ZlQOtP+
+	 cdF0WVOZrJkGtC7qlmca3/RlBzBXzHMtRP5m9wrwn4NTrE5kh2EUTGbWlgBXIpD9QH
+	 NIkCz9hZH3f8/IM28yAto96UH0uEPbiqAjyfhWBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Michael Larabel <Michael@MichaelLarabel.com>
-Subject: [PATCH 6.5 001/739] drm/amd/display: ensure async flips are only accepted for fast updates
-Date: Mon, 11 Sep 2023 15:36:40 +0200
-Message-ID: <20230911134650.979430061@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.5 010/739] Revert "net: macsec: preserve ingress frame ordering"
+Date: Mon, 11 Sep 2023 15:36:49 +0200
+Message-ID: <20230911134651.290494212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,101 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit a7c0cad0dc060bb77e9c9d235d68441b0fc69507 upstream.
+commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
 
-We should be checking to see if async flips are supported in
-amdgpu_dm_atomic_check() (i.e. not dm_crtc_helper_atomic_check()). Also,
-async flipping isn't supported if a plane's framebuffer changes memory
-domains during an atomic commit. So, move the check from
-dm_crtc_helper_atomic_check() to amdgpu_dm_atomic_check() and check if
-the memory domain has changed in amdgpu_dm_atomic_check().
+This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2733
-Fixes: c1e18c44dc7f ("drm/amd/display: only accept async flips for fast updates")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Reported-by: Michael Larabel <Michael@MichaelLarabel.com>
+It was trying to work around an issue at the crypto layer by excluding
+ASYNC implementations of gcm(aes), because a bug in the AESNI version
+caused reordering when some requests bypassed the cryptd queue while
+older requests were still pending on the queue.
+
+This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
+reordering problem on gcm"), which pre-dates ab046a5d4be4.
+
+Herbert Xu confirmed that all ASYNC implementations are expected to
+maintain the ordering of completions wrt requests, so we can use them
+in MACsec.
+
+On my test machine, this restores the performance of a single netperf
+instance, from 1.4Gbps to 4.4Gbps.
+
+Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
+Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
+Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
+Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      |   24 ++++++++++++++---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 --------
- 2 files changed, 21 insertions(+), 15 deletions(-)
+ drivers/net/macsec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8074,10 +8074,12 @@ static void amdgpu_dm_commit_planes(stru
- 		 * fast updates.
- 		 */
- 		if (crtc->state->async_flip &&
--		    acrtc_state->update_type != UPDATE_TYPE_FAST)
-+		    (acrtc_state->update_type != UPDATE_TYPE_FAST ||
-+		     get_mem_type(old_plane_state->fb) != get_mem_type(fb)))
- 			drm_warn_once(state->dev,
- 				      "[PLANE:%d:%s] async flip with non-fast update\n",
- 				      plane->base.id, plane->name);
-+
- 		bundle->flip_addrs[planes_count].flip_immediate =
- 			crtc->state->async_flip &&
- 			acrtc_state->update_type == UPDATE_TYPE_FAST &&
-@@ -10040,6 +10042,11 @@ static int amdgpu_dm_atomic_check(struct
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1341,8 +1341,7 @@ static struct crypto_aead *macsec_alloc_
+ 	struct crypto_aead *tfm;
+ 	int ret;
  
- 	/* Remove exiting planes if they are modified */
- 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
-+		if (old_plane_state->fb && new_plane_state->fb &&
-+		    get_mem_type(old_plane_state->fb) !=
-+		    get_mem_type(new_plane_state->fb))
-+			lock_and_validation_needed = true;
-+
- 		ret = dm_update_plane_state(dc, state, plane,
- 					    old_plane_state,
- 					    new_plane_state,
-@@ -10287,9 +10294,20 @@ static int amdgpu_dm_atomic_check(struct
- 		struct dm_crtc_state *dm_new_crtc_state =
- 			to_dm_crtc_state(new_crtc_state);
+-	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
+-	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
++	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
  
-+		/*
-+		 * Only allow async flips for fast updates that don't change
-+		 * the FB pitch, the DCC state, rotation, etc.
-+		 */
-+		if (new_crtc_state->async_flip && lock_and_validation_needed) {
-+			drm_dbg_atomic(crtc->dev,
-+				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
-+				       crtc->base.id, crtc->name);
-+			ret = -EINVAL;
-+			goto fail;
-+		}
-+
- 		dm_new_crtc_state->update_type = lock_and_validation_needed ?
--							 UPDATE_TYPE_FULL :
--							 UPDATE_TYPE_FAST;
-+			UPDATE_TYPE_FULL : UPDATE_TYPE_FAST;
- 	}
- 
- 	/* Must be success */
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -398,18 +398,6 @@ static int dm_crtc_helper_atomic_check(s
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * Only allow async flips for fast updates that don't change the FB
--	 * pitch, the DCC state, rotation, etc.
--	 */
--	if (crtc_state->async_flip &&
--	    dm_crtc_state->update_type != UPDATE_TYPE_FAST) {
--		drm_dbg_atomic(crtc->dev,
--			       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
--			       crtc->base.id, crtc->name);
--		return -EINVAL;
--	}
--
- 	/* In some use cases, like reset, no stream is attached */
- 	if (!dm_crtc_state->stream)
- 		return 0;
+ 	if (IS_ERR(tfm))
+ 		return tfm;
 
 
