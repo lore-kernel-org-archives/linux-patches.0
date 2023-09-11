@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60251170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CA8C433C7;
-	Mon, 11 Sep 2023 14:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC421170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D17C433C8;
+	Mon, 11 Sep 2023 14:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442576;
-	bh=AyIwjgZJVg+JpRXETK8ZNpMA5M21zVmkFTfkWcuDEQo=;
+	s=korg; t=1694442579;
+	bh=ndNe+vLgR9pUMLxASmAssrGbWMMzvapkPlFeMGHhgu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYPK/ID5yGyyGnyNfU1AuCduddi4P6B46iNE/hnPm2l0Xu1Ble6Z+psXJc1cEYLqR
-	 1cyVAs99IciXjbM56lrZ+luQObzZbfLOuzB6ASE8XvKXgcsJRKdCCS+2FM9Ie9d8cT
-	 bItA8lx9pxwcfKvmS8TiZRFQOocMSPzZzmABA9U4=
+	b=EV4B1MKQfRsMtLvxDlmdNi6xI4G9zh5sbRTzezVUJmH6KRiXwNVt3Ull8MISLTnwO
+	 3iTW+MlkA7WwLh8HKTMQs2iVybNwXuESb0Rxx73LSSMfgyaoEsQOBhSGWPD9LQ5lJ3
+	 MG+xNB/Jtev6Vg9cfxRpbNlkAPmFbuiM8Cyy3Z6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lin Yujun <linyujun809@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 074/737] ALSA: hda/cs8409: Support new Dell Dolphin Variants
-Date: Mon, 11 Sep 2023 15:38:53 +0200
-Message-ID: <20230911134652.583722578@linuxfoundation.org>
+Subject: [PATCH 6.4 075/737] ARM: dts: integrator: fix PCI bus dtc warnings
+Date: Mon, 11 Sep 2023 15:38:54 +0200
+Message-ID: <20230911134652.610859863@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,35 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Lin Yujun <linyujun809@huawei.com>
 
-[ Upstream commit 7c761166399bedfc89c928bef8015546d85a9099 ]
+[ Upstream commit 42ff49a1967af71772b264009659ce181f7d2d2a ]
 
-Add 4 new Dell Dolphin Systems, same configuration as older systems.
+An warning is reported when allmodconfig is used to compile the kernel of the ARM architecture:
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230811123044.1045651-1-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+arch/arm/boot/dts/arm/integratorap.dts:161.22-206.4: Warning (pci_bridge): /pciv3@62000000: node name is not "pci" or "pcie"
+
+Change the node name to pci to clear the build warning.
+
+Signed-off-by: Lin Yujun <linyujun809@huawei.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230811-versatile-dts-v6-6-v1-1-d8cb9d1947ed@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_cs8409-tables.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/integratorap.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_cs8409-tables.c b/sound/pci/hda/patch_cs8409-tables.c
-index b288874e401e5..36b411d1a9609 100644
---- a/sound/pci/hda/patch_cs8409-tables.c
-+++ b/sound/pci/hda/patch_cs8409-tables.c
-@@ -550,6 +550,10 @@ const struct snd_pci_quirk cs8409_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1028, 0x0C50, "Dolphin", CS8409_DOLPHIN),
- 	SND_PCI_QUIRK(0x1028, 0x0C51, "Dolphin", CS8409_DOLPHIN),
- 	SND_PCI_QUIRK(0x1028, 0x0C52, "Dolphin", CS8409_DOLPHIN),
-+	SND_PCI_QUIRK(0x1028, 0x0C73, "Dolphin", CS8409_DOLPHIN),
-+	SND_PCI_QUIRK(0x1028, 0x0C75, "Dolphin", CS8409_DOLPHIN),
-+	SND_PCI_QUIRK(0x1028, 0x0C7D, "Dolphin", CS8409_DOLPHIN),
-+	SND_PCI_QUIRK(0x1028, 0x0C7F, "Dolphin", CS8409_DOLPHIN),
- 	{} /* terminator */
- };
+diff --git a/arch/arm/boot/dts/integratorap.dts b/arch/arm/boot/dts/integratorap.dts
+index 5b52d75bc6bed..d9927d3181dce 100644
+--- a/arch/arm/boot/dts/integratorap.dts
++++ b/arch/arm/boot/dts/integratorap.dts
+@@ -158,7 +158,7 @@
+ 		valid-mask = <0x003fffff>;
+ 	};
  
+-	pci: pciv3@62000000 {
++	pci: pci@62000000 {
+ 		compatible = "arm,integrator-ap-pci", "v3,v360epc-pci";
+ 		device_type = "pci";
+ 		#interrupt-cells = <1>;
 -- 
 2.40.1
 
