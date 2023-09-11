@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024AF11727
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784B1C433C7;
-	Mon, 11 Sep 2023 15:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821111705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3DAC433C7;
+	Mon, 11 Sep 2023 15:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444707;
-	bh=BL/7UfwrE7ej1HGdqhpKqpKXFmcgwccml/WlNbZcaXI=;
+	s=korg; t=1694444710;
+	bh=tyMgdI+jcsjOlqKph/FM2gXZQ1CbtHGZQi1NohMGj04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2g7/Dp70oUyzEXooIh3VL8p5Wl7kZsi599k9wjkFGOYvtiUMS8aQX+/0QbWn1Czf
-	 +89KgN5g/URRR6u/iBHy0FRNe45Zr0o84P4mRBZNl+fR5AFLyJx4fo3SGRTzyhraEB
-	 6L/YCS2XpWfUcCtp2qmkNsy3WFndH65wFFNraKM8=
+	b=X/S8GemvIAzQ6aQjqD+aLae8zkLEHf0RCTOwmQJU0Iq6Ydon5kkKbcztqCxLr8e26
+	 S0O8/bn/npnLNTslfWgUKqnSNWpajf9r7hIamsQ7XxGJnuoBd+VfbcWe6HBNK8WWAC
+	 3G30xn0e+sqqPX+avZQFgrvXBB1VNzvrXWzRABns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/600] platform/x86/amd/pmf: Fix unsigned comparison with less than zero
-Date: Mon, 11 Sep 2023 15:41:30 +0200
-Message-ID: <20230911134635.310640506@linuxfoundation.org>
+Subject: [PATCH 6.1 048/600] clk: fixed-mmio: make COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM
+Date: Mon, 11 Sep 2023 15:41:21 +0200
+Message-ID: <20230911134635.014049204@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,42 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Li <yang.lee@linux.alibaba.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit 785c00993dc4c4bb2f7b0f3a3f29c03a6f7aab2e ]
+[ Upstream commit e7dd44f4f3166db45248414f5df8f615392de47a ]
 
-The return value from the call to amd_pmf_get_pprof_modes() is int.
-However, the return value is being assigned to an unsigned char
-variable 'mode', so making 'mode' an int.
+On s390 systems (aka mainframes), it has classic channel devices for
+networking and permanent storage that are currently even more common
+than PCI devices. Hence it could have a fully functional s390 kernel
+with CONFIG_PCI=n, then the relevant iomem mapping functions
+[including ioremap(), devm_ioremap(), etc.] are not available.
 
-silence the warning:
-./drivers/platform/x86/amd/pmf/sps.c:183:5-9: WARNING: Unsigned expression compared with zero: mode < 0
+Here let COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM so that it won't
+be built to cause below compiling error if PCI is unset:
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=5995
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230727014315.51375-1-yang.lee@linux.alibaba.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+------
+ld: drivers/clk/clk-fixed-mmio.o: in function `fixed_mmio_clk_setup':
+clk-fixed-mmio.c:(.text+0x5e): undefined reference to `of_iomap'
+ld: clk-fixed-mmio.c:(.text+0xba): undefined reference to `iounmap'
+------
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230707135852.24292-8-bhe@redhat.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/sps.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/pmf/sps.c b/drivers/platform/x86/amd/pmf/sps.c
-index fd448844de206..b2cf62937227c 100644
---- a/drivers/platform/x86/amd/pmf/sps.c
-+++ b/drivers/platform/x86/amd/pmf/sps.c
-@@ -121,7 +121,8 @@ int amd_pmf_get_pprof_modes(struct amd_pmf_dev *pmf)
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 5da82f2bdd211..a5dcc7293a836 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -427,6 +427,7 @@ config COMMON_CLK_BD718XX
+ config COMMON_CLK_FIXED_MMIO
+ 	bool "Clock driver for Memory Mapped Fixed values"
+ 	depends on COMMON_CLK && OF
++	depends on HAS_IOMEM
+ 	help
+ 	  Support for Memory Mapped IO Fixed clocks
  
- int amd_pmf_power_slider_update_event(struct amd_pmf_dev *dev)
- {
--	u8 mode, flag = 0;
-+	u8 flag = 0;
-+	int mode;
- 	int src;
- 
- 	mode = amd_pmf_get_pprof_modes(dev);
 -- 
 2.40.1
 
