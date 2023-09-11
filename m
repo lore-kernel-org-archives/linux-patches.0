@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B923B11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DEFC433C7;
-	Mon, 11 Sep 2023 14:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CA111706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AE2C433C8;
+	Mon, 11 Sep 2023 14:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444160;
-	bh=/rfLeDycxAxbLgCu7hJnCB4ooTvNgZYvK6R467TmaCE=;
+	s=korg; t=1694444163;
+	bh=huk3A7YkpF0oXcIO3PjdJ/7jOqJz4BEd5NaP0KXJNt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jshnLREEtW5u1jINdKyHxyV7T6dhZqhxHUSflp25cQOC+IngoDIVzKvn1xNvD2fwJ
-	 ORCUy6DmQL7Pg2dVppKKtMpPLlNfSO9yxKSvJFpKWX8C7csYaiqhvwbEJIdfHUuuOg
-	 UjmAX7wEe74oo9eShaipoSs1B9TXh+PeDZ7+4eUw=
+	b=zbiJbqqcxPsnFzO96z8kcatSm/u6pOGu9R5BBT8xCPOvFkNFAcLdKbHgQJ65bE3Om
+	 x37XtNkp0K7ZFfF/22Co2eMQRtpal+vJ3W02SauBl7euJIzajgcos3hyEJnesvQ1OQ
+	 EI7HBnsMcJkC1Dk0cckzc0Ekri0snsoSO+9LEqLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 631/737] cpufreq: Fix the race condition while updating the transition_task of policy
-Date: Mon, 11 Sep 2023 15:48:10 +0200
-Message-ID: <20230911134708.157960802@linuxfoundation.org>
+Subject: [PATCH 6.4 632/737] virtio_vdpa: build affinity masks conditionally
+Date: Mon, 11 Sep 2023 15:48:11 +0200
+Message-ID: <20230911134708.184684130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,78 +40,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Jason Wang <jasowang@redhat.com>
 
-[ Upstream commit 61bfbf7951ba561dcbdd5357702d3cbc2d447812 ]
+[ Upstream commit ae15aceaa98ad9499763923f7890e345d9f46b60 ]
 
-The field 'transition_task' of policy structure is used to track the
-task which is performing the frequency transition. Using this field to
-print a warning once detect a case where the same task is calling
-_begin() again before completing the preivous frequency transition via
-the _end().
+We try to build affinity mask via create_affinity_masks()
+unconditionally which may lead several issues:
 
-However, there is a potential race condition in _end() and _begin() APIs
-while updating the field 'transition_task' of policy, the scenario is
-depicted below:
+- the affinity mask is not used for parent without affinity support
+  (only VDUSE support the affinity now)
+- the logic of create_affinity_masks() might not work for devices
+  other than block. For example it's not rare in the networking device
+  where the number of queues could exceed the number of CPUs. Such
+  case breaks the current affinity logic which is based on
+  group_cpus_evenly() who assumes the number of CPUs are not less than
+  the number of groups. This can trigger a warning[1]:
 
-             Task A                            Task B
+	if (ret >= 0)
+		WARN_ON(nr_present + nr_others < numgrps);
 
-        /* 1st freq transition */
-        Invoke _begin() {
-                ...
-                ...
-        }
-                                        /* 2nd freq transition */
-                                        Invoke _begin() {
-                                                ... //waiting for A to
-                                                ... //clear
-                                                ... //transition_ongoing
-                                                ... //in _end() for
-                                                ... //the 1st transition
-                                                        |
-        Change the frequency                            |
-                                                        |
-        Invoke _end() {                                 |
-                ...                                     |
-                ...                                     |
-                transition_ongoing = false;             V
-                                                transition_ongoing = true;
-                                                transition_task = current;
-                transition_task = NULL;
-                ... //A overwrites the task
-                ... //performing the transition
-                ... //result in error warning.
-        }
+Fixing this by only build the affinity masks only when
 
-To fix this race condition, the transition_lock of policy structure is
-now acquired before updating policy structure in _end() API. Which ensure
-that only one task can update the 'transition_task' field at a time.
+- Driver passes affinity descriptor, driver like virtio-blk can make
+  sure to limit the number of queues when it exceeds the number of CPUs
+- Parent support affinity setting config ops
 
-Link: https://lore.kernel.org/all/b3c61d8a-d52d-3136-fbf0-d1de9f1ba411@huawei.com/
-Fixes: ca654dc3a93d ("cpufreq: Catch double invocations of cpufreq_freq_transition_begin/end")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This help to avoid the warning. More optimizations could be done on
+top.
+
+[1]
+[  682.146655] WARNING: CPU: 6 PID: 1550 at lib/group_cpus.c:400 group_cpus_evenly+0x1aa/0x1c0
+[  682.146668] CPU: 6 PID: 1550 Comm: vdpa Not tainted 6.5.0-rc5jason+ #79
+[  682.146671] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+[  682.146673] RIP: 0010:group_cpus_evenly+0x1aa/0x1c0
+[  682.146676] Code: 4c 89 e0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc e8 1b c4 74 ff 48 89 ef e8 13 ac 98 ff 4c 89 e7 45 31 e4 e8 08 ac 98 ff eb c2 <0f> 0b eb b6 e8 fd 05 c3 00 45 31 e4 eb e5 cc cc cc cc cc cc cc cc
+[  682.146679] RSP: 0018:ffffc9000215f498 EFLAGS: 00010293
+[  682.146682] RAX: 000000000001f1e0 RBX: 0000000000000041 RCX: 0000000000000000
+[  682.146684] RDX: ffff888109922058 RSI: 0000000000000041 RDI: 0000000000000030
+[  682.146686] RBP: ffff888109922058 R08: ffffc9000215f498 R09: ffffc9000215f4a0
+[  682.146687] R10: 00000000000198d0 R11: 0000000000000030 R12: ffff888107e02800
+[  682.146689] R13: 0000000000000030 R14: 0000000000000030 R15: 0000000000000041
+[  682.146692] FS:  00007fef52315740(0000) GS:ffff888237380000(0000) knlGS:0000000000000000
+[  682.146695] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  682.146696] CR2: 00007fef52509000 CR3: 0000000110dbc004 CR4: 0000000000370ee0
+[  682.146698] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  682.146700] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  682.146701] Call Trace:
+[  682.146703]  <TASK>
+[  682.146705]  ? __warn+0x7b/0x130
+[  682.146709]  ? group_cpus_evenly+0x1aa/0x1c0
+[  682.146712]  ? report_bug+0x1c8/0x1e0
+[  682.146717]  ? handle_bug+0x3c/0x70
+[  682.146721]  ? exc_invalid_op+0x14/0x70
+[  682.146723]  ? asm_exc_invalid_op+0x16/0x20
+[  682.146727]  ? group_cpus_evenly+0x1aa/0x1c0
+[  682.146729]  ? group_cpus_evenly+0x15c/0x1c0
+[  682.146731]  create_affinity_masks+0xaf/0x1a0
+[  682.146735]  virtio_vdpa_find_vqs+0x83/0x1d0
+[  682.146738]  ? __pfx_default_calc_sets+0x10/0x10
+[  682.146742]  virtnet_find_vqs+0x1f0/0x370
+[  682.146747]  virtnet_probe+0x501/0xcd0
+[  682.146749]  ? vp_modern_get_status+0x12/0x20
+[  682.146751]  ? get_cap_addr.isra.0+0x10/0xc0
+[  682.146754]  virtio_dev_probe+0x1af/0x260
+[  682.146759]  really_probe+0x1a5/0x410
+
+Fixes: 3dad56823b53 ("virtio-vdpa: Support interrupt affinity spreading mechanism")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20230811091539.1359865-1-jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virtio/virtio_vdpa.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 6b52ebe5a8904..f11b01b25e8d5 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -455,8 +455,10 @@ void cpufreq_freq_transition_end(struct cpufreq_policy *policy,
- 			    policy->cur,
- 			    policy->cpuinfo.max_freq);
+diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
+index 961161da59000..06ce6d8c2e004 100644
+--- a/drivers/virtio/virtio_vdpa.c
++++ b/drivers/virtio/virtio_vdpa.c
+@@ -366,11 +366,14 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
+ 	struct irq_affinity default_affd = { 0 };
+ 	struct cpumask *masks;
+ 	struct vdpa_callback cb;
++	bool has_affinity = desc && ops->set_vq_affinity;
+ 	int i, err, queue_idx = 0;
  
-+	spin_lock(&policy->transition_lock);
- 	policy->transition_ongoing = false;
- 	policy->transition_task = NULL;
-+	spin_unlock(&policy->transition_lock);
+-	masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
+-	if (!masks)
+-		return -ENOMEM;
++	if (has_affinity) {
++		masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
++		if (!masks)
++			return -ENOMEM;
++	}
  
- 	wake_up(&policy->transition_wait);
+ 	for (i = 0; i < nvqs; ++i) {
+ 		if (!names[i]) {
+@@ -386,20 +389,22 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
+ 			goto err_setup_vq;
+ 		}
+ 
+-		if (ops->set_vq_affinity)
++		if (has_affinity)
+ 			ops->set_vq_affinity(vdpa, i, &masks[i]);
+ 	}
+ 
+ 	cb.callback = virtio_vdpa_config_cb;
+ 	cb.private = vd_dev;
+ 	ops->set_config_cb(vdpa, &cb);
+-	kfree(masks);
++	if (has_affinity)
++		kfree(masks);
+ 
+ 	return 0;
+ 
+ err_setup_vq:
+ 	virtio_vdpa_del_vqs(vdev);
+-	kfree(masks);
++	if (has_affinity)
++		kfree(masks);
+ 	return err;
  }
+ 
 -- 
 2.40.1
 
