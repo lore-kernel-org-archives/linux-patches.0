@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293471170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD28C433C7;
-	Mon, 11 Sep 2023 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D936B1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530DFC433C9;
+	Mon, 11 Sep 2023 14:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441615;
-	bh=r/ALvqjdSIK0bQb9MuIDqkBEjanuyBWXm6Gj63eNGTs=;
+	s=korg; t=1694441618;
+	bh=tn2QEwxzRjbPtNfrcXzAv9aKSP+1wezY/wB0MygC7bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RohRiIvUtKj+lOZn48m7cWYfIl1Tp2/K/oW+kvECT038yZse1ykr09ZubEJLUQXf9
-	 QhcNgRIJMa1/McdFZiK33P0d7e2ZiHUBPnBBbjUN8VFNPWaMnsaLFZB3mbRGaivetk
-	 o76APuhhqQ0+ZNRKMeWrVajR69GXOG2KFUwlexH0=
+	b=TfC0nF39Mi8yYQKFfG8YIbzBPKmubWru38Aa4XgsmXHG2NXvIWTfbQaQocAyYxpCX
+	 nhn4eK64SwmQ51NDWUS9/k6h/W8UDjm8HcvH3QZP9QPMNOWwF5HIw1rtAWoGoRHFFS
+	 w8QaZWsXffOdFWuCDqFMPEkvkXVMIDaqvxLXS86g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyong Lu <xiaoyong.lu@mediatek.com>,
+	Irui Wang <irui.wang@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 476/739] media: mediatek: vcodec: fix AV1 decode fail for 36bit iova
-Date: Mon, 11 Sep 2023 15:44:35 +0200
-Message-ID: <20230911134704.438510173@linuxfoundation.org>
+Subject: [PATCH 6.5 477/739] media: mediatek: vcodec: Return NULL if no vdec_fb is found
+Date: Mon, 11 Sep 2023 15:44:36 +0200
+Message-ID: <20230911134704.465175839@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,54 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyong Lu <xiaoyong.lu@mediatek.com>
+From: Irui Wang <irui.wang@mediatek.com>
 
-[ Upstream commit 89a4f369b20810a8365f87badf7862c67d344bbe ]
+[ Upstream commit dfa2d6e07432270330ae191f50a0e70636a4cd2b ]
 
-Fix av1 decode fail when iova is 36bit.
+"fb_use_list" is used to store used or referenced frame buffers for
+vp9 stateful decoder. "NULL" should be returned when getting target
+frame buffer failed from "fb_use_list", not a random unexpected one.
 
-Decoder hardware will access incorrect iova address when tile buffer is
-36bit, it will lead to iommu fault when hardware access dram data.
-
-Fixes: 2f5d0aef37c6 ("media: mediatek: vcodec: support stateless AV1 decoder")
-Signed-off-by: Xiaoyong Lu<xiaoyong.lu@mediatek.com>
+Fixes: f77e89854b3e ("[media] vcodec: mediatek: Add Mediatek VP9 Video Decoder Driver")
+Signed-off-by: Irui Wang <irui.wang@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/vdec/vdec_av1_req_lat_if.c       | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_if.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
-index 404a1a23fd402..b00b423274b3b 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
-@@ -1658,9 +1658,9 @@ static void vdec_av1_slice_setup_tile_buffer(struct vdec_av1_slice_instance *ins
- 	u32 allow_update_cdf = 0;
- 	u32 sb_boundary_x_m1 = 0, sb_boundary_y_m1 = 0;
- 	int tile_info_base;
--	u32 tile_buf_pa;
-+	u64 tile_buf_pa;
- 	u32 *tile_info_buf = instance->tile.va;
--	u32 pa = (u32)bs->dma_addr;
-+	u64 pa = (u64)bs->dma_addr;
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_if.c
+index 70b8383f7c8ec..a27a109d8d144 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_if.c
+@@ -226,10 +226,11 @@ static struct vdec_fb *vp9_rm_from_fb_use_list(struct vdec_vp9_inst
+ 		if (fb->base_y.va == addr) {
+ 			list_move_tail(&node->list,
+ 				       &inst->available_fb_node_list);
+-			break;
++			return fb;
+ 		}
+ 	}
+-	return fb;
++
++	return NULL;
+ }
  
- 	if (uh->disable_cdf_update == 0)
- 		allow_update_cdf = 1;
-@@ -1673,8 +1673,12 @@ static void vdec_av1_slice_setup_tile_buffer(struct vdec_av1_slice_instance *ins
- 		tile_info_buf[tile_info_base + 0] = (tile_group->tile_size[tile_num] << 3);
- 		tile_buf_pa = pa + tile_group->tile_start_offset[tile_num];
- 
--		tile_info_buf[tile_info_base + 1] = (tile_buf_pa >> 4) << 4;
--		tile_info_buf[tile_info_base + 2] = (tile_buf_pa % 16) << 3;
-+		/* save av1 tile high 4bits(bit 32-35) address in lower 4 bits position
-+		 * and clear original for hw requirement.
-+		 */
-+		tile_info_buf[tile_info_base + 1] = (tile_buf_pa & 0xFFFFFFF0ull) |
-+			((tile_buf_pa & 0xF00000000ull) >> 32);
-+		tile_info_buf[tile_info_base + 2] = (tile_buf_pa & 0xFull) << 3;
- 
- 		sb_boundary_x_m1 =
- 			(tile->mi_col_starts[tile_col + 1] - tile->mi_col_starts[tile_col] - 1) &
+ static void vp9_add_to_fb_free_list(struct vdec_vp9_inst *inst,
 -- 
 2.40.1
 
