@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F8111715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8704C433C8;
-	Mon, 11 Sep 2023 15:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29A311715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CE9C433C8;
+	Mon, 11 Sep 2023 15:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444775;
-	bh=khEPc4bLW2D7weoxvEdF01fPzk/siH09qMm5PX0nPgg=;
+	s=korg; t=1694444777;
+	bh=HjEoMxfcPUrIQAsurL38wf9OCmfrWSkQP7Ay/X/2yWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aN+5PhTn/ZxNYveRTSN+nZuGvLTiM3ub9MDQrJTzm1au+XzFRp3fJSTxbWwtOc9CS
-	 tz1nylXik+taAC62lxWg94M4cTBmfLRPM8B2Tvy4V9MiH0/lub7disBvr1VG0Wb+hl
-	 +J2llKre3DhAdycNX9UUPMMnO9W1ATnqaJB6tpR8=
+	b=e4tZWMcrLiRabe6A9l6k8VQ+G9yGVfVOG3AHN8sZpTacASu8GABeW8bTZOYopXkV1
+	 /cci7YaKsHiATyB42M77H/f5DBALyrHmjk6rtgcztN+EcVxBI0CY2CWKi6upi99K0d
+	 6sLopSstMr6UM+FNv1eSatqJFXWXd25dIF80+h8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 084/600] net: Avoid address overwrite in kernel_connect
-Date: Mon, 11 Sep 2023 15:41:57 +0200
-Message-ID: <20230911134636.093043679@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 111/600] OPP: Fix passing 0 to PTR_ERR in _opp_attach_genpd()
+Date: Mon, 11 Sep 2023 15:42:24 +0200
+Message-ID: <20230911134636.876686741@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,51 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
+[ Upstream commit d920920f85a82c1c806a4143871a0e8f534732f2 ]
 
-BPF programs that run on connect can rewrite the connect address. For
-the connect system call this isn't a problem, because a copy of the address
-is made when it is moved into kernel space. However, kernel_connect
-simply passes through the address it is given, so the caller may observe
-its address value unexpectedly change.
+If dev_pm_domain_attach_by_name() returns NULL, then 0 will be passed to
+PTR_ERR() as reported by the smatch warning below:
 
-A practical example where this is problematic is where NFS is combined
-with a system such as Cilium which implements BPF-based load balancing.
-A common pattern in software-defined storage systems is to have an NFS
-mount that connects to a persistent virtual IP which in turn maps to an
-ephemeral server IP. This is usually done to achieve high availability:
-if your server goes down you can quickly spin up a replacement and remap
-the virtual IP to that endpoint. With BPF-based load balancing, mounts
-will forget the virtual IP address when the address rewrite occurs
-because a pointer to the only copy of that address is passed down the
-stack. Server failover then breaks, because clients have forgotten the
-virtual IP address. Reconnects fail and mounts remain broken. This patch
-was tested by setting up a scenario like this and ensuring that NFS
-reconnects worked after applying the patch.
+drivers/opp/core.c:2456 _opp_attach_genpd() warn: passing zero to 'PTR_ERR'
 
-Signed-off-by: Jordan Rife <jrife@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix it by checking for the non-NULL virt_dev pointer before passing it to
+PTR_ERR. Otherwise return -ENODEV.
+
+Fixes: 4ea9496cbc95 ("opp: Fix error check in dev_pm_opp_attach_genpd()")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/socket.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/opp/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -3507,7 +3507,11 @@ EXPORT_SYMBOL(kernel_accept);
- int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
- 		   int flags)
- {
--	return sock->ops->connect(sock, addr, addrlen, flags);
-+	struct sockaddr_storage address;
-+
-+	memcpy(&address, addr, addrlen);
-+
-+	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
- }
- EXPORT_SYMBOL(kernel_connect);
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index d707214069ca9..f0d70ecc0271b 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -2372,7 +2372,7 @@ static int _opp_attach_genpd(struct opp_table *opp_table, struct device *dev,
  
+ 		virt_dev = dev_pm_domain_attach_by_name(dev, *name);
+ 		if (IS_ERR_OR_NULL(virt_dev)) {
+-			ret = PTR_ERR(virt_dev) ? : -ENODEV;
++			ret = virt_dev ? PTR_ERR(virt_dev) : -ENODEV;
+ 			dev_err(dev, "Couldn't attach to pm_domain: %d\n", ret);
+ 			goto err;
+ 		}
+-- 
+2.40.1
+
 
 
