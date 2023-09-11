@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFBE11718
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B32FC433C8;
-	Mon, 11 Sep 2023 15:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AA311718
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C01AC433C7;
+	Mon, 11 Sep 2023 15:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444682;
-	bh=bEi6H68uXjf7nmUuq5rNAQ+UjlaCtV5+QqlPM9HJ/fs=;
+	s=korg; t=1694444685;
+	bh=1m/PqfjixadJZ7stxRHVUJXRbO6KZj+sR/10bi/IMqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+FTi6ipHYBAeSvJQTABE3kRUEy4bV04rj8GXlpW4wQdwnaJjgoZbxMq0YHDe3WsD
-	 m5QDs2sWUN8lOr3y6rQiRXT6C8rymp1VCEsRNuccWHyr9o/VmekmDNSeMmdq8+WOOx
-	 6OBQLm7YNgrp3rmDSViLRUOG7+EUKqChAb1xJX5M=
+	b=xXtYl7iMU5uM+B3B20ASh+uwAcw8Buy7IuEM2CVEy2jznyixtwDKjMRFqcbev164U
+	 DTRKow3uBXkitdYN50/8meKJmqHS9yTaVmQrrra6A3XqpE5FDdqnlxbkvrbpOIjtUx
+	 Fv94yH3YT+Up4myEw87BXuJUcqF1tIyoD9GjynJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majewski <lukma@denx.de>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/600] net: dsa: microchip: KSZ9477 register regmap alignment to 32 bit boundaries
-Date: Mon, 11 Sep 2023 15:41:24 +0200
-Message-ID: <20230911134635.119142684@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Adam Ford <aford173@gmail.com>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.1 078/600] of: property: Simplify of_link_to_phandle()
+Date: Mon, 11 Sep 2023 15:41:51 +0200
+Message-ID: <20230911134635.916151126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,116 +44,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 8d7ae22ae9f8c8a4407f8e993df64440bdbd0cee ]
+commit 4a032827daa89350365166b19d14d82fe8219128 upstream.
 
-The commit (SHA1: 5c844d57aa7894154e49cf2fc648bfe2f1aefc1c) provided code
-to apply "Module 6: Certain PHY registers must be written as pairs instead
-of singly" errata for KSZ9477 as this chip for certain PHY registers
-(0xN120 to 0xN13F, N=1,2,3,4,5) must be accesses as 32 bit words instead
-of 16 or 8 bit access.
-Otherwise, adjacent registers (no matter if reserved or not) are
-overwritten with 0x0.
+The driver core now:
+- Has the parent device of a supplier pick up the consumers if the
+  supplier never has a device created for it.
+- Ignores a supplier if the supplier has no parent device and will never
+  be probed by a driver
 
-Without this patch some registers (e.g. 0x113c or 0x1134) required for 32
-bit access are out of valid regmap ranges.
+And already prevents creating a device link with the consumer as a
+supplier of a parent.
 
-As a result, following error is observed and KSZ9477 is not properly
-configured:
+So, we no longer need to find the "compatible" node of the supplier or
+do any other checks in of_link_to_phandle(). We simply need to make sure
+that the supplier is available in DT.
 
-ksz-switch spi1.0: can't rmw 32bit reg 0x113c: -EIO
-ksz-switch spi1.0: can't rmw 32bit reg 0x1134: -EIO
-ksz-switch spi1.0 lan1 (uninitialized): failed to connect to PHY: -EIO
-ksz-switch spi1.0 lan1 (uninitialized): error -5 setting up PHY for tree 0, switch 0, port 0
-
-The solution is to modify regmap_reg_range to allow accesses with 4 bytes
-boundaries.
-
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-10-saravanak@google.com
+Fixes: eaf9b5612a47 ("driver core: fw_devlink: Don't purge child fwnode's consumer links")
+Signed-off-by:  Adam Ford <aford173@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 35 +++++++++++---------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ drivers/of/property.c |   84 +++++++-------------------------------------------
+ 1 file changed, 13 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index 8c492d56d2c36..dc9eea3c8ab16 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -590,10 +590,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x1030, 0x1030),
- 	regmap_reg_range(0x1100, 0x1115),
- 	regmap_reg_range(0x111a, 0x111f),
--	regmap_reg_range(0x1122, 0x1127),
--	regmap_reg_range(0x112a, 0x112b),
--	regmap_reg_range(0x1136, 0x1139),
--	regmap_reg_range(0x113e, 0x113f),
-+	regmap_reg_range(0x1120, 0x112b),
-+	regmap_reg_range(0x1134, 0x113b),
-+	regmap_reg_range(0x113c, 0x113f),
- 	regmap_reg_range(0x1400, 0x1401),
- 	regmap_reg_range(0x1403, 0x1403),
- 	regmap_reg_range(0x1410, 0x1417),
-@@ -624,10 +623,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x2030, 0x2030),
- 	regmap_reg_range(0x2100, 0x2115),
- 	regmap_reg_range(0x211a, 0x211f),
--	regmap_reg_range(0x2122, 0x2127),
--	regmap_reg_range(0x212a, 0x212b),
--	regmap_reg_range(0x2136, 0x2139),
--	regmap_reg_range(0x213e, 0x213f),
-+	regmap_reg_range(0x2120, 0x212b),
-+	regmap_reg_range(0x2134, 0x213b),
-+	regmap_reg_range(0x213c, 0x213f),
- 	regmap_reg_range(0x2400, 0x2401),
- 	regmap_reg_range(0x2403, 0x2403),
- 	regmap_reg_range(0x2410, 0x2417),
-@@ -658,10 +656,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x3030, 0x3030),
- 	regmap_reg_range(0x3100, 0x3115),
- 	regmap_reg_range(0x311a, 0x311f),
--	regmap_reg_range(0x3122, 0x3127),
--	regmap_reg_range(0x312a, 0x312b),
--	regmap_reg_range(0x3136, 0x3139),
--	regmap_reg_range(0x313e, 0x313f),
-+	regmap_reg_range(0x3120, 0x312b),
-+	regmap_reg_range(0x3134, 0x313b),
-+	regmap_reg_range(0x313c, 0x313f),
- 	regmap_reg_range(0x3400, 0x3401),
- 	regmap_reg_range(0x3403, 0x3403),
- 	regmap_reg_range(0x3410, 0x3417),
-@@ -692,10 +689,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x4030, 0x4030),
- 	regmap_reg_range(0x4100, 0x4115),
- 	regmap_reg_range(0x411a, 0x411f),
--	regmap_reg_range(0x4122, 0x4127),
--	regmap_reg_range(0x412a, 0x412b),
--	regmap_reg_range(0x4136, 0x4139),
--	regmap_reg_range(0x413e, 0x413f),
-+	regmap_reg_range(0x4120, 0x412b),
-+	regmap_reg_range(0x4134, 0x413b),
-+	regmap_reg_range(0x413c, 0x413f),
- 	regmap_reg_range(0x4400, 0x4401),
- 	regmap_reg_range(0x4403, 0x4403),
- 	regmap_reg_range(0x4410, 0x4417),
-@@ -726,10 +722,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x5030, 0x5030),
- 	regmap_reg_range(0x5100, 0x5115),
- 	regmap_reg_range(0x511a, 0x511f),
--	regmap_reg_range(0x5122, 0x5127),
--	regmap_reg_range(0x512a, 0x512b),
--	regmap_reg_range(0x5136, 0x5139),
--	regmap_reg_range(0x513e, 0x513f),
-+	regmap_reg_range(0x5120, 0x512b),
-+	regmap_reg_range(0x5134, 0x513b),
-+	regmap_reg_range(0x513c, 0x513f),
- 	regmap_reg_range(0x5400, 0x5401),
- 	regmap_reg_range(0x5403, 0x5403),
- 	regmap_reg_range(0x5410, 0x5417),
--- 
-2.40.1
-
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1062,20 +1062,6 @@ of_fwnode_device_get_match_data(const st
+ 	return of_device_get_match_data(dev);
+ }
+ 
+-static bool of_is_ancestor_of(struct device_node *test_ancestor,
+-			      struct device_node *child)
+-{
+-	of_node_get(child);
+-	while (child) {
+-		if (child == test_ancestor) {
+-			of_node_put(child);
+-			return true;
+-		}
+-		child = of_get_next_parent(child);
+-	}
+-	return false;
+-}
+-
+ static struct device_node *of_get_compat_node(struct device_node *np)
+ {
+ 	of_node_get(np);
+@@ -1106,71 +1092,27 @@ static struct device_node *of_get_compat
+ 	return node;
+ }
+ 
+-/**
+- * of_link_to_phandle - Add fwnode link to supplier from supplier phandle
+- * @con_np: consumer device tree node
+- * @sup_np: supplier device tree node
+- *
+- * Given a phandle to a supplier device tree node (@sup_np), this function
+- * finds the device that owns the supplier device tree node and creates a
+- * device link from @dev consumer device to the supplier device. This function
+- * doesn't create device links for invalid scenarios such as trying to create a
+- * link with a parent device as the consumer of its child device. In such
+- * cases, it returns an error.
+- *
+- * Returns:
+- * - 0 if fwnode link successfully created to supplier
+- * - -EINVAL if the supplier link is invalid and should not be created
+- * - -ENODEV if struct device will never be create for supplier
+- */
+-static int of_link_to_phandle(struct device_node *con_np,
++static void of_link_to_phandle(struct device_node *con_np,
+ 			      struct device_node *sup_np)
+ {
+-	struct device *sup_dev;
+-	struct device_node *tmp_np = sup_np;
++	struct device_node *tmp_np = of_node_get(sup_np);
+ 
+-	/*
+-	 * Find the device node that contains the supplier phandle.  It may be
+-	 * @sup_np or it may be an ancestor of @sup_np.
+-	 */
+-	sup_np = of_get_compat_node(sup_np);
+-	if (!sup_np) {
+-		pr_debug("Not linking %pOFP to %pOFP - No device\n",
+-			 con_np, tmp_np);
+-		return -ENODEV;
+-	}
++	/* Check that sup_np and its ancestors are available. */
++	while (tmp_np) {
++		if (of_fwnode_handle(tmp_np)->dev) {
++			of_node_put(tmp_np);
++			break;
++		}
+ 
+-	/*
+-	 * Don't allow linking a device node as a consumer of one of its
+-	 * descendant nodes. By definition, a child node can't be a functional
+-	 * dependency for the parent node.
+-	 */
+-	if (of_is_ancestor_of(con_np, sup_np)) {
+-		pr_debug("Not linking %pOFP to %pOFP - is descendant\n",
+-			 con_np, sup_np);
+-		of_node_put(sup_np);
+-		return -EINVAL;
+-	}
++		if (!of_device_is_available(tmp_np)) {
++			of_node_put(tmp_np);
++			return;
++		}
+ 
+-	/*
+-	 * Don't create links to "early devices" that won't have struct devices
+-	 * created for them.
+-	 */
+-	sup_dev = get_dev_from_fwnode(&sup_np->fwnode);
+-	if (!sup_dev &&
+-	    (of_node_check_flag(sup_np, OF_POPULATED) ||
+-	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
+-		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
+-			 con_np, sup_np);
+-		of_node_put(sup_np);
+-		return -ENODEV;
++		tmp_np = of_get_next_parent(tmp_np);
+ 	}
+-	put_device(sup_dev);
+ 
+ 	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
+-	of_node_put(sup_np);
+-
+-	return 0;
+ }
+ 
+ /**
 
 
