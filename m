@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D1911705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE393C433C8;
-	Mon, 11 Sep 2023 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4619611705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFC8C433C7;
+	Mon, 11 Sep 2023 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443330;
-	bh=l/m4RKQ0DzSb5yH+GsivYMjJxqX42+74Wo1dvss4j28=;
+	s=korg; t=1694443333;
+	bh=c4cI8ZbK4t/EU8dwkUlZ3exNZqhFw9BkaXEicfIIUcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l19NWAaVKXyjZLBU7g+smgOCMxH2ETzaN3G7cdB39iG6kzbafNfE/n2ArAYeQvm7K
-	 qyObHo0DfuUQFCZSs6dXm7tpB8w2fdSoWj5P6LzIzsznpID7TuFp0b90QGfKLD64xr
-	 UX27inVEklT+L+IyWMT2MtrufJS9aGDj9xeJuaVA=
+	b=uUuX3heEwRnvwrBPKCZX0t+3PdaU1GUEhxrcSwy+Lnm3lMY0U8ZDlnuXVzcXxyK1b
+	 Jwt30bDCepyXbyZ6QbS3FXYGJUN+LuBiSoaOzyoo6bS4gb/nN3gXa2gtxLa5SCN0Zl
+	 s0g6b2+o3Fprw1IxmF/38yKCnHueibbC3VZK1mqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 340/737] md/raid10: use dereference_rdev_and_rrdev() to get devices
-Date: Mon, 11 Sep 2023 15:43:19 +0200
-Message-ID: <20230911134700.028899844@linuxfoundation.org>
+Subject: [PATCH 6.4 341/737] md/md-bitmap: remove unnecessary local variable in backlog_store()
+Date: Mon, 11 Sep 2023 15:43:20 +0200
+Message-ID: <20230911134700.055116392@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,57 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 673643490b9a0eb3b25633abe604f62b8f63dba1 ]
+[ Upstream commit b4d129640f194ffc4cc64c3e97f98ae944c072e8 ]
 
-Commit 2ae6aaf76912 ("md/raid10: fix io loss while replacement replace
-rdev") reads replacement first to prevent io loss. However, there are same
-issue in wait_blocked_dev() and raid10_handle_discard(), too. Fix it by
-using dereference_rdev_and_rrdev() to get devices.
+Local variable is definied first in the beginning of backlog_store(),
+there is no need to define it again.
 
-Fixes: d30588b2731f ("md/raid10: improve raid10 discard request")
-Fixes: f2e7e269a752 ("md/raid10: pull the code that wait for blocked dev into one function")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/r/20230701080529.2684932-4-linan666@huaweicloud.com
+Fixes: 8c13ab115b57 ("md/bitmap: don't set max_write_behind if there is no write mostly device")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230706083727.608914-2-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/md/md-bitmap.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index f47fd50651c45..925ab30c15d49 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1350,11 +1350,9 @@ static void wait_blocked_dev(struct mddev *mddev, struct r10bio *r10_bio)
- 	blocked_rdev = NULL;
- 	rcu_read_lock();
- 	for (i = 0; i < conf->copies; i++) {
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[i].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[i].replacement);
--		if (rdev == rrdev)
--			rrdev = NULL;
-+		struct md_rdev *rdev, *rrdev;
-+
-+		rdev = dereference_rdev_and_rrdev(&conf->mirrors[i], &rrdev);
- 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
- 			atomic_inc(&rdev->nr_pending);
- 			blocked_rdev = rdev;
-@@ -1790,10 +1788,9 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	 */
- 	rcu_read_lock();
- 	for (disk = 0; disk < geo->raid_disks; disk++) {
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[disk].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[disk].replacement);
-+		struct md_rdev *rdev, *rrdev;
- 
-+		rdev = dereference_rdev_and_rrdev(&conf->mirrors[disk], &rrdev);
- 		r10_bio->devs[disk].bio = NULL;
- 		r10_bio->devs[disk].repl_bio = NULL;
- 
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index ea226a37b110a..4934d8f0cf11a 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2527,8 +2527,6 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
+ 			mddev_destroy_serial_pool(mddev, NULL, false);
+ 	} else if (backlog && !mddev->serial_info_pool) {
+ 		/* serial_info_pool is needed since backlog is not zero */
+-		struct md_rdev *rdev;
+-
+ 		rdev_for_each(rdev, mddev)
+ 			mddev_create_serial_pool(mddev, rdev, false);
+ 	}
 -- 
 2.40.1
 
