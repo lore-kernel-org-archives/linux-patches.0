@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E374811706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6492CC433C8;
-	Mon, 11 Sep 2023 14:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C821711706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460DBC433C7;
+	Mon, 11 Sep 2023 14:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443610;
-	bh=kGqDqgKJG/FhWzbCv5A5uMEuZ1W+FVIZs6xJBdvyRBg=;
+	s=korg; t=1694443613;
+	bh=qvFxsfj0g1OknuyMe9kRn6OvDZZIhvydBWTI2Xx3d6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0aXYLorVNChkAeJNFvw59ZEjA2ZTQiCsEMJdkzpHBj1FqBUL+uMT0xAIt2BwlGka
-	 9oVG7gMXG/9Ca0JmY9+pntKsJD+W+UUQLvdBm/lF5KnEkA8KZ4p2nXzaoo4kXcNO31
-	 jfxegcJlVypzgIwQh42kIzJ29F93BrjBluxV9naw=
+	b=Ixt3penLfeRCsAHPG6CI7G3bUt6eeOMYufN5iBg+QLBfshl7v36fKke78OvgfZ2tZ
+	 XH+cSyeis4UhG6NWlqwc0dR6U84g+XtLWrLCYOxmfKvcdlUvs/GB5q2ToF5nFCMr+E
+	 PqzeTJ+jWeWIs3hShT4eDf8Nn5g9od1Hj6YGO/S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 439/737] clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs
-Date: Mon, 11 Sep 2023 15:44:58 +0200
-Message-ID: <20230911134702.860331374@linuxfoundation.org>
+Subject: [PATCH 6.4 422/737] clk: qcom: dispcc-sc8280xp: Use ret registers on GDSCs
+Date: Mon, 11 Sep 2023 15:44:41 +0200
+Message-ID: <20230911134702.392444666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,44 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit a27ac3806b0a0e6954fb5967223b8635242e5b8f ]
+[ Upstream commit 20e1d75bc043c5ec1fd8f5169fde17db89eb11c3 ]
 
-Use the floor ops to prevent warnings like this at suspend exit and boot:
+The DISP_CC GDSCs have not been instructed to use the ret registers.
+Fix that.
 
-mmc0: Card appears overclocked; req 800000 Hz, actual 25000000 Hz
-
-Fixes: db0c944ee92b ("clk: qcom: Add clock driver for SM8450")
+Fixes: 4a66e76fdb6d ("clk: qcom: Add SC8280XP display clock controller")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20230811-topic-8450_clk-v1-1-88031478d548@linaro.org
+Link: https://lore.kernel.org/r/20230725-topic-8280_dispcc_gdsc-v1-1-236590060531@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8450.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/dispcc-sc8280xp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
-index 84764cc3db4ff..1d912f8a7243c 100644
---- a/drivers/clk/qcom/gcc-sm8450.c
-+++ b/drivers/clk/qcom/gcc-sm8450.c
-@@ -904,7 +904,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_7,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_7),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
+diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
+index 167470beb3691..30f636b9f0ec8 100644
+--- a/drivers/clk/qcom/dispcc-sc8280xp.c
++++ b/drivers/clk/qcom/dispcc-sc8280xp.c
+@@ -3057,7 +3057,7 @@ static struct gdsc disp0_mdss_gdsc = {
+ 		.name = "disp0_mdss_gdsc",
  	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
  };
  
-@@ -926,7 +926,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
+ static struct gdsc disp1_mdss_gdsc = {
+@@ -3069,7 +3069,7 @@ static struct gdsc disp1_mdss_gdsc = {
+ 		.name = "disp1_mdss_gdsc",
  	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
  };
  
+ static struct gdsc disp0_mdss_int2_gdsc = {
+@@ -3081,7 +3081,7 @@ static struct gdsc disp0_mdss_int2_gdsc = {
+ 		.name = "disp0_mdss_int2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc disp1_mdss_int2_gdsc = {
+@@ -3093,7 +3093,7 @@ static struct gdsc disp1_mdss_int2_gdsc = {
+ 		.name = "disp1_mdss_int2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc *disp0_cc_sc8280xp_gdscs[] = {
 -- 
 2.40.1
 
