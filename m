@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2142E11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931BCC433C7;
-	Mon, 11 Sep 2023 14:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D784611706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559DDC433C7;
+	Mon, 11 Sep 2023 14:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443841;
-	bh=wNs1B6rbji9AfmZtVsHMMY/hbEJqh87Ermi47sfTGEQ=;
+	s=korg; t=1694443843;
+	bh=a79bmNhlYyVgK6BP0Pw+JZjw69F6A+hsDTacbw4WQsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWxOc2kZphuhIMG7h78X6Fh7TuEllKFNEu6zA54dZDxvAyi3BN9fTKp9a+PhPDsU7
-	 BSsAg4UpWxGWrbBVQgUpWoMEtRLKz4dFj4jA6j8DjRz8SzlArG2QjqkREldHKO7fJ+
-	 m4cYqbOT5l9IDSX2+vHfvEW/GjBG7hLegtvNrYhI=
+	b=u9pp6GAqD1joHlJoo2xiMqVYerv7fkrZVAgjEG5pVNcEBB+atedUDOO6fLlNwISvW
+	 NM4rObUN0VFAmIl8CdPzAEuhiE6Kh3iS9j5mKDPiFsy5Lo17ue+ULgQcsRP16haDeE
+	 KLLbkmqnmfMWwmV6sES9NXOzRZhx16VHwT2eajwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 493/737] scsi: hisi_sas: Fix normally completed I/O analysed as failed
-Date: Mon, 11 Sep 2023 15:45:52 +0200
-Message-ID: <20230911134704.347349100@linuxfoundation.org>
+Subject: [PATCH 6.4 494/737] dt-bindings: extcon: maxim,max77843: restrict connector properties
+Date: Mon, 11 Sep 2023 15:45:53 +0200
+Message-ID: <20230911134704.374775941@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,88 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f5393a5602cacfda2014e0ff8220e5a7564e7cd1 ]
+[ Upstream commit fb2c3f72e819254d8c76de95917e5f9ff232586c ]
 
-The PIO read command has no response frame and the struct iu[1024] won't be
-filled. I/Os which are normally completed will be treated as failed in
-sas_ata_task_done() when iu contains abnormal dirty data.
+Do not allow any other properties in connector child, except what
+usb-connector.yaml evaluates.
 
-Consequently ending_fis should not be filled by iu when the response frame
-hasn't been written to memory.
-
-Fixes: d380f55503ed ("scsi: hisi_sas: Don't bother clearing status buffer IU in task prep")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1689045300-44318-2-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9729cad0278b ("dt-bindings: extcon: maxim,max77843: Add MAX77843 bindings")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 11 +++++++++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  6 ++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/extcon/maxim,max77843.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index cd78e4c983aa8..38a91e227842c 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2026,6 +2026,11 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
- 	u16 dma_tx_err_type = le16_to_cpu(err_record->dma_tx_err_type);
- 	u16 sipc_rx_err_type = le16_to_cpu(err_record->sipc_rx_err_type);
- 	u32 dma_rx_err_type = le32_to_cpu(err_record->dma_rx_err_type);
-+	struct hisi_sas_complete_v2_hdr *complete_queue =
-+			hisi_hba->complete_hdr[slot->cmplt_queue];
-+	struct hisi_sas_complete_v2_hdr *complete_hdr =
-+			&complete_queue[slot->cmplt_queue_slot];
-+	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
- 	int error = -1;
+diff --git a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
+index 1289605456408..55800fb0221d0 100644
+--- a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
++++ b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
+@@ -23,6 +23,7 @@ properties:
  
- 	if (err_phase == 1) {
-@@ -2310,7 +2315,8 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
- 			break;
- 		}
- 		}
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 	}
- 		break;
- 	default:
-@@ -2443,7 +2449,8 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
- 	{
- 		ts->stat = SAS_SAM_STAT_GOOD;
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	}
- 	default:
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 81a2a0437c95a..1794ad709183e 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2247,7 +2247,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 			ts->stat = SAS_OPEN_REJECT;
- 			ts->open_rej_reason = SAS_OREJ_RSVD_RETRY;
- 		}
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	case SAS_PROTOCOL_SMP:
- 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
-@@ -2374,7 +2375,8 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 	case SAS_PROTOCOL_STP:
- 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
- 		ts->stat = SAS_SAM_STAT_GOOD;
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	default:
- 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
+   connector:
+     $ref: /schemas/connector/usb-connector.yaml#
++    unevaluatedProperties: false
+ 
+   ports:
+     $ref: /schemas/graph.yaml#/properties/ports
 -- 
 2.40.1
 
