@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D215C433C8;
-	Mon, 11 Sep 2023 15:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6731511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE713C433C7;
+	Mon, 11 Sep 2023 15:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445886;
-	bh=27nKyDR4ra6wcAg6tApOC79OcDskFoUrwNmvWD8Vieo=;
+	s=korg; t=1694445889;
+	bh=w68OcLwnBurfeqPdOmBRERQSn2eU9RFIjiahhGdWbkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nu1FRtb621mN4ui/YrPEksaJEgR7CS/s+EN8NwNuvA1ZjMiPKFjB3KLwyJ/hFwfd
-	 kKWAVePv/RiSb6twzBy21MM3Rh2WGR4fgzlh7o91JMeqmD5dBVbFRX9U3v1tL0vy+7
-	 8AuPkG6cjSVznwrDxiRkZQCKEpylupzvzhQEzoSY=
+	b=Vl+OOIiZnQ0i1QtOl5XVMQtzO79SAvU5LLHPR0yfJ4QUf/LHyBtznHw5AiUR/s1NM
+	 5bUyMVtROS1RGtD0IoB6eZAS9/maHtp4L0nAyNtvxyjug+L1bCJE3JxlUchveBdnd9
+	 22c9a4JDgzMgTT6w4ku/GujFwTBOg9B7/PYIeOYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 506/600] leds: pwm: Fix error code in led_pwm_create_fwnode()
-Date: Mon, 11 Sep 2023 15:48:59 +0200
-Message-ID: <20230911134648.554381713@linuxfoundation.org>
+Subject: [PATCH 6.1 507/600] leds: multicolor: Use rounded division when calculating color components
+Date: Mon, 11 Sep 2023 15:49:00 +0200
+Message-ID: <20230911134648.584497371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,41 +34,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit cadb2de2a7fd9e955381307de3eddfcc386c208e ]
+[ Upstream commit 065d099f1be58187e6629273c50b948a02b7e1bf ]
 
-Negative -EINVAL was intended, not positive EINVAL.  Fix it.
+Given channel intensity, LED brightness and max LED brightness, the
+multicolor LED framework helper led_mc_calc_color_components() computes
+the color channel brightness as
 
-Fixes: 95138e01275e ("leds: pwm: Make error handling more robust")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/a33b981a-b2c4-4dc2-b00a-626a090d2f11@moroto.mountain
+    chan_brightness = brightness * chan_intensity / max_brightness
+
+Consider the situation when (brightness, intensity, max_brightness) is
+for example (16, 15, 255), then chan_brightness is computed to 0
+although the fractional divison would give 0.94, which should be rounded
+to 1.
+
+Use DIV_ROUND_CLOSEST here for the division to give more realistic
+component computation:
+
+    chan_brightness = DIV_ROUND_CLOSEST(brightness * chan_intensity,
+                                        max_brightness)
+
+Fixes: 55d5d3b46b08 ("leds: multicolor: Introduce a multicolor class definition")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://lore.kernel.org/r/20230801124931.8661-1-kabel@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pwm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/led-class-multicolor.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
-index 6832180c1c54f..cc892ecd52408 100644
---- a/drivers/leds/leds-pwm.c
-+++ b/drivers/leds/leds-pwm.c
-@@ -146,7 +146,7 @@ static int led_pwm_create_fwnode(struct device *dev, struct led_pwm_priv *priv)
- 			led.name = to_of_node(fwnode)->name;
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index e317408583df9..ec62a48116135 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -6,6 +6,7 @@
+ #include <linux/device.h>
+ #include <linux/init.h>
+ #include <linux/led-class-multicolor.h>
++#include <linux/math.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+@@ -19,9 +20,10 @@ int led_mc_calc_color_components(struct led_classdev_mc *mcled_cdev,
+ 	int i;
  
- 		if (!led.name) {
--			ret = EINVAL;
-+			ret = -EINVAL;
- 			goto err_child_out;
- 		}
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+-		mcled_cdev->subled_info[i].brightness = brightness *
+-					mcled_cdev->subled_info[i].intensity /
+-					led_cdev->max_brightness;
++		mcled_cdev->subled_info[i].brightness =
++			DIV_ROUND_CLOSEST(brightness *
++					  mcled_cdev->subled_info[i].intensity,
++					  led_cdev->max_brightness);
  
+ 	return 0;
+ }
 -- 
 2.40.1
 
