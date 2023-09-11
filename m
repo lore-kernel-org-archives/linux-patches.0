@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E5E11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:12:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83235C433C7;
-	Mon, 11 Sep 2023 15:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F211511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7387BC433C8;
+	Mon, 11 Sep 2023 15:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445179;
-	bh=p7orKD5sbLctgquvti1rrs357czOAxNo2SG1XYjyJN8=;
+	s=korg; t=1694445181;
+	bh=ZSqA4Uokhg3u04G+tT6NbJUqn8TwGuFfQ6B6JQ/tidY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGcIK5EJke4PLG30cWHlcuMvt9bKV7X58bfiv8eSfUK3tb/ZGkPsq+GG7AG2Qju7E
-	 1cGX7CEWhfQCytfn+HL9dEStrx1K2Jm7t/pngfKfkymop4PwqzegCqn0Ky9JVvDHXz
-	 2lz9t/4T6ncDSwZcPsOiXTcg2wwYuhLtshd5tKyc=
+	b=K27ttgVhmjo+blwH8jCedo+yEGN8E+ivoHfGItlslGXZ/Dt5uljNMdd3xtrDgwuFd
+	 U1IQgS+vpfr2+RWnw+QNPmLB0ivHqVVEEVjSUi7Jx2yy5FlO1/JXwjVldUIss0++16
+	 4utCKFVprfNVSRT2SedKEac9PMfIxX/a5S3FuI88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Suman Ghosh <sumang@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 215/600] quota: rename dquot_active() to inode_quota_active()
-Date: Mon, 11 Sep 2023 15:44:08 +0200
-Message-ID: <20230911134639.963853458@linuxfoundation.org>
+Subject: [PATCH 6.1 206/600] octeontx2-pf: Fix PFC TX scheduler free
+Date: Mon, 11 Sep 2023 15:43:59 +0200
+Message-ID: <20230911134639.697206014@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,119 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit 4b9bdfa16535de8f49bf954aeed0f525ee2fc322 ]
+[ Upstream commit a9ac2e18779597f280d68a5b5f5bdd51a34080fa ]
 
-Now we have a helper function dquot_dirty() to determine if dquot has
-DQ_MOD_B bit. dquot_active() can easily be misunderstood as a helper
-function to determine if dquot has DQ_ACTIVE_B bit. So we avoid this by
-renaming it to inode_quota_active() and later on we will add the helper
-function dquot_active() to determine if dquot has DQ_ACTIVE_B bit.
+During PFC TX schedulers free, flag TXSCHQ_FREE_ALL was being set
+which caused free up all schedulers other than the PFC schedulers.
+This patch fixes that to free only the PFC Tx schedulers.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230630110822.3881712-3-libaokun1@huawei.com>
-Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
+Fixes: 99c969a83d82 ("octeontx2-pf: Add egress PFC support")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230824081032.436432-2-sumang@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_common.c  |  1 +
+ .../ethernet/marvell/octeontx2/nic/otx2_dcbnl.c   | 15 ++++-----------
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 5541960ad0252..f9f0610b504df 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -1418,7 +1418,7 @@ static int info_bdq_free(struct dquot *dquot, qsize_t space)
- 	return QUOTA_NL_NOWARN;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index dd97731f81698..011355e73696e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -773,6 +773,7 @@ void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq)
+ 
+ 	mutex_unlock(&pfvf->mbox.lock);
  }
++EXPORT_SYMBOL(otx2_txschq_free_one);
  
--static int dquot_active(const struct inode *inode)
-+static int inode_quota_active(const struct inode *inode)
+ void otx2_txschq_stop(struct otx2_nic *pfvf)
  {
- 	struct super_block *sb = inode->i_sb;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+index ccaf97bb1ce03..6492749dd7c89 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+@@ -125,19 +125,12 @@ int otx2_pfc_txschq_alloc(struct otx2_nic *pfvf)
  
-@@ -1441,7 +1441,7 @@ static int __dquot_initialize(struct inode *inode, int type)
- 	qsize_t rsv;
- 	int ret = 0;
+ static int otx2_pfc_txschq_stop_one(struct otx2_nic *pfvf, u8 prio)
+ {
+-	struct nix_txsch_free_req *free_req;
++	int lvl;
  
--	if (!dquot_active(inode))
-+	if (!inode_quota_active(inode))
- 		return 0;
+-	mutex_lock(&pfvf->mbox.lock);
+ 	/* free PFC TLx nodes */
+-	free_req = otx2_mbox_alloc_msg_nix_txsch_free(&pfvf->mbox);
+-	if (!free_req) {
+-		mutex_unlock(&pfvf->mbox.lock);
+-		return -ENOMEM;
+-	}
+-
+-	free_req->flags = TXSCHQ_FREE_ALL;
+-	otx2_sync_mbox_msg(&pfvf->mbox);
+-	mutex_unlock(&pfvf->mbox.lock);
++	for (lvl = 0; lvl < pfvf->hw.txschq_link_cfg_lvl; lvl++)
++		otx2_txschq_free_one(pfvf, lvl,
++				     pfvf->pfc_schq_list[lvl][prio]);
  
- 	dquots = i_dquot(inode);
-@@ -1549,7 +1549,7 @@ bool dquot_initialize_needed(struct inode *inode)
- 	struct dquot **dquots;
- 	int i;
- 
--	if (!dquot_active(inode))
-+	if (!inode_quota_active(inode))
- 		return false;
- 
- 	dquots = i_dquot(inode);
-@@ -1660,7 +1660,7 @@ int __dquot_alloc_space(struct inode *inode, qsize_t number, int flags)
- 	int reserve = flags & DQUOT_SPACE_RESERVE;
- 	struct dquot **dquots;
- 
--	if (!dquot_active(inode)) {
-+	if (!inode_quota_active(inode)) {
- 		if (reserve) {
- 			spin_lock(&inode->i_lock);
- 			*inode_reserved_space(inode) += number;
-@@ -1730,7 +1730,7 @@ int dquot_alloc_inode(struct inode *inode)
- 	struct dquot_warn warn[MAXQUOTAS];
- 	struct dquot * const *dquots;
- 
--	if (!dquot_active(inode))
-+	if (!inode_quota_active(inode))
- 		return 0;
- 	for (cnt = 0; cnt < MAXQUOTAS; cnt++)
- 		warn[cnt].w_type = QUOTA_NL_NOWARN;
-@@ -1773,7 +1773,7 @@ int dquot_claim_space_nodirty(struct inode *inode, qsize_t number)
- 	struct dquot **dquots;
- 	int cnt, index;
- 
--	if (!dquot_active(inode)) {
-+	if (!inode_quota_active(inode)) {
- 		spin_lock(&inode->i_lock);
- 		*inode_reserved_space(inode) -= number;
- 		__inode_add_bytes(inode, number);
-@@ -1815,7 +1815,7 @@ void dquot_reclaim_space_nodirty(struct inode *inode, qsize_t number)
- 	struct dquot **dquots;
- 	int cnt, index;
- 
--	if (!dquot_active(inode)) {
-+	if (!inode_quota_active(inode)) {
- 		spin_lock(&inode->i_lock);
- 		*inode_reserved_space(inode) += number;
- 		__inode_sub_bytes(inode, number);
-@@ -1859,7 +1859,7 @@ void __dquot_free_space(struct inode *inode, qsize_t number, int flags)
- 	struct dquot **dquots;
- 	int reserve = flags & DQUOT_SPACE_RESERVE, index;
- 
--	if (!dquot_active(inode)) {
-+	if (!inode_quota_active(inode)) {
- 		if (reserve) {
- 			spin_lock(&inode->i_lock);
- 			*inode_reserved_space(inode) -= number;
-@@ -1914,7 +1914,7 @@ void dquot_free_inode(struct inode *inode)
- 	struct dquot * const *dquots;
- 	int index;
- 
--	if (!dquot_active(inode))
-+	if (!inode_quota_active(inode))
- 		return;
- 
- 	dquots = i_dquot(inode);
-@@ -2086,7 +2086,7 @@ int dquot_transfer(struct user_namespace *mnt_userns, struct inode *inode,
- 	struct super_block *sb = inode->i_sb;
- 	int ret;
- 
--	if (!dquot_active(inode))
-+	if (!inode_quota_active(inode))
- 		return 0;
- 
- 	if (i_uid_needs_update(mnt_userns, iattr, inode)) {
+ 	pfvf->pfc_alloc_status[prio] = false;
+ 	return 0;
 -- 
 2.40.1
 
