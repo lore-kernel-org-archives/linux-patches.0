@@ -1,40 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A8811706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E4AC433C7;
-	Mon, 11 Sep 2023 15:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1611706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CABC433C8;
+	Mon, 11 Sep 2023 15:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444481;
-	bh=qISE5J5VtM0PjcDwTlFRuQVozce80n3WS8mAe+4B//o=;
+	s=korg; t=1694444484;
+	bh=w5/ykC5htjhcK9bK3UMZZD8F750ZMJkQD1hfYSzo1xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcUq8my8lD2sD/Cektrrkxf/y91qW12ut7+tiHAaqFX4IFynfN0jo/MNMmlxhl8Ke
-	 dHRZ33d0iiM+x/sZusLX887Q+2d4qpFlQnEHScaO58Knr5XiYRQof4nav3VHTfVFoF
-	 EXwZEW3YJTBROzNT0q9Dw18G7XtW9uEhBu5LPCGU=
+	b=0Xs+ACBp8ISVrE9nvetQ92wDqXT+9ZFyHNyjLzfG9SnPjKxgaa28aC6g5hvCz4lws
+	 cUocQjl0L22/sQHmHqhlcodz3/wB7LtnWsj/k+Yr/0DKYGTilOnLcGad4Kn8mz8pEy
+	 N/VaL5MY4GvCqFPOoimLoD0vXxtmhdtweuYiTTl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Jeff Xu <jeffxu@google.com>,
-	Daniel Verkamp <dverkamp@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Hugh Dickins <hughd@google.com>,
-	Jann Horn <jannh@google.com>,
-	Jorge Lucangeli Obes <jorgelo@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
-	kernel test robot <lkp@intel.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 731/737] selftests/memfd: sysctl: fix MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED
-Date: Mon, 11 Sep 2023 15:49:50 +0200
-Message-ID: <20230911134710.929904497@linuxfoundation.org>
+Subject: [PATCH 6.1 001/600] Revert "bridge: Add extack warning when enabling STP in netns."
+Date: Mon, 11 Sep 2023 15:40:34 +0200
+Message-ID: <20230911134633.668244209@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
-References: <20230911134650.286315610@linuxfoundation.org>
+In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
+References: <20230911134633.619970489@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +36,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Xu <jeffxu@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit badbbcd76545c58eff64bb1548f7f834a30dc52a ]
+[ Upstream commit 7ebd00a5a20c48e6020d49a3b2afb3cdfd2da8b7 ]
 
-Add selftest for sysctl vm.memfd_noexec is 2
-(MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED)
+This reverts commit 56a16035bb6effb37177867cea94c13a8382f745.
 
-memfd_create(.., MFD_EXEC) should fail in this case.
+Since the previous commit, STP works on bridge in netns.
 
-Link: https://lkml.kernel.org/r/20230705063315.3680666-3-jeffxu@google.com
-Reported-by: Dominique Martinet <asmadeus@codewreck.org>
-Closes: https://lore.kernel.org/linux-mm/CABi2SkXUX_QqTQ10Yx9bBUGpN1wByOi_=gZU6WEy5a8MaQY3Jw@mail.gmail.com/T/
-Signed-off-by: Jeff Xu <jeffxu@google.com>
-Cc: Daniel Verkamp <dverkamp@chromium.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jorge Lucangeli Obes <jorgelo@chromium.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: kernel test robot <lkp@intel.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 202e14222fad ("memfd: do not -EACCES old memfd_create() users with vm.memfd_noexec=2")
+  # unshare -n
+  # ip link add br0 type bridge
+  # ip link add veth0 type veth peer name veth1
+
+  # ip link set veth0 master br0 up
+  [   50.558135] br0: port 1(veth0) entered blocking state
+  [   50.558366] br0: port 1(veth0) entered disabled state
+  [   50.558798] veth0: entered allmulticast mode
+  [   50.564401] veth0: entered promiscuous mode
+
+  # ip link set veth1 master br0 up
+  [   54.215487] br0: port 2(veth1) entered blocking state
+  [   54.215657] br0: port 2(veth1) entered disabled state
+  [   54.215848] veth1: entered allmulticast mode
+  [   54.219577] veth1: entered promiscuous mode
+
+  # ip link set br0 type bridge stp_state 1
+  # ip link set br0 up
+  [   61.960726] br0: port 2(veth1) entered blocking state
+  [   61.961097] br0: port 2(veth1) entered listening state
+  [   61.961495] br0: port 1(veth0) entered blocking state
+  [   61.961653] br0: port 1(veth0) entered listening state
+  [   63.998835] br0: port 2(veth1) entered blocking state
+  [   77.437113] br0: port 1(veth0) entered learning state
+  [   86.653501] br0: received packet on veth0 with own address as source address (addr:6e:0f:e7:6f:5f:5f, vlan:0)
+  [   92.797095] br0: port 1(veth0) entered forwarding state
+  [   92.797398] br0: topology change detected, propagating
+
+Let's remove the warning.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bridge/br_stp_if.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
-index 7fc5d7c3bd65b..8eb49204f9eac 100644
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -1147,6 +1147,11 @@ static void test_sysctl_child(void)
- 	sysctl_assert_write("2");
- 	mfd_fail_new("kern_memfd_sysctl_2",
- 		MFD_CLOEXEC | MFD_ALLOW_SEALING);
-+	mfd_fail_new("kern_memfd_sysctl_2_MFD_EXEC",
-+		MFD_CLOEXEC | MFD_EXEC);
-+	fd = mfd_assert_new("", 0, MFD_NOEXEC_SEAL);
-+	close(fd);
-+
- 	sysctl_fail_write("0");
- 	sysctl_fail_write("1");
- }
+diff --git a/net/bridge/br_stp_if.c b/net/bridge/br_stp_if.c
+index b65962682771f..75204d36d7f90 100644
+--- a/net/bridge/br_stp_if.c
++++ b/net/bridge/br_stp_if.c
+@@ -201,9 +201,6 @@ int br_stp_set_enabled(struct net_bridge *br, unsigned long val,
+ {
+ 	ASSERT_RTNL();
+ 
+-	if (!net_eq(dev_net(br->dev), &init_net))
+-		NL_SET_ERR_MSG_MOD(extack, "STP does not work in non-root netns");
+-
+ 	if (br_mrp_enabled(br)) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+ 				   "STP can't be enabled if MRP is already enabled");
 -- 
 2.40.1
 
