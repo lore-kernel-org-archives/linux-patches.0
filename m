@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5692D11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAC7C433C8;
-	Mon, 11 Sep 2023 15:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2554511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEFAC433C7;
+	Mon, 11 Sep 2023 15:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445489;
-	bh=r63YQlw35F4v3ize8nwQIZbe7GfsPurfKYS5t3qX4HM=;
+	s=korg; t=1694445492;
+	bh=LF5WJOwWVQjvGKAJxW4cL9Ty+GWVB4T4zLBXZ8lgwWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iEjSYuW1QnwKu7lcZGd4Y/or0MvqJSqSkx69OTP/AxENzdXqMf8pvD6mP/PKn702e
-	 ticQ3/4hQ34QXPXZVoFjVqaJzhRbGu1DyPJP0mkDK0A4DVeiudg6TcNGIOuWqMKhzS
-	 PksEAr/H+J7RPvC9Jhd8Wxc5808cDiVpuUuVTnTo=
+	b=Cz0MvlaJoTtZjgAYsWvUCjn98OvRrvxlR1VC6GC8ds9bZfUlozDpWiTfmKh+HMiet
+	 EyaCQqz6ROF839bb7w3I/hA700g0A5Xq0ypuBIvqz1J4pwa6bX/uQDLRfH+sPlor6I
+	 LUlOkUtOmce2bpFaTqboo3LeOJH62EzG8KbVnuA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 328/600] clk: qcom: gpucc-sm6350: Introduce index-based clk lookup
-Date: Mon, 11 Sep 2023 15:46:01 +0200
-Message-ID: <20230911134643.368998944@linuxfoundation.org>
+Subject: [PATCH 6.1 359/600] clk: imx8mp: fix sai4 clock
+Date: Mon, 11 Sep 2023 15:46:32 +0200
+Message-ID: <20230911134644.277282302@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,86 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit f6f89d194e4ddcfe197ac8a05ed4161f642a5c68 ]
+[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
 
-Add the nowadays-prefered and marginally faster way of looking up parent
-clocks in the device tree. It also allows for clock-names-independent
-operation, so long as the order (which is enforced by schema) is kept.
+The reference manual don't mention a SAI4 hardware block. This would be
+clock slice 78 which is skipped (TRM, page 237). Remove any reference to
+this clock to align the driver with the reality.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230315-topic-lagoon_gpu-v2-1-afcdfb18bb13@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 743913b343a3 ("clk: qcom: gpucc-sm6350: Fix clock source names")
+Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-sm6350.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
-index ef15185a99c31..a9887d1f0ed71 100644
---- a/drivers/clk/qcom/gpucc-sm6350.c
-+++ b/drivers/clk/qcom/gpucc-sm6350.c
-@@ -24,6 +24,12 @@
- #define CX_GMU_CBCR_WAKE_MASK		0xF
- #define CX_GMU_CBCR_WAKE_SHIFT		8
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 05c02f4e2a143..3d0d8f2c02dc1 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -177,10 +177,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext3", "clk_ext4", };
  
-+enum {
-+	DT_BI_TCXO,
-+	DT_GPLL0_OUT_MAIN,
-+	DT_GPLL0_OUT_MAIN_DIV,
-+};
-+
- enum {
- 	P_BI_TCXO,
- 	P_GPLL0_OUT_MAIN,
-@@ -61,6 +67,7 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpu_cc_pll0",
- 			.parent_data =  &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO,
- 				.fw_name = "bi_tcxo",
- 			},
- 			.num_parents = 1,
-@@ -104,6 +111,7 @@ static struct clk_alpha_pll gpu_cc_pll1 = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpu_cc_pll1",
- 			.parent_data =  &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO,
- 				.fw_name = "bi_tcxo",
- 			},
- 			.num_parents = 1,
-@@ -121,11 +129,11 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
- };
- 
- static const struct clk_parent_data gpu_cc_parent_data_0[] = {
--	{ .fw_name = "bi_tcxo" },
-+	{ .index = DT_BI_TCXO, .fw_name = "bi_tcxo" },
- 	{ .hw = &gpu_cc_pll0.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
--	{ .fw_name = "gcc_gpu_gpll0_clk" },
--	{ .fw_name = "gcc_gpu_gpll0_div_clk" },
-+	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
-+	{ .index = DT_GPLL0_OUT_MAIN_DIV, .fw_name = "gcc_gpu_gpll0_div_clk" },
- };
- 
- static const struct parent_map gpu_cc_parent_map_1[] = {
-@@ -138,12 +146,12 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
- };
- 
- static const struct clk_parent_data gpu_cc_parent_data_1[] = {
--	{ .fw_name = "bi_tcxo" },
-+	{ .index = DT_BI_TCXO, .fw_name = "bi_tcxo" },
- 	{ .hw = &crc_div.hw },
- 	{ .hw = &gpu_cc_pll0.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
--	{ .fw_name = "gcc_gpu_gpll0_clk" },
-+	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
- };
- 
- static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
+-static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+-						"clk_ext1", "clk_ext2", };
+-
+ static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext2", "clk_ext3", };
+@@ -566,7 +562,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
+ 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
+ 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
+-	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
+ 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
+ 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
+ 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
 -- 
 2.40.1
 
