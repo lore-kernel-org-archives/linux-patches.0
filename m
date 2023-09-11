@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273881170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7A1C433C7;
-	Mon, 11 Sep 2023 14:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2196D1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74832C433C8;
+	Mon, 11 Sep 2023 14:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441226;
-	bh=lF/NazABTk6h5wktyneg8+VhxzPi3Oa3WdUUuWnpMqQ=;
+	s=korg; t=1694441228;
+	bh=8iTo8M93VZleBiF01WeGTWA+RPlhGansgKop+5GFRCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gwt5zU4hndK8o0Xg/ak58g2/gnMuBvw89saY96+uGS4iyhCmtHffHcjOrvFiCFMvv
-	 IcAIqkD/cPbeiyTgmxO8vN8A8g7Bs6vt06ntGW+gRvpVsTkou2hxUmnwco/5jzr6sD
-	 8yVt+Th4mgwNv35i7bsbQIBlu/qRsFd3fMCqVaJM=
+	b=DuLClhIZJc3s6RjdS/4WhkWvv7F7MF6zzP2cDKGalF5uYSRA4J8GS69jwrMs8wdN+
+	 3Svt9fGsq9tjKTBxEzGku11300B6qzlRPssWiffIMhu24S+pVueiTYlAwMgNKCJqDU
+	 9LEd3F3owoyYHCN0LYiw0Hqp3MD/QORHRAYw0MnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 338/739] drm/mediatek: Add cnt checking for coverity issue
-Date: Mon, 11 Sep 2023 15:42:17 +0200
-Message-ID: <20230911134700.544644172@linuxfoundation.org>
+Subject: [PATCH 6.5 339/739] arm64: dts: imx8mp-debix: remove unused fec pinctrl node
+Date: Mon, 11 Sep 2023 15:42:18 +0200
+Message-ID: <20230911134700.573140293@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,55 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit d761b9450e31e5abd212f0085d424ed32760de5a ]
+[ Upstream commit 574e4099d787c2eb41a43f14c453e422515bf658 ]
 
-CERT-C Characters and Strings (CERT STR31-C)
-all_drm_priv[cnt] evaluates to an address that could be at negative
-offset of an array.
+The SoM A uses the EQOS ethernet interface and not the FEC, so drop the
+interface pinctrl node from the device tree.
 
-In mtk_drm_get_all_drm_priv():
-Guarantee that storage for strings has sufficient space for character
-data and the null terminator.
-
-So change cnt to unsigned int and check its max value.
-
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230714094908.13087-3-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: c86d350aae68 ("arm64: dts: Add device tree for the Debix Model A Board")
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../dts/freescale/imx8mp-debix-model-a.dts    | 22 -------------------
+ 1 file changed, 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 6dcb4ba2466c0..fc217e0acd45d 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -354,7 +354,7 @@ static bool mtk_drm_get_all_drm_priv(struct device *dev)
- 	const struct of_device_id *of_id;
- 	struct device_node *node;
- 	struct device *drm_dev;
--	int cnt = 0;
-+	unsigned int cnt = 0;
- 	int i, j;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts b/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
+index b4409349eb3f6..1004ab0abb131 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
+@@ -355,28 +355,6 @@ MX8MP_IOMUXC_SAI1_TXD6__GPIO4_IO18				0x19
+ 		>;
+ 	};
  
- 	for_each_child_of_node(phandle->parent, node) {
-@@ -375,6 +375,9 @@ static bool mtk_drm_get_all_drm_priv(struct device *dev)
- 		all_drm_priv[cnt] = dev_get_drvdata(drm_dev);
- 		if (all_drm_priv[cnt] && all_drm_priv[cnt]->mtk_drm_bound)
- 			cnt++;
-+
-+		if (cnt == MAX_CRTC)
-+			break;
- 	}
- 
- 	if (drm_priv->data->mmsys_dev_num == cnt) {
+-	pinctrl_fec: fecgrp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_SAI1_RXD2__ENET1_MDC				0x3
+-			MX8MP_IOMUXC_SAI1_RXD3__ENET1_MDIO				0x3
+-			MX8MP_IOMUXC_SAI1_RXD4__ENET1_RGMII_RD0				0x91
+-			MX8MP_IOMUXC_SAI1_RXD5__ENET1_RGMII_RD1				0x91
+-			MX8MP_IOMUXC_SAI1_RXD6__ENET1_RGMII_RD2				0x91
+-			MX8MP_IOMUXC_SAI1_RXD7__ENET1_RGMII_RD3				0x91
+-			MX8MP_IOMUXC_SAI1_TXC__ENET1_RGMII_RXC				0x91
+-			MX8MP_IOMUXC_SAI1_TXFS__ENET1_RGMII_RX_CTL			0x91
+-			MX8MP_IOMUXC_SAI1_TXD0__ENET1_RGMII_TD0				0x1f
+-			MX8MP_IOMUXC_SAI1_TXD1__ENET1_RGMII_TD1				0x1f
+-			MX8MP_IOMUXC_SAI1_TXD2__ENET1_RGMII_TD2				0x1f
+-			MX8MP_IOMUXC_SAI1_TXD3__ENET1_RGMII_TD3				0x1f
+-			MX8MP_IOMUXC_SAI1_TXD4__ENET1_RGMII_TX_CTL			0x1f
+-			MX8MP_IOMUXC_SAI1_TXD5__ENET1_RGMII_TXC				0x1f
+-			MX8MP_IOMUXC_SAI1_RXD1__ENET1_1588_EVENT1_OUT			0x1f
+-			MX8MP_IOMUXC_SAI1_RXD0__ENET1_1588_EVENT1_IN			0x1f
+-			MX8MP_IOMUXC_SAI1_TXD7__GPIO4_IO19				0x19
+-		>;
+-	};
+-
+ 	pinctrl_gpio_led: gpioledgrp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_NAND_READY_B__GPIO3_IO16				0x19
 -- 
 2.40.1
 
