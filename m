@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0562B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780C3C433C8;
-	Mon, 11 Sep 2023 13:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35CD1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5278FC433C8;
+	Mon, 11 Sep 2023 13:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440508;
-	bh=L2EwtVJH+LhN/VY7ehBN9GHuR027UxgzVq6Iig3S3L4=;
+	s=korg; t=1694440511;
+	bh=PMVrQxcUlTZuCIWNs5PAKwrolEKKMXlKg43XkM3D0ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLEc58bQs4fS4ZTHB+RtSLt+pS+N0ucQSWWxkBhYRs/VQixXeB6uO7Qu8AmDp7yTL
-	 ZIzpmqOw8a1qDCXsmHGLZsKnOZjI8LmLSm+IyD0TLwhX1PBlGJ0WwTKTSJl7fuu+g4
-	 YVoFAsQ3DWoqDMWpo8b6JE040WOxghFmLPXxaQbQ=
+	b=v87a28bF4Lzs5Ms7AyoIlBJIMKzbNm/v4P8boPhEvUxVMiwhAedAcbGhvXCV0KMbF
+	 rp59HTf10qg7xfw9IoLDobr5s75gx9fuqVEDz7i7+TvvbIXBqkpKyLuHlj4VQz/X+7
+	 1WaIcLek5XddxhfycsYqeCkU37ihgKjJkNfx/EJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 087/739] wifi: mt76: mt7996: fix WA event ring size
-Date: Mon, 11 Sep 2023 15:38:06 +0200
-Message-ID: <20230911134653.537899483@linuxfoundation.org>
+Subject: [PATCH 6.5 088/739] udp: re-score reuseport groups when connected sockets are present
+Date: Mon, 11 Sep 2023 15:38:07 +0200
+Message-ID: <20230911134653.564501363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,48 +41,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit 1634de418b3048c5f435b6ffd37f75943c554c04 ]
+[ Upstream commit f0ea27e7bfe1c34e1f451a63eb68faa1d4c3a86d ]
 
-Fix rx ring size of WA event to get rid of event loss and queue overflow
-problems.
+Contrary to TCP, UDP reuseport groups can contain TCP_ESTABLISHED
+sockets. To support these properly we remember whether a group has
+a connected socket and skip the fast reuseport early-return. In
+effect we continue scoring all reuseport sockets and then choose the
+one with the highest score.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The current code fails to re-calculate the score for the result of
+lookup_reuseport. According to Kuniyuki Iwashima:
+
+    1) SO_INCOMING_CPU is set
+       -> selected sk might have +1 score
+
+    2) BPF prog returns ESTABLISHED and/or SO_INCOMING_CPU sk
+       -> selected sk will have more than 8
+
+  Using the old score could trigger more lookups depending on the
+  order that sockets are created.
+
+    sk -> sk (SO_INCOMING_CPU) -> sk (ESTABLISHED)
+    |     |
+    `-> select the next SO_INCOMING_CPU sk
+          |
+          `-> select itself (We should save this lookup)
+
+Fixes: efc6b6f6c311 ("udp: Improve load balancing for SO_REUSEPORT.")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-1-7021b683cdae@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/dma.c    | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/udp.c | 20 +++++++++++++++-----
+ net/ipv6/udp.c | 19 ++++++++++++++-----
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-index 534143465d9b3..fbedaacffbba5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-@@ -293,7 +293,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
- 	/* event from WA */
- 	ret = mt76_queue_alloc(dev, &dev->mt76.q_rx[MT_RXQ_MCU_WA],
- 			       MT_RXQ_ID(MT_RXQ_MCU_WA),
--			       MT7996_RX_MCU_RING_SIZE,
-+			       MT7996_RX_MCU_RING_SIZE_WA,
- 			       MT_RX_BUF_SIZE,
- 			       MT_RXQ_RING_BASE(MT_RXQ_MCU_WA));
- 	if (ret)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 4d7dcb95a620a..b8bcad717d89f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -26,6 +26,7 @@
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index abfa860367aa9..b3aa68ea29de2 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -452,14 +452,24 @@ static struct sock *udp4_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
- #define MT7996_RX_RING_SIZE		1536
- #define MT7996_RX_MCU_RING_SIZE		512
-+#define MT7996_RX_MCU_RING_SIZE_WA	1024
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(result, net, saddr, sport,
++						daddr, hnum, dif, sdif);
++
+ 		}
+ 	}
+ 	return result;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 486d893b8e3ca..3ffca158d3e11 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -195,14 +195,23 @@ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
- #define MT7996_FIRMWARE_WA		"mediatek/mt7996/mt7996_wa.bin"
- #define MT7996_FIRMWARE_WM		"mediatek/mt7996/mt7996_wm.bin"
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(sk, net, saddr, sport,
++						daddr, hnum, dif, sdif);
+ 		}
+ 	}
+ 	return result;
 -- 
 2.40.1
 
