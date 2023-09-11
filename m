@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E83A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867A3C433C8;
-	Mon, 11 Sep 2023 15:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4395611706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5023BC433C8;
+	Mon, 11 Sep 2023 15:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444416;
-	bh=2EfkddGdZh5KwATzfyIBvJzRdaVt9a9KKDidRGZVxzM=;
+	s=korg; t=1694444419;
+	bh=t6nZifou342Frxs+8Tvd5HArOQ3VaMCgvm9LSgtn04A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kfim+BUR8NBSE6+Mmh28us/3TuWojkFA7+Et/n4ya63cVEYsG1bigPooIVTpkC453
-	 L7daCOoyZWUvTBUg3QJgEk9/0dtmcjxOc7d1VV5IwOva5Ouy8PZAUd6PO6eMEA36AS
-	 BzueIeB5zn5nDEpFPQnX1TQ1zKrp+SUMcQ2cVw6s=
+	b=y6jUlRmk0bEkc+mWCDn8IShnP9pCbNRv5wlS9mqqLnwL7GZkDkex/MkMm9c6OjV8q
+	 9CpmT46O2IrkTNa1VCzjSw+E3IyuEbcFCC857Q1U0QXT4tNYPgWgqJ5ebni0Km/zOC
+	 60nhlGp7r9LsfMwmfT22mQXQXyl9SLP3mXS/kTQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.4 722/737] x86/build: Fix linker fill bytes quirk/incompatibility for ld.lld
-Date: Mon, 11 Sep 2023 15:49:41 +0200
-Message-ID: <20230911134710.681147959@linuxfoundation.org>
+	Stephane Eranian <eranian@google.com>,
+	Yunying Sun <yunying.sun@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.4 723/737] perf/x86/uncore: Correct the number of CHAs on EMR
+Date: Mon, 11 Sep 2023 15:49:42 +0200
+Message-ID: <20230911134710.707422701@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,53 +41,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 65e710899fd19f435f40268f3a92dfaa11f14470 upstream.
+commit 6f7f984fa85b305799076a1bcec941b9377587de upstream.
 
-With ":text =0xcccc", ld.lld fills unused text area with 0xcccc0000.
-Example objdump -D output:
+Starting from SPR, the basic uncore PMON information is retrieved from
+the discovery table (resides in an MMIO space populated by BIOS). It is
+called the discovery method. The existing value of the type->num_boxes
+is from the discovery table.
 
-	ffffffff82b04203:       00 00                   add    %al,(%rax)
-	ffffffff82b04205:       cc                      int3
-	ffffffff82b04206:       cc                      int3
-	ffffffff82b04207:       00 00                   add    %al,(%rax)
-	ffffffff82b04209:       cc                      int3
-	ffffffff82b0420a:       cc                      int3
+On some SPR variants, there is a firmware bug that makes the value from the
+discovery table incorrect. We use the value from the
+SPR_MSR_UNC_CBO_CONFIG MSR to replace the one from the discovery table:
 
-Replace it with ":text =0xcccccccc", so we get the following instead:
+   38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
 
-	ffffffff82b04203:       cc                      int3
-	ffffffff82b04204:       cc                      int3
-	ffffffff82b04205:       cc                      int3
-	ffffffff82b04206:       cc                      int3
-	ffffffff82b04207:       cc                      int3
-	ffffffff82b04208:       cc                      int3
+Unfortunately, the SPR_MSR_UNC_CBO_CONFIG isn't available for the EMR
+XCC (Always returns 0), but the above firmware bug doesn't impact the
+EMR XCC.
 
-gcc/ld doesn't seem to have the same issue. The generated code stays the
-same for gcc/ld.
+Don't let the value from the MSR replace the existing value from the
+discovery table.
 
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
+Reported-by: Stephane Eranian <eranian@google.com>
+Reported-by: Yunying Sun <yunying.sun@intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Fixes: 7705dc855797 ("x86/vmlinux: Use INT3 instead of NOP for linker fill bytes")
-Link: https://lore.kernel.org/r/20230906175215.2236033-1-song@kernel.org
+Tested-by: Yunying Sun <yunying.sun@intel.com>
+Link: https://lore.kernel.org/r/20230905134248.496114-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/vmlinux.lds.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/uncore_snbep.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -156,7 +156,7 @@ SECTIONS
- 		ALIGN_ENTRY_TEXT_END
- 		*(.gnu.warning)
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -6474,8 +6474,18 @@ void spr_uncore_cpu_init(void)
  
--	} :text =0xcccc
-+	} :text = 0xcccccccc
- 
- 	/* End of text section, which should occupy whole number of pages */
- 	_etext = .;
+ 	type = uncore_find_type_by_id(uncore_msr_uncores, UNCORE_SPR_CHA);
+ 	if (type) {
++		/*
++		 * The value from the discovery table (stored in the type->num_boxes
++		 * of UNCORE_SPR_CHA) is incorrect on some SPR variants because of a
++		 * firmware bug. Using the value from SPR_MSR_UNC_CBO_CONFIG to replace it.
++		 */
+ 		rdmsrl(SPR_MSR_UNC_CBO_CONFIG, num_cbo);
+-		type->num_boxes = num_cbo;
++		/*
++		 * The MSR doesn't work on the EMR XCC, but the firmware bug doesn't impact
++		 * the EMR XCC. Don't let the value from the MSR replace the existing value.
++		 */
++		if (num_cbo)
++			type->num_boxes = num_cbo;
+ 	}
+ 	spr_uncore_iio_free_running.num_boxes = uncore_type_max_boxes(uncore_msr_uncores, UNCORE_SPR_IIO);
+ }
 
 
