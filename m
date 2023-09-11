@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764D011184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFB8C433C8;
-	Mon, 11 Sep 2023 14:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631C11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E9AC433C8;
+	Mon, 11 Sep 2023 14:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440890;
-	bh=4mg+ryVNLhQL+i7kqODLbghs+CW3GihIR7bNheDiPJs=;
+	s=korg; t=1694440893;
+	bh=AsBXe/jnuD5L+FPiQjZLa1gV8V5visF1Osd1kf155oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuuLa9I+dYwEPDTU+CWNU8eWxyDG9+b8sT/A+lCnEVGg7+JnVfKSXqqOJ1bgNzT6+
-	 U4dvvW/jLDU6zdTPTNrG3JFvvtVl9BGcJZF2ZW/tKx318L9bapC6AHN6ch4hyF/6eO
-	 okVBfffQXZqWLE0WEbbq1iblriKoDYUfbUrUuZlY=
+	b=0pg0Xlvf7uDtUAmFZEWbhAxf7l8zzi/Y1VCXFLjVhon+iEYaETLYCrs5BVXGnopMk
+	 CkEHxWD7Bfq+ouKXmcE2SN6QTJrpDGSsfV3yS+6OqSCC646Zzyt3Ccvungvr9A7jY3
+	 gwo4Rdrn6SsIJbmIr8F0rN/pPfBdmaaxno9ZtJEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 221/739] arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
-Date: Mon, 11 Sep 2023 15:40:20 +0200
-Message-ID: <20230911134657.357255962@linuxfoundation.org>
+Subject: [PATCH 6.5 222/739] arm64: dts: qcom: sc8280xp-crd: Correct vreg_misc_3p3 GPIO
+Date: Mon, 11 Sep 2023 15:40:21 +0200
+Message-ID: <20230911134657.384057055@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,123 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit a422c6a91a667b309ca1a6c08b30dbfcf7d4e866 ]
+[ Upstream commit 9566b5271f68bdf6e69b7c511850e3fb75cd18be ]
 
-Set up the corresponding GPIOs properly and add the leftover hardware
-buttons to mark this piece of the puzzle complete.
+The vreg_misc_3p3 regulator is controlled by PMC8280_1 GPIO 2, not 1, on
+the CRD.
 
-Fixes: 46e14907c716 ("arm64: dts: qcom: sm8250-edo: Add hardware keys")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230614-topic-edo_pinsgpiopmic-v2-4-6f90bba54c53@linaro.org
+Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230620203915.141337-1-quic_bjorande@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../qcom/sm8250-sony-xperia-edo-pdx206.dts    | 10 ++++
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 54 ++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-index ea4571bf4fbf0..58a521046f5f5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-@@ -20,6 +20,8 @@ &framebuffer {
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index b566e403d1db2..b21b41a066b62 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -167,7 +167,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
  
- &gpio_keys {
-+	pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
-+
- 	g-assist-key {
- 		label = "Google Assistant Key";
- 		linux,code = <KEY_LEFTMETA>;
-@@ -48,6 +50,14 @@ &pm8150_gpios {
- 			  "SP_ARI_PWR_ALARM",
- 			  "NC",
- 			  "NC"; /* GPIO_10 */
-+
-+	g_assist_n: g-assist-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
- };
+-		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
++		gpio = <&pmc8280_1_gpios 2 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
  
- &pm8150b_gpios {
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 8ab82bacba81f..4727a4e0fc95b 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -51,12 +51,26 @@ framebuffer: framebuffer@9c000000 {
- 	gpio_keys: gpio-keys {
- 		compatible = "gpio-keys";
+ 		pinctrl-names = "default";
+@@ -757,7 +757,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
+ 	};
  
--		/*
--		 * Camera focus (light press) and camera snapshot (full press)
--		 * seem not to work properly.. Adding the former one stalls the CPU
--		 * and the latter kills the volume down key for whatever reason. In any
--		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
--		 */
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-camera-focus {
-+			label = "Camera Focus";
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+
-+		key-camera-snapshot {
-+			label = "Camera Snapshot";
-+			linux,code = <KEY_CAMERA>;
-+			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
- 
- 		key-vol-down {
- 			label = "Volume Down";
-@@ -551,6 +565,34 @@ &pcie2_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
- 
-+&pm8150_gpios {
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pm8150b_gpios {
-+	snapshot_n: snapshot-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	focus_n: focus-n-state {
+ 	misc_3p3_reg_en: misc-3p3-reg-en-state {
+-		pins = "gpio1";
 +		pins = "gpio2";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
+ 		function = "normal";
+ 	};
  };
 -- 
 2.40.1
