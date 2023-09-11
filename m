@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA61172F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81983C433C8;
-	Mon, 11 Sep 2023 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC0811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568ECC433C7;
+	Mon, 11 Sep 2023 15:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445945;
-	bh=qRmGEv+/9knJjrHXCGjnxgMEr3UdxhGUWP0bT64rk4Y=;
+	s=korg; t=1694445948;
+	bh=m/f6FDAI9WXsFSS/mM+m2TJ8miY+PuR1PVP25i98Vdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMcKXS4lOrqcG6ScLGKHRffpE0q0/ZPnLw9zs3KXbc+ZWvQRkJmspcNZCs3I3vIRp
-	 9wDQQ5VDfFo+jhG5Cl2+6MroMeRfizOkT/RGiOMOWhb3/qXXYaot6o8+IwOazFFzta
-	 JXtyyf1lswmA6/hrUZgSEEVGivGkK2sIgLP3bu/0=
+	b=OpcVXelr3lrwxgk6By/tXybDOcDWAJTaVedAj2yeEvoeO/DyD02Q3MLUGCNVsGCXO
+	 XbG199F740CoCW/d4rRG0d9iy3aN9N+gNa29pKK7WTNl1y5tdxyG0Uhb6SMYsHgX8/
+	 7l+xwpTtupJZFdcb3lPew+nAtrvKGjhZhUmkVes0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 528/600] scsi: core: Fix the scsi_set_resid() documentation
-Date: Mon, 11 Sep 2023 15:49:21 +0200
-Message-ID: <20230911134649.209444610@linuxfoundation.org>
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Zhen Lei <thunder.leizhen@huaweicloud.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 529/600] mm/vmalloc: add a safer version of find_vm_area() for debug
+Date: Mon, 11 Sep 2023 15:49:22 +0200
+Message-ID: <20230911134649.238794777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,42 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit f669b8a683e4ee26fa5cafe19d71cec1786b556a upstream.
+commit 0818e739b5c061b0251c30152380600fb9b84c0c upstream.
 
-Because scsi_finish_command() subtracts the residual from the buffer
-length, residual overflows must not be reported. Reflect this in the SCSI
-documentation. See also commit 9237f04e12cc ("scsi: core: Fix
-scsi_get/set_resid() interface")
+It is unsafe to dump vmalloc area information when trying to do so from
+some contexts.  Add a safer trylock version of the same function to do a
+best-effort VMA finding and use it from vmalloc_dump_obj().
 
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230721160154.874010-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[applied test robot feedback on unused function fix.]
+[applied Uladzislau feedback on locking.]
+Link: https://lkml.kernel.org/r/20230904180806.1002832-1-joel@joelfernandes.org
+Fixes: 98f180837a89 ("mm: Make mem_dump_obj() handle vmalloc() memory")
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Reported-by: Zhen Lei <thunder.leizhen@huaweicloud.com>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Zqiang <qiang.zhang1211@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/scsi/scsi_mid_low_api.rst |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/vmalloc.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/Documentation/scsi/scsi_mid_low_api.rst
-+++ b/Documentation/scsi/scsi_mid_low_api.rst
-@@ -1190,11 +1190,11 @@ Members of interest:
- 		 - pointer to scsi_device object that this command is
-                    associated with.
-     resid
--		 - an LLD should set this signed integer to the requested
-+		 - an LLD should set this unsigned integer to the requested
-                    transfer length (i.e. 'request_bufflen') less the number
-                    of bytes that are actually transferred. 'resid' is
-                    preset to 0 so an LLD can ignore it if it cannot detect
--                   underruns (overruns should be rare). If possible an LLD
-+                   underruns (overruns should not be reported). An LLD
-                    should set 'resid' prior to invoking 'done'. The most
-                    interesting case is data transfers from a SCSI target
-                    device (e.g. READs) that underrun.
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -4041,14 +4041,32 @@ void pcpu_free_vm_areas(struct vm_struct
+ #ifdef CONFIG_PRINTK
+ bool vmalloc_dump_obj(void *object)
+ {
+-	struct vm_struct *vm;
+ 	void *objp = (void *)PAGE_ALIGN((unsigned long)object);
++	const void *caller;
++	struct vm_struct *vm;
++	struct vmap_area *va;
++	unsigned long addr;
++	unsigned int nr_pages;
++
++	if (!spin_trylock(&vmap_area_lock))
++		return false;
++	va = __find_vmap_area((unsigned long)objp, &vmap_area_root);
++	if (!va) {
++		spin_unlock(&vmap_area_lock);
++		return false;
++	}
+ 
+-	vm = find_vm_area(objp);
+-	if (!vm)
++	vm = va->vm;
++	if (!vm) {
++		spin_unlock(&vmap_area_lock);
+ 		return false;
++	}
++	addr = (unsigned long)vm->addr;
++	caller = vm->caller;
++	nr_pages = vm->nr_pages;
++	spin_unlock(&vmap_area_lock);
+ 	pr_cont(" %u-page vmalloc region starting at %#lx allocated at %pS\n",
+-		vm->nr_pages, (unsigned long)vm->addr, vm->caller);
++		nr_pages, addr, caller);
+ 	return true;
+ }
+ #endif
 
 
