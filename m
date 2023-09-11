@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25F81170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42052C433C7;
-	Mon, 11 Sep 2023 13:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2576C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CFAC433AB;
+	Mon, 11 Sep 2023 13:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440726;
-	bh=HKI7Zcc4ihRxX+FTzuedW9eWSXvUZYQMSy70gL+i9I0=;
+	s=korg; t=1694440729;
+	bh=Ys5e4WGNcs6sZ1kUlqFv9ltHIvwKsPznypixXFsV6pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lvu4OtHKdW8TmhUP1mYT4efeHx9W+Q0d3h5BEciD7+XFPF7tCTxxk/psMxjI56ZJs
-	 0EQZzTQ9tIFNagy9fuza+C6E6IlnOW+5/9DZVNezTEiSe3VYiTEDiZ8nDb+sEmmVIk
-	 xoGIuwIY1YjShaYxbR+oKyMaXXNb7Rnqxm69u2kw=
+	b=CJJbrwQ5cz5sJInFUqu3SqvLgQwJ/uCV/fFeIplLRObmxT4kizwWDbkCGHowQUgq4
+	 9Ibamjf4Nv+nyOkAgwef5IYbuCtUlb2S0N4nES2Z3Rm7beMRutUvET91scA7FeB/Wa
+	 Q2R/rDKKbkFOGImPZXXwkAR777bGhkpq8Iya9e/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 163/739] wifi: ath9k: fix races between ath9k_wmi_cmd and ath9k_wmi_ctrl_rx
-Date: Mon, 11 Sep 2023 15:39:22 +0200
-Message-ID: <20230911134655.719463475@linuxfoundation.org>
+Subject: [PATCH 6.5 138/739] net: hns3: fix wrong rpu tln reg issue
+Date: Mon, 11 Sep 2023 15:38:57 +0200
+Message-ID: <20230911134654.956526958@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -35,131 +35,205 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit b674fb513e2e7a514fcde287c0f73915d393fdb6 ]
+[ Upstream commit 36122201eeaefd78547def9681aa5d83b5a00b6a ]
 
-Currently, the synchronization between ath9k_wmi_cmd() and
-ath9k_wmi_ctrl_rx() is exposed to a race condition which, although being
-rather unlikely, can lead to invalid behaviour of ath9k_wmi_cmd().
+In the original RPU query command, the status register values of
+multiple RPU tunnels are accumulated by default, which is unreasonable.
+This patch Fix it by querying the specified tunnel ID.
+The tunnel number of the device can be obtained from firmware
+during initialization.
 
-Consider the following scenario:
-
-CPU0					CPU1
-
-ath9k_wmi_cmd(...)
-  mutex_lock(&wmi->op_mutex)
-  ath9k_wmi_cmd_issue(...)
-  wait_for_completion_timeout(...)
-  ---
-  timeout
-  ---
-					/* the callback is being processed
-					 * before last_seq_id became zero
-					 */
-					ath9k_wmi_ctrl_rx(...)
-					  spin_lock_irqsave(...)
-					  /* wmi->last_seq_id check here
-					   * doesn't detect timeout yet
-					   */
-					  spin_unlock_irqrestore(...)
-  /* last_seq_id is zeroed to
-   * indicate there was a timeout
-   */
-  wmi->last_seq_id = 0
-  mutex_unlock(&wmi->op_mutex)
-  return -ETIMEDOUT
-
-ath9k_wmi_cmd(...)
-  mutex_lock(&wmi->op_mutex)
-  /* the buffer is replaced with
-   * another one
-   */
-  wmi->cmd_rsp_buf = rsp_buf
-  wmi->cmd_rsp_len = rsp_len
-  ath9k_wmi_cmd_issue(...)
-    spin_lock_irqsave(...)
-    spin_unlock_irqrestore(...)
-  wait_for_completion_timeout(...)
-					/* the continuation of the
-					 * callback left after the first
-					 * ath9k_wmi_cmd call
-					 */
-					  ath9k_wmi_rsp_callback(...)
-					    /* copying data designated
-					     * to already timeouted
-					     * WMI command into an
-					     * inappropriate wmi_cmd_buf
-					     */
-					    memcpy(...)
-					    complete(&wmi->cmd_wait)
-  /* awakened by the bogus callback
-   * => invalid return result
-   */
-  mutex_unlock(&wmi->op_mutex)
-  return 0
-
-To fix this, update last_seq_id on timeout path inside ath9k_wmi_cmd()
-under the wmi_lock. Move ath9k_wmi_rsp_callback() under wmi_lock inside
-ath9k_wmi_ctrl_rx() so that the wmi->cmd_wait can be completed only for
-initially designated wmi_cmd call, otherwise the path would be rejected
-with last_seq_id check.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230425192607.18015-1-pchelkin@ispras.ru
+Fixes: ddb54554fa51 ("net: hns3: add DFX registers information for ethtool -d")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hnae3.h   |  1 +
+ .../hisilicon/hns3/hns3pf/hclge_cmd.h         |  4 +-
+ .../hisilicon/hns3/hns3pf/hclge_main.c        |  2 +
+ .../hisilicon/hns3/hns3pf/hclge_regs.c        | 66 ++++++++++++++++++-
+ 4 files changed, 71 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index d652c647d56b5..04f363cb90fe5 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -242,10 +242,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
- 		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
- 		goto free_skb;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+index 514a20bce4f44..a4b43bcd2f0c9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+@@ -382,6 +382,7 @@ struct hnae3_dev_specs {
+ 	u16 umv_size;
+ 	u16 mc_mac_size;
+ 	u32 mac_stats_num;
++	u8 tnl_num;
+ };
+ 
+ struct hnae3_client_ops {
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+index 91c173f40701a..d5cfdc4c082d8 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+@@ -826,7 +826,9 @@ struct hclge_dev_specs_1_cmd {
+ 	u8 rsv0[2];
+ 	__le16 umv_size;
+ 	__le16 mc_mac_size;
+-	u8 rsv1[12];
++	u8 rsv1[6];
++	u8 tnl_num;
++	u8 rsv2[5];
+ };
+ 
+ /* mac speed type defined in firmware command */
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index a5c7eeeb631ad..2d5a2e1ef664d 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -1326,6 +1326,7 @@ static void hclge_set_default_dev_specs(struct hclge_dev *hdev)
+ 	ae_dev->dev_specs.max_frm_size = HCLGE_MAC_MAX_FRAME;
+ 	ae_dev->dev_specs.max_qset_num = HCLGE_MAX_QSET_NUM;
+ 	ae_dev->dev_specs.umv_size = HCLGE_DEFAULT_UMV_SPACE_PER_PF;
++	ae_dev->dev_specs.tnl_num = 0;
+ }
+ 
+ static void hclge_parse_dev_specs(struct hclge_dev *hdev,
+@@ -1349,6 +1350,7 @@ static void hclge_parse_dev_specs(struct hclge_dev *hdev,
+ 	ae_dev->dev_specs.max_frm_size = le16_to_cpu(req1->max_frm_size);
+ 	ae_dev->dev_specs.umv_size = le16_to_cpu(req1->umv_size);
+ 	ae_dev->dev_specs.mc_mac_size = le16_to_cpu(req1->mc_mac_size);
++	ae_dev->dev_specs.tnl_num = req1->tnl_num;
+ }
+ 
+ static void hclge_check_dev_specs(struct hclge_dev *hdev)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
+index 734e5f757b9c5..43c1c18fa81f8 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
+@@ -125,6 +125,7 @@ enum hclge_reg_tag {
+ 	HCLGE_REG_TAG_DFX_RCB,
+ 	HCLGE_REG_TAG_DFX_TQP,
+ 	HCLGE_REG_TAG_DFX_SSU_2,
++	HCLGE_REG_TAG_RPU_TNL,
+ };
+ 
+ #pragma pack(4)
+@@ -147,6 +148,8 @@ struct hclge_reg_header {
+ #define HCLGE_REG_HEADER_SPACE	(sizeof(struct hclge_reg_header) / sizeof(u32))
+ #define HCLGE_REG_MAGIC_NUMBER	0x686e733372656773 /* meaning is hns3regs */
+ 
++#define HCLGE_REG_RPU_TNL_ID_0	1
++
+ static u32 hclge_reg_get_header(void *data)
+ {
+ 	struct hclge_reg_header *header = data;
+@@ -342,6 +345,28 @@ static int hclge_dfx_reg_cmd_send(struct hclge_dev *hdev,
+ 	return ret;
+ }
+ 
++/* tnl_id = 0 means get sum of all tnl reg's value */
++static int hclge_dfx_reg_rpu_tnl_cmd_send(struct hclge_dev *hdev, u32 tnl_id,
++					  struct hclge_desc *desc, int bd_num)
++{
++	int i, ret;
++
++	for (i = 0; i < bd_num; i++) {
++		hclge_cmd_setup_basic_desc(&desc[i], HCLGE_OPC_DFX_RPU_REG_0,
++					   true);
++		if (i != bd_num - 1)
++			desc[i].flag |= cpu_to_le16(HCLGE_COMM_CMD_FLAG_NEXT);
++	}
++
++	desc[0].data[0] = cpu_to_le32(tnl_id);
++	ret = hclge_cmd_send(&hdev->hw, desc, bd_num);
++	if (ret)
++		dev_err(&hdev->pdev->dev,
++			"failed to query dfx rpu tnl reg, ret = %d\n",
++			ret);
++	return ret;
++}
++
+ static int hclge_dfx_reg_fetch_data(struct hclge_desc *desc_src, int bd_num,
+ 				    void *data)
+ {
+@@ -363,6 +388,7 @@ static int hclge_dfx_reg_fetch_data(struct hclge_desc *desc_src, int bd_num,
+ static int hclge_get_dfx_reg_len(struct hclge_dev *hdev, int *len)
+ {
+ 	u32 dfx_reg_type_num = ARRAY_SIZE(hclge_dfx_bd_offset_list);
++	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(hdev->pdev);
+ 	int data_len_per_desc;
+ 	int *bd_num_list;
+ 	int ret;
+@@ -384,11 +410,41 @@ static int hclge_get_dfx_reg_len(struct hclge_dev *hdev, int *len)
+ 	for (i = 0; i < dfx_reg_type_num; i++)
+ 		*len += bd_num_list[i] * data_len_per_desc + HCLGE_REG_TLV_SIZE;
+ 
++	/**
++	 * the num of dfx_rpu_0 is reused by each dfx_rpu_tnl
++	 * HCLGE_DFX_BD_OFFSET is starting at 1, but the array subscript is
++	 * starting at 0, so offset need '- 1'.
++	 */
++	*len += (bd_num_list[HCLGE_DFX_RPU_0_BD_OFFSET - 1] * data_len_per_desc +
++		 HCLGE_REG_TLV_SIZE) * ae_dev->dev_specs.tnl_num;
++
+ out:
+ 	kfree(bd_num_list);
+ 	return ret;
+ }
+ 
++static int hclge_get_dfx_rpu_tnl_reg(struct hclge_dev *hdev, u32 *reg,
++				     struct hclge_desc *desc_src,
++				     int bd_num)
++{
++	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(hdev->pdev);
++	int ret = 0;
++	u8 i;
++
++	for (i = HCLGE_REG_RPU_TNL_ID_0; i <= ae_dev->dev_specs.tnl_num; i++) {
++		ret = hclge_dfx_reg_rpu_tnl_cmd_send(hdev, i, desc_src, bd_num);
++		if (ret)
++			break;
++
++		reg += hclge_reg_get_tlv(HCLGE_REG_TAG_RPU_TNL,
++					 ARRAY_SIZE(desc_src->data) * bd_num,
++					 reg);
++		reg += hclge_dfx_reg_fetch_data(desc_src, bd_num, reg);
++	}
++
++	return ret;
++}
++
+ static int hclge_get_dfx_reg(struct hclge_dev *hdev, void *data)
+ {
+ 	u32 dfx_reg_type_num = ARRAY_SIZE(hclge_dfx_bd_offset_list);
+@@ -428,7 +484,7 @@ static int hclge_get_dfx_reg(struct hclge_dev *hdev, void *data)
+ 		if (ret) {
+ 			dev_err(&hdev->pdev->dev,
+ 				"Get dfx reg fail, status is %d.\n", ret);
+-			break;
++			goto free;
+ 		}
+ 
+ 		reg += hclge_reg_get_tlv(HCLGE_REG_TAG_DFX_BIOS_COMMON + i,
+@@ -437,6 +493,14 @@ static int hclge_get_dfx_reg(struct hclge_dev *hdev, void *data)
+ 		reg += hclge_dfx_reg_fetch_data(desc_src, bd_num, reg);
  	}
--	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
  
- 	/* WMI command response */
- 	ath9k_wmi_rsp_callback(wmi, skb);
-+	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
- 
- free_skb:
- 	kfree_skb(skb);
-@@ -308,8 +308,8 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 	struct ath_common *common = ath9k_hw_common(ah);
- 	u16 headroom = sizeof(struct htc_frame_hdr) +
- 		       sizeof(struct wmi_cmd_hdr);
-+	unsigned long time_left, flags;
- 	struct sk_buff *skb;
--	unsigned long time_left;
- 	int ret = 0;
- 
- 	if (ah->ah_flags & AH_UNPLUGGED)
-@@ -345,7 +345,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 	if (!time_left) {
- 		ath_dbg(common, WMI, "Timeout waiting for WMI command: %s\n",
- 			wmi_cmd_to_name(cmd_id));
-+		spin_lock_irqsave(&wmi->wmi_lock, flags);
- 		wmi->last_seq_id = 0;
-+		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
- 		mutex_unlock(&wmi->op_mutex);
- 		return -ETIMEDOUT;
- 	}
++	/**
++	 * HCLGE_DFX_BD_OFFSET is starting at 1, but the array subscript is
++	 * starting at 0, so offset need '- 1'.
++	 */
++	bd_num = bd_num_list[HCLGE_DFX_RPU_0_BD_OFFSET - 1];
++	ret = hclge_get_dfx_rpu_tnl_reg(hdev, reg, desc_src, bd_num);
++
++free:
+ 	kfree(desc_src);
+ out:
+ 	kfree(bd_num_list);
 -- 
 2.40.1
 
