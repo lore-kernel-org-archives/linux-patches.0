@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E7D1172B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6636EC433C8;
-	Mon, 11 Sep 2023 14:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12B41171F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423AFC433C7;
+	Mon, 11 Sep 2023 14:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442602;
-	bh=6mBGLz6skFIWwJTM4BUVUQShaH3tMrsgsut2+Rb+WdY=;
+	s=korg; t=1694442605;
+	bh=7k0MUi6EMGyMMvZT5F65jYLDP834p4chOCpVKLiPA4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlvQThWE/7scBF89VFUcflOuFeqB8296EKlkF1ONbIOZ3xNCRUuFpl7bAPP1PaFkI
-	 Qa/ZkK8hv2dDSsKZiEKYz76HvzyhjeEFObJrQRoN+vsRTdBuaI80ylXhDtnuqwNUTf
-	 MlwNIdwMDuxWCxTKibiWt+M30IZe8FjVulCMqaqQ=
+	b=WMjMRPCFvZcdfsfJqkT+Ue4QMBCXQ1ZorOYKsM8yM7xtNiLA6xXm4wOL6mBmH8Hg/
+	 5VGqNiRd9s4q5A47CQH9vLx+ht5yZAz+piHJ0QKb5e7mP8UPpa9lSNP5RrJwBcVZmv
+	 lPfQhAv3lSEGMiP5LFAeILywdbJIskIuz3IhRXnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Josua Mayer <josua@solid-run.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 082/737] ASoC: cs35l56: Add an ACPI match table
-Date: Mon, 11 Sep 2023 15:39:01 +0200
-Message-ID: <20230911134652.800450741@linuxfoundation.org>
+Subject: [PATCH 6.4 083/737] net: sfp: handle 100G/25G active optical cables in sfp_parse_support
+Date: Mon, 11 Sep 2023 15:39:02 +0200
+Message-ID: <20230911134652.826934964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,71 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit e8500a70270334b9abad72fea504ef38a2952274 ]
+[ Upstream commit db1a6ad77c180efc7242d7204b9a0c72c8a5a1bb ]
 
-An ACPI ID has been allocated for CS35L56 ASoC devices so that they can
-be instantiated from ACPI Device entries.
+Handle extended compliance code 0x1 (SFF8024_ECC_100G_25GAUI_C2M_AOC)
+for active optical cables supporting 25G and 100G speeds.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230817112712.16637-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since the specification makes no statement about transmitter range, and
+as the specific sfp module that had been tested features only 2m fiber -
+short-range (SR) modes are selected.
+
+The 100G speed is irrelevant because it would require multiple fibers /
+multiple SFP28 modules combined under one netdev.
+sfp-bus.c only handles a single module per netdev, so only 25Gbps modes
+are selected.
+
+sfp_parse_support already handles SFF8024_ECC_100GBASE_SR4_25GBASE_SR
+with compatible properties, however that entry is a contradiction in
+itself since with SFP(28) 100GBASE_SR4 is impossible - that would likely
+be a mode for qsfp modules only.
+
+Add a case for SFF8024_ECC_100G_25GAUI_C2M_AOC selecting 25gbase-r
+interface mode and 25000baseSR link mode.
+Also enforce SFP28 bitrate limits on the values read from sfp eeprom as
+requested by Russell King.
+
+Tested with fs.com S28-AO02 AOC SFP28 module.
+
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56-i2c.c | 9 +++++++++
- sound/soc/codecs/cs35l56-spi.c | 9 +++++++++
- 2 files changed, 18 insertions(+)
+ drivers/net/phy/sfp-bus.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/cs35l56-i2c.c b/sound/soc/codecs/cs35l56-i2c.c
-index 295caad262243..c613a2554fa31 100644
---- a/sound/soc/codecs/cs35l56-i2c.c
-+++ b/sound/soc/codecs/cs35l56-i2c.c
-@@ -62,10 +62,19 @@ static const struct i2c_device_id cs35l56_id_i2c[] = {
- };
- MODULE_DEVICE_TABLE(i2c, cs35l56_id_i2c);
- 
-+#ifdef CONFIG_ACPI
-+static const struct acpi_device_id cs35l56_asoc_acpi_match[] = {
-+	{ "CSC355C", 0 },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(acpi, cs35l56_asoc_acpi_match);
-+#endif
-+
- static struct i2c_driver cs35l56_i2c_driver = {
- 	.driver = {
- 		.name		= "cs35l56",
- 		.pm = &cs35l56_pm_ops_i2c_spi,
-+		.acpi_match_table = ACPI_PTR(cs35l56_asoc_acpi_match),
- 	},
- 	.id_table	= cs35l56_id_i2c,
- 	.probe_new	= cs35l56_i2c_probe,
-diff --git a/sound/soc/codecs/cs35l56-spi.c b/sound/soc/codecs/cs35l56-spi.c
-index 996aab10500ee..302f9c47407a4 100644
---- a/sound/soc/codecs/cs35l56-spi.c
-+++ b/sound/soc/codecs/cs35l56-spi.c
-@@ -59,10 +59,19 @@ static const struct spi_device_id cs35l56_id_spi[] = {
- };
- MODULE_DEVICE_TABLE(spi, cs35l56_id_spi);
- 
-+#ifdef CONFIG_ACPI
-+static const struct acpi_device_id cs35l56_asoc_acpi_match[] = {
-+	{ "CSC355C", 0 },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(acpi, cs35l56_asoc_acpi_match);
-+#endif
-+
- static struct spi_driver cs35l56_spi_driver = {
- 	.driver = {
- 		.name		= "cs35l56",
- 		.pm = &cs35l56_pm_ops_i2c_spi,
-+		.acpi_match_table = ACPI_PTR(cs35l56_asoc_acpi_match),
- 	},
- 	.id_table	= cs35l56_id_spi,
- 	.probe		= cs35l56_spi_probe,
+diff --git a/drivers/net/phy/sfp-bus.c b/drivers/net/phy/sfp-bus.c
+index 9372e5a4cadcf..5093fc82a0248 100644
+--- a/drivers/net/phy/sfp-bus.c
++++ b/drivers/net/phy/sfp-bus.c
+@@ -258,6 +258,16 @@ void sfp_parse_support(struct sfp_bus *bus, const struct sfp_eeprom_id *id,
+ 	switch (id->base.extended_cc) {
+ 	case SFF8024_ECC_UNSPEC:
+ 		break;
++	case SFF8024_ECC_100G_25GAUI_C2M_AOC:
++		if (br_min <= 28000 && br_max >= 25000) {
++			/* 25GBASE-R, possibly with FEC */
++			__set_bit(PHY_INTERFACE_MODE_25GBASER, interfaces);
++			/* There is currently no link mode for 25000base
++			 * with unspecified range, reuse SR.
++			 */
++			phylink_set(modes, 25000baseSR_Full);
++		}
++		break;
+ 	case SFF8024_ECC_100GBASE_SR4_25GBASE_SR:
+ 		phylink_set(modes, 100000baseSR4_Full);
+ 		phylink_set(modes, 25000baseSR_Full);
 -- 
 2.40.1
 
