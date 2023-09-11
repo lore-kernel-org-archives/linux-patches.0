@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2341170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E90C433C9;
-	Mon, 11 Sep 2023 14:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C81B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAECC433C7;
+	Mon, 11 Sep 2023 14:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440998;
-	bh=S4XzJFL65oEHvUO0xpxS+RLodhdQIaK4ix091Kje4D4=;
+	s=korg; t=1694441000;
+	bh=NtqGWMpr9T63u0GnTPX3CYuEuIXrk9c7NcAQ2JDf9CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qDNxx4wyx7QbwfL1g0KNOvVgbNwzuf7z63evFpd9Bq1smWj9FdTuZvG7wq9+aKAj
-	 ICuqkWBY/yVKXiskzpfEWnrL3N5BBfxspaRumTCzA6F1e++i9ZdfzGJLIo1qvdBiBU
-	 pw0rs9V6fJbsezmYftg5iUPSSvwAQ5iE0f4+hXXU=
+	b=fQpjjtzBNMrJO6qkXVierk5L5jlBfjjlvr9KU+q6LxHAdG4vQ6r+Zkb5kPLEi3YUJ
+	 mVXbwLYbn4CYS22ql9b6X0toC9VB4JZeMkcG2zQ9JoTzykcSSQAalH8uQWUpgp4jL6
+	 6C7CEe/GTOGB7LHpFuiIHaY3SGE1PfrMQkpSGU38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 223/739] arm64: dts: qcom: sc8280xp: Add missing SCM interconnect
-Date: Mon, 11 Sep 2023 15:40:22 +0200
-Message-ID: <20230911134657.410378851@linuxfoundation.org>
+Subject: [PATCH 6.5 253/739] arm64: dts: qcom: pm6150l: Add missing short interrupt
+Date: Mon, 11 Sep 2023 15:40:52 +0200
+Message-ID: <20230911134658.221138489@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,33 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 0a69ccf20b0837db857abfc94d7e3bacf1cb771b ]
+[ Upstream commit 7e1f024ef0d1da456f61d00f01dc3287ede915b3 ]
 
-The SCM interconnect path was missing. Add it.
+Add the missing short interrupt. This fixes the schema warning:
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+wled@d800: interrupt-names: ['ovp'] is too short
+
+Fixes: fe508ced49dd ("arm64: dts: qcom: pm6150l: Add wled node")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230622-topic-8280scmicc-v1-2-6ef318919ea5@linaro.org
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-3-254ae8642e69@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index ac0596dfdbc47..0756b7c141fff 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -298,6 +298,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sc8280xp", "qcom,scm";
-+			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/pm6150l.dtsi b/arch/arm64/boot/dts/qcom/pm6150l.dtsi
+index 6f7aa67501e27..0fdf440596c01 100644
+--- a/arch/arm64/boot/dts/qcom/pm6150l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm6150l.dtsi
+@@ -121,8 +121,9 @@ pm6150l_flash: led-controller@d300 {
+ 		pm6150l_wled: leds@d800 {
+ 			compatible = "qcom,pm6150l-wled";
+ 			reg = <0xd800>, <0xd900>;
+-			interrupts = <0x5 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "ovp";
++			interrupts = <0x5 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
++				     <0x5 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ovp", "short";
+ 			label = "backlight";
  
+ 			status = "disabled";
 -- 
 2.40.1
 
