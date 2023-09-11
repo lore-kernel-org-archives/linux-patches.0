@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D791170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA79C433C7;
-	Mon, 11 Sep 2023 14:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EBB1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5D1C433C7;
+	Mon, 11 Sep 2023 14:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441550;
-	bh=NH1whBAMTK5y5EGK1vEMIwRTjN7FrC6jRiM+4shsIOg=;
+	s=korg; t=1694441553;
+	bh=5UKcSz227dlPaO+1rnuOM8EhQGWh56FHEkaDqAsYQWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1j/sr4yCCjVx2KorOE89XTHCKme/fOOX6eJjthQ2RYSoCH7+4Vs0Cl3w4WAFiWz4
-	 t2G2RCTd4leRGzM81QRv7WaaNthSbEO+TlnsbTa1nYmBMhYQha+nvgJtb9ThSeYCjL
-	 TqyuoWBhE8ouluj7wPWlfnQH3QFXv/IP1pIL7SqI=
+	b=j0dKwtdf63ZG+uD8mTP0zOse5Efxh/SgSiod1NOn+u/wflL5fAzKEjtgosvpzF8pl
+	 xNi75cs9jHUL3S/BMTINwiCFi3KRukn47VFlDEIbEGw4NFY+9E9oKH5gXE+Z5q+mkR
+	 uglkoSnASsWuULnUMNUydpkzCEXP6vtsXUxu4clk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tomm.merciai@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Ricardo Ribalda Delgado <ribalda@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 452/739] media: i2c: imx290: drop format param from imx290_ctrl_update
-Date: Mon, 11 Sep 2023 15:44:11 +0200
-Message-ID: <20230911134703.784905151@linuxfoundation.org>
+Subject: [PATCH 6.5 453/739] media: ad5820: Drop unsupported ad5823 from i2c_ and of_device_id tables
+Date: Mon, 11 Sep 2023 15:44:12 +0200
+Message-ID: <20230911134703.811385810@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,62 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tomm.merciai@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9b4e0e7a570d222be5f5e0f914d3c4528eadeeb4 ]
+[ Upstream commit f126ff7e4024f6704e6ec0d4137037568708a3c7 ]
 
-The format param actually is not used in imx290_ctrl_update
-function, let's drop this
+The supported ad5820 and ad5821 VCMs both use a single 16 bit register
+which is written by sending 2 bytes with the data directly after sending
+the i2c-client address.
 
-Fixes: bc35f9a21a55 ("media: i2c: imx290: Fix the pixel rate at 148.5Mpix/s")
-Signed-off-by: Tommaso Merciai <tomm.merciai@gmail.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+The ad5823 OTOH has a more typical i2c / smbus device setup with multiple
+8 bit registers where the first byte send after the i2c-client address is
+the register address and the actual data only starts from the second byte
+after the i2c-client address.
+
+The ad5823 i2c_ and of_device_id-s was added at the same time as
+the ad5821 ids with as rationale:
+
+"""
+Some camera modules also refer that AD5823 is a replacement of AD5820:
+https://download.kamami.com/p564094-OV8865_DS.pdf
+"""
+
+The AD5823 may be an electrical and functional replacement of the AD5820,
+but from a software pov it is not compatible at all and it is going to
+need its own driver, drop its id from the ad5820 driver.
+
+Fixes: b8bf73136bae ("media: ad5820: Add support for ad5821 and ad5823")
+Cc: Pavel Machek <pavel@ucw.cz>
+Cc: Ricardo Ribalda Delgado <ribalda@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx290.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/media/i2c/ad5820.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/media/i2c/imx290.c b/drivers/media/i2c/imx290.c
-index b3f832e9d7e16..0622a9fcd2e07 100644
---- a/drivers/media/i2c/imx290.c
-+++ b/drivers/media/i2c/imx290.c
-@@ -902,7 +902,6 @@ static const char * const imx290_test_pattern_menu[] = {
+diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
+index 5f605b9be3b15..1543d24f522c3 100644
+--- a/drivers/media/i2c/ad5820.c
++++ b/drivers/media/i2c/ad5820.c
+@@ -349,7 +349,6 @@ static void ad5820_remove(struct i2c_client *client)
+ static const struct i2c_device_id ad5820_id_table[] = {
+ 	{ "ad5820", 0 },
+ 	{ "ad5821", 0 },
+-	{ "ad5823", 0 },
+ 	{ }
  };
- 
- static void imx290_ctrl_update(struct imx290 *imx290,
--			       const struct v4l2_mbus_framefmt *format,
- 			       const struct imx290_mode *mode)
- {
- 	unsigned int hblank_min = mode->hmax_min - mode->width;
-@@ -1195,7 +1194,7 @@ static int imx290_set_fmt(struct v4l2_subdev *sd,
- 	if (fmt->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
- 		imx290->current_mode = mode;
- 
--		imx290_ctrl_update(imx290, &fmt->format, mode);
-+		imx290_ctrl_update(imx290, mode);
- 		imx290_exposure_update(imx290, mode);
- 	}
- 
-@@ -1300,7 +1299,6 @@ static const struct media_entity_operations imx290_subdev_entity_ops = {
- static int imx290_subdev_init(struct imx290 *imx290)
- {
- 	struct i2c_client *client = to_i2c_client(imx290->dev);
--	const struct v4l2_mbus_framefmt *format;
- 	struct v4l2_subdev_state *state;
- 	int ret;
- 
-@@ -1335,8 +1333,7 @@ static int imx290_subdev_init(struct imx290 *imx290)
- 	}
- 
- 	state = v4l2_subdev_lock_and_get_active_state(&imx290->sd);
--	format = v4l2_subdev_get_pad_format(&imx290->sd, state, 0);
--	imx290_ctrl_update(imx290, format, imx290->current_mode);
-+	imx290_ctrl_update(imx290, imx290->current_mode);
- 	v4l2_subdev_unlock_state(state);
- 
- 	return 0;
+ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+@@ -357,7 +356,6 @@ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+ static const struct of_device_id ad5820_of_table[] = {
+ 	{ .compatible = "adi,ad5820" },
+ 	{ .compatible = "adi,ad5821" },
+-	{ .compatible = "adi,ad5823" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ad5820_of_table);
 -- 
 2.40.1
 
