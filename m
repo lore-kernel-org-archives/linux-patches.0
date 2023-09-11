@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A5111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC23FC433C8;
-	Mon, 11 Sep 2023 14:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349ED11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4093C433C8;
+	Mon, 11 Sep 2023 14:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443750;
-	bh=YJUsdsheENpAcB9cemMUoMnrl1A6howyiYccUgaoEdg=;
+	s=korg; t=1694443753;
+	bh=q5TGz+9lZt0cmsFwRgmW+X4yDc9RqQYp7rp4qMdHSFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNRJsaFgOzlPZg3SD0XIvxAFFiln30VHHLviNSDJsnRcitCWRcZrlmkTcNhYQ11qM
-	 petsjHdFkv7N2OcaMnoORjhMZMJ79cDkQQrMsrpFhgolx/q+pDXZecMOZuXTICZQxd
-	 XY+o4CgIp6kLLE5X0vjlugRxzh/1M+FZBrBnruLw=
+	b=w8y1R1EH16+t28mrpxdgx8P8V1Wj4TGGJBr0UAEKuWO/X86aGHwBVBtMd7dsgpC+4
+	 /ZiCEsI+tHfid4ngktSHFAI5x1JIBNaVBE/VBBnnJC4pmF4VXF2eVfTt2+FtsHQIV5
+	 kKKmg+X+FmjfmjYeMrSFU8TxMAWk+T5crhl4Nshk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 486/737] iommu: rockchip: Fix directory table address encoding
-Date: Mon, 11 Sep 2023 15:45:45 +0200
-Message-ID: <20230911134704.151651254@linuxfoundation.org>
+Subject: [PATCH 6.4 456/737] drm/amdgpu: Use RMW accessors for changing LNKCTL
+Date: Mon, 11 Sep 2023 15:45:15 +0200
+Message-ID: <20230911134703.336295167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -35,160 +36,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6df63b7ebdaf5fcd75dceedf6967d0761e56eca1 ]
+[ Upstream commit ce7d88110b9ed5f33fe79ea6d4ed049fb0e57bce ]
 
-The physical address to the directory table is currently encoded using
-the following bit layout for IOMMU v2.
+Don't assume that only the driver would be accessing LNKCTL. ASPM policy
+changes can trigger write to LNKCTL outside of driver's control.  And in
+the case of upstream bridge, the driver does not even own the device it's
+changing the registers for.
 
- 31:12 - Address bit 31:0
- 11: 4 - Address bit 39:32
+Use RMW capability accessors which do proper locking to avoid losing
+concurrent updates to the register value.
 
-This is also the bit layout used by the vendor kernel.
-
-However, testing has shown that addresses to the directory/page tables
-and memory pages are all encoded using the same bit layout.
-
-IOMMU v1:
- 31:12 - Address bit 31:0
-
-IOMMU v2:
- 31:12 - Address bit 31:0
- 11: 8 - Address bit 35:32
-  7: 4 - Address bit 39:36
-
-Change to use the mk_dtentries ops to encode the directory table address
-correctly. The value written to DTE_ADDR may include the valid bit set,
-a bit that is ignored and DTE_ADDR reg read it back as 0.
-
-This also update the bit layout comment for the page address and the
-number of nybbles that are read back for DTE_ADDR comment.
-
-These changes render the dte_addr_phys and dma_addr_dte ops unused and
-is removed.
-
-Fixes: 227014b33f62 ("iommu: rockchip: Add internal ops to handle variants")
-Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
-Fixes: c987b65a574f ("iommu/rockchip: Fix physical address decoding")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20230617182540.3091374-2-jonas@kwiboo.se
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
+Fixes: 62a37553414a ("drm/amdgpu: add si implementation v10")
+Link: https://lore.kernel.org/r/20230717120503.15276-6-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 43 ++++------------------------------
- 1 file changed, 5 insertions(+), 38 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/cik.c | 36 +++++++++-----------------------
+ drivers/gpu/drm/amd/amdgpu/si.c  | 36 +++++++++-----------------------
+ 2 files changed, 20 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 4054030c32379..ae42959bc4905 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -98,8 +98,6 @@ struct rk_iommu_ops {
- 	phys_addr_t (*pt_address)(u32 dte);
- 	u32 (*mk_dtentries)(dma_addr_t pt_dma);
- 	u32 (*mk_ptentries)(phys_addr_t page, int prot);
--	phys_addr_t (*dte_addr_phys)(u32 addr);
--	u32 (*dma_addr_dte)(dma_addr_t dt_dma);
- 	u64 dma_bit_mask;
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
+index de6d10390ab2f..9be6da37032a7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/cik.c
++++ b/drivers/gpu/drm/amd/amdgpu/cik.c
+@@ -1574,17 +1574,8 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
  
-@@ -278,8 +276,8 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
- /*
-  * In v2:
-  * 31:12 - Page address bit 31:0
-- *  11:9 - Page address bit 34:32
-- *   8:4 - Page address bit 39:35
-+ * 11: 8 - Page address bit 35:32
-+ *  7: 4 - Page address bit 39:36
-  *     3 - Security
-  *     2 - Writable
-  *     1 - Readable
-@@ -506,7 +504,7 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
- 
- 	/*
- 	 * Check if register DTE_ADDR is working by writing DTE_ADDR_DUMMY
--	 * and verifying that upper 5 nybbles are read back.
-+	 * and verifying that upper 5 (v1) or 7 (v2) nybbles are read back.
- 	 */
- 	for (i = 0; i < iommu->num_mmu; i++) {
- 		dte_addr = rk_ops->pt_address(DTE_ADDR_DUMMY);
-@@ -531,33 +529,6 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
- 	return 0;
- }
- 
--static inline phys_addr_t rk_dte_addr_phys(u32 addr)
--{
--	return (phys_addr_t)addr;
--}
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
 -
--static inline u32 rk_dma_addr_dte(dma_addr_t dt_dma)
--{
--	return dt_dma;
--}
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
 -
--#define DT_HI_MASK GENMASK_ULL(39, 32)
--#define DTE_BASE_HI_MASK GENMASK(11, 4)
--#define DT_SHIFT   28
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
+ 
+ 			tmp = RREG32_PCIE(ixPCIE_LC_STATUS1);
+ 			max_lw = (tmp & PCIE_LC_STATUS1__LC_DETECTED_LINK_WIDTH_MASK) >>
+@@ -1637,21 +1628,14 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+ 				msleep(100);
+ 
+ 				/* linkctl */
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
+-							   tmp16);
 -
--static inline phys_addr_t rk_dte_addr_phys_v2(u32 addr)
--{
--	u64 addr64 = addr;
--	return (phys_addr_t)(addr64 & RK_DTE_PT_ADDRESS_MASK) |
--	       ((addr64 & DTE_BASE_HI_MASK) << DT_SHIFT);
--}
+-				pcie_capability_read_word(adev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(adev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
+ 
+ 				/* linkctl2 */
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
+diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
+index 7f99e130acd06..fd34c2100bd96 100644
+--- a/drivers/gpu/drm/amd/amdgpu/si.c
++++ b/drivers/gpu/drm/amd/amdgpu/si.c
+@@ -2276,17 +2276,8 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
+ 
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
 -
--static inline u32 rk_dma_addr_dte_v2(dma_addr_t dt_dma)
--{
--	return (dt_dma & RK_DTE_PT_ADDRESS_MASK) |
--	       ((dt_dma & DT_HI_MASK) >> DT_SHIFT);
--}
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
 -
- static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
- {
- 	void __iomem *base = iommu->bases[index];
-@@ -577,7 +548,7 @@ static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
- 	page_offset = rk_iova_page_offset(iova);
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
  
- 	mmu_dte_addr = rk_iommu_read(base, RK_MMU_DTE_ADDR);
--	mmu_dte_addr_phys = rk_ops->dte_addr_phys(mmu_dte_addr);
-+	mmu_dte_addr_phys = rk_ops->pt_address(mmu_dte_addr);
+ 			tmp = RREG32_PCIE(PCIE_LC_STATUS1);
+ 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
+@@ -2331,21 +2322,14 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
  
- 	dte_addr_phys = mmu_dte_addr_phys + (4 * dte_index);
- 	dte_addr = phys_to_virt(dte_addr_phys);
-@@ -967,7 +938,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 				mdelay(100);
  
- 	for (i = 0; i < iommu->num_mmu; i++) {
- 		rk_iommu_write(iommu->bases[i], RK_MMU_DTE_ADDR,
--			       rk_ops->dma_addr_dte(rk_domain->dt_dma));
-+			       rk_ops->mk_dtentries(rk_domain->dt_dma));
- 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
- 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
- 	}
-@@ -1405,8 +1376,6 @@ static struct rk_iommu_ops iommu_data_ops_v1 = {
- 	.pt_address = &rk_dte_pt_address,
- 	.mk_dtentries = &rk_mk_dte,
- 	.mk_ptentries = &rk_mk_pte,
--	.dte_addr_phys = &rk_dte_addr_phys,
--	.dma_addr_dte = &rk_dma_addr_dte,
- 	.dma_bit_mask = DMA_BIT_MASK(32),
- };
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
+-							   tmp16);
+-
+-				pcie_capability_read_word(adev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(adev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
  
-@@ -1414,8 +1383,6 @@ static struct rk_iommu_ops iommu_data_ops_v2 = {
- 	.pt_address = &rk_dte_pt_address_v2,
- 	.mk_dtentries = &rk_mk_dte_v2,
- 	.mk_ptentries = &rk_mk_pte_v2,
--	.dte_addr_phys = &rk_dte_addr_phys_v2,
--	.dma_addr_dte = &rk_dma_addr_dte_v2,
- 	.dma_bit_mask = DMA_BIT_MASK(40),
- };
- 
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
+ 							  &tmp16);
 -- 
 2.40.1
 
