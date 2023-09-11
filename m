@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA90711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3377FC433C8;
-	Mon, 11 Sep 2023 15:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FD411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA83BC433C8;
+	Mon, 11 Sep 2023 15:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445620;
-	bh=iAZsJO6U/IuU7ETgURvt3NBTlpDBqzgP6w5ebJEmQiM=;
+	s=korg; t=1694445623;
+	bh=e3j76ZCMCaKrj+P8XJo1lfwvrRisVnhWNm6Dpej6KpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U01G2NvPSXnQSDbB1PfZnb7UCEeaQjqXeR7qGRfaCQ/HY97A6W56uv/PUH7VtLrfY
-	 qTnOf5eSZ376SYC2+tHQannM4BdUMrTj+uLCqAP5ZuXMO233M27AFPjrNy1+UcTN7V
-	 TQM2O5+nAgEC3+SzHH/tWd9BJXOxZXIVzPZw35oc=
+	b=QGJ0UlBJ5d7cvaBsj51J7w64+YfQA+nX4zdCHyF5isv1gCjnYT3xuHYsN6cc35T/6
+	 M8Fk8gstv3wXsGTuZ9PhF3yJqmZCncLxK0fLF57vUgexGi1OFtCuDTbhB71+F3Xeq3
+	 ey58JNlm9hi8DfuVHjwr9lJw8LfEgPtL7QR3rryc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 412/600] media: amphion: fix UNUSED_VALUE issue reported by coverity
-Date: Mon, 11 Sep 2023 15:47:25 +0200
-Message-ID: <20230911134645.837091833@linuxfoundation.org>
+Subject: [PATCH 6.1 413/600] media: amphion: ensure the bitops dont cross boundaries
+Date: Mon, 11 Sep 2023 15:47:26 +0200
+Message-ID: <20230911134645.865064469@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,10 +43,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit cf6a06354989c41b536be8e094561ee16223cf1f ]
+[ Upstream commit 5bd28eae48589694ff4e5badb03bf75dae695b3f ]
 
-assign value '-EINVAL' to ret, but the stored value is overwritten
-before it can be used
+the supported_instance_count determine the instance index range,
+it shouldn't exceed the bits number of instance_mask,
+otherwise the bitops of instance_mask may cross boundaries
 
 Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -54,22 +55,22 @@ Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/amphion/vpu_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
-index 7e137f276c3b1..235b71398d403 100644
---- a/drivers/media/platform/amphion/vpu_cmds.c
-+++ b/drivers/media/platform/amphion/vpu_cmds.c
-@@ -315,7 +315,7 @@ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
- {
- 	unsigned long key;
- 	int sync = false;
--	int ret = -EINVAL;
-+	int ret;
+diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
+index be80410682681..9add73b9b45f9 100644
+--- a/drivers/media/platform/amphion/vpu_core.c
++++ b/drivers/media/platform/amphion/vpu_core.c
+@@ -88,6 +88,8 @@ static int vpu_core_boot_done(struct vpu_core *core)
  
- 	if (inst->id < 0)
- 		return -EINVAL;
+ 		core->supported_instance_count = min(core->supported_instance_count, count);
+ 	}
++	if (core->supported_instance_count >= BITS_PER_TYPE(core->instance_mask))
++		core->supported_instance_count = BITS_PER_TYPE(core->instance_mask);
+ 	core->fw_version = fw_version;
+ 	vpu_core_set_state(core, VPU_CORE_ACTIVE);
+ 
 -- 
 2.40.1
 
