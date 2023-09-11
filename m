@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED3C291E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE08C433C8;
-	Mon, 11 Sep 2023 14:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51D71170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30538C433C7;
+	Mon, 11 Sep 2023 14:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441123;
-	bh=zWVTGJ4SQhJhopu7+njRdf73lzhLFAsXWoQe9PZQcyk=;
+	s=korg; t=1694441126;
+	bh=68xm8GZyiyxUi4sYFmI51ectlfs5mH81X21O2S/Oysg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hW+GPhUxB25XSf2WhpRNxF6VmGCo6YqlMudmNwQ9pDNbvevbwsfierW5X+NkZj5Bx
-	 De6FYOJVfui2jDt/B/yBW5HL09WiUPb6MGxfL51PN/PRGpfLBGupiqSFZ7NxjCSD5X
-	 ct2JOFFJyltFDVl1Qv1+DHJCyqvOlqg1YGYAkmpc=
+	b=Wm2YhQRoodsn/vRLZ1+ps3e2ohslNAUP7RQyJxP6j47wRF+qQPoecIqWK3zzT/KFf
+	 p2a+jNkIexQ88e+wimC5uKL4r+WHGdgNPXwX/Zfv3IfLfG1oUA3hdy1hILbax+72yl
+	 EbN+z4bhYq7u0lrwXwi3DRkkX8of6x/4O/kCTH+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan McCann <quic_rmccann@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 303/739] drm/msm/dpu: fix DSC 1.2 block lengths
-Date: Mon, 11 Sep 2023 15:41:42 +0200
-Message-ID: <20230911134659.588908190@linuxfoundation.org>
+Subject: [PATCH 6.5 304/739] drm/msm/dpu1: Rename sm8150_dspp_blk to sdm845_dspp_blk
+Date: Mon, 11 Sep 2023 15:41:43 +0200
+Message-ID: <20230911134659.615188682@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,180 +40,309 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit e550ad0e5c3d1a521413e6efb22729698a70110b ]
+[ Upstream commit 9891b3df2b4300d24735c1a1822985d2d173aade ]
 
-All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
-This includes the common block itself, enc subblocks and some empty
-space around. Change that to pass 0x4 instead, the length of common
-register block itself.
+SDM845 was the first SoC to include both PCC v4 and GC v1.8.
+We don't currently support any other blocks but the common config
+for these two can be reused for a large amount of SoCs.
 
-Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
-Reported-by: Ryan McCann <quic_rmccann@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Rename it to indicate the origin of that combo.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/533003/
+Link: https://lore.kernel.org/r/20230420-topic-dpu_gc-v1-1-d9d1a5e40917@linaro.org
+[DB: also applied to new catalog files]
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/550998/
-Link: https://lore.kernel.org/r/20230802183655.4188640-1-dmitry.baryshkov@linaro.org
+Stable-dep-of: 57a1ca6cf73b ("drm/msm/dpu: fix DSC 1.2 enc subblock length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  8 ++++----
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   |  2 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  8 ++++----
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   |  8 ++++----
- 5 files changed, 19 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 2 +-
+ 15 files changed, 39 insertions(+), 39 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 5cdfeb3dcb395..bd450712e65cd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -111,13 +111,13 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sdm845_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sdm845_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+index 53c7f89cf23e6..4589b7a043990 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+@@ -118,13 +118,13 @@ static const struct dpu_lm_cfg sm8150_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm8150_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index 27457060f53be..8f5d5d44ccb3d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -117,13 +117,13 @@ static const struct dpu_lm_cfg sc8180x_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc8180x_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+index e2d068bde9b71..0e17be6ed94f2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+@@ -119,13 +119,13 @@ static const struct dpu_lm_cfg sm8250_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm8250_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index 67566b07195a2..a3124661cb65f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -76,7 +76,7 @@ static const struct dpu_lm_cfg sc7180_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc7180_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sc7180_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+index 031fc8dae3c69..04a0dbf96e179 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+@@ -56,7 +56,7 @@ static const struct dpu_lm_cfg sm6115_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm6115_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm6115_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+index d6e84c2e3ea23..398ea3749f805 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+@@ -85,7 +85,7 @@ static const struct dpu_lm_cfg sm6350_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm6350_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		&sm8150_dspp_sblk),
++		&sdm845_dspp_sblk),
+ };
+ 
+ static struct dpu_pingpong_cfg sm6350_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+index f2808098af399..06cf48b55f989 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+@@ -53,7 +53,7 @@ static const struct dpu_lm_cfg qcm2290_lm[] = {
+ 
+ static const struct dpu_dspp_cfg qcm2290_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg qcm2290_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+index 06944b3686d6a..ec12602896f31 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+@@ -57,7 +57,7 @@ static const struct dpu_lm_cfg sm6375_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm6375_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		&sm8150_dspp_sblk),
++		&sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm6375_pp[] = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index a7baef8d9c490..b2a90e9e849e5 100644
+index b2a90e9e849e5..66b3d299ffcf7 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -161,22 +161,22 @@ static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
- static const struct dpu_dsc_cfg sm8350_dsc[] = {
- 	{
- 		.name = "dce_0_0", .id = DSC_0,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_0_1", .id = DSC_1,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_1,
- 	}, {
- 		.name = "dce_1_0", .id = DSC_2,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_1_1", .id = DSC_3,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_1,
- 	},
+@@ -117,13 +117,13 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm8350_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm8350_pp[] = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 9bfea24105629..76a2530238aab 100644
+index 76a2530238aab..f06ed9a73b071 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -106,7 +106,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
- static const struct dpu_dsc_cfg sc7280_dsc[] = {
- 	{
- 		.name = "dce_0_0", .id = DSC_0,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_0,
- 	},
+@@ -84,7 +84,7 @@ static const struct dpu_lm_cfg sc7280_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc7280_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sc7280_pp[] = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 16310d3d24dce..7ed302ade28c8 100644
+index 7ed302ade28c8..ac71cc62f605a 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -150,32 +150,32 @@ static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
- static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
- 	{
- 		.name = "dce_0_0", .id = DSC_0,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_0_1", .id = DSC_1,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_1,
- 	}, {
- 		.name = "dce_1_0", .id = DSC_2,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_1_1", .id = DSC_3,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_1,
- 	}, {
- 		.name = "dce_2_0", .id = DSC_4,
--		.base = 0x82000, .len = 0x29c,
-+		.base = 0x82000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_2_1", .id = DSC_5,
--		.base = 0x82000, .len = 0x29c,
-+		.base = 0x82000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_1,
- 	},
+@@ -112,13 +112,13 @@ static const struct dpu_lm_cfg sc8280xp_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc8280xp_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index ed5a9f9e2d331..7a27f26c69b62 100644
+index 7a27f26c69b62..d7407d471a31e 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -169,22 +169,22 @@ static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
- static const struct dpu_dsc_cfg sm8450_dsc[] = {
- 	{
- 		.name = "dce_0_0", .id = DSC_0,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_0_1", .id = DSC_1,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_1,
- 	}, {
- 		.name = "dce_1_0", .id = DSC_2,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_1_1", .id = DSC_3,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_1,
- 	},
+@@ -118,13 +118,13 @@ static const struct dpu_lm_cfg sm8450_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm8450_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sm8450_pp[] = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 3f91f230636db..9b653a95e019c 100644
+index 9b653a95e019c..d51c2f8acba0a 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -173,22 +173,22 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
- static const struct dpu_dsc_cfg sm8550_dsc[] = {
- 	{
- 		.name = "dce_0_0", .id = DSC_0,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_0_1", .id = DSC_1,
--		.base = 0x80000, .len = 0x29c,
-+		.base = 0x80000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2),
- 		.sblk = &dsc_sblk_1,
- 	}, {
- 		.name = "dce_1_0", .id = DSC_2,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_0,
- 	}, {
- 		.name = "dce_1_1", .id = DSC_3,
--		.base = 0x81000, .len = 0x29c,
-+		.base = 0x81000, .len = 0x4,
- 		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
- 		.sblk = &dsc_sblk_1,
- 	},
+@@ -123,13 +123,13 @@ static const struct dpu_lm_cfg sm8550_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sm8550_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ 	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
+-		 &sm8150_dspp_sblk),
++		 &sdm845_dspp_sblk),
+ };
+ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 	PP_BLK_DITHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 6d4252b2b215e..e96b3c2c2faf0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -448,7 +448,7 @@ static const struct dpu_dspp_sub_blks msm8998_dspp_sblk = {
+ 		.len = 0x90, .version = 0x10007},
+ };
+ 
+-static const struct dpu_dspp_sub_blks sm8150_dspp_sblk = {
++static const struct dpu_dspp_sub_blks sdm845_dspp_sblk = {
+ 	.pcc = {.id = DPU_DSPP_PCC, .base = 0x1700,
+ 		.len = 0x90, .version = 0x40000},
+ };
 -- 
 2.40.1
 
