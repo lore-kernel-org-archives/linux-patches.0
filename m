@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639571170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A07C433C7;
-	Mon, 11 Sep 2023 13:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443EC1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E78C433C8;
+	Mon, 11 Sep 2023 13:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440602;
-	bh=X/L3kRyOQU/rTLC4zVWeP/v0gA4lxMhechOubwF9YS0=;
+	s=korg; t=1694440605;
+	bh=FqPRaSRt/ahvt2OvH9QTY1QDA+ktWuIE/LdBW7Qrk4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7tAgz7Z2SS1YaXBWmhZOM748sBMfW31YgAuaMNiczuPbDQz70zhh30eXw10Ud263
-	 z0VqToXLFcqulOR8S8g5a6pHN7O9vpcsPlLfGqH0nbmtbIjcBwK/zVMcOouUMwdwj5
-	 1deIjO9NusrLcUmdkleymlPrOIIkmQzF2HymqZkM=
+	b=vEQGbekuB/SDIoysqz99ppCP2cRMFdn9B+80NJsaMk+xZb8Ky2rHBS/hujid51Czy
+	 occnLL12q/Y22jbBB7ASv/0i7zCecv7olZK2XarXeuAuGPD3ueVs3pkc0tSJ9SfCKJ
+	 EodO5HH5fdVmsYO9Y+NgUaN754iY1m5d95NDdyAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 120/739] Bluetooth: nokia: fix value check in nokia_bluetooth_serdev_probe()
-Date: Mon, 11 Sep 2023 15:38:39 +0200
-Message-ID: <20230911134654.447834608@linuxfoundation.org>
+Subject: [PATCH 6.5 121/739] Bluetooth: ISO: Fix not checking for valid CIG/CIS IDs
+Date: Mon, 11 Sep 2023 15:38:40 +0200
+Message-ID: <20230911134654.476710350@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,38 +39,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit e8b5aed31355072faac8092ead4938ddec3111fd ]
+[ Upstream commit b7f923b1ef6a2e76013089d30c9552257056360a ]
 
-in nokia_bluetooth_serdev_probe(), check the return value of
-clk_prepare_enable() and return the error code if
-clk_prepare_enable() returns an unexpected value.
+Valid range of CIG/CIS are 0x00 to 0xEF, so this checks they are
+properly checked before attempting to use HCI_OP_LE_SET_CIG_PARAMS.
 
-Fixes: 7bb318680e86 ("Bluetooth: add nokia driver")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_nokia.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/iso.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_nokia.c b/drivers/bluetooth/hci_nokia.c
-index 05f7f6de6863d..97da0b2bfd17e 100644
---- a/drivers/bluetooth/hci_nokia.c
-+++ b/drivers/bluetooth/hci_nokia.c
-@@ -734,7 +734,11 @@ static int nokia_bluetooth_serdev_probe(struct serdev_device *serdev)
- 		return err;
- 	}
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 5db4d68c96d5c..fa3765bc8a5cd 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1216,6 +1216,12 @@ static bool check_io_qos(struct bt_iso_io_qos *qos)
  
--	clk_prepare_enable(sysclk);
-+	err = clk_prepare_enable(sysclk);
-+	if (err) {
-+		dev_err(dev, "could not enable sysclk: %d", err);
-+		return err;
-+	}
- 	btdev->sysclk_speed = clk_get_rate(sysclk);
- 	clk_disable_unprepare(sysclk);
+ static bool check_ucast_qos(struct bt_iso_qos *qos)
+ {
++	if (qos->ucast.cig > 0xef && qos->ucast.cig != BT_ISO_QOS_CIG_UNSET)
++		return false;
++
++	if (qos->ucast.cis > 0xef && qos->ucast.cis != BT_ISO_QOS_CIS_UNSET)
++		return false;
++
+ 	if (qos->ucast.sca > 0x07)
+ 		return false;
  
 -- 
 2.40.1
