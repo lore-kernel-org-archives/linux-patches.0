@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FD411705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460FAC433C8;
-	Mon, 11 Sep 2023 14:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947DC11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143D8C433C7;
+	Mon, 11 Sep 2023 14:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443392;
-	bh=vNV4bGKY4uTvqOBKrkrtIdWKhKCzVbB7tWVsp6xAmdo=;
+	s=korg; t=1694443395;
+	bh=weJur1bcVSCT7yVmowpJ95gQkgfIQzmjeY8nBb6Idlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmSQ335Nfm4YWsgS36XFKoOmyt0byv4Id01i8igaUqaFiNgMsGTLguOs9VzQXoii+
-	 LhPsW81GUQ7zDahoDqLj0A9DFKkeq1Q/YU72BrMY2kkyfP9vQKIhUTex+k+phET7EC
-	 3k1EgFnq5ghBZXKqXrg1NH464oBwpceyXJkZ9dx8=
+	b=jWWlJ7aLOnIbLfLQ6wOfjlQBuHKWaNQ0uSz0V4VS7Q73hXiLBY171OeZP3H379zie
+	 8sSQ0NK0y+bKB/KpmrBR8u7ifJKGUS+igHKEJVKu6juka/Z+DU5r0kEIPFPDCCZ/gl
+	 4SaFJOcX1PXtAg2X6F6Fx74KYeL4ECBOGbYp/ub4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 334/737] drm/amdgpu: Update min() to min_t() in amdgpu_info_ioctl
-Date: Mon, 11 Sep 2023 15:43:13 +0200
-Message-ID: <20230911134659.867557134@linuxfoundation.org>
+Subject: [PATCH 6.4 335/737] arm64: dts: rockchip: Fix PCIe regulators on Radxa E25
+Date: Mon, 11 Sep 2023 15:43:14 +0200
+Message-ID: <20230911134659.895168428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -35,89 +34,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit a0cc8e1512ad72c9f97cdcb76d42715730adaf62 ]
+[ Upstream commit a87852e37f782257ebc57cc44a0d3fbf806471f6 ]
 
-Fixes the following:
+Despite its name, the regulator vcc3v3_pcie30x1 has nothing to do with
+pcie30x1. Instead, it supply power to VBAT1-5 on the M.2 KEY B port as
+seen on page 8 of the schematic [1].
 
-WARNING: min() should probably be min_t(size_t, size, sizeof(ip))
-+               ret = copy_to_user(out, &ip, min((size_t)size, sizeof(ip)));
+pcie30x1 is used for the mini PCIe slot, and as seen on page 9 the
+vcc3v3_minipcie regulator is instead related to pcie30x1.
 
-And other style fixes:
+The M.2 KEY B port can be used for WWAN USB2 modules or SATA drives.
 
-WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
-WARNING: Missing a blank line after declarations
+Use correct regulator vcc3v3_minipcie for pcie30x1.
 
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[1] https://dl.radxa.com/cm3p/e25/radxa-e25-v1.4-sch.pdf
+
+Fixes: 2bf2f4d9f673 ("arm64: dts: rockchip: Add Radxa CM3I E25")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20230724145213.3833099-1-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ .../arm64/boot/dts/rockchip/rk3568-radxa-e25.dts | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 724e80c192973..cecae6c1e8935 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -556,6 +556,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 			crtc = (struct drm_crtc *)minfo->crtcs[i];
- 			if (crtc && crtc->base.id == info->mode_crtc.id) {
- 				struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
-+
- 				ui32 = amdgpu_crtc->crtc_id;
- 				found = 1;
- 				break;
-@@ -574,7 +575,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		if (ret)
- 			return ret;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
+index 63c4bd873188e..f0e4884438e39 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
+@@ -47,6 +47,9 @@ vbus_typec: vbus-typec-regulator {
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
  
--		ret = copy_to_user(out, &ip, min((size_t)size, sizeof(ip)));
-+		ret = copy_to_user(out, &ip, min_t(size_t, size, sizeof(ip)));
- 		return ret ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_HW_IP_COUNT: {
-@@ -720,17 +721,18 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				    ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_READ_MMR_REG: {
--		unsigned n, alloc_size;
-+		unsigned int n, alloc_size;
- 		uint32_t *regs;
--		unsigned se_num = (info->read_mmr_reg.instance >>
-+		unsigned int se_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SE_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SE_INDEX_MASK;
--		unsigned sh_num = (info->read_mmr_reg.instance >>
-+		unsigned int sh_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
++	/* actually fed by vcc5v0_sys, dependent
++	 * on pi6c clock generator
++	 */
+ 	vcc3v3_minipcie: vcc3v3-minipcie-regulator {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+@@ -54,9 +57,9 @@ vcc3v3_minipcie: vcc3v3-minipcie-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&minipcie_enable_h>;
+ 		regulator-name = "vcc3v3_minipcie";
+-		regulator-min-microvolt = <5000000>;
+-		regulator-max-microvolt = <5000000>;
+-		vin-supply = <&vcc5v0_sys>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vcc3v3_pi6c_05>;
+ 	};
  
- 		/* set full masks if the userspace set all bits
--		 * in the bitfields */
-+		 * in the bitfields
-+		 */
- 		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
- 			se_num = 0xffffffff;
- 		else if (se_num >= AMDGPU_GFX_MAX_SE)
-@@ -882,7 +884,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		return ret;
- 	}
- 	case AMDGPU_INFO_VCE_CLOCK_TABLE: {
--		unsigned i;
-+		unsigned int i;
- 		struct drm_amdgpu_info_vce_clock_table vce_clk_table = {};
- 		struct amd_vce_state *vce_state;
+ 	vcc3v3_ngff: vcc3v3-ngff-regulator {
+@@ -71,9 +74,6 @@ vcc3v3_ngff: vcc3v3-ngff-regulator {
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
+ 
+-	/* actually fed by vcc5v0_sys, dependent
+-	 * on pi6c clock generator
+-	 */
+ 	vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+@@ -83,7 +83,7 @@ vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
+ 		regulator-name = "vcc3v3_pcie30x1";
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+-		vin-supply = <&vcc3v3_pi6c_05>;
++		vin-supply = <&vcc5v0_sys>;
+ 	};
+ 
+ 	vcc3v3_pi6c_05: vcc3v3-pi6c-05-regulator {
+@@ -117,7 +117,7 @@ &pcie3x1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie30x1m0_pins>;
+ 	reset-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
+-	vpcie3v3-supply = <&vcc3v3_pcie30x1>;
++	vpcie3v3-supply = <&vcc3v3_minipcie>;
+ 	status = "okay";
+ };
  
 -- 
 2.40.1
