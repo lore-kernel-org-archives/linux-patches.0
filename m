@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2756E11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC86C433C7;
-	Mon, 11 Sep 2023 15:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFD911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832C2C433C9;
+	Mon, 11 Sep 2023 15:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446110;
-	bh=4oDi4L2faiwN2ffQ5oiq1xAKbHJRerZAEh/m96tJxgc=;
+	s=korg; t=1694446112;
+	bh=neAGBucmQwy9UuwpJd4J3vNjHr7gujEp9kSCvMwQX04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfUEbIcVFkFi1sQY1CMOo7tqsLqD6D1+WoSZ/QrCTAW0J9f8+FY8qAo5GB5AOEqfW
-	 Ahlw/RtAd8dSyNT7Rovx9RSPVhTXLy7JPeM4saNwQlXmjtSbqZ5BkCkN4N9BlSTVsw
-	 b/iAZpy104WgtbI0vQ/7xZ+pQdqZIF71RT+N7JHU=
+	b=cTnPNvxoQ4r4iHXnb0DtiSXmwh5uz8NsukgcBoP5ybHb4WUBg8uDmzVozw9qNOHxQ
+	 nXkZp3jaOleZPmM+cz1OIADk1VXPcDzlSl/IzqHRTtLsbsEVu40jgkONEx1Iug+BsV
+	 IhzKrE/pBS2xijg+DCXYDbF4aoMgGZ6+bdX/Y17A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 586/600] USB: core: Fix oversight in SuperSpeed initialization
-Date: Mon, 11 Sep 2023 15:50:19 +0200
-Message-ID: <20230911134650.921317879@linuxfoundation.org>
+	Yu Zhang <yu.zhang@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Haitao Huang <haitao.huang@linux.intel.com>
+Subject: [PATCH 6.1 587/600] x86/sgx: Break up long non-preemptible delays in sgx_vepc_release()
+Date: Mon, 11 Sep 2023 15:50:20 +0200
+Message-ID: <20230911134650.953018728@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,100 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Jack Wang <jinpu.wang@ionos.com>
 
-commit 59cf445754566984fd55af19ba7146c76e6627bc upstream.
+commit 3d7d72a34e05b23e21bafc8bfb861e73c86b31f3 upstream.
 
-Commit 85d07c556216 ("USB: core: Unite old scheme and new scheme
-descriptor reads") altered the way USB devices are enumerated
-following detection, and in the process it messed up the
-initialization of SuperSpeed (or faster) devices:
+On large enclaves we hit the softlockup warning with following call trace:
 
-[   31.650759] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 2 using xhci_hcd
-[   31.663107] usb 2-1: device descriptor read/8, error -71
-[   31.952697] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 3 using xhci_hcd
-[   31.965122] usb 2-1: device descriptor read/8, error -71
-[   32.080991] usb usb2-port1: attempt power cycle
-...
+	xa_erase()
+	sgx_vepc_release()
+	__fput()
+	task_work_run()
+	do_exit()
 
-The problem was caused by the commit forgetting that in SuperSpeed or
-faster devices, the device descriptor uses a logarithmic encoding of
-the bMaxPacketSize0 value.  (For some reason I thought the 255 case in
-the switch statement was meant for these devices, but it isn't -- it
-was meant for Wireless USB and is no longer needed.)
+The latency issue is similar to the one fixed in:
 
-We can fix the oversight by testing for buf->bMaxPacketSize0 = 9
-(meaning 512, the actual maxpacket size for ep0 on all SuperSpeed
-devices) and straightening out the logic that checks and adjusts our
-initial guesses of the maxpacket value.
+  8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
 
-Reported-and-tested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Closes: https://lore.kernel.org/linux-usb/20230810002257.nadxmfmrobkaxgnz@synopsys.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
-Link: https://lore.kernel.org/r/8809e6c5-59d5-4d2d-ac8f-6d106658ad73@rowland.harvard.edu
+The test system has 64GB of enclave memory, and all is assigned to a single VM.
+Release of 'vepc' takes a longer time and causes long latencies, which triggers
+the softlockup warning.
+
+Add cond_resched() to give other tasks a chance to run and reduce
+latencies, which also avoids the softlockup detector.
+
+[ mingo: Rewrote the changelog. ]
+
+Fixes: 540745ddbc70 ("x86/sgx: Introduce virtual EPC for use by KVM guests")
+Reported-by: Yu Zhang <yu.zhang@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Yu Zhang <yu.zhang@ionos.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Acked-by: Haitao Huang <haitao.huang@linux.intel.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/sgx/virt.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4700,7 +4700,7 @@ static int get_bMaxPacketSize0(struct us
- 				buf, size,
- 				initial_descriptor_timeout);
- 		switch (buf->bMaxPacketSize0) {
--		case 8: case 16: case 32: case 64: case 255:
-+		case 8: case 16: case 32: case 64: case 9:
- 			if (buf->bDescriptorType == USB_DT_DEVICE) {
- 				rc = buf->bMaxPacketSize0;
- 				break;
-@@ -4994,23 +4994,35 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (retval)
- 		goto fail;
+--- a/arch/x86/kernel/cpu/sgx/virt.c
++++ b/arch/x86/kernel/cpu/sgx/virt.c
+@@ -204,6 +204,7 @@ static int sgx_vepc_release(struct inode
+ 			continue;
  
--	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
--		i = 512;
--	else
--		i = maxp0;
--	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
--		if (udev->speed == USB_SPEED_LOW ||
--				!(i == 8 || i == 16 || i == 32 || i == 64)) {
--			dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", i);
--			retval = -EMSGSIZE;
--			goto fail;
--		}
-+	/*
-+	 * Check the ep0 maxpacket guess and correct it if necessary.
-+	 * maxp0 is the value stored in the device descriptor;
-+	 * i is the value it encodes (logarithmic for SuperSpeed or greater).
-+	 */
-+	i = maxp0;
-+	if (udev->speed >= USB_SPEED_SUPER) {
-+		if (maxp0 <= 16)
-+			i = 1 << maxp0;
-+		else
-+			i = 0;		/* Invalid */
-+	}
-+	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
-+		;	/* Initial ep0 maxpacket guess is right */
-+	} else if ((udev->speed == USB_SPEED_FULL ||
-+				udev->speed == USB_SPEED_HIGH) &&
-+			(i == 8 || i == 16 || i == 32 || i == 64)) {
-+		/* Initial guess is wrong; use the descriptor's value */
- 		if (udev->speed == USB_SPEED_FULL)
- 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
- 		else
- 			dev_warn(&udev->dev, "Using ep0 maxpacket: %d\n", i);
- 		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(i);
- 		usb_ep0_reinit(udev);
-+	} else {
-+		/* Initial guess is wrong and descriptor's value is invalid */
-+		dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", maxp0);
-+		retval = -EMSGSIZE;
-+		goto fail;
+ 		xa_erase(&vepc->page_array, index);
++		cond_resched();
  	}
  
- 	descr = usb_get_device_descriptor(udev);
+ 	/*
+@@ -222,6 +223,7 @@ static int sgx_vepc_release(struct inode
+ 			list_add_tail(&epc_page->list, &secs_pages);
+ 
+ 		xa_erase(&vepc->page_array, index);
++		cond_resched();
+ 	}
+ 
+ 	/*
+@@ -243,6 +245,7 @@ static int sgx_vepc_release(struct inode
+ 
+ 		if (sgx_vepc_free_page(epc_page))
+ 			list_add_tail(&epc_page->list, &secs_pages);
++		cond_resched();
+ 	}
+ 
+ 	if (!list_empty(&secs_pages))
 
 
