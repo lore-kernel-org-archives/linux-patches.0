@@ -1,116 +1,236 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from vps.xff.cz (vps.xff.cz [195.181.215.36])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B4714F81
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC2EC43395;
-	Mon, 11 Sep 2023 15:29:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446176;
-	bh=8ABMsgVXMHDcQXJPDfm8BrOSo7OCB7e9pcicEahb8g0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToqA4yMwdJmlsoasWcJqw8THT7mwG0npOBPUEM11f7UrJy5K0bFzaNaMxryIVwRLc
-	 Yq2YV+IKyWAA0jFcrn8+3fG6NMTlVoDyCYRVDebFujKsDU5ElPvr0YC2FsObj43DD4
-	 9SRYty0tr+YlEm4XnVaY164mqWIewnotDOf8F7A0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.1 600/600] clk: Avoid invalid function names in CLK_OF_DECLARE()
-Date: Mon, 11 Sep 2023 15:50:33 +0200
-Message-ID: <20230911134651.374782834@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280611172B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:56:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xff.cz; s=mail;
+	t=1694447371; bh=LYI/5atAF0JSa1mHt9bwuHQXtG/R6iV+GdNNrijftlg=;
+	h=Date:From:To:Cc:Subject:X-My-GPG-KeyId:References:From;
+	b=yF78+/pYBghOE7Jaa3iosLX2Ef+0glDuGEpNcvCCM11ygv7U3eUiDjplx5BqUAQLr
+	 c8AJcpyZsSszhTCNz5Rx6Y3u8dWUECO3lr1ZA/uPpe4jiP46kfSpBJBBdKTlmIDMTP
+	 mb+uKPv7GYF03UIysYYijujtE+JRbXTtbjaOqiQY=
+Date: Mon, 11 Sep 2023 17:49:30 +0200
+From: =?utf-8?Q?Ond=C5=99ej?= Jirman <megi@xff.cz>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Sam Ravnborg <sam@ravnborg.org>, Robert Foss <rfoss@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 213/600] drm: bridge: dw-mipi-dsi: Fix enable/disable
+ of DSI controller
+Message-ID: <6xoqdk4sttjv5pskf67r5gc24ttsuspb6bnip5o35xcfmdtilp@72qguymwyt7y>
+X-My-GPG-KeyId: EBFBDDE11FB918D44D1F56C1F9F0A873BE9777ED
+ <https://xff.cz/key.txt>
 References: <20230911134633.619970489@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+ <20230911134639.905252752@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230911134639.905252752@linuxfoundation.org>
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Sep 11, 2023 at 03:44:06PM +0200, Greg Kroah-Hartman wrote:
+> 
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
 
-------------------
+See patch message comment:
 
-From: Nathan Chancellor <nathan@kernel.org>
+       (But depends on functionality intorduced in Linux 6.3, so this patch will
+        not build on older kernels when applied to older stable branches.)
 
-commit 5cf9d015be160e2d90d29ae74ef1364390e8fce8 upstream.
+kind regards,
+	o.
 
-After commit c28cd1f3433c ("clk: Mark a fwnode as initialized when using
-CLK_OF_DECLARE() macro"), drivers/clk/mvebu/kirkwood.c fails to build:
-
- drivers/clk/mvebu/kirkwood.c:358:1: error: expected identifier or '('
- CLK_OF_DECLARE(98dx1135_clk, "marvell,mv98dx1135-core-clock",
- ^
- include/linux/clk-provider.h:1367:21: note: expanded from macro 'CLK_OF_DECLARE'
-         static void __init name##_of_clk_init_declare(struct device_node *np) \
-                            ^
- <scratch space>:124:1: note: expanded from here
- 98dx1135_clk_of_clk_init_declare
- ^
- drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
- include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
-         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
-                                         ^
- <scratch space>:125:3: note: expanded from here
- 98dx1135_clk_of_clk_init_declare
-   ^
- drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
- include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
-         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
-                                         ^
- <scratch space>:125:3: note: expanded from here
- 98dx1135_clk_of_clk_init_declare
-   ^
- drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
- include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
-         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
-                                         ^
- <scratch space>:125:3: note: expanded from here
- 98dx1135_clk_of_clk_init_declare
-   ^
-
-C function names must start with either an alphabetic letter or an
-underscore. To avoid generating invalid function names from clock names,
-add two underscores to the beginning of the identifier.
-
-Fixes: c28cd1f3433c ("clk: Mark a fwnode as initialized when using CLK_OF_DECLARE() macro")
-Suggested-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230308-clk_of_declare-fix-v1-1-317b741e2532@kernel.org
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/clk-provider.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -1362,12 +1362,12 @@ struct clk_hw_onecell_data {
- };
- 
- #define CLK_OF_DECLARE(name, compat, fn) \
--	static void __init name##_of_clk_init_declare(struct device_node *np) \
-+	static void __init __##name##_of_clk_init_declare(struct device_node *np) \
- 	{								\
- 		fn(np);							\
- 		fwnode_dev_initialized(of_fwnode_handle(np), true);	\
- 	}								\
--	OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
-+	OF_DECLARE_1(clk, name, compat, __##name##_of_clk_init_declare)
- 
- /*
-  * Use this macro when you have a driver that requires two initialization
-
-
+> ------------------
+> 
+> From: Ondrej Jirman <megi@xff.cz>
+> 
+> [ Upstream commit 05aa61334592adb230749ff465b103ee10e63936 ]
+> 
+> Before this patch, booting to Linux VT and doing a simple:
+> 
+>   echo 2 > /sys/class/graphics/fb0/blank
+>   echo 0 > /sys/class/graphics/fb0/blank
+> 
+> would result in failures to re-enable the panel. Mode set callback is
+> called only once during boot in this scenario, while calls to
+> enable/disable callbacks are balanced afterwards. The driver doesn't
+> work unless userspace calls modeset before enabling the CRTC/connector.
+> 
+> This patch moves enabling of the DSI host from mode_set into pre_enable
+> callback, and removes some old hacks where this bridge driver is
+> directly calling into other bridge driver's callbacks.
+> 
+> pre_enable_prev_first flag is set on the panel's bridge so that panel
+> drivers will get their prepare function called between DSI host's
+> pre_enable and enable callbacks, so that they get a chance to
+> perform panel setup while DSI host is already enabled in command
+> mode. Otherwise panel's prepare would be called before DSI host
+> is enabled, and any DSI communication used in prepare callback
+> would fail.
+> 
+> With all these changes, the enable/disable sequence is now well
+> balanced, and host's and panel's callbacks are called in proper order
+> documented in the drm_panel API documentation without needing the old
+> hacks. (Mainly that panel->prepare is called when DSI host is ready to
+> allow the panel driver to send DSI commands and vice versa during
+> disable.)
+> 
+> Tested on Pinephone Pro. Trace of the callbacks follows.
+> 
+> Before:
+> 
+> [    1.253882] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
+> [    1.290732] panel-himax-hx8394 ff960000.dsi.0: prepare
+> [    1.475576] dw-mipi-dsi-rockchip ff960000.dsi: enable
+> [    1.475593] panel-himax-hx8394 ff960000.dsi.0: enable
+> 
+> echo 2 > /sys/class/graphics/fb0/blank
+> 
+> [   13.722799] panel-himax-hx8394 ff960000.dsi.0: disable
+> [   13.774502] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+> [   13.774526] panel-himax-hx8394 ff960000.dsi.0: unprepare
+> 
+> echo 0 > /sys/class/graphics/fb0/blank
+> 
+> [   17.735796] panel-himax-hx8394 ff960000.dsi.0: prepare
+> [   17.923522] dw-mipi-dsi-rockchip ff960000.dsi: enable
+> [   17.923540] panel-himax-hx8394 ff960000.dsi.0: enable
+> [   17.944330] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+> [   17.944335] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
+> [   17.944340] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
+> 
+> echo 2 > /sys/class/graphics/fb0/blank
+> 
+> [  431.148583] panel-himax-hx8394 ff960000.dsi.0: disable
+> [  431.169259] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+> [  431.169268] panel-himax-hx8394 ff960000.dsi.0: Failed to enter sleep mode: -110
+> [  431.169282] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+> [  431.169316] panel-himax-hx8394 ff960000.dsi.0: unprepare
+> [  431.169357] pclk_mipi_dsi0 already disabled
+> 
+> echo 0 > /sys/class/graphics/fb0/blank
+> 
+> [  432.796851] panel-himax-hx8394 ff960000.dsi.0: prepare
+> [  432.981537] dw-mipi-dsi-rockchip ff960000.dsi: enable
+> [  432.981568] panel-himax-hx8394 ff960000.dsi.0: enable
+> [  433.002290] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+> [  433.002299] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
+> [  433.002312] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
+> 
+> -----------------------------------------------------------------------
+> 
+> After:
+> 
+> [    1.248372] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
+> [    1.248704] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
+> [    1.285377] panel-himax-hx8394 ff960000.dsi.0: prepare
+> [    1.468392] dw-mipi-dsi-rockchip ff960000.dsi: enable
+> [    1.468421] panel-himax-hx8394 ff960000.dsi.0: enable
+> 
+> echo 2 > /sys/class/graphics/fb0/blank
+> 
+> [   16.210357] panel-himax-hx8394 ff960000.dsi.0: disable
+> [   16.261315] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+> [   16.261339] panel-himax-hx8394 ff960000.dsi.0: unprepare
+> 
+> echo 0 > /sys/class/graphics/fb0/blank
+> 
+> [   19.161453] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
+> [   19.197869] panel-himax-hx8394 ff960000.dsi.0: prepare
+> [   19.382141] dw-mipi-dsi-rockchip ff960000.dsi: enable
+> [   19.382158] panel-himax-hx8394 ff960000.dsi.0: enable
+> 
+>        (But depends on functionality intorduced in Linux 6.3, so this patch will
+>         not build on older kernels when applied to older stable branches.)
+> 
+> Fixes: 46fc51546d44 ("drm/bridge/synopsys: Add MIPI DSI host controller bridge")
+> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+> Signed-off-by: Robert Foss <rfoss@kernel.org>
+> Link: https://patchwork.freedesktop.org/patch/msgid/20230617224915.1923630-1-megi@xff.cz
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 28 +++++++++++--------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+> index b2efecf7d1603..4291798bd70f5 100644
+> --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+> +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+> @@ -265,6 +265,7 @@ struct dw_mipi_dsi {
+>  	struct dw_mipi_dsi *master; /* dual-dsi master ptr */
+>  	struct dw_mipi_dsi *slave; /* dual-dsi slave ptr */
+>  
+> +	struct drm_display_mode mode;
+>  	const struct dw_mipi_dsi_plat_data *plat_data;
+>  };
+>  
+> @@ -332,6 +333,7 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
+>  	if (IS_ERR(bridge))
+>  		return PTR_ERR(bridge);
+>  
+> +	bridge->pre_enable_prev_first = true;
+>  	dsi->panel_bridge = bridge;
+>  
+>  	drm_bridge_add(&dsi->bridge);
+> @@ -859,15 +861,6 @@ static void dw_mipi_dsi_bridge_post_atomic_disable(struct drm_bridge *bridge,
+>  	 */
+>  	dw_mipi_dsi_set_mode(dsi, 0);
+>  
+> -	/*
+> -	 * TODO Only way found to call panel-bridge post_disable &
+> -	 * panel unprepare before the dsi "final" disable...
+> -	 * This needs to be fixed in the drm_bridge framework and the API
+> -	 * needs to be updated to manage our own call chains...
+> -	 */
+> -	if (dsi->panel_bridge->funcs->post_disable)
+> -		dsi->panel_bridge->funcs->post_disable(dsi->panel_bridge);
+> -
+>  	if (phy_ops->power_off)
+>  		phy_ops->power_off(dsi->plat_data->priv_data);
+>  
+> @@ -942,15 +935,25 @@ static void dw_mipi_dsi_mode_set(struct dw_mipi_dsi *dsi,
+>  		phy_ops->power_on(dsi->plat_data->priv_data);
+>  }
+>  
+> +static void dw_mipi_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+> +						 struct drm_bridge_state *old_bridge_state)
+> +{
+> +	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
+> +
+> +	/* Power up the dsi ctl into a command mode */
+> +	dw_mipi_dsi_mode_set(dsi, &dsi->mode);
+> +	if (dsi->slave)
+> +		dw_mipi_dsi_mode_set(dsi->slave, &dsi->mode);
+> +}
+> +
+>  static void dw_mipi_dsi_bridge_mode_set(struct drm_bridge *bridge,
+>  					const struct drm_display_mode *mode,
+>  					const struct drm_display_mode *adjusted_mode)
+>  {
+>  	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
+>  
+> -	dw_mipi_dsi_mode_set(dsi, adjusted_mode);
+> -	if (dsi->slave)
+> -		dw_mipi_dsi_mode_set(dsi->slave, adjusted_mode);
+> +	/* Store the display mode for later use in pre_enable callback */
+> +	drm_mode_copy(&dsi->mode, adjusted_mode);
+>  }
+>  
+>  static void dw_mipi_dsi_bridge_atomic_enable(struct drm_bridge *bridge,
+> @@ -1004,6 +1007,7 @@ static const struct drm_bridge_funcs dw_mipi_dsi_bridge_funcs = {
+>  	.atomic_duplicate_state	= drm_atomic_helper_bridge_duplicate_state,
+>  	.atomic_destroy_state	= drm_atomic_helper_bridge_destroy_state,
+>  	.atomic_reset		= drm_atomic_helper_bridge_reset,
+> +	.atomic_pre_enable	= dw_mipi_dsi_bridge_atomic_pre_enable,
+>  	.atomic_enable		= dw_mipi_dsi_bridge_atomic_enable,
+>  	.atomic_post_disable	= dw_mipi_dsi_bridge_post_atomic_disable,
+>  	.mode_set		= dw_mipi_dsi_bridge_mode_set,
+> -- 
+> 2.40.1
+> 
+> 
+> 
