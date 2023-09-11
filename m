@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180D211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40044C433C8;
-	Mon, 11 Sep 2023 15:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C672811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF365C433C8;
+	Mon, 11 Sep 2023 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445755;
-	bh=E1Z/qByRkVvZmYRNE8vw7mlZir2og/booa5Ao3LaBR4=;
+	s=korg; t=1694445758;
+	bh=n0dpMF49s8GZF2nt6khvkhkjHL8s9AxRZqJfKNEu8QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GamSf7ASmio6f+FXwjIbGC+ZxW/GI1OZBovud1URVsQPV/CtNe12a1DIFg4nZ91/T
-	 VqO3x/p7zCMF94wWloOfV+znPDDjiqUmM20yhTEspNTRiHMsuF6TUmDeDdiPqxdeuD
-	 kiIJVxgjCw+3RYwVCqO4ah4oqakN0iILPEkzxDnI=
+	b=2hjbQDtXeibUyakUB4dRNQ2GobTJMcgHNvKjllUH5ksG+YJJfTen0Nw1nXhRje4n0
+	 MAT2tZwpccRxVmEuVsXpUWwTcR6POAspJt3OBhVV9PFqG9uER0ZBCaaNqxwqltkFLd
+	 pV/TTsJvXNrDK/Jr9ESGC3tMcax1ZlomKYODuG9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Marek Vasut <marex@denx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 453/600] media: cec: core: add adap_nb_transmit_canceled() callback
-Date: Mon, 11 Sep 2023 15:48:06 +0200
-Message-ID: <20230911134647.021554396@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>
+Subject: [PATCH 6.1 462/600] media: ov5640: Enable MIPI interface in ov5640_set_power_mipi()
+Date: Mon, 11 Sep 2023 15:48:15 +0200
+Message-ID: <20230911134647.289431201@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,78 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit da53c36ddd3f118a525a04faa8c47ca471e6c467 ]
+[ Upstream commit 98cb72d3b9c5e03b10fa993752ecfcbd9c572d8c ]
 
-A potential deadlock was found by Zheng Zhang with a local syzkaller
-instance.
+Set OV5640_REG_IO_MIPI_CTRL00 bit 2 to 1 instead of 0, since 1 means
+MIPI CSI2 interface, while 0 means CPI parallel interface.
 
-The problem is that when a non-blocking CEC transmit is canceled by calling
-cec_data_cancel, that in turn can call the high-level received() driver
-callback, which can call cec_transmit_msg() to transmit a new message.
+In the ov5640_set_power_mipi() the interface should obviously be set
+to MIPI CSI2 since this functions is used to power up the sensor when
+operated in MIPI CSI2 mode. The sensor should not be in CPI mode in
+that case.
 
-The cec_data_cancel() function is called with the adap->lock mutex held,
-and cec_transmit_msg() tries to take that same lock.
+This fixes a corner case where capturing the first frame on i.MX8MN
+with CSI/ISI resulted in corrupted frame.
 
-The root cause is that the received() callback can either be used to pass
-on a received message (and then adap->lock is not held), or to report a
-canceled transmit (and then adap->lock is held).
-
-This is confusing, so create a new low-level adap_nb_transmit_canceled
-callback that reports back that a non-blocking transmit was canceled.
-
-And the received() callback is only called when a message is received,
-as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
-on reply results") complicated matters.
-
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
+Fixes: aa4bb8b8838f ("media: ov5640: Re-work MIPI startup sequence")
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Tested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com> # [Test on imx6q]
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Jai Luthra <j-luthra@ti.com> # [Test on bplay, sk-am62]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 4 ++--
- include/media/cec.h               | 6 ++++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ov5640.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index b1512f9c5895c..aed3e51d6d354 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -385,8 +385,8 @@ static void cec_data_cancel(struct cec_data *data, u8 tx_status, u8 rx_status)
- 	cec_queue_msg_monitor(adap, &data->msg, 1);
- 
- 	if (!data->blocking && data->msg.sequence)
--		/* Allow drivers to process the message first */
--		call_op(adap, received, &data->msg);
-+		/* Allow drivers to react to a canceled transmit */
-+		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
- 
- 	cec_data_completed(data);
- }
-diff --git a/include/media/cec.h b/include/media/cec.h
-index abee41ae02d0e..6556cc161dc0a 100644
---- a/include/media/cec.h
-+++ b/include/media/cec.h
-@@ -121,14 +121,16 @@ struct cec_adap_ops {
- 	void (*adap_configured)(struct cec_adapter *adap, bool configured);
- 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
- 			     u32 signal_free_time, struct cec_msg *msg);
-+	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
-+					  const struct cec_msg *msg);
- 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
- 	void (*adap_free)(struct cec_adapter *adap);
- 
--	/* Error injection callbacks */
-+	/* Error injection callbacks, called without adap->lock held */
- 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
- 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
- 
--	/* High-level CEC message callback */
-+	/* High-level CEC message callback, called without adap->lock held */
- 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
- };
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index cc23ff2067f6a..f76bcb395cffa 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2531,9 +2531,9 @@ static int ov5640_set_power_mipi(struct ov5640_dev *sensor, bool on)
+ 	 *		  "ov5640_set_stream_mipi()")
+ 	 * [4] = 0	: Power up MIPI HS Tx
+ 	 * [3] = 0	: Power up MIPI LS Rx
+-	 * [2] = 0	: MIPI interface disabled
++	 * [2] = 1	: MIPI interface enabled
+ 	 */
+-	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x40);
++	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x44);
+ 	if (ret)
+ 		return ret;
  
 -- 
 2.40.1
