@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3806A11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFB0C433C9;
-	Mon, 11 Sep 2023 15:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8137611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEE6C433C8;
+	Mon, 11 Sep 2023 15:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445957;
-	bh=MnTRiWOyPhb00LxmvR61I2NrXyPDalLAkiVqziNVNB0=;
+	s=korg; t=1694445960;
+	bh=mVt+hq8/arJHJ+WuFOzhCbGD2vMbJ/KocM1hO96spjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8FlWZcCy7Sfbw1/D+Hd7j62GzkZtm4b+zi4sU/1kw8GO/dIUmq/JeVg8rZWkRy7N
-	 qe/zBGOxbiMtP4JzDyMqzhN0Y0wCXtmvNJCB+hAPTyc1YqcZ4nwAhKMtpNENN3pbLr
-	 ef7fgv3Op6IQFdsGVMItXrt3T9vwVGobKXiPYrXo=
+	b=L7ieBuYeaHfFh02eLtrAGw5zklQ9eqECpgKLTt590HjE0nlmhlM3PDrBUgskg5mhu
+	 99HWBfWtnm0rGmS7RI2s+b9XabKe9Z/UoSRCR1tPptviQUYPlL80ToP6NQvgPHk/D2
+	 4+B9VrKieVW/JMgqfmHmKIzH0O8Xxp0+B3ZuEI08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.1 531/600] media: i2c: ccs: Check rules is non-NULL
-Date: Mon, 11 Sep 2023 15:49:24 +0200
-Message-ID: <20230911134649.297880718@linuxfoundation.org>
+Subject: [PATCH 6.1 532/600] media: i2c: Add a camera sensor top level menu
+Date: Mon, 11 Sep 2023 15:49:25 +0200
+Message-ID: <20230911134649.331851699@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,144 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 607bcc4213d998d051541d8f10b5bbb7d546c0be upstream.
+commit 7d3c7d2a2914e10bec3b9cdacdadb8e1f65f715a upstream.
 
-Fix the following smatch warning:
+Select V4L2_FWNODE and VIDEO_V4L2_SUBDEV_API for all sensor drivers. This
+also adds the options to drivers that don't specifically need them, these
+are still seldom used drivers using old APIs. The upside is that these
+should now all compile --- many drivers have had missing dependencies.
 
-drivers/media/i2c/ccs/ccs-data.c:524 ccs_data_parse_rules() warn: address
-of NULL pointer 'rules'
+The "menu" is replaced by selectable "menuconfig" to select the needed
+V4L2_FWNODE and VIDEO_V4L2_SUBDEV_API options.
 
-The CCS static data rule parser does not check an if rule has been
-obtained before checking for other rule types (which depend on the if
-rule). In practice this means parsing invalid CCS static data could lead
-to dereferencing a NULL pointer.
+Also select MEDIA_CONTROLLER which VIDEO_V4L2_SUBDEV_API effectively
+depends on, and add the I2C dependency to the menu.
 
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Fixes: a6b396f410b1 ("media: ccs: Add CCS static data parser library")
-Cc: stable@vger.kernel.org # for 5.11 and up
+Reported-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: stable@vger.kernel.org # for >= 6.1
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs/ccs-data.c |  101 +++++++++++++++++++++------------------
- 1 file changed, 56 insertions(+), 45 deletions(-)
+ drivers/media/i2c/Kconfig |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/media/i2c/ccs/ccs-data.c
-+++ b/drivers/media/i2c/ccs/ccs-data.c
-@@ -464,8 +464,7 @@ static int ccs_data_parse_rules(struct b
- 		rule_payload = __rule_type + 1;
- 		rule_plen2 = rule_plen - sizeof(*__rule_type);
+--- a/drivers/media/i2c/Kconfig
++++ b/drivers/media/i2c/Kconfig
+@@ -25,8 +25,15 @@ config VIDEO_IR_I2C
+ # V4L2 I2C drivers that are related with Camera support
+ #
  
--		switch (*__rule_type) {
--		case CCS_DATA_BLOCK_RULE_ID_IF: {
-+		if (*__rule_type == CCS_DATA_BLOCK_RULE_ID_IF) {
- 			const struct __ccs_data_block_rule_if *__if_rules =
- 				rule_payload;
- 			const size_t __num_if_rules =
-@@ -514,49 +513,61 @@ static int ccs_data_parse_rules(struct b
- 				rules->if_rules = if_rule;
- 				rules->num_if_rules = __num_if_rules;
- 			}
--			break;
--		}
--		case CCS_DATA_BLOCK_RULE_ID_READ_ONLY_REGS:
--			rval = ccs_data_parse_reg_rules(bin, &rules->read_only_regs,
--							&rules->num_read_only_regs,
--							rule_payload,
--							rule_payload + rule_plen2,
--							dev);
--			if (rval)
--				return rval;
--			break;
--		case CCS_DATA_BLOCK_RULE_ID_FFD:
--			rval = ccs_data_parse_ffd(bin, &rules->frame_format,
--						  rule_payload,
--						  rule_payload + rule_plen2,
--						  dev);
--			if (rval)
--				return rval;
--			break;
--		case CCS_DATA_BLOCK_RULE_ID_MSR:
--			rval = ccs_data_parse_reg_rules(bin,
--							&rules->manufacturer_regs,
--							&rules->num_manufacturer_regs,
--							rule_payload,
--							rule_payload + rule_plen2,
--							dev);
--			if (rval)
--				return rval;
--			break;
--		case CCS_DATA_BLOCK_RULE_ID_PDAF_READOUT:
--			rval = ccs_data_parse_pdaf_readout(bin,
--							   &rules->pdaf_readout,
--							   rule_payload,
--							   rule_payload + rule_plen2,
--							   dev);
--			if (rval)
--				return rval;
--			break;
--		default:
--			dev_dbg(dev,
--				"Don't know how to handle rule type %u!\n",
--				*__rule_type);
--			return -EINVAL;
-+		} else {
-+			/* Check there was an if rule before any other rules */
-+			if (bin->base && !rules)
-+				return -EINVAL;
+-menu "Camera sensor devices"
+-	visible if MEDIA_CAMERA_SUPPORT
++menuconfig VIDEO_CAMERA_SENSOR
++	bool "Camera sensor devices"
++	depends on MEDIA_CAMERA_SUPPORT && I2C
++	select MEDIA_CONTROLLER
++	select V4L2_FWNODE
++	select VIDEO_V4L2_SUBDEV_API
++	default y
 +
-+			switch (*__rule_type) {
-+			case CCS_DATA_BLOCK_RULE_ID_READ_ONLY_REGS:
-+				rval = ccs_data_parse_reg_rules(bin,
-+								rules ?
-+								&rules->read_only_regs : NULL,
-+								rules ?
-+								&rules->num_read_only_regs : NULL,
-+								rule_payload,
-+								rule_payload + rule_plen2,
-+								dev);
-+				if (rval)
-+					return rval;
-+				break;
-+			case CCS_DATA_BLOCK_RULE_ID_FFD:
-+				rval = ccs_data_parse_ffd(bin, rules ?
-+							  &rules->frame_format : NULL,
-+							  rule_payload,
-+							  rule_payload + rule_plen2,
-+							  dev);
-+				if (rval)
-+					return rval;
-+				break;
-+			case CCS_DATA_BLOCK_RULE_ID_MSR:
-+				rval = ccs_data_parse_reg_rules(bin,
-+								rules ?
-+								&rules->manufacturer_regs : NULL,
-+								rules ?
-+								&rules->num_manufacturer_regs : NULL,
-+								rule_payload,
-+								rule_payload + rule_plen2,
-+								dev);
-+				if (rval)
-+					return rval;
-+				break;
-+			case CCS_DATA_BLOCK_RULE_ID_PDAF_READOUT:
-+				rval = ccs_data_parse_pdaf_readout(bin,
-+								   rules ?
-+								   &rules->pdaf_readout : NULL,
-+								   rule_payload,
-+								   rule_payload + rule_plen2,
-+								   dev);
-+				if (rval)
-+					return rval;
-+				break;
-+			default:
-+				dev_dbg(dev,
-+					"Don't know how to handle rule type %u!\n",
-+					*__rule_type);
-+				return -EINVAL;
-+			}
- 		}
- 		__next_rule = __next_rule + rule_hlen + rule_plen;
- 	}
++if VIDEO_CAMERA_SENSOR
+ 
+ config VIDEO_APTINA_PLL
+ 	tristate
+@@ -783,7 +790,7 @@ source "drivers/media/i2c/ccs/Kconfig"
+ source "drivers/media/i2c/et8ek8/Kconfig"
+ source "drivers/media/i2c/m5mols/Kconfig"
+ 
+-endmenu
++endif
+ 
+ menu "Lens drivers"
+ 	visible if MEDIA_CAMERA_SUPPORT
 
 
