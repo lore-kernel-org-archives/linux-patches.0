@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9627311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D60C433C7;
-	Mon, 11 Sep 2023 14:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA411706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015AFC433C8;
+	Mon, 11 Sep 2023 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444383;
-	bh=Q2iiDv4pBmYHnY68pFdnb+lGC4oC45tZWZIYTMAbmcs=;
+	s=korg; t=1694444386;
+	bh=Rd2pgj+FEY+vqvXa8mUu1oKZMHjDYj18GDkrmnA+uT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0xcbAdUeZLg4XvUoB9FVkxvEd8AvUI5foEEPaxdlQtJibY47tlx1PXvUbKR1/SWU
-	 wyRTmf6BdZ9h2jq4za/5pw64VFKsdpNf7j8+M8Tb8yrOmXtYM5i8WKTJP8RG+e9XLh
-	 tWgw0UmL3lmtOXPoCmVW1XhSho43w/obJ6niduak=
+	b=cTVFz6JAKevfVrrHIdwYVpPCz2D+alCfEQ1MIFwqCkA0AoLHZSFLlcnZ2XfMrLu3N
+	 k3nnuKxlzzxTjNuSTXESpZKKMx61nZ0qbKue4hWiPRrVyM6oIBvN6B5Up1UpEwvaj3
+	 jRWYS1aGCILim/0R2d8GJ+JMYDULlGS2Gi7Pzq5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.4 711/737] crypto: stm32 - fix loop iterating through scatterlist for DMA
-Date: Mon, 11 Sep 2023 15:49:30 +0200
-Message-ID: <20230911134710.383439975@linuxfoundation.org>
+Subject: [PATCH 6.4 712/737] crypto: stm32 - fix MDMAT condition
+Date: Mon, 11 Sep 2023 15:49:31 +0200
+Message-ID: <20230911134710.409981152@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,16 +42,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
+commit a4adfbc2544933ac12e7fbd50708290265546dbc upstream.
 
-We were reading the length of the scatterlist sg after copying value of
-tsg inside.
-So we are using the size of the previous scatterlist and for the first
-one we are using an unitialised value.
-Fix this by copying tsg in sg[0] before reading the size.
+If IP has MDMAT support, set or reset the bit MDMAT in Control Register.
 
-Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
+Fixes: b56403a25af7 ("crypto: stm32/hash - Support Ux500 hash")
 Cc: stable@vger.kernel.org
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -60,16 +58,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/crypto/stm32/stm32-hash.c
 +++ b/drivers/crypto/stm32/stm32-hash.c
-@@ -627,9 +627,9 @@ static int stm32_hash_dma_send(struct st
- 	}
+@@ -492,7 +492,7 @@ static int stm32_hash_xmit_dma(struct st
  
- 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
-+		sg[0] = *tsg;
- 		len = sg->length;
+ 	reg = stm32_hash_read(hdev, HASH_CR);
  
--		sg[0] = *tsg;
- 		if (sg_is_last(sg)) {
- 			if (hdev->dma_mode == 1) {
- 				len = (ALIGN(sg->length, 16) - 16);
+-	if (!hdev->pdata->has_mdmat) {
++	if (hdev->pdata->has_mdmat) {
+ 		if (mdma)
+ 			reg |= HASH_CR_MDMAT;
+ 		else
 
 
