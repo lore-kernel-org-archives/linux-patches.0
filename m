@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0B31170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBA7C433C7;
-	Mon, 11 Sep 2023 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C646D1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE03CC433C8;
+	Mon, 11 Sep 2023 14:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441564;
-	bh=3ZpmjhyBBuijtLxAb0Cdrxdj4uH7R4aOLc54QE88Ulw=;
+	s=korg; t=1694441567;
+	bh=K5yGtOWGn9pAuEhbthS3oiOC7BAtigJxhJ4Qb/SJaqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cq5WrpCvgB4NZLPRnYxBbmp04E5CM+QB8jtKz8N2aoDBwEq32oXBBrMecKwrrQBJ/
-	 IRWDqHAHzURG2Y8ZwMNLmXbIQiWUgMOVwTkTwJ/INAQnUCcOq0K2cyqWtna/xxMmf+
-	 /gy+5l32Vwv0blwCALYtxELVk/13HOJCWs/lsGss=
+	b=Qun36LQZnGsq6DaKUSmUp+gRGPjeLGJCcLXVJqBc8/wq3OW1JiBcB9ttYr5N6kCCq
+	 7fRMC/QHXM1DxQkaD0vhHx329a+pxOZDuq/xefRW6OiszBEiTk1NRUUjzJHCePUapi
+	 DuSU9zULFN7k/LX9ZwGS73n5pYK0AVqPYNDuj/Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 457/739] iommu: rockchip: Fix directory table address encoding
-Date: Mon, 11 Sep 2023 15:44:16 +0200
-Message-ID: <20230911134703.918893817@linuxfoundation.org>
+Subject: [PATCH 6.5 431/739] NFSv4.2: Fix READ_PLUS size calculations
+Date: Mon, 11 Sep 2023 15:43:50 +0200
+Message-ID: <20230911134703.214106167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,153 +40,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit 6df63b7ebdaf5fcd75dceedf6967d0761e56eca1 ]
+[ Upstream commit 8d18f6c5bb864d97a730f471c56cdecf313efe64 ]
 
-The physical address to the directory table is currently encoded using
-the following bit layout for IOMMU v2.
+I bump the decode_read_plus_maxsz to account for hole segments, but I
+need to subtract out this increase when calling
+rpc_prepare_reply_pages() so the common case of single data segment
+replies can be directly placed into the xdr pages without needing to be
+shifted around.
 
- 31:12 - Address bit 31:0
- 11: 4 - Address bit 39:32
-
-This is also the bit layout used by the vendor kernel.
-
-However, testing has shown that addresses to the directory/page tables
-and memory pages are all encoded using the same bit layout.
-
-IOMMU v1:
- 31:12 - Address bit 31:0
-
-IOMMU v2:
- 31:12 - Address bit 31:0
- 11: 8 - Address bit 35:32
-  7: 4 - Address bit 39:36
-
-Change to use the mk_dtentries ops to encode the directory table address
-correctly. The value written to DTE_ADDR may include the valid bit set,
-a bit that is ignored and DTE_ADDR reg read it back as 0.
-
-This also update the bit layout comment for the page address and the
-number of nybbles that are read back for DTE_ADDR comment.
-
-These changes render the dte_addr_phys and dma_addr_dte ops unused and
-is removed.
-
-Fixes: 227014b33f62 ("iommu: rockchip: Add internal ops to handle variants")
-Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
-Fixes: c987b65a574f ("iommu/rockchip: Fix physical address decoding")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20230617182540.3091374-2-jonas@kwiboo.se
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Reported-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: d3b00a802c845 ("NFS: Replace the READ_PLUS decoding code")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 43 ++++------------------------------
- 1 file changed, 5 insertions(+), 38 deletions(-)
+ fs/nfs/nfs42xdr.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 4054030c32379..ae42959bc4905 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -98,8 +98,6 @@ struct rk_iommu_ops {
- 	phys_addr_t (*pt_address)(u32 dte);
- 	u32 (*mk_dtentries)(dma_addr_t pt_dma);
- 	u32 (*mk_ptentries)(phys_addr_t page, int prot);
--	phys_addr_t (*dte_addr_phys)(u32 addr);
--	u32 (*dma_addr_dte)(dma_addr_t dt_dma);
- 	u64 dma_bit_mask;
- };
+diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
+index d0919c5bf61c7..78193f04d8928 100644
+--- a/fs/nfs/nfs42xdr.c
++++ b/fs/nfs/nfs42xdr.c
+@@ -54,10 +54,16 @@
+ 					(1 /* data_content4 */ + \
+ 					 2 /* data_info4.di_offset */ + \
+ 					 1 /* data_info4.di_length */)
++#define NFS42_READ_PLUS_HOLE_SEGMENT_SIZE \
++					(1 /* data_content4 */ + \
++					 2 /* data_info4.di_offset */ + \
++					 2 /* data_info4.di_length */)
++#define READ_PLUS_SEGMENT_SIZE_DIFF	(NFS42_READ_PLUS_HOLE_SEGMENT_SIZE - \
++					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
+ #define decode_read_plus_maxsz		(op_decode_hdr_maxsz + \
+ 					 1 /* rpr_eof */ + \
+ 					 1 /* rpr_contents count */ + \
+-					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
++					 NFS42_READ_PLUS_HOLE_SEGMENT_SIZE)
+ #define encode_seek_maxsz		(op_encode_hdr_maxsz + \
+ 					 encode_stateid_maxsz + \
+ 					 2 /* offset */ + \
+@@ -617,8 +623,8 @@ static void nfs4_xdr_enc_read_plus(struct rpc_rqst *req,
+ 	encode_putfh(xdr, args->fh, &hdr);
+ 	encode_read_plus(xdr, args, &hdr);
  
-@@ -278,8 +276,8 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
- /*
-  * In v2:
-  * 31:12 - Page address bit 31:0
-- *  11:9 - Page address bit 34:32
-- *   8:4 - Page address bit 39:35
-+ * 11: 8 - Page address bit 35:32
-+ *  7: 4 - Page address bit 39:36
-  *     3 - Security
-  *     2 - Writable
-  *     1 - Readable
-@@ -506,7 +504,7 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
- 
- 	/*
- 	 * Check if register DTE_ADDR is working by writing DTE_ADDR_DUMMY
--	 * and verifying that upper 5 nybbles are read back.
-+	 * and verifying that upper 5 (v1) or 7 (v2) nybbles are read back.
- 	 */
- 	for (i = 0; i < iommu->num_mmu; i++) {
- 		dte_addr = rk_ops->pt_address(DTE_ADDR_DUMMY);
-@@ -531,33 +529,6 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
- 	return 0;
+-	rpc_prepare_reply_pages(req, args->pages, args->pgbase,
+-				args->count, hdr.replen);
++	rpc_prepare_reply_pages(req, args->pages, args->pgbase, args->count,
++				hdr.replen - READ_PLUS_SEGMENT_SIZE_DIFF);
+ 	encode_nops(&hdr);
  }
- 
--static inline phys_addr_t rk_dte_addr_phys(u32 addr)
--{
--	return (phys_addr_t)addr;
--}
--
--static inline u32 rk_dma_addr_dte(dma_addr_t dt_dma)
--{
--	return dt_dma;
--}
--
--#define DT_HI_MASK GENMASK_ULL(39, 32)
--#define DTE_BASE_HI_MASK GENMASK(11, 4)
--#define DT_SHIFT   28
--
--static inline phys_addr_t rk_dte_addr_phys_v2(u32 addr)
--{
--	u64 addr64 = addr;
--	return (phys_addr_t)(addr64 & RK_DTE_PT_ADDRESS_MASK) |
--	       ((addr64 & DTE_BASE_HI_MASK) << DT_SHIFT);
--}
--
--static inline u32 rk_dma_addr_dte_v2(dma_addr_t dt_dma)
--{
--	return (dt_dma & RK_DTE_PT_ADDRESS_MASK) |
--	       ((dt_dma & DT_HI_MASK) >> DT_SHIFT);
--}
--
- static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
- {
- 	void __iomem *base = iommu->bases[index];
-@@ -577,7 +548,7 @@ static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
- 	page_offset = rk_iova_page_offset(iova);
- 
- 	mmu_dte_addr = rk_iommu_read(base, RK_MMU_DTE_ADDR);
--	mmu_dte_addr_phys = rk_ops->dte_addr_phys(mmu_dte_addr);
-+	mmu_dte_addr_phys = rk_ops->pt_address(mmu_dte_addr);
- 
- 	dte_addr_phys = mmu_dte_addr_phys + (4 * dte_index);
- 	dte_addr = phys_to_virt(dte_addr_phys);
-@@ -967,7 +938,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
- 
- 	for (i = 0; i < iommu->num_mmu; i++) {
- 		rk_iommu_write(iommu->bases[i], RK_MMU_DTE_ADDR,
--			       rk_ops->dma_addr_dte(rk_domain->dt_dma));
-+			       rk_ops->mk_dtentries(rk_domain->dt_dma));
- 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
- 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
- 	}
-@@ -1405,8 +1376,6 @@ static struct rk_iommu_ops iommu_data_ops_v1 = {
- 	.pt_address = &rk_dte_pt_address,
- 	.mk_dtentries = &rk_mk_dte,
- 	.mk_ptentries = &rk_mk_pte,
--	.dte_addr_phys = &rk_dte_addr_phys,
--	.dma_addr_dte = &rk_dma_addr_dte,
- 	.dma_bit_mask = DMA_BIT_MASK(32),
- };
- 
-@@ -1414,8 +1383,6 @@ static struct rk_iommu_ops iommu_data_ops_v2 = {
- 	.pt_address = &rk_dte_pt_address_v2,
- 	.mk_dtentries = &rk_mk_dte_v2,
- 	.mk_ptentries = &rk_mk_pte_v2,
--	.dte_addr_phys = &rk_dte_addr_phys_v2,
--	.dma_addr_dte = &rk_dma_addr_dte_v2,
- 	.dma_bit_mask = DMA_BIT_MASK(40),
- };
  
 -- 
 2.40.1
