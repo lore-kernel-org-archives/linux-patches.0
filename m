@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C48F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F114AC433C7;
-	Mon, 11 Sep 2023 14:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2511170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2609C433C8;
+	Mon, 11 Sep 2023 14:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442073;
-	bh=XPFyBDXuFDUA9D6g1hJjysgzMs07QuFt/hqwFogpTMA=;
+	s=korg; t=1694442076;
+	bh=teNOkB5cbTtE+/19PCxqH5zO7bFQA+bdDWexYDdw5jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSVKwbV4DaHOLlmsjaaxiAjK5Qmz8rxUdufyBPBCSCjaGbaK4boWSGLEoOxL1eDA5
-	 DrLXmvAhTswKhTMqcNsRjIIr/MxqATsdwDGlxOaeg/Yk/qPcAoFqoFacr25iQI4uue
-	 k8MWmeQhr6sQiTs/42eWy67qJFw9Rg+3y+Uix3OM=
+	b=ApTqUFVFwvPqBmyOvO54loKd7mRT0JExXIH4tZN1+J+GhHUUxdac4zp9m1rrDxkh9
+	 KY7v2avfDPI0ZlpibcjBd91/iZiP8pzvs4kgDuJI0y+YuiP6tpUo2kgZDJ9m1rMt9S
+	 BUjTR55v3VZdxzVT3peQ/CuNX3HFeiGjfQDGwcAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Amit Goyal <agoyal@purestorage.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.5 636/739] skbuff: skb_segment, Call zero copy functions before using skbuff frags
-Date: Mon, 11 Sep 2023 15:47:15 +0200
-Message-ID: <20230911134708.859536789@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 611/739] leds: multicolor: Use rounded division when calculating color components
+Date: Mon, 11 Sep 2023 15:46:50 +0200
+Message-ID: <20230911134708.164799843@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -35,162 +34,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Marek Behún <kabel@kernel.org>
 
-commit 2ea35288c83b3d501a88bc17f2df8f176b5cc96f upstream.
+[ Upstream commit 065d099f1be58187e6629273c50b948a02b7e1bf ]
 
-Commit bf5c25d60861 ("skbuff: in skb_segment, call zerocopy functions
-once per nskb") added the call to zero copy functions in skb_segment().
-The change introduced a bug in skb_segment() because skb_orphan_frags()
-may possibly change the number of fragments or allocate new fragments
-altogether leaving nrfrags and frag to point to the old values. This can
-cause a panic with stacktrace like the one below.
+Given channel intensity, LED brightness and max LED brightness, the
+multicolor LED framework helper led_mc_calc_color_components() computes
+the color channel brightness as
 
-[  193.894380] BUG: kernel NULL pointer dereference, address: 00000000000000bc
-[  193.895273] CPU: 13 PID: 18164 Comm: vh-net-17428 Kdump: loaded Tainted: G           O      5.15.123+ #26
-[  193.903919] RIP: 0010:skb_segment+0xb0e/0x12f0
-[  194.021892] Call Trace:
-[  194.027422]  <TASK>
-[  194.072861]  tcp_gso_segment+0x107/0x540
-[  194.082031]  inet_gso_segment+0x15c/0x3d0
-[  194.090783]  skb_mac_gso_segment+0x9f/0x110
-[  194.095016]  __skb_gso_segment+0xc1/0x190
-[  194.103131]  netem_enqueue+0x290/0xb10 [sch_netem]
-[  194.107071]  dev_qdisc_enqueue+0x16/0x70
-[  194.110884]  __dev_queue_xmit+0x63b/0xb30
-[  194.121670]  bond_start_xmit+0x159/0x380 [bonding]
-[  194.128506]  dev_hard_start_xmit+0xc3/0x1e0
-[  194.131787]  __dev_queue_xmit+0x8a0/0xb30
-[  194.138225]  macvlan_start_xmit+0x4f/0x100 [macvlan]
-[  194.141477]  dev_hard_start_xmit+0xc3/0x1e0
-[  194.144622]  sch_direct_xmit+0xe3/0x280
-[  194.147748]  __dev_queue_xmit+0x54a/0xb30
-[  194.154131]  tap_get_user+0x2a8/0x9c0 [tap]
-[  194.157358]  tap_sendmsg+0x52/0x8e0 [tap]
-[  194.167049]  handle_tx_zerocopy+0x14e/0x4c0 [vhost_net]
-[  194.173631]  handle_tx+0xcd/0xe0 [vhost_net]
-[  194.176959]  vhost_worker+0x76/0xb0 [vhost]
-[  194.183667]  kthread+0x118/0x140
-[  194.190358]  ret_from_fork+0x1f/0x30
-[  194.193670]  </TASK>
+    chan_brightness = brightness * chan_intensity / max_brightness
 
-In this case calling skb_orphan_frags() updated nr_frags leaving nrfrags
-local variable in skb_segment() stale. This resulted in the code hitting
-i >= nrfrags prematurely and trying to move to next frag_skb using
-list_skb pointer, which was NULL, and caused kernel panic. Move the call
-to zero copy functions before using frags and nr_frags.
+Consider the situation when (brightness, intensity, max_brightness) is
+for example (16, 15, 255), then chan_brightness is computed to 0
+although the fractional divison would give 0.94, which should be rounded
+to 1.
 
-Fixes: bf5c25d60861 ("skbuff: in skb_segment, call zerocopy functions once per nskb")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reported-by: Amit Goyal <agoyal@purestorage.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use DIV_ROUND_CLOSEST here for the division to give more realistic
+component computation:
+
+    chan_brightness = DIV_ROUND_CLOSEST(brightness * chan_intensity,
+                                        max_brightness)
+
+Fixes: 55d5d3b46b08 ("leds: multicolor: Introduce a multicolor class definition")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://lore.kernel.org/r/20230801124931.8661-1-kabel@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |   34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ drivers/leds/led-class-multicolor.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4360,21 +4360,20 @@ struct sk_buff *skb_segment(struct sk_bu
- 	struct sk_buff *segs = NULL;
- 	struct sk_buff *tail = NULL;
- 	struct sk_buff *list_skb = skb_shinfo(head_skb)->frag_list;
--	skb_frag_t *frag = skb_shinfo(head_skb)->frags;
- 	unsigned int mss = skb_shinfo(head_skb)->gso_size;
- 	unsigned int doffset = head_skb->data - skb_mac_header(head_skb);
--	struct sk_buff *frag_skb = head_skb;
- 	unsigned int offset = doffset;
- 	unsigned int tnl_hlen = skb_tnl_header_len(head_skb);
- 	unsigned int partial_segs = 0;
- 	unsigned int headroom;
- 	unsigned int len = head_skb->len;
-+	struct sk_buff *frag_skb;
-+	skb_frag_t *frag;
- 	__be16 proto;
- 	bool csum, sg;
--	int nfrags = skb_shinfo(head_skb)->nr_frags;
- 	int err = -ENOMEM;
- 	int i = 0;
--	int pos;
-+	int nfrags, pos;
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index e317408583df9..ec62a48116135 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -6,6 +6,7 @@
+ #include <linux/device.h>
+ #include <linux/init.h>
+ #include <linux/led-class-multicolor.h>
++#include <linux/math.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+@@ -19,9 +20,10 @@ int led_mc_calc_color_components(struct led_classdev_mc *mcled_cdev,
+ 	int i;
  
- 	if ((skb_shinfo(head_skb)->gso_type & SKB_GSO_DODGY) &&
- 	    mss != GSO_BY_FRAGS && mss != skb_headlen(head_skb)) {
-@@ -4451,6 +4450,13 @@ normal:
- 	headroom = skb_headroom(head_skb);
- 	pos = skb_headlen(head_skb);
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+-		mcled_cdev->subled_info[i].brightness = brightness *
+-					mcled_cdev->subled_info[i].intensity /
+-					led_cdev->max_brightness;
++		mcled_cdev->subled_info[i].brightness =
++			DIV_ROUND_CLOSEST(brightness *
++					  mcled_cdev->subled_info[i].intensity,
++					  led_cdev->max_brightness);
  
-+	if (skb_orphan_frags(head_skb, GFP_ATOMIC))
-+		return ERR_PTR(-ENOMEM);
-+
-+	nfrags = skb_shinfo(head_skb)->nr_frags;
-+	frag = skb_shinfo(head_skb)->frags;
-+	frag_skb = head_skb;
-+
- 	do {
- 		struct sk_buff *nskb;
- 		skb_frag_t *nskb_frag;
-@@ -4471,6 +4477,10 @@ normal:
- 		    (skb_headlen(list_skb) == len || sg)) {
- 			BUG_ON(skb_headlen(list_skb) > len);
- 
-+			nskb = skb_clone(list_skb, GFP_ATOMIC);
-+			if (unlikely(!nskb))
-+				goto err;
-+
- 			i = 0;
- 			nfrags = skb_shinfo(list_skb)->nr_frags;
- 			frag = skb_shinfo(list_skb)->frags;
-@@ -4489,12 +4499,8 @@ normal:
- 				frag++;
- 			}
- 
--			nskb = skb_clone(list_skb, GFP_ATOMIC);
- 			list_skb = list_skb->next;
- 
--			if (unlikely(!nskb))
--				goto err;
--
- 			if (unlikely(pskb_trim(nskb, len))) {
- 				kfree_skb(nskb);
- 				goto err;
-@@ -4570,12 +4576,16 @@ normal:
- 		skb_shinfo(nskb)->flags |= skb_shinfo(head_skb)->flags &
- 					   SKBFL_SHARED_FRAG;
- 
--		if (skb_orphan_frags(frag_skb, GFP_ATOMIC) ||
--		    skb_zerocopy_clone(nskb, frag_skb, GFP_ATOMIC))
-+		if (skb_zerocopy_clone(nskb, frag_skb, GFP_ATOMIC))
- 			goto err;
- 
- 		while (pos < offset + len) {
- 			if (i >= nfrags) {
-+				if (skb_orphan_frags(list_skb, GFP_ATOMIC) ||
-+				    skb_zerocopy_clone(nskb, list_skb,
-+						       GFP_ATOMIC))
-+					goto err;
-+
- 				i = 0;
- 				nfrags = skb_shinfo(list_skb)->nr_frags;
- 				frag = skb_shinfo(list_skb)->frags;
-@@ -4589,10 +4599,6 @@ normal:
- 					i--;
- 					frag--;
- 				}
--				if (skb_orphan_frags(frag_skb, GFP_ATOMIC) ||
--				    skb_zerocopy_clone(nskb, frag_skb,
--						       GFP_ATOMIC))
--					goto err;
- 
- 				list_skb = list_skb->next;
- 			}
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
