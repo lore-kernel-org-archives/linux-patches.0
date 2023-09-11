@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D5511715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39ECDC433C8;
-	Mon, 11 Sep 2023 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC2511715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBD9C433C7;
+	Mon, 11 Sep 2023 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444875;
-	bh=coxyD0Ne2Lq5khzIKV2g/EKpXgJrsZ6yXy9PL5FMiDA=;
+	s=korg; t=1694444878;
+	bh=S88UxCf9dW+6T6NaDVytrP19ah5Io/bNs3mEtsuJ/2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOahhpB72JXlU3DvxVqH3+eg9adREw08eQhpzWLRGdTqLlGSNaE/WeEBv90bPPAF/
-	 eTfbfSF8eDxkpJR9xu7HugcQjCjBO5Oc6yQL/2VdgzGxnxJrj+zadgPCrTanZQpH4w
-	 e9inlKcmbhcM+RPVLPi+02WEdKeXzkLpmWxEIOUc=
+	b=EkiGq6sA3IoontNVtxOZzZCokVp18vaHUKA0QxZDaTadgAY6B3aex0ApGIeyKU/HU
+	 XS+1KZdqJnkKTrpBucTJVhWHczi527nbu4Yy66G/3yAlqpPu3CFGaPNuY33xFMvUy3
+	 2ft2A0jLSWwv7mH+B83GHlfzi+gfMFsx/d0t9ip4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/600] hwrng: pic32 - use devm_clk_get_enabled
-Date: Mon, 11 Sep 2023 15:43:00 +0200
-Message-ID: <20230911134637.945648090@linuxfoundation.org>
+Subject: [PATCH 6.1 148/600] regmap: rbtree: Use alloc_flags for memory allocations
+Date: Mon, 11 Sep 2023 15:43:01 +0200
+Message-ID: <20230911134637.981435231@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,82 +41,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
+[ Upstream commit 0c8b0bf42c8cef56f7cd9cd876fbb7ece9217064 ]
 
-Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
-enabled as long as the driver is registered with the hwrng core.
+The kunit tests discovered a sleeping in atomic bug.  The allocations
+in the regcache-rbtree code should use the map->alloc_flags instead of
+GFP_KERNEL.
 
-Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[    5.005510] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
+[    5.005960] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 117, name: kunit_try_catch
+[    5.006219] preempt_count: 1, expected: 0
+[    5.006414] 1 lock held by kunit_try_catch/117:
+[    5.006590]  #0: 833b9010 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
+[    5.007493] irq event stamp: 162
+[    5.007627] hardirqs last  enabled at (161): [<80786738>] crng_make_state+0x1a0/0x294
+[    5.007871] hardirqs last disabled at (162): [<80c531ec>] _raw_spin_lock_irqsave+0x7c/0x80
+[    5.008119] softirqs last  enabled at (0): [<801110ac>] copy_process+0x810/0x2138
+[    5.008356] softirqs last disabled at (0): [<00000000>] 0x0
+[    5.008688] CPU: 0 PID: 117 Comm: kunit_try_catch Tainted: G                 N 6.4.4-rc3-g0e8d2fdfb188 #1
+[    5.009011] Hardware name: Generic DT based system
+[    5.009277]  unwind_backtrace from show_stack+0x18/0x1c
+[    5.009497]  show_stack from dump_stack_lvl+0x38/0x5c
+[    5.009676]  dump_stack_lvl from __might_resched+0x188/0x2d0
+[    5.009860]  __might_resched from __kmem_cache_alloc_node+0x1dc/0x25c
+[    5.010061]  __kmem_cache_alloc_node from kmalloc_trace+0x30/0xc8
+[    5.010254]  kmalloc_trace from regcache_rbtree_write+0x26c/0x468
+[    5.010446]  regcache_rbtree_write from _regmap_write+0x88/0x140
+[    5.010634]  _regmap_write from regmap_write+0x44/0x68
+[    5.010803]  regmap_write from basic_read_write+0x8c/0x270
+[    5.010980]  basic_read_write from kunit_try_run_case+0x48/0xa0
+
+Fixes: 28644c809f44 ("regmap: Add the rbtree cache support")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/ee59d128-413c-48ad-a3aa-d9d350c80042@roeck-us.net/
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/58f12a07-5f4b-4a8f-ab84-0a42d1908cb9@moroto.mountain
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/base/regmap/regcache-rbtree.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
-index 99c8bd0859a14..e04a054e89307 100644
---- a/drivers/char/hw_random/pic32-rng.c
-+++ b/drivers/char/hw_random/pic32-rng.c
-@@ -36,7 +36,6 @@
- struct pic32_rng {
- 	void __iomem	*base;
- 	struct hwrng	rng;
--	struct clk	*clk;
- };
+diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
+index fabf87058d80b..ae6b8788d5f3f 100644
+--- a/drivers/base/regmap/regcache-rbtree.c
++++ b/drivers/base/regmap/regcache-rbtree.c
+@@ -277,7 +277,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
  
- /*
-@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
- static int pic32_rng_probe(struct platform_device *pdev)
- {
- 	struct pic32_rng *priv;
-+	struct clk *clk;
- 	u32 v;
- 	int ret;
+ 	blk = krealloc(rbnode->block,
+ 		       blklen * map->cache_word_size,
+-		       GFP_KERNEL);
++		       map->alloc_flags);
+ 	if (!blk)
+ 		return -ENOMEM;
  
-@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->base))
- 		return PTR_ERR(priv->base);
+@@ -286,7 +286,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
+ 	if (BITS_TO_LONGS(blklen) > BITS_TO_LONGS(rbnode->blklen)) {
+ 		present = krealloc(rbnode->cache_present,
+ 				   BITS_TO_LONGS(blklen) * sizeof(*present),
+-				   GFP_KERNEL);
++				   map->alloc_flags);
+ 		if (!present)
+ 			return -ENOMEM;
  
--	priv->clk = devm_clk_get(&pdev->dev, NULL);
--	if (IS_ERR(priv->clk))
--		return PTR_ERR(priv->clk);
--
--	ret = clk_prepare_enable(priv->clk);
--	if (ret)
--		return ret;
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
+@@ -320,7 +320,7 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	const struct regmap_range *range;
+ 	int i;
  
- 	/* enable TRNG in enhanced mode */
- 	v = TRNGEN | TRNGMOD;
-@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
+-	rbnode = kzalloc(sizeof(*rbnode), GFP_KERNEL);
++	rbnode = kzalloc(sizeof(*rbnode), map->alloc_flags);
+ 	if (!rbnode)
+ 		return NULL;
  
- 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
- 	if (ret)
--		goto err_register;
-+		return ret;
+@@ -346,13 +346,13 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	}
  
- 	platform_set_drvdata(pdev, priv);
+ 	rbnode->block = kmalloc_array(rbnode->blklen, map->cache_word_size,
+-				      GFP_KERNEL);
++				      map->alloc_flags);
+ 	if (!rbnode->block)
+ 		goto err_free;
  
- 	return 0;
--
--err_register:
--	clk_disable_unprepare(priv->clk);
--	return ret;
- }
- 
- static int pic32_rng_remove(struct platform_device *pdev)
-@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
- 	struct pic32_rng *rng = platform_get_drvdata(pdev);
- 
- 	writel(0, rng->base + RNGCON);
--	clk_disable_unprepare(rng->clk);
- 	return 0;
- }
+ 	rbnode->cache_present = kcalloc(BITS_TO_LONGS(rbnode->blklen),
+ 					sizeof(*rbnode->cache_present),
+-					GFP_KERNEL);
++					map->alloc_flags);
+ 	if (!rbnode->cache_present)
+ 		goto err_free_block;
  
 -- 
 2.40.1
