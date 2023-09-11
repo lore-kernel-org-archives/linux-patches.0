@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF411706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6B0C433C8;
-	Mon, 11 Sep 2023 15:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3836C11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1933C433C8;
+	Mon, 11 Sep 2023 15:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444442;
-	bh=ZV1FXQedMu6XjFkaVl/wc/dGVBosvQumBHJZGKXANIw=;
+	s=korg; t=1694444445;
+	bh=6a7SXEkHJGLbkWvi0Pyt9N/mIeGy15QEFPBeirtYcw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKBDKZ4E97sQRA24DpOjb0AS5WkglXoQrDR0Xlmyxm3wWfdtk454AJgfIt3sW4PyD
-	 3+j0UuClB14sif+hFp0VnthqKGn/b1IUvVooiJJ42jaO73j+On0ZooAaa3O/eNLw+a
-	 nQwyNBJwQpRYXcD1u5Tj+oC+jkPwK55rKAcZUjIk=
+	b=a97tVyaKYL9igeiPSp40g/Nfx8rEpNKbEnxC/P6B5Qjb12k06H/BNDIpwqb322mVJ
+	 d0FHRcglIBFJVv7aYr2MM2wk5qPJ8JZqQWWMUThGC9MtcTgpmQz3CF4R/ApvwPa4W3
+	 Fk7UkAEDxgcpXJaGsGMMxOREEwxYnNxjjuaHlNDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	James Morse <james.morse@arm.com>,
-	Mihai Carabas <mihai.carabas@oracle.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.4 704/737] arm64: sdei: abort running SDEI handlers during crash
-Date: Mon, 11 Sep 2023 15:49:23 +0200
-Message-ID: <20230911134710.185661870@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 705/737] regulator: dt-bindings: qcom,rpm: fix pattern for children
+Date: Mon, 11 Sep 2023 15:49:24 +0200
+Message-ID: <20230911134710.213735518@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,183 +39,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D Scott Phillips <scott@os.amperecomputing.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 5cd474e57368f0957c343bb21e309cf82826b1ef upstream.
+commit 75d9bf03e2fa38242b35e941ce7c7cdabe479961 upstream.
 
-Interrupts are blocked in SDEI context, per the SDEI spec: "The client
-interrupts cannot preempt the event handler." If we crashed in the SDEI
-handler-running context (as with ACPI's AGDI) then we need to clean up the
-SDEI state before proceeding to the crash kernel so that the crash kernel
-can have working interrupts.
+The "or" (|) in regular expression must be within parentheses,
+otherwise it is not really an "or" and it matches supplies:
 
-Track the active SDEI handler per-cpu so that we can COMPLETE_AND_RESUME
-the handler, discarding the interrupted context.
+  qcom-apq8060-dragonboard.dtb: regulators-1: vdd_ncp-supply: [[34]] is not of type 'object'
 
-Fixes: f5df26961853 ("arm64: kernel: Add arch-specific SDEI entry code and CPU masking")
-Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Fixes: fde0e25b71a9 ("dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema")
 Cc: stable@vger.kernel.org
-Reviewed-by: James Morse <james.morse@arm.com>
-Tested-by: Mihai Carabas <mihai.carabas@oracle.com>
-Link: https://lore.kernel.org/r/20230627002939.2758-1-scott@os.amperecomputing.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230725164047.368892-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/sdei.h |    6 ++++++
- arch/arm64/kernel/entry.S     |   27 +++++++++++++++++++++++++--
- arch/arm64/kernel/sdei.c      |    3 +++
- arch/arm64/kernel/smp.c       |    8 ++++----
- drivers/firmware/arm_sdei.c   |   19 +++++++++++++++++++
- include/linux/arm_sdei.h      |    2 ++
- 6 files changed, 59 insertions(+), 6 deletions(-)
+ .../devicetree/bindings/regulator/qcom,rpm-regulator.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/sdei.h
-+++ b/arch/arm64/include/asm/sdei.h
-@@ -17,6 +17,9 @@
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
+index 8a08698e3484..b4eb4001eb3d 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
+@@ -49,7 +49,7 @@ patternProperties:
+   ".*-supply$":
+     description: Input supply phandle(s) for this node
  
- #include <asm/virt.h>
- 
-+DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
-+DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
-+
- extern unsigned long sdei_exit_mode;
- 
- /* Software Delegated Exception entry point from firmware*/
-@@ -29,6 +32,9 @@ asmlinkage void __sdei_asm_entry_trampol
- 						   unsigned long pc,
- 						   unsigned long pstate);
- 
-+/* Abort a running handler. Context is discarded. */
-+void __sdei_handler_abort(void);
-+
- /*
-  * The above entry point does the minimum to call C code. This function does
-  * anything else, before calling the driver.
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -1003,9 +1003,13 @@ SYM_CODE_START(__sdei_asm_handler)
- 
- 	mov	x19, x1
- 
--#if defined(CONFIG_VMAP_STACK) || defined(CONFIG_SHADOW_CALL_STACK)
-+	/* Store the registered-event for crash_smp_send_stop() */
- 	ldrb	w4, [x19, #SDEI_EVENT_PRIORITY]
--#endif
-+	cbnz	w4, 1f
-+	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
-+	b	2f
-+1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
-+2:	str	x19, [x5]
- 
- #ifdef CONFIG_VMAP_STACK
- 	/*
-@@ -1072,6 +1076,14 @@ SYM_CODE_START(__sdei_asm_handler)
- 
- 	ldr_l	x2, sdei_exit_mode
- 
-+	/* Clear the registered-event seen by crash_smp_send_stop() */
-+	ldrb	w3, [x4, #SDEI_EVENT_PRIORITY]
-+	cbnz	w3, 1f
-+	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
-+	b	2f
-+1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
-+2:	str	xzr, [x5]
-+
- alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
- 	sdei_handler_exit exit_mode=x2
- alternative_else_nop_endif
-@@ -1082,4 +1094,15 @@ alternative_else_nop_endif
- #endif
- SYM_CODE_END(__sdei_asm_handler)
- NOKPROBE(__sdei_asm_handler)
-+
-+SYM_CODE_START(__sdei_handler_abort)
-+	mov_q	x0, SDEI_1_0_FN_SDEI_EVENT_COMPLETE_AND_RESUME
-+	adr	x1, 1f
-+	ldr_l	x2, sdei_exit_mode
-+	sdei_handler_exit exit_mode=x2
-+	// exit the handler and jump to the next instruction.
-+	// Exit will stomp x0-x17, PSTATE, ELR_ELx, and SPSR_ELx.
-+1:	ret
-+SYM_CODE_END(__sdei_handler_abort)
-+NOKPROBE(__sdei_handler_abort)
- #endif /* CONFIG_ARM_SDE_INTERFACE */
---- a/arch/arm64/kernel/sdei.c
-+++ b/arch/arm64/kernel/sdei.c
-@@ -47,6 +47,9 @@ DEFINE_PER_CPU(unsigned long *, sdei_sha
- DEFINE_PER_CPU(unsigned long *, sdei_shadow_call_stack_critical_ptr);
- #endif
- 
-+DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
-+DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
-+
- static void _free_sdei_stack(unsigned long * __percpu *ptr, int cpu)
- {
- 	unsigned long *p;
---- a/arch/arm64/kernel/smp.c
-+++ b/arch/arm64/kernel/smp.c
-@@ -1048,10 +1048,8 @@ void crash_smp_send_stop(void)
- 	 * If this cpu is the only one alive at this point in time, online or
- 	 * not, there are no stop messages to be sent around, so just back out.
- 	 */
--	if (num_other_online_cpus() == 0) {
--		sdei_mask_local_cpu();
--		return;
--	}
-+	if (num_other_online_cpus() == 0)
-+		goto skip_ipi;
- 
- 	cpumask_copy(&mask, cpu_online_mask);
- 	cpumask_clear_cpu(smp_processor_id(), &mask);
-@@ -1070,7 +1068,9 @@ void crash_smp_send_stop(void)
- 		pr_warn("SMP: failed to stop secondary CPUs %*pbl\n",
- 			cpumask_pr_args(&mask));
- 
-+skip_ipi:
- 	sdei_mask_local_cpu();
-+	sdei_handler_abort();
- }
- 
- bool smp_crash_stop_failed(void)
---- a/drivers/firmware/arm_sdei.c
-+++ b/drivers/firmware/arm_sdei.c
-@@ -1095,3 +1095,22 @@ int sdei_event_handler(struct pt_regs *r
- 	return err;
- }
- NOKPROBE_SYMBOL(sdei_event_handler);
-+
-+void sdei_handler_abort(void)
-+{
-+	/*
-+	 * If the crash happened in an SDEI event handler then we need to
-+	 * finish the handler with the firmware so that we can have working
-+	 * interrupts in the crash kernel.
-+	 */
-+	if (__this_cpu_read(sdei_active_critical_event)) {
-+	        pr_warn("still in SDEI critical event context, attempting to finish handler.\n");
-+	        __sdei_handler_abort();
-+	        __this_cpu_write(sdei_active_critical_event, NULL);
-+	}
-+	if (__this_cpu_read(sdei_active_normal_event)) {
-+	        pr_warn("still in SDEI normal event context, attempting to finish handler.\n");
-+	        __sdei_handler_abort();
-+	        __this_cpu_write(sdei_active_normal_event, NULL);
-+	}
-+}
---- a/include/linux/arm_sdei.h
-+++ b/include/linux/arm_sdei.h
-@@ -47,10 +47,12 @@ int sdei_unregister_ghes(struct ghes *gh
- int sdei_mask_local_cpu(void);
- int sdei_unmask_local_cpu(void);
- void __init sdei_init(void);
-+void sdei_handler_abort(void);
- #else
- static inline int sdei_mask_local_cpu(void) { return 0; }
- static inline int sdei_unmask_local_cpu(void) { return 0; }
- static inline void sdei_init(void) { }
-+static inline void sdei_handler_abort(void) { }
- #endif /* CONFIG_ARM_SDE_INTERFACE */
- 
- 
+-  "^((s|l|lvs)[0-9]*)|(s[1-2][a-b])|(ncp)|(mvs)|(usb-switch)|(hdmi-switch)$":
++  "^((s|l|lvs)[0-9]*|s[1-2][a-b]|ncp|mvs|usb-switch|hdmi-switch)$":
+     description: List of regulators and its properties
+     $ref: regulator.yaml#
+     unevaluatedProperties: false
+-- 
+2.42.0
+
 
 
