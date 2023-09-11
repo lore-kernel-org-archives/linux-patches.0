@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9AB1172B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09B5C433C8;
-	Mon, 11 Sep 2023 14:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F6811718
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B54C433CA;
+	Mon, 11 Sep 2023 14:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442676;
-	bh=9GL3EXWK90u/QZlmA3uTSIMfrDWEwv+Jm8YlvTfqttQ=;
+	s=korg; t=1694442678;
+	bh=en448N2tMjfD87wHumQy1ONXXNW9qdwnoBO7/kL7zfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpA/RsE2oxw9FV7pIDyDagxqEmazWZX8UlHqou4xphPUWl0I2LvrG1T7DskhqlqoQ
-	 tRJ7fJucZ5AENRJnjdi86xwtnrAFOovLXnViLFEw0xZM+GuMoKomZCxh+WxA2QGJvp
-	 9aH1kU4s8tsO5MFzarUq/1E/8lJcLoaTX2i5ZN/Q=
+	b=Y8C/ZwSKNYf8FOpcLt3JSkf+283jSJNT90mJyl3W2h4IKfcdEjPhSk8PNSArbYHbz
+	 pXq+jqYuCTFbQKNGASv1QOfq5Z4r86PXa5ZO+hoyk9cZMx6lWkOBv14fbVeu6HhUu6
+	 UCx8bupsyPT859duT24sDWcv/g5d1eh+Az8tI4rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Arnd Bergmann <arnd@kernel.org>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
+	Charlemagne Lasse <charlemagnelasse@gmail.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 108/737] ARM: ptrace: Restore syscall skipping for tracers
-Date: Mon, 11 Sep 2023 15:39:27 +0200
-Message-ID: <20230911134653.526327199@linuxfoundation.org>
+Subject: [PATCH 6.4 109/737] locking/arch: Avoid variable shadowing in local_try_cmpxchg()
+Date: Mon, 11 Sep 2023 15:39:28 +0200
+Message-ID: <20230911134653.553585474@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -45,66 +41,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 4697b5848bd933f68ebd04836362c8de0cacaf71 ]
+[ Upstream commit d6b45484c130f4095313ae3edeb4aae662c12fb1 ]
 
-Since commit 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store
-thread_info->abi_syscall"), the seccomp selftests "syscall_errno"
-and "syscall_faked" have been broken. Both seccomp and PTRACE depend
-on using the special value of "-1" for skipping syscalls. This value
-wasn't working because it was getting masked by __NR_SYSCALL_MASK in
-both PTRACE_SET_SYSCALL and get_syscall_nr().
+Several architectures define arch_try_local_cmpxchg macro using
+internal temporary variables named ___old, __old or _old. Remove
+temporary varible in local_try_cmpxchg to avoid variable shadowing.
 
-Explicitly test for -1 in PTRACE_SET_SYSCALL and get_syscall_nr(),
-leaving it exposed when present, allowing tracers to skip syscalls
-again.
+No functional change intended.
 
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Arnd Bergmann <arnd@kernel.org>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Fixes: 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store thread_info->abi_syscall")
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230810195422.2304827-2-keescook@chromium.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: d994f2c8e241 ("locking/arch: Wire up local_try_cmpxchg()")
+Closes: https://lore.kernel.org/lkml/CAFGhKbyxtuk=LoW-E3yLXgcmR93m+Dfo5-u9oQA_YC5Fcy_t9g@mail.gmail.com/
+Reported-by: Charlemagne Lasse <charlemagnelasse@gmail.com>
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230708090048.63046-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/syscall.h | 3 +++
- arch/arm/kernel/ptrace.c       | 5 +++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/local.h | 4 ++--
+ arch/mips/include/asm/local.h      | 4 ++--
+ arch/x86/include/asm/local.h       | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/include/asm/syscall.h b/arch/arm/include/asm/syscall.h
-index dfeed440254a8..fe4326d938c18 100644
---- a/arch/arm/include/asm/syscall.h
-+++ b/arch/arm/include/asm/syscall.h
-@@ -25,6 +25,9 @@ static inline int syscall_get_nr(struct task_struct *task,
- 	if (IS_ENABLED(CONFIG_AEABI) && !IS_ENABLED(CONFIG_OABI_COMPAT))
- 		return task_thread_info(task)->abi_syscall;
+diff --git a/arch/loongarch/include/asm/local.h b/arch/loongarch/include/asm/local.h
+index 83e995b30e472..c49675852bdcd 100644
+--- a/arch/loongarch/include/asm/local.h
++++ b/arch/loongarch/include/asm/local.h
+@@ -63,8 +63,8 @@ static inline long local_cmpxchg(local_t *l, long old, long new)
  
-+	if (task_thread_info(task)->abi_syscall == -1)
-+		return -1;
-+
- 	return task_thread_info(task)->abi_syscall & __NR_SYSCALL_MASK;
+ static inline bool local_try_cmpxchg(local_t *l, long *old, long new)
+ {
+-	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
+-	return try_cmpxchg_local(&l->a.counter, __old, new);
++	return try_cmpxchg_local(&l->a.counter,
++				 (typeof(l->a.counter) *) old, new);
  }
  
-diff --git a/arch/arm/kernel/ptrace.c b/arch/arm/kernel/ptrace.c
-index 2d8e2516906b6..fef32d73f9120 100644
---- a/arch/arm/kernel/ptrace.c
-+++ b/arch/arm/kernel/ptrace.c
-@@ -783,8 +783,9 @@ long arch_ptrace(struct task_struct *child, long request,
- 			break;
+ #define local_xchg(l, n) (atomic_long_xchg((&(l)->a), (n)))
+diff --git a/arch/mips/include/asm/local.h b/arch/mips/include/asm/local.h
+index 5daf6fe8e3e9a..e6ae3df0349d2 100644
+--- a/arch/mips/include/asm/local.h
++++ b/arch/mips/include/asm/local.h
+@@ -101,8 +101,8 @@ static __inline__ long local_cmpxchg(local_t *l, long old, long new)
  
- 		case PTRACE_SET_SYSCALL:
--			task_thread_info(child)->abi_syscall = data &
--							__NR_SYSCALL_MASK;
-+			if (data != -1)
-+				data &= __NR_SYSCALL_MASK;
-+			task_thread_info(child)->abi_syscall = data;
- 			ret = 0;
- 			break;
+ static __inline__ bool local_try_cmpxchg(local_t *l, long *old, long new)
+ {
+-	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
+-	return try_cmpxchg_local(&l->a.counter, __old, new);
++	return try_cmpxchg_local(&l->a.counter,
++				 (typeof(l->a.counter) *) old, new);
+ }
  
+ #define local_xchg(l, n) (atomic_long_xchg((&(l)->a), (n)))
+diff --git a/arch/x86/include/asm/local.h b/arch/x86/include/asm/local.h
+index 56d4ef604b919..635132a127782 100644
+--- a/arch/x86/include/asm/local.h
++++ b/arch/x86/include/asm/local.h
+@@ -127,8 +127,8 @@ static inline long local_cmpxchg(local_t *l, long old, long new)
+ 
+ static inline bool local_try_cmpxchg(local_t *l, long *old, long new)
+ {
+-	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
+-	return try_cmpxchg_local(&l->a.counter, __old, new);
++	return try_cmpxchg_local(&l->a.counter,
++				 (typeof(l->a.counter) *) old, new);
+ }
+ 
+ /* Always has a lock prefix */
 -- 
 2.40.1
 
