@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AEA11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36202C433C9;
-	Mon, 11 Sep 2023 15:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8000911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03897C433C8;
+	Mon, 11 Sep 2023 15:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445466;
-	bh=Ifd/4eX0PlwtkJ7g4k4auG790O4zD4kS6ITEQ7+J73k=;
+	s=korg; t=1694445469;
+	bh=u3vJVSw60ug4CtJz4x+6lUe6UKP1yOxIXa5xX3tOXKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaLdHQyA4rRilv676c331isWqdkR6/cvzYu4ClQ0F0ekqw+h3aTa960fBK1wrMTsx
-	 c0R4JvCFsLRNQSqbKUAnlE1QRLm1RlK7ITLN+rbQPMNtrXzy1RZoGAMm5lFFM2k4h/
-	 iSv/MM9Yc+RCnIJvny+lDrdqk5+C0ai/cuYSTYGQ=
+	b=MH25p2sVCDATXe6BR6SgSyRa2jkvaYRwJ6Mru+E0P6SvwLYQzG1BwOf8Jbx9Gf0Wh
+	 YBiP32cFWauWnHzvgt8nEI3xhxt2KK+2Mq8WPdX3CVyf0pAjWLpj5Nan2rq3RZFaAi
+	 HSkfSxFlstvUogUCx3qB6dIjooBKKpcbADu9w/VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Ye Li <ye.li@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 357/600] clk: imx: pllv4: Fix SPLL2 MULT range
-Date: Mon, 11 Sep 2023 15:46:30 +0200
-Message-ID: <20230911134644.218466902@linuxfoundation.org>
+Subject: [PATCH 6.1 331/600] clk: qcom: gcc-sc8280xp: Add missing GDSC flags
+Date: Mon, 11 Sep 2023 15:46:04 +0200
+Message-ID: <20230911134643.459548803@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,148 +41,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Li <ye.li@nxp.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 3f0cdb945471f1abd1cf4d172190e9c489c5052a ]
+[ Upstream commit 2fd02de27054576a4a8c89302e2f77122c55e957 ]
 
-The SPLL2 on iMX8ULP is different with other frac PLLs, it can
-support VCO from 650Mhz to 1Ghz. According to RM, the MULT is
-using a range from 27 to 54, not some fixed values. If using
-current PLL implementation, some clock rate can't be supported.
+All of the 8280's GCC GDSCs can and should use the retain registers so
+as not to lose their state when entering lower power modes.
 
-Fix the issue by adding new type for the SPLL2 and use MULT range
-to replace MULT table
-
-Fixes: 5f0601c47c33 ("clk: imx: Update the pllv4 to support imx8ulp")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Ye Li <ye.li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230625123340.4067536-1-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230620-topic-sc8280_gccgdsc-v2-1-562c1428c10d@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-pllv4.c | 46 +++++++++++++++++++++++++++++--------
- drivers/clk/imx/clk.h       |  1 +
- 2 files changed, 37 insertions(+), 10 deletions(-)
+ drivers/clk/qcom/gcc-sc8280xp.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-pllv4.c b/drivers/clk/imx/clk-pllv4.c
-index 6e7e34571fc8d..9b136c951762c 100644
---- a/drivers/clk/imx/clk-pllv4.c
-+++ b/drivers/clk/imx/clk-pllv4.c
-@@ -44,11 +44,15 @@ struct clk_pllv4 {
- 	u32		cfg_offset;
- 	u32		num_offset;
- 	u32		denom_offset;
-+	bool		use_mult_range;
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index 04a99dbaa57e0..43c518e5c986b 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -6760,7 +6760,7 @@ static struct gdsc pcie_0_tunnel_gdsc = {
+ 		.name = "pcie_0_tunnel_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE,
++	.flags = VOTABLE | RETAIN_FF_ENABLE,
  };
  
- /* Valid PLL MULT Table */
- static const int pllv4_mult_table[] = {33, 27, 22, 20, 17, 16};
- 
-+/* Valid PLL MULT range, (max, min) */
-+static const int pllv4_mult_range[] = {54, 27};
-+
- #define to_clk_pllv4(__hw) container_of(__hw, struct clk_pllv4, hw)
- 
- #define LOCK_TIMEOUT_US		USEC_PER_MSEC
-@@ -94,17 +98,30 @@ static unsigned long clk_pllv4_recalc_rate(struct clk_hw *hw,
- static long clk_pllv4_round_rate(struct clk_hw *hw, unsigned long rate,
- 				 unsigned long *prate)
- {
-+	struct clk_pllv4 *pll = to_clk_pllv4(hw);
- 	unsigned long parent_rate = *prate;
- 	unsigned long round_rate, i;
- 	u32 mfn, mfd = DEFAULT_MFD;
- 	bool found = false;
- 	u64 temp64;
--
--	for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
--		round_rate = parent_rate * pllv4_mult_table[i];
--		if (rate >= round_rate) {
-+	u32 mult;
-+
-+	if (pll->use_mult_range) {
-+		temp64 = (u64)rate;
-+		do_div(temp64, parent_rate);
-+		mult = temp64;
-+		if (mult >= pllv4_mult_range[1] &&
-+		    mult <= pllv4_mult_range[0]) {
-+			round_rate = parent_rate * mult;
- 			found = true;
--			break;
-+		}
-+	} else {
-+		for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
-+			round_rate = parent_rate * pllv4_mult_table[i];
-+			if (rate >= round_rate) {
-+				found = true;
-+				break;
-+			}
- 		}
- 	}
- 
-@@ -138,14 +155,20 @@ static long clk_pllv4_round_rate(struct clk_hw *hw, unsigned long rate,
- 	return round_rate + (u32)temp64;
- }
- 
--static bool clk_pllv4_is_valid_mult(unsigned int mult)
-+static bool clk_pllv4_is_valid_mult(struct clk_pllv4 *pll, unsigned int mult)
- {
- 	int i;
- 
- 	/* check if mult is in valid MULT table */
--	for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
--		if (pllv4_mult_table[i] == mult)
-+	if (pll->use_mult_range) {
-+		if (mult >= pllv4_mult_range[1] &&
-+		    mult <= pllv4_mult_range[0])
- 			return true;
-+	} else {
-+		for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
-+			if (pllv4_mult_table[i] == mult)
-+				return true;
-+		}
- 	}
- 
- 	return false;
-@@ -160,7 +183,7 @@ static int clk_pllv4_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- 	mult = rate / parent_rate;
- 
--	if (!clk_pllv4_is_valid_mult(mult))
-+	if (!clk_pllv4_is_valid_mult(pll, mult))
- 		return -EINVAL;
- 
- 	if (parent_rate <= MAX_MFD)
-@@ -227,10 +250,13 @@ struct clk_hw *imx_clk_hw_pllv4(enum imx_pllv4_type type, const char *name,
- 
- 	pll->base = base;
- 
--	if (type == IMX_PLLV4_IMX8ULP) {
-+	if (type == IMX_PLLV4_IMX8ULP ||
-+	    type == IMX_PLLV4_IMX8ULP_1GHZ) {
- 		pll->cfg_offset = IMX8ULP_PLL_CFG_OFFSET;
- 		pll->num_offset = IMX8ULP_PLL_NUM_OFFSET;
- 		pll->denom_offset = IMX8ULP_PLL_DENOM_OFFSET;
-+		if (type == IMX_PLLV4_IMX8ULP_1GHZ)
-+			pll->use_mult_range = true;
- 	} else {
- 		pll->cfg_offset = PLL_CFG_OFFSET;
- 		pll->num_offset = PLL_NUM_OFFSET;
-diff --git a/drivers/clk/imx/clk.h b/drivers/clk/imx/clk.h
-index dd49f90110e8b..fb59131395f03 100644
---- a/drivers/clk/imx/clk.h
-+++ b/drivers/clk/imx/clk.h
-@@ -46,6 +46,7 @@ enum imx_pll14xx_type {
- enum imx_pllv4_type {
- 	IMX_PLLV4_IMX7ULP,
- 	IMX_PLLV4_IMX8ULP,
-+	IMX_PLLV4_IMX8ULP_1GHZ,
+ static struct gdsc pcie_1_tunnel_gdsc = {
+@@ -6771,7 +6771,7 @@ static struct gdsc pcie_1_tunnel_gdsc = {
+ 		.name = "pcie_1_tunnel_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE,
++	.flags = VOTABLE | RETAIN_FF_ENABLE,
  };
  
- enum imx_pfdv2_type {
+ /*
+@@ -6786,7 +6786,7 @@ static struct gdsc pcie_2a_gdsc = {
+ 		.name = "pcie_2a_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+ };
+ 
+ static struct gdsc pcie_2b_gdsc = {
+@@ -6797,7 +6797,7 @@ static struct gdsc pcie_2b_gdsc = {
+ 		.name = "pcie_2b_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+ };
+ 
+ static struct gdsc pcie_3a_gdsc = {
+@@ -6808,7 +6808,7 @@ static struct gdsc pcie_3a_gdsc = {
+ 		.name = "pcie_3a_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+ };
+ 
+ static struct gdsc pcie_3b_gdsc = {
+@@ -6819,7 +6819,7 @@ static struct gdsc pcie_3b_gdsc = {
+ 		.name = "pcie_3b_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+ };
+ 
+ static struct gdsc pcie_4_gdsc = {
+@@ -6830,7 +6830,7 @@ static struct gdsc pcie_4_gdsc = {
+ 		.name = "pcie_4_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+ };
+ 
+ static struct gdsc ufs_card_gdsc = {
+@@ -6839,6 +6839,7 @@ static struct gdsc ufs_card_gdsc = {
+ 		.name = "ufs_card_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc ufs_phy_gdsc = {
+@@ -6847,6 +6848,7 @@ static struct gdsc ufs_phy_gdsc = {
+ 		.name = "ufs_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc usb30_mp_gdsc = {
+@@ -6855,6 +6857,7 @@ static struct gdsc usb30_mp_gdsc = {
+ 		.name = "usb30_mp_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_RET_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc usb30_prim_gdsc = {
+@@ -6863,6 +6866,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_RET_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc usb30_sec_gdsc = {
+@@ -6871,6 +6875,7 @@ static struct gdsc usb30_sec_gdsc = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_RET_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc emac_0_gdsc = {
+@@ -6879,6 +6884,7 @@ static struct gdsc emac_0_gdsc = {
+ 		.name = "emac_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc emac_1_gdsc = {
+@@ -6887,6 +6893,7 @@ static struct gdsc emac_1_gdsc = {
+ 		.name = "emac_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+ static struct clk_regmap *gcc_sc8280xp_clocks[] = {
 -- 
 2.40.1
 
