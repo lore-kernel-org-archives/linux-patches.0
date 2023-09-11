@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1381170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB1C433C8;
-	Mon, 11 Sep 2023 14:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCBD1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933DAC433C8;
+	Mon, 11 Sep 2023 14:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441675;
-	bh=h471t8K39bqvd2w5T2HxZ9ITHxva2kh6iclXSp5nrLY=;
+	s=korg; t=1694441678;
+	bh=NK/YvXIUGrjTQ92639si5SP4VEzAJ1/2jXnHmj/yIa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VTGKgJYIzy2Pja/b6VG/HSBElxa9UXRFt9/wTaanNNI3y1SgLUDesU7ZyPuV3zycl
-	 zzvIjP9L92x51Zut57qDSPPQBeZ3pnOGk8K4HZuVWtUoE+JENC4/hi5BYsdxBPMvKa
-	 SLx0q5N+zLkgN+kahdylc0s/c30MdE/MBVL/Ps/Q=
+	b=dGDDsiB9ZBEV1G/rne7ulkbATPOTZ/H3gYHQalK6jhUx9oIM0ChnF8YT2LwlCYXlz
+	 31SPVt1FCqYu9BGFth+HfNs8tUWU+fDDfUFuubA0Uh6Yqt2usfSCnUbbgBj04tyg6k
+	 su7Y4xUf1dlWWB/kgiHrpY2PULlY/GPQhR7HssYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 470/739] media: rkvdec: increase max supported height for H.264
-Date: Mon, 11 Sep 2023 15:44:29 +0200
-Message-ID: <20230911134704.273563298@linuxfoundation.org>
+Subject: [PATCH 6.5 471/739] media: amphion: fix CHECKED_RETURN issues reported by coverity
+Date: Mon, 11 Sep 2023 15:44:30 +0200
+Message-ID: <20230911134704.301145746@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,35 +41,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit f000e6ca2d60fefd02a180a57df2c4162fa0c1b7 ]
+[ Upstream commit b237b058adbc7825da9c8f358f1ff3f0467d623a ]
 
-After testing it is possible for the hardware to decode H264
-bistream with a height up to 2560.
+calling "vpu_cmd_send/vpu_get_buffer_state/vpu_session_alloc_fs"
+without checking return value
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Fixes: cd33c830448ba ("media: rkvdec: Add the rkvdec driver")
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/amphion/vdec.c     |  5 ++++-
+ drivers/media/platform/amphion/vpu_cmds.c |  3 ++-
+ drivers/media/platform/amphion/vpu_dbg.c  | 11 +++++++++--
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index 134e2b9fa7d9a..84a41792cb4b8 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -120,7 +120,7 @@ static const struct rkvdec_coded_fmt_desc rkvdec_coded_fmts[] = {
- 			.max_width = 4096,
- 			.step_width = 16,
- 			.min_height = 48,
--			.max_height = 2304,
-+			.max_height = 2560,
- 			.step_height = 16,
- 		},
- 		.ctrls = &rkvdec_h264_ctrls,
+diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
+index eeb2ef72df5b3..133d77d1ea0c3 100644
+--- a/drivers/media/platform/amphion/vdec.c
++++ b/drivers/media/platform/amphion/vdec.c
+@@ -1019,6 +1019,7 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
+ {
+ 	struct vdec_t *vdec = inst->priv;
+ 	struct vpu_fs_info info;
++	int ret;
+ 
+ 	if (!vdec->req_frame_count)
+ 		return 0;
+@@ -1026,7 +1027,9 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
+ 	memset(&info, 0, sizeof(info));
+ 	info.type = MEM_RES_FRAME;
+ 	info.tag = vdec->seq_tag + 0xf0;
+-	vpu_session_alloc_fs(inst, &info);
++	ret = vpu_session_alloc_fs(inst, &info);
++	if (ret)
++		return ret;
+ 	vdec->req_frame_count--;
+ 
+ 	return 0;
+diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
+index 647d94554fb5d..7e137f276c3b1 100644
+--- a/drivers/media/platform/amphion/vpu_cmds.c
++++ b/drivers/media/platform/amphion/vpu_cmds.c
+@@ -306,7 +306,8 @@ static void vpu_core_keep_active(struct vpu_core *core)
+ 
+ 	dev_dbg(core->dev, "try to wake up\n");
+ 	mutex_lock(&core->cmd_lock);
+-	vpu_cmd_send(core, &pkt);
++	if (vpu_cmd_send(core, &pkt))
++		dev_err(core->dev, "fail to keep active\n");
+ 	mutex_unlock(&core->cmd_lock);
+ }
+ 
+diff --git a/drivers/media/platform/amphion/vpu_dbg.c b/drivers/media/platform/amphion/vpu_dbg.c
+index adc523b950618..982c2c777484c 100644
+--- a/drivers/media/platform/amphion/vpu_dbg.c
++++ b/drivers/media/platform/amphion/vpu_dbg.c
+@@ -50,6 +50,13 @@ static char *vpu_stat_name[] = {
+ 	[VPU_BUF_STATE_ERROR] = "error",
+ };
+ 
++static inline const char *to_vpu_stat_name(int state)
++{
++	if (state <= VPU_BUF_STATE_ERROR)
++		return vpu_stat_name[state];
++	return "unknown";
++}
++
+ static int vpu_dbg_instance(struct seq_file *s, void *data)
+ {
+ 	struct vpu_inst *inst = s->private;
+@@ -141,7 +148,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+ 		num = scnprintf(str, sizeof(str),
+ 				"output [%2d] state = %10s, %8s\n",
+ 				i, vb2_stat_name[vb->state],
+-				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
++				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
+ 		if (seq_write(s, str, num))
+ 			return 0;
+ 	}
+@@ -156,7 +163,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+ 		num = scnprintf(str, sizeof(str),
+ 				"capture[%2d] state = %10s, %8s\n",
+ 				i, vb2_stat_name[vb->state],
+-				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
++				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
+ 		if (seq_write(s, str, num))
+ 			return 0;
+ 	}
 -- 
 2.40.1
 
