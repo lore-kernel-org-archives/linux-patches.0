@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B8A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D3BC433C7;
-	Mon, 11 Sep 2023 13:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E93B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3905C433C7;
+	Mon, 11 Sep 2023 13:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440311;
-	bh=bWyYbxPzHCQvB8zV9sMvkLYZ4f16+LHKrrBTIv8G1aI=;
+	s=korg; t=1694440314;
+	bh=JGa2s9BA82mfzcZQIx+gT7WCX9Hd9i48Mb9GGu3W414=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vx5Qz8a/URXUgg489NKms5X39Iluj7Rj7Tzwh2vA4Y6GLHJvmTHaKVNgr8uH7SrZ2
-	 diSF5dHMiQLMrQ3Ixst68twFaa4KWVYt7KAy+pPBenkQGTB0BFLrJeVK7hsJ2P1VEY
-	 Wg+zHxCPidGUHveu7XmcBgIWk1N1hbm3934dTVYM=
+	b=DxH6vjGDnCafB1PP5YPaH9c1uqRj0B82RgYhj2wGg6UyJUso0HSn84LKNE/Utcjip
+	 /1K6lP6ZDu7ZPpC0Rzex3vDMtNZ2Wu+cFzkjnqkeN2daOGjFCgS2xlzPnfTYyFy0Mp
+	 rbMqQ/dyJjJOhtzkYwVFzPH1Ddn9AZK4tY/us938=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 017/739] iomap: Remove large folio handling in iomap_invalidate_folio()
-Date: Mon, 11 Sep 2023 15:36:56 +0200
-Message-ID: <20230911134651.508719528@linuxfoundation.org>
+	Yang Jie <yang.jie@linux.intel.com>,
+	Doug Smythies <dsmythies@telus.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.5 002/739] cpufreq: intel_pstate: set stale CPU frequency to minimum
+Date: Mon, 11 Sep 2023 15:36:41 +0200
+Message-ID: <20230911134651.010670934@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,46 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Doug Smythies <dsmythies@telus.net>
 
-[ Upstream commit a221ab717c43147f728d93513923ba3528f861bf ]
+commit d51847acb018d83186e4af67bc93f9a00a8644f7 upstream.
 
-We do not need to release the iomap_page in iomap_invalidate_folio()
-to allow the folio to be split.  The splitting code will call
-->release_folio() if there is still per-fs private data attached to
-the folio.  At that point, we will check if the folio is still dirty
-and decline to release the iomap_page.  It is possible to trigger the
-warning in perfectly legitimate circumstances (eg if a disk read fails,
-we do a partial write to the folio, then we truncate the folio), which
-will cause those writes to be lost.
+The intel_pstate CPU frequency scaling driver does not
+use policy->cur and it is 0.
+When the CPU frequency is outdated arch_freq_get_on_cpu()
+will default to the nominal clock frequency when its call to
+cpufreq_quick_getpolicy_cur returns the never updated 0.
+Thus, the listed frequency might be outside of currently
+set limits. Some users are complaining about the high
+reported frequency, albeit stale, when their system is
+idle and/or it is above the reduced maximum they have set.
 
-Fixes: 60d8231089f0 ("iomap: Support large folios in invalidatepage")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch will maintain policy_cur for the intel_pstate
+driver at the current minimum CPU frequency.
+
+Reported-by: Yang Jie <yang.jie@linux.intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217597
+Signed-off-by: Doug Smythies <dsmythies@telus.net>
+[ rjw: White space damage fixes and comment adjustment ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Keyon Jie <yang.jie@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/cpufreq/intel_pstate.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index aa8967cca1a31..7d2f70708f37d 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -508,11 +508,6 @@ void iomap_invalidate_folio(struct folio *folio, size_t offset, size_t len)
- 		WARN_ON_ONCE(folio_test_writeback(folio));
- 		folio_cancel_dirty(folio);
- 		iomap_page_release(folio);
--	} else if (folio_test_large(folio)) {
--		/* Must release the iop so the page can be split */
--		WARN_ON_ONCE(!folio_test_uptodate(folio) &&
--			     folio_test_dirty(folio));
--		iomap_page_release(folio);
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2609,6 +2609,11 @@ static int intel_pstate_set_policy(struc
+ 			intel_pstate_clear_update_util_hook(policy->cpu);
+ 		intel_pstate_hwp_set(policy->cpu);
  	}
- }
- EXPORT_SYMBOL_GPL(iomap_invalidate_folio);
--- 
-2.40.1
-
++	/*
++	 * policy->cur is never updated with the intel_pstate driver, but it
++	 * is used as a stale frequency value. So, keep it within limits.
++	 */
++	policy->cur = policy->min;
+ 
+ 	mutex_unlock(&intel_pstate_limits_lock);
+ 
 
 
