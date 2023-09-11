@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BD211715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78664C433C9;
-	Mon, 11 Sep 2023 15:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F8711715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA49BC433C8;
+	Mon, 11 Sep 2023 15:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444855;
-	bh=4okI+ydUurJhT/wlH+GhmgYCtTUtTpcOLlIX0fEWnHk=;
+	s=korg; t=1694444859;
+	bh=QT9ThB/4PdB7WuYSa6O2iulkdjGcg2Y3eqGXN6n8AIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rejhdVOSfYHx7zHx/rX+LqD3suTBupzWZxxeWwQIxcY34JvG3ZwnkOyZ5ucGPxy/n
-	 PGZjDrsdfLt6hpP2kcTphVKtlc3TSboVNX/W31S1n+oQPqsEEuVM9wUY9ixdeepo9S
-	 FNwFtKF0bblEPd+5yk+sorEaR8Uo5VDhDLZ1CqyE=
+	b=bqR2zfry1GTVuSRD4/6fnXXdtU/6PMFOO2eXu0nmqKitcrlf5vV5UtwpNQPPRLyOb
+	 +8QIP+VzlJWCAIEtYeSmvGHRmvQZsEgjClmkaP8dxoPYk+MT8A5aEtrlNOTTxO6d2o
+	 fJxHyw0h35Te+lBHp1+AwRgkoX6iBlCQhZ8OOaCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/600] selftests/futex: Order calls to futex_lock_pi
-Date: Mon, 11 Sep 2023 15:42:36 +0200
-Message-ID: <20230911134637.245592013@linuxfoundation.org>
+Subject: [PATCH 6.1 141/600] libbpf: Fix realloc API handling in zero-sized edge cases
+Date: Mon, 11 Sep 2023 15:42:54 +0200
+Message-ID: <20230911134637.771986580@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,74 +40,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nysal Jan K.A <nysal@linux.ibm.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit fbf4dec702774286db409815ffb077711a96b824 ]
+[ Upstream commit 8a0260dbf6553c969248b6530cafadac46562f47 ]
 
-Observed occassional failures in the futex_wait_timeout test:
+realloc() and reallocarray() can either return NULL or a special
+non-NULL pointer, if their size argument is zero. This requires a bit
+more care to handle NULL-as-valid-result situation differently from
+NULL-as-error case. This has caused real issues before ([0]), and just
+recently bit again in production when performing bpf_program__attach_usdt().
 
-ok 1 futex_wait relative succeeds
-ok 2 futex_wait_bitset realtime succeeds
-ok 3 futex_wait_bitset monotonic succeeds
-ok 4 futex_wait_requeue_pi realtime succeeds
-ok 5 futex_wait_requeue_pi monotonic succeeds
-not ok 6 futex_lock_pi realtime returned 0
-......
+This patch fixes 4 places that do or potentially could suffer from this
+mishandling of NULL, including the reported USDT-related one.
 
-The test expects the child thread to complete some steps before
-the parent thread gets to run. There is an implicit expectation
-of the order of invocation of futex_lock_pi between the child thread
-and the parent thread. Make this order explicit. If the order is
-not met, the futex_lock_pi call in the parent thread succeeds and
-will not timeout.
+There are many other places where realloc()/reallocarray() is used and
+NULL is always treated as an error value, but all those have guarantees
+that their size is always non-zero, so those spot don't need any extra
+handling.
 
-Fixes: f4addd54b161 ("selftests: futex: Expand timeout test")
-Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+  [0] d08ab82f59d5 ("libbpf: Fix double-free when linker processes empty sections")
+
+Fixes: 999783c8bbda ("libbpf: Wire up spec management and other arch-independent USDT logic")
+Fixes: b63b3c490eee ("libbpf: Add bpf_program__set_insns function")
+Fixes: 697f104db8a6 ("libbpf: Support custom SEC() handlers")
+Fixes: b12688267280 ("libbpf: Change the order of data and text relocations.")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230711024150.1566433-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/futex/functional/futex_wait_timeout.c        | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/lib/bpf/libbpf.c | 15 ++++++++++++---
+ tools/lib/bpf/usdt.c   |  5 ++++-
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_wait_timeout.c b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-index 3651ce17beeb9..d183f878360bc 100644
---- a/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-+++ b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-@@ -24,6 +24,7 @@
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index b9a29d1053765..eeb2693128d8a 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -6063,7 +6063,11 @@ static int append_subprog_relos(struct bpf_program *main_prog, struct bpf_progra
+ 	if (main_prog == subprog)
+ 		return 0;
+ 	relos = libbpf_reallocarray(main_prog->reloc_desc, new_cnt, sizeof(*relos));
+-	if (!relos)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (!relos && new_cnt)
+ 		return -ENOMEM;
+ 	if (subprog->nr_reloc)
+ 		memcpy(relos + main_prog->nr_reloc, subprog->reloc_desc,
+@@ -8345,7 +8349,8 @@ int bpf_program__set_insns(struct bpf_program *prog,
+ 		return -EBUSY;
  
- static long timeout_ns = 100000;	/* 100us default timeout */
- static futex_t futex_pi;
-+static pthread_barrier_t barrier;
+ 	insns = libbpf_reallocarray(prog->insns, new_insn_cnt, sizeof(*insns));
+-	if (!insns) {
++	/* NULL is a valid return from reallocarray if the new count is zero */
++	if (!insns && new_insn_cnt) {
+ 		pr_warn("prog '%s': failed to realloc prog code\n", prog->name);
+ 		return -ENOMEM;
+ 	}
+@@ -8640,7 +8645,11 @@ int libbpf_unregister_prog_handler(int handler_id)
  
- void usage(char *prog)
- {
-@@ -48,6 +49,8 @@ void *get_pi_lock(void *arg)
- 	if (ret != 0)
- 		error("futex_lock_pi failed\n", ret);
+ 	/* try to shrink the array, but it's ok if we couldn't */
+ 	sec_defs = libbpf_reallocarray(custom_sec_defs, custom_sec_def_cnt, sizeof(*sec_defs));
+-	if (sec_defs)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (sec_defs || custom_sec_def_cnt == 0)
+ 		custom_sec_defs = sec_defs;
  
-+	pthread_barrier_wait(&barrier);
-+
- 	/* Blocks forever */
- 	ret = futex_wait(&lock, 0, NULL, 0);
- 	error("futex_wait failed\n", ret);
-@@ -130,6 +133,7 @@ int main(int argc, char *argv[])
- 	       basename(argv[0]));
- 	ksft_print_msg("\tArguments: timeout=%ldns\n", timeout_ns);
- 
-+	pthread_barrier_init(&barrier, NULL, 2);
- 	pthread_create(&thread, NULL, get_pi_lock, NULL);
- 
- 	/* initialize relative timeout */
-@@ -163,6 +167,9 @@ int main(int argc, char *argv[])
- 	res = futex_wait_requeue_pi(&f1, f1, &futex_pi, &to, 0);
- 	test_timeout(res, &ret, "futex_wait_requeue_pi monotonic", ETIMEDOUT);
- 
-+	/* Wait until the other thread calls futex_lock_pi() */
-+	pthread_barrier_wait(&barrier);
-+	pthread_barrier_destroy(&barrier);
- 	/*
- 	 * FUTEX_LOCK_PI with CLOCK_REALTIME
- 	 * Due to historical reasons, FUTEX_LOCK_PI supports only realtime
+ 	return 0;
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index 49f3c3b7f6095..af1cb30556b46 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -852,8 +852,11 @@ static int bpf_link_usdt_detach(struct bpf_link *link)
+ 		 * system is so exhausted on memory, it's the least of user's
+ 		 * concerns, probably.
+ 		 * So just do our best here to return those IDs to usdt_manager.
++		 * Another edge case when we can legitimately get NULL is when
++		 * new_cnt is zero, which can happen in some edge cases, so we
++		 * need to be careful about that.
+ 		 */
+-		if (new_free_ids) {
++		if (new_free_ids || new_cnt == 0) {
+ 			memcpy(new_free_ids + man->free_spec_cnt, usdt_link->spec_ids,
+ 			       usdt_link->spec_cnt * sizeof(*usdt_link->spec_ids));
+ 			man->free_spec_ids = new_free_ids;
 -- 
 2.40.1
 
