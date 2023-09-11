@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A071172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FDEC433C7;
-	Mon, 11 Sep 2023 14:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2198E11722
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97706C433C8;
+	Mon, 11 Sep 2023 14:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442611;
-	bh=wcrOCfrsrK9m4f2/f5g5SOAOs7GVgWjAg0CJuP4eTsc=;
+	s=korg; t=1694442614;
+	bh=AOdd3BkDwF3JSM4FGZVHHZ+9wHLz3JJ0xrm0pARvO3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZF3fTvKohxUCA/5jdGtJdAutZp9RIhXBwVgoEkdL6VHgP2N4U9rPmNOEk3A4pIfI
-	 hBRcY6VASk0Y9XLWjkf3AF4U71WqBKtcnIrvuXVDNizaR6VdnY+0YoBXS58CYnbhl0
-	 lt9H3YLdZUtlL7A1txQFXDGinEC+DHsy874wV1Og=
+	b=b58YHbrxUxKK0MUfRKa5LapwMtKqXA75eTIrhijr6lmr7cT5frk3HHy10e85bcrYx
+	 tkCA/O6iH7Mwm0mx61c5XelEvEtVy8ni06E4y2Nc7uAK7xSpVwVSKolkWGb7KeQB0s
+	 UPPtm5em94uB/BsT0vdHppldAbnwbHW3qZ2KVltA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shih-Yi Chen <shihyic@nvidia.com>,
-	Liming Sung <limings@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 085/737] platform/mellanox: Fix mlxbf-tmfifo not handling all virtio CONSOLE notifications
-Date: Mon, 11 Sep 2023 15:39:04 +0200
-Message-ID: <20230911134652.880186142@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Jan Kara <jack@suse.cz>,
+	David Jeffery <djeffery@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.4 086/737] sbitmap: fix batching wakeup
+Date: Mon, 11 Sep 2023 15:39:05 +0200
+Message-ID: <20230911134652.907130519@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,39 +45,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shih-Yi Chen <shihyic@nvidia.com>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit 0848cab765c634597636810bf76d0934003cce28 ]
+commit 106397376c0369fcc01c58dd189ff925a2724a57 upstream.
 
-rshim console does not show all entries of dmesg.
+Current code supposes that it is enough to provide forward progress by
+just waking up one wait queue after one completion batch is done.
 
-Fixed by setting MLXBF_TM_TX_LWM_IRQ for every CONSOLE notification.
+Unfortunately this way isn't enough, cause waiter can be added to wait
+queue just after it is woken up.
 
-Signed-off-by: Shih-Yi Chen <shihyic@nvidia.com>
-Reviewed-by: Liming Sung <limings@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20230821150627.26075-1-shihyic@nvidia.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Follows one example(64 depth, wake_batch is 8)
+
+1) all 64 tags are active
+
+2) in each wait queue, there is only one single waiter
+
+3) each time one completion batch(8 completions) wakes up just one
+   waiter in each wait queue, then immediately one new sleeper is added
+   to this wait queue
+
+4) after 64 completions, 8 waiters are wakeup, and there are still 8
+   waiters in each wait queue
+
+5) after another 8 active tags are completed, only one waiter can be
+   wakeup, and the other 7 can't be waken up anymore.
+
+Turns out it isn't easy to fix this problem, so simply wakeup enough
+waiters for single batch.
+
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Chengming Zhou <zhouchengming@bytedance.com>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Link: https://lore.kernel.org/r/20230721095715.232728-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/sbitmap.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index a79318e90a139..b600b77d91ef2 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -887,6 +887,7 @@ static bool mlxbf_tmfifo_virtio_notify(struct virtqueue *vq)
- 			tm_vdev = fifo->vdev[VIRTIO_ID_CONSOLE];
- 			mlxbf_tmfifo_console_output(tm_vdev, vring);
- 			spin_unlock_irqrestore(&fifo->spin_lock[0], flags);
-+			set_bit(MLXBF_TM_TX_LWM_IRQ, &fifo->pend_events);
- 		} else if (test_and_set_bit(MLXBF_TM_TX_LWM_IRQ,
- 					    &fifo->pend_events)) {
- 			return true;
--- 
-2.40.1
-
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -550,7 +550,7 @@ EXPORT_SYMBOL_GPL(sbitmap_queue_min_shal
+ 
+ static void __sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr)
+ {
+-	int i, wake_index;
++	int i, wake_index, woken;
+ 
+ 	if (!atomic_read(&sbq->ws_active))
+ 		return;
+@@ -567,13 +567,12 @@ static void __sbitmap_queue_wake_up(stru
+ 		 */
+ 		wake_index = sbq_index_inc(wake_index);
+ 
+-		/*
+-		 * It is sufficient to wake up at least one waiter to
+-		 * guarantee forward progress.
+-		 */
+-		if (waitqueue_active(&ws->wait) &&
+-		    wake_up_nr(&ws->wait, nr))
+-			break;
++		if (waitqueue_active(&ws->wait)) {
++			woken = wake_up_nr(&ws->wait, nr);
++			if (woken == nr)
++				break;
++			nr -= woken;
++		}
+ 	}
+ 
+ 	if (wake_index != atomic_read(&sbq->wake_index))
 
 
