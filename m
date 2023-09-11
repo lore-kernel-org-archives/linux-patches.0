@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8488311710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B26C433C7;
-	Mon, 11 Sep 2023 15:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484CD11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE97AC433C8;
+	Mon, 11 Sep 2023 15:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445550;
-	bh=OcjHl9m6+ievBmAkpyIkWEqtYRDoEuYpYZFR5nlcoIQ=;
+	s=korg; t=1694445553;
+	bh=/lgvZeS8b3otMks2WyLoG+5A+5dkxfhA2/SnKlkFpdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vu1gUwv8VwHLEmLyLg2JSUkTo2+u1RPwcoEPRgVk3TVIKfJmVzEaT2IZPHtLalv86
-	 5F8Om0GkUP/r7ypceI/Os2TNQZbHkzKOSLRMmd7QUs8eGtzfcagVmGtkZ/gRy1+4xs
-	 ND2n1S1edm5PmguyP2VjJo6m7D8Bl+cwPJN3cF74=
+	b=GuwlA0SXn0/+oQSUV+PDnDAJE4+lKl6YCgulL+t+HLTnYfgn3z4qJWg4kVH1Ovght
+	 CNr4q4PAEmGOtpyUZdiYQtNt0bg0P0Qsr2Sp0oozYVNwmR6Z/XwMFwn53PyE3oBn8T
+	 k7460Umee+pOd0SIyu3zLT/tcEIiDxVlaafPSrO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	kernel test robot <lkp@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 387/600] NFSv4.2: fix handling of COPY ERR_OFFLOAD_NO_REQ
-Date: Mon, 11 Sep 2023 15:47:00 +0200
-Message-ID: <20230911134645.102743532@linuxfoundation.org>
+Subject: [PATCH 6.1 361/600] powerpc/radix: Move some functions into #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
+Date: Mon, 11 Sep 2023 15:46:34 +0200
+Message-ID: <20230911134644.335301215@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,38 +41,343 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 5690eed941ab7e33c3c3d6b850100cabf740f075 ]
+[ Upstream commit 4a9dd8f292efd614f0a18452e6474fe19ae17b47 ]
 
-If the client sent a synchronous copy and the server replied with
-ERR_OFFLOAD_NO_REQ indicating that it wants an asynchronous
-copy instead, the client should retry with asynchronous copy.
+With skiboot_defconfig, Clang reports:
 
-Fixes: 539f57b3e0fd ("NFS handle COPY ERR_OFFLOAD_NO_REQS")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+  CC      arch/powerpc/mm/book3s64/radix_tlb.o
+arch/powerpc/mm/book3s64/radix_tlb.c:419:20: error: unused function '_tlbie_pid_lpid' [-Werror,-Wunused-function]
+static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+                   ^
+arch/powerpc/mm/book3s64/radix_tlb.c:663:20: error: unused function '_tlbie_va_range_lpid' [-Werror,-Wunused-function]
+static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
+                   ^
+
+This is because those functions are only called from functions
+enclosed in a #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
+
+Move below functions inside that #ifdef
+* __tlbie_pid_lpid(unsigned long pid,
+* __tlbie_va_lpid(unsigned long va, unsigned long pid,
+* fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
+* _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+* fixup_tlbie_va_range_lpid(unsigned long va,
+* __tlbie_va_range_lpid(unsigned long start, unsigned long end,
+* _tlbie_va_range_lpid(unsigned long start, unsigned long end,
+
+Fixes: f0c6fbbb9050 ("KVM: PPC: Book3S HV: Add support for H_RPT_INVALIDATE")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307260802.Mjr99P5O-lkp@intel.com/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/3d72efd39f986ee939d068af69fdce28bd600766.1691568093.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42proc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/mm/book3s64/radix_tlb.c | 240 ++++++++++++++-------------
+ 1 file changed, 121 insertions(+), 119 deletions(-)
 
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index 7c33bba179d2f..d903ea10410c2 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -470,8 +470,9 @@ ssize_t nfs42_proc_copy(struct file *src, loff_t pos_src,
- 				continue;
- 			}
- 			break;
--		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS && !args.sync) {
--			args.sync = true;
-+		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS &&
-+				args.sync != res.synchronous) {
-+			args.sync = res.synchronous;
- 			dst_exception.retry = 1;
- 			continue;
- 		} else if ((err == -ESTALE ||
+diff --git a/arch/powerpc/mm/book3s64/radix_tlb.c b/arch/powerpc/mm/book3s64/radix_tlb.c
+index 6d7a1ef723e69..a8ba04dcb20fa 100644
+--- a/arch/powerpc/mm/book3s64/radix_tlb.c
++++ b/arch/powerpc/mm/book3s64/radix_tlb.c
+@@ -127,21 +127,6 @@ static __always_inline void __tlbie_pid(unsigned long pid, unsigned long ric)
+ 	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+ }
+ 
+-static __always_inline void __tlbie_pid_lpid(unsigned long pid,
+-					     unsigned long lpid,
+-					     unsigned long ric)
+-{
+-	unsigned long rb, rs, prs, r;
+-
+-	rb = PPC_BIT(53); /* IS = 1 */
+-	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
+-	prs = 1; /* process scoped */
+-	r = 1;   /* radix format */
+-
+-	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
+-		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
+-	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+-}
+ static __always_inline void __tlbie_lpid(unsigned long lpid, unsigned long ric)
+ {
+ 	unsigned long rb,rs,prs,r;
+@@ -202,23 +187,6 @@ static __always_inline void __tlbie_va(unsigned long va, unsigned long pid,
+ 	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+ }
+ 
+-static __always_inline void __tlbie_va_lpid(unsigned long va, unsigned long pid,
+-					    unsigned long lpid,
+-					    unsigned long ap, unsigned long ric)
+-{
+-	unsigned long rb, rs, prs, r;
+-
+-	rb = va & ~(PPC_BITMASK(52, 63));
+-	rb |= ap << PPC_BITLSHIFT(58);
+-	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
+-	prs = 1; /* process scoped */
+-	r = 1;   /* radix format */
+-
+-	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
+-		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
+-	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+-}
+-
+ static __always_inline void __tlbie_lpid_va(unsigned long va, unsigned long lpid,
+ 					    unsigned long ap, unsigned long ric)
+ {
+@@ -264,22 +232,6 @@ static inline void fixup_tlbie_va_range(unsigned long va, unsigned long pid,
+ 	}
+ }
+ 
+-static inline void fixup_tlbie_va_range_lpid(unsigned long va,
+-					     unsigned long pid,
+-					     unsigned long lpid,
+-					     unsigned long ap)
+-{
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
+-	}
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_va_lpid(va, pid, lpid, ap, RIC_FLUSH_TLB);
+-	}
+-}
+-
+ static inline void fixup_tlbie_pid(unsigned long pid)
+ {
+ 	/*
+@@ -299,26 +251,6 @@ static inline void fixup_tlbie_pid(unsigned long pid)
+ 	}
+ }
+ 
+-static inline void fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
+-{
+-	/*
+-	 * We can use any address for the invalidation, pick one which is
+-	 * probably unused as an optimisation.
+-	 */
+-	unsigned long va = ((1UL << 52) - 1);
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
+-	}
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_va_lpid(va, pid, lpid, mmu_get_ap(MMU_PAGE_64K),
+-				RIC_FLUSH_TLB);
+-	}
+-}
+-
+ static inline void fixup_tlbie_lpid_va(unsigned long va, unsigned long lpid,
+ 				       unsigned long ap)
+ {
+@@ -416,31 +348,6 @@ static inline void _tlbie_pid(unsigned long pid, unsigned long ric)
+ 	asm volatile("eieio; tlbsync; ptesync": : :"memory");
+ }
+ 
+-static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+-				   unsigned long ric)
+-{
+-	asm volatile("ptesync" : : : "memory");
+-
+-	/*
+-	 * Workaround the fact that the "ric" argument to __tlbie_pid
+-	 * must be a compile-time contraint to match the "i" constraint
+-	 * in the asm statement.
+-	 */
+-	switch (ric) {
+-	case RIC_FLUSH_TLB:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_TLB);
+-		fixup_tlbie_pid_lpid(pid, lpid);
+-		break;
+-	case RIC_FLUSH_PWC:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
+-		break;
+-	case RIC_FLUSH_ALL:
+-	default:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_ALL);
+-		fixup_tlbie_pid_lpid(pid, lpid);
+-	}
+-	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
+-}
+ struct tlbiel_pid {
+ 	unsigned long pid;
+ 	unsigned long ric;
+@@ -566,20 +473,6 @@ static inline void __tlbie_va_range(unsigned long start, unsigned long end,
+ 	fixup_tlbie_va_range(addr - page_size, pid, ap);
+ }
+ 
+-static inline void __tlbie_va_range_lpid(unsigned long start, unsigned long end,
+-					 unsigned long pid, unsigned long lpid,
+-					 unsigned long page_size,
+-					 unsigned long psize)
+-{
+-	unsigned long addr;
+-	unsigned long ap = mmu_get_ap(psize);
+-
+-	for (addr = start; addr < end; addr += page_size)
+-		__tlbie_va_lpid(addr, pid, lpid, ap, RIC_FLUSH_TLB);
+-
+-	fixup_tlbie_va_range_lpid(addr - page_size, pid, lpid, ap);
+-}
+-
+ static __always_inline void _tlbie_va(unsigned long va, unsigned long pid,
+ 				      unsigned long psize, unsigned long ric)
+ {
+@@ -660,18 +553,6 @@ static inline void _tlbie_va_range(unsigned long start, unsigned long end,
+ 	asm volatile("eieio; tlbsync; ptesync": : :"memory");
+ }
+ 
+-static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
+-					unsigned long pid, unsigned long lpid,
+-					unsigned long page_size,
+-					unsigned long psize, bool also_pwc)
+-{
+-	asm volatile("ptesync" : : : "memory");
+-	if (also_pwc)
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
+-	__tlbie_va_range_lpid(start, end, pid, lpid, page_size, psize);
+-	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
+-}
+-
+ static inline void _tlbiel_va_range_multicast(struct mm_struct *mm,
+ 				unsigned long start, unsigned long end,
+ 				unsigned long pid, unsigned long page_size,
+@@ -1476,6 +1357,127 @@ void radix__flush_tlb_all(void)
+ }
+ 
+ #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
++static __always_inline void __tlbie_pid_lpid(unsigned long pid,
++					     unsigned long lpid,
++					     unsigned long ric)
++{
++	unsigned long rb, rs, prs, r;
++
++	rb = PPC_BIT(53); /* IS = 1 */
++	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
++	prs = 1; /* process scoped */
++	r = 1;   /* radix format */
++
++	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
++		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
++	trace_tlbie(0, 0, rb, rs, ric, prs, r);
++}
++
++static __always_inline void __tlbie_va_lpid(unsigned long va, unsigned long pid,
++					    unsigned long lpid,
++					    unsigned long ap, unsigned long ric)
++{
++	unsigned long rb, rs, prs, r;
++
++	rb = va & ~(PPC_BITMASK(52, 63));
++	rb |= ap << PPC_BITLSHIFT(58);
++	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
++	prs = 1; /* process scoped */
++	r = 1;   /* radix format */
++
++	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
++		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
++	trace_tlbie(0, 0, rb, rs, ric, prs, r);
++}
++
++static inline void fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
++{
++	/*
++	 * We can use any address for the invalidation, pick one which is
++	 * probably unused as an optimisation.
++	 */
++	unsigned long va = ((1UL << 52) - 1);
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
++	}
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_va_lpid(va, pid, lpid, mmu_get_ap(MMU_PAGE_64K),
++				RIC_FLUSH_TLB);
++	}
++}
++
++static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
++				   unsigned long ric)
++{
++	asm volatile("ptesync" : : : "memory");
++
++	/*
++	 * Workaround the fact that the "ric" argument to __tlbie_pid
++	 * must be a compile-time contraint to match the "i" constraint
++	 * in the asm statement.
++	 */
++	switch (ric) {
++	case RIC_FLUSH_TLB:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_TLB);
++		fixup_tlbie_pid_lpid(pid, lpid);
++		break;
++	case RIC_FLUSH_PWC:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
++		break;
++	case RIC_FLUSH_ALL:
++	default:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_ALL);
++		fixup_tlbie_pid_lpid(pid, lpid);
++	}
++	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
++}
++
++static inline void fixup_tlbie_va_range_lpid(unsigned long va,
++					     unsigned long pid,
++					     unsigned long lpid,
++					     unsigned long ap)
++{
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
++	}
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_va_lpid(va, pid, lpid, ap, RIC_FLUSH_TLB);
++	}
++}
++
++static inline void __tlbie_va_range_lpid(unsigned long start, unsigned long end,
++					 unsigned long pid, unsigned long lpid,
++					 unsigned long page_size,
++					 unsigned long psize)
++{
++	unsigned long addr;
++	unsigned long ap = mmu_get_ap(psize);
++
++	for (addr = start; addr < end; addr += page_size)
++		__tlbie_va_lpid(addr, pid, lpid, ap, RIC_FLUSH_TLB);
++
++	fixup_tlbie_va_range_lpid(addr - page_size, pid, lpid, ap);
++}
++
++static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
++					unsigned long pid, unsigned long lpid,
++					unsigned long page_size,
++					unsigned long psize, bool also_pwc)
++{
++	asm volatile("ptesync" : : : "memory");
++	if (also_pwc)
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
++	__tlbie_va_range_lpid(start, end, pid, lpid, page_size, psize);
++	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
++}
++
+ /*
+  * Performs process-scoped invalidations for a given LPID
+  * as part of H_RPT_INVALIDATE hcall.
 -- 
 2.40.1
 
