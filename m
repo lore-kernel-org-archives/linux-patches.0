@@ -1,178 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19BF9449
-	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 17:55:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC82FC433C9;
-	Tue, 12 Sep 2023 17:55:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694541336;
-	bh=Ko4/UwcgT3eF+DcCLkqCyN0KFTjfLGv5nyGKHZQ9hcU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Er1pbDCrPsgoljrMA7EZu4PaPiK4QM/q0W5JqbtXFV8FolVzjwN/rrjYK+mg/2dnZ
-	 LIo+HwBY3cQ8yBBeBDM57UPLKJ+nZBzmWGz1+NFeojsx9LKFJfxjoubXUPwHGG7jDs
-	 O0IAOqRu6N12saJD9lDjBrgUDFulU69nztdX2n2yr+dej312vxW9Dfe3GfcLlxgaz1
-	 2MCg6w7STeRELdeErgKDnrD2bb7y32OHCi6EgAM1uc2YbOl4Qc9ZZCgT4nbnLB5WSa
-	 6W7hnodZ3RrtE+GWm8+nLjFfmfmMVe4f4j/jc1idaoaI7WWqPj/dIPyIC2UM8YqsBo
-	 gQYDj7fPGq53Q==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH 2/2] clk: Parameterize clk_leaf_mux_set_rate_parent
-Date: Tue, 12 Sep 2023 10:55:31 -0700
-Message-ID: <20230912175534.2427862-3-sboyd@kernel.org>
-X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
-In-Reply-To: <20230912175534.2427862-1-sboyd@kernel.org>
-References: <20230912175534.2427862-1-sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1AA5C
+	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 18:06:44 +0000 (UTC)
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-564b6276941so4609463a12.3
+        for <patches@lists.linux.dev>; Tue, 12 Sep 2023 11:06:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694542004; x=1695146804; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=b/FcdXt508wzlUPKZM2U2Z4krLmys9jD7gjAAQB1Fak=;
+        b=stvktxgp8mIVVkDWTZucqw9L+i1vt1/834ZZKZSjgWeQmEkuAuwq/U8Exu8vhaR1nz
+         VkiVI6Zq4cXeH8f4l3/j+uJGZEOk8/8QMDCixcowt3/Sn0MwQA4HTaXDQfi63/Q91xEE
+         nKVv2ukHAmRA0YiknQpQZlQHEsLKDHACvd2Cz3geHkAd55SwaysQc75a2vsCSka68d/s
+         QIjOYVuYn6GeAPX7d4TLXOf9pcArYaoHwCTRVPyPuHiGy7P+T1aqFL7K8JPRtaA7tB8n
+         R5EYqDlJMUiVRIDCYDVQEfkwuSGAVV0S7SrQxGdxPZF6tf+y+UC/aNgCD0S0+trA3yrV
+         Sz1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694542004; x=1695146804;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b/FcdXt508wzlUPKZM2U2Z4krLmys9jD7gjAAQB1Fak=;
+        b=C7aIho7rDwwkTdLi/vdGiWSYdmsDmS44kZuYv1IkH33Lk1NMobJPIdUWZMoitQ3Kl0
+         B38bTwe1rBKNnoqVGfE6/mn/PfXKL4LRoA7gN9MMUmxRs3KeI1bssqWzF7q6o/CUZ3Ls
+         TYatbr9S5cKQt9nzsrNpXpNdyg5z8MSSfbd4ePdr2lnefKhnmibmmPtZO/EpnPsLnh94
+         qJAvx1DM58Wj0GwUXGsnWCfz/ooB/3x0v7Vsh9QrOJnTY7JDiA4k82MWdb32hBD+t2c+
+         0AdaIsYYtu5iksHVuBQm1rf0pt/p4M5pJH8KzeN2VxUzW+kOqD9YXUUKxWus63tjOr3y
+         A/pQ==
+X-Gm-Message-State: AOJu0YwNL/6n5ruqO4LpNSJB9lNVYxT2XT39vFZk+HtjQEmley2MV6qG
+	7QAJgw7bO+cpc9ixSJeGc6A=
+X-Google-Smtp-Source: AGHT+IF1qy2cfIn54//x9+QFzFdq2dCQpP+A7JwFxYGlzyHdW63t3FsaKm0KYnTcxA7a0T1vP4p3GQ==
+X-Received: by 2002:a17:90a:520c:b0:271:8d4d:d046 with SMTP id v12-20020a17090a520c00b002718d4dd046mr58739pjh.4.1694542004044;
+        Tue, 12 Sep 2023 11:06:44 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id l3-20020a17090a72c300b0025bdc3454c6sm9449911pjk.8.2023.09.12.11.06.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Sep 2023 11:06:43 -0700 (PDT)
+Message-ID: <0903ba48-643b-7091-0ca3-e76b95c7e822@gmail.com>
+Date: Tue, 12 Sep 2023 11:06:36 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.4 000/737] 6.4.16-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230911134650.286315610@linuxfoundation.org>
+Content-Language: en-US
+In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Transform the existing clk_leaf_mux_set_rate_parent test into a
-parameterized test that calls the various determine rate APIs that exist
-for clk providers. This ensures that whatever determine rate API is used
-by a clk provider will return the correct parent in the best_parent_hw
-pointer of the clk_rate_request because clk_rate_requests are forwarded
-properly.
 
-Cc: Guenter Roeck <linux@roeck-us.net>
-Cc: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/clk_test.c | 81 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 73 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
-index 43e85fc0b025..39e2b5ff4f51 100644
---- a/drivers/clk/clk_test.c
-+++ b/drivers/clk/clk_test.c
-@@ -2159,6 +2159,7 @@ struct clk_leaf_mux_ctx {
- 	struct clk_hw hw;
- 	struct clk_hw parent;
- 	struct clk_rate_request *req;
-+	int (*determine_rate_func)(struct clk_hw *hw, struct clk_rate_request *req);
- };
- 
- static int clk_leaf_mux_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
-@@ -2168,7 +2169,7 @@ static int clk_leaf_mux_determine_rate(struct clk_hw *hw, struct clk_rate_reques
- 	struct clk_rate_request *parent_req = ctx->req;
- 
- 	clk_hw_forward_rate_request(hw, req, req->best_parent_hw, parent_req, req->rate);
--	ret = __clk_determine_rate(req->best_parent_hw, parent_req);
-+	ret = ctx->determine_rate_func(req->best_parent_hw, parent_req);
- 	if (ret)
- 		return ret;
- 
-@@ -2246,20 +2247,83 @@ static void clk_leaf_mux_set_rate_parent_test_exit(struct kunit *test)
- 	clk_hw_unregister(&ctx->mux_ctx.parents_ctx[1].hw);
- }
- 
-+struct clk_leaf_mux_set_rate_parent_determine_rate_test_case {
-+	const char *desc;
-+	int (*determine_rate_func)(struct clk_hw *hw, struct clk_rate_request *req);
-+};
-+
-+static void
-+clk_leaf_mux_set_rate_parent_determine_rate_test_case_to_desc(
-+		const struct clk_leaf_mux_set_rate_parent_determine_rate_test_case *t, char *desc)
-+{
-+	strcpy(desc, t->desc);
-+}
-+
-+static const struct clk_leaf_mux_set_rate_parent_determine_rate_test_case
-+clk_leaf_mux_set_rate_parent_determine_rate_test_cases[] = {
-+	{
-+		/*
-+		 * Test that __clk_determine_rate() on the parent that can't
-+		 * change rate doesn't return a clk_rate_request structure with
-+		 * the best_parent_hw pointer pointing to the parent.
-+		 */
-+		.desc = "clk_leaf_mux_set_rate_parent__clk_determine_rate_proper_parent",
-+		.determine_rate_func = __clk_determine_rate,
-+	},
-+	{
-+		/*
-+		 * Test that __clk_mux_determine_rate() on the parent that
-+		 * can't change rate doesn't return a clk_rate_request
-+		 * structure with the best_parent_hw pointer pointing to
-+		 * the parent.
-+		 */
-+		.desc = "clk_leaf_mux_set_rate_parent__clk_mux_determine_rate_proper_parent",
-+		.determine_rate_func = __clk_mux_determine_rate,
-+	},
-+	{
-+		/*
-+		 * Test that __clk_mux_determine_rate_closest() on the parent
-+		 * that can't change rate doesn't return a clk_rate_request
-+		 * structure with the best_parent_hw pointer pointing to
-+		 * the parent.
-+		 */
-+		.desc = "clk_leaf_mux_set_rate_parent__clk_mux_determine_rate_closest_proper_parent",
-+		.determine_rate_func = __clk_mux_determine_rate_closest,
-+	},
-+	{
-+		/*
-+		 * Test that clk_hw_determine_rate_no_reparent() on the parent
-+		 * that can't change rate doesn't return a clk_rate_request
-+		 * structure with the best_parent_hw pointer pointing to
-+		 * the parent.
-+		 */
-+		.desc = "clk_leaf_mux_set_rate_parent_clk_hw_determine_rate_no_reparent_proper_parent",
-+		.determine_rate_func = clk_hw_determine_rate_no_reparent,
-+	},
-+};
-+
-+KUNIT_ARRAY_PARAM(clk_leaf_mux_set_rate_parent_determine_rate_test,
-+		  clk_leaf_mux_set_rate_parent_determine_rate_test_cases,
-+		  clk_leaf_mux_set_rate_parent_determine_rate_test_case_to_desc)
-+
- /*
-- * Test that, for a clock that will forward any rate request to its parent, the
-- * rate request structure returned by __clk_determine_rate() is sane and
-- * doesn't have the clk_rate_request's best_parent_hw pointer point to the
-- * clk_hw passed into __clk_determine_rate(). See commit 262ca38f4b6e ("clk:
-- * Stop forwarding clk_rate_requests to the parent") for more background.
-+ * Test that when a clk that can't change rate itself calls a function like
-+ * __clk_determine_rate() on its parent it doesn't get back a clk_rate_request
-+ * structure that has the best_parent_hw pointer point to the clk_hw passed
-+ * into the determine rate function. See commit 262ca38f4b6e ("clk: Stop
-+ * forwarding clk_rate_requests to the parent") for more background.
-  */
--static void clk_leaf_mux_set_rate_parent__clk_determine_rate_proper_parent(struct kunit *test)
-+static void clk_leaf_mux_set_rate_parent_determine_rate_test(struct kunit *test)
- {
- 	struct clk_leaf_mux_ctx *ctx = test->priv;
- 	struct clk_hw *hw = &ctx->hw;
- 	struct clk *clk = clk_hw_get_clk(hw, NULL);
- 	struct clk_rate_request req;
- 	unsigned long rate;
-+	const struct clk_leaf_mux_set_rate_parent_determine_rate_test_case *test_param;
-+
-+	test_param = test->param_value;
-+	ctx->determine_rate_func = test_param->determine_rate_func;
- 
- 	ctx->req = &req;
- 	rate = clk_get_rate(clk);
-@@ -2274,7 +2338,8 @@ static void clk_leaf_mux_set_rate_parent__clk_determine_rate_proper_parent(struc
- }
- 
- static struct kunit_case clk_leaf_mux_set_rate_parent_test_cases[] = {
--	KUNIT_CASE(clk_leaf_mux_set_rate_parent__clk_determine_rate_proper_parent),
-+	KUNIT_CASE_PARAM(clk_leaf_mux_set_rate_parent_determine_rate_test,
-+			 clk_leaf_mux_set_rate_parent_determine_rate_test_gen_params),
- 	{}
- };
- 
+On 9/11/2023 6:37 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.16 release.
+> There are 737 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 13 Sep 2023 13:44:56 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.16-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+Florian
 
