@@ -1,125 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F28118AFC
-	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 10:32:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D3AC433CA;
-	Tue, 12 Sep 2023 10:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9897179A7
+	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 10:34:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED57C433C7;
+	Tue, 12 Sep 2023 10:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694514733;
-	bh=F+3htaiK86iu0hovTxNnP1IUyQ40FjMrFsKbNvgy7vE=;
+	s=korg; t=1694514845;
+	bh=LUobv7SluRAhwPkCwsysSqViibZox9UQzgrORWf91hU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CsLrUrInURChNjSy8XKJOvskoV0IXEGbUr+VcrEoje70b+iqLqquOwaWv4NyhGBJw
-	 feCI6nlIHu1MdTWtgq6hfgJMjoxGUsZbG+gTXY0xZ+bY4Fee7RviKTB1v49VwaeugE
-	 rTCqJfjeiFe3b07maPXGKH22lWzvBFxwgpOu70yw=
-Date: Tue, 12 Sep 2023 12:32:10 +0200
+	b=itSKEfHZgDCToPGuEf9aCSCneUW5kawklARi1gt9JGYquCuvfgMQE48EsG2GG+dBJ
+	 oROQpGgOGeX5a2HrK3Q/GeaDesePdq/h1u12jqtmhGO6K3N9TYsYvmKfZJkH4lLA96
+	 DP7Fp0VVyzuAqATw9CIqK/mttWmivYwZ/VMx0oNQ=
+Date: Tue, 12 Sep 2023 12:34:02 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: jack@suse.cz, stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org,
-	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	Tom Rix <trix@redhat.com>, Nathan Chancellor <nathan@kernel.org>
-Subject: Re: [PATCH 6.1 000/600] 6.1.53-rc1 review
-Message-ID: <2023091233-boots-line-a3d4@gregkh>
+To: =?utf-8?Q?Ond=C5=99ej?= Jirman <megi@xff.cz>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Sam Ravnborg <sam@ravnborg.org>, Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 213/600] drm: bridge: dw-mipi-dsi: Fix enable/disable
+ of DSI controller
+Message-ID: <2023091252-baggage-calorie-e2e8@gregkh>
 References: <20230911134633.619970489@linuxfoundation.org>
- <1ffe4f64-f238-859a-ab14-7559d03c4671@linaro.org>
- <CAEUSe7_XA16yZAHA+YTbJygwaUYkU5gs=FnV9BAmQRYzwgVjvQ@mail.gmail.com>
- <CA+G9fYsiWEKSV0EeU0cXsJZ3U75fbdGyCmDx07ksFMUW5jouyw@mail.gmail.com>
+ <20230911134639.905252752@linuxfoundation.org>
+ <6xoqdk4sttjv5pskf67r5gc24ttsuspb6bnip5o35xcfmdtilp@72qguymwyt7y>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYsiWEKSV0EeU0cXsJZ3U75fbdGyCmDx07ksFMUW5jouyw@mail.gmail.com>
+In-Reply-To: <6xoqdk4sttjv5pskf67r5gc24ttsuspb6bnip5o35xcfmdtilp@72qguymwyt7y>
 
-On Tue, Sep 12, 2023 at 02:19:34PM +0530, Naresh Kamboju wrote:
-> On Tue, 12 Sept 2023 at 07:55, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> >
-> > Hello!
-> >
-> > On Mon, 11 Sept 2023 at 14:58, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > > On 11/09/23 7:40 a. m., Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.53 release.
-> > > > There are 600 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Wed, 13 Sep 2023 13:44:56 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.53-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > >
-> > > We're seeing this new warning:
-> > > -----8<-----
-> > >    /builds/linux/fs/udf/inode.c:892:6: warning: variable 'newblock' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-> > >      892 |         if (*err < 0)
-> > >          |             ^~~~~~~~
-> > >    /builds/linux/fs/udf/inode.c:914:9: note: uninitialized use occurs here
-> > >      914 |         return newblock;
-> > >          |                ^~~~~~~~
-> > >    /builds/linux/fs/udf/inode.c:892:2: note: remove the 'if' if its condition is always false
-> > >      892 |         if (*err < 0)
-> > >          |         ^~~~~~~~~~~~~
-> > >      893 |                 goto out_free;
-> > >          |                 ~~~~~~~~~~~~~
-> > >    /builds/linux/fs/udf/inode.c:699:34: note: initialize the variable 'newblock' to silence this warning
-> > >      699 |         udf_pblk_t newblocknum, newblock;
-> > >          |                                         ^
-> > >          |                                          = 0
-> > >    1 warning generated.
-> > > ----->8-----
-> > >
-> > > That's with Clang 17 (and nightly) on:
-> > > * arm
-> > > * powerpc
-> > > * s390
-> >
-> > For what it's worth, bisection points to 903b487b5ba6 ("udf: Handle
-> > error when adding extent to a file").
+On Mon, Sep 11, 2023 at 05:49:30PM +0200, OndÅ™ej Jirman wrote:
+> On Mon, Sep 11, 2023 at 03:44:06PM +0200, Greg Kroah-Hartman wrote:
+> > 
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
 > 
-> I see the following commit is fixing the reported problem.
+> See patch message comment:
 > 
-> commit 6d5ab7c2f7cf90877dab8f2bb06eb5ca8edc73ef
-> Author: Tom Rix <trix@redhat.com>
-> Date:   Fri Dec 30 12:53:41 2022 -0500
-> 
->     udf: initialize newblock to 0
-> 
->     The clang build reports this error
->     fs/udf/inode.c:805:6: error: variable 'newblock' is used
-> uninitialized whenever 'if' condition is true
-> [-Werror,-Wsometimes-uninitialized]
->             if (*err < 0)
->                 ^~~~~~~~
->     newblock is never set before error handling jump.
->     Initialize newblock to 0 and remove redundant settings.
-> 
->     Fixes: d8b39db5fab8 ("udf: Handle error when adding extent to a file")
->     Reported-by: Nathan Chancellor <nathan@kernel.org>
->     Signed-off-by: Tom Rix <trix@redhat.com>
->     Signed-off-by: Jan Kara <jack@suse.cz>
->     Message-Id: <20221230175341.1629734-1-trix@redhat.com>
+>        (But depends on functionality intorduced in Linux 6.3, so this patch will
+>         not build on older kernels when applied to older stable branches.)
 
-Wait, where is this commit?  I don't see it in Linus's tree either, nor
-in linux-next.  Where did you find it?
-
-confused,
+Ah, missed that, thanks, now dropped.
 
 greg k-h
