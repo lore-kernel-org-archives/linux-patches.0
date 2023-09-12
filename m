@@ -1,34 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB97A31
-	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 15:39:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13945C433C8;
-	Tue, 12 Sep 2023 15:39:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694533156;
-	bh=s56TYvD4zME5tvL4CwkcfoAeGsE8j2xXWgRVodvnlxQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WVp9QwRbyfuLASrjfAXDUWcRo/zqpaTvgoV2z/pG10EiwCiYq2rKJJ4eG5fpqFp3F
-	 SM9BSrDn02A+ckjJTA+Ty0NfQb+7P8DIavQ7HT4yhVmD9LzcjxrbCTpUA4LTEmkncb
-	 6GSix7BH188wT/hVKZVk6gRMYn00L0oit5jQCrG4=
-Date: Tue, 12 Sep 2023 17:39:13 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Pillai, Aurabindo" <Aurabindo.Pillai@amd.com>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-	Michel =?iso-8859-1?Q?D=E4nzer?= <michel@daenzer.net>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Deucher, Alexander" <Alexander.Deucher@amd.com>,
-	Michel =?iso-8859-1?Q?D=E4nzer?= <mdaenzer@redhat.com>,
-	"Mahfooz, Hamza" <Hamza.Mahfooz@amd.com>
-Subject: Re: [PATCH 6.4 737/737] Revert "drm/amd/display: Do not set drr on
- pipe commit"
-Message-ID: <2023091211-contact-limping-4fe0@gregkh>
-References: <20230911134650.286315610@linuxfoundation.org>
- <20230911134711.107793802@linuxfoundation.org>
- <CH0PR12MB5284A97461111A04912017798BF1A@CH0PR12MB5284.namprd12.prod.outlook.com>
- <2023091212-simplify-underfoot-a4d6@gregkh>
- <CH0PR12MB528496066990E49D4F93CD208BF1A@CH0PR12MB5284.namprd12.prod.outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3F18C2C
+	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 16:02:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694534574; x=1726070574;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=U+a6QizW/Aulka1WQ2QT9P6hpcvGBSRq2JsjI2qWUjA=;
+  b=fuJLYqQ4CeKUIhED8SGfE6McKliYiUm22MpYXEh/XS8yZSDRHTdd239s
+   YjmxVKAlWsv55PxPhZzDm1oPXubzJ23eXtLMuB9g7WP7utH3DEZH+DM3c
+   d9TfF4DilNAFWg4NYE3hBWCBrxUP7xZ9EpEMPp9QFuubFzjyh6yHy8Upu
+   DlQyQhzOa9b2/bI6gW1V3frcswT8/0icfKfiAA6FVimNhRsec0OvllhBL
+   Yy2pAE3Enkt9m/C3ONM7Ib9e5lLq5/Hab6IqBgjoiviqXWZkdlzxKDrS1
+   TJ4c7nLMXnV/5zg6/uPcNxxHdT45Go0HdpeMgYoU27eC4yPYMrdWHjz1A
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10831"; a="363450047"
+X-IronPort-AV: E=Sophos;i="6.02,139,1688454000"; 
+   d="scan'208";a="363450047"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2023 09:01:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10831"; a="1074597625"
+X-IronPort-AV: E=Sophos;i="6.02,139,1688454000"; 
+   d="scan'208";a="1074597625"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2023 09:01:18 -0700
+Date: Tue, 12 Sep 2023 09:01:17 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZQCLTS0XAs/H2min@agluck-desk3>
+References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
+ <45e81506-3c43-95ba-56a4-38e1bb2e42dc@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,27 +53,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CH0PR12MB528496066990E49D4F93CD208BF1A@CH0PR12MB5284.namprd12.prod.outlook.com>
+In-Reply-To: <45e81506-3c43-95ba-56a4-38e1bb2e42dc@intel.com>
 
-On Tue, Sep 12, 2023 at 03:31:16PM +0000, Pillai, Aurabindo wrote:
-> [AMD Official Use Only - General]
+On Mon, Sep 11, 2023 at 01:23:35PM -0700, Reinette Chatre wrote:
+> Hi Tony,
 > 
-> Hi Greg,
+> On 8/29/2023 4:44 PM, Tony Luck wrote:
+> > The Sub-NUMA cluster feature on some Intel processors partitions
+> > the CPUs that share an L3 cache into two or more sets. This plays
+> > havoc with the Resource Director Technology (RDT) monitoring features.
+> > Prior to this patch Intel has advised that SNC and RDT are incompatible.
+> > 
+> > Some of these CPU support an MSR that can partition the RMID
+> > counters in the same way. This allows for monitoring features
+> > to be used (with the caveat that memory accesses between different
+> > SNC NUMA nodes may still not be counted accuratlely.
 > 
-> It was reverted but has been re-applied.
-> 
-> Here is a chronological summary of what happened:
-> 
-> 
->   1.  Michel bisected some major issues to "drm/amd/display: Do not set drr on pipe commit" and was revered in upstream. ". Along with that patch, "drm/amd/display: Block optimize on consecutive FAMS enables" was also reverted due to dependency.
->   2.  We found that reverting these patches caused some multi monitor configurations to hang on RDNA3.
->   3.  We debugged Michel's issue and merged a workaround (https://gitlab.freedesktop.org/agd5f/linux/-/commit/cc225c8af276396c3379885b38d2a9e28af19aa9
->   4.  Subsequently, the two patches were reapplied (https://gitlab.freedesktop.org/agd5f/linux/-/commit/bfe1b43c1acee1251ddb09159442b9d782800aef and https://gitlab.freedesktop.org/agd5f/linux/-/commit/f3c2a89c5103b4ffdd88f09caa36488e0d0cf79d)
-> 
-> Hence, the stable kernel should have all 3 patches - the workaround and 2 others. Hope that clarifies the situation.
+> Same typo as in V4.
 
-Great, what are the ids of those in Linus's tree?
+Sorry. Will fix and re-post.
 
-thanks,
+> > 
+> > Note that this patch series improves resctrl reporting considerably
+> > on systems with SNC enabled, but there will still be some anomalies
+> > for processes accessing memory from other sub-NUMA nodes.
+> 
+> I have the same question as with V4 that was not answered in that email
+> thread nor in this new version.
+> https://lore.kernel.org/lkml/e350514e-76ed-14ea-3e74-c0852658182f@intel.com/
 
-greg k-h
+Non-SNC systems already have an issue when reporting memory bandwidth
+for a task that Linux may migrate the task to a CPU on a different node
+which means that logging for that task will also move to different files
+in the mon_data/mon_L3_*/ for the new node.
+
+With SNC enabled, migration between NUMA nodes on the same socket may happen
+much more frequently because:
+1) The CPUs on the other NUMA nodes in the socket are in the same Linux
+   L3 cache domain. So Linux regard the migration as "cheap".
+2) The ACPI SLIT table on SNC enabled systems may also report the
+   latency for remote access to another NUMA node on the same socket
+   as significantly lower than the latency for cross-socket access. On
+   my test system the SLIT distance for same socket nodes is 0xC,
+   compared to 0x15 for cross-socket distance. This will also lead
+   to Linux being more likely to migrate a task to a CPU on another
+   SNC NUMA node in the same socket.
+
+To avoid migration issues, users may use sched_setaffinity(2) to bind
+tasks to the subset of CPUs that share an SNC NUMA node.
+
+I can write this up in a new cover letter.
+
+> I stop my review of this series here.
+
+Reinette
+
+Should I repost the whole series as v6 with the new cover letter. The
+only change to the patches so far is to the selftest reported by
+Shaopeng Tan[1].
+
+-Tony
+
+[1] https://lore.kernel.org/all/TYAPR01MB633033C489AAC0E514CBC6688BEEA@TYAPR01MB6330.jpnprd01.prod.outlook.com/
