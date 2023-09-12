@@ -1,24 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BE2A951;
-	Tue, 12 Sep 2023 19:16:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0822C433C9;
-	Tue, 12 Sep 2023 19:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2EBA95E;
+	Tue, 12 Sep 2023 19:16:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B85C43391;
+	Tue, 12 Sep 2023 19:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694546162;
-	bh=qJOiausqrNbKIkN5Zet+po6884A5rNQYVlvbj7JYJgA=;
+	s=k20201202; t=1694546163;
+	bh=612YPLrIsD0uPeWmH83BxpgrCG+y5OEbKK0LLl/otRk=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=UKun96VnkbE34mUaZFl7Tv/hA6s6SDm91InaWv5QH5AeXK79TvnSCqPUZKjzJgeNg
-	 o0KDzH3OFoTS6bwrrJuL/juEtbmA7pNDmgusiQBZA1KzLgXn4hgwP3gTnQSkMWy5YS
-	 wyRYyHjhgc/o6YBJjYrTmkD5R/0DjhqiqKbVTsQQsPnj9CbOYidxLNob3Ef2TqiHRX
-	 Jfqtsg/PJfjp/iotDlyEcvteAZ3MUj+lZSCqvRKPRY0CYyuKge2rBirsjWVCADq3Ul
-	 cJy7VeuIKos0H8XOgdxChkcHBUkrfCyKvgOO4sjHE63fBvWX6qIOgSWrSK/iiVPEFZ
-	 Uu57Zlz3OgwCQ==
+	b=jB90vDIE3JllSIP4mciLxqPf/+VpXkHCy8bhQmQNqBcjCqELqLg3bBwvuPsZ/k+gn
+	 qmXVTLbTO+2iXjS3t/GWUTlM5wB15QpbR/P4wisMPUUolx7olBbyYqVdjhiA4bvFWZ
+	 FTLpYzBieZLUKS7xRnjDZtgmyUNtUzdULSgOUKTvOieENUGDKKYQXVbg8CwhVDmoSb
+	 ELiNSzHsymZ1dQ6DNAMHeLTmACp5DEPlsv/R3XhGMZeI3O+8QEpBCNF603NtLksFAG
+	 4qWLLvdRhGlmUZ8TD+sQgCeM54mLyx2yAMT35G7xgU/pwDuQbNsXOFmc8F8Os18eUC
+	 Qghv6dSl0oIjQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 12 Sep 2023 12:15:39 -0700
-Subject: [PATCH 2/7] bcachefs: Fix -Wformat in
- bch2_btree_key_cache_to_text()
+Date: Tue, 12 Sep 2023 12:15:42 -0700
+Subject: [PATCH 5/7] bcachefs: Fix
+ -Wincompatible-function-pointer-types-strict from key_invalid callbacks
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -27,7 +27,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230912-bcachefs-warning-fixes-v1-2-a1cc83a38836@kernel.org>
+Message-Id: <20230912-bcachefs-warning-fixes-v1-5-a1cc83a38836@kernel.org>
 References: <20230912-bcachefs-warning-fixes-v1-0-a1cc83a38836@kernel.org>
 In-Reply-To: <20230912-bcachefs-warning-fixes-v1-0-a1cc83a38836@kernel.org>
 To: kent.overstreet@linux.dev
@@ -35,52 +35,122 @@ Cc: bfoster@redhat.com, linux-bcachefs@vger.kernel.org,
  linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1921; i=nathan@kernel.org;
- h=from:subject:message-id; bh=qJOiausqrNbKIkN5Zet+po6884A5rNQYVlvbj7JYJgA=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKkMO94zmTCaf3fUStC4KNdQfHLO2y2L7JVYZPtSZA2uv
- pnQuYm7o5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzkdSjD/3JdK71jmp5pPl/0
- /zcfLeJu9RRiCf2xdatnaLv3XrHzWxj+ChuklltsnBW6tUzqxzkXRfMf55imTzjiu8v7wabIpox
- TXAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4766; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=612YPLrIsD0uPeWmH83BxpgrCG+y5OEbKK0LLl/otRk=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKkMOz407FwvfundSvbIjBceZlF3TllurBTS2XLEbOa5J
+ 2qnVh5n6yhlYRDjYJAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATmbidkWHlgukr9ynkdVh8
+ mTTt86T2Rx7fdwSdyy+oNq1+7iCwdd1koAreTL7Vf+UDJtU+mtjgvTek5aZEsUi4svxG1a97d5m
+ WsQMA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building bcachefs for 32-bit ARM, there is a compiler warning in
-bch2_btree_key_cache_to_text() due to use of an incorrect format
-specifier:
+When building bcachefs with -Wincompatible-function-pointer-types-strict,
+a clang warning designed to catch issues with mismatched function
+pointer types, which will be fatal at runtime due to kernel Control Flow
+Integrity (kCFI), there are several instances along the lines of:
 
-  fs/bcachefs/btree_key_cache.c:1060:36: error: format specifies type 'size_t' (aka 'unsigned int') but the argument has type 'long' [-Werror,-Wformat]
-   1060 |         prt_printf(out, "nr_freed:\t%zu",       atomic_long_read(&c->nr_freed));
-        |                                     ~~~         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        |                                     %ld
-  fs/bcachefs/util.h:223:54: note: expanded from macro 'prt_printf'
-    223 | #define prt_printf(_out, ...)           bch2_prt_printf(_out, __VA_ARGS__)
-        |                                                               ^~~~~~~~~~~
-  1 error generated.
+  fs/bcachefs/bkey_methods.c:118:2: error: incompatible function pointer types initializing 'int (*)(const struct bch_fs *, struct bkey_s_c, enum bkey_invalid_flags, struct printbuf *)' with an expression of type 'int (const struct bch_fs *, struct bkey_s_c, unsigned int, struct printbuf *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+    118 |         BCH_BKEY_TYPES()
+        |         ^~~~~~~~~~~~~~~~
+  fs/bcachefs/bcachefs_format.h:342:2: note: expanded from macro 'BCH_BKEY_TYPES'
+    342 |         x(deleted,              0)                      \
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  fs/bcachefs/bkey_methods.c:117:41: note: expanded from macro 'x'
+    117 | #define x(name, nr) [KEY_TYPE_##name]   = bch2_bkey_ops_##name,
+        |                                           ^~~~~~~~~~~~~~~~~~~~
+  <scratch space>:206:1: note: expanded from here
+    206 | bch2_bkey_ops_deleted
+        | ^~~~~~~~~~~~~~~~~~~~~
+  fs/bcachefs/bkey_methods.c:34:17: note: expanded from macro 'bch2_bkey_ops_deleted'
+     34 |         .key_invalid = deleted_key_invalid,             \
+        |                        ^~~~~~~~~~~~~~~~~~~
 
-On 64-bit architectures, size_t is 'unsigned long', so there is no
-warning when using %zu but on 32-bit architectures, size_t is
-'unsigned int'. Use '%lu' to match the other format specifiers used in
-this function for printing values returned from atomic_long_read().
+The flags parameter should be of type 'enum bkey_invalid_flags', not
+'unsigned int'. Adjust the type everywhere so that there is no more
+warning.
 
-Fixes: 6d799930ce0f ("bcachefs: btree key cache pcpu freedlist")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- fs/bcachefs/btree_key_cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/bcachefs/bkey_methods.c | 10 +++++-----
+ fs/bcachefs/subvolume.c    |  2 +-
+ fs/bcachefs/subvolume.h    |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/bcachefs/btree_key_cache.c b/fs/bcachefs/btree_key_cache.c
-index 505e7c365ab7..a74ee6d8a7cf 100644
---- a/fs/bcachefs/btree_key_cache.c
-+++ b/fs/bcachefs/btree_key_cache.c
-@@ -1053,7 +1053,7 @@ int bch2_fs_btree_key_cache_init(struct btree_key_cache *bc)
+diff --git a/fs/bcachefs/bkey_methods.c b/fs/bcachefs/bkey_methods.c
+index 6547142db428..2a284c954c7a 100644
+--- a/fs/bcachefs/bkey_methods.c
++++ b/fs/bcachefs/bkey_methods.c
+@@ -25,7 +25,7 @@ const char * const bch2_bkey_types[] = {
+ };
  
- void bch2_btree_key_cache_to_text(struct printbuf *out, struct btree_key_cache *c)
+ static int deleted_key_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-			       unsigned flags, struct printbuf *err)
++			       enum bkey_invalid_flags flags, struct printbuf *err)
  {
--	prt_printf(out, "nr_freed:\t%zu",	atomic_long_read(&c->nr_freed));
-+	prt_printf(out, "nr_freed:\t%lu",	atomic_long_read(&c->nr_freed));
- 	prt_newline(out);
- 	prt_printf(out, "nr_keys:\t%lu",	atomic_long_read(&c->nr_keys));
- 	prt_newline(out);
+ 	return 0;
+ }
+@@ -39,7 +39,7 @@ static int deleted_key_invalid(const struct bch_fs *c, struct bkey_s_c k,
+ })
+ 
+ static int empty_val_key_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-				 unsigned flags, struct printbuf *err)
++				 enum bkey_invalid_flags flags, struct printbuf *err)
+ {
+ 	if (bkey_val_bytes(k.k)) {
+ 		prt_printf(err, "incorrect value size (%zu != 0)",
+@@ -55,7 +55,7 @@ static int empty_val_key_invalid(const struct bch_fs *c, struct bkey_s_c k,
+ })
+ 
+ static int key_type_cookie_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-				   unsigned flags, struct printbuf *err)
++				   enum bkey_invalid_flags flags, struct printbuf *err)
+ {
+ 	return 0;
+ }
+@@ -70,7 +70,7 @@ static int key_type_cookie_invalid(const struct bch_fs *c, struct bkey_s_c k,
+ })
+ 
+ static int key_type_inline_data_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-					unsigned flags, struct printbuf *err)
++					enum bkey_invalid_flags flags, struct printbuf *err)
+ {
+ 	return 0;
+ }
+@@ -91,7 +91,7 @@ static void key_type_inline_data_to_text(struct printbuf *out, struct bch_fs *c,
+ })
+ 
+ static int key_type_set_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-				unsigned flags, struct printbuf *err)
++				enum bkey_invalid_flags flags, struct printbuf *err)
+ {
+ 	if (bkey_val_bytes(k.k)) {
+ 		prt_printf(err, "incorrect value size (%zu != %zu)",
+diff --git a/fs/bcachefs/subvolume.c b/fs/bcachefs/subvolume.c
+index 0214a98deb4f..b371a5c4e06e 100644
+--- a/fs/bcachefs/subvolume.c
++++ b/fs/bcachefs/subvolume.c
+@@ -99,7 +99,7 @@ int bch2_check_subvols(struct bch_fs *c)
+ /* Subvolumes: */
+ 
+ int bch2_subvolume_invalid(const struct bch_fs *c, struct bkey_s_c k,
+-			   unsigned flags, struct printbuf *err)
++			   enum bkey_invalid_flags flags, struct printbuf *err)
+ {
+ 	if (bkey_lt(k.k->p, SUBVOL_POS_MIN) ||
+ 	    bkey_gt(k.k->p, SUBVOL_POS_MAX)) {
+diff --git a/fs/bcachefs/subvolume.h b/fs/bcachefs/subvolume.h
+index 8d4c50f4cd05..bb14f92e8687 100644
+--- a/fs/bcachefs/subvolume.h
++++ b/fs/bcachefs/subvolume.h
+@@ -10,7 +10,7 @@ enum bkey_invalid_flags;
+ int bch2_check_subvols(struct bch_fs *);
+ 
+ int bch2_subvolume_invalid(const struct bch_fs *, struct bkey_s_c,
+-			   unsigned, struct printbuf *);
++			   enum bkey_invalid_flags, struct printbuf *);
+ void bch2_subvolume_to_text(struct printbuf *, struct bch_fs *, struct bkey_s_c);
+ 
+ #define bch2_bkey_ops_subvolume ((struct bkey_ops) {		\
 
 -- 
 2.42.0
