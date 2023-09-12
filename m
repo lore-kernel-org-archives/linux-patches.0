@@ -1,138 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63C618032
-	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 12:01:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB815C433C7;
-	Tue, 12 Sep 2023 12:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FDF9443
+	for <patches@lists.linux.dev>; Tue, 12 Sep 2023 12:04:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86811C433C8;
+	Tue, 12 Sep 2023 12:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694520096;
-	bh=/tbmZhK8Z5nyAJ9/9qP9S2JNPfr54CTIWfz6Jzu7CY4=;
+	s=korg; t=1694520292;
+	bh=c2WM0QebFwkruvvqL++OW0UcOhGNYH/ROgXNJT1LLoc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=0sqMd8rQ9DoQejQC8jvKEXs1jw+YQcJiuzZiiSyfGDjSmsJ4sBtPIpYkXg0rEfOd7
-	 d75MJ1RXe0rfPyTpFQMRm7P4fg2RIGECchKutu7L3vX5+FnV1QFSUgz0ToJzatnWwo
-	 7TPwvAwsY+ETBX0FNZ5JooNuEI06NAZghaQA7xyY=
-Date: Tue, 12 Sep 2023 14:01:33 +0200
+	b=v095H48BttzMy8UN6sFIadIbmuGZr8BXHGdlpBazolDN9mRSqexuiCvxBW5dIxIqZ
+	 5CQ4HsYLFxBJ65pfYX9JG4hrnCou4Q+mnQMyyEaGRvMqZNt6tkPWwA9KVylcNKl6uy
+	 v3zuyJrrE5oC0B0nSU5RxsD5s2CoSgDmyvYDOjuw=
+Date: Tue, 12 Sep 2023 14:04:49 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: jack@suse.cz, stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org,
-	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	Tom Rix <trix@redhat.com>, Nathan Chancellor <nathan@kernel.org>
-Subject: Re: [PATCH 6.1 000/600] 6.1.53-rc1 review
-Message-ID: <2023091213-awning-driveway-4671@gregkh>
-References: <20230911134633.619970489@linuxfoundation.org>
- <1ffe4f64-f238-859a-ab14-7559d03c4671@linaro.org>
- <CAEUSe7_XA16yZAHA+YTbJygwaUYkU5gs=FnV9BAmQRYzwgVjvQ@mail.gmail.com>
- <CA+G9fYsiWEKSV0EeU0cXsJZ3U75fbdGyCmDx07ksFMUW5jouyw@mail.gmail.com>
- <2023091233-boots-line-a3d4@gregkh>
- <CA+G9fYt2Jnxwvpzcd66HCqkPi6CNistHfmxQYAzX22OWHUoUSA@mail.gmail.com>
+To: Lorenz Bauer <lorenz.bauer@isovalent.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.5 090/739] net: export inet_lookup_reuseport and
+ inet6_lookup_reuseport
+Message-ID: <2023091237-glandular-feel-9012@gregkh>
+References: <20230911134650.921299741@linuxfoundation.org>
+ <20230911134653.617660874@linuxfoundation.org>
+ <CAN+4W8jR5vXtgzanqDc2UHYZRC-m87cMFwCAztArENtgqfA9Rw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYt2Jnxwvpzcd66HCqkPi6CNistHfmxQYAzX22OWHUoUSA@mail.gmail.com>
+In-Reply-To: <CAN+4W8jR5vXtgzanqDc2UHYZRC-m87cMFwCAztArENtgqfA9Rw@mail.gmail.com>
 
-On Tue, Sep 12, 2023 at 05:26:27PM +0530, Naresh Kamboju wrote:
-> On Tue, 12 Sept 2023 at 16:02, Greg Kroah-Hartman
+On Mon, Sep 11, 2023 at 03:13:56PM +0100, Lorenz Bauer wrote:
+> Hi Greg,
+> 
+> I sent the below email to Sasha and stable@ this morning, but I forgot
+> to CC you and can't find a copy of it on lore. So here goes a copy:
+> 
+> On Mon, Sep 11, 2023 at 2:55â€¯PM Greg Kroah-Hartman
 > <gregkh@linuxfoundation.org> wrote:
 > >
-> > On Tue, Sep 12, 2023 at 02:19:34PM +0530, Naresh Kamboju wrote:
-> > > On Tue, 12 Sept 2023 at 07:55, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > > >
-> > > > Hello!
-> > > >
-> > > > On Mon, 11 Sept 2023 at 14:58, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > > > > On 11/09/23 7:40 a. m., Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 6.1.53 release.
-> > > > > > There are 600 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > > >
-> > > > > > Responses should be made by Wed, 13 Sep 2023 13:44:56 +0000.
-> > > > > > Anything received after that time might be too late.
-> > > > > >
-> > > > > > The whole patch series can be found in one patch at:
-> > > > > >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.53-rc1.gz
-> > > > > > or in the git tree and branch at:
-> > > > > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > > > and the diffstat can be found below.
-> > > > > >
-> > > > > > thanks,
-> > > > > >
-> > > > > > greg k-h
-> > > > >
-> > > > > We're seeing this new warning:
-> > > > > -----8<-----
-> > > > >    /builds/linux/fs/udf/inode.c:892:6: warning: variable 'newblock' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-> > > > >      892 |         if (*err < 0)
-> > > > >          |             ^~~~~~~~
-> > > > >    /builds/linux/fs/udf/inode.c:914:9: note: uninitialized use occurs here
-> > > > >      914 |         return newblock;
-> > > > >          |                ^~~~~~~~
-> > > > >    /builds/linux/fs/udf/inode.c:892:2: note: remove the 'if' if its condition is always false
-> > > > >      892 |         if (*err < 0)
-> > > > >          |         ^~~~~~~~~~~~~
-> > > > >      893 |                 goto out_free;
-> > > > >          |                 ~~~~~~~~~~~~~
-> > > > >    /builds/linux/fs/udf/inode.c:699:34: note: initialize the variable 'newblock' to silence this warning
-> > > > >      699 |         udf_pblk_t newblocknum, newblock;
-> > > > >          |                                         ^
-> > > > >          |                                          = 0
-> > > > >    1 warning generated.
-> > > > > ----->8-----
-> > > > >
-> > > > > That's with Clang 17 (and nightly) on:
-> > > > > * arm
-> > > > > * powerpc
-> > > > > * s390
-> > > >
-> > > > For what it's worth, bisection points to 903b487b5ba6 ("udf: Handle
-> > > > error when adding extent to a file").
-> > >
-> > > I see the following commit is fixing the reported problem.
-> > >
-> > > commit 6d5ab7c2f7cf90877dab8f2bb06eb5ca8edc73ef
-> > > Author: Tom Rix <trix@redhat.com>
-> > > Date:   Fri Dec 30 12:53:41 2022 -0500
-> > >
-> > >     udf: initialize newblock to 0
-> > >
-> > >     The clang build reports this error
-> > >     fs/udf/inode.c:805:6: error: variable 'newblock' is used
-> > > uninitialized whenever 'if' condition is true
-> > > [-Werror,-Wsometimes-uninitialized]
-> > >             if (*err < 0)
-> > >                 ^~~~~~~~
-> > >     newblock is never set before error handling jump.
-> > >     Initialize newblock to 0 and remove redundant settings.
-> > >
-> > >     Fixes: d8b39db5fab8 ("udf: Handle error when adding extent to a file")
-> > >     Reported-by: Nathan Chancellor <nathan@kernel.org>
-> > >     Signed-off-by: Tom Rix <trix@redhat.com>
-> > >     Signed-off-by: Jan Kara <jack@suse.cz>
-> > >     Message-Id: <20221230175341.1629734-1-trix@redhat.com>
-> >
-> > Wait, where is this commit?  I don't see it in Linus's tree either, nor
-> > in linux-next.  Where did you find it?
+> > 6.5-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Can you find this commit id ?
+> This commit is part of the following series
+> https://lore.kernel.org/all/20230720-so-reuseport-v6-0-7021b683cdae@isovalent.com/
+> As far as I can tell this was pulled in due to the Fixes tag on patch
+> 7. I think that tag was misguided, in that the original code
+> explicitly rejected SO_REUSEPORT sockets so there isn't a bug to fix
+> here. The SO_REUSEPORT code is quite fiddly, so I'm uneasy about
+> backporting the change. Could you drop patches 3-8 from 5.15, 6.1, 6.4
+> and 6.5 please? Patch 1-2 are good to backport.
 > 
-> Commit id: 23970a1c9475b305770fd37bebfec7a10f263787
-> subject: ("udf: initialize newblock to 0")
+> This also means that "net: remove duplicate INDIRECT_CALLABLE_DECLARE
+> of udp[6]_ehashfn" is not required anymore.
 
-Yes, that is in 6.2.  Where did the id you used above come from?
-
-confused,
+Thank you for this, I've now dropped all of these from all queues.
 
 greg k-h
