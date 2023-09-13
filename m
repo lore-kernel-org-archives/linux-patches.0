@@ -1,197 +1,105 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AABE29CA;
-	Wed, 13 Sep 2023 21:18:01 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-52bcd4db4e6so260818a12.0;
-        Wed, 13 Sep 2023 14:18:01 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B34D200DF
+	for <patches@lists.linux.dev>; Wed, 13 Sep 2023 21:27:26 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-68fbd31d9ddso207882b3a.0
+        for <patches@lists.linux.dev>; Wed, 13 Sep 2023 14:27:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694639879; x=1695244679; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EF449AIlL6XYD426YEW6S8zbtOg73mCSG4ZzOl+W5Oo=;
-        b=pygxdE+dcKC7/TrFIiWqSV9TuL/w/AEB5a9HmgJn6UDZpWo2hsmk4GblXK+LjoG9rp
-         bllPrDKCRWM+QQJP89SFDSef4LX9L6RGSWj62AewYy4F1Jx4uQ0J1hD+yqWs1hkX32te
-         9SqfQovuQNn5HaJXxgtRbtvbsnoqhq92pJVWnj4jH7RJC/ZsGnb1Qh1DbT5t597BW7p5
-         kZn80lgLYr2Oz32eNZnwEWzfxuTox2c8Ta5aubVD+fN+eUxr0SjKyZ4NVYZjWhiqBbMe
-         eLC3nrJTyX/SltszY7S0uUJGMEWsYwo7LV/yz9Go7rzaaJsNh9zSUI5xY//OkMvnR291
-         fPmg==
+        d=chromium.org; s=google; t=1694640446; x=1695245246; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NJ8fqic/uomWgpsKqJ7x61RUWZmvyUYZyTh0hpMJdiM=;
+        b=iL3jSxwp2gV+FNdzNCroL1yiVy0ZgiLE7FrABjRBR/wJHuu4/cCszdSxj9DBNv8ieJ
+         v6dzO+UqsfKFzXl2uLA5BhvP+wgveQCJUR4Sj85Cm7K1f1S8tu6dHAVxcg52klaggewO
+         kH/4gzz/u9UO2J3w9P4mB8v2JQkFlabMhoiWI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694639879; x=1695244679;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EF449AIlL6XYD426YEW6S8zbtOg73mCSG4ZzOl+W5Oo=;
-        b=EySbAC7jBUIVMjPjUEfGlbdtkmaU5+NIvSXuqxm73ZxQfq5xuJrGo8tY0C4y4yvMyn
-         J1f6S6DzzrLvV29pjbw1m4gxvkGX0TIhZOTo7cDB2I3tCCDbYnteCWRfSPr1yxPOx3iH
-         EwB0GrQZFPTRbSJzf6NCrh5AtdMyihfBqJ+c22yUsfUy8jCz2lC0Gz5RqOTqcNirdxVr
-         spLA/Ls7tU/YiQon1j0dhvB+IRLrBWDKK862s3IhXrSHybKA0RxsP89pjTWAF1/2puGh
-         MRZpVZPhkoNZIvgvgqBvI7iuZJibHZu7ykp2bKPo+GKiPDwSzOsTVcldAi+JNrR8eY+7
-         n+pw==
-X-Gm-Message-State: AOJu0Yxy5i3eq7ZomwCatolOkACn+aMkYpYlxp22xkALT1CZpJiDf10A
-	znyjKQUURKW7tBWbijHrjfvlRlMOCO+K0dbUFqE=
-X-Google-Smtp-Source: AGHT+IETKy2hamoh5trTYjKH/mUZmeqeeIJzKFwxuCLL0meTkX20nzuzsF+vhZWUBzg2AV4JJHmDU2yE4G+n1Li3IIU=
-X-Received: by 2002:aa7:c459:0:b0:523:bfec:4913 with SMTP id
- n25-20020aa7c459000000b00523bfec4913mr3340114edr.0.1694639879272; Wed, 13 Sep
- 2023 14:17:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694640446; x=1695245246;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NJ8fqic/uomWgpsKqJ7x61RUWZmvyUYZyTh0hpMJdiM=;
+        b=I4txtnxujj3Ozd629V9M55ejBosKJ5A4jlAZVRNVfsyrnlg63BSSLhWd20FBhxxLBR
+         7XGhONB3bJxsv3UKBJCoNcBEncIJkiHe0kjXZVPDfow4/4k9uzPA2hF3hn14XoQV6gLZ
+         U1lzEdn+sh4V3aOshbtUonc5kvLpfma+TFyt/uTy+9TOIebOTBxey+JaqreYUg6Kpe9+
+         vTOm/+2R9/lLoqyyD+K3oj5TNw2YYUspbdSrZzw82gzQSPdCjaeDyvqLQ+xfaOo4/H/D
+         yjcqSRC4o5yb119scY2UHSfPCnq94LQrKx8nBwsmP3W2o0jvGrz1iUBqpmUk+GDE+5Or
+         pDqQ==
+X-Gm-Message-State: AOJu0Yz4UvgJKhmSr9K/IT8KVs47FTsYJssPdxwkz91FnqbNWErgdSZT
+	8kff6DeVajH01AK9mz2nfySFlA==
+X-Google-Smtp-Source: AGHT+IGyI6LR0X+sTt85Dc5hyaU3kiSenLO/6Xn71Ljenu4d72Yi/579Xsvyp40g93KRVbpEbnHMVA==
+X-Received: by 2002:a05:6a20:1445:b0:144:5d5b:8e24 with SMTP id a5-20020a056a20144500b001445d5b8e24mr4250764pzi.24.1694640445852;
+        Wed, 13 Sep 2023 14:27:25 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:ae97:c6dc:1d98:494f])
+        by smtp.gmail.com with ESMTPSA id a10-20020a17090ad80a00b0025bdc3454c6sm1923976pjv.8.2023.09.13.14.27.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Sep 2023 14:27:25 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Gross <markgross@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	platform-driver-x86@vger.kernel.org,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: [PATCH v4 0/4] platform/x86: intel_scu_ipc: Timeout fixes
+Date: Wed, 13 Sep 2023 14:27:18 -0700
+Message-ID: <20230913212723.3055315-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230913-fix-wuninitialized-dm_helpers_dp_mst_send_payload_allocation-v1-1-2d1b0a3ef16c@kernel.org>
- <b11cce07-7e13-49b5-aed3-88517356281b@amd.com> <CADnq5_MsHwC94F_2SdyUM39FRoeVZMNa-8quxB4TVOVqM05=zQ@mail.gmail.com>
- <b1396feb-9bd5-4aa4-97b1-9d743fffe5ef@amd.com> <CADnq5_NZ6Bv5zyNxJc13Bb4bPmHTTDPEWqtV_VFt5y1gzsgGzQ@mail.gmail.com>
- <327f018f-c810-4e99-8003-f0dfa9f7d156@amd.com>
-In-Reply-To: <327f018f-c810-4e99-8003-f0dfa9f7d156@amd.com>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Wed, 13 Sep 2023 17:17:45 -0400
-Message-ID: <CADnq5_Oo9Qm+CHe3tdkN7fQ=ZMw5wZNssk3rxDRSPK8F9DxBDw@mail.gmail.com>
-Subject: Re: [PATCH] drm/amd/display: Fix -Wuninitialized in dm_helpers_dp_mst_send_payload_allocation()
-To: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, harry.wentland@amd.com, sunpeng.li@amd.com, 
-	Rodrigo.Siqueira@amd.com, alexander.deucher@amd.com, christian.koenig@amd.com, 
-	Xinhui.Pan@amd.com, Wayne.Lin@amd.com, lyude@redhat.com, trix@redhat.com, 
-	llvm@lists.linux.dev, ndesaulniers@google.com, patches@lists.linux.dev, 
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 13, 2023 at 4:46=E2=80=AFPM Hamza Mahfooz <hamza.mahfooz@amd.co=
-m> wrote:
->
-> On 9/13/23 16:03, Alex Deucher wrote:
-> > On Wed, Sep 13, 2023 at 3:57=E2=80=AFPM Hamza Mahfooz <hamza.mahfooz@am=
-d.com> wrote:
-> >>
-> >>
-> >> On 9/13/23 15:54, Alex Deucher wrote:
-> >>> On Wed, Sep 13, 2023 at 12:17=E2=80=AFPM Hamza Mahfooz <hamza.mahfooz=
-@amd.com> wrote:
-> >>>>
-> >>>>
-> >>>> On 9/13/23 12:10, Nathan Chancellor wrote:
-> >>>>> When building with clang, there is a warning (or error when
-> >>>>> CONFIG_WERROR is set):
-> >>>>>
-> >>>>>      drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_help=
-ers.c:368:21: error: variable 'old_payload' is uninitialized when used here=
- [-Werror,-Wuninitialized]
-> >>>>>        368 |                                                  new_p=
-ayload, old_payload);
-> >>>>>            |                                                       =
-        ^~~~~~~~~~~
-> >>>>>      drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_help=
-ers.c:344:61: note: initialize the variable 'old_payload' to silence this w=
-arning
-> >>>>>        344 |         struct drm_dp_mst_atomic_payload *new_payload,=
- *old_payload;
-> >>>>>            |                                                       =
-             ^
-> >>>>>            |                                                       =
-              =3D NULL
-> >>>>>      1 error generated.
-> >>>>>
-> >>>>> This variable is not required outside of this function so allocate
-> >>>>> old_payload on the stack and pass it by reference to
-> >>>>> dm_helpers_construct_old_payload(), resolving the warning.
-> >>>>>
-> >>>>> Closes: https://github.com/ClangBuiltLinux/linux/issues/1931
-> >>>>> Fixes: 5aa1dfcdf0a4 ("drm/mst: Refactor the flow for payload alloca=
-tion/removement")
-> >>>>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> >>>>
-> >>>> Reviewed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-> >>>>
-> >>>> Hm, seems like this was pushed through drm-misc-next and as such our=
- CI
-> >>>> didn't get a chance to test it.
-> >>>
-> >>> Can you push this to drm-misc?  That is where Wayne's patches landed.
-> >>> If not, I can push it.
-> >>
-> >> No need, I cherry-picked Wayne's patches to amd-staging-drm-next and
-> >> applied Nathan's fix.
-> >
-> > Yes, but we can only have patches go upstream via one tree.  Wayne's
-> > patches are in drm-misc, so that is where the fix should be.  It's
-> > fine to have them in amd-staging-drm-next for testing purposes, but I
-> > won't be upstreaming them via the amdgpu -next tree since they are
-> > already in drm-misc.
->
-> In that case can you push it to drm-misc?
+I recently looked at some crash reports on ChromeOS devices that call
+into this intel_scu_ipc driver. They were hitting timeouts, and it
+certainly looks possible for those timeouts to be triggering because of
+scheduling issues. Once things started going south, the timeouts kept
+coming. Maybe that's because the other side got seriously confused? I
+don't know.
 
-Pushed.  Thanks!
+I added some sleeps to these paths to trigger the timeout behavior to
+make sure the code works. Simply sleeping for a long time in busy_loop()
+hits the timeout, which could happen if the system is scheduling lots of
+other things at the time.
 
-Alex
+I couldn't really test the last patch because forcing a timeout or
+returning immediately wasn't fast enough to trigger the second
+transaction to run into the first one being processed.
 
+Changes from v3 (https://lore.kernel.org/r/20230911193937.302552-1-swboyd@chromium.org):
+ * Use readx_poll_timeout() to shorten a line
 
-Alex
+Changes from v2 (https://lore.kernel.org/r/20230906180944.2197111-1-swboyd@chromium.org):
+ * Use read_poll_timeout() helper in patch #1 (again)
+ * New patch #3 to fix bug pointed out by Andy
+ * Consolidate more code into busy check in patch #4
 
->
-> >
-> > Alex
-> >
-> >>
-> >>>
-> >>> Alex
-> >>>
-> >>>
-> >>>>
-> >>>>
-> >>>>> ---
-> >>>>>     drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 6 +=
-++---
-> >>>>>     1 file changed, 3 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helper=
-s.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-> >>>>> index 9ad509279b0a..c4c35f6844f4 100644
-> >>>>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-> >>>>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-> >>>>> @@ -341,7 +341,7 @@ bool dm_helpers_dp_mst_send_payload_allocation(
-> >>>>>         struct amdgpu_dm_connector *aconnector;
-> >>>>>         struct drm_dp_mst_topology_state *mst_state;
-> >>>>>         struct drm_dp_mst_topology_mgr *mst_mgr;
-> >>>>> -     struct drm_dp_mst_atomic_payload *new_payload, *old_payload;
-> >>>>> +     struct drm_dp_mst_atomic_payload *new_payload, old_payload;
-> >>>>>         enum mst_progress_status set_flag =3D MST_ALLOCATE_NEW_PAYL=
-OAD;
-> >>>>>         enum mst_progress_status clr_flag =3D MST_CLEAR_ALLOCATED_P=
-AYLOAD;
-> >>>>>         int ret =3D 0;
-> >>>>> @@ -365,8 +365,8 @@ bool dm_helpers_dp_mst_send_payload_allocation(
-> >>>>>                 ret =3D drm_dp_add_payload_part2(mst_mgr, mst_state=
-->base.state, new_payload);
-> >>>>>         } else {
-> >>>>>                 dm_helpers_construct_old_payload(stream->link, mst_=
-state->pbn_div,
-> >>>>> -                                              new_payload, old_pay=
-load);
-> >>>>> -             drm_dp_remove_payload_part2(mst_mgr, mst_state, old_p=
-ayload, new_payload);
-> >>>>> +                                              new_payload, &old_pa=
-yload);
-> >>>>> +             drm_dp_remove_payload_part2(mst_mgr, mst_state, &old_=
-payload, new_payload);
-> >>>>>         }
-> >>>>>
-> >>>>>         if (ret) {
-> >>>>>
-> >>>>> ---
-> >>>>> base-commit: 8569c31545385195bdb0c021124e68336e91c693
-> >>>>> change-id: 20230913-fix-wuninitialized-dm_helpers_dp_mst_send_paylo=
-ad_allocation-c37b33aaad18
-> >>>>>
-> >>>>> Best regards,
-> >>>> --
-> >>>> Hamza
-> >>>>
-> >> --
-> >> Hamza
-> >>
-> --
-> Hamza
->
+Changes from v1 (https://lore.kernel.org/r/20230831011405.3246849-1-swboyd@chromium.org):
+ * Don't use read_poll_timeout() helper in patch 1, just add code
+ * Rewrite patch 2 to be simpler
+ * Make intel_scu_ipc_busy() return -EBUSY when busy
+ * Downgrade dev_err() to dev_dbg() in intel_scu_ipc_busy()
+
+Stephen Boyd (4):
+  platform/x86: intel_scu_ipc: Check status after timeout in busy_loop()
+  platform/x86: intel_scu_ipc: Check status upon timeout in
+    ipc_wait_for_interrupt()
+  platform/x86: intel_scu_ipc: Don't override scu in
+    intel_scu_ipc_dev_simple_command()
+  platform/x86: intel_scu_ipc: Fail IPC send if still busy
+
+ drivers/platform/x86/intel_scu_ipc.c | 66 +++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 26 deletions(-)
+
+Cc: Prashant Malani <pmalani@chromium.org>
+
+base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
+-- 
+https://chromeos.dev
+
