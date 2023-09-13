@@ -1,116 +1,105 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F5F1A718
-	for <patches@lists.linux.dev>; Wed, 13 Sep 2023 13:55:46 +0000 (UTC)
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-44d48168e2cso2297317137.2
-        for <patches@lists.linux.dev>; Wed, 13 Sep 2023 06:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694613345; x=1695218145; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bHOWKgoMJ5vIrHEwzYhikdH8Nfh2BsBh7d3nokFVIcY=;
-        b=hTmvSR1FJyyHEEXO54kym0eDM0RFAdUS/+csrWkye0057nTLI/LkWevMwepyQjsi/I
-         We2W5T4yjxgHUViIaO9NA+f84N1Sklj6YnhD5sJuQ1ejzYYqVfvxXV2nTEhyW7NhujUZ
-         d9ImHBPhNw1Rm55G93EcxLaBrvO2tgvlAAYmIA5i5Pe7Ew2HK056qGN/GjKTgO1foiti
-         E3tfRrSmv+Av7EWkn7FmcmuJ95+Ji/ey7Z7gYl6L9LdY2f+/wCGpG775U6h5kbX+UgsJ
-         L8D8WRG8HEzZsQDnZjiokUcT401LFosTZ/8DEhA9uDGWOmezWkXdEoeNiasd/+wB0tCE
-         6AsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694613345; x=1695218145;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bHOWKgoMJ5vIrHEwzYhikdH8Nfh2BsBh7d3nokFVIcY=;
-        b=c4RtDsoHdR75U/9e5VEkgIlGB0lJBZp/p3ba9kU+2acbX+qvHPhHViEY/uljUTzhld
-         EnqM6PukfBMRhvh8/w1pZmfaf2r8MsYcSafjx1MznGNNBjpko7OvnXjgKPAXxLVKkjkA
-         9kmWBHU5Ey/nuRZXyzrlZ9f5UL846TbH/+k8on1LImMAXK4KIl2A79g1FJIBNs4VCWQF
-         DkoeZbTxZX5WoXN6iPraVYVsGnAKdJ+qS/d0mIJvOHY+bNak4mip9nGSybog3J0Hp3lC
-         nF6s0PEQ1c6ttgfknXwicE1o0k1wPJATbgUkxWMfu70P7IpHOuTywP8nwycbF4MH02Nz
-         UxYQ==
-X-Gm-Message-State: AOJu0YzbNujlSubs8bjG3nRJDmT8aUjtMXJZtSicDzPeEdNjfgejU/w7
-	prq5souKG2DaBMf8veSJcQLQDj3ra9TgX2qRrsdd1g==
-X-Google-Smtp-Source: AGHT+IFf5imTqug/zcRG1beR5iQXSQEFra9TlGRP6+/+gjc5RTxdHFSFJ3q0U7S4Vcw7LNDBmZUTS5F2jEkEzXHOm+M=
-X-Received: by 2002:a67:e203:0:b0:44d:3bc0:f1ba with SMTP id
- g3-20020a67e203000000b0044d3bc0f1bamr2601874vsa.26.1694613345099; Wed, 13 Sep
- 2023 06:55:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3398F68;
+	Wed, 13 Sep 2023 16:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25ED1C433C7;
+	Wed, 13 Sep 2023 16:10:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1694621456;
+	bh=zb3Av1pFNOsjED2IV5DGzeXlf/onH5EprDbHqtbQT5U=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Qg4IGxYynpdACteEvT7EkdE/xPD94USvg2ihnnUDmzCmtoft/v+c+9krD+k6TD0jN
+	 MShDL5F1gOGib2CK3QpH2OWrd9tZT8fD1XWETdVHMyEmBUWeRw1tu5oHLEk33aH9iv
+	 R/qJtAQBOUY5sZdbDG/4ZQUjCO9IyRvwzoCzfDZEajMn8wbBxZU0a/wWD3ESOYVmjH
+	 1tuqBmdU1bstlLEMTcgs5IfHJNBom30nKSqlx4rGinVZgrrKtfGp23+4emdqvYu5R4
+	 x4sRkZQ/2JthyaTxQyj1wsdC1SMNXc5IWDZiyG38HJjqWkTXS3HKMU9I5IiUV0RNmv
+	 pXBWzds3PKp2A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 13 Sep 2023 09:10:36 -0700
+Subject: [PATCH] drm/amd/display: Fix -Wuninitialized in
+ dm_helpers_dp_mst_send_payload_allocation()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230911134633.619970489@linuxfoundation.org> <1ffe4f64-f238-859a-ab14-7559d03c4671@linaro.org>
- <CAEUSe7_XA16yZAHA+YTbJygwaUYkU5gs=FnV9BAmQRYzwgVjvQ@mail.gmail.com>
- <CA+G9fYsiWEKSV0EeU0cXsJZ3U75fbdGyCmDx07ksFMUW5jouyw@mail.gmail.com>
- <2023091233-boots-line-a3d4@gregkh> <CA+G9fYt2Jnxwvpzcd66HCqkPi6CNistHfmxQYAzX22OWHUoUSA@mail.gmail.com>
- <2023091213-awning-driveway-4671@gregkh>
-In-Reply-To: <2023091213-awning-driveway-4671@gregkh>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 13 Sep 2023 19:25:33 +0530
-Message-ID: <CA+G9fYtY7_-JgVizZuVJZ3RX0e3eZ3ri8AxDpkkPdP-uYfZ1ig@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/600] 6.1.53-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: jack@suse.cz, stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	=?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>, 
-	Tom Rix <trix@redhat.com>, Nathan Chancellor <nathan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230913-fix-wuninitialized-dm_helpers_dp_mst_send_payload_allocation-v1-1-2d1b0a3ef16c@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPveAWUC/x3NSQ7DIAxA0atEXhcphEWHq1QVcrHbWCKAMB2j3
+ L2oy795fwXlKqxwGlao/BSVnHrY3QBhxnRnI9QbpnFy49E6c5O3eT2SJGmCUb5MhhY/cyxc1VP
+ xizavnMgX/MSM5DHGHLB12AS3vzqHiGQP0Belcvf++/Nl2358pnq5jgAAAA==
+To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
+ alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com, 
+ Wayne.Lin@amd.com, lyude@redhat.com
+Cc: ndesaulniers@google.com, trix@redhat.com, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2845; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=zb3Av1pFNOsjED2IV5DGzeXlf/onH5EprDbHqtbQT5U=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKmM9/lf+i24czf2fN73Jy6zvQwNtkj95LHXVnnBnBDiF
+ Jb7zVq8o5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExkqSvDb5YvF4xeJYp3O5s9
+ NEpbWrmmo+G71c0vimJ6k3Qr056d3szwv6TNLavXbXvqzXWMNm0r16zZ6P/u7dwLPCqhlbaWBo8
+ n8AAA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Greg,
+When building with clang, there is a warning (or error when
+CONFIG_WERROR is set):
 
-> > > > > For what it's worth, bisection points to 903b487b5ba6 ("udf: Handle
-> > > > > error when adding extent to a file").
-> > > >
-> > > > I see the following commit is fixing the reported problem.
-> > > >
-> > > > commit 6d5ab7c2f7cf90877dab8f2bb06eb5ca8edc73ef
-> > > > Author: Tom Rix <trix@redhat.com>
-> > > > Date:   Fri Dec 30 12:53:41 2022 -0500
-> > > >
-> > > >     udf: initialize newblock to 0
-> > > >
-> > > >     The clang build reports this error
-> > > >     fs/udf/inode.c:805:6: error: variable 'newblock' is used
-> > > > uninitialized whenever 'if' condition is true
-> > > > [-Werror,-Wsometimes-uninitialized]
-> > > >             if (*err < 0)
-> > > >                 ^~~~~~~~
-> > > >     newblock is never set before error handling jump.
-> > > >     Initialize newblock to 0 and remove redundant settings.
-> > > >
-> > > >     Fixes: d8b39db5fab8 ("udf: Handle error when adding extent to a file")
-> > > >     Reported-by: Nathan Chancellor <nathan@kernel.org>
-> > > >     Signed-off-by: Tom Rix <trix@redhat.com>
-> > > >     Signed-off-by: Jan Kara <jack@suse.cz>
-> > > >     Message-Id: <20221230175341.1629734-1-trix@redhat.com>
-> > >
-> > > Wait, where is this commit?  I don't see it in Linus's tree either, nor
-> > > in linux-next.  Where did you find it?
-> >
-> > Can you find this commit id ?
-> >
-> > Commit id: 23970a1c9475b305770fd37bebfec7a10f263787
-> > subject: ("udf: initialize newblock to 0")
->
-> Yes, that is in 6.2.  Where did the id you used above come from?
+  drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_helpers.c:368:21: error: variable 'old_payload' is uninitialized when used here [-Werror,-Wuninitialized]
+    368 |                                                  new_payload, old_payload);
+        |                                                               ^~~~~~~~~~~
+  drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_helpers.c:344:61: note: initialize the variable 'old_payload' to silence this warning
+    344 |         struct drm_dp_mst_atomic_payload *new_payload, *old_payload;
+        |                                                                    ^
+        |                                                                     = NULL
+  1 error generated.
 
-While looking around for the fix commit i found this on Linux next,
+This variable is not required outside of this function so allocate
+old_payload on the stack and pass it by reference to
+dm_helpers_construct_old_payload(), resolving the warning.
 
-$ git log --oneline next-20221226..next-20230106  -- fs/udf/inode.c
-e86812bfac97e udf: Detect system inodes linked into directory hierarchy
-453bc25de0a55 udf: Preserve link count of system files
-6d5ab7c2f7cf9 udf: initialize newblock to 0
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1931
+Fixes: 5aa1dfcdf0a4 ("drm/mst: Refactor the flow for payload allocation/removement")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
->
-> confused,
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index 9ad509279b0a..c4c35f6844f4 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -341,7 +341,7 @@ bool dm_helpers_dp_mst_send_payload_allocation(
+ 	struct amdgpu_dm_connector *aconnector;
+ 	struct drm_dp_mst_topology_state *mst_state;
+ 	struct drm_dp_mst_topology_mgr *mst_mgr;
+-	struct drm_dp_mst_atomic_payload *new_payload, *old_payload;
++	struct drm_dp_mst_atomic_payload *new_payload, old_payload;
+ 	enum mst_progress_status set_flag = MST_ALLOCATE_NEW_PAYLOAD;
+ 	enum mst_progress_status clr_flag = MST_CLEAR_ALLOCATED_PAYLOAD;
+ 	int ret = 0;
+@@ -365,8 +365,8 @@ bool dm_helpers_dp_mst_send_payload_allocation(
+ 		ret = drm_dp_add_payload_part2(mst_mgr, mst_state->base.state, new_payload);
+ 	} else {
+ 		dm_helpers_construct_old_payload(stream->link, mst_state->pbn_div,
+-						 new_payload, old_payload);
+-		drm_dp_remove_payload_part2(mst_mgr, mst_state, old_payload, new_payload);
++						 new_payload, &old_payload);
++		drm_dp_remove_payload_part2(mst_mgr, mst_state, &old_payload, new_payload);
+ 	}
+ 
+ 	if (ret) {
 
-Sorry for the confusion.
+---
+base-commit: 8569c31545385195bdb0c021124e68336e91c693
+change-id: 20230913-fix-wuninitialized-dm_helpers_dp_mst_send_payload_allocation-c37b33aaad18
 
-> greg k-h
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-- Naresh
