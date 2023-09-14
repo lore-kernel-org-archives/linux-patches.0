@@ -1,83 +1,185 @@
-Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70724224F7
-	for <patches@lists.linux.dev>; Thu, 14 Sep 2023 08:53:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
-  t=1694681586; x=1726217586;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:reply-to:mime-version:
-   content-transfer-encoding;
-  bh=1oOQuxfNU4RfdzAwsBikNi3NOnwfshCWMLL8S7/JsUg=;
-  b=g0D1px38MZ4zHjcn9JAbFoKMzanM+0sSb/KKzqUaBAi15nnH0MGCLZde
-   q2CVl9I7sm7N9bf7jfMTic0oNYf55qgrV01IKNgYv5AOG7q/MeHPwV2l9
-   fvnqoUlE+WZNvTNQHAKgljBBnGg0xs/DA1KIu3JdHTLOc1qiyQhFRTO4l
-   w=;
-X-IronPort-AV: E=Sophos;i="6.02,145,1688428800"; 
-   d="scan'208";a="358488597"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-iad-1e-m6i4x-6e7a78d7.us-east-1.amazon.com) ([10.43.8.2])
-  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2023 08:53:03 +0000
-Received: from EX19D017EUA004.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
-	by email-inbound-relay-iad-1e-m6i4x-6e7a78d7.us-east-1.amazon.com (Postfix) with ESMTPS id C8143810F0;
-	Thu, 14 Sep 2023 08:53:00 +0000 (UTC)
-Received: from dev-dsk-gerhorst-1c-a6f23d20.eu-west-1.amazon.com
- (10.15.21.113) by EX19D017EUA004.ant.amazon.com (10.252.50.239) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.37; Thu, 14 Sep
- 2023 08:52:56 +0000
-From: Luis Gerhorst <gerhorst@amazon.de>
-To: <gregkh@linuxfoundation.org>
-CC: <alexei.starovoitov@gmail.com>, <ast@kernel.org>, <eddyz87@gmail.com>,
-	<laoar.shao@gmail.com>, <patches@lists.linux.dev>, <stable@vger.kernel.org>,
-	<yonghong.song@linux.dev>, <hagarhem@amazon.de>, <puranjay12@gmail.com>,
-	<daniel@iogearbox.net>, Luis Gerhorst <gerhorst@amazon.de>
-Subject: Re: [PATCH 6.1 562/600] bpf: Fix issue in verifying allow_ptr_leaks
-Date: Thu, 14 Sep 2023 08:51:32 +0000
-Message-ID: <20230914085131.40974-1-gerhorst@amazon.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230911134650.200439213@linuxfoundation.org>
-References: <20230911134650.200439213@linuxfoundation.org>
-Reply-To: <gerhorst@cs.fau.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FC621A06
+	for <patches@lists.linux.dev>; Thu, 14 Sep 2023 13:16:46 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 97A9021842;
+	Thu, 14 Sep 2023 13:16:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1694697399; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mKBTahQunslc+rwPFTpR4lF34AdmUPBQHy7sPwquY2I=;
+	b=uaiILth6R+RqHEJYuiyeI/wOZnySfe2Scae7Znwl14HCONN8ce+9YyX3QF45A8wzyrrD8q
+	E2TDy5VdI6Lg/5B5fpq7VOZlL/GUwT5vYDCXMriZPKRlKmN1NcCuvhiQAsHA4KaCRYdMbf
+	GZvOmv0zLh7ojYXy2jitNGn2xxzlRNM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1694697399;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mKBTahQunslc+rwPFTpR4lF34AdmUPBQHy7sPwquY2I=;
+	b=aN1ZHWhPQDkc8CUonNARkRazVN6sN5vJ8cRFA6BO0/zMtH75/ClXY0kBphEWglj/rIegdl
+	t22B/YjhQH6cSIAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 759F6139F2;
+	Thu, 14 Sep 2023 13:16:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id qNUVHLcHA2U6TQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 14 Sep 2023 13:16:39 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-trace-kernel@vger.kernel.org,
+	Hugh Dickins <hughd@google.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 2/2] mm, vmscan: remove ISOLATE_UNMAPPED
+Date: Thu, 14 Sep 2023 15:16:39 +0200
+Message-ID: <20230914131637.12204-4-vbabka@suse.cz>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230914131637.12204-3-vbabka@suse.cz>
+References: <20230914131637.12204-3-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Originating-IP: [10.15.21.113]
-X-ClientProxiedBy: EX19D033UWC003.ant.amazon.com (10.13.139.217) To
- EX19D017EUA004.ant.amazon.com (10.252.50.239)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
-> 
-> From: Yafang Shao <laoar.shao@gmail.com>
-> 
-> commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
+This isolate_mode_t flag is effectively unused since 89f6c88a6ab4 ("mm:
+__isolate_lru_page_prepare() in isolate_migratepages_block()") as
+sc->may_unmap is now checked directly (and only node_reclaim has a mode
+that sets it to 0). The last remaining place is mm_vmscan_lru_isolate
+tracepoint for the isolate_mode parameter. That one was mainly used to
+indicate the active/inactive mode, which the trace-vmscan-postprocess.pl
+script consumed, but that got silently broken. After fixing the script
+by the previous patch, it does not need the isolate_mode anymore. So
+just remove the parameter and with that the whole ISOLATE_UNMAPPED flag.
 
-I unfortunately have objections, they are pending discussion at [1].
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ .../trace/postprocess/trace-vmscan-postprocess.pl         | 8 ++++----
+ include/linux/mmzone.h                                    | 2 --
+ include/trace/events/vmscan.h                             | 8 ++------
+ mm/vmscan.c                                               | 3 +--
+ 4 files changed, 7 insertions(+), 14 deletions(-)
 
-Same applies to the 6.4-stable review patch [2] and all other backports.
-
-[1] https://lore.kernel.org/bpf/20230913122827.91591-1-gerhorst@amazon.de/
-[2] https://lore.kernel.org/stable/20230911134709.834278248@linuxfoundation.org/
-
+diff --git a/Documentation/trace/postprocess/trace-vmscan-postprocess.pl b/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
+index 725d41a8d4ef..048dc0dbce64 100644
+--- a/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
++++ b/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
+@@ -112,7 +112,7 @@ my $regex_direct_end_default = 'nr_reclaimed=([0-9]*)';
+ my $regex_kswapd_wake_default = 'nid=([0-9]*) order=([0-9]*)';
+ my $regex_kswapd_sleep_default = 'nid=([0-9]*)';
+ my $regex_wakeup_kswapd_default = 'nid=([0-9]*) order=([0-9]*) gfp_flags=([A-Z_|]*)';
+-my $regex_lru_isolate_default = 'isolate_mode=([0-9]*) classzone=([0-9]*) order=([0-9]*) nr_requested=([0-9]*) nr_scanned=([0-9]*) nr_skipped=([0-9]*) nr_taken=([0-9]*) lru=([a-z_]*)';
++my $regex_lru_isolate_default = 'classzone=([0-9]*) order=([0-9]*) nr_requested=([0-9]*) nr_scanned=([0-9]*) nr_skipped=([0-9]*) nr_taken=([0-9]*) lru=([a-z_]*)';
+ my $regex_lru_shrink_inactive_default = 'nid=([0-9]*) nr_scanned=([0-9]*) nr_reclaimed=([0-9]*) nr_dirty=([0-9]*) nr_writeback=([0-9]*) nr_congested=([0-9]*) nr_immediate=([0-9]*) nr_activate_anon=([0-9]*) nr_activate_file=([0-9]*) nr_ref_keep=([0-9]*) nr_unmap_fail=([0-9]*) priority=([0-9]*) flags=([A-Z_|]*)';
+ my $regex_lru_shrink_active_default = 'lru=([A-Z_]*) nr_taken=([0-9]*) nr_active=([0-9]*) nr_deactivated=([0-9]*) nr_referenced=([0-9]*) priority=([0-9]*) flags=([A-Z_|]*)' ;
+ my $regex_writepage_default = 'page=([0-9a-f]*) pfn=([0-9]*) flags=([A-Z_|]*)';
+@@ -204,7 +204,7 @@ $regex_wakeup_kswapd = generate_traceevent_regex(
+ $regex_lru_isolate = generate_traceevent_regex(
+ 			"vmscan/mm_vmscan_lru_isolate",
+ 			$regex_lru_isolate_default,
+-			"isolate_mode", classzone", "order",
++			"classzone", "order",
+ 			"nr_requested", "nr_scanned", "nr_skipped", "nr_taken",
+ 			"lru");
+ $regex_lru_shrink_inactive = generate_traceevent_regex(
+@@ -379,8 +379,8 @@ sub process_events {
+ 				print "         $regex_lru_isolate/o\n";
+ 				next;
+ 			}
+-			my $nr_scanned = $5;
+-			my $lru = $8;
++			my $nr_scanned = $4;
++			my $lru = $7;
+ 
+ 			# To closer match vmstat scanning statistics, only count
+ 			# inactive lru as scanning
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 4106fbc5b4b3..486587fcd27f 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -639,8 +639,6 @@ struct lruvec {
+ #endif
+ };
+ 
+-/* Isolate unmapped pages */
+-#define ISOLATE_UNMAPPED	((__force isolate_mode_t)0x2)
+ /* Isolate for asynchronous migration */
+ #define ISOLATE_ASYNC_MIGRATE	((__force isolate_mode_t)0x4)
+ /* Isolate unevictable pages */
+diff --git a/include/trace/events/vmscan.h b/include/trace/events/vmscan.h
+index d2123dd960d5..1a488c30afa5 100644
+--- a/include/trace/events/vmscan.h
++++ b/include/trace/events/vmscan.h
+@@ -285,10 +285,9 @@ TRACE_EVENT(mm_vmscan_lru_isolate,
+ 		unsigned long nr_scanned,
+ 		unsigned long nr_skipped,
+ 		unsigned long nr_taken,
+-		isolate_mode_t isolate_mode,
+ 		int lru),
+ 
+-	TP_ARGS(highest_zoneidx, order, nr_requested, nr_scanned, nr_skipped, nr_taken, isolate_mode, lru),
++	TP_ARGS(highest_zoneidx, order, nr_requested, nr_scanned, nr_skipped, nr_taken, lru),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(int, highest_zoneidx)
+@@ -297,7 +296,6 @@ TRACE_EVENT(mm_vmscan_lru_isolate,
+ 		__field(unsigned long, nr_scanned)
+ 		__field(unsigned long, nr_skipped)
+ 		__field(unsigned long, nr_taken)
+-		__field(unsigned int, isolate_mode)
+ 		__field(int, lru)
+ 	),
+ 
+@@ -308,7 +306,6 @@ TRACE_EVENT(mm_vmscan_lru_isolate,
+ 		__entry->nr_scanned = nr_scanned;
+ 		__entry->nr_skipped = nr_skipped;
+ 		__entry->nr_taken = nr_taken;
+-		__entry->isolate_mode = (__force unsigned int)isolate_mode;
+ 		__entry->lru = lru;
+ 	),
+ 
+@@ -316,8 +313,7 @@ TRACE_EVENT(mm_vmscan_lru_isolate,
+ 	 * classzone is previous name of the highest_zoneidx.
+ 	 * Reason not to change it is the ABI requirement of the tracepoint.
+ 	 */
+-	TP_printk("isolate_mode=%d classzone=%d order=%d nr_requested=%lu nr_scanned=%lu nr_skipped=%lu nr_taken=%lu lru=%s",
+-		__entry->isolate_mode,
++	TP_printk("classzone=%d order=%d nr_requested=%lu nr_scanned=%lu nr_skipped=%lu nr_taken=%lu lru=%s",
+ 		__entry->highest_zoneidx,
+ 		__entry->order,
+ 		__entry->nr_requested,
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 6f13394b112e..f2e5e992fefb 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2389,8 +2389,7 @@ static unsigned long isolate_lru_folios(unsigned long nr_to_scan,
+ 	}
+ 	*nr_scanned = total_scan;
+ 	trace_mm_vmscan_lru_isolate(sc->reclaim_idx, sc->order, nr_to_scan,
+-				    total_scan, skipped, nr_taken,
+-				    sc->may_unmap ? 0 : ISOLATE_UNMAPPED, lru);
++				    total_scan, skipped, nr_taken, lru);
+ 	update_lru_sizes(lruvec, lru, nr_zone_taken);
+ 	return nr_taken;
+ }
 -- 
-Luis
-
-
-
-Amazon Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
-Sitz: Berlin
-Ust-ID: DE 289 237 879
-
-
+2.42.0
 
