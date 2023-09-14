@@ -1,90 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272FF250E2
-	for <patches@lists.linux.dev>; Wed, 13 Sep 2023 23:30:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCB7C433C8;
-	Wed, 13 Sep 2023 23:30:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694647840;
-	bh=tup+LBZbXxFTbfC3DcOI+jhqHile7U8Wyx9Eh+f7OXw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=TnFvBYFM2LasEmUnQQ1ikWeuUqH2r//pz3V1oxnfxwBkDnSWs3dtYS2gWiHVQk06e
-	 Kijqxn2K4fdqzCOyMiRfy177zBHItLd3WHaz9IXK1cVrA/gQ3+bOzVlUmj1AIn1t4/
-	 UUfRUtBa1/lHtzIEOCOVYo8TCalf+sO2DJxkcJS4+bJ4EI4pfuAIuUJ5q1Gjoyve29
-	 mu3+pb2kG900rypFDXGzmoKSS451SiQ767nFg7w7lf21VZP+0rPZlmqGL9RcaIfS+V
-	 VS73Ip4Z67p7hcu+7Jv4KpT2XAfChe1NDcAcvVGssFKBIDwr0eIjx9gU8/Uc9Tj/rF
-	 A8fsgvyjEMRCA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 13 Sep 2023 16:30:24 -0700
-Subject: [PATCH] drm/debugfs: Fix drm_debugfs_remove_files() stub
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291D77F
+	for <patches@lists.linux.dev>; Thu, 14 Sep 2023 02:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694659629; x=1726195629;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=7AqD5A5iW3EXE8bXRwZVy9z6UDY0KU2vLZ++lAl1CMw=;
+  b=mV6qqIXVBhkLEOpFLE23DKz3nPm2m3Dy+RXaoLPolM0osnVe2vlXm/iA
+   SKeSUJQzwQ8aaBTHaiUcv+/vz8gomAgpn79u2MKop9M574diY6h3b3lGp
+   DPprHwr/w5fNAv+jWGHw2hvZhGlmtFVAyBiCf4N/6W19IkJDf1FO5Jlrc
+   AK03NnPvnlTz62ZLD27SPb7DbfabvO2FLKvHT1A77tdl/UOihr4RWPDBB
+   KJRN2NA1u07Vkx1vBB2WYZpi43QhII9Z+kJwbXkJUW002+EC/hC7HHyFb
+   abmFzPVzzmVtccXuXudxqsuS0DEJQh3BTCQHUyaVCnDwadI+8Oj/iyfs9
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10832"; a="378760917"
+X-IronPort-AV: E=Sophos;i="6.02,144,1688454000"; 
+   d="scan'208";a="378760917"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2023 19:47:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10832"; a="868067061"
+X-IronPort-AV: E=Sophos;i="6.02,144,1688454000"; 
+   d="scan'208";a="868067061"
+Received: from zhiquan-linux-dev.bj.intel.com ([10.238.156.102])
+  by orsmga004.jf.intel.com with ESMTP; 13 Sep 2023 19:47:04 -0700
+From: Zhiquan Li <zhiquan1.li@intel.com>
+To: x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	bp@alien8.de,
+	tony.luck@intel.com,
+	naoya.horiguchi@nec.com
+Cc: zhiquan1.li@intel.com,
+	Youquan Song <youquan.song@intel.com>
+Subject: [PATCH RESEND v2] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
+Date: Thu, 14 Sep 2023 11:05:39 +0800
+Message-Id: <20230914030539.1622477-1-zhiquan1.li@intel.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230913-fix-drm_debugfs_remove_files-stub-v1-1-6b952ac559f3@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAA9GAmUC/x2NzQqDMBAGX0X23AUTxf68SimhMV/sQtWyW6Ugv
- ruhxznMzEYGFRjdqo0Uq5jMUwF3qqh/PacBLKkw+do39dU1nOXHSceQEJchW1CM84qQ5Q1j+y6
- RY7p0rfPn3nWeSuejKNL/cX/s+wFpwjRDcwAAAA==
-To: maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
- tzimmermann@suse.de
-Cc: andi.shyti@linux.intel.com, christian.koenig@amd.com, 
- dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1757; i=nathan@kernel.org;
- h=from:subject:message-id; bh=tup+LBZbXxFTbfC3DcOI+jhqHile7U8Wyx9Eh+f7OXw=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKlMbgqHBe/t7b69c9m9qX/eTlnxf9Ka6zscry2L4ih13
- ZqSPmHSio5SFgYxDgZZMUWW6seqxw0N55xlvHFqEswcViaQIQxcnAIwkfzNjAy7Hz3fZnrvyg7L
- +Z299/XXH5+2ZcvesC0HPdV+rnwhuHXtWUaGhjSD7I1VmiEKJlslNC9GM73hYJfv5H+4NthoT1H
- 7hqnMAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-When building without CONFIG_DEBUG_FS:
+Kdump can exclude the HWPosion page to avoid touch the error page
+again, the prerequisite is the PG_hwpoison page flag is set.
+However, for some MCE fatal error cases, there is no opportunity
+to queue a task for calling memory_failure(), as a result,
+the capture kernel touches the error page again and panics.
 
-  drivers/gpu/drm/tegra/dc.c:1757:59: error: too many arguments to function call, expected 3, have 4
-   1757 |         drm_debugfs_remove_files(dc->debugfs_files, count, root, minor);
-        |         ~~~~~~~~~~~~~~~~~~~~~~~~                                 ^~~~~
-  include/drm/drm_debugfs.h:162:19: note: 'drm_debugfs_remove_files' declared here
-    162 | static inline int drm_debugfs_remove_files(const struct drm_info_list *files,
-        |                   ^                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    163 |                                            int count, struct drm_minor *minor)
-        |                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+Add function mce_set_page_hwpoison_now() which marks a page as
+HWPoison before kernel panic() for MCE error, so that the dump
+program can check and skip the error page and prevent the capture
+kernel panic.
 
-Update the stub to include the root parameter.
+[Tony: Changed TestSetPageHWPoison() to SetPageHWPoison()]
 
-Fixes: 8e455145d8f1 ("drm/debugfs: rework drm_debugfs_create_files implementation v2")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Co-developed-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+
 ---
- include/drm/drm_debugfs.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+V2 RESEND notes:
+- No changes on this, just rebasing as v6.6-rc1 is out.
+- Added the tag from Naoya.
+  Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
 
-diff --git a/include/drm/drm_debugfs.h b/include/drm/drm_debugfs.h
-index 7213ce15e4ff..3bba169f9bae 100644
---- a/include/drm/drm_debugfs.h
-+++ b/include/drm/drm_debugfs.h
-@@ -160,7 +160,8 @@ static inline void drm_debugfs_create_files(const struct drm_info_list *files,
- {}
- 
- static inline int drm_debugfs_remove_files(const struct drm_info_list *files,
--					   int count, struct drm_minor *minor)
-+					   int count, struct dentry *root,
-+					   struct drm_minor *minor)
- {
- 	return 0;
+Changes since V1:
+- Revised the commit message as per Naoya's suggestion.
+- Replaced "TODO" comment in code with comments based on mailing list
+  discussion on the lack of value in covering other page types.
+  Link: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
+---
+ arch/x86/kernel/cpu/mce/core.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 6f35f724cc14..2725698268f3 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -156,6 +156,22 @@ void mce_unregister_decode_chain(struct notifier_block *nb)
  }
-
----
-base-commit: fc71f615fd08a530d24c7af0a1efa72ec6ea8e34
-change-id: 20230913-fix-drm_debugfs_remove_files-stub-bd864127c162
-
-Best regards,
+ EXPORT_SYMBOL_GPL(mce_unregister_decode_chain);
+ 
++/*
++ * Kdump can exclude the HWPosion page to avoid touch the error page again,
++ * the prerequisite is the PG_hwpoison page flag is set. However, for some
++ * MCE fatal error cases, there are no opportunity to queue a task
++ * for calling memory_failure(), as a result, the capture kernel panics.
++ * This function marks the page as HWPoison before kernel panic() for MCE.
++ */
++static void mce_set_page_hwpoison_now(unsigned long pfn)
++{
++	struct page *p;
++
++	p = pfn_to_online_page(pfn);
++	if (p)
++		SetPageHWPoison(p);
++}
++
+ static void __print_mce(struct mce *m)
+ {
+ 	pr_emerg(HW_ERR "CPU %d: Machine Check%s: %Lx Bank %d: %016Lx\n",
+@@ -286,6 +302,8 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	if (!fake_panic) {
+ 		if (panic_timeout == 0)
+ 			panic_timeout = mca_cfg.panic_timeout;
++		if (final && (final->status & MCI_STATUS_ADDRV))
++			mce_set_page_hwpoison_now(final->addr >> PAGE_SHIFT);
+ 		panic(msg);
+ 	} else
+ 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.25.1
 
