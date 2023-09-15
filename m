@@ -1,169 +1,129 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43142241E0
-	for <patches@lists.linux.dev>; Thu, 14 Sep 2023 13:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423D810947;
+	Fri, 15 Sep 2023 13:36:21 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 72EB31F459;
-	Thu, 14 Sep 2023 13:16:39 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 3A4BE218EC;
+	Fri, 15 Sep 2023 13:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1694697399; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=rAhS+FVn6ocw85psQvFvN0PR1VlmozuQ4I8i9ZtjuaY=;
-	b=rXYZHOfzaYBcmQOVenjZjswEmg6RN8Sk2V+BW7r+HfBOpYHGbbkEjxpu9Zgwo9D+tbJ4Vp
-	kmB2yLegf2zWD9jKJ3Ng7DLOqQQ9DxQc92Zd8RqQLJohLIpq9KcXUJ7v+rov8SOyDnqYj6
-	B+M40p1WYtQj6yYH4kenKUe5Ci3sMno=
+	t=1694784974; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9rlrz3u2Vsb7vGlQTOlcmAup+cWeQZdVEYu0oGCHX8Q=;
+	b=Gsf1eUJ8XcQyXAK6NTaBzs+N2+cdSyYIzeO1b/6RlP7vdDItVhbz80p8Qj3Qn8t4LxdmrR
+	5QEwjUPmp+6VQDd1NSictR5mbiGJEIqRpC3GmW7A37Q1qaei5tpPCFdsg0cWBZYiULZLVQ
+	3SWSGOBae2UIwjvy8R2KcUi+cAr2xgI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1694697399;
+	s=susede2_ed25519; t=1694784974;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=rAhS+FVn6ocw85psQvFvN0PR1VlmozuQ4I8i9ZtjuaY=;
-	b=w7ODrEMWKXDJyZH8yRRXjpu91JCbJkXlJ4zV31DCOedOfday7a05umNo2GtvdyBR8OgJ0B
-	HgOQEkZWGtvD7wDQ==
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9rlrz3u2Vsb7vGlQTOlcmAup+cWeQZdVEYu0oGCHX8Q=;
+	b=zf2vbx7BqDgGUZ4WxbsB6fugz/uSdeVGa7gqa3pSZsnTM9EHCeGeqr1PthyoSONkMRrj/1
+	pT32eXfikGMIKbDw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 53F3B13580;
-	Thu, 14 Sep 2023 13:16:39 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F024E1358A;
+	Fri, 15 Sep 2023 13:36:13 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 5fDXE7cHA2U6TQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 14 Sep 2023 13:16:39 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org,
-	Hugh Dickins <hughd@google.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 1/2] trace-vmscan-postprocess: sync with tracepoints updates
-Date: Thu, 14 Sep 2023 15:16:38 +0200
-Message-ID: <20230914131637.12204-3-vbabka@suse.cz>
-X-Mailer: git-send-email 2.42.0
+	id VyDGOc1dBGUbYwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 15 Sep 2023 13:36:13 +0000
+Message-ID: <c5e0caf5-cefd-fc4a-9e3d-a3479323bd09@suse.cz>
+Date: Fri, 15 Sep 2023 15:36:13 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
+ calc_slab_order()
+To: kernel test robot <oliver.sang@intel.com>
+Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-mm@kvack.org,
+ David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg
+ <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <202309111340.f59c3f22-oliver.sang@intel.com>
+Content-Language: en-US
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <202309111340.f59c3f22-oliver.sang@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The script has fallen behind tracepoint changes for a while, fix it up.
+On 9/11/23 07:56, kernel test robot wrote:
+> 
+> 
+> Hello,
+> 
+> kernel test robot noticed "UBSAN:shift-out-of-bounds_in_mm/slub.c" on:
+> 
+> commit: f04d441027621c16081803832a54f59272112cf5 ("[PATCH 4/4] mm/slub: refactor calculate_order() and calc_slab_order()")
+> url: https://github.com/intel-lab-lkp/linux/commits/Vlastimil-Babka/mm-slub-simplify-the-last-resort-slab-order-calculation/20230908-225506
+> base: git://git.kernel.org/cgit/linux/kernel/git/vbabka/slab.git for-next
+> patch link: https://lore.kernel.org/all/20230908145302.30320-10-vbabka@suse.cz/
+> patch subject: [PATCH 4/4] mm/slub: refactor calculate_order() and calc_slab_order()
+> 
+> in testcase: boot
+> 
+> compiler: clang-16
+> test machine: qemu-system-x86_64 -enable-kvm -cpu SandyBridge -smp 2 -m 16G
+> 
+> (please refer to attached dmesg/kmsg for entire log/backtrace)
+> 
+> 
+> +-------------------------------------------------+------------+------------+
+> |                                                 | a17847b835 | f04d441027 |
+> +-------------------------------------------------+------------+------------+
+> | UBSAN:shift-out-of-bounds_in_mm/slub.c          | 0          | 12         |
+> +-------------------------------------------------+------------+------------+
+> 
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <oliver.sang@intel.com>
+> | Closes: https://lore.kernel.org/oe-lkp/202309111340.f59c3f22-oliver.sang@intel.com
+> 
+> 
+> [    0.901457][    T0] UBSAN: shift-out-of-bounds in mm/slub.c:463:34
+> [    0.902458][    T0] shift exponent 52 is too large for 32-bit type 'unsigned int'
+> [    0.903477][    T0] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G                T  6.5.0-rc1-00009-gf04d44102762 #1
+> [    0.904450][    T0] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+> [    0.904450][    T0] Call Trace:
+> [    0.904450][    T0]  <TASK>
+> [ 0.904450][ T0] dump_stack_lvl (lib/dump_stack.c:107) 
+> [ 0.904450][ T0] dump_stack (lib/dump_stack.c:114) 
+> [ 0.904450][ T0] ubsan_epilogue (lib/ubsan.c:218) 
+> [ 0.904450][ T0] __ubsan_handle_shift_out_of_bounds (lib/ubsan.c:?) 
+> [ 0.904450][ T0] ? tdx_handle_virt_exception (arch/x86/include/asm/shared/tdx.h:60 arch/x86/coco/tdx/tdx.c:375 arch/x86/coco/tdx/tdx.c:430 arch/x86/coco/tdx/tdx.c:650 arch/x86/coco/tdx/tdx.c:666) 
+> [ 0.904450][ T0] ? kmemleak_alloc (mm/kmemleak.c:977) 
+> [ 0.904450][ T0] __kmem_cache_create (mm/slub.c:? mm/slub.c:4159 mm/slub.c:4473 mm/slub.c:4507 mm/slub.c:5104) 
 
-Most changes are mechanical (renames, removal of tracepoint parameters
-that are not used by the script). More notable change involves
-mm_vmscan_lru_isolate which is relying on the isolate_mode to determine
-if the inactive list is being scanned. However the parameter currently
-only indicates ISOLATE_UNMAPPED. We can use the lru parameter instead to
-determine which list is scanned, and stop checking isolate_mode.
+Oh thanks, fixing up:
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- .../postprocess/trace-vmscan-postprocess.pl   | 40 ++++++++-----------
- 1 file changed, 17 insertions(+), 23 deletions(-)
-
-diff --git a/Documentation/trace/postprocess/trace-vmscan-postprocess.pl b/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
-index e24c009789a0..725d41a8d4ef 100644
---- a/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
-+++ b/Documentation/trace/postprocess/trace-vmscan-postprocess.pl
-@@ -107,14 +107,14 @@ GetOptions(
- );
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -4152,7 +4152,8 @@ static inline int calculate_order(unsigned int size)
+                        nr_cpus = nr_cpu_ids;
+                min_objects = 4 * (fls(nr_cpus) + 1);
+        }
+-       max_objects = order_objects(slub_max_order, size);
++       /* min_objects can't be 0 because get_order(0) is undefined */
++       max_objects = max(order_objects(slub_max_order, size), 1);
+        min_objects = min(min_objects, max_objects);
  
- # Defaults for dynamically discovered regex's
--my $regex_direct_begin_default = 'order=([0-9]*) may_writepage=([0-9]*) gfp_flags=([A-Z_|]*)';
-+my $regex_direct_begin_default = 'order=([0-9]*) gfp_flags=([A-Z_|]*)';
- my $regex_direct_end_default = 'nr_reclaimed=([0-9]*)';
- my $regex_kswapd_wake_default = 'nid=([0-9]*) order=([0-9]*)';
- my $regex_kswapd_sleep_default = 'nid=([0-9]*)';
--my $regex_wakeup_kswapd_default = 'nid=([0-9]*) zid=([0-9]*) order=([0-9]*) gfp_flags=([A-Z_|]*)';
--my $regex_lru_isolate_default = 'isolate_mode=([0-9]*) classzone_idx=([0-9]*) order=([0-9]*) nr_requested=([0-9]*) nr_scanned=([0-9]*) nr_skipped=([0-9]*) nr_taken=([0-9]*) lru=([a-z_]*)';
-+my $regex_wakeup_kswapd_default = 'nid=([0-9]*) order=([0-9]*) gfp_flags=([A-Z_|]*)';
-+my $regex_lru_isolate_default = 'isolate_mode=([0-9]*) classzone=([0-9]*) order=([0-9]*) nr_requested=([0-9]*) nr_scanned=([0-9]*) nr_skipped=([0-9]*) nr_taken=([0-9]*) lru=([a-z_]*)';
- my $regex_lru_shrink_inactive_default = 'nid=([0-9]*) nr_scanned=([0-9]*) nr_reclaimed=([0-9]*) nr_dirty=([0-9]*) nr_writeback=([0-9]*) nr_congested=([0-9]*) nr_immediate=([0-9]*) nr_activate_anon=([0-9]*) nr_activate_file=([0-9]*) nr_ref_keep=([0-9]*) nr_unmap_fail=([0-9]*) priority=([0-9]*) flags=([A-Z_|]*)';
--my $regex_lru_shrink_active_default = 'lru=([A-Z_]*) nr_scanned=([0-9]*) nr_rotated=([0-9]*) priority=([0-9]*)';
-+my $regex_lru_shrink_active_default = 'lru=([A-Z_]*) nr_taken=([0-9]*) nr_active=([0-9]*) nr_deactivated=([0-9]*) nr_referenced=([0-9]*) priority=([0-9]*) flags=([A-Z_|]*)' ;
- my $regex_writepage_default = 'page=([0-9a-f]*) pfn=([0-9]*) flags=([A-Z_|]*)';
- 
- # Dyanically discovered regex
-@@ -184,8 +184,7 @@ sub generate_traceevent_regex {
- $regex_direct_begin = generate_traceevent_regex(
- 			"vmscan/mm_vmscan_direct_reclaim_begin",
- 			$regex_direct_begin_default,
--			"order", "may_writepage",
--			"gfp_flags");
-+			"order", "gfp_flags");
- $regex_direct_end = generate_traceevent_regex(
- 			"vmscan/mm_vmscan_direct_reclaim_end",
- 			$regex_direct_end_default,
-@@ -201,11 +200,11 @@ $regex_kswapd_sleep = generate_traceevent_regex(
- $regex_wakeup_kswapd = generate_traceevent_regex(
- 			"vmscan/mm_vmscan_wakeup_kswapd",
- 			$regex_wakeup_kswapd_default,
--			"nid", "zid", "order", "gfp_flags");
-+			"nid", "order", "gfp_flags");
- $regex_lru_isolate = generate_traceevent_regex(
- 			"vmscan/mm_vmscan_lru_isolate",
- 			$regex_lru_isolate_default,
--			"isolate_mode", "classzone_idx", "order",
-+			"isolate_mode", classzone", "order",
- 			"nr_requested", "nr_scanned", "nr_skipped", "nr_taken",
- 			"lru");
- $regex_lru_shrink_inactive = generate_traceevent_regex(
-@@ -218,11 +217,10 @@ $regex_lru_shrink_inactive = generate_traceevent_regex(
- $regex_lru_shrink_active = generate_traceevent_regex(
- 			"vmscan/mm_vmscan_lru_shrink_active",
- 			$regex_lru_shrink_active_default,
--			"nid", "zid",
--			"lru",
--			"nr_scanned", "nr_rotated", "priority");
-+			"nid", "nr_taken", "nr_active", "nr_deactivated", "nr_referenced",
-+			"priority", "flags");
- $regex_writepage = generate_traceevent_regex(
--			"vmscan/mm_vmscan_writepage",
-+			"vmscan/mm_vmscan_write_folio",
- 			$regex_writepage_default,
- 			"page", "pfn", "flags");
- 
-@@ -371,7 +369,7 @@ sub process_events {
- 				print "         $regex_wakeup_kswapd\n";
- 				next;
- 			}
--			my $order = $3;
-+			my $order = $2;
- 			$perprocesspid{$process_pid}->{MM_VMSCAN_WAKEUP_KSWAPD_PERORDER}[$order]++;
- 		} elsif ($tracepoint eq "mm_vmscan_lru_isolate") {
- 			$details = $6;
-@@ -381,18 +379,14 @@ sub process_events {
- 				print "         $regex_lru_isolate/o\n";
- 				next;
- 			}
--			my $isolate_mode = $1;
- 			my $nr_scanned = $5;
--			my $file = $8;
--
--			# To closer match vmstat scanning statistics, only count isolate_both
--			# and isolate_inactive as scanning. isolate_active is rotation
--			# isolate_inactive == 1
--			# isolate_active   == 2
--			# isolate_both     == 3
--			if ($isolate_mode != 2) {
-+			my $lru = $8;
-+
-+			# To closer match vmstat scanning statistics, only count
-+			# inactive lru as scanning
-+			if ($lru =~ /inactive_/) {
- 				$perprocesspid{$process_pid}->{HIGH_NR_SCANNED} += $nr_scanned;
--				if ($file =~ /_file/) {
-+				if ($lru =~ /_file/) {
- 					$perprocesspid{$process_pid}->{HIGH_NR_FILE_SCANNED} += $nr_scanned;
- 				} else {
- 					$perprocesspid{$process_pid}->{HIGH_NR_ANON_SCANNED} += $nr_scanned;
--- 
-2.42.0
+        min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
+l
 
