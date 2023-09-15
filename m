@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AC31B298
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002211B29B
 	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=Xh7vw1sTfFAIIC7IdEzQuwsZlBUzUqtsvV+NboGq3ok=; b=0ZL4HQvXbqYv52GWetOWj1OK8M
-	qehjk4nrJDZukU81QHh6aQ1MpjX0zuIEdK/YETV8xtJeSmbP+fLIjxkHQr3NUETmJkeDDsxRq95tC
-	gTXX0uy1loUeReAIlfUj/l1GoMohmYcpCBZs6l5RKmd8IymdTF4A4OGGE0RV+busvY7J+BbWHOi1h
-	Ncpwxsfc/OZNdgKT07yd7fGALHiScD5AU2AFoMkxWwGI2hxxBROmEXf/Z3zFm9/d0xMXCoJg6/AgS
-	ZCDcRbUYLeYCuz69jWzTUkc8rxWS9JErmsumGG0/ip2aQXTV9gS2PwV+plIt72OMKHM2Q1ekB0DKF
-	XeYU/3sw==;
+	bh=R2D5ERHgA50rjnGDJd3UTlmr28nE94IPRsx6Q30NTNM=; b=IioY1+MgNEocbawTB+OnCHuQPq
+	m334jTZ/rCCDiPzly1hKTAnORYCPXPfXiFu35XxAtsJh70qoLVkXLWWdO79+mD7WR432rlQebZrTL
+	cYwrdeEgZUkSN3sqaVas6b/eMzrthfiXWQnmOA1+sT7ytv5z33SyWfO59607OFtHrFeJ2lZSGVkxH
+	+MEHOarKFO7fXw36ZP5Fi2MZv/HiawQB8OuB1KcPEsdCTHz3XDjrAVwB0n8rNubNFaQx8l88wsHcF
+	lQqTYpYp1EkQybTcS+lydA1PawBqxqbzMb72Itu7Xlcc6pLwY6e97lZ4gggq007lKBQE0yY/f5xQo
+	gyCQ8WmQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhGQq-00BQnM-0U;
+	id 1qhGQq-00BQnY-1P;
 	Fri, 15 Sep 2023 21:32:56 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -39,9 +39,9 @@ Cc: willy@infradead.org,
 	da.gomez@samsung.com,
 	dan.helmick@samsung.com,
 	mcgrof@kernel.org
-Subject: [RFC v2 02/10] bdev: dynamically set aops to enable LBS support
-Date: Fri, 15 Sep 2023 14:32:46 -0700
-Message-Id: <20230915213254.2724586-3-mcgrof@kernel.org>
+Subject: [RFC v2 08/10] nvme: add awun / nawun sanity check
+Date: Fri, 15 Sep 2023 14:32:52 -0700
+Message-Id: <20230915213254.2724586-9-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
 References: <20230915213254.2724586-1-mcgrof@kernel.org>
@@ -54,48 +54,90 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-In order to support large block devices where block size > page size
-we must be able to support an aops which does support blocks > ps
-and the block layer needs this on its address space operations. We
-have to sets of aops and only one which does support bs > ps right
-now and that is when we use iomap on the aops for the block device
-cache.
+AWUN/NAWUN control the atomicity of command execution in relation to
+other commands. They impose inter-command serialization of writing of
+blocks of data to the NVM and prevent blocks of data ending up on the
+NVM containing partial data from one new command and partial data from
+one or more other new commands.
 
-If the min order has not yet been set and the target filesystem does
-require bs > ps allow for the inode for the block device cache to use
-the iomap aops.
+Parse awun / nawun to verify at least the physical block size
+exposed is not greater than this value.
 
+The special case of awun / nawun == 0xffff tells us we can ramp
+up to mdts.
+
+Suggested-by: Dan Helmick <dan.helmick@samsung.com>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvme/host/core.c | 21 +++++++++++++++++++++
+ drivers/nvme/host/nvme.h |  1 +
+ 2 files changed, 22 insertions(+)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 6e62d8a992e6..63b4d7dd8075 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -126,6 +126,7 @@ static void set_init_blocksize(struct block_device *bdev)
- {
- 	unsigned int bsize = bdev_logical_block_size(bdev);
- 	loff_t size = i_size_read(bdev->bd_inode);
-+	int order, folio_order;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 0365f260c514..7a3c51ac13bd 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1911,6 +1911,7 @@ static void nvme_update_disk_info(struct gendisk *disk,
+ 	sector_t capacity = nvme_lba_to_sect(ns, le64_to_cpu(id->nsze));
+ 	u32 bs = 1U << ns->lba_shift;
+ 	u32 atomic_bs, phys_bs, io_opt = 0;
++	u32 awun = 0, awun_bs = 0;
  
- 	while (bsize < PAGE_SIZE) {
- 		if (size & bsize)
-@@ -133,6 +134,13 @@ static void set_init_blocksize(struct block_device *bdev)
- 		bsize <<= 1;
+ 	if (!nvme_lba_shift_supported(ns)) {
+ 		capacity = 0;
+@@ -1931,6 +1932,15 @@ static void nvme_update_disk_info(struct gendisk *disk,
+ 			atomic_bs = (1 + le16_to_cpu(id->nawupf)) * bs;
+ 		else
+ 			atomic_bs = (1 + ns->ctrl->subsys->awupf) * bs;
++		if (id->nsfeat & NVME_NS_FEAT_ATOMICS && id->nawun)
++			awun = (1 + le16_to_cpu(id->nawun));
++		else
++			awun = (1 + ns->ctrl->subsys->awun);
++		/* Indicates MDTS can be used */
++		if (awun == 0xffff)
++			awun_bs = ns->ctrl->max_hw_sectors << SECTOR_SHIFT;
++		else
++			awun_bs = awun * bs;
  	}
- 	bdev->bd_inode->i_blkbits = blksize_bits(bsize);
-+	order = bdev->bd_inode->i_blkbits - PAGE_SHIFT;
-+	folio_order = mapping_min_folio_order(bdev->bd_inode->i_mapping);
-+	if (order > 0 && folio_order == 0) {
-+		mapping_set_folio_orders(bdev->bd_inode->i_mapping, order,
-+					 MAX_PAGECACHE_ORDER);
-+		bdev->bd_inode->i_data.a_ops = &def_blk_aops_iomap;
-+	}
- }
  
- int set_blocksize(struct block_device *bdev, int size)
+ 	if (id->nsfeat & NVME_NS_FEAT_IO_OPT) {
+@@ -1940,6 +1950,16 @@ static void nvme_update_disk_info(struct gendisk *disk,
+ 		io_opt = bs * (1 + le16_to_cpu(id->nows));
+ 	}
+ 
++	if (awun) {
++		phys_bs = min(awun_bs, phys_bs);
++
++		/*
++		 * npwg and nows could be > awun, in such cases users should
++		 * be aware of out of order reads/writes as npwg and nows
++		 * are purely performance optimizations.
++		 */
++	}
++
+ 	blk_queue_logical_block_size(disk->queue, bs);
+ 	/*
+ 	 * Linux filesystems assume writing a single physical block is
+@@ -2785,6 +2805,7 @@ static int nvme_init_subsystem(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
+ 		kfree(subsys);
+ 		return -EINVAL;
+ 	}
++	subsys->awun = le16_to_cpu(id->awun);
+ 	subsys->awupf = le16_to_cpu(id->awupf);
+ 	nvme_mpath_default_iopolicy(subsys);
+ 
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index f35647c470af..071ec52d83ea 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -410,6 +410,7 @@ struct nvme_subsystem {
+ 	u8			cmic;
+ 	enum nvme_subsys_type	subtype;
+ 	u16			vendor_id;
++	u16			awun;
+ 	u16			awupf;	/* 0's based awupf value. */
+ 	struct ida		ns_ida;
+ #ifdef CONFIG_NVME_MULTIPATH
 -- 
 2.39.2
 
