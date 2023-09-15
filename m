@@ -1,33 +1,33 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD91111A4
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 16:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788F21094C
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 16:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694796406; x=1726332406;
+  t=1694796700; x=1726332700;
   h=date:from:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=+zobR5lGXgXP3onpep1hv+W0ln3Xl8Jm5wQKIz7tcPs=;
-  b=Vlw/FYGg0Y3m+MfRlm1jjWcnaSjNtip2zn2QD2zKF5xcB4ecFy+LvzVO
-   /GUJBItJCsO7+b35cTW4sWjeyxKr/JWtdOo+uf7CidcXMyv8UFTJ4q0Hy
-   uCpRtCOKMXBgGL5sAkgQLkIFuk0XkkDt2ElHRPovjthvnChPcNs+D8efo
-   hWjrBw9y64cMADuQblTqfg6VS1tBbE0vp5FyvWsJHpLv6pWFaqz8NEwx2
-   l0w5YhQjd7sh1vtWRDkHGBat7/uqhdmqKQcDkgLc5SNgBr5oUuNherJA1
-   /RubC8xqNbQW7cQXFHl0EZUQ0wYRoJ/OX8RHkc9YrQlIVFJJ/k2V8BW8v
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="378205618"
+  bh=hV7ri2QcMrtTel/YBw6177BdZCvTJg4PvROjGVpyhUA=;
+  b=Gr/z95WPSGQ6ufwDozoi71y+0gFxmJy47BeCT54kX4B8/mZjZG0+abP1
+   YFSnOPnbhUoZ1LmNYLSAzekGWCpWBqS2mXT7L8WTMouTcW216Bjq1ZOvI
+   J4cyKGGcHDmZ0Uhij+fpVoda1FSoiKQ1ktNpg4UmTyltic0c95E26j94C
+   p7/uylIdx/epOLY2LSzHSJTmIfGYSTcR88P4zp543azdsHqlKbzdeR1Ro
+   QGq4WljEu2dcFBDGk9t1HF6ZWeJPKDRLO4Qja/asfCyDc2YMn7xoawGGW
+   Y8GEoBugEUuOBE+iUiAMcgtiSG5BEUg4wuUL5feWoEiC7QoP7tf+dbx3n
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="465654681"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="378205618"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:46:45 -0700
+   d="scan'208";a="465654681"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:51:39 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="694779664"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="774380992"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="694779664"
+   d="scan'208";a="774380992"
 Received: from srdoo-mobl1.ger.corp.intel.com ([10.252.38.99])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:46:40 -0700
-Date: Fri, 15 Sep 2023 19:46:38 +0300 (EEST)
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:51:34 -0700
+Date: Fri, 15 Sep 2023 19:51:32 +0300 (EEST)
 From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
 To: Jithu Joseph <jithu.joseph@intel.com>
 cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de, 
@@ -36,11 +36,11 @@ cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
     tony.luck@intel.com, linux-kernel@vger.kernel.org, 
     platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
     ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
+Subject: Re: [PATCH 04/10] platform/x86/intel/ifs: Scan test for new
  generations
-In-Reply-To: <20230913183348.1349409-4-jithu.joseph@intel.com>
-Message-ID: <ba753b39-1819-35ff-1248-6ce2c2824ae9@linux.intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-4-jithu.joseph@intel.com>
+In-Reply-To: <20230913183348.1349409-5-jithu.joseph@intel.com>
+Message-ID: <74882e91-f41e-7672-3835-d74f1364bbdd@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-5-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,279 +51,120 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Wed, 13 Sep 2023, Jithu Joseph wrote:
 
-> Scan image loading flow for newer IFS generations (1 and 2) are slightly
-> different from that of current generation (0). In newer schemes,
-> loading need not be done once for each socket as was done in gen0.
+> Make changes to scan test flow such that MSRs are populated
+> appropriately based on the generation supported by hardware.
 > 
-> Also the width of CHUNK related bitfields in SCAN_HASHES_STATUS MSR has
-> increased from 8 -> 16 bits. Similarly there are width differences
-> for CHUNK_AUTHENTICATION_STATUS too.
-> 
-> Further the parameter to AUTHENTICATE_AND_COPY_CHUNK is passed
-> differently in newer generations.
+> Width of chunk related bitfields is ACTIVATE_SCAN and SCAN_STATUS MSRs
+> are different in newer IFS generation compared to gen0.
 > 
 > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 > Reviewed-by: Tony Luck <tony.luck@intel.com>
 > Tested-by: Pengfei Xu <pengfei.xu@intel.com>
 > ---
->  drivers/platform/x86/intel/ifs/ifs.h  |  27 ++++++
->  drivers/platform/x86/intel/ifs/load.c | 113 +++++++++++++++++++++++++-
->  2 files changed, 138 insertions(+), 2 deletions(-)
+>  drivers/platform/x86/intel/ifs/ifs.h     | 14 ++++++++++++++
+>  drivers/platform/x86/intel/ifs/runtest.c | 23 ++++++++++++++++++-----
+>  2 files changed, 32 insertions(+), 5 deletions(-)
 > 
 > diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index d666aeed20fc..886dc74de57d 100644
+> index 886dc74de57d..3265a6d8a6f3 100644
 > --- a/drivers/platform/x86/intel/ifs/ifs.h
 > +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -137,6 +137,8 @@
->  #define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
->  #define MSR_ACTIVATE_SCAN			0x000002c6
->  #define MSR_SCAN_STATUS				0x000002c7
-> +#define MSR_SAF_CTRL				0x000004f0
-> +
->  #define SCAN_NOT_TESTED				0
->  #define SCAN_TEST_PASS				1
->  #define SCAN_TEST_FAIL				2
-> @@ -158,6 +160,19 @@ union ifs_scan_hashes_status {
+> @@ -205,6 +205,12 @@ union ifs_scan {
+>  		u32	delay	:31;
+>  		u32	sigmce	:1;
 >  	};
+> +	struct {
+> +		u16	start;
+> +		u16	stop;
+> +		u32	delay	:31;
+> +		u32	sigmce	:1;
+> +	} gen2;
+
+I don't like the way old struct is left without genx naming. It makes the 
+code below more confusing as is.
+
 >  };
 >  
-> +union ifs_scan_hashes_status_gen2 {
-> +	u64	data;
-> +	struct {
-> +		u16	chunk_size;
-> +		u16	num_chunks;
-> +		u8	error_code;
-> +		u32	chunks_in_stride :9;
-> +		u32	rsvd		:2;
-> +		u32	max_core_limit	:12;
-> +		u32	valid		:1;
-
-This doesn't look it would be guaranteed to provide the alignment you seem 
-to want for the fields.
-
-> +	};
-> +};
-> +
->  /* MSR_CHUNKS_AUTH_STATUS bit fields */
->  union ifs_chunks_auth_status {
->  	u64	data;
-> @@ -170,6 +185,16 @@ union ifs_chunks_auth_status {
+>  /* MSR_SCAN_STATUS bit fields */
+> @@ -219,6 +225,14 @@ union ifs_status {
+>  		u32	control_error		:1;
+>  		u32	signature_error		:1;
 >  	};
->  };
->  
-> +union ifs_chunks_auth_status_gen2 {
-> +	u64	data;
 > +	struct {
-> +		u16	valid_chunks;
-> +		u16	total_chunks;
+> +		u16	chunk_num;
+> +		u16	chunk_stop_index;
 > +		u8	error_code;
-> +		u32	rsvd		:24;
+> +		u32	rsvd1			:22;
+> +		u32	control_error		:1;
+> +		u32	signature_error		:1;
 
-Ditto.
+Again, I don't think the alignment will be correct in this case.
 
-> +	};
-> +};
-> +
->  /* MSR_ACTIVATE_SCAN bit fields */
->  union ifs_scan {
->  	u64	data;
-> @@ -230,6 +255,7 @@ struct ifs_test_caps {
->   * @scan_details: opaque scan status code from h/w
->   * @cur_batch: number indicating the currently loaded test file
->   * @generation: IFS test generation enumerated by hardware
-> + * @chunk_size: size of a test chunk
->   */
->  struct ifs_data {
->  	int	loaded_version;
-> @@ -240,6 +266,7 @@ struct ifs_data {
->  	u64	scan_details;
->  	u32	cur_batch;
->  	u32	generation;
-> +	u32	chunk_size;
+> +	} gen2;
 >  };
 >  
->  struct ifs_work {
-> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-> index 851c97cc6a6b..e8fb03dd8bcf 100644
-> --- a/drivers/platform/x86/intel/ifs/load.c
-> +++ b/drivers/platform/x86/intel/ifs/load.c
-> @@ -26,6 +26,11 @@ union meta_data {
+>  /* MSR_ARRAY_BIST bit fields */
+> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
+> index 1061eb7ec399..4bbab6be2fa2 100644
+> --- a/drivers/platform/x86/intel/ifs/runtest.c
+> +++ b/drivers/platform/x86/intel/ifs/runtest.c
+> @@ -171,6 +171,8 @@ static void ifs_test_core(int cpu, struct device *dev)
+>  	union ifs_status status;
+>  	unsigned long timeout;
+>  	struct ifs_data *ifsd;
+> +	int to_start, to_stop;
+> +	int status_chunk;
+>  	u64 msrvals[2];
+>  	int retries;
 >  
->  #define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
->  #define META_TYPE_IFS	1
-> +#define INVALIDATE_STRIDE (0x1UL)
-
-Unnecessary parenthesis. 
-
-Align.
-
-> +#define IFS_GEN_STRIDE_AWARE	2
-> +#define AUTH_INTERRUPTED_ERROR	5
-> +#define IFS_AUTH_RETRY_CT	10
+> @@ -179,13 +181,21 @@ static void ifs_test_core(int cpu, struct device *dev)
+>  	activate.rsvd = 0;
+>  	activate.delay = IFS_THREAD_WAIT;
+>  	activate.sigmce = 0;
+> -	activate.start = 0;
+> -	activate.stop = ifsd->valid_chunks - 1;
+> +	to_start = 0;
+> +	to_stop = ifsd->valid_chunks - 1;
 > +
->  static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
->  static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
->  static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
-> @@ -44,7 +49,10 @@ static const char * const scan_hash_status[] = {
->  static const char * const scan_authentication_status[] = {
->  	[0] = "No error reported",
->  	[1] = "Attempt to authenticate a chunk which is already marked as authentic",
-> -	[2] = "Chunk authentication error. The hash of chunk did not match expected value"
-> +	[2] = "Chunk authentication error. The hash of chunk did not match expected value",
-> +	[3] = "Reserved",
-> +	[4] = "Chunk outside the current stride",
-> +	[5] = "Authentication flow interrupted"
-
-Add the trailing comma to avoid the need to touch the line later if more
-entries are added.
-
->  };
->  
->  #define MC_HEADER_META_TYPE_END		(0)
-> @@ -154,6 +162,104 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
->  	complete(&ifs_done);
->  }
->  
-> +static int get_num_chunks(int gen, union ifs_scan_hashes_status_gen2 status)
-> +{
-> +	return  gen >= IFS_GEN_STRIDE_AWARE ? status.chunks_in_stride : status.num_chunks;
-
-Remove extra space.
-
-> +}
-> +
-> +static bool need_copy_scan_hashes(struct ifs_data *ifsd)
-> +{
-> +	if (!ifsd->loaded || ifsd->generation < IFS_GEN_STRIDE_AWARE ||
-> +	    ifsd->loaded_version != ifs_header_ptr->rev) {
-> +		return true;
-> +	}
-> +	return false;
-
-IMO, this would be easier to read:
-
-	return !ifsd->loaded ||
-	       ifsd->generation < IFS_GEN_STRIDE_AWARE ||
-	       ifsd->loaded_version != ifs_header_ptr->rev;
-
-> +}
-> +
-> +static int copy_hashes_authenticate_chunks_gen2(struct device *dev)
-> +{
-> +	union ifs_scan_hashes_status_gen2 hashes_status;
-> +	union ifs_chunks_auth_status_gen2 chunk_status;
-> +	u32 err_code, valid_chunks, total_chunks;
-> +	int i, num_chunks, chunk_size;
-> +	union meta_data *ifs_meta;
-> +	int starting_chunk_nr;
-> +	struct ifs_data *ifsd;
-> +	u64 linear_addr, base;
-> +	u64 chunk_table[2];
-> +	int retry_count;
-> +
-> +	ifsd = ifs_get_data(dev);
-> +
-> +	if (need_copy_scan_hashes(ifsd)) {
-> +		wrmsrl(MSR_COPY_SCAN_HASHES, ifs_hash_ptr);
-> +		rdmsrl(MSR_SCAN_HASHES_STATUS, hashes_status.data);
-> +
-> +		/* enumerate the scan image information */
-> +		chunk_size = hashes_status.chunk_size * 1024;
-
-SZ_1K ?
-
-> +		err_code = hashes_status.error_code;
-> +
-> +		num_chunks = get_num_chunks(ifsd->generation, hashes_status);
-> +
-> +		if (!hashes_status.valid) {
-> +			hashcopy_err_message(dev, err_code);
-> +			return -EIO;
-> +		}
-> +		ifsd->loaded_version = ifs_header_ptr->rev;
-> +		ifsd->chunk_size = chunk_size;
+> +	if (ifsd->generation) {
+> +		activate.gen2.start = to_start;
+> +		activate.gen2.stop = to_stop;
 > +	} else {
-> +		num_chunks = ifsd->valid_chunks;
-> +		chunk_size = ifsd->chunk_size;
+> +		activate.start = to_start;
+> +		activate.stop = to_stop;
 > +	}
-> +
-> +	if (ifsd->generation >= IFS_GEN_STRIDE_AWARE) {
-> +		wrmsrl(MSR_SAF_CTRL, INVALIDATE_STRIDE);
-> +		rdmsrl(MSR_CHUNKS_AUTHENTICATION_STATUS, chunk_status.data);
-> +		if (chunk_status.valid_chunks != 0) {
-> +			dev_err(dev, "Couldn't invalidate installed stride - %d\n",
-> +				chunk_status.valid_chunks);
-> +			return -EIO;
-> +		}
-> +	}
-> +
-> +	base = ifs_test_image_ptr;
-> +	ifs_meta = (union meta_data *)find_meta_data(ifs_header_ptr, META_TYPE_IFS);
-> +	starting_chunk_nr = ifs_meta->starting_chunk;
-> +
-> +	/* scan data authentication and copy chunks to secured memory */
-> +	for (i = 0; i < num_chunks; i++) {
-> +		retry_count = IFS_AUTH_RETRY_CT;
-> +		linear_addr = base + i * chunk_size;
-> +
-> +		chunk_table[0] = starting_chunk_nr + i;
-> +		chunk_table[1] = linear_addr;
-> +auth_retry:
-> +		wrmsrl(MSR_AUTHENTICATE_AND_COPY_CHUNK, (u64)chunk_table);
-> +		rdmsrl(MSR_CHUNKS_AUTHENTICATION_STATUS, chunk_status.data);
-> +		err_code = chunk_status.error_code;
-> +		if (err_code == AUTH_INTERRUPTED_ERROR && --retry_count)
-> +			goto auth_retry;
-
-do {
-
-} while ();
-
-> +		if (err_code) {
-> +			ifsd->loading_error = true;
-> +			auth_err_message(dev, err_code);
-> +			return -EIO;
-> +		}
-> +	}
-> +
-> +	valid_chunks = chunk_status.valid_chunks;
-> +	total_chunks = chunk_status.total_chunks;
-> +
-> +	if (valid_chunks != total_chunks) {
-> +		ifsd->loading_error = true;
-> +		dev_err(dev, "Couldn't authenticate all the chunks.Authenticated %d total %d.\n",
-
-Missing whitespace.
-
-> +			valid_chunks, total_chunks);
-> +		return -EIO;
-> +	}
-> +	ifsd->valid_chunks = valid_chunks;
-> +
-> +	return 0;
-> +}
-> +
->  static int validate_ifs_metadata(struct device *dev)
->  {
->  	struct ifs_data *ifsd = ifs_get_data(dev);
-> @@ -206,7 +312,9 @@ static int scan_chunks_sanity_check(struct device *dev)
->  		return ret;
 >  
->  	ifsd->loading_error = false;
-> -	ifsd->loaded_version = ifs_header_ptr->rev;
-> +
-> +	if (ifsd->generation > 0)
-> +		return copy_hashes_authenticate_chunks_gen2(dev);
+>  	timeout = jiffies + HZ / 2;
+>  	retries = MAX_IFS_RETRIES;
 >  
->  	/* copy the scan hash and authenticate per package */
->  	cpus_read_lock();
-> @@ -226,6 +334,7 @@ static int scan_chunks_sanity_check(struct device *dev)
->  		ifs_pkg_auth[curr_pkg] = 1;
+> -	while (activate.start <= activate.stop) {
+> +	while (to_start <= to_stop) {
+>  		if (time_after(jiffies, timeout)) {
+>  			status.error_code = IFS_SW_TIMEOUT;
+>  			break;
+> @@ -202,7 +212,8 @@ static void ifs_test_core(int cpu, struct device *dev)
+>  		if (!can_restart(status))
+>  			break;
+>  
+> -		if (status.chunk_num == activate.start) {
+> +		status_chunk = ifsd->generation ? status.gen2.chunk_num : status.chunk_num;
+> +		if (status_chunk == to_start) {
+>  			/* Check for forward progress */
+>  			if (--retries == 0) {
+>  				if (status.error_code == IFS_NO_ERROR)
+> @@ -211,7 +222,9 @@ static void ifs_test_core(int cpu, struct device *dev)
+>  			}
+>  		} else {
+>  			retries = MAX_IFS_RETRIES;
+> -			activate.start = status.chunk_num;
+> +			ifsd->generation ? (activate.gen2.start = status_chunk) :
+> +			 (activate.start = status_chunk);
+
+Misaligned.
+
+> +			to_start = status_chunk;
+>  		}
 >  	}
->  	ret = 0;
-> +	ifsd->loaded_version = ifs_header_ptr->rev;
->  out:
->  	cpus_read_unlock();
 >  
 > 
 
