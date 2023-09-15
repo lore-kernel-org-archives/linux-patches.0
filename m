@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F201D1B29A
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971531BDC1
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=yV0EfbURKJh4PDYaNYUDtuXfuSlOqQYcsl+NeN4c8pU=; b=LXYofCU61UT766npBrb7d4bqPz
-	I8maRneOkt/otlO6AmfY3gCmoxvXu+qP88lIcpICnNwKOVhF0uPVrLBxoRdTfghz+apCgLs3Em1Bi
-	EBDweNYcg6qZW98TkDkbtz4pz0Yee6Gec+a9mzOB480fC/vME2k7TqfvWSuLtmpm+IvrW9Ru1LcXM
-	DRlcbHbLchQM7mhA0g2ZWfn+46YQ3tK8mAfsYYLq6Q/Min/o1D6XsLBbY2YfsTB29+S4tR0Ojkor5
-	zJyWDdA367BmuJ1kAH3JTyp7nBwpF8Mnbax0PT+6B22hutkF7ShUPUfVOs3AaPpMIJSKXVk/G7rfk
-	dhYE93fw==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=ywg9faqG2BCnT1wKSQTUuxdInS3gshCAShEIiU6RHjQ=; b=qZS2ofRnqhN2ypoQAYEMnwcIRF
+	HZUE+++FdwsDen9M6IhyoAQ+Y7IzzG+N6V5wdQXwdMhZwhUZOOOkXUyJn5dH5RZELYsDhvqfIyCnA
+	ZjYUrf9zEzLClRiJF4F8RlTgboxEj7+SeYzajsKRRaiu9LdY0ic7q1ZAKdUj1flkfYBD5mf2ru396
+	o6BEKaGXoMw51wobZ87Zc80mRgP73fRjgEVpPf3KoqmioNBUm5UeaqAtE4ddC30ZIYqkwxU6RlDOC
+	28YjopC1+/y6tkHKPQpwssGCKPPuBy05mqO5WZzTekd+HM/K74fIDkiSrHBRW+fDUWOH85cjqgyBi
+	gUde0Spg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhGQq-00BQn6-0A;
+	id 1qhGQq-00BQnS-0y;
 	Fri, 15 Sep 2023 21:32:56 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -39,10 +39,12 @@ Cc: willy@infradead.org,
 	da.gomez@samsung.com,
 	dan.helmick@samsung.com,
 	mcgrof@kernel.org
-Subject: [RFC v2 00/10] bdev: LBS devices support to coexist with buffer-heads
-Date: Fri, 15 Sep 2023 14:32:44 -0700
-Message-Id: <20230915213254.2724586-1-mcgrof@kernel.org>
+Subject: [RFC v2 05/10] bdev: allow to switch between bdev aops
+Date: Fri, 15 Sep 2023 14:32:49 -0700
+Message-Id: <20230915213254.2724586-6-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
+References: <20230915213254.2724586-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,145 +54,137 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Christoph added CONFIG_BUFFER_HEAD on v6.1 enabling a world where we can
-live without buffer-heads. When we opt into that world we end up also
-using the address space operations of the block device cache using
-iomap. Since iomap supports higher order folios it means then that block
-devices which do use the iomap aops can end up having a logical block
-size or physical block size greater than PAGE_SIZE. We refer to these as
-LBS devices. This in turn allows filesystems which support bs > 4k to be
-enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
-device then to take advantage of the recenlty posted work today to enable
-LBS support for filesystems [0].
+Now that we have annotations for filesystems which require buffer-heads we
+can use that flag to verify if we can use the filesystem on the target
+block devices which require higher order folios. A filesystems which requires
+buffer-heads cannot be used on block devices which have a logical block size
+greater than PAGE_SIZE. We also want to allow to use buffer-head filesystems
+on block devices and at a later time then unmount and switch to a filesystem
+which supports bs > PAGE_SIZE, even if the logical block size of the block
+device is PAGE_SIZE, and this requires iomap. Provide helpers to do all these
+checks and resets the aops to iomap when needed.
 
-However, an issue is that disabling CONFIG_BUFFER_HEAD in practice is not viable
-for many Linux distributions since it also means disabling support for most
-filesystems other than btrfs and XFS. So we either support larger order folios
-on buffer-heads, or we draw up a solution to enable co-existence. Since at LSFMM
-2023 it was decided we would not support larger order folios on buffer-heads,
-this takes the approach to help support co-existence between using buffer-head
-based filesystems and using the iomap aops dynamically when needed on block
-devices. Folks who want to enhance buffer-heads to support larger order folios
-can do so in parallel to this effort. This just allows iomap based filesystems
-to support LBS block devices today while also allowing buffer-head based
-filesystems to be used on them as well the LBS device also supports a
-logical block of PAGE_SIZE.
+Leaving iomap in place after an umount would not make such block devices usable
+for buffer-head filesystems so we must reset the aops to buffer-heads also
+on unmount.
 
-LBS devices can come in a few flavors. Adopting larger LBA format enables a
-logical block sizes to be > 4k. Different block device mechanisms which can also
-increase a block device's physical block size to be larger than 4k while still
-retaining backward compatibility with a logical block size of 4k. An example is
-NVMe drives with an LBA format of 4k and an npwg and awupf | nawupf of 16k. With
-this you a logical block size of 4k and a physical block size of 16k. Drives
-which do this may be a reality as larger Indirection Units (IUs) on QLC adopt
-IUs larger than 4k so to better support larger capacity. At least OCP 2.0 does
-require you to expose the IU through npwg. Whether or not a device supports the
-same value for awupf | nawupf (large atomic) is device specific. Devices which
-*do* sport an LBA format of 4k and npwg & awupf | nawupf >= 16k essentially can
-benefit from LBS support such as with XFS [1].
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ block/bdev.c           | 55 ++++++++++++++++++++++++++++++++++++++++++
+ fs/super.c             |  3 ++-
+ include/linux/blkdev.h |  7 ++++++
+ 3 files changed, 64 insertions(+), 1 deletion(-)
 
-While LBS devices come to market folks can also experiment with NVMe today
-what some of this might be like by ignoring power failure and faking the larger
-atomic up to the NVMe awun. When the NVMe awun is 0xffff it means awun is
-MDTS, so for those drives, in practice you can experiment today with LBS
-up to MDTS with real drives. This is documented on the kdevops documentation
-for LBS by using something like nvme_core.debug_large_atomics=16384 [2].
-
-To experiment with larger LBA formtas you can also use kdevops and enable
-CONFIG_QEMU_ENABLE_EXTRA_DRIVE_LARGEIO. That enables a ton of drives with
-logical and physical block sizes >= 4k up to a desriable max target for
-experimentation. Since filesystems today only support up to 32k sector sizes,
-in practice you may only want to experiment up to 32k physical / logical.
-
-Support for 64k sector sizes requires an XFS format change, which is something
-Daniel Gomez has experimental patches for, in case folks are interested in
-messing with.
-
-Patch 6 could probably be squashed with patch 5, but I wanted to be
-explicit about this, as this should be decided with the community.
-
-There might be a better way to do this than do deal with the switching
-of the aops dynamically, ideas welcomed!
-
-The NVMe debug patches are posted for pure experimentation purposes, but
-the AWUN patch might be welcomed upsteram. Unless folks really want it,
-the goal here is *not* to upstream the support for the debug module
-parameter nvme_core.debug_large_atomics=16384. On a v3 RFC I can drop those
-patches and just aim to simplify the logic to support LBA formats > ps.
-
-Changes since v1 RFC:
-
-  o Modified the approach to accept we can have different aops per super block
-    on the block device cache as suggested by Christoph
-  o Try to allow dynamically switching between iomap aops and buffer-head aops
-  o Use the iomap aops if the target block size order or min order > ps
-  o Loosten restrictions on set_blocksize() so to just check for the iomap
-    aops for now, making it easy to allow buffer-heads to later add support
-    for bs > ps as well
-  o Use buffer-head aops first always unless the min order is > ps so to always
-    support buffer-head based filesystems
-  o Adopt a flag for buffer-heads so to check for support, buffer-heads based
-    filesystems cannot be used while an LBS filesystem is being used, for
-    instance
-  o Allow iomap aops to be used when the physical block size is > ps as well
-  o NVMe changes to experiment with LBS devices without power failure
-  o NVMe changes to support LBS devices
-
-[0] https://lkml.kernel.org/r/20230608032404.1887046-1-mcgrof@kernel.org
-[1] https://lkml.kernel.org/r/20230915183848.1018717-1-kernel@pankajraghav.com
-[2] https://github.com/linux-kdevops/kdevops/blob/master/docs/lbs.md
-
-Luis Chamberlain (10):
-  bdev: rename iomap aops
-  bdev: dynamically set aops to enable LBS support
-  bdev: increase bdev max blocksize depending on the aops used
-  filesystems: add filesytem buffer-head flag
-  bdev: allow to switch between bdev aops
-  bdev: simplify coexistance
-  nvme: enhance max supported LBA format check
-  nvme: add awun / nawun sanity check
-  nvme: add nvme_core.debug_large_atomics to force high awun as phys_bs
-  nvme: enable LBS support
-
- block/bdev.c             | 73 ++++++++++++++++++++++++++++++++++++++--
- block/blk.h              |  1 +
- block/fops.c             | 14 ++++----
- drivers/nvme/host/core.c | 70 +++++++++++++++++++++++++++++++++++---
- drivers/nvme/host/nvme.h |  1 +
- fs/adfs/super.c          |  2 +-
- fs/affs/super.c          |  2 +-
- fs/befs/linuxvfs.c       |  2 +-
- fs/bfs/inode.c           |  2 +-
- fs/efs/super.c           |  2 +-
- fs/exfat/super.c         |  2 +-
- fs/ext2/super.c          |  2 +-
- fs/ext4/super.c          |  7 ++--
- fs/f2fs/super.c          |  2 +-
- fs/fat/namei_msdos.c     |  2 +-
- fs/fat/namei_vfat.c      |  2 +-
- fs/freevxfs/vxfs_super.c |  2 +-
- fs/gfs2/ops_fstype.c     |  4 +--
- fs/hfs/super.c           |  2 +-
- fs/hfsplus/super.c       |  2 +-
- fs/isofs/inode.c         |  2 +-
- fs/jfs/super.c           |  2 +-
- fs/minix/inode.c         |  2 +-
- fs/nilfs2/super.c        |  2 +-
- fs/ntfs/super.c          |  2 +-
- fs/ntfs3/super.c         |  2 +-
- fs/ocfs2/super.c         |  2 +-
- fs/omfs/inode.c          |  2 +-
- fs/qnx4/inode.c          |  2 +-
- fs/qnx6/inode.c          |  2 +-
- fs/reiserfs/super.c      |  2 +-
- fs/super.c               |  3 +-
- fs/sysv/super.c          |  4 +--
- fs/udf/super.c           |  2 +-
- fs/ufs/super.c           |  2 +-
- include/linux/blkdev.h   |  7 ++++
- include/linux/fs.h       |  1 +
- 37 files changed, 189 insertions(+), 48 deletions(-)
-
+diff --git a/block/bdev.c b/block/bdev.c
+index 0d685270cd34..bf3cfc02aaf9 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -150,6 +150,59 @@ static int bdev_bsize_limit(struct block_device *bdev)
+ 	return PAGE_SIZE;
+ }
+ 
++#ifdef CONFIG_BUFFER_HEAD
++static void bdev_aops_set(struct block_device *bdev,
++			  const struct address_space_operations *aops)
++{
++	kill_bdev(bdev);
++	bdev->bd_inode->i_data.a_ops = aops;
++}
++
++static void bdev_aops_sync(struct super_block *sb, struct block_device *bdev,
++			   const struct address_space_operations *aops)
++{
++	sync_blockdev(bdev);
++	bdev_aops_set(bdev, aops);
++	kill_bdev(bdev);
++	bdev->bd_inode->i_data.a_ops = aops;
++}
++
++void bdev_aops_reset(struct block_device *bdev)
++{
++	bdev_aops_set(bdev, &def_blk_aops);
++}
++
++static int sb_bdev_aops_set(struct super_block *sb)
++{
++	struct block_device *bdev = sb->s_bdev;
++
++	if (mapping_min_folio_order(bdev->bd_inode->i_mapping) != 0 &&
++	    sb->s_type->fs_flags & FS_BUFFER_HEADS) {
++			pr_warn_ratelimited(
++"block device logical block size > PAGE_SIZE, buffer-head filesystem cannot be used.\n");
++		return -EINVAL;
++	}
++
++	/*
++	 * We can switch back and forth, but we need to use buffer-heads
++	 * first, otherwise a filesystem created which only uses iomap
++	 * will have it sticky and we can't detect buffer-head filesystems
++	 * on mount.
++	 */
++	bdev_aops_sync(sb, bdev, &def_blk_aops);
++	if (sb->s_type->fs_flags & FS_BUFFER_HEADS)
++		return 0;
++
++	bdev_aops_sync(sb, bdev, &def_blk_aops_iomap);
++	return 0;
++}
++#else
++static int sb_bdev_aops_set(struct super_block *sb)
++{
++	return 0;
++}
++#endif
++
+ int set_blocksize(struct block_device *bdev, int size)
+ {
+ 	/* Size must be a power of two, and between 512 and supported order */
+@@ -173,6 +226,8 @@ EXPORT_SYMBOL(set_blocksize);
+ 
+ int sb_set_blocksize(struct super_block *sb, int size)
+ {
++	if (sb_bdev_aops_set(sb))
++		return 0;
+ 	if (set_blocksize(sb->s_bdev, size))
+ 		return 0;
+ 	/* If we get here, we know size is power of two
+diff --git a/fs/super.c b/fs/super.c
+index 816a22a5cad1..eb269c9489cb 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -1649,12 +1649,13 @@ void kill_block_super(struct super_block *sb)
+ 	generic_shutdown_super(sb);
+ 	if (bdev) {
+ 		sync_blockdev(bdev);
++		bdev_aops_reset(bdev);
+ 		blkdev_put(bdev, sb);
+ 	}
+ }
+ 
+ EXPORT_SYMBOL(kill_block_super);
+-#endif
++#endif /* CONFIG_BLOCK */
+ 
+ struct dentry *mount_nodev(struct file_system_type *fs_type,
+ 	int flags, void *data,
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index eef450f25982..738a879a0786 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1503,6 +1503,13 @@ void sync_bdevs(bool wait);
+ void bdev_statx_dioalign(struct inode *inode, struct kstat *stat);
+ void printk_all_partitions(void);
+ int __init early_lookup_bdev(const char *pathname, dev_t *dev);
++#ifdef CONFIG_BUFFER_HEAD
++void bdev_aops_reset(struct block_device *bdev);
++#else
++static inline void bdev_aops_reset(struct block_device *bdev)
++{
++}
++#endif
+ #else
+ static inline void invalidate_bdev(struct block_device *bdev)
+ {
 -- 
 2.39.2
 
