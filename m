@@ -1,172 +1,130 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414AF30CE9
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 14:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B787811CB1
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 16:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694789474; x=1726325474;
+  t=1694794967; x=1726330967;
   h=date:from:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=ZhU/YBjNOOPe5s3iZG0OgiJEfBTYLPIc8dia6attIks=;
-  b=Oj8SeQ1p3D5QjbJv8HZ9bS0r7JYrbfemlfQxR9njDaqUMVI/aK4J+rvv
-   4ag/mTD9wvpD1Go8owcaiXuB4vFtH2p1DdPJCVW4ZuUQDwBDoeJ9BE7RA
-   D0ZHU9Iyk0KLwNR7siHXM0dptncWKm171lNhkXUlNGPXDCcKn71p4RYAm
-   IcXn5I/N64ud+Om1YvtQAp3Ohl9Sbd6vBkEgIxDG1CsxHL0aYcJjwJHHk
-   WuQFO5L5BsQ1xEA7Duknd5ba9wBml/oNtQWYimYYP5j7aQp7dloUQ2UmO
-   bI6j+SwTkk+V5ofe1QDHOcigleSaU1/qxVmbYFusve09SOlORr8XBrspV
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="443326474"
+  bh=gZr9jiChR+PI/11CHpgMrz1spTSHcnF3wv8jDHSpulI=;
+  b=ITi63aVg4C7WDxIpV7PX7EENe6+PJyq0qRUYiw44GUXhtPA6RBibS7Fn
+   uP/eo8yFGuNcVcdJUad8m4NflTbyMLFRfbdNhUK+EJnK9GoXL2qGGEbZ5
+   Lwry5ODgHrhja2XwDMiu8/NSbH2YJSYNdq+JkWUR1WsvR8nOVJSNc95RG
+   VWi1VR+B8TGbL7+GsnfIAJtOJbPBUPVVTkTnGvlAMKsxFscjNiCToUnOf
+   xNxl8SogTQ2kPBerkZh8m54T0CVRGAiViNARPTB0D1J7c4XoiC4kLACHw
+   2bMwAZWmnYHLbDpxow3g7TdyasIDCiM/f7b6q6WRcj8KhMVruV/2ae9S1
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="465647689"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="443326474"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 07:49:58 -0700
+   d="scan'208";a="465647689"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:22:46 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="860181871"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="888277863"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="860181871"
+   d="scan'208";a="888277863"
 Received: from srdoo-mobl1.ger.corp.intel.com ([10.252.38.99])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 07:49:55 -0700
-Date: Fri, 15 Sep 2023 17:49:53 +0300 (EEST)
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:22:07 -0700
+Date: Fri, 15 Sep 2023 19:22:40 +0300 (EEST)
 From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-cc: Mika Westerberg <mika.westerberg@linux.intel.com>, 
-    Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
-    LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-    platform-driver-x86@vger.kernel.org, 
-    Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-    Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-    Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v4 4/4] platform/x86: intel_scu_ipc: Fail IPC send if
- still busy
-In-Reply-To: <20230913212723.3055315-5-swboyd@chromium.org>
-Message-ID: <3e17994a-9481-acc5-dfac-3878929b7038@linux.intel.com>
-References: <20230913212723.3055315-1-swboyd@chromium.org> <20230913212723.3055315-5-swboyd@chromium.org>
+To: Jithu Joseph <jithu.joseph@intel.com>
+cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de, 
+    mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, 
+    x86@kernel.org, hpa@zytor.com, rostedt@goodmis.org, ashok.raj@intel.com, 
+    tony.luck@intel.com, linux-kernel@vger.kernel.org, 
+    platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
+    ravi.v.shankar@intel.com, pengfei.xu@intel.com
+Subject: Re: [PATCH 01/10] platform/x86/intel/ifs: Store IFS generation
+ number
+In-Reply-To: <20230913183348.1349409-2-jithu.joseph@intel.com>
+Message-ID: <e7f8136d-d07a-1668-2667-d2836c7112a@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-2-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-496999276-1694789398=:2347"
+Content-Type: text/plain; charset=US-ASCII
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, 13 Sep 2023, Jithu Joseph wrote:
 
---8323329-496999276-1694789398=:2347
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+> IFS generation number is reported via MSR_INTEGRITY_CAPS.
 
-On Wed, 13 Sep 2023, Stephen Boyd wrote:
+Please use more characters per line, the limit is 72 characters.
 
-> It's possible for interrupts to get significantly delayed to the point
-> that callers of intel_scu_ipc_dev_command() and friends can call the
-> function once, hit a timeout, and call it again while the interrupt
-> still hasn't been processed. This driver will get seriously confused if
-> the interrupt is finally processed after the second IPC has been sent
-> with ipc_command(). It won't know which IPC has been completed. This
-> could be quite disastrous if calling code assumes something has happened
-> upon return from intel_scu_ipc_dev_simple_command() when it actually
-> hasn't.
+> As IFS support gets added to newer CPUs, some differences
+> are expected during IFS image loading and test flows.
 > 
-> Let's avoid this scenario by simply returning -EBUSY in this case.
-> Hopefully higher layers will know to back off or fail gracefully when
-> this happens. It's all highly unlikely anyway, but it's better to be
-> correct here as we have no way to know which IPC the status register is
-> telling us about if we send a second IPC while the previous IPC is still
-> processing.
+> Define MSR bitmasks to extract and store the generation in
+> driver data, so that driver can modify its MSR interaction
+> appropriately.
 > 
-> Cc: Prashant Malani <pmalani@chromium.org>
-> Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-> Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+> ---
+>  arch/x86/include/asm/msr-index.h      | 2 ++
+>  drivers/platform/x86/intel/ifs/ifs.h  | 2 ++
+>  drivers/platform/x86/intel/ifs/core.c | 2 ++
+>  3 files changed, 6 insertions(+)
+> 
+> diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+> index 1d111350197f..a71a86a01488 100644
+> --- a/arch/x86/include/asm/msr-index.h
+> +++ b/arch/x86/include/asm/msr-index.h
+> @@ -222,6 +222,8 @@
+>  #define MSR_INTEGRITY_CAPS_ARRAY_BIST          BIT(MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT)
+>  #define MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT	4
+>  #define MSR_INTEGRITY_CAPS_PERIODIC_BIST	BIT(MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT)
+> +#define MSR_INTEGRITY_CAPS_SAF_GEN_REV_SHIFT	9
+> +#define MSR_INTEGRITY_CAPS_SAF_GEN_REV_MASK	(0x3ull << MSR_INTEGRITY_CAPS_SAF_GEN_REV_SHIFT)
 
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+GENMASK_ULL(), don't add _SHIFT at all as FIELD_GET/PREP() will handle 
+it for you.
+
+>  #define MSR_LBR_NHM_FROM		0x00000680
+>  #define MSR_LBR_NHM_TO			0x000006c0
+> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+> index 93191855890f..d666aeed20fc 100644
+> --- a/drivers/platform/x86/intel/ifs/ifs.h
+> +++ b/drivers/platform/x86/intel/ifs/ifs.h
+> @@ -229,6 +229,7 @@ struct ifs_test_caps {
+>   * @status: it holds simple status pass/fail/untested
+>   * @scan_details: opaque scan status code from h/w
+>   * @cur_batch: number indicating the currently loaded test file
+> + * @generation: IFS test generation enumerated by hardware
+>   */
+>  struct ifs_data {
+>  	int	loaded_version;
+> @@ -238,6 +239,7 @@ struct ifs_data {
+>  	int	status;
+>  	u64	scan_details;
+>  	u32	cur_batch;
+> +	u32	generation;
+>  };
+>  
+>  struct ifs_work {
+> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+> index 306f886b52d2..88d84aad9334 100644
+> --- a/drivers/platform/x86/intel/ifs/core.c
+> +++ b/drivers/platform/x86/intel/ifs/core.c
+> @@ -94,6 +94,8 @@ static int __init ifs_init(void)
+>  	for (i = 0; i < IFS_NUMTESTS; i++) {
+>  		if (!(msrval & BIT(ifs_devices[i].test_caps->integrity_cap_bit)))
+>  			continue;
+> +		ifs_devices[i].rw_data.generation = (msrval & MSR_INTEGRITY_CAPS_SAF_GEN_REV_MASK)
+> +							>> MSR_INTEGRITY_CAPS_SAF_GEN_REV_SHIFT;
+
+FIELD_GET(), don't forget to make sure use have the include for it.
+
+>  		ret = misc_register(&ifs_devices[i].misc);
+>  		if (ret)
+>  			goto err_exit;
+> 
 
 -- 
  i.
 
-> ---
->  drivers/platform/x86/intel_scu_ipc.c | 40 +++++++++++++++++++---------
->  1 file changed, 28 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-> index 3271f81a9c00..a68df4133403 100644
-> --- a/drivers/platform/x86/intel_scu_ipc.c
-> +++ b/drivers/platform/x86/intel_scu_ipc.c
-> @@ -265,6 +265,24 @@ static int intel_scu_ipc_check_status(struct intel_scu_ipc_dev *scu)
->  	return scu->irq > 0 ? ipc_wait_for_interrupt(scu) : busy_loop(scu);
->  }
->  
-> +static struct intel_scu_ipc_dev *intel_scu_ipc_get(struct intel_scu_ipc_dev *scu)
-> +{
-> +	u8 status;
-> +
-> +	if (!scu)
-> +		scu = ipcdev;
-> +	if (!scu)
-> +		return ERR_PTR(-ENODEV);
-> +
-> +	status = ipc_read_status(scu);
-> +	if (status & IPC_STATUS_BUSY) {
-> +		dev_dbg(&scu->dev, "device is busy\n");
-> +		return ERR_PTR(-EBUSY);
-> +	}
-> +
-> +	return scu;
-> +}
-> +
->  /* Read/Write power control(PMIC in Langwell, MSIC in PenWell) registers */
->  static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
->  			u32 count, u32 op, u32 id)
-> @@ -278,11 +296,10 @@ static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
->  	memset(cbuf, 0, sizeof(cbuf));
->  
->  	mutex_lock(&ipclock);
-> -	if (!scu)
-> -		scu = ipcdev;
-> -	if (!scu) {
-> +	scu = intel_scu_ipc_get(scu);
-> +	if (IS_ERR(scu)) {
->  		mutex_unlock(&ipclock);
-> -		return -ENODEV;
-> +		return PTR_ERR(scu);
->  	}
->  
->  	for (nc = 0; nc < count; nc++, offset += 2) {
-> @@ -437,12 +454,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
->  	int err;
->  
->  	mutex_lock(&ipclock);
-> -	if (!scu)
-> -		scu = ipcdev;
-> -	if (!scu) {
-> +	scu = intel_scu_ipc_get(scu);
-> +	if (IS_ERR(scu)) {
->  		mutex_unlock(&ipclock);
-> -		return -ENODEV;
-> +		return PTR_ERR(scu);
->  	}
-> +
->  	cmdval = sub << 12 | cmd;
->  	ipc_command(scu, cmdval);
->  	err = intel_scu_ipc_check_status(scu);
-> @@ -482,11 +499,10 @@ int intel_scu_ipc_dev_command_with_size(struct intel_scu_ipc_dev *scu, int cmd,
->  		return -EINVAL;
->  
->  	mutex_lock(&ipclock);
-> -	if (!scu)
-> -		scu = ipcdev;
-> -	if (!scu) {
-> +	scu = intel_scu_ipc_get(scu);
-> +	if (IS_ERR(scu)) {
->  		mutex_unlock(&ipclock);
-> -		return -ENODEV;
-> +		return PTR_ERR(scu);
->  	}
->  
->  	memcpy(inbuf, in, inlen);
-> 
---8323329-496999276-1694789398=:2347--
