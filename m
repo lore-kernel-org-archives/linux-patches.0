@@ -1,143 +1,114 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F352C8485
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 13:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F198510964
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 13:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694785341; x=1726321341;
+  t=1694785751; x=1726321751;
   h=date:from:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=MNuTddJauiPRkBx+ucRB3S+YwwDAcFs5oVQUJiHydRY=;
-  b=UV2DNlQWVtSuE31lqoKycRFSpD/LUNjd2BMzq+KptwWF4uwvfFhvNINE
-   nNouIxmSGZQXkOMBGjoiJMd5khYSLrCHFUBSyp1eNSAKgawFGiteHSVwj
-   D19YYDKd9TTuk1jsu1UjOfzarE7HFzEFg7fPz5d60n/5iuN2ci2i57eIW
-   M7wBwVQws0MwQZoD8gvtWvYFprJPWMeeKrvKJABGjKWXyMp4k+eLr7MNt
-   b816572vLeC1kuCuOZIwWf2NEEATiMiYZupwljCe7cH3CsV9Aig9+pY4l
-   4/aO5WRaRqe71R2vIVnn3sRxBSsyMrB0ERIwiIbkJHaJ1PbqMK9fN9Z0O
+  bh=4IcYhwjz5QUsOTeYLbkK5pEmiuhen3zjH9p2Ck1k6DY=;
+  b=cEpY9tcgvPE8tXZrVrT97w6qShJrqoLbENFd7f8D7SBH8lrw0dLztWPM
+   a45vyU5raUZ7ykRaanz1w7ib7jy4vSfUTBa9Ijq7CT6j52TjbQG59YmVh
+   Q3bz4g7Slvt6Gg4kfqmSzHtnK7J0n6lI/jkaLTELCB/ugLD+MChkgrRhX
+   xtpk+H1LT8sk5dueUdHXlEetgpBXltRU3fd5+J0r1gez7K8zsygK0R4jz
+   yjZcuyGTewIenxusITSGm21X42DgQ30C23btlHewWWO+vPm7YYfyYBFBp
+   7iqWhNxPCrYfVsvAF/sZ5zIAemAecIo92SMxDj/3wO1WvMt3iftosfChW
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="381978247"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="465613857"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="381978247"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:42:21 -0700
+   d="scan'208";a="465613857"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:49:09 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="744988928"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="694726004"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="744988928"
+   d="scan'208";a="694726004"
 Received: from srdoo-mobl1.ger.corp.intel.com ([10.252.38.99])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:42:18 -0700
-Date: Fri, 15 Sep 2023 16:42:16 +0300 (EEST)
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:49:06 -0700
+Date: Fri, 15 Sep 2023 16:49:04 +0300 (EEST)
 From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
 To: Stephen Boyd <swboyd@chromium.org>
 cc: Mika Westerberg <mika.westerberg@linux.intel.com>, 
     Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
-    linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+    LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
     platform-driver-x86@vger.kernel.org, 
     Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
     Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
     Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v4 1/4] platform/x86: intel_scu_ipc: Check status after
- timeout in busy_loop()
-In-Reply-To: <20230913212723.3055315-2-swboyd@chromium.org>
-Message-ID: <b567a98b-8d4f-d0e4-145e-462a1edd5116@linux.intel.com>
-References: <20230913212723.3055315-1-swboyd@chromium.org> <20230913212723.3055315-2-swboyd@chromium.org>
+Subject: Re: [PATCH v4 2/4] platform/x86: intel_scu_ipc: Check status upon
+ timeout in ipc_wait_for_interrupt()
+In-Reply-To: <20230913212723.3055315-3-swboyd@chromium.org>
+Message-ID: <2bd9b7e2-a558-305b-bfd9-e64c28b6303d@linux.intel.com>
+References: <20230913212723.3055315-1-swboyd@chromium.org> <20230913212723.3055315-3-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-2022163745-1694785340=:2347"
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-2022163745-1694785340=:2347
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
 
 On Wed, 13 Sep 2023, Stephen Boyd wrote:
 
-> It's possible for the polling loop in busy_loop() to get scheduled away
-> for a long time.
+> It's possible for the completion in ipc_wait_for_interrupt() to timeout,
+> simply because the interrupt was delayed in being processed. A timeout
+> in itself is not an error. This driver should check the status register
+> upon a timeout to ensure that scheduling or interrupt processing delays
+> don't affect the outcome of the IPC return value.
 > 
->   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
->   <long time scheduled away>
->   if (!(status & IPC_STATUS_BUSY))
+>  CPU0                                                   SCU
+>  ----                                                   ---
+>  ipc_wait_for_interrupt()
+>   wait_for_completion_timeout(&scu->cmd_complete)
+>   [TIMEOUT]                                             status[IPC_STATUS_BUSY]=0
 > 
-> If this happens, then the status bit could change while the task is
-> scheduled away and this function would never read the status again after
-> timing out. Instead, the function will return -ETIMEDOUT when it's
-> possible that scheduling didn't work out and the status bit was cleared.
-> Bit polling code should always check the bit being polled one more time
-> after the timeout in case this happens.
-> 
-> Fix this by reading the status once more after the while loop breaks.
-> The readl_poll_timeout() macro implements all of this, and it is
-> shorter, so use that macro here to consolidate code and fix this.
-> 
-> There were some concerns with using readl_poll_timeout() because it uses
-> timekeeping, and timekeeping isn't running early on or during the late
-> stages of system suspend or early stages of system resume, but an audit
-> of the code concluded that this code isn't called during those times so
-> it is safe to use the macro.
-> 
-> Cc: Prashant Malani <pmalani@chromium.org>
-> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-> Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Fix this problem by reading the status bit in all cases, regardless of
+> the timeout. If the completion times out, we'll assume the problem was
+> that the IPC_STATUS_BUSY bit was still set, but if the status bit is
+> cleared in the meantime we know that we hit some scheduling delay and we
+> should just check the error bit.
 
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Hi,
+
+I don't understand the intent here. What prevents IPC_STATUS_BUSY from 
+changing right after you've read it in ipc_read_status(scu)? Doesn't that 
+end you exactly into the same situation where the returned value is stale 
+so I cannot see how this fixes anything, at best it just plays around the 
+race window that seems to still be there after this fix?
 
 -- 
  i.
 
 
+> Cc: Prashant Malani <pmalani@chromium.org>
+> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+> Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
->  1 file changed, 8 insertions(+), 11 deletions(-)
+>  drivers/platform/x86/intel_scu_ipc.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
 > diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-> index 6851d10d6582..4c774ee8bb1b 100644
+> index 4c774ee8bb1b..299c15312acb 100644
 > --- a/drivers/platform/x86/intel_scu_ipc.c
 > +++ b/drivers/platform/x86/intel_scu_ipc.c
-> @@ -19,6 +19,7 @@
->  #include <linux/init.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
-> +#include <linux/iopoll.h>
->  #include <linux/module.h>
->  #include <linux/slab.h>
->  
-> @@ -231,19 +232,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
->  /* Wait till scu status is busy */
->  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+> @@ -248,10 +248,12 @@ static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
 >  {
-> -	unsigned long end = jiffies + IPC_TIMEOUT;
-> +	u8 status;
-> +	int err;
+>  	int status;
 >  
-> -	do {
-> -		u32 status;
-> +	err = readx_poll_timeout(ipc_read_status, scu, status, !(status & IPC_STATUS_BUSY),
-> +				 100, jiffies_to_usecs(IPC_TIMEOUT));
-> +	if (err)
-> +		return err;
+> -	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
+> -		return -ETIMEDOUT;
+> +	wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT);
 >  
-> -		status = ipc_read_status(scu);
-> -		if (!(status & IPC_STATUS_BUSY))
-> -			return (status & IPC_STATUS_ERR) ? -EIO : 0;
-> -
-> -		usleep_range(50, 100);
-> -	} while (time_before(jiffies, end));
-> -
-> -	return -ETIMEDOUT;
-> +	return (status & IPC_STATUS_ERR) ? -EIO : 0;
->  }
+>  	status = ipc_read_status(scu);
+> +	if (status & IPC_STATUS_BUSY)
+> +		return -ETIMEDOUT;
+> +
+>  	if (status & IPC_STATUS_ERR)
+>  		return -EIO;
 >  
->  /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
 > 
---8323329-2022163745-1694785340=:2347--
