@@ -1,62 +1,95 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D01D11CAA
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 22:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A86FB0
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 22:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=8LC9ABYMtvMooE79NbP16TEYzDeGtu70GqKcQJq0kq8=; b=yvjb2o6tPz1MXMBAeSj5x0aIeX
-	cSyGmvEkgi9faScHYHoY7w2yGKAMnNLOrG7feAdQ0cZfW75y5sLVzItObHcbaA/wCbNeC7u9i7Vb3
-	qVDqisy5tG+YMgMDi1CyH/XCPBPSVguSQJ7wZMp+4qsQK42Uf4LLP+6hCaYjmZLJMqDi3EhMjv/0N
-	7T0Bk4kV6enU9TwwKEPuV/91RFgY2hBsV/hsFaqrU1Vmv3k179SqOkLfZj/J2KvTIygP9k3HJBb5i
-	9iBIo7uUEM24yU59PUtlrUf3IHvGSg+AbdAG4MWXzCNGJN9bvnComXGA1VWmb50RdGbAqA9KuFJu1
-	iudWUlVQ==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=q5kC8lKXTQQVIY9YNTK1DwlfcMyU3THWqOh+LBupeKg=; b=XIkzA4O9wGqO2WtO8tF1Z+xTn6
+	38fyqpIf4n/IRVBBYSnI4HTtxoGdQ8LSxZIP8/NSOPmdJX/6DryFm1LyL2/rS5Wthw0D9Rc5scxXx
+	LeBfwDOWskLDMOD5Txbwvzoa8w47Q+FzsTwVlhtZIXH8t5goceyGum2sBY4q4juffs5HTbYPQASpT
+	iQMJK8QZZL36GAP7fFFC9PfseuwA7wua+m3Sm1TqVEdTdAbNRv6nBe+cI0DCPcBiEFH5r0zh2G8tV
+	4s4fP5cV+wF3aIWx2BG++FJ3o6PNKFE+Z1nWnlngkygbY4QmNH8SvuZMwjZKYMIc4beAWEP5tblOE
+	kS4wAVZA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhHI6-00BUEa-2Z;
-	Fri, 15 Sep 2023 22:27:58 +0000
-Date: Fri, 15 Sep 2023 15:27:58 -0700
+	id 1qhHXM-00BUtR-2z;
+	Fri, 15 Sep 2023 22:43:44 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: Matthew Wilcox <willy@infradead.org>, Jeff Layton <jlayton@kernel.org>
-Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
-	kbusch@kernel.org, sagi@grimberg.me, axboe@fb.com,
-	brauner@kernel.org, hare@suse.de, ritesh.list@gmail.com,
-	rgoldwyn@suse.com, jack@suse.cz, ziy@nvidia.com,
-	ryan.roberts@arm.com, patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org, p.raghav@samsung.com,
-	da.gomez@samsung.com, dan.helmick@samsung.com
-Subject: Re: [RFC v2 07/10] nvme: enhance max supported LBA format check
-Message-ID: <ZQTablZ1mHzb/MJl@bombadil.infradead.org>
-References: <20230915213254.2724586-1-mcgrof@kernel.org>
- <20230915213254.2724586-8-mcgrof@kernel.org>
- <ZQTYt9qG0AxhgR4I@casper.infradead.org>
+To: axboe@kernel.dk,
+	agk@redhat.com,
+	snitzer@kernel.org,
+	philipp.reisner@linbit.com,
+	lars.ellenberg@linbit.com,
+	christoph.boehmwalder@linbit.com,
+	hch@infradead.org,
+	djwong@kernel.org,
+	minchan@kernel.org,
+	senozhatsky@chromium.org
+Cc: patches@lists.linux.dev,
+	linux-block@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	dm-devel@redhat.com,
+	drbd-dev@lists.linbit.com,
+	linux-kernel@vger.kernel.org,
+	willy@infradead.org,
+	hare@suse.de,
+	p.raghav@samsung.com,
+	da.gomez@samsung.com,
+	rohan.puri@samsung.com,
+	rpuri.linux@gmail.com,
+	kbusch@kernel.org,
+	mcgrof@kernel.org
+Subject: [PATCH v3 3/4] dm bufio: simplify by using PAGE_SECTORS_SHIFT
+Date: Fri, 15 Sep 2023 15:43:42 -0700
+Message-Id: <20230915224343.2740317-4-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230915224343.2740317-1-mcgrof@kernel.org>
+References: <20230915224343.2740317-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZQTYt9qG0AxhgR4I@casper.infradead.org>
+Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Fri, Sep 15, 2023 at 11:20:39PM +0100, Matthew Wilcox wrote:
-> On Fri, Sep 15, 2023 at 02:32:51PM -0700, Luis Chamberlain wrote:
-> > +/* XXX: shift 20 (1 MiB LBA) crashes on pure-iomap */
-> > +#define NVME_MAX_SHIFT_SUPPORTED 19
-> 
-> I imagine somewhere we do a PAGE_SIZE << 20 and it overflows an int to 0.
-> I've been trying to use size_t everywhere, but we probably missed
-> something.
-> 
-> Does 19 work on a machine with 64kB pages?  My guess is no.
+The PAGE_SHIFT - SECTOR_SHIFT constant be replaced with PAGE_SECTORS_SHIFT
+defined in linux/blt_types.h, which is included by linux/blkdev.h.
 
-Let's ask someone who *might* have access to a 64k PAGE_SIZE system or
-might know someone who does.
+This produces no functional changes.
 
-I definitely don't!
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ drivers/md/dm-bufio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  Luis
+diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
+index 62eb27639c9b..a5b48be93b30 100644
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -1152,7 +1152,7 @@ static void *alloc_buffer_data(struct dm_bufio_client *c, gfp_t gfp_mask,
+ 	    gfp_mask & __GFP_NORETRY) {
+ 		*data_mode = DATA_MODE_GET_FREE_PAGES;
+ 		return (void *)__get_free_pages(gfp_mask,
+-						c->sectors_per_block_bits - (PAGE_SHIFT - SECTOR_SHIFT));
++						c->sectors_per_block_bits - PAGE_SECTORS_SHIFT);
+ 	}
+ 
+ 	*data_mode = DATA_MODE_VMALLOC;
+@@ -1173,7 +1173,7 @@ static void free_buffer_data(struct dm_bufio_client *c,
+ 
+ 	case DATA_MODE_GET_FREE_PAGES:
+ 		free_pages((unsigned long)data,
+-			   c->sectors_per_block_bits - (PAGE_SHIFT - SECTOR_SHIFT));
++			   c->sectors_per_block_bits - PAGE_SECTORS_SHIFT);
+ 		break;
+ 
+ 	case DATA_MODE_VMALLOC:
+-- 
+2.39.2
+
