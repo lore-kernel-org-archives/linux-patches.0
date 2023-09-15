@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFF718E2F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8E61A29D
 	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 22:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=7Au7GQlleAmj5M8e5CX+OM2MfEjyMcPNx8bLn2lT0zk=; b=i0rFTNFIrhpMybyhkJGOmDs4xP
-	oBHzLbvVUXzpm9ZTd/EcCT2Iw9SuWQ79s/UnmZ4WPBsOAOwEYHTSyLdvf6kcvui4XpKnR82hw/5XY
-	t67KZYZUm1S0b104aYYCMFlC5dSPvzaBnDgKSKHBb9OmFUFlBRRTFM1OnoT+BjuYEqFWJzEYaGIKF
-	XiejQ/wmAcDv5FV8u7wNAlc1idUDBYvGEDs4c+Y8af5dUGeSRk0jMFCkWjGP+dXMaBm4U9gV+y0W9
-	UFnqi+X2sRQRqRrJxB6k88JcyoS1qMrCd/M4F8O96+1kXBnPhSWFunceDmRB7FW4H/UWEZi7sFiCF
-	XhmBZLQA==;
+	Content-Type:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:
+	To:From:Reply-To:Content-ID:Content-Description;
+	bh=kAhu3RhQYAb+8x8i6cEfQIaFhfRyBt/UYtL6yvE2uiU=; b=ipX40f4//V/ZCGGZ4czyigk+tq
+	Y1pEa4+9a0xgZHI9HB4D4Tfrictfi7SMy0XGAfRV739gQESHHurrBTlm5Ua+EE3iZV0tsx6IKqvwZ
+	IiC6jCE6msF7T92DFE/znIds6/zZgcrifjXuvn0EcmNskZ6gPaGreeyH5rJC6lgqaAeL6P7rfVtkG
+	DMPIuRQ+bZaIIBLKq7iwAyTitwD25b+3/vJUJ6ZlqhptkqgEUnJsMCFqyWqs7kD/j4JUp8wQpiPG0
+	Ac3VauQPjIuDinZl/qGvSMQdchK2QEx+UkGmAc0m6gGcpDATkelTsHLTVh8nggDwFVZd4JhiP4A92
+	z2qI6tpQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhHXM-00BUtK-2O;
+	id 1qhHXM-00BUtM-2g;
 	Fri, 15 Sep 2023 22:43:44 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: axboe@kernel.dk,
@@ -42,11 +42,14 @@ Cc: patches@lists.linux.dev,
 	rohan.puri@samsung.com,
 	rpuri.linux@gmail.com,
 	kbusch@kernel.org,
-	mcgrof@kernel.org
-Subject: [PATCH v3 0/4] block: simplify with PAGE_SECTORS_SHIFT
-Date: Fri, 15 Sep 2023 15:43:39 -0700
-Message-Id: <20230915224343.2740317-1-mcgrof@kernel.org>
+	mcgrof@kernel.org,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Subject: [PATCH v3 1/4] drbd: use PAGE_SECTORS_SHIFT and PAGE_SECTORS
+Date: Fri, 15 Sep 2023 15:43:40 -0700
+Message-Id: <20230915224343.2740317-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230915224343.2740317-1-mcgrof@kernel.org>
+References: <20230915224343.2740317-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,36 +60,38 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Just spinning these low hanging fruit patches I forgot about.
+Replace common constants with generic versions.
+This produces no functional changes.
 
-Changes on v3:
+Acked-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ drivers/block/drbd/drbd_bitmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- o Add tags for Reviews/acks
- o rebase onto next-20230914
- o Fixes as suggested by Johannes Thumshirn:
-   - drop not-needed parens on dm bufio
-   - use SECTOR_MASK instead of PAGE_SECTORS - 1 for the zram driver
- o Drop shmem patches as they are already merged / modified
-
-Changes on v2:
-                                                                                                                                                                                              
- o keep iomap math visibly simple                                                                                                                                                             
- o Add tags for Reviews/acks                                                                                                                                                                  
- o rebase onto next-20230525 
-
-Luis Chamberlain (4):
-  drbd: use PAGE_SECTORS_SHIFT and PAGE_SECTORS
-  iomap: simplify iomap_init() with PAGE_SECTORS
-  dm bufio: simplify by using PAGE_SECTORS_SHIFT
-  zram: use generic PAGE_SECTORS and PAGE_SECTORS_SHIFT
-
- drivers/block/drbd/drbd_bitmap.c |  4 ++--
- drivers/block/zram/zram_drv.c    | 15 ++++++---------
- drivers/block/zram/zram_drv.h    |  2 --
- drivers/md/dm-bufio.c            |  4 ++--
- fs/iomap/buffered-io.c           |  2 +-
- 5 files changed, 11 insertions(+), 16 deletions(-)
-
+diff --git a/drivers/block/drbd/drbd_bitmap.c b/drivers/block/drbd/drbd_bitmap.c
+index 85ca000a0564..1a1782f55e61 100644
+--- a/drivers/block/drbd/drbd_bitmap.c
++++ b/drivers/block/drbd/drbd_bitmap.c
+@@ -1000,7 +1000,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
+ 	unsigned int len;
+ 
+ 	first_bm_sect = device->ldev->md.md_offset + device->ldev->md.bm_offset;
+-	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << (PAGE_SHIFT-SECTOR_SHIFT));
++	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << PAGE_SECTORS_SHIFT);
+ 
+ 	/* this might happen with very small
+ 	 * flexible external meta data device,
+@@ -1008,7 +1008,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
+ 	last_bm_sect = drbd_md_last_bitmap_sector(device->ldev);
+ 	if (first_bm_sect <= on_disk_sector && last_bm_sect >= on_disk_sector) {
+ 		sector_t len_sect = last_bm_sect - on_disk_sector + 1;
+-		if (len_sect < PAGE_SIZE/SECTOR_SIZE)
++		if (len_sect < PAGE_SECTORS)
+ 			len = (unsigned int)len_sect*SECTOR_SIZE;
+ 		else
+ 			len = PAGE_SIZE;
 -- 
 2.39.2
 
