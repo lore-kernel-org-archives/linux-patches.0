@@ -1,33 +1,33 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788F21094C
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 16:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859B4107B5
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 16:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694796700; x=1726332700;
+  t=1694797080; x=1726333080;
   h=date:from:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=hV7ri2QcMrtTel/YBw6177BdZCvTJg4PvROjGVpyhUA=;
-  b=Gr/z95WPSGQ6ufwDozoi71y+0gFxmJy47BeCT54kX4B8/mZjZG0+abP1
-   YFSnOPnbhUoZ1LmNYLSAzekGWCpWBqS2mXT7L8WTMouTcW216Bjq1ZOvI
-   J4cyKGGcHDmZ0Uhij+fpVoda1FSoiKQ1ktNpg4UmTyltic0c95E26j94C
-   p7/uylIdx/epOLY2LSzHSJTmIfGYSTcR88P4zp543azdsHqlKbzdeR1Ro
-   QGq4WljEu2dcFBDGk9t1HF6ZWeJPKDRLO4Qja/asfCyDc2YMn7xoawGGW
-   Y8GEoBugEUuOBE+iUiAMcgtiSG5BEUg4wuUL5feWoEiC7QoP7tf+dbx3n
+  bh=GJvSC4wZ70sklL2nyd+0IoJ0iYnegdWVS9yxn2Uh8vc=;
+  b=QGna7J/b1S4ucoqkX3vogbnJNpEBVWztnFK9rSCWP50OMVoebPIvvlM3
+   OAcMDaenDFTCzJrSw42phVFBLVtT9W4uA+0zfMsyx5gRYjv2odcssqSq/
+   ASl+aeZJDFf89bu+rdUr52O8mJOyrBkDo++tdkXZnngR2Pt/bq1owGfh/
+   srMWXChLFK0tpP/EIb2vWgDI54EUQtcLJigMJ1QpdXfgkgSaeQxcXF2/Q
+   AtwxndJ7Kh4uDOcWR+znLXr9xQHCLQjbqfVycL1f59380kgHLOdKxHdhK
+   x46zPaLnhFt/uHMw77abZCUQURvkkfMpc/KYVk8da7XBw2TsmDafyogDm
    A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="465654681"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="445756595"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="465654681"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:51:39 -0700
+   d="scan'208";a="445756595"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:57:59 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="774380992"
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="694783038"
 X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="774380992"
+   d="scan'208";a="694783038"
 Received: from srdoo-mobl1.ger.corp.intel.com ([10.252.38.99])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:51:34 -0700
-Date: Fri, 15 Sep 2023 19:51:32 +0300 (EEST)
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 09:57:55 -0700
+Date: Fri, 15 Sep 2023 19:57:53 +0300 (EEST)
 From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
 To: Jithu Joseph <jithu.joseph@intel.com>
 cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de, 
@@ -36,11 +36,10 @@ cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
     tony.luck@intel.com, linux-kernel@vger.kernel.org, 
     platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
     ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH 04/10] platform/x86/intel/ifs: Scan test for new
- generations
-In-Reply-To: <20230913183348.1349409-5-jithu.joseph@intel.com>
-Message-ID: <74882e91-f41e-7672-3835-d74f1364bbdd@linux.intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-5-jithu.joseph@intel.com>
+Subject: Re: [PATCH 06/10] platform/x86/intel/ifs: Validate image size
+In-Reply-To: <20230913183348.1349409-7-jithu.joseph@intel.com>
+Message-ID: <b189850-ce7c-d8fc-ecd-1a843f52b916@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-7-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,121 +50,50 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Wed, 13 Sep 2023, Jithu Joseph wrote:
 
-> Make changes to scan test flow such that MSRs are populated
-> appropriately based on the generation supported by hardware.
+> Perform additional validation prior to loading IFS image.
 > 
-> Width of chunk related bitfields is ACTIVATE_SCAN and SCAN_STATUS MSRs
-> are different in newer IFS generation compared to gen0.
-> 
+> Error out if the size of the file being loaded doesn't
+> match the size specified in the header.
+
+Please fix these short lines in all your patches.
+ 
 > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 > Reviewed-by: Tony Luck <tony.luck@intel.com>
 > Tested-by: Pengfei Xu <pengfei.xu@intel.com>
 > ---
->  drivers/platform/x86/intel/ifs/ifs.h     | 14 ++++++++++++++
->  drivers/platform/x86/intel/ifs/runtest.c | 23 ++++++++++++++++++-----
->  2 files changed, 32 insertions(+), 5 deletions(-)
+>  drivers/platform/x86/intel/ifs/load.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index 886dc74de57d..3265a6d8a6f3 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -205,6 +205,12 @@ union ifs_scan {
->  		u32	delay	:31;
->  		u32	sigmce	:1;
->  	};
-> +	struct {
-> +		u16	start;
-> +		u16	stop;
-> +		u32	delay	:31;
-> +		u32	sigmce	:1;
-> +	} gen2;
-
-I don't like the way old struct is left without genx naming. It makes the 
-code below more confusing as is.
-
->  };
->  
->  /* MSR_SCAN_STATUS bit fields */
-> @@ -219,6 +225,14 @@ union ifs_status {
->  		u32	control_error		:1;
->  		u32	signature_error		:1;
->  	};
-> +	struct {
-> +		u16	chunk_num;
-> +		u16	chunk_stop_index;
-> +		u8	error_code;
-> +		u32	rsvd1			:22;
-> +		u32	control_error		:1;
-> +		u32	signature_error		:1;
-
-Again, I don't think the alignment will be correct in this case.
-
-> +	} gen2;
->  };
->  
->  /* MSR_ARRAY_BIST bit fields */
-> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-> index 1061eb7ec399..4bbab6be2fa2 100644
-> --- a/drivers/platform/x86/intel/ifs/runtest.c
-> +++ b/drivers/platform/x86/intel/ifs/runtest.c
-> @@ -171,6 +171,8 @@ static void ifs_test_core(int cpu, struct device *dev)
->  	union ifs_status status;
->  	unsigned long timeout;
->  	struct ifs_data *ifsd;
-> +	int to_start, to_stop;
-> +	int status_chunk;
->  	u64 msrvals[2];
->  	int retries;
->  
-> @@ -179,13 +181,21 @@ static void ifs_test_core(int cpu, struct device *dev)
->  	activate.rsvd = 0;
->  	activate.delay = IFS_THREAD_WAIT;
->  	activate.sigmce = 0;
-> -	activate.start = 0;
-> -	activate.stop = ifsd->valid_chunks - 1;
-> +	to_start = 0;
-> +	to_stop = ifsd->valid_chunks - 1;
-> +
-> +	if (ifsd->generation) {
-> +		activate.gen2.start = to_start;
-> +		activate.gen2.stop = to_stop;
-> +	} else {
-> +		activate.start = to_start;
-> +		activate.stop = to_stop;
-> +	}
->  
->  	timeout = jiffies + HZ / 2;
->  	retries = MAX_IFS_RETRIES;
->  
-> -	while (activate.start <= activate.stop) {
-> +	while (to_start <= to_stop) {
->  		if (time_after(jiffies, timeout)) {
->  			status.error_code = IFS_SW_TIMEOUT;
->  			break;
-> @@ -202,7 +212,8 @@ static void ifs_test_core(int cpu, struct device *dev)
->  		if (!can_restart(status))
->  			break;
->  
-> -		if (status.chunk_num == activate.start) {
-> +		status_chunk = ifsd->generation ? status.gen2.chunk_num : status.chunk_num;
-> +		if (status_chunk == to_start) {
->  			/* Check for forward progress */
->  			if (--retries == 0) {
->  				if (status.error_code == IFS_NO_ERROR)
-> @@ -211,7 +222,9 @@ static void ifs_test_core(int cpu, struct device *dev)
->  			}
->  		} else {
->  			retries = MAX_IFS_RETRIES;
-> -			activate.start = status.chunk_num;
-> +			ifsd->generation ? (activate.gen2.start = status_chunk) :
-> +			 (activate.start = status_chunk);
-
-Misaligned.
-
-> +			to_start = status_chunk;
->  		}
+> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+> index e8fb03dd8bcf..778a3b89a24d 100644
+> --- a/drivers/platform/x86/intel/ifs/load.c
+> +++ b/drivers/platform/x86/intel/ifs/load.c
+> @@ -376,6 +376,7 @@ int ifs_load_firmware(struct device *dev)
+>  {
+>  	const struct ifs_test_caps *test = ifs_get_test_caps(dev);
+>  	struct ifs_data *ifsd = ifs_get_data(dev);
+> +	unsigned int expected_size;
+>  	const struct firmware *fw;
+>  	char scan_path[64];
+>  	int ret = -EINVAL;
+> @@ -390,6 +391,13 @@ int ifs_load_firmware(struct device *dev)
+>  		goto done;
 >  	}
 >  
+> +	expected_size = ((struct microcode_header_intel *)fw->data)->totalsize;
+> +	if (fw->size != expected_size) {
+> +		dev_err(dev, "File size mismatch (expected %d, actual %ld). Corrupted IFS image.\n",
+> +			expected_size, fw->size);
+> +		return -EBADFD;
+> +	}
+> +
+>  	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
+
+It looks than a bit odd to add the check here and not into a function 
+called image_sanity_check()?!?
+
+>  	if (ret)
+>  		goto release;
 > 
 
 -- 
