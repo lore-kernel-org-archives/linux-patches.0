@@ -1,194 +1,147 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7731B26D
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 20:13:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694808810; x=1726344810;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Emx6TQqTBKAVjvt36D8c38wnuDjmgpbdla30Nh8cSPQ=;
-  b=W4QDHCqYeF9+IQ4BeN6YEmwDHT0fOGuZXDnIIzJ0g24tT6ClFm/fk+k+
-   Zr6yotlAeeOUo0KiAWyGCy8HD17ZdpITkzh3X92eKrvKnJaxnt46x1dle
-   tMoD4y4mOLU5If23CzYw3WXzW/QKSSqb1N+OyCMFYoQxMdCy3XkCaCwWn
-   mFKCEt4FHk6qkduxqwAF99oIvscGOzj1ReuLVWtGDEzoCxhDs/62KRTV+
-   OItA/PlKz+FE9uiVc7Nn32vr2qVrwfcvst+ol29IFkM58lxIDVSK/84qc
-   N5s+5LtFr0kxLXrOPN/KM71MhXJRRKJ00Bnsc0LseBED2c7zUO/vMguQw
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="378243264"
-X-IronPort-AV: E=Sophos;i="6.02,150,1688454000"; 
-   d="scan'208";a="378243264"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 13:13:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="745120734"
-X-IronPort-AV: E=Sophos;i="6.02,150,1688454000"; 
-   d="scan'208";a="745120734"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orsmga002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 15 Sep 2023 13:13:28 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Fri, 15 Sep 2023 13:13:28 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Fri, 15 Sep 2023 13:13:27 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Fri, 15 Sep 2023 13:13:27 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.176)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Fri, 15 Sep 2023 13:13:27 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AksA877j3ejTIBHfbQB8kuQEA3ECg6aELoHzYeY6hVA/4j7tUBz/EB+RI74lorrTKjCRNNhCMzKxIGnOHFZ3MDRYFoP7tjQimemujqZ+RDuVjsfJMXLjjzSt2dRR1GEsV7QKd3wp3xyaM8B5fhaUXl1/kCZkoT8bog8ex85ojbRpDJc51d7UW2IKdLtZwUDX97CdZ+jPjiOzRsBfk4v5pLXgpK5uNbut5TfJAyxSKAzUclPyM7iWDSXDMLgOeYg7dxDAlHUNjLMMnFnxUnjE/1jzBlzmkO1A2pbTgiwmGd/eCWtLvBAhshW8YCwnIP0memdFP1Rwymgc6bxv422PXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y/Nt/vQi1yI8Z7sBWmwABhqrEBWwPrUb97lXhpKV6Yg=;
- b=a/nYF1qDQBptsDKohazKVuJtmsUBpJDgxnS0lQiGPGquKJlUldSd0gKMzFJxTsPS1XOMXWN5SVI9igHDwuUYQoKt+mif6AjXdeLzn+DysTQqR/2fmIp1VsiagXPVMp9veHptovour7VTK5/+A9Q0jH56NLxKChuwWgqMO3dFE6MtYN14PUNoecsh01DrrtiLscjcDm6PT4fTGQI0I7AUhzSMMZJrGW0WsAUlUrpEIMohjXkkHyARlT7aEkRzs60NGvwmbNrX90o9BWzdRNjgvyphkn+gAIcSBXp7Pu/z7mQeaU/ys0wpojgqyxUEfG3bgK2QT/4m1tnTzJWD10CVWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by SN7PR11MB7090.namprd11.prod.outlook.com (2603:10b6:806:299::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.38; Fri, 15 Sep
- 2023 20:13:25 +0000
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::fca6:a86:a250:ad54]) by BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::fca6:a86:a250:ad54%7]) with mapi id 15.20.6792.021; Fri, 15 Sep 2023
- 20:13:25 +0000
-Message-ID: <dae23faf-577a-182d-537a-70acb9e0dcfa@intel.com>
-Date: Fri, 15 Sep 2023 13:13:20 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 10/10] platform/x86/intel/ifs: ARRAY BIST for Sierra
- Forest
-Content-Language: en-US
-To: =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
-CC: <hdegoede@redhat.com>, <markgross@kernel.org>, <tglx@linutronix.de>,
-	<mingo@redhat.com>, <bp@alien8.de>, <dave.hansen@linux.intel.com>,
-	<x86@kernel.org>, <hpa@zytor.com>, <rostedt@goodmis.org>,
-	<ashok.raj@intel.com>, <tony.luck@intel.com>, <linux-kernel@vger.kernel.org>,
-	<platform-driver-x86@vger.kernel.org>, <patches@lists.linux.dev>,
-	<ravi.v.shankar@intel.com>, <pengfei.xu@intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com>
- <20230913183348.1349409-11-jithu.joseph@intel.com>
- <cabbda89-f89f-aa75-d661-c8d5f6cc5d93@linux.intel.com>
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <cabbda89-f89f-aa75-d661-c8d5f6cc5d93@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MW4P221CA0027.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:303:8b::32) To BYAPR11MB3768.namprd11.prod.outlook.com
- (2603:10b6:a03:fa::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D92D1B28A
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=fY/ZSJcX0nGtNhorp279tvkX1snuX5Kki9NEKyyEvZ0=; b=pMZOMSoplkznMz23hCcyCuvW+1
+	Q5X0DNXRoWSaQm50XrYed2ERGsB62yIGhxRFVJ5yWO7/WHTncq80QWO6bWPAxmnhgXa2arperZvms
+	NTxp8MdrjSQkYV48LcOR50FiLW93j9OS1kLLdbjLQ8sW2W7WPR5rqgWAM7bEnXWkxT4QnkGneUGO3
+	E8rh9r/+rao7kSNdq1f6/C0v4BHWzLlSlNz46HMKDM6azvHhAKSm/tyv230E9q1BPCMDWUATuo9/Y
+	IL5mKOlshmRBOtbl2P/dz7P55FbzsqPlB8QGk16lhaOPwcNLq1sYSSDisbfbiHzu6BE1WTaycpYL6
+	3hzMI4aQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1qhGQq-00BQnH-0K;
+	Fri, 15 Sep 2023 21:32:56 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: hch@infradead.org,
+	djwong@kernel.org,
+	dchinner@redhat.com,
+	kbusch@kernel.org,
+	sagi@grimberg.me,
+	axboe@fb.com
+Cc: willy@infradead.org,
+	brauner@kernel.org,
+	hare@suse.de,
+	ritesh.list@gmail.com,
+	rgoldwyn@suse.com,
+	jack@suse.cz,
+	ziy@nvidia.com,
+	ryan.roberts@arm.com,
+	patches@lists.linux.dev,
+	linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	p.raghav@samsung.com,
+	da.gomez@samsung.com,
+	dan.helmick@samsung.com,
+	mcgrof@kernel.org
+Subject: [RFC v2 01/10] bdev: rename iomap aops
+Date: Fri, 15 Sep 2023 14:32:45 -0700
+Message-Id: <20230915213254.2724586-2-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
+References: <20230915213254.2724586-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|SN7PR11MB7090:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9d645b7-81ff-4f02-89a9-08dbb628376e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: BMj0Souf3uBww8gTo/rIVOpBXM5t/XAb13//Tu9J5n2Fyu5n2KWu2WbdhgJHDWugjYj9xhYdeBh9l0mQ/jNO4J8ztFISTNqjgQZ8V9fLGg1Ek6+5azkpncygWbfgcjAy4x8j4r3Ho/EkzCvOrU4eIlTn3olrKiidPyw2Qn8i7UgqCBFG7mG/65OTNtpy82OQVzJOltCLfcwdvy+NGhO+of61g0DqTOdWZgV1bMPhhg6t0hcyOHXxh38xMIjpqRR0aZ4mtruMNI81hydsPeCfhSR5X3wNzFwlMfoD8IrvaajO35fT7Epv5LiCzw7Gv3eJG2Q3W2s8qYsasPoEi8bDHtQez4EQ42Yq7hEquaL/jwFqsNynGyUlY55T+VLBq/tlS6vsBVjhBYITSr0kyzVKujHUoSZZzTdqjobo6RYQx9nGO3uldcVCCJWysYMphK1ms4xre0hD5ibYNLSZNonuAbntav0qACyj+igtZpK8qDFcI4GB74WH15KwRxXhumnnFT7eHm0JFh/OFwjTks9cMZ6/VPPGeFI6umEz62Q/oS5L/uM680cV9br9OWiIiQ+SJGVwRJM4uT9d061yTy/rIr4FoZ4NE96MAQYRdBNi9nYJ7tu4gYb/l+BzOLK/HV4ZcUOBNvpsy7/ZguRjcwDdCQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(376002)(346002)(39860400002)(396003)(1800799009)(451199024)(186009)(41300700001)(66476007)(66556008)(316002)(66946007)(6916009)(478600001)(7416002)(38100700002)(31696002)(2906002)(36756003)(86362001)(4744005)(5660300002)(8936002)(8676002)(26005)(4326008)(2616005)(31686004)(6506007)(6486002)(53546011)(6512007)(82960400001)(6666004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cUtTZGloeTdlSXlNTWQ2U2NEaDB5ZVV3Q05HRVF4dW5ZanVBV3NrZTJWL01x?=
- =?utf-8?B?SG5sMDJSY1lXWUc3cmp2VERVZTJreG8rSG5pNlRGbEZLNmpvZVlMQklRTURh?=
- =?utf-8?B?TXRRNzNOUHpsN091aVErNzVXVXVSbXhKRDNDTTVkaGJ1L1pVYUJoK3lIMWo3?=
- =?utf-8?B?UU9PMGJ4NmhLT1pvcnJBQzZTeCszWSttK3RYdG5zZlk1N1plK2N3TEJpQnBz?=
- =?utf-8?B?cXB1QUg3TkdwVUNwN1hsL2t5QnNvdGF1Z2JKYzgzNlBEbzl6ZWVQWUJxQkxN?=
- =?utf-8?B?bWthZU5CaEk4dnhBU3NXcVZsZGJVbGxGUmI1ZzhoVWdzMWI2dXQ4VFlteTdZ?=
- =?utf-8?B?aTdoU0FwblY4OTYrRWdDS1E2NU5ZaWlRUG0wbFZ3SEN5NElmVlIrYVh2MWRJ?=
- =?utf-8?B?UlJMZjk4MjUwM1hhUlNGWGlJb3R1QzNjekM5L3dvRUpGQnJoeTY3cExhZnRl?=
- =?utf-8?B?MTl1VWVqbFRrUjV5VlU1eWZaQk4vV0JjQUJSUElOeDVJZkJIYTlUQUV3NXJ2?=
- =?utf-8?B?aTcrYXcydWlOdFZsdlZ2YnpLYTUxZnFjaGVjd2IrbzEzTktYYkdoMmw4d2Ey?=
- =?utf-8?B?aGdPMnpPK0xqbHJKTFVuVVdMdC9LU2R0YVRCK1hSR3ZyOTE0Tk5sTTQ5L0h4?=
- =?utf-8?B?a2NJU2tuWW1YODBLdk00aDBtcEU0dzBLdVd2WWFjVG53SDNFRCtISWtCdElJ?=
- =?utf-8?B?N2Y5WDd3TUhBeHRtVTVJeUJHd09LUTZwYTg1SGZjT1c0N2FDK0RSQmF5Q1Vu?=
- =?utf-8?B?VlJheTZyYkxDdFkyVTM0dkoydzBBemZrZGhTeC82T3ppcVRwWUYvc3B1WFhi?=
- =?utf-8?B?S1Zyb3NSM2ZSWWR0UWw5Uk5oT2JTOEZLN2lnTnpyRzFyM04zRUhyWGFESy9M?=
- =?utf-8?B?Q2lQMWh4RkdXTVlnZ21PT0FPL2JlV2dMdFZnR1QrMzUvTWNkL1ltbDAyc1VK?=
- =?utf-8?B?cWVWYitMb1FDOXIrZ1JSN0d0dHF4aEVaY1Urd1d2SVZWSy9adHAvb0tEYnl4?=
- =?utf-8?B?Y0FBRzVxK09jazIwMXJWWFpHZ1EyOHZIYzhGUkVGZjdQOTk3MDk5Vm9USzJ1?=
- =?utf-8?B?MGdXaEpNaHZUSlpZaDJpZnZNTXlCMDcwYzFYUkJBejhnV0pNakU2MzlqcXN2?=
- =?utf-8?B?WDVES2w1d2w1dXlTV0tEbUJVTmlReHlQcS9TN2JWdU5NNERQcWxmbHVJZ01T?=
- =?utf-8?B?Y0o3KzlMcDFlU3JUWVNSSFF1N1BVUjVHbko2ZjM2a0FMSklCb2J5OTV1RlNH?=
- =?utf-8?B?RXY0NGtUTGw3NldrMjQ3dTJkT3R3U3puZWgxaEdnaXMvTlQrYjUycXJQa2ty?=
- =?utf-8?B?bmtycFVlQXlJZlZwQldnYmdCUy83cU1rMVlaYUNNOXphK20zR1o0QXNpNm85?=
- =?utf-8?B?NnBrQkZvOExDQzJrcXNEU2dwWUpWdHZMRHNKeHJMQXRVeVdvUE5VQVdrbGwx?=
- =?utf-8?B?NUhFY01jVU1tNEdTTWlZVUc3VW5yN2gxYmN6dFhndGM5VjNHd2NTMzhjTVJN?=
- =?utf-8?B?aWVVVlRkMm1xTGIrVFhrcytyUmowVkYwYldxckRka3RvQnhRTTFwZnpFelhW?=
- =?utf-8?B?U1lUV0ZlVHdQa0VBNm11V3cvVE9GaXYvUzM5bjZTOHhBMGR4NVo2WU0vSVNj?=
- =?utf-8?B?RklPV3ZNdEJhQkVUSXB5UFkwc08xNDhXSUdwZlQyaGs2KzBQUEhpbllTcVh2?=
- =?utf-8?B?RmlwYXpYaWFkMFJoSy9oUW42STgxaytRNHJlNkFVWjhoMjZYYzRFSlRLVDM4?=
- =?utf-8?B?NTJ3VFRSNXhSNHhNNTlqWWpQbnFxeWFFRGkwbUxiM0tsMjFGb0ZqSXNzQ1Rj?=
- =?utf-8?B?MkZzcFplM1kzemtFWVkvR3E0THNGQ2lMaHUrbHV4N3FBN0RpQjBsQUN4RE5F?=
- =?utf-8?B?SVNneXB6V243T1kwOXUrTHRpRjRObU5tWG5JQU83QWI2cFJxYkFhcFNjYjhm?=
- =?utf-8?B?MzlyZC9LTURuMkVUcGNReHdBR2lheHBrUCtJdHdJLzZYeDZpKzI4a3ViUC9r?=
- =?utf-8?B?VER2ZER3NTJmbHllSUwrZG5FNE9vTTZCelhyeTdSYTNYSmZvdVNqZS83Tm12?=
- =?utf-8?B?SW4wWktUdTFnQkVnOFFTMk9XZjJvZTVVT09mMjFJMy9Qd1ZQdll2L3FOaW5m?=
- =?utf-8?B?RytEVUJBN0dSZ2ZSemFURGc2cUZIZjZjREsxL2dYeFM1dzdPbUluY250T0pk?=
- =?utf-8?B?UFE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9d645b7-81ff-4f02-89a9-08dbb628376e
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2023 20:13:24.9717
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TjwO4wZmMumryGw+upBlrjW9kNxVulvZbUerFUcAZhKBridKTfP4DNf7CvDMSlSII/p4AM+61GaqkVlZWtCmoQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7090
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
+Allow buffer-head and iomap aops to co-exist on a build. Right
+now the iomap aops is can only be used if you disable buffer-heads.
+In the near future we should be able to dynamically select at runtime
+the intended aops based on the nature of the filesystem and device
+requirements.
 
+So rename the iomap aops, and select use the new name if buffer-heads
+is disabled. This introduces no functional changes.
 
-On 9/15/2023 10:04 AM, Ilpo Järvinen wrote:
-> On Wed, 13 Sep 2023, Jithu Joseph wrote:
-> 
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ block/bdev.c |  4 ++++
+ block/blk.h  |  1 +
+ block/fops.c | 14 +++++++-------
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-...
+diff --git a/block/bdev.c b/block/bdev.c
+index f3b13aa1b7d4..6e62d8a992e6 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -392,7 +392,11 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
+ 		return NULL;
+ 	inode->i_mode = S_IFBLK;
+ 	inode->i_rdev = 0;
++#ifdef CONFIG_BUFFER_HEAD
+ 	inode->i_data.a_ops = &def_blk_aops;
++#else
++	inode->i_data.a_ops = &def_blk_aops_iomap;
++#endif
+ 	mapping_set_gfp_mask(&inode->i_data, GFP_USER);
+ 
+ 	bdev = I_BDEV(inode);
+diff --git a/block/blk.h b/block/blk.h
+index 08a358bc0919..75e8deb9f458 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -473,6 +473,7 @@ long blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
+ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
+ 
+ extern const struct address_space_operations def_blk_aops;
++extern const struct address_space_operations def_blk_aops_iomap;
+ 
+ int disk_register_independent_access_ranges(struct gendisk *disk);
+ void disk_unregister_independent_access_ranges(struct gendisk *disk);
+diff --git a/block/fops.c b/block/fops.c
+index acff3d5d22d4..80a8430bcd69 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -455,13 +455,14 @@ const struct address_space_operations def_blk_aops = {
+ 	.migrate_folio	= buffer_migrate_folio_norefs,
+ 	.is_dirty_writeback = buffer_check_dirty_writeback,
+ };
+-#else /* CONFIG_BUFFER_HEAD */
+-static int blkdev_read_folio(struct file *file, struct folio *folio)
++
++#endif /* CONFIG_BUFFER_HEAD */
++static int blkdev_read_folio_iomap(struct file *file, struct folio *folio)
+ {
+ 	return iomap_read_folio(folio, &blkdev_iomap_ops);
+ }
+ 
+-static void blkdev_readahead(struct readahead_control *rac)
++static void blkdev_readahead_iomap(struct readahead_control *rac)
+ {
+ 	iomap_readahead(rac, &blkdev_iomap_ops);
+ }
+@@ -492,18 +493,17 @@ static int blkdev_writepages(struct address_space *mapping,
+ 	return iomap_writepages(mapping, wbc, &wpc, &blkdev_writeback_ops);
+ }
+ 
+-const struct address_space_operations def_blk_aops = {
++const struct address_space_operations def_blk_aops_iomap = {
+ 	.dirty_folio	= filemap_dirty_folio,
+ 	.release_folio		= iomap_release_folio,
+ 	.invalidate_folio	= iomap_invalidate_folio,
+-	.read_folio		= blkdev_read_folio,
+-	.readahead		= blkdev_readahead,
++	.read_folio		= blkdev_read_folio_iomap,
++	.readahead		= blkdev_readahead_iomap,
+ 	.writepages		= blkdev_writepages,
+ 	.is_partially_uptodate  = iomap_is_partially_uptodate,
+ 	.error_remove_page	= generic_error_remove_page,
+ 	.migrate_folio		= filemap_migrate_folio,
+ };
+-#endif /* CONFIG_BUFFER_HEAD */
+ 
+ /*
+  * for a block special file file_inode(file)->i_size is zero
+-- 
+2.39.2
 
->> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
->> index 997d2f07aa0c..9cfd5c015cb2 100644
->> --- a/drivers/platform/x86/intel/ifs/runtest.c
->> +++ b/drivers/platform/x86/intel/ifs/runtest.c
->> @@ -327,6 +327,38 @@ static void ifs_array_test_core(int cpu, struct device *dev)
->>  		ifsd->status = SCAN_TEST_PASS;
->>  }
->>  
->> +#define ARRAY_GEN1_TEST_ALL_ARRAYS	(0x0ULL)
->> +#define ARRAY_GEN1_STATUS_FAIL		(0x1ULL)
-> 
-> Unnecessary parenthesis
-> 
-
-noted
-
-...
-
->> +
->> +static void ifs_array_test_gen1(int cpu, struct device *dev)
->> +{
->> +	struct ifs_data *ifsd = ifs_get_data(dev);
->> +	u64	status = 0;
-> 
-> Just use space instead of tab.
-> 
-
-Will do
-
-
-
-Jithu
