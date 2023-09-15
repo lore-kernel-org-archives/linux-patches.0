@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D92D1B28A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8EF1B294
 	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=fY/ZSJcX0nGtNhorp279tvkX1snuX5Kki9NEKyyEvZ0=; b=pMZOMSoplkznMz23hCcyCuvW+1
-	Q5X0DNXRoWSaQm50XrYed2ERGsB62yIGhxRFVJ5yWO7/WHTncq80QWO6bWPAxmnhgXa2arperZvms
-	NTxp8MdrjSQkYV48LcOR50FiLW93j9OS1kLLdbjLQ8sW2W7WPR5rqgWAM7bEnXWkxT4QnkGneUGO3
-	E8rh9r/+rao7kSNdq1f6/C0v4BHWzLlSlNz46HMKDM6azvHhAKSm/tyv230E9q1BPCMDWUATuo9/Y
-	IL5mKOlshmRBOtbl2P/dz7P55FbzsqPlB8QGk16lhaOPwcNLq1sYSSDisbfbiHzu6BE1WTaycpYL6
-	3hzMI4aQ==;
+	bh=klgxghukoLB077BcGmD37gwuwN5TiuVyvr8uJe/6qJU=; b=xTeTtvE1PB+sCk5jYN9CsRNDcC
+	oq2rbg1f2LevVKTppTb9rvS7a6d9knnti9jQdDdUKPFipV/7xRYRi9bXw1loPY9YRQLYncMi0eTH0
+	eSA7OvBPVYDjb/pTBadQaMypikILS+6vmRakqpcosKTLfq6mA5A9nT5TFdX/6+BWkToM79mGvZ7C/
+	tfJjEHFIAWrCbPalQvlsnGYZpiYB2i4a7P6av3qMHhcJxJ08e6/CKkcCSA5aVBYA0JrWxd6Hx1R0v
+	HvwVgB8hOjoe2H7UeTLiZRP+Ab6e+CWQp+OvTodpFSnvw6ER3Zk057IRQNPe4YstyGZWoX/Y8EDtM
+	kClVBvPA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhGQq-00BQnH-0K;
+	id 1qhGQq-00BQna-1Y;
 	Fri, 15 Sep 2023 21:32:56 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -39,9 +39,9 @@ Cc: willy@infradead.org,
 	da.gomez@samsung.com,
 	dan.helmick@samsung.com,
 	mcgrof@kernel.org
-Subject: [RFC v2 01/10] bdev: rename iomap aops
-Date: Fri, 15 Sep 2023 14:32:45 -0700
-Message-Id: <20230915213254.2724586-2-mcgrof@kernel.org>
+Subject: [RFC v2 09/10] nvme: add nvme_core.debug_large_atomics to force high awun as phys_bs
+Date: Fri, 15 Sep 2023 14:32:53 -0700
+Message-Id: <20230915213254.2724586-10-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
 References: <20230915213254.2724586-1-mcgrof@kernel.org>
@@ -54,94 +54,59 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Allow buffer-head and iomap aops to co-exist on a build. Right
-now the iomap aops is can only be used if you disable buffer-heads.
-In the near future we should be able to dynamically select at runtime
-the intended aops based on the nature of the filesystem and device
-requirements.
+A drive with atomic write support should have awun / nawun defined,
+for these drives it should be possible to play with and experiment
+safely with LBS support up to awun / nawun settings if you are
+completely ignoring power failure situations. Add support to
+experiment with this. The rationale to limit to awun / nawun is
+to avoid races with other on flight commands which otherwise
+could cause unexpected results.
 
-So rename the iomap aops, and select use the new name if buffer-heads
-is disabled. This introduces no functional changes.
+This also means this debug module parameter feature is not supported
+if your drive does not support atomics / awun / nawun.
 
+Suggested-by: Dan Helmick <dan.helmick@samsung.com>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c |  4 ++++
- block/blk.h  |  1 +
- block/fops.c | 14 +++++++-------
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/nvme/host/core.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index f3b13aa1b7d4..6e62d8a992e6 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -392,7 +392,11 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
- 		return NULL;
- 	inode->i_mode = S_IFBLK;
- 	inode->i_rdev = 0;
-+#ifdef CONFIG_BUFFER_HEAD
- 	inode->i_data.a_ops = &def_blk_aops;
-+#else
-+	inode->i_data.a_ops = &def_blk_aops_iomap;
-+#endif
- 	mapping_set_gfp_mask(&inode->i_data, GFP_USER);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 7a3c51ac13bd..c1f9d8e3ea93 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -92,6 +92,10 @@ static bool debug_large_lbas;
+ module_param(debug_large_lbas, bool, 0644);
+ MODULE_PARM_DESC(debug_large_lbas, "allow LBAs > PAGE_SIZE");
  
- 	bdev = I_BDEV(inode);
-diff --git a/block/blk.h b/block/blk.h
-index 08a358bc0919..75e8deb9f458 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -473,6 +473,7 @@ long blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
- long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
- 
- extern const struct address_space_operations def_blk_aops;
-+extern const struct address_space_operations def_blk_aops_iomap;
- 
- int disk_register_independent_access_ranges(struct gendisk *disk);
- void disk_unregister_independent_access_ranges(struct gendisk *disk);
-diff --git a/block/fops.c b/block/fops.c
-index acff3d5d22d4..80a8430bcd69 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -455,13 +455,14 @@ const struct address_space_operations def_blk_aops = {
- 	.migrate_folio	= buffer_migrate_folio_norefs,
- 	.is_dirty_writeback = buffer_check_dirty_writeback,
- };
--#else /* CONFIG_BUFFER_HEAD */
--static int blkdev_read_folio(struct file *file, struct folio *folio)
++static unsigned int debug_large_atomics;
++module_param(debug_large_atomics, uint, 0644);
++MODULE_PARM_DESC(debug_large_atomics, "allow large atomics <= awun or nawun <= mdts");
 +
-+#endif /* CONFIG_BUFFER_HEAD */
-+static int blkdev_read_folio_iomap(struct file *file, struct folio *folio)
- {
- 	return iomap_read_folio(folio, &blkdev_iomap_ops);
- }
- 
--static void blkdev_readahead(struct readahead_control *rac)
-+static void blkdev_readahead_iomap(struct readahead_control *rac)
- {
- 	iomap_readahead(rac, &blkdev_iomap_ops);
- }
-@@ -492,18 +493,17 @@ static int blkdev_writepages(struct address_space *mapping,
- 	return iomap_writepages(mapping, wbc, &wpc, &blkdev_writeback_ops);
- }
- 
--const struct address_space_operations def_blk_aops = {
-+const struct address_space_operations def_blk_aops_iomap = {
- 	.dirty_folio	= filemap_dirty_folio,
- 	.release_folio		= iomap_release_folio,
- 	.invalidate_folio	= iomap_invalidate_folio,
--	.read_folio		= blkdev_read_folio,
--	.readahead		= blkdev_readahead,
-+	.read_folio		= blkdev_read_folio_iomap,
-+	.readahead		= blkdev_readahead_iomap,
- 	.writepages		= blkdev_writepages,
- 	.is_partially_uptodate  = iomap_is_partially_uptodate,
- 	.error_remove_page	= generic_error_remove_page,
- 	.migrate_folio		= filemap_migrate_folio,
- };
--#endif /* CONFIG_BUFFER_HEAD */
- 
  /*
-  * for a block special file file_inode(file)->i_size is zero
+  * nvme_wq - hosts nvme related works that are not reset or delete
+  * nvme_reset_wq - hosts nvme reset works
+@@ -1958,6 +1962,20 @@ static void nvme_update_disk_info(struct gendisk *disk,
+ 		 * be aware of out of order reads/writes as npwg and nows
+ 		 * are purely performance optimizations.
+ 		 */
++
++		/*
++		 * If you're not concerned about power failure, in theory,
++		 * you should be able to experiment up to awun rather safely.
++		 *
++		 * Ignore qemu awun value of 1.
++		 */
++		if (debug_large_atomics && awun != 1) {
++			debug_large_atomics = min(awun_bs, debug_large_atomics);
++			phys_bs = atomic_bs = debug_large_atomics;
++			dev_info(ns->ctrl->device,
++				 "Forcing large atomic: %u (awun_bs: %u awun: %u)\n",
++				 debug_large_atomics, awun_bs, awun);
++		}
+ 	}
+ 
+ 	blk_queue_logical_block_size(disk->queue, bs);
 -- 
 2.39.2
 
