@@ -1,129 +1,143 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423D810947;
-	Fri, 15 Sep 2023 13:36:21 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3A4BE218EC;
-	Fri, 15 Sep 2023 13:36:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1694784974; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9rlrz3u2Vsb7vGlQTOlcmAup+cWeQZdVEYu0oGCHX8Q=;
-	b=Gsf1eUJ8XcQyXAK6NTaBzs+N2+cdSyYIzeO1b/6RlP7vdDItVhbz80p8Qj3Qn8t4LxdmrR
-	5QEwjUPmp+6VQDd1NSictR5mbiGJEIqRpC3GmW7A37Q1qaei5tpPCFdsg0cWBZYiULZLVQ
-	3SWSGOBae2UIwjvy8R2KcUi+cAr2xgI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1694784974;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9rlrz3u2Vsb7vGlQTOlcmAup+cWeQZdVEYu0oGCHX8Q=;
-	b=zf2vbx7BqDgGUZ4WxbsB6fugz/uSdeVGa7gqa3pSZsnTM9EHCeGeqr1PthyoSONkMRrj/1
-	pT32eXfikGMIKbDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F024E1358A;
-	Fri, 15 Sep 2023 13:36:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id VyDGOc1dBGUbYwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 15 Sep 2023 13:36:13 +0000
-Message-ID: <c5e0caf5-cefd-fc4a-9e3d-a3479323bd09@suse.cz>
-Date: Fri, 15 Sep 2023 15:36:13 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F352C8485
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 13:42:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694785341; x=1726321341;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=MNuTddJauiPRkBx+ucRB3S+YwwDAcFs5oVQUJiHydRY=;
+  b=UV2DNlQWVtSuE31lqoKycRFSpD/LUNjd2BMzq+KptwWF4uwvfFhvNINE
+   nNouIxmSGZQXkOMBGjoiJMd5khYSLrCHFUBSyp1eNSAKgawFGiteHSVwj
+   D19YYDKd9TTuk1jsu1UjOfzarE7HFzEFg7fPz5d60n/5iuN2ci2i57eIW
+   M7wBwVQws0MwQZoD8gvtWvYFprJPWMeeKrvKJABGjKWXyMp4k+eLr7MNt
+   b816572vLeC1kuCuOZIwWf2NEEATiMiYZupwljCe7cH3CsV9Aig9+pY4l
+   4/aO5WRaRqe71R2vIVnn3sRxBSsyMrB0ERIwiIbkJHaJ1PbqMK9fN9Z0O
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="381978247"
+X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
+   d="scan'208";a="381978247"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:42:21 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="744988928"
+X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
+   d="scan'208";a="744988928"
+Received: from srdoo-mobl1.ger.corp.intel.com ([10.252.38.99])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 06:42:18 -0700
+Date: Fri, 15 Sep 2023 16:42:16 +0300 (EEST)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+cc: Mika Westerberg <mika.westerberg@linux.intel.com>, 
+    Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
+    linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+    platform-driver-x86@vger.kernel.org, 
+    Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+    Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+    Prashant Malani <pmalani@chromium.org>
+Subject: Re: [PATCH v4 1/4] platform/x86: intel_scu_ipc: Check status after
+ timeout in busy_loop()
+In-Reply-To: <20230913212723.3055315-2-swboyd@chromium.org>
+Message-ID: <b567a98b-8d4f-d0e4-145e-462a1edd5116@linux.intel.com>
+References: <20230913212723.3055315-1-swboyd@chromium.org> <20230913212723.3055315-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
- calc_slab_order()
-To: kernel test robot <oliver.sang@intel.com>
-Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-mm@kvack.org,
- David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg
- <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <202309111340.f59c3f22-oliver.sang@intel.com>
-Content-Language: en-US
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <202309111340.f59c3f22-oliver.sang@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323329-2022163745-1694785340=:2347"
 
-On 9/11/23 07:56, kernel test robot wrote:
-> 
-> 
-> Hello,
-> 
-> kernel test robot noticed "UBSAN:shift-out-of-bounds_in_mm/slub.c" on:
-> 
-> commit: f04d441027621c16081803832a54f59272112cf5 ("[PATCH 4/4] mm/slub: refactor calculate_order() and calc_slab_order()")
-> url: https://github.com/intel-lab-lkp/linux/commits/Vlastimil-Babka/mm-slub-simplify-the-last-resort-slab-order-calculation/20230908-225506
-> base: git://git.kernel.org/cgit/linux/kernel/git/vbabka/slab.git for-next
-> patch link: https://lore.kernel.org/all/20230908145302.30320-10-vbabka@suse.cz/
-> patch subject: [PATCH 4/4] mm/slub: refactor calculate_order() and calc_slab_order()
-> 
-> in testcase: boot
-> 
-> compiler: clang-16
-> test machine: qemu-system-x86_64 -enable-kvm -cpu SandyBridge -smp 2 -m 16G
-> 
-> (please refer to attached dmesg/kmsg for entire log/backtrace)
-> 
-> 
-> +-------------------------------------------------+------------+------------+
-> |                                                 | a17847b835 | f04d441027 |
-> +-------------------------------------------------+------------+------------+
-> | UBSAN:shift-out-of-bounds_in_mm/slub.c          | 0          | 12         |
-> +-------------------------------------------------+------------+------------+
-> 
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <oliver.sang@intel.com>
-> | Closes: https://lore.kernel.org/oe-lkp/202309111340.f59c3f22-oliver.sang@intel.com
-> 
-> 
-> [    0.901457][    T0] UBSAN: shift-out-of-bounds in mm/slub.c:463:34
-> [    0.902458][    T0] shift exponent 52 is too large for 32-bit type 'unsigned int'
-> [    0.903477][    T0] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G                T  6.5.0-rc1-00009-gf04d44102762 #1
-> [    0.904450][    T0] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-> [    0.904450][    T0] Call Trace:
-> [    0.904450][    T0]  <TASK>
-> [ 0.904450][ T0] dump_stack_lvl (lib/dump_stack.c:107) 
-> [ 0.904450][ T0] dump_stack (lib/dump_stack.c:114) 
-> [ 0.904450][ T0] ubsan_epilogue (lib/ubsan.c:218) 
-> [ 0.904450][ T0] __ubsan_handle_shift_out_of_bounds (lib/ubsan.c:?) 
-> [ 0.904450][ T0] ? tdx_handle_virt_exception (arch/x86/include/asm/shared/tdx.h:60 arch/x86/coco/tdx/tdx.c:375 arch/x86/coco/tdx/tdx.c:430 arch/x86/coco/tdx/tdx.c:650 arch/x86/coco/tdx/tdx.c:666) 
-> [ 0.904450][ T0] ? kmemleak_alloc (mm/kmemleak.c:977) 
-> [ 0.904450][ T0] __kmem_cache_create (mm/slub.c:? mm/slub.c:4159 mm/slub.c:4473 mm/slub.c:4507 mm/slub.c:5104) 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Oh thanks, fixing up:
+--8323329-2022163745-1694785340=:2347
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4152,7 +4152,8 @@ static inline int calculate_order(unsigned int size)
-                        nr_cpus = nr_cpu_ids;
-                min_objects = 4 * (fls(nr_cpus) + 1);
-        }
--       max_objects = order_objects(slub_max_order, size);
-+       /* min_objects can't be 0 because get_order(0) is undefined */
-+       max_objects = max(order_objects(slub_max_order, size), 1);
-        min_objects = min(min_objects, max_objects);
- 
-        min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
-l
+On Wed, 13 Sep 2023, Stephen Boyd wrote:
 
+> It's possible for the polling loop in busy_loop() to get scheduled away
+> for a long time.
+> 
+>   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+>   <long time scheduled away>
+>   if (!(status & IPC_STATUS_BUSY))
+> 
+> If this happens, then the status bit could change while the task is
+> scheduled away and this function would never read the status again after
+> timing out. Instead, the function will return -ETIMEDOUT when it's
+> possible that scheduling didn't work out and the status bit was cleared.
+> Bit polling code should always check the bit being polled one more time
+> after the timeout in case this happens.
+> 
+> Fix this by reading the status once more after the while loop breaks.
+> The readl_poll_timeout() macro implements all of this, and it is
+> shorter, so use that macro here to consolidate code and fix this.
+> 
+> There were some concerns with using readl_poll_timeout() because it uses
+> timekeeping, and timekeeping isn't running early on or during the late
+> stages of system suspend or early stages of system resume, but an audit
+> of the code concluded that this code isn't called during those times so
+> it is safe to use the macro.
+> 
+> Cc: Prashant Malani <pmalani@chromium.org>
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+> Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+
+-- 
+ i.
+
+
+> ---
+>  drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
+>  1 file changed, 8 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+> index 6851d10d6582..4c774ee8bb1b 100644
+> --- a/drivers/platform/x86/intel_scu_ipc.c
+> +++ b/drivers/platform/x86/intel_scu_ipc.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/init.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+> +#include <linux/iopoll.h>
+>  #include <linux/module.h>
+>  #include <linux/slab.h>
+>  
+> @@ -231,19 +232,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
+>  /* Wait till scu status is busy */
+>  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+>  {
+> -	unsigned long end = jiffies + IPC_TIMEOUT;
+> +	u8 status;
+> +	int err;
+>  
+> -	do {
+> -		u32 status;
+> +	err = readx_poll_timeout(ipc_read_status, scu, status, !(status & IPC_STATUS_BUSY),
+> +				 100, jiffies_to_usecs(IPC_TIMEOUT));
+> +	if (err)
+> +		return err;
+>  
+> -		status = ipc_read_status(scu);
+> -		if (!(status & IPC_STATUS_BUSY))
+> -			return (status & IPC_STATUS_ERR) ? -EIO : 0;
+> -
+> -		usleep_range(50, 100);
+> -	} while (time_before(jiffies, end));
+> -
+> -	return -ETIMEDOUT;
+> +	return (status & IPC_STATUS_ERR) ? -EIO : 0;
+>  }
+>  
+>  /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
+> 
+--8323329-2022163745-1694785340=:2347--
