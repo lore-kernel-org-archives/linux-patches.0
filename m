@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F27C1B29E
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740401B29F
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=thUa+GI8LogBnk2itZ6HfrgnIy9fcg1//Qc9u4UGwh8=; b=FylAZt6NRWKeXs49zjVqb5xpZE
-	MQ1ezlENpkCtY1xG8O9m+S6v3geuBLsuoU/jZZ6rOdB1Uri4HZNCRooRQVJkI8iiVZvRZb0SVlvUC
-	t1N1i7YlV9BJnxC7pbJi/AeGw6Bauh6rpOThcOvQpHro8p9gSJzt6bWPCox4T/DKPjbTEgztYEG0Q
-	ovruUkG34tjzemunuH6MjFwxtgishAiMLG7Goa84fzGJSWMlbuBL5yGFkPBdNAeKX3PSQM9khO7BM
-	qlgx9+sV2oGyt3gWnXEvOMlapwuJvm0PZ3sj/e2AoKG7wERS0hYHBEOe0M2SD/9LoJn7Djncb7jHi
-	MW5A3D3A==;
+	bh=YAt8eqD7AwRW7noJ7ot53OuTQiWk3/Uzs5ZyXdvJRXo=; b=ChjtTsEwNBGrcoqmRLmGJI9MF/
+	Znds+peolza0YOyDfbzK7sYjlaorMElTJeuVXXemAGZ/77XsGsWLy4LiwZ3aNSzf7NUgvVJJBGbA1
+	hmCGMflxN19Oe4EI3C7aKcRcio6PaX5Na8PK1imIjJ8kOMelI0FTQZ7NT+1XpQNn+Vgw+fnPaFQte
+	QnhQwpAvQ4HFE39VSr0ZaN5+ixCaC6SXpcaZFxK1+sKdZo2gZoZCYrf8yjGAxoQS9F3QaCqG3cV0Q
+	6sPUZ/gg1WftlzkFMKrXlPvvm0+qh0R4kHfYP7ZAlWL+jp2OCGX2QSrXPUFhcQQXub2SKy5eQNaol
+	SQVAqgWg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhGQq-00BQnU-17;
+	id 1qhGQq-00BQnc-1h;
 	Fri, 15 Sep 2023 21:32:56 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -39,9 +39,9 @@ Cc: willy@infradead.org,
 	da.gomez@samsung.com,
 	dan.helmick@samsung.com,
 	mcgrof@kernel.org
-Subject: [RFC v2 06/10] bdev: simplify coexistance
-Date: Fri, 15 Sep 2023 14:32:50 -0700
-Message-Id: <20230915213254.2724586-7-mcgrof@kernel.org>
+Subject: [RFC v2 10/10] nvme: enable LBS support
+Date: Fri, 15 Sep 2023 14:32:54 -0700
+Message-Id: <20230915213254.2724586-11-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
 References: <20230915213254.2724586-1-mcgrof@kernel.org>
@@ -54,46 +54,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Now that we have a bdev inode aops easily switch between buffer-heads
-and iomap we can simplify our requirement. This also enables usage
-of xfs on devices which for example have a physical block size greater
-than page size but the logical block size is only 4k or lower.
+Now that the block device cache allows LBS, and we have buffered-io
+support, and we support both buffer-heads and iomap aops on the
+block device cache through the inode dynamically, enable support for
+LBA formats > PAGE_SIZE.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/nvme/host/core.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index bf3cfc02aaf9..d9236eb149a4 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -143,13 +143,6 @@ static void set_init_blocksize(struct block_device *bdev)
- 	}
- }
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c1f9d8e3ea93..724d3c342344 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1894,9 +1894,6 @@ static bool nvme_lba_shift_supported(struct nvme_ns *ns)
+ 	if (ns->lba_shift <= PAGE_SHIFT)
+ 		return true;
  
--static int bdev_bsize_limit(struct block_device *bdev)
--{
--	if (bdev->bd_inode->i_data.a_ops == &def_blk_aops_iomap)
--		return 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER);
--	return PAGE_SIZE;
--}
+-	if (IS_ENABLED(CONFIG_BUFFER_HEAD))
+-		return false;
 -
- #ifdef CONFIG_BUFFER_HEAD
- static void bdev_aops_set(struct block_device *bdev,
- 			  const struct address_space_operations *aops)
-@@ -205,8 +198,10 @@ static int sb_bdev_aops_set(struct super_block *sb)
+ 	if (ns->lba_shift <= NVME_MAX_SHIFT_SUPPORTED)
+ 		return true;
  
- int set_blocksize(struct block_device *bdev, int size)
- {
-+	unsigned int bdev_size_limit = 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER);
-+
- 	/* Size must be a power of two, and between 512 and supported order */
--	if (size > bdev_bsize_limit(bdev) || size < 512 || !is_power_of_2(size))
-+	if (size > bdev_size_limit || size < 512 || !is_power_of_2(size))
- 		return -EINVAL;
- 
- 	/* Size cannot be smaller than the size supported by the device */
 -- 
 2.39.2
 
