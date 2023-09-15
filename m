@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002211B29B
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BBA1B294
+	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 21:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=R2D5ERHgA50rjnGDJd3UTlmr28nE94IPRsx6Q30NTNM=; b=IioY1+MgNEocbawTB+OnCHuQPq
-	m334jTZ/rCCDiPzly1hKTAnORYCPXPfXiFu35XxAtsJh70qoLVkXLWWdO79+mD7WR432rlQebZrTL
-	cYwrdeEgZUkSN3sqaVas6b/eMzrthfiXWQnmOA1+sT7ytv5z33SyWfO59607OFtHrFeJ2lZSGVkxH
-	+MEHOarKFO7fXw36ZP5Fi2MZv/HiawQB8OuB1KcPEsdCTHz3XDjrAVwB0n8rNubNFaQx8l88wsHcF
-	lQqTYpYp1EkQybTcS+lydA1PawBqxqbzMb72Itu7Xlcc6pLwY6e97lZ4gggq007lKBQE0yY/f5xQo
-	gyCQ8WmQ==;
+	bh=2mSGek1i5EgJL9SrMaIAYJlLO6wzLTnTk7T6Som6xA4=; b=Ycrwpwu7ypuRwzODX1BDsAiH+x
+	MWK9lId7QT9gWn+XlmAbxOB4bSVNOmm4G/+yV0lLPwfmgADJUAF6zlOeJAt9lnoexWN2CxXYWQlSK
+	AFIPn/AhNXs/9E5DN2ZWTvC5XwMj56lS3cMbuYNaZRmtyOhukh50OezpfX13JwzSICvSlO4aVnBXE
+	eJLz3FPaIhB6+mAVhKDpVdr0MWAKqnMCLIqfiPqd81Z2y5GmnlWO8EH6OpJlqSfMhlhfxniLs3CnJ
+	PsDD68MzF3vYxWyk2ML392iUBym8SeaLa+cefz1Y+LbLyBi8HuhrEDG9tTGTdQ2SuIwFl3yhvSnVs
+	cW26v5qg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhGQq-00BQnY-1P;
+	id 1qhGQq-00BQnO-0d;
 	Fri, 15 Sep 2023 21:32:56 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -39,9 +39,9 @@ Cc: willy@infradead.org,
 	da.gomez@samsung.com,
 	dan.helmick@samsung.com,
 	mcgrof@kernel.org
-Subject: [RFC v2 08/10] nvme: add awun / nawun sanity check
-Date: Fri, 15 Sep 2023 14:32:52 -0700
-Message-Id: <20230915213254.2724586-9-mcgrof@kernel.org>
+Subject: [RFC v2 03/10] bdev: increase bdev max blocksize depending on the aops used
+Date: Fri, 15 Sep 2023 14:32:47 -0700
+Message-Id: <20230915213254.2724586-4-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
 References: <20230915213254.2724586-1-mcgrof@kernel.org>
@@ -54,90 +54,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-AWUN/NAWUN control the atomicity of command execution in relation to
-other commands. They impose inter-command serialization of writing of
-blocks of data to the NVM and prevent blocks of data ending up on the
-NVM containing partial data from one new command and partial data from
-one or more other new commands.
+While buffer-heads is stuck at order 0, so PAGE_SIZE, iomap support is
+currently capped at MAX_PAGECACHE_ORDER as that is the cap also set on
+readahead. We match parity for the max allowed block size when using
+iomap.
 
-Parse awun / nawun to verify at least the physical block size
-exposed is not greater than this value.
-
-The special case of awun / nawun == 0xffff tells us we can ramp
-up to mdts.
-
-Suggested-by: Dan Helmick <dan.helmick@samsung.com>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- drivers/nvme/host/core.c | 21 +++++++++++++++++++++
- drivers/nvme/host/nvme.h |  1 +
- 2 files changed, 22 insertions(+)
+ block/bdev.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 0365f260c514..7a3c51ac13bd 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1911,6 +1911,7 @@ static void nvme_update_disk_info(struct gendisk *disk,
- 	sector_t capacity = nvme_lba_to_sect(ns, le64_to_cpu(id->nsze));
- 	u32 bs = 1U << ns->lba_shift;
- 	u32 atomic_bs, phys_bs, io_opt = 0;
-+	u32 awun = 0, awun_bs = 0;
- 
- 	if (!nvme_lba_shift_supported(ns)) {
- 		capacity = 0;
-@@ -1931,6 +1932,15 @@ static void nvme_update_disk_info(struct gendisk *disk,
- 			atomic_bs = (1 + le16_to_cpu(id->nawupf)) * bs;
- 		else
- 			atomic_bs = (1 + ns->ctrl->subsys->awupf) * bs;
-+		if (id->nsfeat & NVME_NS_FEAT_ATOMICS && id->nawun)
-+			awun = (1 + le16_to_cpu(id->nawun));
-+		else
-+			awun = (1 + ns->ctrl->subsys->awun);
-+		/* Indicates MDTS can be used */
-+		if (awun == 0xffff)
-+			awun_bs = ns->ctrl->max_hw_sectors << SECTOR_SHIFT;
-+		else
-+			awun_bs = awun * bs;
+diff --git a/block/bdev.c b/block/bdev.c
+index 63b4d7dd8075..0d685270cd34 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -143,10 +143,17 @@ static void set_init_blocksize(struct block_device *bdev)
  	}
+ }
  
- 	if (id->nsfeat & NVME_NS_FEAT_IO_OPT) {
-@@ -1940,6 +1950,16 @@ static void nvme_update_disk_info(struct gendisk *disk,
- 		io_opt = bs * (1 + le16_to_cpu(id->nows));
- 	}
- 
-+	if (awun) {
-+		phys_bs = min(awun_bs, phys_bs);
++static int bdev_bsize_limit(struct block_device *bdev)
++{
++	if (bdev->bd_inode->i_data.a_ops == &def_blk_aops_iomap)
++		return 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER);
++	return PAGE_SIZE;
++}
 +
-+		/*
-+		 * npwg and nows could be > awun, in such cases users should
-+		 * be aware of out of order reads/writes as npwg and nows
-+		 * are purely performance optimizations.
-+		 */
-+	}
-+
- 	blk_queue_logical_block_size(disk->queue, bs);
- 	/*
- 	 * Linux filesystems assume writing a single physical block is
-@@ -2785,6 +2805,7 @@ static int nvme_init_subsystem(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
- 		kfree(subsys);
+ int set_blocksize(struct block_device *bdev, int size)
+ {
+-	/* Size must be a power of two, and between 512 and PAGE_SIZE */
+-	if (size > PAGE_SIZE || size < 512 || !is_power_of_2(size))
++	/* Size must be a power of two, and between 512 and supported order */
++	if (size > bdev_bsize_limit(bdev) || size < 512 || !is_power_of_2(size))
  		return -EINVAL;
- 	}
-+	subsys->awun = le16_to_cpu(id->awun);
- 	subsys->awupf = le16_to_cpu(id->awupf);
- 	nvme_mpath_default_iopolicy(subsys);
  
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index f35647c470af..071ec52d83ea 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -410,6 +410,7 @@ struct nvme_subsystem {
- 	u8			cmic;
- 	enum nvme_subsys_type	subtype;
- 	u16			vendor_id;
-+	u16			awun;
- 	u16			awupf;	/* 0's based awupf value. */
- 	struct ida		ns_ida;
- #ifdef CONFIG_NVME_MULTIPATH
+ 	/* Size cannot be smaller than the size supported by the device */
 -- 
 2.39.2
 
