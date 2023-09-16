@@ -1,80 +1,88 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AAA12B8B
-	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 10:53:11 +0000 (UTC)
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-31dca134c83so2936560f8f.3
-        for <patches@lists.linux.dev>; Sat, 16 Sep 2023 03:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694861590; x=1695466390; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E6++5ofz/XVp0r1sKsCzLslu6+YsvGovl/0af+/t0Io=;
-        b=mFUvLYsWWazgnKHVl/GoyBnpL52xACK0CqSf7zLX9WXY20qwC67ElzxI37F0FMRiIP
-         R8Wl0Na/lFCua0MI6FZuQNQ2bjdloX9YOG0/dAWfNVL4cdhuGNOIIqnCJyA5QaOIeG3+
-         a4n5GYuVtRZPiH9+j//Zf7d9j/OUR+EUVuO3dXQ4cBW73mbsQCoygurSiW9FLTiBwjEm
-         I9M2Oel13HS6/yBocdYSJ47NvloERUGXAToCzSuOvkQ8iflIy5TLLb+vMwYvknnolpSU
-         R7S2kMBVp/UpkncC3mU07ryEvhObzxZvSOBkHsFQ+FvH1p7bXN5weHw5s5R/eGjf5nAP
-         8jdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694861590; x=1695466390;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=E6++5ofz/XVp0r1sKsCzLslu6+YsvGovl/0af+/t0Io=;
-        b=UgWgMA+tAm1Qpw9r0/GsHJyCVsAbfIni6CovFi22sNSstmgaW8zrfsbLp8A6D0SyBi
-         1Kvv3a03AzL0GwgWHA9IRVrLNWk3XIfcHT/PvOLwy5cAjqyXtm8LOfDoogYWRu2fbebA
-         EwyULm8HsODo35/seXFOACDokuRX+ZOhX33ghsy14QHGa2wupgcLuxCAjCVXldqxABQ3
-         x1bGerzEaaOKM2Lyg4JVIueS0GvwHqcq0jC35c3xTKoscwadWEJihxpOQef1DafvQ2dT
-         JML5TLZ5H0YCAk1nDavgt+6S1aFj5KJPLq3gn3CFkIAWxM9K45DCDmLCXn1icAHXfHu0
-         JSaQ==
-X-Gm-Message-State: AOJu0YykYISaHOAlE6/JUg76xbxHR1Fvr0GirpuvBgS6y5IbUAMR/fhL
-	xf8mh/BcpVVqmr/GuJ/Yt/Y=
-X-Google-Smtp-Source: AGHT+IE9iYdti2ESeNV0y7KhQoMbN+Ztv4NNyQYjs2YsSmiRyiYMcX7eVbsM8hDYzjaHn3x5C/E4cg==
-X-Received: by 2002:adf:f34f:0:b0:317:e1fb:d57b with SMTP id e15-20020adff34f000000b00317e1fbd57bmr3282990wrp.56.1694861589528;
-        Sat, 16 Sep 2023 03:53:09 -0700 (PDT)
-Received: from localhost ([45.134.213.210])
-        by smtp.gmail.com with ESMTPSA id t3-20020a5d5343000000b00317ab75748bsm6852110wrv.49.2023.09.16.03.53.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Sep 2023 03:53:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD99713AC6
+	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 11:14:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694862855; x=1726398855;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=6LByGd6BJ/KoBVbB5quf9dys3O4g3Rte15yl6U221g8=;
+  b=DGoC0FvImDErw6iSP6qAzFzZ2rJXU6aIZU+Qed3j7Uze5fGhnRMnSdDp
+   jWy7lazfgqw/5xlCCA9X2r0g8pdxq4GRMBY8+FlyCuM+73U9ZKLUJINc1
+   Wzl4qy/ourL6rODPBbZnl2o97zN3jeIKsGFd5Jwv4tkp+AbdPtKMvRb6a
+   ThaYGLeXpJ5gGvnew1RleeOCyC/Wc+GtBBVLnVRBKPTdGztmSlIl+OFIF
+   orA649vGOnkARTmg2Khf5F9yYktBzFxSHZjk3dbtsIUbK+SMzCiUpvJ0G
+   Fqw8FsiqzQ6GpUKu8zBvT8bmeatuuYS7DshZd7ArivLstTUqgvUoUAOXx
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="359655883"
+X-IronPort-AV: E=Sophos;i="6.02,152,1688454000"; 
+   d="scan'208";a="359655883"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2023 04:14:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10834"; a="869045162"
+X-IronPort-AV: E=Sophos;i="6.02,152,1688454000"; 
+   d="scan'208";a="869045162"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2023 04:14:10 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97-RC0)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1qhTFX-0000000Gg9M-2NuF;
+	Sat, 16 Sep 2023 14:14:07 +0300
+Date: Sat, 16 Sep 2023 14:14:07 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Gross <markgross@kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+	platform-driver-x86@vger.kernel.org,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: Re: [PATCH v4 3/4] platform/x86: intel_scu_ipc: Don't override scu
+ in intel_scu_ipc_dev_simple_command()
+Message-ID: <ZQWN/xpN2801loCo@smile.fi.intel.com>
+References: <20230913212723.3055315-1-swboyd@chromium.org>
+ <20230913212723.3055315-4-swboyd@chromium.org>
+ <58e817b0-1872-6ff1-58bb-1aeeb572361@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 16 Sep 2023 12:53:08 +0200
-Message-Id: <CVKAAGQ6QV0W.3LCCSR4PNZKDC@vincent-arch>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Wedson Almeida Filho"
- <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
-Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
- <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@samsung.com>,
- "Alice Ryhl" <aliceryhl@google.com>, <rust-for-linux@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 2/2] MAINTAINERS: add Maintainer Entry Profile field for
- Rust
-From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
-References: <20230830165949.127475-1-ojeda@kernel.org>
- <20230830165949.127475-2-ojeda@kernel.org>
-In-Reply-To: <20230830165949.127475-2-ojeda@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <58e817b0-1872-6ff1-58bb-1aeeb572361@linux.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-> The `P:` field allows a URI, and we have been adding information
-> on how to contribute to the Rust subsystem to our webpage for a
-> while now (and other relevant topics, e.g. branches, third-party
-> crates, Rust unstable features...).
->
-> The webpage/document does not currently follow the headings of
-> the Maintainer Entry Profile, but it does nevertheless answer
-> some of the questions we have got so far from contributors and
-> it covers partially some of the topics there.
->
-> Thus link to our "Contributing" document [1].
->
-> Link: https://rust-for-linux.com/contributing [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Fri, Sep 15, 2023 at 05:45:42PM +0300, Ilpo Järvinen wrote:
+> On Wed, 13 Sep 2023, Stephen Boyd wrote:
+> 
+> > Andy discovered this bug during patch review. The 'scu' argument to this
+> > function shouldn't be overridden by the function itself. It doesn't make
+> > any sense. Looking at the commit history, we see that commit
+> > f57fa18583f5 ("platform/x86: intel_scu_ipc: Introduce new SCU IPC API")
+> > removed the setting of the scu to ipcdev in other functions, but not
+> > this one. That was an oversight. Remove this line so that we stop
+> > overriding the scu instance that is used by this function.
+> > 
+> > Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Closes: https://lore.kernel.org/r/ZPjdZ3xNmBEBvNiS@smile.fi.intel.com
+> 
+> This looks somewhat unusual way to tag it. I'd just drop the Closes tag 
+> as the email list is not a bug tracter.
 
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+This is a new requirement enforced by checkpatch.pl. If commit message has
+the Reported-by: tag it should have Closes: one as well.
+
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
