@@ -1,143 +1,79 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B2A374
-	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 01:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1694827738;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4qbIE5Sx2G6B9yvMVQiBRk6nSJz0jXl9dCA6L1yJm1M=;
-	b=S7CcR2hVspyxIHyx4IkJUDT6elNVBY4ut/pS2K9RyzBc6E0WRL9kLbWHpwnKqdixN5I1Re
-	Noc7FOyp6Pu+N3E+7zHJNSUCEdNkxcBtvoOH3YWhBEq30BGEQZ4ngXht7MsZ8HU13KB2sG
-	+kgZm8HFJBqETAGnCh2inallLn9e2kI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-111-Tk3Gc_49MvaBP6egFecfag-1; Fri, 15 Sep 2023 21:28:56 -0400
-X-MC-Unique: Tk3Gc_49MvaBP6egFecfag-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D85691875062;
-	Sat, 16 Sep 2023 01:28:55 +0000 (UTC)
-Received: from localhost (unknown [10.72.112.6])
-	by smtp.corp.redhat.com (Postfix) with ESMTPS id 05C732026D68;
-	Sat, 16 Sep 2023 01:28:52 +0000 (UTC)
-Date: Sat, 16 Sep 2023 09:28:49 +0800
-From: Baoquan He <bhe@redhat.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Jay Patel <jaypatel@linux.ibm.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
- calc_slab_order()
-Message-ID: <ZQUE0e4i8HrGUthB@MiWiFi-R3L-srv>
-References: <20230908145302.30320-6-vbabka@suse.cz>
- <20230908145302.30320-10-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DBAEAE5
+	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 10:52:30 +0000 (UTC)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40479f8325fso19040925e9.1
+        for <patches@lists.linux.dev>; Sat, 16 Sep 2023 03:52:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1694861548; x=1695466348; darn=lists.linux.dev;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NkaN8cKyKQ/v2N4UZS/i+2Cr3FWbQdqVVYD1cTsC53I=;
+        b=Ykgw6z99sklbkcToRGSxnWQ3oHi1x/eEXL9pu6ej0kX76SzfJ2c5UFQ7QNIrMcLY5J
+         7toP8ba22WeHzJgqt6gFtjsHB4NnPd+0HcP50jXCKxb4Saj1nNeMONLHCTksB78MSB0u
+         VppoqjDFOymF0Vhqrrrikg3E+MlfB8sYdAt7S8Ap/2SN4XrQPNIlaSJnnI580qiZO4iq
+         bFug+RGUg9lNPMBP50Tjx43D9m7610Ml+cqv8Z147f1KvcTfxtVbaR33SXU6YIVcj+Wq
+         MsUBtQJL+atDIg9DaOcbVE27dYwfhhm8VXQjNsfmaWsrDxSuE1QwtSjrws1bzHi2eGqD
+         dK0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694861548; x=1695466348;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NkaN8cKyKQ/v2N4UZS/i+2Cr3FWbQdqVVYD1cTsC53I=;
+        b=e3lhp3ojsdkp/alDaIGq45sTFOLqK0mQmk5PLGETWJEWi0j4CZ8uUcu3QRaeU3Ahpu
+         hpxQC4BdwmwbPLi7mRUct63M4GuXsf+Akl4fjltpTIOi2k4g43oHs/HOhpDz6C2a9JJC
+         sN4HHqzJNu2aP1lGEjHsREHXfyuRdHSbo+CrjIWGHmoizw907BzpjYaEulWx/Xma3KUK
+         9TGA28cVbyD9mOhChPpOZ0lnqsES/kMtQG4LD6BpwZ5vARp4vZbF5GCPbgzAYSSLBgYX
+         OnFMtydBSzjKNRws5tk9htHvQkdqCVSCEnNb5k5HgieESgMNW/TO2X4I0TAYRrTQzWoV
+         kExg==
+X-Gm-Message-State: AOJu0YysFW/sSbnXanl3z0Ww87hm3/E0FaLc/addQgdz6AQOgxI1aVfr
+	8t8KdiA49oKon1ENazEawAc=
+X-Google-Smtp-Source: AGHT+IFdjBX4VSeBZn0JpdO85JrcBe0bVVpLDZ4NtoJf3Oru0QM0aSmeH6zWGbp6bEW3eVbBqI27SA==
+X-Received: by 2002:a1c:7203:0:b0:3fe:15f0:dfbc with SMTP id n3-20020a1c7203000000b003fe15f0dfbcmr3689181wmc.12.1694861548123;
+        Sat, 16 Sep 2023 03:52:28 -0700 (PDT)
+Received: from localhost ([45.134.213.210])
+        by smtp.gmail.com with ESMTPSA id y15-20020a5d470f000000b0031981c500aasm6838175wrq.25.2023.09.16.03.52.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Sep 2023 03:52:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230908145302.30320-10-vbabka@suse.cz>
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 16 Sep 2023 12:52:26 +0200
+Message-Id: <CVKA9XPFB9BF.2UL40PGKDJ00P@vincent-arch>
+Subject: Re: [PATCH 1/2] MAINTAINERS: update Rust webpage
+From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
+To: "Miguel Ojeda" <ojeda@kernel.org>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
+Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@samsung.com>,
+ "Alice Ryhl" <aliceryhl@google.com>, <rust-for-linux@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+References: <20230830165949.127475-1-ojeda@kernel.org>
+In-Reply-To: <20230830165949.127475-1-ojeda@kernel.org>
 
-On 09/08/23 at 04:53pm, Vlastimil Babka wrote:
-> After the previous cleanups, we can now move some code from
-> calc_slab_order() to calculate_order() so it's executed just once, and
-> do some more cleanups.
-> 
-> - move the min_order and MAX_OBJS_PER_PAGE evaluation to
->   calc_slab_order().
-> 
-> - change calc_slab_order() parameter min_objects to min_order
-> 
-> Also make MAX_OBJS_PER_PAGE check more robust by considering also
-> min_objects in addition to slub_min_order. Otherwise this is not a
-> functional change.
-> 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/slub.c | 19 +++++++++----------
->  1 file changed, 9 insertions(+), 10 deletions(-)
-> 
-> diff --git a/mm/slub.c b/mm/slub.c
-> index f04eb029d85a..1c91f72c7239 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -4110,17 +4110,12 @@ static unsigned int slub_min_objects;
->   * the smallest order which will fit the object.
->   */
->  static inline unsigned int calc_slab_order(unsigned int size,
-> -		unsigned int min_objects, unsigned int max_order,
-> +		unsigned int min_order, unsigned int max_order,
->  		unsigned int fract_leftover)
->  {
-> -	unsigned int min_order = slub_min_order;
->  	unsigned int order;
->  
-> -	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
-> -		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
-> -
-> -	for (order = max(min_order, (unsigned int)get_order(min_objects * size));
-> -			order <= max_order; order++) {
-> +	for (order = min_order; order <= max_order; order++) {
->  
->  		unsigned int slab_size = (unsigned int)PAGE_SIZE << order;
->  		unsigned int rem;
-> @@ -4139,7 +4134,7 @@ static inline int calculate_order(unsigned int size)
->  	unsigned int order;
->  	unsigned int min_objects;
->  	unsigned int max_objects;
-> -	unsigned int nr_cpus;
-> +	unsigned int min_order;
->  
->  	min_objects = slub_min_objects;
->  	if (!min_objects) {
-> @@ -4152,7 +4147,7 @@ static inline int calculate_order(unsigned int size)
->  		 * order on systems that appear larger than they are, and too
->  		 * low order on systems that appear smaller than they are.
->  		 */
-> -		nr_cpus = num_present_cpus();
-> +		unsigned int nr_cpus = num_present_cpus();
->  		if (nr_cpus <= 1)
->  			nr_cpus = nr_cpu_ids;
->  		min_objects = 4 * (fls(nr_cpus) + 1);
+> A few months ago we started a webpage for the Rust subsystem and
+> the overall Rust for Linux project [1].
+>
+> The current `W:` field of the Rust entry points to the GitHub
+> repository, since originally we kept information in a `README.md`
+> file that got rendered by GitHub when visiting that URL.
+>
+> That information was moved into the webpage and got expanded.
+> The webpage is also nowadays the entry point to the project,
+> and we pointed the "Website" GitHub metadata field to it.
+>
+> Thus update the `W:` field to point to the actual webpage.
+>
+> Link: https://rust-for-linux.com [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-A minor concern, should we change 'min_objects' to be a local static
-to avoid the "if (!min_objects) {" code block every time?  It's deducing
-the value from nr_cpus, we may not need do the calculation each time.
-
-> @@ -4160,6 +4155,10 @@ static inline int calculate_order(unsigned int size)
->  	max_objects = order_objects(slub_max_order, size);
->  	min_objects = min(min_objects, max_objects);
->  
-> +	min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
-> +	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
-> +		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
-> +
->  	/*
->  	 * Attempt to find best configuration for a slab. This works by first
->  	 * attempting to generate a layout with the best possible configuration and
-> @@ -4176,7 +4175,7 @@ static inline int calculate_order(unsigned int size)
->  	 * long as at least single object fits within slub_max_order.
->  	 */
->  	for (unsigned int fraction = 16; fraction > 1; fraction /= 2) {
-> -		order = calc_slab_order(size, min_objects, slub_max_order,
-> +		order = calc_slab_order(size, min_order, slub_max_order,
->  					fraction);
->  		if (order <= slub_max_order)
->  			return order;
-> -- 
-> 2.42.0
-> 
-
+Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
