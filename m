@@ -1,97 +1,143 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8E61A29D
-	for <patches@lists.linux.dev>; Fri, 15 Sep 2023 22:43:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:
-	To:From:Reply-To:Content-ID:Content-Description;
-	bh=kAhu3RhQYAb+8x8i6cEfQIaFhfRyBt/UYtL6yvE2uiU=; b=ipX40f4//V/ZCGGZ4czyigk+tq
-	Y1pEa4+9a0xgZHI9HB4D4Tfrictfi7SMy0XGAfRV739gQESHHurrBTlm5Ua+EE3iZV0tsx6IKqvwZ
-	IiC6jCE6msF7T92DFE/znIds6/zZgcrifjXuvn0EcmNskZ6gPaGreeyH5rJC6lgqaAeL6P7rfVtkG
-	DMPIuRQ+bZaIIBLKq7iwAyTitwD25b+3/vJUJ6ZlqhptkqgEUnJsMCFqyWqs7kD/j4JUp8wQpiPG0
-	Ac3VauQPjIuDinZl/qGvSMQdchK2QEx+UkGmAc0m6gGcpDATkelTsHLTVh8nggDwFVZd4JhiP4A92
-	z2qI6tpQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qhHXM-00BUtM-2g;
-	Fri, 15 Sep 2023 22:43:44 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: axboe@kernel.dk,
-	agk@redhat.com,
-	snitzer@kernel.org,
-	philipp.reisner@linbit.com,
-	lars.ellenberg@linbit.com,
-	christoph.boehmwalder@linbit.com,
-	hch@infradead.org,
-	djwong@kernel.org,
-	minchan@kernel.org,
-	senozhatsky@chromium.org
-Cc: patches@lists.linux.dev,
-	linux-block@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	dm-devel@redhat.com,
-	drbd-dev@lists.linbit.com,
-	linux-kernel@vger.kernel.org,
-	willy@infradead.org,
-	hare@suse.de,
-	p.raghav@samsung.com,
-	da.gomez@samsung.com,
-	rohan.puri@samsung.com,
-	rpuri.linux@gmail.com,
-	kbusch@kernel.org,
-	mcgrof@kernel.org,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Subject: [PATCH v3 1/4] drbd: use PAGE_SECTORS_SHIFT and PAGE_SECTORS
-Date: Fri, 15 Sep 2023 15:43:40 -0700
-Message-Id: <20230915224343.2740317-2-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230915224343.2740317-1-mcgrof@kernel.org>
-References: <20230915224343.2740317-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B2A374
+	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 01:28:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1694827738;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4qbIE5Sx2G6B9yvMVQiBRk6nSJz0jXl9dCA6L1yJm1M=;
+	b=S7CcR2hVspyxIHyx4IkJUDT6elNVBY4ut/pS2K9RyzBc6E0WRL9kLbWHpwnKqdixN5I1Re
+	Noc7FOyp6Pu+N3E+7zHJNSUCEdNkxcBtvoOH3YWhBEq30BGEQZ4ngXht7MsZ8HU13KB2sG
+	+kgZm8HFJBqETAGnCh2inallLn9e2kI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-111-Tk3Gc_49MvaBP6egFecfag-1; Fri, 15 Sep 2023 21:28:56 -0400
+X-MC-Unique: Tk3Gc_49MvaBP6egFecfag-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D85691875062;
+	Sat, 16 Sep 2023 01:28:55 +0000 (UTC)
+Received: from localhost (unknown [10.72.112.6])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 05C732026D68;
+	Sat, 16 Sep 2023 01:28:52 +0000 (UTC)
+Date: Sat, 16 Sep 2023 09:28:49 +0800
+From: Baoquan He <bhe@redhat.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Jay Patel <jaypatel@linux.ibm.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>, linux-mm@kvack.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
+ calc_slab_order()
+Message-ID: <ZQUE0e4i8HrGUthB@MiWiFi-R3L-srv>
+References: <20230908145302.30320-6-vbabka@suse.cz>
+ <20230908145302.30320-10-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230908145302.30320-10-vbabka@suse.cz>
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
 
-Replace common constants with generic versions.
-This produces no functional changes.
+On 09/08/23 at 04:53pm, Vlastimil Babka wrote:
+> After the previous cleanups, we can now move some code from
+> calc_slab_order() to calculate_order() so it's executed just once, and
+> do some more cleanups.
+> 
+> - move the min_order and MAX_OBJS_PER_PAGE evaluation to
+>   calc_slab_order().
+> 
+> - change calc_slab_order() parameter min_objects to min_order
+> 
+> Also make MAX_OBJS_PER_PAGE check more robust by considering also
+> min_objects in addition to slub_min_order. Otherwise this is not a
+> functional change.
+> 
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  mm/slub.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+> 
+> diff --git a/mm/slub.c b/mm/slub.c
+> index f04eb029d85a..1c91f72c7239 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -4110,17 +4110,12 @@ static unsigned int slub_min_objects;
+>   * the smallest order which will fit the object.
+>   */
+>  static inline unsigned int calc_slab_order(unsigned int size,
+> -		unsigned int min_objects, unsigned int max_order,
+> +		unsigned int min_order, unsigned int max_order,
+>  		unsigned int fract_leftover)
+>  {
+> -	unsigned int min_order = slub_min_order;
+>  	unsigned int order;
+>  
+> -	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+> -		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+> -
+> -	for (order = max(min_order, (unsigned int)get_order(min_objects * size));
+> -			order <= max_order; order++) {
+> +	for (order = min_order; order <= max_order; order++) {
+>  
+>  		unsigned int slab_size = (unsigned int)PAGE_SIZE << order;
+>  		unsigned int rem;
+> @@ -4139,7 +4134,7 @@ static inline int calculate_order(unsigned int size)
+>  	unsigned int order;
+>  	unsigned int min_objects;
+>  	unsigned int max_objects;
+> -	unsigned int nr_cpus;
+> +	unsigned int min_order;
+>  
+>  	min_objects = slub_min_objects;
+>  	if (!min_objects) {
+> @@ -4152,7 +4147,7 @@ static inline int calculate_order(unsigned int size)
+>  		 * order on systems that appear larger than they are, and too
+>  		 * low order on systems that appear smaller than they are.
+>  		 */
+> -		nr_cpus = num_present_cpus();
+> +		unsigned int nr_cpus = num_present_cpus();
+>  		if (nr_cpus <= 1)
+>  			nr_cpus = nr_cpu_ids;
+>  		min_objects = 4 * (fls(nr_cpus) + 1);
 
-Acked-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- drivers/block/drbd/drbd_bitmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+A minor concern, should we change 'min_objects' to be a local static
+to avoid the "if (!min_objects) {" code block every time?  It's deducing
+the value from nr_cpus, we may not need do the calculation each time.
 
-diff --git a/drivers/block/drbd/drbd_bitmap.c b/drivers/block/drbd/drbd_bitmap.c
-index 85ca000a0564..1a1782f55e61 100644
---- a/drivers/block/drbd/drbd_bitmap.c
-+++ b/drivers/block/drbd/drbd_bitmap.c
-@@ -1000,7 +1000,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
- 	unsigned int len;
- 
- 	first_bm_sect = device->ldev->md.md_offset + device->ldev->md.bm_offset;
--	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << (PAGE_SHIFT-SECTOR_SHIFT));
-+	on_disk_sector = first_bm_sect + (((sector_t)page_nr) << PAGE_SECTORS_SHIFT);
- 
- 	/* this might happen with very small
- 	 * flexible external meta data device,
-@@ -1008,7 +1008,7 @@ static void bm_page_io_async(struct drbd_bm_aio_ctx *ctx, int page_nr) __must_ho
- 	last_bm_sect = drbd_md_last_bitmap_sector(device->ldev);
- 	if (first_bm_sect <= on_disk_sector && last_bm_sect >= on_disk_sector) {
- 		sector_t len_sect = last_bm_sect - on_disk_sector + 1;
--		if (len_sect < PAGE_SIZE/SECTOR_SIZE)
-+		if (len_sect < PAGE_SECTORS)
- 			len = (unsigned int)len_sect*SECTOR_SIZE;
- 		else
- 			len = PAGE_SIZE;
--- 
-2.39.2
+> @@ -4160,6 +4155,10 @@ static inline int calculate_order(unsigned int size)
+>  	max_objects = order_objects(slub_max_order, size);
+>  	min_objects = min(min_objects, max_objects);
+>  
+> +	min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
+> +	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+> +		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+> +
+>  	/*
+>  	 * Attempt to find best configuration for a slab. This works by first
+>  	 * attempting to generate a layout with the best possible configuration and
+> @@ -4176,7 +4175,7 @@ static inline int calculate_order(unsigned int size)
+>  	 * long as at least single object fits within slub_max_order.
+>  	 */
+>  	for (unsigned int fraction = 16; fraction > 1; fraction /= 2) {
+> -		order = calc_slab_order(size, min_objects, slub_max_order,
+> +		order = calc_slab_order(size, min_order, slub_max_order,
+>  					fraction);
+>  		if (order <= slub_max_order)
+>  			return order;
+> -- 
+> 2.42.0
+> 
 
