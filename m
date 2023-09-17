@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264E7469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31155C433C8;
-	Sun, 17 Sep 2023 20:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2BE7469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7629BC433C7;
+	Sun, 17 Sep 2023 20:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982345;
-	bh=0YGOQaKOmSZetTWVpuMPRCg3YoOB3wA1MMLmoONH/B8=;
+	s=korg; t=1694982348;
+	bh=g8fYXl2Wjw1xqQmU0RI9e4cMIYKMtI01n2p355vpguU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rf3p6jvsp2UrjcQsVGJCDnIOnhIGSHIRaa7R9fblPsnE+w+9z9s66PG3yFMCBXFJ5
-	 LEF352Lw4T07eGcT9ow0V6Hr0v6xyEMc/bCoblPdd06j9cInuVE4nmtnv1SwZ/uFSk
-	 py1po+E1uddKysk+52MqWnaueTQSbOqytv0FCtFA=
+	b=T2kfqjDW4ZeWo1Uhznk8k6qQQfGzVNNq8sYLc4Ao6AMsjQ3gpm5c11y5SVP/63b9f
+	 hDdg7KTxdh93ERvQHxTONhdCTaEltnGaYM3pI5DHBzVyZnWfeez92/wIXhmACJdyKg
+	 AHq8JG4+lquM5QqX6T+MvN6izER7k4F2c989j9Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Currey <ruscur@russell.cc>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 224/511] powerpc/pseries: Rework lppaca_shared_proc() to avoid DEBUG_PREEMPT
-Date: Sun, 17 Sep 2023 21:10:51 +0200
-Message-ID: <20230917191119.218102256@linuxfoundation.org>
+Subject: [PATCH 5.15 225/511] nfs/blocklayout: Use the passed in gfp flags
+Date: Sun, 17 Sep 2023 21:10:52 +0200
+Message-ID: <20230917191119.241793040@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,158 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Currey <ruscur@russell.cc>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit eac030b22ea12cdfcbb2e941c21c03964403c63f ]
+[ Upstream commit 08b45fcb2d4675f6182fe0edc0d8b1fe604051fa ]
 
-lppaca_shared_proc() takes a pointer to the lppaca which is typically
-accessed through get_lppaca().  With DEBUG_PREEMPT enabled, this leads
-to checking if preemption is enabled, for example:
+This allocation should use the passed in GFP_ flags instead of
+GFP_KERNEL.  One places where this matters is in filelayout_pg_init_write()
+which uses GFP_NOFS as the allocation flags.
 
-  BUG: using smp_processor_id() in preemptible [00000000] code: grep/10693
-  caller is lparcfg_data+0x408/0x19a0
-  CPU: 4 PID: 10693 Comm: grep Not tainted 6.5.0-rc3 #2
-  Call Trace:
-    dump_stack_lvl+0x154/0x200 (unreliable)
-    check_preemption_disabled+0x214/0x220
-    lparcfg_data+0x408/0x19a0
-    ...
-
-This isn't actually a problem however, as it does not matter which
-lppaca is accessed, the shared proc state will be the same.
-vcpudispatch_stats_procfs_init() already works around this by disabling
-preemption, but the lparcfg code does not, erroring any time
-/proc/powerpc/lparcfg is accessed with DEBUG_PREEMPT enabled.
-
-Instead of disabling preemption on the caller side, rework
-lppaca_shared_proc() to not take a pointer and instead directly access
-the lppaca, bypassing any potential preemption checks.
-
-Fixes: f13c13a00512 ("powerpc: Stop using non-architected shared_proc field in lppaca")
-Signed-off-by: Russell Currey <ruscur@russell.cc>
-[mpe: Rework to avoid needing a definition in paca.h and lppaca.h]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230823055317.751786-4-mpe@ellerman.id.au
+Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/lppaca.h        | 11 +++++++++--
- arch/powerpc/platforms/pseries/lpar.c    | 10 +---------
- arch/powerpc/platforms/pseries/lparcfg.c |  4 ++--
- arch/powerpc/platforms/pseries/setup.c   |  2 +-
- drivers/cpuidle/cpuidle-pseries.c        |  8 +-------
- 5 files changed, 14 insertions(+), 21 deletions(-)
+ fs/nfs/blocklayout/dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/lppaca.h b/arch/powerpc/include/asm/lppaca.h
-index 5d509ba0550b5..1412e643122e4 100644
---- a/arch/powerpc/include/asm/lppaca.h
-+++ b/arch/powerpc/include/asm/lppaca.h
-@@ -45,6 +45,7 @@
- #include <asm/types.h>
- #include <asm/mmu.h>
- #include <asm/firmware.h>
-+#include <asm/paca.h>
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index acb1d22907daf..16412d6636e86 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -422,7 +422,7 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	int ret, i;
  
- /*
-  * The lppaca is the "virtual processor area" registered with the hypervisor,
-@@ -123,14 +124,20 @@ struct lppaca {
-  */
- #define LPPACA_OLD_SHARED_PROC		2
+ 	d->children = kcalloc(v->concat.volumes_count,
+-			sizeof(struct pnfs_block_dev), GFP_KERNEL);
++			sizeof(struct pnfs_block_dev), gfp_mask);
+ 	if (!d->children)
+ 		return -ENOMEM;
  
--static inline bool lppaca_shared_proc(struct lppaca *l)
-+#ifdef CONFIG_PPC_PSERIES
-+/*
-+ * All CPUs should have the same shared proc value, so directly access the PACA
-+ * to avoid false positives from DEBUG_PREEMPT.
-+ */
-+static inline bool lppaca_shared_proc(void)
- {
-+	struct lppaca *l = local_paca->lppaca_ptr;
-+
- 	if (!firmware_has_feature(FW_FEATURE_SPLPAR))
- 		return false;
- 	return !!(l->__old_status & LPPACA_OLD_SHARED_PROC);
- }
+@@ -451,7 +451,7 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	int ret, i;
  
--#ifdef CONFIG_PPC_PSERIES
- #define get_lppaca()	(get_paca()->lppaca_ptr)
- #endif
+ 	d->children = kcalloc(v->stripe.volumes_count,
+-			sizeof(struct pnfs_block_dev), GFP_KERNEL);
++			sizeof(struct pnfs_block_dev), gfp_mask);
+ 	if (!d->children)
+ 		return -ENOMEM;
  
-diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
-index 3df6bdfea475a..d133597a84ca0 100644
---- a/arch/powerpc/platforms/pseries/lpar.c
-+++ b/arch/powerpc/platforms/pseries/lpar.c
-@@ -638,16 +638,8 @@ static const struct proc_ops vcpudispatch_stats_freq_proc_ops = {
- 
- static int __init vcpudispatch_stats_procfs_init(void)
- {
--	/*
--	 * Avoid smp_processor_id while preemptible. All CPUs should have
--	 * the same value for lppaca_shared_proc.
--	 */
--	preempt_disable();
--	if (!lppaca_shared_proc(get_lppaca())) {
--		preempt_enable();
-+	if (!lppaca_shared_proc())
- 		return 0;
--	}
--	preempt_enable();
- 
- 	if (!proc_create("powerpc/vcpudispatch_stats", 0600, NULL,
- 					&vcpudispatch_stats_proc_ops))
-diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
-index f71eac74ea92a..19503a8797823 100644
---- a/arch/powerpc/platforms/pseries/lparcfg.c
-+++ b/arch/powerpc/platforms/pseries/lparcfg.c
-@@ -205,7 +205,7 @@ static void parse_ppp_data(struct seq_file *m)
- 	           ppp_data.active_system_procs);
- 
- 	/* pool related entries are appropriate for shared configs */
--	if (lppaca_shared_proc(get_lppaca())) {
-+	if (lppaca_shared_proc()) {
- 		unsigned long pool_idle_time, pool_procs;
- 
- 		seq_printf(m, "pool=%d\n", ppp_data.pool_num);
-@@ -529,7 +529,7 @@ static int pseries_lparcfg_data(struct seq_file *m, void *v)
- 		   partition_potential_processors);
- 
- 	seq_printf(m, "shared_processor_mode=%d\n",
--		   lppaca_shared_proc(get_lppaca()));
-+		   lppaca_shared_proc());
- 
- #ifdef CONFIG_PPC_BOOK3S_64
- 	seq_printf(m, "slb_size=%d\n", mmu_slb_size);
-diff --git a/arch/powerpc/platforms/pseries/setup.c b/arch/powerpc/platforms/pseries/setup.c
-index c2b3752684b5f..d25053755c8b8 100644
---- a/arch/powerpc/platforms/pseries/setup.c
-+++ b/arch/powerpc/platforms/pseries/setup.c
-@@ -816,7 +816,7 @@ static void __init pSeries_setup_arch(void)
- 	if (firmware_has_feature(FW_FEATURE_LPAR)) {
- 		vpa_init(boot_cpuid);
- 
--		if (lppaca_shared_proc(get_lppaca())) {
-+		if (lppaca_shared_proc()) {
- 			static_branch_enable(&shared_processor);
- 			pv_spinlocks_init();
- 		}
-diff --git a/drivers/cpuidle/cpuidle-pseries.c b/drivers/cpuidle/cpuidle-pseries.c
-index 7e7ab5597d7ac..0590001db6532 100644
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -410,13 +410,7 @@ static int __init pseries_idle_probe(void)
- 		return -ENODEV;
- 
- 	if (firmware_has_feature(FW_FEATURE_SPLPAR)) {
--		/*
--		 * Use local_paca instead of get_lppaca() since
--		 * preemption is not disabled, and it is not required in
--		 * fact, since lppaca_ptr does not need to be the value
--		 * associated to the current CPU, it can be from any CPU.
--		 */
--		if (lppaca_shared_proc(local_paca->lppaca_ptr)) {
-+		if (lppaca_shared_proc()) {
- 			cpuidle_state_table = shared_states;
- 			max_idle_state = ARRAY_SIZE(shared_states);
- 		} else {
 -- 
 2.40.1
 
