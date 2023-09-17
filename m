@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68906FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED57C433C7;
-	Sun, 17 Sep 2023 19:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7ECA6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A30FC433C8;
+	Sun, 17 Sep 2023 19:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980556;
-	bh=deQrrf+xOBM3E4OjB7S/Xs4BBH3wEnyP5OtHoo93mSQ=;
+	s=korg; t=1694980559;
+	bh=qxLrSLDlJZfoxdtXjBYxj+k4090HCFnNSeHQODBvEWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDsNF3JkWtkpQ4gP1j99Scrvrx6qWpDK42fEhc1FmJCKZ/e2vmsisOapVONHDrqgv
-	 ZU9FvvBdD1vebWzM8BgUMAgsujd99zjpC1n2Dt9T8Lxm2LSwkh3D+TiHiHJPd+o8DO
-	 anSH2XbF9zE49lSSOtjR9JRPRkZmTT3+aJVBSgNE=
+	b=XthQswGu0Z5KGqZ1wrWI89zjevzfsHHskLtc98UDz2hJszeYBQlly+2t3y1s/VgUI
+	 2wVHWymjTmIC6BWgIghgAwyx7Bx0ijDIo2flw3VL9evabjNub1UGgJAc7rK8b3++Ig
+	 zb43oapD2xFEFWLyPci2bQ9fgtcVOTAEAo3rOJRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.5 225/285] KVM: SVM: Get source vCPUs from source VM for SEV-ES intrahost migration
-Date: Sun, 17 Sep 2023 21:13:45 +0200
-Message-ID: <20230917191059.266184112@linuxfoundation.org>
+Subject: [PATCH 6.5 226/285] KVM: nSVM: Check instead of asserting on nested TSC scaling support
+Date: Sun, 17 Sep 2023 21:13:46 +0200
+Message-ID: <20230917191059.295226908@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,73 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit f1187ef24eb8f36e8ad8106d22615ceddeea6097 upstream.
+commit 7cafe9b8e22bb3d77f130c461aedf6868c4aaf58 upstream.
 
-Fix a goof where KVM tries to grab source vCPUs from the destination VM
-when doing intrahost migration.  Grabbing the wrong vCPU not only hoses
-the guest, it also crashes the host due to the VMSA pointer being left
-NULL.
+Check for nested TSC scaling support on nested SVM VMRUN instead of
+asserting that TSC scaling is exposed to L1 if L1's MSR_AMD64_TSC_RATIO
+has diverged from KVM's default.  Userspace can trigger the WARN at will
+by writing the MSR and then updating guest CPUID to hide the feature
+(modifying guest CPUID is allowed anytime before KVM_RUN).  E.g. hacking
+KVM's state_test selftest to do
 
-  BUG: unable to handle page fault for address: ffffe38687000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] SMP NOPTI
-  CPU: 39 PID: 17143 Comm: sev_migrate_tes Tainted: GO       6.5.0-smp--fff2e47e6c3b-next #151
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.28.0 07/10/2023
-  RIP: 0010:__free_pages+0x15/0xd0
-  RSP: 0018:ffff923fcf6e3c78 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffffe38687000000 RCX: 0000000000000100
-  RDX: 0000000000000100 RSI: 0000000000000000 RDI: ffffe38687000000
-  RBP: ffff923fcf6e3c88 R08: ffff923fcafb0000 R09: 0000000000000000
-  R10: 0000000000000000 R11: ffffffff83619b90 R12: ffff923fa9540000
-  R13: 0000000000080007 R14: ffff923f6d35d000 R15: 0000000000000000
-  FS:  0000000000000000(0000) GS:ffff929d0d7c0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: ffffe38687000000 CR3: 0000005224c34005 CR4: 0000000000770ee0
-  PKRU: 55555554
+		vcpu_set_msr(vcpu, MSR_AMD64_TSC_RATIO, 0);
+		vcpu_clear_cpuid_feature(vcpu, X86_FEATURE_TSCRATEMSR);
+
+after restoring state in a new VM+vCPU yields an endless supply of:
+
+  ------------[ cut here ]------------
+  WARNING: CPU: 164 PID: 62565 at arch/x86/kvm/svm/nested.c:699
+           nested_vmcb02_prepare_control+0x3d6/0x3f0 [kvm_amd]
   Call Trace:
    <TASK>
-   sev_free_vcpu+0xcb/0x110 [kvm_amd]
-   svm_vcpu_free+0x75/0xf0 [kvm_amd]
-   kvm_arch_vcpu_destroy+0x36/0x140 [kvm]
-   kvm_destroy_vcpus+0x67/0x100 [kvm]
-   kvm_arch_destroy_vm+0x161/0x1d0 [kvm]
-   kvm_put_kvm+0x276/0x560 [kvm]
-   kvm_vm_release+0x25/0x30 [kvm]
-   __fput+0x106/0x280
-   ____fput+0x12/0x20
-   task_work_run+0x86/0xb0
-   do_exit+0x2e3/0x9c0
-   do_group_exit+0xb1/0xc0
-   __x64_sys_exit_group+0x1b/0x20
+   enter_svm_guest_mode+0x114/0x560 [kvm_amd]
+   nested_svm_vmrun+0x260/0x330 [kvm_amd]
+   vmrun_interception+0x29/0x30 [kvm_amd]
+   svm_invoke_exit_handler+0x35/0x100 [kvm_amd]
+   svm_handle_exit+0xe7/0x180 [kvm_amd]
+   kvm_arch_vcpu_ioctl_run+0x1eab/0x2570 [kvm]
+   kvm_vcpu_ioctl+0x4c9/0x5b0 [kvm]
+   __se_sys_ioctl+0x7a/0xc0
+   __x64_sys_ioctl+0x21/0x30
    do_syscall_64+0x41/0x90
    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-   </TASK>
-  CR2: ffffe38687000000
+  RIP: 0033:0x45ca1b
 
-Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
+Note, the nested #VMEXIT path has the same flaw, but needs a different
+fix and will be handled separately.
+
+Fixes: 5228eb96a487 ("KVM: x86: nSVM: implement nested TSC scaling")
+Cc: Maxim Levitsky <mlevitsk@redhat.com>
 Cc: stable@vger.kernel.org
-Cc: Peter Gonda <pgonda@google.com>
-Reviewed-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/20230825022357.2852133-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20230729011608.1065019-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1725,7 +1725,7 @@ static void sev_migrate_from(struct kvm
- 		 * Note, the source is not required to have the same number of
- 		 * vCPUs as the destination when migrating a vanilla SEV VM.
- 		 */
--		src_vcpu = kvm_get_vcpu(dst_kvm, i);
-+		src_vcpu = kvm_get_vcpu(src_kvm, i);
- 		src_svm = to_svm(src_vcpu);
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -695,10 +695,9 @@ static void nested_vmcb02_prepare_contro
  
- 		/*
+ 	vmcb02->control.tsc_offset = vcpu->arch.tsc_offset;
+ 
+-	if (svm->tsc_ratio_msr != kvm_caps.default_tsc_scaling_ratio) {
+-		WARN_ON(!svm->tsc_scaling_enabled);
++	if (svm->tsc_scaling_enabled &&
++	    svm->tsc_ratio_msr != kvm_caps.default_tsc_scaling_ratio)
+ 		nested_svm_update_tsc_ratio_msr(vcpu);
+-	}
+ 
+ 	vmcb02->control.int_ctl             =
+ 		(svm->nested.ctl.int_ctl & int_ctl_vmcb12_bits) |
 
 
