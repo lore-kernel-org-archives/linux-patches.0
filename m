@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAF17461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35D3C433C7;
-	Sun, 17 Sep 2023 20:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D17461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E77C433C9;
+	Sun, 17 Sep 2023 20:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982002;
-	bh=UAGG6Rg7gfRtQCEXXMNndJdGYaa9zXZMvJo3O0zwtqk=;
+	s=korg; t=1694982006;
+	bh=0rcik/4Vv7I/6RpILEDRp0A+/z0KpqI85adwQEDcwPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExBvBF6GwYZP9+LFJIShm2xAfRE59FWYLekVwIWTVg3aZNk5GrkRYNRaKUPkauJOJ
-	 nuzY5qgsQdkexmWKCc8YygjoK2Krn8hog08LYq4MXyTVdNyjG1UqqTwdwEYDKIn1D3
-	 wbg9nFBzri4l1NArDRbJDDqTnsrNWfhcCT2ByvSE=
+	b=xf+EhwOR9rZmnOg0618wjPFtcnz7zaogd7pTLlNjeffDSXZPpIdXZPHvjeU3tAYwi
+	 i3nRh1J7/fbMmCMoFBRmDS4Cf+pedHEB5xU57FSjBK0WtFDlUXif5dOk4PEqeui6yh
+	 PMKPpwhXbSBkrTgplpGADIgzLHKq1+a3SHeJq37E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/219] platform/mellanox: mlxbf-tmfifo: Drop jumbo frames
-Date: Sun, 17 Sep 2023 21:15:31 +0200
-Message-ID: <20230917191048.315421134@linuxfoundation.org>
+Subject: [PATCH 5.15 138/511] arm64: dts: qcom: pmk8350: fix ADC-TM compatible string
+Date: Sun, 17 Sep 2023 21:09:25 +0200
+Message-ID: <20230917191117.194987716@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,105 +37,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liming Sun <limings@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit fc4c655821546239abb3cf4274d66b9747aa87dd ]
+[ Upstream commit 435a73d7377ceb29c1a22d2711dd85c831b40c45 ]
 
-This commit drops over-sized network packets to avoid tmfifo
-queue stuck.
+The commit b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for
+pmk8350") for the ADC TM (thermal monitoring device) have used the
+compatible string from the vendor kernel ("qcom,adc-tm7"). Use the
+proper compatible string that is defined in the upstream kernel
+("qcom,spmi-adc-tm5-gen2").
 
-Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/9318936c2447f76db475c985ca6d91f057efcd41.1693322547.git.limings@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230707123027.1510723-6-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index ee8648a271fda..a04ff89a7ec44 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -205,7 +205,7 @@ static u8 mlxbf_tmfifo_net_default_mac[ETH_ALEN] = {
- static efi_char16_t mlxbf_tmfifo_efi_name[] = L"RshimMacAddr";
+diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+index fc38f77d12a36..9e99fcf269dfd 100644
+--- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+@@ -45,7 +45,7 @@ pmk8350_vadc: adc@3100 {
+ 		};
  
- /* Maximum L2 header length. */
--#define MLXBF_TMFIFO_NET_L2_OVERHEAD	36
-+#define MLXBF_TMFIFO_NET_L2_OVERHEAD	(ETH_HLEN + VLAN_HLEN)
- 
- /* Supported virtio-net features. */
- #define MLXBF_TMFIFO_NET_FEATURES \
-@@ -623,13 +623,14 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
-  * flag is set.
-  */
- static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
--				     struct vring_desc *desc,
-+				     struct vring_desc **desc,
- 				     bool is_rx, bool *vring_change)
- {
- 	struct mlxbf_tmfifo *fifo = vring->fifo;
- 	struct virtio_net_config *config;
- 	struct mlxbf_tmfifo_msg_hdr hdr;
- 	int vdev_id, hdr_len;
-+	bool drop_rx = false;
- 
- 	/* Read/Write packet header. */
- 	if (is_rx) {
-@@ -649,8 +650,8 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 			if (ntohs(hdr.len) >
- 			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
- 					      config->mtu) +
--			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
--				return;
-+					      MLXBF_TMFIFO_NET_L2_OVERHEAD)
-+				drop_rx = true;
- 		} else {
- 			vdev_id = VIRTIO_ID_CONSOLE;
- 			hdr_len = 0;
-@@ -665,16 +666,25 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 
- 			if (!tm_dev2)
- 				return;
--			vring->desc = desc;
-+			vring->desc = *desc;
- 			vring = &tm_dev2->vrings[MLXBF_TMFIFO_VRING_RX];
- 			*vring_change = true;
- 		}
-+
-+		if (drop_rx && !IS_VRING_DROP(vring)) {
-+			if (vring->desc_head)
-+				mlxbf_tmfifo_release_pkt(vring);
-+			*desc = &vring->drop_desc;
-+			vring->desc_head = *desc;
-+			vring->desc = *desc;
-+		}
-+
- 		vring->pkt_len = ntohs(hdr.len) + hdr_len;
- 	} else {
- 		/* Network virtio has an extra header. */
- 		hdr_len = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			   sizeof(struct virtio_net_hdr) : 0;
--		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, desc);
-+		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, *desc);
- 		hdr.type = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			    VIRTIO_ID_NET : VIRTIO_ID_CONSOLE;
- 		hdr.len = htons(vring->pkt_len - hdr_len);
-@@ -723,7 +733,7 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 
- 	/* Beginning of a packet. Start to Rx/Tx packet header. */
- 	if (vring->pkt_len == 0) {
--		mlxbf_tmfifo_rxtx_header(vring, desc, is_rx, &vring_change);
-+		mlxbf_tmfifo_rxtx_header(vring, &desc, is_rx, &vring_change);
- 		(*avail)--;
- 
- 		/* Return if new packet is for another ring. */
+ 		pmk8350_adc_tm: adc-tm@3400 {
+-			compatible = "qcom,adc-tm7";
++			compatible = "qcom,spmi-adc-tm5-gen2";
+ 			reg = <0x3400>;
+ 			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "threshold";
 -- 
 2.40.1
 
