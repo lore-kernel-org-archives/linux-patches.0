@@ -1,52 +1,26 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99B2185F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 22:38:41 +0000 (UTC)
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-68fac346f6aso3600672b3a.3
-        for <patches@lists.linux.dev>; Sun, 17 Sep 2023 15:38:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20230601.gappssmtp.com; s=20230601; t=1694990321; x=1695595121; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ke+r8qXwhOQOEjkcPa800K8AHAdSog2oBC7oPzo38JE=;
-        b=e2Hn+Dk5C+PzPY7R91GhKdeAfZhfaH6EBuK9Z/yUpJNgv8iTvknV6pvphhu4tW3KEo
-         peT7ayJ0990gKKPKsC0VRfTU52QqWMzdguGnYS5LIIfHtKcsieYSnvMyuRkyDswIMYvU
-         vVIoHriHHOH15XEd4TDTTI6ii8NWmHaVQfjr2IP+vy44NfPulOofWD2VQx++Mu7IzEKf
-         T9kHvcUVXZ/0/cBJMaF1eruIsdQcuk2i26oD8Qi0kRAosvKXaMlu2fh1jEbVhCLWmS4k
-         65vhY5Gxx58h/sG/2TlL1LqrKp2KiKQpIUYAvXg5ptk76/+3s6GKiJMFxRtdqTfqpGYW
-         cpJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694990321; x=1695595121;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ke+r8qXwhOQOEjkcPa800K8AHAdSog2oBC7oPzo38JE=;
-        b=Brd0oHrC5m6MOZooSRdEMDA/3P57o6DTSsyHYu9tqfrsR/z8HMTIkSj2bbURB7MjNx
-         EArgytWMT4XzD1peufqNWto2WbmO74bxWwWbMvUfzgAUl7PNOkL+kGjxxiuEr0On0AFb
-         qMS/2UTjI5aqblowuriG9gEw2LB1hMdrbgs4o8+ea05qIthQbnIk2mcGPZels18qyZjN
-         feN9xhmzTDqIp8MvFBbH+dvIg6O/tj0jm0TTKVIBCCmTNs2z8t/v3jYnRZ6rIO6Y4hx0
-         8Zsof3esVpLYCx1YyGNy4XRvSLFmQSokHt3XZlQJWzNT/QDTLhnP7P1xx5lQR5cW5Rg5
-         Hylg==
-X-Gm-Message-State: AOJu0YzVFthYGoQ/Y2KqrCNkdhEb1V6BlkyXrToxYcAIHymvhckQxAVe
-	XGgiaAmCwz6acMVkwYyeN9cM5A==
-X-Google-Smtp-Source: AGHT+IEoyN+Ko/vfHzQTCsklohWVs/1xyU3W3CJm23TtEgGeo8n/qm7u6KZZ2GYIzVYy18nvPVPyHg==
-X-Received: by 2002:a05:6a20:f38a:b0:149:602e:9233 with SMTP id qr10-20020a056a20f38a00b00149602e9233mr7133863pzb.26.1694990320910;
-        Sun, 17 Sep 2023 15:38:40 -0700 (PDT)
-Received: from dread.disaster.area (pa49-180-20-59.pa.nsw.optusnet.com.au. [49.180.20.59])
-        by smtp.gmail.com with ESMTPSA id bm1-20020a056a00320100b0068fbaea118esm6037350pfb.45.2023.09.17.15.38.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Sep 2023 15:38:40 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.96)
-	(envelope-from <david@fromorbit.com>)
-	id 1qi0PV-00263K-1r;
-	Mon, 18 Sep 2023 08:38:37 +1000
-Date: Mon, 18 Sep 2023 08:38:37 +1000
-From: Dave Chinner <david@fromorbit.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
-	kbusch@kernel.org, sagi@grimberg.me, axboe@fb.com,
-	willy@infradead.org, brauner@kernel.org, hare@suse.de,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4852E185F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 23:15:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=nv2p7fEiwt/74JfgCxfcZvTioovA33E8lFlj3CEAEjY=; b=vlYcZaSanHANq0jx23+xIJAUtb
+	R+pJ1pDaY+TTfzmF/RZ7PEagoPruiVqP4bwz2L2G1nj6+zWT0Rfp3Yvon+qVu6poFMFKsjrXddv8p
+	WKS/ZWK5SyBy7N+ldrYp3SXfpxAWyHNkJ05q/35j378ajKV5ZzgvyeZjPRFoUbV+B+NcwO5reZfqX
+	5rAJjkm1CY8Rxdwkl4CQfn4Gx1/guKtGIK7lMCMzeS93PQhtEVeWBcXtgChNmxKeonN0fL6FZQ/Rs
+	EkfoQi8/5LLxOtKmMGvQ+3ZudnmemS5E0EmaDei23ujrQTru96J4cafezjnM83wH83/5ThFPextK8
+	w2/sgiAQ==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1qi0yW-007KHa-Tb; Sun, 17 Sep 2023 23:14:48 +0000
+Date: Mon, 18 Sep 2023 00:14:48 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Dave Chinner <david@fromorbit.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, hch@infradead.org,
+	djwong@kernel.org, dchinner@redhat.com, kbusch@kernel.org,
+	sagi@grimberg.me, axboe@fb.com, brauner@kernel.org, hare@suse.de,
 	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
 	ziy@nvidia.com, ryan.roberts@arm.com, patches@lists.linux.dev,
 	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
@@ -54,8 +28,9 @@ Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
 	da.gomez@samsung.com, dan.helmick@samsung.com
 Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
  buffer-heads
-Message-ID: <ZQd/7RYfDZgvR0n2@dread.disaster.area>
+Message-ID: <ZQeIaN2WC+whc/OP@casper.infradead.org>
 References: <20230915213254.2724586-1-mcgrof@kernel.org>
+ <ZQd/7RYfDZgvR0n2@dread.disaster.area>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,74 +39,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230915213254.2724586-1-mcgrof@kernel.org>
+In-Reply-To: <ZQd/7RYfDZgvR0n2@dread.disaster.area>
 
-On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
-> Christoph added CONFIG_BUFFER_HEAD on v6.1 enabling a world where we can
-> live without buffer-heads. When we opt into that world we end up also
-> using the address space operations of the block device cache using
-> iomap. Since iomap supports higher order folios it means then that block
-> devices which do use the iomap aops can end up having a logical block
-> size or physical block size greater than PAGE_SIZE. We refer to these as
-> LBS devices. This in turn allows filesystems which support bs > 4k to be
-> enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
-> device then to take advantage of the recenlty posted work today to enable
-> LBS support for filesystems [0].
-
-Why do we need LBS devices to support bs > ps in XFS?
-
-As long as the filesystem block size is >= logical sector size of
-the device, XFS just doesn't care what the "block size" of the
-underlying block device is. i.e. XFS will allow minimum IO sizes of
-the logical sector size of the device for select metadata and
-sub-block direct IO, but otherwise all other IO will be aligned to
-filesystem block size and so the underlying device block sizes are
-completely irrelevant...
-
-> To experiment with larger LBA formtas you can also use kdevops and enable
-> CONFIG_QEMU_ENABLE_EXTRA_DRIVE_LARGEIO. That enables a ton of drives with
-> logical and physical block sizes >= 4k up to a desriable max target for
-> experimentation. Since filesystems today only support up to 32k sector sizes,
-> in practice you may only want to experiment up to 32k physical / logical.
+On Mon, Sep 18, 2023 at 08:38:37AM +1000, Dave Chinner wrote:
+> On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
+> > LBS devices. This in turn allows filesystems which support bs > 4k to be
+> > enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
+> > device then to take advantage of the recenlty posted work today to enable
+> > LBS support for filesystems [0].
 > 
-> Support for 64k sector sizes requires an XFS format change, which is something
-> Daniel Gomez has experimental patches for, in case folks are interested in
-> messing with.
+> Why do we need LBS devices to support bs > ps in XFS?
 
-Please don't do this without first talking to the upstream XFS
-developers about the intended use cases and design of the new
-format. Especially when the problem involves requiring a whole new
-journal header and indexing format to be implemented...
+It's the other way round -- we need the support in the page cache to
+reject sub-block-size folios (which is in the other patches) before we
+can sensibly talk about enabling any filesystems on top of LBS devices.
+Even XFS, or for that matter ext2 which support 16k block sizes on
+CONFIG_PAGE_SIZE_16K (or 64K) kernels need that support first.
 
-As a general rule, nobody should *ever* be writing patches to change
-the on-disk format of a -any- filesystem without first engaging the
-people who maintain that filesystem. Architecture and design come
-first, not implementation. The last thing we want is to have someone
-spend weeks or months on something that takes the experts half a
-minute to NACK because it is so obviously flawed....
+[snipping the parts I agree with; this should not be the first you're
+hearing about a format change to XFS]
 
-> Patch 6 could probably be squashed with patch 5, but I wanted to be
-> explicit about this, as this should be decided with the community.
+> > There might be a better way to do this than do deal with the switching
+> > of the aops dynamically, ideas welcomed!
 > 
-> There might be a better way to do this than do deal with the switching
-> of the aops dynamically, ideas welcomed!
+> Is it even safe to switch aops dynamically? We know there are
+> inherent race conditions in doing this w.r.t. mmap and page faults,
+> as the write fault part of the processing is directly dependent
+> on the page being correctly initialised during the initial
+> population of the page data (the "read fault" side of the write
+> fault).
+> 
+> Hence it's not generally considered safe to change aops from one
+> mechanism to another dynamically. Block devices can be mmap()d, but
+> I don't see anything in this patch set that ensures there are no
+> other users of the block device when the swaps are done. What am I
+> missing?
 
-Is it even safe to switch aops dynamically? We know there are
-inherent race conditions in doing this w.r.t. mmap and page faults,
-as the write fault part of the processing is directly dependent
-on the page being correctly initialised during the initial
-population of the page data (the "read fault" side of the write
-fault).
-
-Hence it's not generally considered safe to change aops from one
-mechanism to another dynamically. Block devices can be mmap()d, but
-I don't see anything in this patch set that ensures there are no
-other users of the block device when the swaps are done. What am I
-missing?
-
-Cheers,
-
-Dave.
--- 
-Dave Chinner
-david@fromorbit.com
+We need to evict all pages from the page cache before switching aops to
+prevent misinterpretation of folio->private.  If switching aops is even
+the right thing to do.  I don't see the problem with allowing buffer heads
+on block devices, but I haven't been involved with the discussion here.
