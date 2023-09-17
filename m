@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4D753B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3C9C433CA;
-	Sun, 17 Sep 2023 19:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B00A53B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9D5C433CA;
+	Sun, 17 Sep 2023 19:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979291;
-	bh=k0yT05CYt9De2FtZfPxNxDXYt02hNdLtQVKSblX1Rfc=;
+	s=korg; t=1694979294;
+	bh=oYBs3yF9q0z4kIXw+TtxtQtXGeDHKJQ1GNvp+WXAXLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GE7gsq4WrofNAUAnj3eOdoZ4qu5nMwCylv3hsU3AitCU4iCCa5HgFy3M2HjT91wL+
-	 a9lwtunauSS+lakQgSxxBu+bksojjXvwtOm5M6hfNfvP49kVp1U4xGjOVK2u1fx981
-	 8BtYtYA8vn1PUFYWcWDUrf7ursd8f0HfsQreVv04=
+	b=TvgJlXnxY5ti0rR23zcJD/fpUUdde7nerILeLWw0S6codDErH+/7GxZQl3o0HhDT5
+	 GaJtX2KPTGlykIHc7ekxD4I1xePlA8iZHxQ9a0AnUWKS7Q6cE9aphmktSiEWeMOJ0+
+	 0Xi6jqVHz/aheLJI5KrUex3NxF0xf94j8vWGzJtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 269/406] netfilter: ipset: add the missing IP_SET_HASH_WITH_NET0 macro for ip_set_hash_netportnet.c
-Date: Sun, 17 Sep 2023 21:12:03 +0200
-Message-ID: <20230917191108.346605016@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 270/406] netfilter: xt_u32: validate user space input
+Date: Sun, 17 Sep 2023 21:12:04 +0200
+Message-ID: <20230917191108.376558739@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,36 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <zengyhkyle@gmail.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-commit 050d91c03b28ca479df13dfb02bcd2c60dd6a878 upstream.
+commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
 
-The missing IP_SET_HASH_WITH_NET0 macro in ip_set_hash_netportnet can
-lead to the use of wrong `CIDR_POS(c)` for calculating array offsets,
-which can lead to integer underflow. As a result, it leads to slab
-out-of-bound access.
-This patch adds back the IP_SET_HASH_WITH_NET0 macro to
-ip_set_hash_netportnet to address the issue.
+The xt_u32 module doesn't validate the fields in the xt_u32 structure.
+An attacker may take advantage of this to trigger an OOB read by setting
+the size fields with a value beyond the arrays boundaries.
 
-Fixes: 886503f34d63 ("netfilter: ipset: actually allow allowable CIDR 0 in hash:net,port,net")
-Suggested-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Kyle Zeng <zengyhkyle@gmail.com>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Add a checkentry function to validate the structure.
+
+This was originally reported by the ZDI project (ZDI-CAN-18408).
+
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_netportnet.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/net/netfilter/ipset/ip_set_hash_netportnet.c
-+++ b/net/netfilter/ipset/ip_set_hash_netportnet.c
-@@ -35,6 +35,7 @@ MODULE_ALIAS("ip_set_hash:net,port,net")
- #define IP_SET_HASH_WITH_PROTO
- #define IP_SET_HASH_WITH_NETS
- #define IPSET_NET_COUNT 2
-+#define IP_SET_HASH_WITH_NET0
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -96,11 +96,32 @@ static bool u32_mt(const struct sk_buff
+ 	return ret ^ data->invert;
+ }
  
- /* IPv4 variant */
- 
++static int u32_mt_checkentry(const struct xt_mtchk_param *par)
++{
++	const struct xt_u32 *data = par->matchinfo;
++	const struct xt_u32_test *ct;
++	unsigned int i;
++
++	if (data->ntests > ARRAY_SIZE(data->tests))
++		return -EINVAL;
++
++	for (i = 0; i < data->ntests; ++i) {
++		ct = &data->tests[i];
++
++		if (ct->nnums > ARRAY_SIZE(ct->location) ||
++		    ct->nvalues > ARRAY_SIZE(ct->value))
++			return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static struct xt_match xt_u32_mt_reg __read_mostly = {
+ 	.name       = "u32",
+ 	.revision   = 0,
+ 	.family     = NFPROTO_UNSPEC,
+ 	.match      = u32_mt,
++	.checkentry = u32_mt_checkentry,
+ 	.matchsize  = sizeof(struct xt_u32),
+ 	.me         = THIS_MODULE,
+ };
 
 
