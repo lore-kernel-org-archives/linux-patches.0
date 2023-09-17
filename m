@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CD66FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F53FC433C7;
-	Sun, 17 Sep 2023 19:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D42F6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7098FC433C8;
+	Sun, 17 Sep 2023 19:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978947;
-	bh=gB3aweqeCD/Z5u0E3oYwPpoWNVpLKYcGvctZ9VNNXqc=;
+	s=korg; t=1694978950;
+	bh=QpDdtjAieqavsHRFTQxNSWB4mHrRg9BZUCplTGQ2JdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhwIzPvUT/sHdJyiGMyNlOW0Wzi343Bpu7Ck97gJ9pgoOnRke74HYsZQH9wzSiJdC
-	 oyxMHKB0onEDXXjVUJqECgwDAMgdkw3JCCWe8CSzuW9/MBl5tR0L+on75tnjpyzFU5
-	 irezAWJzH2OW9GiDebWM+nEXH9pHtw9C9lumnHPs=
+	b=VKTKzns3oUAtSSErqTM9d8Jefp+7j9IiApVYxbcIHu1HZv/KPBNlCCY9Ba8X/4Mjg
+	 lkN+IDRxLs3JUSA84C16iMfL1IPPYbb0khLFxe3utzzC56zKZCqr2R78K0rC+NEUAo
+	 Nbfc9t87ZcSihx6DCvGyfJrb3+ASsDXSHCEgJyyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/406] ARM: dts: BCM53573: Fix Ethernet info for Luxul devices
-Date: Sun, 17 Sep 2023 21:09:59 +0200
-Message-ID: <20230917191104.990164530@linuxfoundation.org>
+Subject: [PATCH 5.10 136/406] ARM: dts: BCM53573: Use updated "spi-gpio" binding properties
+Date: Sun, 17 Sep 2023 21:09:50 +0200
+Message-ID: <20230917191104.752735192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,80 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 44ad8207806973f4e4f7d870fff36cc01f494250 ]
+[ Upstream commit 2c0fd6b3d0778ceab40205315ccef74568490f17 ]
 
-Both Luxul's XAP devices (XAP-810 and XAP-1440) are access points that
-use a non-default design. They don't include switch but have a single
-Ethernet port and BCM54210E PHY connected to the Ethernet controller's
-MDIO bus.
+Switch away from deprecated properties.
 
-Support for those devices regressed due to two changes:
+This fixes:
+arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-sck: False schema does not allow [[3, 21, 0]]
+        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-miso: False schema does not allow [[3, 22, 0]]
+        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-mosi: False schema does not allow [[3, 23, 0]]
+        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: 'sck-gpios' is a required property
+        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: Unevaluated properties are not allowed ('gpio-miso', 'gpio-mosi', 'gpio-sck' were unexpected)
+        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
 
-1. Describing MDIO bus with switch
-After commit 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125
-rev 4 switch") Linux stopped probing for MDIO devices.
-
-2. Dropping hardcoded BCM54210E delays
-In commit fea7fda7f50a ("net: phy: broadcom: Fix RGMII delays
-configuration for BCM54210E") support for other PHY modes was added but
-that requires a proper "phy-mode" value in DT.
-
-Both above changes are correct (they don't need to be reverted or
-anything) but they need this fix for DT data to be correct and for Linux
-to work properly.
-
-Fixes: 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125 rev 4 switch")
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230713111145.14864-1-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20230707114004.2740-4-zajec5@gmail.com
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 13 +++++++++++++
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+ arch/arm/boot/dts/bcm947189acdbmr.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 57ca1cfaecd8e..00e688b45d981 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -46,3 +46,16 @@ restart {
- 		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 2e1a7e382cb7a..78c80a5d3f4fa 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -83,3 +83,16 @@ pcie0_chipcommon: chipcommon@0 {
- 		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
+diff --git a/arch/arm/boot/dts/bcm947189acdbmr.dts b/arch/arm/boot/dts/bcm947189acdbmr.dts
+index b0b8c774a37f9..1f0be30e54435 100644
+--- a/arch/arm/boot/dts/bcm947189acdbmr.dts
++++ b/arch/arm/boot/dts/bcm947189acdbmr.dts
+@@ -60,9 +60,9 @@ wps {
+ 	spi {
+ 		compatible = "spi-gpio";
+ 		num-chipselects = <1>;
+-		gpio-sck = <&chipcommon 21 0>;
+-		gpio-miso = <&chipcommon 22 0>;
+-		gpio-mosi = <&chipcommon 23 0>;
++		sck-gpios = <&chipcommon 21 0>;
++		miso-gpios = <&chipcommon 22 0>;
++		mosi-gpios = <&chipcommon 23 0>;
+ 		cs-gpios = <&chipcommon 24 0>;
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
 -- 
 2.40.1
 
