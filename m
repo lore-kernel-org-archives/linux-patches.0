@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7AA6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:41:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7E4C433C8;
-	Sun, 17 Sep 2023 20:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1409C6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:41:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAB2C433C8;
+	Sun, 17 Sep 2023 20:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983301;
-	bh=5VRU9LsGLN2msqDUAqiePfXnrI2p1zGE5om0dtLgd9Q=;
+	s=korg; t=1694983304;
+	bh=4KTDu8oG/KdDFNCJVscdnWRz/F0R+mFlYt+oMgrbpVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBA2wVud0GAKkmT/hkc1DfVTyNSjDxJpfOxAUzdHZYWFMEkzeX8gMYrUEn/kNt2ui
-	 97zyBLHl7BKsIXowmcPd+W/d4OSQh5ZqUYZ3ZxKloV5APZ3vETxt5bOjda/4Vs93sQ
-	 GFzH2Ys+So6UgEc84+MTuEgy1ovr2LtWZcojyl50=
+	b=YCBaAk88FTBMlxiMyOAR5Ob7tqXBcJuvXwgta76sFdAZ4ghHGx+HN2q6WqKl8siwV
+	 RB8l8nnEhjvJLiGqpqMbuNPLuVHE03RqGAaqwm3/rGL8QBlzpdNDV3HJJPIN4Isl9X
+	 yQ2rOA7mdwAcJgVb7yo2RcjXM361sTVT13RzZOKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 501/511] kcm: Fix memory leak in error path of kcm_sendmsg()
-Date: Sun, 17 Sep 2023 21:15:28 +0200
-Message-ID: <20230917191125.821671555@linuxfoundation.org>
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Subject: [PATCH 5.15 463/511] net/mlx5: Free IRQ rmap and notifier on kernel shutdown
+Date: Sun, 17 Sep 2023 21:14:50 +0200
+Message-ID: <20230917191124.933072594@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,65 +40,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit c821a88bd720b0046433173185fd841a100d44ad ]
+commit 314ded538e5f22e7610b1bf621402024a180ec80 upstream.
 
-syzbot reported a memory leak like below:
+The kernel IRQ system needs the irq affinity notifier to be clear
+before attempting to free the irq, see WARN_ON log below.
 
-BUG: memory leak
-unreferenced object 0xffff88810b088c00 (size 240):
-  comm "syz-executor186", pid 5012, jiffies 4294943306 (age 13.680s)
-  hex dump (first 32 bytes):
-    00 89 08 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff83e5d5ff>] __alloc_skb+0x1ef/0x230 net/core/skbuff.c:634
-    [<ffffffff84606e59>] alloc_skb include/linux/skbuff.h:1289 [inline]
-    [<ffffffff84606e59>] kcm_sendmsg+0x269/0x1050 net/kcm/kcmsock.c:815
-    [<ffffffff83e479c6>] sock_sendmsg_nosec net/socket.c:725 [inline]
-    [<ffffffff83e479c6>] sock_sendmsg+0x56/0xb0 net/socket.c:748
-    [<ffffffff83e47f55>] ____sys_sendmsg+0x365/0x470 net/socket.c:2494
-    [<ffffffff83e4c389>] ___sys_sendmsg+0xc9/0x130 net/socket.c:2548
-    [<ffffffff83e4c536>] __sys_sendmsg+0xa6/0x120 net/socket.c:2577
-    [<ffffffff84ad7bb8>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff84ad7bb8>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+On a normal driver unload we don't have this issue since we do the
+complete cleanup of the irq resources.
 
-In kcm_sendmsg(), kcm_tx_msg(head)->last_skb is used as a cursor to append
-newly allocated skbs to 'head'. If some bytes are copied, an error occurred,
-and jumped to out_error label, 'last_skb' is left unmodified. A later
-kcm_sendmsg() will use an obsoleted 'last_skb' reference, corrupting the
-'head' frag_list and causing the leak.
+To fix this, put the important resources cleanup in a helper function
+and use it in both normal driver unload and shutdown flows.
 
-This patch fixes this issue by properly updating the last allocated skb in
-'last_skb'.
+[ 4497.498434] ------------[ cut here ]------------
+[ 4497.498726] WARNING: CPU: 0 PID: 9 at kernel/irq/manage.c:2034 free_irq+0x295/0x340
+[ 4497.499193] Modules linked in:
+[ 4497.499386] CPU: 0 PID: 9 Comm: kworker/0:1 Tainted: G        W          6.4.0-rc4+ #10
+[ 4497.499876] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
+[ 4497.500518] Workqueue: events do_poweroff
+[ 4497.500849] RIP: 0010:free_irq+0x295/0x340
+[ 4497.501132] Code: 85 c0 0f 84 1d ff ff ff 48 89 ef ff d0 0f 1f 00 e9 10 ff ff ff 0f 0b e9 72 ff ff ff 49 8d 7f 28 ff d0 0f 1f 00 e9 df fd ff ff <0f> 0b 48 c7 80 c0 008
+[ 4497.502269] RSP: 0018:ffffc90000053da0 EFLAGS: 00010282
+[ 4497.502589] RAX: ffff888100949600 RBX: ffff88810330b948 RCX: 0000000000000000
+[ 4497.503035] RDX: ffff888100949600 RSI: ffff888100400490 RDI: 0000000000000023
+[ 4497.503472] RBP: ffff88810330c7e0 R08: ffff8881004005d0 R09: ffffffff8273a260
+[ 4497.503923] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881009ae000
+[ 4497.504359] R13: ffff8881009ae148 R14: 0000000000000000 R15: ffff888100949600
+[ 4497.504804] FS:  0000000000000000(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+[ 4497.505302] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 4497.505671] CR2: 00007fce98806298 CR3: 000000000262e005 CR4: 0000000000370ef0
+[ 4497.506104] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 4497.506540] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 4497.507002] Call Trace:
+[ 4497.507158]  <TASK>
+[ 4497.507299]  ? free_irq+0x295/0x340
+[ 4497.507522]  ? __warn+0x7c/0x130
+[ 4497.507740]  ? free_irq+0x295/0x340
+[ 4497.507963]  ? report_bug+0x171/0x1a0
+[ 4497.508197]  ? handle_bug+0x3c/0x70
+[ 4497.508417]  ? exc_invalid_op+0x17/0x70
+[ 4497.508662]  ? asm_exc_invalid_op+0x1a/0x20
+[ 4497.508926]  ? free_irq+0x295/0x340
+[ 4497.509146]  mlx5_irq_pool_free_irqs+0x48/0x90
+[ 4497.509421]  mlx5_irq_table_free_irqs+0x38/0x50
+[ 4497.509714]  mlx5_core_eq_free_irqs+0x27/0x40
+[ 4497.509984]  shutdown+0x7b/0x100
+[ 4497.510184]  pci_device_shutdown+0x30/0x60
+[ 4497.510440]  device_shutdown+0x14d/0x240
+[ 4497.510698]  kernel_power_off+0x30/0x70
+[ 4497.510938]  process_one_work+0x1e6/0x3e0
+[ 4497.511183]  worker_thread+0x49/0x3b0
+[ 4497.511407]  ? __pfx_worker_thread+0x10/0x10
+[ 4497.511679]  kthread+0xe0/0x110
+[ 4497.511879]  ? __pfx_kthread+0x10/0x10
+[ 4497.512114]  ret_from_fork+0x29/0x50
+[ 4497.512342]  </TASK>
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-and-tested-by: syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6f98de741f7dbbfc4ccb
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9c2d08010963 ("net/mlx5: Free irqs only on shutdown callback")
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 43005bba2d407..2d06617e89891 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1073,6 +1073,8 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
+@@ -138,18 +138,23 @@ out:
+ 	return ret;
+ }
  
- 	if (head != kcm->seq_skb)
- 		kfree_skb(head);
-+	else if (copied)
-+		kcm_tx_msg(head)->last_skb = skb;
+-static void irq_release(struct mlx5_irq *irq)
++static void mlx5_system_free_irq(struct mlx5_irq *irq)
+ {
+-	struct mlx5_irq_pool *pool = irq->pool;
+-
+-	xa_erase(&pool->irqs, irq->index);
+ 	/* free_irq requires that affinity and rmap will be cleared
+ 	 * before calling it. This is why there is asymmetry with set_rmap
+ 	 * which should be called after alloc_irq but before request_irq.
+ 	 */
+ 	irq_set_affinity_hint(irq->irqn, NULL);
+-	free_cpumask_var(irq->mask);
+ 	free_irq(irq->irqn, &irq->nh);
++}
++
++static void irq_release(struct mlx5_irq *irq)
++{
++	struct mlx5_irq_pool *pool = irq->pool;
++
++	xa_erase(&pool->irqs, irq->index);
++	mlx5_system_free_irq(irq);
++	free_cpumask_var(irq->mask);
+ 	kfree(irq);
+ }
  
- 	err = sk_stream_error(sk, msg->msg_flags, err);
+@@ -556,7 +561,7 @@ static void mlx5_irq_pool_free_irqs(stru
+ 	unsigned long index;
  
--- 
-2.40.1
-
+ 	xa_for_each(&pool->irqs, index, irq)
+-		free_irq(irq->irqn, &irq->nh);
++		mlx5_system_free_irq(irq);
+ }
+ 
+ static void mlx5_irq_pools_free_irqs(struct mlx5_irq_table *table)
 
 
