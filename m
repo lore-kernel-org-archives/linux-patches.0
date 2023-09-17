@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C346FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:03:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E22BC433C7;
-	Sun, 17 Sep 2023 20:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013976FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:03:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCEFC433C9;
+	Sun, 17 Sep 2023 20:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980981;
-	bh=P0sjx+iniFkqZEYOmsetBCnmkwwlHphkPzoVxeFZrps=;
+	s=korg; t=1694980984;
+	bh=CZdlYMkaBkc4Dha1iXay2XjvT7Dj3S88/iHjkQgn/b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMDK0qEOicd2W0lu+lyVSz0h1YSDWsiImmh9Q5vBPWtsWWW9KlJHV81Gr8/30RrKM
-	 expo0PpnwEFTeVooDq8KlrwwSSL7FvSxgNMGNEjn5asImb4oV0C8O4PBWOLPMWWbsA
-	 +6UtDGoA3WeomMES0kyA5I12kizyLAGjnIYp3JqU=
+	b=r6wJUVwnRkqpAzCHXbfr0JV2at8x+4vCYqKzQoPsgvGCcRDG2vLlHIlXuc/GZZtPF
+	 6ov6J/Vi9TALE/UCYv7q3QM0zN0h+EsFk0pNHgPnZDWiFcKjCGzOGfuVGgPqhzKgSa
+	 vSSbH9xGFe0OAy0dyflOTZ5vfL5CW9D25EvVKiHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Riccardo Mancini <rickyman7@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/219] perf trace: Really free the evsel->priv area
-Date: Sun, 17 Sep 2023 21:13:12 +0200
-Message-ID: <20230917191043.350400134@linuxfoundation.org>
+Subject: [PATCH 6.1 066/219] pwm: atmel-tcb: Convert to platform remove callback returning void
+Date: Sun, 17 Sep 2023 21:13:13 +0200
+Message-ID: <20230917191043.380915891@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -38,103 +35,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 7962ef13651a9163f07b530607392ea123482e8a ]
+[ Upstream commit 9609284a76978daf53a54e05cff36873a75e4d13 ]
 
-In 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in
-evsel->priv") it only was freeing if strcmp(evsel->tp_format->system,
-"syscalls") returned zero, while the corresponding initialization of
-evsel->priv was being performed if it was _not_ zero, i.e. if the tp
-system wasn't 'syscalls'.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Just stop looking for that and free it if evsel->priv was set, which
-should be equivalent.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Also use the pre-existing evsel_trace__delete() function.
-
-This resolves these leaks, detected with:
-
-  $ make EXTRA_CFLAGS="-fsanitize=address" BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools-next -C tools/perf install-bin
-
-  =================================================================
-  ==481565==ERROR: LeakSanitizer: detected memory leaks
-
-  Direct leak of 40 byte(s) in 1 object(s) allocated from:
-      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
-      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
-      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
-      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
-      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
-      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
-      #6 0x540e8b in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3212
-      #7 0x540e8b in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
-      #8 0x540e8b in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
-      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
-      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
-      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
-      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
-      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
-
-  Direct leak of 40 byte(s) in 1 object(s) allocated from:
-      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
-      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
-      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
-      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
-      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
-      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
-      #6 0x540dd1 in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3205
-      #7 0x540dd1 in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
-      #8 0x540dd1 in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
-      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
-      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
-      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
-      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
-      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
-
-  SUMMARY: AddressSanitizer: 80 byte(s) leaked in 2 allocation(s).
-  [root@quaco ~]#
-
-With this we plug all leaks with "perf trace sleep 1".
-
-Fixes: 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in evsel->priv")
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Riccardo Mancini <rickyman7@gmail.com>
-Link: https://lore.kernel.org/lkml/20230719202951.534582-5-acme@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: c11622324c02 ("pwm: atmel-tcb: Fix resource freeing in error path and remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-atmel-tcb.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 6392fcf2610c4..93dab6423a048 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3124,13 +3124,8 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
- 	struct evsel *evsel;
- 
- 	evlist__for_each_entry(evlist, evsel) {
--		struct evsel_trace *et = evsel->priv;
--
--		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
--			continue;
--
--		zfree(&et->fmt);
--		free(et);
-+		evsel_trace__delete(evsel->priv);
-+		evsel->priv = NULL;
- 	}
+diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
+index 2837b4ce8053c..4a116dc44f6e7 100644
+--- a/drivers/pwm/pwm-atmel-tcb.c
++++ b/drivers/pwm/pwm-atmel-tcb.c
+@@ -500,7 +500,7 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+ 	return err;
  }
+ 
+-static int atmel_tcb_pwm_remove(struct platform_device *pdev)
++static void atmel_tcb_pwm_remove(struct platform_device *pdev)
+ {
+ 	struct atmel_tcb_pwm_chip *tcbpwm = platform_get_drvdata(pdev);
+ 
+@@ -509,8 +509,6 @@ static int atmel_tcb_pwm_remove(struct platform_device *pdev)
+ 	clk_disable_unprepare(tcbpwm->slow_clk);
+ 	clk_put(tcbpwm->slow_clk);
+ 	clk_put(tcbpwm->clk);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id atmel_tcb_pwm_dt_ids[] = {
+@@ -564,7 +562,7 @@ static struct platform_driver atmel_tcb_pwm_driver = {
+ 		.pm = &atmel_tcb_pwm_pm_ops,
+ 	},
+ 	.probe = atmel_tcb_pwm_probe,
+-	.remove = atmel_tcb_pwm_remove,
++	.remove_new = atmel_tcb_pwm_remove,
+ };
+ module_platform_driver(atmel_tcb_pwm_driver);
  
 -- 
 2.40.1
