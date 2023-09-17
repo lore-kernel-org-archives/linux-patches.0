@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8830746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235BCC433C7;
-	Sun, 17 Sep 2023 20:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32518746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D40C433C8;
+	Sun, 17 Sep 2023 20:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983109;
-	bh=bviwq4gOy3W3zxDUzsLyDq//cb0obuLMYfmcD/O//v0=;
+	s=korg; t=1694983113;
+	bh=F5zepUs3q2u5xyXulgX6Y49kxeguLCd99ID8Xm3e+SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjxJuBwXaJgAFmzTUyGZZ2wQOlC39RkZ1y6pX/hybRC1H2qf1FBG40VbISbTJFMgV
-	 HYS2TS2lmAmyTVm2GfIPHzLwETk7jzIG7knKMn4Pi4DVatwAlrF/BnSBoO9OpBgLgF
-	 ym/lfs8Yqy40RoWi1YdXxYqXpjj+2gF5mzr6lXhg=
+	b=xQVKBudh93fZeEYSzFTEvWsO3S9BwDAtlXuaQ4MGn9yJMK9caWPHucwVrERyc8cBq
+	 GqPglOe6mbPbDnftmUFbiCSNobIZSl3ppCWl/lsBPvZ+tfWELSBf4pjg7z2OlNqCl/
+	 K2LR+bmMe1k/iYEIrgazy5PdpMX7NU7c2wnLbslM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Olga Zaborska <olga.zaborska@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 446/511] igc: Change IGC_MIN to allow set rx/tx value between 64 and 80
-Date: Sun, 17 Sep 2023 21:14:33 +0200
-Message-ID: <20230917191124.521955984@linuxfoundation.org>
+Subject: [PATCH 5.15 447/511] igbvf: Change IGBVF_MIN to allow set rx/tx value between 64 and 80
+Date: Sun, 17 Sep 2023 21:14:34 +0200
+Message-ID: <20230917191124.545096416@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -43,40 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Olga Zaborska <olga.zaborska@intel.com>
 
-[ Upstream commit 5aa48279712e1f134aac908acde4df798955a955 ]
+[ Upstream commit 8360717524a24a421c36ef8eb512406dbd42160a ]
 
 Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
-value between 64 and 80. All igc devices can use as low as 64 descriptors.
-This change will unify igc with other drivers.
+value between 64 and 80. All igbvf devices can use as low as 64 descriptors.
+This change will unify igbvf with other drivers.
 Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
 
-Fixes: 0507ef8a0372 ("igc: Add transmit and receive fastpath and interrupt handlers")
+Fixes: d4e0fe01a38a ("igbvf: add new driver to support 82576 virtual functions")
 Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h | 4 ++--
+ drivers/net/ethernet/intel/igbvf/igbvf.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 192fee9e72b05..e09ca21b8e3fe 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -359,11 +359,11 @@ static inline u32 igc_rss_type(const union igc_adv_rx_desc *rx_desc)
- /* TX/RX descriptor defines */
- #define IGC_DEFAULT_TXD		256
- #define IGC_DEFAULT_TX_WORK	128
--#define IGC_MIN_TXD		80
-+#define IGC_MIN_TXD		64
- #define IGC_MAX_TXD		4096
+diff --git a/drivers/net/ethernet/intel/igbvf/igbvf.h b/drivers/net/ethernet/intel/igbvf/igbvf.h
+index 975eb47ee04df..b39fca9827dc2 100644
+--- a/drivers/net/ethernet/intel/igbvf/igbvf.h
++++ b/drivers/net/ethernet/intel/igbvf/igbvf.h
+@@ -39,11 +39,11 @@ enum latency_range {
+ /* Tx/Rx descriptor defines */
+ #define IGBVF_DEFAULT_TXD	256
+ #define IGBVF_MAX_TXD		4096
+-#define IGBVF_MIN_TXD		80
++#define IGBVF_MIN_TXD		64
  
- #define IGC_DEFAULT_RXD		256
--#define IGC_MIN_RXD		80
-+#define IGC_MIN_RXD		64
- #define IGC_MAX_RXD		4096
+ #define IGBVF_DEFAULT_RXD	256
+ #define IGBVF_MAX_RXD		4096
+-#define IGBVF_MIN_RXD		80
++#define IGBVF_MIN_RXD		64
  
- /* Supported Rx Buffer Sizes */
+ #define IGBVF_MIN_ITR_USECS	10 /* 100000 irq/sec */
+ #define IGBVF_MAX_ITR_USECS	10000 /* 100    irq/sec */
 -- 
 2.40.1
 
