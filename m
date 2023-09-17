@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C117461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE2FC433C8;
-	Sun, 17 Sep 2023 20:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A887461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642ECC433C7;
+	Sun, 17 Sep 2023 20:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981260;
-	bh=uT/sJUp9iGsGjCSW9nEcTg5zmwRDAU15p3JrLoa+dwg=;
+	s=korg; t=1694981263;
+	bh=mDxW0dMuoy4IebjiZxbdo4XOQzl3zJFyhOCbdUmC9SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3fmQRtXJFdCg/4dvrwqAVxKqoq8tKT1cSGiUW/xNDHRPXPkxSlW4Ae1CE9bgoiJ9
-	 NhWLdFTECPZyajrTOSASkfaJRKQsrXNclV0yFOeINdZTk0wh5sgKfSns60BPxnNuSa
-	 W8lDrmSEG0brqBkfiio9QCp8CixI5QgJMABXDWoU=
+	b=AX2aBZECA73ZJc2Mv+v0agN+OFrxoeIzcrsBP6+dAuHdbZZpu2aN3hQak06H5lna4
+	 j2W5up67Aw0m3F1XpDGhRTABn5y8O0Mkb5FmCJem1SUUH3alwk+pumgyE3s/MgGRmk
+	 vRA0d5wGSuosWU6fyUgx6v9YNv22sZ25YfG3qCZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhao <yan.y.zhao@intel.com>,
-	Yongwei Ma <yongwei.ma@intel.com>,
-	Zhi Wang <zhi.a.wang@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/219] drm/i915/gvt: Drop unused helper intel_vgpu_reset_gtt()
-Date: Sun, 17 Sep 2023 21:13:43 +0200
-Message-ID: <20230917191044.444659382@linuxfoundation.org>
+Subject: [PATCH 5.15 030/511] security: keys: perform capable check only on privileged operations
+Date: Sun, 17 Sep 2023 21:07:37 +0200
+Message-ID: <20230917191114.558860169@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,78 +34,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-[ Upstream commit a90c367e5af63880008e21dd199dac839e0e9e0f ]
+[ Upstream commit 2d7f105edbb3b2be5ffa4d833abbf9b6965e9ce7 ]
 
-Drop intel_vgpu_reset_gtt() as it no longer has any callers.  In addition
-to eliminating dead code, this eliminates the last possible scenario where
-__kvmgt_protect_table_find() can be reached without holding vgpu_lock.
-Requiring vgpu_lock to be held when calling __kvmgt_protect_table_find()
-will allow a protecting the gfn hash with vgpu_lock without too much fuss.
+If the current task fails the check for the queried capability via
+`capable(CAP_SYS_ADMIN)` LSMs like SELinux generate a denial message.
+Issuing such denial messages unnecessarily can lead to a policy author
+granting more privileges to a subject than needed to silence them.
 
-No functional change intended.
+Reorder CAP_SYS_ADMIN checks after the check whether the operation is
+actually privileged.
 
-Fixes: ba25d977571e ("drm/i915/gvt: Do not destroy ppgtt_mm during vGPU D3->D0.")
-Reviewed-by: Yan Zhao <yan.y.zhao@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Reviewed-by: Zhi Wang <zhi.a.wang@intel.com>
-Link: https://lore.kernel.org/r/20230729013535.1070024-11-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/gtt.c | 18 ------------------
- drivers/gpu/drm/i915/gvt/gtt.h |  1 -
- 2 files changed, 19 deletions(-)
+ security/keys/keyctl.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gvt/gtt.c b/drivers/gpu/drm/i915/gvt/gtt.c
-index 980d671ac3595..79bf1be68d8cf 100644
---- a/drivers/gpu/drm/i915/gvt/gtt.c
-+++ b/drivers/gpu/drm/i915/gvt/gtt.c
-@@ -2887,24 +2887,6 @@ void intel_vgpu_reset_ggtt(struct intel_vgpu *vgpu, bool invalidate_old)
- 	ggtt_invalidate(gvt->gt);
- }
+diff --git a/security/keys/keyctl.c b/security/keys/keyctl.c
+index 96a92a645216d..cfb5000876922 100644
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -980,14 +980,19 @@ long keyctl_chown_key(key_serial_t id, uid_t user, gid_t group)
+ 	ret = -EACCES;
+ 	down_write(&key->sem);
  
--/**
-- * intel_vgpu_reset_gtt - reset the all GTT related status
-- * @vgpu: a vGPU
-- *
-- * This function is called from vfio core to reset reset all
-- * GTT related status, including GGTT, PPGTT, scratch page.
-- *
-- */
--void intel_vgpu_reset_gtt(struct intel_vgpu *vgpu)
--{
--	/* Shadow pages are only created when there is no page
--	 * table tracking data, so remove page tracking data after
--	 * removing the shadow pages.
--	 */
--	intel_vgpu_destroy_all_ppgtt_mm(vgpu);
--	intel_vgpu_reset_ggtt(vgpu, true);
--}
--
- /**
-  * intel_gvt_restore_ggtt - restore all vGPU's ggtt entries
-  * @gvt: intel gvt device
-diff --git a/drivers/gpu/drm/i915/gvt/gtt.h b/drivers/gpu/drm/i915/gvt/gtt.h
-index a3b0f59ec8bd9..4cb183e06e95a 100644
---- a/drivers/gpu/drm/i915/gvt/gtt.h
-+++ b/drivers/gpu/drm/i915/gvt/gtt.h
-@@ -224,7 +224,6 @@ void intel_vgpu_reset_ggtt(struct intel_vgpu *vgpu, bool invalidate_old);
- void intel_vgpu_invalidate_ppgtt(struct intel_vgpu *vgpu);
+-	if (!capable(CAP_SYS_ADMIN)) {
++	{
++		bool is_privileged_op = false;
++
+ 		/* only the sysadmin can chown a key to some other UID */
+ 		if (user != (uid_t) -1 && !uid_eq(key->uid, uid))
+-			goto error_put;
++			is_privileged_op = true;
  
- int intel_gvt_init_gtt(struct intel_gvt *gvt);
--void intel_vgpu_reset_gtt(struct intel_vgpu *vgpu);
- void intel_gvt_clean_gtt(struct intel_gvt *gvt);
+ 		/* only the sysadmin can set the key's GID to a group other
+ 		 * than one of those that the current process subscribes to */
+ 		if (group != (gid_t) -1 && !gid_eq(gid, key->gid) && !in_group_p(gid))
++			is_privileged_op = true;
++
++		if (is_privileged_op && !capable(CAP_SYS_ADMIN))
+ 			goto error_put;
+ 	}
  
- struct intel_vgpu_mm *intel_gvt_find_ppgtt_mm(struct intel_vgpu *vgpu,
+@@ -1088,7 +1093,7 @@ long keyctl_setperm_key(key_serial_t id, key_perm_t perm)
+ 	down_write(&key->sem);
+ 
+ 	/* if we're not the sysadmin, we can only change a key that we own */
+-	if (capable(CAP_SYS_ADMIN) || uid_eq(key->uid, current_fsuid())) {
++	if (uid_eq(key->uid, current_fsuid()) || capable(CAP_SYS_ADMIN)) {
+ 		key->perm = perm;
+ 		notify_key(key, NOTIFY_KEY_SETATTR, 0);
+ 		ret = 0;
 -- 
 2.40.1
 
