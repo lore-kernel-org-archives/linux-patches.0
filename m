@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C6C7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B1FC433C8;
-	Sun, 17 Sep 2023 20:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F577461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECEFC433C9;
+	Sun, 17 Sep 2023 20:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981882;
-	bh=NInC6Urs60IIlL+b4Tp8QEJUIYPxzYvvfQxravTe6TU=;
+	s=korg; t=1694981886;
+	bh=zkkY760X1gjJPc74LEZBIREv/7Hicw10U67v/zKDGVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhQ5UlNI8/CsCaF4NyJXsi7tI483WjOU6Lw/t6p9sJhTXcLwd/E/NE2nRxNXbicZK
-	 5Zrv9qgvFpRXqoMx2Ot7bVpj7dqZSgtPMI7gXGQHpM0pOm1cFASoYF3npbTI7o9vkr
-	 YdvEquwVUKuGW9iN2p+g5D3o+7j2eET/RVp0gIFQ=
+	b=oDBYXmh8SnQI4eeUli2sX5gt1KFZfFEH2kaofrFovzne0yxsUuaNps/MgTiVGG1my
+	 jEfMealWRm4Kjb/Mss3E9FmHBis+g1O5eqy8anmxja9XWRlogYYmT1sOcozMVZ3GF0
+	 cBZp3N7QgsUZ0/A0f+nDjLKuDoqsZIH6bUFu25nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/511] mlxsw: i2c: Limit single transaction buffer size
-Date: Sun, 17 Sep 2023 21:09:06 +0200
-Message-ID: <20230917191116.748118101@linuxfoundation.org>
+Subject: [PATCH 5.15 090/511] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
+Date: Sun, 17 Sep 2023 21:08:37 +0200
+Message-ID: <20230917191116.044457055@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,54 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit d7248f1cc835bd80e936dc5b2d94b149bdd0077d ]
+[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
 
-Maximum size of buffer is obtained from underlying I2C adapter and in
-case adapter allows I2C transaction buffer size greater than 100 bytes,
-transaction will fail due to firmware limitation.
+In case of an RX overflow error from the CAN controller and an OOM
+where no skb can be allocated, the error counters are not incremented.
 
-As a result driver will fail initialization.
+Fix this by first incrementing the error counters and then allocate
+the skb.
 
-Limit the maximum size of transaction buffer by 100 bytes to fit to
-firmware.
-
-Remove unnecessary calculation:
-max_t(u16, MLXSW_I2C_BLK_DEF, quirk_size).
-This condition can not happened.
-
-Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index f20dca41424c9..61d2f621d65fc 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -47,6 +47,7 @@
- #define MLXSW_I2C_MBOX_SIZE_BITS	12
- #define MLXSW_I2C_ADDR_BUF_SIZE		4
- #define MLXSW_I2C_BLK_DEF		32
-+#define MLXSW_I2C_BLK_MAX		100
- #define MLXSW_I2C_RETRY			5
- #define MLXSW_I2C_TIMEOUT_MSECS		5000
- #define MLXSW_I2C_MAX_DATA_SIZE		256
-@@ -576,7 +577,7 @@ static int mlxsw_i2c_probe(struct i2c_client *client,
- 			return -EOPNOTSUPP;
- 		}
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index 5d6062fbebfcc..7dc4fb574e459 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -382,6 +382,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 	}
  
--		mlxsw_i2c->block_size = max_t(u16, MLXSW_I2C_BLK_DEF,
-+		mlxsw_i2c->block_size = min_t(u16, MLXSW_I2C_BLK_MAX,
- 					      min_t(u16, quirks->max_read_len,
- 						    quirks->max_write_len));
- 	} else {
+ 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
++		stats->rx_over_errors++;
++		stats->rx_errors++;
++
+ 		skb = alloc_can_err_skb(netdev, &cf);
+ 		if (!skb)
+ 			goto resubmit_urb;
+@@ -389,8 +392,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 		cf->can_id |= CAN_ERR_CRTL;
+ 		cf->len = CAN_ERR_DLC;
+ 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
+-		stats->rx_over_errors++;
+-		stats->rx_errors++;
+ 		netif_rx(skb);
+ 	}
+ 
 -- 
 2.40.1
 
