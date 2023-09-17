@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D346FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D310C433C7;
-	Sun, 17 Sep 2023 19:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02506FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3497CC433C7;
+	Sun, 17 Sep 2023 19:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979640;
-	bh=7BJJkVw6qMYRT9cCpgR4kx4t4RvZuSr25OcLn1r3Eck=;
+	s=korg; t=1694979644;
+	bh=l+71RpglJvj/Nyybl4B6VqFS8YpKPz6U2/5A3cHTKSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYSik943Br9U+Q7Vlrd67ikon3D5AguzGERYr+VmVNda4z0BxmH+BFcZiuNamF2zN
-	 QP+ayGDktV6DNeHZcngFFSgNUf7L1z2i3rDt/KQT25qZEY4OYjtvp6AwwNHvJ/ZR57
-	 7kwkUUQsNh4WNsx5Zjl3ELgstzqCMAJnXDBob+rU=
+	b=TV8/mYWWAQPIgAAdPaDeRkItOjjgCbkRWOtwiJgIje3U59G2OeB5Vtn34R3pnrZtN
+	 q1AgpmRo7/1e6SS68ucVasHJ8zOMd4yY4CLbA2SjzTX6FHFIEYGjL9bAPjr4hHwTYs
+	 3UkoIt3kPhY5EBeHK/bBiQ/0ynSD4q7SqbfGIXqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 372/406] btrfs: dont start transaction when joining with TRANS_JOIN_NOSTART
-Date: Sun, 17 Sep 2023 21:13:46 +0200
-Message-ID: <20230917191111.091639084@linuxfoundation.org>
+Subject: [PATCH 5.10 373/406] btrfs: use the correct superblock to compare fsid in btrfs_validate_super
+Date: Sun, 17 Sep 2023 21:13:47 +0200
+Message-ID: <20230917191111.120059939@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,43 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-commit 4490e803e1fe9fab8db5025e44e23b55df54078b upstream.
+commit d167aa76dc0683828588c25767da07fb549e4f48 upstream.
 
-When joining a transaction with TRANS_JOIN_NOSTART, if we don't find a
-running transaction we end up creating one. This goes against the purpose
-of TRANS_JOIN_NOSTART which is to join a running transaction if its state
-is at or below the state TRANS_STATE_COMMIT_START, otherwise return an
--ENOENT error and don't start a new transaction. So fix this to not create
-a new transaction if there's no running transaction at or below that
-state.
+The function btrfs_validate_super() should verify the fsid in the provided
+superblock argument. Because, all its callers expect it to do that.
 
-CC: stable@vger.kernel.org # 4.14+
-Fixes: a6d155d2e363 ("Btrfs: fix deadlock between fiemap and transaction commits")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Such as in the following stack:
+
+   write_all_supers()
+       sb = fs_info->super_for_commit;
+       btrfs_validate_write_super(.., sb)
+         btrfs_validate_super(.., sb, ..)
+
+   scrub_one_super()
+	btrfs_validate_super(.., sb, ..)
+
+And
+   check_dev_super()
+	btrfs_validate_super(.., sb, ..)
+
+However, it currently verifies the fs_info::super_copy::fsid instead,
+which is not correct.  Fix this using the correct fsid in the superblock
+argument.
+
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/btrfs/disk-io.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -301,10 +301,11 @@ loop:
- 	spin_unlock(&fs_info->trans_lock);
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2496,11 +2496,10 @@ static int validate_super(struct btrfs_f
+ 		ret = -EINVAL;
+ 	}
  
- 	/*
--	 * If we are ATTACH, we just want to catch the current transaction,
--	 * and commit it. If there is no transaction, just return ENOENT.
-+	 * If we are ATTACH or TRANS_JOIN_NOSTART, we just want to catch the
-+	 * current transaction, and commit it. If there is no transaction, just
-+	 * return ENOENT.
- 	 */
--	if (type == TRANS_ATTACH)
-+	if (type == TRANS_ATTACH || type == TRANS_JOIN_NOSTART)
- 		return -ENOENT;
+-	if (memcmp(fs_info->fs_devices->fsid, fs_info->super_copy->fsid,
+-		   BTRFS_FSID_SIZE)) {
++	if (memcmp(fs_info->fs_devices->fsid, sb->fsid, BTRFS_FSID_SIZE) != 0) {
+ 		btrfs_err(fs_info,
+ 		"superblock fsid doesn't match fsid of fs_devices: %pU != %pU",
+-			fs_info->super_copy->fsid, fs_info->fs_devices->fsid);
++			  sb->fsid, fs_info->fs_devices->fsid);
+ 		ret = -EINVAL;
+ 	}
  
- 	/*
 
 
