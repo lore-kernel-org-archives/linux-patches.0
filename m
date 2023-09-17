@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C3A6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC23C433C7;
-	Sun, 17 Sep 2023 19:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA586FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C3FC433C7;
+	Sun, 17 Sep 2023 19:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978941;
-	bh=OXCRPb+InHsVgus0RWfcs/NnKBW3s9/7ykhynOwvKNM=;
+	s=korg; t=1694978944;
+	bh=devN84+Y8+jTDUYshCM/x7TuFWY4Cp2Rruqhp1SmNjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hfyZixSAJy07uzEbrAJN3CRBMGi/mXXPt210j0iMQqv4IWdzp/PM56OWpg5AM2fH
-	 7nuzhIwoJbC3p5Tnjs1UzdNVnxhG3z8YcasBMMO3JTYR1WStVOlaHO/4XR6zZI1oJo
-	 VJbf7l9C+/TlZMndL721hX8hHr0aDjFPbrgoN5dk=
+	b=SCRSELupc7uEG8D5KKarJjiqJDvJTNmbSMVzVZSEPP1YZ+t99EXv0B2BTt93syabF
+	 1XEwCnUobT5npImPVgBA1PBxSkMpjJGlKIwx5cKouaj5y7gtnUlVgP/2IekJzeRzIF
+	 wUadG1jV+ndKkGhdxfyJ2zLLrhvFxaxsPYVqG9e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Bogdan Togorean <bogdan.togorean@analog.com>,
+	Alexandru Ardelean <alex@shruggie.ro>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/406] ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)
-Date: Sun, 17 Sep 2023 21:09:57 +0200
-Message-ID: <20230917191104.935585785@linuxfoundation.org>
+Subject: [PATCH 5.10 144/406] drm: adv7511: Fix low refresh rate register for ADV7533/5
+Date: Sun, 17 Sep 2023 21:09:58 +0200
+Message-ID: <20230917191104.962572342@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,34 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Bogdan Togorean <bogdan.togorean@analog.com>
 
-[ Upstream commit 982655cb0e7f18934d7532c32366e574ad61dbd7 ]
+[ Upstream commit d281eeaa4de2636ff0c8e6ae387bb07b50e5fcbb ]
 
-The davicom,dm9000 Ethernet Controller accepts two reg addresses.
+For ADV7533 and ADV7535 low refresh rate is selected using
+bits [3:2] of 0x4a main register.
+So depending on ADV model write 0xfb or 0x4a register.
 
-Fixes: b672b27d232e ("ARM: dts: Add Device tree for s5pc110/s5pv210 boards")
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20230713152926.82884-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 2437e7cd88e8 ("drm/bridge: adv7533: Initial support for ADV7533")
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Bogdan Togorean <bogdan.togorean@analog.com>
+Signed-off-by: Alexandru Ardelean <alex@shruggie.ro>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230719060143.63649-1-alex@shruggie.ro
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s5pv210-smdkv210.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-index 6e26c67e0a26e..901e7197b1368 100644
---- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
-+++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-@@ -41,7 +41,7 @@ pmic_ap_clk: clock-0 {
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+index 6ba860a16e96c..e50c741cbfe72 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -786,8 +786,13 @@ static void adv7511_mode_set(struct adv7511 *adv7511,
+ 	else
+ 		low_refresh_rate = ADV7511_LOW_REFRESH_RATE_NONE;
  
- 	ethernet@a8000000 {
- 		compatible = "davicom,dm9000";
--		reg = <0xA8000000 0x2 0xA8000002 0x2>;
-+		reg = <0xa8000000 0x2>, <0xa8000002 0x2>;
- 		interrupt-parent = <&gph1>;
- 		interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
- 		local-mac-address = [00 00 de ad be ef];
+-	regmap_update_bits(adv7511->regmap, 0xfb,
+-		0x6, low_refresh_rate << 1);
++	if (adv7511->type == ADV7511)
++		regmap_update_bits(adv7511->regmap, 0xfb,
++				   0x6, low_refresh_rate << 1);
++	else
++		regmap_update_bits(adv7511->regmap, 0x4a,
++				   0xc, low_refresh_rate << 2);
++
+ 	regmap_update_bits(adv7511->regmap, 0x17,
+ 		0x60, (vsync_polarity << 6) | (hsync_polarity << 5));
+ 
 -- 
 2.40.1
 
