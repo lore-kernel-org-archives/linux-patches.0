@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5357461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C768BC433C7;
-	Sun, 17 Sep 2023 20:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CE27461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F52C433C8;
+	Sun, 17 Sep 2023 20:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981364;
-	bh=hInM9uqM0pmXPvWu3qH3SskDUUC/MW5Hr3H7Cxbgepw=;
+	s=korg; t=1694981367;
+	bh=8zOJlEz+k1n1oZkmBvK4nE5JKLVFPHuajh9o5wt/efA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uREjULbgE/Y+quj7jiGqA1klosF3P/U3NDGgbbBbQXVyKDf/bxkDmSiEQEW/1uA+v
-	 Bk0ST7QfTP/ES4hnLnkXGEfI0DWByhneAHlNmOOPnPxyUqejDvA8lyjBzuvGrqHJMC
-	 Jandg8MU0F5ehja1iy4mOct+e7OwbeVXg7ZivCOw=
+	b=oHR85U/jaH5I7HpkZcJVzojsoKjHrO6eaQqCqwKobZ1uPcBc6BPxLDQsHiz8WvkdH
+	 U2tLTIIcwGqxs8/0BZSlsy4hXodkGr+xPKc1G/7c5ghqTA4U1Lc+vP1y643I6CBn+G
+	 0Ms4cI1cZIC9BhmnX9xgjM9S7W8Vrlo/JnFoeUC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/219] af_unix: Fix data-races around sk->sk_shutdown.
-Date: Sun, 17 Sep 2023 21:13:57 +0200
-Message-ID: <20230917191044.966302447@linuxfoundation.org>
+Subject: [PATCH 6.1 088/219] sctp: annotate data-races around sk->sk_wmem_queued
+Date: Sun, 17 Sep 2023 21:13:35 +0200
+Message-ID: <20230917191044.157770805@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -42,94 +43,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit afe8764f76346ba838d4f162883e23d2fcfaa90e ]
+[ Upstream commit dc9511dd6f37fe803f6b15b61b030728d7057417 ]
 
-sk->sk_shutdown is changed under unix_state_lock(sk), but
-unix_dgram_sendmsg() calls two functions to read sk_shutdown locklessly.
+sk->sk_wmem_queued can be read locklessly from sctp_poll()
 
-  sock_alloc_send_pskb
-  `- sock_wait_for_wmem
+Use sk_wmem_queued_add() when the field is changed,
+and add READ_ONCE() annotations in sctp_writeable()
+and sctp_assocs_seq_show()
 
-Let's use READ_ONCE() there.
+syzbot reported:
 
-Note that the writer side was marked by commit e1d09c2c2f57 ("af_unix:
-Fix data races around sk->sk_shutdown.").
+BUG: KCSAN: data-race in sctp_poll / sctp_wfree
 
-BUG: KCSAN: data-race in sock_alloc_send_pskb / unix_release_sock
+read-write to 0xffff888149d77810 of 4 bytes by interrupt on cpu 0:
+sctp_wfree+0x170/0x4a0 net/sctp/socket.c:9147
+skb_release_head_state+0xb7/0x1a0 net/core/skbuff.c:988
+skb_release_all net/core/skbuff.c:1000 [inline]
+__kfree_skb+0x16/0x140 net/core/skbuff.c:1016
+consume_skb+0x57/0x180 net/core/skbuff.c:1232
+sctp_chunk_destroy net/sctp/sm_make_chunk.c:1503 [inline]
+sctp_chunk_put+0xcd/0x130 net/sctp/sm_make_chunk.c:1530
+sctp_datamsg_put+0x29a/0x300 net/sctp/chunk.c:128
+sctp_chunk_free+0x34/0x50 net/sctp/sm_make_chunk.c:1515
+sctp_outq_sack+0xafa/0xd70 net/sctp/outqueue.c:1381
+sctp_cmd_process_sack net/sctp/sm_sideeffect.c:834 [inline]
+sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1366 [inline]
+sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+sctp_do_sm+0x12c7/0x31b0 net/sctp/sm_sideeffect.c:1169
+sctp_assoc_bh_rcv+0x2b2/0x430 net/sctp/associola.c:1051
+sctp_inq_push+0x108/0x120 net/sctp/inqueue.c:80
+sctp_rcv+0x116e/0x1340 net/sctp/input.c:243
+sctp6_rcv+0x25/0x40 net/sctp/ipv6.c:1120
+ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
+ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
+__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
+process_backlog+0x21f/0x380 net/core/dev.c:5894
+__napi_poll+0x60/0x3b0 net/core/dev.c:6460
+napi_poll net/core/dev.c:6527 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6660
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:389
+ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-write (marked) to 0xffff8880069af12c of 1 bytes by task 1 on cpu 1:
- unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
- unix_release+0x59/0x80 net/unix/af_unix.c:1053
- __sock_release+0x7d/0x170 net/socket.c:654
- sock_close+0x19/0x30 net/socket.c:1386
- __fput+0x2a3/0x680 fs/file_table.c:384
- ____fput+0x15/0x20 fs/file_table.c:412
- task_work_run+0x116/0x1a0 kernel/task_work.c:179
- resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
- exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
- syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
- do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+read to 0xffff888149d77810 of 4 bytes by task 17828 on cpu 1:
+sctp_writeable net/sctp/socket.c:9304 [inline]
+sctp_poll+0x265/0x410 net/sctp/socket.c:8671
+sock_poll+0x253/0x270 net/socket.c:1374
+vfs_poll include/linux/poll.h:88 [inline]
+do_pollfd fs/select.c:873 [inline]
+do_poll fs/select.c:921 [inline]
+do_sys_poll+0x636/0xc00 fs/select.c:1015
+__do_sys_ppoll fs/select.c:1121 [inline]
+__se_sys_ppoll+0x1af/0x1f0 fs/select.c:1101
+__x64_sys_ppoll+0x67/0x80 fs/select.c:1101
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-read to 0xffff8880069af12c of 1 bytes by task 28650 on cpu 0:
- sock_alloc_send_pskb+0xd2/0x620 net/core/sock.c:2767
- unix_dgram_sendmsg+0x2f8/0x14f0 net/unix/af_unix.c:1944
- unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
- unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
- sock_sendmsg_nosec net/socket.c:725 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:748
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
- __sys_sendmsg+0x94/0x140 net/socket.c:2577
- __do_sys_sendmsg net/socket.c:2586 [inline]
- __se_sys_sendmsg net/socket.c:2584 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-value changed: 0x00 -> 0x03
+value changed: 0x00019e80 -> 0x0000cc80
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 28650 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+CPU: 1 PID: 17828 Comm: syz-executor.1 Not tainted 6.5.0-rc7-syzkaller-00185-g28f20a19294d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230830094519.950007-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/proc.c   |  2 +-
+ net/sctp/socket.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index aa628c6314f64..71990525d37e2 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2690,7 +2690,7 @@ static long sock_wait_for_wmem(struct sock *sk, long timeo)
- 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
- 		if (refcount_read(&sk->sk_wmem_alloc) < READ_ONCE(sk->sk_sndbuf))
- 			break;
--		if (sk->sk_shutdown & SEND_SHUTDOWN)
-+		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
- 			break;
- 		if (sk->sk_err)
- 			break;
-@@ -2720,7 +2720,7 @@ struct sk_buff *sock_alloc_send_pskb(struct sock *sk, unsigned long header_len,
- 			goto failure;
+diff --git a/net/sctp/proc.c b/net/sctp/proc.c
+index f13d6a34f32f2..ec00ee75d59a6 100644
+--- a/net/sctp/proc.c
++++ b/net/sctp/proc.c
+@@ -282,7 +282,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
+ 		assoc->init_retries, assoc->shutdown_retries,
+ 		assoc->rtx_data_chunks,
+ 		refcount_read(&sk->sk_wmem_alloc),
+-		sk->sk_wmem_queued,
++		READ_ONCE(sk->sk_wmem_queued),
+ 		sk->sk_sndbuf,
+ 		sk->sk_rcvbuf);
+ 	seq_printf(seq, "\n");
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index a11b0d903514c..32e3669adf146 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -68,7 +68,7 @@
+ #include <net/sctp/stream_sched.h>
  
- 		err = -EPIPE;
--		if (sk->sk_shutdown & SEND_SHUTDOWN)
-+		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
- 			goto failure;
+ /* Forward declarations for internal helper functions. */
+-static bool sctp_writeable(struct sock *sk);
++static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+ 				size_t msg_len);
+@@ -139,7 +139,7 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
- 		if (sk_wmem_alloc_get(sk) < READ_ONCE(sk->sk_sndbuf))
+ 	refcount_add(sizeof(struct sctp_chunk), &sk->sk_wmem_alloc);
+ 	asoc->sndbuf_used += chunk->skb->truesize + sizeof(struct sctp_chunk);
+-	sk->sk_wmem_queued += chunk->skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, chunk->skb->truesize + sizeof(struct sctp_chunk));
+ 	sk_mem_charge(sk, chunk->skb->truesize);
+ }
+ 
+@@ -9139,7 +9139,7 @@ static void sctp_wfree(struct sk_buff *skb)
+ 	struct sock *sk = asoc->base.sk;
+ 
+ 	sk_mem_uncharge(sk, skb->truesize);
+-	sk->sk_wmem_queued -= skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, -(skb->truesize + sizeof(struct sctp_chunk)));
+ 	asoc->sndbuf_used -= skb->truesize + sizeof(struct sctp_chunk);
+ 	WARN_ON(refcount_sub_and_test(sizeof(struct sctp_chunk),
+ 				      &sk->sk_wmem_alloc));
+@@ -9292,9 +9292,9 @@ void sctp_write_space(struct sock *sk)
+  * UDP-style sockets or TCP-style sockets, this code should work.
+  *  - Daisy
+  */
+-static bool sctp_writeable(struct sock *sk)
++static bool sctp_writeable(const struct sock *sk)
+ {
+-	return sk->sk_sndbuf > sk->sk_wmem_queued;
++	return READ_ONCE(sk->sk_sndbuf) > READ_ONCE(sk->sk_wmem_queued);
+ }
+ 
+ /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
 -- 
 2.40.1
 
