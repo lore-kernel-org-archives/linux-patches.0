@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B776FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B756C433C7;
-	Sun, 17 Sep 2023 20:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA136FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18232C433C8;
+	Sun, 17 Sep 2023 20:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981428;
-	bh=OUKDi2uMrP28Uikek4Ixfzm4Qrx1+nRqC0pIgid3PHc=;
+	s=korg; t=1694981431;
+	bh=FPMo3cLjyMHVLhRvEtInB8aSkq2WNaxGodpWNHWWZSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZiQTN0TXTreLsE/9zBL5JhlqCbcTlTx2MPJYZzYJQ8K7UKZhxnB1pi4U2N6oY/od
-	 LpboRlr9CH+rnwZgsjsGodqBOedKJEVIyVesWEExswtIua95xCl7vnT1PcKlys2LWz
-	 jmpkI5wsN0nsxUv2WXAfI3Saz1uaqPyG7M8vgfdc=
+	b=aWdigs8rTryv7aUNYny3WC9vNBjAJIQ4Ru1uA2Sfxq3YJOCOhGARcMKeBNr816xv8
+	 4DWSTiQIHVfWpfkaGeMGhma6FW+LiHwidvyOrf7iKu8nVfs2eLeOXdXyRL68QMvcn/
+	 aCO0NM6bAgA1VgRjfjnWjmZtxbc76xOAftEpTSGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, robh+dt@kernel.org, frowand.list@gmail.com, zohar@linux.ibm.com, dmitry.kasatkin@gmail.com, devicetree@vger.kernel.org, linux-integrity@vger.kernel.org, linux-security-module@vger.kernel.org, Nathan Chancellor" <nathan@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.15 052/511] of: kexec: Mark ima_{free,stable}_kexec_buffer() as __init
-Date: Sun, 17 Sep 2023 21:07:59 +0200
-Message-ID: <20230917191115.135922367@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 089/219] ipv4: annotate data-races around fi->fib_dead
+Date: Sun, 17 Sep 2023 21:13:36 +0200
+Message-ID: <20230917191044.190028439@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,86 +38,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-This commit has no direct upstream equivalent.
+[ Upstream commit fce92af1c29d90184dfec638b5738831097d66e9 ]
 
-After commit d48016d74836 ("mm,ima,kexec,of: use memblock_free_late from
-ima_free_kexec_buffer") in 5.15, there is a modpost warning for certain
-configurations:
+syzbot complained about a data-race in fib_table_lookup() [1]
 
-  WARNING: modpost: vmlinux.o(.text+0xb14064): Section mismatch in reference from the function ima_free_kexec_buffer() to the function .init.text:__memblock_free_late()
-  The function ima_free_kexec_buffer() references
-  the function __init __memblock_free_late().
-  This is often because ima_free_kexec_buffer lacks a __init
-  annotation or the annotation of __memblock_free_late is wrong.
+Add appropriate annotations to document it.
 
-In mainline, there is no issue because ima_free_kexec_buffer() is marked
-as __init, which was done as part of commit b69a2afd5afc ("x86/kexec:
-Carry forward IMA measurement log on kexec") in 6.0, which is not
-suitable for stable.
+[1]
+BUG: KCSAN: data-race in fib_release_info / fib_table_lookup
 
-Mark ima_free_kexec_buffer() and its single caller
-ima_load_kexec_buffer() as __init in 5.15, as ima_load_kexec_buffer() is
-only called from ima_init(), which is __init, clearing up the warning.
+write to 0xffff888150f31744 of 1 bytes by task 1189 on cpu 0:
+fib_release_info+0x3a0/0x460 net/ipv4/fib_semantics.c:281
+fib_table_delete+0x8d2/0x900 net/ipv4/fib_trie.c:1777
+fib_magic+0x1c1/0x1f0 net/ipv4/fib_frontend.c:1106
+fib_del_ifaddr+0x8cf/0xa60 net/ipv4/fib_frontend.c:1317
+fib_inetaddr_event+0x77/0x200 net/ipv4/fib_frontend.c:1448
+notifier_call_chain kernel/notifier.c:93 [inline]
+blocking_notifier_call_chain+0x90/0x200 kernel/notifier.c:388
+__inet_del_ifa+0x4df/0x800 net/ipv4/devinet.c:432
+inet_del_ifa net/ipv4/devinet.c:469 [inline]
+inetdev_destroy net/ipv4/devinet.c:322 [inline]
+inetdev_event+0x553/0xaf0 net/ipv4/devinet.c:1606
+notifier_call_chain kernel/notifier.c:93 [inline]
+raw_notifier_call_chain+0x6b/0x1c0 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1962 [inline]
+call_netdevice_notifiers_mtu+0xd2/0x130 net/core/dev.c:2037
+dev_set_mtu_ext+0x30b/0x3e0 net/core/dev.c:8673
+do_setlink+0x5be/0x2430 net/core/rtnetlink.c:2837
+rtnl_setlink+0x255/0x300 net/core/rtnetlink.c:3177
+rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6445
+netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2549
+rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6463
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1914
+sock_sendmsg_nosec net/socket.c:725 [inline]
+sock_sendmsg net/socket.c:748 [inline]
+sock_write_iter+0x1aa/0x230 net/socket.c:1129
+do_iter_write+0x4b4/0x7b0 fs/read_write.c:860
+vfs_writev+0x1a8/0x320 fs/read_write.c:933
+do_writev+0xf8/0x220 fs/read_write.c:976
+__do_sys_writev fs/read_write.c:1049 [inline]
+__se_sys_writev fs/read_write.c:1046 [inline]
+__x64_sys_writev+0x45/0x50 fs/read_write.c:1046
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+read to 0xffff888150f31744 of 1 bytes by task 21839 on cpu 1:
+fib_table_lookup+0x2bf/0xd50 net/ipv4/fib_trie.c:1585
+fib_lookup include/net/ip_fib.h:383 [inline]
+ip_route_output_key_hash_rcu+0x38c/0x12c0 net/ipv4/route.c:2751
+ip_route_output_key_hash net/ipv4/route.c:2641 [inline]
+__ip_route_output_key include/net/route.h:134 [inline]
+ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2869
+send4+0x1e7/0x500 drivers/net/wireguard/socket.c:61
+wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
+wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
+wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
+wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
+process_one_work+0x434/0x860 kernel/workqueue.c:2600
+worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
+kthread+0x1d7/0x210 kernel/kthread.c:389
+ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+value changed: 0x00 -> 0x01
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 21839 Comm: kworker/u4:18 Tainted: G W 6.5.0-syzkaller #0
+
+Fixes: dccd9ecc3744 ("ipv4: Do not use dead fib_info entries.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230830095520.1046984-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/kexec.c                 |    2 +-
- include/linux/of.h                 |    2 +-
- security/integrity/ima/ima.h       |    2 +-
- security/integrity/ima/ima_kexec.c |    2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/fib_semantics.c | 5 ++++-
+ net/ipv4/fib_trie.c      | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -165,7 +165,7 @@ int ima_get_kexec_buffer(void **addr, si
- /**
-  * ima_free_kexec_buffer - free memory used by the IMA buffer
-  */
--int ima_free_kexec_buffer(void)
-+int __init ima_free_kexec_buffer(void)
- {
- 	int ret;
- 	unsigned long addr;
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -574,7 +574,7 @@ void *of_kexec_alloc_and_setup_fdt(const
- 				   unsigned long initrd_len,
- 				   const char *cmdline, size_t extra_fdt_size);
- int ima_get_kexec_buffer(void **addr, size_t *size);
--int ima_free_kexec_buffer(void);
-+int __init ima_free_kexec_buffer(void);
- #else /* CONFIG_OF */
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index 3bb890a40ed73..3b6e6bc80dc1c 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -278,7 +278,8 @@ void fib_release_info(struct fib_info *fi)
+ 				hlist_del(&nexthop_nh->nh_hash);
+ 			} endfor_nexthops(fi)
+ 		}
+-		fi->fib_dead = 1;
++		/* Paired with READ_ONCE() from fib_table_lookup() */
++		WRITE_ONCE(fi->fib_dead, 1);
+ 		fib_info_put(fi);
+ 	}
+ 	spin_unlock_bh(&fib_info_lock);
+@@ -1581,6 +1582,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
+ link_it:
+ 	ofi = fib_find_info(fi);
+ 	if (ofi) {
++		/* fib_table_lookup() should not see @fi yet. */
+ 		fi->fib_dead = 1;
+ 		free_fib_info(fi);
+ 		refcount_inc(&ofi->fib_treeref);
+@@ -1619,6 +1621,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
  
- static inline void of_core_init(void)
---- a/security/integrity/ima/ima.h
-+++ b/security/integrity/ima/ima.h
-@@ -122,7 +122,7 @@ struct ima_kexec_hdr {
- extern const int read_idmap[];
- 
- #ifdef CONFIG_HAVE_IMA_KEXEC
--void ima_load_kexec_buffer(void);
-+void __init ima_load_kexec_buffer(void);
- #else
- static inline void ima_load_kexec_buffer(void) {}
- #endif /* CONFIG_HAVE_IMA_KEXEC */
---- a/security/integrity/ima/ima_kexec.c
-+++ b/security/integrity/ima/ima_kexec.c
-@@ -137,7 +137,7 @@ void ima_add_kexec_buffer(struct kimage
- /*
-  * Restore the measurement list from the previous kernel.
-  */
--void ima_load_kexec_buffer(void)
-+void __init ima_load_kexec_buffer(void)
- {
- 	void *kexec_buffer = NULL;
- 	size_t kexec_buffer_size = 0;
+ failure:
+ 	if (fi) {
++		/* fib_table_lookup() should not see @fi yet. */
+ 		fi->fib_dead = 1;
+ 		free_fib_info(fi);
+ 	}
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 74d403dbd2b4e..d13fb9e76b971 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -1582,7 +1582,8 @@ int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
+ 		if (fa->fa_dscp &&
+ 		    inet_dscp_to_dsfield(fa->fa_dscp) != flp->flowi4_tos)
+ 			continue;
+-		if (fi->fib_dead)
++		/* Paired with WRITE_ONCE() in fib_release_info() */
++		if (READ_ONCE(fi->fib_dead))
+ 			continue;
+ 		if (fa->fa_info->fib_scope < flp->flowi4_scope)
+ 			continue;
+-- 
+2.40.1
+
 
 
