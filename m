@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D897473
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADA5C433C7;
-	Sun, 17 Sep 2023 19:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C357473
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED33CC433C7;
+	Sun, 17 Sep 2023 19:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980022;
-	bh=mrPJXpCKk63myEWwJO5ZMdUYeu+afRGdVubDOOyzklM=;
+	s=korg; t=1694980025;
+	bh=KwmmuQ8ClOKHwON7fdt8RtEXUxtOGigX7BCtWuM9TGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpygmjBvosZFolcWcm253VH47qZm7pNk6ptjRn+x0bQ7+mhlTlPrtP5WOy3IFbsUc
-	 QH0WK0OiVeWJrcNDr+nMNaIykpHf0I8L+xVglL+e6mOjEckp3/Zy8xeeJirpFRQCmn
-	 0B2aMaIQsGWrVtAci1kPaT81TYVueGy1r3j0CKpg=
+	b=jf7SD8bd6B9ehAy2mdB9D2/vo0fkNyIz30VTJzFIokhNBzTvu7SdPERwlsND6U6pj
+	 JlAlkd0EnJazsOfrpOvYEFIMYeBmcNnyTC/yJeZMpCIYE5g2UbtAhb9Eguz90L8jAU
+	 8ZgCLaupZNJr8kYog6RkuwRZgv8DVlyBsPEBzNPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 075/285] KVM: SVM: Dont defer NMI unblocking until next exit for SEV-ES guests
-Date: Sun, 17 Sep 2023 21:11:15 +0200
-Message-ID: <20230917191054.318636011@linuxfoundation.org>
+Subject: [PATCH 6.5 076/285] Input: tca6416-keypad - always expect proper IRQ number in i2c client
+Date: Sun, 17 Sep 2023 21:11:16 +0200
+Message-ID: <20230917191054.350828364@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,83 +39,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 389fbbec261b2842fd0e34b26a2b288b122cc406 ]
+[ Upstream commit 687fe7dfb736b03ab820d172ea5dbfc1ec447135 ]
 
-Immediately mark NMIs as unmasked in response to #VMGEXIT(NMI complete)
-instead of setting awaiting_iret_completion and waiting until the *next*
-VM-Exit to unmask NMIs.  The whole point of "NMI complete" is that the
-guest is responsible for telling the hypervisor when it's safe to inject
-an NMI, i.e. there's no need to wait.  And because there's no IRET to
-single-step, the next VM-Exit could be a long time coming, i.e. KVM could
-incorrectly hold an NMI pending for far longer than what is required and
-expected.
+Remove option having i2c client contain raw gpio number instead of proper
+IRQ number. There are no users of this facility in mainline and it will
+allow cleaning up the driver code with regard to wakeup handling, etc.
 
-Opportunistically fix a stale reference to HF_IRET_MASK.
-
-Fixes: 916b54a7688b ("KVM: x86: Move HF_NMI_MASK and HF_IRET_MASK into "struct vcpu_svm"")
-Fixes: 4444dfe4050b ("KVM: SVM: Add NMI support for an SEV-ES guest")
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230615063757.3039121-9-aik@amd.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20230724053024.352054-1-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: cc141c35af87 ("Input: tca6416-keypad - fix interrupt enable disbalance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |  5 ++++-
- arch/x86/kvm/svm/svm.c | 10 +++++-----
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/input/keyboard/tca6416-keypad.c | 27 +++++++++----------------
+ include/linux/tca6416_keypad.h          |  1 -
+ 2 files changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index d3aec1f2cad20..42630f5b11875 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2881,7 +2881,10 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
- 					    svm->sev_es.ghcb_sa);
- 		break;
- 	case SVM_VMGEXIT_NMI_COMPLETE:
--		ret = svm_invoke_exit_handler(vcpu, SVM_EXIT_IRET);
-+		++vcpu->stat.nmi_window_exits;
-+		svm->nmi_masked = false;
-+		kvm_make_request(KVM_REQ_EVENT, vcpu);
-+		ret = 1;
- 		break;
- 	case SVM_VMGEXIT_AP_HLT_LOOP:
- 		ret = kvm_emulate_ap_reset_hold(vcpu);
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index d4bfdc607fe7f..dfb8a3f504322 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2510,12 +2510,13 @@ static int iret_interception(struct kvm_vcpu *vcpu)
+diff --git a/drivers/input/keyboard/tca6416-keypad.c b/drivers/input/keyboard/tca6416-keypad.c
+index 2f745cabf4f24..01bc0b8811882 100644
+--- a/drivers/input/keyboard/tca6416-keypad.c
++++ b/drivers/input/keyboard/tca6416-keypad.c
+@@ -148,7 +148,7 @@ static int tca6416_keys_open(struct input_dev *dev)
+ 	if (chip->use_polling)
+ 		schedule_delayed_work(&chip->dwork, msecs_to_jiffies(100));
+ 	else
+-		enable_irq(chip->irqnum);
++		enable_irq(chip->client->irq);
+ 
+ 	return 0;
+ }
+@@ -160,7 +160,7 @@ static void tca6416_keys_close(struct input_dev *dev)
+ 	if (chip->use_polling)
+ 		cancel_delayed_work_sync(&chip->dwork);
+ 	else
+-		disable_irq(chip->irqnum);
++		disable_irq(chip->client->irq);
+ }
+ 
+ static int tca6416_setup_registers(struct tca6416_keypad_chip *chip)
+@@ -266,12 +266,7 @@ static int tca6416_keypad_probe(struct i2c_client *client)
+ 		goto fail1;
+ 
+ 	if (!chip->use_polling) {
+-		if (pdata->irq_is_gpio)
+-			chip->irqnum = gpio_to_irq(client->irq);
+-		else
+-			chip->irqnum = client->irq;
+-
+-		error = request_threaded_irq(chip->irqnum, NULL,
++		error = request_threaded_irq(client->irq, NULL,
+ 					     tca6416_keys_isr,
+ 					     IRQF_TRIGGER_FALLING |
+ 					     IRQF_ONESHOT | IRQF_NO_AUTOEN,
+@@ -279,7 +274,7 @@ static int tca6416_keypad_probe(struct i2c_client *client)
+ 		if (error) {
+ 			dev_dbg(&client->dev,
+ 				"Unable to claim irq %d; error %d\n",
+-				chip->irqnum, error);
++				client->irq, error);
+ 			goto fail1;
+ 		}
+ 	}
+@@ -298,8 +293,8 @@ static int tca6416_keypad_probe(struct i2c_client *client)
+ 
+ fail2:
+ 	if (!chip->use_polling) {
+-		free_irq(chip->irqnum, chip);
+-		enable_irq(chip->irqnum);
++		free_irq(client->irq, chip);
++		enable_irq(client->irq);
+ 	}
+ fail1:
+ 	input_free_device(input);
+@@ -312,8 +307,8 @@ static void tca6416_keypad_remove(struct i2c_client *client)
+ 	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
+ 
+ 	if (!chip->use_polling) {
+-		free_irq(chip->irqnum, chip);
+-		enable_irq(chip->irqnum);
++		free_irq(client->irq, chip);
++		enable_irq(client->irq);
+ 	}
+ 
+ 	input_unregister_device(chip->input);
+@@ -323,10 +318,9 @@ static void tca6416_keypad_remove(struct i2c_client *client)
+ static int tca6416_keypad_suspend(struct device *dev)
  {
- 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
  
-+	WARN_ON_ONCE(sev_es_guest(vcpu->kvm));
-+
- 	++vcpu->stat.nmi_window_exits;
- 	svm->awaiting_iret_completion = true;
+ 	if (device_may_wakeup(dev))
+-		enable_irq_wake(chip->irqnum);
++		enable_irq_wake(client->irq);
  
- 	svm_clr_iret_intercept(svm);
--	if (!sev_es_guest(vcpu->kvm))
--		svm->nmi_iret_rip = kvm_rip_read(vcpu);
-+	svm->nmi_iret_rip = kvm_rip_read(vcpu);
+ 	return 0;
+ }
+@@ -334,10 +328,9 @@ static int tca6416_keypad_suspend(struct device *dev)
+ static int tca6416_keypad_resume(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
  
- 	kvm_make_request(KVM_REQ_EVENT, vcpu);
- 	return 1;
-@@ -3918,12 +3919,11 @@ static void svm_complete_interrupts(struct kvm_vcpu *vcpu)
- 	svm->soft_int_injected = false;
+ 	if (device_may_wakeup(dev))
+-		disable_irq_wake(chip->irqnum);
++		disable_irq_wake(client->irq);
  
- 	/*
--	 * If we've made progress since setting HF_IRET_MASK, we've
-+	 * If we've made progress since setting awaiting_iret_completion, we've
- 	 * executed an IRET and can allow NMI injection.
- 	 */
- 	if (svm->awaiting_iret_completion &&
--	    (sev_es_guest(vcpu->kvm) ||
--	     kvm_rip_read(vcpu) != svm->nmi_iret_rip)) {
-+	    kvm_rip_read(vcpu) != svm->nmi_iret_rip) {
- 		svm->awaiting_iret_completion = false;
- 		svm->nmi_masked = false;
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 	return 0;
+ }
+diff --git a/include/linux/tca6416_keypad.h b/include/linux/tca6416_keypad.h
+index b0d36a9934ccd..5cf6f6f82aa70 100644
+--- a/include/linux/tca6416_keypad.h
++++ b/include/linux/tca6416_keypad.h
+@@ -25,7 +25,6 @@ struct tca6416_keys_platform_data {
+ 	unsigned int rep:1;	/* enable input subsystem auto repeat */
+ 	uint16_t pinmask;
+ 	uint16_t invert;
+-	int irq_is_gpio;
+ 	int use_polling;	/* use polling if Interrupt is not connected*/
+ };
+ #endif
 -- 
 2.40.1
 
