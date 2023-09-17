@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF9F53B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:32:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E60C433CB;
-	Sun, 17 Sep 2023 19:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B2653B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:32:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DEFC433C9;
+	Sun, 17 Sep 2023 19:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979160;
-	bh=Rj9C1NbN1r6Tl+/Ueh9c+Ljy15oM4FmmeED6/Gb/y+o=;
+	s=korg; t=1694979163;
+	bh=z9inRm7nAVHq1PGqoAWDmAHf7An/vtyTeecZc5VHSAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffRnJv1QmccB2ezug5EYovtamk9m7wb3COCOQfUGPb1Wc98po2LOSCU1JxBQyOfye
-	 lPglsu1WGd2EsP2TiEY1OHZHMtGigkpkWRY/t+xVJme/lu+ntBUuEbaNrgyF+ppjKW
-	 LA8y8bfZWCtJhXXk0UMLoJLGvTbnQoXdTBAL9AKE=
+	b=rYT0mkY2Kottn8wegxQvx+QgH0XdzA6rYr8lJPBSnzRlZx/JHdAb7KGCFWGf0M9Vc
+	 a1pqycFOQXZPcmwXfVibZleUto+FaUaTdZVa2Kyy6FDM8Hy7SUmZtRyU+cFxZPDJ3q
+	 xChs8kMd1ikmOGnOEACtZAMTYD6Ggc5zHmQol9pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Yang <xiangyang3@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eddie James <eajames@linux.ibm.com>,
+	Joel Stanley <joel@jms.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/406] IB/uverbs: Fix an potential error pointer dereference
-Date: Sun, 17 Sep 2023 21:11:26 +0200
-Message-ID: <20230917191107.296370614@linuxfoundation.org>
+Subject: [PATCH 5.10 233/406] fsi: aspeed: Reset master errors after CFAM reset
+Date: Sun, 17 Sep 2023 21:11:27 +0200
+Message-ID: <20230917191107.321714689@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,40 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Yang <xiangyang3@huawei.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 26b7d1a27167e7adf75b150755e05d2bc123ce55 ]
+[ Upstream commit 52300909f4670ac552bfeb33c1355b896eac8c06 ]
 
-smatch reports the warning below:
-drivers/infiniband/core/uverbs_std_types_counters.c:110
-ib_uverbs_handler_UVERBS_METHOD_COUNTERS_READ() error: 'uattr'
-dereferencing possible ERR_PTR()
+It has been observed that sometimes the FSI master will return all 0xffs
+after a CFAM has been taken out of reset, without presenting any error.
+Resetting the FSI master errors resolves the issue.
 
-The return value of uattr maybe ERR_PTR(-ENOENT), fix this by checking
-the value of uattr before using it.
-
-Fixes: ebb6796bd397 ("IB/uverbs: Add read counters support")
-Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
-Link: https://lore.kernel.org/r/20230804022525.1916766-1-xiangyang3@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 4a851d714ead ("fsi: aspeed: Support CFAM reset GPIO")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230612195657.245125-8-eajames@linux.ibm.com
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_counters.c | 2 ++
+ drivers/fsi/fsi-master-aspeed.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_counters.c b/drivers/infiniband/core/uverbs_std_types_counters.c
-index b3c6c066b6010..c61b10fbf90a9 100644
---- a/drivers/infiniband/core/uverbs_std_types_counters.c
-+++ b/drivers/infiniband/core/uverbs_std_types_counters.c
-@@ -108,6 +108,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_COUNTERS_READ)(
- 		return ret;
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index 87edc77260d20..db0519da0f892 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -445,6 +445,8 @@ static ssize_t cfam_reset_store(struct device *dev, struct device_attribute *att
+ 	gpiod_set_value(aspeed->cfam_reset_gpio, 1);
+ 	usleep_range(900, 1000);
+ 	gpiod_set_value(aspeed->cfam_reset_gpio, 0);
++	usleep_range(900, 1000);
++	opb_writel(aspeed, ctrl_base + FSI_MRESP0, cpu_to_be32(FSI_MRESP_RST_ALL_MASTER));
+ 	mutex_unlock(&aspeed->lock);
  
- 	uattr = uverbs_attr_get(attrs, UVERBS_ATTR_READ_COUNTERS_BUFF);
-+	if (IS_ERR(uattr))
-+		return PTR_ERR(uattr);
- 	read_attr.ncounters = uattr->ptr_attr.len / sizeof(u64);
- 	read_attr.counters_buff = uverbs_zalloc(
- 		attrs, array_size(read_attr.ncounters, sizeof(u64)));
+ 	return count;
 -- 
 2.40.1
 
