@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A9A6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77031C433C9;
-	Sun, 17 Sep 2023 19:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788B6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BF8C433CD;
+	Sun, 17 Sep 2023 19:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980422;
-	bh=EQ9pktDE7+lLm00YJ3KwzztnmjM4cwLBqFy2Q/o8xQc=;
+	s=korg; t=1694980426;
+	bh=98CxqHjkBvetmP0FSdQT8LWyVI/7h8h05wk+3Vuj2kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPMMzjMrM4NHCTzknjdZoCyO6M6HEyLVAlPRd1H2Egbe9xcYiO0phKOADueL2D1EW
-	 TbNaz+J9xwEom0EKa34m0bAWYfQTL2c+kIYWiSiwTiHlYhn4Dp4RshGpvD0E8uasJ3
-	 /9ber5xRcrDGQcB5reHf4q1Hn+pDBHXwWOA7yFjQ=
+	b=EjjPQwSUt5AAZN1pmgJtmIscagR8Xfy9g0jVx5hDAyxRxbRuhd0R6mDebJZ+wNsvE
+	 iLjk03sfIw87vG/75a2l36qh8WKppExjVFg8j1yraTh5lw9o0Cl/9Xw/kM2chMm0yp
+	 /QfScXWl7rDu+GXfev9eMZx4sS6obCMPR1IhXaLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yikebaer Aizezi <yikebaer61@gmail.com>,
 	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Wang Jianjian <wangjianjian0@foxmail.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.5 187/285] ext4: fix slab-use-after-free in ext4_es_insert_extent()
-Date: Sun, 17 Sep 2023 21:13:07 +0200
-Message-ID: <20230917191058.083977809@linuxfoundation.org>
+Subject: [PATCH 6.5 188/285] ext4: add correct group descriptors and reserved GDT blocks to system zone
+Date: Sun, 17 Sep 2023 21:13:08 +0200
+Message-ID: <20230917191058.115223458@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,181 +40,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Wang Jianjian <wangjianjian0@foxmail.com>
 
-commit 768d612f79822d30a1e7d132a4d4b05337ce42ec upstream.
+commit 68228da51c9a436872a4ef4b5a7692e29f7e5bc7 upstream.
 
-Yikebaer reported an issue:
-==================================================================
-BUG: KASAN: slab-use-after-free in ext4_es_insert_extent+0xc68/0xcb0
-fs/ext4/extents_status.c:894
-Read of size 4 at addr ffff888112ecc1a4 by task syz-executor/8438
+When setup_system_zone, flex_bg is not initialized so it is always 1.
+Use a new helper function, ext4_num_base_meta_blocks() which does not
+depend on sbi->s_log_groups_per_flex being initialized.
 
-CPU: 1 PID: 8438 Comm: syz-executor Not tainted 6.5.0-rc5 #1
-Call Trace:
- [...]
- kasan_report+0xba/0xf0 mm/kasan/report.c:588
- ext4_es_insert_extent+0xc68/0xcb0 fs/ext4/extents_status.c:894
- ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
- ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
- ext4_zero_range fs/ext4/extents.c:4622 [inline]
- ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
- [...]
+[ Squashed two patches in the Link URL's below together into a single
+  commit, which is simpler to review/understand.  Also fix checkpatch
+  warnings. --TYT ]
 
-Allocated by task 8438:
- [...]
- kmem_cache_zalloc include/linux/slab.h:693 [inline]
- __es_alloc_extent fs/ext4/extents_status.c:469 [inline]
- ext4_es_insert_extent+0x672/0xcb0 fs/ext4/extents_status.c:873
- ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
- ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
- ext4_zero_range fs/ext4/extents.c:4622 [inline]
- ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
- [...]
-
-Freed by task 8438:
- [...]
- kmem_cache_free+0xec/0x490 mm/slub.c:3823
- ext4_es_try_to_merge_right fs/ext4/extents_status.c:593 [inline]
- __es_insert_extent+0x9f4/0x1440 fs/ext4/extents_status.c:802
- ext4_es_insert_extent+0x2ca/0xcb0 fs/ext4/extents_status.c:882
- ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
- ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
- ext4_zero_range fs/ext4/extents.c:4622 [inline]
- ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
- [...]
-==================================================================
-
-The flow of issue triggering is as follows:
-1. remove es
-      raw es               es  removed  es1
-|-------------------| -> |----|.......|------|
-
-2. insert es
-  es   insert   es1      merge with es  es1     merge with es and free es1
-|----|.......|------| -> |------------|------| -> |-------------------|
-
-es merges with newes, then merges with es1, frees es1, then determines
-if es1->es_len is 0 and triggers a UAF.
-
-The code flow is as follows:
-ext4_es_insert_extent
-  es1 = __es_alloc_extent(true);
-  es2 = __es_alloc_extent(true);
-  __es_remove_extent(inode, lblk, end, NULL, es1)
-    __es_insert_extent(inode, &newes, es1) ---> insert es1 to es tree
-  __es_insert_extent(inode, &newes, es2)
-    ext4_es_try_to_merge_right
-      ext4_es_free_extent(inode, es1) --->  es1 is freed
-  if (es1 && !es1->es_len)
-    // Trigger UAF by determining if es1 is used.
-
-We determine whether es1 or es2 is used immediately after calling
-__es_remove_extent() or __es_insert_extent() to avoid triggering a
-UAF if es1 or es2 is freed.
-
-Reported-by: Yikebaer Aizezi <yikebaer61@gmail.com>
-Closes: https://lore.kernel.org/lkml/CALcu4raD4h9coiyEBL4Bm0zjDwxC2CyPiTwsP3zFuhot6y9Beg@mail.gmail.com
-Fixes: 2a69c450083d ("ext4: using nofail preallocation in ext4_es_insert_extent()")
 Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230815070808.3377171-1-libaokun1@huawei.com
+Signed-off-by: Wang Jianjian <wangjianjian0@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_21AF0D446A9916ED5C51492CC6C9A0A77B05@qq.com
+Link: https://lore.kernel.org/r/tencent_D744D1450CC169AEA77FCF0A64719909ED05@qq.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents_status.c | 44 +++++++++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 14 deletions(-)
+ fs/ext4/balloc.c         |   15 +++++++++++----
+ fs/ext4/block_validity.c |    8 ++++----
+ fs/ext4/ext4.h           |    2 ++
+ 3 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index 9b5b8951afb4..6f7de14c0fa8 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -878,23 +878,29 @@ void ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- 	err1 = __es_remove_extent(inode, lblk, end, NULL, es1);
- 	if (err1 != 0)
- 		goto error;
-+	/* Free preallocated extent if it didn't get used. */
-+	if (es1) {
-+		if (!es1->es_len)
-+			__es_free_extent(es1);
-+		es1 = NULL;
-+	}
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -913,11 +913,11 @@ unsigned long ext4_bg_num_gdb(struct sup
+ }
  
- 	err2 = __es_insert_extent(inode, &newes, es2);
- 	if (err2 == -ENOMEM && !ext4_es_must_keep(&newes))
- 		err2 = 0;
- 	if (err2 != 0)
- 		goto error;
-+	/* Free preallocated extent if it didn't get used. */
-+	if (es2) {
-+		if (!es2->es_len)
-+			__es_free_extent(es2);
-+		es2 = NULL;
-+	}
+ /*
+- * This function returns the number of file system metadata clusters at
++ * This function returns the number of file system metadata blocks at
+  * the beginning of a block group, including the reserved gdt blocks.
+  */
+-static unsigned ext4_num_base_meta_clusters(struct super_block *sb,
+-				     ext4_group_t block_group)
++unsigned int ext4_num_base_meta_blocks(struct super_block *sb,
++				       ext4_group_t block_group)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	unsigned num;
+@@ -935,8 +935,15 @@ static unsigned ext4_num_base_meta_clust
+ 	} else { /* For META_BG_BLOCK_GROUPS */
+ 		num += ext4_bg_num_gdb_meta(sb, block_group);
+ 	}
+-	return EXT4_NUM_B2C(sbi, num);
++	return num;
+ }
++
++static unsigned int ext4_num_base_meta_clusters(struct super_block *sb,
++						ext4_group_t block_group)
++{
++	return EXT4_NUM_B2C(EXT4_SB(sb), ext4_num_base_meta_blocks(sb, block_group));
++}
++
+ /**
+  *	ext4_inode_to_goal_block - return a hint for block allocation
+  *	@inode: inode for block allocation
+--- a/fs/ext4/block_validity.c
++++ b/fs/ext4/block_validity.c
+@@ -215,7 +215,6 @@ int ext4_setup_system_zone(struct super_
+ 	struct ext4_system_blocks *system_blks;
+ 	struct ext4_group_desc *gdp;
+ 	ext4_group_t i;
+-	int flex_size = ext4_flex_bg_size(sbi);
+ 	int ret;
  
- 	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
- 	    (status & EXTENT_STATUS_WRITTEN ||
- 	     status & EXTENT_STATUS_UNWRITTEN))
- 		__revise_pending(inode, lblk, len);
--
--	/* es is pre-allocated but not used, free it. */
--	if (es1 && !es1->es_len)
--		__es_free_extent(es1);
--	if (es2 && !es2->es_len)
--		__es_free_extent(es2);
- error:
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
- 	if (err1 || err2)
-@@ -1491,8 +1497,12 @@ void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 	 */
- 	write_lock(&EXT4_I(inode)->i_es_lock);
- 	err = __es_remove_extent(inode, lblk, end, &reserved, es);
--	if (es && !es->es_len)
--		__es_free_extent(es);
-+	/* Free preallocated extent if it didn't get used. */
-+	if (es) {
-+		if (!es->es_len)
-+			__es_free_extent(es);
-+		es = NULL;
-+	}
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
- 	if (err)
- 		goto retry;
-@@ -2047,19 +2057,25 @@ void ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
- 	err1 = __es_remove_extent(inode, lblk, lblk, NULL, es1);
- 	if (err1 != 0)
- 		goto error;
-+	/* Free preallocated extent if it didn't get used. */
-+	if (es1) {
-+		if (!es1->es_len)
-+			__es_free_extent(es1);
-+		es1 = NULL;
-+	}
+ 	system_blks = kzalloc(sizeof(*system_blks), GFP_KERNEL);
+@@ -223,12 +222,13 @@ int ext4_setup_system_zone(struct super_
+ 		return -ENOMEM;
  
- 	err2 = __es_insert_extent(inode, &newes, es2);
- 	if (err2 != 0)
- 		goto error;
-+	/* Free preallocated extent if it didn't get used. */
-+	if (es2) {
-+		if (!es2->es_len)
-+			__es_free_extent(es2);
-+		es2 = NULL;
-+	}
+ 	for (i=0; i < ngroups; i++) {
++		unsigned int meta_blks = ext4_num_base_meta_blocks(sb, i);
++
+ 		cond_resched();
+-		if (ext4_bg_has_super(sb, i) &&
+-		    ((i < 5) || ((i % flex_size) == 0))) {
++		if (meta_blks != 0) {
+ 			ret = add_system_zone(system_blks,
+ 					ext4_group_first_block_no(sb, i),
+-					ext4_bg_num_gdb(sb, i) + 1, 0);
++					meta_blks, 0);
+ 			if (ret)
+ 				goto err;
+ 		}
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3084,6 +3084,8 @@ extern const char *ext4_decode_error(str
+ extern void ext4_mark_group_bitmap_corrupted(struct super_block *sb,
+ 					     ext4_group_t block_group,
+ 					     unsigned int flags);
++extern unsigned int ext4_num_base_meta_blocks(struct super_block *sb,
++					      ext4_group_t block_group);
  
- 	if (allocated)
- 		__insert_pending(inode, lblk);
--
--	/* es is pre-allocated but not used, free it. */
--	if (es1 && !es1->es_len)
--		__es_free_extent(es1);
--	if (es2 && !es2->es_len)
--		__es_free_extent(es2);
- error:
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
- 	if (err1 || err2)
--- 
-2.42.0
-
+ extern __printf(7, 8)
+ void __ext4_error(struct super_block *, const char *, unsigned int, bool,
 
 
