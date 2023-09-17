@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9946FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79FDC433CA;
-	Sun, 17 Sep 2023 20:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2D26FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F338C433C8;
+	Sun, 17 Sep 2023 20:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983345;
-	bh=Z9hQ0kNV8gqHtWt64eiBng++M2iBISmwSDZ0hmf2oyA=;
+	s=korg; t=1694983348;
+	bh=qNs/60bM0oB9UK7blt+kNKu7chLvlTshZUAppnxK3Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEyiUJVZ4EwpH7Wtf7CJcwM4RNa8DkEG9vQBMKvbf8f/wY30YAt2RcZ0Qbfzc0yLP
-	 d+tU3/qqBTrP4Yt7/m0vZ1sLi6ZC1mFu+Dn5D/v2UV06M8oBqvQFtei5vuGY09Tqna
-	 v8c+7WaRXB9GSjyLGiCnn90HtV6nkud89BK2HhqM=
+	b=kAdFrqEE6HRkbsUKfEWSC/vJSjEFfJepX4UrvOs7+EoxhRmqvZk6Y/GVVqpWxd5Dm
+	 VfINZFSTJlGPm1jIIn11zL5iPeafULrp8eqZ5UmsrNQ98biZ1ghq4L0CT0454Y9FJo
+	 s1KM95ORSIyn12CIQNof7GXwvzJTjrFuJ2n6bSy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 509/511] kcm: Fix error handling for SOCK_DGRAM in kcm_sendmsg().
-Date: Sun, 17 Sep 2023 21:15:36 +0200
-Message-ID: <20230917191126.008215161@linuxfoundation.org>
+	Guillaume Tucker <guillaume.tucker@collabora.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	"kernelci.org bot" <bot@kernelci.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.15 510/511] MIPS: Only fiddle with CHECKFLAGS if `need-compiler
+Date: Sun, 17 Sep 2023 21:15:37 +0200
+Message-ID: <20230917191126.031515992@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,70 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit a22730b1b4bf437c6bbfdeff5feddf54be4aeada ]
+commit 4fe4a6374c4db9ae2b849b61e84b58685dca565a upstream.
 
-syzkaller found a memory leak in kcm_sendmsg(), and commit c821a88bd720
-("kcm: Fix memory leak in error path of kcm_sendmsg()") suppressed it by
-updating kcm_tx_msg(head)->last_skb if partial data is copied so that the
-following sendmsg() will resume from the skb.
+We have originally guarded fiddling with CHECKFLAGS in our arch Makefile
+by checking for the CONFIG_MIPS variable, not set for targets such as
+`distclean', etc. that neither include `.config' nor use the compiler.
 
-However, we cannot know how many bytes were copied when we get the error.
-Thus, we could mess up the MSG_MORE queue.
+Starting from commit 805b2e1d427a ("kbuild: include Makefile.compiler
+only when compiler is needed") we have had a generic `need-compiler'
+variable explicitly telling us if the compiler will be used and thus its
+capabilities need to be checked and expressed in the form of compilation
+flags.  If this variable is not set, then `make' functions such as
+`cc-option' are undefined, causing all kinds of weirdness to happen if
+we expect specific results to be returned, most recently:
 
-When kcm_sendmsg() fails for SOCK_DGRAM, we should purge the queue as we
-do so for UDP by udp_flush_pending_frames().
+cc1: error: '-mloongson-mmi' must be used with '-mhard-float'
 
-Even without this change, when the error occurred, the following sendmsg()
-resumed from a wrong skb and the queue was messed up.  However, we have
-yet to get such a report, and only syzkaller stumbled on it.  So, this
-can be changed safely.
+messages with configurations such as `fuloong2e_defconfig' and the
+`modules_install' target, which does include `.config' and yet does not
+use the compiler.
 
-Note this does not change SOCK_SEQPACKET behaviour.
+Replace the check for CONFIG_MIPS with one for `need-compiler' instead,
+so as to prevent the compiler from being ever called for CHECKFLAGS when
+not needed.
 
-Fixes: c821a88bd720 ("kcm: Fix memory leak in error path of kcm_sendmsg()")
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230912022753.33327-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Guillaume Tucker <guillaume.tucker@collabora.com>
+Closes: https://lore.kernel.org/r/85031c0c-d981-031e-8a50-bc4fad2ddcd8@collabora.com/
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 805b2e1d427a ("kbuild: include Makefile.compiler only when compiler is needed")
+Cc: stable@vger.kernel.org # v5.13+
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/mips/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 2d06617e89891..0d1ab4149553c 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1064,17 +1064,18 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- out_error:
- 	kcm_push(kcm);
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -321,7 +321,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
  
--	if (copied && sock->type == SOCK_SEQPACKET) {
-+	if (sock->type == SOCK_SEQPACKET) {
- 		/* Wrote some bytes before encountering an
- 		 * error, return partial success.
- 		 */
--		goto partial_message;
--	}
--
--	if (head != kcm->seq_skb)
-+		if (copied)
-+			goto partial_message;
-+		if (head != kcm->seq_skb)
-+			kfree_skb(head);
-+	} else {
- 		kfree_skb(head);
--	else if (copied)
--		kcm_tx_msg(head)->last_skb = skb;
-+		kcm->seq_skb = NULL;
-+	}
+ KBUILD_LDFLAGS		+= -m $(ld-emul)
  
- 	err = sk_stream_error(sk, msg->msg_flags, err);
- 
--- 
-2.40.1
-
+-ifdef CONFIG_MIPS
++ifdef need-compiler
+ CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
+ 	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
+ 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
 
 
