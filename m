@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE916FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1E4C433C9;
-	Sun, 17 Sep 2023 20:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD436FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B536EC433C7;
+	Sun, 17 Sep 2023 20:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981060;
-	bh=phhe5laKqx6LASxCxHDK51e+orCxnxM/X6fQ0Xe5KKA=;
+	s=korg; t=1694981064;
+	bh=+aKeu1gdyAA4axKXCjIL8fQugs5Vionc2qXBfwyWeZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w82tkHXbLzxwi/H/jK0xrE1dhvHyzTCGPGabr7XuKAvecWJOnIlRxFixk0RXY3XxA
-	 v1KeHZSh8oObiGUCwF5dIiuvD//tHIOqDG16a65vQU4lWXXY5GV+wgJHfJmfPhdqrO
-	 azZu5QdiE5gHj8Y5FRcifH8iC11F/ApuVlbuVYy0=
+	b=JiQ+A8bZtF/J85jK9Lz6CBoRWx3ND8oOKFgiEP83pvQ+2MUe3oMprczi9liHsqtml
+	 zXp92LBBX8vnBsY9LpBGXY/Fo+fQwDuM4B03i1vvliM1wuqehYN9OOhbjys/R8tJGy
+	 uteQmy4tYjryEpxkkV922u4eKr052FIYUAEH2zso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/219] pwm: atmel-tcb: Fix resource freeing in error path and remove
-Date: Sun, 17 Sep 2023 21:13:15 +0200
-Message-ID: <20230917191043.454185817@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Soheil Hassas Yeganeh <soheil@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ajay Kaher <akaher@vmware.com>
+Subject: [PATCH 6.1 052/219] net: add SKB_HEAD_ALIGN() helper
+Date: Sun, 17 Sep 2023 21:12:59 +0200
+Message-ID: <20230917191042.884108341@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -35,94 +37,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c11622324c023415fb69196c5fc3782d2b8cced0 ]
+commit 115f1a5c42bdad9a9ea356fc0b4a39ec7537947f upstream.
 
-Several resources were not freed in the error path and the remove
-function. Add the forgotten items.
+We have many places using this expression:
 
-Fixes: 34cbcd72588f ("pwm: atmel-tcb: Add sama5d2 support")
-Fixes: 061f8572a31c ("pwm: atmel-tcb: Switch to new binding")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
+
+Use of SKB_HEAD_ALIGN() will allow to clean them.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Ajay: Regenerated the patch for v6.1.y]
+Signed-off-by: Ajay Kaher <akaher@vmware.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-atmel-tcb.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ include/linux/skbuff.h |    8 ++++++++
+ net/core/skbuff.c      |   18 ++++++------------
+ 2 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
-index 613dd1810fb53..2826fc216d291 100644
---- a/drivers/pwm/pwm-atmel-tcb.c
-+++ b/drivers/pwm/pwm-atmel-tcb.c
-@@ -450,16 +450,20 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
- 	tcbpwm->clk = of_clk_get_by_name(np->parent, clk_name);
- 	if (IS_ERR(tcbpwm->clk))
- 		tcbpwm->clk = of_clk_get_by_name(np->parent, "t0_clk");
--	if (IS_ERR(tcbpwm->clk))
--		return PTR_ERR(tcbpwm->clk);
-+	if (IS_ERR(tcbpwm->clk)) {
-+		err = PTR_ERR(tcbpwm->clk);
-+		goto err_slow_clk;
-+	}
- 
- 	match = of_match_node(atmel_tcb_of_match, np->parent);
- 	config = match->data;
- 
- 	if (config->has_gclk) {
- 		tcbpwm->gclk = of_clk_get_by_name(np->parent, "gclk");
--		if (IS_ERR(tcbpwm->gclk))
--			return PTR_ERR(tcbpwm->gclk);
-+		if (IS_ERR(tcbpwm->gclk)) {
-+			err = PTR_ERR(tcbpwm->gclk);
-+			goto err_clk;
-+		}
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -261,6 +261,14 @@
+ #define SKB_DATA_ALIGN(X)	ALIGN(X, SMP_CACHE_BYTES)
+ #define SKB_WITH_OVERHEAD(X)	\
+ 	((X) - SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
++
++/* For X bytes available in skb->head, what is the minimal
++ * allocation needed, knowing struct skb_shared_info needs
++ * to be aligned.
++ */
++#define SKB_HEAD_ALIGN(X) (SKB_DATA_ALIGN(X) + \
++	SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
++
+ #define SKB_MAX_ORDER(X, ORDER) \
+ 	SKB_WITH_OVERHEAD((PAGE_SIZE << (ORDER)) - (X))
+ #define SKB_MAX_HEAD(X)		(SKB_MAX_ORDER((X), 0))
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -504,8 +504,7 @@ struct sk_buff *__alloc_skb(unsigned int
+ 	 * aligned memory blocks, unless SLUB/SLAB debug is enabled.
+ 	 * Both skb->head and skb_shared_info are cache line aligned.
+ 	 */
+-	size = SKB_DATA_ALIGN(size);
+-	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++	size = SKB_HEAD_ALIGN(size);
+ 	osize = kmalloc_size_roundup(size);
+ 	data = kmalloc_reserve(osize, gfp_mask, node, &pfmemalloc);
+ 	if (unlikely(!data))
+@@ -578,8 +577,7 @@ struct sk_buff *__netdev_alloc_skb(struc
+ 		goto skb_success;
  	}
  
- 	tcbpwm->chip.dev = &pdev->dev;
-@@ -470,7 +474,7 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+-	len += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+-	len = SKB_DATA_ALIGN(len);
++	len = SKB_HEAD_ALIGN(len);
  
- 	err = clk_prepare_enable(tcbpwm->slow_clk);
- 	if (err)
--		goto err_slow_clk;
-+		goto err_gclk;
+ 	if (sk_memalloc_socks())
+ 		gfp_mask |= __GFP_MEMALLOC;
+@@ -678,8 +676,7 @@ struct sk_buff *__napi_alloc_skb(struct
+ 		data = page_frag_alloc_1k(&nc->page_small, gfp_mask);
+ 		pfmemalloc = NAPI_SMALL_PAGE_PFMEMALLOC(nc->page_small);
+ 	} else {
+-		len += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+-		len = SKB_DATA_ALIGN(len);
++		len = SKB_HEAD_ALIGN(len);
  
- 	spin_lock_init(&tcbpwm->lock);
+ 		data = page_frag_alloc(&nc->page, len, gfp_mask);
+ 		pfmemalloc = nc->page.pfmemalloc;
+@@ -1837,8 +1834,7 @@ int pskb_expand_head(struct sk_buff *skb
+ 	if (skb_pfmemalloc(skb))
+ 		gfp_mask |= __GFP_MEMALLOC;
  
-@@ -485,6 +489,12 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
- err_disable_clk:
- 	clk_disable_unprepare(tcbpwm->slow_clk);
+-	size = SKB_DATA_ALIGN(size);
+-	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++	size = SKB_HEAD_ALIGN(size);
+ 	size = kmalloc_size_roundup(size);
+ 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
+ 	if (!data)
+@@ -6204,8 +6200,7 @@ static int pskb_carve_inside_header(stru
+ 	if (skb_pfmemalloc(skb))
+ 		gfp_mask |= __GFP_MEMALLOC;
  
-+err_gclk:
-+	clk_put(tcbpwm->gclk);
-+
-+err_clk:
-+	clk_put(tcbpwm->clk);
-+
- err_slow_clk:
- 	clk_put(tcbpwm->slow_clk);
+-	size = SKB_DATA_ALIGN(size);
+-	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++	size = SKB_HEAD_ALIGN(size);
+ 	size = kmalloc_size_roundup(size);
+ 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
+ 	if (!data)
+@@ -6323,8 +6318,7 @@ static int pskb_carve_inside_nonlinear(s
+ 	if (skb_pfmemalloc(skb))
+ 		gfp_mask |= __GFP_MEMALLOC;
  
-@@ -498,8 +508,9 @@ static void atmel_tcb_pwm_remove(struct platform_device *pdev)
- 	pwmchip_remove(&tcbpwm->chip);
- 
- 	clk_disable_unprepare(tcbpwm->slow_clk);
--	clk_put(tcbpwm->slow_clk);
-+	clk_put(tcbpwm->gclk);
- 	clk_put(tcbpwm->clk);
-+	clk_put(tcbpwm->slow_clk);
- }
- 
- static const struct of_device_id atmel_tcb_pwm_dt_ids[] = {
--- 
-2.40.1
-
+-	size = SKB_DATA_ALIGN(size);
+-	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++	size = SKB_HEAD_ALIGN(size);
+ 	size = kmalloc_size_roundup(size);
+ 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
+ 	if (!data)
 
 
