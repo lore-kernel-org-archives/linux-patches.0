@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1F17461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9940DC433C7;
-	Sun, 17 Sep 2023 19:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA07461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FFEC433C8;
+	Sun, 17 Sep 2023 19:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980757;
-	bh=psB1KBeQO3ClstUvgpWPqNoPqKEnp0tn8S6EyKYfcdQ=;
+	s=korg; t=1694980760;
+	bh=/krOP+GGNsEKjKDGbzC+iqCYnrhrjQGqXpyKCIDDEhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTFiBSqrCxhZuo1vp+O680QL9PM1Db027+Tf0oeCMHSDc+YHxnn3bPn1D/U6+nPi9
-	 begPIqzAEDpzEo1YrCwn13FlfjTIrl231SYd5lkCXTvx9xRFAO7IsFxdm9xWZT+qW5
-	 L/gyDoR2fE1lK0O4CtBYXcMa8NXXKRkkLO11zoU0=
+	b=j9HQ66k3j4q/NSEYQIQnyikvCN49Se0PDZGpkZDl3Uatt0iwXmFeUp1v2TaHMkRg9
+	 K7htJnItowq0ndYYfq/ZZ+feGia87OUJOSYcPt+NbUR45yDT8Qswx2kiF5Fpau1J1A
+	 fGurX0KsqmtSGK3UqI9gJPeDi64UtALMCG7835Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Helge Deller <deller@gmx.de>,
-	Michael Labiuk <michael.labiuk@virtuozzo.com>
-Subject: [PATCH 6.5 284/285] vm: fix move_vma() memory accounting being off
-Date: Sun, 17 Sep 2023 21:14:44 +0200
-Message-ID: <20230917191100.965552467@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wesley Chalmers <wesley.chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.5 285/285] drm/amd/display: Fix a bug when searching for insert_above_mpcc
+Date: Sun, 17 Sep 2023 21:14:45 +0200
+Message-ID: <20230917191100.996862643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,54 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Wesley Chalmers <wesley.chalmers@amd.com>
 
-commit 3cec50490969afd4a76ccee441f747d869ccff77 upstream.
+commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
 
-Commit 408579cd627a ("mm: Update do_vmi_align_munmap() return
-semantics") seems to have updated one of the callers of do_vmi_munmap()
-incorrectly: it used to check for the error case (which didn't
-change: negative means error).
+[WHY]
+Currently, when insert_plane is called with insert_above_mpcc
+parameter that is equal to tree->opp_list, the function returns NULL.
 
-That commit changed the check to the success case (which did change:
-before that commit, 0 was success, and 1 was "success and lock
-downgraded".  After the change, it's always 0 for success, and the lock
-will have been released if requested).
+[HOW]
+Instead, the function should insert the plane at the top of the tree.
 
-This didn't change any actual VM behavior _except_ for memory accounting
-when 'VM_ACCOUNT' was set on the vma.  Which made the wrong return value
-test fairly subtle, since everything continues to work.
-
-Or rather - it continues to work but the "Committed memory" accounting
-goes all wonky (Committed_AS value in /proc/meminfo), and depending on
-settings that then causes problems much much later as the VM relies on
-bogus statistics for its heuristics.
-
-Revert that one line of the change back to the original logic.
-
-Fixes: 408579cd627a ("mm: Update do_vmi_align_munmap() return semantics")
-Reported-by: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-Reported-bisected-and-tested-by: Michael Labiuk <michael.labiuk@virtuozzo.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Link: https://lore.kernel.org/all/1694366957@msgid.manchmal.in-ulm.de/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Helge Deller <deller@gmx.de>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mremap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -715,7 +715,7 @@ static unsigned long move_vma(struct vm_
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
+@@ -212,8 +212,9 @@ struct mpcc *mpc1_insert_plane(
+ 		/* check insert_above_mpcc exist in tree->opp_list */
+ 		struct mpcc *temp_mpcc = tree->opp_list;
  
- 	vma_iter_init(&vmi, mm, old_addr);
--	if (!do_vmi_munmap(&vmi, mm, old_addr, old_len, uf_unmap, false)) {
-+	if (do_vmi_munmap(&vmi, mm, old_addr, old_len, uf_unmap, false) < 0) {
- 		/* OOM: unable to split vma, just get accounts right */
- 		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
- 			vm_acct_memory(old_len >> PAGE_SHIFT);
+-		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
+-			temp_mpcc = temp_mpcc->mpcc_bot;
++		if (temp_mpcc != insert_above_mpcc)
++			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
++				temp_mpcc = temp_mpcc->mpcc_bot;
+ 		if (temp_mpcc == NULL)
+ 			return NULL;
+ 	}
 
 
