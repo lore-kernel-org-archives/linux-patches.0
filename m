@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF67D6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:26:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B95EC433C7;
-	Sun, 17 Sep 2023 19:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8E76FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:26:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D41C433C8;
+	Sun, 17 Sep 2023 19:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978770;
-	bh=+DGBtqwAABsWfyyhwA5Oj8b37zxzYYr9JrsQSMClcN8=;
+	s=korg; t=1694978774;
+	bh=9DJeaXrczdtg0dHhkeXm3UmrF7sM4FolvrQ75VPYfFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AXxFHov57CYMdOf3PZgQZx+ApPOLQ5cHG8A4QQyGnw0mWfFG1uXHsfa3MMKkhrF5
-	 5Dd2Hs66EYcKC1yD1iJ0Rj2oxp44IvplTrUCCHWJbqpPnnnLiO7Z9R5JMBi6GysNMO
-	 7PMKr79hYnlpHoc25CO5g1HSO3I1GdhCmGrmmf2s=
+	b=yVHZwjooOjiRAE6lSNjEhCWSkQKGU7NbQLKjGQFoH4Zamc89Sya1ZaDApkTR6TPjp
+	 2FmrfTY9vhKSQsiajv7tf3sX/cG1MJ7RfPb6vg55An9YYeQyxOLhbgHuPeOF0VO+rs
+	 dkxuJAa8jtUvej6ed6ZjT+9BzDAyIbCwNAR96I3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 138/406] x86/mm: Fix PAT bit missing from page protection modify mask
-Date: Sun, 17 Sep 2023 21:09:52 +0200
-Message-ID: <20230917191104.804823941@linuxfoundation.org>
+Subject: [PATCH 5.10 156/406] ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig
+Date: Sun, 17 Sep 2023 21:10:10 +0200
+Message-ID: <20230917191105.293268189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -37,109 +34,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Nayna Jain <nayna@linux.ibm.com>
 
-[ Upstream commit 548cb932051fb6232ac983ed6673dae7bdf3cf4c ]
+[ Upstream commit 5087fd9e80e539d2163accd045b73da64de7de95 ]
 
-Visible glitches have been observed when running graphics applications on
-Linux under Xen hypervisor.  Those observations have been confirmed with
-failures from kms_pwrite_crc Intel GPU test that verifies data coherency
-of DRM frame buffer objects using hardware CRC checksums calculated by
-display controllers, exposed to userspace via debugfs.  Affected
-processing paths have then been identified with new IGT test variants that
-mmap the objects using different methods and caching modes [1].
+Time to remove "IMA_TRUSTED_KEYRING".
 
-When running as a Xen PV guest, Linux uses Xen provided PAT configuration
-which is different from its native one.  In particular, Xen specific PTE
-encoding of write-combining caching, likely used by graphics applications,
-differs from the Linux default one found among statically defined minimal
-set of supported modes.  Since Xen defines PTE encoding of the WC mode as
-_PAGE_PAT, it no longer belongs to the minimal set, depends on correct
-handling of _PAGE_PAT bit, and can be mismatched with write-back caching.
-
-When a user calls mmap() for a DRM buffer object, DRM device specific
-.mmap file operation, called from mmap_region(), takes care of setting PTE
-encoding bits in a vm_page_prot field of an associated virtual memory area
-structure.  Unfortunately, _PAGE_PAT bit is not preserved when the vma's
-.vm_flags are then applied to .vm_page_prot via vm_set_page_prot().  Bits
-to be preserved are determined with _PAGE_CHG_MASK symbol that doesn't
-cover _PAGE_PAT.  As a consequence, WB caching is requested instead of WC
-when running under Xen (also, WP is silently changed to WT, and UC
-downgraded to UC_MINUS).  When running on bare metal, WC is not affected,
-but WP and WT extra modes are unintentionally replaced with WC and UC,
-respectively.
-
-WP and WT modes, encoded with _PAGE_PAT bit set, were introduced by commit
-281d4078bec3 ("x86: Make page cache mode a real type").  Care was taken
-to extend _PAGE_CACHE_MASK symbol with that additional bit, but that
-symbol has never been used for identification of bits preserved when
-applying page protection flags.  Support for all cache modes under Xen,
-including the problematic WC mode, was then introduced by commit
-47591df50512 ("xen: Support Xen pv-domains using PAT").
-
-The issue needs to be fixed by including _PAGE_PAT bit into a bitmask used
-by pgprot_modify() for selecting bits to be preserved.  We can do that
-either internally to pgprot_modify() (as initially proposed), or by making
-_PAGE_PAT a part of _PAGE_CHG_MASK.  If we go for the latter then, since
-_PAGE_PAT is the same as _PAGE_PSE, we need to note that _HPAGE_CHG_MASK
--- a huge pmds' counterpart of _PAGE_CHG_MASK, introduced by commit
-c489f1257b8c ("thp: add pmd_modify"), defined as (_PAGE_CHG_MASK |
-_PAGE_PSE) -- will no longer differ from _PAGE_CHG_MASK.  If such
-modification of _PAGE_CHG_MASK was irrelevant to its users then one might
-wonder why that new _HPAGE_CHG_MASK symbol was introduced instead of
-reusing the existing one with that otherwise irrelevant bit (_PAGE_PSE in
-that case) added.
-
-Add _PAGE_PAT to _PAGE_CHG_MASK and _PAGE_PAT_LARGE to _HPAGE_CHG_MASK for
-symmetry.  Split out common bits from both symbols to a common symbol for
-clarity.
-
-[ dhansen: tweak the solution changelog description ]
-
-[1] https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/commit/0f0754413f14
-
-Fixes: 281d4078bec3 ("x86: Make page cache mode a real type")
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Link: https://gitlab.freedesktop.org/drm/intel/-/issues/7648
-Link: https://lore.kernel.org/all/20230710073613.8006-2-janusz.krzysztofik%40linux.intel.com
+Fixes: f4dc37785e9b ("integrity: define '.evm' as a builtin 'trusted' keyring") # v4.5+
+Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/pgtable_types.h | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ security/integrity/ima/Kconfig | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/arch/x86/include/asm/pgtable_types.h b/arch/x86/include/asm/pgtable_types.h
-index 394757ee030a6..85baa72cb8947 100644
---- a/arch/x86/include/asm/pgtable_types.h
-+++ b/arch/x86/include/asm/pgtable_types.h
-@@ -125,11 +125,12 @@
-  * instance, and is *not* included in this mask since
-  * pte_modify() does modify it.
-  */
--#define _PAGE_CHG_MASK	(PTE_PFN_MASK | _PAGE_PCD | _PAGE_PWT |		\
--			 _PAGE_SPECIAL | _PAGE_ACCESSED | _PAGE_DIRTY |	\
--			 _PAGE_SOFT_DIRTY | _PAGE_DEVMAP | _PAGE_ENC |  \
--			 _PAGE_UFFD_WP)
--#define _HPAGE_CHG_MASK (_PAGE_CHG_MASK | _PAGE_PSE)
-+#define _COMMON_PAGE_CHG_MASK	(PTE_PFN_MASK | _PAGE_PCD | _PAGE_PWT |	       \
-+				 _PAGE_SPECIAL | _PAGE_ACCESSED | _PAGE_DIRTY |\
-+				 _PAGE_SOFT_DIRTY | _PAGE_DEVMAP | _PAGE_ENC | \
-+				 _PAGE_UFFD_WP)
-+#define _PAGE_CHG_MASK	(_COMMON_PAGE_CHG_MASK | _PAGE_PAT)
-+#define _HPAGE_CHG_MASK (_COMMON_PAGE_CHG_MASK | _PAGE_PSE | _PAGE_PAT_LARGE)
+diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
+index 0a5ae1e8da47a..05b8f5bcc37ac 100644
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -248,18 +248,6 @@ config IMA_APPRAISE_MODSIG
+ 	   The modsig keyword can be used in the IMA policy to allow a hook
+ 	   to accept such signatures.
  
- /*
-  * The cache modes defined here are used to translate between pure SW usage
+-config IMA_TRUSTED_KEYRING
+-	bool "Require all keys on the .ima keyring be signed (deprecated)"
+-	depends on IMA_APPRAISE && SYSTEM_TRUSTED_KEYRING
+-	depends on INTEGRITY_ASYMMETRIC_KEYS
+-	select INTEGRITY_TRUSTED_KEYRING
+-	default y
+-	help
+-	   This option requires that all keys added to the .ima
+-	   keyring be signed by a key on the system trusted keyring.
+-
+-	   This option is deprecated in favor of INTEGRITY_TRUSTED_KEYRING
+-
+ config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
+ 	bool "Permit keys validly signed by a built-in or secondary CA cert (EXPERIMENTAL)"
+ 	depends on SYSTEM_TRUSTED_KEYRING
 -- 
 2.40.1
 
