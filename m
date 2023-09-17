@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9A16FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3565C433C8;
-	Sun, 17 Sep 2023 19:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DD56FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BC4C433C8;
+	Sun, 17 Sep 2023 19:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979932;
-	bh=Z5vACDYnhDiJvy+1UfnUT7QZfxfG31KrBRMU2TrcjGc=;
+	s=korg; t=1694979935;
+	bh=6mzTUJrcQzwAWL0Zwjl0Wtuj94nxwdg86m6H5LBUZHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYaTt8tJ7ZVkJ2icfxlEyaZc8dcAmS2Nvw2bOz07YyJ1M7P7TGuDIOVqZ7Ce96Kl8
-	 Z7ZR1sH8XeOFqZ9pUmejilUuQu/2sHMK0xQrV5+2ch45MFkrvMNqTg/4VzPzHJsH3K
-	 ZeCzTUUNTR7Of8QTr69mQeJtRO8SYn/uS3IIlui4=
+	b=2fIbzfYUJNqLUVk0ED3EdoHhw/z4rui3kTTuyVY2zvAyLOAevKzF6uZpNBvAfu9Jy
+	 6Y8CSjbDjKaryjXEEH44yBi4A3GbRWdEVUvMCrcZ/3gns9Odk0nIBj4uFEub4qlPck
+	 fWZMsXFKdyQQ4l+T4HzraMmzUk6V0hHFKr41GmVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.5 049/285] clk: qcom: dispcc-sm8550: fix runtime PM imbalance on probe errors
-Date: Sun, 17 Sep 2023 21:10:49 +0200
-Message-ID: <20230917191053.375624870@linuxfoundation.org>
+Subject: [PATCH 6.5 050/285] clk: qcom: lpasscc-sc7280: fix missing resume during probe
+Date: Sun, 17 Sep 2023 21:10:50 +0200
+Message-ID: <20230917191053.413771110@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,53 +42,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit acaf1b3296a504d4a61b685f78baae771421608d upstream.
+commit 66af5339d4f8e20c6d89a490570bd94d40f1a7f6 upstream.
 
-Make sure to decrement the runtime PM usage count before returning in
-case regmap initialisation fails.
+Drivers that enable runtime PM must make sure that the controller is
+runtime resumed before accessing its registers to prevent the power
+domain from being disabled.
 
-Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
-Cc: stable@vger.kernel.org      # 6.3
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
+Cc: stable@vger.kernel.org      # 5.16
+Cc: Taniya Das <quic_tdas@quicinc.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230718132902.21430-4-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230718132902.21430-6-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/dispcc-sm8550.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/lpasscc-sc7280.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/clk/qcom/dispcc-sm8550.c
-+++ b/drivers/clk/qcom/dispcc-sm8550.c
-@@ -1761,8 +1761,10 @@ static int disp_cc_sm8550_probe(struct p
- 		return ret;
+--- a/drivers/clk/qcom/lpasscc-sc7280.c
++++ b/drivers/clk/qcom/lpasscc-sc7280.c
+@@ -118,9 +118,13 @@ static int lpass_cc_sc7280_probe(struct
+ 	ret = pm_clk_add(&pdev->dev, "iface");
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+-		goto destroy_pm_clk;
++		goto err_destroy_pm_clk;
+ 	}
  
- 	regmap = qcom_cc_map(pdev, &disp_cc_sm8550_desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (IS_ERR(regmap)) {
-+		ret = PTR_ERR(regmap);
-+		goto err_put_rpm;
-+	}
- 
- 	clk_lucid_evo_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
- 	clk_lucid_evo_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
-@@ -1777,9 +1779,16 @@ static int disp_cc_sm8550_probe(struct p
- 	regmap_update_bits(regmap, 0xe054, BIT(0), BIT(0));
- 
- 	ret = qcom_cc_really_probe(pdev, &disp_cc_sm8550_desc, regmap);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
 +	if (ret)
-+		goto err_put_rpm;
- 
- 	pm_runtime_put(&pdev->dev);
- 
-+	return 0;
++		goto err_destroy_pm_clk;
 +
+ 	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
+ 		lpass_regmap_config.name = "qdsp6ss";
+ 		lpass_regmap_config.max_register = 0x3f;
+@@ -128,7 +132,7 @@ static int lpass_cc_sc7280_probe(struct
+ 
+ 		ret = qcom_cc_probe_by_index(pdev, 0, desc);
+ 		if (ret)
+-			goto destroy_pm_clk;
++			goto err_put_rpm;
+ 	}
+ 
+ 	lpass_regmap_config.name = "top_cc";
+@@ -137,11 +141,15 @@ static int lpass_cc_sc7280_probe(struct
+ 
+ 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+ 	if (ret)
+-		goto destroy_pm_clk;
++		goto err_put_rpm;
++
++	pm_runtime_put(&pdev->dev);
+ 
+ 	return 0;
+ 
+-destroy_pm_clk:
 +err_put_rpm:
 +	pm_runtime_put_sync(&pdev->dev);
-+
- 	return ret;
- }
++err_destroy_pm_clk:
+ 	pm_clk_destroy(&pdev->dev);
  
+ 	return ret;
 
 
