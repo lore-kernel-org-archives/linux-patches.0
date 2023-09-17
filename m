@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C76D6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60611C433CB;
-	Sun, 17 Sep 2023 19:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0C76FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A8C433C9;
+	Sun, 17 Sep 2023 19:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978489;
-	bh=30gWOOQiZ1A+Phs70JyjijG4r3U6j/AiKZKRr3TGg2s=;
+	s=korg; t=1694978493;
+	bh=jhsIVnDQbJ72vP42LVD0LgF17jrT/kJyLWXMJGOaINo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aj0R9lGZTj/uKIm6i059YjA4/KLtCXxjyZABW5WUfGRSGIoIofeZ1Xzmh6I9nGes
-	 NF3rt+01pta5U3szIT3O+cqVBtHgDp4rzgM5pWu3yJFp2OJDFazu+9a7EDz3PdauMO
-	 Vw8SRPGVK4zZ24Ud6d8C4tyiHS9BhBKXoErMZBTw=
+	b=ocw5lQ0vbtnmVO7DOxo1Y1hYPkusNvclPf7w3eZrnG20lIOma5x28t888Tp6KIV2U
+	 qmzxtfewB3K2RM7PQPI1ENLvt9PXdq7knhKboyf8+XVKu8Jle2jBZzT+yQD5kSqiDZ
+	 JcGZHLB3Nq2KIbyLEHQlvoG4obGNRXTwwjxfbTyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/406] selftests/resctrl: Dont leak buffer in fill_cache()
-Date: Sun, 17 Sep 2023 21:08:47 +0200
-Message-ID: <20230917191103.062755542@linuxfoundation.org>
+Subject: [PATCH 5.10 074/406] selftests/resctrl: Unmount resctrl FS if child fails to run benchmark
+Date: Sun, 17 Sep 2023 21:08:48 +0200
+Message-ID: <20230917191103.089372547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -46,19 +46,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 2d320b1029ee7329ee0638181be967789775b962 ]
+[ Upstream commit f99e413eb54652e2436cc56d081176bc9a34cd8d ]
 
-The error path in fill_cache() does return before the allocated buffer
-is freed leaking the buffer.
+A child calls PARENT_EXIT() when it fails to run a benchmark to kill
+the parent process. PARENT_EXIT() lacks unmount for the resctrl FS and
+the parent won't be there to unmount it either after it gets killed.
 
-The leak was introduced when fill_cache_read() started to return errors
-in commit c7b607fa9325 ("selftests/resctrl: Fix null pointer
-dereference on open failed"), before that both fill functions always
-returned 0.
+Add the resctrl FS unmount also to PARENT_EXIT().
 
-Move free() earlier to prevent the mem leak.
-
-Fixes: c7b607fa9325 ("selftests/resctrl: Fix null pointer dereference on open failed")
+Fixes: 591a6e8588fc ("selftests/resctrl: Add basic resctrl file system operations and data")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
@@ -66,28 +62,21 @@ Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/resctrl/resctrl.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index c20d0a7ecbe63..ab1d91328d67b 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -184,12 +184,13 @@ fill_cache(unsigned long long buf_size, int malloc_and_init, int memflush,
- 	else
- 		ret = fill_cache_write(start_ptr, end_ptr, resctrl_val);
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 36da6136af968..c38f2d58df927 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -33,6 +33,7 @@
+ 	do {					\
+ 		perror(err_msg);		\
+ 		kill(ppid, SIGKILL);		\
++		umount_resctrlfs();		\
+ 		exit(EXIT_FAILURE);		\
+ 	} while (0)
  
-+	free(startptr);
-+
- 	if (ret) {
- 		printf("\n Error in fill cache read/write...\n");
- 		return -1;
- 	}
- 
--	free(startptr);
- 
- 	return 0;
- }
 -- 
 2.40.1
 
