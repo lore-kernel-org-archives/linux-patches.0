@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E727461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFC8C433C7;
-	Sun, 17 Sep 2023 20:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3D87461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E18C433C7;
+	Sun, 17 Sep 2023 20:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981933;
-	bh=IrCIMyGJqENalE/KJWq0Vs66S84g+l7xgRrOMJBD3N8=;
+	s=korg; t=1694981937;
+	bh=EKVqVctqoxuq2R0G1HvDUXQ+z0zXOcC/DtOG35F6bz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvuCKRUEJyOPnK3o7x36n7/CCK68vBHTt/IIYXoV34dw/BQ+8ACiIiGWTOYGJ1m/d
-	 3oOTnjWDfKlzj5u4GmFqlEApV/NSV7qHMTFoU6SGYOjZkig17CTu40p7pz8eBQMoS9
-	 VbICByOnHyxjgSNR3ePyh6n8LRTu4PlxwVugYSvY=
+	b=fFNvr5mLi1w1YsJYrCfWx2jGm+IXKyBZ0YxttgoRQoSvEq8Qx6hUjxZXOYz5UFykB
+	 9Z2/3tfqYuY2S9YvYhZLIl2syMhxZq/N2WKBx3R7Ff1nrevf+OTcqjYZp1Fjx2xJon
+	 xRCKMq7bHeIft31zSeXuwjKO1gHiRUJNIR/Uust4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ciprian Regus <ciprian.regus@analog.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/219] net:ethernet:adi:adin1110: Fix forwarding offload
-Date: Sun, 17 Sep 2023 21:15:22 +0200
-Message-ID: <20230917191047.989785592@linuxfoundation.org>
+Subject: [PATCH 5.15 120/511] hwmon: (tmp513) Fix the channel number in tmp51x_is_visible()
+Date: Sun, 17 Sep 2023 21:09:07 +0200
+Message-ID: <20230917191116.771413188@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,48 +36,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ciprian Regus <ciprian.regus@analog.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 32530dba1bd48da4437d18d9a8dbc9d2826938a6 ]
+[ Upstream commit d103337e38e7e64c3d915029e947b1cb0b512737 ]
 
-Currently, when a new fdb entry is added (with both ports of the
-ADIN2111 bridged), the driver configures the MAC filters for the wrong
-port, which results in the forwarding being done by the host, and not
-actually hardware offloaded.
+The supported channels for this driver are {0..3}. Fix the incorrect
+channel in tmp51x_is_visible().
 
-The ADIN2111 offloads the forwarding by setting filters on the
-destination MAC address of incoming frames. Based on these, they may be
-routed to the other port. Thus, if a frame has to be forwarded from port
-1 to port 2, the required configuration for the ADDR_FILT_UPRn register
-should set the APPLY2PORT1 bit (instead of APPLY2PORT2, as it's
-currently the case).
-
-Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
-Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/ea0eccc0-a29f-41e4-9049-a1a13f8b16f1@roeck-us.net/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230824204456.401580-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/adi/adin1110.c | 2 +-
+ drivers/hwmon/tmp513.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
-index cc026780ee0e8..ed2863ed6a5bb 100644
---- a/drivers/net/ethernet/adi/adin1110.c
-+++ b/drivers/net/ethernet/adi/adin1110.c
-@@ -1365,7 +1365,7 @@ static int adin1110_fdb_add(struct adin1110_port_priv *port_priv,
- 		return -ENOMEM;
+diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
+index 7d5f7441aceb1..b9a93ee9c2364 100644
+--- a/drivers/hwmon/tmp513.c
++++ b/drivers/hwmon/tmp513.c
+@@ -434,7 +434,7 @@ static umode_t tmp51x_is_visible(const void *_data,
  
- 	other_port = priv->ports[!port_priv->nr];
--	port_rules = adin1110_port_rules(port_priv, false, true);
-+	port_rules = adin1110_port_rules(other_port, false, true);
- 	eth_broadcast_addr(mask);
- 
- 	return adin1110_write_mac_address(other_port, mac_nr, (u8 *)fdb->addr,
+ 	switch (type) {
+ 	case hwmon_temp:
+-		if (data->id == tmp512 && channel == 4)
++		if (data->id == tmp512 && channel == 3)
+ 			return 0;
+ 		switch (attr) {
+ 		case hwmon_temp_input:
 -- 
 2.40.1
 
