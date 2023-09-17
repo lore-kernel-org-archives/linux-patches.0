@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2995A7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D8CC433C7;
-	Sun, 17 Sep 2023 20:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723717461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F2EC433C7;
+	Sun, 17 Sep 2023 20:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981202;
-	bh=QetLoVC385ghN+/3EMSjnvyeY1CFQLcCKZTt7xQT69I=;
+	s=korg; t=1694981206;
+	bh=CoDla67E2KTpErJuLyOZc/REx67UTwKy4aJABHsKSN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrRgyjCOHaUkE7KRfxeE9tmslUcv0GLspyu0+TGVpEOAUxSgZQHU/UaUYKfuy+ZZf
-	 7LusWE2Jj9BvEea79mEQyIVtkkhY2UxOkfKeHudzo+JwRyCZ5AazqrEfRX/mrY7K7K
-	 P04YYtZiEYmpojvBkTkA6PfNGmFQRlPcPUUwsES0=
+	b=uk+COaFAtvCGTTRcu6duxiwEwTDCfeIQU6M9bpX2g5PlNTPpeQe1+dKUaZVzTyA19
+	 tUbUR72A97fxIPCtYl3wj17/+ai41K/9cAZAo+iqC21ahHKUMYfRxn2YhRynCB5LSh
+	 1moTlyXnBkrmlqWndY61bjjHWn8i9RPZxDEQbuXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Matthew Garrett <mgarrett@aurora.tech>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/219] kbuild: do not run depmod for make modules_sign
-Date: Sun, 17 Sep 2023 21:13:04 +0200
-Message-ID: <20230917191043.073374017@linuxfoundation.org>
+Subject: [PATCH 6.1 058/219] tpm_crb: Fix an error handling path in crb_acpi_add()
+Date: Sun, 17 Sep 2023 21:13:05 +0200
+Message-ID: <20230917191043.115814523@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -40,39 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 2429742e506a2b5939a62c629c4a46d91df0ada8 ]
+[ Upstream commit 9c377852ddfdc557b1370f196b0cfdf28d233460 ]
 
-Commit 961ab4a3cd66 ("kbuild: merge scripts/Makefile.modsign to
-scripts/Makefile.modinst") started to run depmod at the end of
-'make modules_sign'.
+Some error paths don't call acpi_put_table() before returning.
+Branch to the correct place instead of doing some direct return.
 
-Move the depmod rule to scripts/Makefile.modinst and run it only when
-$(modules_sign_only) is empty.
-
-Fixes: 961ab4a3cd66 ("kbuild: merge scripts/Makefile.modsign to scripts/Makefile.modinst")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Fixes: 4d2732882703 ("tpm_crb: Add support for CRB devices based on Pluton")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Matthew Garrett <mgarrett@aurora.tech>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/tpm/tpm_crb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 35fc0d62898dc..f23edaa0e8139 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1939,7 +1939,9 @@ quiet_cmd_depmod = DEPMOD  $(MODLIB)
+diff --git a/drivers/char/tpm/tpm_crb.c b/drivers/char/tpm/tpm_crb.c
+index db0b774207d35..f45239e73c4ca 100644
+--- a/drivers/char/tpm/tpm_crb.c
++++ b/drivers/char/tpm/tpm_crb.c
+@@ -775,12 +775,13 @@ static int crb_acpi_add(struct acpi_device *device)
+ 				FW_BUG "TPM2 ACPI table has wrong size %u for start method type %d\n",
+ 				buf->header.length,
+ 				ACPI_TPM2_COMMAND_BUFFER_WITH_PLUTON);
+-			return -EINVAL;
++			rc = -EINVAL;
++			goto out;
+ 		}
+ 		crb_pluton = ACPI_ADD_PTR(struct tpm2_crb_pluton, buf, sizeof(*buf));
+ 		rc = crb_map_pluton(dev, priv, buf, crb_pluton);
+ 		if (rc)
+-			return rc;
++			goto out;
+ 	}
  
- modules_install:
- 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
-+ifndef modules_sign_only
- 	$(call cmd,depmod)
-+endif
- 
- else # CONFIG_MODULES
- 
+ 	priv->sm = sm;
 -- 
 2.40.1
 
