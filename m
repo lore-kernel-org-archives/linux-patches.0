@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B986FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A08C433C8;
-	Sun, 17 Sep 2023 19:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CE56FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C757DC433C8;
+	Sun, 17 Sep 2023 19:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978644;
-	bh=sZbUM+Jh786ace82gJS/k7tVkhq3cARgEEnpe90Ejo0=;
+	s=korg; t=1694978648;
+	bh=1XJfGIs45dWgZ5GUFAHp5XvJFgwRUQoBVAxKIC1HokQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFaeMuMFi8SuV5s+TnOxDshbtZ/XUL2J0WGAH4cUeuGw5OjEVc7ZBKyOIotNRj2d6
-	 9YGIOoeUlxtxLzzEW0g1p+WHU8lWfWBwFvm4K9HSij4TPvD97499p7yhQ19b2L4bKZ
-	 V3sJMvLj4psigVbRWMGKBk8lUorsQUyNbBfIinfU=
+	b=qUusplV93+Dj8Ea5+z0q/yDHRZFpAh+eziSixQWGlhZ5GXn3aSp6CuaLc3hsJssrO
+	 mltJ/d23NeDIXxU+bSyQEWvCoeCmKrJUgzIAuxG2os+uRjEB8uL/nPEGGc2N+Hk7ma
+	 bT2G790JfZCLgkwVsiVAM1svhVH13cMdpbXGaL6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/406] hwmon: (tmp513) Fix the channel number in tmp51x_is_visible()
-Date: Sun, 17 Sep 2023 21:09:33 +0200
-Message-ID: <20230917191104.278661844@linuxfoundation.org>
+Subject: [PATCH 5.10 120/406] net/sched: sch_hfsc: Ensure inner classes have fsc curve
+Date: Sun, 17 Sep 2023 21:09:34 +0200
+Message-ID: <20230917191104.306740187@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,37 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Budimir Markovic <markovicbudimir@gmail.com>
 
-[ Upstream commit d103337e38e7e64c3d915029e947b1cb0b512737 ]
+[ Upstream commit b3d26c5702c7d6c45456326e56d2ccf3f103e60f ]
 
-The supported channels for this driver are {0..3}. Fix the incorrect
-channel in tmp51x_is_visible().
+HFSC assumes that inner classes have an fsc curve, but it is currently
+possible for classes without an fsc curve to become parents. This leads
+to bugs including a use-after-free.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/ea0eccc0-a29f-41e4-9049-a1a13f8b16f1@roeck-us.net/
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230824204456.401580-2-biju.das.jz@bp.renesas.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Don't allow non-root classes without HFSC_FSC to become parents.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20230824084905.422-1-markovicbudimir@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp513.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_hfsc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index 7d5f7441aceb1..b9a93ee9c2364 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -434,7 +434,7 @@ static umode_t tmp51x_is_visible(const void *_data,
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index cdc43a06aa9bc..6076294a632c5 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -1012,6 +1012,10 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 		if (parent == NULL)
+ 			return -ENOENT;
+ 	}
++	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
++		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
++		return -EINVAL;
++	}
  
- 	switch (type) {
- 	case hwmon_temp:
--		if (data->id == tmp512 && channel == 4)
-+		if (data->id == tmp512 && channel == 3)
- 			return 0;
- 		switch (attr) {
- 		case hwmon_temp_input:
+ 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
+ 		return -EINVAL;
 -- 
 2.40.1
 
