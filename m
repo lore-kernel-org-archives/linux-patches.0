@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6197C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F61C433C8;
-	Sun, 17 Sep 2023 20:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE6E746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693D4C433C8;
+	Sun, 17 Sep 2023 20:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982990;
-	bh=QeSncU3ZBMuRN5pVqIjwOFIFuEV/cUE5X6MGkLSZ4QM=;
+	s=korg; t=1694982994;
+	bh=V1csM/M+nyVVTIhFc5XhEaVmVR9iBSGJjHN6vjx3DVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oam+J6Ly2FRW5HWWyJSpMATjx4xXPKJ/LM+bQy/jYlt6ZtfAcNGA6Thyc3FoZPxAa
-	 BH9V3urKgFcRXfexmPRQNk9ro7KZi00/5JYs3GI9nvVrYXP1uf6WuzN96fnXpYtBR2
-	 rXvUMLl8D2v4wtNOJ5/Tebq4kpXXQ6ZZik2cMu+k=
+	b=lDPhGs3NbPP8TWqYh6PabLGCsddVAY+st8IeZzIGsQVN4iarVhAdfCQWSOMcwpSHf
+	 tOgTJvnBHo1zTbNWxaPVUnFxYLi1BbQKgfArUyjHUhY8av5M2DOfLhW0qmKEHNnA7a
+	 cIY09ukXqS0JZZc4a/2BLPq6ZP656cp9B9vmtBGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 375/511] io_uring: break iopolling on signal
-Date: Sun, 17 Sep 2023 21:13:22 +0200
-Message-ID: <20230917191122.859107509@linuxfoundation.org>
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 411/511] perf trace: Use zfree() to reduce chances of use after free
+Date: Sun, 17 Sep 2023 21:13:58 +0200
+Message-ID: <20230917191123.708095694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -39,37 +39,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ upstream commit dc314886cb3d0e4ab2858003e8de2917f8a3ccbd ]
+[ Upstream commit 9997d5dd177c52017fa0541bf236a4232c8148e6 ]
 
-Don't keep spinning iopoll with a signal set. It'll eventually return
-back, e.g. by virtue of need_resched(), but it's not a nice user
-experience.
+Do defensive programming by using zfree() to initialize freed pointers
+to NULL, so that eventual use after free result in a NULL pointer deref
+instead of more subtle behaviour.
 
-Cc: stable@vger.kernel.org
-Fixes: def596e9557c9 ("io_uring: support for IO polling")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/eeba551e82cad12af30c3220125eb6cb244cc94c.1691594339.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 7962ef13651a ("perf trace: Really free the evsel->priv area")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/builtin-trace.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2668,6 +2668,11 @@ static int io_iopoll_check(struct io_rin
- 				break;
- 		}
- 		ret = io_do_iopoll(ctx, &nr_events, min);
-+
-+		if (task_sigpending(current)) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 	} while (!ret && nr_events < min && !need_resched());
- out:
- 	mutex_unlock(&ctx->uring_lock);
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index d9ea546850cd6..d912dc878a6e9 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -2287,7 +2287,7 @@ static void syscall__exit(struct syscall *sc)
+ 	if (!sc)
+ 		return;
+ 
+-	free(sc->arg_fmt);
++	zfree(&sc->arg_fmt);
+ }
+ 
+ static int trace__sys_enter(struct trace *trace, struct evsel *evsel,
+@@ -3129,7 +3129,7 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
+ 		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
+ 			continue;
+ 
+-		free(et->fmt);
++		zfree(&et->fmt);
+ 		free(et);
+ 	}
+ }
+@@ -4748,11 +4748,11 @@ static void trace__exit(struct trace *trace)
+ 	int i;
+ 
+ 	strlist__delete(trace->ev_qualifier);
+-	free(trace->ev_qualifier_ids.entries);
++	zfree(&trace->ev_qualifier_ids.entries);
+ 	if (trace->syscalls.table) {
+ 		for (i = 0; i <= trace->sctbl->syscalls.max_id; i++)
+ 			syscall__exit(&trace->syscalls.table[i]);
+-		free(trace->syscalls.table);
++		zfree(&trace->syscalls.table);
+ 	}
+ 	syscalltbl__delete(trace->sctbl);
+ 	zfree(&trace->perfconfig_events);
+-- 
+2.40.1
+
 
 
