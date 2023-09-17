@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957A76FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0365EC433C9;
-	Sun, 17 Sep 2023 19:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3496FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E76C433C7;
+	Sun, 17 Sep 2023 19:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978726;
-	bh=oJMtQK76tx7ZMLmRpRhnVNSQlDFAJjzfhpyS9QOkdAU=;
+	s=korg; t=1694978729;
+	bh=cId8JY4S2CXaRBB3kwes3GF5hNacwQmzllgO+USdvaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfBrWEYSTshSt1v8zI5bCZ9hsVtwq5FZir3OmuiF4ifTrCLCGQ8tkvjgvBpBzz2i6
-	 GHiz9nGCdpxcS0Ui3m59+WHbo7Xrod3ZJhSPKU0Ve3LDRi4r1aiWx3k89aCDITPwKV
-	 ORjKeeuNQD1FE6UriunwPH7KhaahmXmVa3waYbx8=
+	b=pOK94HbJFAJZ9LsJ4NQWaECAlqVio1apXWMaP7r5PiQZ2Xep6SGuiaAt7q/owidsM
+	 gBxB94BIJYTpgpulcG4W9SYEtCd81eLVVmhl16/IqSEQaxKQsejpA9a+4vIOhJNi+Y
+	 miDQCZp0984e5fDehOq6EKO26bFZdbbrCNAgo4uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 117/406] mlxsw: i2c: Fix chunk size setting in output mailbox buffer
-Date: Sun, 17 Sep 2023 21:09:31 +0200
-Message-ID: <20230917191104.223607008@linuxfoundation.org>
+Subject: [PATCH 5.10 108/406] wifi: mwifiex: fix memory leak in mwifiex_histogram_read()
+Date: Sun, 17 Sep 2023 21:09:22 +0200
+Message-ID: <20230917191103.978552171@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,41 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 146c7c330507c0384bf29d567186632bfe975927 ]
+[ Upstream commit 9c8fd72a5c2a031cbc680a2990107ecd958ffcdb ]
 
-The driver reads commands output from the output mailbox. If the size
-of the output mailbox is not a multiple of the transaction /
-block size, then the driver will not issue enough read transactions
-to read the entire output, which can result in driver initialization
-errors.
+Always free the zeroed page on return from 'mwifiex_histogram_read()'.
 
-Fix by determining the number of transactions using DIV_ROUND_UP().
+Fixes: cbf6e05527a7 ("mwifiex: add rx histogram statistics support")
 
-Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230802160726.85545-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/debugfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index ce843ea914646..f20dca41424c9 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -428,7 +428,7 @@ mlxsw_i2c_cmd(struct device *dev, u16 opcode, u32 in_mod, size_t in_mbox_size,
- 	} else {
- 		/* No input mailbox is case of initialization query command. */
- 		reg_size = MLXSW_I2C_MAX_DATA_SIZE;
--		num = reg_size / mlxsw_i2c->block_size;
-+		num = DIV_ROUND_UP(reg_size, mlxsw_i2c->block_size);
+diff --git a/drivers/net/wireless/marvell/mwifiex/debugfs.c b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+index dded92db1f373..1e7dc724c6a94 100644
+--- a/drivers/net/wireless/marvell/mwifiex/debugfs.c
++++ b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+@@ -265,8 +265,11 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	if (!p)
+ 		return -ENOMEM;
  
- 		if (mutex_lock_interruptible(&mlxsw_i2c->cmd.lock) < 0) {
- 			dev_err(&client->dev, "Could not acquire lock");
+-	if (!priv || !priv->hist_data)
+-		return -EFAULT;
++	if (!priv || !priv->hist_data) {
++		ret = -EFAULT;
++		goto free_and_exit;
++	}
++
+ 	phist_data = priv->hist_data;
+ 
+ 	p += sprintf(p, "\n"
+@@ -321,6 +324,8 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	ret = simple_read_from_buffer(ubuf, count, ppos, (char *)page,
+ 				      (unsigned long)p - page);
+ 
++free_and_exit:
++	free_page(page);
+ 	return ret;
+ }
+ 
 -- 
 2.40.1
 
