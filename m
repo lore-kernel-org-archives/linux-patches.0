@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADBC6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B543C433C7;
-	Sun, 17 Sep 2023 19:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350246FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CC6C433C9;
+	Sun, 17 Sep 2023 19:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979700;
-	bh=go12wEkDgHaeWS6T+51bakePktmj6fGeYCLE2FCIAkU=;
+	s=korg; t=1694979704;
+	bh=dwxJiaYDVylNz7sBJ9gjj7VqR/OzouVAU62rr+id4Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1s2O/JQAzf7WM89uUtKYaWCEP+l0v2Lpxsgi9w+9d0IwmcotxB/dqRyy0M/AFDx6
-	 Ep6axTfQTjn/NoPR6fQmJaYMi9of0+tyXhLIvj8ltH3L1p5epT/TTYdGOJmLbcUVou
-	 AeLOs0qmFZSA1uSGAXCB81FU61+7VQTQiiDdY71A=
+	b=B/6Ppux7LmUlF4JzT1Z5byQ1aDM6ukVHQNVEYVIIjodQLht4StLv437q7S8u+x9oI
+	 5lNeWNUYjG3B5KKDo/yre0rdSaq2lNc0Zw6qBfAUJYMS5TBQ/EdDOzwX4p8V6b6Meu
+	 d1rN45AyzESpLHPaKnLCA938IoL+hErFP6BTmDHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lucas Leong <wmliang@infosec.exchange>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 364/406] net: dsa: sja1105: fix -ENOSPC when replacing the same tc-cbs too many times
-Date: Sun, 17 Sep 2023 21:13:38 +0200
-Message-ID: <20230917191110.882387932@linuxfoundation.org>
+Subject: [PATCH 5.10 365/406] netfilter: nfnetlink_osf: avoid OOB read
+Date: Sun, 17 Sep 2023 21:13:39 +0200
+Message-ID: <20230917191110.907686782@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,78 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 894cafc5c62ccced758077bd4e970dc714c42637 ]
+[ Upstream commit f4f8a7803119005e87b716874bec07c751efafec ]
 
-After running command [2] too many times in a row:
+The opt_num field is controlled by user mode and is not currently
+validated inside the kernel. An attacker can take advantage of this to
+trigger an OOB read and potentially leak information.
 
-[1] $ tc qdisc add dev sw2p0 root handle 1: mqprio num_tc 8 \
-	map 0 1 2 3 4 5 6 7 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
-[2] $ tc qdisc replace dev sw2p0 parent 1:1 cbs offload 1 \
-	idleslope 120000 sendslope -880000 locredit -1320 hicredit 180
+BUG: KASAN: slab-out-of-bounds in nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+Read of size 2 at addr ffff88804bc64272 by task poc/6431
 
-(aka more than priv->info->num_cbs_shapers times)
+CPU: 1 PID: 6431 Comm: poc Not tainted 6.0.0-rc4 #1
+Call Trace:
+ nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+ nf_osf_find+0x186/0x2f0 net/netfilter/nfnetlink_osf.c:281
+ nft_osf_eval+0x37f/0x590 net/netfilter/nft_osf.c:47
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:214
+ nft_do_chain+0x2b0/0x1490 net/netfilter/nf_tables_core.c:264
+ nft_do_chain_ipv4+0x17c/0x1f0 net/netfilter/nft_chain_filter.c:23
+ [..]
 
-we start seeing the following error message:
+Also add validation to genre, subtype and version fields.
 
-Error: Specified device failed to setup cbs hardware offload.
-
-This comes from the fact that ndo_setup_tc(TC_SETUP_QDISC_CBS) presents
-the same API for the qdisc create and replace cases, and the sja1105
-driver fails to distinguish between the 2. Thus, it always thinks that
-it must allocate the same shaper for a {port, queue} pair, when it may
-instead have to replace an existing one.
-
-Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Lucas Leong <wmliang@infosec.exchange>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 4c0ee13126e4f..4362fe0f346d2 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -1691,6 +1691,18 @@ static void sja1105_bridge_leave(struct dsa_switch *ds, int port,
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 9dbaa5ce24e51..573a372e760f4 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -316,6 +316,14 @@ static int nfnl_osf_add_callback(struct net *net, struct sock *ctnl,
  
- #define BYTES_PER_KBIT (1000LL / 8)
+ 	f = nla_data(osf_attrs[OSF_ATTR_FINGER]);
  
-+static int sja1105_find_cbs_shaper(struct sja1105_private *priv,
-+				   int port, int prio)
-+{
-+	int i;
++	if (f->opt_num > ARRAY_SIZE(f->opt))
++		return -EINVAL;
 +
-+	for (i = 0; i < priv->info->num_cbs_shapers; i++)
-+		if (priv->cbs[i].port == port && priv->cbs[i].prio == prio)
-+			return i;
++	if (!memchr(f->genre, 0, MAXGENRELEN) ||
++	    !memchr(f->subtype, 0, MAXGENRELEN) ||
++	    !memchr(f->version, 0, MAXGENRELEN))
++		return -EINVAL;
 +
-+	return -1;
-+}
-+
- static int sja1105_find_unused_cbs_shaper(struct sja1105_private *priv)
- {
- 	int i;
-@@ -1731,9 +1743,14 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- 	if (!offload->enable)
- 		return sja1105_delete_cbs_shaper(priv, port, offload->queue);
- 
--	index = sja1105_find_unused_cbs_shaper(priv);
--	if (index < 0)
--		return -ENOSPC;
-+	/* The user may be replacing an existing shaper */
-+	index = sja1105_find_cbs_shaper(priv, port, offload->queue);
-+	if (index < 0) {
-+		/* That isn't the case - see if we can allocate a new one */
-+		index = sja1105_find_unused_cbs_shaper(priv);
-+		if (index < 0)
-+			return -ENOSPC;
-+	}
- 
- 	cbs = &priv->cbs[index];
- 	cbs->port = port;
+ 	kf = kmalloc(sizeof(struct nf_osf_finger), GFP_KERNEL);
+ 	if (!kf)
+ 		return -ENOMEM;
 -- 
 2.40.1
 
