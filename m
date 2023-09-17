@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12137469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6409C433C7;
-	Sun, 17 Sep 2023 20:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D64A6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846FCC433C7;
+	Sun, 17 Sep 2023 20:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982328;
-	bh=RtoZU1E/LlG33wwvvPiN51TYGiEQceaDSYbYwsVPgKE=;
+	s=korg; t=1694982332;
+	bh=80GwFUNwt+1ilv/SmM761ph9FAs4ARABJiWj0TZZVjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ev2yNnbwb2Qo84t57KRcQ2kXB/K4TxOmAxM4yfrS7R9gmHZPQ9H5qvdp7335e5orZ
-	 e6gCOgB9ymeDDV29rTYK4bNPJ2TYMAQ0b3SBro36vKyI5i+5r8e+FsF2eZajbo/xh6
-	 OIODkcaiMJ6zE7KKh+ORaQGPCrTLCqFBKoT4feTg=
+	b=zRA9liqcFvj80JEJkCmYsSvlI412VVhK96EL9UfcRvVImh64esskZoTipBHUnv3pr
+	 CNDdHcwnrn9ZejNIAmXK5VM9fgjZCMB4OV65aTjmusAYZ4rB36IcSNe8GDPPJ1iPkY
+	 m2h5FqMwMGp4pND5tTTGVHNe8IhK6fQw+d0fEOys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/511] ALSA: ac97: Fix possible error value of *rac97
-Date: Sun, 17 Sep 2023 21:10:19 +0200
-Message-ID: <20230917191118.458477967@linuxfoundation.org>
+Subject: [PATCH 5.15 183/511] arm64: dts: qcom: apq8016-sbc: Fix ov5640 regulator supply names
+Date: Sun, 17 Sep 2023 21:10:10 +0200
+Message-ID: <20230917191118.248468700@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,50 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 67de40c9df94037769967ba28c7d951afb45b7fb ]
+[ Upstream commit 43a684580819e7f35b6cb38236be63c4cba26ef4 ]
 
-Before committing 79597c8bf64c, *rac97 always be NULL if there is
-an error. When error happens, make sure *rac97 is NULL is safer.
+The ov5640 driver expects DOVDD, AVDD and DVDD as regulator supply names.
 
-For examble, in snd_vortex_mixer():
-	err = snd_ac97_mixer(pbus, &ac97, &vortex->codec);
-	vortex->isquad = ((vortex->codec == NULL) ?
-		0 : (vortex->codec->ext_id&0x80));
-If error happened but vortex->codec isn't NULL, this may cause some
-problems.
+The ov5640 has depended on these names since the driver was committed
+upstream in 2017. Similarly apq8016-sbc.dtsi has had completely different
+regulator names since its own initial commit in 2020.
 
-Move the judgement order to be clearer and better.
+Perhaps the regulators were left on in previous 410c bootloaders. In any
+case today on 6.5 we won't switch on the ov5640 without correctly naming
+the regulators.
 
-Fixes: 79597c8bf64c ("ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230823025212.1000961-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 39e0ce6cd1bf ("arm64: dts: qcom: apq8016-sbc: Add CCI/Sensor nodes")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811234738.2859417-3-bryan.odonoghue@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index 58ae0c3ce1e49..b81b3c1f76499 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2070,10 +2070,9 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index c6e8bf18defc6..ad4c2ccec63ee 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -280,9 +280,9 @@ camera_rear@3b {
+ 		clock-names = "xclk";
+ 		clock-frequency = <23880000>;
  
--	if (!rac97)
--		return -EINVAL;
--	if (snd_BUG_ON(!bus || !template))
-+	if (snd_BUG_ON(!bus || !template || !rac97))
- 		return -EINVAL;
-+	*rac97 = NULL;
- 	if (snd_BUG_ON(template->num >= 4))
- 		return -EINVAL;
- 	if (bus->codec[template->num])
+-		vdddo-supply = <&camera_vdddo_1v8>;
+-		vdda-supply = <&camera_vdda_2v8>;
+-		vddd-supply = <&camera_vddd_1v5>;
++		DOVDD-supply = <&camera_vdddo_1v8>;
++		AVDD-supply = <&camera_vdda_2v8>;
++		DVDD-supply = <&camera_vddd_1v5>;
+ 
+ 		/* No camera mezzanine by default */
+ 		status = "disabled";
 -- 
 2.40.1
 
