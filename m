@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827FE6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96B4C433C9;
-	Sun, 17 Sep 2023 19:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205166FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA8EC433C8;
+	Sun, 17 Sep 2023 19:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979571;
-	bh=BycRv6mFuDyR6WUG1/qdtdgp3usBkVD+AEQcrBWx1uA=;
+	s=korg; t=1694979575;
+	bh=3Bt46GCy8d0lu64WDJtrKg3PGlhQnCz9WbRqjGnvDxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xkcpkpp0y5ZftgcaDhOc4+Y70YLr0Q8ykJCO0ze0N9Rd3bI6lhcH/QqshrQkKVySC
-	 gVSue+R21FEaRfh133PAb9s7XrDWQM+cyvJdKnaq2x0sUmLE8W5hEocdE4dZ/VgpRb
-	 +r5nr9jVk+/kZSm4jvQ/xnIqSNnoD7gaToG29/Fo=
+	b=EkwOUvNzzYC9jE8drSJ2h44vpXd1CUOQVh7+Z/YFCG7QJoU7byhhvCEP3iyQ6O5/R
+	 sSzAHbR66i0V5TGjSjxg2jOB1AUDtXSH4zGWSSde+vXpJjFlN7cWxh1xrZW8IthKVi
+	 YN0/2+FZtNNKCn27JLbtEixl236WUgppTXWMKlp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Ying <victor.liu@nxp.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 352/406] af_unix: Fix data-race around unix_tot_inflight.
-Date: Sun, 17 Sep 2023 21:13:26 +0200
-Message-ID: <20230917191110.566367080@linuxfoundation.org>
+Subject: [PATCH 5.10 335/406] backlight: gpio_backlight: Drop output GPIO direction check for initial power state
+Date: Sun, 17 Sep 2023 21:13:09 +0200
+Message-ID: <20230917191110.129691539@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,82 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ying Liu <victor.liu@nxp.com>
 
-[ Upstream commit ade32bd8a738d7497ffe9743c46728db26740f78 ]
+[ Upstream commit fe1328b5b2a087221e31da77e617f4c2b70f3b7f ]
 
-unix_tot_inflight is changed under spin_lock(unix_gc_lock), but
-unix_release_sock() reads it locklessly.
+So, let's drop output GPIO direction check and only check GPIO value to set
+the initial power state.
 
-Let's use READ_ONCE() for unix_tot_inflight.
-
-Note that the writer side was marked by commit 9d6d7f1cb67c ("af_unix:
-annote lockless accesses to unix_tot_inflight & gc_in_progress")
-
-BUG: KCSAN: data-race in unix_inflight / unix_release_sock
-
-write (marked) to 0xffffffff871852b8 of 4 bytes by task 123 on cpu 1:
- unix_inflight+0x130/0x180 net/unix/scm.c:64
- unix_attach_fds+0x137/0x1b0 net/unix/scm.c:123
- unix_scm_to_skb net/unix/af_unix.c:1832 [inline]
- unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1955
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:747
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2493
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2547
- __sys_sendmsg+0x94/0x140 net/socket.c:2576
- __do_sys_sendmsg net/socket.c:2585 [inline]
- __se_sys_sendmsg net/socket.c:2583 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2583
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffffffff871852b8 of 4 bytes by task 4891 on cpu 0:
- unix_release_sock+0x608/0x910 net/unix/af_unix.c:671
- unix_release+0x59/0x80 net/unix/af_unix.c:1058
- __sock_release+0x7d/0x170 net/socket.c:653
- sock_close+0x19/0x30 net/socket.c:1385
- __fput+0x179/0x5e0 fs/file_table.c:321
- ____fput+0x15/0x20 fs/file_table.c:349
- task_work_run+0x116/0x1a0 kernel/task_work.c:179
- resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
- exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
- syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
- do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x00000000 -> 0x00000001
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 4891 Comm: systemd-coredum Not tainted 6.4.0-rc5-01219-gfa0e21fa4443 #5
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 9305cfa4443d ("[AF_UNIX]: Make unix_tot_inflight counter non-atomic")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 706dc68102bc ("backlight: gpio: Explicitly set the direction of the GPIO")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230721093342.1532531-1-victor.liu@nxp.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/backlight/gpio_backlight.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 8d941cbba5cb7..237488b1b58b6 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -587,7 +587,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 	 *	  What the above comment does talk about? --ANK(980817)
- 	 */
- 
--	if (unix_tot_inflight)
-+	if (READ_ONCE(unix_tot_inflight))
- 		unix_gc();		/* Garbage collect fds */
- }
- 
+diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
+index 5c5c99f7979e3..30ec5b6845335 100644
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -87,8 +87,7 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 		/* Not booted with device tree or no phandle link to the node */
+ 		bl->props.power = def_value ? FB_BLANK_UNBLANK
+ 					    : FB_BLANK_POWERDOWN;
+-	else if (gpiod_get_direction(gbl->gpiod) == 0 &&
+-		 gpiod_get_value_cansleep(gbl->gpiod) == 0)
++	else if (gpiod_get_value_cansleep(gbl->gpiod) == 0)
+ 		bl->props.power = FB_BLANK_POWERDOWN;
+ 	else
+ 		bl->props.power = FB_BLANK_UNBLANK;
 -- 
 2.40.1
 
