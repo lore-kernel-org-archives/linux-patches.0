@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114226FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77147C433CC;
-	Sun, 17 Sep 2023 19:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56ECC6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CE6C433C8;
+	Sun, 17 Sep 2023 19:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978524;
-	bh=8tLpuBMB/G+U1xiarnc5WkRxQmFOzxC3uIteveDaKXA=;
+	s=korg; t=1694978528;
+	bh=TcuPoGiBL3LlXCcDTivm6XhNkwK+WIQWFzxhQNP5A0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDItgZaWpkeKZtUi8L/XC/LmnklBmbkCXTqwKT0mK1HSUqIvXoJeFWThLKM1D2Km6
-	 8WOrIAoikZtn2Pj6pv+6z7vkrrN6c0BxANy5W/QNlGYlMsArr8hTIbYuyBFb9HiijC
-	 T9LoL+RS6UpxtANawTHAtxAPBojrjoUGVk+R4UjA=
+	b=mGIKUlgGkmGWrCRbjGeFXx0PQCT8TLHrPMYUBtlzVpSmQjd7kf2+H0skA3Dez/8KI
+	 Y++E14uuImBAY1GigFGxNClYL+agoilmHV0HidT9xiCbLKD9vL6lDjseAnMgWpwMKY
+	 kGXiSLwg57WIooGUHSdivvPmORfHqS9a/G4xZQPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/406] security: keys: perform capable check only on privileged operations
-Date: Sun, 17 Sep 2023 21:08:21 +0200
-Message-ID: <20230917191102.387988861@linuxfoundation.org>
+Subject: [PATCH 5.10 077/406] perf/imx_ddr: dont enable counter0 if none of 4 counters are used
+Date: Sun, 17 Sep 2023 21:08:51 +0200
+Message-ID: <20230917191103.166215324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,68 +35,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 2d7f105edbb3b2be5ffa4d833abbf9b6965e9ce7 ]
+[ Upstream commit f4e2bd91ddf5e8543cbe7ad80b3fba3d2dc63fa3 ]
 
-If the current task fails the check for the queried capability via
-`capable(CAP_SYS_ADMIN)` LSMs like SELinux generate a denial message.
-Issuing such denial messages unnecessarily can lead to a policy author
-granting more privileges to a subject than needed to silence them.
+In current driver, counter0 will be enabled after ddr_perf_pmu_enable()
+is called even though none of the 4 counters are used. This will cause
+counter0 continue to count until ddr_perf_pmu_disabled() is called. If
+pmu is not disabled all the time, the pmu interrupt will be asserted
+from time to time due to counter0 will overflow and irq handler will
+clear it. It's not an expected behavior. This patch will not enable
+counter0 if none of 4 counters are used.
 
-Reorder CAP_SYS_ADMIN checks after the check whether the operation is
-actually privileged.
-
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 9a66d36cc7ac ("drivers/perf: imx_ddr: Add DDR performance counter support to perf")
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230811015438.1999307-2-xu.yang_2@nxp.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyctl.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/perf/fsl_imx8_ddr_perf.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/security/keys/keyctl.c b/security/keys/keyctl.c
-index 61a614c21b9b6..e3ffaf5ad6394 100644
---- a/security/keys/keyctl.c
-+++ b/security/keys/keyctl.c
-@@ -980,14 +980,19 @@ long keyctl_chown_key(key_serial_t id, uid_t user, gid_t group)
- 	ret = -EACCES;
- 	down_write(&key->sem);
+diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
+index e09bbf3890c49..8dfb67530d6bc 100644
+--- a/drivers/perf/fsl_imx8_ddr_perf.c
++++ b/drivers/perf/fsl_imx8_ddr_perf.c
+@@ -82,6 +82,7 @@ struct ddr_pmu {
+ 	const struct fsl_ddr_devtype_data *devtype_data;
+ 	int irq;
+ 	int id;
++	int active_counter;
+ };
  
--	if (!capable(CAP_SYS_ADMIN)) {
-+	{
-+		bool is_privileged_op = false;
+ enum ddr_perf_filter_capabilities {
+@@ -414,6 +415,10 @@ static void ddr_perf_event_start(struct perf_event *event, int flags)
+ 
+ 	ddr_perf_counter_enable(pmu, event->attr.config, counter, true);
+ 
++	if (!pmu->active_counter++)
++		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
++			EVENT_CYCLES_COUNTER, true);
 +
- 		/* only the sysadmin can chown a key to some other UID */
- 		if (user != (uid_t) -1 && !uid_eq(key->uid, uid))
--			goto error_put;
-+			is_privileged_op = true;
+ 	hwc->state = 0;
+ }
  
- 		/* only the sysadmin can set the key's GID to a group other
- 		 * than one of those that the current process subscribes to */
- 		if (group != (gid_t) -1 && !gid_eq(gid, key->gid) && !in_group_p(gid))
-+			is_privileged_op = true;
+@@ -468,6 +473,10 @@ static void ddr_perf_event_stop(struct perf_event *event, int flags)
+ 	ddr_perf_counter_enable(pmu, event->attr.config, counter, false);
+ 	ddr_perf_event_update(event);
+ 
++	if (!--pmu->active_counter)
++		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
++			EVENT_CYCLES_COUNTER, false);
 +
-+		if (is_privileged_op && !capable(CAP_SYS_ADMIN))
- 			goto error_put;
- 	}
+ 	hwc->state |= PERF_HES_STOPPED;
+ }
  
-@@ -1088,7 +1093,7 @@ long keyctl_setperm_key(key_serial_t id, key_perm_t perm)
- 	down_write(&key->sem);
+@@ -486,25 +495,10 @@ static void ddr_perf_event_del(struct perf_event *event, int flags)
  
- 	/* if we're not the sysadmin, we can only change a key that we own */
--	if (capable(CAP_SYS_ADMIN) || uid_eq(key->uid, current_fsuid())) {
-+	if (uid_eq(key->uid, current_fsuid()) || capable(CAP_SYS_ADMIN)) {
- 		key->perm = perm;
- 		notify_key(key, NOTIFY_KEY_SETATTR, 0);
- 		ret = 0;
+ static void ddr_perf_pmu_enable(struct pmu *pmu)
+ {
+-	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
+-
+-	/* enable cycle counter if cycle is not active event list */
+-	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
+-		ddr_perf_counter_enable(ddr_pmu,
+-				      EVENT_CYCLES_ID,
+-				      EVENT_CYCLES_COUNTER,
+-				      true);
+ }
+ 
+ static void ddr_perf_pmu_disable(struct pmu *pmu)
+ {
+-	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
+-
+-	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
+-		ddr_perf_counter_enable(ddr_pmu,
+-				      EVENT_CYCLES_ID,
+-				      EVENT_CYCLES_COUNTER,
+-				      false);
+ }
+ 
+ static int ddr_perf_init(struct ddr_pmu *pmu, void __iomem *base,
 -- 
 2.40.1
 
