@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DED6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3787C43397;
-	Sun, 17 Sep 2023 20:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243CA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4207FC43395;
+	Sun, 17 Sep 2023 20:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981575;
-	bh=nhUVXmL9v5nfJUDn+UQ4b10E10vthsyd7EaqQiqkGm4=;
+	s=korg; t=1694981578;
+	bh=SG9ZOfLKS9vTjbzpI5rfwGg4C+b6SWdZWQws2uZuyWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvCd9y3TSSYFqaNE3n7uJ0CyjWZJVY6GrbvYlXgk0aMyfR4ibfw2yKNQTYn/KHFdj
-	 0bGKfgl/u4c5ltEgBtdNMJ+w456iI77ckmKv/2TYZxXDodRJ/SIDSQf2Y7pDPPieFJ
-	 9DFL+1eYPfAQLkxeWXgCcG86Vnlxczz3f4P0A+J4=
+	b=zm6usNhLklbJ/UFrqJIcXs09sOhII2Qtuowgb3upOW3JsiHmzy21HBhzgxHOcXxdK
+	 5jzHu4UA5yis4x8ErNiWnYwhBvLvXlMefJB4LjXph2sMIJtftUrhRRrX4tuchewRZ1
+	 tLwC9BOxAavE6ppjo/ZZkVjlr7Upk+92XnewR0Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 142/219] jbd2: check jh->b_transaction before removing it from checkpoint
-Date: Sun, 17 Sep 2023 21:14:29 +0200
-Message-ID: <20230917191046.139473152@linuxfoundation.org>
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 074/511] s390/paes: fix PKEY_TYPE_EP11_AES handling for secure keyblobs
+Date: Sun, 17 Sep 2023 21:08:21 +0200
+Message-ID: <20230917191115.666050759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,71 +35,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 590a809ff743e7bd890ba5fb36bc38e20a36de53 upstream.
+[ Upstream commit cba33db3fc4dbf2e54294b0e499d2335a3a00d78 ]
 
-Following process will corrupt ext4 image:
-Step 1:
-jbd2_journal_commit_transaction
- __jbd2_journal_insert_checkpoint(jh, commit_transaction)
- // Put jh into trans1->t_checkpoint_list
- journal->j_checkpoint_transactions = commit_transaction
- // Put trans1 into journal->j_checkpoint_transactions
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES securekey blobs as a
+supplement to the PKEY_TYPE_EP11 (which won't work in environments
+with session-bound keys). This new keyblobs has a different maximum
+size, so fix paes crypto module to accept also these larger keyblobs.
 
-Step 2:
-do_get_write_access
- test_clear_buffer_dirty(bh) // clear buffer dirty，set jbd dirty
- __jbd2_journal_file_buffer(jh, transaction) // jh belongs to trans2
-
-Step 3:
-drop_cache
- journal_shrink_one_cp_list
-  jbd2_journal_try_remove_checkpoint
-   if (!trylock_buffer(bh))  // lock bh, true
-   if (buffer_dirty(bh))     // buffer is not dirty
-   __jbd2_journal_remove_checkpoint(jh)
-   // remove jh from trans1->t_checkpoint_list
-
-Step 4:
-jbd2_log_do_checkpoint
- trans1 = journal->j_checkpoint_transactions
- // jh is not in trans1->t_checkpoint_list
- jbd2_cleanup_journal_tail(journal)  // trans1 is done
-
-Step 5: Power cut, trans2 is not committed, jh is lost in next mounting.
-
-Fix it by checking 'jh->b_transaction' before remove it from checkpoint.
-
-Cc: stable@kernel.org
-Fixes: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230714025528.564988-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/crypto/paes_s390.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -639,6 +639,8 @@ int jbd2_journal_try_remove_checkpoint(s
- {
- 	struct buffer_head *bh = jh2bh(jh);
+diff --git a/arch/s390/crypto/paes_s390.c b/arch/s390/crypto/paes_s390.c
+index a279b7d23a5e2..621322eb0e681 100644
+--- a/arch/s390/crypto/paes_s390.c
++++ b/arch/s390/crypto/paes_s390.c
+@@ -35,7 +35,7 @@
+  * and padding is also possible, the limits need to be generous.
+  */
+ #define PAES_MIN_KEYSIZE 16
+-#define PAES_MAX_KEYSIZE 320
++#define PAES_MAX_KEYSIZE MAXEP11AESKEYBLOBSIZE
  
-+	if (jh->b_transaction)
-+		return -EBUSY;
- 	if (!trylock_buffer(bh))
- 		return -EBUSY;
- 	if (buffer_dirty(bh)) {
+ static u8 *ctrblk;
+ static DEFINE_MUTEX(ctrblk_lock);
+-- 
+2.40.1
+
 
 
