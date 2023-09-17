@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8C76FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA44C433C8;
-	Sun, 17 Sep 2023 20:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1607D6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E17C433C7;
+	Sun, 17 Sep 2023 20:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982803;
-	bh=Fw9AN9siuQCMz9imNIdIN+f+TS6v3Z4FzoKoatleA0M=;
+	s=korg; t=1694982806;
+	bh=5t7a6olzgPrYU1NZiLvVfwKUUyYRaTQsVuEx/Xome8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTNOvM9Tx15nOkH8vaec9D97amtlm9Q+0276TlLejFRKgmXF2dT3foSKXGz6xQsbZ
-	 uwN96QBoEC5nkscZ3qtT+ezjorj/w+gs7qKR1n3L3qKVz2SNpv5nA1aYpt/13LNB7n
-	 4hpFqtLdV7pU4gJ2wL0M27BlixE5GYcd0g+13qXU=
+	b=t8XcARMSOgYvMETEqZLnfSH6AxGnFHiJdr7B/wUZ5PTk9JvOyoM2INLuJmeYeH23b
+	 rTYN+11VeXAk3y/bDqbCWjrhkJryQpye9pgy53+C4TNZ5ncGGN2OGf5SuwIRto1+D2
+	 Xg+K/ZR1PyyYW9UOw4x9VHaSMa5wmHpRvCU38aRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.15 357/511] s390/ipl: add missing secure/has_secure file to ipl type unknown
-Date: Sun, 17 Sep 2023 21:13:04 +0200
-Message-ID: <20230917191122.421370206@linuxfoundation.org>
+	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 358/511] crypto: stm32 - fix loop iterating through scatterlist for DMA
+Date: Sun, 17 Sep 2023 21:13:05 +0200
+Message-ID: <20230917191122.444241455@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -39,37 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-commit ea5717cb13468323a7c3dd394748301802991f39 upstream.
+commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
 
-OS installers are relying on /sys/firmware/ipl/has_secure to be
-present on machines supporting secure boot. This file is present
-for all IPL types, but not the unknown type, which prevents a secure
-installation when an LPAR is booted in HMC via FTP(s), because
-this is an unknown IPL type in linux. While at it, also add the secure
-file.
+We were reading the length of the scatterlist sg after copying value of
+tsg inside.
+So we are using the size of the previous scatterlist and for the first
+one we are using an unitialised value.
+Fix this by copying tsg in sg[0] before reading the size.
 
-Fixes: c9896acc7851 ("s390/ipl: Provide has_secure sysfs attribute")
+Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/ipl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/stm32/stm32-hash.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -502,6 +502,8 @@ static struct attribute_group ipl_ccw_at
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -565,9 +565,9 @@ static int stm32_hash_dma_send(struct st
+ 	}
  
- static struct attribute *ipl_unknown_attrs[] = {
- 	&sys_ipl_type_attr.attr,
-+	&sys_ipl_secure_attr.attr,
-+	&sys_ipl_has_secure_attr.attr,
- 	NULL,
- };
+ 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
++		sg[0] = *tsg;
+ 		len = sg->length;
  
+-		sg[0] = *tsg;
+ 		if (sg_is_last(sg)) {
+ 			if (hdev->dma_mode == 1) {
+ 				len = (ALIGN(sg->length, 16) - 16);
 
 
