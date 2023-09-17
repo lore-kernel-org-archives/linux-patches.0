@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333106FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99428C433C8;
-	Sun, 17 Sep 2023 19:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9476A6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2948C433C7;
+	Sun, 17 Sep 2023 19:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980008;
-	bh=FaQjAb2zYMO1YjQrxeUxtBKrLv8dMDEeyg9XfYol9Y8=;
+	s=korg; t=1694980011;
+	bh=XDFDxLm7EzVJ9QXdjFO+R2i3u5qiTT3+MZw3Z2Ayxos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uL8NkwnEkYEu3vHHrlOi+q9lqTC1IQCFrtOWdwj4Ewl2uL1NbXPqpMXyWvWk3izUe
-	 SVFYrMfmfMyvyHjBhcbstgB+/W0k2T7B5tK8DFRKM2AF4QHaLlxnbc+j8FPVr1EvZC
-	 b4dqfr7hmWOS+D0Hb1Hpl5xmts6N9G29GrHyTZG4=
+	b=YEqG83jsN2wS6qSGF5YO0kifzYxjnD9iKuQzY3h/L6GYojRPSs7zyO8XnHY6+52cZ
+	 nl32RiObn4WpgOC/u5fuhWeelUXDTYhjMlqdbcCmFwf18tkMEiKlofHMg+U7bP/FE4
+	 UeP6nHdjKGmuIt/hUnoQVnpgNt2ZYUyCH8ROAieA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomohiro Komagata <tomohiro.komagata.aj@renesas.com>,
-	Chris Paterson <chris.paterson2@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.5 032/285] arm64: dts: renesas: rzg2l: Fix txdv-skew-psec typos
-Date: Sun, 17 Sep 2023 21:10:32 +0200
-Message-ID: <20230917191052.781761234@linuxfoundation.org>
+	Xie XiuQi <xiexiuqi@huawei.com>,
+	Ian Rogers <irogers@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 064/285] tools/mm: fix undefined reference to pthread_once
+Date: Sun, 17 Sep 2023 21:11:04 +0200
+Message-ID: <20230917191053.923872590@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,85 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Paterson <chris.paterson2@renesas.com>
+From: Xie XiuQi <xiexiuqi@huawei.com>
 
-commit db67345716a52abb750ec8f76d6a5675218715f9 upstream.
+[ Upstream commit 7f33105cdd59a99d068d3d147723a865d10e2260 ]
 
-It looks like txdv-skew-psec is a typo from a copy+paste. txdv-skew-psec
-is not present in the PHY bindings nor is it in the driver.
+Commit 97d5f2e9ee12 ("tools api fs: More thread safety for global
+filesystem variables") introduces pthread_once, so the libpthread
+should be added at link time, or we'll meet the following compile
+error when 'make -C tools/mm':
 
-Correct to txen-skew-psec which is clearly what it was meant to be.
+  gcc -Wall -Wextra -I../lib/ -o page-types page-types.c ../lib/api/libapi.a
+  ~/linux/tools/lib/api/fs/fs.c:146: undefined reference to `pthread_once'
+  ~/linux/tools/lib/api/fs/fs.c:147: undefined reference to `pthread_once'
+  ~/linux/tools/lib/api/fs/fs.c:148: undefined reference to `pthread_once'
+  ~/linux/tools/lib/api/fs/fs.c:149: undefined reference to `pthread_once'
+  ~/linux/tools/lib/api/fs/fs.c:150: undefined reference to `pthread_once'
+  /usr/bin/ld: ../lib/api/libapi.a(libapi-in.o):~/linux/tools/lib/api/fs/fs.c:151:
+  more undefined references to `pthread_once' follow
+  collect2: error: ld returned 1 exit status
+  make: *** [Makefile:22: page-types] Error 1
 
-Given that the default for txen-skew-psec is 0, and the device tree is
-only trying to set it to 0 anyway, there should not be any functional
-change from this fix.
-
-Fixes: 361b0dcbd7f9 ("arm64: dts: renesas: rzg2l-smarc-som: Enable Ethernet")
-Fixes: 6494e4f90503 ("arm64: dts: renesas: rzg2ul-smarc-som: Enable Ethernet on SMARC platform")
-Fixes: ce0c63b6a5ef ("arm64: dts: renesas: Add initial device tree for RZ/G2LC SMARC EVK")
-Cc: stable@vger.kernel.org # 6.1.y
-Reported-by: Tomohiro Komagata <tomohiro.komagata.aj@renesas.com>
-Signed-off-by: Chris Paterson <chris.paterson2@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230609221136.7431-1-chris.paterson2@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230831034205.2376653-1-xiexiuqi@huaweicloud.com
+Fixes: 97d5f2e9ee12 ("tools api fs: More thread safety for global filesystem variables")
+Signed-off-by: Xie XiuQi <xiexiuqi@huawei.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/rzg2l-smarc-som.dtsi  |    4 ++--
- arch/arm64/boot/dts/renesas/rzg2lc-smarc-som.dtsi |    2 +-
- arch/arm64/boot/dts/renesas/rzg2ul-smarc-som.dtsi |    4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ tools/mm/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/renesas/rzg2l-smarc-som.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg2l-smarc-som.dtsi
-@@ -100,7 +100,7 @@
- 		rxc-skew-psec = <2400>;
- 		txc-skew-psec = <2400>;
- 		rxdv-skew-psec = <0>;
--		txdv-skew-psec = <0>;
-+		txen-skew-psec = <0>;
- 		rxd0-skew-psec = <0>;
- 		rxd1-skew-psec = <0>;
- 		rxd2-skew-psec = <0>;
-@@ -128,7 +128,7 @@
- 		rxc-skew-psec = <2400>;
- 		txc-skew-psec = <2400>;
- 		rxdv-skew-psec = <0>;
--		txdv-skew-psec = <0>;
-+		txen-skew-psec = <0>;
- 		rxd0-skew-psec = <0>;
- 		rxd1-skew-psec = <0>;
- 		rxd2-skew-psec = <0>;
---- a/arch/arm64/boot/dts/renesas/rzg2lc-smarc-som.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg2lc-smarc-som.dtsi
-@@ -77,7 +77,7 @@
- 		rxc-skew-psec = <2400>;
- 		txc-skew-psec = <2400>;
- 		rxdv-skew-psec = <0>;
--		txdv-skew-psec = <0>;
-+		txen-skew-psec = <0>;
- 		rxd0-skew-psec = <0>;
- 		rxd1-skew-psec = <0>;
- 		rxd2-skew-psec = <0>;
---- a/arch/arm64/boot/dts/renesas/rzg2ul-smarc-som.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg2ul-smarc-som.dtsi
-@@ -83,7 +83,7 @@
- 		rxc-skew-psec = <2400>;
- 		txc-skew-psec = <2400>;
- 		rxdv-skew-psec = <0>;
--		txdv-skew-psec = <0>;
-+		txen-skew-psec = <0>;
- 		rxd0-skew-psec = <0>;
- 		rxd1-skew-psec = <0>;
- 		rxd2-skew-psec = <0>;
-@@ -112,7 +112,7 @@
- 		rxc-skew-psec = <2400>;
- 		txc-skew-psec = <2400>;
- 		rxdv-skew-psec = <0>;
--		txdv-skew-psec = <0>;
-+		txen-skew-psec = <0>;
- 		rxd0-skew-psec = <0>;
- 		rxd1-skew-psec = <0>;
- 		rxd2-skew-psec = <0>;
+diff --git a/tools/mm/Makefile b/tools/mm/Makefile
+index 6c1da51f4177c..1c5606cc33346 100644
+--- a/tools/mm/Makefile
++++ b/tools/mm/Makefile
+@@ -8,8 +8,8 @@ TARGETS=page-types slabinfo page_owner_sort
+ LIB_DIR = ../lib/api
+ LIBS = $(LIB_DIR)/libapi.a
+ 
+-CFLAGS += -Wall -Wextra -I../lib/
+-LDFLAGS += $(LIBS)
++CFLAGS += -Wall -Wextra -I../lib/ -pthread
++LDFLAGS += $(LIBS) -pthread
+ 
+ all: $(TARGETS)
+ 
+-- 
+2.40.1
+
 
 
