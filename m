@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D108F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42555C433CB;
-	Sun, 17 Sep 2023 20:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519B56FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81151C433C7;
+	Sun, 17 Sep 2023 20:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981715;
-	bh=psFQzHfvPHzTEy+QKzSSAR5Ojx6BhZUZSeGBY4lLGIE=;
+	s=korg; t=1694981719;
+	bh=ulDAvKJZcI/cYcVItB/icSDIb/tXcmvj0x1kUIUnaJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlmpFoSjBnjhHY+zx+IoQXppSm0IzrvGiIj1Wq/jxeDDsRj0FhHh7Cb7iJJpd7Lmx
-	 kvyAadI3eY9ngCg07ZeLFSuWsNoRVcPTQKhev1b1hDAprn6XIPa4kjLhUTagvpNg6V
-	 CsA+vrtVURZIl2eS05msTxeTaAwYYMX4KtQTPiQk=
+	b=Ksh/OniKjSk9uVYnmfvS/VJaMFVQnjlJkjy2CY52kaoedFookRzPtYxcTC+YkUfv9
+	 ymDocNOE4T8LWEfJMDgb0kVcVQ6u2YfHo3CamhLbsePZrSKUzW4CTOPqZql8wTa24f
+	 qcoshpOIIfBjnPwTbn5+w4IM7+B1RTE04HzvnSH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Marek Vasut <marex@denx.de>
-Subject: [PATCH 6.1 162/219] drm/mxsfb: Disable overlay plane in mxsfb_plane_overlay_atomic_disable()
-Date: Sun, 17 Sep 2023 21:14:49 +0200
-Message-ID: <20230917191046.897954268@linuxfoundation.org>
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 097/511] Bluetooth: nokia: fix value check in nokia_bluetooth_serdev_probe()
+Date: Sun, 17 Sep 2023 21:08:44 +0200
+Message-ID: <20230917191116.210508128@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,54 +36,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Ying <victor.liu@nxp.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-commit aa656d48e871a1b062e1bbf9474d8b831c35074c upstream.
+[ Upstream commit e8b5aed31355072faac8092ead4938ddec3111fd ]
 
-When disabling overlay plane in mxsfb_plane_overlay_atomic_update(),
-overlay plane's framebuffer pointer is NULL.  So, dereferencing it would
-cause a kernel Oops(NULL pointer dereferencing).  Fix the issue by
-disabling overlay plane in mxsfb_plane_overlay_atomic_disable() instead.
+in nokia_bluetooth_serdev_probe(), check the return value of
+clk_prepare_enable() and return the error code if
+clk_prepare_enable() returns an unexpected value.
 
-Fixes: cb285a5348e7 ("drm: mxsfb: Replace mxsfb_get_fb_paddr() with drm_fb_cma_get_gem_addr()")
-Cc: stable@vger.kernel.org # 5.19+
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230612092359.784115-1-victor.liu@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7bb318680e86 ("Bluetooth: add nokia driver")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/mxsfb_kms.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/bluetooth/hci_nokia.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/mxsfb/mxsfb_kms.c
-+++ b/drivers/gpu/drm/mxsfb/mxsfb_kms.c
-@@ -611,6 +611,14 @@ static void mxsfb_plane_overlay_atomic_u
- 	writel(ctrl, mxsfb->base + LCDC_AS_CTRL);
- }
+diff --git a/drivers/bluetooth/hci_nokia.c b/drivers/bluetooth/hci_nokia.c
+index 05f7f6de6863d..97da0b2bfd17e 100644
+--- a/drivers/bluetooth/hci_nokia.c
++++ b/drivers/bluetooth/hci_nokia.c
+@@ -734,7 +734,11 @@ static int nokia_bluetooth_serdev_probe(struct serdev_device *serdev)
+ 		return err;
+ 	}
  
-+static void mxsfb_plane_overlay_atomic_disable(struct drm_plane *plane,
-+					       struct drm_atomic_state *state)
-+{
-+	struct mxsfb_drm_private *mxsfb = to_mxsfb_drm_private(plane->dev);
-+
-+	writel(0, mxsfb->base + LCDC_AS_CTRL);
-+}
-+
- static bool mxsfb_format_mod_supported(struct drm_plane *plane,
- 				       uint32_t format,
- 				       uint64_t modifier)
-@@ -626,6 +634,7 @@ static const struct drm_plane_helper_fun
- static const struct drm_plane_helper_funcs mxsfb_plane_overlay_helper_funcs = {
- 	.atomic_check = mxsfb_plane_atomic_check,
- 	.atomic_update = mxsfb_plane_overlay_atomic_update,
-+	.atomic_disable = mxsfb_plane_overlay_atomic_disable,
- };
+-	clk_prepare_enable(sysclk);
++	err = clk_prepare_enable(sysclk);
++	if (err) {
++		dev_err(dev, "could not enable sysclk: %d", err);
++		return err;
++	}
+ 	btdev->sysclk_speed = clk_get_rate(sysclk);
+ 	clk_disable_unprepare(sysclk);
  
- static const struct drm_plane_funcs mxsfb_plane_funcs = {
+-- 
+2.40.1
+
 
 
