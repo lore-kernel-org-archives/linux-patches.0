@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E997461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBE2C433C8;
-	Sun, 17 Sep 2023 20:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08D77461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4E7C433C8;
+	Sun, 17 Sep 2023 20:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981354;
-	bh=ay5vsD8GvCtGfclQ7xDBVWJF0N3TrITOeO5uaPvsvfo=;
+	s=korg; t=1694981357;
+	bh=yUHxAtdN7dDIp4neiO57SDhnRu+F/ggNdhyGJIO+cGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yAQ064Agt//SnVN0+D8poyrveGtEg+Rrb67tFLC754hrXLBucRxxxA/H1SwguaEN
-	 oqLGnEkNDZekcJwd8hTA54CAPrKqiS4S5uhUcBrrheiGr8WdNMfcyavNbFOhThfHcE
-	 fDwRJqxq2hNQLgqWrKDEUGoyZ8cdC3qluzEkn8j8=
+	b=dFKmzXCl5Jexhm4QjtQEjqGECBvvooX1oviqYUcTXcwLx6h2SWjjv4zqGTd0o2gSZ
+	 rsFDsjiwxyGyFiUx8ixPlGmfhu+DoCKkfgeG0Tku3wMTE4eqLRvq2HQIlSfG47ppjZ
+	 2trPaVWE0tFAFWs68L9m6DXtahF/WwvrV07wa6c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Christensen <drc@linux.vnet.ibm.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/511] bnx2x: fix page fault following EEH recovery
-Date: Sun, 17 Sep 2023 21:07:49 +0200
-Message-ID: <20230917191114.877187948@linuxfoundation.org>
+Subject: [PATCH 6.1 109/219] af_unix: Fix data-race around unix_tot_inflight.
+Date: Sun, 17 Sep 2023 21:13:56 +0200
+Message-ID: <20230917191044.927192580@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,55 +38,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Christensen <drc@linux.vnet.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 7ebe4eda4265642859507d1b3ca330d8c196cfe5 ]
+[ Upstream commit ade32bd8a738d7497ffe9743c46728db26740f78 ]
 
-In the last step of the EEH recovery process, the EEH driver calls into
-bnx2x_io_resume() to re-initialize the NIC hardware via the function
-bnx2x_nic_load().  If an error occurs during bnx2x_nic_load(), OS and
-hardware resources are released and an error code is returned to the
-caller.  When called from bnx2x_io_resume(), the return code is ignored
-and the network interface is brought up unconditionally.  Later attempts
-to send a packet via this interface result in a page fault due to a null
-pointer reference.
+unix_tot_inflight is changed under spin_lock(unix_gc_lock), but
+unix_release_sock() reads it locklessly.
 
-This patch checks the return code of bnx2x_nic_load(), prints an error
-message if necessary, and does not enable the interface.
+Let's use READ_ONCE() for unix_tot_inflight.
 
-Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Note that the writer side was marked by commit 9d6d7f1cb67c ("af_unix:
+annote lockless accesses to unix_tot_inflight & gc_in_progress")
+
+BUG: KCSAN: data-race in unix_inflight / unix_release_sock
+
+write (marked) to 0xffffffff871852b8 of 4 bytes by task 123 on cpu 1:
+ unix_inflight+0x130/0x180 net/unix/scm.c:64
+ unix_attach_fds+0x137/0x1b0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1832 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1955
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:747
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2493
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2547
+ __sys_sendmsg+0x94/0x140 net/socket.c:2576
+ __do_sys_sendmsg net/socket.c:2585 [inline]
+ __se_sys_sendmsg net/socket.c:2583 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2583
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+read to 0xffffffff871852b8 of 4 bytes by task 4891 on cpu 0:
+ unix_release_sock+0x608/0x910 net/unix/af_unix.c:671
+ unix_release+0x59/0x80 net/unix/af_unix.c:1058
+ __sock_release+0x7d/0x170 net/socket.c:653
+ sock_close+0x19/0x30 net/socket.c:1385
+ __fput+0x179/0x5e0 fs/file_table.c:321
+ ____fput+0x15/0x20 fs/file_table.c:349
+ task_work_run+0x116/0x1a0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+ syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
+ do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0x00000000 -> 0x00000001
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 4891 Comm: systemd-coredum Not tainted 6.4.0-rc5-01219-gfa0e21fa4443 #5
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 9305cfa4443d ("[AF_UNIX]: Make unix_tot_inflight counter non-atomic")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-index 553f3de939574..9c26c46771f5e 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -14317,11 +14317,16 @@ static void bnx2x_io_resume(struct pci_dev *pdev)
- 	bp->fw_seq = SHMEM_RD(bp, func_mb[BP_FW_MB_IDX(bp)].drv_mb_header) &
- 							DRV_MSG_SEQ_NUMBER_MASK;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index ca31847a6c70c..310952f4c68f7 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -667,7 +667,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
+ 	 *	  What the above comment does talk about? --ANK(980817)
+ 	 */
  
--	if (netif_running(dev))
--		bnx2x_nic_load(bp, LOAD_NORMAL);
-+	if (netif_running(dev)) {
-+		if (bnx2x_nic_load(bp, LOAD_NORMAL)) {
-+			netdev_err(bp->dev, "Error during driver initialization, try unloading/reloading the driver\n");
-+			goto done;
-+		}
-+	}
- 
- 	netif_device_attach(dev);
- 
-+done:
- 	rtnl_unlock();
+-	if (unix_tot_inflight)
++	if (READ_ONCE(unix_tot_inflight))
+ 		unix_gc();		/* Garbage collect fds */
  }
  
 -- 
