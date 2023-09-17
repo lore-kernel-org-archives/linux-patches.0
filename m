@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179957469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75ABBC433CD;
-	Sun, 17 Sep 2023 20:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862517469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40F5C433CC;
+	Sun, 17 Sep 2023 20:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982156;
-	bh=Q0KBnSNZo/mwor8LSzLuSPbjFVe5/Q1dSBqn1SW4Fw8=;
+	s=korg; t=1694982160;
+	bh=/koIl1AMmtEy78ktL+/iLc+9ugphSMVAuIqA/XgF+mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lwzxx6C4qZq+eAgDFZkeKrgUFCrtABgPfMM0qWIJPIrpPExkbm5HMu5huMSJIZ90R
-	 LDXUmUYKKHIhGvVPcK22dk8svbaQfnJPuTjQOYSMHknxsGfHs+92RxE5247qFLvUTF
-	 Rhg/lWY6UV4rY1XGh8APeDcoybeocFw842MYTCSw=
+	b=iOGw73Q6qIHV+DnNgiNkcjueB+UqQbtBfw4xlYlLaki7kUqXsmKinHNu94BkLKFj8
+	 TvY5ZMtUkSVJRrZaP97F5xDXF5OVokVlUl4c9oedzHyNCzFXHhTkVqCUgYnEiTYnvn
+	 uUV/6Du/TGeeR9TV49wLHgZFXFXFfo/25JRW7OIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 169/511] drm/armada: Fix off-by-one error in armada_overlay_get_property()
-Date: Sun, 17 Sep 2023 21:09:56 +0200
-Message-ID: <20230917191117.920179515@linuxfoundation.org>
+Subject: [PATCH 5.15 170/511] drm/panel: simple: Add missing connector type and pixel format for AUO T215HVN01
+Date: Sun, 17 Sep 2023 21:09:57 +0200
+Message-ID: <20230917191117.943407567@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,50 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 5f0d984053f74983a287100a9519b2fabb785fb5 ]
+[ Upstream commit 7a675a8fa598edb29a664a91adb80f0340649f6f ]
 
-As ffs() returns one more than the index of the first bit set (zero
-means no bits set), the color key mode value is shifted one position too
-much.
+The connector type and pixel format are missing for this panel,
+add them to prevent various drivers from failing to determine
+either of those parameters.
 
-Fix this by using FIELD_GET() instead.
-
-Fixes: c96103b6c49ff9a8 ("drm/armada: move colorkey properties into overlay plane state")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/a4d779d954a7515ddbbf31cb0f0d8184c0e7c879.1689600265.git.geert+renesas@glider.be
+Fixes: 7ee933a1d5c4 ("drm/panel: simple: Add support for AUO T215HVN01")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230709134914.449328-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/armada/armada_overlay.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/armada/armada_overlay.c b/drivers/gpu/drm/armada/armada_overlay.c
-index 424250535fed9..0383deb970bbb 100644
---- a/drivers/gpu/drm/armada/armada_overlay.c
-+++ b/drivers/gpu/drm/armada/armada_overlay.c
-@@ -4,6 +4,8 @@
-  *  Rewritten from the dovefb driver, and Armada510 manuals.
-  */
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 7cf0af78b7bc9..e58eb93e9bc9e 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1448,7 +1448,9 @@ static const struct panel_desc auo_t215hvn01 = {
+ 	.delay = {
+ 		.disable = 5,
+ 		.unprepare = 1000,
+-	}
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
-+#include <linux/bitfield.h>
-+
- #include <drm/armada_drm.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
-@@ -451,8 +453,8 @@ static int armada_overlay_get_property(struct drm_plane *plane,
- 			     drm_to_overlay_state(state)->colorkey_ug,
- 			     drm_to_overlay_state(state)->colorkey_vb, 0);
- 	} else if (property == priv->colorkey_mode_prop) {
--		*val = (drm_to_overlay_state(state)->colorkey_mode &
--			CFG_CKMODE_MASK) >> ffs(CFG_CKMODE_MASK);
-+		*val = FIELD_GET(CFG_CKMODE_MASK,
-+				 drm_to_overlay_state(state)->colorkey_mode);
- 	} else if (property == priv->brightness_prop) {
- 		*val = drm_to_overlay_state(state)->brightness + 256;
- 	} else if (property == priv->contrast_prop) {
+ static const struct drm_display_mode avic_tm070ddh03_mode = {
 -- 
 2.40.1
 
