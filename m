@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C956FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F1BC433C7;
-	Sun, 17 Sep 2023 20:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BF86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61967C433C8;
+	Sun, 17 Sep 2023 20:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981750;
-	bh=tynlqowZxBPGcPTu+V1o+rPwNwlQCUc5cvgswCIWO2c=;
+	s=korg; t=1694981753;
+	bh=s7gxMNX2ynG5mnYYerhiYy9FfsGxKtw1o8WFz19vjaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwOR0rkFRXzpup50RcPb4BJLejtcG+gfJ+ccFEapJGr+FiIC3nU+5LGJu/lTIDUrb
-	 O5kDTd0VwkNGlcd22BIx1/5gIuK7hTOyH5cHsGfbDF98RSlES6cZQNUiYOIpi7LZy+
-	 Ft/SVuNUzUkgH2Jj16emyCFBCsHswwtgNP2e00BA=
+	b=AEdEBJDQ4e+qQ99i6gpYmdNwJ5NgfKUDhWbx9k1i8YjZGU9est5+wGfEXHMYVGJmS
+	 PH+azVBr4rbwUexBjGc/Z35Pb+kFa5dsz/CnyNeylodUbVo+41kJbb5SnThUfWuHMr
+	 qvNNimFWU+tDGYlMz4FEccjsGXSBaTnt9RxO3h5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/511] wifi: mt76: testmode: add nla_policy for MT76_TM_ATTR_TX_LENGTH
-Date: Sun, 17 Sep 2023 21:08:35 +0200
-Message-ID: <20230917191115.996918673@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 167/219] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
+Date: Sun, 17 Sep 2023 21:14:54 +0200
+Message-ID: <20230917191047.060833298@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,45 +36,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 74f12d511625e603fac8c0c2b6872e687e56dd61 ]
+commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b upstream.
 
-It seems that the nla_policy in mt76_tm_policy is missed for attribute
-MT76_TM_ATTR_TX_LENGTH. This patch adds the correct description to make
-sure the
+v7.2 controller has different ECC level field size and shift in the acc
+control register than its predecessor and successor controller. It needs
+to be set specifically.
 
-  u32 val = nla_get_u32(tb[MT76_TM_ATTR_TX_LENGTH]);
-
-in function mt76_testmode_cmd() is safe and will not result in
-out-of-attribute read.
-
-Fixes: f0efa8621550 ("mt76: add API for testmode support")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/testmode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   74 +++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/testmode.c b/drivers/net/wireless/mediatek/mt76/testmode.c
-index f73ffbd6e622d..0109433e8c2fe 100644
---- a/drivers/net/wireless/mediatek/mt76/testmode.c
-+++ b/drivers/net/wireless/mediatek/mt76/testmode.c
-@@ -6,6 +6,7 @@ static const struct nla_policy mt76_tm_policy[NUM_MT76_TM_ATTRS] = {
- 	[MT76_TM_ATTR_RESET] = { .type = NLA_FLAG },
- 	[MT76_TM_ATTR_STATE] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_COUNT] = { .type = NLA_U32 },
-+	[MT76_TM_ATTR_TX_LENGTH] = { .type = NLA_U32 },
- 	[MT76_TM_ATTR_TX_RATE_MODE] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_RATE_NSS] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_RATE_IDX] = { .type = NLA_U8 },
--- 
-2.40.1
-
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -272,6 +272,7 @@ struct brcmnand_controller {
+ 	const unsigned int	*page_sizes;
+ 	unsigned int		page_size_shift;
+ 	unsigned int		max_oob;
++	u32			ecc_level_shift;
+ 	u32			features;
+ 
+ 	/* for low-power standby/resume only */
+@@ -596,6 +597,34 @@ enum {
+ 	INTFC_CTLR_READY		= BIT(31),
+ };
+ 
++/***********************************************************************
++ * NAND ACC CONTROL bitfield
++ *
++ * Some bits have remained constant throughout hardware revision, while
++ * others have shifted around.
++ ***********************************************************************/
++
++/* Constant for all versions (where supported) */
++enum {
++	/* See BRCMNAND_HAS_CACHE_MODE */
++	ACC_CONTROL_CACHE_MODE				= BIT(22),
++
++	/* See BRCMNAND_HAS_PREFETCH */
++	ACC_CONTROL_PREFETCH				= BIT(23),
++
++	ACC_CONTROL_PAGE_HIT				= BIT(24),
++	ACC_CONTROL_WR_PREEMPT				= BIT(25),
++	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
++	ACC_CONTROL_RD_ERASED				= BIT(27),
++	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
++	ACC_CONTROL_WR_ECC				= BIT(30),
++	ACC_CONTROL_RD_ECC				= BIT(31),
++};
++
++#define	ACC_CONTROL_ECC_SHIFT			16
++/* Only for v7.2 */
++#define	ACC_CONTROL_ECC_EXT_SHIFT		13
++
+ static inline bool brcmnand_non_mmio_ops(struct brcmnand_controller *ctrl)
+ {
+ #if IS_ENABLED(CONFIG_MTD_NAND_BRCMNAND_BCMA)
+@@ -737,6 +766,12 @@ static int brcmnand_revision_init(struct
+ 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
+ 		ctrl->features |= BRCMNAND_HAS_WP;
+ 
++	/* v7.2 has different ecc level shift in the acc register */
++	if (ctrl->nand_version == 0x0702)
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
++	else
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
++
+ 	return 0;
+ }
+ 
+@@ -931,30 +966,6 @@ static inline int brcmnand_cmd_shift(str
+ 	return 0;
+ }
+ 
+-/***********************************************************************
+- * NAND ACC CONTROL bitfield
+- *
+- * Some bits have remained constant throughout hardware revision, while
+- * others have shifted around.
+- ***********************************************************************/
+-
+-/* Constant for all versions (where supported) */
+-enum {
+-	/* See BRCMNAND_HAS_CACHE_MODE */
+-	ACC_CONTROL_CACHE_MODE				= BIT(22),
+-
+-	/* See BRCMNAND_HAS_PREFETCH */
+-	ACC_CONTROL_PREFETCH				= BIT(23),
+-
+-	ACC_CONTROL_PAGE_HIT				= BIT(24),
+-	ACC_CONTROL_WR_PREEMPT				= BIT(25),
+-	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
+-	ACC_CONTROL_RD_ERASED				= BIT(27),
+-	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
+-	ACC_CONTROL_WR_ECC				= BIT(30),
+-	ACC_CONTROL_RD_ECC				= BIT(31),
+-};
+-
+ static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
+ {
+ 	if (ctrl->nand_version == 0x0702)
+@@ -967,18 +978,15 @@ static inline u32 brcmnand_spare_area_ma
+ 		return GENMASK(4, 0);
+ }
+ 
+-#define NAND_ACC_CONTROL_ECC_SHIFT	16
+-#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
+-
+ static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
+ {
+ 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
+ 
+-	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
++	mask <<= ACC_CONTROL_ECC_SHIFT;
+ 
+ 	/* v7.2 includes additional ECC levels */
+-	if (ctrl->nand_version >= 0x0702)
+-		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
++	if (ctrl->nand_version == 0x0702)
++		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
+ 
+ 	return mask;
+ }
+@@ -992,8 +1000,8 @@ static void brcmnand_set_ecc_enabled(str
+ 
+ 	if (en) {
+ 		acc_control |= ecc_flags; /* enable RD/WR ECC */
+-		acc_control |= host->hwcfg.ecc_level
+-			       << NAND_ACC_CONTROL_ECC_SHIFT;
++		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
++		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
+ 	} else {
+ 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
+ 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
+@@ -2593,7 +2601,7 @@ static int brcmnand_set_cfg(struct brcmn
+ 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
+ 	tmp &= ~brcmnand_spare_area_mask(ctrl);
+ 	if (ctrl->nand_version >= 0x0302) {
+-		tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
++		tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
+ 		tmp |= cfg->spare_area_size;
+ 	}
+ 	nand_writereg(ctrl, acc_control_offs, tmp);
 
 
