@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4DD7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0DDC433C7;
-	Sun, 17 Sep 2023 19:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADDB7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1314C433C9;
+	Sun, 17 Sep 2023 19:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980127;
-	bh=oBOoxbAbZfsVyoVHVFoYMMoQ3wvNYaDZ2CWgOtV0u48=;
+	s=korg; t=1694980131;
+	bh=NtVjRWhXGN23KRDtLWiXQA+uVwiOXr+7/CUy9ePqRtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhdFwCaoDRWTgznDO0QnLKhFY8C6Xr3HDR/6vAd2SzAA0oJt+764t11wqd3Nmwou0
-	 O9IepIMZyaigAD9vUP58NrrXiaMroMyitiLEohVrZv0v1VqeDz1TjFxbcPbShIUQQR
-	 XlIcbMuHe4P1zcYfuo4OU456e7DHTlR1M+C/0pTg=
+	b=ymoroV9f1lxozSLzuQlVJSPww9KNCnfEbbl1a3DojpvGaudXGu5bq4b6pQbZHmvXU
+	 k65l1MUZONsJkyCt5rE/Rea1OY8pSD8LVkOu0s73y/he3829uNBRPscln/0YBA0cHj
+	 sMJ5pHXpX+QndK14TTRANmYwccd3z68Brlb5Ct0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhuxiaohui <zhuxiaohui.400@bytedance.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Phil Sutter <phil@nwl.cc>,
+	Richard Guy Briggs <rgb@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 103/285] blk-throttle: consider carryover_ios/bytes in throtl_trim_slice()
-Date: Sun, 17 Sep 2023 21:11:43 +0200
-Message-ID: <20230917191055.236644018@linuxfoundation.org>
+Subject: [PATCH 6.5 104/285] netfilter: nf_tables: Audit log setelem reset
+Date: Sun, 17 Sep 2023 21:11:44 +0200
+Message-ID: <20230917191055.270581975@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,93 +41,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit eead0056648cef49d7b15c07ae612fa217083165 ]
+[ Upstream commit 7e9be1124dbe7888907e82cab20164578e3f9ab7 ]
 
-Currently, 'carryover_ios/bytes' is not handled in throtl_trim_slice(),
-for consequence, 'carryover_ios/bytes' will be used to throttle bio
-multiple times, for example:
+Since set element reset is not integrated into nf_tables' transaction
+logic, an explicit log call is needed, similar to NFT_MSG_GETOBJ_RESET
+handling.
 
-1) set iops limit to 100, and slice start is 0, slice end is 100ms;
-2) current time is 0, and 10 ios are dispatched, those io won't be
-   throttled and io_disp is 10;
-3) still at current time 0, update iops limit to 1000, carryover_ios is
-   updated to (0 - 10) = -10;
-4) in this slice(0 - 100ms), io_allowed = 100 + (-10) = 90, which means
-   only 90 ios can be dispatched without waiting;
-5) assume that io is throttled in slice(0 - 100ms), and
-   throtl_trim_slice() update silce to (100ms - 200ms). In this case,
-   'carryover_ios/bytes' is not cleared and still only 90 ios can be
-   dispatched between 100ms - 200ms.
+For the sake of simplicity, catchall element reset will always generate
+a dedicated log entry. This relieves nf_tables_dump_set() from having to
+adjust the logged element count depending on whether a catchall element
+was found or not.
 
-Fix this problem by updating 'carryover_ios/bytes' in
-throtl_trim_slice().
-
-Fixes: a880ae93e5b5 ("blk-throttle: fix io hung due to configuration updates")
-Reported-by: zhuxiaohui <zhuxiaohui.400@bytedance.com>
-Link: https://lore.kernel.org/all/20230812072116.42321-1-zhuxiaohui.400@bytedance.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230816012708.1193747-5-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 079cd633219d7 ("netfilter: nf_tables: Introduce NFT_MSG_GETSETELEM_RESET")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Reviewed-by: Richard Guy Briggs <rgb@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ include/linux/audit.h         |  1 +
+ kernel/auditsc.c              |  1 +
+ net/netfilter/nf_tables_api.c | 31 ++++++++++++++++++++++++++++---
+ 3 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index b0d9573f1911b..e78bc3b65ec80 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -729,8 +729,9 @@ static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
- /* Trim the used slices and adjust slice start accordingly */
- static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+diff --git a/include/linux/audit.h b/include/linux/audit.h
+index 6a3a9e122bb5e..192bf03aacc52 100644
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -117,6 +117,7 @@ enum audit_nfcfgop {
+ 	AUDIT_NFT_OP_OBJ_RESET,
+ 	AUDIT_NFT_OP_FLOWTABLE_REGISTER,
+ 	AUDIT_NFT_OP_FLOWTABLE_UNREGISTER,
++	AUDIT_NFT_OP_SETELEM_RESET,
+ 	AUDIT_NFT_OP_INVALID,
+ };
+ 
+diff --git a/kernel/auditsc.c b/kernel/auditsc.c
+index 8dfd581cd5543..87342b7126bcd 100644
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -143,6 +143,7 @@ static const struct audit_nfcfgop_tab audit_nfcfgs[] = {
+ 	{ AUDIT_NFT_OP_OBJ_RESET,		"nft_reset_obj"		   },
+ 	{ AUDIT_NFT_OP_FLOWTABLE_REGISTER,	"nft_register_flowtable"   },
+ 	{ AUDIT_NFT_OP_FLOWTABLE_UNREGISTER,	"nft_unregister_flowtable" },
++	{ AUDIT_NFT_OP_SETELEM_RESET,		"nft_reset_setelem"        },
+ 	{ AUDIT_NFT_OP_INVALID,			"nft_invalid"		   },
+ };
+ 
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index eb8b1167dced2..2e3844d5923f5 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -102,6 +102,7 @@ static const u8 nft2audit_op[NFT_MSG_MAX] = { // enum nf_tables_msg_types
+ 	[NFT_MSG_NEWFLOWTABLE]	= AUDIT_NFT_OP_FLOWTABLE_REGISTER,
+ 	[NFT_MSG_GETFLOWTABLE]	= AUDIT_NFT_OP_INVALID,
+ 	[NFT_MSG_DELFLOWTABLE]	= AUDIT_NFT_OP_FLOWTABLE_UNREGISTER,
++	[NFT_MSG_GETSETELEM_RESET] = AUDIT_NFT_OP_SETELEM_RESET,
+ };
+ 
+ static void nft_validate_state_update(struct nft_table *table, u8 new_validate_state)
+@@ -5621,13 +5622,25 @@ static int nf_tables_dump_setelem(const struct nft_ctx *ctx,
+ 	return nf_tables_fill_setelem(args->skb, set, elem, args->reset);
+ }
+ 
++static void audit_log_nft_set_reset(const struct nft_table *table,
++				    unsigned int base_seq,
++				    unsigned int nentries)
++{
++	char *buf = kasprintf(GFP_ATOMIC, "%s:%u", table->name, base_seq);
++
++	audit_log_nfcfg(buf, table->family, nentries,
++			AUDIT_NFT_OP_SETELEM_RESET, GFP_ATOMIC);
++	kfree(buf);
++}
++
+ struct nft_set_dump_ctx {
+ 	const struct nft_set	*set;
+ 	struct nft_ctx		ctx;
+ };
+ 
+ static int nft_set_catchall_dump(struct net *net, struct sk_buff *skb,
+-				 const struct nft_set *set, bool reset)
++				 const struct nft_set *set, bool reset,
++				 unsigned int base_seq)
  {
--	unsigned long time_elapsed, io_trim;
--	u64 bytes_trim;
-+	unsigned long time_elapsed;
-+	long long bytes_trim;
-+	int io_trim;
+ 	struct nft_set_elem_catchall *catchall;
+ 	u8 genmask = nft_genmask_cur(net);
+@@ -5643,6 +5656,8 @@ static int nft_set_catchall_dump(struct net *net, struct sk_buff *skb,
  
- 	BUG_ON(time_before(tg->slice_end[rw], tg->slice_start[rw]));
+ 		elem.priv = catchall->elem;
+ 		ret = nf_tables_fill_setelem(skb, set, &elem, reset);
++		if (reset && !ret)
++			audit_log_nft_set_reset(set->table, base_seq, 1);
+ 		break;
+ 	}
  
-@@ -758,17 +759,21 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
- 		return;
+@@ -5722,12 +5737,17 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
+ 	set->ops->walk(&dump_ctx->ctx, set, &args.iter);
  
- 	bytes_trim = calculate_bytes_allowed(tg_bps_limit(tg, rw),
--					     time_elapsed);
--	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed);
--	if (!bytes_trim && !io_trim)
-+					     time_elapsed) +
-+		     tg->carryover_bytes[rw];
-+	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed) +
-+		  tg->carryover_ios[rw];
-+	if (bytes_trim <= 0 && io_trim <= 0)
- 		return;
+ 	if (!args.iter.err && args.iter.count == cb->args[0])
+-		args.iter.err = nft_set_catchall_dump(net, skb, set, reset);
++		args.iter.err = nft_set_catchall_dump(net, skb, set,
++						      reset, cb->seq);
+ 	rcu_read_unlock();
  
--	if (tg->bytes_disp[rw] >= bytes_trim)
-+	tg->carryover_bytes[rw] = 0;
-+	if ((long long)tg->bytes_disp[rw] >= bytes_trim)
- 		tg->bytes_disp[rw] -= bytes_trim;
- 	else
- 		tg->bytes_disp[rw] = 0;
+ 	nla_nest_end(skb, nest);
+ 	nlmsg_end(skb, nlh);
  
--	if (tg->io_disp[rw] >= io_trim)
-+	tg->carryover_ios[rw] = 0;
-+	if ((int)tg->io_disp[rw] >= io_trim)
- 		tg->io_disp[rw] -= io_trim;
- 	else
- 		tg->io_disp[rw] = 0;
-@@ -776,7 +781,7 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
- 	tg->slice_start[rw] += time_elapsed;
++	if (reset && args.iter.count > args.iter.skip)
++		audit_log_nft_set_reset(table, cb->seq,
++					args.iter.count - args.iter.skip);
++
+ 	if (args.iter.err && args.iter.err != -EMSGSIZE)
+ 		return args.iter.err;
+ 	if (args.iter.count == cb->args[0])
+@@ -5952,13 +5972,13 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	u8 genmask = nft_genmask_cur(info->net);
+ 	u8 family = info->nfmsg->nfgen_family;
++	int rem, err = 0, nelems = 0;
+ 	struct net *net = info->net;
+ 	struct nft_table *table;
+ 	struct nft_set *set;
+ 	struct nlattr *attr;
+ 	struct nft_ctx ctx;
+ 	bool reset = false;
+-	int rem, err = 0;
  
- 	throtl_log(&tg->service_queue,
--		   "[%c] trim slice nr=%lu bytes=%llu io=%lu start=%lu end=%lu jiffies=%lu",
-+		   "[%c] trim slice nr=%lu bytes=%lld io=%d start=%lu end=%lu jiffies=%lu",
- 		   rw == READ ? 'R' : 'W', time_elapsed / tg->td->throtl_slice,
- 		   bytes_trim, io_trim, tg->slice_start[rw], tg->slice_end[rw],
- 		   jiffies);
+ 	table = nft_table_lookup(net, nla[NFTA_SET_ELEM_LIST_TABLE], family,
+ 				 genmask, 0);
+@@ -6001,8 +6021,13 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
+ 			NL_SET_BAD_ATTR(extack, attr);
+ 			break;
+ 		}
++		nelems++;
+ 	}
+ 
++	if (reset)
++		audit_log_nft_set_reset(table, nft_pernet(net)->base_seq,
++					nelems);
++
+ 	return err;
+ }
+ 
 -- 
 2.40.1
 
