@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7265B746E
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C213C433C8;
-	Sun, 17 Sep 2023 19:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214937461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2079BC433C7;
+	Sun, 17 Sep 2023 19:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980687;
-	bh=YZSisbruAH/vvDY24lyHyKFC7mSWT4fNCzPqqkeivoU=;
+	s=korg; t=1694980690;
+	bh=iLxdRoywkauh7b2Apk0BQR3LmdjNrX5WECw+la157RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLRvK0H2WayXZTUerTk95oapsvUWw8pZsoGdWMU0fwWiioNJXexbLOi901ff25GBb
-	 WsrQXcHlme4e9RYeL0ZaPoFkpTa32OEmy1QVeSVMpbR7PHDkMGv+Olu4HPsER46oJa
-	 FAxbvsxpRQNb1b4b6xSBxBOJ5Xju73C6OVY8CH/k=
+	b=K+lbHz/1e8YiZedA7hvMQu4bacCDMF15rIw17ln0Lv/yair3Zz0Drgj2B0jzlouB3
+	 VjD9a5NY5hJuzXOo/e/WbjkfTD3h7RHOJvu1Sq0sUbHhDcERSxvV0+30o2MUUtgP6H
+	 m/Aqp5Xb/PikcS9vagd9dCmm7HwS0gtM6+/cMRQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.5 237/285] perf hists browser: Fix the number of entries for e key
-Date: Sun, 17 Sep 2023 21:13:57 +0200
-Message-ID: <20230917191059.601057358@linuxfoundation.org>
+	"dengqiao.joey" <dengqiao.joey@bytedance.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 228/285] KVM: SVM: Set target pCPU during IRTE update if target vCPU is running
+Date: Sun, 17 Sep 2023 21:13:48 +0200
+Message-ID: <20230917191059.349171618@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -44,150 +43,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
+commit f3cebc75e7425d6949d726bb8e937095b0aef025 upstream.
 
-The 'e' key is to toggle expand/collapse the selected entry only.  But
-the current code has a bug that it only increases the number of entries
-by 1 in the hierarchy mode so users cannot move under the current entry
-after the key stroke.  This is due to a wrong assumption in the
-hist_entry__set_folding().
+Update the target pCPU for IOMMU doorbells when updating IRTE routing if
+KVM is actively running the associated vCPU.  KVM currently only updates
+the pCPU when loading the vCPU (via avic_vcpu_load()), and so doorbell
+events will be delayed until the vCPU goes through a put+load cycle (which
+might very well "never" happen for the lifetime of the VM).
 
-The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
-logic into single function") factored out the code, but actually it
-should be handled separately.  The hist_browser__set_folding() is to
-update fold state for each entry so it needs to traverse all (child)
-entries regardless of the current fold state.  So it increases the
-number of entries by 1.
+To avoid inserting a stale pCPU, e.g. due to racing between updating IRTE
+routing and vCPU load/put, get the pCPU information from the vCPU's
+Physical APIC ID table entry (a.k.a. avic_physical_id_cache in KVM) and
+update the IRTE while holding ir_list_lock.  Add comments with --verbose
+enabled to explain exactly what is and isn't protected by ir_list_lock.
 
-But the hist_entry__set_folding() only cares the currently selected
-entry and its all children.  So it should count all unfolded child
-entries.  This code is implemented in hist_browser__toggle_fold()
-already so we can just call it.
-
-Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
+Reported-by: dengqiao.joey <dengqiao.joey@bytedance.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Link: https://lore.kernel.org/r/20230808233132.2499764-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
+ arch/x86/kvm/svm/avic.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
- 	return container_of(ms, struct callchain_list, ms)->has_children;
- }
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -791,6 +791,7 @@ static int svm_ir_list_add(struct vcpu_s
+ 	int ret = 0;
+ 	unsigned long flags;
+ 	struct amd_svm_iommu_ir *ir;
++	u64 entry;
  
--static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
--{
--	return browser->he_selection ? browser->he_selection->unfolded : false;
--}
--
- static bool hist_browser__selection_unfolded(struct hist_browser *browser)
- {
- 	struct hist_entry *he = browser->he_selection;
-@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
- 	return n;
- }
+ 	/**
+ 	 * In some cases, the existing irte is updated and re-set,
+@@ -824,6 +825,18 @@ static int svm_ir_list_add(struct vcpu_s
+ 	ir->data = pi->ir_data;
  
--static void __hist_entry__set_folding(struct hist_entry *he,
--				      struct hist_browser *hb, bool unfold)
-+static void hist_entry__set_folding(struct hist_entry *he,
-+				    struct hist_browser *hb, bool unfold)
- {
- 	hist_entry__init_have_children(he);
- 	he->unfolded = unfold ? he->has_children : false;
-@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
- 		he->nr_rows = 0;
- }
- 
--static void hist_entry__set_folding(struct hist_entry *he,
--				    struct hist_browser *browser, bool unfold)
--{
--	double percent;
--
--	percent = hist_entry__get_percent_limit(he);
--	if (he->filtered || percent < browser->min_pcnt)
--		return;
--
--	__hist_entry__set_folding(he, browser, unfold);
--
--	if (!he->depth || unfold)
--		browser->nr_hierarchy_entries++;
--	if (he->leaf)
--		browser->nr_callchain_rows += he->nr_rows;
--	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
--		browser->nr_hierarchy_entries++;
--		he->has_no_entry = true;
--		he->nr_rows = 1;
--	} else
--		he->has_no_entry = false;
--}
--
- static void
- __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
- {
- 	struct rb_node *nd;
- 	struct hist_entry *he;
-+	double percent;
- 
- 	nd = rb_first_cached(&browser->hists->entries);
- 	while (nd) {
-@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
- 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
- 
- 		hist_entry__set_folding(he, browser, unfold);
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
 +
-+		percent = hist_entry__get_percent_limit(he);
-+		if (he->filtered || percent < browser->min_pcnt)
-+			continue;
++	/*
++	 * Update the target pCPU for IOMMU doorbells if the vCPU is running.
++	 * If the vCPU is NOT running, i.e. is blocking or scheduled out, KVM
++	 * will update the pCPU info when the vCPU awkened and/or scheduled in.
++	 * See also avic_vcpu_load().
++	 */
++	entry = READ_ONCE(*(svm->avic_physical_id_cache));
++	if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK)
++		amd_iommu_update_ga(entry & AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK,
++				    true, pi->ir_data);
 +
-+		if (!he->depth || unfold)
-+			browser->nr_hierarchy_entries++;
-+		if (he->leaf)
-+			browser->nr_callchain_rows += he->nr_rows;
-+		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
-+			browser->nr_hierarchy_entries++;
-+			he->has_no_entry = true;
-+			he->nr_rows = 1;
-+		} else
-+			he->has_no_entry = false;
- 	}
- }
- 
-@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
- 	if (!browser->he_selection)
+ 	list_add(&ir->node, &svm->ir_list);
+ 	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
+ out:
+@@ -1031,6 +1044,13 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
+ 	if (kvm_vcpu_is_blocking(vcpu))
  		return;
  
--	hist_entry__set_folding(browser->he_selection, browser, unfold);
--	browser->b.nr_entries = hist_browser__nr_entries(browser);
-+	if (unfold == browser->he_selection->unfolded)
-+		return;
-+
-+	hist_browser__toggle_fold(browser);
- }
++	/*
++	 * Grab the per-vCPU interrupt remapping lock even if the VM doesn't
++	 * _currently_ have assigned devices, as that can change.  Holding
++	 * ir_list_lock ensures that either svm_ir_list_add() will consume
++	 * up-to-date entry information, or that this task will wait until
++	 * svm_ir_list_add() completes to set the new target pCPU.
++	 */
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
  
- static void ui_browser__warn_lost_events(struct ui_browser *browser)
-@@ -732,8 +722,8 @@ static int hist_browser__handle_hotkey(s
- 		hist_browser__set_folding(browser, true);
- 		break;
- 	case 'e':
--		/* Expand the selected entry. */
--		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
-+		/* Toggle expand/collapse the selected entry. */
-+		hist_browser__toggle_fold(browser);
- 		break;
- 	case 'H':
- 		browser->show_headers = !browser->show_headers;
+ 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
+@@ -1067,6 +1087,14 @@ void avic_vcpu_put(struct kvm_vcpu *vcpu
+ 	if (!(entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK))
+ 		return;
+ 
++	/*
++	 * Take and hold the per-vCPU interrupt remapping lock while updating
++	 * the Physical ID entry even though the lock doesn't protect against
++	 * multiple writers (see above).  Holding ir_list_lock ensures that
++	 * either svm_ir_list_add() will consume up-to-date entry information,
++	 * or that this task will wait until svm_ir_list_add() completes to
++	 * mark the vCPU as not running.
++	 */
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
+ 
+ 	avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
 
 
