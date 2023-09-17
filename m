@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F1253B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B80AC433C7;
-	Sun, 17 Sep 2023 19:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D35853B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C17C433C7;
+	Sun, 17 Sep 2023 19:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979342;
-	bh=RpmWjVB38GPanWNxyMq26KgbrZ+4BLDaXwDPShE+txk=;
+	s=korg; t=1694979346;
+	bh=Xwsh/q8A1FEj8c6kej7j1BHnCIzR4o5jtAqcQ4BdGls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X8U10c2aRTKn+/tV41/4nBlPI0LT0ckstUTfWo/LJKt0MpB3hxRBw3vD9ivbreAbz
-	 EtEzY89lr31b9YftBF+29k4stniiCkZtW4X6eEvyMQJfvxY6nx3+d+t8CvBcq5Z5UR
-	 MLpqmyMOALi9Dl91MaHSd7iZT2m+q0U6mV0M8wGY=
+	b=DK/iuewewcMwMnHcxkPt2zGyNBY6Lzco0Y0YkBhQv4hpBH83WtbyvmPa/NytSIkQL
+	 q7Wojjr6M1my+IeAmvTmcbWx/ITqaIVb6FW1ZiY/s3KaFlLaHABHtCaX8c0dVGP6+M
+	 G2+MtOXhvYE6DLJLZ4WOYDNYIde9oI2dnjFYr1Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 277/406] scsi: core: Fix the scsi_set_resid() documentation
-Date: Sun, 17 Sep 2023 21:12:11 +0200
-Message-ID: <20230917191108.592372362@linuxfoundation.org>
+Subject: [PATCH 5.10 286/406] Revert "scsi: qla2xxx: Fix buffer overrun"
+Date: Sun, 17 Sep 2023 21:12:20 +0200
+Message-ID: <20230917191108.856867961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,42 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit f669b8a683e4ee26fa5cafe19d71cec1786b556a upstream.
+commit 641671d97b9199f1ba35ccc2222d4b189a6a5de5 upstream.
 
-Because scsi_finish_command() subtracts the residual from the buffer
-length, residual overflows must not be reported. Reflect this in the SCSI
-documentation. See also commit 9237f04e12cc ("scsi: core: Fix
-scsi_get/set_resid() interface")
+Revert due to Get PLOGI Template failed.
+This reverts commit b68710a8094fdffe8dd4f7a82c82649f479bb453.
 
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Douglas Gilbert <dgilbert@interlog.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230721160154.874010-2-bvanassche@acm.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230821130045.34850-9-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/scsi/scsi_mid_low_api.rst |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/scsi/scsi_mid_low_api.rst
-+++ b/Documentation/scsi/scsi_mid_low_api.rst
-@@ -1195,11 +1195,11 @@ Members of interest:
- 		 - pointer to scsi_device object that this command is
-                    associated with.
-     resid
--		 - an LLD should set this signed integer to the requested
-+		 - an LLD should set this unsigned integer to the requested
-                    transfer length (i.e. 'request_bufflen') less the number
-                    of bytes that are actually transferred. 'resid' is
-                    preset to 0 so an LLD can ignore it if it cannot detect
--                   underruns (overruns should be rare). If possible an LLD
-+                   underruns (overruns should not be reported). An LLD
-                    should set 'resid' prior to invoking 'done'. The most
-                    interesting case is data transfers from a SCSI target
-                    device (e.g. READs) that underrun.
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -5107,7 +5107,7 @@ static void qla_get_login_template(scsi_
+ 	__be32 *q;
+ 
+ 	memset(ha->init_cb, 0, ha->init_cb_size);
+-	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
++	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
+ 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
+ 					    ha->init_cb, sz);
+ 	if (rval != QLA_SUCCESS) {
 
 
