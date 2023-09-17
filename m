@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265A353B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA1AC433C7;
-	Sun, 17 Sep 2023 19:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191453B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5F1C433C9;
+	Sun, 17 Sep 2023 19:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979329;
-	bh=u9LmL/WkoefVI7VgOteQGKMTIDI6iX8bcN/9mSwTI6g=;
+	s=korg; t=1694979332;
+	bh=iQQKVdXqtENnTGRTMj5DSOcxacoKTtv481bpNwks8z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULdSK+rbzErgygZl2k4j+yuw370293FMP0VIc2CAngrU5N86C4ZoDy6amLoVoeWlu
-	 UFyt1mQdNQO4QuIY2rbj6Wz9UeMj3zgY950jdnZgQqqzVoTgFNK2tXlOYlZFxMAG2z
-	 rfgjjyB+OujJXaQUr68wbM64I+P4oDLLMbRDx9zQ=
+	b=LEH1gOchSvu1smFJNs81WdTiaO8htLaWkHuzQzYe3LSDoGFqR3mFzS0r4RCeCJyoK
+	 7fY7VuyfVIJKXeBWxPAJ9JyB3DiYhbiV3pCEyRVs3DDsjrZlHGJ7Y/VTrW1O5AjJBM
+	 MWoWhqbajfr0gLM1N4ukWCjLPT2ulsvE1Bu0KK+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Zhivich <mzhivich@akamai.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	mhiramat@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/406] x86/speculation: Mark all Skylake CPUs as vulnerable to GDS
-Date: Sun, 17 Sep 2023 21:11:48 +0200
-Message-ID: <20230917191107.881643860@linuxfoundation.org>
+Subject: [PATCH 5.10 255/406] tracing: Fix race issue between cpu buffer write and swap
+Date: Sun, 17 Sep 2023 21:11:49 +0200
+Message-ID: <20230917191107.911945682@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,74 +41,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit c9f4c45c8ec3f07f4f083f9750032a1ec3eab6b2 ]
+[ Upstream commit 3163f635b20e9e1fb4659e74f47918c9dddfe64e ]
 
-The Gather Data Sampling (GDS) vulnerability is common to all Skylake
-processors.  However, the "client" Skylakes* are now in this list:
+Warning happened in rb_end_commit() at code:
+	if (RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing)))
 
-	https://www.intel.com/content/www/us/en/support/articles/000022396/processors.html
+  WARNING: CPU: 0 PID: 139 at kernel/trace/ring_buffer.c:3142
+	rb_commit+0x402/0x4a0
+  Call Trace:
+   ring_buffer_unlock_commit+0x42/0x250
+   trace_buffer_unlock_commit_regs+0x3b/0x250
+   trace_event_buffer_commit+0xe5/0x440
+   trace_event_buffer_reserve+0x11c/0x150
+   trace_event_raw_event_sched_switch+0x23c/0x2c0
+   __traceiter_sched_switch+0x59/0x80
+   __schedule+0x72b/0x1580
+   schedule+0x92/0x120
+   worker_thread+0xa0/0x6f0
 
-which means they are no longer included for new vulnerabilities here:
+It is because the race between writing event into cpu buffer and swapping
+cpu buffer through file per_cpu/cpu0/snapshot:
 
-	https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
+  Write on CPU 0             Swap buffer by per_cpu/cpu0/snapshot on CPU 1
+  --------                   --------
+                             tracing_snapshot_write()
+                               [...]
 
-or in other GDS documentation.  Thus, they were not included in the
-original GDS mitigation patches.
+  ring_buffer_lock_reserve()
+    cpu_buffer = buffer->buffers[cpu]; // 1. Suppose find 'cpu_buffer_a';
+    [...]
+    rb_reserve_next_event()
+      [...]
 
-Mark SKYLAKE and SKYLAKE_L as vulnerable to GDS to match all the
-other Skylake CPUs (which include Kaby Lake).  Also group the CPUs
-so that the ones that share the exact same vulnerabilities are next
-to each other.
+                               ring_buffer_swap_cpu()
+                                 if (local_read(&cpu_buffer_a->committing))
+                                     goto out_dec;
+                                 if (local_read(&cpu_buffer_b->committing))
+                                     goto out_dec;
+                                 buffer_a->buffers[cpu] = cpu_buffer_b;
+                                 buffer_b->buffers[cpu] = cpu_buffer_a;
+                                 // 2. cpu_buffer has swapped here.
 
-Last, move SRBDS to the end of each line.  This makes it clear at a
-glance that SKYLAKE_X is unique.  Of the five Skylakes, it is the
-only "server" CPU and has a different implementation from the
-clients of the "special register" hardware, making it immune to SRBDS.
+      rb_start_commit(cpu_buffer);
+      if (unlikely(READ_ONCE(cpu_buffer->buffer)
+          != buffer)) { // 3. This check passed due to 'cpu_buffer->buffer'
+        [...]           //    has not changed here.
+        return NULL;
+      }
+                                 cpu_buffer_b->buffer = buffer_a;
+                                 cpu_buffer_a->buffer = buffer_b;
+                                 [...]
 
-This makes the diff much harder to read, but the resulting table is
-worth it.
+      // 4. Reserve event from 'cpu_buffer_a'.
 
-I very much appreciate the report from Michael Zhivich about this
-issue.  Despite what level of support a hardware vendor is providing,
-the kernel very much needs an accurate and up-to-date list of
-vulnerable CPUs.  More reports like this are very welcome.
+  ring_buffer_unlock_commit()
+    [...]
+    cpu_buffer = buffer->buffers[cpu]; // 5. Now find 'cpu_buffer_b' !!!
+    rb_commit(cpu_buffer)
+      rb_end_commit()  // 6. WARN for the wrong 'committing' state !!!
 
-* Client Skylakes are CPUID 406E3/506E3 which is family 6, models
-  0x4E and 0x5E, aka INTEL_FAM6_SKYLAKE and INTEL_FAM6_SKYLAKE_L.
+Based on above analysis, we can easily reproduce by following testcase:
+  ``` bash
+  #!/bin/bash
 
-Reported-by: Michael Zhivich <mzhivich@akamai.com>
-Fixes: 8974eb588283 ("x86/speculation: Add Gather Data Sampling mitigation")
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+  dmesg -n 7
+  sysctl -w kernel.panic_on_warn=1
+  TR=/sys/kernel/tracing
+  echo 7 > ${TR}/buffer_size_kb
+  echo "sched:sched_switch" > ${TR}/set_event
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  ```
+
+To fix it, IIUC, we can use smp_call_function_single() to do the swap on
+the target cpu where the buffer is located, so that above race would be
+avoided.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230831132739.4070878-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Fixes: f1affcaaa861 ("tracing: Add snapshot in the per_cpu trace directories")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/trace.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index c1ff75ad11358..4ecc6072e9a48 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1145,11 +1145,11 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_G,	X86_STEPPING_ANY,		SRBDS),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
- 	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
- 	VULNBL_INTEL_STEPPINGS(CANNONLAKE_L,	X86_STEPPING_ANY,		RETBLEED),
- 	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
- 	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS),
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 2ded5012543bf..fbe13cfdb85b0 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7164,6 +7164,11 @@ static int tracing_snapshot_open(struct inode *inode, struct file *file)
+ 	return ret;
+ }
+ 
++static void tracing_swap_cpu_buffer(void *tr)
++{
++	update_max_tr_single((struct trace_array *)tr, current, smp_processor_id());
++}
++
+ static ssize_t
+ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 		       loff_t *ppos)
+@@ -7222,13 +7227,15 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 			ret = tracing_alloc_snapshot_instance(tr);
+ 		if (ret < 0)
+ 			break;
+-		local_irq_disable();
+ 		/* Now, we're going to swap */
+-		if (iter->cpu_file == RING_BUFFER_ALL_CPUS)
++		if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
++			local_irq_disable();
+ 			update_max_tr(tr, current, smp_processor_id(), NULL);
+-		else
+-			update_max_tr_single(tr, current, iter->cpu_file);
+-		local_irq_enable();
++			local_irq_enable();
++		} else {
++			smp_call_function_single(iter->cpu_file, tracing_swap_cpu_buffer,
++						 (void *)tr, 1);
++		}
+ 		break;
+ 	default:
+ 		if (tr->allocated_snapshot) {
 -- 
 2.40.1
 
