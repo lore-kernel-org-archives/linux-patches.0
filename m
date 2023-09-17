@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D19746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D278C433C7;
-	Sun, 17 Sep 2023 20:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C397746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AB7C433C7;
+	Sun, 17 Sep 2023 20:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983024;
-	bh=hM+A9NhCJUkv/KZ6L2nuAMWUEbXXtXh1VUaTy+4LPiw=;
+	s=korg; t=1694983027;
+	bh=fCptCeZLtHi26O6GA/NKAWcLtMDhByEgTS5QW6ElClQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJdUxyTNDAI+yIOOGygbYVbczE8cV9STCa3G8ZmldAaNhTsA1kvYr8RuaXYVonIw+
-	 zWL1lCf2z5XBjM9oEr4o0EWxpdu1ouQNfVRWsB2xbwBYmqHTOubueKF07ITGTACp+7
-	 Nlu3yKwX9TnuFXJ1T8diBw7NrOj6Eo0jmX+nENnA=
+	b=symrcXbBsxtdrXpx/45OBE0GJK+axpYkmxue7+ECyZyWzR4QYc4+9AHvjJKFCxQls
+	 IYRI5VIXjElSEGapgO/rByy9elPtYhXexOExel4z+MG1yT8fhAcC0SC2IWKqTNfK56
+	 Exu3DeG/JnO7/fEIhLNjTVtbPimAAL+KxlWHfik4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tom Rix <trix@redhat.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 371/511] udf: initialize newblock to 0
-Date: Sun, 17 Sep 2023 21:13:18 +0200
-Message-ID: <20230917191122.764853007@linuxfoundation.org>
+	Liu Ying <victor.liu@nxp.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 416/511] backlight: gpio_backlight: Drop output GPIO direction check for initial power state
+Date: Sun, 17 Sep 2023 21:14:03 +0200
+Message-ID: <20230917191123.825488287@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,53 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Rix <trix@redhat.com>
+From: Ying Liu <victor.liu@nxp.com>
 
-commit 23970a1c9475b305770fd37bebfec7a10f263787 upstream.
+[ Upstream commit fe1328b5b2a087221e31da77e617f4c2b70f3b7f ]
 
-The clang build reports this error
-fs/udf/inode.c:805:6: error: variable 'newblock' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-        if (*err < 0)
-            ^~~~~~~~
-newblock is never set before error handling jump.
-Initialize newblock to 0 and remove redundant settings.
+So, let's drop output GPIO direction check and only check GPIO value to set
+the initial power state.
 
-Fixes: d8b39db5fab8 ("udf: Handle error when adding extent to a file")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Tom Rix <trix@redhat.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20221230175341.1629734-1-trix@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 706dc68102bc ("backlight: gpio: Explicitly set the direction of the GPIO")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230721093342.1532531-1-victor.liu@nxp.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/video/backlight/gpio_backlight.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -695,7 +695,7 @@ static sector_t inode_getblk(struct inod
- 	struct kernel_lb_addr eloc, tmpeloc;
- 	int c = 1;
- 	loff_t lbcount = 0, b_off = 0;
--	udf_pblk_t newblocknum, newblock;
-+	udf_pblk_t newblocknum, newblock = 0;
- 	sector_t offset = 0;
- 	int8_t etype;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-@@ -798,7 +798,6 @@ static sector_t inode_getblk(struct inod
- 		ret = udf_do_extend_file(inode, &prev_epos, laarr, hole_len);
- 		if (ret < 0) {
- 			*err = ret;
--			newblock = 0;
- 			goto out_free;
- 		}
- 		c = 0;
-@@ -861,7 +860,6 @@ static sector_t inode_getblk(struct inod
- 				goal, err);
- 		if (!newblocknum) {
- 			*err = -ENOSPC;
--			newblock = 0;
- 			goto out_free;
- 		}
- 		if (isBeyondEOF)
+diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
+index 5c5c99f7979e3..30ec5b6845335 100644
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -87,8 +87,7 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 		/* Not booted with device tree or no phandle link to the node */
+ 		bl->props.power = def_value ? FB_BLANK_UNBLANK
+ 					    : FB_BLANK_POWERDOWN;
+-	else if (gpiod_get_direction(gbl->gpiod) == 0 &&
+-		 gpiod_get_value_cansleep(gbl->gpiod) == 0)
++	else if (gpiod_get_value_cansleep(gbl->gpiod) == 0)
+ 		bl->props.power = FB_BLANK_POWERDOWN;
+ 	else
+ 		bl->props.power = FB_BLANK_UNBLANK;
+-- 
+2.40.1
+
 
 
