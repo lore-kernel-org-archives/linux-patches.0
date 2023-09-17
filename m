@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119BC6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1B0C433C8;
-	Sun, 17 Sep 2023 19:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EE16FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83539C433C7;
+	Sun, 17 Sep 2023 19:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980457;
-	bh=S0zqokmRPlr3UoQkRLDvQt+xA6D03M85IfXHQl7w7ug=;
+	s=korg; t=1694980461;
+	bh=iHFNubh9oG6MzJKPGf5stIQyYH+qBewnVirr+30LCpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5uhT6DkeN8Cd1MfQZLL3NWDoJ/1/WTyciio8OQ05jeskgOLS0i/xDcIgfrgZkT5e
-	 xMgdLLJcMTcU6j1X7mo47i4CnEufyMIQl3F1xes6kdnKLbsgd0Ij1BryoBnxlEyLjA
-	 2FC17H+nQ7ZYpUJz4MiEEqmeRukxkEJScIC9F5DU=
+	b=bf0i0Or0NhrQEPLZcg3ImxG2s/zJhaYe9t4NtSRxLC8m/uaWyiTdKoi7pPYYv01EX
+	 Z3LeaXBQ+TLD4v5D/wD/Dm/3n/q6O/pv7ZxdrFFl71hVaGKnu45XHu+23CDMe3ZMqy
+	 lGSB5YyJMVlnnEAvIfjg6nH7BoQwQx3RTIG4wSVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Hao Chen <chenhao418@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 167/285] net: hns3: fix tx timeout issue
-Date: Sun, 17 Sep 2023 21:12:47 +0200
-Message-ID: <20230917191057.431684481@linuxfoundation.org>
+Subject: [PATCH 6.5 168/285] net: hns3: fix byte order conversion issue in hclge_dbg_fd_tcam_read()
+Date: Sun, 17 Sep 2023 21:12:48 +0200
+Message-ID: <20230917191057.462477733@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,77 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Hao Chen <chenhao418@huawei.com>
 
-[ Upstream commit 61a1deacc3d4fd3d57d7fda4d935f7f7503e8440 ]
+[ Upstream commit efccf655e99b6907ca07a466924e91805892e7d3 ]
 
-Currently, the driver knocks the ring doorbell before updating
-the ring->last_to_use in tx flow. if the hardware transmiting
-packet and napi poll scheduling are fast enough, it may get
-the old ring->last_to_use in drivers' napi poll.
-In this case, the driver will think the tx is not completed, and
-return directly without clear the flag __QUEUE_STATE_STACK_XOFF,
-which may cause tx timeout.
+req1->tcam_data is defined as "u8 tcam_data[8]", and we convert it as
+(u32 *) without considerring byte order conversion,
+it may result in printing wrong data for tcam_data.
 
-Fixes: 20d06ca2679c ("net: hns3: optimize the tx clean process")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Convert tcam_data to (__le32 *) first to fix it.
+
+Fixes: b5a0b70d77b9 ("net: hns3: refactor dump fd tcam of debugfs")
+Signed-off-by: Hao Chen <chenhao418@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index b7b51e56b0308..71772213b4448 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -2102,8 +2102,12 @@ static void hns3_tx_doorbell(struct hns3_enet_ring *ring, int num,
- 	 */
- 	if (test_bit(HNS3_NIC_STATE_TX_PUSH_ENABLE, &priv->state) && num &&
- 	    !ring->pending_buf && num <= HNS3_MAX_PUSH_BD_NUM && doorbell) {
-+		/* This smp_store_release() pairs with smp_load_aquire() in
-+		 * hns3_nic_reclaim_desc(). Ensure that the BD valid bit
-+		 * is updated.
-+		 */
-+		smp_store_release(&ring->last_to_use, ring->next_to_use);
- 		hns3_tx_push_bd(ring, num);
--		WRITE_ONCE(ring->last_to_use, ring->next_to_use);
- 		return;
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+index f01a7a9ee02ca..ff3f8f424ad90 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+@@ -1519,7 +1519,7 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 	struct hclge_desc desc[3];
+ 	int pos = 0;
+ 	int ret, i;
+-	u32 *req;
++	__le32 *req;
  
-@@ -2114,6 +2118,11 @@ static void hns3_tx_doorbell(struct hns3_enet_ring *ring, int num,
- 		return;
- 	}
+ 	hclge_cmd_setup_basic_desc(&desc[0], HCLGE_OPC_FD_TCAM_OP, true);
+ 	desc[0].flag |= cpu_to_le16(HCLGE_COMM_CMD_FLAG_NEXT);
+@@ -1544,22 +1544,22 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 			 tcam_msg.loc);
  
-+	/* This smp_store_release() pairs with smp_load_aquire() in
-+	 * hns3_nic_reclaim_desc(). Ensure that the BD valid bit is updated.
-+	 */
-+	smp_store_release(&ring->last_to_use, ring->next_to_use);
-+
- 	if (ring->tqp->mem_base)
- 		hns3_tx_mem_doorbell(ring);
- 	else
-@@ -2121,7 +2130,6 @@ static void hns3_tx_doorbell(struct hns3_enet_ring *ring, int num,
- 		       ring->tqp->io_base + HNS3_RING_TX_RING_TAIL_REG);
+ 	/* tcam_data0 ~ tcam_data1 */
+-	req = (u32 *)req1->tcam_data;
++	req = (__le32 *)req1->tcam_data;
+ 	for (i = 0; i < 2; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
  
- 	ring->pending_buf = 0;
--	WRITE_ONCE(ring->last_to_use, ring->next_to_use);
+ 	/* tcam_data2 ~ tcam_data7 */
+-	req = (u32 *)req2->tcam_data;
++	req = (__le32 *)req2->tcam_data;
+ 	for (i = 0; i < 6; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	/* tcam_data8 ~ tcam_data12 */
+-	req = (u32 *)req3->tcam_data;
++	req = (__le32 *)req3->tcam_data;
+ 	for (i = 0; i < 5; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	return ret;
  }
- 
- static void hns3_tsyn(struct net_device *netdev, struct sk_buff *skb,
-@@ -3562,9 +3570,8 @@ static void hns3_reuse_buffer(struct hns3_enet_ring *ring, int i)
- static bool hns3_nic_reclaim_desc(struct hns3_enet_ring *ring,
- 				  int *bytes, int *pkts, int budget)
- {
--	/* pair with ring->last_to_use update in hns3_tx_doorbell(),
--	 * smp_store_release() is not used in hns3_tx_doorbell() because
--	 * the doorbell operation already have the needed barrier operation.
-+	/* This smp_load_acquire() pairs with smp_store_release() in
-+	 * hns3_tx_doorbell().
- 	 */
- 	int ltu = smp_load_acquire(&ring->last_to_use);
- 	int ntc = ring->next_to_clean;
 -- 
 2.40.1
 
