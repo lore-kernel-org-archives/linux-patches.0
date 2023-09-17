@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245607461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576C0C433CB;
-	Sun, 17 Sep 2023 20:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563FE7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5ED0C433C9;
+	Sun, 17 Sep 2023 20:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981398;
-	bh=s7+yisPqdFdBfY4qNCmGw0XV2JSvyFOWkY6JU31QgGw=;
+	s=korg; t=1694981401;
+	bh=WZfD3BPOseEtV+8jRFfxy291HuE2WiMus2PaVUjXNX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeVlrtOdrX2DUFhOb2D2FRpWnjA4LWXy669pm+4NanMz4NjXEXoLxtqZeIfvkhIGm
-	 NCU4RxPduV12//jo0o+B9BHecjBX0eII9KCDbCPmpok/pathG0qI3SkIliSaBbjTJI
-	 3BkO1G23rL80dhBNud7+tQAkiYQjYp3KqJLVgC9o=
+	b=sDujJL7PYhuBfVTVa9Ug9rX5pJnfBHzk0+YuXkZgEbcTIDF3ZEZrLeqGmGMcp82Ho
+	 lD7BVLbqbSrTPyfcOsQPGbIERZeQ18I/+CsU3MwpAfcADfRBzXT7iANSNXBtnN06w6
+	 CI/sRejqP1YIFLK+YH5tQdMBkt6WcT6GLwiN55QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shih-Yi Chen <shihyic@nvidia.com>,
-	Liming Sung <limings@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Olga Zaborska <olga.zaborska@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/511] platform/mellanox: Fix mlxbf-tmfifo not handling all virtio CONSOLE notifications
-Date: Sun, 17 Sep 2023 21:07:55 +0200
-Message-ID: <20230917191115.033946075@linuxfoundation.org>
+Subject: [PATCH 6.1 115/219] igc: Change IGC_MIN to allow set rx/tx value between 64 and 80
+Date: Sun, 17 Sep 2023 21:14:02 +0200
+Message-ID: <20230917191045.137399898@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,41 +37,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shih-Yi Chen <shihyic@nvidia.com>
+From: Olga Zaborska <olga.zaborska@intel.com>
 
-[ Upstream commit 0848cab765c634597636810bf76d0934003cce28 ]
+[ Upstream commit 5aa48279712e1f134aac908acde4df798955a955 ]
 
-rshim console does not show all entries of dmesg.
+Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
+value between 64 and 80. All igc devices can use as low as 64 descriptors.
+This change will unify igc with other drivers.
+Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
 
-Fixed by setting MLXBF_TM_TX_LWM_IRQ for every CONSOLE notification.
-
-Signed-off-by: Shih-Yi Chen <shihyic@nvidia.com>
-Reviewed-by: Liming Sung <limings@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20230821150627.26075-1-shihyic@nvidia.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 0507ef8a0372 ("igc: Add transmit and receive fastpath and interrupt handlers")
+Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igc/igc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 38800e86ed8ad..64d22ecf3cddd 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -868,6 +868,7 @@ static bool mlxbf_tmfifo_virtio_notify(struct virtqueue *vq)
- 			tm_vdev = fifo->vdev[VIRTIO_ID_CONSOLE];
- 			mlxbf_tmfifo_console_output(tm_vdev, vring);
- 			spin_unlock_irqrestore(&fifo->spin_lock[0], flags);
-+			set_bit(MLXBF_TM_TX_LWM_IRQ, &fifo->pend_events);
- 		} else if (test_and_set_bit(MLXBF_TM_TX_LWM_IRQ,
- 					    &fifo->pend_events)) {
- 			return true;
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index f83cbc4a1afa8..d3b17aa1d1a83 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -354,11 +354,11 @@ static inline u32 igc_rss_type(const union igc_adv_rx_desc *rx_desc)
+ /* TX/RX descriptor defines */
+ #define IGC_DEFAULT_TXD		256
+ #define IGC_DEFAULT_TX_WORK	128
+-#define IGC_MIN_TXD		80
++#define IGC_MIN_TXD		64
+ #define IGC_MAX_TXD		4096
+ 
+ #define IGC_DEFAULT_RXD		256
+-#define IGC_MIN_RXD		80
++#define IGC_MIN_RXD		64
+ #define IGC_MAX_RXD		4096
+ 
+ /* Supported Rx Buffer Sizes */
 -- 
 2.40.1
 
