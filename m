@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D301C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBCCC433C8;
-	Sun, 17 Sep 2023 20:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A49C746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8177EC433C8;
+	Sun, 17 Sep 2023 20:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982983;
-	bh=Z8LpXU4rz0Jkr5dZqjS0HvtGVDVAPVmxjp0MVeW6SaU=;
+	s=korg; t=1694982986;
+	bh=2VqXem/+7HQshhQKrXpg5wCAACmihLo3j+436LD8bFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deoUPvbRYVPX6PU9Ail63gu6eb7AUEEf9ooB8nw2nOIfXRjChIsa0XMQ3idXmrBA/
-	 TopeUTwJsV+/pfEQh0gXuDuu1kjN8LyE9CSlCb9pkm0VNY7m3/L1k+zc6XTayvSN9f
-	 rp8/o4ZQCXsXOVPEvyRLAd0PaqGOKyj+N0fDs9oQ=
+	b=fKDBhLmaC0sO/PwcUHbjkhA1R/aT28ZU36iBXn8TiwF1U24JV+8hPBpKhtKFbunLP
+	 VQYGDOA/HzgLqQgWl3wXctkVOWpuFzrLK9npOIg1SPkMCINeRPPnbAaw4hDFFJvfNC
+	 HYTSfx/k6Yt2FtUv0E3fzO8WwwrNUIdCEHT/kwc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 409/511] gfs2: low-memory forced flush fixes
-Date: Sun, 17 Sep 2023 21:13:56 +0200
-Message-ID: <20230917191123.662397627@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.15 410/511] kconfig: fix possible buffer overflow
+Date: Sun, 17 Sep 2023 21:13:57 +0200
+Message-ID: <20230917191123.684788129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -39,87 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit b74cd55aa9a9d0aca760028a51343ec79812e410 ]
+[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
 
-First, function gfs2_ail_flush_reqd checks the SDF_FORCE_AIL_FLUSH flag
-to determine if an AIL flush should be forced in low-memory situations.
-However, it also immediately clears the flag, and when called repeatedly
-as in function gfs2_logd, the flag will be lost.  Fix that by pulling
-the SDF_FORCE_AIL_FLUSH flag check out of gfs2_ail_flush_reqd.
+Buffer 'new_argv' is accessed without bound check after accessing with
+bound check via 'new_argc' index.
 
-Second, function gfs2_writepages sets the SDF_FORCE_AIL_FLUSH flag
-whether or not enough pages were written.  If enough pages could be
-written, flushing the AIL is unnecessary, though.
-
-Third, gfs2_writepages doesn't wake up logd after setting the
-SDF_FORCE_AIL_FLUSH flag, so it can take a long time for logd to react.
-It would be preferable to wake up logd, but that hurts the performance
-of some workloads and we don't quite understand why so far, so don't
-wake up logd so far.
-
-Fixes: b066a4eebd4f ("gfs2: forcibly flush ail to relieve memory pressure")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: e298f3b49def ("kconfig: add built-in function support")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/aops.c | 4 ++--
- fs/gfs2/log.c  | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ scripts/kconfig/preprocess.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
-index ee212c9310ad0..2b654c3b918a3 100644
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -207,13 +207,13 @@ static int gfs2_writepages(struct address_space *mapping,
- 	int ret;
+diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
+index 748da578b418c..d1f5bcff4b62d 100644
+--- a/scripts/kconfig/preprocess.c
++++ b/scripts/kconfig/preprocess.c
+@@ -396,6 +396,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
+ 
+ 		p++;
+ 	}
++
++	if (new_argc >= FUNCTION_MAX_ARGS)
++		pperror("too many function arguments");
+ 	new_argv[new_argc++] = prev;
  
  	/*
--	 * Even if we didn't write any pages here, we might still be holding
-+	 * Even if we didn't write enough pages here, we might still be holding
- 	 * dirty pages in the ail. We forcibly flush the ail because we don't
- 	 * want balance_dirty_pages() to loop indefinitely trying to write out
- 	 * pages held in the ail that it can't find.
- 	 */
- 	ret = iomap_writepages(mapping, wbc, &wpc, &gfs2_writeback_ops);
--	if (ret == 0)
-+	if (ret == 0 && wbc->nr_to_write > 0)
- 		set_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
- 	return ret;
- }
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 924d7f0de1e83..9a96842aeab3d 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -1277,9 +1277,6 @@ static inline int gfs2_ail_flush_reqd(struct gfs2_sbd *sdp)
- {
- 	unsigned int used_blocks = sdp->sd_jdesc->jd_blocks - atomic_read(&sdp->sd_log_blks_free);
- 
--	if (test_and_clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags))
--		return 1;
--
- 	return used_blocks + atomic_read(&sdp->sd_log_blks_needed) >=
- 		atomic_read(&sdp->sd_log_thresh2);
- }
-@@ -1320,7 +1317,9 @@ int gfs2_logd(void *data)
- 						  GFS2_LFC_LOGD_JFLUSH_REQD);
- 		}
- 
--		if (gfs2_ail_flush_reqd(sdp)) {
-+		if (test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
-+		    gfs2_ail_flush_reqd(sdp)) {
-+			clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
- 			gfs2_ail1_start(sdp);
- 			gfs2_ail1_wait(sdp);
- 			gfs2_ail1_empty(sdp, 0);
-@@ -1333,6 +1332,7 @@ int gfs2_logd(void *data)
- 		try_to_freeze();
- 
- 		t = wait_event_interruptible_timeout(sdp->sd_logd_waitq,
-+				test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
- 				gfs2_ail_flush_reqd(sdp) ||
- 				gfs2_jrnl_flush_reqd(sdp) ||
- 				kthread_should_stop(),
 -- 
 2.40.1
 
