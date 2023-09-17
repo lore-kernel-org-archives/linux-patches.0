@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFD6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C5CC433C7;
-	Sun, 17 Sep 2023 19:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1B86FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D007AC433CB;
+	Sun, 17 Sep 2023 19:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979455;
-	bh=YSG5yD+udw7xQk6qQWnwDpIQZ0HhNWHxt0rXvlBO0HU=;
+	s=korg; t=1694979458;
+	bh=7BfA+JjrJ6l5Ei3qn9iueBr/bKg91pX4CGH4+xSlhog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoQQ9fWKaat7Yw3rnbV8x72AhypNaO9XLpxe0eOQz7SDEZB5qZahT7sZjIAF8MRsG
-	 tvYL8PMqoZRXMB46GL5aBMbv06WZrLRN8sGGmf/SH7Bdm/ooYDMk6Hevjj/g1ySpNW
-	 RtKL8N0znTfD4+I7KeBTNmPkZlTJ9EM3avNi5X80=
+	b=jDxUaKrt/A+hnQKmGgj8blwvQ11KltFBjgBiAINjiez4r+QHb8LPzHJxVSM/p6frx
+	 6aqPJkZpWa1Fyf5e/S2SjZGkikkJKnxZcJckrG0SRmBwhH2Ewkyh8BSqguYRCCguIh
+	 OHGTESwKSlevXMv6NDff7l63ebhEj50qQj/wt3gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 318/406] scsi: qla2xxx: fix inconsistent TMF timeout
-Date: Sun, 17 Sep 2023 21:12:52 +0200
-Message-ID: <20230917191109.695617753@linuxfoundation.org>
+Subject: [PATCH 5.10 319/406] scsi: qla2xxx: Fix erroneous link up failure
+Date: Sun, 17 Sep 2023 21:12:53 +0200
+Message-ID: <20230917191109.721287312@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,34 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Quinn Tran <qutran@marvell.com>
 
-commit 009e7fe4a1ed52276b332842a6b6e23b07200f2d upstream.
+commit 5b51f35d127e7bef55fa869d2465e2bca4636454 upstream.
 
-Different behavior were experienced of session being torn down vs not when
-TMF is timed out. When FW detects the time out, the session is torn down.
-When driver detects the time out, the session is not torn down.
+Link up failure occurred where driver failed to see certain events from FW
+indicating link up (AEN 8011) and fabric login completion (AEN 8014).
+Without these 2 events, driver would not proceed forward to scan the
+fabric. The cause of this is due to delay in the receive of interrupt for
+Mailbox 60 that causes qla to set the fw_started flag late.  The late
+setting of this flag causes other interrupts to be dropped.  These dropped
+interrupts happen to be the link up (AEN 8011) and fabric login completion
+(AEN 8014).
 
-Allow TMF error to return to upper layer without session tear down.
+Set fw_started flag early to prevent interrupts being dropped.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-10-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230714070104.40052-6-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    3 ++-
+ drivers/scsi/qla2xxx/qla_isr.c  |    6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4342,15 +4342,16 @@ qla2x00_init_rings(scsi_qla_host_t *vha)
+ 		memcpy(ha->port_name, ha->init_cb->port_name, WWN_SIZE);
+ 	}
+ 
++	QLA_FW_STARTED(ha);
+ 	rval = qla2x00_init_firmware(vha, ha->init_cb_size);
+ next_check:
+ 	if (rval) {
++		QLA_FW_STOPPED(ha);
+ 		ql_log(ql_log_fatal, vha, 0x00d2,
+ 		    "Init Firmware **** FAILED ****.\n");
+ 	} else {
+ 		ql_dbg(ql_dbg_init, vha, 0x00d3,
+ 		    "Init Firmware -- success.\n");
+-		QLA_FW_STARTED(ha);
+ 		vha->u_ql2xexchoffld = vha->u_ql2xiniexchg = 0;
+ 	}
+ 
 --- a/drivers/scsi/qla2xxx/qla_isr.c
 +++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -3139,7 +3139,6 @@ check_scsi_status:
- 	case CS_PORT_BUSY:
- 	case CS_INCOMPLETE:
- 	case CS_PORT_UNAVAILABLE:
--	case CS_TIMEOUT:
- 	case CS_RESET:
+@@ -982,8 +982,12 @@ qla2x00_async_event(scsi_qla_host_t *vha
+ 	unsigned long	flags;
+ 	fc_port_t	*fcport = NULL;
  
- 		/*
+-	if (!vha->hw->flags.fw_started)
++	if (!vha->hw->flags.fw_started) {
++		ql_log(ql_log_warn, vha, 0x50ff,
++		    "Dropping AEN - %04x %04x %04x %04x.\n",
++		    mb[0], mb[1], mb[2], mb[3]);
+ 		return;
++	}
+ 
+ 	/* Setup to process RIO completion. */
+ 	handle_cnt = 0;
 
 
