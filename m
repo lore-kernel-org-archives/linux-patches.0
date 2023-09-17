@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9218D746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E63C433C8;
-	Sun, 17 Sep 2023 20:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36F87472
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506B2C433C8;
+	Sun, 17 Sep 2023 20:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983175;
-	bh=RhH9SAjMcJOMLwFi9dAja4Y1YwTY1fJxpRqkO0MRHX8=;
+	s=korg; t=1694983178;
+	bh=qohU3B/4idrDu9l+gkfnjCMf8XIdrvE4n7OHYNtvApI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZrt9yjZ2nZd6pMoIg4pGOr982NWCS7z8GB0OvivhunghBhBK3U1NFBpnLp0IUpdv
-	 ITiIBHpq6X4tgmxzM4/dDF0jFWUmus5j0yiVp+OHesSYoNwGlLogStzX85T4imfn8E
-	 97GwfgjMLYG7n2OF7332KCOZFc7gn4vTA0R8jQZE=
+	b=asq5R7MkH1U4oMcsjSiQWyborjRYXgJAIi1xuH0YweiA3jOJGCVHh8cekmvxuP/pj
+	 c5Ih34NuW2HOmy3Ha7mnpsubJ4dmYk/3Y4W8tlXL3ZYcBAqQHDokYG9PzYE4stZ3Vb
+	 x9QXB+jjKvtOow8oA4LqifkY9bBJI3TxDa6DohJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 459/511] net: hns3: fix invalid mutex between tc qdisc and dcb ets command issue
-Date: Sun, 17 Sep 2023 21:14:46 +0200
-Message-ID: <20230917191124.837928507@linuxfoundation.org>
+	stable@kernel.org,
+	Wang Jianjian <wangjianjian0@foxmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 468/511] ext4: add correct group descriptors and reserved GDT blocks to system zone
+Date: Sun, 17 Sep 2023 21:14:55 +0200
+Message-ID: <20230917191125.048962890@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,152 +40,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Wang Jianjian <wangjianjian0@foxmail.com>
 
-[ Upstream commit fa5564945f7d15ae2390b00c08b6abaef0165cda ]
+commit 68228da51c9a436872a4ef4b5a7692e29f7e5bc7 upstream.
 
-We hope that tc qdisc and dcb ets commands can not be used crosswise.
-If we want to use any of the commands to configure tc,
-We must use the other command to clear the existing configuration.
+When setup_system_zone, flex_bg is not initialized so it is always 1.
+Use a new helper function, ext4_num_base_meta_blocks() which does not
+depend on sbi->s_log_groups_per_flex being initialized.
 
-However, when we configure a single tc with tc qdisc,
-we can still configure it with dcb ets.
-Because we use mqprio_active as the tag of tc qdisc configuration,
-but with dcb ets, we do not check mqprio_active.
+[ Squashed two patches in the Link URL's below together into a single
+  commit, which is simpler to review/understand.  Also fix checkpatch
+  warnings. --TYT ]
 
-This patch fix this issue by check mqprio_active before
-executing the dcb ets command. and add dcb_ets_active to
-replace HCLGE_FLAG_DCB_ENABLE and HCLGE_FLAG_MQPRIO_ENABLE
-at the hclge layer,
-
-Fixes: cacde272dd00 ("net: hns3: Add hclge_dcb module for the support of DCB feature")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Wang Jianjian <wangjianjian0@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_21AF0D446A9916ED5C51492CC6C9A0A77B05@qq.com
+Link: https://lore.kernel.org/r/tencent_D744D1450CC169AEA77FCF0A64719909ED05@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hnae3.h   |  1 +
- .../hisilicon/hns3/hns3pf/hclge_dcb.c         | 20 +++++--------------
- .../hisilicon/hns3/hns3pf/hclge_main.c        |  5 +++--
- .../hisilicon/hns3/hns3pf/hclge_main.h        |  2 --
- 4 files changed, 9 insertions(+), 19 deletions(-)
+ fs/ext4/balloc.c         |   15 +++++++++++----
+ fs/ext4/block_validity.c |    8 ++++----
+ fs/ext4/ext4.h           |    2 ++
+ 3 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-index 9204f5ecd4151..695e299f534d5 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-@@ -757,6 +757,7 @@ struct hnae3_tc_info {
- 	u16 tqp_offset[HNAE3_MAX_TC];
- 	u8 num_tc; /* Total number of enabled TCs */
- 	bool mqprio_active;
-+	bool dcb_ets_active;
- };
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -909,11 +909,11 @@ unsigned long ext4_bg_num_gdb(struct sup
+ }
  
- struct hnae3_knic_private_info {
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-index 87640a2e1794b..a15f2ed268a8d 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-@@ -251,7 +251,7 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
+ /*
+- * This function returns the number of file system metadata clusters at
++ * This function returns the number of file system metadata blocks at
+  * the beginning of a block group, including the reserved gdt blocks.
+  */
+-static unsigned ext4_num_base_meta_clusters(struct super_block *sb,
+-				     ext4_group_t block_group)
++unsigned int ext4_num_base_meta_blocks(struct super_block *sb,
++				       ext4_group_t block_group)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	unsigned num;
+@@ -931,8 +931,15 @@ static unsigned ext4_num_base_meta_clust
+ 	} else { /* For META_BG_BLOCK_GROUPS */
+ 		num += ext4_bg_num_gdb(sb, block_group);
+ 	}
+-	return EXT4_NUM_B2C(sbi, num);
++	return num;
+ }
++
++static unsigned int ext4_num_base_meta_clusters(struct super_block *sb,
++						ext4_group_t block_group)
++{
++	return EXT4_NUM_B2C(EXT4_SB(sb), ext4_num_base_meta_blocks(sb, block_group));
++}
++
+ /**
+  *	ext4_inode_to_goal_block - return a hint for block allocation
+  *	@inode: inode for block allocation
+--- a/fs/ext4/block_validity.c
++++ b/fs/ext4/block_validity.c
+@@ -215,7 +215,6 @@ int ext4_setup_system_zone(struct super_
+ 	struct ext4_system_blocks *system_blks;
+ 	struct ext4_group_desc *gdp;
+ 	ext4_group_t i;
+-	int flex_size = ext4_flex_bg_size(sbi);
  	int ret;
  
- 	if (!(hdev->dcbx_cap & DCB_CAP_DCBX_VER_IEEE) ||
--	    hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE)
-+	    h->kinfo.tc_info.mqprio_active)
- 		return -EINVAL;
+ 	system_blks = kzalloc(sizeof(*system_blks), GFP_KERNEL);
+@@ -223,12 +222,13 @@ int ext4_setup_system_zone(struct super_
+ 		return -ENOMEM;
  
- 	ret = hclge_ets_validate(hdev, ets, &num_tc, &map_changed);
-@@ -267,10 +267,7 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
- 	}
+ 	for (i=0; i < ngroups; i++) {
++		unsigned int meta_blks = ext4_num_base_meta_blocks(sb, i);
++
+ 		cond_resched();
+-		if (ext4_bg_has_super(sb, i) &&
+-		    ((i < 5) || ((i % flex_size) == 0))) {
++		if (meta_blks != 0) {
+ 			ret = add_system_zone(system_blks,
+ 					ext4_group_first_block_no(sb, i),
+-					ext4_bg_num_gdb(sb, i) + 1, 0);
++					meta_blks, 0);
+ 			if (ret)
+ 				goto err;
+ 		}
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3120,6 +3120,8 @@ extern const char *ext4_decode_error(str
+ extern void ext4_mark_group_bitmap_corrupted(struct super_block *sb,
+ 					     ext4_group_t block_group,
+ 					     unsigned int flags);
++extern unsigned int ext4_num_base_meta_blocks(struct super_block *sb,
++					      ext4_group_t block_group);
  
- 	hclge_tm_schd_info_update(hdev, num_tc);
--	if (num_tc > 1)
--		hdev->flag |= HCLGE_FLAG_DCB_ENABLE;
--	else
--		hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
-+	h->kinfo.tc_info.dcb_ets_active = num_tc > 1;
- 
- 	ret = hclge_ieee_ets_to_tm_info(hdev, ets);
- 	if (ret)
-@@ -376,7 +373,7 @@ static u8 hclge_getdcbx(struct hnae3_handle *h)
- 	struct hclge_vport *vport = hclge_get_vport(h);
- 	struct hclge_dev *hdev = vport->back;
- 
--	if (hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE)
-+	if (h->kinfo.tc_info.mqprio_active)
- 		return 0;
- 
- 	return hdev->dcbx_cap;
-@@ -500,7 +497,8 @@ static int hclge_setup_tc(struct hnae3_handle *h,
- 	if (!test_bit(HCLGE_STATE_NIC_REGISTERED, &hdev->state))
- 		return -EBUSY;
- 
--	if (hdev->flag & HCLGE_FLAG_DCB_ENABLE)
-+	kinfo = &vport->nic.kinfo;
-+	if (kinfo->tc_info.dcb_ets_active)
- 		return -EINVAL;
- 
- 	ret = hclge_mqprio_qopt_check(hdev, mqprio_qopt);
-@@ -514,7 +512,6 @@ static int hclge_setup_tc(struct hnae3_handle *h,
- 	if (ret)
- 		return ret;
- 
--	kinfo = &vport->nic.kinfo;
- 	memcpy(&old_tc_info, &kinfo->tc_info, sizeof(old_tc_info));
- 	hclge_sync_mqprio_qopt(&kinfo->tc_info, mqprio_qopt);
- 	kinfo->tc_info.mqprio_active = tc > 0;
-@@ -523,13 +520,6 @@ static int hclge_setup_tc(struct hnae3_handle *h,
- 	if (ret)
- 		goto err_out;
- 
--	hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
--
--	if (tc > 1)
--		hdev->flag |= HCLGE_FLAG_MQPRIO_ENABLE;
--	else
--		hdev->flag &= ~HCLGE_FLAG_MQPRIO_ENABLE;
--
- 	return hclge_notify_init_up(hdev);
- 
- err_out:
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 1d424b1ee6cd3..a415760505ab4 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11187,6 +11187,7 @@ static void hclge_get_mdix_mode(struct hnae3_handle *handle,
- 
- static void hclge_info_show(struct hclge_dev *hdev)
- {
-+	struct hnae3_handle *handle = &hdev->vport->nic;
- 	struct device *dev = &hdev->pdev->dev;
- 
- 	dev_info(dev, "PF info begin:\n");
-@@ -11203,9 +11204,9 @@ static void hclge_info_show(struct hclge_dev *hdev)
- 	dev_info(dev, "This is %s PF\n",
- 		 hdev->flag & HCLGE_FLAG_MAIN ? "main" : "not main");
- 	dev_info(dev, "DCB %s\n",
--		 hdev->flag & HCLGE_FLAG_DCB_ENABLE ? "enable" : "disable");
-+		 handle->kinfo.tc_info.dcb_ets_active ? "enable" : "disable");
- 	dev_info(dev, "MQPRIO %s\n",
--		 hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE ? "enable" : "disable");
-+		 handle->kinfo.tc_info.mqprio_active ? "enable" : "disable");
- 	dev_info(dev, "Default tx spare buffer size: %u\n",
- 		 hdev->tx_spare_buf_size);
- 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-index 4d6dbfe0be7a2..a716027df0ed1 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-@@ -902,8 +902,6 @@ struct hclge_dev {
- 
- #define HCLGE_FLAG_MAIN			BIT(0)
- #define HCLGE_FLAG_DCB_CAPABLE		BIT(1)
--#define HCLGE_FLAG_DCB_ENABLE		BIT(2)
--#define HCLGE_FLAG_MQPRIO_ENABLE	BIT(3)
- 	u32 flag;
- 
- 	u32 pkt_buf_size; /* Total pf buf size for tx/rx */
--- 
-2.40.1
-
+ extern __printf(7, 8)
+ void __ext4_error(struct super_block *, const char *, unsigned int, bool,
 
 
