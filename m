@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D87746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:28:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409C0C433C8;
-	Sun, 17 Sep 2023 20:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3996E746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9806CC433C8;
+	Sun, 17 Sep 2023 20:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982537;
-	bh=JC7pSxbPJI1E8ztyouvxB8uRQowbt0etqIxQXNfp++E=;
+	s=korg; t=1694982541;
+	bh=uzJyNjGzGmSqLZZ20L8p3R8jATjTVy3ma1K6XLL4qQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epdcrR/YcNQCJ5jdH7XNnFHnY06lfJCTAoWmjPz3TmvTRXWANTD20SoANhd3T4fHR
-	 PyCg4BEw0xrMqW7binDDyaOaDI0eNEc+hpN2fGOh+LKGLODxj7h3VJQbM6nrIBHYD1
-	 6MI4GAldkomxyZrm/HkonMHqVUDEm3eigS296Poo=
+	b=KCa2t46CYtNcjP16xOoYZwgBZvE+vTh7HzYti7kelVsG0oRcezcZjcAYRAzvarmoW
+	 Ins4Ne8DdxLoV+svLArWvONOcgHgrNHsLS+mWoUvmPSiHTXNLYgQ6RPIqhCjXveP49
+	 /cnW8u++8DOEroWZmnRkmLAwRLAT6mKKgxsYHSSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/511] media: dvb-usb: m920x: Fix a potential memory leak in m920x_i2c_xfer()
-Date: Sun, 17 Sep 2023 21:11:09 +0200
-Message-ID: <20230917191119.659860178@linuxfoundation.org>
+Subject: [PATCH 5.15 273/511] iommu/qcom: Disable and reset context bank before programming
+Date: Sun, 17 Sep 2023 21:11:40 +0200
+Message-ID: <20230917191120.432473010@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,47 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit ea9ef6c2e001c5dc94bee35ebd1c8a98621cf7b8 ]
+[ Upstream commit 9f3fef23d9b5a858a6e6d5f478bb1b6b76265e76 ]
 
-'read' is freed when it is known to be NULL, but not when a read error
-occurs.
+Writing	the new	TTBRs, TCRs and MAIRs on a previously enabled
+context bank may trigger a context fault, resulting in firmware
+driven AP resets: change the domain initialization programming
+sequence to disable the context bank(s) and to also clear the
+related fault address (CB_FAR) and fault status (CB_FSR)
+registers before writing new values to TTBR0/1, TCR/TCR2, MAIR0/1.
 
-Revert the logic to avoid a small leak, should a m920x_read() call fail.
-
-Fixes: a2ab06d7c4d6 ("media: m920x: don't use stack on USB reads")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230622092742.74819-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/m920x.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb/m920x.c b/drivers/media/usb/dvb-usb/m920x.c
-index 691e05833db19..da81fa189b5d5 100644
---- a/drivers/media/usb/dvb-usb/m920x.c
-+++ b/drivers/media/usb/dvb-usb/m920x.c
-@@ -277,7 +277,6 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
- 			char *read = kmalloc(1, GFP_KERNEL);
- 			if (!read) {
- 				ret = -ENOMEM;
--				kfree(read);
- 				goto unlock;
- 			}
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index a47cb654b7048..9438203f08de7 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -273,6 +273,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 			ctx->secure_init = true;
+ 		}
  
-@@ -288,8 +287,10 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
- 
- 				if ((ret = m920x_read(d->udev, M9206_I2C, 0x0,
- 						      0x20 | stop,
--						      read, 1)) != 0)
-+						      read, 1)) != 0) {
-+					kfree(read);
- 					goto unlock;
-+				}
- 				msg[i].buf[j] = read[0];
- 			}
- 
++		/* Disable context bank before programming */
++		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++
++		/* Clear context bank fault address fault status registers */
++		iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
++		iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_FSR_FAULT);
++
+ 		/* TTBRs */
+ 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+ 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
 -- 
 2.40.1
 
