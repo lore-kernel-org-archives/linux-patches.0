@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EA16FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A47C433C7;
-	Sun, 17 Sep 2023 20:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4506FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B79C433C8;
+	Sun, 17 Sep 2023 20:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981774;
-	bh=+YSvmt0ZW6DngcsUv6UHm6opbvIqOxN2huuJEEz+JUw=;
+	s=korg; t=1694981777;
+	bh=Zoc8TJNlVvxx/NwrtMaTfteqwQEhU76p51u9o9G57tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rA9VklqDYYQt2D5joiuxksX6KC99F8Yk/Xpe6aVWLHvlFXG93KDO3oVQVpYOfkRwf
-	 k4AB2bXg9/CGbOShVucv3z/pjyNe2aHGBK7iyzf7h2EOI957HLwX23O4lahQHfnxiH
-	 85sxlHYQ1fSQLF3Kdf/0aQLHzTPkMdMAsgAPN2m0=
+	b=VkvIEoJr0wB7yMqXCTHxgxL7xlziwwXv/HHMDb5ChSVuuD6ihjYIDrmKfu4E0I4gP
+	 6VbATHlqh3zzc2KiOkdGqzjafXdg0lztCHXR8c+7cyWDYhC9Vh2hSD2Em0KueguuF/
+	 GZ3etgsodl6HHW4YR/tfpjiVc7s/LovzhYeGbY90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 170/219] KVM: SVM: Take and hold ir_list_lock when updating vCPUs Physical ID entry
-Date: Sun, 17 Sep 2023 21:14:57 +0200
-Message-ID: <20230917191047.158597262@linuxfoundation.org>
+	Jordan Griege <jgriege@cloudflare.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Stanislav Fomichev <sdf@google.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 105/511] lwt: Fix return values of BPF xmit ops
+Date: Sun, 17 Sep 2023 21:08:52 +0200
+Message-ID: <20230917191116.398619209@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,135 +39,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yan Zhai <yan@cloudflare.com>
 
-commit 4c08e737f056fec930b416a2bd37ed266d724f95 upstream.
+[ Upstream commit 29b22badb7a84b783e3a4fffca16f7768fb31205 ]
 
-Hoist the acquisition of ir_list_lock from avic_update_iommu_vcpu_affinity()
-to its two callers, avic_vcpu_load() and avic_vcpu_put(), specifically to
-encapsulate the write to the vCPU's entry in the AVIC Physical ID table.
-This will allow a future fix to pull information from the Physical ID entry
-when updating the IRTE, without potentially consuming stale information,
-i.e. without racing with the vCPU being (un)loaded.
+BPF encap ops can return different types of positive values, such like
+NET_RX_DROP, NET_XMIT_CN, NETDEV_TX_BUSY, and so on, from function
+skb_do_redirect and bpf_lwt_xmit_reroute. At the xmit hook, such return
+values would be treated implicitly as LWTUNNEL_XMIT_CONTINUE in
+ip(6)_finish_output2. When this happens, skbs that have been freed would
+continue to the neighbor subsystem, causing use-after-free bug and
+kernel crashes.
 
-Add a comment to call out that ir_list_lock does NOT protect against
-multiple writers, specifically that reading the Physical ID entry in
-avic_vcpu_put() outside of the lock is safe.
+To fix the incorrect behavior, skb_do_redirect return values can be
+simply discarded, the same as tc-egress behavior. On the other hand,
+bpf_lwt_xmit_reroute returns useful errors to local senders, e.g. PMTU
+information. Thus convert its return values to avoid the conflict with
+LWTUNNEL_XMIT_CONTINUE.
 
-To preserve some semblance of independence from ir_list_lock, keep the
-READ_ONCE() in avic_vcpu_load() even though acuiring the spinlock
-effectively ensures the load(s) will be generated after acquiring the
-lock.
-
-Cc: stable@vger.kernel.org
-Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20230808233132.2499764-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Reported-by: Jordan Griege <jgriege@cloudflare.com>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Suggested-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/0d2b878186cfe215fec6b45769c1cd0591d3628d.1692326837.git.yan@cloudflare.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/avic.c |   31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ net/core/lwt_bpf.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -1022,10 +1022,11 @@ static inline int
- avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int cpu, bool r)
- {
- 	int ret = 0;
--	unsigned long flags;
- 	struct amd_svm_iommu_ir *ir;
- 	struct vcpu_svm *svm = to_svm(vcpu);
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index 3fd207fe1284a..f6c327c7badb4 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -59,9 +59,8 @@ static int run_lwt_bpf(struct sk_buff *skb, struct bpf_lwt_prog *lwt,
+ 			ret = BPF_OK;
+ 		} else {
+ 			skb_reset_mac_header(skb);
+-			ret = skb_do_redirect(skb);
+-			if (ret == 0)
+-				ret = BPF_REDIRECT;
++			skb_do_redirect(skb);
++			ret = BPF_REDIRECT;
+ 		}
+ 		break;
  
-+	lockdep_assert_held(&svm->ir_list_lock);
-+
- 	if (!kvm_arch_has_assigned_device(vcpu->kvm))
- 		return 0;
+@@ -254,7 +253,7 @@ static int bpf_lwt_xmit_reroute(struct sk_buff *skb)
  
-@@ -1033,19 +1034,15 @@ avic_update_iommu_vcpu_affinity(struct k
- 	 * Here, we go through the per-vcpu ir_list to update all existing
- 	 * interrupt remapping table entry targeting this vcpu.
- 	 */
--	spin_lock_irqsave(&svm->ir_list_lock, flags);
--
- 	if (list_empty(&svm->ir_list))
--		goto out;
-+		return 0;
+ 	err = dst_output(dev_net(skb_dst(skb)->dev), skb->sk, skb);
+ 	if (unlikely(err))
+-		return err;
++		return net_xmit_errno(err);
  
- 	list_for_each_entry(ir, &svm->ir_list, node) {
- 		ret = amd_iommu_update_ga(cpu, r, ir->data);
- 		if (ret)
--			break;
-+			return ret;
- 	}
--out:
--	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
--	return ret;
-+	return 0;
- }
- 
- void avic_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
-@@ -1053,6 +1050,7 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
- 	u64 entry;
- 	int h_physical_id = kvm_cpu_get_apicid(cpu);
- 	struct vcpu_svm *svm = to_svm(vcpu);
-+	unsigned long flags;
- 
- 	lockdep_assert_preemption_disabled();
- 
-@@ -1069,6 +1067,8 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
- 	if (kvm_vcpu_is_blocking(vcpu))
- 		return;
- 
-+	spin_lock_irqsave(&svm->ir_list_lock, flags);
-+
- 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
- 
- 	entry &= ~AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK;
-@@ -1077,25 +1077,40 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
- 
- 	WRITE_ONCE(*(svm->avic_physical_id_cache), entry);
- 	avic_update_iommu_vcpu_affinity(vcpu, h_physical_id, true);
-+
-+	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
- }
- 
- void avic_vcpu_put(struct kvm_vcpu *vcpu)
- {
- 	u64 entry;
- 	struct vcpu_svm *svm = to_svm(vcpu);
-+	unsigned long flags;
- 
- 	lockdep_assert_preemption_disabled();
- 
-+	/*
-+	 * Note, reading the Physical ID entry outside of ir_list_lock is safe
-+	 * as only the pCPU that has loaded (or is loading) the vCPU is allowed
-+	 * to modify the entry, and preemption is disabled.  I.e. the vCPU
-+	 * can't be scheduled out and thus avic_vcpu_{put,load}() can't run
-+	 * recursively.
-+	 */
- 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
- 
- 	/* Nothing to do if IsRunning == '0' due to vCPU blocking. */
- 	if (!(entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK))
- 		return;
- 
-+	spin_lock_irqsave(&svm->ir_list_lock, flags);
-+
- 	avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
- 
- 	entry &= ~AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK;
- 	WRITE_ONCE(*(svm->avic_physical_id_cache), entry);
-+
-+	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
-+
- }
- 
- void avic_refresh_virtual_apic_mode(struct kvm_vcpu *vcpu)
+ 	/* ip[6]_finish_output2 understand LWTUNNEL_XMIT_DONE */
+ 	return LWTUNNEL_XMIT_DONE;
+-- 
+2.40.1
+
 
 
