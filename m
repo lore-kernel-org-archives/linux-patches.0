@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD436FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B536EC433C7;
-	Sun, 17 Sep 2023 20:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908A66FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED939C433C8;
+	Sun, 17 Sep 2023 20:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981064;
-	bh=+aKeu1gdyAA4axKXCjIL8fQugs5Vionc2qXBfwyWeZY=;
+	s=korg; t=1694981067;
+	bh=b1fHKmdGN7yH/zKKP/NZeFXBYN0Kd97FVBkqgPUPOp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiQ+A8bZtF/J85jK9Lz6CBoRWx3ND8oOKFgiEP83pvQ+2MUe3oMprczi9liHsqtml
-	 zXp92LBBX8vnBsY9LpBGXY/Fo+fQwDuM4B03i1vvliM1wuqehYN9OOhbjys/R8tJGy
-	 uteQmy4tYjryEpxkkV922u4eKr052FIYUAEH2zso=
+	b=VuLyj8kqcIrP6gZkqzi5eswPmgiQSlLT9xDNBtIWp0sNA7r9O4ifHd3gjEGbvnK8o
+	 HTJu7evdpK7XoWbb1ZonTY+H/JRyD+B+cBVN1/ijZ+KptZ3lVT3KNG2u13VYhpIf+N
+	 sXrSUkuiMfMj86jKvMgnkPK1u1sreo4XRgpyIeoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Soheil Hassas Yeganeh <soheil@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ajay Kaher <akaher@vmware.com>
-Subject: [PATCH 6.1 052/219] net: add SKB_HEAD_ALIGN() helper
-Date: Sun, 17 Sep 2023 21:12:59 +0200
-Message-ID: <20230917191042.884108341@linuxfoundation.org>
+	Fabio Estevam <festevam@gmail.com>,
+	Joy Zou <joy.zou@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/511] ARM: dts: imx: update sdma node name format
+Date: Sun, 17 Sep 2023 21:07:08 +0200
+Message-ID: <20230917191113.872459690@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,111 +37,181 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Joy Zou <joy.zou@nxp.com>
 
-commit 115f1a5c42bdad9a9ea356fc0b4a39ec7537947f upstream.
+[ Upstream commit 6769089ecb5073b0896addffe72c89a4d80258c9 ]
 
-We have many places using this expression:
+Node names should be generic, so change the sdma node name format 'sdma'
+into 'dma-controller'.
 
- SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-
-Use of SKB_HEAD_ALIGN() will allow to clean them.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Ajay: Regenerated the patch for v6.1.y]
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: be18293e47cb ("ARM: dts: imx: Set default tuning step for imx7d usdhc")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h |    8 ++++++++
- net/core/skbuff.c      |   18 ++++++------------
- 2 files changed, 14 insertions(+), 12 deletions(-)
+ arch/arm/boot/dts/imx25.dtsi   | 2 +-
+ arch/arm/boot/dts/imx31.dtsi   | 2 +-
+ arch/arm/boot/dts/imx35.dtsi   | 2 +-
+ arch/arm/boot/dts/imx50.dtsi   | 2 +-
+ arch/arm/boot/dts/imx51.dtsi   | 2 +-
+ arch/arm/boot/dts/imx53.dtsi   | 2 +-
+ arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
+ arch/arm/boot/dts/imx6sl.dtsi  | 2 +-
+ arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
+ arch/arm/boot/dts/imx6ul.dtsi  | 2 +-
+ arch/arm/boot/dts/imx7s.dtsi   | 2 +-
+ 11 files changed, 11 insertions(+), 11 deletions(-)
 
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -261,6 +261,14 @@
- #define SKB_DATA_ALIGN(X)	ALIGN(X, SMP_CACHE_BYTES)
- #define SKB_WITH_OVERHEAD(X)	\
- 	((X) - SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
-+
-+/* For X bytes available in skb->head, what is the minimal
-+ * allocation needed, knowing struct skb_shared_info needs
-+ * to be aligned.
-+ */
-+#define SKB_HEAD_ALIGN(X) (SKB_DATA_ALIGN(X) + \
-+	SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
-+
- #define SKB_MAX_ORDER(X, ORDER) \
- 	SKB_WITH_OVERHEAD((PAGE_SIZE << (ORDER)) - (X))
- #define SKB_MAX_HEAD(X)		(SKB_MAX_ORDER((X), 0))
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -504,8 +504,7 @@ struct sk_buff *__alloc_skb(unsigned int
- 	 * aligned memory blocks, unless SLUB/SLAB debug is enabled.
- 	 * Both skb->head and skb_shared_info are cache line aligned.
- 	 */
--	size = SKB_DATA_ALIGN(size);
--	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	size = SKB_HEAD_ALIGN(size);
- 	osize = kmalloc_size_roundup(size);
- 	data = kmalloc_reserve(osize, gfp_mask, node, &pfmemalloc);
- 	if (unlikely(!data))
-@@ -578,8 +577,7 @@ struct sk_buff *__netdev_alloc_skb(struc
- 		goto skb_success;
- 	}
+diff --git a/arch/arm/boot/dts/imx25.dtsi b/arch/arm/boot/dts/imx25.dtsi
+index fdcca82c9986f..bd8ea2ec24575 100644
+--- a/arch/arm/boot/dts/imx25.dtsi
++++ b/arch/arm/boot/dts/imx25.dtsi
+@@ -515,7 +515,7 @@
+ 				#interrupt-cells = <2>;
+ 			};
  
--	len += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--	len = SKB_DATA_ALIGN(len);
-+	len = SKB_HEAD_ALIGN(len);
+-			sdma: sdma@53fd4000 {
++			sdma: dma-controller@53fd4000 {
+ 				compatible = "fsl,imx25-sdma";
+ 				reg = <0x53fd4000 0x4000>;
+ 				clocks = <&clks 112>, <&clks 68>;
+diff --git a/arch/arm/boot/dts/imx31.dtsi b/arch/arm/boot/dts/imx31.dtsi
+index 948d2a543f8d1..c85866e73a7b9 100644
+--- a/arch/arm/boot/dts/imx31.dtsi
++++ b/arch/arm/boot/dts/imx31.dtsi
+@@ -297,7 +297,7 @@
+ 				#interrupt-cells = <2>;
+ 			};
  
- 	if (sk_memalloc_socks())
- 		gfp_mask |= __GFP_MEMALLOC;
-@@ -678,8 +676,7 @@ struct sk_buff *__napi_alloc_skb(struct
- 		data = page_frag_alloc_1k(&nc->page_small, gfp_mask);
- 		pfmemalloc = NAPI_SMALL_PAGE_PFMEMALLOC(nc->page_small);
- 	} else {
--		len += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--		len = SKB_DATA_ALIGN(len);
-+		len = SKB_HEAD_ALIGN(len);
+-			sdma: sdma@53fd4000 {
++			sdma: dma-controller@53fd4000 {
+ 				compatible = "fsl,imx31-sdma";
+ 				reg = <0x53fd4000 0x4000>;
+ 				interrupts = <34>;
+diff --git a/arch/arm/boot/dts/imx35.dtsi b/arch/arm/boot/dts/imx35.dtsi
+index 8e41c8b7bd705..d650f54c3fc6b 100644
+--- a/arch/arm/boot/dts/imx35.dtsi
++++ b/arch/arm/boot/dts/imx35.dtsi
+@@ -284,7 +284,7 @@
+ 				#interrupt-cells = <2>;
+ 			};
  
- 		data = page_frag_alloc(&nc->page, len, gfp_mask);
- 		pfmemalloc = nc->page.pfmemalloc;
-@@ -1837,8 +1834,7 @@ int pskb_expand_head(struct sk_buff *skb
- 	if (skb_pfmemalloc(skb))
- 		gfp_mask |= __GFP_MEMALLOC;
+-			sdma: sdma@53fd4000 {
++			sdma: dma-controller@53fd4000 {
+ 				compatible = "fsl,imx35-sdma";
+ 				reg = <0x53fd4000 0x4000>;
+ 				clocks = <&clks 9>, <&clks 65>;
+diff --git a/arch/arm/boot/dts/imx50.dtsi b/arch/arm/boot/dts/imx50.dtsi
+index a969f335b2402..2560f8514ebed 100644
+--- a/arch/arm/boot/dts/imx50.dtsi
++++ b/arch/arm/boot/dts/imx50.dtsi
+@@ -421,7 +421,7 @@
+ 				status = "disabled";
+ 			};
  
--	size = SKB_DATA_ALIGN(size);
--	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	size = SKB_HEAD_ALIGN(size);
- 	size = kmalloc_size_roundup(size);
- 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
- 	if (!data)
-@@ -6204,8 +6200,7 @@ static int pskb_carve_inside_header(stru
- 	if (skb_pfmemalloc(skb))
- 		gfp_mask |= __GFP_MEMALLOC;
+-			sdma: sdma@63fb0000 {
++			sdma: dma-controller@63fb0000 {
+ 				compatible = "fsl,imx50-sdma", "fsl,imx35-sdma";
+ 				reg = <0x63fb0000 0x4000>;
+ 				interrupts = <6>;
+diff --git a/arch/arm/boot/dts/imx51.dtsi b/arch/arm/boot/dts/imx51.dtsi
+index 01cfcbe5928e8..b3ab0c000d9d1 100644
+--- a/arch/arm/boot/dts/imx51.dtsi
++++ b/arch/arm/boot/dts/imx51.dtsi
+@@ -498,7 +498,7 @@
+ 				status = "disabled";
+ 			};
  
--	size = SKB_DATA_ALIGN(size);
--	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	size = SKB_HEAD_ALIGN(size);
- 	size = kmalloc_size_roundup(size);
- 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
- 	if (!data)
-@@ -6323,8 +6318,7 @@ static int pskb_carve_inside_nonlinear(s
- 	if (skb_pfmemalloc(skb))
- 		gfp_mask |= __GFP_MEMALLOC;
+-			sdma: sdma@83fb0000 {
++			sdma: dma-controller@83fb0000 {
+ 				compatible = "fsl,imx51-sdma", "fsl,imx35-sdma";
+ 				reg = <0x83fb0000 0x4000>;
+ 				interrupts = <6>;
+diff --git a/arch/arm/boot/dts/imx53.dtsi b/arch/arm/boot/dts/imx53.dtsi
+index 2cf3909cca2f8..ca1bea42cc0e2 100644
+--- a/arch/arm/boot/dts/imx53.dtsi
++++ b/arch/arm/boot/dts/imx53.dtsi
+@@ -710,7 +710,7 @@
+ 				status = "disabled";
+ 			};
  
--	size = SKB_DATA_ALIGN(size);
--	size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	size = SKB_HEAD_ALIGN(size);
- 	size = kmalloc_size_roundup(size);
- 	data = kmalloc_reserve(size, gfp_mask, NUMA_NO_NODE, NULL);
- 	if (!data)
+-			sdma: sdma@63fb0000 {
++			sdma: dma-controller@63fb0000 {
+ 				compatible = "fsl,imx53-sdma", "fsl,imx35-sdma";
+ 				reg = <0x63fb0000 0x4000>;
+ 				interrupts = <6>;
+diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
+index 8520ffc1779b6..60fd903ead3aa 100644
+--- a/arch/arm/boot/dts/imx6qdl.dtsi
++++ b/arch/arm/boot/dts/imx6qdl.dtsi
+@@ -930,7 +930,7 @@
+ 				interrupts = <0 125 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
+-			sdma: sdma@20ec000 {
++			sdma: dma-controller@20ec000 {
+ 				compatible = "fsl,imx6q-sdma", "fsl,imx35-sdma";
+ 				reg = <0x020ec000 0x4000>;
+ 				interrupts = <0 2 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/imx6sl.dtsi b/arch/arm/boot/dts/imx6sl.dtsi
+index 5b4dfc62030e8..0e0139246ad21 100644
+--- a/arch/arm/boot/dts/imx6sl.dtsi
++++ b/arch/arm/boot/dts/imx6sl.dtsi
+@@ -752,7 +752,7 @@
+ 				interrupts = <0 6 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
+-			sdma: sdma@20ec000 {
++			sdma: dma-controller@20ec000 {
+ 				compatible = "fsl,imx6sl-sdma", "fsl,imx6q-sdma";
+ 				reg = <0x020ec000 0x4000>;
+ 				interrupts = <0 2 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index 3e779fd0a3961..ff4dc6d1b7578 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -848,7 +848,7 @@
+ 				reg = <0x020e4000 0x4000>;
+ 			};
+ 
+-			sdma: sdma@20ec000 {
++			sdma: dma-controller@20ec000 {
+ 				compatible = "fsl,imx6sx-sdma", "fsl,imx6q-sdma";
+ 				reg = <0x020ec000 0x4000>;
+ 				interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
+index eca8bf89ab88f..f920c7beb02fa 100644
+--- a/arch/arm/boot/dts/imx6ul.dtsi
++++ b/arch/arm/boot/dts/imx6ul.dtsi
+@@ -744,7 +744,7 @@
+ 				status = "disabled";
+ 			};
+ 
+-			sdma: sdma@20ec000 {
++			sdma: dma-controller@20ec000 {
+ 				compatible = "fsl,imx6ul-sdma", "fsl,imx6q-sdma",
+ 					     "fsl,imx35-sdma";
+ 				reg = <0x020ec000 0x4000>;
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index f4d2009d998b7..5951f9a22af86 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -1206,7 +1206,7 @@
+ 				status = "disabled";
+ 			};
+ 
+-			sdma: sdma@30bd0000 {
++			sdma: dma-controller@30bd0000 {
+ 				compatible = "fsl,imx7d-sdma", "fsl,imx35-sdma";
+ 				reg = <0x30bd0000 0x10000>;
+ 				interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.40.1
+
 
 
