@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D417461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3FCC433C9;
-	Sun, 17 Sep 2023 20:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5357461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C768BC433C7;
+	Sun, 17 Sep 2023 20:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981361;
-	bh=vz4uscc2qH06vHAJ3x4Lkwo+tOWXydYGhyr2YRg+b5o=;
+	s=korg; t=1694981364;
+	bh=hInM9uqM0pmXPvWu3qH3SskDUUC/MW5Hr3H7Cxbgepw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oN9JiVTwmZ3XCh8D2go19FcT9SuX5fsMFz8jhVHCEehWiOLXrtVsETUVeTMIbSupN
-	 r5HN71iLT2XIZtqhj6jgHcq3EwOTEWiYnZ1muCdmwgz/fc5DbHnPtQiTZdqEEi/nwS
-	 97dIN+z7CZlko6uYVYQr8paXhHLMQSTT0w1y73OY=
+	b=uREjULbgE/Y+quj7jiGqA1klosF3P/U3NDGgbbBbQXVyKDf/bxkDmSiEQEW/1uA+v
+	 Bk0ST7QfTP/ES4hnLnkXGEfI0DWByhneAHlNmOOPnPxyUqejDvA8lyjBzuvGrqHJMC
+	 Jandg8MU0F5ehja1iy4mOct+e7OwbeVXg7ZivCOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/511] sctp: handle invalid error codes without calling BUG()
-Date: Sun, 17 Sep 2023 21:07:50 +0200
-Message-ID: <20230917191114.903779491@linuxfoundation.org>
+Subject: [PATCH 6.1 110/219] af_unix: Fix data-races around sk->sk_shutdown.
+Date: Sun, 17 Sep 2023 21:13:57 +0200
+Message-ID: <20230917191044.966302447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,47 +38,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a0067dfcd9418fd3b0632bc59210d120d038a9c6 ]
+[ Upstream commit afe8764f76346ba838d4f162883e23d2fcfaa90e ]
 
-The sctp_sf_eat_auth() function is supposed to return enum sctp_disposition
-values but if the call to sctp_ulpevent_make_authkey() fails, it returns
--ENOMEM.
+sk->sk_shutdown is changed under unix_state_lock(sk), but
+unix_dgram_sendmsg() calls two functions to read sk_shutdown locklessly.
 
-This results in calling BUG() inside the sctp_side_effects() function.
-Calling BUG() is an over reaction and not helpful.  Call WARN_ON_ONCE()
-instead.
+  sock_alloc_send_pskb
+  `- sock_wait_for_wmem
 
-This code predates git.
+Let's use READ_ONCE() there.
 
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Note that the writer side was marked by commit e1d09c2c2f57 ("af_unix:
+Fix data races around sk->sk_shutdown.").
+
+BUG: KCSAN: data-race in sock_alloc_send_pskb / unix_release_sock
+
+write (marked) to 0xffff8880069af12c of 1 bytes by task 1 on cpu 1:
+ unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
+ unix_release+0x59/0x80 net/unix/af_unix.c:1053
+ __sock_release+0x7d/0x170 net/socket.c:654
+ sock_close+0x19/0x30 net/socket.c:1386
+ __fput+0x2a3/0x680 fs/file_table.c:384
+ ____fput+0x15/0x20 fs/file_table.c:412
+ task_work_run+0x116/0x1a0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+ syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
+ do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+read to 0xffff8880069af12c of 1 bytes by task 28650 on cpu 0:
+ sock_alloc_send_pskb+0xd2/0x620 net/core/sock.c:2767
+ unix_dgram_sendmsg+0x2f8/0x14f0 net/unix/af_unix.c:1944
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+value changed: 0x00 -> 0x03
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 28650 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_sideeffect.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
-index 463c4a58d2c36..970c6a486a9b0 100644
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -1251,7 +1251,10 @@ static int sctp_side_effects(enum sctp_event_type event_type,
- 	default:
- 		pr_err("impossible disposition %d in state %d, event_type %d, event_id %d\n",
- 		       status, state, event_type, subtype.chunk);
--		BUG();
-+		error = status;
-+		if (error >= 0)
-+			error = -EINVAL;
-+		WARN_ON_ONCE(1);
- 		break;
- 	}
+diff --git a/net/core/sock.c b/net/core/sock.c
+index aa628c6314f64..71990525d37e2 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2690,7 +2690,7 @@ static long sock_wait_for_wmem(struct sock *sk, long timeo)
+ 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+ 		if (refcount_read(&sk->sk_wmem_alloc) < READ_ONCE(sk->sk_sndbuf))
+ 			break;
+-		if (sk->sk_shutdown & SEND_SHUTDOWN)
++		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 			break;
+ 		if (sk->sk_err)
+ 			break;
+@@ -2720,7 +2720,7 @@ struct sk_buff *sock_alloc_send_pskb(struct sock *sk, unsigned long header_len,
+ 			goto failure;
  
+ 		err = -EPIPE;
+-		if (sk->sk_shutdown & SEND_SHUTDOWN)
++		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 			goto failure;
+ 
+ 		if (sk_wmem_alloc_get(sk) < READ_ONCE(sk->sk_sndbuf))
 -- 
 2.40.1
 
