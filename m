@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3C86FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C811C433C8;
-	Sun, 17 Sep 2023 20:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DED6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3787C43397;
+	Sun, 17 Sep 2023 20:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981572;
-	bh=D4+gsig1XC7BRhz04pxBjhImMT320bcZBnqegC2y268=;
+	s=korg; t=1694981575;
+	bh=nhUVXmL9v5nfJUDn+UQ4b10E10vthsyd7EaqQiqkGm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGaCzZnZ1R1HRqYk3DGm4Ye1NbgT0Sb7M5xZ427TiznE6eV0XRd3T6U6z4Kgt1nFF
-	 iklX0ijaAahPPV/oFIOrIODlYJLXh8Kyh2uVC/iuZUHqacThEMcznQlQ63OfIspZe8
-	 4UNDfZyHlIs7cwjPaHLLYwR7vxeug+tcpzDmq6ZI=
+	b=WvCd9y3TSSYFqaNE3n7uJ0CyjWZJVY6GrbvYlXgk0aMyfR4ibfw2yKNQTYn/KHFdj
+	 0bGKfgl/u4c5ltEgBtdNMJ+w456iI77ckmKv/2TYZxXDodRJ/SIDSQf2Y7pDPPieFJ
+	 9DFL+1eYPfAQLkxeWXgCcG86Vnlxczz3f4P0A+J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/511] s390/pkey: fix/harmonize internal keyblob headers
-Date: Sun, 17 Sep 2023 21:08:20 +0200
-Message-ID: <20230917191115.641758939@linuxfoundation.org>
+	stable@kernel.org,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 142/219] jbd2: check jh->b_transaction before removing it from checkpoint
+Date: Sun, 17 Sep 2023 21:14:29 +0200
+Message-ID: <20230917191046.139473152@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,95 +36,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
+commit 590a809ff743e7bd890ba5fb36bc38e20a36de53 upstream.
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
-PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
-which is opaque to the userspace. The header structures for
-PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
-is no reason, why different structures are used. In preparation to fix
-the keyversion handling in the broken PKEY IOCTLs, the same header
-structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
-reduces the number of different code paths and increases the
-readability.
+Following process will corrupt ext4 image:
+Step 1:
+jbd2_journal_commit_transaction
+ __jbd2_journal_insert_checkpoint(jh, commit_transaction)
+ // Put jh into trans1->t_checkpoint_list
+ journal->j_checkpoint_transactions = commit_transaction
+ // Put trans1 into journal->j_checkpoint_transactions
 
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Step 2:
+do_get_write_access
+ test_clear_buffer_dirty(bh) // clear buffer dirty，set jbd dirty
+ __jbd2_journal_file_buffer(jh, transaction) // jh belongs to trans2
+
+Step 3:
+drop_cache
+ journal_shrink_one_cp_list
+  jbd2_journal_try_remove_checkpoint
+   if (!trylock_buffer(bh))  // lock bh, true
+   if (buffer_dirty(bh))     // buffer is not dirty
+   __jbd2_journal_remove_checkpoint(jh)
+   // remove jh from trans1->t_checkpoint_list
+
+Step 4:
+jbd2_log_do_checkpoint
+ trans1 = journal->j_checkpoint_transactions
+ // jh is not in trans1->t_checkpoint_list
+ jbd2_cleanup_journal_tail(journal)  // trans1 is done
+
+Step 5: Power cut, trans2 is not committed, jh is lost in next mounting.
+
+Fix it by checking 'jh->b_transaction' before remove it from checkpoint.
+
+Cc: stable@kernel.org
+Fixes: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230714025528.564988-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/pkey_api.c        | 2 +-
- drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
- drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
- 3 files changed, 4 insertions(+), 11 deletions(-)
+ fs/jbd2/checkpoint.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index 83b335f962c89..34e1d1b339c12 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -744,7 +744,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
- 		if (ktype)
- 			*ktype = PKEY_TYPE_EP11;
- 		if (ksize)
--			*ksize = kb->head.keybitlen;
-+			*ksize = kb->head.bitlen;
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -639,6 +639,8 @@ int jbd2_journal_try_remove_checkpoint(s
+ {
+ 	struct buffer_head *bh = jh2bh(jh);
  
- 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
- 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
-index 9ce5a71da69b8..3daf259ba10e7 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.c
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.c
-@@ -788,7 +788,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	kb->head.type = TOKTYPE_NON_CCA;
- 	kb->head.len = rep_pl->data_len;
- 	kb->head.version = TOKVER_EP11_AES;
--	kb->head.keybitlen = keybitsize;
-+	kb->head.bitlen = keybitsize;
- 
- out:
- 	kfree(req);
-@@ -1056,7 +1056,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
- 	kb->head.type = TOKTYPE_NON_CCA;
- 	kb->head.len = rep_pl->data_len;
- 	kb->head.version = TOKVER_EP11_AES;
--	kb->head.keybitlen = keybitsize;
-+	kb->head.bitlen = keybitsize;
- 
- out:
- 	kfree(req);
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
-index 1e02b197c0035..d424fa901f1b0 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.h
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.h
-@@ -29,14 +29,7 @@ struct ep11keyblob {
- 	union {
- 		u8 session[32];
- 		/* only used for PKEY_TYPE_EP11: */
--		struct {
--			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
--			u8  res0;      /* unused */
--			u16 len;       /* total length in bytes of this blob */
--			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
--			u8  res1;      /* unused */
--			u16 keybitlen; /* clear key bit len, 0 for unknown */
--		} head;
-+		struct ep11kblob_header head;
- 	};
- 	u8  wkvp[16];  /* wrapping key verification pattern */
- 	u64 attr;      /* boolean key attributes */
--- 
-2.40.1
-
++	if (jh->b_transaction)
++		return -EBUSY;
+ 	if (!trylock_buffer(bh))
+ 		return -EBUSY;
+ 	if (buffer_dirty(bh)) {
 
 
