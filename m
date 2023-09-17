@@ -1,40 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440787461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B46AC433CA;
-	Sun, 17 Sep 2023 20:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6688A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDBAC433CC;
+	Sun, 17 Sep 2023 20:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980825;
-	bh=qTzgIdDGu0jVRANRX61rnfgmaBmjwEMyiU5PLxusJjk=;
+	s=korg; t=1694980828;
+	bh=UXQWC612usyKwqkTcUFixSpA781GQ+Kga2CuGi+N5pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQ3+Le2Hr2AbqgbvkdirTqP+3IS+BVPO5eVR7wD42XXoTwOW7DNZ0IODtvDtJ6djg
-	 hLq5OCjJOBuypu3pUB7eFSNxfLCIlOTzX+p8iqYEiWXwqSNbuUgli1KRrjWxNPbFe8
-	 lUjfdqO1XHuRvbaGpu0IuH04kizGo26ssXrbRE8c=
+	b=ON02YKa+6/78TLPOyJpoRe8FpfmSGc5s6O8Bsnjq34gVwQ5DS+r8IqAVhJHcrdS/k
+	 jpqVEUqlgoKqP+3j2o2/ag9EgQ0cwtZfTnOBseUlZ8VHWiSGe++CU7ic6z8SOteBU6
+	 LRfycxNo/99W+fU916lo04k5O4dg32cXKNOhUgqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Barry Song <baohua@kernel.org>,
-	Brian Geffon <bgeffon@google.com>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.1 003/219] Multi-gen LRU: fix per-zone reclaim
-Date: Sun, 17 Sep 2023 21:12:10 +0200
-Message-ID: <20230917191041.085728494@linuxfoundation.org>
+	Dylan Yudaken <dylany@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Pavel Begunkov <asml.silence@gmail.com>
+Subject: [PATCH 6.1 004/219] io_uring: always lock in io_apoll_task_func
+Date: Sun, 17 Sep 2023 21:12:11 +0200
+Message-ID: <20230917191041.121272755@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -53,154 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh Singh <kaleshsingh@google.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 669281ee7ef731fb5204df9d948669bf32a5e68d upstream.
+From: Dylan Yudaken <dylany@meta.com>
 
-MGLRU has a LRU list for each zone for each type (anon/file) in each
-generation:
+[ upstream commit c06c6c5d276707e04cedbcc55625e984922118aa ]
 
-	long nr_pages[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
+This is required for the failure case (io_req_complete_failed) and is
+missing.
 
-The min_seq (oldest generation) can progress independently for each
-type but the max_seq (youngest generation) is shared for both anon and
-file. This is to maintain a common frame of reference.
+The alternative would be to only lock in the failure path, however all of
+the non-error paths in io_poll_check_events that do not do not return
+IOU_POLL_NO_ACTION end up locking anyway. The only extraneous lock would
+be for the multishot poll overflowing the CQE ring, however multishot poll
+would probably benefit from being locked as it will allow completions to
+be batched.
 
-In order for eviction to advance the min_seq of a type, all the per-zone
-lists in the oldest generation of that type must be empty.
+So it seems reasonable to lock always.
 
-The eviction logic only considers pages from eligible zones for
-eviction or promotion.
-
-    scan_folios() {
-	...
-	for (zone = sc->reclaim_idx; zone >= 0; zone--)  {
-	    ...
-	    sort_folio(); 	// Promote
-	    ...
-	    isolate_folio(); 	// Evict
-	}
-	...
-    }
-
-Consider the system has the movable zone configured and default 4
-generations. The current state of the system is as shown below
-(only illustrating one type for simplicity):
-
-Type: ANON
-
-	Zone    DMA32     Normal    Movable    Device
-
-	Gen 0       0          0        4GB         0
-
-	Gen 1       0        1GB        1MB         0
-
-	Gen 2     1MB        4GB        1MB         0
-
-	Gen 3     1MB        1MB        1MB         0
-
-Now consider there is a GFP_KERNEL allocation request (eligible zone
-index <= Normal), evict_folios() will return without doing any work
-since there are no pages to scan in the eligible zones of the oldest
-generation. Reclaim won't make progress until triggered from a ZONE_MOVABLE
-allocation request; which may not happen soon if there is a lot of free
-memory in the movable zone. This can lead to OOM kills, although there
-is 1GB pages in the Normal zone of Gen 1 that we have not yet tried to
-reclaim.
-
-This issue is not seen in the conventional active/inactive LRU since
-there are no per-zone lists.
-
-If there are no (not enough) folios to scan in the eligible zones, move
-folios from ineligible zone (zone_index > reclaim_index) to the next
-generation. This allows for the progression of min_seq and reclaiming
-from the next generation (Gen 1).
-
-Qualcomm, Mediatek and raspberrypi [1] discovered this issue independently.
-
-[1] https://github.com/raspberrypi/linux/issues/5395
-
-Link: https://lkml.kernel.org/r/20230802025606.346758-1-kaleshsingh@google.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
-Reported-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Reported-by: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> [mediatek]
-Tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dylan Yudaken <dylany@meta.com>
+Link: https://lore.kernel.org/r/20221124093559.3780686-3-dylany@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ io_uring/poll.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4728,7 +4728,8 @@ void lru_gen_look_around(struct page_vma
-  *                          the eviction
-  ******************************************************************************/
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -360,11 +360,12 @@ static void io_apoll_task_func(struct io
+ 	if (ret == IOU_POLL_NO_ACTION)
+ 		return;
  
--static bool sort_folio(struct lruvec *lruvec, struct folio *folio, int tier_idx)
-+static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_control *sc,
-+		       int tier_idx)
- {
- 	bool success;
- 	int gen = folio_lru_gen(folio);
-@@ -4779,6 +4780,13 @@ static bool sort_folio(struct lruvec *lr
- 		return true;
- 	}
++	io_tw_lock(req->ctx, locked);
+ 	io_poll_remove_entries(req);
+ 	io_poll_tw_hash_eject(req, locked);
  
-+	/* ineligible */
-+	if (zone > sc->reclaim_idx) {
-+		gen = folio_inc_gen(lruvec, folio, false);
-+		list_move_tail(&folio->lru, &lrugen->folios[gen][type][zone]);
-+		return true;
-+	}
-+
- 	/* waiting for writeback */
- 	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
- 	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
-@@ -4831,7 +4839,8 @@ static bool isolate_folio(struct lruvec
- static int scan_folios(struct lruvec *lruvec, struct scan_control *sc,
- 		       int type, int tier, struct list_head *list)
- {
--	int gen, zone;
-+	int i;
-+	int gen;
- 	enum vm_event_item item;
- 	int sorted = 0;
- 	int scanned = 0;
-@@ -4847,9 +4856,10 @@ static int scan_folios(struct lruvec *lr
- 
- 	gen = lru_gen_from_seq(lrugen->min_seq[type]);
- 
--	for (zone = sc->reclaim_idx; zone >= 0; zone--) {
-+	for (i = MAX_NR_ZONES; i > 0; i--) {
- 		LIST_HEAD(moved);
- 		int skipped = 0;
-+		int zone = (sc->reclaim_idx + i) % MAX_NR_ZONES;
- 		struct list_head *head = &lrugen->folios[gen][type][zone];
- 
- 		while (!list_empty(head)) {
-@@ -4863,7 +4873,7 @@ static int scan_folios(struct lruvec *lr
- 
- 			scanned += delta;
- 
--			if (sort_folio(lruvec, folio, tier))
-+			if (sort_folio(lruvec, folio, sc, tier))
- 				sorted += delta;
- 			else if (isolate_folio(lruvec, folio, sc)) {
- 				list_add(&folio->lru, list);
+ 	if (ret == IOU_POLL_REMOVE_POLL_USE_RES)
+-		io_req_complete_post(req);
++		io_req_task_complete(req, locked);
+ 	else if (ret == IOU_POLL_DONE || ret == IOU_POLL_REISSUE)
+ 		io_req_task_submit(req, locked);
+ 	else
 
 
