@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909216FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0338DC433C8;
-	Sun, 17 Sep 2023 20:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D886D6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABF5C433C7;
+	Sun, 17 Sep 2023 20:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982875;
-	bh=C5wjJUkStjoQ/WgAr1s3+4w3V8ujged+EDTzAD76aCA=;
+	s=korg; t=1694982878;
+	bh=B7wj+jdQVs2X/M2z3WxODVVNH0MznAjQbaks0pKOtrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAuClJPCzD5//ae3esgj64uoreMrITv/xzYInVYVAOtTBwRfaO+hQVd73ZX/VQpn7
-	 Tu16oBs2GCXyeVMNnuUJo12nnr1NMBbDPbrVcqCp0hcjmjDGbeFXGrUtW7ublfoc0o
-	 S9PEb473OlYNiPuU+ktVi2sbBfjekHocYZ88Xu+8=
+	b=CZHxXF8iP0M09u8qm1m/YVXs/wNCS79VB9C7jzGAs1N703i9Gs5lw2/+f4Lv7wI22
+	 0Mpv2ftVaCMLLTW91tXePN8lxzLf04JA2mnxV50451Im8dzDQP2STbzYRGBvvNAuVW
+	 +hntCOWg9l1sUkXFU4lCHYM75aCHNPCU2NhgNYTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 5.15 335/511] xtensa: PMU: fix base address for the newer hardware
-Date: Sun, 17 Sep 2023 21:12:42 +0200
-Message-ID: <20230917191121.904519776@linuxfoundation.org>
+	Lars Ekman <uablrek@gmail.com>,
+	Quan Tian <qtian@vmware.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 372/511] net/ipv6: SKB symmetric hash should incorporate transport ports
+Date: Sun, 17 Sep 2023 21:13:19 +0200
+Message-ID: <20230917191122.788246642@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -38,69 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Quan Tian <qtian@vmware.com>
 
-commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
+commit a5e2151ff9d5852d0ababbbcaeebd9646af9c8d9 upstream.
 
-With introduction of ERI access control in RG.0 base address of the PMU
-unit registers has changed. Add support for the new PMU configuration.
+__skb_get_hash_symmetric() was added to compute a symmetric hash over
+the protocol, addresses and transport ports, by commit eb70db875671
+("packet: Use symmetric hash for PACKET_FANOUT_HASH."). It uses
+flow_keys_dissector_symmetric_keys as the flow_dissector to incorporate
+IPv4 addresses, IPv6 addresses and ports. However, it should not specify
+the flag as FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL, which stops further
+dissection when an IPv6 flow label is encountered, making transport
+ports not being incorporated in such case.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+As a consequence, the symmetric hash is based on 5-tuple for IPv4 but
+3-tuple for IPv6 when flow label is present. It caused a few problems,
+e.g. when nft symhash and openvswitch l4_sym rely on the symmetric hash
+to perform load balancing as different L4 flows between two given IPv6
+addresses would always get the same symmetric hash, leading to uneven
+traffic distribution.
+
+Removing the use of FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL makes sure the
+symmetric hash is based on 5-tuple for both IPv4 and IPv6 consistently.
+
+Fixes: eb70db875671 ("packet: Use symmetric hash for PACKET_FANOUT_HASH.")
+Reported-by: Lars Ekman <uablrek@gmail.com>
+Closes: https://github.com/antrea-io/antrea/issues/5457
+Signed-off-by: Quan Tian <qtian@vmware.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/include/asm/core.h  |    9 +++++++++
- arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ net/core/flow_dissector.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/xtensa/include/asm/core.h
-+++ b/arch/xtensa/include/asm/core.h
-@@ -26,4 +26,13 @@
- #define XCHAL_SPANNING_WAY 0
- #endif
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1614,8 +1614,7 @@ u32 __skb_get_hash_symmetric(const struc
  
-+#ifndef XCHAL_HW_MIN_VERSION
-+#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
-+#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
-+			      XCHAL_HW_MIN_VERSION_MINOR)
-+#else
-+#define XCHAL_HW_MIN_VERSION 0
-+#endif
-+#endif
-+
- #endif
---- a/arch/xtensa/kernel/perf_event.c
-+++ b/arch/xtensa/kernel/perf_event.c
-@@ -13,17 +13,26 @@
- #include <linux/perf_event.h>
- #include <linux/platform_device.h>
+ 	memset(&keys, 0, sizeof(keys));
+ 	__skb_flow_dissect(NULL, skb, &flow_keys_dissector_symmetric,
+-			   &keys, NULL, 0, 0, 0,
+-			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
++			   &keys, NULL, 0, 0, 0, 0);
  
-+#include <asm/core.h>
- #include <asm/processor.h>
- #include <asm/stacktrace.h>
- 
-+#define XTENSA_HWVERSION_RG_2015_0	260000
-+
-+#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
-+#define XTENSA_PMU_ERI_BASE		0x00101000
-+#else
-+#define XTENSA_PMU_ERI_BASE		0x00001000
-+#endif
-+
- /* Global control/status for all perf counters */
--#define XTENSA_PMU_PMG			0x1000
-+#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
- /* Perf counter values */
--#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
-+#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
- /* Perf counter control registers */
--#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
-+#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
- /* Perf counter status registers */
--#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
-+#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
- 
- #define XTENSA_PMU_PMG_PMEN		0x1
- 
+ 	return __flow_hash_from_keys(&keys, &hashrnd);
+ }
 
 
