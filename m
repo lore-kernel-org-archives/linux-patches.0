@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574916FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0E3C433C9;
-	Sun, 17 Sep 2023 19:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80E76FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ED3C433C8;
+	Sun, 17 Sep 2023 19:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979503;
-	bh=JWKPQUvjGNVyfR8IJ7n9xrp8vrhirDK7nJwz8FNrMA0=;
+	s=korg; t=1694979506;
+	bh=DTE8hbGo8lVGpZFLMABrW1XMghoGEGZfZszH1Ju3Ses=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lV1mC92l3R17C+AUpI/jKriIuzY0ZDyuTN7r7+wCt0F+WTXCL/l7Q8+DTaMxQ5i3F
-	 Mkmimvl1vUIBMwH0V4DEu0qGL6AKQd9GbSTGjeLMARZDb2WY+ZAwPhpxUJ53zEfMRv
-	 J1y9f3UrlsMQU/CaqOsdtj2GK4L265cDReKbRIBk=
+	b=NXRutyIDgDzsIcVDGXDzC77xW0OjYhozhb/6rlV8Mi9F3jy4csNRdbssC0RwCz+fR
+	 gVC/WR85aRloHhLKF+pRDuLbGMLRfFzNAAb2je+bPWiGJFgdMAYW+qlHgRKAFI4eNh
+	 Kf3O3KuUyz6YxEsucqIKQSN4JJQma2SBTMlktD84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <quic_clew@quicinc.com>,
-	Praveenkumar I <quic_ipkumar@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 331/406] soc: qcom: qmi_encdec: Restrict string length in decode
-Date: Sun, 17 Sep 2023 21:13:05 +0200
-Message-ID: <20230917191110.028199919@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.10 332/406] NFS: Fix a potential data corruption
+Date: Sun, 17 Sep 2023 21:13:06 +0200
+Message-ID: <20230917191110.053386483@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,38 +39,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lew <quic_clew@quicinc.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 8d207400fd6b79c92aeb2f33bb79f62dff904ea2 upstream.
+commit 88975a55969e11f26fe3846bf4fbf8e7dc8cbbd4 upstream.
 
-The QMI TLV value for strings in a lot of qmi element info structures
-account for null terminated strings with MAX_LEN + 1. If a string is
-actually MAX_LEN + 1 length, this will cause an out of bounds access
-when the NULL character is appended in decoding.
+We must ensure that the subrequests are joined back into the head before
+we can retransmit a request. If the head was not on the commit lists,
+because the server wrote it synchronously, we still need to add it back
+to the retransmission list.
+Add a call that mirrors the effect of nfs_cancel_remove_inode() for
+O_DIRECT.
 
-Fixes: 9b8a11e82615 ("soc: qcom: Introduce QMI encoder/decoder")
+Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Link: https://lore.kernel.org/r/20230801064712.3590128-1-quic_ipkumar@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/qmi_encdec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/direct.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/qmi_encdec.c
-+++ b/drivers/soc/qcom/qmi_encdec.c
-@@ -534,8 +534,8 @@ static int qmi_decode_string_elem(struct
- 		decoded_bytes += rc;
- 	}
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -509,13 +509,31 @@ out:
+ 	return result;
+ }
  
--	if (string_len > temp_ei->elem_len) {
--		pr_err("%s: String len %d > Max Len %d\n",
-+	if (string_len >= temp_ei->elem_len) {
-+		pr_err("%s: String len %d >= Max Len %d\n",
- 		       __func__, string_len, temp_ei->elem_len);
- 		return -ETOOSMALL;
- 	} else if (string_len > tlv_len) {
++static void nfs_direct_add_page_head(struct list_head *list,
++				     struct nfs_page *req)
++{
++	struct nfs_page *head = req->wb_head;
++
++	if (!list_empty(&head->wb_list) || !nfs_lock_request(head))
++		return;
++	if (!list_empty(&head->wb_list)) {
++		nfs_unlock_request(head);
++		return;
++	}
++	list_add(&head->wb_list, list);
++	kref_get(&head->wb_kref);
++	kref_get(&head->wb_kref);
++}
++
+ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
+ {
+ 	struct nfs_page *req, *subreq;
+ 
+ 	list_for_each_entry(req, list, wb_list) {
+-		if (req->wb_head != req)
++		if (req->wb_head != req) {
++			nfs_direct_add_page_head(&req->wb_list, req);
+ 			continue;
++		}
+ 		subreq = req->wb_this_page;
+ 		if (subreq == req)
+ 			continue;
 
 
