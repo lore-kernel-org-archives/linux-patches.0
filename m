@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6567461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9A3C433C7;
-	Sun, 17 Sep 2023 19:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282077461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FDCC433C8;
+	Sun, 17 Sep 2023 19:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980053;
-	bh=ksuMZkGzCOK4R6P1OmaDxuDcYjZKdZVTc1hFH/BIPsc=;
+	s=korg; t=1694980057;
+	bh=zkVRjpuxtmyZ1zvMMiXzKKsaZteyK78A0Nn4kQotNi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeVCRJzCZGcmQ/jpRDcM2qSyhxFyxTy6JkPtJuqgkdiVAu5vrIWU8fshbPV+Z3C0p
-	 QHucTLCzY3+bW63oIFYTtCM1RP8EfByRg2sYPWo1b79R27AzA43gXcaXaawTX65tzN
-	 RmZhPzPXDiLsQFtaAVgnXYZWxsCtLcXErJMJWkKQ=
+	b=E3JXw/baPYOeLQg17/TJ93m9vQf+7k0D+rZgkfn6Jqtss3RQbH8d+JQPHiIEWa2LS
+	 hpM5JnWs5G5ZpHyscFk155OR3eqBnCpP9lPEf80H04bRnXKqB5xAPRtkhq9emixuJo
+	 9H3/OsAeqRkSg7mKxXKb1XpoKnK/NwB46lzOQJVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
 	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 083/285] perf dlfilter: Add al_cleanup()
-Date: Sun, 17 Sep 2023 21:11:23 +0200
-Message-ID: <20230917191054.580662538@linuxfoundation.org>
+Subject: [PATCH 6.5 084/285] perf vendor events: Update the JSON/events descriptions for power10 platform
+Date: Sun, 17 Sep 2023 21:11:24 +0200
+Message-ID: <20230917191054.615411222@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,733 +46,615 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit 82b0a10390e5f198a4e23c9cc6a7307d2cf099f3 ]
+[ Upstream commit 3286f88f31da060ac2789cee247153961ba57e49 ]
 
-Add perf_dlfilter_fns.al_cleanup() to do addr_location__exit() on data
-passed via perf_dlfilter_fns.resolve_address().
+Update the description for some of the JSON/events for power10 platform.
 
-Add dlfilter-test-api-v2 to the "dlfilter C API" test to test it.
-
-Update documentation, clarifying that data returned by APIs should not
-be dereferenced after filter_event() and filter_event_early() return.
-
-Fixes: 0dd5041c9a0eaf8c ("perf addr_location: Add init/exit/copy functions")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
+Fixes: 32daa5d7899e0343 ("perf vendor events: Initial JSON/events list for power10 platform")
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Disha Goel <disgoel@linux.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230731091857.10681-3-adrian.hunter@intel.com
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://lore.kernel.org/r/20230814112803.1508296-1-kjain@linux.ibm.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-dlfilter.txt  |  22 +-
- tools/perf/Makefile.perf                    |   2 +-
- tools/perf/dlfilters/dlfilter-test-api-v2.c | 377 ++++++++++++++++++++
- tools/perf/include/perf/perf_dlfilter.h     |  11 +-
- tools/perf/tests/dlfilter-test.c            |  38 +-
- tools/perf/util/dlfilter.c                  |  29 ++
- 6 files changed, 464 insertions(+), 15 deletions(-)
- create mode 100644 tools/perf/dlfilters/dlfilter-test-api-v2.c
+ .../arch/powerpc/power10/cache.json           |  4 +-
+ .../arch/powerpc/power10/frontend.json        | 30 ++++++------
+ .../arch/powerpc/power10/marked.json          | 20 ++++----
+ .../arch/powerpc/power10/memory.json          |  6 +--
+ .../arch/powerpc/power10/others.json          | 48 +++++++++----------
+ .../arch/powerpc/power10/pipeline.json        | 20 ++++----
+ .../pmu-events/arch/powerpc/power10/pmc.json  |  4 +-
+ .../arch/powerpc/power10/translation.json     |  6 +--
+ 8 files changed, 69 insertions(+), 69 deletions(-)
 
-diff --git a/tools/perf/Documentation/perf-dlfilter.txt b/tools/perf/Documentation/perf-dlfilter.txt
-index fb22e3b31dc5c..8887cc20a809e 100644
---- a/tools/perf/Documentation/perf-dlfilter.txt
-+++ b/tools/perf/Documentation/perf-dlfilter.txt
-@@ -64,6 +64,12 @@ internal filtering.
- If implemented, 'filter_description' should return a one-line description
- of the filter, and optionally a longer description.
- 
-+Do not assume the 'sample' argument is valid (dereferenceable)
-+after 'filter_event' and 'filter_event_early' return.
-+
-+Do not assume data referenced by pointers in struct perf_dlfilter_sample
-+is valid (dereferenceable) after 'filter_event' and 'filter_event_early' return.
-+
- The perf_dlfilter_sample structure
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -150,7 +156,8 @@ struct perf_dlfilter_fns {
- 	const char *(*srcline)(void *ctx, __u32 *line_number);
- 	struct perf_event_attr *(*attr)(void *ctx);
- 	__s32 (*object_code)(void *ctx, __u64 ip, void *buf, __u32 len);
--	void *(*reserved[120])(void *);
-+	void (*al_cleanup)(void *ctx, struct perf_dlfilter_al *al);
-+	void *(*reserved[119])(void *);
- };
- ----
- 
-@@ -161,7 +168,8 @@ struct perf_dlfilter_fns {
- 'args' returns arguments from --dlarg options.
- 
- 'resolve_address' provides information about 'address'. al->size must be set
--before calling. Returns 0 on success, -1 otherwise.
-+before calling. Returns 0 on success, -1 otherwise. Call al_cleanup() (if present,
-+see below) when 'al' data is no longer needed.
- 
- 'insn' returns instruction bytes and length.
- 
-@@ -171,6 +179,12 @@ before calling. Returns 0 on success, -1 otherwise.
- 
- 'object_code' reads object code and returns the number of bytes read.
- 
-+'al_cleanup' must be called (if present, so check perf_dlfilter_fns.al_cleanup != NULL)
-+after resolve_address() to free any associated resources.
-+
-+Do not assume pointers obtained via perf_dlfilter_fns are valid (dereferenceable)
-+after 'filter_event' and 'filter_event_early' return.
-+
- The perf_dlfilter_al structure
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -197,9 +211,13 @@ struct perf_dlfilter_al {
- 	/* Below members are only populated by resolve_ip() */
- 	__u8 filtered; /* true if this sample event will be filtered out */
- 	const char *comm;
-+	void *priv; /* Private data. Do not change */
- };
- ----
- 
-+Do not assume data referenced by pointers in struct perf_dlfilter_al
-+is valid (dereferenceable) after 'filter_event' and 'filter_event_early' return.
-+
- perf_dlfilter_sample flags
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 097316ef38e6a..f178b36c69402 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -381,7 +381,7 @@ ifndef NO_JVMTI
- PROGRAMS += $(OUTPUT)$(LIBJVMTI)
- endif
- 
--DLFILTERS := dlfilter-test-api-v0.so dlfilter-show-cycles.so
-+DLFILTERS := dlfilter-test-api-v0.so dlfilter-test-api-v2.so dlfilter-show-cycles.so
- DLFILTERS := $(patsubst %,$(OUTPUT)dlfilters/%,$(DLFILTERS))
- 
- # what 'all' will build and 'install' will install, in perfexecdir
-diff --git a/tools/perf/dlfilters/dlfilter-test-api-v2.c b/tools/perf/dlfilters/dlfilter-test-api-v2.c
-new file mode 100644
-index 0000000000000..38e593d92920c
---- /dev/null
-+++ b/tools/perf/dlfilters/dlfilter-test-api-v2.c
-@@ -0,0 +1,377 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Test v2 API for perf --dlfilter shared object
-+ * Copyright (c) 2023, Intel Corporation.
-+ */
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <stdbool.h>
-+
-+/*
-+ * Copy v2 API instead of including current API
-+ */
-+#include <linux/perf_event.h>
-+#include <linux/types.h>
-+
-+/*
-+ * The following macro can be used to determine if this header defines
-+ * perf_dlfilter_sample machine_pid and vcpu.
-+ */
-+#define PERF_DLFILTER_HAS_MACHINE_PID
-+
-+/* Definitions for perf_dlfilter_sample flags */
-+enum {
-+	PERF_DLFILTER_FLAG_BRANCH	= 1ULL << 0,
-+	PERF_DLFILTER_FLAG_CALL		= 1ULL << 1,
-+	PERF_DLFILTER_FLAG_RETURN	= 1ULL << 2,
-+	PERF_DLFILTER_FLAG_CONDITIONAL	= 1ULL << 3,
-+	PERF_DLFILTER_FLAG_SYSCALLRET	= 1ULL << 4,
-+	PERF_DLFILTER_FLAG_ASYNC	= 1ULL << 5,
-+	PERF_DLFILTER_FLAG_INTERRUPT	= 1ULL << 6,
-+	PERF_DLFILTER_FLAG_TX_ABORT	= 1ULL << 7,
-+	PERF_DLFILTER_FLAG_TRACE_BEGIN	= 1ULL << 8,
-+	PERF_DLFILTER_FLAG_TRACE_END	= 1ULL << 9,
-+	PERF_DLFILTER_FLAG_IN_TX	= 1ULL << 10,
-+	PERF_DLFILTER_FLAG_VMENTRY	= 1ULL << 11,
-+	PERF_DLFILTER_FLAG_VMEXIT	= 1ULL << 12,
-+};
-+
-+/*
-+ * perf sample event information (as per perf script and <linux/perf_event.h>)
-+ */
-+struct perf_dlfilter_sample {
-+	__u32 size; /* Size of this structure (for compatibility checking) */
-+	__u16 ins_lat;		/* Refer PERF_SAMPLE_WEIGHT_TYPE in <linux/perf_event.h> */
-+	__u16 p_stage_cyc;	/* Refer PERF_SAMPLE_WEIGHT_TYPE in <linux/perf_event.h> */
-+	__u64 ip;
-+	__s32 pid;
-+	__s32 tid;
-+	__u64 time;
-+	__u64 addr;
-+	__u64 id;
-+	__u64 stream_id;
-+	__u64 period;
-+	__u64 weight;		/* Refer PERF_SAMPLE_WEIGHT_TYPE in <linux/perf_event.h> */
-+	__u64 transaction;	/* Refer PERF_SAMPLE_TRANSACTION in <linux/perf_event.h> */
-+	__u64 insn_cnt;	/* For instructions-per-cycle (IPC) */
-+	__u64 cyc_cnt;		/* For instructions-per-cycle (IPC) */
-+	__s32 cpu;
-+	__u32 flags;		/* Refer PERF_DLFILTER_FLAG_* above */
-+	__u64 data_src;		/* Refer PERF_SAMPLE_DATA_SRC in <linux/perf_event.h> */
-+	__u64 phys_addr;	/* Refer PERF_SAMPLE_PHYS_ADDR in <linux/perf_event.h> */
-+	__u64 data_page_size;	/* Refer PERF_SAMPLE_DATA_PAGE_SIZE in <linux/perf_event.h> */
-+	__u64 code_page_size;	/* Refer PERF_SAMPLE_CODE_PAGE_SIZE in <linux/perf_event.h> */
-+	__u64 cgroup;		/* Refer PERF_SAMPLE_CGROUP in <linux/perf_event.h> */
-+	__u8  cpumode;		/* Refer CPUMODE_MASK etc in <linux/perf_event.h> */
-+	__u8  addr_correlates_sym; /* True => resolve_addr() can be called */
-+	__u16 misc;		/* Refer perf_event_header in <linux/perf_event.h> */
-+	__u32 raw_size;		/* Refer PERF_SAMPLE_RAW in <linux/perf_event.h> */
-+	const void *raw_data;	/* Refer PERF_SAMPLE_RAW in <linux/perf_event.h> */
-+	__u64 brstack_nr;	/* Number of brstack entries */
-+	const struct perf_branch_entry *brstack; /* Refer <linux/perf_event.h> */
-+	__u64 raw_callchain_nr;	/* Number of raw_callchain entries */
-+	const __u64 *raw_callchain; /* Refer <linux/perf_event.h> */
-+	const char *event;
-+	__s32 machine_pid;
-+	__s32 vcpu;
-+};
-+
-+/*
-+ * Address location (as per perf script)
-+ */
-+struct perf_dlfilter_al {
-+	__u32 size; /* Size of this structure (for compatibility checking) */
-+	__u32 symoff;
-+	const char *sym;
-+	__u64 addr; /* Mapped address (from dso) */
-+	__u64 sym_start;
-+	__u64 sym_end;
-+	const char *dso;
-+	__u8  sym_binding; /* STB_LOCAL, STB_GLOBAL or STB_WEAK, refer <elf.h> */
-+	__u8  is_64_bit; /* Only valid if dso is not NULL */
-+	__u8  is_kernel_ip; /* True if in kernel space */
-+	__u32 buildid_size;
-+	__u8 *buildid;
-+	/* Below members are only populated by resolve_ip() */
-+	__u8 filtered; /* True if this sample event will be filtered out */
-+	const char *comm;
-+	void *priv; /* Private data (v2 API) */
-+};
-+
-+struct perf_dlfilter_fns {
-+	/* Return information about ip */
-+	const struct perf_dlfilter_al *(*resolve_ip)(void *ctx);
-+	/* Return information about addr (if addr_correlates_sym) */
-+	const struct perf_dlfilter_al *(*resolve_addr)(void *ctx);
-+	/* Return arguments from --dlarg option */
-+	char **(*args)(void *ctx, int *dlargc);
-+	/*
-+	 * Return information about address (al->size must be set before
-+	 * calling). Returns 0 on success, -1 otherwise. Call al_cleanup()
-+	 * when 'al' data is no longer needed.
-+	 */
-+	__s32 (*resolve_address)(void *ctx, __u64 address, struct perf_dlfilter_al *al);
-+	/* Return instruction bytes and length */
-+	const __u8 *(*insn)(void *ctx, __u32 *length);
-+	/* Return source file name and line number */
-+	const char *(*srcline)(void *ctx, __u32 *line_number);
-+	/* Return perf_event_attr, refer <linux/perf_event.h> */
-+	struct perf_event_attr *(*attr)(void *ctx);
-+	/* Read object code, return numbers of bytes read */
-+	__s32 (*object_code)(void *ctx, __u64 ip, void *buf, __u32 len);
-+	/*
-+	 * If present (i.e. must check al_cleanup != NULL), call after
-+	 * resolve_address() to free any associated resources. (v2 API)
-+	 */
-+	void (*al_cleanup)(void *ctx, struct perf_dlfilter_al *al);
-+	/* Reserved */
-+	void *(*reserved[119])(void *);
-+};
-+
-+struct perf_dlfilter_fns perf_dlfilter_fns;
-+
-+static int verbose;
-+
-+#define pr_debug(fmt, ...) do { \
-+		if (verbose > 0) \
-+			fprintf(stderr, fmt, ##__VA_ARGS__); \
-+	} while (0)
-+
-+static int test_fail(const char *msg)
-+{
-+	pr_debug("%s\n", msg);
-+	return -1;
-+}
-+
-+#define CHECK(x) do { \
-+		if (!(x)) \
-+			return test_fail("Check '" #x "' failed\n"); \
-+	} while (0)
-+
-+struct filter_data {
-+	__u64 ip;
-+	__u64 addr;
-+	int do_early;
-+	int early_filter_cnt;
-+	int filter_cnt;
-+};
-+
-+static struct filter_data *filt_dat;
-+
-+int start(void **data, void *ctx)
-+{
-+	int dlargc;
-+	char **dlargv;
-+	struct filter_data *d;
-+	static bool called;
-+
-+	verbose = 1;
-+
-+	CHECK(!filt_dat && !called);
-+	called = true;
-+
-+	d = calloc(1, sizeof(*d));
-+	if (!d)
-+		test_fail("Failed to allocate memory");
-+	filt_dat = d;
-+	*data = d;
-+
-+	dlargv = perf_dlfilter_fns.args(ctx, &dlargc);
-+
-+	CHECK(dlargc == 6);
-+	CHECK(!strcmp(dlargv[0], "first"));
-+	verbose = strtol(dlargv[1], NULL, 0);
-+	d->ip = strtoull(dlargv[2], NULL, 0);
-+	d->addr = strtoull(dlargv[3], NULL, 0);
-+	d->do_early = strtol(dlargv[4], NULL, 0);
-+	CHECK(!strcmp(dlargv[5], "last"));
-+
-+	pr_debug("%s API\n", __func__);
-+
-+	return 0;
-+}
-+
-+#define CHECK_SAMPLE(x) do { \
-+		if (sample->x != expected.x) \
-+			return test_fail("'" #x "' not expected value\n"); \
-+	} while (0)
-+
-+static int check_sample(struct filter_data *d, const struct perf_dlfilter_sample *sample)
-+{
-+	struct perf_dlfilter_sample expected = {
-+		.ip		= d->ip,
-+		.pid		= 12345,
-+		.tid		= 12346,
-+		.time		= 1234567890,
-+		.addr		= d->addr,
-+		.id		= 99,
-+		.stream_id	= 101,
-+		.period		= 543212345,
-+		.cpu		= 31,
-+		.cpumode	= PERF_RECORD_MISC_USER,
-+		.addr_correlates_sym = 1,
-+		.misc		= PERF_RECORD_MISC_USER,
-+	};
-+
-+	CHECK(sample->size >= sizeof(struct perf_dlfilter_sample));
-+
-+	CHECK_SAMPLE(ip);
-+	CHECK_SAMPLE(pid);
-+	CHECK_SAMPLE(tid);
-+	CHECK_SAMPLE(time);
-+	CHECK_SAMPLE(addr);
-+	CHECK_SAMPLE(id);
-+	CHECK_SAMPLE(stream_id);
-+	CHECK_SAMPLE(period);
-+	CHECK_SAMPLE(cpu);
-+	CHECK_SAMPLE(cpumode);
-+	CHECK_SAMPLE(addr_correlates_sym);
-+	CHECK_SAMPLE(misc);
-+
-+	CHECK(!sample->raw_data);
-+	CHECK_SAMPLE(brstack_nr);
-+	CHECK(!sample->brstack);
-+	CHECK_SAMPLE(raw_callchain_nr);
-+	CHECK(!sample->raw_callchain);
-+
-+#define EVENT_NAME "branches:"
-+	CHECK(!strncmp(sample->event, EVENT_NAME, strlen(EVENT_NAME)));
-+
-+	return 0;
-+}
-+
-+static int check_al(void *ctx)
-+{
-+	const struct perf_dlfilter_al *al;
-+
-+	al = perf_dlfilter_fns.resolve_ip(ctx);
-+	if (!al)
-+		return test_fail("resolve_ip() failed");
-+
-+	CHECK(al->sym && !strcmp("foo", al->sym));
-+	CHECK(!al->symoff);
-+
-+	return 0;
-+}
-+
-+static int check_addr_al(void *ctx)
-+{
-+	const struct perf_dlfilter_al *addr_al;
-+
-+	addr_al = perf_dlfilter_fns.resolve_addr(ctx);
-+	if (!addr_al)
-+		return test_fail("resolve_addr() failed");
-+
-+	CHECK(addr_al->sym && !strcmp("bar", addr_al->sym));
-+	CHECK(!addr_al->symoff);
-+
-+	return 0;
-+}
-+
-+static int check_address_al(void *ctx, const struct perf_dlfilter_sample *sample)
-+{
-+	struct perf_dlfilter_al address_al;
-+	const struct perf_dlfilter_al *al;
-+
-+	al = perf_dlfilter_fns.resolve_ip(ctx);
-+	if (!al)
-+		return test_fail("resolve_ip() failed");
-+
-+	address_al.size = sizeof(address_al);
-+	if (perf_dlfilter_fns.resolve_address(ctx, sample->ip, &address_al))
-+		return test_fail("resolve_address() failed");
-+
-+	CHECK(address_al.sym && al->sym);
-+	CHECK(!strcmp(address_al.sym, al->sym));
-+	CHECK(address_al.addr == al->addr);
-+	CHECK(address_al.sym_start == al->sym_start);
-+	CHECK(address_al.sym_end == al->sym_end);
-+	CHECK(address_al.dso && al->dso);
-+	CHECK(!strcmp(address_al.dso, al->dso));
-+
-+	/* al_cleanup() is v2 API so may not be present */
-+	if (perf_dlfilter_fns.al_cleanup)
-+		perf_dlfilter_fns.al_cleanup(ctx, &address_al);
-+
-+	return 0;
-+}
-+
-+static int check_attr(void *ctx)
-+{
-+	struct perf_event_attr *attr = perf_dlfilter_fns.attr(ctx);
-+
-+	CHECK(attr);
-+	CHECK(attr->type == PERF_TYPE_HARDWARE);
-+	CHECK(attr->config == PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
-+
-+	return 0;
-+}
-+
-+static int do_checks(void *data, const struct perf_dlfilter_sample *sample, void *ctx, bool early)
-+{
-+	struct filter_data *d = data;
-+
-+	CHECK(data && filt_dat == data);
-+
-+	if (early) {
-+		CHECK(!d->early_filter_cnt);
-+		d->early_filter_cnt += 1;
-+	} else {
-+		CHECK(!d->filter_cnt);
-+		CHECK(d->early_filter_cnt);
-+		CHECK(d->do_early != 2);
-+		d->filter_cnt += 1;
-+	}
-+
-+	if (check_sample(data, sample))
-+		return -1;
-+
-+	if (check_attr(ctx))
-+		return -1;
-+
-+	if (early && !d->do_early)
-+		return 0;
-+
-+	if (check_al(ctx) || check_addr_al(ctx) || check_address_al(ctx, sample))
-+		return -1;
-+
-+	if (early)
-+		return d->do_early == 2;
-+
-+	return 1;
-+}
-+
-+int filter_event_early(void *data, const struct perf_dlfilter_sample *sample, void *ctx)
-+{
-+	pr_debug("%s API\n", __func__);
-+
-+	return do_checks(data, sample, ctx, true);
-+}
-+
-+int filter_event(void *data, const struct perf_dlfilter_sample *sample, void *ctx)
-+{
-+	pr_debug("%s API\n", __func__);
-+
-+	return do_checks(data, sample, ctx, false);
-+}
-+
-+int stop(void *data, void *ctx)
-+{
-+	static bool called;
-+
-+	pr_debug("%s API\n", __func__);
-+
-+	CHECK(data && filt_dat == data && !called);
-+	called = true;
-+
-+	free(data);
-+	filt_dat = NULL;
-+	return 0;
-+}
-+
-+const char *filter_description(const char **long_description)
-+{
-+	*long_description = "Filter used by the 'dlfilter C API' perf test";
-+	return "dlfilter to test v2 C API";
-+}
-diff --git a/tools/perf/include/perf/perf_dlfilter.h b/tools/perf/include/perf/perf_dlfilter.h
-index a26e2f129f83e..16fc4568ac53b 100644
---- a/tools/perf/include/perf/perf_dlfilter.h
-+++ b/tools/perf/include/perf/perf_dlfilter.h
-@@ -91,6 +91,7 @@ struct perf_dlfilter_al {
- 	/* Below members are only populated by resolve_ip() */
- 	__u8 filtered; /* True if this sample event will be filtered out */
- 	const char *comm;
-+	void *priv; /* Private data. Do not change */
- };
- 
- struct perf_dlfilter_fns {
-@@ -102,7 +103,8 @@ struct perf_dlfilter_fns {
- 	char **(*args)(void *ctx, int *dlargc);
- 	/*
- 	 * Return information about address (al->size must be set before
--	 * calling). Returns 0 on success, -1 otherwise.
-+	 * calling). Returns 0 on success, -1 otherwise. Call al_cleanup()
-+	 * when 'al' data is no longer needed.
- 	 */
- 	__s32 (*resolve_address)(void *ctx, __u64 address, struct perf_dlfilter_al *al);
- 	/* Return instruction bytes and length */
-@@ -113,8 +115,13 @@ struct perf_dlfilter_fns {
- 	struct perf_event_attr *(*attr)(void *ctx);
- 	/* Read object code, return numbers of bytes read */
- 	__s32 (*object_code)(void *ctx, __u64 ip, void *buf, __u32 len);
-+	/*
-+	 * If present (i.e. must check al_cleanup != NULL), call after
-+	 * resolve_address() to free any associated resources.
-+	 */
-+	void (*al_cleanup)(void *ctx, struct perf_dlfilter_al *al);
- 	/* Reserved */
--	void *(*reserved[120])(void *);
-+	void *(*reserved[119])(void *);
- };
- 
- /*
-diff --git a/tools/perf/tests/dlfilter-test.c b/tools/perf/tests/dlfilter-test.c
-index 086fd2179e41f..da3a9b50b1b1f 100644
---- a/tools/perf/tests/dlfilter-test.c
-+++ b/tools/perf/tests/dlfilter-test.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Test dlfilter C API. A perf.data file is synthesized and then processed
-- * by perf script with a dlfilter named dlfilter-test-api-v0.so. Also a C file
-+ * by perf script with dlfilters named dlfilter-test-api-v*.so. Also a C file
-  * is compiled to provide a dso to match the synthesized perf.data file.
-  */
- 
-@@ -37,6 +37,8 @@
- 
- #define MAP_START 0x400000
- 
-+#define DLFILTER_TEST_NAME_MAX 128
-+
- struct test_data {
- 	struct perf_tool tool;
- 	struct machine *machine;
-@@ -45,6 +47,8 @@ struct test_data {
- 	u64 bar;
- 	u64 ip;
- 	u64 addr;
-+	char name[DLFILTER_TEST_NAME_MAX];
-+	char desc[DLFILTER_TEST_NAME_MAX];
- 	char perf[PATH_MAX];
- 	char perf_data_file_name[PATH_MAX];
- 	char c_file_name[PATH_MAX];
-@@ -215,7 +219,7 @@ static int write_prog(char *file_name)
- 	return err ? -1 : 0;
- }
- 
--static int get_dlfilters_path(char *buf, size_t sz)
-+static int get_dlfilters_path(const char *name, char *buf, size_t sz)
- {
- 	char perf[PATH_MAX];
- 	char path[PATH_MAX];
-@@ -224,12 +228,12 @@ static int get_dlfilters_path(char *buf, size_t sz)
- 
- 	perf_exe(perf, sizeof(perf));
- 	perf_path = dirname(perf);
--	snprintf(path, sizeof(path), "%s/dlfilters/dlfilter-test-api-v0.so", perf_path);
-+	snprintf(path, sizeof(path), "%s/dlfilters/%s", perf_path, name);
- 	if (access(path, R_OK)) {
- 		exec_path = get_argv_exec_path();
- 		if (!exec_path)
- 			return -1;
--		snprintf(path, sizeof(path), "%s/dlfilters/dlfilter-test-api-v0.so", exec_path);
-+		snprintf(path, sizeof(path), "%s/dlfilters/%s", exec_path, name);
- 		free(exec_path);
- 		if (access(path, R_OK))
- 			return -1;
-@@ -244,9 +248,9 @@ static int check_filter_desc(struct test_data *td)
- 	char *desc = NULL;
- 	int ret;
- 
--	if (get_filter_desc(td->dlfilters, "dlfilter-test-api-v0.so", &desc, &long_desc) &&
-+	if (get_filter_desc(td->dlfilters, td->name, &desc, &long_desc) &&
- 	    long_desc && !strcmp(long_desc, "Filter used by the 'dlfilter C API' perf test") &&
--	    desc && !strcmp(desc, "dlfilter to test v0 C API"))
-+	    desc && !strcmp(desc, td->desc))
- 		ret = 0;
- 	else
- 		ret = -1;
-@@ -284,7 +288,7 @@ static int get_ip_addr(struct test_data *td)
- static int do_run_perf_script(struct test_data *td, int do_early)
- {
- 	return system_cmd("%s script -i %s "
--			  "--dlfilter %s/dlfilter-test-api-v0.so "
-+			  "--dlfilter %s/%s "
- 			  "--dlarg first "
- 			  "--dlarg %d "
- 			  "--dlarg %" PRIu64 " "
-@@ -292,7 +296,7 @@ static int do_run_perf_script(struct test_data *td, int do_early)
- 			  "--dlarg %d "
- 			  "--dlarg last",
- 			  td->perf, td->perf_data_file_name, td->dlfilters,
--			  verbose, td->ip, td->addr, do_early);
-+			  td->name, verbose, td->ip, td->addr, do_early);
- }
- 
- static int run_perf_script(struct test_data *td)
-@@ -321,7 +325,7 @@ static int test__dlfilter_test(struct test_data *td)
- 	u64 id = 99;
- 	int err;
- 
--	if (get_dlfilters_path(td->dlfilters, PATH_MAX))
-+	if (get_dlfilters_path(td->name, td->dlfilters, PATH_MAX))
- 		return test_result("dlfilters not found", TEST_SKIP);
- 
- 	if (check_filter_desc(td))
-@@ -399,14 +403,18 @@ static void test_data__free(struct test_data *td)
- 	}
- }
- 
--static int test__dlfilter(struct test_suite *test __maybe_unused, int subtest __maybe_unused)
-+static int test__dlfilter_ver(int ver)
- {
- 	struct test_data td = {.fd = -1};
- 	int pid = getpid();
- 	int err;
- 
-+	pr_debug("\n-- Testing version %d API --\n", ver);
-+
- 	perf_exe(td.perf, sizeof(td.perf));
- 
-+	snprintf(td.name, sizeof(td.name), "dlfilter-test-api-v%d.so", ver);
-+	snprintf(td.desc, sizeof(td.desc), "dlfilter to test v%d C API", ver);
- 	snprintf(td.perf_data_file_name, PATH_MAX, "/tmp/dlfilter-test-%u-perf-data", pid);
- 	snprintf(td.c_file_name, PATH_MAX, "/tmp/dlfilter-test-%u-prog.c", pid);
- 	snprintf(td.prog_file_name, PATH_MAX, "/tmp/dlfilter-test-%u-prog", pid);
-@@ -416,4 +424,14 @@ static int test__dlfilter(struct test_suite *test __maybe_unused, int subtest __
- 	return err;
- }
- 
-+static int test__dlfilter(struct test_suite *test __maybe_unused, int subtest __maybe_unused)
-+{
-+	int err = test__dlfilter_ver(0);
-+
-+	if (err)
-+		return err;
-+	/* No test for version 1 */
-+	return test__dlfilter_ver(2);
-+}
-+
- DEFINE_SUITE("dlfilter C API", dlfilter);
-diff --git a/tools/perf/util/dlfilter.c b/tools/perf/util/dlfilter.c
-index 798a53d7e6c9d..e0f822ebb9b97 100644
---- a/tools/perf/util/dlfilter.c
-+++ b/tools/perf/util/dlfilter.c
-@@ -10,6 +10,8 @@
- #include <subcmd/exec-cmd.h>
- #include <linux/zalloc.h>
- #include <linux/build_bug.h>
-+#include <linux/kernel.h>
-+#include <linux/string.h>
- 
- #include "debug.h"
- #include "event.h"
-@@ -63,6 +65,7 @@ static void al_to_d_al(struct addr_location *al, struct perf_dlfilter_al *d_al)
- 	d_al->addr = al->addr;
- 	d_al->comm = NULL;
- 	d_al->filtered = 0;
-+	d_al->priv = NULL;
- }
- 
- static struct addr_location *get_al(struct dlfilter *d)
-@@ -151,6 +154,11 @@ static char **dlfilter__args(void *ctx, int *dlargc)
- 	return d->dlargv;
- }
- 
-+static bool has_priv(struct perf_dlfilter_al *d_al_p)
-+{
-+	return d_al_p->size >= offsetof(struct perf_dlfilter_al, priv) + sizeof(d_al_p->priv);
-+}
-+
- static __s32 dlfilter__resolve_address(void *ctx, __u64 address, struct perf_dlfilter_al *d_al_p)
- {
- 	struct dlfilter *d = (struct dlfilter *)ctx;
-@@ -177,9 +185,29 @@ static __s32 dlfilter__resolve_address(void *ctx, __u64 address, struct perf_dlf
- 	memcpy(d_al_p, &d_al, min((size_t)sz, sizeof(d_al)));
- 	d_al_p->size = sz;
- 
-+	if (has_priv(d_al_p))
-+		d_al_p->priv = memdup(&al, sizeof(al));
-+
- 	return 0;
- }
- 
-+static void dlfilter__al_cleanup(void *ctx __maybe_unused, struct perf_dlfilter_al *d_al_p)
-+{
-+	struct addr_location *al;
-+
-+	/* Ensure backward compatibility */
-+	if (!has_priv(d_al_p) || !d_al_p->priv)
-+		return;
-+
-+	al = d_al_p->priv;
-+
-+	d_al_p->priv = NULL;
-+
-+	addr_location__exit(al);
-+
-+	free(al);
-+}
-+
- static const __u8 *dlfilter__insn(void *ctx, __u32 *len)
- {
- 	struct dlfilter *d = (struct dlfilter *)ctx;
-@@ -297,6 +325,7 @@ static const struct perf_dlfilter_fns perf_dlfilter_fns = {
- 	.resolve_addr    = dlfilter__resolve_addr,
- 	.args            = dlfilter__args,
- 	.resolve_address = dlfilter__resolve_address,
-+	.al_cleanup      = dlfilter__al_cleanup,
- 	.insn            = dlfilter__insn,
- 	.srcline         = dlfilter__srcline,
- 	.attr            = dlfilter__attr,
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/cache.json b/tools/perf/pmu-events/arch/powerpc/power10/cache.json
+index 605be14f441c8..9cb929bb64afd 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/cache.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/cache.json
+@@ -17,7 +17,7 @@
+   {
+     "EventCode": "0x34056",
+     "EventName": "PM_EXEC_STALL_LOAD_FINISH",
+-    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was finishing a load after its data was reloaded from a data source beyond the local L1; cycles in which the LSU was processing an L1-hit; cycles in which the NTF instruction merged with another load in the LMQ; cycles in which the NTF instruction is waiting for a data reload for a load miss, but the data comes back with a non-NTF instruction."
++    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was finishing a load after its data was reloaded from a data source beyond the local L1; cycles in which the LSU was processing an L1-hit; cycles in which the next-to-finish (NTF) instruction merged with another load in the LMQ; cycles in which the NTF instruction is waiting for a data reload for a load miss, but the data comes back with a non-NTF instruction."
+   },
+   {
+     "EventCode": "0x3006C",
+@@ -27,7 +27,7 @@
+   {
+     "EventCode": "0x300F4",
+     "EventName": "PM_RUN_INST_CMPL_CONC",
+-    "BriefDescription": "PowerPC instructions completed by this thread when all threads in the core had the run-latch set."
++    "BriefDescription": "PowerPC instruction completed by this thread when all threads in the core had the run-latch set."
+   },
+   {
+     "EventCode": "0x4C016",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/frontend.json b/tools/perf/pmu-events/arch/powerpc/power10/frontend.json
+index 558f9530f54ec..61e9e0222c873 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/frontend.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/frontend.json
+@@ -7,7 +7,7 @@
+   {
+     "EventCode": "0x10006",
+     "EventName": "PM_DISP_STALL_HELD_OTHER_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch for any other reason."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch for any other reason."
+   },
+   {
+     "EventCode": "0x10010",
+@@ -32,12 +32,12 @@
+   {
+     "EventCode": "0x1D05E",
+     "EventName": "PM_DISP_STALL_HELD_HALT_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch because of power management."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch because of power management."
+   },
+   {
+     "EventCode": "0x1E050",
+     "EventName": "PM_DISP_STALL_HELD_STF_MAPPER_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch because the STF mapper/SRB was full. Includes GPR (count, link, tar), VSR, VMR, FPR."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch because the STF mapper/SRB was full. Includes GPR (count, link, tar), VSR, VMR, FPR."
+   },
+   {
+     "EventCode": "0x1F054",
+@@ -67,7 +67,7 @@
+   {
+     "EventCode": "0x100F6",
+     "EventName": "PM_IERAT_MISS",
+-    "BriefDescription": "IERAT Reloaded to satisfy an IERAT miss. All page sizes are counted by this event."
++    "BriefDescription": "IERAT Reloaded to satisfy an IERAT miss. All page sizes are counted by this event. This event only counts instruction demand access."
+   },
+   {
+     "EventCode": "0x100F8",
+@@ -77,7 +77,7 @@
+   {
+     "EventCode": "0x20006",
+     "EventName": "PM_DISP_STALL_HELD_ISSQ_FULL_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch due to Issue queue full. Includes issue queue and branch queue."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch due to Issue queue full. Includes issue queue and branch queue."
+   },
+   {
+     "EventCode": "0x20114",
+@@ -102,7 +102,7 @@
+   {
+     "EventCode": "0x2D01A",
+     "EventName": "PM_DISP_STALL_IC_MISS",
+-    "BriefDescription": "Cycles when dispatch was stalled for this thread due to an Icache Miss."
++    "BriefDescription": "Cycles when dispatch was stalled for this thread due to an instruction cache miss."
+   },
+   {
+     "EventCode": "0x2E018",
+@@ -112,7 +112,7 @@
+   {
+     "EventCode": "0x2E01A",
+     "EventName": "PM_DISP_STALL_HELD_XVFC_MAPPER_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch because the XVFC mapper/SRB was full."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch because the XVFC mapper/SRB was full."
+   },
+   {
+     "EventCode": "0x2C142",
+@@ -137,7 +137,7 @@
+   {
+     "EventCode": "0x30004",
+     "EventName": "PM_DISP_STALL_FLUSH",
+-    "BriefDescription": "Cycles when dispatch was stalled because of a flush that happened to an instruction(s) that was not yet NTC. PM_EXEC_STALL_NTC_FLUSH only includes instructions that were flushed after becoming NTC."
++    "BriefDescription": "Cycles when dispatch was stalled because of a flush that happened to an instruction(s) that was not yet next-to-complete (NTC). PM_EXEC_STALL_NTC_FLUSH only includes instructions that were flushed after becoming NTC."
+   },
+   {
+     "EventCode": "0x3000A",
+@@ -157,7 +157,7 @@
+   {
+     "EventCode": "0x30018",
+     "EventName": "PM_DISP_STALL_HELD_SCOREBOARD_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch while waiting on the Scoreboard. This event combines VSCR and FPSCR together."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch while waiting on the Scoreboard. This event combines VSCR and FPSCR together."
+   },
+   {
+     "EventCode": "0x30026",
+@@ -182,7 +182,7 @@
+   {
+     "EventCode": "0x3D05C",
+     "EventName": "PM_DISP_STALL_HELD_RENAME_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch because the mapper/SRB was full. Includes GPR (count, link, tar), VSR, VMR, FPR and XVFC."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch because the mapper/SRB was full. Includes GPR (count, link, tar), VSR, VMR, FPR and XVFC."
+   },
+   {
+     "EventCode": "0x3E052",
+@@ -192,7 +192,7 @@
+   {
+     "EventCode": "0x3E054",
+     "EventName": "PM_LD_MISS_L1",
+-    "BriefDescription": "Load Missed L1, counted at execution time (can be greater than loads finished). LMQ merges are not included in this count. i.e. if a load instruction misses on an address that is already allocated on the LMQ, this event will not increment for that load). Note that this count is per slice, so if a load spans multiple slices this event will increment multiple times for a single load."
++    "BriefDescription": "Load missed L1, counted at finish time. LMQ merges are not included in this count. i.e. if a load instruction misses on an address that is already allocated on the LMQ, this event will not increment for that load). Note that this count is per slice, so if a load spans multiple slices this event will increment multiple times for a single load."
+   },
+   {
+     "EventCode": "0x301EA",
+@@ -202,7 +202,7 @@
+   {
+     "EventCode": "0x300FA",
+     "EventName": "PM_INST_FROM_L3MISS",
+-    "BriefDescription": "The processor's instruction cache was reloaded from a source other than the local core's L1, L2, or L3 due to a demand miss."
++    "BriefDescription": "The processor's instruction cache was reloaded from beyond the local core's L3 due to a demand miss."
+   },
+   {
+     "EventCode": "0x40006",
+@@ -232,16 +232,16 @@
+   {
+     "EventCode": "0x4E01A",
+     "EventName": "PM_DISP_STALL_HELD_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch for any reason."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch for any reason."
+   },
+   {
+     "EventCode": "0x4003C",
+     "EventName": "PM_DISP_STALL_HELD_SYNC_CYC",
+-    "BriefDescription": "Cycles in which the NTC instruction is held at dispatch because of a synchronizing instruction that requires the ICT to be empty before dispatch."
++    "BriefDescription": "Cycles in which the next-to-complete (NTC) instruction is held at dispatch because of a synchronizing instruction that requires the ICT to be empty before dispatch."
+   },
+   {
+     "EventCode": "0x44056",
+     "EventName": "PM_VECTOR_ST_CMPL",
+-    "BriefDescription": "Vector store instructions completed."
++    "BriefDescription": "Vector store instruction completed."
+   }
+ ]
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/marked.json b/tools/perf/pmu-events/arch/powerpc/power10/marked.json
+index 58b5dfe3a2731..131f8d0e88317 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/marked.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/marked.json
+@@ -62,7 +62,7 @@
+   {
+     "EventCode": "0x200FD",
+     "EventName": "PM_L1_ICACHE_MISS",
+-    "BriefDescription": "Demand iCache Miss."
++    "BriefDescription": "Demand instruction cache miss."
+   },
+   {
+     "EventCode": "0x30130",
+@@ -72,7 +72,7 @@
+   {
+     "EventCode": "0x34146",
+     "EventName": "PM_MRK_LD_CMPL",
+-    "BriefDescription": "Marked loads completed."
++    "BriefDescription": "Marked load instruction completed."
+   },
+   {
+     "EventCode": "0x3E158",
+@@ -82,12 +82,12 @@
+   {
+     "EventCode": "0x3E15A",
+     "EventName": "PM_MRK_ST_FIN",
+-    "BriefDescription": "The marked instruction was a store of any kind."
++    "BriefDescription": "Marked store instruction finished."
+   },
+   {
+     "EventCode": "0x30068",
+     "EventName": "PM_L1_ICACHE_RELOADED_PREF",
+-    "BriefDescription": "Counts all Icache prefetch reloads ( includes demand turned into prefetch)."
++    "BriefDescription": "Counts all instruction cache prefetch reloads (includes demand turned into prefetch)."
+   },
+   {
+     "EventCode": "0x301E4",
+@@ -102,12 +102,12 @@
+   {
+     "EventCode": "0x300FE",
+     "EventName": "PM_DATA_FROM_L3MISS",
+-    "BriefDescription": "The processor's data cache was reloaded from a source other than the local core's L1, L2, or L3 due to a demand miss."
++    "BriefDescription": "The processor's L1 data cache was reloaded from beyond the local core's L3 due to a demand miss."
+   },
+   {
+     "EventCode": "0x40012",
+     "EventName": "PM_L1_ICACHE_RELOADED_ALL",
+-    "BriefDescription": "Counts all Icache reloads includes demand, prefetch, prefetch turned into demand and demand turned into prefetch."
++    "BriefDescription": "Counts all instruction cache reloads includes demand, prefetch, prefetch turned into demand and demand turned into prefetch."
+   },
+   {
+     "EventCode": "0x40134",
+@@ -117,22 +117,22 @@
+   {
+     "EventCode": "0x4505A",
+     "EventName": "PM_SP_FLOP_CMPL",
+-    "BriefDescription": "Single Precision floating point instructions completed."
++    "BriefDescription": "Single Precision floating point instruction completed."
+   },
+   {
+     "EventCode": "0x4D058",
+     "EventName": "PM_VECTOR_FLOP_CMPL",
+-    "BriefDescription": "Vector floating point instructions completed."
++    "BriefDescription": "Vector floating point instruction completed."
+   },
+   {
+     "EventCode": "0x4D05A",
+     "EventName": "PM_NON_MATH_FLOP_CMPL",
+-    "BriefDescription": "Non Math instructions completed."
++    "BriefDescription": "Non Math instruction completed."
+   },
+   {
+     "EventCode": "0x401E0",
+     "EventName": "PM_MRK_INST_CMPL",
+-    "BriefDescription": "marked instruction completed."
++    "BriefDescription": "Marked instruction completed."
+   },
+   {
+     "EventCode": "0x400FE",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/memory.json b/tools/perf/pmu-events/arch/powerpc/power10/memory.json
+index 843b51f531e95..c4c10ca98cad7 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/memory.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/memory.json
+@@ -47,7 +47,7 @@
+   {
+     "EventCode": "0x10062",
+     "EventName": "PM_LD_L3MISS_PEND_CYC",
+-    "BriefDescription": "Cycles L3 miss was pending for this thread."
++    "BriefDescription": "Cycles in which an L3 miss was pending for this thread."
+   },
+   {
+     "EventCode": "0x20010",
+@@ -132,7 +132,7 @@
+   {
+     "EventCode": "0x300FC",
+     "EventName": "PM_DTLB_MISS",
+-    "BriefDescription": "The DPTEG required for the load/store instruction in execution was missing from the TLB. It includes pages of all sizes for demand and prefetch activity."
++    "BriefDescription": "The DPTEG required for the load/store instruction in execution was missing from the TLB. This event only counts for demand misses."
+   },
+   {
+     "EventCode": "0x4D02C",
+@@ -142,7 +142,7 @@
+   {
+     "EventCode": "0x4003E",
+     "EventName": "PM_LD_CMPL",
+-    "BriefDescription": "Loads completed."
++    "BriefDescription": "Load instruction completed."
+   },
+   {
+     "EventCode": "0x4C040",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/others.json b/tools/perf/pmu-events/arch/powerpc/power10/others.json
+index a771e4b6bec58..a5319cdba89b3 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/others.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/others.json
+@@ -2,12 +2,12 @@
+   {
+     "EventCode": "0x10016",
+     "EventName": "PM_VSU0_ISSUE",
+-    "BriefDescription": "VSU instructions issued to VSU pipe 0."
++    "BriefDescription": "VSU instruction issued to VSU pipe 0."
+   },
+   {
+     "EventCode": "0x1001C",
+     "EventName": "PM_ULTRAVISOR_INST_CMPL",
+-    "BriefDescription": "PowerPC instructions that completed while the thread was in ultravisor state."
++    "BriefDescription": "PowerPC instruction completed while the thread was in ultravisor state."
+   },
+   {
+     "EventCode": "0x100F0",
+@@ -17,12 +17,12 @@
+   {
+     "EventCode": "0x10134",
+     "EventName": "PM_MRK_ST_DONE_L2",
+-    "BriefDescription": "Marked stores completed in L2 (RC machine done)."
++    "BriefDescription": "Marked store completed in L2."
+   },
+   {
+     "EventCode": "0x1505E",
+     "EventName": "PM_LD_HIT_L1",
+-    "BriefDescription": "Loads that finished without experiencing an L1 miss."
++    "BriefDescription": "Load finished without experiencing an L1 miss."
+   },
+   {
+     "EventCode": "0x1F056",
+@@ -42,7 +42,7 @@
+   {
+     "EventCode": "0x101E4",
+     "EventName": "PM_MRK_L1_ICACHE_MISS",
+-    "BriefDescription": "Marked Instruction suffered an icache Miss."
++    "BriefDescription": "Marked instruction suffered an instruction cache miss."
+   },
+   {
+     "EventCode": "0x101EA",
+@@ -72,7 +72,7 @@
+   {
+     "EventCode": "0x2E010",
+     "EventName": "PM_ADJUNCT_INST_CMPL",
+-    "BriefDescription": "PowerPC instructions that completed while the thread is in Adjunct state."
++    "BriefDescription": "PowerPC instruction completed while the thread was in Adjunct state."
+   },
+   {
+     "EventCode": "0x2E014",
+@@ -122,7 +122,7 @@
+   {
+     "EventCode": "0x201E4",
+     "EventName": "PM_MRK_DATA_FROM_L3MISS",
+-    "BriefDescription": "The processor's data cache was reloaded from a source other than the local core's L1, L2, or L3 due to a demand miss for a marked load."
++    "BriefDescription": "The processor's L1 data cache was reloaded from beyond the local core's L3 due to a demand miss for a marked instruction."
+   },
+   {
+     "EventCode": "0x201E8",
+@@ -132,17 +132,17 @@
+   {
+     "EventCode": "0x200F2",
+     "EventName": "PM_INST_DISP",
+-    "BriefDescription": "PowerPC instructions dispatched."
++    "BriefDescription": "PowerPC instruction dispatched."
+   },
+   {
+     "EventCode": "0x30132",
+     "EventName": "PM_MRK_VSU_FIN",
+-    "BriefDescription": "VSU marked instructions finished. Excludes simple FX instructions issued to the Store Unit."
++    "BriefDescription": "VSU marked instruction finished. Excludes simple FX instructions issued to the Store Unit."
+   },
+   {
+     "EventCode": "0x30038",
+     "EventName": "PM_EXEC_STALL_DMISS_LMEM",
+-    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was waiting for a load miss to resolve from the local memory, local OpenCapp cache, or local OpenCapp memory."
++    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was waiting for a load miss to resolve from the local memory, local OpenCAPI cache, or local OpenCAPI memory."
+   },
+   {
+     "EventCode": "0x3F04A",
+@@ -152,12 +152,12 @@
+   {
+     "EventCode": "0x3405A",
+     "EventName": "PM_PRIVILEGED_INST_CMPL",
+-    "BriefDescription": "PowerPC Instructions that completed while the thread is in Privileged state."
++    "BriefDescription": "PowerPC instruction completed while the thread was in Privileged state."
+   },
+   {
+     "EventCode": "0x3F150",
+     "EventName": "PM_MRK_ST_DRAIN_CYC",
+-    "BriefDescription": "cycles to drain st from core to L2."
++    "BriefDescription": "Cycles in which the marked store drained from the core to the L2."
+   },
+   {
+     "EventCode": "0x3F054",
+@@ -182,7 +182,7 @@
+   {
+     "EventCode": "0x4001C",
+     "EventName": "PM_VSU_FIN",
+-    "BriefDescription": "VSU instructions finished."
++    "BriefDescription": "VSU instruction finished."
+   },
+   {
+     "EventCode": "0x4C01A",
+@@ -197,7 +197,7 @@
+   {
+     "EventCode": "0x4D022",
+     "EventName": "PM_HYPERVISOR_INST_CMPL",
+-    "BriefDescription": "PowerPC instructions that completed while the thread is in hypervisor state."
++    "BriefDescription": "PowerPC instruction completed while the thread was in hypervisor state."
+   },
+   {
+     "EventCode": "0x4D026",
+@@ -212,32 +212,32 @@
+   {
+     "EventCode": "0x40030",
+     "EventName": "PM_INST_FIN",
+-    "BriefDescription": "Instructions finished."
++    "BriefDescription": "Instruction finished."
+   },
+   {
+     "EventCode": "0x44146",
+     "EventName": "PM_MRK_STCX_CORE_CYC",
+-    "BriefDescription": "Cycles spent in the core portion of a marked Stcx instruction. It starts counting when the instruction is decoded and stops counting when it drains into the L2."
++    "BriefDescription": "Cycles spent in the core portion of a marked STCX instruction. It starts counting when the instruction is decoded and stops counting when it drains into the L2."
+   },
+   {
+     "EventCode": "0x44054",
+     "EventName": "PM_VECTOR_LD_CMPL",
+-    "BriefDescription": "Vector load instructions completed."
++    "BriefDescription": "Vector load instruction completed."
+   },
+   {
+     "EventCode": "0x45054",
+     "EventName": "PM_FMA_CMPL",
+-    "BriefDescription": "Two floating point instructions completed (FMA class of instructions: fmadd, fnmadd, fmsub, fnmsub). Scalar instructions only."
++    "BriefDescription": "Two floating point instruction completed (FMA class of instructions: fmadd, fnmadd, fmsub, fnmsub). Scalar instructions only."
+   },
+   {
+     "EventCode": "0x45056",
+     "EventName": "PM_SCALAR_FLOP_CMPL",
+-    "BriefDescription": "Scalar floating point instructions completed."
++    "BriefDescription": "Scalar floating point instruction completed."
+   },
+   {
+     "EventCode": "0x4505C",
+     "EventName": "PM_MATH_FLOP_CMPL",
+-    "BriefDescription": "Math floating point instructions completed."
++    "BriefDescription": "Math floating point instruction completed."
+   },
+   {
+     "EventCode": "0x4D05E",
+@@ -252,21 +252,21 @@
+   {
+     "EventCode": "0x401E6",
+     "EventName": "PM_MRK_INST_FROM_L3MISS",
+-    "BriefDescription": "The processor's instruction cache was reloaded from a source other than the local core's L1, L2, or L3 due to a demand miss for a marked instruction."
++    "BriefDescription": "The processor's instruction cache was reloaded from beyond the local core's L3 due to a demand miss for a marked instruction."
+   },
+   {
+     "EventCode": "0x401E8",
+     "EventName": "PM_MRK_DATA_FROM_L2MISS",
+-    "BriefDescription": "The processor's data cache was reloaded from a source other than the local core's L1 or L2 due to a demand miss for a marked load."
++    "BriefDescription": "The processor's L1 data cache was reloaded from a source beyond the local core's L2 due to a demand miss for a marked instruction."
+   },
+   {
+     "EventCode": "0x400F0",
+     "EventName": "PM_LD_DEMAND_MISS_L1_FIN",
+-    "BriefDescription": "Load Missed L1, counted at finish time."
++    "BriefDescription": "Load missed L1, counted at finish time."
+   },
+   {
+     "EventCode": "0x500FA",
+     "EventName": "PM_RUN_INST_CMPL",
+-    "BriefDescription": "Completed PowerPC instructions gated by the run latch."
++    "BriefDescription": "PowerPC instruction completed while the run latch is set."
+   }
+ ]
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json b/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
+index b8aded6045faa..449f57e8ba6af 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
+@@ -2,7 +2,7 @@
+   {
+     "EventCode": "0x100FE",
+     "EventName": "PM_INST_CMPL",
+-    "BriefDescription": "PowerPC instructions completed."
++    "BriefDescription": "PowerPC instruction completed."
+   },
+   {
+     "EventCode": "0x1000C",
+@@ -12,7 +12,7 @@
+   {
+     "EventCode": "0x1000E",
+     "EventName": "PM_MMA_ISSUED",
+-    "BriefDescription": "MMA instructions issued."
++    "BriefDescription": "MMA instruction issued."
+   },
+   {
+     "EventCode": "0x10012",
+@@ -107,7 +107,7 @@
+   {
+     "EventCode": "0x2D012",
+     "EventName": "PM_VSU1_ISSUE",
+-    "BriefDescription": "VSU instructions issued to VSU pipe 1."
++    "BriefDescription": "VSU instruction issued to VSU pipe 1."
+   },
+   {
+     "EventCode": "0x2D018",
+@@ -122,7 +122,7 @@
+   {
+     "EventCode": "0x2E01E",
+     "EventName": "PM_EXEC_STALL_NTC_FLUSH",
+-    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was executing in any unit before it was flushed. Note that if the flush of the oldest instruction happens after finish, the cycles from dispatch to issue will be included in PM_DISP_STALL and the cycles from issue to finish will be included in PM_EXEC_STALL and its corresponding children. This event will also count cycles when the previous NTF instruction is still completing and the new NTF instruction is stalled at dispatch."
++    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was executing in any unit before it was flushed. Note that if the flush of the oldest instruction happens after finish, the cycles from dispatch to issue will be included in PM_DISP_STALL and the cycles from issue to finish will be included in PM_EXEC_STALL and its corresponding children. This event will also count cycles when the previous next-to-finish (NTF) instruction is still completing and the new NTF instruction is stalled at dispatch."
+   },
+   {
+     "EventCode": "0x2013C",
+@@ -137,7 +137,7 @@
+   {
+     "EventCode": "0x201E2",
+     "EventName": "PM_MRK_LD_MISS_L1",
+-    "BriefDescription": "Marked DL1 Demand Miss counted at finish time."
++    "BriefDescription": "Marked demand data load miss counted at finish time."
+   },
+   {
+     "EventCode": "0x200F4",
+@@ -172,7 +172,7 @@
+   {
+     "EventCode": "0x30028",
+     "EventName": "PM_CMPL_STALL_MEM_ECC",
+-    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was waiting for the non-speculative finish of either a stcx waiting for its result or a load waiting for non-critical sectors of data and ECC."
++    "BriefDescription": "Cycles in which the oldest instruction in the pipeline was waiting for the non-speculative finish of either a STCX waiting for its result or a load waiting for non-critical sectors of data and ECC."
+   },
+   {
+     "EventCode": "0x30036",
+@@ -187,12 +187,12 @@
+   {
+     "EventCode": "0x3F044",
+     "EventName": "PM_VSU2_ISSUE",
+-    "BriefDescription": "VSU instructions issued to VSU pipe 2."
++    "BriefDescription": "VSU instruction issued to VSU pipe 2."
+   },
+   {
+     "EventCode": "0x30058",
+     "EventName": "PM_TLBIE_FIN",
+-    "BriefDescription": "TLBIE instructions finished in the LSU. Two TLBIEs can finish each cycle. All will be counted."
++    "BriefDescription": "TLBIE instruction finished in the LSU. Two TLBIEs can finish each cycle. All will be counted."
+   },
+   {
+     "EventCode": "0x3D058",
+@@ -252,7 +252,7 @@
+   {
+     "EventCode": "0x4E012",
+     "EventName": "PM_EXEC_STALL_UNKNOWN",
+-    "BriefDescription": "Cycles in which the oldest instruction in the pipeline completed without an ntf_type pulse. The ntf_pulse was missed by the ISU because the NTF finishes and completions came too close together."
++    "BriefDescription": "Cycles in which the oldest instruction in the pipeline completed without an ntf_type pulse. The ntf_pulse was missed by the ISU because the next-to-finish (NTF) instruction finishes and completions came too close together."
+   },
+   {
+     "EventCode": "0x4D020",
+@@ -267,7 +267,7 @@
+   {
+     "EventCode": "0x45058",
+     "EventName": "PM_IC_MISS_CMPL",
+-    "BriefDescription": "Non-speculative icache miss, counted at completion."
++    "BriefDescription": "Non-speculative instruction cache miss, counted at completion."
+   },
+   {
+     "EventCode": "0x4D050",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+index b5d1bd39cfb22..364fedbfb490b 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+@@ -12,11 +12,11 @@
+   {
+     "EventCode": "0x45052",
+     "EventName": "PM_4FLOP_CMPL",
+-    "BriefDescription": "Four floating point instructions completed (fadd, fmul, fsub, fcmp, fsel, fabs, fnabs, fres, fsqrte, fneg)."
++    "BriefDescription": "Four floating point instruction completed (fadd, fmul, fsub, fcmp, fsel, fabs, fnabs, fres, fsqrte, fneg)."
+   },
+   {
+     "EventCode": "0x4D054",
+     "EventName": "PM_8FLOP_CMPL",
+-    "BriefDescription": "Four Double Precision vector instructions completed."
++    "BriefDescription": "Four Double Precision vector instruction completed."
+   }
+ ]
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/translation.json b/tools/perf/pmu-events/arch/powerpc/power10/translation.json
+index db3766dca07c5..3e47b804a0a8f 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/translation.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/translation.json
+@@ -17,7 +17,7 @@
+   {
+     "EventCode": "0x2011C",
+     "EventName": "PM_MRK_NTF_CYC",
+-    "BriefDescription": "Cycles during which the marked instruction is the oldest in the pipeline (NTF or NTC)."
++    "BriefDescription": "Cycles in which the marked instruction is the oldest in the pipeline (next-to-finish or next-to-complete)."
+   },
+   {
+     "EventCode": "0x2E01C",
+@@ -37,7 +37,7 @@
+   {
+     "EventCode": "0x200FE",
+     "EventName": "PM_DATA_FROM_L2MISS",
+-    "BriefDescription": "The processor's data cache was reloaded from a source other than the local core's L1 or L2 due to a demand miss."
++    "BriefDescription": "The processor's L1 data cache was reloaded from a source beyond the local core's L2 due to a demand miss."
+   },
+   {
+     "EventCode": "0x30010",
+@@ -52,6 +52,6 @@
+   {
+     "EventCode": "0x4D05C",
+     "EventName": "PM_DPP_FLOP_CMPL",
+-    "BriefDescription": "Double-Precision or Quad-Precision instructions completed."
++    "BriefDescription": "Double-Precision or Quad-Precision instruction completed."
+   }
+ ]
 -- 
 2.40.1
 
