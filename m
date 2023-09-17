@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C82E7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9B6C433C7;
-	Sun, 17 Sep 2023 20:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E861C7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E50C433C8;
+	Sun, 17 Sep 2023 20:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981876;
-	bh=WjPmEiHxpYOr5ARWzsIn1NSFGZmW9IrAx4lPo5CJ7N8=;
+	s=korg; t=1694981879;
+	bh=SehNVzGmva21IZADFw45mq7V8Uw4oIweINHjbD2mdjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFuDIVtBR7Qv9K585clTG7l4XLRJPhIDmUy+LOxjdq/UpdWSiW1KtnctL6B7DuADl
-	 +Hetlrrt+bhkXOP07bbDKnhz1k7ls2ddy4P6l4xTmK9EXZWosRaRKw5n66JLrAtViv
-	 eRo3v8c2uNXw+Q/hrtTBVh8GQp+pynuVKBLZe9Tg=
+	b=ItqTo3BsaHJN3OFS5d8Ma/Y6jYMKuwq64c1SACk+8Geky24puVRF3paGiVD7RMQ0S
+	 uzO1nFsfzI+zjbVPSvPanaFgR7sm1ysiTnXsae+3xvGt2nKHjDJnCWPikw7Y5FxDMI
+	 TEwE+uMckV4cFSK+z7WKuPlf+GlLUQNzL1ZTg1CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/511] mlxsw: i2c: Fix chunk size setting in output mailbox buffer
-Date: Sun, 17 Sep 2023 21:09:05 +0200
-Message-ID: <20230917191116.724573863@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 184/219] drm/amdgpu: register a dirty framebuffer callback for fbcon
+Date: Sun, 17 Sep 2023 21:15:11 +0200
+Message-ID: <20230917191047.603461873@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,47 +37,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit 146c7c330507c0384bf29d567186632bfe975927 ]
+commit 0a611560f53bfd489e33f4a718c915f1a6123d03 upstream.
 
-The driver reads commands output from the output mailbox. If the size
-of the output mailbox is not a multiple of the transaction /
-block size, then the driver will not issue enough read transactions
-to read the entire output, which can result in driver initialization
-errors.
+fbcon requires that we implement &drm_framebuffer_funcs.dirty.
+Otherwise, the framebuffer might take a while to flush (which would
+manifest as noticeable lag). However, we can't enable this callback for
+non-fbcon cases since it may cause too many atomic commits to be made at
+once. So, implement amdgpu_dirtyfb() and only enable it for fbcon
+framebuffers (we can use the "struct drm_file file" parameter in the
+callback to check for this since it is only NULL when called by fbcon,
+at least in the mainline kernel) on devices that support atomic KMS.
 
-Fix by determining the number of transactions using DIV_ROUND_UP().
-
-Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2519
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c |   26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index ce843ea914646..f20dca41424c9 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -428,7 +428,7 @@ mlxsw_i2c_cmd(struct device *dev, u16 opcode, u32 in_mod, size_t in_mbox_size,
- 	} else {
- 		/* No input mailbox is case of initialization query command. */
- 		reg_size = MLXSW_I2C_MAX_DATA_SIZE;
--		num = reg_size / mlxsw_i2c->block_size;
-+		num = DIV_ROUND_UP(reg_size, mlxsw_i2c->block_size);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+@@ -38,6 +38,8 @@
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
+ #include <drm/drm_crtc_helper.h>
++#include <drm/drm_damage_helper.h>
++#include <drm/drm_drv.h>
+ #include <drm/drm_edid.h>
+ #include <drm/drm_gem_framebuffer_helper.h>
+ #include <drm/drm_fb_helper.h>
+@@ -493,11 +495,29 @@ bool amdgpu_display_ddc_probe(struct amd
+ 	return true;
+ }
  
- 		if (mutex_lock_interruptible(&mlxsw_i2c->cmd.lock) < 0) {
- 			dev_err(&client->dev, "Could not acquire lock");
--- 
-2.40.1
-
++static int amdgpu_dirtyfb(struct drm_framebuffer *fb, struct drm_file *file,
++			  unsigned int flags, unsigned int color,
++			  struct drm_clip_rect *clips, unsigned int num_clips)
++{
++
++	if (file)
++		return -ENOSYS;
++
++	return drm_atomic_helper_dirtyfb(fb, file, flags, color, clips,
++					 num_clips);
++}
++
+ static const struct drm_framebuffer_funcs amdgpu_fb_funcs = {
+ 	.destroy = drm_gem_fb_destroy,
+ 	.create_handle = drm_gem_fb_create_handle,
+ };
+ 
++static const struct drm_framebuffer_funcs amdgpu_fb_funcs_atomic = {
++	.destroy = drm_gem_fb_destroy,
++	.create_handle = drm_gem_fb_create_handle,
++	.dirty = amdgpu_dirtyfb
++};
++
+ uint32_t amdgpu_display_supported_domains(struct amdgpu_device *adev,
+ 					  uint64_t bo_flags)
+ {
+@@ -1100,7 +1120,11 @@ static int amdgpu_display_gem_fb_verify_
+ 	if (ret)
+ 		goto err;
+ 
+-	ret = drm_framebuffer_init(dev, &rfb->base, &amdgpu_fb_funcs);
++	if (drm_drv_uses_atomic_modeset(dev))
++		ret = drm_framebuffer_init(dev, &rfb->base,
++					   &amdgpu_fb_funcs_atomic);
++	else
++		ret = drm_framebuffer_init(dev, &rfb->base, &amdgpu_fb_funcs);
+ 
+ 	if (ret)
+ 		goto err;
 
 
