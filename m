@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53DA7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522A8C433C7;
-	Sun, 17 Sep 2023 20:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B47461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0B4C433C7;
+	Sun, 17 Sep 2023 20:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981988;
-	bh=HbSmh8oggO+KUKUKboHdlPwc3o76y2lSXGljmAOJZZA=;
+	s=korg; t=1694981992;
+	bh=ElmzyMbt+jrh8D499sen3H/rcq2c77XH+2n0ZxSx914=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeXpfV7a7feo10N1g+Ge5T45fbZjUF0a6pe3k2xI1JYd5CnCWmDNEnzNgffLw7Lwm
-	 qChSHynlZ9vsEIBQ4LYVLA1JK591qxz0fWnXLfGxQwFq+QrKbcIoiKUlfW9svsjBhM
-	 D1eZe7ByQGeEsTYYVILsEwQ3EIyX+hQPTw0kliYg=
+	b=SuL/HokoC8OPkWB7rf5mCIskVk3RNSFBEmXIIlR1A45R9OjJUguSKDXahaGh7G5ej
+	 zZuf3hCEVVEjwxu81vCJhwnNjW2p7OGa3kkY8i45NfFHQi2nqWhCCM4ZUpnyG5mLnu
+	 hBDGNiMWQPT6Z0Qp+2fbs7a6JEp3BkiYOYHYquwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 202/219] kcm: Fix memory leak in error path of kcm_sendmsg()
-Date: Sun, 17 Sep 2023 21:15:29 +0200
-Message-ID: <20230917191048.237909251@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 136/511] arm64: dts: qcom: sm8350: Add missing LMH interrupts to cpufreq
+Date: Sun, 17 Sep 2023 21:09:23 +0200
+Message-ID: <20230917191117.148272713@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,66 +36,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c821a88bd720b0046433173185fd841a100d44ad ]
+[ Upstream commit 951151c2bb548e0f6b2c40ab4c48675f5342c914 ]
 
-syzbot reported a memory leak like below:
+Add the missing interrupts that communicate the hardware-managed
+throttling to Linux.
 
-BUG: memory leak
-unreferenced object 0xffff88810b088c00 (size 240):
-  comm "syz-executor186", pid 5012, jiffies 4294943306 (age 13.680s)
-  hex dump (first 32 bytes):
-    00 89 08 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff83e5d5ff>] __alloc_skb+0x1ef/0x230 net/core/skbuff.c:634
-    [<ffffffff84606e59>] alloc_skb include/linux/skbuff.h:1289 [inline]
-    [<ffffffff84606e59>] kcm_sendmsg+0x269/0x1050 net/kcm/kcmsock.c:815
-    [<ffffffff83e479c6>] sock_sendmsg_nosec net/socket.c:725 [inline]
-    [<ffffffff83e479c6>] sock_sendmsg+0x56/0xb0 net/socket.c:748
-    [<ffffffff83e47f55>] ____sys_sendmsg+0x365/0x470 net/socket.c:2494
-    [<ffffffff83e4c389>] ___sys_sendmsg+0xc9/0x130 net/socket.c:2548
-    [<ffffffff83e4c536>] __sys_sendmsg+0xa6/0x120 net/socket.c:2577
-    [<ffffffff84ad7bb8>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff84ad7bb8>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-In kcm_sendmsg(), kcm_tx_msg(head)->last_skb is used as a cursor to append
-newly allocated skbs to 'head'. If some bytes are copied, an error occurred,
-and jumped to out_error label, 'last_skb' is left unmodified. A later
-kcm_sendmsg() will use an obsoleted 'last_skb' reference, corrupting the
-'head' frag_list and causing the leak.
-
-This patch fixes this issue by properly updating the last allocated skb in
-'last_skb'.
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-and-tested-by: syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6f98de741f7dbbfc4ccb
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ccbb3abb23a5 ("arm64: dts: qcom: sm8350: Add cpufreq node")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230705-topic-sm8350_fixes-v1-3-0f69f70ccb6a@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 6a97662d7548e..dd929a8350740 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1074,6 +1074,8 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 1ef16975d13a1..635e9f17a549f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1052,6 +1052,13 @@ cpufreq_hw: cpufreq@18591000 {
+ 			      <0 0x18593000 0 0x1000>;
+ 			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
  
- 	if (head != kcm->seq_skb)
- 		kfree_skb(head);
-+	else if (copied)
-+		kcm_tx_msg(head)->last_skb = skb;
- 
- 	err = sk_stream_error(sk, msg->msg_flags, err);
++			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "dcvsh-irq-0",
++					  "dcvsh-irq-1",
++					  "dcvsh-irq-2";
++
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+ 			clock-names = "xo", "alternate";
  
 -- 
 2.40.1
