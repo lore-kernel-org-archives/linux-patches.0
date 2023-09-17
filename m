@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CFC63BB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95D3C433C7;
-	Sun, 17 Sep 2023 19:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55416FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2743AC433C8;
+	Sun, 17 Sep 2023 19:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980488;
-	bh=egCKt7TXu4Qc0ilwWMzuAlfaKrdnwpfhWv2GYIPtfu8=;
+	s=korg; t=1694980491;
+	bh=OK9WXkOgRGl9Uful20CKEUGkkAhVq09DtD5w3qWrJkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zsi1u6OYrwKGoQ1Kep5F2lwy+GKLfQ/2Ux1S9upicA6AtN+Gjt7ikW8x7lQwC/y6/
-	 DlDG7smYm6nUPD91f6I6uoE2WFKAgbxB40zMSvxAv0A1gTNwURLW1/JZ102dIaoyxz
-	 qv6goKOu4LV8K457wBIw7ywgXSusk+pefGsI4yJU=
+	b=gjkvV4mXvnmcbeiphUCTG4Ueb5gZGddP1wrhUTNOGFNQY2m++2Y1L5QN7wEScTXfh
+	 8dHJEaKWX6f6X41US+udlIHhyj/e/xMrBiJ8kky0mn/15rry0pmfAci/5UaYRU1DSr
+	 3emhQUSHQnIoVMlK6zyqQA31soLiOWTTm2pZEvpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 207/285] btrfs: zoned: re-enable metadata over-commit for zoned mode
-Date: Sun, 17 Sep 2023 21:13:27 +0200
-Message-ID: <20230917191058.737926200@linuxfoundation.org>
+Subject: [PATCH 6.5 208/285] btrfs: use the correct superblock to compare fsid in btrfs_validate_super
+Date: Sun, 17 Sep 2023 21:13:28 +0200
+Message-ID: <20230917191058.772757807@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,42 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-commit 5b135b382a360f4c87cf8896d1465b0b07f10cb0 upstream.
+commit d167aa76dc0683828588c25767da07fb549e4f48 upstream.
 
-Now that, we can re-enable metadata over-commit. As we moved the activation
-from the reservation time to the write time, we no longer need to ensure
-all the reserved bytes is properly activated.
+The function btrfs_validate_super() should verify the fsid in the provided
+superblock argument. Because, all its callers expect it to do that.
 
-Without the metadata over-commit, it suffers from lower performance because
-it needs to flush the delalloc items more often and allocate more block
-groups. Re-enabling metadata over-commit will solve the issue.
+Such as in the following stack:
 
-Fixes: 79417d040f4f ("btrfs: zoned: disable metadata overcommit for zoned")
-CC: stable@vger.kernel.org # 6.1+
+   write_all_supers()
+       sb = fs_info->super_for_commit;
+       btrfs_validate_write_super(.., sb)
+         btrfs_validate_super(.., sb, ..)
+
+   scrub_one_super()
+	btrfs_validate_super(.., sb, ..)
+
+And
+   check_dev_super()
+	btrfs_validate_super(.., sb, ..)
+
+However, it currently verifies the fs_info::super_copy::fsid instead,
+which is not correct.  Fix this using the correct fsid in the superblock
+argument.
+
+CC: stable@vger.kernel.org # 5.4+
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/btrfs/disk-io.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -389,11 +389,7 @@ int btrfs_can_overcommit(struct btrfs_fs
- 		return 0;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2384,11 +2384,10 @@ int btrfs_validate_super(struct btrfs_fs
+ 		ret = -EINVAL;
+ 	}
  
- 	used = btrfs_space_info_used(space_info, true);
--	if (test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags) &&
--	    (space_info->flags & BTRFS_BLOCK_GROUP_METADATA))
--		avail = 0;
--	else
--		avail = calc_available_free_space(fs_info, space_info, flush);
-+	avail = calc_available_free_space(fs_info, space_info, flush);
+-	if (memcmp(fs_info->fs_devices->fsid, fs_info->super_copy->fsid,
+-		   BTRFS_FSID_SIZE)) {
++	if (memcmp(fs_info->fs_devices->fsid, sb->fsid, BTRFS_FSID_SIZE) != 0) {
+ 		btrfs_err(fs_info,
+ 		"superblock fsid doesn't match fsid of fs_devices: %pU != %pU",
+-			fs_info->super_copy->fsid, fs_info->fs_devices->fsid);
++			  sb->fsid, fs_info->fs_devices->fsid);
+ 		ret = -EINVAL;
+ 	}
  
- 	if (used + bytes < space_info->total_bytes + avail)
- 		return 1;
 
 
