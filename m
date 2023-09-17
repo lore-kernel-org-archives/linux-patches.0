@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3885A6ABA
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E5EC433C8;
-	Sun, 17 Sep 2023 19:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98FD6ABA
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD512C433C9;
+	Sun, 17 Sep 2023 19:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980212;
-	bh=WIrxuUFB3E5sxeyiqb+dAE8dMIS1mvxSddUnuOxb5nQ=;
+	s=korg; t=1694980215;
+	bh=xISA6xyRw5FxX2IDrEiApsbDZU95zBpq9gBj5b7LfKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZN+8rotW26HFvNI84mBDrK6b+Y9Mzr+NPmpFtLcGMYnSN+kv0WOUzsw6qLh/3sRR
-	 XSHflepdeN/P+l4oG0LLzC5Mb2M54vAsP9MDmG2Ze1Mk16bywMRWlZVPV5kYcQ2Z4J
-	 +C1IuFqsg2tfiolAEq5mchzXyxjjpU1XUduHOYyo=
+	b=gr6rM4Js8WTID3yRK+39DqbM4x42DtZ0+xRxukkOd+n9kYf7OPt8VlSAQ2ri7I8tS
+	 VViS2Pl3ANXjMJK7p7S2KYNwdL98d3c21eWO5XnkX0Jpyz8smBYF7GTU+S7moLt7nQ
+	 awwudsxmfi4l0ep4nlBFXGCJeEUdkaErirKobnlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 124/285] ipv4: ignore dst hint for multipath routes
-Date: Sun, 17 Sep 2023 21:12:04 +0200
-Message-ID: <20230917191055.954859680@linuxfoundation.org>
+Subject: [PATCH 6.5 125/285] ipv6: ignore dst hint for multipath routes
+Date: Sun, 17 Sep 2023 21:12:05 +0200
+Message-ID: <20230917191055.991957669@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -44,67 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
 
-[ Upstream commit 6ac66cb03ae306c2e288a9be18226310529f5b25 ]
+[ Upstream commit 8423be8926aa82cd2e28bba5cc96ccb72c7ce6be ]
 
 Route hints when the nexthop is part of a multipath group causes packets
 in the same receive batch to be sent to the same nexthop irrespective of
 the multipath hash of the packet. So, do not extract route hint for
 packets whose destination is part of a multipath group.
 
-A new SKB flag IPSKB_MULTIPATH is introduced for this purpose, set the
-flag when route is looked up in ip_mkroute_input() and use it in
-ip_extract_route_hint() to check for the existence of the flag.
+A new SKB flag IP6SKB_MULTIPATH is introduced for this purpose, set the
+flag when route is looked up in fib6_select_path() and use it in
+ip6_can_use_hint() to check for the existence of the flag.
 
-Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
+Fixes: 197dbf24e360 ("ipv6: introduce and uses route look hints for list input.")
 Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h    | 1 +
- net/ipv4/ip_input.c | 3 ++-
- net/ipv4/route.c    | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ include/linux/ipv6.h | 1 +
+ net/ipv6/ip6_input.c | 3 ++-
+ net/ipv6/route.c     | 3 +++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 9276cea775cc2..3489a1cca5e7b 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -57,6 +57,7 @@ struct inet_skb_parm {
- #define IPSKB_FRAG_PMTU		BIT(6)
- #define IPSKB_L3SLAVE		BIT(7)
- #define IPSKB_NOPOLICY		BIT(8)
-+#define IPSKB_MULTIPATH		BIT(9)
- 
- 	u16			frag_max_size;
+diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
+index 660012997f54c..644e69354cba6 100644
+--- a/include/linux/ipv6.h
++++ b/include/linux/ipv6.h
+@@ -146,6 +146,7 @@ struct inet6_skb_parm {
+ #define IP6SKB_JUMBOGRAM      128
+ #define IP6SKB_SEG6	      256
+ #define IP6SKB_FAKEJUMBO      512
++#define IP6SKB_MULTIPATH      1024
  };
-diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
-index fe9ead9ee863d..5e9c8156656a7 100644
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -584,7 +584,8 @@ static void ip_sublist_rcv_finish(struct list_head *head)
- static struct sk_buff *ip_extract_route_hint(const struct net *net,
- 					     struct sk_buff *skb, int rt_type)
+ 
+ #if defined(CONFIG_NET_L3_MASTER_DEV)
+diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
+index d94041bb42872..b8378814532ce 100644
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -99,7 +99,8 @@ static bool ip6_can_use_hint(const struct sk_buff *skb,
+ static struct sk_buff *ip6_extract_route_hint(const struct net *net,
+ 					      struct sk_buff *skb)
  {
--	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST)
-+	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST ||
-+	    IPCB(skb)->flags & IPSKB_MULTIPATH)
+-	if (fib6_routes_require_src(net) || fib6_has_custom_rules(net))
++	if (fib6_routes_require_src(net) || fib6_has_custom_rules(net) ||
++	    IP6CB(skb)->flags & IP6SKB_MULTIPATH)
  		return NULL;
  
  	return skb;
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 92fede388d520..33626619aee79 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2144,6 +2144,7 @@ static int ip_mkroute_input(struct sk_buff *skb,
- 		int h = fib_multipath_hash(res->fi->fib_net, NULL, skb, hkeys);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 56a55585eb798..a02328c93a537 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -424,6 +424,9 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
+ 	if (match->nh && have_oif_match && res->nh)
+ 		return;
  
- 		fib_select_multipath(res, h);
-+		IPCB(skb)->flags |= IPSKB_MULTIPATH;
- 	}
- #endif
- 
++	if (skb)
++		IP6CB(skb)->flags |= IP6SKB_MULTIPATH;
++
+ 	/* We might have already computed the hash for ICMPv6 errors. In such
+ 	 * case it will always be non-zero. Otherwise now is the time to do it.
+ 	 */
 -- 
 2.40.1
 
