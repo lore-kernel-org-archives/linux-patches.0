@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EC36FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA26C433C8;
-	Sun, 17 Sep 2023 19:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1976FAB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11181C433C8;
+	Sun, 17 Sep 2023 19:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979048;
-	bh=esA44IqHrsjMKyP+ZXXuebWqq29UQ+1gpshCyvBBZjo=;
+	s=korg; t=1694979051;
+	bh=bdeAsP9V2ha+7lz5u0uOAgG4pD4Pxe/7DAnB60OvXlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWrNTDNkiICSGwRu/FDsY0VkjuT+sMCcIO0IHWJ0iOp+LnxU4i8BrExtkx7EMdf1X
-	 CHr2CF941/zbdh8gpoqXrqKrFto49pMAjwWJ637CAiGoLDM7colzzMZEo8hBJnUQGY
-	 uPTlFQtVP45EprpfEzbgrZ5Vds13UKHxx0GodIHI=
+	b=jdFUY9XBUysyeKQLKxWNNt/T49p6d4iqb6SrQlkb/wSZwx66O+RPWuyz2ic6DP619
+	 GtiE47F6F+LGnd4VvaSFMboIeusZTWpSZJUtNK5ciHww8EPvMLDoL7J1XvRhHKAWXQ
+	 mAFrzO8NDICpoHSfSG5Qhn4uSo9B00wtnxrBa31Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/406] wifi: ath10k: Use RMW accessors for changing LNKCTL
-Date: Sun, 17 Sep 2023 21:10:45 +0200
-Message-ID: <20230917191106.244905296@linuxfoundation.org>
+Subject: [PATCH 5.10 200/406] NFSv4.2: fix handling of COPY ERR_OFFLOAD_NO_REQ
+Date: Sun, 17 Sep 2023 21:10:54 +0200
+Message-ID: <20230917191106.472878500@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -37,63 +34,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
+[ Upstream commit 5690eed941ab7e33c3c3d6b850100cabf740f075 ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+If the client sent a synchronous copy and the server replied with
+ERR_OFFLOAD_NO_REQ indicating that it wants an asynchronous
+copy instead, the client should retry with asynchronous copy.
 
-Use RMW capability accessors which does proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 76d870ed09ab ("ath10k: enable ASPM")
-Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Fixes: 539f57b3e0fd ("NFS handle COPY ERR_OFFLOAD_NO_REQS")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/nfs/nfs42proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index 67e240327fb31..2c8f04b415c71 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
- 	ath10k_pci_irq_enable(ar);
- 	ath10k_pci_rx_post(ar);
- 
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl);
-+	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC,
-+					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
- 
- 	return 0;
- }
-@@ -2820,8 +2821,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
- 
- 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
- 				  &ar_pci->link_ctl);
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
- 
- 	/*
- 	 * Bring the target up cleanly.
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index dad32b171e677..dfeea712014b7 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -443,8 +443,9 @@ ssize_t nfs42_proc_copy(struct file *src, loff_t pos_src,
+ 				continue;
+ 			}
+ 			break;
+-		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS && !args.sync) {
+-			args.sync = true;
++		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS &&
++				args.sync != res.synchronous) {
++			args.sync = res.synchronous;
+ 			dst_exception.retry = 1;
+ 			continue;
+ 		} else if ((err == -ESTALE ||
 -- 
 2.40.1
 
