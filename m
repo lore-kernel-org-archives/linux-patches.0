@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF696FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C311C433C7;
-	Sun, 17 Sep 2023 19:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F0C6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972A0C433C9;
+	Sun, 17 Sep 2023 19:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980302;
-	bh=ayTrQ1NoHQKL+3H+hDVVhkkUrJvtqbPoT9lLQjBL1vo=;
+	s=korg; t=1694980306;
+	bh=0xcsQ88TWlM+5AjypHyRhtI2R06o4B/DeP4xDUPQ30w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGctXBGxUieMD0fVI+qa6WH8GZUTpUGjOAqRZzYuTagI12xiDU8gIPMJHFxDg+KAq
-	 K0aLrfgdW/p5ousOg4K+acNDsTycUOACGuAx4R2ohd60uFBIcdSVJsWdoyL6lwiVKC
-	 7YYHJcqVfDLcPn+nolZ+r9KJIa/2gm7NRy1NBOJE=
+	b=NB135Dv2diB+G/xFZdOu8lfTVbOfT8ibn6Z37283x32QMaoz9TBCxUf78VLfjSXd5
+	 7YYzWt6SMH07Nbz2f2a/pYcAjlVwCBdTqODv+ce209TycrSX8Lz4lZaT/SmFGOAJxW
+	 vHUdvdI7b4M0eUNscivFVLS2PrftYaBZNVX+nmEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bodong Wang <bodong@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Yanan Yang <yanan.yang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 152/285] mlx5/core: E-Switch, Create ACL FT for eswitch manager in switchdev mode
-Date: Sun, 17 Sep 2023 21:12:32 +0200
-Message-ID: <20230917191056.945483055@linuxfoundation.org>
+Subject: [PATCH 6.5 153/285] net: dsa: sja1105: fix bandwidth discrepancy between tc-cbs software and offload
+Date: Sun, 17 Sep 2023 21:12:33 +0200
+Message-ID: <20230917191056.981257857@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,175 +41,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bodong Wang <bodong@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 344134609a564f28b3cc81ca6650319ccd5d8961 ]
+[ Upstream commit 954ad9bf13c4f95a4958b5f8433301f2ab99e1f5 ]
 
-ACL flow table is required in switchdev mode when metadata is enabled,
-driver creates such table when loading each vport. However, not every
-vport is loaded in switchdev mode. Such as ECPF if it's the eswitch manager.
-In this case, ACL flow table is still needed.
+More careful measurement of the tc-cbs bandwidth shows that the stream
+bandwidth (effectively idleslope) increases, there is a larger and
+larger discrepancy between the rate limit obtained by the software
+Qdisc, and the rate limit obtained by its offloaded counterpart.
 
-To make it modularized, create ACL flow table for eswitch manager as
-default and skip such operations when loading manager vport.
+The discrepancy becomes so large, that e.g. at an idleslope of 40000
+(40Mbps), the offloaded cbs does not actually rate limit anything, and
+traffic will pass at line rate through a 100 Mbps port.
 
-Also, there is no need to load the eswitch manager vport in switchdev mode.
-This means there is no need to load it on regular connect-x HCAs where
-the PF is the eswitch manager. This will avoid creating duplicate ACL
-flow table for host PF vport.
+The reason for the discrepancy is that the hardware documentation I've
+been following is incorrect. UM11040.pdf (for SJA1105P/Q/R/S) states
+about IDLE_SLOPE that it is "the rate (in unit of bytes/sec) at which
+the credit counter is increased".
 
-Fixes: 29bcb6e4fe70 ("net/mlx5e: E-Switch, Use metadata for vport matching in send-to-vport rules")
-Fixes: eb8e9fae0a22 ("mlx5/core: E-Switch, Allocate ECPF vport if it's an eswitch manager")
-Fixes: 5019833d661f ("net/mlx5: E-switch, Introduce helper function to enable/disable vports")
-Signed-off-by: Bodong Wang <bodong@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Cross-checking with UM10944.pdf (for SJA1105E/T) and UM11107.pdf
+(for SJA1110), the wording is different: "This field specifies the
+value, in bytes per second times link speed, by which the credit counter
+is increased".
+
+So there's an extra scaling for link speed that the driver is currently
+not accounting for, and apparently (empirically), that link speed is
+expressed in Kbps.
+
+I've pondered whether to pollute the sja1105_mac_link_up()
+implementation with CBS shaper reprogramming, but I don't think it is
+worth it. IMO, the UAPI exposed by tc-cbs requires user space to
+recalculate the sendslope anyway, since the formula for that depends on
+port_transmit_rate (see man tc-cbs), which is not an invariant from tc's
+perspective.
+
+So we use the offload->sendslope and offload->idleslope to deduce the
+original port_transmit_rate from the CBS formula, and use that value to
+scale the offload->sendslope and offload->idleslope to values that the
+hardware understands.
+
+Some numerical data points:
+
+ 40Mbps stream, max interfering frame size 1500, port speed 100M
+ ---------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -60000 locredit -900 hicredit 600
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    600                600
+ credit_lo    900                900
+ send_slope   7500000            75
+ idle_slope   5000000            50
+
+ 40Mbps stream, max interfering frame size 1500, port speed 1G
+ -------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -960000 locredit -1440 hicredit 60
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    60                 60
+ credit_lo    1440               1440
+ send_slope   120000000          120
+ idle_slope   5000000            5
+
+ 5.12Mbps stream, max interfering frame size 1522, port speed 100M
+ -----------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 5120 sendslope -94880 locredit -1444 hicredit 77
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    77                 77
+ credit_lo    1444               1444
+ send_slope   11860000           118
+ idle_slope   640000             6
+
+Tested on SJA1105T, SJA1105S and SJA1110A, at 1Gbps and 100Mbps.
+
+Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
+Reported-by: Yanan Yang <yanan.yang@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 21 ++++++--
- .../mellanox/mlx5/core/eswitch_offloads.c     | 49 +++++++++++++------
- 2 files changed, 51 insertions(+), 19 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index 591184d892af6..6e9b1b183190d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1212,12 +1212,19 @@ int
- mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
- 				 enum mlx5_eswitch_vport_event enabled_events)
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 3529a565b4aaf..fe7f09519653a 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2157,6 +2157,7 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
  {
-+	bool pf_needed;
- 	int ret;
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct sja1105_cbs_entry *cbs;
++	s64 port_transmit_rate_kbps;
+ 	int index;
  
-+	pf_needed = mlx5_core_is_ecpf_esw_manager(esw->dev) ||
-+		    esw->mode == MLX5_ESWITCH_LEGACY;
-+
- 	/* Enable PF vport */
--	ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF, enabled_events);
--	if (ret)
--		return ret;
-+	if (pf_needed) {
-+		ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF,
-+						    enabled_events);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	/* Enable external host PF HCA */
- 	ret = host_pf_enable_hca(esw->dev);
-@@ -1253,7 +1260,8 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
- ecpf_err:
- 	host_pf_disable_hca(esw->dev);
- pf_hca_err:
--	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
-+	if (pf_needed)
-+		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
- 	return ret;
- }
- 
-@@ -1271,7 +1279,10 @@ void mlx5_eswitch_disable_pf_vf_vports(struct mlx5_eswitch *esw)
- 	}
- 
- 	host_pf_disable_hca(esw->dev);
--	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
-+
-+	if (mlx5_core_is_ecpf_esw_manager(esw->dev) ||
-+	    esw->mode == MLX5_ESWITCH_LEGACY)
-+		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
- }
- 
- static void mlx5_eswitch_get_devlink_param(struct mlx5_eswitch *esw)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 2f8bab73643e2..1ad5a72dcc3fd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3092,26 +3092,47 @@ esw_vport_destroy_offloads_acl_tables(struct mlx5_eswitch *esw,
- 	esw_acl_ingress_ofld_cleanup(esw, vport);
- }
- 
--static int esw_create_uplink_offloads_acl_tables(struct mlx5_eswitch *esw)
-+static int esw_create_offloads_acl_tables(struct mlx5_eswitch *esw)
- {
--	struct mlx5_vport *vport;
-+	struct mlx5_vport *uplink, *manager;
-+	int ret;
- 
--	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
--	if (IS_ERR(vport))
--		return PTR_ERR(vport);
-+	uplink = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
-+	if (IS_ERR(uplink))
-+		return PTR_ERR(uplink);
-+
-+	ret = esw_vport_create_offloads_acl_tables(esw, uplink);
-+	if (ret)
-+		return ret;
-+
-+	manager = mlx5_eswitch_get_vport(esw, esw->manager_vport);
-+	if (IS_ERR(manager)) {
-+		ret = PTR_ERR(manager);
-+		goto err_manager;
-+	}
- 
--	return esw_vport_create_offloads_acl_tables(esw, vport);
-+	ret = esw_vport_create_offloads_acl_tables(esw, manager);
-+	if (ret)
-+		goto err_manager;
-+
-+	return 0;
-+
-+err_manager:
-+	esw_vport_destroy_offloads_acl_tables(esw, uplink);
-+	return ret;
- }
- 
--static void esw_destroy_uplink_offloads_acl_tables(struct mlx5_eswitch *esw)
-+static void esw_destroy_offloads_acl_tables(struct mlx5_eswitch *esw)
- {
- 	struct mlx5_vport *vport;
- 
--	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
--	if (IS_ERR(vport))
--		return;
-+	vport = mlx5_eswitch_get_vport(esw, esw->manager_vport);
-+	if (!IS_ERR(vport))
-+		esw_vport_destroy_offloads_acl_tables(esw, vport);
- 
--	esw_vport_destroy_offloads_acl_tables(esw, vport);
-+	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
-+	if (!IS_ERR(vport))
-+		esw_vport_destroy_offloads_acl_tables(esw, vport);
- }
- 
- int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
-@@ -3156,7 +3177,7 @@ static int esw_offloads_steering_init(struct mlx5_eswitch *esw)
- 	}
- 	esw->fdb_table.offloads.indir = indir;
- 
--	err = esw_create_uplink_offloads_acl_tables(esw);
-+	err = esw_create_offloads_acl_tables(esw);
- 	if (err)
- 		goto create_acl_err;
- 
-@@ -3197,7 +3218,7 @@ static int esw_offloads_steering_init(struct mlx5_eswitch *esw)
- create_restore_err:
- 	esw_destroy_offloads_table(esw);
- create_offloads_err:
--	esw_destroy_uplink_offloads_acl_tables(esw);
-+	esw_destroy_offloads_acl_tables(esw);
- create_acl_err:
- 	mlx5_esw_indir_table_destroy(esw->fdb_table.offloads.indir);
- create_indir_err:
-@@ -3213,7 +3234,7 @@ static void esw_offloads_steering_cleanup(struct mlx5_eswitch *esw)
- 	esw_destroy_offloads_fdb_tables(esw);
- 	esw_destroy_restore_table(esw);
- 	esw_destroy_offloads_table(esw);
--	esw_destroy_uplink_offloads_acl_tables(esw);
-+	esw_destroy_offloads_acl_tables(esw);
- 	mlx5_esw_indir_table_destroy(esw->fdb_table.offloads.indir);
- 	mutex_destroy(&esw->fdb_table.offloads.vports.lock);
- }
+ 	if (!offload->enable)
+@@ -2174,9 +2175,17 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ 	 */
+ 	cbs->credit_hi = offload->hicredit;
+ 	cbs->credit_lo = abs(offload->locredit);
+-	/* User space is in kbits/sec, hardware in bytes/sec */
+-	cbs->idle_slope = offload->idleslope * BYTES_PER_KBIT;
+-	cbs->send_slope = abs(offload->sendslope * BYTES_PER_KBIT);
++	/* User space is in kbits/sec, while the hardware in bytes/sec times
++	 * link speed. Since the given offload->sendslope is good only for the
++	 * current link speed anyway, and user space is likely to reprogram it
++	 * when that changes, don't even bother to track the port's link speed,
++	 * but deduce the port transmit rate from idleslope - sendslope.
++	 */
++	port_transmit_rate_kbps = offload->idleslope - offload->sendslope;
++	cbs->idle_slope = div_s64(offload->idleslope * BYTES_PER_KBIT,
++				  port_transmit_rate_kbps);
++	cbs->send_slope = div_s64(abs(offload->sendslope * BYTES_PER_KBIT),
++				  port_transmit_rate_kbps);
+ 	/* Convert the negative values from 64-bit 2's complement
+ 	 * to 32-bit 2's complement (for the case of 0x80000000 whose
+ 	 * negative is still negative).
 -- 
 2.40.1
 
