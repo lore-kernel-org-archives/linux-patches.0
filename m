@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B136FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B81FC433C8;
-	Sun, 17 Sep 2023 20:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362576FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADE7C433C8;
+	Sun, 17 Sep 2023 20:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982922;
-	bh=IuuvXkU85syQpWnEaOkvlNYW+SheGPbW7JcWrcqi0+0=;
+	s=korg; t=1694982926;
+	bh=RdUGNlqLu8aW3BNwtMJy7dqiGhVxPIHDFd9Yj+DoHDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnlEXVUXYtFrboEfIm2/odNb5KdzAxUMlaiFOYyDJI8/hVpCnDchtnbfsO8p8lEga
-	 u0BQztpOxu6NwGx9FD77PhYJ4pXUKgy3DZivXp2u2Ere61qurGkjhu23Vn6Pq2iXEA
-	 N1BLmgxTR0//l8KOqXHHNa4GOS0N/5qf5EtUN5bA=
+	b=016tYytdxWkEuJjrmTpyeIpalUcx21oWPftDM+kO1JlkMG0qAojnnjOTGF93yxBPz
+	 Y8Qpo6Gkjb7SrJE/dVA1UizngmvDPg7+CFPqiGS7OnVhyQWQb3sWLtV3wH6Q32zn8y
+	 RxHbGX1p9vx8J2v892xrSmbjW2Uqq/Ahuj0CMuUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Jocelyn Falempe <jfalempe@redhat.com>
-Subject: [PATCH 5.15 392/511] drm/ast: Fix DRAM init on AST2200
-Date: Sun, 17 Sep 2023 21:13:39 +0200
-Message-ID: <20230917191123.259362426@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 5.15 393/511] clk: qcom: turingcc-qcs404: fix missing resume during probe
+Date: Sun, 17 Sep 2023 21:13:40 +0200
+Message-ID: <20230917191123.284212093@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,41 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 4cfe75f0f14f044dae66ad0e6eea812d038465d9 upstream.
+commit a9f71a033587c9074059132d34c74eabbe95ef26 upstream.
 
-Fix the test for the AST2200 in the DRAM initialization. The value
-in ast->chip has to be compared against an enum constant instead of
-a numerical value.
+Drivers that enable runtime PM must make sure that the controller is
+runtime resumed before accessing its registers to prevent the power
+domain from being disabled.
 
-This bug got introduced when the driver was first imported into the
-kernel.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.5+
-Reviewed-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Tested-by: Jocelyn Falempe <jfalempe@redhat.com> # AST2600
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621130032.3568-2-tzimmermann@suse.de
+Fixes: 892df0191b29 ("clk: qcom: Add QCS404 TuringCC")
+Cc: stable@vger.kernel.org      # 5.2
+Cc: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230718132902.21430-9-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_post.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/turingcc-qcs404.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/ast/ast_post.c
-+++ b/drivers/gpu/drm/ast/ast_post.c
-@@ -291,7 +291,7 @@ static void ast_init_dram_reg(struct drm
- 				;
- 			} while (ast_read32(ast, 0x10100) != 0xa8);
- 		} else {/* AST2100/1100 */
--			if (ast->chip == AST2100 || ast->chip == 2200)
-+			if (ast->chip == AST2100 || ast->chip == AST2200)
- 				dram_reg_info = ast2100_dram_table_data;
- 			else
- 				dram_reg_info = ast1100_dram_table_data;
+--- a/drivers/clk/qcom/turingcc-qcs404.c
++++ b/drivers/clk/qcom/turingcc-qcs404.c
+@@ -124,11 +124,22 @@ static int turingcc_probe(struct platfor
+ 		return ret;
+ 	}
+ 
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret)
++		return ret;
++
+ 	ret = qcom_cc_probe(pdev, &turingcc_desc);
+ 	if (ret < 0)
+-		return ret;
++		goto err_put_rpm;
++
++	pm_runtime_put(&pdev->dev);
+ 
+ 	return 0;
++
++err_put_rpm:
++	pm_runtime_put_sync(&pdev->dev);
++
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops turingcc_pm_ops = {
 
 
