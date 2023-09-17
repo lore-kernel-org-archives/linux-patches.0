@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F1E6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA21CC433C8;
-	Sun, 17 Sep 2023 19:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB276FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6286C433C8;
+	Sun, 17 Sep 2023 19:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980296;
-	bh=MCrlwr+2dIlW2OqNs5tGStPAfB6fteqEbTHk2gBZL1A=;
+	s=korg; t=1694980299;
+	bh=j6biYPykILApp0VsCJYHbm0sVvGkBZ7WUZmBN+FfqzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwfyamcoA8DCtgvIwt6DTwzL5NbqmFmf0NI1Nn46gVJ14AN8LVK4mDW6MFP6FVw1F
-	 brZt3DRoYYmlUvAmZV+nmAruVsY96UGktHlKDDjgmskzdfriV8C54u7QTaHZ9rQU9Q
-	 cbY7WeXK8oRYOnvTBZBhurfJOYzXhQ0kS9l000ig=
+	b=q3S89ApB5Cd0WPtSxqDvtCAsaeIK7kWNP5zbZGR5T3qeDXABTHSs+hnvGa569r8YY
+	 5/zpzb8YxNK7e6lvJaqimlXX6nJl02knem45HIy2yvRasaaToVIxVIMrG5hZrTKzfQ
+	 nAqdv23Trx+0DmTe0PILZZoz9lFRydkuGzJ+ibtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Christian Brauner <brauner@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 133/285] af_unix: Fix msg_controllen test in scm_pidfd_recv() for MSG_CMSG_COMPAT.
-Date: Sun, 17 Sep 2023 21:12:13 +0200
-Message-ID: <20230917191056.265203812@linuxfoundation.org>
+Subject: [PATCH 6.5 151/285] net/mlx5: Push devlink port PF/VF init/cleanup calls out of devlink_port_register/unregister()
+Date: Sun, 17 Sep 2023 21:12:31 +0200
+Message-ID: <20230917191056.913593177@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -44,65 +41,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 718e6b51298e0f254baca0d40ab52a00e004e014 ]
+[ Upstream commit d9833bcfe840fff5d368b1c7c68e05c95be8d19c ]
 
-Heiko Carstens reported that SCM_PIDFD does not work with MSG_CMSG_COMPAT
-because scm_pidfd_recv() always checks msg_controllen against sizeof(struct
-cmsghdr).
+In order to prepare for
+mlx5_esw_offloads_devlink_port_register/unregister() to be used
+for SFs as well, push out the PF/VF specific init/cleanup calls outside.
+Introduce mlx5_eswitch_load/unload_pf_vf_vport() and call them from
+there. Use these new helpers of PF/VF loading and make
+mlx5_eswitch_local/unload_vport() reusable for SFs.
 
-We need to use sizeof(struct compat_cmsghdr) for the compat case.
-
-Fixes: 5e2ff6704a27 ("scm: add SO_PASSPIDFD and SCM_PIDFD")
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Closes: https://lore.kernel.org/netdev/20230901200517.8742-A-hca@linux.ibm.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Tested-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: 344134609a56 ("mlx5/core: E-Switch, Create ACL FT for eswitch manager in switchdev mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/scm.h | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ .../mellanox/mlx5/core/esw/devlink_port.c     | 13 ++----
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c | 45 ++++++++++++++-----
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  4 ++
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 16 +++++++
+ 4 files changed, 58 insertions(+), 20 deletions(-)
 
-diff --git a/include/net/scm.h b/include/net/scm.h
-index c5bcdf65f55c9..e8c76b4be2fe7 100644
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -9,6 +9,7 @@
- #include <linux/pid.h>
- #include <linux/nsproxy.h>
- #include <linux/sched/signal.h>
-+#include <net/compat.h>
- 
- /* Well, we should have at least one descriptor open
-  * to accept passed FDs 8)
-@@ -123,14 +124,17 @@ static inline bool scm_has_secdata(struct socket *sock)
- static __inline__ void scm_pidfd_recv(struct msghdr *msg, struct scm_cookie *scm)
- {
- 	struct file *pidfd_file = NULL;
--	int pidfd;
-+	int len, pidfd;
- 
--	/*
--	 * put_cmsg() doesn't return an error if CMSG is truncated,
-+	/* put_cmsg() doesn't return an error if CMSG is truncated,
- 	 * that's why we need to opencode these checks here.
- 	 */
--	if ((msg->msg_controllen <= sizeof(struct cmsghdr)) ||
--	    (msg->msg_controllen - sizeof(struct cmsghdr)) < sizeof(int)) {
-+	if (msg->msg_flags & MSG_CMSG_COMPAT)
-+		len = sizeof(struct compat_cmsghdr) + sizeof(int);
-+	else
-+		len = sizeof(struct cmsghdr) + sizeof(int);
-+
-+	if (msg->msg_controllen < len) {
- 		msg->msg_flags |= MSG_CTRUNC;
- 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+index 463bde802e45e..2170539461fa2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+@@ -62,7 +62,7 @@ static void mlx5_esw_offloads_pf_vf_devlink_port_attrs_set(struct mlx5_eswitch *
  	}
+ }
+ 
+-static int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num)
++int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num)
+ {
+ 	struct devlink_port *dl_port;
+ 	struct mlx5_vport *vport;
+@@ -84,7 +84,7 @@ static int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u
+ 	return 0;
+ }
+ 
+-static void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num)
++void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num)
+ {
+ 	struct mlx5_vport *vport;
+ 
+@@ -118,10 +118,6 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
+ 	if (IS_ERR(vport))
+ 		return PTR_ERR(vport);
+ 
+-	err = mlx5_esw_offloads_pf_vf_devlink_port_init(esw, vport_num);
+-	if (err)
+-		return err;
+-
+ 	dl_port = vport->dl_port;
+ 	if (!dl_port)
+ 		return 0;
+@@ -131,7 +127,7 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
+ 	err = devl_port_register_with_ops(devlink, dl_port, dl_port_index,
+ 					  &mlx5_esw_dl_port_ops);
+ 	if (err)
+-		goto reg_err;
++		return err;
+ 
+ 	err = devl_rate_leaf_create(dl_port, vport, NULL);
+ 	if (err)
+@@ -141,8 +137,6 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
+ 
+ rate_err:
+ 	devl_port_unregister(dl_port);
+-reg_err:
+-	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
+ 	return err;
+ }
+ 
+@@ -160,7 +154,6 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, u16 vpo
+ 	}
+ 
+ 	devl_port_unregister(vport->dl_port);
+-	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
+ }
+ 
+ struct devlink_port *mlx5_esw_offloads_devlink_port(struct mlx5_eswitch *esw, u16 vport_num)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 85ddf6f7e37df..591184d892af6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1095,6 +1095,31 @@ void mlx5_eswitch_unload_vport(struct mlx5_eswitch *esw, u16 vport_num)
+ 	mlx5_esw_vport_disable(esw, vport_num);
+ }
+ 
++static int mlx5_eswitch_load_pf_vf_vport(struct mlx5_eswitch *esw, u16 vport_num,
++					 enum mlx5_eswitch_vport_event enabled_events)
++{
++	int err;
++
++	err = mlx5_esw_offloads_init_pf_vf_rep(esw, vport_num);
++	if (err)
++		return err;
++
++	err = mlx5_eswitch_load_vport(esw, vport_num, enabled_events);
++	if (err)
++		goto err_load;
++	return 0;
++
++err_load:
++	mlx5_esw_offloads_cleanup_pf_vf_rep(esw, vport_num);
++	return err;
++}
++
++static void mlx5_eswitch_unload_pf_vf_vport(struct mlx5_eswitch *esw, u16 vport_num)
++{
++	mlx5_eswitch_unload_vport(esw, vport_num);
++	mlx5_esw_offloads_cleanup_pf_vf_rep(esw, vport_num);
++}
++
+ void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs)
+ {
+ 	struct mlx5_vport *vport;
+@@ -1103,7 +1128,7 @@ void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs)
+ 	mlx5_esw_for_each_vf_vport(esw, i, vport, num_vfs) {
+ 		if (!vport->enabled)
+ 			continue;
+-		mlx5_eswitch_unload_vport(esw, vport->vport);
++		mlx5_eswitch_unload_pf_vf_vport(esw, vport->vport);
+ 	}
+ }
+ 
+@@ -1116,7 +1141,7 @@ static void mlx5_eswitch_unload_ec_vf_vports(struct mlx5_eswitch *esw,
+ 	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, num_ec_vfs) {
+ 		if (!vport->enabled)
+ 			continue;
+-		mlx5_eswitch_unload_vport(esw, vport->vport);
++		mlx5_eswitch_unload_pf_vf_vport(esw, vport->vport);
+ 	}
+ }
+ 
+@@ -1128,7 +1153,7 @@ int mlx5_eswitch_load_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs,
+ 	int err;
+ 
+ 	mlx5_esw_for_each_vf_vport(esw, i, vport, num_vfs) {
+-		err = mlx5_eswitch_load_vport(esw, vport->vport, enabled_events);
++		err = mlx5_eswitch_load_pf_vf_vport(esw, vport->vport, enabled_events);
+ 		if (err)
+ 			goto vf_err;
+ 	}
+@@ -1148,7 +1173,7 @@ static int mlx5_eswitch_load_ec_vf_vports(struct mlx5_eswitch *esw, u16 num_ec_v
+ 	int err;
+ 
+ 	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, num_ec_vfs) {
+-		err = mlx5_eswitch_load_vport(esw, vport->vport, enabled_events);
++		err = mlx5_eswitch_load_pf_vf_vport(esw, vport->vport, enabled_events);
+ 		if (err)
+ 			goto vf_err;
+ 	}
+@@ -1190,7 +1215,7 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
+ 	int ret;
+ 
+ 	/* Enable PF vport */
+-	ret = mlx5_eswitch_load_vport(esw, MLX5_VPORT_PF, enabled_events);
++	ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF, enabled_events);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1201,7 +1226,7 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
+ 
+ 	/* Enable ECPF vport */
+ 	if (mlx5_ecpf_vport_exists(esw->dev)) {
+-		ret = mlx5_eswitch_load_vport(esw, MLX5_VPORT_ECPF, enabled_events);
++		ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_ECPF, enabled_events);
+ 		if (ret)
+ 			goto ecpf_err;
+ 		if (mlx5_core_ec_sriov_enabled(esw->dev)) {
+@@ -1224,11 +1249,11 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
+ 		mlx5_eswitch_unload_ec_vf_vports(esw, esw->esw_funcs.num_ec_vfs);
+ ec_vf_err:
+ 	if (mlx5_ecpf_vport_exists(esw->dev))
+-		mlx5_eswitch_unload_vport(esw, MLX5_VPORT_ECPF);
++		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_ECPF);
+ ecpf_err:
+ 	host_pf_disable_hca(esw->dev);
+ pf_hca_err:
+-	mlx5_eswitch_unload_vport(esw, MLX5_VPORT_PF);
++	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
+ 	return ret;
+ }
+ 
+@@ -1242,11 +1267,11 @@ void mlx5_eswitch_disable_pf_vf_vports(struct mlx5_eswitch *esw)
+ 	if (mlx5_ecpf_vport_exists(esw->dev)) {
+ 		if (mlx5_core_ec_sriov_enabled(esw->dev))
+ 			mlx5_eswitch_unload_ec_vf_vports(esw, esw->esw_funcs.num_vfs);
+-		mlx5_eswitch_unload_vport(esw, MLX5_VPORT_ECPF);
++		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_ECPF);
+ 	}
+ 
+ 	host_pf_disable_hca(esw->dev);
+-	mlx5_eswitch_unload_vport(esw, MLX5_VPORT_PF);
++	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
+ }
+ 
+ static void mlx5_eswitch_get_devlink_param(struct mlx5_eswitch *esw)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 040ed6d79258f..56d9a261a5c80 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -725,6 +725,8 @@ void mlx5_esw_set_spec_source_port(struct mlx5_eswitch *esw,
+ 				   u16 vport,
+ 				   struct mlx5_flow_spec *spec);
+ 
++int mlx5_esw_offloads_init_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num);
++void mlx5_esw_offloads_cleanup_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num);
+ int mlx5_esw_offloads_load_rep(struct mlx5_eswitch *esw, u16 vport_num);
+ void mlx5_esw_offloads_unload_rep(struct mlx5_eswitch *esw, u16 vport_num);
+ 
+@@ -739,6 +741,8 @@ int mlx5_eswitch_load_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs,
+ 				enum mlx5_eswitch_vport_event enabled_events);
+ void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs);
+ 
++int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num);
++void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num);
+ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_num);
+ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, u16 vport_num);
+ struct devlink_port *mlx5_esw_offloads_devlink_port(struct mlx5_eswitch *esw, u16 vport_num);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 1eb49784c0e11..2f8bab73643e2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2424,6 +2424,22 @@ void mlx5_esw_offloads_rep_unload(struct mlx5_eswitch *esw, u16 vport_num)
+ 		__esw_offloads_unload_rep(esw, rep, rep_type);
+ }
+ 
++int mlx5_esw_offloads_init_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num)
++{
++	if (esw->mode != MLX5_ESWITCH_OFFLOADS)
++		return 0;
++
++	return mlx5_esw_offloads_pf_vf_devlink_port_init(esw, vport_num);
++}
++
++void mlx5_esw_offloads_cleanup_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num)
++{
++	if (esw->mode != MLX5_ESWITCH_OFFLOADS)
++		return;
++
++	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
++}
++
+ int mlx5_esw_offloads_load_rep(struct mlx5_eswitch *esw, u16 vport_num)
+ {
+ 	int err;
 -- 
 2.40.1
 
