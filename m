@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3996E746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9806CC433C8;
-	Sun, 17 Sep 2023 20:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE32746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3472C433C8;
+	Sun, 17 Sep 2023 20:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982541;
-	bh=uzJyNjGzGmSqLZZ20L8p3R8jATjTVy3ma1K6XLL4qQc=;
+	s=korg; t=1694982544;
+	bh=XEQWxeE5ZFCz0rdgNFM/nShFl9zvm5Yjgu4ym24g7Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCa2t46CYtNcjP16xOoYZwgBZvE+vTh7HzYti7kelVsG0oRcezcZjcAYRAzvarmoW
-	 Ins4Ne8DdxLoV+svLArWvONOcgHgrNHsLS+mWoUvmPSiHTXNLYgQ6RPIqhCjXveP49
-	 /cnW8u++8DOEroWZmnRkmLAwRLAT6mKKgxsYHSSQ=
+	b=0jQmCaS9WkjUH6IDDB8BjSJDjG1o10LgnAhM+Bi/hY56GrYbBzLM+koei1trJPhWY
+	 3y8v4pL8JVBGF6+7Q5UST2+kZmU1FtH60Uuf/H1B8Era3pXQSKWosi/+9/YhBpfShS
+	 gUT6zDWYz4S3nLfUUTuNN9Kf1Dt4QmkgQvmOOJ3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/511] iommu/qcom: Disable and reset context bank before programming
-Date: Sun, 17 Sep 2023 21:11:40 +0200
-Message-ID: <20230917191120.432473010@linuxfoundation.org>
+Subject: [PATCH 5.15 282/511] media: ov2680: Fix ov2680_bayer_order()
+Date: Sun, 17 Sep 2023 21:11:49 +0200
+Message-ID: <20230917191120.658163499@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,45 +43,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9f3fef23d9b5a858a6e6d5f478bb1b6b76265e76 ]
+[ Upstream commit 50a7bad4e0a37d7018ab6fe843dd84bc6b2ecf72 ]
 
-Writing	the new	TTBRs, TCRs and MAIRs on a previously enabled
-context bank may trigger a context fault, resulting in firmware
-driven AP resets: change the domain initialization programming
-sequence to disable the context bank(s) and to also clear the
-related fault address (CB_FAR) and fault status (CB_FSR)
-registers before writing new values to TTBR0/1, TCR/TCR2, MAIR0/1.
+The index into ov2680_hv_flip_bayer_order[] should be 0-3, but
+ov2680_bayer_order() was using 0 + BIT(2) + (BIT(2) << 1) as
+max index, while the intention was to use: 0 + 1 + 2 as max index.
 
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230622092742.74819-4-angelogioacchino.delregno@collabora.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix the index calculation in ov2680_bayer_order(), while at it
+also just use the ctrl values rather then reading them back using
+a slow i2c-read transaction.
+
+This also allows making the function void, since there now are
+no more i2c-reads to error check.
+
+Note the check for the ctrls being NULL is there to allow
+adding an ov2680_fill_format() helper later, which will call
+ov2680_set_bayer_order() during probe() before the ctrls are created.
+
+[Sakari Ailus: Change all users of ov2680_set_bayer_order() here]
+
+Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/i2c/ov2680.c | 33 ++++++++++++++-------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index a47cb654b7048..9438203f08de7 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -273,6 +273,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 			ctx->secure_init = true;
- 		}
+diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
+index 8c729955e5e84..f43881fe997c5 100644
+--- a/drivers/media/i2c/ov2680.c
++++ b/drivers/media/i2c/ov2680.c
+@@ -315,26 +315,17 @@ static void ov2680_power_down(struct ov2680_dev *sensor)
+ 	usleep_range(5000, 10000);
+ }
  
-+		/* Disable context bank before programming */
-+		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
-+
-+		/* Clear context bank fault address fault status registers */
-+		iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
-+		iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_FSR_FAULT);
-+
- 		/* TTBRs */
- 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
- 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+-static int ov2680_bayer_order(struct ov2680_dev *sensor)
++static void ov2680_set_bayer_order(struct ov2680_dev *sensor)
+ {
+-	u32 format1;
+-	u32 format2;
+-	u32 hv_flip;
+-	int ret;
+-
+-	ret = ov2680_read_reg(sensor, OV2680_REG_FORMAT1, &format1);
+-	if (ret < 0)
+-		return ret;
++	int hv_flip = 0;
+ 
+-	ret = ov2680_read_reg(sensor, OV2680_REG_FORMAT2, &format2);
+-	if (ret < 0)
+-		return ret;
++	if (sensor->ctrls.vflip && sensor->ctrls.vflip->val)
++		hv_flip += 1;
+ 
+-	hv_flip = (format2 & BIT(2)  << 1) | (format1 & BIT(2));
++	if (sensor->ctrls.hflip && sensor->ctrls.hflip->val)
++		hv_flip += 2;
+ 
+ 	sensor->fmt.code = ov2680_hv_flip_bayer_order[hv_flip];
+-
+-	return 0;
+ }
+ 
+ static int ov2680_vflip_enable(struct ov2680_dev *sensor)
+@@ -345,7 +336,8 @@ static int ov2680_vflip_enable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
+@@ -356,7 +348,8 @@ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_hflip_enable(struct ov2680_dev *sensor)
+@@ -367,7 +360,8 @@ static int ov2680_hflip_enable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_hflip_disable(struct ov2680_dev *sensor)
+@@ -378,7 +372,8 @@ static int ov2680_hflip_disable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_test_pattern_set(struct ov2680_dev *sensor, int value)
 -- 
 2.40.1
 
