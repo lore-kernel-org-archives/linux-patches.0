@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB40746E
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B85C433C7;
-	Sun, 17 Sep 2023 19:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A90746E
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3733FC433C8;
+	Sun, 17 Sep 2023 19:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980680;
-	bh=2zKJQGh+4JsdUK2ABwjWExM/cQBHCOHTAEPG/kx3aCI=;
+	s=korg; t=1694980683;
+	bh=3bPN4zzq1NNkyvAeaPF3oSmnaftj5DWe4UYoPAz0Eeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZTaJcVdYnn216mgCwGHwHCT4uAhWBTKJHfjsnOQggI6EzyPgcWLPnmloOBFWPTsW
-	 ZsJ/n+xtsFF26A/FwFjxqo6Y7L7JcWNVYyMF+ZiLL2p6IE/S/ia7m+O1BtSjDDx5so
-	 SgM+C51Ulb4emm/papsZTdWkXpSCzbj4dbtA2dqU=
+	b=ZCXLVFOndMcUAn1wNGZOnY0koMItJYhd3PwhFtvdUlRlRc5swBrEWIzsKynEP5JaT
+	 eLXlLQRAIuFbhe+xhWjdiPacSW8qSo3yVetEupMDDLiA257u8Rd75+b85qlEAwdwDm
+	 SfJpdbnPdPCAVJaG6oCMZNoLn+FAUViIzIB1njPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Anup Sharma <anupnewsmail@gmail.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Tom Zanussi <zanussi@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.5 235/285] perf tools: Handle old data in PERF_RECORD_ATTR
-Date: Sun, 17 Sep 2023 21:13:55 +0200
-Message-ID: <20230917191059.546358277@linuxfoundation.org>
+Subject: [PATCH 6.5 236/285] perf build: Include generated header files properly
+Date: Sun, 17 Sep 2023 21:13:56 +0200
+Message-ID: <20230917191059.573361717@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -47,88 +48,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-commit 9bf63282ea77a531ea58acb42fb3f40d2d1e4497 upstream.
+commit c7e97f215a4ad634b746804679f5937d25f77e29 upstream.
 
-The PERF_RECORD_ATTR is used for a pipe mode to describe an event with
-attribute and IDs.  The ID table comes after the attr and it calculate
-size of the table using the total record size and the attr size.
+The flex and bison generate header files from the source.  When user
+specified a build directory with O= option, it'd generate files under
+the directory.  The build command has -I option to specify the header
+include directory.
 
-  n_ids = (total_record_size - end_of_the_attr_field) / sizeof(u64)
+But the -I option only affects the files included like <...>.  Let's
+change the flex and bison headers to use it instead of "...".
 
-This is fine for most use cases, but sometimes it saves the pipe output
-in a file and then process it later.  And it becomes a problem if there
-is a change in attr size between the record and report.
-
-  $ perf record -o- > perf-pipe.data  # old version
-  $ perf report -i- < perf-pipe.data  # new version
-
-For example, if the attr size is 128 and it has 4 IDs, then it would
-save them in 168 byte like below:
-
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 128 byte: perf event attr { .size = 128, ... },
-  32 byte: event IDs [] = { 1234, 1235, 1236, 1237 },
-
-But when report later, it thinks the attr size is 136 then it only read
-the last 3 entries as ID.
-
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 136 byte: perf event attr { .size = 136, ... },
-  24 byte: event IDs [] = { 1235, 1236, 1237 },  // 1234 is missing
-
-So it should use the recorded version of the attr.  The attr has the
-size field already then it should honor the size when reading data.
-
-Fixes: 2c46dbb517a10b18 ("perf: Convert perf header attrs into attr events")
+Fixes: 80eeb67fe577aa76 ("perf jevents: Program to convert JSON file")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Anup Sharma <anupnewsmail@gmail.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tom Zanussi <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230825152552.112913-1-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20230728022447.1323563-2-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/header.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/perf/pmu-events/jevents.py |    2 +-
+ tools/perf/util/bpf-filter.c     |    4 ++--
+ tools/perf/util/expr.c           |    4 ++--
+ tools/perf/util/parse-events.c   |    4 ++--
+ tools/perf/util/pmu.c            |    4 ++--
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -4382,7 +4382,8 @@ int perf_event__process_attr(struct perf
- 			     union perf_event *event,
- 			     struct evlist **pevlist)
- {
--	u32 i, ids, n_ids;
-+	u32 i, n_ids;
-+	u64 *ids;
- 	struct evsel *evsel;
- 	struct evlist *evlist = *pevlist;
+--- a/tools/perf/pmu-events/jevents.py
++++ b/tools/perf/pmu-events/jevents.py
+@@ -999,7 +999,7 @@ such as "arm/cortex-a34".''',
+   _args = ap.parse_args()
  
-@@ -4398,9 +4399,8 @@ int perf_event__process_attr(struct perf
+   _args.output_file.write("""
+-#include "pmu-events/pmu-events.h"
++#include <pmu-events/pmu-events.h>
+ #include "util/header.h"
+ #include "util/pmu.h"
+ #include <string.h>
+--- a/tools/perf/util/bpf-filter.c
++++ b/tools/perf/util/bpf-filter.c
+@@ -9,8 +9,8 @@
+ #include "util/evsel.h"
  
- 	evlist__add(evlist, evsel);
+ #include "util/bpf-filter.h"
+-#include "util/bpf-filter-flex.h"
+-#include "util/bpf-filter-bison.h"
++#include <util/bpf-filter-flex.h>
++#include <util/bpf-filter-bison.h>
  
--	ids = event->header.size;
--	ids -= (void *)&event->attr.id - (void *)event;
--	n_ids = ids / sizeof(u64);
-+	n_ids = event->header.size - sizeof(event->header) - event->attr.attr.size;
-+	n_ids = n_ids / sizeof(u64);
- 	/*
- 	 * We don't have the cpu and thread maps on the header, so
- 	 * for allocating the perf_sample_id table we fake 1 cpu and
-@@ -4409,8 +4409,9 @@ int perf_event__process_attr(struct perf
- 	if (perf_evsel__alloc_id(&evsel->core, 1, n_ids))
- 		return -ENOMEM;
- 
-+	ids = (void *)&event->attr.attr + event->attr.attr.size;
- 	for (i = 0; i < n_ids; i++) {
--		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, event->attr.id[i]);
-+		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, ids[i]);
- 	}
- 
- 	return 0;
+ #include "bpf_skel/sample-filter.h"
+ #include "bpf_skel/sample_filter.skel.h"
+--- a/tools/perf/util/expr.c
++++ b/tools/perf/util/expr.c
+@@ -10,8 +10,8 @@
+ #include "debug.h"
+ #include "evlist.h"
+ #include "expr.h"
+-#include "expr-bison.h"
+-#include "expr-flex.h"
++#include <util/expr-bison.h>
++#include <util/expr-flex.h>
+ #include "util/hashmap.h"
+ #include "smt.h"
+ #include "tsc.h"
+--- a/tools/perf/util/parse-events.c
++++ b/tools/perf/util/parse-events.c
+@@ -18,8 +18,8 @@
+ #include "debug.h"
+ #include <api/fs/tracing_path.h>
+ #include <perf/cpumap.h>
+-#include "parse-events-bison.h"
+-#include "parse-events-flex.h"
++#include <util/parse-events-bison.h>
++#include <util/parse-events-flex.h>
+ #include "pmu.h"
+ #include "pmus.h"
+ #include "asm/bug.h"
+--- a/tools/perf/util/pmu.c
++++ b/tools/perf/util/pmu.c
+@@ -19,8 +19,8 @@
+ #include "evsel.h"
+ #include "pmu.h"
+ #include "pmus.h"
+-#include "pmu-bison.h"
+-#include "pmu-flex.h"
++#include <util/pmu-bison.h>
++#include <util/pmu-flex.h>
+ #include "parse-events.h"
+ #include "print-events.h"
+ #include "header.h"
 
 
