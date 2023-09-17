@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB69F6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D65EC433C7;
-	Sun, 17 Sep 2023 19:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1243A6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D46C433C7;
+	Sun, 17 Sep 2023 19:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979564;
-	bh=dgEmA6LrNJYeIPd4Ims83BkoEL11arIoPxpo0KyhUM4=;
+	s=korg; t=1694979567;
+	bh=/Kl08M3xHNWC5BI7WceiZqt4ZhCP5ib0gaRBhwaGgIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njKyiXlqZlhAySIvsMXIna2kBy7chCyqJrHfnuvXHwQdKCzFzh32RTN2b4JJskHC7
-	 UozfXGRkOeqgCI6YitFbuNEwz0Mx+nUecNTu8R6R1lAvSgVQKkDi2TIBGJxsAialr2
-	 6jqjApFGFQzOYiEZSU5JIt+AZqi7lvQiLOySzsZI=
+	b=VWuaVzmsC70FRfVvmlzKrMAXjHpiJU46UAWV6amVB/0MCHoWGHUkiet0ZynOreMcw
+	 27jsgXemZsiYZ93JV43SgSB1BlyRvUfIKGyZK4ycQQKN7a2rqFDZuVU1lTEC8p9GOm
+	 z8H73+mx/INuJI427NwJ0D2KGhbJVBNxAWMsU+/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 350/406] net: ipv6/addrconf: avoid integer underflow in ipv6_create_tempaddr
-Date: Sun, 17 Sep 2023 21:13:24 +0200
-Message-ID: <20230917191110.514407937@linuxfoundation.org>
+Subject: [PATCH 5.10 351/406] af_unix: Fix data-races around user->unix_inflight.
+Date: Sun, 17 Sep 2023 21:13:25 +0200
+Message-ID: <20230917191110.540775001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,38 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit f31867d0d9d82af757c1e0178b659438f4c1ea3c ]
+[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
 
-The existing code incorrectly casted a negative value (the result of a
-subtraction) to an unsigned value without checking. For example, if
-/proc/sys/net/ipv6/conf/*/temp_prefered_lft was set to 1, the preferred
-lifetime would jump to 4 billion seconds. On my machine and network the
-shortest lifetime that avoided underflow was 3 seconds.
+user->unix_inflight is changed under spin_lock(unix_gc_lock),
+but too_many_unix_fds() reads it locklessly.
 
-Fixes: 76506a986dc3 ("IPv6: fix DESYNC_FACTOR")
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Let's annotate the write/read accesses to user->unix_inflight.
+
+BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
+
+write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
+ unix_inflight+0x157/0x180 net/unix/scm.c:66
+ unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
+ too_many_unix_fds net/unix/scm.c:101 [inline]
+ unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+value changed: 0x000000000000000c -> 0x000000000000000d
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/scm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 9b414681500a5..0eafe26c05f77 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1359,7 +1359,7 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
- 	 * idev->desync_factor if it's larger
- 	 */
- 	cnf_temp_preferred_lft = READ_ONCE(idev->cnf.temp_prefered_lft);
--	max_desync_factor = min_t(__u32,
-+	max_desync_factor = min_t(long,
- 				  idev->cnf.max_desync_factor,
- 				  cnf_temp_preferred_lft - regen_advance);
+diff --git a/net/unix/scm.c b/net/unix/scm.c
+index aa27a02478dc1..e8e2a00bb0f58 100644
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
+ 	}
+-	user->unix_inflight++;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
  
+@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
+ 	}
+-	user->unix_inflight--;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
+ 
+@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
+ {
+ 	struct user_struct *user = current_user();
+ 
+-	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
++	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
+ 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
+ 	return false;
+ }
 -- 
 2.40.1
 
