@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D637461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6D8C433C9;
-	Sun, 17 Sep 2023 20:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C1D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8BAC433C8;
+	Sun, 17 Sep 2023 20:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981889;
-	bh=O68uv2Qp8pKV87GjEPT88Jjk1JlCqVYyw63/MmEdniA=;
+	s=korg; t=1694981892;
+	bh=o/ZVIrgLUUr7lIW8utgRGf3xcye5To6rGi2uHe/P8Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6Nlxth/vt7yJwEWhbBrsoPv3MFJgl4bmC28yjSQXvLwDPdIVAJEntKSGlR5J2b/y
-	 rKTLfudJXt3DTHAnogHkn1Rd+y/ztWoyLKsEteXvNUX0eqHh7Jc0QzCu5FfjCvurXZ
-	 mMaXVJDdkqzWMEwUgZAS1CK2ZBVzzeHoZGVqp7cA=
+	b=VXaSXCj645Hl0QK3Qie1Fft1bwRX/V/zttOFBDYbYtSaDJ1tTUQkEzmtm/UYMrMbZ
+	 owCWt7HZ/bWICpSRHZjfTKKBdnvD4iI8KsTzGIFln8+8jeFyYHzOkw6X55fZr7VFe0
+	 HXhahd40lcELvTDoEoBX5m2mi9Sdk9SFxNq90SgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 156/219] btrfs: fix start transaction qgroup rsv double free
-Date: Sun, 17 Sep 2023 21:14:43 +0200
-Message-ID: <20230917191046.688260869@linuxfoundation.org>
+	Chad Monroe <chad.monroe@smartrg.com>,
+	Allen Ye <allen.ye@mediatek.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 091/511] wifi: mt76: mt7915: fix power-limits while chan_switch
+Date: Sun, 17 Sep 2023 21:08:38 +0200
+Message-ID: <20230917191116.068011249@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,101 +38,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-commit a6496849671a5bc9218ecec25a983253b34351b1 upstream.
+[ Upstream commit 6c0570bc21ec2073890aa252c8420ca7bec402e4 ]
 
-btrfs_start_transaction reserves metadata space of the PERTRANS type
-before it identifies a transaction to start/join. This allows flushing
-when reserving that space without a deadlock. However, it results in a
-race which temporarily breaks qgroup rsv accounting.
+If user changes the channel without completely disabling the interface the
+txpower_sku values reported track the old channel the device was operating on.
+If user bounces the interface the correct power tables are applied.
 
-T1                                              T2
-start_transaction
-do_stuff
-                                            start_transaction
-                                                qgroup_reserve_meta_pertrans
-commit_transaction
-    qgroup_free_meta_all_pertrans
-                                            hit an error starting txn
-                                            goto reserve_fail
-                                            qgroup_free_meta_pertrans (already freed!)
+mt7915_sku_group_len array gets updated before the channel switch happens so it
+uses data from the old channel.
 
-The basic issue is that there is nothing preventing another commit from
-committing before start_transaction finishes (in fact sometimes we
-intentionally wait for it) so any error path that frees the reserve is
-at risk of this race.
-
-While this exact space was getting freed anyway, and it's not a huge
-deal to double free it (just a warning, the free code catches this), it
-can result in incorrectly freeing some other pertrans reservation in
-this same reservation, which could then lead to spuriously granting
-reservations we might not have the space for. Therefore, I do believe it
-is worth fixing.
-
-To fix it, use the existing prealloc->pertrans conversion mechanism.
-When we first reserve the space, we reserve prealloc space and only when
-we are sure we have a transaction do we convert it to pertrans. This way
-any racing commits do not blow away our reservation, but we still get a
-pertrans reservation that is freed when _this_ transaction gets committed.
-
-This issue can be reproduced by running generic/269 with either qgroups
-or squotas enabled via mkfs on the scratch device.
-
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-CC: stable@vger.kernel.org # 5.10+
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ecb187a74e18 ("mt76: mt7915: rework the flow of txpower setting")
+Fixes: f1d962369d56 ("mt76: mt7915: implement HE per-rate tx power support")
+Reported-By: Chad Monroe <chad.monroe@smartrg.com>
+Tested-by: Chad Monroe <chad.monroe@smartrg.com>
+Signed-off-by: Allen Ye <allen.ye@mediatek.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -580,8 +580,13 @@ start_transaction(struct btrfs_root *roo
- 		u64 delayed_refs_bytes = 0;
- 
- 		qgroup_reserved = num_items * fs_info->nodesize;
--		ret = btrfs_qgroup_reserve_meta_pertrans(root, qgroup_reserved,
--				enforce_qgroups);
-+		/*
-+		 * Use prealloc for now, as there might be a currently running
-+		 * transaction that could free this reserved space prematurely
-+		 * by committing.
-+		 */
-+		ret = btrfs_qgroup_reserve_meta_prealloc(root, qgroup_reserved,
-+							 enforce_qgroups, false);
- 		if (ret)
- 			return ERR_PTR(ret);
- 
-@@ -693,6 +698,14 @@ again:
- 		h->reloc_reserved = reloc_reserved;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 7a4f277a16223..09ea97a81fb4f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -441,7 +441,8 @@ static int mt7915_config(struct ieee80211_hw *hw, u32 changed)
+ 		ieee80211_wake_queues(hw);
  	}
  
-+	/*
-+	 * Now that we have found a transaction to be a part of, convert the
-+	 * qgroup reservation from prealloc to pertrans. A different transaction
-+	 * can't race in and free our pertrans out from under us.
-+	 */
-+	if (qgroup_reserved)
-+		btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
-+
- got_it:
- 	if (!current->journal_info)
- 		current->journal_info = h;
-@@ -740,7 +753,7 @@ alloc_fail:
- 		btrfs_block_rsv_release(fs_info, &fs_info->trans_block_rsv,
- 					num_bytes, NULL);
- reserve_fail:
--	btrfs_qgroup_free_meta_pertrans(root, qgroup_reserved);
-+	btrfs_qgroup_free_meta_prealloc(root, qgroup_reserved);
- 	return ERR_PTR(ret);
- }
- 
+-	if (changed & IEEE80211_CONF_CHANGE_POWER) {
++	if (changed & (IEEE80211_CONF_CHANGE_POWER |
++		       IEEE80211_CONF_CHANGE_CHANNEL)) {
+ 		ret = mt7915_mcu_set_txpower_sku(phy);
+ 		if (ret)
+ 			return ret;
+-- 
+2.40.1
+
 
 
