@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C2C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A72AC433C7;
-	Sun, 17 Sep 2023 20:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216EC746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6B0C433C7;
+	Sun, 17 Sep 2023 20:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982547;
-	bh=AWZFWttZwKOMLF7EjOJEfqNArdkYUbKNG70X/OLr/7g=;
+	s=korg; t=1694982551;
+	bh=lXK65o1UwZt/AIBUqIG1ajuBzH00GqFYYctCcPx3akM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOA/az3ddsvilMicUwoyJ4Wn8YcvvhSlJ5oPf7FIjlRdri4wW5tWEybo3Ys6++Dxc
-	 CK04VZVwVIjADQTFnZKTxH/OgqGsEbHYD3xRFns6XuzKDr1ytOnyUs0i7Ggifu2RLT
-	 ZxJYz7hift2FdMLaTRn9GTgCqrbtQGsFjMiOxow8=
+	b=hM6rEZsFnOaMjk61Ncav0WWJdMh+7QQyfLwTY91pvF/nU9Eorun7WOdjndY4lBxma
+	 OwHZqbVrUAPVUwmtTmwQz4/ii0tW63CryBQpuhPKn7r/87ABaHJ3oMtkWiYC8fbjx+
+	 L0N8xSAdio+5W1pWqCCiBwIKM5RdbdPe700Mf9P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 283/511] media: ov2680: Fix vflip / hflip set functions
-Date: Sun, 17 Sep 2023 21:11:50 +0200
-Message-ID: <20230917191120.681355649@linuxfoundation.org>
+Subject: [PATCH 5.15 284/511] media: ov2680: Remove VIDEO_V4L2_SUBDEV_API ifdef-s
+Date: Sun, 17 Sep 2023 21:11:51 +0200
+Message-ID: <20230917191120.704962940@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -45,18 +45,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d5d08ad330c9ccebc5e066fda815423a290f48b0 ]
+[ Upstream commit 49c282d5a8c5f4d1d9088622bec792294c716010 ]
 
-ov2680_vflip_disable() / ov2680_hflip_disable() pass BIT(0) instead of
-0 as value to ov2680_mod_reg().
+VIDEO_V4L2_SUBDEV_API is now automatically selected in Kconfig
+for all sensor drivers. Remove the ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+checks.
 
-While fixing this also:
-
-1. Stop having separate enable/disable functions for hflip / vflip
-2. Move the is_streaming check, which is unique to hflip / vflip
-   into the ov2680_set_?flip() functions.
-
-for a nice code cleanup.
+This is a preparation patch for fixing ov2680_set_fmt()
+which == V4L2_SUBDEV_FORMAT_TRY calls not properly filling in
+the passed in v4l2_mbus_framefmt struct.
 
 Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
 Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
@@ -66,93 +63,77 @@ Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 50 +++++++++-----------------------------
- 1 file changed, 12 insertions(+), 38 deletions(-)
+ drivers/media/i2c/ov2680.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index f43881fe997c5..c78ac547ddbc1 100644
+index c78ac547ddbc1..2a89deacb6ab1 100644
 --- a/drivers/media/i2c/ov2680.c
 +++ b/drivers/media/i2c/ov2680.c
-@@ -328,23 +328,15 @@ static void ov2680_set_bayer_order(struct ov2680_dev *sensor)
- 	sensor->fmt.code = ov2680_hv_flip_bayer_order[hv_flip];
+@@ -562,7 +562,6 @@ static int ov2680_get_fmt(struct v4l2_subdev *sd,
+ {
+ 	struct ov2680_dev *sensor = to_ov2680_dev(sd);
+ 	struct v4l2_mbus_framefmt *fmt = NULL;
+-	int ret = 0;
+ 
+ 	if (format->pad != 0)
+ 		return -EINVAL;
+@@ -570,22 +569,17 @@ static int ov2680_get_fmt(struct v4l2_subdev *sd,
+ 	mutex_lock(&sensor->lock);
+ 
+ 	if (format->which == V4L2_SUBDEV_FORMAT_TRY) {
+-#ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 		fmt = v4l2_subdev_get_try_format(&sensor->sd, sd_state,
+ 						 format->pad);
+-#else
+-		ret = -EINVAL;
+-#endif
+ 	} else {
+ 		fmt = &sensor->fmt;
+ 	}
+ 
+-	if (fmt)
+-		format->format = *fmt;
++	format->format = *fmt;
+ 
+ 	mutex_unlock(&sensor->lock);
+ 
+-	return ret;
++	return 0;
  }
  
--static int ov2680_vflip_enable(struct ov2680_dev *sensor)
-+static int ov2680_set_vflip(struct ov2680_dev *sensor, s32 val)
+ static int ov2680_set_fmt(struct v4l2_subdev *sd,
+@@ -594,9 +588,7 @@ static int ov2680_set_fmt(struct v4l2_subdev *sd,
  {
- 	int ret;
+ 	struct ov2680_dev *sensor = to_ov2680_dev(sd);
+ 	struct v4l2_mbus_framefmt *fmt = &format->format;
+-#ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 	struct v4l2_mbus_framefmt *try_fmt;
+-#endif
+ 	const struct ov2680_mode_info *mode;
+ 	int ret = 0;
  
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1, BIT(2), BIT(2));
--	if (ret < 0)
--		return ret;
--
--	ov2680_set_bayer_order(sensor);
--	return 0;
--}
--
--static int ov2680_vflip_disable(struct ov2680_dev *sensor)
--{
--	int ret;
-+	if (sensor->is_streaming)
-+		return -EBUSY;
+@@ -619,10 +611,8 @@ static int ov2680_set_fmt(struct v4l2_subdev *sd,
+ 	}
  
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1, BIT(2), BIT(0));
-+	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1,
-+			     BIT(2), val ? BIT(2) : 0);
- 	if (ret < 0)
- 		return ret;
+ 	if (format->which == V4L2_SUBDEV_FORMAT_TRY) {
+-#ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 		try_fmt = v4l2_subdev_get_try_format(sd, sd_state, 0);
+ 		format->format = *try_fmt;
+-#endif
+ 		goto unlock;
+ 	}
  
-@@ -352,23 +344,15 @@ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
- 	return 0;
- }
+@@ -780,9 +770,7 @@ static int ov2680_v4l2_register(struct ov2680_dev *sensor)
+ 	v4l2_i2c_subdev_init(&sensor->sd, sensor->i2c_client,
+ 			     &ov2680_subdev_ops);
  
--static int ov2680_hflip_enable(struct ov2680_dev *sensor)
-+static int ov2680_set_hflip(struct ov2680_dev *sensor, s32 val)
- {
- 	int ret;
+-#ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 	sensor->sd.flags = V4L2_SUBDEV_FL_HAS_DEVNODE;
+-#endif
+ 	sensor->pad.flags = MEDIA_PAD_FL_SOURCE;
+ 	sensor->sd.entity.function = MEDIA_ENT_F_CAM_SENSOR;
  
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2, BIT(2), BIT(2));
--	if (ret < 0)
--		return ret;
--
--	ov2680_set_bayer_order(sensor);
--	return 0;
--}
--
--static int ov2680_hflip_disable(struct ov2680_dev *sensor)
--{
--	int ret;
-+	if (sensor->is_streaming)
-+		return -EBUSY;
- 
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2, BIT(2), BIT(0));
-+	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2,
-+			     BIT(2), val ? BIT(2) : 0);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -722,19 +706,9 @@ static int ov2680_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_EXPOSURE:
- 		return ov2680_exposure_set(sensor, ctrl->val);
- 	case V4L2_CID_VFLIP:
--		if (sensor->is_streaming)
--			return -EBUSY;
--		if (ctrl->val)
--			return ov2680_vflip_enable(sensor);
--		else
--			return ov2680_vflip_disable(sensor);
-+		return ov2680_set_vflip(sensor, ctrl->val);
- 	case V4L2_CID_HFLIP:
--		if (sensor->is_streaming)
--			return -EBUSY;
--		if (ctrl->val)
--			return ov2680_hflip_enable(sensor);
--		else
--			return ov2680_hflip_disable(sensor);
-+		return ov2680_set_hflip(sensor, ctrl->val);
- 	case V4L2_CID_TEST_PATTERN:
- 		return ov2680_test_pattern_set(sensor, ctrl->val);
- 	default:
 -- 
 2.40.1
 
