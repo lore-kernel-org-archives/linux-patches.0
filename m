@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447B953B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:32:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E24C433C7;
-	Sun, 17 Sep 2023 19:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFAD53B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:33:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A6AC433C8;
+	Sun, 17 Sep 2023 19:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979177;
-	bh=IuCJylvzy23Y17t+SnoUH/YhICtmIpOanlswQFt9MB8=;
+	s=korg; t=1694979180;
+	bh=BLXzJInpoP1yUewiHEwqFN1kF/2K3cjdj03PJTee+Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CryoGty3RT/pfxIaUfnNAO8dMwtyMzFfOkt8d/ZEBn5TsTEzmrLqwt8ypUlyPt9Lb
-	 OHqifuyrVHsvNzcMh0ioIbJML/BeRShJ4ATgItdVghViUFxcz2v4x7L1hPk6utrCuh
-	 UvXLk+s0FkMk84vJDLhQdx8TCzlZa/kBNhiQn6dk=
+	b=vmqoWGPqxgDk6u1A6LiFU1TqW2u6m73J9GLGemfel6X3RsycckwAo0zf4xWHWpXCP
+	 v0tk2Kf4xVQqBTEbwNzZcP/GKvINSOt35ltAdtJk1fvcUl+YluOycCbb8eiZUvfm+8
+	 9SyhEP8RBJK97Y4s53Z3jgR9WCXGnR/lP1KaihJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Lin Ma <linma@zju.edu.cn>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 237/406] USB: gadget: f_mass_storage: Fix unused variable warning
-Date: Sun, 17 Sep 2023 21:11:31 +0200
-Message-ID: <20230917191107.423291210@linuxfoundation.org>
+Subject: [PATCH 5.10 220/406] scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()
+Date: Sun, 17 Sep 2023 21:11:14 +0200
+Message-ID: <20230917191106.989718113@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,35 +41,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 55c3e571d2a0aabef4f1354604443f1c415d2e85 ]
+[ Upstream commit ce51c817008450ef4188471db31639d42d37a5e1 ]
 
-Fix a "variable set but not used" warning in f_mass_storage.c.  rc is
-used if	verbose debugging is enabled but not otherwise.
+The functions iscsi_if_set_param() and iscsi_if_set_host_param() convert an
+nlattr payload to type char* and then call C string handling functions like
+sscanf and kstrdup:
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: d5e2b67aae79 ("USB: g_mass_storage: template f_mass_storage.c file created")
-Link: https://lore.kernel.org/r/cfed16c7-aa46-494b-ba84-b0e0dc99be3a@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  char *data = (char*)ev + sizeof(*ev);
+  ...
+  sscanf(data, "%d", &value);
+
+However, since the nlattr is provided by the user-space program and the
+nlmsg skb is allocated with GFP_KERNEL instead of GFP_ZERO flag (see
+netlink_alloc_large_skb() in netlink_sendmsg()), dirty data on the heap can
+lead to an OOB access for those string handling functions.
+
+By investigating how the bug is introduced, we find it is really
+interesting as the old version parsing code starting from commit
+fd7255f51a13 ("[SCSI] iscsi: add sysfs attrs for uspace sync up") treated
+the nlattr as integer bytes instead of string and had length check in
+iscsi_copy_param():
+
+  if (ev->u.set_param.len != sizeof(uint32_t))
+    BUG();
+
+But, since the commit a54a52caad4b ("[SCSI] iscsi: fixup set/get param
+functions"), the code treated the nlattr as C string while forgetting to
+add any strlen checks(), opening the possibility of an OOB access.
+
+Fix the potential OOB by adding the strlen() check before accessing the
+buf. If the data passes this check, all low-level set_param handlers can
+safely treat this buf as legal C string.
+
+Fixes: fd7255f51a13 ("[SCSI] iscsi: add sysfs attrs for uspace sync up")
+Fixes: 1d9bf13a9cf9 ("[SCSI] iscsi class: add iscsi host set param event")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230723075820.3713119-1-linma@zju.edu.cn
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_transport_iscsi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 950c9435beec3..553547f12fd20 100644
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -951,7 +951,7 @@ static void invalidate_sub(struct fsg_lun *curlun)
- {
- 	struct file	*filp = curlun->filp;
- 	struct inode	*inode = file_inode(filp);
--	unsigned long	rc;
-+	unsigned long __maybe_unused	rc;
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index 64bc403a4c285..074cbd64aa253 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -3007,6 +3007,10 @@ iscsi_if_set_param(struct iscsi_transport *transport, struct iscsi_uevent *ev, u
+ 	if (!conn || !session)
+ 		return -EINVAL;
  
- 	rc = invalidate_mapping_pages(inode->i_mapping, 0, -1);
- 	VLDBG(curlun, "invalidate_mapping_pages -> %ld\n", rc);
++	/* data will be regarded as NULL-ended string, do length check */
++	if (strlen(data) > ev->u.set_param.len)
++		return -EINVAL;
++
+ 	switch (ev->u.set_param.param) {
+ 	case ISCSI_PARAM_SESS_RECOVERY_TMO:
+ 		sscanf(data, "%d", &value);
+@@ -3180,6 +3184,10 @@ iscsi_set_host_param(struct iscsi_transport *transport,
+ 		return -ENODEV;
+ 	}
+ 
++	/* see similar check in iscsi_if_set_param() */
++	if (strlen(data) > ev->u.set_host_param.len)
++		return -EINVAL;
++
+ 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
+ 					data, ev->u.set_host_param.len);
+ 	scsi_host_put(shost);
 -- 
 2.40.1
 
