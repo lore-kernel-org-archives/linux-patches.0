@@ -1,33 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FAB7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E26C433C8;
-	Sun, 17 Sep 2023 19:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF4D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E210C433C7;
+	Sun, 17 Sep 2023 19:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980071;
-	bh=CAGdkPGWsMEpYXlokznD6ISLGy/gfriiqr63WthGK5k=;
+	s=korg; t=1694980074;
+	bh=eGMwnej6m+ZnPJxqfDhehVsGkQ00rYu7rFlBh3oFOi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSWLEe2zvqoGH0pKA1SpE2R80/LJbplgUkylyhv+ymJWzVtcxOGiU3ji9luIwkD1/
-	 jKNHmtYFqNIjpOwRm2eFlszsTloyrR4sB3xpSszC7P7JoAKGPI1odU4Rj6tS67f0DA
-	 5gs6O68kOolGMMwuHChhBRkg9Ppqe3mlSIAzBNI0=
+	b=XgbKZ7WeDaTJ3seqrKy8/9Kjz4wMZpe3MX+zmyXlI/WmOUzSHSgLG3ZL5SZxZ96+K
+	 F/D/HYLyqiVL3xCXkKDxX8iJ+TGPF21yVKBQX4UH9xpMDQOhs8KGhY9WUMim2hNY09
+	 8AholiPUZUr8Btd+BcFKDa1lix8YuKR4avvijBCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
+	Jeremie Galarneau <jeremie.galarneau@efficios.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kate Stewart <kstewart@linuxfoundation.org>,
+	Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>,
+	Mukesh Ojha <mojha@codeaurora.org>,
+	Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	linuxppc-dev@lists.ozlabs.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
+	Shawn Landden <shawn@git.icu>,
+	Song Liu <songliubraving@fb.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tzvetomir Stoyanov <tstoyanov@vmware.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 088/285] perf vendor events: Update metric event names for power10 platform
-Date: Sun, 17 Sep 2023 21:11:28 +0200
-Message-ID: <20230917191054.752496408@linuxfoundation.org>
+Subject: [PATCH 6.5 089/285] perf top: Dont pass an ERR_PTR() directly to perf_session__delete()
+Date: Sun, 17 Sep 2023 21:11:29 +0200
+Message-ID: <20230917191054.783484646@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -46,214 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit edd65d2bc55fb84d7b80c2ffe3b74d9b11ac4e2f ]
+[ Upstream commit ef23cb593304bde0cc046fd4cc83ae7ea2e24f16 ]
 
-Update metric event name for some of the JSON/metric events for
-power10 platform.
+While debugging a segfault on 'perf lock contention' without an
+available perf.data file I noticed that it was basically calling:
 
-Fixes: 3ca3af7d1f230d1f ("perf vendor events power10: Add metric events JSON file for power10 platform")
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Disha Goel <disgoel@linux.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+	perf_session__delete(ERR_PTR(-1))
+
+Resulting in:
+
+  (gdb) run lock contention
+  Starting program: /root/bin/perf lock contention
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib64/libthread_db.so.1".
+  failed to open perf.data: No such file or directory  (try 'perf record' first)
+  Initializing perf session failed
+
+  Program received signal SIGSEGV, Segmentation fault.
+  0x00000000005e7515 in auxtrace__free (session=0xffffffffffffffff) at util/auxtrace.c:2858
+  2858		if (!session->auxtrace)
+  (gdb) p session
+  $1 = (struct perf_session *) 0xffffffffffffffff
+  (gdb) bt
+  #0  0x00000000005e7515 in auxtrace__free (session=0xffffffffffffffff) at util/auxtrace.c:2858
+  #1  0x000000000057bb4d in perf_session__delete (session=0xffffffffffffffff) at util/session.c:300
+  #2  0x000000000047c421 in __cmd_contention (argc=0, argv=0x7fffffffe200) at builtin-lock.c:2161
+  #3  0x000000000047dc95 in cmd_lock (argc=0, argv=0x7fffffffe200) at builtin-lock.c:2604
+  #4  0x0000000000501466 in run_builtin (p=0xe597a8 <commands+552>, argc=2, argv=0x7fffffffe200) at perf.c:322
+  #5  0x00000000005016d5 in handle_internal_command (argc=2, argv=0x7fffffffe200) at perf.c:375
+  #6  0x0000000000501824 in run_argv (argcp=0x7fffffffe02c, argv=0x7fffffffe020) at perf.c:419
+  #7  0x0000000000501b11 in main (argc=2, argv=0x7fffffffe200) at perf.c:535
+  (gdb)
+
+So just set it to NULL after using PTR_ERR(session) to decode the error
+as perf_session__delete(NULL) is supported.
+
+The same problem was found in 'perf top' after an audit of all
+perf_session__new() failure handling.
+
+Fixes: 6ef81c55a2b6584c ("perf session: Return error code for perf_session__new() function on failure")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jeremie Galarneau <jeremie.galarneau@efficios.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kate Stewart <kstewart@linuxfoundation.org>
+Cc: Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>
+Cc: Mukesh Ojha <mojha@codeaurora.org>
+Cc: Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230814112803.1508296-6-kjain@linux.ibm.com
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+Cc: Shawn Landden <shawn@git.icu>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tzvetomir Stoyanov <tstoyanov@vmware.com>
+Link: https://lore.kernel.org/lkml/ZN4Q2rxxsL08A8rd@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/powerpc/power10/metrics.json         | 50 +++++++++----------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ tools/perf/builtin-top.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
-index e3087eb1ccff8..182369076d956 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
-@@ -16,133 +16,133 @@
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled for any reason",
-         "MetricExpr": "PM_DISP_STALL_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI;CPI_STALL_RATIO",
--        "MetricName": "DISPATCHED_CPI"
-+        "MetricName": "DISPATCH_STALL_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled because there was a flush",
-         "MetricExpr": "PM_DISP_STALL_FLUSH / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_FLUSH_CPI"
-+        "MetricName": "DISPATCH_STALL_FLUSH_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled because the MMU was handling a translation miss",
-         "MetricExpr": "PM_DISP_STALL_TRANSLATION / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_TRANSLATION_CPI"
-+        "MetricName": "DISPATCH_STALL_TRANSLATION_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled waiting to resolve an instruction ERAT miss",
-         "MetricExpr": "PM_DISP_STALL_IERAT_ONLY_MISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_IERAT_ONLY_MISS_CPI"
-+        "MetricName": "DISPATCH_STALL_IERAT_ONLY_MISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled waiting to resolve an instruction TLB miss",
-         "MetricExpr": "PM_DISP_STALL_ITLB_MISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_ITLB_MISS_CPI"
-+        "MetricName": "DISPATCH_STALL_ITLB_MISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled due to an icache miss",
-         "MetricExpr": "PM_DISP_STALL_IC_MISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_IC_MISS_CPI"
-+        "MetricName": "DISPATCH_STALL_IC_MISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while the instruction was fetched from the local L2",
-         "MetricExpr": "PM_DISP_STALL_IC_L2 / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_IC_L2_CPI"
-+        "MetricName": "DISPATCH_STALL_IC_L2_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while the instruction was fetched from the local L3",
-         "MetricExpr": "PM_DISP_STALL_IC_L3 / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_IC_L3_CPI"
-+        "MetricName": "DISPATCH_STALL_IC_L3_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while the instruction was fetched from any source beyond the local L3",
-         "MetricExpr": "PM_DISP_STALL_IC_L3MISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_IC_L3MISS_CPI"
-+        "MetricName": "DISPATCH_STALL_IC_L3MISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled due to an icache miss after a branch mispredict",
-         "MetricExpr": "PM_DISP_STALL_BR_MPRED_ICMISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_BR_MPRED_ICMISS_CPI"
-+        "MetricName": "DISPATCH_STALL_BR_MPRED_ICMISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while instruction was fetched from the local L2 after suffering a branch mispredict",
-         "MetricExpr": "PM_DISP_STALL_BR_MPRED_IC_L2 / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_BR_MPRED_IC_L2_CPI"
-+        "MetricName": "DISPATCH_STALL_BR_MPRED_IC_L2_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while instruction was fetched from the local L3 after suffering a branch mispredict",
-         "MetricExpr": "PM_DISP_STALL_BR_MPRED_IC_L3 / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_BR_MPRED_IC_L3_CPI"
-+        "MetricName": "DISPATCH_STALL_BR_MPRED_IC_L3_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled while instruction was fetched from any source beyond the local L3 after suffering a branch mispredict",
-         "MetricExpr": "PM_DISP_STALL_BR_MPRED_IC_L3MISS / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_BR_MPRED_IC_L3MISS_CPI"
-+        "MetricName": "DISPATCH_STALL_BR_MPRED_IC_L3MISS_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled due to a branch mispredict",
-         "MetricExpr": "PM_DISP_STALL_BR_MPRED / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_BR_MPRED_CPI"
-+        "MetricName": "DISPATCH_STALL_BR_MPRED_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch for any reason",
-         "MetricExpr": "PM_DISP_STALL_HELD_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch because of a synchronizing instruction that requires the ICT to be empty before dispatch",
-         "MetricExpr": "PM_DISP_STALL_HELD_SYNC_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISP_HELD_STALL_SYNC_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_SYNC_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch while waiting on the scoreboard",
-         "MetricExpr": "PM_DISP_STALL_HELD_SCOREBOARD_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISP_HELD_STALL_SCOREBOARD_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_SCOREBOARD_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch due to issue queue full",
-         "MetricExpr": "PM_DISP_STALL_HELD_ISSQ_FULL_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISP_HELD_STALL_ISSQ_FULL_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_ISSQ_FULL_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch because the mapper/SRB was full",
-         "MetricExpr": "PM_DISP_STALL_HELD_RENAME_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_RENAME_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_RENAME_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch because the STF mapper/SRB was full",
-         "MetricExpr": "PM_DISP_STALL_HELD_STF_MAPPER_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_STF_MAPPER_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_STF_MAPPER_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch because the XVFC mapper/SRB was full",
-         "MetricExpr": "PM_DISP_STALL_HELD_XVFC_MAPPER_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_XVFC_MAPPER_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_XVFC_MAPPER_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch for any other reason",
-         "MetricExpr": "PM_DISP_STALL_HELD_OTHER_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_OTHER_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_OTHER_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction has been dispatched but not issued for any reason",
-@@ -352,13 +352,13 @@
-         "BriefDescription": "Average cycles per completed instruction when dispatch was stalled because fetch was being held, so there was nothing in the pipeline for this thread",
-         "MetricExpr": "PM_DISP_STALL_FETCH / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_FETCH_CPI"
-+        "MetricName": "DISPATCH_STALL_FETCH_CPI"
-     },
-     {
-         "BriefDescription": "Average cycles per completed instruction when the NTC instruction was held at dispatch because of power management",
-         "MetricExpr": "PM_DISP_STALL_HELD_HALT_CYC / PM_RUN_INST_CMPL",
-         "MetricGroup": "CPI",
--        "MetricName": "DISPATCHED_HELD_HALT_CPI"
-+        "MetricName": "DISPATCH_STALL_HELD_HALT_CPI"
-     },
-     {
-         "BriefDescription": "Percentage of flushes per completed instruction",
-@@ -560,7 +560,7 @@
-         "BriefDescription": "Average number of STCX instructions finshed per completed instruction",
-         "MetricExpr": "PM_STCX_FIN / PM_RUN_INST_CMPL",
-         "MetricGroup": "General",
--        "MetricName": "STXC_PER_INST"
-+        "MetricName": "STCX_PER_INST"
-     },
-     {
-         "BriefDescription": "Average number of LARX instructions finshed per completed instruction",
+diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
+index 1baa2acb3cedd..ea8c7eca5eeed 100644
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -1805,6 +1805,7 @@ int cmd_top(int argc, const char **argv)
+ 	top.session = perf_session__new(NULL, NULL);
+ 	if (IS_ERR(top.session)) {
+ 		status = PTR_ERR(top.session);
++		top.session = NULL;
+ 		goto out_delete_evlist;
+ 	}
+ 
 -- 
 2.40.1
 
