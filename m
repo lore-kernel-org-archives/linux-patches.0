@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33786FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D8C433C7;
-	Sun, 17 Sep 2023 20:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D108F6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42555C433CB;
+	Sun, 17 Sep 2023 20:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981712;
-	bh=oolUaj3iv16VWgqBG5yBCJZF3xDJy2+xr0nL1XfTrVc=;
+	s=korg; t=1694981715;
+	bh=psFQzHfvPHzTEy+QKzSSAR5Ojx6BhZUZSeGBY4lLGIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpR9rtnm/78ot8AazG0CKntsAFY4h2vFYknV7ZCR0D2adbgib0FD2S+WIL1pn5OAY
-	 AB+PuQpqwOFVspUEL/UQwuujcQAThiLsMY8kLeZxYtYtxBr3lw+4XlgZkT0r99E449
-	 RfudlK3HdUgKk6AAAUvqCUIeY4vZo67SuEa1PUSg=
+	b=jlmpFoSjBnjhHY+zx+IoQXppSm0IzrvGiIj1Wq/jxeDDsRj0FhHh7Cb7iJJpd7Lmx
+	 kvyAadI3eY9ngCg07ZeLFSuWsNoRVcPTQKhev1b1hDAprn6XIPa4kjLhUTagvpNg6V
+	 CsA+vrtVURZIl2eS05msTxeTaAwYYMX4KtQTPiQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/511] ipv6: Add reasons for skb drops to __udp6_lib_rcv
-Date: Sun, 17 Sep 2023 21:08:34 +0200
-Message-ID: <20230917191115.973104486@linuxfoundation.org>
+	Liu Ying <victor.liu@nxp.com>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 6.1 162/219] drm/mxsfb: Disable overlay plane in mxsfb_plane_overlay_atomic_disable()
+Date: Sun, 17 Sep 2023 21:14:49 +0200
+Message-ID: <20230917191046.897954268@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,77 +35,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Ahern <dsahern@kernel.org>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit 4cf91f825b2777f81799f98ce32172b829acd1b2 ]
+commit aa656d48e871a1b062e1bbf9474d8b831c35074c upstream.
 
-Add reasons to __udp6_lib_rcv for skb drops. The only twist is that the
-NO_SOCKET takes precedence over the CSUM or other counters for that
-path (motivation behind this patch - csum counter was misleading).
+When disabling overlay plane in mxsfb_plane_overlay_atomic_update(),
+overlay plane's framebuffer pointer is NULL.  So, dereferencing it would
+cause a kernel Oops(NULL pointer dereferencing).  Fix the issue by
+disabling overlay plane in mxsfb_plane_overlay_atomic_disable() instead.
 
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cb285a5348e7 ("drm: mxsfb: Replace mxsfb_get_fb_paddr() with drm_fb_cma_get_gem_addr()")
+Cc: stable@vger.kernel.org # 5.19+
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230612092359.784115-1-victor.liu@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/udp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mxsfb/mxsfb_kms.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 2dab9aab551c3..d5d254ca2dfe6 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -936,6 +936,7 @@ static int udp6_unicast_rcv_skb(struct sock *sk, struct sk_buff *skb,
- int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 		   int proto)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	const struct in6_addr *saddr, *daddr;
- 	struct net *net = dev_net(skb->dev);
- 	struct udphdr *uh;
-@@ -1012,6 +1013,8 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 		return udp6_unicast_rcv_skb(sk, skb, uh);
- 	}
- 
-+	reason = SKB_DROP_REASON_NO_SOCKET;
-+
- 	if (!uh->check)
- 		goto report_csum_error;
- 
-@@ -1024,10 +1027,12 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 	__UDP6_INC_STATS(net, UDP_MIB_NOPORTS, proto == IPPROTO_UDPLITE);
- 	icmpv6_send(skb, ICMPV6_DEST_UNREACH, ICMPV6_PORT_UNREACH, 0);
- 
--	kfree_skb(skb);
-+	kfree_skb_reason(skb, reason);
- 	return 0;
- 
- short_packet:
-+	if (reason == SKB_DROP_REASON_NOT_SPECIFIED)
-+		reason = SKB_DROP_REASON_PKT_TOO_SMALL;
- 	net_dbg_ratelimited("UDP%sv6: short packet: From [%pI6c]:%u %d/%d to [%pI6c]:%u\n",
- 			    proto == IPPROTO_UDPLITE ? "-Lite" : "",
- 			    saddr, ntohs(uh->source),
-@@ -1038,10 +1043,12 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- report_csum_error:
- 	udp6_csum_zero_error(skb);
- csum_error:
-+	if (reason == SKB_DROP_REASON_NOT_SPECIFIED)
-+		reason = SKB_DROP_REASON_UDP_CSUM;
- 	__UDP6_INC_STATS(net, UDP_MIB_CSUMERRORS, proto == IPPROTO_UDPLITE);
- discard:
- 	__UDP6_INC_STATS(net, UDP_MIB_INERRORS, proto == IPPROTO_UDPLITE);
--	kfree_skb(skb);
-+	kfree_skb_reason(skb, reason);
- 	return 0;
+--- a/drivers/gpu/drm/mxsfb/mxsfb_kms.c
++++ b/drivers/gpu/drm/mxsfb/mxsfb_kms.c
+@@ -611,6 +611,14 @@ static void mxsfb_plane_overlay_atomic_u
+ 	writel(ctrl, mxsfb->base + LCDC_AS_CTRL);
  }
  
--- 
-2.40.1
-
++static void mxsfb_plane_overlay_atomic_disable(struct drm_plane *plane,
++					       struct drm_atomic_state *state)
++{
++	struct mxsfb_drm_private *mxsfb = to_mxsfb_drm_private(plane->dev);
++
++	writel(0, mxsfb->base + LCDC_AS_CTRL);
++}
++
+ static bool mxsfb_format_mod_supported(struct drm_plane *plane,
+ 				       uint32_t format,
+ 				       uint64_t modifier)
+@@ -626,6 +634,7 @@ static const struct drm_plane_helper_fun
+ static const struct drm_plane_helper_funcs mxsfb_plane_overlay_helper_funcs = {
+ 	.atomic_check = mxsfb_plane_atomic_check,
+ 	.atomic_update = mxsfb_plane_overlay_atomic_update,
++	.atomic_disable = mxsfb_plane_overlay_atomic_disable,
+ };
+ 
+ static const struct drm_plane_funcs mxsfb_plane_funcs = {
 
 
