@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECFA6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F481C433C8;
-	Sun, 17 Sep 2023 19:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0528B6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189EEC433C8;
+	Sun, 17 Sep 2023 19:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978986;
-	bh=txoFpH0E8ju/6Alo0HdrRc2JVXruPyT2v+6wXYgGIPI=;
+	s=korg; t=1694978989;
+	bh=Pp1FdQPZON8lGUZA9hufGB3Z65PgVmV3gWthf/tB/eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFdxy8bS1Ugjsk96MAJRkglWQ7ZKaDEaSdy6mtGzI53lHdziVJ0+IyR/ML2+TeY5T
-	 mU1Hv3YROsSBqGIfJ65hG1i2j1fzkY3B1tbGAdgs3AYFUeJ63o2yzsgioHuAMXRxh+
-	 zbI4nFDnHIR4lOtEtbJYJf3Wky/M/Rp4bC7yRtWk=
+	b=ZBxzYffrE52rJPeWPZgzpACCLZhbI7Zwz7kxRtEvJntT48eXqGEp60IKryMOa7Uai
+	 llZX/Ebst1YQzBWfGDMr5oIEh3WMThajuSAZ7PdF07+55UY2Saf/zVAeq+/XoBUTrj
+	 xBg9bkYvE5YWqP0DZljeyN1S2qou/t6PK2tRd0xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/406] PCI: pciehp: Use RMW accessors for changing LNKCTL
-Date: Sun, 17 Sep 2023 21:10:35 +0200
-Message-ID: <20230917191105.975791234@linuxfoundation.org>
+Subject: [PATCH 5.10 182/406] PCI/ASPM: Use RMW accessors for changing LNKCTL
+Date: Sun, 17 Sep 2023 21:10:36 +0200
+Message-ID: <20230917191106.008569369@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -45,45 +45,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 5f75f96c61039151c193775d776fde42477eace1 ]
+[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
 
-As hotplug is not the only driver touching LNKCTL, use the RMW capability
-accessor which handles concurrent changes correctly.
+Don't assume that the device is fully under the control of ASPM and use RMW
+capability accessors which do proper locking to avoid losing concurrent
+updates to the register values.
+
+If configuration fails in pcie_aspm_configure_common_clock(), the
+function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
+only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
+than the content of the whole LNKCTL registers. It aligns better with
+how pcie_lnkctl_clear_and_set() expects its parameter and makes the
+code more obvious to understand.
 
 Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 7f822999e12a ("PCI: pciehp: Add Disable/enable link functions")
-Link: https://lore.kernel.org/r/20230717120503.15276-4-ilpo.jarvinen@linux.intel.com
+Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
+Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
+Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pciehp_hpc.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
-index dda9523577472..75c6c72ec32ac 100644
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -332,17 +332,11 @@ int pciehp_check_link_status(struct controller *ctrl)
- static int __pciehp_link_set(struct controller *ctrl, bool enable)
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 7a3cf8aaec256..ef6f0ceb92f9f 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -249,7 +249,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
+ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
  {
- 	struct pci_dev *pdev = ctrl_dev(ctrl);
--	u16 lnk_ctrl;
+ 	int same_clock = 1;
+-	u16 reg16, parent_reg, child_reg[8];
++	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
+ 	struct pci_dev *child, *parent = link->pdev;
+ 	struct pci_bus *linkbus = parent->subordinate;
+ 	/*
+@@ -271,6 +271,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
  
--	pcie_capability_read_word(pdev, PCI_EXP_LNKCTL, &lnk_ctrl);
-+	pcie_capability_clear_and_set_word(pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_LD,
-+					   enable ? 0 : PCI_EXP_LNKCTL_LD);
+ 	/* Port might be already in common clock mode */
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
++	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
+ 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
+ 		bool consistent = true;
  
--	if (enable)
--		lnk_ctrl &= ~PCI_EXP_LNKCTL_LD;
+@@ -287,34 +288,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+ 		pci_info(parent, "ASPM: current common clock configuration is inconsistent, reconfiguring\n");
+ 	}
+ 
++	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
+ 	/* Configure downstream component, all functions */
+ 	list_for_each_entry(child, &linkbus->devices, bus_list) {
+ 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
+-		child_reg[PCI_FUNC(child->devfn)] = reg16;
+-		if (same_clock)
+-			reg16 |= PCI_EXP_LNKCTL_CCC;
+-		else
+-			reg16 &= ~PCI_EXP_LNKCTL_CCC;
+-		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
++		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
++		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++						   PCI_EXP_LNKCTL_CCC, ccc);
+ 	}
+ 
+ 	/* Configure upstream component */
+-	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
+-	parent_reg = reg16;
+-	if (same_clock)
+-		reg16 |= PCI_EXP_LNKCTL_CCC;
 -	else
--		lnk_ctrl |= PCI_EXP_LNKCTL_LD;
--
--	pcie_capability_write_word(pdev, PCI_EXP_LNKCTL, lnk_ctrl);
--	ctrl_dbg(ctrl, "%s: lnk_ctrl = %x\n", __func__, lnk_ctrl);
- 	return 0;
+-		reg16 &= ~PCI_EXP_LNKCTL_CCC;
+-	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
++	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_CCC, ccc);
+ 
+ 	if (pcie_retrain_link(link)) {
+ 
+ 		/* Training failed. Restore common clock configurations */
+ 		pci_err(parent, "ASPM: Could not configure common clock\n");
+ 		list_for_each_entry(child, &linkbus->devices, bus_list)
+-			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
+-					   child_reg[PCI_FUNC(child->devfn)]);
+-		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
++			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++							   PCI_EXP_LNKCTL_CCC,
++							   child_old_ccc[PCI_FUNC(child->devfn)]);
++		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
+ 	}
  }
  
 -- 
