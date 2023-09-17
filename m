@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3FF6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D80C433CB;
-	Sun, 17 Sep 2023 19:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68906FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED57C433C7;
+	Sun, 17 Sep 2023 19:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980553;
-	bh=RgNh2LVJxOuyJeU27TuKyV+rz9RGRrzzf4eFVBA/PZQ=;
+	s=korg; t=1694980556;
+	bh=deQrrf+xOBM3E4OjB7S/Xs4BBH3wEnyP5OtHoo93mSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6BolJk+FuP3Aju8j7UfgH6Xobrp7WsSXqRJSDnR5Elk8yYKEXZp5yhqcpjLpj64a
-	 Q/yRObSr+1/hUHAs1WJSeVVjdBfGvpbXJJktKA731p2NHcojdu12XXyIoRFtE4kGKs
-	 D7yMbsMjM3JV3Ne5WkQ90CZ30MEmnPcF/eI4jMs0=
+	b=QDsNF3JkWtkpQ4gP1j99Scrvrx6qWpDK42fEhc1FmJCKZ/e2vmsisOapVONHDrqgv
+	 ZU9FvvBdD1vebWzM8BgUMAgsujd99zjpC1n2Dt9T8Lxm2LSwkh3D+TiHiHJPd+o8DO
+	 anSH2XbF9zE49lSSOtjR9JRPRkZmTT3+aJVBSgNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William R Sowerbutts <will@sowerbutts.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.5 198/285] ata: pata_falcon: fix IO base selection for Q40
-Date: Sun, 17 Sep 2023 21:13:18 +0200
-Message-ID: <20230917191058.442164997@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 225/285] KVM: SVM: Get source vCPUs from source VM for SEV-ES intrahost migration
+Date: Sun, 17 Sep 2023 21:13:45 +0200
+Message-ID: <20230917191059.266184112@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,123 +40,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 8a1f00b753ecfdb117dc1a07e68c46d80e7923ea upstream.
+commit f1187ef24eb8f36e8ad8106d22615ceddeea6097 upstream.
 
-With commit 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver
-with pata_falcon and falconide"), the Q40 IDE driver was
-replaced by pata_falcon.c.
+Fix a goof where KVM tries to grab source vCPUs from the destination VM
+when doing intrahost migration.  Grabbing the wrong vCPU not only hoses
+the guest, it also crashes the host due to the VMSA pointer being left
+NULL.
 
-Both IO and memory resources were defined for the Q40 IDE
-platform device, but definition of the IDE register addresses
-was modeled after the Falcon case, both in use of the memory
-resources and in including register shift and byte vs. word
-offset in the address.
+  BUG: unable to handle page fault for address: ffffe38687000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] SMP NOPTI
+  CPU: 39 PID: 17143 Comm: sev_migrate_tes Tainted: GO       6.5.0-smp--fff2e47e6c3b-next #151
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.28.0 07/10/2023
+  RIP: 0010:__free_pages+0x15/0xd0
+  RSP: 0018:ffff923fcf6e3c78 EFLAGS: 00010246
+  RAX: 0000000000000000 RBX: ffffe38687000000 RCX: 0000000000000100
+  RDX: 0000000000000100 RSI: 0000000000000000 RDI: ffffe38687000000
+  RBP: ffff923fcf6e3c88 R08: ffff923fcafb0000 R09: 0000000000000000
+  R10: 0000000000000000 R11: ffffffff83619b90 R12: ffff923fa9540000
+  R13: 0000000000080007 R14: ffff923f6d35d000 R15: 0000000000000000
+  FS:  0000000000000000(0000) GS:ffff929d0d7c0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: ffffe38687000000 CR3: 0000005224c34005 CR4: 0000000000770ee0
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   sev_free_vcpu+0xcb/0x110 [kvm_amd]
+   svm_vcpu_free+0x75/0xf0 [kvm_amd]
+   kvm_arch_vcpu_destroy+0x36/0x140 [kvm]
+   kvm_destroy_vcpus+0x67/0x100 [kvm]
+   kvm_arch_destroy_vm+0x161/0x1d0 [kvm]
+   kvm_put_kvm+0x276/0x560 [kvm]
+   kvm_vm_release+0x25/0x30 [kvm]
+   __fput+0x106/0x280
+   ____fput+0x12/0x20
+   task_work_run+0x86/0xb0
+   do_exit+0x2e3/0x9c0
+   do_group_exit+0xb1/0xc0
+   __x64_sys_exit_group+0x1b/0x20
+   do_syscall_64+0x41/0x90
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+   </TASK>
+  CR2: ffffe38687000000
 
-This was correct for the Falcon case, which does not apply
-any address translation to the register addresses. In the
-Q40 case, all of device base address, byte access offset
-and register shift is included in the platform specific
-ISA access translation (in asm/mm_io.h).
-
-As a consequence, such address translation gets applied
-twice, and register addresses are mangled.
-
-Use the device base address from the platform IO resource
-for Q40 (the IO address translation will then add the correct
-ISA window base address and byte access offset), with register
-shift 1. Use MMIO base address and register shift 2 as before
-for Falcon.
-
-Encode PIO_OFFSET into IO port addresses for all registers
-for Q40 except the data transfer register. Encode the MMIO
-offset there (pata_falcon_data_xfer() directly uses raw IO
-with no address translation).
-
-Reported-by: William R Sowerbutts <will@sowerbutts.com>
-Closes: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
-Link: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
-Fixes: 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver with pata_falcon and falconide")
+Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
 Cc: stable@vger.kernel.org
-Cc: Finn Thain <fthain@linux-m68k.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: William R Sowerbutts <will@sowerbutts.com>
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: Peter Gonda <pgonda@google.com>
+Reviewed-by: Peter Gonda <pgonda@google.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/r/20230825022357.2852133-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_falcon.c |   50 ++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ arch/x86/kvm/svm/sev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/pata_falcon.c
-+++ b/drivers/ata/pata_falcon.c
-@@ -123,8 +123,8 @@ static int __init pata_falcon_init_one(s
- 	struct resource *base_res, *ctl_res, *irq_res;
- 	struct ata_host *host;
- 	struct ata_port *ap;
--	void __iomem *base;
--	int irq = 0;
-+	void __iomem *base, *ctl_base;
-+	int irq = 0, io_offset = 1, reg_shift = 2; /* Falcon defaults */
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1725,7 +1725,7 @@ static void sev_migrate_from(struct kvm
+ 		 * Note, the source is not required to have the same number of
+ 		 * vCPUs as the destination when migrating a vanilla SEV VM.
+ 		 */
+-		src_vcpu = kvm_get_vcpu(dst_kvm, i);
++		src_vcpu = kvm_get_vcpu(src_kvm, i);
+ 		src_svm = to_svm(src_vcpu);
  
- 	dev_info(&pdev->dev, "Atari Falcon and Q40/Q60 PATA controller\n");
- 
-@@ -165,26 +165,34 @@ static int __init pata_falcon_init_one(s
- 	ap->pio_mask = ATA_PIO4;
- 	ap->flags |= ATA_FLAG_SLAVE_POSS | ATA_FLAG_NO_IORDY;
- 
--	base = (void __iomem *)base_mem_res->start;
- 	/* N.B. this assumes data_addr will be used for word-sized I/O only */
--	ap->ioaddr.data_addr		= base + 0 + 0 * 4;
--	ap->ioaddr.error_addr		= base + 1 + 1 * 4;
--	ap->ioaddr.feature_addr		= base + 1 + 1 * 4;
--	ap->ioaddr.nsect_addr		= base + 1 + 2 * 4;
--	ap->ioaddr.lbal_addr		= base + 1 + 3 * 4;
--	ap->ioaddr.lbam_addr		= base + 1 + 4 * 4;
--	ap->ioaddr.lbah_addr		= base + 1 + 5 * 4;
--	ap->ioaddr.device_addr		= base + 1 + 6 * 4;
--	ap->ioaddr.status_addr		= base + 1 + 7 * 4;
--	ap->ioaddr.command_addr		= base + 1 + 7 * 4;
--
--	base = (void __iomem *)ctl_mem_res->start;
--	ap->ioaddr.altstatus_addr	= base + 1;
--	ap->ioaddr.ctl_addr		= base + 1;
--
--	ata_port_desc(ap, "cmd 0x%lx ctl 0x%lx",
--		      (unsigned long)base_mem_res->start,
--		      (unsigned long)ctl_mem_res->start);
-+	ap->ioaddr.data_addr = (void __iomem *)base_mem_res->start;
-+
-+	if (base_res) {		/* only Q40 has IO resources */
-+		io_offset = 0x10000;
-+		reg_shift = 0;
-+		base = (void __iomem *)base_res->start;
-+		ctl_base = (void __iomem *)ctl_res->start;
-+	} else {
-+		base = (void __iomem *)base_mem_res->start;
-+		ctl_base = (void __iomem *)ctl_mem_res->start;
-+	}
-+
-+	ap->ioaddr.error_addr	= base + io_offset + (1 << reg_shift);
-+	ap->ioaddr.feature_addr	= base + io_offset + (1 << reg_shift);
-+	ap->ioaddr.nsect_addr	= base + io_offset + (2 << reg_shift);
-+	ap->ioaddr.lbal_addr	= base + io_offset + (3 << reg_shift);
-+	ap->ioaddr.lbam_addr	= base + io_offset + (4 << reg_shift);
-+	ap->ioaddr.lbah_addr	= base + io_offset + (5 << reg_shift);
-+	ap->ioaddr.device_addr	= base + io_offset + (6 << reg_shift);
-+	ap->ioaddr.status_addr	= base + io_offset + (7 << reg_shift);
-+	ap->ioaddr.command_addr	= base + io_offset + (7 << reg_shift);
-+
-+	ap->ioaddr.altstatus_addr	= ctl_base + io_offset;
-+	ap->ioaddr.ctl_addr		= ctl_base + io_offset;
-+
-+	ata_port_desc(ap, "cmd %px ctl %px data %px",
-+		      base, ctl_base, ap->ioaddr.data_addr);
- 
- 	irq_res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
- 	if (irq_res && irq_res->start > 0) {
+ 		/*
 
 
