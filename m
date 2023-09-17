@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F0C6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972A0C433C9;
-	Sun, 17 Sep 2023 19:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6F56FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285FBC433C8;
+	Sun, 17 Sep 2023 19:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980306;
-	bh=0xcsQ88TWlM+5AjypHyRhtI2R06o4B/DeP4xDUPQ30w=;
+	s=korg; t=1694980309;
+	bh=+KQDJPNUmqldDjAsgE6GGFKbWBLRZT4B/NSW6rtLaLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NB135Dv2diB+G/xFZdOu8lfTVbOfT8ibn6Z37283x32QMaoz9TBCxUf78VLfjSXd5
-	 7YYzWt6SMH07Nbz2f2a/pYcAjlVwCBdTqODv+ce209TycrSX8Lz4lZaT/SmFGOAJxW
-	 vHUdvdI7b4M0eUNscivFVLS2PrftYaBZNVX+nmEc=
+	b=EHhZwNaxHyFKh/zPQxGg57M85dW40AOq+HMLNonuKqSCcam6cQUntKF+gxAZLuWfn
+	 6xC3sXVojbdWtTYk4+wIx+XlVNxVnzYHzLfVDqSRAZRiRKWOZwQ4gRyierFH/GN4Uo
+	 LwJEWTJr/Te3+MEIspDzCr/R0I0zhcXoCCnomKUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanan Yang <yanan.yang@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 153/285] net: dsa: sja1105: fix bandwidth discrepancy between tc-cbs software and offload
-Date: Sun, 17 Sep 2023 21:12:33 +0200
-Message-ID: <20230917191056.981257857@linuxfoundation.org>
+Subject: [PATCH 6.5 154/285] net: dsa: sja1105: fix -ENOSPC when replacing the same tc-cbs too many times
+Date: Sun, 17 Sep 2023 21:12:34 +0200
+Message-ID: <20230917191057.015813198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,131 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 954ad9bf13c4f95a4958b5f8433301f2ab99e1f5 ]
+[ Upstream commit 894cafc5c62ccced758077bd4e970dc714c42637 ]
 
-More careful measurement of the tc-cbs bandwidth shows that the stream
-bandwidth (effectively idleslope) increases, there is a larger and
-larger discrepancy between the rate limit obtained by the software
-Qdisc, and the rate limit obtained by its offloaded counterpart.
+After running command [2] too many times in a row:
 
-The discrepancy becomes so large, that e.g. at an idleslope of 40000
-(40Mbps), the offloaded cbs does not actually rate limit anything, and
-traffic will pass at line rate through a 100 Mbps port.
+[1] $ tc qdisc add dev sw2p0 root handle 1: mqprio num_tc 8 \
+	map 0 1 2 3 4 5 6 7 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
+[2] $ tc qdisc replace dev sw2p0 parent 1:1 cbs offload 1 \
+	idleslope 120000 sendslope -880000 locredit -1320 hicredit 180
 
-The reason for the discrepancy is that the hardware documentation I've
-been following is incorrect. UM11040.pdf (for SJA1105P/Q/R/S) states
-about IDLE_SLOPE that it is "the rate (in unit of bytes/sec) at which
-the credit counter is increased".
+(aka more than priv->info->num_cbs_shapers times)
 
-Cross-checking with UM10944.pdf (for SJA1105E/T) and UM11107.pdf
-(for SJA1110), the wording is different: "This field specifies the
-value, in bytes per second times link speed, by which the credit counter
-is increased".
+we start seeing the following error message:
 
-So there's an extra scaling for link speed that the driver is currently
-not accounting for, and apparently (empirically), that link speed is
-expressed in Kbps.
+Error: Specified device failed to setup cbs hardware offload.
 
-I've pondered whether to pollute the sja1105_mac_link_up()
-implementation with CBS shaper reprogramming, but I don't think it is
-worth it. IMO, the UAPI exposed by tc-cbs requires user space to
-recalculate the sendslope anyway, since the formula for that depends on
-port_transmit_rate (see man tc-cbs), which is not an invariant from tc's
-perspective.
-
-So we use the offload->sendslope and offload->idleslope to deduce the
-original port_transmit_rate from the CBS formula, and use that value to
-scale the offload->sendslope and offload->idleslope to values that the
-hardware understands.
-
-Some numerical data points:
-
- 40Mbps stream, max interfering frame size 1500, port speed 100M
- ---------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 40000 sendslope -60000 locredit -900 hicredit 600
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    600                600
- credit_lo    900                900
- send_slope   7500000            75
- idle_slope   5000000            50
-
- 40Mbps stream, max interfering frame size 1500, port speed 1G
- -------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 40000 sendslope -960000 locredit -1440 hicredit 60
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    60                 60
- credit_lo    1440               1440
- send_slope   120000000          120
- idle_slope   5000000            5
-
- 5.12Mbps stream, max interfering frame size 1522, port speed 100M
- -----------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 5120 sendslope -94880 locredit -1444 hicredit 77
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    77                 77
- credit_lo    1444               1444
- send_slope   11860000           118
- idle_slope   640000             6
-
-Tested on SJA1105T, SJA1105S and SJA1110A, at 1Gbps and 100Mbps.
+This comes from the fact that ndo_setup_tc(TC_SETUP_QDISC_CBS) presents
+the same API for the qdisc create and replace cases, and the sja1105
+driver fails to distinguish between the 2. Thus, it always thinks that
+it must allocate the same shaper for a {port, queue} pair, when it may
+instead have to replace an existing one.
 
 Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
-Reported-by: Yanan Yang <yanan.yang@nxp.com>
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 3529a565b4aaf..fe7f09519653a 100644
+index fe7f09519653a..e6d82ac106bee 100644
 --- a/drivers/net/dsa/sja1105/sja1105_main.c
 +++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2157,6 +2157,7 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- {
- 	struct sja1105_private *priv = ds->priv;
- 	struct sja1105_cbs_entry *cbs;
-+	s64 port_transmit_rate_kbps;
- 	int index;
+@@ -2123,6 +2123,18 @@ static void sja1105_bridge_leave(struct dsa_switch *ds, int port,
  
+ #define BYTES_PER_KBIT (1000LL / 8)
+ 
++static int sja1105_find_cbs_shaper(struct sja1105_private *priv,
++				   int port, int prio)
++{
++	int i;
++
++	for (i = 0; i < priv->info->num_cbs_shapers; i++)
++		if (priv->cbs[i].port == port && priv->cbs[i].prio == prio)
++			return i;
++
++	return -1;
++}
++
+ static int sja1105_find_unused_cbs_shaper(struct sja1105_private *priv)
+ {
+ 	int i;
+@@ -2163,9 +2175,14 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
  	if (!offload->enable)
-@@ -2174,9 +2175,17 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- 	 */
- 	cbs->credit_hi = offload->hicredit;
- 	cbs->credit_lo = abs(offload->locredit);
--	/* User space is in kbits/sec, hardware in bytes/sec */
--	cbs->idle_slope = offload->idleslope * BYTES_PER_KBIT;
--	cbs->send_slope = abs(offload->sendslope * BYTES_PER_KBIT);
-+	/* User space is in kbits/sec, while the hardware in bytes/sec times
-+	 * link speed. Since the given offload->sendslope is good only for the
-+	 * current link speed anyway, and user space is likely to reprogram it
-+	 * when that changes, don't even bother to track the port's link speed,
-+	 * but deduce the port transmit rate from idleslope - sendslope.
-+	 */
-+	port_transmit_rate_kbps = offload->idleslope - offload->sendslope;
-+	cbs->idle_slope = div_s64(offload->idleslope * BYTES_PER_KBIT,
-+				  port_transmit_rate_kbps);
-+	cbs->send_slope = div_s64(abs(offload->sendslope * BYTES_PER_KBIT),
-+				  port_transmit_rate_kbps);
- 	/* Convert the negative values from 64-bit 2's complement
- 	 * to 32-bit 2's complement (for the case of 0x80000000 whose
- 	 * negative is still negative).
+ 		return sja1105_delete_cbs_shaper(priv, port, offload->queue);
+ 
+-	index = sja1105_find_unused_cbs_shaper(priv);
+-	if (index < 0)
+-		return -ENOSPC;
++	/* The user may be replacing an existing shaper */
++	index = sja1105_find_cbs_shaper(priv, port, offload->queue);
++	if (index < 0) {
++		/* That isn't the case - see if we can allocate a new one */
++		index = sja1105_find_unused_cbs_shaper(priv);
++		if (index < 0)
++			return -ENOSPC;
++	}
+ 
+ 	cbs = &priv->cbs[index];
+ 	cbs->port = port;
 -- 
 2.40.1
 
