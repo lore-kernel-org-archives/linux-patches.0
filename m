@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C396FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB57C433C8;
-	Sun, 17 Sep 2023 19:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0D06FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF2FC433CB;
+	Sun, 17 Sep 2023 19:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980330;
-	bh=yVaKkPkwCVsTqwb831qlrnZeaQe6OIOW/Sl6STJLClM=;
+	s=korg; t=1694980333;
+	bh=PNnbXTSh40Sjr7zYsULIH6DayGAijSyehwHYWgM6uZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsSwHEV/Uacf7V0uhRnSJLBUHxXvkRlCyBOvhjfHnxutRcPxqFyiPim8V4CNs+qlZ
-	 F/u6L6gItJ8zleviC3dB49cs2C+PNK702hJpjg2zaAPNpN3CpbWplfJzrHnshkJqys
-	 OXDzXmr/baeig+WKY++VNgl+BdMNEz4YZ73YmTHM=
+	b=tsxThMgwx5Y5QuXDYLNMHSwJOs+XORfOmCcmVHeaCXKC56pVkh+sH/MbkyTjM0tYv
+	 UQdAlXiPKaPMDBMiE0pJvgd5HurJTqP5sjH5g7aegeBDXO/YKWaknzxP1Xv9G2yERb
+	 Ptq3y0k2e/Wk/BChXGldDUF0tF2dnZQS01mgDa5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 160/285] bpf: bpf_sk_storage: Fix invalid wait context lockdep report
-Date: Sun, 17 Sep 2023 21:12:40 +0200
-Message-ID: <20230917191057.210302227@linuxfoundation.org>
+Subject: [PATCH 6.5 134/285] af_unix: Fix data-races around user->unix_inflight.
+Date: Sun, 17 Sep 2023 21:12:14 +0200
+Message-ID: <20230917191056.299316020@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,196 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a96a44aba556c42b432929d37d60158aca21ad4c ]
+[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
 
-'./test_progs -t test_local_storage' reported a splat:
+user->unix_inflight is changed under spin_lock(unix_gc_lock),
+but too_many_unix_fds() reads it locklessly.
 
-[   27.137569] =============================
-[   27.138122] [ BUG: Invalid wait context ]
-[   27.138650] 6.5.0-03980-gd11ae1b16b0a #247 Tainted: G           O
-[   27.139542] -----------------------------
-[   27.140106] test_progs/1729 is trying to lock:
-[   27.140713] ffff8883ef047b88 (stock_lock){-.-.}-{3:3}, at: local_lock_acquire+0x9/0x130
-[   27.141834] other info that might help us debug this:
-[   27.142437] context-{5:5}
-[   27.142856] 2 locks held by test_progs/1729:
-[   27.143352]  #0: ffffffff84bcd9c0 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire+0x4/0x40
-[   27.144492]  #1: ffff888107deb2c0 (&storage->lock){..-.}-{2:2}, at: bpf_local_storage_update+0x39e/0x8e0
-[   27.145855] stack backtrace:
-[   27.146274] CPU: 0 PID: 1729 Comm: test_progs Tainted: G           O       6.5.0-03980-gd11ae1b16b0a #247
-[   27.147550] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-[   27.149127] Call Trace:
-[   27.149490]  <TASK>
-[   27.149867]  dump_stack_lvl+0x130/0x1d0
-[   27.152609]  dump_stack+0x14/0x20
-[   27.153131]  __lock_acquire+0x1657/0x2220
-[   27.153677]  lock_acquire+0x1b8/0x510
-[   27.157908]  local_lock_acquire+0x29/0x130
-[   27.159048]  obj_cgroup_charge+0xf4/0x3c0
-[   27.160794]  slab_pre_alloc_hook+0x28e/0x2b0
-[   27.161931]  __kmem_cache_alloc_node+0x51/0x210
-[   27.163557]  __kmalloc+0xaa/0x210
-[   27.164593]  bpf_map_kzalloc+0xbc/0x170
-[   27.165147]  bpf_selem_alloc+0x130/0x510
-[   27.166295]  bpf_local_storage_update+0x5aa/0x8e0
-[   27.167042]  bpf_fd_sk_storage_update_elem+0xdb/0x1a0
-[   27.169199]  bpf_map_update_value+0x415/0x4f0
-[   27.169871]  map_update_elem+0x413/0x550
-[   27.170330]  __sys_bpf+0x5e9/0x640
-[   27.174065]  __x64_sys_bpf+0x80/0x90
-[   27.174568]  do_syscall_64+0x48/0xa0
-[   27.175201]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[   27.175932] RIP: 0033:0x7effb40e41ad
-[   27.176357] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d8
-[   27.179028] RSP: 002b:00007ffe64c21fc8 EFLAGS: 00000202 ORIG_RAX: 0000000000000141
-[   27.180088] RAX: ffffffffffffffda RBX: 00007ffe64c22768 RCX: 00007effb40e41ad
-[   27.181082] RDX: 0000000000000020 RSI: 00007ffe64c22008 RDI: 0000000000000002
-[   27.182030] RBP: 00007ffe64c21ff0 R08: 0000000000000000 R09: 00007ffe64c22788
-[   27.183038] R10: 0000000000000064 R11: 0000000000000202 R12: 0000000000000000
-[   27.184006] R13: 00007ffe64c22788 R14: 00007effb42a1000 R15: 0000000000000000
-[   27.184958]  </TASK>
+Let's annotate the write/read accesses to user->unix_inflight.
 
-It complains about acquiring a local_lock while holding a raw_spin_lock.
-It means it should not allocate memory while holding a raw_spin_lock
-since it is not safe for RT.
+BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
 
-raw_spin_lock is needed because bpf_local_storage supports tracing
-context. In particular for task local storage, it is easy to
-get a "current" task PTR_TO_BTF_ID in tracing bpf prog.
-However, task (and cgroup) local storage has already been moved to
-bpf mem allocator which can be used after raw_spin_lock.
+write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
+ unix_inflight+0x157/0x180 net/unix/scm.c:66
+ unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-The splat is for the sk storage. For sk (and inode) storage,
-it has not been moved to bpf mem allocator. Using raw_spin_lock or not,
-kzalloc(GFP_ATOMIC) could theoretically be unsafe in tracing context.
-However, the local storage helper requires a verifier accepted
-sk pointer (PTR_TO_BTF_ID), it is hypothetical if that (mean running
-a bpf prog in a kzalloc unsafe context and also able to hold a verifier
-accepted sk pointer) could happen.
+read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
+ too_many_unix_fds net/unix/scm.c:101 [inline]
+ unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-This patch avoids kzalloc after raw_spin_lock to silent the splat.
-There is an existing kzalloc before the raw_spin_lock. At that point,
-a kzalloc is very likely required because a lookup has just been done
-before. Thus, this patch always does the kzalloc before acquiring
-the raw_spin_lock and remove the later kzalloc usage after the
-raw_spin_lock. After this change, it will have a charge and then
-uncharge during the syscall bpf_map_update_elem() code path.
-This patch opts for simplicity and not continue the old
-optimization to save one charge and uncharge.
+value changed: 0x000000000000000c -> 0x000000000000000d
 
-This issue is dated back to the very first commit of bpf_sk_storage
-which had been refactored multiple times to create task, inode, and
-cgroup storage. This patch uses a Fixes tag with a more recent
-commit that should be easier to do backport.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
 
-Fixes: b00fa38a9c1c ("bpf: Enable non-atomic allocations in local storage")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230901231129.578493-2-martin.lau@linux.dev
+Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 47 ++++++++++------------------------
- 1 file changed, 14 insertions(+), 33 deletions(-)
+ net/unix/scm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index b5149cfce7d4d..37ad47d52dc55 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -553,7 +553,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 			 void *value, u64 map_flags, gfp_t gfp_flags)
- {
- 	struct bpf_local_storage_data *old_sdata = NULL;
--	struct bpf_local_storage_elem *selem = NULL;
-+	struct bpf_local_storage_elem *alloc_selem, *selem = NULL;
- 	struct bpf_local_storage *local_storage;
- 	unsigned long flags;
- 	int err;
-@@ -607,11 +607,12 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		}
+diff --git a/net/unix/scm.c b/net/unix/scm.c
+index f9152881d77f6..033e21e5c4df6 100644
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
  	}
- 
--	if (gfp_flags == GFP_KERNEL) {
--		selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
--		if (!selem)
--			return ERR_PTR(-ENOMEM);
--	}
-+	/* A lookup has just been done before and concluded a new selem is
-+	 * needed. The chance of an unnecessary alloc is unlikely.
-+	 */
-+	alloc_selem = selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
-+	if (!alloc_selem)
-+		return ERR_PTR(-ENOMEM);
- 
- 	raw_spin_lock_irqsave(&local_storage->lock, flags);
- 
-@@ -623,13 +624,13 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		 * simple.
- 		 */
- 		err = -EAGAIN;
--		goto unlock_err;
-+		goto unlock;
- 	}
- 
- 	old_sdata = bpf_local_storage_lookup(local_storage, smap, false);
- 	err = check_flags(old_sdata, map_flags);
- 	if (err)
--		goto unlock_err;
-+		goto unlock;
- 
- 	if (old_sdata && (map_flags & BPF_F_LOCK)) {
- 		copy_map_value_locked(&smap->map, old_sdata->data, value,
-@@ -638,23 +639,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		goto unlock;
- 	}
- 
--	if (gfp_flags != GFP_KERNEL) {
--		/* local_storage->lock is held.  Hence, we are sure
--		 * we can unlink and uncharge the old_sdata successfully
--		 * later.  Hence, instead of charging the new selem now
--		 * and then uncharge the old selem later (which may cause
--		 * a potential but unnecessary charge failure),  avoid taking
--		 * a charge at all here (the "!old_sdata" check) and the
--		 * old_sdata will not be uncharged later during
--		 * bpf_selem_unlink_storage_nolock().
--		 */
--		selem = bpf_selem_alloc(smap, owner, value, !old_sdata, gfp_flags);
--		if (!selem) {
--			err = -ENOMEM;
--			goto unlock_err;
--		}
--	}
--
-+	alloc_selem = NULL;
- 	/* First, link the new selem to the map */
- 	bpf_selem_link_map(smap, selem);
- 
-@@ -665,20 +650,16 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 	if (old_sdata) {
- 		bpf_selem_unlink_map(SELEM(old_sdata));
- 		bpf_selem_unlink_storage_nolock(local_storage, SELEM(old_sdata),
--						false, false);
-+						true, false);
- 	}
- 
- unlock:
- 	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
--	return SDATA(selem);
--
--unlock_err:
--	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
--	if (selem) {
-+	if (alloc_selem) {
- 		mem_uncharge(smap, owner, smap->elem_size);
--		bpf_selem_free(selem, smap, true);
-+		bpf_selem_free(alloc_selem, smap, true);
- 	}
--	return ERR_PTR(err);
-+	return err ? ERR_PTR(err) : SDATA(selem);
+-	user->unix_inflight++;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
+ 	spin_unlock(&unix_gc_lock);
  }
  
- static u16 bpf_local_storage_cache_idx_get(struct bpf_local_storage_cache *cache)
+@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
+ 	}
+-	user->unix_inflight--;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
+ 
+@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
+ {
+ 	struct user_struct *user = current_user();
+ 
+-	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
++	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
+ 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
+ 	return false;
+ }
 -- 
 2.40.1
 
