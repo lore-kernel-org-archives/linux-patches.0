@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F276FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C38DC433CC;
-	Sun, 17 Sep 2023 20:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3586FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE688C43391;
+	Sun, 17 Sep 2023 20:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981564;
-	bh=xBbZEOyj9VcpV/RCbkEdbLY+tg635D8puTW+lJY0jCA=;
+	s=korg; t=1694981568;
+	bh=7Fle1oQoPk1vKpVCsXj5+JQXaLi6cQ0RBghpAKCdjgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuRfuQL676GroMIy+0Msybpxj/25xGw566G0FMGqzM9BUD7YdbhEmZyrtxh2R0Gd3
-	 faF3CX0XE2i1xEIdlGbBRcC4p9KIfrHZnZnW4rm3PWZ7j0sySUOIgZLJ/vX11LYRxD
-	 fuLanQmyGYF8UURlggSB9au3sLG19wuVQkRwl5O0=
+	b=cWl9koxJjthfYluDiD8+P53y7Bsk6fvpYs+TT5AvS0Guuv3Bki+lCP+EcgnWjnm/v
+	 AGsAhwQCtI3XjHp9dlnp1e/39unIKcj8nzs7rwAzLgAHu2Xkzbtc4gZnypF9IhSXbL
+	 +SUQKGo4plehe3NE+UF1w2od+z8PRuAwJdyKnJQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/511] selftests/futex: Order calls to futex_lock_pi
-Date: Sun, 17 Sep 2023 21:08:19 +0200
-Message-ID: <20230917191115.618123281@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 141/219] jbd2: fix checkpoint cleanup performance regression
+Date: Sun, 17 Sep 2023 21:14:28 +0200
+Message-ID: <20230917191046.099480823@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,80 +37,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nysal Jan K.A <nysal@linux.ibm.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit fbf4dec702774286db409815ffb077711a96b824 ]
+commit 373ac521799d9e97061515aca6ec6621789036bb upstream.
 
-Observed occassional failures in the futex_wait_timeout test:
+journal_clean_one_cp_list() has been merged into
+journal_shrink_one_cp_list(), but do chekpoint buffer cleanup from the
+committing process is just a best effort, it should stop scan once it
+meet a busy buffer, or else it will cause a lot of invalid buffer scan
+and checks. We catch a performance regression when doing fs_mark tests
+below.
 
-ok 1 futex_wait relative succeeds
-ok 2 futex_wait_bitset realtime succeeds
-ok 3 futex_wait_bitset monotonic succeeds
-ok 4 futex_wait_requeue_pi realtime succeeds
-ok 5 futex_wait_requeue_pi monotonic succeeds
-not ok 6 futex_lock_pi realtime returned 0
-......
+Test cmd:
+ ./fs_mark  -d  scratch  -s  1024  -n  10000  -t  1  -D  100  -N  100
 
-The test expects the child thread to complete some steps before
-the parent thread gets to run. There is an implicit expectation
-of the order of invocation of futex_lock_pi between the child thread
-and the parent thread. Make this order explicit. If the order is
-not met, the futex_lock_pi call in the parent thread succeeds and
-will not timeout.
+Before merging checkpoint buffer cleanup:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       8304.9            49033
 
-Fixes: f4addd54b161 ("selftests: futex: Expand timeout test")
-Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After merging checkpoint buffer cleanup:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       7649.0            50012
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       2107.1            50871
+
+After merging checkpoint buffer cleanup, the total loop count in
+journal_shrink_one_cp_list() could be up to 6,261,600+ (50,000+ ~
+100,000+ in general), most of them are invalid. This patch fix it
+through passing 'shrink_type' into journal_shrink_one_cp_list() and add
+a new 'SHRINK_BUSY_STOP' to indicate it should stop once meet a busy
+buffer. After fix, the loop count descending back to 10,000+.
+
+After this fix:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       8558.4            49109
+
+Cc: stable@kernel.org
+Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230714025528.564988-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/futex/functional/futex_wait_timeout.c        | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/jbd2/checkpoint.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_wait_timeout.c b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-index 1f8f6daaf1e70..86ac205ea8e18 100644
---- a/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-+++ b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-@@ -23,6 +23,7 @@
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -349,6 +349,8 @@ int jbd2_cleanup_journal_tail(journal_t
  
- static long timeout_ns = 100000;	/* 100us default timeout */
- static futex_t futex_pi;
-+static pthread_barrier_t barrier;
+ /* Checkpoint list management */
  
- void usage(char *prog)
- {
-@@ -47,6 +48,8 @@ void *get_pi_lock(void *arg)
- 	if (ret != 0)
- 		error("futex_lock_pi failed\n", ret);
- 
-+	pthread_barrier_wait(&barrier);
++enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
 +
- 	/* Blocks forever */
- 	ret = futex_wait(&lock, 0, NULL, 0);
- 	error("futex_wait failed\n", ret);
-@@ -123,6 +126,7 @@ int main(int argc, char *argv[])
- 	       basename(argv[0]));
- 	ksft_print_msg("\tArguments: timeout=%ldns\n", timeout_ns);
+ /*
+  * journal_shrink_one_cp_list
+  *
+@@ -360,7 +362,8 @@ int jbd2_cleanup_journal_tail(journal_t
+  * Called with j_list_lock held.
+  */
+ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+-						bool destroy, bool *released)
++						enum shrink_type type,
++						bool *released)
+ {
+ 	struct journal_head *last_jh;
+ 	struct journal_head *next_jh = jh;
+@@ -376,12 +379,15 @@ static unsigned long journal_shrink_one_
+ 		jh = next_jh;
+ 		next_jh = jh->b_cpnext;
  
-+	pthread_barrier_init(&barrier, NULL, 2);
- 	pthread_create(&thread, NULL, get_pi_lock, NULL);
+-		if (destroy) {
++		if (type == SHRINK_DESTROY) {
+ 			ret = __jbd2_journal_remove_checkpoint(jh);
+ 		} else {
+ 			ret = jbd2_journal_try_remove_checkpoint(jh);
+-			if (ret < 0)
+-				continue;
++			if (ret < 0) {
++				if (type == SHRINK_BUSY_SKIP)
++					continue;
++				break;
++			}
+ 		}
  
- 	/* initialize relative timeout */
-@@ -156,6 +160,9 @@ int main(int argc, char *argv[])
- 	res = futex_wait_requeue_pi(&f1, f1, &futex_pi, &to, 0);
- 	test_timeout(res, &ret, "futex_wait_requeue_pi monotonic", ETIMEDOUT);
+ 		nr_freed++;
+@@ -445,7 +451,7 @@ again:
+ 		tid = transaction->t_tid;
  
-+	/* Wait until the other thread calls futex_lock_pi() */
-+	pthread_barrier_wait(&barrier);
-+	pthread_barrier_destroy(&barrier);
- 	/*
- 	 * FUTEX_LOCK_PI with CLOCK_REALTIME
- 	 * Due to historical reasons, FUTEX_LOCK_PI supports only realtime
--- 
-2.40.1
-
+ 		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
+-						   false, &released);
++						   SHRINK_BUSY_SKIP, &released);
+ 		nr_freed += freed;
+ 		(*nr_to_scan) -= min(*nr_to_scan, freed);
+ 		if (*nr_to_scan == 0)
+@@ -485,19 +491,21 @@ out:
+ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ {
+ 	transaction_t *transaction, *last_transaction, *next_transaction;
++	enum shrink_type type;
+ 	bool released;
+ 
+ 	transaction = journal->j_checkpoint_transactions;
+ 	if (!transaction)
+ 		return;
+ 
++	type = destroy ? SHRINK_DESTROY : SHRINK_BUSY_STOP;
+ 	last_transaction = transaction->t_cpprev;
+ 	next_transaction = transaction;
+ 	do {
+ 		transaction = next_transaction;
+ 		next_transaction = transaction->t_cpnext;
+ 		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
+-					   destroy, &released);
++					   type, &released);
+ 		/*
+ 		 * This function only frees up some memory if possible so we
+ 		 * dont have an obligation to finish processing. Bail out if
 
 
