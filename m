@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4BC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E29C433C7;
-	Sun, 17 Sep 2023 19:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705546FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB54C433C9;
+	Sun, 17 Sep 2023 19:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978461;
-	bh=sR81dnaaaLWGrBIcKKj+EJ3wUQmsdG3TQj5KHUzTMmQ=;
+	s=korg; t=1694978465;
+	bh=CkL1q/1PzLO1l70MethORY8Un7Sr3BNjlZXJcYek3sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCBHGMJWM+tuy7NLZLEqMOIyOcep75ci09C0HbFdAaVoCa54LHo9mVMeMOpK2zTQE
-	 rfquGYjuoT5VR9AzcUHkTj0X7Hm56WcCsPSPZm6bpdWeK6aUfQ6tifVFih5Aa/PJ7R
-	 Bhu0XvSwUpAv1CcBwzdRzPbkO5mClYQ3mM92AHZQ=
+	b=DRXVA0Rp0UAhGRZiYZjPIfZd2AT1oBquD3jw1ht3mLezRs1uCu1tXTXL22bk0b/3/
+	 3FmIFr4QBC8xh01e7hPLOnLXMRyRKrBeSWWlFvXi8ZUugof4xZJ2/4rT7u/TtD660R
+	 bHAumiLWNy7hPdM6B6C0/1gwmq53tQm4Q/xSw5c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/406] eventfd: Export eventfd_ctx_do_read()
-Date: Sun, 17 Sep 2023 21:08:40 +0200
-Message-ID: <20230917191102.881791034@linuxfoundation.org>
+Subject: [PATCH 5.10 049/406] clk: fixed-mmio: make COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM
+Date: Sun, 17 Sep 2023 21:08:23 +0200
+Message-ID: <20230917191102.438575278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,73 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit 28f1326710555bbe666f64452d08f2d7dd657cae ]
+[ Upstream commit e7dd44f4f3166db45248414f5df8f615392de47a ]
 
-Where events are consumed in the kernel, for example by KVM's
-irqfd_wakeup() and VFIO's virqfd_wakeup(), they currently lack a
-mechanism to drain the eventfd's counter.
+On s390 systems (aka mainframes), it has classic channel devices for
+networking and permanent storage that are currently even more common
+than PCI devices. Hence it could have a fully functional s390 kernel
+with CONFIG_PCI=n, then the relevant iomem mapping functions
+[including ioremap(), devm_ioremap(), etc.] are not available.
 
-Since the wait queue is already locked while the wakeup functions are
-invoked, all they really need to do is call eventfd_ctx_do_read().
+Here let COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM so that it won't
+be built to cause below compiling error if PCI is unset:
 
-Add a check for the lock, and export it for them.
+------
+ld: drivers/clk/clk-fixed-mmio.o: in function `fixed_mmio_clk_setup':
+clk-fixed-mmio.c:(.text+0x5e): undefined reference to `of_iomap'
+ld: clk-fixed-mmio.c:(.text+0xba): undefined reference to `iounmap'
+------
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Message-Id: <20201027135523.646811-2-dwmw2@infradead.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 758b49204781 ("eventfd: prevent underflow for eventfd semaphores")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230707135852.24292-8-bhe@redhat.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventfd.c            | 5 ++++-
- include/linux/eventfd.h | 6 ++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/clk/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/eventfd.c b/fs/eventfd.c
-index 4a14295cffe0d..b8d38b970ce7f 100644
---- a/fs/eventfd.c
-+++ b/fs/eventfd.c
-@@ -187,11 +187,14 @@ static __poll_t eventfd_poll(struct file *file, poll_table *wait)
- 	return events;
- }
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 4ae49eae45869..df739665f2063 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -356,6 +356,7 @@ config COMMON_CLK_BD718XX
+ config COMMON_CLK_FIXED_MMIO
+ 	bool "Clock driver for Memory Mapped Fixed values"
+ 	depends on COMMON_CLK && OF
++	depends on HAS_IOMEM
+ 	help
+ 	  Support for Memory Mapped IO Fixed clocks
  
--static void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
-+void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
- {
-+	lockdep_assert_held(&ctx->wqh.lock);
-+
- 	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
- 	ctx->count -= *cnt;
- }
-+EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
- 
- /**
-  * eventfd_ctx_remove_wait_queue - Read the current counter and removes wait queue.
-diff --git a/include/linux/eventfd.h b/include/linux/eventfd.h
-index 6cd2a92daf205..c1bd4883e2faf 100644
---- a/include/linux/eventfd.h
-+++ b/include/linux/eventfd.h
-@@ -42,6 +42,7 @@ __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n);
- __u64 eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n, unsigned mask);
- int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx, wait_queue_entry_t *wait,
- 				  __u64 *cnt);
-+void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt);
- 
- DECLARE_PER_CPU(int, eventfd_wake_count);
- 
-@@ -89,6 +90,11 @@ static inline bool eventfd_signal_count(void)
- 	return false;
- }
- 
-+static inline void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
-+{
-+
-+}
-+
- #endif
- 
- #endif /* _LINUX_EVENTFD_H */
 -- 
 2.40.1
 
