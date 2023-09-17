@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B466FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89533C433D9;
-	Sun, 17 Sep 2023 20:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6310B6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0D0C433CB;
+	Sun, 17 Sep 2023 20:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980934;
-	bh=YMNrfYwfGcHibjtNZ5QK0sKA7Yj+7seU83m51hanu3s=;
+	s=korg; t=1694980937;
+	bh=AqKVkf7WXflN3rY3llnVnZyWRr9Vvf3FXJBvohiXQO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2nJ/Pu1yACHDpqJyD0rz/elmKRAjLcAhxCTmBajmCQ/kZ3enndj/RKQ5saC2mpA3
-	 Z/RtJ7OMdZqnkbgvUoKHejLGk45C47AmweIcjtztDE45wY9gHEJkutVd92yGN1KEKp
-	 eMcqr4T3wbRgQ0TgMTxD+Cf4KePzexShFxabRwGg=
+	b=MHYDcS6hFNQ5zfxond+ZL3FcuDnWb3oDdyphyNkH/nAzxEqQzJkGgobk09QYOzMt6
+	 ytO/MS7/AjnGaxzk5yulLdzDxrI2SFOMtJIYOIi88h4amSkdagtCUy0D4ZfOK3K7K7
+	 1ee6etWcGWRa2bRM4ISNt+6H4hR5iA5+iUt+1cA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.1 049/219] NFS: Fix a potential data corruption
-Date: Sun, 17 Sep 2023 21:12:56 +0200
-Message-ID: <20230917191042.778246848@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 022/219] scsi: qla2xxx: Fix smatch warn for qla_init_iocb_limit()
+Date: Sun, 17 Sep 2023 21:12:29 +0200
+Message-ID: <20230917191041.800047216@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -39,60 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 88975a55969e11f26fe3846bf4fbf8e7dc8cbbd4 upstream.
+commit b496953dd0444001b12f425ea07d78c1f47e3193 upstream.
 
-We must ensure that the subrequests are joined back into the head before
-we can retransmit a request. If the head was not on the commit lists,
-because the server wrote it synchronously, we still need to add it back
-to the retransmission list.
-Add a call that mirrors the effect of nfs_cancel_remove_inode() for
-O_DIRECT.
+Fix indentation for warning reported by smatch:
 
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+drivers/scsi/qla2xxx/qla_init.c:4199 qla_init_iocb_limit() warn: inconsistent indenting
+
+Fixes: efa74a62aaa2 ("scsi: qla2xxx: Adjust IOCB resource on qpair create")
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230821130045.34850-8-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/direct.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -474,13 +474,31 @@ out:
- 	return result;
- }
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4204,7 +4204,7 @@ void qla_init_iocb_limit(scsi_qla_host_t
+ 	u8 i;
+ 	struct qla_hw_data *ha = vha->hw;
  
-+static void nfs_direct_add_page_head(struct list_head *list,
-+				     struct nfs_page *req)
-+{
-+	struct nfs_page *head = req->wb_head;
-+
-+	if (!list_empty(&head->wb_list) || !nfs_lock_request(head))
-+		return;
-+	if (!list_empty(&head->wb_list)) {
-+		nfs_unlock_request(head);
-+		return;
-+	}
-+	list_add(&head->wb_list, list);
-+	kref_get(&head->wb_kref);
-+	kref_get(&head->wb_kref);
-+}
-+
- static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- {
- 	struct nfs_page *req, *subreq;
+-	 __qla_adjust_iocb_limit(ha->base_qpair);
++	__qla_adjust_iocb_limit(ha->base_qpair);
+ 	ha->base_qpair->fwres.iocbs_used = 0;
+ 	ha->base_qpair->fwres.exch_used  = 0;
  
- 	list_for_each_entry(req, list, wb_list) {
--		if (req->wb_head != req)
-+		if (req->wb_head != req) {
-+			nfs_direct_add_page_head(&req->wb_list, req);
- 			continue;
-+		}
- 		subreq = req->wb_this_page;
- 		if (subreq == req)
- 			continue;
 
 
