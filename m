@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A06FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C1FC433C7;
-	Sun, 17 Sep 2023 19:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407C06FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0D8C433C9;
+	Sun, 17 Sep 2023 19:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978552;
-	bh=A2iX2IZWH8Yznq2szO7QKuJHNTCf59aI0qTCsAxdBOo=;
+	s=korg; t=1694978556;
+	bh=DMe/wS2K5FPaLpozX54ZEL5nUrr3S0ZtFsdcPPSbIB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MY9Q1blQU9fAW+eBL5DJ/LEjjdUV85LxpIJdjSPFbgTdMBDMBPFQ9t5CWeK49sJRN
-	 ZjSjSvERKezCACIjnVTKV/vo8zs7qccVrGJ2wcTo6Iw/gvJENyMYAjolrlxktdxJrY
-	 HEuHE8QENk0YTgxt2htfY9YP1bGVegEjkacvjfgw=
+	b=ZQSbAJ2xEVb7zYqdNggI28/DvcaUXmozjZXDyKQXNjbqhkMgMD+hE/VRpTh/WiBF5
+	 QDCNAMZQjlBGRQx5lQXSI3yrgUzqb07QroNupgQq9zVZmT2tv7PsOXimzMDXCvwPSN
+	 /KRrpc4ZpAkL5IXe1oYaJBiiH+FBNpVPuz+MCYpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Matthew Wang <matthewmwang@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Brian Norris <briannorris@chromium.org>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/406] wifi: mwifiex: Fix OOB and integer underflow when rx packets
-Date: Sun, 17 Sep 2023 21:09:06 +0200
-Message-ID: <20230917191103.561447055@linuxfoundation.org>
+Subject: [PATCH 5.10 093/406] wifi: mwifiex: fix error recovery in PCIE buffer descriptor management
+Date: Sun, 17 Sep 2023 21:09:07 +0200
+Message-ID: <20230917191103.588024191@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,125 +41,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 11958528161731c58e105b501ed60b83a91ea941 ]
+[ Upstream commit 288c63d5cb4667a51a04668b3e2bb0ea499bc5f4 ]
 
-Make sure mwifiex_process_mgmt_packet,
-mwifiex_process_sta_rx_packet and mwifiex_process_uap_rx_packet,
-mwifiex_uap_queue_bridged_pkt and mwifiex_process_rx_packet
-not out-of-bounds access the skb->data buffer.
+Add missing 'kfree_skb()' in 'mwifiex_init_rxq_ring()' and never do
+'kfree(card->rxbd_ring_vbase)' because this area is DMAed and should
+be released with 'dma_free_coherent()'. The latter is performed in
+'mwifiex_pcie_delete_rxbd_ring()', which is now called to recover
+from possible errors in 'mwifiex_pcie_create_rxbd_ring()'. Likewise
+for 'mwifiex_pcie_init_evt_ring()', 'kfree(card->evtbd_ring_vbase)'
+'mwifiex_pcie_delete_evtbd_ring()' and 'mwifiex_pcie_create_rxbd_ring()'.
 
-Fixes: 2dbaf751b1de ("mwifiex: report received management frames to cfg80211")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
+Fixes: d930faee141b ("mwifiex: add support for Marvell pcie8766 chipset")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230723070741.1544662-1-pinkperfect2021@gmail.com
+Link: https://lore.kernel.org/r/20230731074334.56463-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c | 11 ++++++++++-
- .../net/wireless/marvell/mwifiex/uap_txrx.c   | 19 +++++++++++++++++++
- drivers/net/wireless/marvell/mwifiex/util.c   | 10 +++++++---
- 3 files changed, 36 insertions(+), 4 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/pcie.c | 25 ++++++++++++++-------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 0d2adf8879005..685a5b6697046 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -98,6 +98,14 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
+index 50c34630ca302..7cec6398da71c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/pcie.c
++++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
+@@ -200,6 +200,8 @@ static int mwifiex_pcie_probe_of(struct device *dev)
+ }
  
-+	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
-+		mwifiex_dbg(priv->adapter, ERROR,
-+			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
-+			    skb->len, rx_pkt_off);
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+	}
-+
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -206,7 +214,8 @@ int mwifiex_process_sta_rx_packet(struct mwifiex_private *priv,
+ static void mwifiex_pcie_work(struct work_struct *work);
++static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter);
++static int mwifiex_pcie_delete_evtbd_ring(struct mwifiex_adapter *adapter);
  
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_offset;
+ static int
+ mwifiex_map_pci_memory(struct mwifiex_adapter *adapter, struct sk_buff *skb,
+@@ -794,14 +796,15 @@ static int mwifiex_init_rxq_ring(struct mwifiex_adapter *adapter)
+ 		if (!skb) {
+ 			mwifiex_dbg(adapter, ERROR,
+ 				    "Unable to allocate skb for RX ring.\n");
+-			kfree(card->rxbd_ring_vbase);
+ 			return -ENOMEM;
+ 		}
  
--	if ((rx_pkt_offset + rx_pkt_length) > (u16) skb->len) {
-+	if ((rx_pkt_offset + rx_pkt_length) > skb->len ||
-+	    sizeof(rx_pkt_hdr->eth803_hdr) + rx_pkt_offset > skb->len) {
- 		mwifiex_dbg(adapter, ERROR,
- 			    "wrong rx packet: len=%d, rx_pkt_offset=%d, rx_pkt_length=%d\n",
- 			    skb->len, rx_pkt_offset, rx_pkt_length);
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index 9bbdb8dfce62a..f46afd7f1b6a4 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -115,6 +115,15 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 		return;
- 	}
+ 		if (mwifiex_map_pci_memory(adapter, skb,
+ 					   MWIFIEX_RX_DATA_BUF_SIZE,
+-					   DMA_FROM_DEVICE))
+-			return -1;
++					   DMA_FROM_DEVICE)) {
++			kfree_skb(skb);
++			return -ENOMEM;
++		}
  
-+	if (sizeof(*rx_pkt_hdr) +
-+	    le16_to_cpu(uap_rx_pd->rx_pkt_offset) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet offset: len=%d,rx_pkt_offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+	}
-+
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -379,6 +388,16 @@ int mwifiex_process_uap_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_type = le16_to_cpu(uap_rx_pd->rx_pkt_type);
- 	rx_pkt_hdr = (void *)uap_rx_pd + le16_to_cpu(uap_rx_pd->rx_pkt_offset);
+ 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
  
-+	if (le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-+	    sizeof(rx_pkt_hdr->eth803_hdr) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet for struct ethhdr: len=%d, offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+		return 0;
-+	}
-+
- 	ether_addr_copy(ta, rx_pkt_hdr->eth803_hdr.h_source);
+@@ -851,7 +854,6 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
+ 		if (!skb) {
+ 			mwifiex_dbg(adapter, ERROR,
+ 				    "Unable to allocate skb for EVENT buf.\n");
+-			kfree(card->evtbd_ring_vbase);
+ 			return -ENOMEM;
+ 		}
+ 		skb_put(skb, MAX_EVENT_SIZE);
+@@ -859,8 +861,7 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
+ 		if (mwifiex_map_pci_memory(adapter, skb, MAX_EVENT_SIZE,
+ 					   DMA_FROM_DEVICE)) {
+ 			kfree_skb(skb);
+-			kfree(card->evtbd_ring_vbase);
+-			return -1;
++			return -ENOMEM;
+ 		}
  
- 	if ((le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-diff --git a/drivers/net/wireless/marvell/mwifiex/util.c b/drivers/net/wireless/marvell/mwifiex/util.c
-index d583fa600a296..1f5a6dab9ce55 100644
---- a/drivers/net/wireless/marvell/mwifiex/util.c
-+++ b/drivers/net/wireless/marvell/mwifiex/util.c
-@@ -405,11 +405,15 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
- 	}
+ 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
+@@ -1060,6 +1061,7 @@ static int mwifiex_pcie_delete_txbd_ring(struct mwifiex_adapter *adapter)
+  */
+ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
+ {
++	int ret;
+ 	struct pcie_service_card *card = adapter->card;
+ 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
  
- 	rx_pd = (struct rxpd *)skb->data;
-+	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	if (pkt_len < sizeof(struct ieee80211_hdr) + sizeof(pkt_len)) {
-+		mwifiex_dbg(priv->adapter, ERROR, "invalid rx_pkt_length");
-+		return -1;
-+	}
+@@ -1098,7 +1100,10 @@ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
+ 		    (u32)((u64)card->rxbd_ring_pbase >> 32),
+ 		    card->rxbd_ring_size);
  
- 	skb_pull(skb, le16_to_cpu(rx_pd->rx_pkt_offset));
- 	skb_pull(skb, sizeof(pkt_len));
--
--	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	pkt_len -= sizeof(pkt_len);
+-	return mwifiex_init_rxq_ring(adapter);
++	ret = mwifiex_init_rxq_ring(adapter);
++	if (ret)
++		mwifiex_pcie_delete_rxbd_ring(adapter);
++	return ret;
+ }
  
- 	ieee_hdr = (void *)skb->data;
- 	if (ieee80211_is_mgmt(ieee_hdr->frame_control)) {
-@@ -422,7 +426,7 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
- 		skb->data + sizeof(struct ieee80211_hdr),
- 		pkt_len - sizeof(struct ieee80211_hdr));
+ /*
+@@ -1129,6 +1134,7 @@ static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter)
+  */
+ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
+ {
++	int ret;
+ 	struct pcie_service_card *card = adapter->card;
+ 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
  
--	pkt_len -= ETH_ALEN + sizeof(pkt_len);
-+	pkt_len -= ETH_ALEN;
- 	rx_pd->rx_pkt_length = cpu_to_le16(pkt_len);
+@@ -1163,7 +1169,10 @@ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
+ 		    (u32)((u64)card->evtbd_ring_pbase >> 32),
+ 		    card->evtbd_ring_size);
  
- 	cfg80211_rx_mgmt(&priv->wdev, priv->roc_cfg.chan.center_freq,
+-	return mwifiex_pcie_init_evt_ring(adapter);
++	ret = mwifiex_pcie_init_evt_ring(adapter);
++	if (ret)
++		mwifiex_pcie_delete_evtbd_ring(adapter);
++	return ret;
+ }
+ 
+ /*
 -- 
 2.40.1
 
