@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488C26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:01:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93249C433D9;
-	Sun, 17 Sep 2023 20:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B7A6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:01:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B5BC43397;
+	Sun, 17 Sep 2023 20:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980872;
-	bh=fheggj1bHESoSWOMU6fK3HWTw//kdpMm8Odx12UGc+c=;
+	s=korg; t=1694980875;
+	bh=38gmd9P7XBwZM5CarY5zU96L3QdMcJQ65V8M2FdO8yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDjvK4Ht9smyqXF7sMT37oBKwCkqqIheYrurFlas/JK4LJEUaTFowI9ivDiu3H7qY
-	 Pzk344krvpiqQ2ERnRD3KEfvaA83PMJ7zbKGcpOZ9NejRUs4wfe3poOW6bimC/et1L
-	 TfHr7xbmmKEV5awnB7YzQHaZGoyCV9mY2E9RNxKs=
+	b=oqqPeXkq0fQrUS2ZZfQXQ+IdndNgIzIq/cYUWSz86UynS7hRbY0lOE3heesJ2bGbJ
+	 WUpfvcw4Z9kEfH73LbFhjh2JPS+iUo4gcFqWaJIp2R806+yaPauIaijO+o+rmDGU3n
+	 ig0IEvP21J+vMHozvanfqfgSid9dq/PT6Ua180RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 033/219] memcg: drop kmem.limit_in_bytes
-Date: Sun, 17 Sep 2023 21:12:40 +0200
-Message-ID: <20230917191042.204185566@linuxfoundation.org>
+Subject: [PATCH 6.1 034/219] mm: hugetlb_vmemmap: fix a race between vmemmap pmd split
+Date: Sun, 17 Sep 2023 21:12:41 +0200
+Message-ID: <20230917191042.236707960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -44,86 +40,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hocko <mhocko@suse.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 86327e8eb94c52eca4f93cfece2e29d1bf52acbf upstream.
+commit 3ce2c24cb68f228590a053d6058a5901cd31af61 upstream.
 
-kmem.limit_in_bytes (v1 way to limit kernel memory usage) has been
-deprecated since 58056f77502f ("memcg, kmem: further deprecate
-kmem.limit_in_bytes") merged in 5.16.  We haven't heard about any serious
-users since then but it seems that the mere presence of the file is
-causing more harm thatn good.  We (SUSE) have had several bug reports from
-customers where Docker based containers started to fail because a write to
-kmem.limit_in_bytes has failed.
+The local variable @page in __split_vmemmap_huge_pmd() to obtain a pmd
+page without holding page_table_lock may possiblely get the page table
+page instead of a huge pmd page.
 
-This was unexpected because runc code only expects ENOENT (kmem disabled)
-or EBUSY (tasks already running within cgroup).  So a new error code was
-unexpected and the whole container startup failed.  This has been later
-addressed by
-https://github.com/opencontainers/runc/commit/52390d68040637dfc77f9fda6bbe70952423d380
-so current Docker runtimes do not suffer from the problem anymore.  There
-are still older version of Docker in use and likely hard to get rid of
-completely.
+The effect may be in set_pte_at() since we may pass an invalid page
+struct, if set_pte_at() wants to access the page struct (e.g.
+CONFIG_PAGE_TABLE_CHECK is enabled), it may crash the kernel.
 
-Address this by wiping out the file completely and effectively get back to
-pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+So fix it.  And inline __split_vmemmap_huge_pmd() since it only has one
+user.
 
-I would recommend backporting to stable trees which have picked up
-58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes").
-
-[mhocko@suse.com: restore _KMEM switch case]
-  Link: https://lkml.kernel.org/r/ZKe5wxdbvPi5Cwd7@dhcp22.suse.cz
-Link: https://lkml.kernel.org/r/20230704115240.14672-1-mhocko@kernel.org
-Signed-off-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
+Link: https://lkml.kernel.org/r/20230707033859.16148-1-songmuchun@bytedance.com
+Fixes: d8d55f5616cf ("mm: sparsemem: use page table lock to protect kernel pmd operations")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/cgroup-v1/memory.rst |    2 --
- mm/memcontrol.c                                |   10 ----------
- 2 files changed, 12 deletions(-)
+ mm/hugetlb_vmemmap.c |   34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
---- a/Documentation/admin-guide/cgroup-v1/memory.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-@@ -91,8 +91,6 @@ Brief summary of control files.
-  memory.oom_control		     set/show oom controls.
-  memory.numa_stat		     show the number of memory usage per numa
- 				     node
-- memory.kmem.limit_in_bytes          This knob is deprecated and writing to
--                                     it will return -ENOTSUPP.
-  memory.kmem.usage_in_bytes          show current kernel memory allocation
-  memory.kmem.failcnt                 show the number of kernel memory usage
- 				     hits limits
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -3841,10 +3841,6 @@ static ssize_t mem_cgroup_write(struct k
- 		case _MEMSWAP:
- 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
- 			break;
--		case _KMEM:
--			/* kmem.limit_in_bytes is deprecated. */
--			ret = -EOPNOTSUPP;
--			break;
- 		case _TCP:
- 			ret = memcg_update_tcp_max(memcg, nr_pages);
- 			break;
-@@ -5056,12 +5052,6 @@ static struct cftype mem_cgroup_legacy_f
- 	},
- #endif
- 	{
--		.name = "kmem.limit_in_bytes",
--		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
--		.write = mem_cgroup_write,
--		.read_u64 = mem_cgroup_read_u64,
--	},
--	{
- 		.name = "kmem.usage_in_bytes",
- 		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
- 		.read_u64 = mem_cgroup_read_u64,
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -36,14 +36,22 @@ struct vmemmap_remap_walk {
+ 	struct list_head	*vmemmap_pages;
+ };
+ 
+-static int __split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
++static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
+ {
+ 	pmd_t __pmd;
+ 	int i;
+ 	unsigned long addr = start;
+-	struct page *page = pmd_page(*pmd);
+-	pte_t *pgtable = pte_alloc_one_kernel(&init_mm);
++	struct page *head;
++	pte_t *pgtable;
++
++	spin_lock(&init_mm.page_table_lock);
++	head = pmd_leaf(*pmd) ? pmd_page(*pmd) : NULL;
++	spin_unlock(&init_mm.page_table_lock);
+ 
++	if (!head)
++		return 0;
++
++	pgtable = pte_alloc_one_kernel(&init_mm);
+ 	if (!pgtable)
+ 		return -ENOMEM;
+ 
+@@ -53,7 +61,7 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 		pte_t entry, *pte;
+ 		pgprot_t pgprot = PAGE_KERNEL;
+ 
+-		entry = mk_pte(page + i, pgprot);
++		entry = mk_pte(head + i, pgprot);
+ 		pte = pte_offset_kernel(&__pmd, addr);
+ 		set_pte_at(&init_mm, addr, pte, entry);
+ 	}
+@@ -65,8 +73,8 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 		 * be treated as indepdenent small pages (as they can be freed
+ 		 * individually).
+ 		 */
+-		if (!PageReserved(page))
+-			split_page(page, get_order(PMD_SIZE));
++		if (!PageReserved(head))
++			split_page(head, get_order(PMD_SIZE));
+ 
+ 		/* Make pte visible before pmd. See comment in pmd_install(). */
+ 		smp_wmb();
+@@ -80,20 +88,6 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 	return 0;
+ }
+ 
+-static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
+-{
+-	int leaf;
+-
+-	spin_lock(&init_mm.page_table_lock);
+-	leaf = pmd_leaf(*pmd);
+-	spin_unlock(&init_mm.page_table_lock);
+-
+-	if (!leaf)
+-		return 0;
+-
+-	return __split_vmemmap_huge_pmd(pmd, start);
+-}
+-
+ static void vmemmap_pte_range(pmd_t *pmd, unsigned long addr,
+ 			      unsigned long end,
+ 			      struct vmemmap_remap_walk *walk)
 
 
