@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1B96FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300DCC433C7;
-	Sun, 17 Sep 2023 19:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEA76FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE229C433C8;
+	Sun, 17 Sep 2023 19:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979665;
-	bh=roCuYcG/qNZj3VN3VCl7lU4TUeE0dXaXWF6i9m6BCxg=;
+	s=korg; t=1694979669;
+	bh=IOxrloBRfVLrluzu2G4Fdv+mF/WxeGjr9TxLYbzVGpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcMLcZLWBo0dSzYMNYiWTF6BFRngPZJJ+VR2MeLsjgmQcfcrh4ZHHdjIiiMKYBZh/
-	 H4TTnEMkdY6zPiLedX9xOOeQSdUqTV0FDVYJeS9g56+SqxUGmESP3CZ/zmL3gx7QvT
-	 buwb1ljDttevqcW4omJDI/+PHEelyia0yw7tlm2s=
+	b=yDp5aXhyt1mI9z58UjZy7BR2cXrhijESRgYUOr2OR4H3gz/vs5OVcTU6YxXNjFuKm
+	 uzjSyUvSPXBd4CVIl+zBMD8eSeTG/r+1qzID/BEIX9Fg9QwHzfNxY8gwy/J4KNFeaJ
+	 y8i4BxyqVZdzM5LbOKufKnacMnk89I3DlVUEgpCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.10 379/406] perf tools: Handle old data in PERF_RECORD_ATTR
-Date: Sun, 17 Sep 2023 21:13:53 +0200
-Message-ID: <20230917191111.272910936@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 362/406] ip_tunnels: use DEV_STATS_INC()
+Date: Sun, 17 Sep 2023 21:13:36 +0200
+Message-ID: <20230917191110.831519422@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -45,90 +41,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 9bf63282ea77a531ea58acb42fb3f40d2d1e4497 upstream.
+[ Upstream commit 9b271ebaf9a2c5c566a54bc6cd915962e8241130 ]
 
-The PERF_RECORD_ATTR is used for a pipe mode to describe an event with
-attribute and IDs.  The ID table comes after the attr and it calculate
-size of the table using the total record size and the attr size.
+syzbot/KCSAN reported data-races in iptunnel_xmit_stats() [1]
 
-  n_ids = (total_record_size - end_of_the_attr_field) / sizeof(u64)
+This can run from multiple cpus without mutual exclusion.
 
-This is fine for most use cases, but sometimes it saves the pipe output
-in a file and then process it later.  And it becomes a problem if there
-is a change in attr size between the record and report.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-  $ perf record -o- > perf-pipe.data  # old version
-  $ perf report -i- < perf-pipe.data  # new version
+[1]
+BUG: KCSAN: data-race in iptunnel_xmit / iptunnel_xmit
 
-For example, if the attr size is 128 and it has 4 IDs, then it would
-save them in 168 byte like below:
+read-write to 0xffff8881353df170 of 8 bytes by task 30263 on cpu 1:
+iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
+iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
+ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+__bpf_tx_skb net/core/filter.c:2129 [inline]
+__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
+__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
+____bpf_clone_redirect net/core/filter.c:2453 [inline]
+bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
+___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
+__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
+bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
+__bpf_prog_run include/linux/filter.h:609 [inline]
+bpf_prog_run include/linux/filter.h:616 [inline]
+bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
+bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
+bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
+__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
+__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 128 byte: perf event attr { .size = 128, ... },
-  32 byte: event IDs [] = { 1234, 1235, 1236, 1237 },
+read-write to 0xffff8881353df170 of 8 bytes by task 30249 on cpu 0:
+iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
+iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
+ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
+__gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+__bpf_tx_skb net/core/filter.c:2129 [inline]
+__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
+__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
+____bpf_clone_redirect net/core/filter.c:2453 [inline]
+bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
+___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
+__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
+bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
+__bpf_prog_run include/linux/filter.h:609 [inline]
+bpf_prog_run include/linux/filter.h:616 [inline]
+bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
+bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
+bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
+__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
+__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-But when report later, it thinks the attr size is 136 then it only read
-the last 3 entries as ID.
+value changed: 0x0000000000018830 -> 0x0000000000018831
 
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 136 byte: perf event attr { .size = 136, ... },
-  24 byte: event IDs [] = { 1235, 1236, 1237 },  // 1234 is missing
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 30249 Comm: syz-executor.4 Not tainted 6.5.0-syzkaller-11704-g3f86ed6ec0b3 #0
 
-So it should use the recorded version of the attr.  The attr has the
-size field already then it should honor the size when reading data.
-
-Fixes: 2c46dbb517a10b18 ("perf: Convert perf header attrs into attr events")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230825152552.112913-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 039f50629b7f ("ip_tunnel: Move stats update to iptunnel_xmit()")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/net/ip_tunnels.h | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3987,7 +3987,8 @@ int perf_event__process_attr(struct perf
- 			     union perf_event *event,
- 			     struct evlist **pevlist)
- {
--	u32 i, ids, n_ids;
-+	u32 i, n_ids;
-+	u64 *ids;
- 	struct evsel *evsel;
- 	struct evlist *evlist = *pevlist;
- 
-@@ -4003,9 +4004,8 @@ int perf_event__process_attr(struct perf
- 
- 	evlist__add(evlist, evsel);
- 
--	ids = event->header.size;
--	ids -= (void *)&event->attr.id - (void *)event;
--	n_ids = ids / sizeof(u64);
-+	n_ids = event->header.size - sizeof(event->header) - event->attr.attr.size;
-+	n_ids = n_ids / sizeof(u64);
- 	/*
- 	 * We don't have the cpu and thread maps on the header, so
- 	 * for allocating the perf_sample_id table we fake 1 cpu and
-@@ -4014,8 +4014,9 @@ int perf_event__process_attr(struct perf
- 	if (perf_evsel__alloc_id(&evsel->core, 1, n_ids))
- 		return -ENOMEM;
- 
-+	ids = (void *)&event->attr.attr + event->attr.attr.size;
- 	for (i = 0; i < n_ids; i++) {
--		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, event->attr.id[i]);
-+		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, ids[i]);
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 1ddd401a8981f..58d8e6260aa13 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -455,15 +455,14 @@ static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
+ 		tstats->tx_packets++;
+ 		u64_stats_update_end(&tstats->syncp);
+ 		put_cpu_ptr(tstats);
++		return;
++	}
++
++	if (pkt_len < 0) {
++		DEV_STATS_INC(dev, tx_errors);
++		DEV_STATS_INC(dev, tx_aborted_errors);
+ 	} else {
+-		struct net_device_stats *err_stats = &dev->stats;
+-
+-		if (pkt_len < 0) {
+-			err_stats->tx_errors++;
+-			err_stats->tx_aborted_errors++;
+-		} else {
+-			err_stats->tx_dropped++;
+-		}
++		DEV_STATS_INC(dev, tx_dropped);
  	}
+ }
  
- 	return 0;
+-- 
+2.40.1
+
 
 
