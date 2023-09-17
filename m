@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ABD746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816E3C433C8;
-	Sun, 17 Sep 2023 20:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03673746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEC0C433C7;
+	Sun, 17 Sep 2023 20:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983062;
-	bh=4uYnKFYeXd3YE8Cw6hdjEFYDwV/VeMPnc0TF5jltTxs=;
+	s=korg; t=1694983065;
+	bh=bWbGOWnwMxCZIb+zq10IDmggmwnu1P7AzNrBcbhkYl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ur1PFdFFRHemLI51anqlYwQ6C438C0vL+VMYW4XCQPVDK8TimWPeuGxpK0J6AG7DV
-	 Z76gYwC710MIagNeSE5CvkLAL5H+5MZ50Ioi2dOma6FbLGG8gjX5rmeUM0c7HsSpdB
-	 INee9Q36UiKLGeWCklmdeXUz6/hgcIB1MVjciqT4=
+	b=t5+0WXVNQtIjZsxASvBTa3yrVxly7/QS+D531yjGsLDCRhWSCKVWLm2x6hfg65g9V
+	 F7TPU+XrwEZYLHmOoNO3KaLiRuRqWAF8y1PU/ECGEnUOPtJ7Cgg+03w8T5LdIiSsOq
+	 Cpv2PyV7m5FzM/Y8WCXSgSNEy8GINzfeFypiZs1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 434/511] ipv4: ignore dst hint for multipath routes
-Date: Sun, 17 Sep 2023 21:14:21 +0200
-Message-ID: <20230917191124.242951458@linuxfoundation.org>
+Subject: [PATCH 5.15 417/511] Input: tca6416-keypad - always expect proper IRQ number in i2c client
+Date: Sun, 17 Sep 2023 21:14:04 +0200
+Message-ID: <20230917191123.849175167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,69 +39,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 6ac66cb03ae306c2e288a9be18226310529f5b25 ]
+[ Upstream commit 687fe7dfb736b03ab820d172ea5dbfc1ec447135 ]
 
-Route hints when the nexthop is part of a multipath group causes packets
-in the same receive batch to be sent to the same nexthop irrespective of
-the multipath hash of the packet. So, do not extract route hint for
-packets whose destination is part of a multipath group.
+Remove option having i2c client contain raw gpio number instead of proper
+IRQ number. There are no users of this facility in mainline and it will
+allow cleaning up the driver code with regard to wakeup handling, etc.
 
-A new SKB flag IPSKB_MULTIPATH is introduced for this purpose, set the
-flag when route is looked up in ip_mkroute_input() and use it in
-ip_extract_route_hint() to check for the existence of the flag.
-
-Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20230724053024.352054-1-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: cc141c35af87 ("Input: tca6416-keypad - fix interrupt enable disbalance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h    | 1 +
- net/ipv4/ip_input.c | 3 ++-
- net/ipv4/route.c    | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/keyboard/tca6416-keypad.c | 27 +++++++++----------------
+ include/linux/tca6416_keypad.h          |  1 -
+ 2 files changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index fc05e016be060..e1a93c3391090 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -56,6 +56,7 @@ struct inet_skb_parm {
- #define IPSKB_FRAG_PMTU		BIT(6)
- #define IPSKB_L3SLAVE		BIT(7)
- #define IPSKB_NOPOLICY		BIT(8)
-+#define IPSKB_MULTIPATH		BIT(9)
+diff --git a/drivers/input/keyboard/tca6416-keypad.c b/drivers/input/keyboard/tca6416-keypad.c
+index 2a97559100652..d65afa25c2405 100644
+--- a/drivers/input/keyboard/tca6416-keypad.c
++++ b/drivers/input/keyboard/tca6416-keypad.c
+@@ -148,7 +148,7 @@ static int tca6416_keys_open(struct input_dev *dev)
+ 	if (chip->use_polling)
+ 		schedule_delayed_work(&chip->dwork, msecs_to_jiffies(100));
+ 	else
+-		enable_irq(chip->irqnum);
++		enable_irq(chip->client->irq);
  
- 	u16			frag_max_size;
- };
-diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
-index 124bf8fdf924a..5d0bc0dbdb4d9 100644
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -581,7 +581,8 @@ static void ip_sublist_rcv_finish(struct list_head *head)
- static struct sk_buff *ip_extract_route_hint(const struct net *net,
- 					     struct sk_buff *skb, int rt_type)
- {
--	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST)
-+	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST ||
-+	    IPCB(skb)->flags & IPSKB_MULTIPATH)
- 		return NULL;
+ 	return 0;
+ }
+@@ -160,7 +160,7 @@ static void tca6416_keys_close(struct input_dev *dev)
+ 	if (chip->use_polling)
+ 		cancel_delayed_work_sync(&chip->dwork);
+ 	else
+-		disable_irq(chip->irqnum);
++		disable_irq(chip->client->irq);
+ }
  
- 	return skb;
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index ca59b61fd3a31..bc6240d327a8f 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2151,6 +2151,7 @@ static int ip_mkroute_input(struct sk_buff *skb,
- 		int h = fib_multipath_hash(res->fi->fib_net, NULL, skb, hkeys);
+ static int tca6416_setup_registers(struct tca6416_keypad_chip *chip)
+@@ -266,12 +266,7 @@ static int tca6416_keypad_probe(struct i2c_client *client,
+ 		goto fail1;
  
- 		fib_select_multipath(res, h);
-+		IPCB(skb)->flags |= IPSKB_MULTIPATH;
+ 	if (!chip->use_polling) {
+-		if (pdata->irq_is_gpio)
+-			chip->irqnum = gpio_to_irq(client->irq);
+-		else
+-			chip->irqnum = client->irq;
+-
+-		error = request_threaded_irq(chip->irqnum, NULL,
++		error = request_threaded_irq(client->irq, NULL,
+ 					     tca6416_keys_isr,
+ 					     IRQF_TRIGGER_FALLING |
+ 					     IRQF_ONESHOT | IRQF_NO_AUTOEN,
+@@ -279,7 +274,7 @@ static int tca6416_keypad_probe(struct i2c_client *client,
+ 		if (error) {
+ 			dev_dbg(&client->dev,
+ 				"Unable to claim irq %d; error %d\n",
+-				chip->irqnum, error);
++				client->irq, error);
+ 			goto fail1;
+ 		}
  	}
- #endif
+@@ -298,8 +293,8 @@ static int tca6416_keypad_probe(struct i2c_client *client,
  
+ fail2:
+ 	if (!chip->use_polling) {
+-		free_irq(chip->irqnum, chip);
+-		enable_irq(chip->irqnum);
++		free_irq(client->irq, chip);
++		enable_irq(client->irq);
+ 	}
+ fail1:
+ 	input_free_device(input);
+@@ -312,8 +307,8 @@ static int tca6416_keypad_remove(struct i2c_client *client)
+ 	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
+ 
+ 	if (!chip->use_polling) {
+-		free_irq(chip->irqnum, chip);
+-		enable_irq(chip->irqnum);
++		free_irq(client->irq, chip);
++		enable_irq(client->irq);
+ 	}
+ 
+ 	input_unregister_device(chip->input);
+@@ -326,10 +321,9 @@ static int tca6416_keypad_remove(struct i2c_client *client)
+ static int tca6416_keypad_suspend(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
+ 
+ 	if (device_may_wakeup(dev))
+-		enable_irq_wake(chip->irqnum);
++		enable_irq_wake(client->irq);
+ 
+ 	return 0;
+ }
+@@ -337,10 +331,9 @@ static int tca6416_keypad_suspend(struct device *dev)
+ static int tca6416_keypad_resume(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct tca6416_keypad_chip *chip = i2c_get_clientdata(client);
+ 
+ 	if (device_may_wakeup(dev))
+-		disable_irq_wake(chip->irqnum);
++		disable_irq_wake(client->irq);
+ 
+ 	return 0;
+ }
+diff --git a/include/linux/tca6416_keypad.h b/include/linux/tca6416_keypad.h
+index b0d36a9934ccd..5cf6f6f82aa70 100644
+--- a/include/linux/tca6416_keypad.h
++++ b/include/linux/tca6416_keypad.h
+@@ -25,7 +25,6 @@ struct tca6416_keys_platform_data {
+ 	unsigned int rep:1;	/* enable input subsystem auto repeat */
+ 	uint16_t pinmask;
+ 	uint16_t invert;
+-	int irq_is_gpio;
+ 	int use_polling;	/* use polling if Interrupt is not connected*/
+ };
+ #endif
 -- 
 2.40.1
 
