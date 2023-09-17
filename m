@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F9D4A3F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1C4C433C7;
-	Sun, 17 Sep 2023 19:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADA76FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A2EC433CD;
+	Sun, 17 Sep 2023 19:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979616;
-	bh=+n4SEchh64bFcOz1X8bGpgcyVoZ8Z34jAq5nvguVcvI=;
+	s=korg; t=1694979620;
+	bh=f+w3APbWLUsGeJKcPOHvNBGRYpqIkB71ux9dbsnnfvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGOJVlTSOLBCl0Wb3yCy5AYsWRS+9mrVhL2ObcOW6OdEWwkOyhr2XyFS5cfvf7rgP
-	 ab1K4Wse8XPC9it5SrxSeWQ90MFX6FvBPEOduPN+9LFKlDtmz+e6VMVOf6HBv8IYxH
-	 l6WQAk3SfJd+7B2bPyo7Evvxucs2a4qVL+wdmdOI=
+	b=gfUosRBX9Mxb+2SZhg6rPgmLEDLLgUc5kKObJUWxCGqbGcoRDinzan7px/5FNeHQm
+	 YMYuPn+s2vVqwpKpO/hCDUqW/YEPWUaTVMgPAx0URv+mNV/OzMWuzuSO66d//KnXz4
+	 a3hcZtshSSjN+AnCCQuv3vt6Sj490zNuBO6P2KOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 340/406] pwm: lpc32xx: Remove handling of PWM channels
-Date: Sun, 17 Sep 2023 21:13:14 +0200
-Message-ID: <20230917191110.259168938@linuxfoundation.org>
+Subject: [PATCH 5.10 341/406] net/sched: fq_pie: avoid stalls in fq_pie_timer()
+Date: Sun, 17 Sep 2023 21:13:15 +0200
+Message-ID: <20230917191110.284806145@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -36,90 +37,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@mleia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
+[ Upstream commit 8c21ab1bae945686c602c5bfa4e3f3352c2452c5 ]
 
-Because LPC32xx PWM controllers have only a single output which is
-registered as the only PWM device/channel per controller, it is known in
-advance that pwm->hwpwm value is always 0. On basis of this fact
-simplify the code by removing operations with pwm->hwpwm, there is no
-controls which require channel number as input.
+When setting a high number of flows (limit being 65536),
+fq_pie_timer() is currently using too much time as syzbot reported.
 
-Even though I wasn't aware at the time when I forward ported that patch,
-this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
-before devm_pwmchip_add() is called.
+Add logic to yield the cpu every 2048 flows (less than 150 usec
+on debug kernels).
+It should also help by not blocking qdisc fast paths for too long.
+Worst case (65536 flows) would need 31 jiffies for a complete scan.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Relevant extract from syzbot report:
+
+rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 0-.... } 2663 jiffies s: 873 root: 0x1/.
+rcu: blocking rcu_node structures (internal RCU debug):
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 PID: 5177 Comm: syz-executor273 Not tainted 6.5.0-syzkaller-00453-g727dbda16b83 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
+RIP: 0010:write_comp_data+0x21/0x90 kernel/kcov.c:236
+Code: 2e 0f 1f 84 00 00 00 00 00 65 8b 05 01 b2 7d 7e 49 89 f1 89 c6 49 89 d2 81 e6 00 01 00 00 49 89 f8 65 48 8b 14 25 80 b9 03 00 <a9> 00 01 ff 00 74 0e 85 f6 74 59 8b 82 04 16 00 00 85 c0 74 4f 8b
+RSP: 0018:ffffc90000007bb8 EFLAGS: 00000206
+RAX: 0000000000000101 RBX: ffffc9000dc0d140 RCX: ffffffff885893b0
+RDX: ffff88807c075940 RSI: 0000000000000100 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffffc9000dc0d178
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000555555d54380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f6b442f6130 CR3: 000000006fe1c000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <IRQ>
+ pie_calculate_probability+0x480/0x850 net/sched/sch_pie.c:415
+ fq_pie_timer+0x1da/0x4f0 net/sched/sch_fq_pie.c:387
+ call_timer_fn+0x1a0/0x580 kernel/time/timer.c:1700
+
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Link: https://lore.kernel.org/lkml/00000000000017ad3f06040bf394@google.com/
+Reported-by: syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20230829123541.3745013-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/sched/sch_fq_pie.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
-index 522f862eca526..504a8f506195a 100644
---- a/drivers/pwm/pwm-lpc32xx.c
-+++ b/drivers/pwm/pwm-lpc32xx.c
-@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (duty_cycles > 255)
- 		duty_cycles = 255;
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index 4f6b5b6fba3ed..a5b63158f081c 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -61,6 +61,7 @@ struct fq_pie_sched_data {
+ 	struct pie_params p_params;
+ 	u32 ecn_prob;
+ 	u32 flows_cnt;
++	u32 flows_cursor;
+ 	u32 quantum;
+ 	u32 memory_limit;
+ 	u32 new_flow_count;
+@@ -378,21 +379,31 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ static void fq_pie_timer(struct timer_list *t)
+ {
+ 	struct fq_pie_sched_data *q = from_timer(q, t, adapt_timer);
++	unsigned long next, tupdate;
+ 	struct Qdisc *sch = q->sch;
+ 	spinlock_t *root_lock; /* to lock qdisc for probability calculations */
+-	u32 idx;
++	int max_cnt, i;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~0xFFFF;
- 	val |= (period_cycles << 8) | duty_cycles;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
+ 	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
+ 	spin_lock(root_lock);
  
- 	return 0;
+-	for (idx = 0; idx < q->flows_cnt; idx++)
+-		pie_calculate_probability(&q->p_params, &q->flows[idx].vars,
+-					  q->flows[idx].backlog);
+-
+-	/* reset the timer to fire after 'tupdate' jiffies. */
+-	if (q->p_params.tupdate)
+-		mod_timer(&q->adapt_timer, jiffies + q->p_params.tupdate);
++	/* Limit this expensive loop to 2048 flows per round. */
++	max_cnt = min_t(int, q->flows_cnt - q->flows_cursor, 2048);
++	for (i = 0; i < max_cnt; i++) {
++		pie_calculate_probability(&q->p_params,
++					  &q->flows[q->flows_cursor].vars,
++					  q->flows[q->flows_cursor].backlog);
++		q->flows_cursor++;
++	}
+ 
++	tupdate = q->p_params.tupdate;
++	next = 0;
++	if (q->flows_cursor >= q->flows_cnt) {
++		q->flows_cursor = 0;
++		next = tupdate;
++	}
++	if (tupdate)
++		mod_timer(&q->adapt_timer, jiffies + next);
+ 	spin_unlock(root_lock);
  }
-@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (ret)
- 		return ret;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val |= PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	return 0;
- }
-@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
- 	u32 val;
- 
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	clk_disable_unprepare(lpc32xx->clk);
- }
-@@ -121,9 +121,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
- 	lpc32xx->chip.base = -1;
- 
- 	/* If PWM is disabled, configure the output to the default value */
--	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_PIN_LEVEL;
--	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	ret = pwmchip_add(&lpc32xx->chip);
- 	if (ret < 0) {
 -- 
 2.40.1
 
