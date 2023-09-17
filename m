@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471307461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A832BC433C8;
-	Sun, 17 Sep 2023 20:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904F7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D3BC433C7;
+	Sun, 17 Sep 2023 20:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981907;
-	bh=T2Tl6WgiHZghGvk3lPvU0D6PB9CZNRtV45MbXsCj4w0=;
+	s=korg; t=1694981910;
+	bh=u6OOAViOq6MGsNd3I34f0QbK7dYqR8seH2ol8Uvh08s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Etm60sY3CH98tBfYeKYr+2q0RE241YRQldG24V2zu3m42VnyYHxcIaCtGEg/Wqod0
-	 CJAec2ybWM8+yLNgHk22qclEflI32XoSjh4TVwabxzAGvThMXCz4Fmu+nW1YOzFffO
-	 2vB1B44jUuEVEYL9MCArvN2ekGY1a89SZnBmWm98=
+	b=dSuMcu0N7tYm8sUanWxZTh+s93dBgG7nELzbHQhHcjfWCotKHgKPPWh6x3cTEVaF0
+	 VPwJnrM1Le0H6ThzDgjQrCeYlwcrYmPIxxbjfNzBtUElcTEft/1x/MOU3Cwj7yhV4V
+	 LXARDn5BFSwX2fP7lZ0xXujJD6VltDfMmVDuC7gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Marcin Wojtas <mw@semihalf.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 191/219] net: ethernet: mvpp2_main: fix possible OOB write in mvpp2_ethtool_get_rxnfc()
-Date: Sun, 17 Sep 2023 21:15:18 +0200
-Message-ID: <20230917191047.844782197@linuxfoundation.org>
+Subject: [PATCH 5.15 125/511] quota: rename dquot_active() to inode_quota_active()
+Date: Sun, 17 Sep 2023 21:09:12 +0200
+Message-ID: <20230917191116.888433248@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,44 +36,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 51fe0a470543f345e3c62b6798929de3ddcedc1d ]
+[ Upstream commit 4b9bdfa16535de8f49bf954aeed0f525ee2fc322 ]
 
-rules is allocated in ethtool_get_rxnfc and the size is determined by
-rule_cnt from user space. So rule_cnt needs to be check before using
-rules to avoid OOB writing or NULL pointer dereference.
+Now we have a helper function dquot_dirty() to determine if dquot has
+DQ_MOD_B bit. dquot_active() can easily be misunderstood as a helper
+function to determine if dquot has DQ_ACTIVE_B bit. So we avoid this by
+renaming it to inode_quota_active() and later on we will add the helper
+function dquot_active() to determine if dquot has DQ_ACTIVE_B bit.
 
-Fixes: 90b509b39ac9 ("net: mvpp2: cls: Add Classification offload support")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Marcin Wojtas <mw@semihalf.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230630110822.3881712-3-libaokun1@huawei.com>
+Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/quota/dquot.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index b399bdb1ca362..f936640cca4e6 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -5578,6 +5578,11 @@ static int mvpp2_ethtool_get_rxnfc(struct net_device *dev,
- 		break;
- 	case ETHTOOL_GRXCLSRLALL:
- 		for (i = 0; i < MVPP2_N_RFS_ENTRIES_PER_FLOW; i++) {
-+			if (loc == info->rule_cnt) {
-+				ret = -EMSGSIZE;
-+				break;
-+			}
-+
- 			if (port->rfs_rules[i])
- 				rules[loc++] = i;
- 		}
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index fae2dbd663020..305771b682047 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -1418,7 +1418,7 @@ static int info_bdq_free(struct dquot *dquot, qsize_t space)
+ 	return QUOTA_NL_NOWARN;
+ }
+ 
+-static int dquot_active(const struct inode *inode)
++static int inode_quota_active(const struct inode *inode)
+ {
+ 	struct super_block *sb = inode->i_sb;
+ 
+@@ -1441,7 +1441,7 @@ static int __dquot_initialize(struct inode *inode, int type)
+ 	qsize_t rsv;
+ 	int ret = 0;
+ 
+-	if (!dquot_active(inode))
++	if (!inode_quota_active(inode))
+ 		return 0;
+ 
+ 	dquots = i_dquot(inode);
+@@ -1549,7 +1549,7 @@ bool dquot_initialize_needed(struct inode *inode)
+ 	struct dquot **dquots;
+ 	int i;
+ 
+-	if (!dquot_active(inode))
++	if (!inode_quota_active(inode))
+ 		return false;
+ 
+ 	dquots = i_dquot(inode);
+@@ -1660,7 +1660,7 @@ int __dquot_alloc_space(struct inode *inode, qsize_t number, int flags)
+ 	int reserve = flags & DQUOT_SPACE_RESERVE;
+ 	struct dquot **dquots;
+ 
+-	if (!dquot_active(inode)) {
++	if (!inode_quota_active(inode)) {
+ 		if (reserve) {
+ 			spin_lock(&inode->i_lock);
+ 			*inode_reserved_space(inode) += number;
+@@ -1730,7 +1730,7 @@ int dquot_alloc_inode(struct inode *inode)
+ 	struct dquot_warn warn[MAXQUOTAS];
+ 	struct dquot * const *dquots;
+ 
+-	if (!dquot_active(inode))
++	if (!inode_quota_active(inode))
+ 		return 0;
+ 	for (cnt = 0; cnt < MAXQUOTAS; cnt++)
+ 		warn[cnt].w_type = QUOTA_NL_NOWARN;
+@@ -1773,7 +1773,7 @@ int dquot_claim_space_nodirty(struct inode *inode, qsize_t number)
+ 	struct dquot **dquots;
+ 	int cnt, index;
+ 
+-	if (!dquot_active(inode)) {
++	if (!inode_quota_active(inode)) {
+ 		spin_lock(&inode->i_lock);
+ 		*inode_reserved_space(inode) -= number;
+ 		__inode_add_bytes(inode, number);
+@@ -1815,7 +1815,7 @@ void dquot_reclaim_space_nodirty(struct inode *inode, qsize_t number)
+ 	struct dquot **dquots;
+ 	int cnt, index;
+ 
+-	if (!dquot_active(inode)) {
++	if (!inode_quota_active(inode)) {
+ 		spin_lock(&inode->i_lock);
+ 		*inode_reserved_space(inode) += number;
+ 		__inode_sub_bytes(inode, number);
+@@ -1859,7 +1859,7 @@ void __dquot_free_space(struct inode *inode, qsize_t number, int flags)
+ 	struct dquot **dquots;
+ 	int reserve = flags & DQUOT_SPACE_RESERVE, index;
+ 
+-	if (!dquot_active(inode)) {
++	if (!inode_quota_active(inode)) {
+ 		if (reserve) {
+ 			spin_lock(&inode->i_lock);
+ 			*inode_reserved_space(inode) -= number;
+@@ -1914,7 +1914,7 @@ void dquot_free_inode(struct inode *inode)
+ 	struct dquot * const *dquots;
+ 	int index;
+ 
+-	if (!dquot_active(inode))
++	if (!inode_quota_active(inode))
+ 		return;
+ 
+ 	dquots = i_dquot(inode);
+@@ -2085,7 +2085,7 @@ int dquot_transfer(struct inode *inode, struct iattr *iattr)
+ 	struct super_block *sb = inode->i_sb;
+ 	int ret;
+ 
+-	if (!dquot_active(inode))
++	if (!inode_quota_active(inode))
+ 		return 0;
+ 
+ 	if (iattr->ia_valid & ATTR_UID && !uid_eq(iattr->ia_uid, inode->i_uid)){
 -- 
 2.40.1
 
