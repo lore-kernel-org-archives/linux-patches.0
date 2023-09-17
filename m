@@ -1,35 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAE16FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD13AC433C7;
-	Sun, 17 Sep 2023 20:42:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983355;
-	bh=QZWaPRY+QnHFCwqOZtkT7de9XzMxAFriWOoVG9tcADA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB04E63B8;
+	Sun, 17 Sep 2023 20:46:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11E8C433C7;
+	Sun, 17 Sep 2023 20:46:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1694983564;
+	bh=YCvyGKWa8Qgt16CSEhFJyax3ZrrbTrGLEGhc6BmNGTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=syGRISBzHoIbTzkpXbWmZoAg4iqcUFHEJmQJa6luHugiwc90cjZyFiiORaE9It641
-	 lGMS7tza9pBhdhr+u2A8bN0c7UT03WL+la1Wfn6TUo6R0+P1w+6FXXZZQBNF+8Lq+4
-	 87lkdvD2NU1UzEqXZO/0iEOgfBxXbW30BMRziu5c=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=qRj/CUSqEWtUkSZqwfOMO1mwnaXTbsuMuyqx/FwXZFVYAZmBcwn23uJ+WidIfcqeh
+	 64O7ArSWtUIWvNaMY+gMXKsS0XbGqBApffKGH7jpvyaOgxA8bApmjMNFTU5fU71bDT
+	 qD8q0g7j/SQ9Xvyh67FffGxh/IBoNBQCBfqAQeknHxoLy6wOG+F9/Yqg1pVbZSIx/v
+	 vtkaqS/ohimQEIufGY6oF8kDi4nT5ud+3mGM2JBxGkzcK/LOKUQNOvb+qTJ993TkKX
+	 QvemWGxZL1v2q5SCtosOCMK58dgJ9o3FihYuBy50KedMyyqrpEDZ47itYZ1YqyLCBb
+	 sc79KM+OK5fSA==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 502/511] platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors
-Date: Sun, 17 Sep 2023 21:15:29 +0200
-Message-ID: <20230917191125.844895640@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/511] 5.15.132-rc1 review
+Date: Sun, 17 Sep 2023 20:46:01 +0000
+Message-Id: <20230917204601.104860-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,179 +49,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Hello,
 
-------------------
+On Sun, 17 Sep 2023 21:07:07 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-From: Liming Sun <limings@nvidia.com>
+> This is the start of the stable review cycle for the 5.15.132 release.
+> There are 511 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.132-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-[ Upstream commit 78034cbece79c2d730ad0770b3b7f23eedbbecf5 ]
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-This commit fixes tmfifo console stuck issue when the virtual
-networking interface is in down state. In such case, the network
-Rx descriptors runs out and causes the Rx network packet staying
-in the head of the tmfifo thus blocking the console packets. The
-fix is to drop the Rx network packet when no more Rx descriptors.
-Function name mlxbf_tmfifo_release_pending_pkt() is also renamed
-to mlxbf_tmfifo_release_pkt() to be more approperiate.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/8c0177dc938ae03f52ff7e0b62dbeee74b7bec09.1693322547.git.limings@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] a8d93816a2f2 ("Linux 5.15.132-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 66 ++++++++++++++++++------
- 1 file changed, 49 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 64d22ecf3cddd..42fcccf06157f 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -56,6 +56,7 @@ struct mlxbf_tmfifo;
-  * @vq: pointer to the virtio virtqueue
-  * @desc: current descriptor of the pending packet
-  * @desc_head: head descriptor of the pending packet
-+ * @drop_desc: dummy desc for packet dropping
-  * @cur_len: processed length of the current descriptor
-  * @rem_len: remaining length of the pending packet
-  * @pkt_len: total length of the pending packet
-@@ -72,6 +73,7 @@ struct mlxbf_tmfifo_vring {
- 	struct virtqueue *vq;
- 	struct vring_desc *desc;
- 	struct vring_desc *desc_head;
-+	struct vring_desc drop_desc;
- 	int cur_len;
- 	int rem_len;
- 	u32 pkt_len;
-@@ -83,6 +85,14 @@ struct mlxbf_tmfifo_vring {
- 	struct mlxbf_tmfifo *fifo;
- };
- 
-+/* Check whether vring is in drop mode. */
-+#define IS_VRING_DROP(_r) ({ \
-+	typeof(_r) (r) = (_r); \
-+	(r->desc_head == &r->drop_desc ? true : false); })
-+
-+/* A stub length to drop maximum length packet. */
-+#define VRING_DROP_DESC_MAX_LEN		GENMASK(15, 0)
-+
- /* Interrupt types. */
- enum {
- 	MLXBF_TM_RX_LWM_IRQ,
-@@ -243,6 +253,7 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
- 		vring->align = SMP_CACHE_BYTES;
- 		vring->index = i;
- 		vring->vdev_id = tm_vdev->vdev.id.device;
-+		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
- 		dev = &tm_vdev->vdev.dev;
- 
- 		size = vring_size(vring->num, vring->align);
-@@ -348,7 +359,7 @@ static u32 mlxbf_tmfifo_get_pkt_len(struct mlxbf_tmfifo_vring *vring,
- 	return len;
- }
- 
--static void mlxbf_tmfifo_release_pending_pkt(struct mlxbf_tmfifo_vring *vring)
-+static void mlxbf_tmfifo_release_pkt(struct mlxbf_tmfifo_vring *vring)
- {
- 	struct vring_desc *desc_head;
- 	u32 len = 0;
-@@ -577,19 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
- 
- 	if (vring->cur_len + sizeof(u64) <= len) {
- 		/* The whole word. */
--		if (is_rx)
--			memcpy(addr + vring->cur_len, &data, sizeof(u64));
--		else
--			memcpy(&data, addr + vring->cur_len, sizeof(u64));
-+		if (!IS_VRING_DROP(vring)) {
-+			if (is_rx)
-+				memcpy(addr + vring->cur_len, &data,
-+				       sizeof(u64));
-+			else
-+				memcpy(&data, addr + vring->cur_len,
-+				       sizeof(u64));
-+		}
- 		vring->cur_len += sizeof(u64);
- 	} else {
- 		/* Leftover bytes. */
--		if (is_rx)
--			memcpy(addr + vring->cur_len, &data,
--			       len - vring->cur_len);
--		else
--			memcpy(&data, addr + vring->cur_len,
--			       len - vring->cur_len);
-+		if (!IS_VRING_DROP(vring)) {
-+			if (is_rx)
-+				memcpy(addr + vring->cur_len, &data,
-+				       len - vring->cur_len);
-+			else
-+				memcpy(&data, addr + vring->cur_len,
-+				       len - vring->cur_len);
-+		}
- 		vring->cur_len = len;
- 	}
- 
-@@ -690,8 +707,16 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 	/* Get the descriptor of the next packet. */
- 	if (!vring->desc) {
- 		desc = mlxbf_tmfifo_get_next_pkt(vring, is_rx);
--		if (!desc)
--			return false;
-+		if (!desc) {
-+			/* Drop next Rx packet to avoid stuck. */
-+			if (is_rx) {
-+				desc = &vring->drop_desc;
-+				vring->desc_head = desc;
-+				vring->desc = desc;
-+			} else {
-+				return false;
-+			}
-+		}
- 	} else {
- 		desc = vring->desc;
- 	}
-@@ -724,17 +749,24 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 		vring->rem_len -= len;
- 
- 		/* Get the next desc on the chain. */
--		if (vring->rem_len > 0 &&
-+		if (!IS_VRING_DROP(vring) && vring->rem_len > 0 &&
- 		    (virtio16_to_cpu(vdev, desc->flags) & VRING_DESC_F_NEXT)) {
- 			idx = virtio16_to_cpu(vdev, desc->next);
- 			desc = &vr->desc[idx];
- 			goto mlxbf_tmfifo_desc_done;
- 		}
- 
--		/* Done and release the pending packet. */
--		mlxbf_tmfifo_release_pending_pkt(vring);
-+		/* Done and release the packet. */
- 		desc = NULL;
- 		fifo->vring[is_rx] = NULL;
-+		if (!IS_VRING_DROP(vring)) {
-+			mlxbf_tmfifo_release_pkt(vring);
-+		} else {
-+			vring->pkt_len = 0;
-+			vring->desc_head = NULL;
-+			vring->desc = NULL;
-+			return false;
-+		}
- 
- 		/*
- 		 * Make sure the load/store are in order before
-@@ -914,7 +946,7 @@ static void mlxbf_tmfifo_virtio_del_vqs(struct virtio_device *vdev)
- 
- 		/* Release the pending packet. */
- 		if (vring->desc)
--			mlxbf_tmfifo_release_pending_pkt(vring);
-+			mlxbf_tmfifo_release_pkt(vring);
- 		vq = vring->vq;
- 		if (vq) {
- 			vring->vq = NULL;
--- 
-2.40.1
-
-
-
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+# selftests: damon-tests: build_i386_highpte.sh
+# .config:1341:warning: override: reassigning to symbol DAMON
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+# selftests: damon-tests: build_nomemcg.sh
+# .config:1342:warning: override: reassigning to symbol DAMON
+# .config:1352:warning: override: reassigning to symbol CGROUPS
+ok 15 selftests: damon-tests: build_nomemcg.sh
+# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
+# the log is at '/home/sjpark/log'.
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
+_remote_run_corr.sh SUCCESS
