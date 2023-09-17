@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176CD63B3
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781D1C433C7;
-	Sun, 17 Sep 2023 19:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596C56FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF300C433C8;
+	Sun, 17 Sep 2023 19:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978427;
-	bh=XpcsLhqD5V8d5NlIrDxpMMTySxMuNpjyW5VFTRJdtLg=;
+	s=korg; t=1694978431;
+	bh=ovFgaXuSXdonpH1bDl0AlOBnBHrmMGEWeiRR2hYvq0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXa4fJqYFk2vFpu0uWd+KdTJzYDMSaPuzkqa1OhYoG3YtWMwF0W05fcmbySyBUpGk
-	 fPePYjA3dDzefSO7UkqO8ZYShOgLn3C7oJ4BpR7yPbzP3VwVCp+oPtkTgUCw0lygXD
-	 UOQzXPZPMykKAniMKqcffVlrYbAb2J5+S7e6aMU8=
+	b=SymcQsC2q8jsD937/hYLRMb2hciI3RuGklsKUm6Cjtxyz07oVg0VxU3GvG6Das+Kr
+	 aMQg7yPisYOZO/zPQh1THTi3PycxkGP+XXac+AYXVxWD9su61fApSQkUhHmceA/eCI
+	 DlaM7NGHuDa48ugw/P2oAaOE/oNgiEYKfvC+bcCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/406] kprobes: Prohibit probing on CFI preamble symbol
-Date: Sun, 17 Sep 2023 21:08:22 +0200
-Message-ID: <20230917191102.413316318@linuxfoundation.org>
+Subject: [PATCH 5.10 057/406] scsi: storvsc: Always set no_report_opcodes
+Date: Sun, 17 Sep 2023 21:08:31 +0200
+Message-ID: <20230917191102.651005522@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,54 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit de02f2ac5d8cfb311f44f2bf144cc20002f1fbbd ]
+[ Upstream commit 31d16e712bdcaee769de4780f72ff8d6cd3f0589 ]
 
-Do not allow to probe on "__cfi_" or "__pfx_" started symbol, because those
-are used for CFI and not executed. Probing it will break the CFI.
+Hyper-V synthetic SCSI devices do not support the MAINTENANCE_IN SCSI
+command, so scsi_report_opcode() always fails, resulting in messages like
+this:
 
-Link: https://lore.kernel.org/all/168904024679.116016.18089228029322008512.stgit@devnote2/
+hv_storvsc <guid>: tag#205 cmd 0xa3 status: scsi 0x2 srb 0x86 hv 0xc0000001
 
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+The recently added support for command duration limits calls
+scsi_report_opcode() four times as each device comes online, which
+significantly increases the number of messages logged in a system with many
+disks.
+
+Fix the problem by always marking Hyper-V synthetic SCSI devices as not
+supporting scsi_report_opcode(). With this setting, the MAINTENANCE_IN SCSI
+command is not issued and no messages are logged.
+
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1686343101-18930-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/scsi/storvsc_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 86d71c49b4957..f1ea3123f3832 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1628,6 +1628,17 @@ int __weak arch_check_ftrace_location(struct kprobe *p)
- 	return 0;
- }
- 
-+static bool is_cfi_preamble_symbol(unsigned long addr)
-+{
-+	char symbuf[KSYM_NAME_LEN];
-+
-+	if (lookup_symbol_name(addr, symbuf))
-+		return false;
-+
-+	return str_has_prefix("__cfi_", symbuf) ||
-+		str_has_prefix("__pfx_", symbuf);
-+}
-+
- static int check_kprobe_address_safe(struct kprobe *p,
- 				     struct module **probed_mod)
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index 45d8549623442..37ad5f5256474 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1537,6 +1537,8 @@ static int storvsc_device_configure(struct scsi_device *sdevice)
  {
-@@ -1646,7 +1657,8 @@ static int check_kprobe_address_safe(struct kprobe *p,
- 	    within_kprobe_blacklist((unsigned long) p->addr) ||
- 	    jump_label_text_reserved(p->addr, p->addr) ||
- 	    static_call_text_reserved(p->addr, p->addr) ||
--	    find_bug((unsigned long)p->addr)) {
-+	    find_bug((unsigned long)p->addr) ||
-+	    is_cfi_preamble_symbol((unsigned long)p->addr)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	blk_queue_rq_timeout(sdevice->request_queue, (storvsc_timeout * HZ));
+ 
++	/* storvsc devices don't support MAINTENANCE_IN SCSI cmd */
++	sdevice->no_report_opcodes = 1;
+ 	sdevice->no_write_same = 1;
+ 
+ 	/*
 -- 
 2.40.1
 
