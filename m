@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B7A6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B5BC43397;
-	Sun, 17 Sep 2023 20:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349CA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:01:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93539C43391;
+	Sun, 17 Sep 2023 20:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980875;
-	bh=38gmd9P7XBwZM5CarY5zU96L3QdMcJQ65V8M2FdO8yQ=;
+	s=korg; t=1694980879;
+	bh=jP8+75Mp9EN0e9ULRb288nhFON7ZNDK1rXgT+gUsRTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqqPeXkq0fQrUS2ZZfQXQ+IdndNgIzIq/cYUWSz86UynS7hRbY0lOE3heesJ2bGbJ
-	 WUpfvcw4Z9kEfH73LbFhjh2JPS+iUo4gcFqWaJIp2R806+yaPauIaijO+o+rmDGU3n
-	 ig0IEvP21J+vMHozvanfqfgSid9dq/PT6Ua180RE=
+	b=oBzyCf8KK/nDlIIJFEFZkWX+HcydVygxTzyJfhbBoBkahzUetQvOa8zyrks14e75e
+	 2OlqSZOwsvsiw5FnCI7jxFlP3AfNup4lMqKChda87Q6AQdlyf5tUyYS+CqrIK3tzaw
+	 lbwt/MgkDDDiEzLy4wv5Hi7fwlAyug2Jsldu4Hjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Xiaoke Wang <xkernel.wang@foxmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 034/219] mm: hugetlb_vmemmap: fix a race between vmemmap pmd split
-Date: Sun, 17 Sep 2023 21:12:41 +0200
-Message-ID: <20230917191042.236707960@linuxfoundation.org>
+Subject: [PATCH 6.1 035/219] lib/test_meminit: allocate pages up to order MAX_ORDER
+Date: Sun, 17 Sep 2023 21:12:42 +0200
+Message-ID: <20230917191042.273642938@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -40,100 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Andrew Donnellan <ajd@linux.ibm.com>
 
-commit 3ce2c24cb68f228590a053d6058a5901cd31af61 upstream.
+commit efb78fa86e95832b78ca0ba60f3706788a818938 upstream.
 
-The local variable @page in __split_vmemmap_huge_pmd() to obtain a pmd
-page without holding page_table_lock may possiblely get the page table
-page instead of a huge pmd page.
+test_pages() tests the page allocator by calling alloc_pages() with
+different orders up to order 10.
 
-The effect may be in set_pte_at() since we may pass an invalid page
-struct, if set_pte_at() wants to access the page struct (e.g.
-CONFIG_PAGE_TABLE_CHECK is enabled), it may crash the kernel.
+However, different architectures and platforms support different maximum
+contiguous allocation sizes.  The default maximum allocation order
+(MAX_ORDER) is 10, but architectures can use CONFIG_ARCH_FORCE_MAX_ORDER
+to override this.  On platforms where this is less than 10, test_meminit()
+will blow up with a WARN().  This is expected, so let's not do that.
 
-So fix it.  And inline __split_vmemmap_huge_pmd() since it only has one
-user.
+Replace the hardcoded "10" with the MAX_ORDER macro so that we test
+allocations up to the expected platform limit.
 
-Link: https://lkml.kernel.org/r/20230707033859.16148-1-songmuchun@bytedance.com
-Fixes: d8d55f5616cf ("mm: sparsemem: use page table lock to protect kernel pmd operations")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Link: https://lkml.kernel.org/r/20230714015238.47931-1-ajd@linux.ibm.com
+Fixes: 5015a300a522 ("lib: introduce test_meminit module")
+Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb_vmemmap.c |   34 ++++++++++++++--------------------
- 1 file changed, 14 insertions(+), 20 deletions(-)
+ lib/test_meminit.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb_vmemmap.c
-+++ b/mm/hugetlb_vmemmap.c
-@@ -36,14 +36,22 @@ struct vmemmap_remap_walk {
- 	struct list_head	*vmemmap_pages;
- };
- 
--static int __split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
-+static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
- {
- 	pmd_t __pmd;
+--- a/lib/test_meminit.c
++++ b/lib/test_meminit.c
+@@ -93,7 +93,7 @@ static int __init test_pages(int *total_
+ 	int failures = 0, num_tests = 0;
  	int i;
- 	unsigned long addr = start;
--	struct page *page = pmd_page(*pmd);
--	pte_t *pgtable = pte_alloc_one_kernel(&init_mm);
-+	struct page *head;
-+	pte_t *pgtable;
-+
-+	spin_lock(&init_mm.page_table_lock);
-+	head = pmd_leaf(*pmd) ? pmd_page(*pmd) : NULL;
-+	spin_unlock(&init_mm.page_table_lock);
  
-+	if (!head)
-+		return 0;
-+
-+	pgtable = pte_alloc_one_kernel(&init_mm);
- 	if (!pgtable)
- 		return -ENOMEM;
+-	for (i = 0; i < 10; i++)
++	for (i = 0; i <= MAX_ORDER; i++)
+ 		num_tests += do_alloc_pages_order(i, &failures);
  
-@@ -53,7 +61,7 @@ static int __split_vmemmap_huge_pmd(pmd_
- 		pte_t entry, *pte;
- 		pgprot_t pgprot = PAGE_KERNEL;
- 
--		entry = mk_pte(page + i, pgprot);
-+		entry = mk_pte(head + i, pgprot);
- 		pte = pte_offset_kernel(&__pmd, addr);
- 		set_pte_at(&init_mm, addr, pte, entry);
- 	}
-@@ -65,8 +73,8 @@ static int __split_vmemmap_huge_pmd(pmd_
- 		 * be treated as indepdenent small pages (as they can be freed
- 		 * individually).
- 		 */
--		if (!PageReserved(page))
--			split_page(page, get_order(PMD_SIZE));
-+		if (!PageReserved(head))
-+			split_page(head, get_order(PMD_SIZE));
- 
- 		/* Make pte visible before pmd. See comment in pmd_install(). */
- 		smp_wmb();
-@@ -80,20 +88,6 @@ static int __split_vmemmap_huge_pmd(pmd_
- 	return 0;
- }
- 
--static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
--{
--	int leaf;
--
--	spin_lock(&init_mm.page_table_lock);
--	leaf = pmd_leaf(*pmd);
--	spin_unlock(&init_mm.page_table_lock);
--
--	if (!leaf)
--		return 0;
--
--	return __split_vmemmap_huge_pmd(pmd, start);
--}
--
- static void vmemmap_pte_range(pmd_t *pmd, unsigned long addr,
- 			      unsigned long end,
- 			      struct vmemmap_remap_walk *walk)
+ 	REPORT_FAILURES_IN_FN();
 
 
