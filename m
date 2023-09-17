@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317B57461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AB3C433C7;
-	Sun, 17 Sep 2023 20:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DF77461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C897DC433CD;
+	Sun, 17 Sep 2023 20:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981917;
-	bh=lNHRiTGlyqRmdVDtQTLQCykpmBmO4r795XqbshW94Bw=;
+	s=korg; t=1694981920;
+	bh=e1tP5OTR7KeI7Nq6k72+EhVcB/IH7qtRFTINw+6WLH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axE72V+y47RIshK6mMDs+vmEREklrr3S4tcUjWJd5ofkPiCig+MvhbQfr32zISn0T
-	 yn/cLWdgYi98Utuu8NQFq4rBASYmoXQzD/mgW8CQ2+552+4V4uNa/sSx04SRJvUGry
-	 dVbiiDLsyZ+M2ElQ0R1JtHkSTr4vy4Z9wWlg9Vjk=
+	b=jptozn1WSTvsEJI1kLsBjViuhQYKWrCo6ewXBKy9ZM4cvD7S39+no3YMHwAzeqo3s
+	 qJSxHjhXP3qzFKQx4XrRQbjLN5/OzyytpogG+QhbS7W5nWoSZbPim0KxFwPyQMiTWH
+	 rK8Xq4p6Bjk5SXqbGGRJNpXlu6xxYb2Nlc9OM4d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/511] quota: add new helper dquot_active()
-Date: Sun, 17 Sep 2023 21:09:13 +0200
-Message-ID: <20230917191116.911415602@linuxfoundation.org>
+Subject: [PATCH 6.1 193/219] hsr: Fix uninit-value access in fill_frame_info()
+Date: Sun, 17 Sep 2023 21:15:20 +0200
+Message-ID: <20230917191047.919103402@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,121 +37,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 33bcfafc48cb186bc4bbcea247feaa396594229e ]
+[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
 
-Add new helper function dquot_active() to make the code more concise.
+Syzbot reports the following uninit-value access problem.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230630110822.3881712-4-libaokun1@huawei.com>
-Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
+=====================================================
+BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+ hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
+ __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+ xmit_one net/core/dev.c:3544 [inline]
+ dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
+ __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
+ dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+ packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
+ packet_snd net/packet/af_packet.c:3087 [inline]
+ packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+Uninit was created at:
+ slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+ kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
+ __alloc_skb+0x318/0x740 net/core/skbuff.c:644
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
+ sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
+ packet_alloc_skb net/packet/af_packet.c:2936 [inline]
+ packet_snd net/packet/af_packet.c:3030 [inline]
+ packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+It is because VLAN not yet supported in hsr driver. Return error
+when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
+
+Fixes: 451d8123f897 ("net: prp: add packet handling support")
+Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/hsr/hsr_forward.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 305771b682047..2069453e88e4f 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -336,6 +336,11 @@ static void wait_on_dquot(struct dquot *dquot)
- 	mutex_unlock(&dquot->dq_lock);
- }
- 
-+static inline int dquot_active(struct dquot *dquot)
-+{
-+	return test_bit(DQ_ACTIVE_B, &dquot->dq_flags);
-+}
-+
- static inline int dquot_dirty(struct dquot *dquot)
- {
- 	return test_bit(DQ_MOD_B, &dquot->dq_flags);
-@@ -351,14 +356,14 @@ int dquot_mark_dquot_dirty(struct dquot *dquot)
- {
- 	int ret = 1;
- 
--	if (!test_bit(DQ_ACTIVE_B, &dquot->dq_flags))
-+	if (!dquot_active(dquot))
- 		return 0;
- 
- 	if (sb_dqopt(dquot->dq_sb)->flags & DQUOT_NOLIST_DIRTY)
- 		return test_and_set_bit(DQ_MOD_B, &dquot->dq_flags);
- 
- 	/* If quota is dirty already, we don't have to acquire dq_list_lock */
--	if (test_bit(DQ_MOD_B, &dquot->dq_flags))
-+	if (dquot_dirty(dquot))
- 		return 1;
- 
- 	spin_lock(&dq_list_lock);
-@@ -440,7 +445,7 @@ int dquot_acquire(struct dquot *dquot)
- 	smp_mb__before_atomic();
- 	set_bit(DQ_READ_B, &dquot->dq_flags);
- 	/* Instantiate dquot if needed */
--	if (!test_bit(DQ_ACTIVE_B, &dquot->dq_flags) && !dquot->dq_off) {
-+	if (!dquot_active(dquot) && !dquot->dq_off) {
- 		ret = dqopt->ops[dquot->dq_id.type]->commit_dqblk(dquot);
- 		/* Write the info if needed */
- 		if (info_dirty(&dqopt->info[dquot->dq_id.type])) {
-@@ -482,7 +487,7 @@ int dquot_commit(struct dquot *dquot)
- 		goto out_lock;
- 	/* Inactive dquot can be only if there was error during read/init
- 	 * => we have better not writing it */
--	if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags))
-+	if (dquot_active(dquot))
- 		ret = dqopt->ops[dquot->dq_id.type]->commit_dqblk(dquot);
- 	else
- 		ret = -EIO;
-@@ -597,7 +602,7 @@ int dquot_scan_active(struct super_block *sb,
- 
- 	spin_lock(&dq_list_lock);
- 	list_for_each_entry(dquot, &inuse_list, dq_inuse) {
--		if (!test_bit(DQ_ACTIVE_B, &dquot->dq_flags))
-+		if (!dquot_active(dquot))
- 			continue;
- 		if (dquot->dq_sb != sb)
- 			continue;
-@@ -612,7 +617,7 @@ int dquot_scan_active(struct super_block *sb,
- 		 * outstanding call and recheck the DQ_ACTIVE_B after that.
- 		 */
- 		wait_on_dquot(dquot);
--		if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
-+		if (dquot_active(dquot)) {
- 			ret = fn(dquot, priv);
- 			if (ret < 0)
- 				goto out;
-@@ -663,7 +668,7 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
- 			dquot = list_first_entry(&dirty, struct dquot,
- 						 dq_dirty);
- 
--			WARN_ON(!test_bit(DQ_ACTIVE_B, &dquot->dq_flags));
-+			WARN_ON(!dquot_active(dquot));
- 
- 			/* Now we have active dquot from which someone is
-  			 * holding reference so we can safely just increase
-@@ -800,7 +805,7 @@ void dqput(struct dquot *dquot)
- 		dquot_write_dquot(dquot);
- 		goto we_slept;
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 629daacc96071..b71dab630a873 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -594,6 +594,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+ 		netdev_warn_once(skb->dev, "VLAN not yet supported");
++		return -EINVAL;
  	}
--	if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
-+	if (dquot_active(dquot)) {
- 		spin_unlock(&dq_list_lock);
- 		dquot->dq_sb->dq_op->release_dquot(dquot);
- 		goto we_slept;
-@@ -901,7 +906,7 @@ struct dquot *dqget(struct super_block *sb, struct kqid qid)
- 	 * already finished or it will be canceled due to dq_count > 1 test */
- 	wait_on_dquot(dquot);
- 	/* Read the dquot / allocate space in quota file */
--	if (!test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
-+	if (!dquot_active(dquot)) {
- 		int err;
  
- 		err = sb->dq_op->acquire_dquot(dquot);
+ 	frame->is_from_san = false;
 -- 
 2.40.1
 
