@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21D36FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C164C433B8;
-	Sun, 17 Sep 2023 20:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBCC6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E97C433CA;
+	Sun, 17 Sep 2023 20:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981598;
-	bh=sjD0fgN5JkARn0e9j97PjchgYzISysmbE22xsEeX9To=;
+	s=korg; t=1694981602;
+	bh=Rg5DUJ2SIAsZ9xzy717JrDsr/u6SdSr8YULNb8Cbrd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwKRwDXgMOHblxzsXhLKwpJtldrXiVJ0SrsKF0bH9nHh9hJHGa3u/ovDTBKLSijWt
-	 rwu8Y2bcn7jx2DIirWO9UzlWRdvqtn2/8yKesfCGRp1Ii5Ub0G26B6XYp8U3RIem+9
-	 S9vnxY8mDhHeJq7Yymh4OKkM6mL6MFNQKxomYQfQ=
+	b=Eh5+EPqMyYxorTkxEF89YcrzYu5mYQZjbuYuon4+yG1/WapvbiIkJxtmNqM/elGJm
+	 2+KvoujAtjzdTyI8nZnhS2UAy2woWnPCvn61oFL+IDkC/hRCaAlRs/YDnuvXfUSKgE
+	 HVM9Cj9LMnuPqpH9NgvZx9ADUv39mOLK0mC9Y5ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 145/219] ext4: fix memory leaks in ext4_fname_{setup_filename,prepare_lookup}
-Date: Sun, 17 Sep 2023 21:14:32 +0200
-Message-ID: <20230917191046.251911310@linuxfoundation.org>
+	Mikel Rychliski <mikel@mikelr.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 077/511] x86/efistub: Fix PCI ROM preservation in mixed mode
+Date: Sun, 17 Sep 2023 21:08:24 +0200
+Message-ID: <20230917191115.735090149@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,53 +34,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luís Henriques <lhenriques@suse.de>
+From: Mikel Rychliski <mikel@mikelr.com>
 
-commit 7ca4b085f430f3774c3838b3da569ceccd6a0177 upstream.
+[ Upstream commit 8b94da92559f7e403dc7ab81937cc50f949ee2fd ]
 
-If the filename casefolding fails, we'll be leaking memory from the
-fscrypt_name struct, namely from the 'crypto_buf.name' member.
+preserve_pci_rom_image() was accessing the romsize field in
+efi_pci_io_protocol_t directly instead of using the efi_table_attr()
+helper. This prevents the ROM image from being saved correctly during a
+mixed mode boot.
 
-Make sure we free it in the error path on both ext4_fname_setup_filename()
-and ext4_fname_prepare_lookup() functions.
-
-Cc: stable@kernel.org
-Fixes: 1ae98e295fa2 ("ext4: optimize match for casefolded encrypted dirs")
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20230803091713.13239-1-lhenriques@suse.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2c3625cb9fa2 ("efi/x86: Fold __setup_efi_pci32() and __setup_efi_pci64() into one function")
+Signed-off-by: Mikel Rychliski <mikel@mikelr.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/crypto.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/efi/libstub/x86-stub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -33,6 +33,8 @@ int ext4_fname_setup_filename(struct ino
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index 72162645b553e..1cb4466e3c108 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -60,7 +60,7 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
+ 	rom->data.type	= SETUP_PCI;
+ 	rom->data.len	= size - sizeof(struct setup_data);
+ 	rom->data.next	= 0;
+-	rom->pcilen	= pci->romsize;
++	rom->pcilen	= romsize;
+ 	*__rom = rom;
  
- #if IS_ENABLED(CONFIG_UNICODE)
- 	err = ext4_fname_setup_ci_filename(dir, iname, fname);
-+	if (err)
-+		ext4_fname_free_filename(fname);
- #endif
- 	return err;
- }
-@@ -51,6 +53,8 @@ int ext4_fname_prepare_lookup(struct ino
- 
- #if IS_ENABLED(CONFIG_UNICODE)
- 	err = ext4_fname_setup_ci_filename(dir, &dentry->d_name, fname);
-+	if (err)
-+		ext4_fname_free_filename(fname);
- #endif
- 	return err;
- }
+ 	status = efi_call_proto(pci, pci.read, EfiPciIoWidthUint16,
+-- 
+2.40.1
+
 
 
