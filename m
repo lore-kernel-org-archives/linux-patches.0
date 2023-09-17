@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28CE6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10447C433C9;
-	Sun, 17 Sep 2023 19:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A9A6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77031C433C9;
+	Sun, 17 Sep 2023 19:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980419;
-	bh=ZykPAvmsFfKN9NS9q5vACLFlt2i+IFt/tiCNu0KVTl4=;
+	s=korg; t=1694980422;
+	bh=EQ9pktDE7+lLm00YJ3KwzztnmjM4cwLBqFy2Q/o8xQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scmflm06MjV652f5xUyMjr4atX8Oh8WHjvkItg8xQdFc09BUlvzpMLrLkICGfl0RJ
-	 hgwfqVsRRplGpqe/uzBhiPx7DTi+i7vYftTSYPsueAUf0bzAVF6JLy501B5p0BiYFo
-	 h4qmRABlbelb+gS2REdQm83DJUbpBTXc6kcHvqbw=
+	b=YPMMzjMrM4NHCTzknjdZoCyO6M6HEyLVAlPRd1H2Egbe9xcYiO0phKOADueL2D1EW
+	 TbNaz+J9xwEom0EKa34m0bAWYfQTL2c+kIYWiSiwTiHlYhn4Dp4RshGpvD0E8uasJ3
+	 /9ber5xRcrDGQcB5reHf4q1Hn+pDBHXwWOA7yFjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yikebaer Aizezi <yikebaer61@gmail.com>,
 	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.5 186/285] jbd2: correct the end of the journal recovery scan range
-Date: Sun, 17 Sep 2023 21:13:06 +0200
-Message-ID: <20230917191058.050792700@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.5 187/285] ext4: fix slab-use-after-free in ext4_es_insert_extent()
+Date: Sun, 17 Sep 2023 21:13:07 +0200
+Message-ID: <20230917191058.083977809@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,76 +42,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 2dfba3bb40ad8536b9fa802364f2d40da31aa88e upstream.
+commit 768d612f79822d30a1e7d132a4d4b05337ce42ec upstream.
 
-We got a filesystem inconsistency issue below while running generic/475
-I/O failure pressure test with fast_commit feature enabled.
+Yikebaer reported an issue:
+==================================================================
+BUG: KASAN: slab-use-after-free in ext4_es_insert_extent+0xc68/0xcb0
+fs/ext4/extents_status.c:894
+Read of size 4 at addr ffff888112ecc1a4 by task syz-executor/8438
 
- Symlink /p3/d3/d1c/d6c/dd6/dce/l101 (inode #132605) is invalid.
+CPU: 1 PID: 8438 Comm: syz-executor Not tainted 6.5.0-rc5 #1
+Call Trace:
+ [...]
+ kasan_report+0xba/0xf0 mm/kasan/report.c:588
+ ext4_es_insert_extent+0xc68/0xcb0 fs/ext4/extents_status.c:894
+ ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
+ ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
+ ext4_zero_range fs/ext4/extents.c:4622 [inline]
+ ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
+ [...]
 
-If fast_commit feature is enabled, a special fast_commit journal area is
-appended to the end of the normal journal area. The journal->j_last
-point to the first unused block behind the normal journal area instead
-of the whole log area, and the journal->j_fc_last point to the first
-unused block behind the fast_commit journal area. While doing journal
-recovery, do_one_pass(PASS_SCAN) should first scan the normal journal
-area and turn around to the first block once it meet journal->j_last,
-but the wrap() macro misuse the journal->j_fc_last, so the recovering
-could not read the next magic block (commit block perhaps) and would end
-early mistakenly and missing tN and every transaction after it in the
-following example. Finally, it could lead to filesystem inconsistency.
+Allocated by task 8438:
+ [...]
+ kmem_cache_zalloc include/linux/slab.h:693 [inline]
+ __es_alloc_extent fs/ext4/extents_status.c:469 [inline]
+ ext4_es_insert_extent+0x672/0xcb0 fs/ext4/extents_status.c:873
+ ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
+ ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
+ ext4_zero_range fs/ext4/extents.c:4622 [inline]
+ ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
+ [...]
 
- | normal journal area                             | fast commit area |
- +-------------------------------------------------+------------------+
- | tN(rere) | tN+1 |~| tN-x |...| tN-1 | tN(front) |       ....       |
- +-------------------------------------------------+------------------+
-                     /                             /                  /
-                start               journal->j_last journal->j_fc_last
+Freed by task 8438:
+ [...]
+ kmem_cache_free+0xec/0x490 mm/slub.c:3823
+ ext4_es_try_to_merge_right fs/ext4/extents_status.c:593 [inline]
+ __es_insert_extent+0x9f4/0x1440 fs/ext4/extents_status.c:802
+ ext4_es_insert_extent+0x2ca/0xcb0 fs/ext4/extents_status.c:882
+ ext4_map_blocks+0x92a/0x16f0 fs/ext4/inode.c:680
+ ext4_alloc_file_blocks.isra.0+0x2df/0xb70 fs/ext4/extents.c:4462
+ ext4_zero_range fs/ext4/extents.c:4622 [inline]
+ ext4_fallocate+0x251c/0x3ce0 fs/ext4/extents.c:4721
+ [...]
+==================================================================
 
-This patch fix it by use the correct ending journal->j_last.
+The flow of issue triggering is as follows:
+1. remove es
+      raw es               es  removed  es1
+|-------------------| -> |----|.......|------|
 
-Fixes: 5b849b5f96b4 ("jbd2: fast commit recovery path")
+2. insert es
+  es   insert   es1      merge with es  es1     merge with es and free es1
+|----|.......|------| -> |------------|------| -> |-------------------|
+
+es merges with newes, then merges with es1, frees es1, then determines
+if es1->es_len is 0 and triggers a UAF.
+
+The code flow is as follows:
+ext4_es_insert_extent
+  es1 = __es_alloc_extent(true);
+  es2 = __es_alloc_extent(true);
+  __es_remove_extent(inode, lblk, end, NULL, es1)
+    __es_insert_extent(inode, &newes, es1) ---> insert es1 to es tree
+  __es_insert_extent(inode, &newes, es2)
+    ext4_es_try_to_merge_right
+      ext4_es_free_extent(inode, es1) --->  es1 is freed
+  if (es1 && !es1->es_len)
+    // Trigger UAF by determining if es1 is used.
+
+We determine whether es1 or es2 is used immediately after calling
+__es_remove_extent() or __es_insert_extent() to avoid triggering a
+UAF if es1 or es2 is freed.
+
+Reported-by: Yikebaer Aizezi <yikebaer61@gmail.com>
+Closes: https://lore.kernel.org/lkml/CALcu4raD4h9coiyEBL4Bm0zjDwxC2CyPiTwsP3zFuhot6y9Beg@mail.gmail.com
+Fixes: 2a69c450083d ("ext4: using nofail preallocation in ext4_es_insert_extent()")
 Cc: stable@kernel.org
-Reported-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/linux-ext4/20230613043120.GB1584772@mit.edu/
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230626073322.3956567-1-yi.zhang@huaweicloud.com
+Link: https://lore.kernel.org/r/20230815070808.3377171-1-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/recovery.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ fs/ext4/extents_status.c | 44 +++++++++++++++++++++++++++-------------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
---- a/fs/jbd2/recovery.c
-+++ b/fs/jbd2/recovery.c
-@@ -230,12 +230,8 @@ static int count_tags(journal_t *journal
- /* Make sure we wrap around the log correctly! */
- #define wrap(journal, var)						\
- do {									\
--	unsigned long _wrap_last =					\
--		jbd2_has_feature_fast_commit(journal) ?			\
--			(journal)->j_fc_last : (journal)->j_last;	\
--									\
--	if (var >= _wrap_last)						\
--		var -= (_wrap_last - (journal)->j_first);		\
-+	if (var >= (journal)->j_last)					\
-+		var -= ((journal)->j_last - (journal)->j_first);	\
- } while (0)
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index 9b5b8951afb4..6f7de14c0fa8 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -878,23 +878,29 @@ void ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	err1 = __es_remove_extent(inode, lblk, end, NULL, es1);
+ 	if (err1 != 0)
+ 		goto error;
++	/* Free preallocated extent if it didn't get used. */
++	if (es1) {
++		if (!es1->es_len)
++			__es_free_extent(es1);
++		es1 = NULL;
++	}
  
- static int fc_do_one_pass(journal_t *journal,
-@@ -524,9 +520,7 @@ static int do_one_pass(journal_t *journa
- 				break;
+ 	err2 = __es_insert_extent(inode, &newes, es2);
+ 	if (err2 == -ENOMEM && !ext4_es_must_keep(&newes))
+ 		err2 = 0;
+ 	if (err2 != 0)
+ 		goto error;
++	/* Free preallocated extent if it didn't get used. */
++	if (es2) {
++		if (!es2->es_len)
++			__es_free_extent(es2);
++		es2 = NULL;
++	}
  
- 		jbd2_debug(2, "Scanning for sequence ID %u at %lu/%lu\n",
--			  next_commit_ID, next_log_block,
--			  jbd2_has_feature_fast_commit(journal) ?
--			  journal->j_fc_last : journal->j_last);
-+			  next_commit_ID, next_log_block, journal->j_last);
+ 	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
+ 	    (status & EXTENT_STATUS_WRITTEN ||
+ 	     status & EXTENT_STATUS_UNWRITTEN))
+ 		__revise_pending(inode, lblk, len);
+-
+-	/* es is pre-allocated but not used, free it. */
+-	if (es1 && !es1->es_len)
+-		__es_free_extent(es1);
+-	if (es2 && !es2->es_len)
+-		__es_free_extent(es2);
+ error:
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
+ 	if (err1 || err2)
+@@ -1491,8 +1497,12 @@ void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	 */
+ 	write_lock(&EXT4_I(inode)->i_es_lock);
+ 	err = __es_remove_extent(inode, lblk, end, &reserved, es);
+-	if (es && !es->es_len)
+-		__es_free_extent(es);
++	/* Free preallocated extent if it didn't get used. */
++	if (es) {
++		if (!es->es_len)
++			__es_free_extent(es);
++		es = NULL;
++	}
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
+ 	if (err)
+ 		goto retry;
+@@ -2047,19 +2057,25 @@ void ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
+ 	err1 = __es_remove_extent(inode, lblk, lblk, NULL, es1);
+ 	if (err1 != 0)
+ 		goto error;
++	/* Free preallocated extent if it didn't get used. */
++	if (es1) {
++		if (!es1->es_len)
++			__es_free_extent(es1);
++		es1 = NULL;
++	}
  
- 		/* Skip over each chunk of the transaction looking
- 		 * either the next descriptor block or the final commit
+ 	err2 = __es_insert_extent(inode, &newes, es2);
+ 	if (err2 != 0)
+ 		goto error;
++	/* Free preallocated extent if it didn't get used. */
++	if (es2) {
++		if (!es2->es_len)
++			__es_free_extent(es2);
++		es2 = NULL;
++	}
+ 
+ 	if (allocated)
+ 		__insert_pending(inode, lblk);
+-
+-	/* es is pre-allocated but not used, free it. */
+-	if (es1 && !es1->es_len)
+-		__es_free_extent(es1);
+-	if (es2 && !es2->es_len)
+-		__es_free_extent(es2);
+ error:
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
+ 	if (err1 || err2)
+-- 
+2.42.0
+
 
 
