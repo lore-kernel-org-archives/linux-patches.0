@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2166E6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:31:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B97C433CA;
-	Sun, 17 Sep 2023 20:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527276FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:31:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73B6C433C7;
+	Sun, 17 Sep 2023 20:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982708;
-	bh=P+lenagLfYl18+RWJZuYW4zW5yMtHMhkXhinYgpEudE=;
+	s=korg; t=1694982711;
+	bh=Fq3a+5sQn52F4LmjPKYOGzv2i6scZQ47jVaVWl3y9ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GH8/HzeVrF0C4/6PZERB5y89IgIoCGBEkquZgGnnLOCPqZaO1GeY+rbUMk9ftTGwn
-	 6aElQI3+vl6oOwQ2PNP6Wv5QF0j/lbASBL1zoPITKxTDZsLOP7N7/dxGImjh/aT+Fk
-	 tdgjB3WeG10dATFndwc9ocgravLuXd3CqVg+4yF0=
+	b=pq9qzgaaNnz9RDkwF+m9oezaveXeSYILsVBhDfW18Rtikz995uf371wtOIueFpba6
+	 9x2gbGPhONJb0cShaOGVm2hJQ3nIvD/30A23et/SZ9iQdnzuE0YMwNIcPJOCuZbhn1
+	 38lYE3d04Yo2DYaduWh1WjGZQGyiDAuP6W2Ng6e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.15 329/511] PCI: rockchip: Use 64-bit mask on MSI 64-bit PCI address
-Date: Sun, 17 Sep 2023 21:12:36 +0200
-Message-ID: <20230917191121.760767714@linuxfoundation.org>
+	Yi Yang <yiyang13@huawei.com>,
+	"GONG, Ruiqi" <gongruiqi@huaweicloud.com>,
+	Corey Minyard <minyard@acm.org>,
+	GONG
+Subject: [PATCH 5.15 330/511] ipmi_si: fix a memleak in try_smi_init()
+Date: Sun, 17 Sep 2023 21:12:37 +0200
+Message-ID: <20230917191121.784589314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -35,59 +35,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit cdb50033dd6dfcf02ae3d4ee56bc1a9555be6d36 upstream.
+commit 6cf1a126de2992b4efe1c3c4d398f8de4aed6e3f upstream.
 
-A 32-bit mask was used on the 64-bit PCI address used for mapping MSIs.
-This would result in the upper 32 bits being unintentionally zeroed and
-MSIs getting mapped to incorrect PCI addresses if the address had any
-of the upper bits set.
+Kmemleak reported the following leak info in try_smi_init():
 
-Replace 32-bit mask by appropriate 64-bit mask.
+unreferenced object 0xffff00018ecf9400 (size 1024):
+  comm "modprobe", pid 2707763, jiffies 4300851415 (age 773.308s)
+  backtrace:
+    [<000000004ca5b312>] __kmalloc+0x4b8/0x7b0
+    [<00000000953b1072>] try_smi_init+0x148/0x5dc [ipmi_si]
+    [<000000006460d325>] 0xffff800081b10148
+    [<0000000039206ea5>] do_one_initcall+0x64/0x2a4
+    [<00000000601399ce>] do_init_module+0x50/0x300
+    [<000000003c12ba3c>] load_module+0x7a8/0x9e0
+    [<00000000c246fffe>] __se_sys_init_module+0x104/0x180
+    [<00000000eea99093>] __arm64_sys_init_module+0x24/0x30
+    [<0000000021b1ef87>] el0_svc_common.constprop.0+0x94/0x250
+    [<0000000070f4f8b7>] do_el0_svc+0x48/0xe0
+    [<000000005a05337f>] el0_svc+0x24/0x3c
+    [<000000005eb248d6>] el0_sync_handler+0x160/0x164
+    [<0000000030a59039>] el0_sync+0x160/0x180
 
-[kwilczynski: use GENMASK_ULL() over GENMASK() for 32-bit compatibility]
-Fixes: dc73ed0f1b8b ("PCI: rockchip: Fix window mapping and address translation for endpoint")
-Closes: https://lore.kernel.org/linux-pci/8d19e5b7-8fa0-44a4-90e2-9bb06f5eb694@moroto.mountain
-Link: https://lore.kernel.org/linux-pci/20230703085845.2052008-1-rick.wertenbroek@gmail.com
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+The problem was that when an error occurred before handlers registration
+and after allocating `new_smi->si_sm`, the variable wouldn't be freed in
+the error handling afterwards since `shutdown_smi()` hadn't been
+registered yet. Fix it by adding a `kfree()` in the error handling path
+in `try_smi_init()`.
+
+Cc: stable@vger.kernel.org # 4.19+
+Fixes: 7960f18a5647 ("ipmi_si: Convert over to a shutdown handler")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: GONG, Ruiqi <gongruiqi@huaweicloud.com>
+Signed-off-by: GONG, Ruiqi <gongruiqi@huaweicloud.com>
+Message-Id: <20230629123328.2402075-1-gongruiqi@huaweicloud.com>
+Signed-off-by: Corey Minyard <minyard@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -159,7 +159,9 @@
- #define PCIE_RC_CONFIG_THP_CAP		(PCIE_RC_CONFIG_BASE + 0x274)
- #define   PCIE_RC_CONFIG_THP_CAP_NEXT_MASK	GENMASK(31, 20)
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -2081,6 +2081,11 @@ static int try_smi_init(struct smi_info
+ 		new_smi->io.io_cleanup = NULL;
+ 	}
  
--#define PCIE_ADDR_MASK			0xffffff00
-+#define MAX_AXI_IB_ROOTPORT_REGION_NUM		3
-+#define MIN_AXI_ADDR_BITS_PASSED		8
-+#define PCIE_ADDR_MASK			GENMASK_ULL(63, MIN_AXI_ADDR_BITS_PASSED)
- #define PCIE_CORE_AXI_CONF_BASE		0xc00000
- #define PCIE_CORE_OB_REGION_ADDR0	(PCIE_CORE_AXI_CONF_BASE + 0x0)
- #define   PCIE_CORE_OB_REGION_ADDR0_NUM_BITS	0x3f
-@@ -186,8 +188,6 @@
- #define AXI_WRAPPER_TYPE1_CFG			0xb
- #define AXI_WRAPPER_NOR_MSG			0xc
++	if (rv && new_smi->si_sm) {
++		kfree(new_smi->si_sm);
++		new_smi->si_sm = NULL;
++	}
++
+ 	return rv;
+ }
  
--#define MAX_AXI_IB_ROOTPORT_REGION_NUM		3
--#define MIN_AXI_ADDR_BITS_PASSED		8
- #define PCIE_RC_SEND_PME_OFF			0x11960
- #define ROCKCHIP_VENDOR_ID			0x1d87
- #define PCIE_LINK_IS_L2(x) \
 
 
