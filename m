@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03367461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB89C433C7;
-	Sun, 17 Sep 2023 20:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898CD7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56BCC433C8;
+	Sun, 17 Sep 2023 20:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981171;
-	bh=JQAtbsY5w7UTVgv01xI83BtoLB70zbCoWuozD11rWVo=;
+	s=korg; t=1694981175;
+	bh=VmJOzVpe5YxQ9g/iADrPjOUQ7ZWwMI0MZ2lYBIeZ0lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/Cw2y8krj0fZ0JB1ww6kHdF86UNc2mOFc7r5yswO1LYiWIqllzO+pwoxm5x0aVCF
-	 gMS7STnpU2hwVDjLdJPS5WVd6U2bhisuvwu9edVAUYSLuMaJOWGdvC1sdpbr4YRkf5
-	 0/HIxVhUd739NfSnS0bu6Oiy2vB0pBnnzqqr/hUo=
+	b=huDpRvaRy1a8URk6hVMgyIKgDUEEOI/ww9ICgvrYt+w9AXzpKz+sta4b48RcchT4F
+	 dJeri5Pi2sriaPj+RJ5++gRg9TjN0ehZkYN2VEjp2L6/iw3OhccBVdL4DZ8ipKYKp3
+	 SyZ8ULszYra1Sv9+KHGpqCtCHRACtGifcZaM8q90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/219] drm/i915: mark requests for GuC virtual engines to avoid use-after-free
-Date: Sun, 17 Sep 2023 21:13:29 +0200
-Message-ID: <20230917191043.938406444@linuxfoundation.org>
+Subject: [PATCH 5.15 016/511] s390/dasd: use correct number of retries for ERP requests
+Date: Sun, 17 Sep 2023 21:07:23 +0200
+Message-ID: <20230917191114.225107119@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,88 +37,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 5eefc5307c983b59344a4cb89009819f580c84fa ]
+[ Upstream commit acea28a6b74f458defda7417d2217b051ba7d444 ]
 
-References to i915_requests may be trapped by userspace inside a
-sync_file or dmabuf (dma-resv) and held indefinitely across different
-proceses. To counter-act the memory leaks, we try to not to keep
-references from the request past their completion.
-On the other side on fence release we need to know if rq->engine
-is valid and points to hw engine (true for non-virtual requests).
-To make it possible extra bit has been added to rq->execution_mask,
-for marking virtual engines.
+If a DASD request fails an error recovery procedure (ERP) request might
+be built as a copy of the original request to do error recovery.
 
-Fixes: bcb9aa45d5a0 ("Revert "drm/i915: Hold reference to intel_context over life of i915_request"")
-Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821153035.3903006-1-andrzej.hajda@intel.com
-(cherry picked from commit 280410677af763f3871b93e794a199cfcf6fb580)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The ERP request gets a number of retries assigned.
+This number is always 256 no matter what other value might have been set
+for the original request. This is not what is expected when a user
+specifies a certain amount of retries for the device via sysfs.
+
+Correctly use the number of retries of the original request for ERP
+requests.
+
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_types.h      | 1 +
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 3 +++
- drivers/gpu/drm/i915/i915_request.c               | 7 ++-----
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/s390/block/dasd_3990_erp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_types.h b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-index 6b5d4ea22b673..107f465a27b9e 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_types.h
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-@@ -56,6 +56,7 @@ struct intel_breadcrumbs;
- 
- typedef u32 intel_engine_mask_t;
- #define ALL_ENGINES ((intel_engine_mask_t)~0ul)
-+#define VIRTUAL_ENGINES BIT(BITS_PER_TYPE(intel_engine_mask_t) - 1)
- 
- struct intel_hw_status_page {
- 	struct list_head timelines;
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index 0ec07dad1dcf1..fecdc7ea78ebd 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -5111,6 +5111,9 @@ guc_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
- 
- 	ve->base.flags = I915_ENGINE_IS_VIRTUAL;
- 
-+	BUILD_BUG_ON(ilog2(VIRTUAL_ENGINES) < I915_NUM_ENGINES);
-+	ve->base.mask = VIRTUAL_ENGINES;
-+
- 	intel_context_init(&ve->context, &ve->base);
- 
- 	for (n = 0; n < count; n++) {
-diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 803cd2ad4deb5..7ce126a01cbf6 100644
---- a/drivers/gpu/drm/i915/i915_request.c
-+++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -134,9 +134,7 @@ static void i915_fence_release(struct dma_fence *fence)
- 	i915_sw_fence_fini(&rq->semaphore);
- 
- 	/*
--	 * Keep one request on each engine for reserved use under mempressure
--	 * do not use with virtual engines as this really is only needed for
--	 * kernel contexts.
-+	 * Keep one request on each engine for reserved use under mempressure.
- 	 *
- 	 * We do not hold a reference to the engine here and so have to be
- 	 * very careful in what rq->engine we poke. The virtual engine is
-@@ -166,8 +164,7 @@ static void i915_fence_release(struct dma_fence *fence)
- 	 * know that if the rq->execution_mask is a single bit, rq->engine
- 	 * can be a physical engine with the exact corresponding mask.
- 	 */
--	if (!intel_engine_is_virtual(rq->engine) &&
--	    is_power_of_2(rq->execution_mask) &&
-+	if (is_power_of_2(rq->execution_mask) &&
- 	    !cmpxchg(&rq->engine->request_pool, NULL, rq))
- 		return;
+diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
+index 4691a3c35d725..c2d4ea74e0d00 100644
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -2436,7 +2436,7 @@ static struct dasd_ccw_req *dasd_3990_erp_add_erp(struct dasd_ccw_req *cqr)
+ 	erp->block    = cqr->block;
+ 	erp->magic    = cqr->magic;
+ 	erp->expires  = cqr->expires;
+-	erp->retries  = 256;
++	erp->retries  = device->default_retries;
+ 	erp->buildclk = get_tod_clock();
+ 	erp->status = DASD_CQR_FILLED;
  
 -- 
 2.40.1
