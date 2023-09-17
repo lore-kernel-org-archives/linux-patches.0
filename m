@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1560953B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A178C433C7;
-	Sun, 17 Sep 2023 19:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706F53B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E208FC433C8;
+	Sun, 17 Sep 2023 19:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979311;
-	bh=LsMXOFyHSjtHb3B1ifJTBWtDnSe3UZkR3bbfpXEOmIU=;
+	s=korg; t=1694979315;
+	bh=Nk+uhoeS+GC/gM+xgHH0UlHdEWoYGCSEcCYEi5WJo8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qaQ0q1waXSt81+CwHZ6vFEKliZyp2uQAhVQKlk/9RU2Rae3yAfnu9j+lt3l0z/LE
-	 F3ZXd2AEKJ/YY1oy7Bh31CwY/ZmaxJEksXrQtOoE1SSyxhJdfIigDalELRHcmleHBK
-	 yaVVRp1V3VWvUgNnuWoW+QaCgS0FJ8DDrk14x/WY=
+	b=wwbcvT8OCHcrGkaCk+XQm3R9+T0pVHqNYOHYecgGrlHPiqGrnB8r4ZjXLNSrXlyMt
+	 fj0mU8j4L+ZbHT13/6lCpKHJdXOsObpGAfsUUlix4CUhLGb6Zi0An5W6PaPzmMQ1Xn
+	 qUvP88P2xZcX75yjNlrdJYRRPsG8008e7L1SlWY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meng_Cai@novatek.com.cn,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 275/406] ALSA: pcm: Fix missing fixup call in compat hw_refine ioctl
-Date: Sun, 17 Sep 2023 21:12:09 +0200
-Message-ID: <20230917191108.531861788@linuxfoundation.org>
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 250/406] RDMA/siw: Balance the reference of cep->kref in the error path
+Date: Sun, 17 Sep 2023 21:11:44 +0200
+Message-ID: <20230917191107.767170118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,49 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-commit 358040e3807754944dbddf948a23c6d914297ed7 upstream.
+[ Upstream commit b056327bee09e6b86683d3f709a438ccd6031d72 ]
 
-The update of rate_num/den and msbits were factored out to
-fixup_unreferenced_params() function to be called explicitly after the
-hw_refine or hw_params procedure.  It's called from
-snd_pcm_hw_refine_user(), but it's forgotten in the PCM compat ioctl.
-This ended up with the incomplete rate_num/den and msbits parameters
-when 32bit compat ioctl is used.
+The siw_connect can go to err in below after cep is allocated successfully:
 
-This patch adds the missing call in snd_pcm_ioctl_hw_params_compat().
+1. If siw_cm_alloc_work returns failure. In this case socket is not
+assoicated with cep so siw_cep_put can't be called by siw_socket_disassoc.
+We need to call siw_cep_put twice since cep->kref is increased once after
+it was initialized.
 
-Reported-by: Meng_Cai@novatek.com.cn
-Fixes: f9a076bff053 ("ALSA: pcm: calculate non-mask/non-interval parameters always when possible")
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230829134344.31588-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+2. If siw_cm_queue_work can't find a work, which means siw_cep_get is not
+called in siw_cm_queue_work, so cep->kref is increased twice by siw_cep_get
+and when associate socket with cep after it was initialized. So we need to
+call siw_cep_put three times (one in siw_socket_disassoc).
+
+3. siw_send_mpareqrep returns error, this scenario is similar as 2.
+
+So we need to remove one siw_cep_put in the error path.
+
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20230821133255.31111-2-guoqing.jiang@linux.dev
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_compat.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/core/pcm_compat.c
-+++ b/sound/core/pcm_compat.c
-@@ -252,10 +252,14 @@ static int snd_pcm_ioctl_hw_params_compa
- 		goto error;
- 	}
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index b87ba4c9fccf1..de5ab282ac748 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1490,7 +1490,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  
--	if (refine)
-+	if (refine) {
- 		err = snd_pcm_hw_refine(substream, data);
--	else
-+		if (err < 0)
-+			goto error;
-+		err = fixup_unreferenced_params(substream, data);
-+	} else {
- 		err = snd_pcm_hw_params(substream, data);
-+	}
- 	if (err < 0)
- 		goto error;
- 	if (copy_to_user(data32, data, sizeof(*data32)) ||
+ 		cep->cm_id = NULL;
+ 		id->rem_ref(id);
+-		siw_cep_put(cep);
+ 
+ 		qp->cep = NULL;
+ 		siw_cep_put(cep);
+-- 
+2.40.1
+
 
 
