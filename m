@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7606FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C04C433C7;
-	Sun, 17 Sep 2023 20:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55026FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8249C433CB;
+	Sun, 17 Sep 2023 20:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981818;
-	bh=4JsY7IPnLqarNEYvlGBdpA2mhmxQqHs8ps85jbhos84=;
+	s=korg; t=1694981821;
+	bh=Nqq4pB6wqiy/W0OXqqUun/hZpCq4iXX5hFIQ+xso3AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmWNlrAa394Vh4qgVI61s1vQOA7iPllZkxlcs/UcHIDsSNCvRCJW1G+bMiw1UxI2c
-	 SVB/9RLXRgfuZ17GgPRXo4V0AZwp3fjS0Vkhnhrh5MS4Mad6pUbtufhXV3TewdxgWt
-	 qx4oyE+OMn6qUcgp4lRcrCoEXPxiOmZ+lpyPBqog=
+	b=Q3Ng/K2GC0SbWLWDQLZ4cI4Vp/ykIkF47UoIw1Ot/Pvwe9ZSbclXYdrzPJHJgT+UU
+	 rPdewqyRgOHbkU0lXjzHoME8hORVbSxDD6MzJeR4T2QDy8HQLGKW/bjk4Bis6AOWNc
+	 qya3LZ/goe2obs98v2BnLuhDwyMVqFSByqzQ0ZZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 176/219] KVM: SVM: Skip VMSA init in sev_es_init_vmcb() if pointer is NULL
-Date: Sun, 17 Sep 2023 21:15:03 +0200
-Message-ID: <20230917191047.338434419@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 111/511] wifi: ath9k: fix races between ath9k_wmi_cmd and ath9k_wmi_ctrl_rx
+Date: Sun, 17 Sep 2023 21:08:58 +0200
+Message-ID: <20230917191116.538557615@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -34,53 +35,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 1952e74da96fb3e48b72a2d0ece78c688a5848c1 upstream.
+[ Upstream commit b674fb513e2e7a514fcde287c0f73915d393fdb6 ]
 
-Skip initializing the VMSA physical address in the VMCB if the VMSA is
-NULL, which occurs during intrahost migration as KVM initializes the VMCB
-before copying over state from the source to the destination (including
-the VMSA and its physical address).
+Currently, the synchronization between ath9k_wmi_cmd() and
+ath9k_wmi_ctrl_rx() is exposed to a race condition which, although being
+rather unlikely, can lead to invalid behaviour of ath9k_wmi_cmd().
 
-In normal builds, __pa() is just math, so the bug isn't fatal, but with
-CONFIG_DEBUG_VIRTUAL=y, the validity of the virtual address is verified
-and passing in NULL will make the kernel unhappy.
+Consider the following scenario:
 
-Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
-Cc: stable@vger.kernel.org
-Cc: Peter Gonda <pgonda@google.com>
-Reviewed-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/20230825022357.2852133-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CPU0					CPU1
+
+ath9k_wmi_cmd(...)
+  mutex_lock(&wmi->op_mutex)
+  ath9k_wmi_cmd_issue(...)
+  wait_for_completion_timeout(...)
+  ---
+  timeout
+  ---
+					/* the callback is being processed
+					 * before last_seq_id became zero
+					 */
+					ath9k_wmi_ctrl_rx(...)
+					  spin_lock_irqsave(...)
+					  /* wmi->last_seq_id check here
+					   * doesn't detect timeout yet
+					   */
+					  spin_unlock_irqrestore(...)
+  /* last_seq_id is zeroed to
+   * indicate there was a timeout
+   */
+  wmi->last_seq_id = 0
+  mutex_unlock(&wmi->op_mutex)
+  return -ETIMEDOUT
+
+ath9k_wmi_cmd(...)
+  mutex_lock(&wmi->op_mutex)
+  /* the buffer is replaced with
+   * another one
+   */
+  wmi->cmd_rsp_buf = rsp_buf
+  wmi->cmd_rsp_len = rsp_len
+  ath9k_wmi_cmd_issue(...)
+    spin_lock_irqsave(...)
+    spin_unlock_irqrestore(...)
+  wait_for_completion_timeout(...)
+					/* the continuation of the
+					 * callback left after the first
+					 * ath9k_wmi_cmd call
+					 */
+					  ath9k_wmi_rsp_callback(...)
+					    /* copying data designated
+					     * to already timeouted
+					     * WMI command into an
+					     * inappropriate wmi_cmd_buf
+					     */
+					    memcpy(...)
+					    complete(&wmi->cmd_wait)
+  /* awakened by the bogus callback
+   * => invalid return result
+   */
+  mutex_unlock(&wmi->op_mutex)
+  return 0
+
+To fix this, update last_seq_id on timeout path inside ath9k_wmi_cmd()
+under the wmi_lock. Move ath9k_wmi_rsp_callback() under wmi_lock inside
+ath9k_wmi_ctrl_rx() so that the wmi->cmd_wait can be completed only for
+initially designated wmi_cmd call, otherwise the path would be rejected
+with last_seq_id check.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230425192607.18015-1-pchelkin@ispras.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2951,9 +2951,12 @@ static void sev_es_init_vmcb(struct vcpu
- 	/*
- 	 * An SEV-ES guest requires a VMSA area that is a separate from the
- 	 * VMCB page. Do not include the encryption mask on the VMSA physical
--	 * address since hardware will access it using the guest key.
-+	 * address since hardware will access it using the guest key.  Note,
-+	 * the VMSA will be NULL if this vCPU is the destination for intrahost
-+	 * migration, and will be copied later.
- 	 */
--	svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
-+	if (svm->sev_es.vmsa)
-+		svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index d652c647d56b5..04f363cb90fe5 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -242,10 +242,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 		goto free_skb;
+ 	}
+-	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
  
- 	/* Can't intercept CR register access, HV can't modify CR registers */
- 	svm_clr_intercept(svm, INTERCEPT_CR0_READ);
+ 	/* WMI command response */
+ 	ath9k_wmi_rsp_callback(wmi, skb);
++	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 
+ free_skb:
+ 	kfree_skb(skb);
+@@ -308,8 +308,8 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 	struct ath_common *common = ath9k_hw_common(ah);
+ 	u16 headroom = sizeof(struct htc_frame_hdr) +
+ 		       sizeof(struct wmi_cmd_hdr);
++	unsigned long time_left, flags;
+ 	struct sk_buff *skb;
+-	unsigned long time_left;
+ 	int ret = 0;
+ 
+ 	if (ah->ah_flags & AH_UNPLUGGED)
+@@ -345,7 +345,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 	if (!time_left) {
+ 		ath_dbg(common, WMI, "Timeout waiting for WMI command: %s\n",
+ 			wmi_cmd_to_name(cmd_id));
++		spin_lock_irqsave(&wmi->wmi_lock, flags);
+ 		wmi->last_seq_id = 0;
++		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 		mutex_unlock(&wmi->op_mutex);
+ 		return -ETIMEDOUT;
+ 	}
+-- 
+2.40.1
+
 
 
