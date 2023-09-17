@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CDC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D4AC433C9;
-	Sun, 17 Sep 2023 20:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2D06FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF4BC433CD;
+	Sun, 17 Sep 2023 20:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980961;
-	bh=K/J3zECpqS71XWC/LQcQKS7LENUY8faj+JS0yuJkZeE=;
+	s=korg; t=1694980964;
+	bh=LM8EGF63NkVrYoX1+nV/BTtZd9+/WdQzmXe68CrgLqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrBGSpU6evVlLSB/GG1hNPJPzCZxFeTc20RgN5nQstVpvUiWJlXKA5G7kWG8/5R+t
-	 BstXTZ+Ux0m3hrWpqx/DlvhUueS067OeElDzfo1UI3V8bcscGiGgippyYksAd+THcV
-	 t0S1c2Xej59X2wma7rWb3E5X8/bINbiDWCwYJ1GY=
+	b=DuPAE9GEa8FkAANBrunzicn9ZEHpnYtpx/8OyZwkXJjAKVi2T1kqOtpu4kbl/T33s
+	 ddgk5widYBVjVRqi0Ijsidv2K4K7zy5JZhgug20oHj6SI/pLfuRetOmf0cSUrG7B0a
+	 WlP0iXpcvQfcy1bwTmO3V10jmc8QhFIchxnyjCqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.1 051/219] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date: Sun, 17 Sep 2023 21:12:58 +0200
-Message-ID: <20230917191042.848472437@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 060/219] gfs2: low-memory forced flush fixes
+Date: Sun, 17 Sep 2023 21:13:07 +0200
+Message-ID: <20230917191043.180404155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,47 +39,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit cabce92dd805945a090dc6fc73b001bb35ed083a upstream.
+[ Upstream commit b74cd55aa9a9d0aca760028a51343ec79812e410 ]
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
+First, function gfs2_ail_flush_reqd checks the SDF_FORCE_AIL_FLUSH flag
+to determine if an AIL flush should be forced in low-memory situations.
+However, it also immediately clears the flag, and when called repeatedly
+as in function gfs2_logd, the flag will be lost.  Fix that by pulling
+the SDF_FORCE_AIL_FLUSH flag check out of gfs2_ail_flush_reqd.
 
-Cc: <stable@vger.kernel.org>
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Second, function gfs2_writepages sets the SDF_FORCE_AIL_FLUSH flag
+whether or not enough pages were written.  If enough pages could be
+written, flushing the AIL is unnecessary, though.
+
+Third, gfs2_writepages doesn't wake up logd after setting the
+SDF_FORCE_AIL_FLUSH flag, so it can take a long time for logd to react.
+It would be preferable to wake up logd, but that hurts the performance
+of some workloads and we don't quite understand why so far, so don't
+wake up logd so far.
+
+Fixes: b066a4eebd4f ("gfs2: forcibly flush ail to relieve memory pressure")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pm.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/gfs2/aops.c | 4 ++--
+ fs/gfs2/log.c  | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(st
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index 2f04c0ff7470b..1e9fa26f04fe1 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -182,13 +182,13 @@ static int gfs2_writepages(struct address_space *mapping,
+ 	int ret;
  
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 	/*
+-	 * Even if we didn't write any pages here, we might still be holding
++	 * Even if we didn't write enough pages here, we might still be holding
+ 	 * dirty pages in the ail. We forcibly flush the ail because we don't
+ 	 * want balance_dirty_pages() to loop indefinitely trying to write out
+ 	 * pages held in the ail that it can't find.
+ 	 */
+ 	ret = iomap_writepages(mapping, wbc, &wpc, &gfs2_writeback_ops);
+-	if (ret == 0)
++	if (ret == 0 && wbc->nr_to_write > 0)
+ 		set_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
+ 	return ret;
+ }
+diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
+index 69c3facfcbef4..e021d5f50c231 100644
+--- a/fs/gfs2/log.c
++++ b/fs/gfs2/log.c
+@@ -1285,9 +1285,6 @@ static inline int gfs2_ail_flush_reqd(struct gfs2_sbd *sdp)
+ {
+ 	unsigned int used_blocks = sdp->sd_jdesc->jd_blocks - atomic_read(&sdp->sd_log_blks_free);
  
-@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(st
+-	if (test_and_clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags))
+-		return 1;
+-
+ 	return used_blocks + atomic_read(&sdp->sd_log_blks_needed) >=
+ 		atomic_read(&sdp->sd_log_thresh2);
+ }
+@@ -1328,7 +1325,9 @@ int gfs2_logd(void *data)
+ 						  GFS2_LFC_LOGD_JFLUSH_REQD);
  		}
- 	}
  
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
+-		if (gfs2_ail_flush_reqd(sdp)) {
++		if (test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
++		    gfs2_ail_flush_reqd(sdp)) {
++			clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
+ 			gfs2_ail1_start(sdp);
+ 			gfs2_ail1_wait(sdp);
+ 			gfs2_ail1_empty(sdp, 0);
+@@ -1341,6 +1340,7 @@ int gfs2_logd(void *data)
+ 		try_to_freeze();
+ 
+ 		t = wait_event_interruptible_timeout(sdp->sd_logd_waitq,
++				test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
+ 				gfs2_ail_flush_reqd(sdp) ||
+ 				gfs2_jrnl_flush_reqd(sdp) ||
+ 				kthread_should_stop(),
+-- 
+2.40.1
+
 
 
