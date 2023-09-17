@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC017461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F3BC433C7;
-	Sun, 17 Sep 2023 19:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357717461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E7FC433CD;
+	Sun, 17 Sep 2023 19:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980060;
-	bh=OygOJR705cS6XcI/eZZ/NTXOExTg7RDHLUzEX3v095M=;
+	s=korg; t=1694980064;
+	bh=mPmJTwuFdYUWP4GLWTyNtzlKEU2XPHQX33h7pddGDsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bP4YhOuJ0UdAFBinG5b1iP+nCAfdhbrZYUWipvRZ+XYsMRYmHM0bR5e1Co63smYKT
-	 vPlUzqWA1f7DokT8h4JxuQziJwf7bDBHhn83AlIHAkVLoVR4DzSuSnfj4ru+T8acON
-	 5s7A2//LemCrQjpfUPlp2WPtenkN6/NZpaqdd4gU=
+	b=l9IWz+iVXBM0T7jyx4TqmUJmu6z2NIY6Xg2YnrlaMXByRFOMK3aXzetng6MtjCofM
+	 v4k+mm96q1cxtdX8W0RfYcqfeyPFyOtNRnzTCP35am7UOE/LR/SpJk0M41dXN0hAbN
+	 rVHtPNTCB4ka2mwf1uZG2Q9cKtnVsjEokC3bZKJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -25,9 +25,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linuxppc-dev@lists.ozlabs.org,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 085/285] perf vendor events: Drop some of the JSON/events for power10 platform
-Date: Sun, 17 Sep 2023 21:11:25 +0200
-Message-ID: <20230917191054.651671546@linuxfoundation.org>
+Subject: [PATCH 6.5 086/285] perf vendor events: Drop STORES_PER_INST metric event for power10 platform
+Date: Sun, 17 Sep 2023 21:11:26 +0200
+Message-ID: <20230917191054.686128724@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -48,12 +48,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit e104df97b8dcfbab2e42de634b99bf03f0805d85 ]
+[ Upstream commit 4836b9a85ef148c7c9779b66fab3f7279e488d90 ]
 
-Drop some of the JSON/events for power10 platform due to counter
-data mismatch.
+Drop STORES_PER_INST metric event for the power10 platform, as the
+metric expression of STORES_PER_INST metric event using dropped event
+PM_ST_FIN.
 
-Fixes: 32daa5d7899e0343 ("perf vendor events: Initial JSON/events list for power10 platform")
+Fixes: 3ca3af7d1f230d1f ("perf vendor events power10: Add metric events JSON file for power10 platform")
 Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
 Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Disha Goel <disgoel@linux.ibm.com>
@@ -62,119 +63,30 @@ Cc: Kajol Jain <kjain@linux.ibm.com>
 Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230814112803.1508296-2-kjain@linux.ibm.com
+Link: https://lore.kernel.org/r/20230814112803.1508296-3-kjain@linux.ibm.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/powerpc/power10/floating_point.json           |  7 -------
- tools/perf/pmu-events/arch/powerpc/power10/marked.json | 10 ----------
- tools/perf/pmu-events/arch/powerpc/power10/others.json |  5 -----
- .../perf/pmu-events/arch/powerpc/power10/pipeline.json | 10 ----------
- .../pmu-events/arch/powerpc/power10/translation.json   |  5 -----
- 5 files changed, 37 deletions(-)
- delete mode 100644 tools/perf/pmu-events/arch/powerpc/power10/floating_point.json
+ tools/perf/pmu-events/arch/powerpc/power10/metrics.json | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/floating_point.json b/tools/perf/pmu-events/arch/powerpc/power10/floating_point.json
-deleted file mode 100644
-index 54acb55e2c8c6..0000000000000
---- a/tools/perf/pmu-events/arch/powerpc/power10/floating_point.json
-+++ /dev/null
-@@ -1,7 +0,0 @@
--[
--  {
--    "EventCode": "0x4016E",
--    "EventName": "PM_THRESH_NOT_MET",
--    "BriefDescription": "Threshold counter did not meet threshold."
--  }
--]
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/marked.json b/tools/perf/pmu-events/arch/powerpc/power10/marked.json
-index 131f8d0e88317..f2436fc5537ce 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/marked.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/marked.json
-@@ -19,11 +19,6 @@
-     "EventName": "PM_MRK_BR_TAKEN_CMPL",
-     "BriefDescription": "Marked Branch Taken instruction completed."
-   },
--  {
--    "EventCode": "0x20112",
--    "EventName": "PM_MRK_NTF_FIN",
--    "BriefDescription": "The marked instruction became the oldest in the pipeline before it finished. It excludes instructions that finish at dispatch."
--  },
-   {
-     "EventCode": "0x2C01C",
-     "EventName": "PM_EXEC_STALL_DMISS_OFF_CHIP",
-@@ -64,11 +59,6 @@
-     "EventName": "PM_L1_ICACHE_MISS",
-     "BriefDescription": "Demand instruction cache miss."
-   },
--  {
--    "EventCode": "0x30130",
--    "EventName": "PM_MRK_INST_FIN",
--    "BriefDescription": "marked instruction finished. Excludes instructions that finish at dispatch. Note that stores always finish twice since the address gets issued to the LSU and the data gets issued to the VSU."
--  },
-   {
-     "EventCode": "0x34146",
-     "EventName": "PM_MRK_LD_CMPL",
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/others.json b/tools/perf/pmu-events/arch/powerpc/power10/others.json
-index a5319cdba89b3..17c5424ef1ac1 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/others.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/others.json
-@@ -29,11 +29,6 @@
-     "EventName": "PM_DISP_SS0_2_INSTR_CYC",
-     "BriefDescription": "Cycles in which Superslice 0 dispatches either 1 or 2 instructions."
-   },
--  {
--    "EventCode": "0x1F15C",
--    "EventName": "PM_MRK_STCX_L2_CYC",
--    "BriefDescription": "Cycles spent in the nest portion of a marked Stcx instruction. It starts counting when the operation starts to drain to the L2 and it stops counting when the instruction retires from the Instruction Completion Table (ICT) in the Instruction Sequencing Unit (ISU)."
--  },
-   {
-     "EventCode": "0x10066",
-     "EventName": "PM_ADJUNCT_CYC",
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json b/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
-index 449f57e8ba6af..799893c56f32b 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/pipeline.json
-@@ -194,11 +194,6 @@
-     "EventName": "PM_TLBIE_FIN",
-     "BriefDescription": "TLBIE instruction finished in the LSU. Two TLBIEs can finish each cycle. All will be counted."
-   },
--  {
--    "EventCode": "0x3D058",
--    "EventName": "PM_SCALAR_FSQRT_FDIV_ISSUE",
--    "BriefDescription": "Scalar versions of four floating point operations: fdiv,fsqrt (xvdivdp, xvdivsp, xvsqrtdp, xvsqrtsp)."
--  },
-   {
-     "EventCode": "0x30066",
-     "EventName": "PM_LSU_FIN",
-@@ -269,11 +264,6 @@
-     "EventName": "PM_IC_MISS_CMPL",
-     "BriefDescription": "Non-speculative instruction cache miss, counted at completion."
-   },
--  {
--    "EventCode": "0x4D050",
--    "EventName": "PM_VSU_NON_FLOP_CMPL",
--    "BriefDescription": "Non-floating point VSU instructions completed."
--  },
-   {
-     "EventCode": "0x4D052",
-     "EventName": "PM_2FLOP_CMPL",
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/translation.json b/tools/perf/pmu-events/arch/powerpc/power10/translation.json
-index 3e47b804a0a8f..961e2491e73f6 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/translation.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/translation.json
-@@ -4,11 +4,6 @@
-     "EventName": "PM_MRK_START_PROBE_NOP_CMPL",
-     "BriefDescription": "Marked Start probe nop (AND R0,R0,R0) completed."
-   },
--  {
--    "EventCode": "0x20016",
--    "EventName": "PM_ST_FIN",
--    "BriefDescription": "Store finish count. Includes speculative activity."
--  },
-   {
-     "EventCode": "0x20018",
-     "EventName": "PM_ST_FWD",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
+index 6f53583a0c62c..e3087eb1ccff8 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
+@@ -453,12 +453,6 @@
+         "MetricGroup": "General",
+         "MetricName": "LOADS_PER_INST"
+     },
+-    {
+-        "BriefDescription": "Average number of finished stores per completed instruction",
+-        "MetricExpr": "PM_ST_FIN / PM_RUN_INST_CMPL",
+-        "MetricGroup": "General",
+-        "MetricName": "STORES_PER_INST"
+-    },
+     {
+         "BriefDescription": "Percentage of demand loads that reloaded from beyond the L2 per completed instruction",
+         "MetricExpr": "PM_DATA_FROM_L2MISS / PM_RUN_INST_CMPL * 100",
 -- 
 2.40.1
 
