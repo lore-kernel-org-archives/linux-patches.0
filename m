@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DFE6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D036CC433C7;
-	Sun, 17 Sep 2023 19:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C406FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1E8C433A9;
+	Sun, 17 Sep 2023 19:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978777;
-	bh=aqkXrHlKEXuqsQ+LdryRxwQL0cjxWbTbNL0cWiitzDA=;
+	s=korg; t=1694978780;
+	bh=XTziQflBtU2AkACxr/MEtdaIzxCY2gQQPHQEj56nd50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Izol3wdXDHUXTaAuw6jaXzK0rffaTCdBLHiz4nA47IJM30kxge2pGvfojQR6qaaQi
-	 gE0ORsrwF2R2qYQXlIOoDFcQkBw1UXaPluSSQLQS7yRezFXATla1xxp/bnfVco+khl
-	 UTsg+4SJ5X0+rgdpxe6sOCYiI5gUd0ORy8V+B5k4=
+	b=cYQTENl93CszGXYt8aPSk1yUD7xFAi5Kg1byJGx9hiDrgATs3eEPDuL/aQVJhi6E7
+	 MV3USSSJPTJ9HhEUmzB+Rs8jMoS5z+IAB8+CdZYeXCm0LUgiVC3uyOznCAv9l1bS4R
+	 6QA37W75/V4MDGcHSn18Sq2DHnluM/PP/cWWENoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	dorum@noisolation.com,
+	Daniel Vetter <daniel.vetter@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/406] drm: xlnx: zynqmp_dpsub: Add missing check for dma_set_mask
-Date: Sun, 17 Sep 2023 21:10:11 +0200
-Message-ID: <20230917191105.320579039@linuxfoundation.org>
+Subject: [PATCH 5.10 158/406] drm/msm/mdp5: Dont leak some plane state
+Date: Sun, 17 Sep 2023 21:10:12 +0200
+Message-ID: <20230917191105.347169382@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,37 +47,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-[ Upstream commit 1832fba7f9780aff67c96ad30f397c2d76141833 ]
+[ Upstream commit fd0ad3b2365c1c58aa5a761c18efc4817193beb6 ]
 
-Add check for dma_set_mask() and return the error if it fails.
+Apparently no one noticed that mdp5 plane states leak like a sieve
+ever since we introduced plane_state->commit refcount a few years ago
+in 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too
+early by tracking commits, v3.")
 
-Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fix it by using the right helpers.
+
+Fixes: 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too early by tracking commits, v3.")
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reported-and-tested-by: dorum@noisolation.com
+Cc: dorum@noisolation.com
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/551236/
+Link: https://lore.kernel.org/r/20230803204521.928582-1-daniel.vetter@ffwll.ch
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-index 8e69303aad3f7..5f6eea81f3cc8 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-@@ -214,7 +214,9 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
- 	dpsub->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, dpsub);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index 0dc23c86747e8..e1c1b4ad5ed04 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -221,8 +221,7 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
+ {
+ 	struct mdp5_plane_state *pstate = to_mdp5_plane_state(state);
  
--	dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
-+	ret = dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
-+	if (ret)
-+		return ret;
+-	if (state->fb)
+-		drm_framebuffer_put(state->fb);
++	__drm_atomic_helper_plane_destroy_state(state);
  
- 	/* Try the reserved memory. Proceed if there's none. */
- 	of_reserved_mem_device_init(&pdev->dev);
+ 	kfree(pstate);
+ }
 -- 
 2.40.1
 
