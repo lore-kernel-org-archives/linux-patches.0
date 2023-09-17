@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8486FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EF5C433C7;
-	Sun, 17 Sep 2023 20:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99986FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264F1C433C9;
+	Sun, 17 Sep 2023 20:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981496;
-	bh=iKIzAitrDlGK5iZAqFXorrI7QUZVUW6BEdYSkk2fcw0=;
+	s=korg; t=1694981499;
+	bh=KoRGFtKAHV7RcqLMWUdprxAQ0nprA+K5PC9IMuK9/Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWpfjwUb3eyAvKXrO4DcdH1vaYUkY4C1e+BRr22K39TfGWoB4aCIb/yh2lNHzo5nc
-	 AhYGvjVRyCQWEk4jCDz7OTRL4NYnBUebAl1CPKr0eBwegqzPuwhigs7GGSbnf39YFZ
-	 z0rcaPhKKIG2J+/V0bsU0sVOlt6AjCVPWTrW+FuU=
+	b=uKguA8dsZrTCA7d2YQjBH8Go2mkrg8TMvhdGLZbVe3tt4mwDGxMvKvbcaFlIXnllO
+	 Iyb5v/aWPgeVQB154C5JGItrckt7pwKZaGJG7PicGtkXTZ623rD1DmI6ponfezNIyz
+	 /4yGKVW/5S262yuydeV/pmgvBlZ+TfbZVDjqFJ9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/511] refscale: Fix uninitalized use of wait_queue_head_t
-Date: Sun, 17 Sep 2023 21:08:10 +0200
-Message-ID: <20230917191115.406012681@linuxfoundation.org>
+Subject: [PATCH 6.1 132/219] net: hns3: fix invalid mutex between tc qdisc and dcb ets command issue
+Date: Sun, 17 Sep 2023 21:14:19 +0200
+Message-ID: <20230917191045.759493622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,85 +36,154 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit f5063e8948dad7f31adb007284a5d5038ae31bb8 ]
+[ Upstream commit fa5564945f7d15ae2390b00c08b6abaef0165cda ]
 
-Running the refscale test occasionally crashes the kernel with the
-following error:
+We hope that tc qdisc and dcb ets commands can not be used crosswise.
+If we want to use any of the commands to configure tc,
+We must use the other command to clear the existing configuration.
 
-[ 8569.952896] BUG: unable to handle page fault for address: ffffffffffffffe8
-[ 8569.952900] #PF: supervisor read access in kernel mode
-[ 8569.952902] #PF: error_code(0x0000) - not-present page
-[ 8569.952904] PGD c4b048067 P4D c4b049067 PUD c4b04b067 PMD 0
-[ 8569.952910] Oops: 0000 [#1] PREEMPT_RT SMP NOPTI
-[ 8569.952916] Hardware name: Dell Inc. PowerEdge R750/0WMWCR, BIOS 1.2.4 05/28/2021
-[ 8569.952917] RIP: 0010:prepare_to_wait_event+0x101/0x190
-  :
-[ 8569.952940] Call Trace:
-[ 8569.952941]  <TASK>
-[ 8569.952944]  ref_scale_reader+0x380/0x4a0 [refscale]
-[ 8569.952959]  kthread+0x10e/0x130
-[ 8569.952966]  ret_from_fork+0x1f/0x30
-[ 8569.952973]  </TASK>
+However, when we configure a single tc with tc qdisc,
+we can still configure it with dcb ets.
+Because we use mqprio_active as the tag of tc qdisc configuration,
+but with dcb ets, we do not check mqprio_active.
 
-The likely cause is that init_waitqueue_head() is called after the call to
-the torture_create_kthread() function that creates the ref_scale_reader
-kthread.  Although this init_waitqueue_head() call will very likely
-complete before this kthread is created and starts running, it is
-possible that the calling kthread will be delayed between the calls to
-torture_create_kthread() and init_waitqueue_head().  In this case, the
-new kthread will use the waitqueue head before it is properly initialized,
-which is not good for the kernel's health and well-being.
+This patch fix this issue by check mqprio_active before
+executing the dcb ets command. and add dcb_ets_active to
+replace HCLGE_FLAG_DCB_ENABLE and HCLGE_FLAG_MQPRIO_ENABLE
+at the hclge layer,
 
-The above crash happened here:
-
-	static inline void __add_wait_queue(...)
-	{
-		:
-		if (!(wq->flags & WQ_FLAG_PRIORITY)) <=== Crash here
-
-The offset of flags from list_head entry in wait_queue_entry is
--0x18. If reader_tasks[i].wq.head.next is NULL as allocated reader_task
-structure is zero initialized, the instruction will try to access address
-0xffffffffffffffe8, which is exactly the fault address listed above.
-
-This commit therefore invokes init_waitqueue_head() before creating
-the kthread.
-
-Fixes: 653ed64b01dc ("refperf: Add a test to measure performance of read-side synchronization")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: cacde272dd00 ("net: hns3: Add hclge_dcb module for the support of DCB feature")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/refscale.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hnae3.h   |  1 +
+ .../hisilicon/hns3/hns3pf/hclge_dcb.c         | 20 +++++--------------
+ .../hisilicon/hns3/hns3pf/hclge_main.c        |  5 +++--
+ .../hisilicon/hns3/hns3pf/hclge_main.h        |  2 --
+ 4 files changed, 9 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
-index 5abb0cf52803a..fda220e2c0426 100644
---- a/kernel/rcu/refscale.c
-+++ b/kernel/rcu/refscale.c
-@@ -849,12 +849,11 @@ ref_scale_init(void)
- 	VERBOSE_SCALEOUT("Starting %d reader threads\n", nreaders);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+index fcb8b6dc5ab92..c693bb701ba3e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+@@ -797,6 +797,7 @@ struct hnae3_tc_info {
+ 	u8 max_tc; /* Total number of TCs */
+ 	u8 num_tc; /* Total number of enabled TCs */
+ 	bool mqprio_active;
++	bool dcb_ets_active;
+ };
  
- 	for (i = 0; i < nreaders; i++) {
-+		init_waitqueue_head(&reader_tasks[i].wq);
- 		firsterr = torture_create_kthread(ref_scale_reader, (void *)i,
- 						  reader_tasks[i].task);
- 		if (firsterr)
- 			goto unwind;
--
--		init_waitqueue_head(&(reader_tasks[i].wq));
+ #define HNAE3_MAX_DSCP			64
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
+index 09362823140d5..2740f0d703e4f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
+@@ -251,7 +251,7 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
+ 	int ret;
+ 
+ 	if (!(hdev->dcbx_cap & DCB_CAP_DCBX_VER_IEEE) ||
+-	    hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE)
++	    h->kinfo.tc_info.mqprio_active)
+ 		return -EINVAL;
+ 
+ 	ret = hclge_ets_validate(hdev, ets, &num_tc, &map_changed);
+@@ -267,10 +267,7 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
  	}
  
- 	// Main Task
+ 	hclge_tm_schd_info_update(hdev, num_tc);
+-	if (num_tc > 1)
+-		hdev->flag |= HCLGE_FLAG_DCB_ENABLE;
+-	else
+-		hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
++	h->kinfo.tc_info.dcb_ets_active = num_tc > 1;
+ 
+ 	ret = hclge_ieee_ets_to_tm_info(hdev, ets);
+ 	if (ret)
+@@ -463,7 +460,7 @@ static u8 hclge_getdcbx(struct hnae3_handle *h)
+ 	struct hclge_vport *vport = hclge_get_vport(h);
+ 	struct hclge_dev *hdev = vport->back;
+ 
+-	if (hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE)
++	if (h->kinfo.tc_info.mqprio_active)
+ 		return 0;
+ 
+ 	return hdev->dcbx_cap;
+@@ -587,7 +584,8 @@ static int hclge_setup_tc(struct hnae3_handle *h,
+ 	if (!test_bit(HCLGE_STATE_NIC_REGISTERED, &hdev->state))
+ 		return -EBUSY;
+ 
+-	if (hdev->flag & HCLGE_FLAG_DCB_ENABLE)
++	kinfo = &vport->nic.kinfo;
++	if (kinfo->tc_info.dcb_ets_active)
+ 		return -EINVAL;
+ 
+ 	ret = hclge_mqprio_qopt_check(hdev, mqprio_qopt);
+@@ -601,7 +599,6 @@ static int hclge_setup_tc(struct hnae3_handle *h,
+ 	if (ret)
+ 		return ret;
+ 
+-	kinfo = &vport->nic.kinfo;
+ 	memcpy(&old_tc_info, &kinfo->tc_info, sizeof(old_tc_info));
+ 	hclge_sync_mqprio_qopt(&kinfo->tc_info, mqprio_qopt);
+ 	kinfo->tc_info.mqprio_active = tc > 0;
+@@ -610,13 +607,6 @@ static int hclge_setup_tc(struct hnae3_handle *h,
+ 	if (ret)
+ 		goto err_out;
+ 
+-	hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
+-
+-	if (tc > 1)
+-		hdev->flag |= HCLGE_FLAG_MQPRIO_ENABLE;
+-	else
+-		hdev->flag &= ~HCLGE_FLAG_MQPRIO_ENABLE;
+-
+ 	return hclge_notify_init_up(hdev);
+ 
+ err_out:
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 84ecd8b9be48c..884e45fb6b72e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11132,6 +11132,7 @@ static void hclge_get_mdix_mode(struct hnae3_handle *handle,
+ 
+ static void hclge_info_show(struct hclge_dev *hdev)
+ {
++	struct hnae3_handle *handle = &hdev->vport->nic;
+ 	struct device *dev = &hdev->pdev->dev;
+ 
+ 	dev_info(dev, "PF info begin:\n");
+@@ -11148,9 +11149,9 @@ static void hclge_info_show(struct hclge_dev *hdev)
+ 	dev_info(dev, "This is %s PF\n",
+ 		 hdev->flag & HCLGE_FLAG_MAIN ? "main" : "not main");
+ 	dev_info(dev, "DCB %s\n",
+-		 hdev->flag & HCLGE_FLAG_DCB_ENABLE ? "enable" : "disable");
++		 handle->kinfo.tc_info.dcb_ets_active ? "enable" : "disable");
+ 	dev_info(dev, "MQPRIO %s\n",
+-		 hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE ? "enable" : "disable");
++		 handle->kinfo.tc_info.mqprio_active ? "enable" : "disable");
+ 	dev_info(dev, "Default tx spare buffer size: %u\n",
+ 		 hdev->tx_spare_buf_size);
+ 
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+index 13f23d606e77b..f6fef790e16c1 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+@@ -916,8 +916,6 @@ struct hclge_dev {
+ 
+ #define HCLGE_FLAG_MAIN			BIT(0)
+ #define HCLGE_FLAG_DCB_CAPABLE		BIT(1)
+-#define HCLGE_FLAG_DCB_ENABLE		BIT(2)
+-#define HCLGE_FLAG_MQPRIO_ENABLE	BIT(3)
+ 	u32 flag;
+ 
+ 	u32 pkt_buf_size; /* Total pf buf size for tx/rx */
 -- 
 2.40.1
 
