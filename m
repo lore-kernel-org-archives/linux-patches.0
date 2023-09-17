@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124D87469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F72C433CB;
-	Sun, 17 Sep 2023 20:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83247469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06E7C43397;
+	Sun, 17 Sep 2023 20:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982139;
-	bh=dnQb1ZwT/EGDjb16p+YgSDToGGJjSsq9NAk7mX8FE0A=;
+	s=korg; t=1694982143;
+	bh=bnPhu/E1S9t3/vmZK68WxF1oJzF0VwS1AWSkNBn5P9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVCDarAQ296ydQW1fD3OfoVEk15HhZIpwd2UFvGoVScOOza4DRw1zMhTubmhrOhx1
-	 U6T8s3G6usQu63dbAQfpHNxl9UqHRzUAh1+R0F9OA/e99OcbKDWB8sjcvvLnub6xft
-	 FfQgBZr+jN3F4L+YYG144ArzmmKpxp0dpJ8SeVUc=
+	b=F24HABknbVb4cA6T2TRbC2R7YKhYEykVQCa+yGqnM+sggM+WP7trNZCbmLyPYCu0B
+	 4A1U6xIyG2G1PiglE7i99eu1OUYhxZs2pTJmw0OcibobjcBR1AhzIxLqBYrJZz8LTl
+	 1npLO4E57iUL40+OGiqevuMYTrZNdrnqHppXzcFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Ryan McCann <quic_rmccann@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/511] md/md-bitmap: hold reconfig_mutex in backlog_store()
-Date: Sun, 17 Sep 2023 21:09:51 +0200
-Message-ID: <20230917191117.804717300@linuxfoundation.org>
+Subject: [PATCH 5.15 165/511] drm/msm: Update dev core dump to not print backwards
+Date: Sun, 17 Sep 2023 21:09:52 +0200
+Message-ID: <20230917191117.827665373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,60 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Ryan McCann <quic_rmccann@quicinc.com>
 
-[ Upstream commit 44abfa6a95df425c0660d56043020b67e6d93ab8 ]
+[ Upstream commit 903705111d863ed8ccf73465da77d232fc422ec1 ]
 
-Several reasons why 'reconfig_mutex' should be held:
+Device core dump add block method adds hardware blocks to dumping queue
+with stack behavior which causes the hardware blocks to be printed in
+reverse order. Change the addition to dumping queue data structure
+from "list_add" to "list_add_tail" for FIFO queue behavior.
 
-1) rdev_for_each() is not safe to be called without the lock, because
-   rdev can be removed concurrently.
-2) mddev_destroy_serial_pool() and mddev_create_serial_pool() should not
-   be called concurrently.
-3) mddev_suspend() from mddev_destroy/create_serial_pool() should be
-   protected by the lock.
-
-Fixes: 10c92fca636e ("md-bitmap: create and destroy wb_info_pool with the change of backlog")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230706083727.608914-3-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/546200/
+Link: https://lore.kernel.org/r/20230622-devcoredump_patch-v5-1-67e8b66c4723@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index daedd9fcc4e5e..9354fd8618e3d 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2484,6 +2484,10 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (backlog > COUNTER_MAX)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+index 369e57f73a470..8746ceae8fca9 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+@@ -185,5 +185,5 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
+ 	new_blk->base_addr = base_addr;
  
-+	rv = mddev_lock(mddev);
-+	if (rv)
-+		return rv;
-+
- 	/*
- 	 * Without write mostly device, it doesn't make sense to set
- 	 * backlog for max_write_behind.
-@@ -2497,6 +2501,7 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (!has_write_mostly) {
- 		pr_warn_ratelimited("%s: can't set backlog, no write mostly device available\n",
- 				    mdname(mddev));
-+		mddev_unlock(mddev);
- 		return -EINVAL;
- 	}
- 
-@@ -2514,6 +2519,8 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	}
- 	if (old_mwb != backlog)
- 		md_bitmap_update_sb(mddev->bitmap);
-+
-+	mddev_unlock(mddev);
- 	return len;
+ 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
+-	list_add(&new_blk->node, &disp_state->blocks);
++	list_add_tail(&new_blk->node, &disp_state->blocks);
  }
- 
 -- 
 2.40.1
 
