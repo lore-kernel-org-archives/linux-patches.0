@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD5C4A3F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCF0C433C7;
-	Sun, 17 Sep 2023 20:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D01D6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C06BC433C7;
+	Sun, 17 Sep 2023 20:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981088;
-	bh=RFTX+JDsTL9lEanEfvctsikny6AOZXur9xTBweMDhGs=;
+	s=korg; t=1694981092;
+	bh=qMCxQ14k/IGveMaeE2VHGgEW7dLCvYKizKaXgik4b9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cxXxxVv3pSH+RlIQCm0X+QOLXgbYW6ChGJhDY2umnIgk/aISBvTMUeeXn3TllhZqk
-	 WG7/nrVSETvNnmtBmU3kmd+FT6jFZEC0d5jv2KJKwNLBRaXbhZLo0sGlukDDM1i+S0
-	 PVq7rr1ARk+IcqG+C4Izzq6hFNM9G409YZDX9Asw=
+	b=VlWND2zQmTUdrxvraolz2ZkbDhNgtznvV18N4bjuHsnbm0/T4K4WvFgJqqU4vWMJ2
+	 r7DWXIYxHXPRKwMYPFx6XSa8a1K8G8ACOsN2w7l6v4pVd97548VkQ8F2LYdDUbGO98
+	 55HQ1/4n8Pg+NFVdB1C5btJamFyEmDFZjkSPxpf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mohamed Mahmoud <mmahmoud@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Dave Tucker <datucker@redhat.com>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Song Liu <songliubraving@fb.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/511] ARM: dts: imx: Set default tuning step for imx7d usdhc
-Date: Sun, 17 Sep 2023 21:07:11 +0200
-Message-ID: <20230917191113.941455162@linuxfoundation.org>
+Subject: [PATCH 6.1 072/219] perf annotate bpf: Dont enclose non-debug code with an assert()
+Date: Sun, 17 Sep 2023 21:13:19 +0200
+Message-ID: <20230917191043.600205405@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,68 +41,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit be18293e47cbca7c6acee9231fc851601d69563a ]
+[ Upstream commit 979e9c9fc9c2a761303585e07fe2699bdd88182f ]
 
-If the tuning step is not set, the tuning step is set to 1.
-For some sd cards, the following Tuning timeout will occur.
+In 616b14b47a86d880 ("perf build: Conditionally define NDEBUG") we
+started using NDEBUG=1 when DEBUG=1 isn't present, so code that is
+enclosed with assert() is not called.
 
-Tuning failed, falling back to fixed sampling clock
-mmc0: Tuning failed, falling back to fixed sampling clock
+In dd317df072071903 ("perf build: Make binutil libraries opt in") we
+stopped linking against binutils-devel, for licensing reasons.
 
-So set the default tuning step. This refers to the NXP vendor's
-commit below:
+Recently people asked me why annotation of BPF programs wasn't working,
+i.e. this:
 
-https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
-arch/arm/boot/dts/imx7s.dtsi#L1216-L1217
+  $ perf annotate bpf_prog_5280546344e3f45c_kfree_skb
 
-Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+was returning:
+
+  case SYMBOL_ANNOTATE_ERRNO__NO_LIBOPCODES_FOR_BPF:
+     scnprintf(buf, buflen, "Please link with binutils's libopcode to enable BPF annotation");
+
+This was on a fedora rpm, so its new enough that I had to try to test by
+rebuilding using BUILD_NONDISTRO=1, only to get it segfaulting on me.
+
+This combination made this libopcode function not to be called:
+
+        assert(bfd_check_format(bfdf, bfd_object));
+
+Changing it to:
+
+	if (!bfd_check_format(bfdf, bfd_object))
+		abort();
+
+Made it work, looking at this "check" function made me realize it
+changes the 'bfdf' internal state, i.e. we better call it.
+
+So stop using assert() on it, just call it and abort if it fails.
+
+Probably it is better to propagate the error, etc, but it seems it is
+unlikely to fail from the usage done so far and we really need to stop
+using libopcodes, so do the quick fix above and move on.
+
+With it we have BPF annotation back working when built with
+BUILD_NONDISTRO=1:
+
+  ⬢[acme@toolbox perf-tools-next]$ perf annotate --stdio2 bpf_prog_5280546344e3f45c_kfree_skb   | head
+  No kallsyms or vmlinux with build-id 939bc71a1a51cdc434e60af93c7e734f7d5c0e7e was found
+  Samples: 12  of event 'cpu-clock:ppp', 4000 Hz, Event count (approx.): 3000000, [percent: local period]
+  bpf_prog_5280546344e3f45c_kfree_skb() bpf_prog_5280546344e3f45c_kfree_skb
+  Percent      int kfree_skb(struct trace_event_raw_kfree_skb *args) {
+                 nop
+   33.33         xchg   %ax,%ax
+                 push   %rbp
+                 mov    %rsp,%rbp
+                 sub    $0x180,%rsp
+                 push   %rbx
+                 push   %r13
+  ⬢[acme@toolbox perf-tools-next]$
+
+Fixes: 6987561c9e86eace ("perf annotate: Enable annotation of BPF programs")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mohamed Mahmoud <mmahmoud@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Dave Tucker <datucker@redhat.com>
+Cc: Derek Barbosa <debarbos@redhat.com>
+Cc: Song Liu <songliubraving@fb.com>
+Link: https://lore.kernel.org/lkml/ZMrMzoQBe0yqMek1@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7s.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/util/annotate.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 1055a1013fd00..c978aab1d0e3d 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -1166,6 +1166,8 @@
- 					<&clks IMX7D_USDHC1_ROOT_CLK>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-step = <2>;
-+				fsl,tuning-start-tap = <20>;
- 				status = "disabled";
- 			};
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index db475e44f42fa..a9122ea3b44c4 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -1756,8 +1756,11 @@ static int symbol__disassemble_bpf(struct symbol *sym,
+ 	perf_exe(tpath, sizeof(tpath));
  
-@@ -1178,6 +1180,8 @@
- 					<&clks IMX7D_USDHC2_ROOT_CLK>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-step = <2>;
-+				fsl,tuning-start-tap = <20>;
- 				status = "disabled";
- 			};
+ 	bfdf = bfd_openr(tpath, NULL);
+-	assert(bfdf);
+-	assert(bfd_check_format(bfdf, bfd_object));
++	if (bfdf == NULL)
++		abort();
++
++	if (!bfd_check_format(bfdf, bfd_object))
++		abort();
  
-@@ -1190,6 +1194,8 @@
- 					<&clks IMX7D_USDHC3_ROOT_CLK>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-step = <2>;
-+				fsl,tuning-start-tap = <20>;
- 				status = "disabled";
- 			};
+ 	s = open_memstream(&buf, &buf_size);
+ 	if (!s) {
+@@ -1805,7 +1808,8 @@ static int symbol__disassemble_bpf(struct symbol *sym,
+ #else
+ 	disassemble = disassembler(bfdf);
+ #endif
+-	assert(disassemble);
++	if (disassemble == NULL)
++		abort();
  
+ 	fflush(s);
+ 	do {
 -- 
 2.40.1
 
