@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C7F53B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:33:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE83FC433CA;
-	Sun, 17 Sep 2023 19:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5798353B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1AEC433CB;
+	Sun, 17 Sep 2023 19:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979239;
-	bh=KtxwKeYgWZtvZKo590157D+mkITOvNs+tiXpn4WQsQA=;
+	s=korg; t=1694979243;
+	bh=Oq6pa7wcUYZrQMj2CspTmtxjJUVk9CSqtHVEEyKjQCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INuQk73X3LT4hdsODfcTLMsTgOaWfKJcuupECL7BzMQHwEl+3Dvm/8XNsUAfeLDAn
-	 mcQeQ0pAiHrt+zh8i3hEtq2KM6VPIIygXgAGxdtfKFafhVC2+WdUfjtNZSjLPqzQNU
-	 FiM6HJe19eIXur+bZz4ag7ZDuNRTd8OgGvfdf4es=
+	b=CJIjq7oF8qKqRZt6PLWKngmLnheYBzTyXBiMxSRSGBwvt2vOyQTMLfhyuR8MEmLE9
+	 NJEvyN/J6W6zyp1QztnkhUcWoUTakAuSPjMmS7dyj0fpOXzH2ngS/Y/Md2NkXIDHZs
+	 irWY7rOO3SHH77vC7WUVCRPjkV59YJKCsPiCQEmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao@huawei.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Lee Duncan <lduncan@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/406] scsi: iscsi: Rename iscsi_set_param() to iscsi_if_set_param()
-Date: Sun, 17 Sep 2023 21:11:12 +0200
-Message-ID: <20230917191106.940009120@linuxfoundation.org>
+Subject: [PATCH 5.10 248/406] amba: bus: fix refcount leak
+Date: Sun, 17 Sep 2023 21:11:42 +0200
+Message-ID: <20230917191107.710736685@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,48 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Hao <haowenchao@huawei.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 0c26a2d7c98039e913e63f9250fde738a3f88a60 ]
+[ Upstream commit e312cbdc11305568554a9e18a2ea5c2492c183f3 ]
 
-There are two iscsi_set_param() functions defined in libiscsi.c and
-scsi_transport_iscsi.c respectively which is confusing.
+commit 5de1540b7bc4 ("drivers/amba: create devices from device tree")
+increases the refcount of of_node, but not releases it in
+amba_device_release, so there is refcount leak. By using of_node_put
+to avoid refcount leak.
 
-Rename the one in scsi_transport_iscsi.c to iscsi_if_set_param().
-
-Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
-Link: https://lore.kernel.org/r/20221122181105.4123935-1-haowenchao@huawei.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Lee Duncan <lduncan@suse.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 971dfcb74a80 ("scsi: iscsi: Add length check for nlattr payload")
+Fixes: 5de1540b7bc4 ("drivers/amba: create devices from device tree")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230821023928.3324283-1-peng.fan@oss.nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/amba/bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index 092bd6a3d64a1..a22bc594b2d4a 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -2991,7 +2991,7 @@ iscsi_if_destroy_conn(struct iscsi_transport *transport, struct iscsi_uevent *ev
- }
- 
- static int
--iscsi_set_param(struct iscsi_transport *transport, struct iscsi_uevent *ev)
-+iscsi_if_set_param(struct iscsi_transport *transport, struct iscsi_uevent *ev)
+diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
+index 47c72447ccd59..52ab582930caa 100644
+--- a/drivers/amba/bus.c
++++ b/drivers/amba/bus.c
+@@ -363,6 +363,7 @@ static void amba_device_release(struct device *dev)
  {
- 	char *data = (char*)ev + sizeof(*ev);
- 	struct iscsi_cls_conn *conn;
-@@ -3940,7 +3940,7 @@ iscsi_if_recv_msg(struct sk_buff *skb, struct nlmsghdr *nlh, uint32_t *group)
- 			err = -EINVAL;
- 		break;
- 	case ISCSI_UEVENT_SET_PARAM:
--		err = iscsi_set_param(transport, ev);
-+		err = iscsi_if_set_param(transport, ev);
- 		break;
- 	case ISCSI_UEVENT_CREATE_CONN:
- 	case ISCSI_UEVENT_DESTROY_CONN:
+ 	struct amba_device *d = to_amba_device(dev);
+ 
++	of_node_put(d->dev.of_node);
+ 	if (d->res.parent)
+ 		release_resource(&d->res);
+ 	kfree(d);
 -- 
 2.40.1
 
