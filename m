@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114537461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8B2C433CA;
-	Sun, 17 Sep 2023 19:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805387461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AB0C433C7;
+	Sun, 17 Sep 2023 19:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980113;
-	bh=EFNQ6yXt0cCWJy3EtzKj5AiRiApdkqUgpA/tXOI6UL4=;
+	s=korg; t=1694980124;
+	bh=hYB9E8scw4cJFdq7P/p1pG/FTtdBU0w7qYgxobEEkLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1Zyluq3yyK+7KJ2DGmZkHJGkjWCm79VKImKp/sPRECgFDoxDePcRnmXfyMVRuntj
-	 C11v229VN2YOjCJKA3AeiRJyS0CWmeHzNVmZMYPuEfxAs5KpJWNhra0SKDjESRdJUP
-	 dmijvr6817v+28ny9KRZzuPT8aSpxKkxc385vylg=
+	b=Xw4MYd21uwRgRTLyMCZLKyFBWY+0LUO9CB2tct7KoJ259M4ku2h+6JGwPLdhj5LWy
+	 VqNF+mOpFPODut3RYOEYgE9mAzdTWbsifay3AiLsicwGBxAPUSWUuAqyggbj8ihQ89
+	 5OIlR+k8U6pleEQ6Y/HfRrn0Kz6AydQ3YAF7Fcis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 093/285] pwm: lpc32xx: Remove handling of PWM channels
-Date: Sun, 17 Sep 2023 21:11:33 +0200
-Message-ID: <20230917191054.914789261@linuxfoundation.org>
+Subject: [PATCH 6.5 102/285] blk-throttle: use calculate_io/bytes_allowed() for throtl_trim_slice()
+Date: Sun, 17 Sep 2023 21:11:42 +0200
+Message-ID: <20230917191055.204445045@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -36,90 +35,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@mleia.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
+[ Upstream commit e8368b57c006dc0e02dcd8a9dc9f2060ff5476fe ]
 
-Because LPC32xx PWM controllers have only a single output which is
-registered as the only PWM device/channel per controller, it is known in
-advance that pwm->hwpwm value is always 0. On basis of this fact
-simplify the code by removing operations with pwm->hwpwm, there is no
-controls which require channel number as input.
+There are no functional changes, just make the code cleaner.
 
-Even though I wasn't aware at the time when I forward ported that patch,
-this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
-before devm_pwmchip_add() is called.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230816012708.1193747-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: eead0056648c ("blk-throttle: consider 'carryover_ios/bytes' in throtl_trim_slice()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ block/blk-throttle.c | 86 +++++++++++++++++++++-----------------------
+ 1 file changed, 41 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
-index 86a0ea0f6955c..806f0bb3ad6d8 100644
---- a/drivers/pwm/pwm-lpc32xx.c
-+++ b/drivers/pwm/pwm-lpc32xx.c
-@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (duty_cycles > 255)
- 		duty_cycles = 255;
- 
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~0xFFFF;
- 	val |= (period_cycles << 8) | duty_cycles;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	return 0;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 7397ff199d669..b0d9573f1911b 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -697,11 +697,40 @@ static bool throtl_slice_used(struct throtl_grp *tg, bool rw)
+ 	return true;
  }
-@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (ret)
- 		return ret;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val |= PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
++static unsigned int calculate_io_allowed(u32 iops_limit,
++					 unsigned long jiffy_elapsed)
++{
++	unsigned int io_allowed;
++	u64 tmp;
++
++	/*
++	 * jiffy_elapsed should not be a big value as minimum iops can be
++	 * 1 then at max jiffy elapsed should be equivalent of 1 second as we
++	 * will allow dispatch after 1 second and after that slice should
++	 * have been trimmed.
++	 */
++
++	tmp = (u64)iops_limit * jiffy_elapsed;
++	do_div(tmp, HZ);
++
++	if (tmp > UINT_MAX)
++		io_allowed = UINT_MAX;
++	else
++		io_allowed = tmp;
++
++	return io_allowed;
++}
++
++static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
++{
++	return mul_u64_u64_div_u64(bps_limit, (u64)jiffy_elapsed, (u64)HZ);
++}
++
+ /* Trim the used slices and adjust slice start accordingly */
+ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ {
+-	unsigned long nr_slices, time_elapsed, io_trim;
+-	u64 bytes_trim, tmp;
++	unsigned long time_elapsed, io_trim;
++	u64 bytes_trim;
  
- 	return 0;
+ 	BUG_ON(time_before(tg->slice_end[rw], tg->slice_start[rw]));
+ 
+@@ -723,19 +752,14 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 
+ 	throtl_set_slice_end(tg, rw, jiffies + tg->td->throtl_slice);
+ 
+-	time_elapsed = jiffies - tg->slice_start[rw];
+-
+-	nr_slices = time_elapsed / tg->td->throtl_slice;
+-
+-	if (!nr_slices)
++	time_elapsed = rounddown(jiffies - tg->slice_start[rw],
++				 tg->td->throtl_slice);
++	if (!time_elapsed)
+ 		return;
+-	tmp = tg_bps_limit(tg, rw) * tg->td->throtl_slice * nr_slices;
+-	do_div(tmp, HZ);
+-	bytes_trim = tmp;
+-
+-	io_trim = (tg_iops_limit(tg, rw) * tg->td->throtl_slice * nr_slices) /
+-		HZ;
+ 
++	bytes_trim = calculate_bytes_allowed(tg_bps_limit(tg, rw),
++					     time_elapsed);
++	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed);
+ 	if (!bytes_trim && !io_trim)
+ 		return;
+ 
+@@ -749,41 +773,13 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 	else
+ 		tg->io_disp[rw] = 0;
+ 
+-	tg->slice_start[rw] += nr_slices * tg->td->throtl_slice;
++	tg->slice_start[rw] += time_elapsed;
+ 
+ 	throtl_log(&tg->service_queue,
+ 		   "[%c] trim slice nr=%lu bytes=%llu io=%lu start=%lu end=%lu jiffies=%lu",
+-		   rw == READ ? 'R' : 'W', nr_slices, bytes_trim, io_trim,
+-		   tg->slice_start[rw], tg->slice_end[rw], jiffies);
+-}
+-
+-static unsigned int calculate_io_allowed(u32 iops_limit,
+-					 unsigned long jiffy_elapsed)
+-{
+-	unsigned int io_allowed;
+-	u64 tmp;
+-
+-	/*
+-	 * jiffy_elapsed should not be a big value as minimum iops can be
+-	 * 1 then at max jiffy elapsed should be equivalent of 1 second as we
+-	 * will allow dispatch after 1 second and after that slice should
+-	 * have been trimmed.
+-	 */
+-
+-	tmp = (u64)iops_limit * jiffy_elapsed;
+-	do_div(tmp, HZ);
+-
+-	if (tmp > UINT_MAX)
+-		io_allowed = UINT_MAX;
+-	else
+-		io_allowed = tmp;
+-
+-	return io_allowed;
+-}
+-
+-static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
+-{
+-	return mul_u64_u64_div_u64(bps_limit, (u64)jiffy_elapsed, (u64)HZ);
++		   rw == READ ? 'R' : 'W', time_elapsed / tg->td->throtl_slice,
++		   bytes_trim, io_trim, tg->slice_start[rw], tg->slice_end[rw],
++		   jiffies);
  }
-@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
- 	u32 val;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	clk_disable_unprepare(lpc32xx->clk);
- }
-@@ -141,9 +141,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
- 	lpc32xx->chip.npwm = 1;
- 
- 	/* If PWM is disabled, configure the output to the default value */
--	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_PIN_LEVEL;
--	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	ret = devm_pwmchip_add(&pdev->dev, &lpc32xx->chip);
- 	if (ret < 0) {
+ static void __tg_update_carryover(struct throtl_grp *tg, bool rw)
 -- 
 2.40.1
 
