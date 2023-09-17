@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE636FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2073C433C8;
-	Sun, 17 Sep 2023 19:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519EA6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9D7C433C9;
+	Sun, 17 Sep 2023 19:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979763;
-	bh=00sUMgE8xKk2JkTCi2ahUPktoCYAwPEI4tlDHuBhS2g=;
+	s=korg; t=1694979767;
+	bh=nKg0LR51CqFQaZ7KBf8mSVgSXyLc7pwwV+BcnboE+E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOh5nDAxGHd7kYnQjag8qryDNQSwtS3zzkQF0bfrzYD/fBd25v9mrG7puzvGN26vL
-	 v9w5zznupU9CAJ6j6r5XcS54jm0pQX6RtUawH8PmzSztmmsoIiskr8IaVQLMt2Sj0e
-	 Xi9haEiTJ/h6561bqmX86c4beS9X7lD/K7Dk9C60=
+	b=bx6GsCihp7/4D2svzAKzwdZ6JUkKIIaXInqqFo3Nn4ISgF7v+uBiFmD5j9JKpu+m1
+	 FgNTug1Ym+YcQ5yiglqNU2g3ocLRWhiXf+AsnidCH+tEe1tsgxwxQ0j/B0aXqo5ZP1
+	 CNRZ0HwAjM2utW72qpRTAHaODv76CitQ9PHboQf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Liu Jian <liujian56@huawei.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 389/406] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date: Sun, 17 Sep 2023 21:14:03 +0200
-Message-ID: <20230917191111.537670906@linuxfoundation.org>
+Subject: [PATCH 5.10 390/406] net: ipv4: fix one memleak in __inet_del_ifa()
+Date: Sun, 17 Sep 2023 21:14:04 +0200
+Message-ID: <20230917191111.563185983@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,50 +41,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit cabce92dd805945a090dc6fc73b001bb35ed083a ]
+[ Upstream commit ac28b1ec6135649b5d78b028e47264cb3ebca5ea ]
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
+I got the below warning when do fuzzing test:
+unregister_netdevice: waiting for bond0 to become free. Usage count = 2
 
-Cc: <stable@vger.kernel.org>
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+It can be repoduced via:
+
+ip link add bond0 type bond
+sysctl -w net.ipv4.conf.bond0.promote_secondaries=1
+ip addr add 4.117.174.103/0 scope 0x40 dev bond0
+ip addr add 192.168.100.111/255.255.255.254 scope 0 dev bond0
+ip addr add 0.0.0.4/0 scope 0x40 secondary dev bond0
+ip addr del 4.117.174.103/0 scope 0x40 dev bond0
+ip link delete bond0 type bond
+
+In this reproduction test case, an incorrect 'last_prim' is found in
+__inet_del_ifa(), as a result, the secondary address(0.0.0.4/0 scope 0x40)
+is lost. The memory of the secondary address is leaked and the reference of
+in_device and net_device is leaked.
+
+Fix this problem:
+Look for 'last_prim' starting at location of the deleted IP and inserting
+the promoted IP into the location of 'last_prim'.
+
+Fixes: 0ff60a45678e ("[IPV4]: Fix secondary IP addresses after promotion")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/devinet.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 7d69b740b9f93..fe8ecd6eaa4d1 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -490,6 +490,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 		u32 in_reset = -1;
- 		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index 88b6120878cd9..da1ca8081c035 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -351,14 +351,14 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ {
+ 	struct in_ifaddr *promote = NULL;
+ 	struct in_ifaddr *ifa, *ifa1;
+-	struct in_ifaddr *last_prim;
++	struct in_ifaddr __rcu **last_prim;
+ 	struct in_ifaddr *prev_prom = NULL;
+ 	int do_promote = IN_DEV_PROMOTE_SECONDARIES(in_dev);
  
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 	ASSERT_RTNL();
  
-@@ -515,6 +519,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
- 	}
+ 	ifa1 = rtnl_dereference(*ifap);
+-	last_prim = rtnl_dereference(in_dev->ifa_list);
++	last_prim = ifap;
+ 	if (in_dev->dead)
+ 		goto no_promotions;
  
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
+@@ -372,7 +372,7 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 		while ((ifa = rtnl_dereference(*ifap1)) != NULL) {
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) &&
+ 			    ifa1->ifa_scope <= ifa->ifa_scope)
+-				last_prim = ifa;
++				last_prim = &ifa->ifa_next;
+ 
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) ||
+ 			    ifa1->ifa_mask != ifa->ifa_mask ||
+@@ -436,9 +436,9 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 
+ 			rcu_assign_pointer(prev_prom->ifa_next, next_sec);
+ 
+-			last_sec = rtnl_dereference(last_prim->ifa_next);
++			last_sec = rtnl_dereference(*last_prim);
+ 			rcu_assign_pointer(promote->ifa_next, last_sec);
+-			rcu_assign_pointer(last_prim->ifa_next, promote);
++			rcu_assign_pointer(*last_prim, promote);
+ 		}
+ 
+ 		promote->ifa_flags &= ~IFA_F_SECONDARY;
 -- 
 2.40.1
 
