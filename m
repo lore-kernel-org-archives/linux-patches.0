@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8201D6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C5DC433C9;
-	Sun, 17 Sep 2023 20:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4496FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B469C433C8;
+	Sun, 17 Sep 2023 20:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981831;
-	bh=6TKUgyPfoz5Br3GMjTjrg3WlRyG97lHtfag0qvJgGUc=;
+	s=korg; t=1694981835;
+	bh=2top8UeOQ0/Y7mHJkktQrf/biDP6JXhVrkLlZ676xJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fI/Kkd/xz42iXHzj/XsY3ZTxtkfd0CwA6dTQu9VsvyOFf6tnqbanw3vrOOE/lN5by
-	 bq6/+AbCu2O522LSQvdwqv8mLvbE9uhkNyPuo4itSUKbSzw2WTcytdb0cPt/VP8BnT
-	 qFCTLxis864fBQILzW+mjGe6hFG64B1C5I2CmOUs=
+	b=0KM/0nw/7QhNYmRCmc/Ls1oda8C/r/G0w/paaIwp6saV+63y2+57ZyTn0CBIO8DSn
+	 Ft6YLxubW4AL85XW86w6UEO4CAs8ZvyOkmegeH5dDUKkaZIZh2oWDtxoHm0fl/VLL/
+	 DmyfrBTT0fk1PYgJQeOJjM7bqFOUBwsOJLB9ikbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/511] wifi: ath9k: protect WMI command response buffer replacement with a lock
-Date: Sun, 17 Sep 2023 21:08:59 +0200
-Message-ID: <20230917191116.562059596@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 178/219] perf hists browser: Fix hierarchy mode header
+Date: Sun, 17 Sep 2023 21:15:05 +0200
+Message-ID: <20230917191047.399663201@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,81 +38,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 454994cfa9e4c18b6df9f78b60db8eadc20a6c25 ]
+commit e2cabf2a44791f01c21f8d5189b946926e34142e upstream.
 
-If ath9k_wmi_cmd() has exited with a timeout, it is possible that during
-next ath9k_wmi_cmd() call the wmi_rsp callback for previous wmi command
-writes to new wmi->cmd_rsp_buf and makes a completion. This results in an
-invalid ath9k_wmi_cmd() return value.
+The commit ef9ff6017e3c4593 ("perf ui browser: Move the extra title
+lines from the hists browser") introduced ui_browser__gotorc_title() to
+help moving non-title lines easily.  But it missed to update the title
+for the hierarchy mode so it won't print the header line on TUI at all.
 
-Move the replacement of WMI command response buffer and length under
-wmi_lock. Note that last_seq_id value is updated there, too.
+  $ perf report --hierarchy
 
-Thus, the buffer cannot be written to by a belated wmi_rsp callback
-because that path is properly rejected by the last_seq_id check.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230425192607.18015-2-pchelkin@ispras.ru
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ef9ff6017e3c4593 ("perf ui browser: Move the extra title lines from the hists browser")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230731094934.1616495-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ tools/perf/ui/browsers/hists.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 04f363cb90fe5..1476b42b52a91 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -283,7 +283,8 @@ int ath9k_wmi_connect(struct htc_target *htc, struct wmi *wmi,
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -1779,7 +1779,7 @@ static void hists_browser__hierarchy_hea
+ 	hists_browser__scnprintf_hierarchy_headers(browser, headers,
+ 						   sizeof(headers));
  
- static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 			       struct sk_buff *skb,
--			       enum wmi_cmd_id cmd, u16 len)
-+			       enum wmi_cmd_id cmd, u16 len,
-+			       u8 *rsp_buf, u32 rsp_len)
- {
- 	struct wmi_cmd_hdr *hdr;
- 	unsigned long flags;
-@@ -293,6 +294,11 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	hdr->seq_no = cpu_to_be16(++wmi->tx_seq_id);
- 
- 	spin_lock_irqsave(&wmi->wmi_lock, flags);
-+
-+	/* record the rsp buffer and length */
-+	wmi->cmd_rsp_buf = rsp_buf;
-+	wmi->cmd_rsp_len = rsp_len;
-+
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
- 
-@@ -333,11 +339,7 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		goto out;
- 	}
- 
--	/* record the rsp buffer and length */
--	wmi->cmd_rsp_buf = rsp_buf;
--	wmi->cmd_rsp_len = rsp_len;
--
--	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len);
-+	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len, rsp_buf, rsp_len);
- 	if (ret)
- 		goto out;
- 
--- 
-2.40.1
-
+-	ui_browser__gotorc(&browser->b, 0, 0);
++	ui_browser__gotorc_title(&browser->b, 0, 0);
+ 	ui_browser__set_color(&browser->b, HE_COLORSET_ROOT);
+ 	ui_browser__write_nstring(&browser->b, headers, browser->b.width + 1);
+ }
 
 
