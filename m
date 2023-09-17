@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBECC433C7;
-	Sun, 17 Sep 2023 19:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D396FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5416FC433C7;
+	Sun, 17 Sep 2023 19:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978671;
-	bh=27w9+pYL+wRDHqkaXkc3hZMXc8NO819ys1F9jEN0Jdc=;
+	s=korg; t=1694978674;
+	bh=mOomIeK2yw+cA79e5lAlYRtE3T5Z/9l3gDhfgcMzGHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+/RoHXvBZORLFNnE8rFbmOEcC7y2AVXe1tcS479WNrTsG1nZh0Mml62B1d+6f9VC
-	 ViMOawgzWCJacDFU7H/P+13UD9P/uFFrAoNCJP6v6Ln6hfhCd7kXt1MAJTGQGnj9Vo
-	 0lS6iYbzmFLIV9M9yFvkySqXY9cG3LhlY7cM5Vew=
+	b=bAAOoVRiZSGyA35C8ZpXgHFAys3DRxZhDdc5eajI60I2HR+LSxTV8TO/xOoIaeD5G
+	 kU+1vOQBSmK8m1rk299FyDtjAa07Ayymhdu8AXizXO1sr/DX5lNOnVCNoNV4CVoSvT
+	 SpgZAMp+C2Uqif/XvWPwN/AaRDwgAj0vIceZQHbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	alsa-devel@alsa-project.org,
+	"Daniel T. Lee" <danieltimlee@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/406] ASoC: stac9766: fix build errors with REGMAP_AC97
-Date: Sun, 17 Sep 2023 21:09:41 +0200
-Message-ID: <20230917191104.501133413@linuxfoundation.org>
+Subject: [PATCH 5.10 110/406] samples/bpf: fix broken map lookup probe
+Date: Sun, 17 Sep 2023 21:09:24 +0200
+Message-ID: <20230917191104.033545388@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,40 +40,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Daniel T. Lee <danieltimlee@gmail.com>
 
-[ Upstream commit c70064b96f509daa78f57992aeabcf274fb2fed4 ]
+[ Upstream commit d93a7cf6ca2cfcd7de5d06f753ce8d5e863316ac ]
 
-Select REGMAP_AC97 to fix these build errors:
+In the commit 7c4cd051add3 ("bpf: Fix syscall's stackmap lookup
+potential deadlock"), a potential deadlock issue was addressed, which
+resulted in *_map_lookup_elem not triggering BPF programs.
+(prior to lookup, bpf_disable_instrumentation() is used)
 
-ERROR: modpost: "regmap_ac97_default_volatile" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
-ERROR: modpost: "__regmap_init_ac97" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
+To resolve the broken map lookup probe using "htab_map_lookup_elem",
+this commit introduces an alternative approach. Instead, it utilize
+"bpf_map_copy_value" and apply a filter specifically for the hash table
+with map_type.
 
-Fixes: 6bbf787bb70c ("ASoC: stac9766: Convert to regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20230701044836.18789-1-rdunlap@infradead.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Daniel T. Lee <danieltimlee@gmail.com>
+Fixes: 7c4cd051add3 ("bpf: Fix syscall's stackmap lookup potential deadlock")
+Link: https://lore.kernel.org/r/20230818090119.477441-8-danieltimlee@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ samples/bpf/tracex6_kern.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index f1c9e563994b2..04a7070c78e28 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -1295,6 +1295,7 @@ config SND_SOC_STA529
- config SND_SOC_STAC9766
- 	tristate
- 	depends on SND_SOC_AC97_BUS
-+	select REGMAP_AC97
+diff --git a/samples/bpf/tracex6_kern.c b/samples/bpf/tracex6_kern.c
+index acad5712d8b4f..fd602c2774b8b 100644
+--- a/samples/bpf/tracex6_kern.c
++++ b/samples/bpf/tracex6_kern.c
+@@ -2,6 +2,8 @@
+ #include <linux/version.h>
+ #include <uapi/linux/bpf.h>
+ #include <bpf/bpf_helpers.h>
++#include <bpf/bpf_tracing.h>
++#include <bpf/bpf_core_read.h>
  
- config SND_SOC_STI_SAS
- 	tristate "codec Audio support for STI SAS codec"
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+@@ -45,13 +47,24 @@ int bpf_prog1(struct pt_regs *ctx)
+ 	return 0;
+ }
+ 
+-SEC("kprobe/htab_map_lookup_elem")
+-int bpf_prog2(struct pt_regs *ctx)
++/*
++ * Since *_map_lookup_elem can't be expected to trigger bpf programs
++ * due to potential deadlocks (bpf_disable_instrumentation), this bpf
++ * program will be attached to bpf_map_copy_value (which is called
++ * from map_lookup_elem) and will only filter the hashtable type.
++ */
++SEC("kprobe/bpf_map_copy_value")
++int BPF_KPROBE(bpf_prog2, struct bpf_map *map)
+ {
+ 	u32 key = bpf_get_smp_processor_id();
+ 	struct bpf_perf_event_value *val, buf;
++	enum bpf_map_type type;
+ 	int error;
+ 
++	type = BPF_CORE_READ(map, map_type);
++	if (type != BPF_MAP_TYPE_HASH)
++		return 0;
++
+ 	error = bpf_perf_event_read_value(&counters, key, &buf, sizeof(buf));
+ 	if (error)
+ 		return 0;
 -- 
 2.40.1
 
