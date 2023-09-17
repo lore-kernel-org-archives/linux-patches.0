@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1D63DE
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7A6C433C7;
-	Sun, 17 Sep 2023 19:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1D16FC1
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D06DC433CA;
+	Sun, 17 Sep 2023 19:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980539;
-	bh=UZo5ZGbLwCgMMBQAqUVR/6DtO3SjelcQCZg/oBdUQ/E=;
+	s=korg; t=1694980543;
+	bh=kbzADXJwpmKTRBsd+sviLtlV2CWddOybxlfDqRq31qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SU0eoLR+VwbYn6iIx3qLkzzQkld9D/VWuX0lI8KMsURbrgMszCJObtMqkeWLjyrCI
-	 kebzyjibquXIwP7RKvQde85XtUlCRYXHZGVinDeyekMdQl9EJUBwEn8VJJT1N8aPhs
-	 f/5+SPWRst7UieGPp/x2oS3Ioigc8ZumeU3bqW04=
+	b=vkyk5gIUHVSlGwwPf2Id0ZnIiPiy10Hzb88Q0g0f9IHXyYtYuCUk8Q/+kyC/6KdAd
+	 uMFuIYUwM9ttSwcIXN5bFGn9wuRX+GWyoy0MuK1QMntX6DscUhT37aknM8DpDflpNP
+	 L9XFlSQIipdmTz8SmN0ynS5sHC5tvwPW7bYjEMxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.5 221/285] drm/amd/display: prevent potential division by zero errors
-Date: Sun, 17 Sep 2023 21:13:41 +0200
-Message-ID: <20230917191059.151085230@linuxfoundation.org>
+	Like Xu <like.xu.linux@gmail.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 222/285] KVM: VMX: Refresh available regs and IDT vectoring info before NMI handling
+Date: Sun, 17 Sep 2023 21:13:42 +0200
+Message-ID: <20230917191059.179743344@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,50 +39,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 07e388aab042774f284a2ad75a70a194517cdad4 upstream.
+commit 50011c2a245792993f2756e5b5b571512bfa409e upstream.
 
-There are two places in apply_below_the_range() where it's possible for
-a divide by zero error to occur. So, to fix this make sure the divisor
-is non-zero before attempting the computation in both cases.
+Reset the mask of available "registers" and refresh the IDT vectoring
+info snapshot in vmx_vcpu_enter_exit(), before KVM potentially handles a
+an NMI VM-Exit.  One of the "registers" that KVM VMX lazily loads is the
+vmcs.VM_EXIT_INTR_INFO field, which is holds the vector+type on "exception
+or NMI" VM-Exits, i.e. is needed to identify NMIs.  Clearing the available
+registers bitmask after handling NMIs results in KVM querying info from
+the last VM-Exit that read vmcs.VM_EXIT_INTR_INFO, and leads to both
+missed NMIs and spurious NMIs in the host.
 
+Opportunistically grab vmcs.IDT_VECTORING_INFO_FIELD early in the VM-Exit
+path too, e.g. to guard against similar consumption of stale data.  The
+field is read on every "normal" VM-Exit, and there's no point in delaying
+the inevitable.
+
+Reported-by: Like Xu <like.xu.linux@gmail.com>
+Fixes: 11df586d774f ("KVM: VMX: Handle NMI VM-Exits in noinstr region")
 Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2637
-Fixes: a463b263032f ("drm/amd/display: Fix frames_to_insert math")
-Fixes: ded6119e825a ("drm/amd/display: Reinstate LFC optimization")
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20230825014532.2846714-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/freesync/freesync.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-+++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-@@ -338,7 +338,9 @@ static void apply_below_the_range(struct
- 		 *  - Delta for CEIL: delta_from_mid_point_in_us_1
- 		 *  - Delta for FLOOR: delta_from_mid_point_in_us_2
- 		 */
--		if ((last_render_time_in_us / mid_point_frames_ceil) < in_out_vrr->min_duration_in_us) {
-+		if (mid_point_frames_ceil &&
-+		    (last_render_time_in_us / mid_point_frames_ceil) <
-+		    in_out_vrr->min_duration_in_us) {
- 			/* Check for out of range.
- 			 * If using CEIL produces a value that is out of range,
- 			 * then we are forced to use FLOOR.
-@@ -385,8 +387,9 @@ static void apply_below_the_range(struct
- 		/* Either we've calculated the number of frames to insert,
- 		 * or we need to insert min duration frames
- 		 */
--		if (last_render_time_in_us / frames_to_insert <
--				in_out_vrr->min_duration_in_us){
-+		if (frames_to_insert &&
-+		    (last_render_time_in_us / frames_to_insert) <
-+		    in_out_vrr->min_duration_in_us){
- 			frames_to_insert -= (frames_to_insert > 1) ?
- 					1 : 0;
- 		}
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7243,13 +7243,20 @@ static noinstr void vmx_vcpu_enter_exit(
+ 				   flags);
+ 
+ 	vcpu->arch.cr2 = native_read_cr2();
++	vcpu->arch.regs_avail &= ~VMX_REGS_LAZY_LOAD_SET;
++
++	vmx->idt_vectoring_info = 0;
+ 
+ 	vmx_enable_fb_clear(vmx);
+ 
+-	if (unlikely(vmx->fail))
++	if (unlikely(vmx->fail)) {
+ 		vmx->exit_reason.full = 0xdead;
+-	else
+-		vmx->exit_reason.full = vmcs_read32(VM_EXIT_REASON);
++		goto out;
++	}
++
++	vmx->exit_reason.full = vmcs_read32(VM_EXIT_REASON);
++	if (likely(!vmx->exit_reason.failed_vmentry))
++		vmx->idt_vectoring_info = vmcs_read32(IDT_VECTORING_INFO_FIELD);
+ 
+ 	if ((u16)vmx->exit_reason.basic == EXIT_REASON_EXCEPTION_NMI &&
+ 	    is_nmi(vmx_get_intr_info(vcpu))) {
+@@ -7258,6 +7265,7 @@ static noinstr void vmx_vcpu_enter_exit(
+ 		kvm_after_interrupt(vcpu);
+ 	}
+ 
++out:
+ 	guest_state_exit_irqoff();
+ }
+ 
+@@ -7379,8 +7387,6 @@ static fastpath_t vmx_vcpu_run(struct kv
+ 	loadsegment(es, __USER_DS);
+ #endif
+ 
+-	vcpu->arch.regs_avail &= ~VMX_REGS_LAZY_LOAD_SET;
+-
+ 	pt_guest_exit(vmx);
+ 
+ 	kvm_load_host_xsave_state(vcpu);
+@@ -7397,17 +7403,12 @@ static fastpath_t vmx_vcpu_run(struct kv
+ 		vmx->nested.nested_run_pending = 0;
+ 	}
+ 
+-	vmx->idt_vectoring_info = 0;
+-
+ 	if (unlikely(vmx->fail))
+ 		return EXIT_FASTPATH_NONE;
+ 
+ 	if (unlikely((u16)vmx->exit_reason.basic == EXIT_REASON_MCE_DURING_VMENTRY))
+ 		kvm_machine_check();
+ 
+-	if (likely(!vmx->exit_reason.failed_vmentry))
+-		vmx->idt_vectoring_info = vmcs_read32(IDT_VECTORING_INFO_FIELD);
+-
+ 	trace_kvm_exit(vcpu, KVM_ISA_VMX);
+ 
+ 	if (unlikely(vmx->exit_reason.failed_vmentry))
 
 
