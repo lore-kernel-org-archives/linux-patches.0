@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71DE6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:24:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4852EC433C8;
-	Sun, 17 Sep 2023 20:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948F07469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6B7C433C7;
+	Sun, 17 Sep 2023 20:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982297;
-	bh=/npIhWllJrVy1wJ+8KdFGk1IVnZHjCwVgpcx+bhGgrk=;
+	s=korg; t=1694982301;
+	bh=c8HHZ3Cc8qIi52O5A5pbVM4eoa4HFjhVd4Ji/04RUmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p98875tubh8PEGdkRAMveVYiZeLf4w2qrnrUpi7Q/CAN7SsbI5+RqSpH5jy6k4Mdu
-	 viPWAhtoK2ksNTlR0DA4GffOhvhroTH9nVb2Oohm3URj/GkA3dWxys8Wtr0eky/IqN
-	 UDkO+FcqWX0mTQY53t9rKRoaXY5ILCr/6npPzQco=
+	b=IXHLEv7dFwYigK9GTei86wL1wiKTSQ7ybBc+huuj0E5ztRZIq4RPKN/XXX6zgT4CK
+	 XO+WNDbgqRUc0PkdytrEN9D6vnkuqoEQyW1p0DNfmblbdqIbw+aSPfPLPAEjBFNRNI
+	 54ZheEf6I86UruzxjkQlAve/lfopaS0H+pAq8xMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 209/511] clk: imx8mp: fix sai4 clock
-Date: Sun, 17 Sep 2023 21:10:36 +0200
-Message-ID: <20230917191118.868302957@linuxfoundation.org>
+Subject: [PATCH 5.15 210/511] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
+Date: Sun, 17 Sep 2023 21:10:37 +0200
+Message-ID: <20230917191118.891801453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,47 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
+[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
 
-The reference manual don't mention a SAI4 hardware block. This would be
-clock slice 78 which is skipped (TRM, page 237). Remove any reference to
-this clock to align the driver with the reality.
+Reconfiguring the clock divider to the exact same value is observed
+on an i.MX8MN to often cause a longer than usual clock pause, probably
+because the divider restarts counting whenever the register is rewritten.
 
-Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
+This issue doesn't show up normally, because the clock framework will
+take care to not call set_rate when the clock rate is the same.
+However, when we reconfigure an upstream clock, the common code will
+call set_rate with the newly calculated rate on all children, e.g.:
+
+  - sai5 is running normally and divides Audio PLL out by 16.
+  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
+  - rates for children are recalculated and rates are set recursively
+  - imx8m_clk_composite_divider_set_rate(sai5) is called with
+    32/16 = 2Hz more
+  - imx8m_clk_composite_divider_set_rate computes same divider as before
+  - divider register is written, so it restarts counting from zero and
+    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
+
+Some external clock consumers can be upset by such unexpected clock pauses,
+so let's make sure we only rewrite the divider value when the value to be
+written is actually different.
+
+Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 0191457fb3cfc..2f898c0bc867c 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -176,10 +176,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
- 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
- 						"clk_ext3", "clk_ext4", };
+diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
+index 04e728538cefe..75e05582cb24f 100644
+--- a/drivers/clk/imx/clk-composite-8m.c
++++ b/drivers/clk/imx/clk-composite-8m.c
+@@ -97,7 +97,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+ 	int prediv_value;
+ 	int div_value;
+ 	int ret;
+-	u32 val;
++	u32 orig, val;
  
--static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
--						"clk_ext1", "clk_ext2", };
--
- static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
- 						"clk_ext2", "clk_ext3", };
-@@ -566,7 +562,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
- 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
- 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
--	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
- 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
- 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
- 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
+ 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
+ 						&prediv_value, &div_value);
+@@ -106,13 +106,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+ 
+ 	spin_lock_irqsave(divider->lock, flags);
+ 
+-	val = readl(divider->reg);
+-	val &= ~((clk_div_mask(divider->width) << divider->shift) |
+-			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
++	orig = readl(divider->reg);
++	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
++		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
+ 
+ 	val |= (u32)(prediv_value  - 1) << divider->shift;
+ 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
+-	writel(val, divider->reg);
++
++	if (val != orig)
++		writel(val, divider->reg);
+ 
+ 	spin_unlock_irqrestore(divider->lock, flags);
+ 
 -- 
 2.40.1
 
