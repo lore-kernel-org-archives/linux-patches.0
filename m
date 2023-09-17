@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0F27461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42120C433C8;
-	Sun, 17 Sep 2023 19:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020C7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC34C433C9;
+	Sun, 17 Sep 2023 19:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980697;
-	bh=nO/ia+mBAUfkvlVx09uZyzq3EMHscyhK98gEy63WvmQ=;
+	s=korg; t=1694980701;
+	bh=396Usfqb6spM58Heu613Zmm2csdqkDElzqnCdX43Gss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBKFvmQV7YYEUwfOSecSD63OFK/IHGPtyd2uhy5XftrWnisY6GYSGOhEsEvC7dedI
-	 vOb+jhmQ6WvsaWHWLTp9xoxwOoXRe78rsP29c+z55eDR9Hp21eYJ9FUqsuyEy0vmsg
-	 twepNSUAtxSfIKn0qcAtYQYqS7HJWKWOfIKjgUrU=
+	b=09gP5U7PWrJH/BPmk1mf8lW57tOGOIs4hO8xoXi02PdgGXZGkKDab/603b7Dxjnc8
+	 e2G4uQYHofwYCdMCkZlHt0463+xd/6Me7kyq0wSgPY9C4D9iopC0zmlVnzEMBbWDSn
+	 GvJq7ozmxLEgrUz92++I6yTVlJr5SO8NHHZ+m+KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
 	Vadim Pasternak <vadimp@nvidia.com>,
 	David Thompson <davthompson@nvidia.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 268/285] platform/mellanox: mlxbf-tmfifo: Drop jumbo frames
-Date: Sun, 17 Sep 2023 21:14:28 +0200
-Message-ID: <20230917191100.475766461@linuxfoundation.org>
+Subject: [PATCH 6.5 269/285] platform/mellanox: mlxbf-pmc: Fix potential buffer overflows
+Date: Sun, 17 Sep 2023 21:14:29 +0200
+Message-ID: <20230917191100.501249157@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,101 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liming Sun <limings@nvidia.com>
+From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit fc4c655821546239abb3cf4274d66b9747aa87dd ]
+[ Upstream commit 80ccd40568bcd3655b0fd0be1e9b3379fd6e1056 ]
 
-This commit drops over-sized network packets to avoid tmfifo
-queue stuck.
+Replace sprintf with sysfs_emit where possible.
+Size check in mlxbf_pmc_event_list_show should account for "\0".
 
-Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
-Signed-off-by: Liming Sun <limings@nvidia.com>
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
 Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
 Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/9318936c2447f76db475c985ca6d91f057efcd41.1693322547.git.limings@nvidia.com
+Link: https://lore.kernel.org/r/bef39ef32319a31b32f999065911f61b0d3b17c3.1693917738.git.shravankr@nvidia.com
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 5c1f859b682a8..f3696a54a2bd7 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -224,7 +224,7 @@ static u8 mlxbf_tmfifo_net_default_mac[ETH_ALEN] = {
- static efi_char16_t mlxbf_tmfifo_efi_name[] = L"RshimMacAddr";
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index be967d797c28e..95afcae7b9fa9 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -1008,7 +1008,7 @@ static ssize_t mlxbf_pmc_counter_show(struct device *dev,
+ 	} else
+ 		return -EINVAL;
  
- /* Maximum L2 header length. */
--#define MLXBF_TMFIFO_NET_L2_OVERHEAD	36
-+#define MLXBF_TMFIFO_NET_L2_OVERHEAD	(ETH_HLEN + VLAN_HLEN)
+-	return sprintf(buf, "0x%llx\n", value);
++	return sysfs_emit(buf, "0x%llx\n", value);
+ }
  
- /* Supported virtio-net features. */
- #define MLXBF_TMFIFO_NET_FEATURES \
-@@ -642,13 +642,14 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
-  * flag is set.
-  */
- static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
--				     struct vring_desc *desc,
-+				     struct vring_desc **desc,
- 				     bool is_rx, bool *vring_change)
- {
- 	struct mlxbf_tmfifo *fifo = vring->fifo;
- 	struct virtio_net_config *config;
- 	struct mlxbf_tmfifo_msg_hdr hdr;
- 	int vdev_id, hdr_len;
-+	bool drop_rx = false;
+ /* Store function for "counter" sysfs files */
+@@ -1078,13 +1078,13 @@ static ssize_t mlxbf_pmc_event_show(struct device *dev,
  
- 	/* Read/Write packet header. */
- 	if (is_rx) {
-@@ -668,8 +669,8 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 			if (ntohs(hdr.len) >
- 			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
- 					      config->mtu) +
--			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
--				return;
-+					      MLXBF_TMFIFO_NET_L2_OVERHEAD)
-+				drop_rx = true;
- 		} else {
- 			vdev_id = VIRTIO_ID_CONSOLE;
- 			hdr_len = 0;
-@@ -684,16 +685,25 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 	err = mlxbf_pmc_read_event(blk_num, cnt_num, is_l3, &evt_num);
+ 	if (err)
+-		return sprintf(buf, "No event being monitored\n");
++		return sysfs_emit(buf, "No event being monitored\n");
  
- 			if (!tm_dev2)
- 				return;
--			vring->desc = desc;
-+			vring->desc = *desc;
- 			vring = &tm_dev2->vrings[MLXBF_TMFIFO_VRING_RX];
- 			*vring_change = true;
- 		}
-+
-+		if (drop_rx && !IS_VRING_DROP(vring)) {
-+			if (vring->desc_head)
-+				mlxbf_tmfifo_release_pkt(vring);
-+			*desc = &vring->drop_desc;
-+			vring->desc_head = *desc;
-+			vring->desc = *desc;
-+		}
-+
- 		vring->pkt_len = ntohs(hdr.len) + hdr_len;
- 	} else {
- 		/* Network virtio has an extra header. */
- 		hdr_len = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			   sizeof(struct virtio_net_hdr) : 0;
--		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, desc);
-+		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, *desc);
- 		hdr.type = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			    VIRTIO_ID_NET : VIRTIO_ID_CONSOLE;
- 		hdr.len = htons(vring->pkt_len - hdr_len);
-@@ -742,7 +752,7 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
+ 	evt_name = mlxbf_pmc_get_event_name(pmc->block_name[blk_num], evt_num);
+ 	if (!evt_name)
+ 		return -EINVAL;
  
- 	/* Beginning of a packet. Start to Rx/Tx packet header. */
- 	if (vring->pkt_len == 0) {
--		mlxbf_tmfifo_rxtx_header(vring, desc, is_rx, &vring_change);
-+		mlxbf_tmfifo_rxtx_header(vring, &desc, is_rx, &vring_change);
- 		(*avail)--;
+-	return sprintf(buf, "0x%llx: %s\n", evt_num, evt_name);
++	return sysfs_emit(buf, "0x%llx: %s\n", evt_num, evt_name);
+ }
  
- 		/* Return if new packet is for another ring. */
+ /* Store function for "event" sysfs files */
+@@ -1139,9 +1139,9 @@ static ssize_t mlxbf_pmc_event_list_show(struct device *dev,
+ 		return -EINVAL;
+ 
+ 	for (i = 0, buf[0] = '\0'; i < size; ++i) {
+-		len += sprintf(e_info, "0x%x: %s\n", events[i].evt_num,
+-			       events[i].evt_name);
+-		if (len > PAGE_SIZE)
++		len += snprintf(e_info, sizeof(e_info), "0x%x: %s\n",
++				events[i].evt_num, events[i].evt_name);
++		if (len >= PAGE_SIZE)
+ 			break;
+ 		strcat(buf, e_info);
+ 		ret = len;
+@@ -1168,7 +1168,7 @@ static ssize_t mlxbf_pmc_enable_show(struct device *dev,
+ 
+ 	value = FIELD_GET(MLXBF_PMC_L3C_PERF_CNT_CFG_EN, perfcnt_cfg);
+ 
+-	return sprintf(buf, "%d\n", value);
++	return sysfs_emit(buf, "%d\n", value);
+ }
+ 
+ /* Store function for "enable" sysfs files - only for l3cache */
 -- 
 2.40.1
 
