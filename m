@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808F26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5F3C433C7;
-	Sun, 17 Sep 2023 19:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7196FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DB8C433C8;
+	Sun, 17 Sep 2023 19:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978441;
-	bh=KCCm/ZoyU9XQoI4Y1X76IXNzmfPyUviTVf+ppu8ORhk=;
+	s=korg; t=1694978444;
+	bh=is4sGn41v1XrENZcD1qJOhzElo48n6z+5y0Yv2T4GvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/FBGvNbR4blOfMrQPioUn1EI28auPLXHzhT9t+47+5hC03MwtvIobQezinJDaA4Z
-	 +9303pzzzl49/sQz9PviEaGn1n16DQBEMX6/6BIa234TAWgcS77CW9HSzm6JXOQKx8
-	 rMO2BZ/Fc8Z7CD/CM9QRaz/umaTlSNsnGgMxPYBc=
+	b=n+wZYatlm3VbOynVwi16VIJ5G+DaVrowPFR17Nfq/S73xVccwHu032aRifkT6uvVk
+	 jR+Og93TmrcosSGGonnJS6qgWHVbF0kIpU09bngkiX0SJwoZpwB6dI/VZ78IBudjEO
+	 ADC2PANfMIz85JzW7Ie4ECEVyNZzAsP8wjSNGczc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shih-Yi Chen <shihyic@nvidia.com>,
-	Liming Sung <limings@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/406] platform/mellanox: Fix mlxbf-tmfifo not handling all virtio CONSOLE notifications
-Date: Sun, 17 Sep 2023 21:08:34 +0200
-Message-ID: <20230917191102.730430595@linuxfoundation.org>
+	Jordan Rife <jrife@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 061/406] net: Avoid address overwrite in kernel_connect
+Date: Sun, 17 Sep 2023 21:08:35 +0200
+Message-ID: <20230917191102.755841473@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,39 +39,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shih-Yi Chen <shihyic@nvidia.com>
+From: Jordan Rife <jrife@google.com>
 
-[ Upstream commit 0848cab765c634597636810bf76d0934003cce28 ]
+commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
 
-rshim console does not show all entries of dmesg.
+BPF programs that run on connect can rewrite the connect address. For
+the connect system call this isn't a problem, because a copy of the address
+is made when it is moved into kernel space. However, kernel_connect
+simply passes through the address it is given, so the caller may observe
+its address value unexpectedly change.
 
-Fixed by setting MLXBF_TM_TX_LWM_IRQ for every CONSOLE notification.
+A practical example where this is problematic is where NFS is combined
+with a system such as Cilium which implements BPF-based load balancing.
+A common pattern in software-defined storage systems is to have an NFS
+mount that connects to a persistent virtual IP which in turn maps to an
+ephemeral server IP. This is usually done to achieve high availability:
+if your server goes down you can quickly spin up a replacement and remap
+the virtual IP to that endpoint. With BPF-based load balancing, mounts
+will forget the virtual IP address when the address rewrite occurs
+because a pointer to the only copy of that address is passed down the
+stack. Server failover then breaks, because clients have forgotten the
+virtual IP address. Reconnects fail and mounts remain broken. This patch
+was tested by setting up a scenario like this and ensuring that NFS
+reconnects worked after applying the patch.
 
-Signed-off-by: Shih-Yi Chen <shihyic@nvidia.com>
-Reviewed-by: Liming Sung <limings@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20230821150627.26075-1-shihyic@nvidia.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/socket.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 38800e86ed8ad..64d22ecf3cddd 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -868,6 +868,7 @@ static bool mlxbf_tmfifo_virtio_notify(struct virtqueue *vq)
- 			tm_vdev = fifo->vdev[VIRTIO_ID_CONSOLE];
- 			mlxbf_tmfifo_console_output(tm_vdev, vring);
- 			spin_unlock_irqrestore(&fifo->spin_lock[0], flags);
-+			set_bit(MLXBF_TM_TX_LWM_IRQ, &fifo->pend_events);
- 		} else if (test_and_set_bit(MLXBF_TM_TX_LWM_IRQ,
- 					    &fifo->pend_events)) {
- 			return true;
--- 
-2.40.1
-
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -3467,7 +3467,11 @@ EXPORT_SYMBOL(kernel_accept);
+ int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
+ 		   int flags)
+ {
+-	return sock->ops->connect(sock, addr, addrlen, flags);
++	struct sockaddr_storage address;
++
++	memcpy(&address, addr, addrlen);
++
++	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
+ }
+ EXPORT_SYMBOL(kernel_connect);
+ 
 
 
