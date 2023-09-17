@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB87461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0BAC433C9;
-	Sun, 17 Sep 2023 20:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2257461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5347FC433C8;
+	Sun, 17 Sep 2023 20:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981896;
-	bh=xk8Dazp0OCeAomHR3iD9B1QO/poysOD23zVoaW4DD4o=;
+	s=korg; t=1694981900;
+	bh=FlxuJ+NqmEwaGLOOaFFl3/lVo0/p2Ekfpgqz07oQyXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PUWnevkYM87be5d+BVr1kuF9qw4ZVmqqvrmfPGVHWQEwjumh0Q6sCG9bZfKvAnOb
-	 CVAwHwzVlyqbGuzBiNaqmeqtVsofKR9ZLHnXJvYpOdzSjrAayMj2WPQ32epHY0pPZH
-	 WKypO3/6JqsxlzVgVipFowi5MqevxbFouwf04p4E=
+	b=YgU7PnzucfItVMg+bcNBDnJvsJmtes3i24pMHZhcsnYmdz7DI49ThirRVryZiB023
+	 cRvv08KDBFzbI6ArzX/w3oEGf5u3o/IHwb9zSjZb3BBIYCbBGHbh5/gkr33A2IVQsY
+	 oamIjioS7RO7m0i02FZMz77IzP6QM/Gp3EbUEe1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/511] udp: re-score reuseport groups when connected sockets are present
-Date: Sun, 17 Sep 2023 21:08:32 +0200
-Message-ID: <20230917191115.924614172@linuxfoundation.org>
+Subject: [PATCH 6.1 186/219] net: ipv4: fix one memleak in __inet_del_ifa()
+Date: Sun, 17 Sep 2023 21:15:13 +0200
+Message-ID: <20230917191047.674997503@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,116 +37,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenz Bauer <lmb@isovalent.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit f0ea27e7bfe1c34e1f451a63eb68faa1d4c3a86d ]
+[ Upstream commit ac28b1ec6135649b5d78b028e47264cb3ebca5ea ]
 
-Contrary to TCP, UDP reuseport groups can contain TCP_ESTABLISHED
-sockets. To support these properly we remember whether a group has
-a connected socket and skip the fast reuseport early-return. In
-effect we continue scoring all reuseport sockets and then choose the
-one with the highest score.
+I got the below warning when do fuzzing test:
+unregister_netdevice: waiting for bond0 to become free. Usage count = 2
 
-The current code fails to re-calculate the score for the result of
-lookup_reuseport. According to Kuniyuki Iwashima:
+It can be repoduced via:
 
-    1) SO_INCOMING_CPU is set
-       -> selected sk might have +1 score
+ip link add bond0 type bond
+sysctl -w net.ipv4.conf.bond0.promote_secondaries=1
+ip addr add 4.117.174.103/0 scope 0x40 dev bond0
+ip addr add 192.168.100.111/255.255.255.254 scope 0 dev bond0
+ip addr add 0.0.0.4/0 scope 0x40 secondary dev bond0
+ip addr del 4.117.174.103/0 scope 0x40 dev bond0
+ip link delete bond0 type bond
 
-    2) BPF prog returns ESTABLISHED and/or SO_INCOMING_CPU sk
-       -> selected sk will have more than 8
+In this reproduction test case, an incorrect 'last_prim' is found in
+__inet_del_ifa(), as a result, the secondary address(0.0.0.4/0 scope 0x40)
+is lost. The memory of the secondary address is leaked and the reference of
+in_device and net_device is leaked.
 
-  Using the old score could trigger more lookups depending on the
-  order that sockets are created.
+Fix this problem:
+Look for 'last_prim' starting at location of the deleted IP and inserting
+the promoted IP into the location of 'last_prim'.
 
-    sk -> sk (SO_INCOMING_CPU) -> sk (ESTABLISHED)
-    |     |
-    `-> select the next SO_INCOMING_CPU sk
-          |
-          `-> select itself (We should save this lookup)
-
-Fixes: efc6b6f6c311 ("udp: Improve load balancing for SO_REUSEPORT.")
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-1-7021b683cdae@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 0ff60a45678e ("[IPV4]: Fix secondary IP addresses after promotion")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 20 +++++++++++++++-----
- net/ipv6/udp.c | 19 ++++++++++++++-----
- 2 files changed, 29 insertions(+), 10 deletions(-)
+ net/ipv4/devinet.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 73bf63d719f84..198d8e07413d3 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -443,14 +443,24 @@ static struct sock *udp4_lib_lookup2(struct net *net,
- 		score = compute_score(sk, net, saddr, sport,
- 				      daddr, hnum, dif, sdif);
- 		if (score > badness) {
--			result = lookup_reuseport(net, sk, skb,
--						  saddr, sport, daddr, hnum);
-+			badness = score;
-+			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
-+			if (!result) {
-+				result = sk;
-+				continue;
-+			}
-+
- 			/* Fall back to scoring if group has connections */
--			if (result && !reuseport_has_conns(sk))
-+			if (!reuseport_has_conns(sk))
- 				return result;
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index e8b9a9202fecd..35d6e74be8406 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -354,14 +354,14 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ {
+ 	struct in_ifaddr *promote = NULL;
+ 	struct in_ifaddr *ifa, *ifa1;
+-	struct in_ifaddr *last_prim;
++	struct in_ifaddr __rcu **last_prim;
+ 	struct in_ifaddr *prev_prom = NULL;
+ 	int do_promote = IN_DEV_PROMOTE_SECONDARIES(in_dev);
  
--			result = result ? : sk;
--			badness = score;
-+			/* Reuseport logic returned an error, keep original score. */
-+			if (IS_ERR(result))
-+				continue;
-+
-+			badness = compute_score(result, net, saddr, sport,
-+						daddr, hnum, dif, sdif);
-+
- 		}
- 	}
- 	return result;
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index a746abbe81b5f..2dab9aab551c3 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -190,14 +190,23 @@ static struct sock *udp6_lib_lookup2(struct net *net,
- 		score = compute_score(sk, net, saddr, sport,
- 				      daddr, hnum, dif, sdif);
- 		if (score > badness) {
--			result = lookup_reuseport(net, sk, skb,
--						  saddr, sport, daddr, hnum);
-+			badness = score;
-+			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
-+			if (!result) {
-+				result = sk;
-+				continue;
-+			}
-+
- 			/* Fall back to scoring if group has connections */
--			if (result && !reuseport_has_conns(sk))
-+			if (!reuseport_has_conns(sk))
- 				return result;
+ 	ASSERT_RTNL();
  
--			result = result ? : sk;
--			badness = score;
-+			/* Reuseport logic returned an error, keep original score. */
-+			if (IS_ERR(result))
-+				continue;
-+
-+			badness = compute_score(sk, net, saddr, sport,
-+						daddr, hnum, dif, sdif);
+ 	ifa1 = rtnl_dereference(*ifap);
+-	last_prim = rtnl_dereference(in_dev->ifa_list);
++	last_prim = ifap;
+ 	if (in_dev->dead)
+ 		goto no_promotions;
+ 
+@@ -375,7 +375,7 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 		while ((ifa = rtnl_dereference(*ifap1)) != NULL) {
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) &&
+ 			    ifa1->ifa_scope <= ifa->ifa_scope)
+-				last_prim = ifa;
++				last_prim = &ifa->ifa_next;
+ 
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) ||
+ 			    ifa1->ifa_mask != ifa->ifa_mask ||
+@@ -439,9 +439,9 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 
+ 			rcu_assign_pointer(prev_prom->ifa_next, next_sec);
+ 
+-			last_sec = rtnl_dereference(last_prim->ifa_next);
++			last_sec = rtnl_dereference(*last_prim);
+ 			rcu_assign_pointer(promote->ifa_next, last_sec);
+-			rcu_assign_pointer(last_prim->ifa_next, promote);
++			rcu_assign_pointer(*last_prim, promote);
  		}
- 	}
- 	return result;
+ 
+ 		promote->ifa_flags &= ~IFA_F_SECONDARY;
 -- 
 2.40.1
 
