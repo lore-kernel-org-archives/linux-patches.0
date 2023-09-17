@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A976FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C00C433C8;
-	Sun, 17 Sep 2023 20:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5576FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B054AC433C7;
+	Sun, 17 Sep 2023 20:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983287;
-	bh=B9+MYkgozfeHAb961IV0daq+Jjin4QBhDmUd7Kr+OxU=;
+	s=korg; t=1694983291;
+	bh=91BioLJnozvFzwKh/WNabdfFg+F3pcHqpdAByr/WAI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iy67Dx+0CsjDohhyuYUQ9aR3//hjiFhcz2BzX/tmZ9RRY2wVc6h7FovWcIJFygm+c
-	 NbCz0QUJyLs3PMh01kJg2uSmIyrQZRcJ+CAL98ArcVthk4JyhYeiqXx3golvOjxiaC
-	 f8ZI3IBLnbx3yOzyyOMICkCax2zgctYM5Z330Y+I=
+	b=psiCJXm51NwKQphYNBYNKIiyFm3jJPaqXnD+Zdj/gPZvxeZBm+leTWHeOMK+7lmwp
+	 RhBtnL5t6dGZM6yK08nqC9yh3tmk5OvjzszJ64YnU9x20t0Dnc9dcAuL+fI2pXVokT
+	 WOKdOLuMmx5PuiRFPCyq10n8wkY+h49D12MV1vHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <petr.tesarik.ext@huawei.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 462/511] sh: boards: Fix CEU buffer size passed to dma_declare_coherent_memory()
-Date: Sun, 17 Sep 2023 21:14:49 +0200
-Message-ID: <20230917191124.907409998@linuxfoundation.org>
+Subject: [PATCH 5.15 498/511] hsr: Fix uninit-value access in fill_frame_info()
+Date: Sun, 17 Sep 2023 21:15:25 +0200
+Message-ID: <20230917191125.752045262@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -43,118 +41,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <petr.tesarik.ext@huawei.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit fb60211f377b69acffead3147578f86d0092a7a5 ]
+[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
 
-In all these cases, the last argument to dma_declare_coherent_memory() is
-the buffer end address, but the expected value should be the size of the
-reserved region.
+Syzbot reports the following uninit-value access problem.
 
-Fixes: 39fb993038e1 ("media: arch: sh: ap325rxa: Use new renesas-ceu camera driver")
-Fixes: c2f9b05fd5c1 ("media: arch: sh: ecovec: Use new renesas-ceu camera driver")
-Fixes: f3590dc32974 ("media: arch: sh: kfr2r09: Use new renesas-ceu camera driver")
-Fixes: 186c446f4b84 ("media: arch: sh: migor: Use new renesas-ceu camera driver")
-Fixes: 1a3c230b4151 ("media: arch: sh: ms7724se: Use new renesas-ceu camera driver")
-Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20230724120742.2187-1-petrtesarik@huaweicloud.com
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+=====================================================
+BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+ hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
+ __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+ xmit_one net/core/dev.c:3544 [inline]
+ dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
+ __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
+ dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+ packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
+ packet_snd net/packet/af_packet.c:3087 [inline]
+ packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+Uninit was created at:
+ slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+ kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
+ __alloc_skb+0x318/0x740 net/core/skbuff.c:644
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
+ sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
+ packet_alloc_skb net/packet/af_packet.c:2936 [inline]
+ packet_snd net/packet/af_packet.c:3030 [inline]
+ packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+It is because VLAN not yet supported in hsr driver. Return error
+when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
+
+Fixes: 451d8123f897 ("net: prp: add packet handling support")
+Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/mach-ap325rxa/setup.c | 2 +-
- arch/sh/boards/mach-ecovec24/setup.c | 6 ++----
- arch/sh/boards/mach-kfr2r09/setup.c  | 2 +-
- arch/sh/boards/mach-migor/setup.c    | 2 +-
- arch/sh/boards/mach-se/7724/setup.c  | 6 ++----
- 5 files changed, 7 insertions(+), 11 deletions(-)
+ net/hsr/hsr_forward.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/sh/boards/mach-ap325rxa/setup.c b/arch/sh/boards/mach-ap325rxa/setup.c
-index bac8a058ebd7c..05bd42dde107b 100644
---- a/arch/sh/boards/mach-ap325rxa/setup.c
-+++ b/arch/sh/boards/mach-ap325rxa/setup.c
-@@ -530,7 +530,7 @@ static int __init ap325rxa_devices_setup(void)
- 	device_initialize(&ap325rxa_ceu_device.dev);
- 	dma_declare_coherent_memory(&ap325rxa_ceu_device.dev,
- 			ceu_dma_membase, ceu_dma_membase,
--			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
-+			CEU_BUFFER_MEMORY_SIZE);
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 35382ed686d1d..12ba43023d30e 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -552,6 +552,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+ 		netdev_warn_once(skb->dev, "VLAN not yet supported");
++		return -EINVAL;
+ 	}
  
- 	platform_device_add(&ap325rxa_ceu_device);
- 
-diff --git a/arch/sh/boards/mach-ecovec24/setup.c b/arch/sh/boards/mach-ecovec24/setup.c
-index bab91a99124e1..9730a992dab33 100644
---- a/arch/sh/boards/mach-ecovec24/setup.c
-+++ b/arch/sh/boards/mach-ecovec24/setup.c
-@@ -1454,15 +1454,13 @@ static int __init arch_setup(void)
- 	device_initialize(&ecovec_ceu_devices[0]->dev);
- 	dma_declare_coherent_memory(&ecovec_ceu_devices[0]->dev,
- 				    ceu0_dma_membase, ceu0_dma_membase,
--				    ceu0_dma_membase +
--				    CEU_BUFFER_MEMORY_SIZE - 1);
-+				    CEU_BUFFER_MEMORY_SIZE);
- 	platform_device_add(ecovec_ceu_devices[0]);
- 
- 	device_initialize(&ecovec_ceu_devices[1]->dev);
- 	dma_declare_coherent_memory(&ecovec_ceu_devices[1]->dev,
- 				    ceu1_dma_membase, ceu1_dma_membase,
--				    ceu1_dma_membase +
--				    CEU_BUFFER_MEMORY_SIZE - 1);
-+				    CEU_BUFFER_MEMORY_SIZE);
- 	platform_device_add(ecovec_ceu_devices[1]);
- 
- 	gpiod_add_lookup_table(&cn12_power_gpiod_table);
-diff --git a/arch/sh/boards/mach-kfr2r09/setup.c b/arch/sh/boards/mach-kfr2r09/setup.c
-index eeb5ce341efdd..4a1caa3e7cf5a 100644
---- a/arch/sh/boards/mach-kfr2r09/setup.c
-+++ b/arch/sh/boards/mach-kfr2r09/setup.c
-@@ -603,7 +603,7 @@ static int __init kfr2r09_devices_setup(void)
- 	device_initialize(&kfr2r09_ceu_device.dev);
- 	dma_declare_coherent_memory(&kfr2r09_ceu_device.dev,
- 			ceu_dma_membase, ceu_dma_membase,
--			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
-+			CEU_BUFFER_MEMORY_SIZE);
- 
- 	platform_device_add(&kfr2r09_ceu_device);
- 
-diff --git a/arch/sh/boards/mach-migor/setup.c b/arch/sh/boards/mach-migor/setup.c
-index 6703a2122c0d6..bd4ccd9f8dd06 100644
---- a/arch/sh/boards/mach-migor/setup.c
-+++ b/arch/sh/boards/mach-migor/setup.c
-@@ -604,7 +604,7 @@ static int __init migor_devices_setup(void)
- 	device_initialize(&migor_ceu_device.dev);
- 	dma_declare_coherent_memory(&migor_ceu_device.dev,
- 			ceu_dma_membase, ceu_dma_membase,
--			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
-+			CEU_BUFFER_MEMORY_SIZE);
- 
- 	platform_device_add(&migor_ceu_device);
- 
-diff --git a/arch/sh/boards/mach-se/7724/setup.c b/arch/sh/boards/mach-se/7724/setup.c
-index 8d6541ba01865..edc7712e4a804 100644
---- a/arch/sh/boards/mach-se/7724/setup.c
-+++ b/arch/sh/boards/mach-se/7724/setup.c
-@@ -940,15 +940,13 @@ static int __init devices_setup(void)
- 	device_initialize(&ms7724se_ceu_devices[0]->dev);
- 	dma_declare_coherent_memory(&ms7724se_ceu_devices[0]->dev,
- 				    ceu0_dma_membase, ceu0_dma_membase,
--				    ceu0_dma_membase +
--				    CEU_BUFFER_MEMORY_SIZE - 1);
-+				    CEU_BUFFER_MEMORY_SIZE);
- 	platform_device_add(ms7724se_ceu_devices[0]);
- 
- 	device_initialize(&ms7724se_ceu_devices[1]->dev);
- 	dma_declare_coherent_memory(&ms7724se_ceu_devices[1]->dev,
- 				    ceu1_dma_membase, ceu1_dma_membase,
--				    ceu1_dma_membase +
--				    CEU_BUFFER_MEMORY_SIZE - 1);
-+				    CEU_BUFFER_MEMORY_SIZE);
- 	platform_device_add(ms7724se_ceu_devices[1]);
- 
- 	return platform_add_devices(ms7724se_devices,
+ 	frame->is_from_san = false;
 -- 
 2.40.1
 
