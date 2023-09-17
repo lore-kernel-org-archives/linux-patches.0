@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA197461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600F9C433C8;
-	Sun, 17 Sep 2023 20:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9132E7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6AEC433CB;
+	Sun, 17 Sep 2023 20:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981212;
-	bh=vM3NlPMb445Y8wmWVtDltNHWj7IX9qKCtfAzYqmAikY=;
+	s=korg; t=1694981216;
+	bh=Sc4bmG5Pg/2Ra4H2zYlKoJaIBWIAkpr1S/+ZbTawGds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHC0WIXF6TKeyiEjF50p3MF9M3ziHmBtvJ6mAE5bOot5yRxuSPzByQSVofFCIuVWM
-	 QF9bcW224zAtDPFTPcjE/lVrKtNZ693Bw8faujGWpkK+bAoKkEvUNWk5r77XFO+qIp
-	 r7xmue8X4r5ejE3gJ7/o0+6tWLavXq+7P/GsSMr4=
+	b=O1FnBNHYecvFnstF5LNU9oIQvSuh8AJiaveyM7Zugyr/eaB2aDajes+l/jOmfRkIO
+	 hg4k60N/DxduTo1gafV3tA3d5Sltw94PktqVD9LOIAofQiw7isB+zImvFlsJx3oJwL
+	 dpdjPIuFvowGx/lu0NlHR0B54bbJZAA+6Uq9u95A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.1 050/219] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
-Date: Sun, 17 Sep 2023 21:12:57 +0200
-Message-ID: <20230917191042.813413605@linuxfoundation.org>
+	Katya Orlova <e.orlova@ispras.ru>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 086/219] smb: propagate error code of extract_sharename()
+Date: Sun, 17 Sep 2023 21:13:33 +0200
+Message-ID: <20230917191044.086196591@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -40,35 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Katya Orlova <e.orlova@ispras.ru>
 
-commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
+[ Upstream commit efc0b0bcffcba60d9c6301063d25a22a4744b499 ]
 
-It is an almost improbable error case but when page allocating loop in
-nfs4_get_device_info() fails then we should only free the already
-allocated pages, as __free_page() can't deal with NULL arguments.
+In addition to the EINVAL, there may be an ENOMEM.
 
-Found by Linux Verification Center (linuxtesting.org).
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
+Signed-off-by: Katya Orlova <e.orlova@ispras.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs_dev.c |    2 +-
+ fs/smb/client/fscache.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/pnfs_dev.c
-+++ b/fs/nfs/pnfs_dev.c
-@@ -154,7 +154,7 @@ nfs4_get_device_info(struct nfs_server *
- 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
+diff --git a/fs/smb/client/fscache.c b/fs/smb/client/fscache.c
+index f6f3a6b75601b..e73625b5d0cc6 100644
+--- a/fs/smb/client/fscache.c
++++ b/fs/smb/client/fscache.c
+@@ -48,7 +48,7 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
+ 	sharename = extract_sharename(tcon->tree_name);
+ 	if (IS_ERR(sharename)) {
+ 		cifs_dbg(FYI, "%s: couldn't extract sharename\n", __func__);
+-		return -EINVAL;
++		return PTR_ERR(sharename);
+ 	}
  
- out_free_pages:
--	for (i = 0; i < max_pages; i++)
-+	while (--i >= 0)
- 		__free_page(pages[i]);
- 	kfree(pages);
- out_free_pdev:
+ 	slen = strlen(sharename);
+-- 
+2.40.1
+
 
 
