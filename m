@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DF77461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C897DC433CD;
-	Sun, 17 Sep 2023 20:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F77461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E63C433C7;
+	Sun, 17 Sep 2023 20:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981920;
-	bh=e1tP5OTR7KeI7Nq6k72+EhVcB/IH7qtRFTINw+6WLH0=;
+	s=korg; t=1694981923;
+	bh=Dytvooc09kwUixZXSbTOb5DXOwfSVB6xeXtHK+J2oeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jptozn1WSTvsEJI1kLsBjViuhQYKWrCo6ewXBKy9ZM4cvD7S39+no3YMHwAzeqo3s
-	 qJSxHjhXP3qzFKQx4XrRQbjLN5/OzyytpogG+QhbS7W5nWoSZbPim0KxFwPyQMiTWH
-	 rK8Xq4p6Bjk5SXqbGGRJNpXlu6xxYb2Nlc9OM4d4=
+	b=semToyzWMEWtQdwtZk+naop2+SYR46rHEmqVG/QpLs/CCX+ypG/efjcZPryHkk2dR
+	 uQy5sUfQ9CXNi9HNWhgbnkpp2vztSH7khv73T9eEsVRk2CNuufAWCdo6v0tuw4kwvY
+	 dE/8A1L642kK6GvoeAl13lKfzfERc3HAXWhwpsJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 193/219] hsr: Fix uninit-value access in fill_frame_info()
-Date: Sun, 17 Sep 2023 21:15:20 +0200
-Message-ID: <20230917191047.919103402@linuxfoundation.org>
+Subject: [PATCH 5.15 127/511] quota: fix dqput() to follow the guarantees dquot_srcu should provide
+Date: Sun, 17 Sep 2023 21:09:14 +0200
+Message-ID: <20230917191116.935114886@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,92 +36,251 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
+[ Upstream commit dabc8b20756601b9e1cc85a81d47d3f98ed4d13a ]
 
-Syzbot reports the following uninit-value access problem.
+The dquot_mark_dquot_dirty() using dquot references from the inode
+should be protected by dquot_srcu. quota_off code takes care to call
+synchronize_srcu(&dquot_srcu) to not drop dquot references while they
+are used by other users. But dquot_transfer() breaks this assumption.
+We call dquot_transfer() to drop the last reference of dquot and add
+it to free_dquots, but there may still be other users using the dquot
+at this time, as shown in the function graph below:
 
-=====================================================
-BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
-BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- fill_frame_info net/hsr/hsr_forward.c:601 [inline]
- hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
- __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
- netdev_start_xmit include/linux/netdevice.h:4903 [inline]
- xmit_one net/core/dev.c:3544 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
- __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
- dev_queue_xmit include/linux/netdevice.h:3082 [inline]
- packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3087 [inline]
- packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+       cpu1              cpu2
+_________________|_________________
+wb_do_writeback         CHOWN(1)
+ ...
+  ext4_da_update_reserve_space
+   dquot_claim_block
+    ...
+     dquot_mark_dquot_dirty // try to dirty old quota
+      test_bit(DQ_ACTIVE_B, &dquot->dq_flags) // still ACTIVE
+      if (test_bit(DQ_MOD_B, &dquot->dq_flags))
+      // test no dirty, wait dq_list_lock
+                    ...
+                     dquot_transfer
+                      __dquot_transfer
+                      dqput_all(transfer_from) // rls old dquot
+                       dqput // last dqput
+                        dquot_release
+                         clear_bit(DQ_ACTIVE_B, &dquot->dq_flags)
+                        atomic_dec(&dquot->dq_count)
+                        put_dquot_last(dquot)
+                         list_add_tail(&dquot->dq_free, &free_dquots)
+                         // add the dquot to free_dquots
+      if (!test_and_set_bit(DQ_MOD_B, &dquot->dq_flags))
+        add dqi_dirty_list // add released dquot to dirty_list
 
-Uninit was created at:
- slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
- kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
- __alloc_skb+0x318/0x740 net/core/skbuff.c:644
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
- packet_alloc_skb net/packet/af_packet.c:2936 [inline]
- packet_snd net/packet/af_packet.c:3030 [inline]
- packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+This can cause various issues, such as dquot being destroyed by
+dqcache_shrink_scan() after being added to free_dquots, which can trigger
+a UAF in dquot_mark_dquot_dirty(); or after dquot is added to free_dquots
+and then to dirty_list, it is added to free_dquots again after
+dquot_writeback_dquots() is executed, which causes the free_dquots list to
+be corrupted and triggers a UAF when dqcache_shrink_scan() is called for
+freeing dquot twice.
 
-It is because VLAN not yet supported in hsr driver. Return error
-when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
+As Honza said, we need to fix dquot_transfer() to follow the guarantees
+dquot_srcu should provide. But calling synchronize_srcu() directly from
+dquot_transfer() is too expensive (and mostly unnecessary). So we add
+dquot whose last reference should be dropped to the new global dquot
+list releasing_dquots, and then queue work item which would call
+synchronize_srcu() and after that perform the final cleanup of all the
+dquots on releasing_dquots.
 
-Fixes: 451d8123f897 ("net: prp: add packet handling support")
-Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4580b30ea887 ("quota: Do not dirty bad dquots")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230630110822.3881712-5-libaokun1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/quota/dquot.c | 96 +++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 78 insertions(+), 18 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 629daacc96071..b71dab630a873 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -594,6 +594,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
- 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
- 		/* FIXME: */
- 		netdev_warn_once(skb->dev, "VLAN not yet supported");
-+		return -EINVAL;
- 	}
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index 2069453e88e4f..889eaea56a784 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -225,13 +225,22 @@ static void put_quota_format(struct quota_format_type *fmt)
  
- 	frame->is_from_san = false;
+ /*
+  * Dquot List Management:
+- * The quota code uses four lists for dquot management: the inuse_list,
+- * free_dquots, dqi_dirty_list, and dquot_hash[] array. A single dquot
+- * structure may be on some of those lists, depending on its current state.
++ * The quota code uses five lists for dquot management: the inuse_list,
++ * releasing_dquots, free_dquots, dqi_dirty_list, and dquot_hash[] array.
++ * A single dquot structure may be on some of those lists, depending on
++ * its current state.
+  *
+  * All dquots are placed to the end of inuse_list when first created, and this
+  * list is used for invalidate operation, which must look at every dquot.
+  *
++ * When the last reference of a dquot will be dropped, the dquot will be
++ * added to releasing_dquots. We'd then queue work item which would call
++ * synchronize_srcu() and after that perform the final cleanup of all the
++ * dquots on the list. Both releasing_dquots and free_dquots use the
++ * dq_free list_head in the dquot struct. When a dquot is removed from
++ * releasing_dquots, a reference count is always subtracted, and if
++ * dq_count == 0 at that point, the dquot will be added to the free_dquots.
++ *
+  * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
+  * and this list is searched whenever we need an available dquot.  Dquots are
+  * removed from the list as soon as they are used again, and
+@@ -250,6 +259,7 @@ static void put_quota_format(struct quota_format_type *fmt)
+ 
+ static LIST_HEAD(inuse_list);
+ static LIST_HEAD(free_dquots);
++static LIST_HEAD(releasing_dquots);
+ static unsigned int dq_hash_bits, dq_hash_mask;
+ static struct hlist_head *dquot_hash;
+ 
+@@ -260,6 +270,9 @@ static qsize_t inode_get_rsv_space(struct inode *inode);
+ static qsize_t __inode_get_rsv_space(struct inode *inode);
+ static int __dquot_initialize(struct inode *inode, int type);
+ 
++static void quota_release_workfn(struct work_struct *work);
++static DECLARE_DELAYED_WORK(quota_release_work, quota_release_workfn);
++
+ static inline unsigned int
+ hashfn(const struct super_block *sb, struct kqid qid)
+ {
+@@ -305,12 +318,18 @@ static inline void put_dquot_last(struct dquot *dquot)
+ 	dqstats_inc(DQST_FREE_DQUOTS);
+ }
+ 
++static inline void put_releasing_dquots(struct dquot *dquot)
++{
++	list_add_tail(&dquot->dq_free, &releasing_dquots);
++}
++
+ static inline void remove_free_dquot(struct dquot *dquot)
+ {
+ 	if (list_empty(&dquot->dq_free))
+ 		return;
+ 	list_del_init(&dquot->dq_free);
+-	dqstats_dec(DQST_FREE_DQUOTS);
++	if (!atomic_read(&dquot->dq_count))
++		dqstats_dec(DQST_FREE_DQUOTS);
+ }
+ 
+ static inline void put_inuse(struct dquot *dquot)
+@@ -552,6 +571,8 @@ static void invalidate_dquots(struct super_block *sb, int type)
+ 	struct dquot *dquot, *tmp;
+ 
+ restart:
++	flush_delayed_work(&quota_release_work);
++
+ 	spin_lock(&dq_list_lock);
+ 	list_for_each_entry_safe(dquot, tmp, &inuse_list, dq_inuse) {
+ 		if (dquot->dq_sb != sb)
+@@ -560,6 +581,12 @@ static void invalidate_dquots(struct super_block *sb, int type)
+ 			continue;
+ 		/* Wait for dquot users */
+ 		if (atomic_read(&dquot->dq_count)) {
++			/* dquot in releasing_dquots, flush and retry */
++			if (!list_empty(&dquot->dq_free)) {
++				spin_unlock(&dq_list_lock);
++				goto restart;
++			}
++
+ 			atomic_inc(&dquot->dq_count);
+ 			spin_unlock(&dq_list_lock);
+ 			/*
+@@ -770,6 +797,49 @@ static struct shrinker dqcache_shrinker = {
+ 	.seeks = DEFAULT_SEEKS,
+ };
+ 
++/*
++ * Safely release dquot and put reference to dquot.
++ */
++static void quota_release_workfn(struct work_struct *work)
++{
++	struct dquot *dquot;
++	struct list_head rls_head;
++
++	spin_lock(&dq_list_lock);
++	/* Exchange the list head to avoid livelock. */
++	list_replace_init(&releasing_dquots, &rls_head);
++	spin_unlock(&dq_list_lock);
++
++restart:
++	synchronize_srcu(&dquot_srcu);
++	spin_lock(&dq_list_lock);
++	while (!list_empty(&rls_head)) {
++		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
++		/* Dquot got used again? */
++		if (atomic_read(&dquot->dq_count) > 1) {
++			remove_free_dquot(dquot);
++			atomic_dec(&dquot->dq_count);
++			continue;
++		}
++		if (dquot_dirty(dquot)) {
++			spin_unlock(&dq_list_lock);
++			/* Commit dquot before releasing */
++			dquot_write_dquot(dquot);
++			goto restart;
++		}
++		if (dquot_active(dquot)) {
++			spin_unlock(&dq_list_lock);
++			dquot->dq_sb->dq_op->release_dquot(dquot);
++			goto restart;
++		}
++		/* Dquot is inactive and clean, now move it to free list */
++		remove_free_dquot(dquot);
++		atomic_dec(&dquot->dq_count);
++		put_dquot_last(dquot);
++	}
++	spin_unlock(&dq_list_lock);
++}
++
+ /*
+  * Put reference to dquot
+  */
+@@ -786,7 +856,7 @@ void dqput(struct dquot *dquot)
+ 	}
+ #endif
+ 	dqstats_inc(DQST_DROPS);
+-we_slept:
++
+ 	spin_lock(&dq_list_lock);
+ 	if (atomic_read(&dquot->dq_count) > 1) {
+ 		/* We have more than one user... nothing to do */
+@@ -798,25 +868,15 @@ void dqput(struct dquot *dquot)
+ 		spin_unlock(&dq_list_lock);
+ 		return;
+ 	}
++
+ 	/* Need to release dquot? */
+-	if (dquot_dirty(dquot)) {
+-		spin_unlock(&dq_list_lock);
+-		/* Commit dquot before releasing */
+-		dquot_write_dquot(dquot);
+-		goto we_slept;
+-	}
+-	if (dquot_active(dquot)) {
+-		spin_unlock(&dq_list_lock);
+-		dquot->dq_sb->dq_op->release_dquot(dquot);
+-		goto we_slept;
+-	}
+-	atomic_dec(&dquot->dq_count);
+ #ifdef CONFIG_QUOTA_DEBUG
+ 	/* sanity check */
+ 	BUG_ON(!list_empty(&dquot->dq_free));
+ #endif
+-	put_dquot_last(dquot);
++	put_releasing_dquots(dquot);
+ 	spin_unlock(&dq_list_lock);
++	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
+ }
+ EXPORT_SYMBOL(dqput);
+ 
 -- 
 2.40.1
 
