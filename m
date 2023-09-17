@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279B96FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B60BC433C7;
-	Sun, 17 Sep 2023 20:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD75C6FA7;
+	Sun, 17 Sep 2023 20:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013DFC433C7;
+	Sun, 17 Sep 2023 20:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981839;
-	bh=rKMqKMYtPuHxuvWgsRpj7pbF/B5Vln81ztXoh/FcueA=;
+	s=korg; t=1694981842;
+	bh=lqtlD4Sd7Jf+dw3QdzIoNx7dZ9JDJJgQn88aQL7tsN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBGZYIK2e5KbZNGgf9bNHv00YsRbFE82/oWnghl9Bh0KPEmjXMHgZz0Ho/TMKYYpH
-	 TRj2J1k5W9YNiiu3B0r+Qrhfyf4NIX9g/KlKLarNheN6Gpi1XchNZmmndGMhin3AK6
-	 Mn+PONdvtRpBcVs1+K81gNa/NdYGzC3fv6uOb9Do=
+	b=ehMdvi4VDs/p+Hu3YeQtQK39US8Y0/12LaTPWBJ/nnRRUJRFodf9VXCSEH/Rgo9FJ
+	 r2UpIhmhfdVpMmVOa+JYwc//V/yrINHpYvuNMcyJm6mSD5al0gqVHZSFDvUZOeFJZf
+	 qCWsc1zoenAO4c0/PLX8mxobC+cKnQXg54OqbphA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/511] wifi: nl80211/cfg80211: add forgotten nla_policy for BSS color attribute
-Date: Sun, 17 Sep 2023 21:09:00 +0200
-Message-ID: <20230917191116.585562351@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.1 179/219] perf test shell stat_bpf_counters: Fix test on Intel
+Date: Sun, 17 Sep 2023 21:15:06 +0200
+Message-ID: <20230917191047.429834924@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,47 +42,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 218d690c49b7e9c94ad0d317adbdd4af846ea0dc ]
+commit 68ca249c964f520af7f8763e22f12bd26b57b870 upstream.
 
-The previous commit dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to
-NDP ranging parameters") adds a parameter for NDP ranging by introducing
-a new attribute type named NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR.
+As of now, bpf counters (bperf) don't support event groups.  But the
+default perf stat includes topdown metrics if supported (on recent Intel
+machines) which require groups.  That makes perf stat exiting.
 
-However, the author forgot to also describe the nla_policy at
-nl80211_pmsr_ftm_req_attr_policy (net/wireless/nl80211.c). Just
-complement it to avoid malformed attribute that causes out-of-attribute
-access.
+  $ sudo perf stat --bpf-counter true
+  bpf managed perf events do not yet support groups.
 
-Fixes: dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to NDP ranging parameters")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230809033151.768910-1-linma@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Actually the test explicitly uses cycles event only, but it missed to
+pass the option when it checks the availability of the command.
+
+Fixes: 2c0cb9f56020d2ea ("perf test: Add a shell test for 'perf stat --bpf-counters' new option")
+Reviewed-by: Song Liu <song@kernel.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: bpf@vger.kernel.org
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230825164152.165610-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/tests/shell/stat_bpf_counters.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 1b91a9c208969..ed3ec7e320ced 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -314,6 +314,7 @@ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
- 	[NL80211_PMSR_FTM_REQ_ATTR_TRIGGER_BASED] = { .type = NLA_FLAG },
- 	[NL80211_PMSR_FTM_REQ_ATTR_NON_TRIGGER_BASED] = { .type = NLA_FLAG },
- 	[NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK] = { .type = NLA_FLAG },
-+	[NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR] = { .type = NLA_U8 },
- };
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -22,10 +22,10 @@ compare_number()
+ }
  
- static const struct nla_policy
--- 
-2.40.1
-
+ # skip if --bpf-counters is not supported
+-if ! perf stat --bpf-counters true > /dev/null 2>&1; then
++if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
+ 	if [ "$1" = "-v" ]; then
+ 		echo "Skipping: --bpf-counters not supported"
+-		perf --no-pager stat --bpf-counters true || true
++		perf --no-pager stat -e cycles --bpf-counters true || true
+ 	fi
+ 	exit 2
+ fi
 
 
