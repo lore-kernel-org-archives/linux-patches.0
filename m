@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F097461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03226C433C8;
-	Sun, 17 Sep 2023 20:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6875E7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCA0C433C7;
+	Sun, 17 Sep 2023 20:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981309;
-	bh=8a4Vb5Pdwl+lcu15+tfbl0uwChhdvIxGe0P2JaKCVis=;
+	s=korg; t=1694981313;
+	bh=K8KrHRdsxFwL4pfgrjiSryfFCQfpWURuXwAiL6cb2aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxMn6WEXgvsFr0TpR0+wUkjmMTBG8TmwLrkqLLBJVWRpazS1dJ6Nu3ZxAQbni3pk6
-	 vm9FECsfJ9mbcSHD/rxrxdlF5jHx6+Q3Pfs+Ei/Av2gaecqfJ/mfXl6YpXP5mp2E30
-	 DL4yQNNmjVCUSWbaOfpLz9boI3F6ZMoK2QT93u3Q=
+	b=ti5kUqVU27KRpqfTj1DQ6ujza7GOjVUFd10IFEH7bLIm2IXXQQBvVHEnnYHcjNZq3
+	 Q95+6cDnaUZbl4hVkzkBl+e+VmHXwanzYCrQ1Dvr9c3B1yLD1Wskv+cHeoyoz1i5HV
+	 Imt2kFI5Aw2J5Lz8dIaAWj4OLoX11TlKhgbo9sps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	dmaengine@vger.kernel.org,
+	Eric Dumazet <edumazet@google.com>,
+	Bailey Forrest <bcf@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Catherine Sullivan <csully@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/511] idmaengine: make FSL_EDMA and INTEL_IDMA64 depends on HAS_IOMEM
-Date: Sun, 17 Sep 2023 21:07:43 +0200
-Message-ID: <20230917191114.723862250@linuxfoundation.org>
+Subject: [PATCH 6.1 103/219] gve: fix frag_list chaining
+Date: Sun, 17 Sep 2023 21:13:50 +0200
+Message-ID: <20230917191044.718469345@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,60 +40,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b1e213a9e31c20206f111ec664afcf31cbfe0dbb ]
+[ Upstream commit 817c7cd2043a83a3d8147f40eea1505ac7300b62 ]
 
-On s390 systems (aka mainframes), it has classic channel devices for
-networking and permanent storage that are currently even more common
-than PCI devices. Hence it could have a fully functional s390 kernel
-with CONFIG_PCI=n, then the relevant iomem mapping functions
-[including ioremap(), devm_ioremap(), etc.] are not available.
+gve_rx_append_frags() is able to build skbs chained with frag_list,
+like GRO engine.
 
-Here let FSL_EDMA and INTEL_IDMA64 depend on HAS_IOMEM so that it
-won't be built to cause below compiling error if PCI is unset.
+Problem is that shinfo->frag_list should only be used
+for the head of the chain.
 
---------
-ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
-ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
---------
+All other links should use skb->next pointer.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-Link: https://lore.kernel.org/r/20230707135852.24292-2-bhe@redhat.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Otherwise, built skbs are not valid and can cause crashes.
+
+Equivalent code in GRO (skb_gro_receive()) is:
+
+    if (NAPI_GRO_CB(p)->last == p)
+        skb_shinfo(p)->frag_list = skb;
+    else
+        NAPI_GRO_CB(p)->last->next = skb;
+    NAPI_GRO_CB(p)->last = skb;
+
+Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Bailey Forrest <bcf@google.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Catherine Sullivan <csully@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 95344ae49e532..e1beddcc8c84a 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -202,6 +202,7 @@ config FSL_DMA
- config FSL_EDMA
- 	tristate "Freescale eDMA engine support"
- 	depends on OF
-+	depends on HAS_IOMEM
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
- 	help
-@@ -271,6 +272,7 @@ config IMX_SDMA
+diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+index 2e6461b0ea8bc..a9409e3721ad7 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -492,7 +492,10 @@ static int gve_rx_append_frags(struct napi_struct *napi,
+ 		if (!skb)
+ 			return -1;
  
- config INTEL_IDMA64
- 	tristate "Intel integrated DMA 64-bit support"
-+	depends on HAS_IOMEM
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
- 	help
+-		skb_shinfo(rx->ctx.skb_tail)->frag_list = skb;
++		if (rx->ctx.skb_tail == rx->ctx.skb_head)
++			skb_shinfo(rx->ctx.skb_head)->frag_list = skb;
++		else
++			rx->ctx.skb_tail->next = skb;
+ 		rx->ctx.skb_tail = skb;
+ 		num_frags = 0;
+ 	}
 -- 
 2.40.1
 
