@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BF86FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61967C433C8;
-	Sun, 17 Sep 2023 20:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEE86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AE8C433C7;
+	Sun, 17 Sep 2023 20:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981753;
-	bh=s7gxMNX2ynG5mnYYerhiYy9FfsGxKtw1o8WFz19vjaM=;
+	s=korg; t=1694981757;
+	bh=yN79GbWP/AapVGaTZptXUkikOtxk6ZmrVGCYy9ZI3N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEdEBJDQ4e+qQ99i6gpYmdNwJ5NgfKUDhWbx9k1i8YjZGU9est5+wGfEXHMYVGJmS
-	 PH+azVBr4rbwUexBjGc/Z35Pb+kFa5dsz/CnyNeylodUbVo+41kJbb5SnThUfWuHMr
-	 qvNNimFWU+tDGYlMz4FEccjsGXSBaTnt9RxO3h5E=
+	b=VNrSdXEkWRghdt9jYNERu5Ej0Ql8VIQM1lNSN3yyMXkD7F3fUTOCclDTFci0WQxII
+	 889qTRtCnFqm6OjjTxjN3SxwFtAVb9w5vVT3eZlA2LRZ1Xdc2EbWr9vawg6lzgQjw+
+	 bH9b3lWURU6pS9P2L5KBTFYXxSrMWcJBUH71bZXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 167/219] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
-Date: Sun, 17 Sep 2023 21:14:54 +0200
-Message-ID: <20230917191047.060833298@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 102/511] ice: ice_aq_check_events: fix off-by-one check when filling buffer
+Date: Sun, 17 Sep 2023 21:08:49 +0200
+Message-ID: <20230917191116.328013301@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,159 +39,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b upstream.
+[ Upstream commit e1e8a142c43336e3d25bfa1cb3a4ae7d00875c48 ]
 
-v7.2 controller has different ECC level field size and shift in the acc
-control register than its predecessor and successor controller. It needs
-to be set specifically.
+Allow task's event buffer to be filled also in the case that it's size
+is exactly the size of the message.
 
-Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d69ea414c9b4 ("ice: implement device flash update via devlink")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |   74 +++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 33 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -272,6 +272,7 @@ struct brcmnand_controller {
- 	const unsigned int	*page_sizes;
- 	unsigned int		page_size_shift;
- 	unsigned int		max_oob;
-+	u32			ecc_level_shift;
- 	u32			features;
- 
- 	/* for low-power standby/resume only */
-@@ -596,6 +597,34 @@ enum {
- 	INTFC_CTLR_READY		= BIT(31),
- };
- 
-+/***********************************************************************
-+ * NAND ACC CONTROL bitfield
-+ *
-+ * Some bits have remained constant throughout hardware revision, while
-+ * others have shifted around.
-+ ***********************************************************************/
-+
-+/* Constant for all versions (where supported) */
-+enum {
-+	/* See BRCMNAND_HAS_CACHE_MODE */
-+	ACC_CONTROL_CACHE_MODE				= BIT(22),
-+
-+	/* See BRCMNAND_HAS_PREFETCH */
-+	ACC_CONTROL_PREFETCH				= BIT(23),
-+
-+	ACC_CONTROL_PAGE_HIT				= BIT(24),
-+	ACC_CONTROL_WR_PREEMPT				= BIT(25),
-+	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
-+	ACC_CONTROL_RD_ERASED				= BIT(27),
-+	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
-+	ACC_CONTROL_WR_ECC				= BIT(30),
-+	ACC_CONTROL_RD_ECC				= BIT(31),
-+};
-+
-+#define	ACC_CONTROL_ECC_SHIFT			16
-+/* Only for v7.2 */
-+#define	ACC_CONTROL_ECC_EXT_SHIFT		13
-+
- static inline bool brcmnand_non_mmio_ops(struct brcmnand_controller *ctrl)
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index a18fa054b4fae..deba18cdc5ef7 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -1177,6 +1177,7 @@ int ice_aq_wait_for_event(struct ice_pf *pf, u16 opcode, unsigned long timeout,
+ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 				struct ice_rq_event_info *event)
  {
- #if IS_ENABLED(CONFIG_MTD_NAND_BRCMNAND_BCMA)
-@@ -737,6 +766,12 @@ static int brcmnand_revision_init(struct
- 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
- 		ctrl->features |= BRCMNAND_HAS_WP;
++	struct ice_rq_event_info *task_ev;
+ 	struct ice_aq_task *task;
+ 	bool found = false;
  
-+	/* v7.2 has different ecc level shift in the acc register */
-+	if (ctrl->nand_version == 0x0702)
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
-+	else
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
-+
- 	return 0;
- }
+@@ -1185,15 +1186,15 @@ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 		if (task->state || task->opcode != opcode)
+ 			continue;
  
-@@ -931,30 +966,6 @@ static inline int brcmnand_cmd_shift(str
- 	return 0;
- }
+-		memcpy(&task->event->desc, &event->desc, sizeof(event->desc));
+-		task->event->msg_len = event->msg_len;
++		task_ev = task->event;
++		memcpy(&task_ev->desc, &event->desc, sizeof(event->desc));
++		task_ev->msg_len = event->msg_len;
  
--/***********************************************************************
-- * NAND ACC CONTROL bitfield
-- *
-- * Some bits have remained constant throughout hardware revision, while
-- * others have shifted around.
-- ***********************************************************************/
--
--/* Constant for all versions (where supported) */
--enum {
--	/* See BRCMNAND_HAS_CACHE_MODE */
--	ACC_CONTROL_CACHE_MODE				= BIT(22),
--
--	/* See BRCMNAND_HAS_PREFETCH */
--	ACC_CONTROL_PREFETCH				= BIT(23),
--
--	ACC_CONTROL_PAGE_HIT				= BIT(24),
--	ACC_CONTROL_WR_PREEMPT				= BIT(25),
--	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
--	ACC_CONTROL_RD_ERASED				= BIT(27),
--	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
--	ACC_CONTROL_WR_ECC				= BIT(30),
--	ACC_CONTROL_RD_ECC				= BIT(31),
--};
--
- static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
- {
- 	if (ctrl->nand_version == 0x0702)
-@@ -967,18 +978,15 @@ static inline u32 brcmnand_spare_area_ma
- 		return GENMASK(4, 0);
- }
+ 		/* Only copy the data buffer if a destination was set */
+-		if (task->event->msg_buf &&
+-		    task->event->buf_len > event->buf_len) {
+-			memcpy(task->event->msg_buf, event->msg_buf,
++		if (task_ev->msg_buf && task_ev->buf_len >= event->buf_len) {
++			memcpy(task_ev->msg_buf, event->msg_buf,
+ 			       event->buf_len);
+-			task->event->buf_len = event->buf_len;
++			task_ev->buf_len = event->buf_len;
+ 		}
  
--#define NAND_ACC_CONTROL_ECC_SHIFT	16
--#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
--
- static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
- {
- 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
- 
--	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
-+	mask <<= ACC_CONTROL_ECC_SHIFT;
- 
- 	/* v7.2 includes additional ECC levels */
--	if (ctrl->nand_version >= 0x0702)
--		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
-+	if (ctrl->nand_version == 0x0702)
-+		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
- 
- 	return mask;
- }
-@@ -992,8 +1000,8 @@ static void brcmnand_set_ecc_enabled(str
- 
- 	if (en) {
- 		acc_control |= ecc_flags; /* enable RD/WR ECC */
--		acc_control |= host->hwcfg.ecc_level
--			       << NAND_ACC_CONTROL_ECC_SHIFT;
-+		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-+		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
- 	} else {
- 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
- 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-@@ -2593,7 +2601,7 @@ static int brcmnand_set_cfg(struct brcmn
- 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
- 	tmp &= ~brcmnand_spare_area_mask(ctrl);
- 	if (ctrl->nand_version >= 0x0302) {
--		tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
-+		tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
- 		tmp |= cfg->spare_area_size;
- 	}
- 	nand_writereg(ctrl, acc_control_offs, tmp);
+ 		task->state = ICE_AQ_TASK_COMPLETE;
+-- 
+2.40.1
+
 
 
