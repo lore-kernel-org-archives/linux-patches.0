@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8A1746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B531C433C7;
-	Sun, 17 Sep 2023 20:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28278746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54489C433C9;
+	Sun, 17 Sep 2023 20:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982973;
-	bh=O1ySbr520dKXjw0BnS0YM7v2k9EauXIaSobWuvyuBtI=;
+	s=korg; t=1694982977;
+	bh=TnoWbkCoHTnrv3zurFweO+Q//jb2J0gbQXHxJBn8mU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5D/d0NCM6qmJiiOmFdmivfTVJn5CwuVaXLQeyUpDVQCvCBfMr0aHZRwg5dy2zOfJ
-	 I9UVIDx+vxszAv7MdzkQiyXVzcITIAxcQEz0Y6DxbVCSdzv7j1V2scA6iTcXjHZeCO
-	 uSHaotddd+ZbBsjyeNpbsRZkzxy4yCue++w5Pus8=
+	b=V8YOrvrKfbOFDYXNDYSrYc0TNE477qGiCk1+7sE0SkCi7w8lFo6lU7xPkJCe9QWk2
+	 PqK6HKXPbyclAbs+KAe6r+VgooRNkErmc62R9ZDFThbB5GzP80PESjBhqIpQ7wo3oi
+	 L8P2Bm00FxLRrHkHH0XBqwOEE1w+2Y5a2EuVEHgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5.15 406/511] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date: Sun, 17 Sep 2023 21:13:53 +0200
-Message-ID: <20230917191123.591781800@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 407/511] kbuild: do not run depmod for make modules_sign
+Date: Sun, 17 Sep 2023 21:13:54 +0200
+Message-ID: <20230917191123.616355821@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,47 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit cabce92dd805945a090dc6fc73b001bb35ed083a upstream.
+[ Upstream commit 2429742e506a2b5939a62c629c4a46d91df0ada8 ]
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
+Commit 961ab4a3cd66 ("kbuild: merge scripts/Makefile.modsign to
+scripts/Makefile.modinst") started to run depmod at the end of
+'make modules_sign'.
 
-Cc: <stable@vger.kernel.org>
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Move the depmod rule to scripts/Makefile.modinst and run it only when
+$(modules_sign_only) is empty.
+
+Fixes: 961ab4a3cd66 ("kbuild: merge scripts/Makefile.modsign to scripts/Makefile.modinst")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pm.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -466,6 +466,10 @@ static void mhi_pm_disable_transition(st
+diff --git a/Makefile b/Makefile
+index 1f537b7286b5f..52baf426dcea5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1835,7 +1835,9 @@ quiet_cmd_depmod = DEPMOD  $(MODLIB)
  
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ modules_install:
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modinst
++ifndef modules_sign_only
+ 	$(call cmd,depmod)
++endif
  
-@@ -483,6 +487,7 @@ static void mhi_pm_disable_transition(st
- 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
- 	}
+ else # CONFIG_MODULES
  
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
+-- 
+2.40.1
+
 
 
