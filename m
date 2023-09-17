@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BEC6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59741C433C7;
-	Sun, 17 Sep 2023 19:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3D36FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B70C433C8;
+	Sun, 17 Sep 2023 19:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980384;
-	bh=8dcxKrxmmbiPZX6GyIouZLs3qeGhYNu0Dw5B0hQX2B4=;
+	s=korg; t=1694980388;
+	bh=S8KM1Z+IhlTMHvCzMBsp73/plPCPlfIV44m8XavTalw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lUNU7XbjGYe6mh/8LHwoNP0WXlQ1sRQCj1wuTSio2fi+dh8srtaP2G0wrUfc3VeNN
-	 XdhBbAAGqNn/oQZmccNoupC73U7t8pHsl7jwzpz7QHkkPp2f5OGkQ0em6xMS1XZ9FF
-	 vGtvDqh0AP+NAlnwp8ViVg6Zajy0tGLcxzLP/I7c=
+	b=IWQ1dD0v8YGVAA0qyQeF7U/SpQ7f7jDg2rtmKBq69IRC6G4rPEXP/HoGsCRW+nYgv
+	 6l7ZsmSZ8gFeJAamqkajZq0jd+5IAcrLwbtsPhb9GdJwSM0hYxIBoTTpzREvEtF6zJ
+	 l81xWSjL/OAkVG/Z1d6z7GuXebHCJM5sxJ+ZqQaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent CARLI <fcarli@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Yoann Congal <yoann.congal@smile.fr>
-Subject: [PATCH 6.5 177/285] watchdog: advantech_ec_wdt: fix Kconfig dependencies
-Date: Sun, 17 Sep 2023 21:12:57 +0200
-Message-ID: <20230917191057.754704578@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.5 178/285] drm/amd/display: Temporary Disable MST DP Colorspace Property
+Date: Sun, 17 Sep 2023 21:12:58 +0200
+Message-ID: <20230917191057.789210819@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,35 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent CARLI <fcarli@gmail.com>
+From: Fangzhi Zuo <jerry.zuo@amd.com>
 
-commit 6eb28a38f6478a650c7e76b2d6910669615d8a62 upstream.
+commit 69a959610229ec31b534eaa5f6ec75965f321bed upstream.
 
-This driver uses the WATCHDOG_CORE framework and ISA_BUS_API.
-This commit has these dependencies correctly selected.
+Create MST colorsapce property for downstream device would trigger
+warning message "RIP: 0010:drm_mode_object_add+0x8e/0xa0 [drm]"
 
-Signed-off-by: Florent CARLI <fcarli@gmail.com>
-Co-authored-by: Yoann Congal <yoann.congal@smile.fr>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230721081347.52069-1-fcarli@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: Yoann Congal <yoann.congal@smile.fr>
+After driver is loaded and drm device is registered, create
+dp colorspace property triggers warning storm at
+WARN_ON(!dev->driver->load && dev->registered && !obj_free_cb);
+
+Temporary disabling MST dp colorspace property for now.
+
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/watchdog/Kconfig
-+++ b/drivers/watchdog/Kconfig
-@@ -1075,6 +1075,8 @@ config ADVANTECH_WDT
- config ADVANTECH_EC_WDT
- 	tristate "Advantech Embedded Controller Watchdog Timer"
- 	depends on X86
-+	select ISA_BUS_API
-+	select WATCHDOG_CORE
- 	help
- 		This driver supports Advantech products with ITE based Embedded Controller.
- 		It does not support Advantech products with other ECs or without EC.
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7295,7 +7295,7 @@ void amdgpu_dm_connector_init_helper(str
+ 	if (connector_type == DRM_MODE_CONNECTOR_HDMIA) {
+ 		if (!drm_mode_create_hdmi_colorspace_property(&aconnector->base, supported_colorspaces))
+ 			drm_connector_attach_colorspace_property(&aconnector->base);
+-	} else if (connector_type == DRM_MODE_CONNECTOR_DisplayPort ||
++	} else if ((connector_type == DRM_MODE_CONNECTOR_DisplayPort && !aconnector->mst_root) ||
+ 		   connector_type == DRM_MODE_CONNECTOR_eDP) {
+ 		if (!drm_mode_create_dp_colorspace_property(&aconnector->base, supported_colorspaces))
+ 			drm_connector_attach_colorspace_property(&aconnector->base);
 
 
