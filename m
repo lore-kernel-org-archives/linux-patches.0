@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B536FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3796C433C9;
-	Sun, 17 Sep 2023 20:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBFF6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24353C433C8;
+	Sun, 17 Sep 2023 20:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982037;
-	bh=/t/zzMWm37XwKJX+lWeafkzNlgJJIl/YYC5G8DVIWf0=;
+	s=korg; t=1694982040;
+	bh=l7uAbJLNv5VMvZpJIxuMKIvRG0NyjozB0cFeYKLFcmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3TGddrZlsqZ6pqLGpKU3LgtXBcO+tYG9r1vnMlswRNpr9LvGArlgFlpXfqntWW9y
-	 uYhUbnQ+uLoK9q3v6yTymj8R5DorGawJPl/viFfn7w6ZVELkzk/iF+9H0IuPPj9uPi
-	 2AeGc6SrbApf9g4NaV9dsi44hvrbw/gM2DPNQ/MM=
+	b=ja1OMQfNcSrEQu06BDVz4buBw8mwEeentt2xpLRS+uRv6dwuFRvex04odlpszSovc
+	 QAirO6pynFdLAX3ekW2lpHupggmLsrpxUVW9d7GKqMKo065uc1BmAGUq7U0wFtGtEV
+	 2GcNpwePZe79w2Y8iU0bgzxcwdVUkw7WhL4x3vKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Harini Katakam <harini.katakam@xilinx.com>,
+	Michal Simek <michal.simek@xilinx.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 142/511] ARM: dts: BCM53573: Use updated "spi-gpio" binding properties
-Date: Sun, 17 Sep 2023 21:09:29 +0200
-Message-ID: <20230917191117.288327382@linuxfoundation.org>
+Subject: [PATCH 6.1 209/219] net: macb: Enable PTP unicast
+Date: Sun, 17 Sep 2023 21:15:36 +0200
+Message-ID: <20230917191048.488595561@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -34,56 +36,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Harini Katakam <harini.katakam@xilinx.com>
 
-[ Upstream commit 2c0fd6b3d0778ceab40205315ccef74568490f17 ]
+[ Upstream commit ee4e92c26c60b7344b7261035683a37da5a6119b ]
 
-Switch away from deprecated properties.
+Enable transmission and reception of PTP unicast packets by
+updating PTP unicast config bit and setting current HW mac
+address as allowed address in PTP unicast filter registers.
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-sck: False schema does not allow [[3, 21, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-miso: False schema does not allow [[3, 22, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-mosi: False schema does not allow [[3, 23, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: 'sck-gpios' is a required property
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: Unevaluated properties are not allowed ('gpio-miso', 'gpio-mosi', 'gpio-sck' were unexpected)
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-4-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Harini Katakam <harini.katakam@xilinx.com>
+Signed-off-by: Michal Simek <michal.simek@xilinx.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 403f0e771457 ("net: macb: fix sleep inside spinlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm947189acdbmr.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb.h      |  4 ++++
+ drivers/net/ethernet/cadence/macb_main.c | 13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm947189acdbmr.dts b/arch/arm/boot/dts/bcm947189acdbmr.dts
-index b0b8c774a37f9..1f0be30e54435 100644
---- a/arch/arm/boot/dts/bcm947189acdbmr.dts
-+++ b/arch/arm/boot/dts/bcm947189acdbmr.dts
-@@ -60,9 +60,9 @@ wps {
- 	spi {
- 		compatible = "spi-gpio";
- 		num-chipselects = <1>;
--		gpio-sck = <&chipcommon 21 0>;
--		gpio-miso = <&chipcommon 22 0>;
--		gpio-mosi = <&chipcommon 23 0>;
-+		sck-gpios = <&chipcommon 21 0>;
-+		miso-gpios = <&chipcommon 22 0>;
-+		mosi-gpios = <&chipcommon 23 0>;
- 		cs-gpios = <&chipcommon 24 0>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
+index 9c410f93a1039..1aa578c1ca4ad 100644
+--- a/drivers/net/ethernet/cadence/macb.h
++++ b/drivers/net/ethernet/cadence/macb.h
+@@ -95,6 +95,8 @@
+ #define GEM_SA4B		0x00A0 /* Specific4 Bottom */
+ #define GEM_SA4T		0x00A4 /* Specific4 Top */
+ #define GEM_WOL			0x00b8 /* Wake on LAN */
++#define GEM_RXPTPUNI		0x00D4 /* PTP RX Unicast address */
++#define GEM_TXPTPUNI		0x00D8 /* PTP TX Unicast address */
+ #define GEM_EFTSH		0x00e8 /* PTP Event Frame Transmitted Seconds Register 47:32 */
+ #define GEM_EFRSH		0x00ec /* PTP Event Frame Received Seconds Register 47:32 */
+ #define GEM_PEFTSH		0x00f0 /* PTP Peer Event Frame Transmitted Seconds Register 47:32 */
+@@ -245,6 +247,8 @@
+ #define MACB_TZQ_OFFSET		12 /* Transmit zero quantum pause frame */
+ #define MACB_TZQ_SIZE		1
+ #define MACB_SRTSM_OFFSET	15 /* Store Receive Timestamp to Memory */
++#define MACB_PTPUNI_OFFSET	20 /* PTP Unicast packet enable */
++#define MACB_PTPUNI_SIZE	1
+ #define MACB_OSSMODE_OFFSET	24 /* Enable One Step Synchro Mode */
+ #define MACB_OSSMODE_SIZE	1
+ #define MACB_MIIONRGMII_OFFSET	28 /* MII Usage on RGMII Interface */
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 5fb991835078a..9470e895591e5 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -288,6 +288,11 @@ static void macb_set_hwaddr(struct macb *bp)
+ 	top = cpu_to_le16(*((u16 *)(bp->dev->dev_addr + 4)));
+ 	macb_or_gem_writel(bp, SA1T, top);
+ 
++	if (gem_has_ptp(bp)) {
++		gem_writel(bp, RXPTPUNI, bottom);
++		gem_writel(bp, TXPTPUNI, bottom);
++	}
++
+ 	/* Clear unused address register sets */
+ 	macb_or_gem_writel(bp, SA2B, 0);
+ 	macb_or_gem_writel(bp, SA2T, 0);
+@@ -721,8 +726,12 @@ static void macb_mac_link_up(struct phylink_config *config,
+ 
+ 	spin_unlock_irqrestore(&bp->lock, flags);
+ 
+-	/* Enable Rx and Tx */
+-	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(RE) | MACB_BIT(TE));
++	/* Enable Rx and Tx; Enable PTP unicast */
++	ctrl = macb_readl(bp, NCR);
++	if (gem_has_ptp(bp))
++		ctrl |= MACB_BIT(PTPUNI);
++
++	macb_writel(bp, NCR, ctrl | MACB_BIT(RE) | MACB_BIT(TE));
+ 
+ 	netif_tx_wake_all_queues(ndev);
+ }
 -- 
 2.40.1
 
