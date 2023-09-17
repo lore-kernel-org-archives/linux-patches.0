@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE906FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AA9C433C8;
-	Sun, 17 Sep 2023 19:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D036FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CD2C433C8;
+	Sun, 17 Sep 2023 19:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978222;
-	bh=ATIWhKdrp0ZNpaQQ4JXea2gH3x06MpYCiLVB37gBhqQ=;
+	s=korg; t=1694978225;
+	bh=diILsxcSAqwylo+1LbUu3UjTp6nKKz+//uK2NeimGJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxGtYDj0S8poc0KHB7UzFmxFBftvUXp09ZUECUeT+CAM0vCrQVYa4UhbPd0rZq2iO
-	 BSfIwLQ5FoS8fNnILcdjdgw9g9tBEjnS3G1tvuh9Oa6sR0E7o481dNwO40Q3yQQK+k
-	 WN2/5UeN0aI5Dx5v2pLOZnwk+asXc9B6lj5X/vds=
+	b=RqlSadDSAWYFNieaoh9MjK1bF/2CRkedtvxju7LodtDSBTN9WwAvBNju88YCgARxm
+	 9uTrwXB2dEALOP/IfmXYmlvCk1IMegDe4we8nFmNKp8IN7kc6XiivNACM3ZDu5/nmx
+	 p3xvtMlRQbZ4lm2aCBOtZYDOJWeF7jcCrpPd76gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>
-Subject: [PATCH 5.10 017/406] serial: sc16is7xx: fix bug when first setting GPIO direction
-Date: Sun, 17 Sep 2023 21:07:51 +0200
-Message-ID: <20230917191101.600336050@linuxfoundation.org>
+	Wang Ming <machel@vivo.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 5.10 018/406] firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
+Date: Sun, 17 Sep 2023 21:07:52 +0200
+Message-ID: <20230917191101.629298840@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,59 +39,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Wang Ming <machel@vivo.com>
 
-commit 9baeea723c0fb9c3ba9a336369f758ed9bc6831d upstream.
+commit dd218433f2b635d97e8fda3eed047151fd528ce4 upstream.
 
-When configuring a pin as an output pin with a value of logic 0, we
-end up as having a value of logic 1 on the output pin. Setting a
-logic 0 a second time (or more) after that will correctly output a
-logic 0 on the output pin.
+The devm_memremap() function returns error pointers.
+It never returns NULL. Fix the check.
 
-By default, all GPIO pins are configured as inputs. When we enter
-sc16is7xx_gpio_direction_output() for the first time, we first set the
-desired value in IOSTATE, and then we configure the pin as an output.
-The datasheet states that writing to IOSTATE register will trigger a
-transfer of the value to the I/O pin configured as output, so if the
-pin is configured as an input, nothing will be transferred.
-
-Therefore, set the direction first in IODIR, and then set the desired
-value in IOSTATE.
-
-This is what is done in NXP application note AN10587.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Link: https://lore.kernel.org/r/20230807214556.540627-6-hugo@hugovil.com
+Signed-off-by: Wang Ming <machel@vivo.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://lore.kernel.org/r/20230727193750.983795-1-dinguyen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/firmware/stratix10-svc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1170,9 +1170,18 @@ static int sc16is7xx_gpio_direction_outp
- 		state |= BIT(offset);
- 	else
- 		state &= ~BIT(offset);
--	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
-+
-+	/*
-+	 * If we write IOSTATE first, and then IODIR, the output value is not
-+	 * transferred to the corresponding I/O pin.
-+	 * The datasheet states that each register bit will be transferred to
-+	 * the corresponding I/O pin programmed as output when writing to
-+	 * IOSTATE. Therefore, configure direction first with IODIR, and then
-+	 * set value after with IOSTATE.
-+	 */
- 	sc16is7xx_port_update(port, SC16IS7XX_IODIR_REG, BIT(offset),
- 			      BIT(offset));
-+	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
- 
- 	return 0;
- }
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -623,7 +623,7 @@ svc_create_memory_pool(struct platform_d
+ 	paddr = begin;
+ 	size = end - begin;
+ 	va = devm_memremap(dev, paddr, size, MEMREMAP_WC);
+-	if (!va) {
++	if (IS_ERR(va)) {
+ 		dev_err(dev, "fail to remap shared memory\n");
+ 		return ERR_PTR(-EINVAL);
+ 	}
 
 
