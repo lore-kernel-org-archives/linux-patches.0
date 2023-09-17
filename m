@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4506FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B79C433C8;
-	Sun, 17 Sep 2023 20:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3CA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB14CC433C7;
+	Sun, 17 Sep 2023 20:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981777;
-	bh=Zoc8TJNlVvxx/NwrtMaTfteqwQEhU76p51u9o9G57tg=;
+	s=korg; t=1694981781;
+	bh=L4uBNYbkWTXBQckBCU47VK8f/vLEStjdtjmtZrXrsyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkvIEoJr0wB7yMqXCTHxgxL7xlziwwXv/HHMDb5ChSVuuD6ihjYIDrmKfu4E0I4gP
-	 6VbATHlqh3zzc2KiOkdGqzjafXdg0lztCHXR8c+7cyWDYhC9Vh2hSD2Em0KueguuF/
-	 GZ3etgsodl6HHW4YR/tfpjiVc7s/LovzhYeGbY90=
+	b=hvf5YSreVWGZugR4wcS7PiLmDohrqPN/8zaaRhLPJnQUjPkzt6Kke1sO/vn/rjXiu
+	 jtB03GNxB5Z0Jf8z3GHe6S94zoLHvS4dDgSooHme9ybsZjLebkKEQ7zssjq6o4Tiq2
+	 Iwv93fDBGVh3xckk+zS3r3U8A+iqNcc0z/T2Q9rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Griege <jgriege@cloudflare.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Stanislav Fomichev <sdf@google.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/511] lwt: Fix return values of BPF xmit ops
-Date: Sun, 17 Sep 2023 21:08:52 +0200
-Message-ID: <20230917191116.398619209@linuxfoundation.org>
+	Wu Zongyo <wuzongyo@mail.ustc.edu.cn>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 171/219] KVM: SVM: Dont inject #UD if KVM attempts to skip SEV guest insn
+Date: Sun, 17 Sep 2023 21:14:58 +0200
+Message-ID: <20230917191047.189175989@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,67 +36,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 29b22badb7a84b783e3a4fffca16f7768fb31205 ]
+commit cb49631ad111570f1bad37702c11c2ae07fa2e3c upstream.
 
-BPF encap ops can return different types of positive values, such like
-NET_RX_DROP, NET_XMIT_CN, NETDEV_TX_BUSY, and so on, from function
-skb_do_redirect and bpf_lwt_xmit_reroute. At the xmit hook, such return
-values would be treated implicitly as LWTUNNEL_XMIT_CONTINUE in
-ip(6)_finish_output2. When this happens, skbs that have been freed would
-continue to the neighbor subsystem, causing use-after-free bug and
-kernel crashes.
+Don't inject a #UD if KVM attempts to "emulate" to skip an instruction
+for an SEV guest, and instead resume the guest and hope that it can make
+forward progress.  When commit 04c40f344def ("KVM: SVM: Inject #UD on
+attempted emulation for SEV guest w/o insn buffer") added the completely
+arbitrary #UD behavior, there were no known scenarios where a well-behaved
+guest would induce a VM-Exit that triggered emulation, i.e. it was thought
+that injecting #UD would be helpful.
 
-To fix the incorrect behavior, skb_do_redirect return values can be
-simply discarded, the same as tc-egress behavior. On the other hand,
-bpf_lwt_xmit_reroute returns useful errors to local senders, e.g. PMTU
-information. Thus convert its return values to avoid the conflict with
-LWTUNNEL_XMIT_CONTINUE.
+However, now that KVM (correctly) attempts to re-inject INT3/INTO, e.g. if
+a #NPF is encountered when attempting to deliver the INT3/INTO, an SEV
+guest can trigger emulation without a buffer, through no fault of its own.
+Resuming the guest and retrying the INT3/INTO is architecturally wrong,
+e.g. the vCPU will incorrectly re-hit code #DBs, but for SEV guests there
+is literally no other option that has a chance of making forward progress.
 
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Reported-by: Jordan Griege <jgriege@cloudflare.com>
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Suggested-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/0d2b878186cfe215fec6b45769c1cd0591d3628d.1692326837.git.yan@cloudflare.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Drop the #UD injection for all "skip" emulation, not just those related to
+INT3/INTO, even though that means that the guest will likely end up in an
+infinite loop instead of getting a #UD (the vCPU may also crash, e.g. if
+KVM emulated everything about an instruction except for advancing RIP).
+There's no evidence that suggests that an unexpected #UD is actually
+better than hanging the vCPU, e.g. a soft-hung vCPU can still respond to
+IRQs and NMIs to generate a backtrace.
+
+Reported-by: Wu Zongyo <wuzongyo@mail.ustc.edu.cn>
+Closes: https://lore.kernel.org/all/8eb933fd-2cf3-d7a9-32fe-2a1d82eac42a@mail.ustc.edu.cn
+Fixes: 6ef88d6e36c2 ("KVM: SVM: Re-inject INT3/INTO instead of retrying the instruction")
+Cc: stable@vger.kernel.org
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20230825013621.2845700-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/lwt_bpf.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/svm.c |   35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 3fd207fe1284a..f6c327c7badb4 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -59,9 +59,8 @@ static int run_lwt_bpf(struct sk_buff *skb, struct bpf_lwt_prog *lwt,
- 			ret = BPF_OK;
- 		} else {
- 			skb_reset_mac_header(skb);
--			ret = skb_do_redirect(skb);
--			if (ret == 0)
--				ret = BPF_REDIRECT;
-+			skb_do_redirect(skb);
-+			ret = BPF_REDIRECT;
- 		}
- 		break;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -366,6 +366,8 @@ static void svm_set_interrupt_shadow(str
+ 		svm->vmcb->control.int_state |= SVM_INTERRUPT_SHADOW_MASK;
  
-@@ -254,7 +253,7 @@ static int bpf_lwt_xmit_reroute(struct sk_buff *skb)
+ }
++static bool svm_can_emulate_instruction(struct kvm_vcpu *vcpu, int emul_type,
++					void *insn, int insn_len);
  
- 	err = dst_output(dev_net(skb_dst(skb)->dev), skb->sk, skb);
- 	if (unlikely(err))
--		return err;
-+		return net_xmit_errno(err);
+ static int __svm_skip_emulated_instruction(struct kvm_vcpu *vcpu,
+ 					   bool commit_side_effects)
+@@ -386,6 +388,14 @@ static int __svm_skip_emulated_instructi
+ 	}
  
- 	/* ip[6]_finish_output2 understand LWTUNNEL_XMIT_DONE */
- 	return LWTUNNEL_XMIT_DONE;
--- 
-2.40.1
-
+ 	if (!svm->next_rip) {
++		/*
++		 * FIXME: Drop this when kvm_emulate_instruction() does the
++		 * right thing and treats "can't emulate" as outright failure
++		 * for EMULTYPE_SKIP.
++		 */
++		if (!svm_can_emulate_instruction(vcpu, EMULTYPE_SKIP, NULL, 0))
++			return 0;
++
+ 		if (unlikely(!commit_side_effects))
+ 			old_rflags = svm->vmcb->save.rflags;
+ 
+@@ -4592,16 +4602,25 @@ static bool svm_can_emulate_instruction(
+ 	 * and cannot be decrypted by KVM, i.e. KVM would read cyphertext and
+ 	 * decode garbage.
+ 	 *
+-	 * Inject #UD if KVM reached this point without an instruction buffer.
+-	 * In practice, this path should never be hit by a well-behaved guest,
+-	 * e.g. KVM doesn't intercept #UD or #GP for SEV guests, but this path
+-	 * is still theoretically reachable, e.g. via unaccelerated fault-like
+-	 * AVIC access, and needs to be handled by KVM to avoid putting the
+-	 * guest into an infinite loop.   Injecting #UD is somewhat arbitrary,
+-	 * but its the least awful option given lack of insight into the guest.
++	 * If KVM is NOT trying to simply skip an instruction, inject #UD if
++	 * KVM reached this point without an instruction buffer.  In practice,
++	 * this path should never be hit by a well-behaved guest, e.g. KVM
++	 * doesn't intercept #UD or #GP for SEV guests, but this path is still
++	 * theoretically reachable, e.g. via unaccelerated fault-like AVIC
++	 * access, and needs to be handled by KVM to avoid putting the guest
++	 * into an infinite loop.   Injecting #UD is somewhat arbitrary, but
++	 * its the least awful option given lack of insight into the guest.
++	 *
++	 * If KVM is trying to skip an instruction, simply resume the guest.
++	 * If a #NPF occurs while the guest is vectoring an INT3/INTO, then KVM
++	 * will attempt to re-inject the INT3/INTO and skip the instruction.
++	 * In that scenario, retrying the INT3/INTO and hoping the guest will
++	 * make forward progress is the only option that has a chance of
++	 * success (and in practice it will work the vast majority of the time).
+ 	 */
+ 	if (unlikely(!insn)) {
+-		kvm_queue_exception(vcpu, UD_VECTOR);
++		if (!(emul_type & EMULTYPE_SKIP))
++			kvm_queue_exception(vcpu, UD_VECTOR);
+ 		return false;
+ 	}
+ 
 
 
