@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0D06FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF2FC433CB;
-	Sun, 17 Sep 2023 19:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE626FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D711C433CD;
+	Sun, 17 Sep 2023 19:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980333;
-	bh=PNnbXTSh40Sjr7zYsULIH6DayGAijSyehwHYWgM6uZY=;
+	s=korg; t=1694980337;
+	bh=pU0p9780dtn6CnZNE+9uIF67WFRb4UcUtb72quRvovk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsxThMgwx5Y5QuXDYLNMHSwJOs+XORfOmCcmVHeaCXKC56pVkh+sH/MbkyTjM0tYv
-	 UQdAlXiPKaPMDBMiE0pJvgd5HurJTqP5sjH5g7aegeBDXO/YKWaknzxP1Xv9G2yERb
-	 Ptq3y0k2e/Wk/BChXGldDUF0tF2dnZQS01mgDa5Y=
+	b=SRMMYlQKR2pDGdUFbiSqraEq0yKQzxx8KEjCp/9ZEtQtBuMEyrzbsqqtHCr+qf5LT
+	 OnaBwg106+9z7++oQ1UjJKzjCUd6Zo4wjpu/VJNiGh/eTNGcKqXjOU7Wp1B6ORLQoI
+	 TFEMBTaePSozTknR9XfO3vqAZTKRhLcPB7L50go8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 134/285] af_unix: Fix data-races around user->unix_inflight.
-Date: Sun, 17 Sep 2023 21:12:14 +0200
-Message-ID: <20230917191056.299316020@linuxfoundation.org>
+Subject: [PATCH 6.5 161/285] bpf: bpf_sk_storage: Fix the missing uncharge in sk_omem_alloc
+Date: Sun, 17 Sep 2023 21:12:41 +0200
+Message-ID: <20230917191057.241079311@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,103 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
+[ Upstream commit 55d49f750b1cb1f177fb1b00ae02cba4613bcfb7 ]
 
-user->unix_inflight is changed under spin_lock(unix_gc_lock),
-but too_many_unix_fds() reads it locklessly.
+The commit c83597fa5dc6 ("bpf: Refactor some inode/task/sk storage functions
+for reuse"), refactored the bpf_{sk,task,inode}_storage_free() into
+bpf_local_storage_unlink_nolock() which then later renamed to
+bpf_local_storage_destroy(). The commit accidentally passed the
+"bool uncharge_mem = false" argument to bpf_selem_unlink_storage_nolock()
+which then stopped the uncharge from happening to the sk->sk_omem_alloc.
 
-Let's annotate the write/read accesses to user->unix_inflight.
+This missing uncharge only happens when the sk is going away (during
+__sk_destruct).
 
-BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
+This patch fixes it by always passing "uncharge_mem = true". It is a
+noop to the task/inode/cgroup storage because they do not have the
+map_local_storage_(un)charge enabled in the map_ops. A followup patch
+will be done in bpf-next to remove the uncharge_mem argument.
 
-write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
- unix_inflight+0x157/0x180 net/unix/scm.c:66
- unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
- unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
- unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
- unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
- unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
- sock_sendmsg_nosec net/socket.c:725 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:748
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
- __sys_sendmsg+0x94/0x140 net/socket.c:2577
- __do_sys_sendmsg net/socket.c:2586 [inline]
- __se_sys_sendmsg net/socket.c:2584 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+A selftest is added in the next patch.
 
-read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
- too_many_unix_fds net/unix/scm.c:101 [inline]
- unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
- unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
- unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
- unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
- unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
- sock_sendmsg_nosec net/socket.c:725 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:748
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
- __sys_sendmsg+0x94/0x140 net/socket.c:2577
- __do_sys_sendmsg net/socket.c:2586 [inline]
- __se_sys_sendmsg net/socket.c:2584 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-value changed: 0x000000000000000c -> 0x000000000000000d
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c83597fa5dc6 ("bpf: Refactor some inode/task/sk storage functions for reuse")
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230901231129.578493-3-martin.lau@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/scm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/bpf/bpf_local_storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/scm.c b/net/unix/scm.c
-index f9152881d77f6..033e21e5c4df6 100644
---- a/net/unix/scm.c
-+++ b/net/unix/scm.c
-@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
- 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
- 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index 37ad47d52dc55..146824cc96893 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -760,7 +760,7 @@ void bpf_local_storage_destroy(struct bpf_local_storage *local_storage)
+ 		 * of the loop will set the free_cgroup_storage to true.
+ 		 */
+ 		free_storage = bpf_selem_unlink_storage_nolock(
+-			local_storage, selem, false, true);
++			local_storage, selem, true, true);
  	}
--	user->unix_inflight++;
-+	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
- 	spin_unlock(&unix_gc_lock);
- }
+ 	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
  
-@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
- 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
- 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
- 	}
--	user->unix_inflight--;
-+	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
- 	spin_unlock(&unix_gc_lock);
- }
- 
-@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
- {
- 	struct user_struct *user = current_user();
- 
--	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
-+	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
- 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
- 	return false;
- }
 -- 
 2.40.1
 
