@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C306FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CD6C433C9;
-	Sun, 17 Sep 2023 20:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317386FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4833AC433C9;
+	Sun, 17 Sep 2023 20:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981466;
-	bh=l+xwsInZGZpQVJM6Mgue/V9oLsQDhCMg9mm4a+BC4Io=;
+	s=korg; t=1694981469;
+	bh=2vtMenHrl21HECctR9PrNxwE4r+FsnVLBiIzzarv9sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nf3iPuxg/ltj0mgtqcWoMYt/672VVDIgFwPfzfsjhY3t6x3jcs1PIXCGnpfQ4G0Z
-	 F8Xvbkb6aOQZ3fa7K3yGMH1MpMGQtAqxQww7YMrLeUciMbdP4s/g849tHtfxFBgP9O
-	 DKvjE5Jc5l/23nFt4bItEqJvgHDNSEB7N3Aahr8k=
+	b=lcsI9ob/o57PYdTKaySjHHdZQGBPZ1MM0jkA8DrQm+NFXtSGPp8KvDzaspz7+I9C1
+	 3i2Q9fq7V9Kf6/MHhZz7ipruJvqFpgJ1czeGFWXH2D+g/XVJ9PGIkUyGa4HWCv0F+k
+	 7xCpwtX3L+FKUdUTPG+yX1PTDInyDHcPK0Ctq5e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Seth Jenkins <sethjenkins@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Lucas Leong <wmliang@infosec.exchange>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/511] tmpfs: verify {g,u}id mount options correctly
-Date: Sun, 17 Sep 2023 21:08:06 +0200
-Message-ID: <20230917191115.311806666@linuxfoundation.org>
+Subject: [PATCH 6.1 128/219] netfilter: nfnetlink_osf: avoid OOB read
+Date: Sun, 17 Sep 2023 21:14:15 +0200
+Message-ID: <20230917191045.620886898@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,100 +37,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 0200679fc7953177941e41c2a4241d0b6c2c5de8 ]
+[ Upstream commit f4f8a7803119005e87b716874bec07c751efafec ]
 
-A while ago we received the following report:
+The opt_num field is controlled by user mode and is not currently
+validated inside the kernel. An attacker can take advantage of this to
+trigger an OOB read and potentially leak information.
 
-"The other outstanding issue I noticed comes from the fact that
-fsconfig syscalls may occur in a different userns than that which
-called fsopen. That means that resolving the uid/gid via
-current_user_ns() can save a kuid that isn't mapped in the associated
-namespace when the filesystem is finally mounted. This means that it
-is possible for an unprivileged user to create files owned by any
-group in a tmpfs mount (since we can set the SUID bit on the tmpfs
-directory), or a tmpfs that is owned by any user, including the root
-group/user."
+BUG: KASAN: slab-out-of-bounds in nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+Read of size 2 at addr ffff88804bc64272 by task poc/6431
 
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, tmpfs has been doing the correct thing.
-But since tmpfs is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock to avoid such bugs as above.
+CPU: 1 PID: 6431 Comm: poc Not tainted 6.0.0-rc4 #1
+Call Trace:
+ nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+ nf_osf_find+0x186/0x2f0 net/netfilter/nfnetlink_osf.c:281
+ nft_osf_eval+0x37f/0x590 net/netfilter/nft_osf.c:47
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:214
+ nft_do_chain+0x2b0/0x1490 net/netfilter/nf_tables_core.c:264
+ nft_do_chain_ipv4+0x17c/0x1f0 net/netfilter/nft_chain_filter.c:23
+ [..]
 
-The new mount api's cross-namespace delegation abilities are already
-widely used. After having talked to a bunch of userspace this is the
-most faithful solution with minimal regression risks. I know of one
-users - systemd - that makes use of the new mount api in this way and
-they don't set unresolable {g,u}ids. So the regression risk is minimal.
+Also add validation to genre, subtype and version fields.
 
-Link: https://lore.kernel.org/lkml/CALxfFW4BXhEwxR0Q5LSkg-8Vb4r2MONKCcUCVioehXQKr35eHg@mail.gmail.com
-Fixes: f32356261d44 ("vfs: Convert ramfs, shmem, tmpfs, devtmpfs, rootfs to use the new mount API")
-Reviewed-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Message-Id: <20230801-vfs-fs_context-uidgid-v1-1-daf46a050bbf@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Lucas Leong <wmliang@infosec.exchange>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 41efb92c4e38f..663fb117cd877 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3394,6 +3394,8 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 	unsigned long long size;
- 	char *rest;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 8f1bfa6ccc2d9..50723ba082890 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -315,6 +315,14 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
  
- 	opt = fs_parse(fc, shmem_fs_parameters, param, &result);
- 	if (opt < 0)
-@@ -3429,14 +3431,32 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->mode = result.uint_32 & 07777;
- 		break;
- 	case Opt_uid:
--		ctx->uid = make_kuid(current_user_ns(), result.uint_32);
--		if (!uid_valid(ctx->uid))
-+		kuid = make_kuid(current_user_ns(), result.uint_32);
-+		if (!uid_valid(kuid))
- 			goto bad_value;
+ 	f = nla_data(osf_attrs[OSF_ATTR_FINGER]);
+ 
++	if (f->opt_num > ARRAY_SIZE(f->opt))
++		return -EINVAL;
 +
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fc->user_ns, kuid))
-+			goto bad_value;
++	if (!memchr(f->genre, 0, MAXGENRELEN) ||
++	    !memchr(f->subtype, 0, MAXGENRELEN) ||
++	    !memchr(f->version, 0, MAXGENRELEN))
++		return -EINVAL;
 +
-+		ctx->uid = kuid;
- 		break;
- 	case Opt_gid:
--		ctx->gid = make_kgid(current_user_ns(), result.uint_32);
--		if (!gid_valid(ctx->gid))
-+		kgid = make_kgid(current_user_ns(), result.uint_32);
-+		if (!gid_valid(kgid))
- 			goto bad_value;
-+
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fc->user_ns, kgid))
-+			goto bad_value;
-+
-+		ctx->gid = kgid;
- 		break;
- 	case Opt_huge:
- 		ctx->huge = result.uint_32;
+ 	kf = kmalloc(sizeof(struct nf_osf_finger), GFP_KERNEL);
+ 	if (!kf)
+ 		return -ENOMEM;
 -- 
 2.40.1
 
