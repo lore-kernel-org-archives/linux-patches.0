@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0F66FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F1C433C8;
-	Sun, 17 Sep 2023 19:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FBE6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DF8C433C8;
+	Sun, 17 Sep 2023 19:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980590;
-	bh=7HPwspJXkMXx4qSiri/iKKhuVjQ3UPFC0fU3gwFcAdc=;
+	s=korg; t=1694980594;
+	bh=/NjWOCnx9kQugUiLJWtVegaaRP9CrH+fZiNDh6rHtKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZE/quHjbmh2Qg8Iblu3NkEc759QrwMLd1ZFDu4bt403QcS7uoFnBnXzeZ2FJRJOo
-	 dM5Hxp2mf0+kG+x04oPHs4A39uRP8+nh0i4l31xZhs34AxSnaWr2AUr41BK5h1lC1K
-	 TkNHt7NOnnXVi89H5zrHdBROOUcBmHWMLLlqFZ2g=
+	b=E4odR902xhd4Iuro8Fu+8jGYA6V7RDHPCKZXzBhsLHcWT+af/+D052JpZjwC2ajbZ
+	 lzpVbdry77iSslkz/PylYxOf2LcVfB2Wnkp4oMCPg+71f1TrP2nP4GsuSZT1QINr2i
+	 NTHGTqEPkS6pjcALoXKqY7TK4rBt6ePFb6Aic0HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.5 229/285] KVM: SVM: Skip VMSA init in sev_es_init_vmcb() if pointer is NULL
-Date: Sun, 17 Sep 2023 21:13:49 +0200
-Message-ID: <20230917191059.376715796@linuxfoundation.org>
+	Dillon Varone <dillon.varone@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.5 238/285] drm/amd/display: always switch off ODM before committing more streams
+Date: Sun, 17 Sep 2023 21:13:58 +0200
+Message-ID: <20230917191059.629110657@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,47 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-commit 1952e74da96fb3e48b72a2d0ece78c688a5848c1 upstream.
+commit 49a30c3d1a2258fc93cfe6eea8e4951dabadc824 upstream.
 
-Skip initializing the VMSA physical address in the VMCB if the VMSA is
-NULL, which occurs during intrahost migration as KVM initializes the VMCB
-before copying over state from the source to the destination (including
-the VMSA and its physical address).
+ODM power optimization is only supported with single stream. When ODM
+power optimization is enabled, we might not have enough free pipes for
+enabling other stream. So when we are committing more than 1 stream we
+should first switch off ODM power optimization to make room for new
+stream and then allocating pipe resource for the new stream.
 
-In normal builds, __pa() is just math, so the bug isn't fatal, but with
-CONFIG_DEBUG_VIRTUAL=y, the validity of the virtual address is verified
-and passing in NULL will make the kernel unhappy.
-
-Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
 Cc: stable@vger.kernel.org
-Cc: Peter Gonda <pgonda@google.com>
-Reviewed-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/20230825022357.2852133-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 59de751e3845 ("drm/amd/display: add ODM case when looking for first split pipe")
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2955,9 +2955,12 @@ static void sev_es_init_vmcb(struct vcpu
- 	/*
- 	 * An SEV-ES guest requires a VMSA area that is a separate from the
- 	 * VMCB page. Do not include the encryption mask on the VMSA physical
--	 * address since hardware will access it using the guest key.
-+	 * address since hardware will access it using the guest key.  Note,
-+	 * the VMSA will be NULL if this vCPU is the destination for intrahost
-+	 * migration, and will be copied later.
- 	 */
--	svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
-+	if (svm->sev_es.vmsa)
-+		svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2061,12 +2061,12 @@ enum dc_status dc_commit_streams(struct
+ 		}
+ 	}
  
- 	/* Can't intercept CR register access, HV can't modify CR registers */
- 	svm_clr_intercept(svm, INTERCEPT_CR0_READ);
+-	/* Check for case where we are going from odm 2:1 to max
+-	 *  pipe scenario.  For these cases, we will call
+-	 *  commit_minimal_transition_state() to exit out of odm 2:1
+-	 *  first before processing new streams
++	/* ODM Combine 2:1 power optimization is only applied for single stream
++	 * scenario, it uses extra pipes than needed to reduce power consumption
++	 * We need to switch off this feature to make room for new streams.
+ 	 */
+-	if (stream_count == dc->res_pool->pipe_count) {
++	if (stream_count > dc->current_state->stream_count &&
++			dc->current_state->stream_count == 1) {
+ 		for (i = 0; i < dc->res_pool->pipe_count; i++) {
+ 			pipe = &dc->current_state->res_ctx.pipe_ctx[i];
+ 			if (pipe->next_odm_pipe)
 
 
