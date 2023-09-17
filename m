@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660566FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91FEC433C7;
-	Sun, 17 Sep 2023 19:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2375C6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B31C433C8;
+	Sun, 17 Sep 2023 19:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979441;
-	bh=NFGLPXotMlmt/ogv0HcxmMRi+Tvf4FVY3Nf4dGmM8LY=;
+	s=korg; t=1694979445;
+	bh=1Yl8j9PPMwlhrNxyVHCfm+gxBxThgvHIYORL8Ts7r8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QohPknpaytKGukyOmVX66b8YkYzh87Jmgf73gm1E8d81C/pgBci12yTd58KyVsJo5
-	 MHz31QWJtP1d6nnr2+GnX2ncI/TThrRgL3Ef0kDfB8VHk/axnWsByMw3UsStd8E19H
-	 IRvnGtuaeDpCVTPbXo9u1jlYx7zerNULVsZ1wZoc=
+	b=Xk9s9MdD25MPOzuO/ZxcPpUHwlkQ2V9FE3b2VLx3Sr099UqH21KaSinqUlA7FFaqN
+	 cXtyl1a3TCFxEXkkfpG2ec+9O1bRo9z6bqLdahgCovAOpS3NafUXTNkfWIz5lq6b0L
+	 lIWuID6ng4WHW5ptBERhKdZd/dvSempjDZYKdes4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 306/406] USB: core: Change usb_get_device_descriptor() API
-Date: Sun, 17 Sep 2023 21:12:40 +0200
-Message-ID: <20230917191109.387438566@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 315/406] io_uring: break out of iowq iopoll on teardown
+Date: Sun, 17 Sep 2023 21:12:49 +0200
+Message-ID: <20230917191109.617401551@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -38,241 +39,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit de28e469da75359a2bb8cd8778b78aa64b1be1f4 upstream.
+[ upstream commit 45500dc4e01c167ee063f3dcc22f51ced5b2b1e9 ]
 
-The usb_get_device_descriptor() routine reads the device descriptor
-from the udev device and stores it directly in udev->descriptor.  This
-interface is error prone, because the USB subsystem expects in-memory
-copies of a device's descriptors to be immutable once the device has
-been initialized.
+io-wq will retry iopoll even when it failed with -EAGAIN. If that
+races with task exit, which sets TIF_NOTIFY_SIGNAL for all its workers,
+such workers might potentially infinitely spin retrying iopoll again and
+again and each time failing on some allocation / waiting / etc. Don't
+keep spinning if io-wq is dying.
 
-The interface is changed so that the device descriptor is left in a
-kmalloc-ed buffer, not copied into the usb_device structure.  A
-pointer to the buffer is returned to the caller, who is then
-responsible for kfree-ing it.  The corresponding changes needed in the
-various callers are fairly small.
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/d0111bb6-56c1-4f90-adf2-6cfe152f6561@rowland.harvard.edu
+Fixes: 561fb04a6a225 ("io_uring: replace workqueue usage with io-wq")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hcd.c     |   10 +++++++---
- drivers/usb/core/hub.c     |   44 +++++++++++++++++++++++---------------------
- drivers/usb/core/message.c |   29 ++++++++++++-----------------
- drivers/usb/core/usb.h     |    4 ++--
- 4 files changed, 44 insertions(+), 43 deletions(-)
+ io_uring/io-wq.c    |   10 ++++++++++
+ io_uring/io-wq.h    |    1 +
+ io_uring/io_uring.c |    3 ++-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -982,6 +982,7 @@ static int register_root_hub(struct usb_
- {
- 	struct device *parent_dev = hcd->self.controller;
- 	struct usb_device *usb_dev = hcd->self.root_hub;
-+	struct usb_device_descriptor *descr;
- 	const int devnum = 1;
- 	int retval;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -176,6 +176,16 @@ static void io_worker_ref_put(struct io_
+ 		complete(&wq->worker_done);
+ }
  
-@@ -993,13 +994,16 @@ static int register_root_hub(struct usb_
- 	mutex_lock(&usb_bus_idr_lock);
- 
- 	usb_dev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
--	retval = usb_get_device_descriptor(usb_dev, USB_DT_DEVICE_SIZE);
--	if (retval != sizeof usb_dev->descriptor) {
-+	descr = usb_get_device_descriptor(usb_dev);
-+	if (IS_ERR(descr)) {
-+		retval = PTR_ERR(descr);
- 		mutex_unlock(&usb_bus_idr_lock);
- 		dev_dbg (parent_dev, "can't read %s device descriptor %d\n",
- 				dev_name(&usb_dev->dev), retval);
--		return (retval < 0) ? retval : -EMSGSIZE;
-+		return retval;
- 	}
-+	usb_dev->descriptor = *descr;
-+	kfree(descr);
- 
- 	if (le16_to_cpu(usb_dev->descriptor.bcdUSB) >= 0x0201) {
- 		retval = usb_get_bos_descriptor(usb_dev);
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2646,12 +2646,17 @@ int usb_authorize_device(struct usb_devi
- 	}
- 
- 	if (usb_dev->wusb) {
--		result = usb_get_device_descriptor(usb_dev, sizeof(usb_dev->descriptor));
--		if (result < 0) {
-+		struct usb_device_descriptor *descr;
++bool io_wq_worker_stopped(void)
++{
++	struct io_worker *worker = current->pf_io_worker;
 +
-+		descr = usb_get_device_descriptor(usb_dev);
-+		if (IS_ERR(descr)) {
-+			result = PTR_ERR(descr);
- 			dev_err(&usb_dev->dev, "can't re-read device descriptor for "
- 				"authorization: %d\n", result);
- 			goto error_device_descriptor;
- 		}
-+		usb_dev->descriptor = *descr;
-+		kfree(descr);
- 	}
- 
- 	usb_dev->authorized = 1;
-@@ -4680,7 +4685,7 @@ hub_port_init(struct usb_hub *hub, struc
- 	const char		*driver_name;
- 	bool			do_new_scheme;
- 	int			maxp0;
--	struct usb_device_descriptor	*buf;
-+	struct usb_device_descriptor	*buf, *descr;
- 
- 	buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
- 	if (!buf)
-@@ -4913,15 +4918,16 @@ hub_port_init(struct usb_hub *hub, struc
- 		usb_ep0_reinit(udev);
- 	}
- 
--	retval = usb_get_device_descriptor(udev, USB_DT_DEVICE_SIZE);
--	if (retval < (signed)sizeof(udev->descriptor)) {
-+	descr = usb_get_device_descriptor(udev);
-+	if (IS_ERR(descr)) {
-+		retval = PTR_ERR(descr);
- 		if (retval != -ENODEV)
- 			dev_err(&udev->dev, "device descriptor read/all, error %d\n",
- 					retval);
--		if (retval >= 0)
--			retval = -ENOMSG;
- 		goto fail;
- 	}
-+	udev->descriptor = *descr;
-+	kfree(descr);
- 
- 	/*
- 	 * Some superspeed devices have finished the link training process
-@@ -5038,7 +5044,7 @@ hub_power_remaining(struct usb_hub *hub)
- 
- 
- static int descriptors_changed(struct usb_device *udev,
--		struct usb_device_descriptor *old_device_descriptor,
-+		struct usb_device_descriptor *new_device_descriptor,
- 		struct usb_host_bos *old_bos)
++	if (WARN_ON_ONCE(!io_wq_current_is_worker()))
++		return true;
++
++	return test_bit(IO_WQ_BIT_EXIT, &worker->wqe->wq->state);
++}
++
+ static void io_worker_cancel_cb(struct io_worker *worker)
  {
- 	int		changed = 0;
-@@ -5049,8 +5055,8 @@ static int descriptors_changed(struct us
- 	int		length;
- 	char		*buf;
+ 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
+--- a/io_uring/io-wq.h
++++ b/io_uring/io-wq.h
+@@ -129,6 +129,7 @@ void io_wq_hash_work(struct io_wq_work *
  
--	if (memcmp(&udev->descriptor, old_device_descriptor,
--			sizeof(*old_device_descriptor)) != 0)
-+	if (memcmp(&udev->descriptor, new_device_descriptor,
-+			sizeof(*new_device_descriptor)) != 0)
- 		return 1;
+ int io_wq_cpu_affinity(struct io_wq *wq, cpumask_var_t mask);
+ int io_wq_max_workers(struct io_wq *wq, int *new_count);
++bool io_wq_worker_stopped(void);
  
- 	if ((old_bos && !udev->bos) || (!old_bos && udev->bos))
-@@ -5370,9 +5376,8 @@ static void hub_port_connect_change(stru
+ static inline bool io_wq_is_hashed(struct io_wq_work *work)
  {
- 	struct usb_port *port_dev = hub->ports[port1 - 1];
- 	struct usb_device *udev = port_dev->child;
--	struct usb_device_descriptor descriptor;
-+	struct usb_device_descriptor *descr;
- 	int status = -ENODEV;
--	int retval;
- 
- 	dev_dbg(&port_dev->dev, "status %04x, change %04x, %s\n", portstatus,
- 			portchange, portspeed(hub, portstatus));
-@@ -5399,23 +5404,20 @@ static void hub_port_connect_change(stru
- 			 * changed device descriptors before resuscitating the
- 			 * device.
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -6898,7 +6898,8 @@ static void io_wq_submit_work(struct io_
  			 */
--			descriptor = udev->descriptor;
--			retval = usb_get_device_descriptor(udev,
--					sizeof(udev->descriptor));
--			if (retval < 0) {
-+			descr = usb_get_device_descriptor(udev);
-+			if (IS_ERR(descr)) {
- 				dev_dbg(&udev->dev,
--						"can't read device descriptor %d\n",
--						retval);
-+						"can't read device descriptor %ld\n",
-+						PTR_ERR(descr));
- 			} else {
--				if (descriptors_changed(udev, &descriptor,
-+				if (descriptors_changed(udev, descr,
- 						udev->bos)) {
- 					dev_dbg(&udev->dev,
- 							"device descriptor has changed\n");
--					/* for disconnect() calls */
--					udev->descriptor = descriptor;
- 				} else {
- 					status = 0; /* Nothing to do */
- 				}
-+				kfree(descr);
- 			}
- #ifdef CONFIG_PM
- 		} else if (udev->state == USB_STATE_SUSPENDED &&
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -1039,39 +1039,34 @@ char *usb_cache_string(struct usb_device
- }
- 
- /*
-- * usb_get_device_descriptor - (re)reads the device descriptor (usbcore)
-- * @dev: the device whose device descriptor is being updated
-- * @size: how much of the descriptor to read
-+ * usb_get_device_descriptor - read the device descriptor
-+ * @udev: the device whose device descriptor should be read
-  * Context: !in_interrupt ()
-  *
-- * Updates the copy of the device descriptor stored in the device structure,
-- * which dedicates space for this purpose.
-- *
-  * Not exported, only for use by the core.  If drivers really want to read
-  * the device descriptor directly, they can call usb_get_descriptor() with
-  * type = USB_DT_DEVICE and index = 0.
-  *
-- * This call is synchronous, and may not be used in an interrupt context.
-- *
-- * Return: The number of bytes received on success, or else the status code
-- * returned by the underlying usb_control_msg() call.
-+ * Returns: a pointer to a dynamically allocated usb_device_descriptor
-+ * structure (which the caller must deallocate), or an ERR_PTR value.
-  */
--int usb_get_device_descriptor(struct usb_device *dev, unsigned int size)
-+struct usb_device_descriptor *usb_get_device_descriptor(struct usb_device *udev)
- {
- 	struct usb_device_descriptor *desc;
- 	int ret;
- 
--	if (size > sizeof(*desc))
--		return -EINVAL;
- 	desc = kmalloc(sizeof(*desc), GFP_NOIO);
- 	if (!desc)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
-+
-+	ret = usb_get_descriptor(udev, USB_DT_DEVICE, 0, desc, sizeof(*desc));
-+	if (ret == sizeof(*desc))
-+		return desc;
- 
--	ret = usb_get_descriptor(dev, USB_DT_DEVICE, 0, desc, size);
- 	if (ret >= 0)
--		memcpy(&dev->descriptor, desc, size);
-+		ret = -EMSGSIZE;
- 	kfree(desc);
--	return ret;
-+	return ERR_PTR(ret);
- }
- 
- /*
---- a/drivers/usb/core/usb.h
-+++ b/drivers/usb/core/usb.h
-@@ -42,8 +42,8 @@ extern bool usb_endpoint_is_ignored(stru
- 		struct usb_endpoint_descriptor *epd);
- extern int usb_remove_device(struct usb_device *udev);
- 
--extern int usb_get_device_descriptor(struct usb_device *dev,
--		unsigned int size);
-+extern struct usb_device_descriptor *usb_get_device_descriptor(
-+		struct usb_device *udev);
- extern int usb_set_isoch_delay(struct usb_device *dev);
- extern int usb_get_bos_descriptor(struct usb_device *dev);
- extern void usb_release_bos_descriptor(struct usb_device *dev);
+ 			if (ret != -EAGAIN || !(req->ctx->flags & IORING_SETUP_IOPOLL))
+ 				break;
+-
++			if (io_wq_worker_stopped())
++				break;
+ 			/*
+ 			 * If REQ_F_NOWAIT is set, then don't wait or retry with
+ 			 * poll. -EAGAIN is final for that case.
 
 
