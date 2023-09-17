@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7196FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DB8C433C8;
-	Sun, 17 Sep 2023 19:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0D76FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6108DC433C8;
+	Sun, 17 Sep 2023 19:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978444;
-	bh=is4sGn41v1XrENZcD1qJOhzElo48n6z+5y0Yv2T4GvA=;
+	s=korg; t=1694978447;
+	bh=BW5osc6pI8mI/Uz++hjyl9ylk7OzC3eXNXSPw7BF/xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+wZYatlm3VbOynVwi16VIJ5G+DaVrowPFR17Nfq/S73xVccwHu032aRifkT6uvVk
-	 jR+Og93TmrcosSGGonnJS6qgWHVbF0kIpU09bngkiX0SJwoZpwB6dI/VZ78IBudjEO
-	 ADC2PANfMIz85JzW7Ie4ECEVyNZzAsP8wjSNGczc=
+	b=nAP86J+gvgJJVdgDAYfHHCIcLOuHvuYhV0OiXQIvoyxeHM/PCNwv24Ep57h7j7jGY
+	 9kmiSG9IgggDDnH/B76Nlo/l6JjiO81d0iigv9fIznVZ5huAfNVc5K9dJ5AGhL/cwh
+	 r7Dj3kUOVyKnsf7iN17j4rsRI5//ffHCmxU2B1NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 061/406] net: Avoid address overwrite in kernel_connect
-Date: Sun, 17 Sep 2023 21:08:35 +0200
-Message-ID: <20230917191102.755841473@linuxfoundation.org>
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.10 062/406] udf: Check consistency of Space Bitmap Descriptor
+Date: Sun, 17 Sep 2023 21:08:36 +0200
+Message-ID: <20230917191102.780287484@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,51 +39,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
+commit 1e0d4adf17e7ef03281d7b16555e7c1508c8ed2d upstream.
 
-BPF programs that run on connect can rewrite the connect address. For
-the connect system call this isn't a problem, because a copy of the address
-is made when it is moved into kernel space. However, kernel_connect
-simply passes through the address it is given, so the caller may observe
-its address value unexpectedly change.
+Bits, which are related to Bitmap Descriptor logical blocks,
+are not reset when buffer headers are allocated for them. As the
+result, these logical blocks can be treated as free and
+be used for other blocks.This can cause usage of one buffer header
+for several types of data. UDF issues WARNING in this situation:
 
-A practical example where this is problematic is where NFS is combined
-with a system such as Cilium which implements BPF-based load balancing.
-A common pattern in software-defined storage systems is to have an NFS
-mount that connects to a persistent virtual IP which in turn maps to an
-ephemeral server IP. This is usually done to achieve high availability:
-if your server goes down you can quickly spin up a replacement and remap
-the virtual IP to that endpoint. With BPF-based load balancing, mounts
-will forget the virtual IP address when the address rewrite occurs
-because a pointer to the only copy of that address is passed down the
-stack. Server failover then breaks, because clients have forgotten the
-virtual IP address. Reconnects fail and mounts remain broken. This patch
-was tested by setting up a scenario like this and ensuring that NFS
-reconnects worked after applying the patch.
+WARNING: CPU: 0 PID: 2703 at fs/udf/inode.c:2014
+  __udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
 
-Signed-off-by: Jordan Rife <jrife@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+RIP: 0010:__udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
+Call Trace:
+ udf_setup_indirect_aext+0x573/0x880 fs/udf/inode.c:1980
+ udf_add_aext+0x208/0x2e0 fs/udf/inode.c:2067
+ udf_insert_aext fs/udf/inode.c:2233 [inline]
+ udf_update_extents fs/udf/inode.c:1181 [inline]
+ inode_getblk+0x1981/0x3b70 fs/udf/inode.c:885
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+[JK: Somewhat cleaned up the boundary checks]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/udf/balloc.c |   31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -3467,7 +3467,11 @@ EXPORT_SYMBOL(kernel_accept);
- int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
- 		   int flags)
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -36,18 +36,41 @@ static int read_block_bitmap(struct supe
+ 			     unsigned long bitmap_nr)
  {
--	return sock->ops->connect(sock, addr, addrlen, flags);
-+	struct sockaddr_storage address;
-+
-+	memcpy(&address, addr, addrlen);
-+
-+	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
- }
- EXPORT_SYMBOL(kernel_connect);
+ 	struct buffer_head *bh = NULL;
+-	int retval = 0;
++	int i;
++	int max_bits, off, count;
+ 	struct kernel_lb_addr loc;
  
+ 	loc.logicalBlockNum = bitmap->s_extPosition;
+ 	loc.partitionReferenceNum = UDF_SB(sb)->s_partition;
+ 
+ 	bh = udf_tread(sb, udf_get_lb_pblock(sb, &loc, block));
++	bitmap->s_block_bitmap[bitmap_nr] = bh;
+ 	if (!bh)
+-		retval = -EIO;
++		return -EIO;
+ 
+-	bitmap->s_block_bitmap[bitmap_nr] = bh;
+-	return retval;
++	/* Check consistency of Space Bitmap buffer. */
++	max_bits = sb->s_blocksize * 8;
++	if (!bitmap_nr) {
++		off = sizeof(struct spaceBitmapDesc) << 3;
++		count = min(max_bits - off, bitmap->s_nr_groups);
++	} else {
++		/*
++		 * Rough check if bitmap number is too big to have any bitmap
++		 * blocks reserved.
++		 */
++		if (bitmap_nr >
++		    (bitmap->s_nr_groups >> (sb->s_blocksize_bits + 3)) + 2)
++			return 0;
++		off = 0;
++		count = bitmap->s_nr_groups - bitmap_nr * max_bits +
++				(sizeof(struct spaceBitmapDesc) << 3);
++		count = min(count, max_bits);
++	}
++
++	for (i = 0; i < count; i++)
++		if (udf_test_bit(i + off, bh->b_data))
++			return -EFSCORRUPTED;
++	return 0;
+ }
+ 
+ static int __load_block_bitmap(struct super_block *sb,
 
 
