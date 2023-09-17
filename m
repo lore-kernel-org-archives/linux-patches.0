@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3736FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF1DC433C8;
-	Sun, 17 Sep 2023 20:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7606FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C04C433C7;
+	Sun, 17 Sep 2023 20:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981814;
-	bh=svO+GXBMomxTW8JIT8sk5mtDy8FhwsU87K2uRVP/DEA=;
+	s=korg; t=1694981818;
+	bh=4JsY7IPnLqarNEYvlGBdpA2mhmxQqHs8ps85jbhos84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R68jzA+/ONxpUwid6lawwKijSXoQNoYzurUNti6fSlVLTKFUqb8w23VUfjb9cFvr7
-	 7/ZdJWFnCDWUpQg65UW8Ydi2ZdnYdNuj3zHDJCQUrMm3lbTJObMygeZhQUuZ95drpl
-	 bgAOM2lYwBTEvuvSHeWLg/tfp4bg6I4C5ezTfaQA=
+	b=WmWNlrAa394Vh4qgVI61s1vQOA7iPllZkxlcs/UcHIDsSNCvRCJW1G+bMiw1UxI2c
+	 SVB/9RLXRgfuZ17GgPRXo4V0AZwp3fjS0Vkhnhrh5MS4Mad6pUbtufhXV3TewdxgWt
+	 qx4oyE+OMn6qUcgp4lRcrCoEXPxiOmZ+lpyPBqog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Daniel T. Lee" <danieltimlee@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/511] samples/bpf: fix broken map lookup probe
-Date: Sun, 17 Sep 2023 21:08:57 +0200
-Message-ID: <20230917191116.515297475@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 176/219] KVM: SVM: Skip VMSA init in sev_es_init_vmcb() if pointer is NULL
+Date: Sun, 17 Sep 2023 21:15:03 +0200
+Message-ID: <20230917191047.338434419@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,75 +36,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel T. Lee <danieltimlee@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d93a7cf6ca2cfcd7de5d06f753ce8d5e863316ac ]
+commit 1952e74da96fb3e48b72a2d0ece78c688a5848c1 upstream.
 
-In the commit 7c4cd051add3 ("bpf: Fix syscall's stackmap lookup
-potential deadlock"), a potential deadlock issue was addressed, which
-resulted in *_map_lookup_elem not triggering BPF programs.
-(prior to lookup, bpf_disable_instrumentation() is used)
+Skip initializing the VMSA physical address in the VMCB if the VMSA is
+NULL, which occurs during intrahost migration as KVM initializes the VMCB
+before copying over state from the source to the destination (including
+the VMSA and its physical address).
 
-To resolve the broken map lookup probe using "htab_map_lookup_elem",
-this commit introduces an alternative approach. Instead, it utilize
-"bpf_map_copy_value" and apply a filter specifically for the hash table
-with map_type.
+In normal builds, __pa() is just math, so the bug isn't fatal, but with
+CONFIG_DEBUG_VIRTUAL=y, the validity of the virtual address is verified
+and passing in NULL will make the kernel unhappy.
 
-Signed-off-by: Daniel T. Lee <danieltimlee@gmail.com>
-Fixes: 7c4cd051add3 ("bpf: Fix syscall's stackmap lookup potential deadlock")
-Link: https://lore.kernel.org/r/20230818090119.477441-8-danieltimlee@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
+Cc: stable@vger.kernel.org
+Cc: Peter Gonda <pgonda@google.com>
+Reviewed-by: Peter Gonda <pgonda@google.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/r/20230825022357.2852133-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/bpf/tracex6_kern.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/samples/bpf/tracex6_kern.c b/samples/bpf/tracex6_kern.c
-index acad5712d8b4f..fd602c2774b8b 100644
---- a/samples/bpf/tracex6_kern.c
-+++ b/samples/bpf/tracex6_kern.c
-@@ -2,6 +2,8 @@
- #include <linux/version.h>
- #include <uapi/linux/bpf.h>
- #include <bpf/bpf_helpers.h>
-+#include <bpf/bpf_tracing.h>
-+#include <bpf/bpf_core_read.h>
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2951,9 +2951,12 @@ static void sev_es_init_vmcb(struct vcpu
+ 	/*
+ 	 * An SEV-ES guest requires a VMSA area that is a separate from the
+ 	 * VMCB page. Do not include the encryption mask on the VMSA physical
+-	 * address since hardware will access it using the guest key.
++	 * address since hardware will access it using the guest key.  Note,
++	 * the VMSA will be NULL if this vCPU is the destination for intrahost
++	 * migration, and will be copied later.
+ 	 */
+-	svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
++	if (svm->sev_es.vmsa)
++		svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
  
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
-@@ -45,13 +47,24 @@ int bpf_prog1(struct pt_regs *ctx)
- 	return 0;
- }
- 
--SEC("kprobe/htab_map_lookup_elem")
--int bpf_prog2(struct pt_regs *ctx)
-+/*
-+ * Since *_map_lookup_elem can't be expected to trigger bpf programs
-+ * due to potential deadlocks (bpf_disable_instrumentation), this bpf
-+ * program will be attached to bpf_map_copy_value (which is called
-+ * from map_lookup_elem) and will only filter the hashtable type.
-+ */
-+SEC("kprobe/bpf_map_copy_value")
-+int BPF_KPROBE(bpf_prog2, struct bpf_map *map)
- {
- 	u32 key = bpf_get_smp_processor_id();
- 	struct bpf_perf_event_value *val, buf;
-+	enum bpf_map_type type;
- 	int error;
- 
-+	type = BPF_CORE_READ(map, map_type);
-+	if (type != BPF_MAP_TYPE_HASH)
-+		return 0;
-+
- 	error = bpf_perf_event_read_value(&counters, key, &buf, sizeof(buf));
- 	if (error)
- 		return 0;
--- 
-2.40.1
-
+ 	/* Can't intercept CR register access, HV can't modify CR registers */
+ 	svm_clr_intercept(svm, INTERCEPT_CR0_READ);
 
 
