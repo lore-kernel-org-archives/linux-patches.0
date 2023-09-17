@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AF66FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9F1C433C7;
-	Sun, 17 Sep 2023 20:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33786FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D8C433C7;
+	Sun, 17 Sep 2023 20:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981709;
-	bh=gXihEpqpYrg8w0SyLrsh/xdzeqylwrYJHhLWQA8XyZY=;
+	s=korg; t=1694981712;
+	bh=oolUaj3iv16VWgqBG5yBCJZF3xDJy2+xr0nL1XfTrVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8i4LPe5Fg27OGtwmhClvkjMsFJ+tIK6zf6U08UygOMM237Nt7G51p31+JjFxZAUH
-	 tuaoT/VAMuxT4kIVj9Ewja79y6JQOR3lZ2kivWRMNPNxm8VtaCfjii2T2sRFmquBJg
-	 YbqGN9KEZf1Cunlg8U+93Nlgt++ak0d5+DX6goBM=
+	b=RpR9rtnm/78ot8AazG0CKntsAFY4h2vFYknV7ZCR0D2adbgib0FD2S+WIL1pn5OAY
+	 AB+PuQpqwOFVspUEL/UQwuujcQAThiLsMY8kLeZxYtYtxBr3lw+4XlgZkT0r99E449
+	 RfudlK3HdUgKk6AAAUvqCUIeY4vZo67SuEa1PUSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	syzbot+d769eed29cc42d75e2a3@syzkaller.appspotmail.com,
-	syzbot+610ec0671f51e838436e@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/511] crypto: api - Use work queue in crypto_destroy_instance
-Date: Sun, 17 Sep 2023 21:08:43 +0200
-Message-ID: <20230917191116.186599404@linuxfoundation.org>
+Subject: [PATCH 5.15 087/511] ipv6: Add reasons for skb drops to __udp6_lib_rcv
+Date: Sun, 17 Sep 2023 21:08:34 +0200
+Message-ID: <20230917191115.973104486@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,92 +40,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit 9ae4577bc077a7e32c3c7d442c95bc76865c0f17 ]
+[ Upstream commit 4cf91f825b2777f81799f98ce32172b829acd1b2 ]
 
-The function crypto_drop_spawn expects to be called in process
-context.  However, when an instance is unregistered while it still
-has active users, the last user may cause the instance to be freed
-in atomic context.
+Add reasons to __udp6_lib_rcv for skb drops. The only twist is that the
+NO_SOCKET takes precedence over the CSUM or other counters for that
+path (motivation behind this patch - csum counter was misleading).
 
-Fix this by delaying the freeing to a work queue.
-
-Fixes: 6bfd48096ff8 ("[CRYPTO] api: Added spawns")
-Reported-by: Florent Revest <revest@chromium.org>
-Reported-by: syzbot+d769eed29cc42d75e2a3@syzkaller.appspotmail.com
-Reported-by: syzbot+610ec0671f51e838436e@syzkaller.appspotmail.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Tested-by: Florent Revest <revest@chromium.org>
-Acked-by: Florent Revest <revest@chromium.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c         | 16 ++++++++++++++--
- include/crypto/algapi.h |  3 +++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ net/ipv6/udp.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index 3920c4b1e9c13..c390a79c5a669 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -16,6 +16,7 @@
- #include <linux/rtnetlink.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-+#include <linux/workqueue.h>
- 
- #include "internal.h"
- 
-@@ -68,15 +69,26 @@ static void crypto_free_instance(struct crypto_instance *inst)
- 	inst->alg.cra_type->free(inst);
- }
- 
--static void crypto_destroy_instance(struct crypto_alg *alg)
-+static void crypto_destroy_instance_workfn(struct work_struct *w)
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 2dab9aab551c3..d5d254ca2dfe6 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -936,6 +936,7 @@ static int udp6_unicast_rcv_skb(struct sock *sk, struct sk_buff *skb,
+ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 		   int proto)
  {
--	struct crypto_instance *inst = (void *)alg;
-+	struct crypto_instance *inst = container_of(w, struct crypto_instance,
-+						    free_work);
- 	struct crypto_template *tmpl = inst->tmpl;
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	const struct in6_addr *saddr, *daddr;
+ 	struct net *net = dev_net(skb->dev);
+ 	struct udphdr *uh;
+@@ -1012,6 +1013,8 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 		return udp6_unicast_rcv_skb(sk, skb, uh);
+ 	}
  
- 	crypto_free_instance(inst);
- 	crypto_tmpl_put(tmpl);
++	reason = SKB_DROP_REASON_NO_SOCKET;
++
+ 	if (!uh->check)
+ 		goto report_csum_error;
+ 
+@@ -1024,10 +1027,12 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 	__UDP6_INC_STATS(net, UDP_MIB_NOPORTS, proto == IPPROTO_UDPLITE);
+ 	icmpv6_send(skb, ICMPV6_DEST_UNREACH, ICMPV6_PORT_UNREACH, 0);
+ 
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return 0;
+ 
+ short_packet:
++	if (reason == SKB_DROP_REASON_NOT_SPECIFIED)
++		reason = SKB_DROP_REASON_PKT_TOO_SMALL;
+ 	net_dbg_ratelimited("UDP%sv6: short packet: From [%pI6c]:%u %d/%d to [%pI6c]:%u\n",
+ 			    proto == IPPROTO_UDPLITE ? "-Lite" : "",
+ 			    saddr, ntohs(uh->source),
+@@ -1038,10 +1043,12 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ report_csum_error:
+ 	udp6_csum_zero_error(skb);
+ csum_error:
++	if (reason == SKB_DROP_REASON_NOT_SPECIFIED)
++		reason = SKB_DROP_REASON_UDP_CSUM;
+ 	__UDP6_INC_STATS(net, UDP_MIB_CSUMERRORS, proto == IPPROTO_UDPLITE);
+ discard:
+ 	__UDP6_INC_STATS(net, UDP_MIB_INERRORS, proto == IPPROTO_UDPLITE);
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return 0;
  }
- 
-+static void crypto_destroy_instance(struct crypto_alg *alg)
-+{
-+	struct crypto_instance *inst = container_of(alg,
-+						    struct crypto_instance,
-+						    alg);
-+
-+	INIT_WORK(&inst->free_work, crypto_destroy_instance_workfn);
-+	schedule_work(&inst->free_work);
-+}
-+
- /*
-  * This function adds a spawn to the list secondary_spawns which
-  * will be used at the end of crypto_remove_spawns to unregister
-diff --git a/include/crypto/algapi.h b/include/crypto/algapi.h
-index 0ffd61930e180..62fa7e82ff5b9 100644
---- a/include/crypto/algapi.h
-+++ b/include/crypto/algapi.h
-@@ -10,6 +10,7 @@
- #include <linux/crypto.h>
- #include <linux/list.h>
- #include <linux/kernel.h>
-+#include <linux/workqueue.h>
- 
- /*
-  * Maximum values for blocksize and alignmask, used to allocate
-@@ -55,6 +56,8 @@ struct crypto_instance {
- 		struct crypto_spawn *spawns;
- 	};
- 
-+	struct work_struct free_work;
-+
- 	void *__ctx[] CRYPTO_MINALIGN_ATTR;
- };
  
 -- 
 2.40.1
