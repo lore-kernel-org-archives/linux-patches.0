@@ -1,40 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B896FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B874C433C7;
-	Sun, 17 Sep 2023 19:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10466FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5F4C433CC;
+	Sun, 17 Sep 2023 19:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979994;
-	bh=EUa0AjzmjosFq2QWhjih8GwoE1puji7XLs95WTaL42A=;
+	s=korg; t=1694979997;
+	bh=QtGIARztFgGsY6aZu4vsHHatewrZ0MEDhLJZXZVZYQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMAEMa59CAt8xgOUNikdC1wP8sp4ixC7eiJ9N6Ho3o5APWJWC8cz+P3e8R8uYvtl5
-	 tmr5h4zFaDIJPpydhVQ4se8oelgrCvvAYLwDFdZT/aQfWWd79FEENycRxr09NSssfb
-	 nbncIG+3Fcsu7q6Q+us+bnCWwpcCOcWEw/CscUE8=
+	b=kzjBqF/duZD6fO11MDd2YxBT+1lVKfaQQ6q+2Na6HlOQZncKoAzAVQIUX5tZFZuha
+	 dV1FfHC7PAXX9sF6s57YYOXSr9jk4KvlZIYKFzJkRVC+lQWMiYnkQOm/N9EZjKNoqz
+	 G0z9Iby6vy4TtUSDFdsVtN3NRlyz+O/04qlleijo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>,
-	Barry Song <baohua@kernel.org>,
-	Brian Geffon <bgeffon@google.com>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.5 038/285] Multi-gen LRU: avoid race in inc_min_seq()
-Date: Sun, 17 Sep 2023 21:10:38 +0200
-Message-ID: <20230917191052.988461946@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.5 039/285] parisc: led: Fix LAN receive and transmit LEDs
+Date: Sun, 17 Sep 2023 21:10:39 +0200
+Message-ID: <20230917191053.022952954@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -53,90 +38,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh Singh <kaleshsingh@google.com>
+From: Helge Deller <deller@gmx.de>
 
-commit bb5e7f234eacf34b65be67ebb3613e3b8cf11b87 upstream.
+commit 4db89524b084f712a887256391fc19d9f66c8e55 upstream.
 
-inc_max_seq() will try to inc_min_seq() if nr_gens == MAX_NR_GENS. This
-is because the generations are reused (the last oldest now empty
-generation will become the next youngest generation).
+Fix the LAN receive and LAN transmit LEDs, which where swapped
+up to now.
 
-inc_min_seq() is retried until successful, dropping the lru_lock
-and yielding the CPU on each failure, and retaking the lock before
-trying again:
-
-        while (!inc_min_seq(lruvec, type, can_swap)) {
-                spin_unlock_irq(&lruvec->lru_lock);
-                cond_resched();
-                spin_lock_irq(&lruvec->lru_lock);
-        }
-
-However, the initial condition that required incrementing the min_seq
-(nr_gens == MAX_NR_GENS) is not retested. This can change by another
-call to inc_max_seq() from run_aging() with force_scan=true from the
-debugfs interface.
-
-Since the eviction stalls when the nr_gens == MIN_NR_GENS, avoid
-unnecessarily incrementing the min_seq by rechecking the number of
-generations before each attempt.
-
-This issue was uncovered in previous discussion on the list by Yu Zhao
-and Aneesh Kumar [1].
-
-[1] https://lore.kernel.org/linux-mm/CAOUHufbO7CaVm=xjEb1avDhHVvnC8pJmGyKcFf2iY_dpf+zR3w@mail.gmail.com/
-
-Link: https://lkml.kernel.org/r/20230802025606.346758-2-kaleshsingh@google.com
-Fixes: d6c3af7d8a2b ("mm: multi-gen LRU: debugfs interface")
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> [mediatek]
-Tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/parisc/include/asm/led.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4440,7 +4440,7 @@ static void inc_max_seq(struct lruvec *l
- 	int prev, next;
- 	int type, zone;
- 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
--
-+restart:
- 	spin_lock_irq(&lruvec->lru_lock);
+--- a/arch/parisc/include/asm/led.h
++++ b/arch/parisc/include/asm/led.h
+@@ -11,8 +11,8 @@
+ #define	LED1		0x02
+ #define	LED0		0x01		/* bottom (or furthest left) LED */
  
- 	VM_WARN_ON_ONCE(!seq_is_valid(lruvec));
-@@ -4451,11 +4451,12 @@ static void inc_max_seq(struct lruvec *l
+-#define	LED_LAN_TX	LED0		/* for LAN transmit activity */
+-#define	LED_LAN_RCV	LED1		/* for LAN receive activity */
++#define	LED_LAN_RCV	LED0		/* for LAN receive activity */
++#define	LED_LAN_TX	LED1		/* for LAN transmit activity */
+ #define	LED_DISK_IO	LED2		/* for disk activity */
+ #define	LED_HEARTBEAT	LED3		/* heartbeat */
  
- 		VM_WARN_ON_ONCE(!force_scan && (type == LRU_GEN_FILE || can_swap));
- 
--		while (!inc_min_seq(lruvec, type, can_swap)) {
--			spin_unlock_irq(&lruvec->lru_lock);
--			cond_resched();
--			spin_lock_irq(&lruvec->lru_lock);
--		}
-+		if (inc_min_seq(lruvec, type, can_swap))
-+			continue;
-+
-+		spin_unlock_irq(&lruvec->lru_lock);
-+		cond_resched();
-+		goto restart;
- 	}
- 
- 	/*
 
 
