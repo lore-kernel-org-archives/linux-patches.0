@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEF06FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45B4C433C7;
-	Sun, 17 Sep 2023 19:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B336FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4426CC433C7;
+	Sun, 17 Sep 2023 19:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979826;
-	bh=Ld02Ds3jm/Wk4lwqSSgz53HDOWM1g99adN0XGpXDhD4=;
+	s=korg; t=1694979829;
+	bh=e5iCdhE9TlPfZNYXiwGw+iiQct0rfeO3cdnaZmKN7yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT654LP2t+1wcTBcCZd/h0+FF4/Al1XHe5wfRKxCVVnhcm1dtaIk6xXE8ii2ISnp6
-	 0mWeJoJToAWOqoGgVkEnYFPlNSATwIB4h43Z/hOLcFdXJfhDgBssEw0wHzV0RqRZZn
-	 ZkqhWH3ZF8eFUhwD+EuHleIgPyCnA/u1/WyhmGso=
+	b=fm68CX/UAlB4DMLBfWcWopXjQ/7G9ZxQrE55r2cB1KzewCycyywp3vVkEXi6DSkVy
+	 h2/mVLoQX5ECmYonhEIf3MurEaFjbByTl/dprGuGQW5/bRJglj0ksqF3NR2jgskcgv
+	 RbLr9MMSdOckjVoz2ZYubZ9OsyGascx4uYY8euw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 018/285] null_blk: fix poll request timeout handling
-Date: Sun, 17 Sep 2023 21:10:18 +0200
-Message-ID: <20230917191052.257552455@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Kent <raven@themaw.net>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Minchan Kim <minchan@kernel.org>,
+	Eric Sandeen <sandeen@sandeen.net>
+Subject: [PATCH 6.5 019/285] kernfs: fix missing kernfs_iattr_rwsem locking
+Date: Sun, 17 Sep 2023 21:10:19 +0200
+Message-ID: <20230917191052.290816866@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,109 +45,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Ian Kent <raven@themaw.net>
 
-commit 5a26e45edb4690d58406178b5a9ea4c6dcf2c105 upstream.
+commit 0559f63057f927d298d68294d6ff77ce09b99255 upstream.
 
-When doing io_uring benchmark on /dev/nullb0, it's easy to crash the
-kernel if poll requests timeout triggered, as reported by David. [1]
+When the kernfs_iattr_rwsem was introduced a case was missed.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-Workqueue: kblockd blk_mq_timeout_work
-RIP: 0010:null_timeout_rq+0x4e/0x91
-Call Trace:
- ? null_timeout_rq+0x4e/0x91
- blk_mq_handle_expired+0x31/0x4b
- bt_iter+0x68/0x84
- ? bt_tags_iter+0x81/0x81
- __sbitmap_for_each_set.constprop.0+0xb0/0xf2
- ? __blk_mq_complete_request_remote+0xf/0xf
- bt_for_each+0x46/0x64
- ? __blk_mq_complete_request_remote+0xf/0xf
- ? percpu_ref_get_many+0xc/0x2a
- blk_mq_queue_tag_busy_iter+0x14d/0x18e
- blk_mq_timeout_work+0x95/0x127
- process_one_work+0x185/0x263
- worker_thread+0x1b5/0x227
+The update of the kernfs directory node child count was also protected
+by the kernfs_rwsem and needs to be included in the change so that the
+child count (and so the inode n_link attribute) does not change while
+holding the rwsem for read.
 
-This is indeed a race problem between null_timeout_rq() and null_poll().
-
-null_poll()				null_timeout_rq()
-  spin_lock(&nq->poll_lock)
-  list_splice_init(&nq->poll_list, &list)
-  spin_unlock(&nq->poll_lock)
-
-  while (!list_empty(&list))
-    req = list_first_entry()
-    list_del_init()
-    ...
-    blk_mq_add_to_batch()
-    // req->rq_next = NULL
-					spin_lock(&nq->poll_lock)
-
-					// rq->queuelist->next == NULL
-					list_del_init(&rq->queuelist)
-
-					spin_unlock(&nq->poll_lock)
-
-Fix these problems by setting requests state to MQ_RQ_COMPLETE under
-nq->poll_lock protection, in which null_timeout_rq() can safely detect
-this race and early return.
-
-Note this patch just fix the kernel panic when request timeout happen.
-
-[1] https://lore.kernel.org/all/3893581.1691785261@warthog.procyon.org.uk/
-
-Fixes: 0a593fbbc245 ("null_blk: poll queue support")
-Reported-by: David Howells <dhowells@redhat.com>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Link: https://lore.kernel.org/r/20230901120306.170520-2-chengming.zhou@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9caf69614225 ("kernfs: Introduce separate rwsem to protect inode attributes.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Kent <raven@themaw.net>
+Reviewed-By: Imran Khan <imran.f.khan@oracle.com>
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Anders Roxell <anders.roxell@linaro.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Eric Sandeen <sandeen@sandeen.net>
+Link: https://lore.kernel.org/r/169128520941.68052.15749253469930138901.stgit@donald.themaw.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/null_blk/main.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/kernfs/dir.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1643,9 +1643,12 @@ static int null_poll(struct blk_mq_hw_ct
- 	struct nullb_queue *nq = hctx->driver_data;
- 	LIST_HEAD(list);
- 	int nr = 0;
-+	struct request *rq;
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 5a1a4af9d3d2..bf243015834e 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -383,9 +383,11 @@ static int kernfs_link_sibling(struct kernfs_node *kn)
+ 	rb_insert_color(&kn->rb, &kn->parent->dir.children);
  
- 	spin_lock(&nq->poll_lock);
- 	list_splice_init(&nq->poll_list, &list);
-+	list_for_each_entry(rq, &list, queuelist)
-+		blk_mq_set_request_complete(rq);
- 	spin_unlock(&nq->poll_lock);
+ 	/* successfully added, account subdir number */
++	down_write(&kernfs_root(kn)->kernfs_iattr_rwsem);
+ 	if (kernfs_type(kn) == KERNFS_DIR)
+ 		kn->parent->dir.subdirs++;
+ 	kernfs_inc_rev(kn->parent);
++	up_write(&kernfs_root(kn)->kernfs_iattr_rwsem);
  
- 	while (!list_empty(&list)) {
-@@ -1671,16 +1674,21 @@ static enum blk_eh_timer_return null_tim
- 	struct blk_mq_hw_ctx *hctx = rq->mq_hctx;
- 	struct nullb_cmd *cmd = blk_mq_rq_to_pdu(rq);
+ 	return 0;
+ }
+@@ -408,9 +410,11 @@ static bool kernfs_unlink_sibling(struct kernfs_node *kn)
+ 	if (RB_EMPTY_NODE(&kn->rb))
+ 		return false;
  
--	pr_info("rq %p timed out\n", rq);
--
- 	if (hctx->type == HCTX_TYPE_POLL) {
- 		struct nullb_queue *nq = hctx->driver_data;
++	down_write(&kernfs_root(kn)->kernfs_iattr_rwsem);
+ 	if (kernfs_type(kn) == KERNFS_DIR)
+ 		kn->parent->dir.subdirs--;
+ 	kernfs_inc_rev(kn->parent);
++	up_write(&kernfs_root(kn)->kernfs_iattr_rwsem);
  
- 		spin_lock(&nq->poll_lock);
-+		/* The request may have completed meanwhile. */
-+		if (blk_mq_request_completed(rq)) {
-+			spin_unlock(&nq->poll_lock);
-+			return BLK_EH_DONE;
-+		}
- 		list_del_init(&rq->queuelist);
- 		spin_unlock(&nq->poll_lock);
- 	}
- 
-+	pr_info("rq %p timed out\n", rq);
-+
- 	/*
- 	 * If the device is marked as blocking (i.e. memory backed or zoned
- 	 * device), the submission path may be blocked waiting for resources
+ 	rb_erase(&kn->rb, &kn->parent->dir.children);
+ 	RB_CLEAR_NODE(&kn->rb);
+-- 
+2.42.0
+
 
 
