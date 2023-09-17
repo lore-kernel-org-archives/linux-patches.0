@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A49C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8177EC433C8;
-	Sun, 17 Sep 2023 20:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6197C746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:36:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F61C433C8;
+	Sun, 17 Sep 2023 20:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982986;
-	bh=2VqXem/+7HQshhQKrXpg5wCAACmihLo3j+436LD8bFk=;
+	s=korg; t=1694982990;
+	bh=QeSncU3ZBMuRN5pVqIjwOFIFuEV/cUE5X6MGkLSZ4QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKDBhLmaC0sO/PwcUHbjkhA1R/aT28ZU36iBXn8TiwF1U24JV+8hPBpKhtKFbunLP
-	 VQYGDOA/HzgLqQgWl3wXctkVOWpuFzrLK9npOIg1SPkMCINeRPPnbAaw4hDFFJvfNC
-	 HYTSfx/k6Yt2FtUv0E3fzO8WwwrNUIdCEHT/kwc8=
+	b=oam+J6Ly2FRW5HWWyJSpMATjx4xXPKJ/LM+bQy/jYlt6ZtfAcNGA6Thyc3FoZPxAa
+	 BH9V3urKgFcRXfexmPRQNk9ro7KZi00/5JYs3GI9nvVrYXP1uf6WuzN96fnXpYtBR2
+	 rXvUMLl8D2v4wtNOJ5/Tebq4kpXXQ6ZZik2cMu+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 5.15 410/511] kconfig: fix possible buffer overflow
-Date: Sun, 17 Sep 2023 21:13:57 +0200
-Message-ID: <20230917191123.684788129@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 375/511] io_uring: break iopolling on signal
+Date: Sun, 17 Sep 2023 21:13:22 +0200
+Message-ID: <20230917191122.859107509@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,38 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
+[ upstream commit dc314886cb3d0e4ab2858003e8de2917f8a3ccbd ]
 
-Buffer 'new_argv' is accessed without bound check after accessing with
-bound check via 'new_argc' index.
+Don't keep spinning iopoll with a signal set. It'll eventually return
+back, e.g. by virtue of need_resched(), but it's not a nice user
+experience.
 
-Fixes: e298f3b49def ("kconfig: add built-in function support")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: def596e9557c9 ("io_uring: support for IO polling")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/eeba551e82cad12af30c3220125eb6cb244cc94c.1691594339.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/kconfig/preprocess.c | 3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/io_uring.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
-index 748da578b418c..d1f5bcff4b62d 100644
---- a/scripts/kconfig/preprocess.c
-+++ b/scripts/kconfig/preprocess.c
-@@ -396,6 +396,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
- 
- 		p++;
- 	}
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2668,6 +2668,11 @@ static int io_iopoll_check(struct io_rin
+ 				break;
+ 		}
+ 		ret = io_do_iopoll(ctx, &nr_events, min);
 +
-+	if (new_argc >= FUNCTION_MAX_ARGS)
-+		pperror("too many function arguments");
- 	new_argv[new_argc++] = prev;
- 
- 	/*
--- 
-2.40.1
-
++		if (task_sigpending(current)) {
++			ret = -EINTR;
++			goto out;
++		}
+ 	} while (!ret && nr_events < min && !need_resched());
+ out:
+ 	mutex_unlock(&ctx->uring_lock);
 
 
