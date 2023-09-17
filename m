@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B446FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B77C433CB;
-	Sun, 17 Sep 2023 20:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BC37469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E645DC433C8;
+	Sun, 17 Sep 2023 20:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982339;
-	bh=OeETpE/humoNwsNobUE+h0OL+zP4oG7SEFdiOKa+qkE=;
+	s=korg; t=1694982342;
+	bh=d8zjwdspyugbZiYsFMrIJMIQIZDOXQnFrwJb3OrIXCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDa+l+URV+paznBvyP5Fk6OLF8Yeo+1QmHEcfFqWnrvXIwvW9eotnxaCDZ2fVuSJq
-	 oSxetOJzQmoIEhcprUWXQqn0S9bKarBJqrEOFZnyVRTXTFcmv6QtiZlgT4j42tdjqy
-	 n41cKeNY9r6Vtienn3qNGLlQcZU5x9WXmtawxyGo=
+	b=g+aiDqcJ57C/yFRHqdB67iOydbN7HwmPaLr1lpogWIsuWo1/fhm41luKgsGqY47GO
+	 c4p4rDK920M1gKqndhJ8+AkiFdaZ0Ul2hpjVtEMfW3ozzChedFeUHNZIMaeZicwCF3
+	 nMOn/dvsni4d+76AmmGGJboLkoLwnDRiuvhBGHdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaowei Bao <xiaowei.bao@nxp.com>,
-	Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/511] PCI: layerscape: Add workaround for lost link capabilities during reset
-Date: Sun, 17 Sep 2023 21:10:49 +0200
-Message-ID: <20230917191119.171464882@linuxfoundation.org>
+Subject: [PATCH 5.15 223/511] powerpc: Dont include lppaca.h in paca.h
+Date: Sun, 17 Sep 2023 21:10:50 +0200
+Message-ID: <20230917191119.195361299@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -43,86 +39,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaowei Bao <xiaowei.bao@nxp.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 17cf8661ee0f065c08152e611a568dd1fb0285f1 ]
+[ Upstream commit 1aa000667669fa855853decbb1c69e974d8ff716 ]
 
-The endpoint controller loses the Maximum Link Width and Supported Link Speed
-value from the Link Capabilities Register - initially configured by the Reset
-Configuration Word (RCW) - during a link-down or hot reset event.
+By adding a forward declaration for struct lppaca we can untangle paca.h
+and lppaca.h. Also move get_lppaca() into lppaca.h for consistency.
 
-Address this issue in the endpoint event handler.
+Add includes of lppaca.h to some files that need it.
 
-Link: https://lore.kernel.org/r/20230720135834.1977616-2-Frank.Li@nxp.com
-Fixes: a805770d8a22 ("PCI: layerscape: Add EP mode support")
-Signed-off-by: Xiaowei Bao <xiaowei.bao@nxp.com>
-Signed-off-by: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230823055317.751786-3-mpe@ellerman.id.au
+Stable-dep-of: eac030b22ea1 ("powerpc/pseries: Rework lppaca_shared_proc() to avoid DEBUG_PREEMPT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pci-layerscape-ep.c    | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/powerpc/include/asm/lppaca.h         | 4 ++++
+ arch/powerpc/include/asm/paca.h           | 6 +-----
+ arch/powerpc/include/asm/paravirt.h       | 1 +
+ arch/powerpc/include/asm/plpar_wrappers.h | 1 +
+ arch/powerpc/kvm/book3s_hv_ras.c          | 1 +
+ arch/powerpc/mm/book3s64/slb.c            | 1 +
+ arch/powerpc/xmon/xmon.c                  | 1 +
+ 7 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-index 5b27554e071a1..dd7d74fecc48e 100644
---- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
-+++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-@@ -45,6 +45,7 @@ struct ls_pcie_ep {
- 	struct pci_epc_features		*ls_epc;
- 	const struct ls_pcie_ep_drvdata *drvdata;
- 	int				irq;
-+	u32				lnkcap;
- 	bool				big_endian;
- };
+diff --git a/arch/powerpc/include/asm/lppaca.h b/arch/powerpc/include/asm/lppaca.h
+index c390ec377baed..5d509ba0550b5 100644
+--- a/arch/powerpc/include/asm/lppaca.h
++++ b/arch/powerpc/include/asm/lppaca.h
+@@ -130,6 +130,10 @@ static inline bool lppaca_shared_proc(struct lppaca *l)
+ 	return !!(l->__old_status & LPPACA_OLD_SHARED_PROC);
+ }
  
-@@ -73,6 +74,7 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
- 	struct ls_pcie_ep *pcie = dev_id;
- 	struct dw_pcie *pci = pcie->pci;
- 	u32 val, cfg;
-+	u8 offset;
- 
- 	val = ls_lut_readl(pcie, PEX_PF0_PME_MES_DR);
- 	ls_lut_writel(pcie, PEX_PF0_PME_MES_DR, val);
-@@ -81,6 +83,19 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
- 
- 	if (val & PEX_PF0_PME_MES_DR_LUD) {
++#ifdef CONFIG_PPC_PSERIES
++#define get_lppaca()	(get_paca()->lppaca_ptr)
++#endif
 +
-+		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+
-+		/*
-+		 * The values of the Maximum Link Width and Supported Link
-+		 * Speed from the Link Capabilities Register will be lost
-+		 * during link down or hot reset. Restore initial value
-+		 * that configured by the Reset Configuration Word (RCW).
-+		 */
-+		dw_pcie_dbi_ro_wr_en(pci);
-+		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCAP, pcie->lnkcap);
-+		dw_pcie_dbi_ro_wr_dis(pci);
-+
- 		cfg = ls_lut_readl(pcie, PEX_PF0_CONFIG);
- 		cfg |= PEX_PF0_CFG_READY;
- 		ls_lut_writel(pcie, PEX_PF0_CONFIG, cfg);
-@@ -214,6 +229,7 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
- 	struct ls_pcie_ep *pcie;
- 	struct pci_epc_features *ls_epc;
- 	struct resource *dbi_base;
-+	u8 offset;
- 	int ret;
+ /*
+  * SLB shadow buffer structure as defined in the PAPR.  The save_area
+  * contains adjacent ESID and VSID pairs for each shadowed SLB.  The
+diff --git a/arch/powerpc/include/asm/paca.h b/arch/powerpc/include/asm/paca.h
+index c5c9e25153152..02c089c5493ad 100644
+--- a/arch/powerpc/include/asm/paca.h
++++ b/arch/powerpc/include/asm/paca.h
+@@ -14,7 +14,6 @@
  
- 	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
-@@ -250,6 +266,9 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+ #include <linux/string.h>
+ #include <asm/types.h>
+-#include <asm/lppaca.h>
+ #include <asm/mmu.h>
+ #include <asm/page.h>
+ #ifdef CONFIG_PPC_BOOK3E
+@@ -46,14 +45,11 @@ extern unsigned int debug_smp_processor_id(void); /* from linux/smp.h */
+ #define get_paca()	local_paca
+ #endif
  
- 	platform_set_drvdata(pdev, pcie);
+-#ifdef CONFIG_PPC_PSERIES
+-#define get_lppaca()	(get_paca()->lppaca_ptr)
+-#endif
+-
+ #define get_slb_shadow()	(get_paca()->slb_shadow_ptr)
  
-+	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	pcie->lnkcap = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
-+
- 	ret = dw_pcie_ep_init(&pci->ep);
- 	if (ret)
- 		return ret;
+ struct task_struct;
+ struct rtas_args;
++struct lppaca;
+ 
+ /*
+  * Defines the layout of the paca.
+diff --git a/arch/powerpc/include/asm/paravirt.h b/arch/powerpc/include/asm/paravirt.h
+index b325022ffa2b0..0a333ac716e0b 100644
+--- a/arch/powerpc/include/asm/paravirt.h
++++ b/arch/powerpc/include/asm/paravirt.h
+@@ -6,6 +6,7 @@
+ #include <asm/smp.h>
+ #ifdef CONFIG_PPC64
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/hvcall.h>
+ #endif
+ 
+diff --git a/arch/powerpc/include/asm/plpar_wrappers.h b/arch/powerpc/include/asm/plpar_wrappers.h
+index 83e0f701ebc67..217d8fb246354 100644
+--- a/arch/powerpc/include/asm/plpar_wrappers.h
++++ b/arch/powerpc/include/asm/plpar_wrappers.h
+@@ -9,6 +9,7 @@
+ 
+ #include <asm/hvcall.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/page.h>
+ 
+ static inline long poll_pending(void)
+diff --git a/arch/powerpc/kvm/book3s_hv_ras.c b/arch/powerpc/kvm/book3s_hv_ras.c
+index d4bca93b79f6d..6fa634599bc90 100644
+--- a/arch/powerpc/kvm/book3s_hv_ras.c
++++ b/arch/powerpc/kvm/book3s_hv_ras.c
+@@ -9,6 +9,7 @@
+ #include <linux/kvm.h>
+ #include <linux/kvm_host.h>
+ #include <linux/kernel.h>
++#include <asm/lppaca.h>
+ #include <asm/opal.h>
+ #include <asm/mce.h>
+ #include <asm/machdep.h>
+diff --git a/arch/powerpc/mm/book3s64/slb.c b/arch/powerpc/mm/book3s64/slb.c
+index f0037bcc47a0e..a4fd2901189c5 100644
+--- a/arch/powerpc/mm/book3s64/slb.c
++++ b/arch/powerpc/mm/book3s64/slb.c
+@@ -14,6 +14,7 @@
+ #include <asm/mmu.h>
+ #include <asm/mmu_context.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/ppc-opcode.h>
+ #include <asm/cputable.h>
+ #include <asm/cacheflush.h>
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 3c085e1e5232e..8b5277c3b1476 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -59,6 +59,7 @@
+ #ifdef CONFIG_PPC64
+ #include <asm/hvcall.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #endif
+ 
+ #include "nonstdio.h"
 -- 
 2.40.1
 
