@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01C96FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:36:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52608C433CB;
-	Sun, 17 Sep 2023 19:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7D56FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:36:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AE4C433C9;
+	Sun, 17 Sep 2023 19:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979389;
-	bh=Je4uhglKv30pU6VywX9Vn0VgfAB6negreCtqznoAQbU=;
+	s=korg; t=1694979393;
+	bh=6xG5K7B8vJ8lVlp1lFNORIztkhXDvRkj5f07odaHvLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1SZPYgKozKrk8CewogbGYHnQBzn6Pi8JEW7+Hum3QkWN9v1pSdGToI851xjLAUhNo
-	 mVpia854UK965ewIkWNNFdfHnOC8MthngDhEXGJbH/MGZOwMBXHbdaz21SC6Gdisjp
-	 NLJjLqqrprjuJt64jYhyrOXMHGcGrySMnfcJAmMI=
+	b=qSTR54Z4ot8AlcMgI0QOkxo75iZYMEYxIQFs5jsNHbkhmBqDaMD3PRfrE3yRt+ty7
+	 3a+sg5FMXy2L18J+UqqU0SA4ahsuGkKxFU2nSQ79JCEjspaQQeufGs2MCTK3s9Tss4
+	 mcfgxumhk4UrqEmnZSWz0QtvaOZXeaLrco79VFLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Siwar Zitouni <siwar.zitouni@6wind.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 298/406] net: handle ARPHRD_PPP in dev_is_mac_header_xmit()
-Date: Sun, 17 Sep 2023 21:12:32 +0200
-Message-ID: <20230917191109.180901036@linuxfoundation.org>
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 5.10 299/406] fsverity: skip PKCS#7 parser when keyring is empty
+Date: Sun, 17 Sep 2023 21:12:33 +0200
+Message-ID: <20230917191109.207523272@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,38 +39,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit a4f39c9f14a634e4cd35fcd338c239d11fcc73fc upstream.
+commit 919dc320956ea353a7fb2d84265195ad5ef525ac upstream.
 
-The goal is to support a bpf_redirect() from an ethernet device (ingress)
-to a ppp device (egress).
-The l2 header is added automatically by the ppp driver, thus the ethernet
-header should be removed.
+If an fsverity builtin signature is given for a file but the
+".fs-verity" keyring is empty, there's no real reason to run the PKCS#7
+parser.  Skip this to avoid the PKCS#7 attack surface when builtin
+signature support is configured into the kernel but is not being used.
 
-CC: stable@vger.kernel.org
-Fixes: 27b29f63058d ("bpf: add bpf_redirect() helper")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Tested-by: Siwar Zitouni <siwar.zitouni@6wind.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This is a hardening improvement, not a fix per se, but I've added
+Fixes and Cc stable to get it out to more users.
+
+Fixes: 432434c9f8e1 ("fs-verity: support builtin file signatures")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20230820173237.2579-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/if_arp.h |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/verity/signature.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/include/linux/if_arp.h
-+++ b/include/linux/if_arp.h
-@@ -52,6 +52,10 @@ static inline bool dev_is_mac_header_xmi
- 	case ARPHRD_NONE:
- 	case ARPHRD_RAWIP:
- 	case ARPHRD_PIMREG:
-+	/* PPP adds its l2 header automatically in ppp_start_xmit().
-+	 * This makes it look like an l3 device to __bpf_redirect() and tcf_mirred_init().
-+	 */
-+	case ARPHRD_PPP:
- 		return false;
- 	default:
- 		return true;
+--- a/fs/verity/signature.c
++++ b/fs/verity/signature.c
+@@ -61,6 +61,22 @@ int fsverity_verify_signature(const stru
+ 		return -EBADMSG;
+ 	}
+ 
++	if (fsverity_keyring->keys.nr_leaves_on_tree == 0) {
++		/*
++		 * The ".fs-verity" keyring is empty, due to builtin signatures
++		 * being supported by the kernel but not actually being used.
++		 * In this case, verify_pkcs7_signature() would always return an
++		 * error, usually ENOKEY.  It could also be EBADMSG if the
++		 * PKCS#7 is malformed, but that isn't very important to
++		 * distinguish.  So, just skip to ENOKEY to avoid the attack
++		 * surface of the PKCS#7 parser, which would otherwise be
++		 * reachable by any task able to execute FS_IOC_ENABLE_VERITY.
++		 */
++		fsverity_err(inode,
++			     "fs-verity keyring is empty, rejecting signed file!");
++		return -ENOKEY;
++	}
++
+ 	d = kzalloc(sizeof(*d) + hash_alg->digest_size, GFP_KERNEL);
+ 	if (!d)
+ 		return -ENOMEM;
 
 
