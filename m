@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B47461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0B4C433C7;
-	Sun, 17 Sep 2023 20:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B974A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FE8C433C7;
+	Sun, 17 Sep 2023 20:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981992;
-	bh=ElmzyMbt+jrh8D499sen3H/rcq2c77XH+2n0ZxSx914=;
+	s=korg; t=1694981995;
+	bh=j4EPA6SHpZ+2mbLZcacx7C1zlthNhv5TYucxXWWteaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuL/HokoC8OPkWB7rf5mCIskVk3RNSFBEmXIIlR1A45R9OjJUguSKDXahaGh7G5ej
-	 zZuf3hCEVVEjwxu81vCJhwnNjW2p7OGa3kkY8i45NfFHQi2nqWhCCM4ZUpnyG5mLnu
-	 hBDGNiMWQPT6Z0Qp+2fbs7a6JEp3BkiYOYHYquwk=
+	b=lGCTJJS21Pe8m8vt7v1S87xDa9BI88aMe3+40ell1Fe29EwJmGJ6GYQLF3CPi8EOR
+	 zEO2JldlR6W8cCQVfvNr+7ddDZZjhKem7uSS4qjWHUUlrwtLvMHfhjo3Movvb08EfI
+	 +dtgJndbGjbqgcaqo+xBJ0NXN4PSCJBEnJP4E8rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Liming Sun <limings@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/511] arm64: dts: qcom: sm8350: Add missing LMH interrupts to cpufreq
-Date: Sun, 17 Sep 2023 21:09:23 +0200
-Message-ID: <20230917191117.148272713@linuxfoundation.org>
+Subject: [PATCH 6.1 203/219] platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors
+Date: Sun, 17 Sep 2023 21:15:30 +0200
+Message-ID: <20230917191048.275429622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,44 +38,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit 951151c2bb548e0f6b2c40ab4c48675f5342c914 ]
+[ Upstream commit 78034cbece79c2d730ad0770b3b7f23eedbbecf5 ]
 
-Add the missing interrupts that communicate the hardware-managed
-throttling to Linux.
+This commit fixes tmfifo console stuck issue when the virtual
+networking interface is in down state. In such case, the network
+Rx descriptors runs out and causes the Rx network packet staying
+in the head of the tmfifo thus blocking the console packets. The
+fix is to drop the Rx network packet when no more Rx descriptors.
+Function name mlxbf_tmfifo_release_pending_pkt() is also renamed
+to mlxbf_tmfifo_release_pkt() to be more approperiate.
 
-Fixes: ccbb3abb23a5 ("arm64: dts: qcom: sm8350: Add cpufreq node")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230705-topic-sm8350_fixes-v1-3-0f69f70ccb6a@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/8c0177dc938ae03f52ff7e0b62dbeee74b7bec09.1693322547.git.limings@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 66 ++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 1ef16975d13a1..635e9f17a549f 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1052,6 +1052,13 @@ cpufreq_hw: cpufreq@18591000 {
- 			      <0 0x18593000 0 0x1000>;
- 			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index d31fe7eed38df..ee8648a271fda 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -56,6 +56,7 @@ struct mlxbf_tmfifo;
+  * @vq: pointer to the virtio virtqueue
+  * @desc: current descriptor of the pending packet
+  * @desc_head: head descriptor of the pending packet
++ * @drop_desc: dummy desc for packet dropping
+  * @cur_len: processed length of the current descriptor
+  * @rem_len: remaining length of the pending packet
+  * @pkt_len: total length of the pending packet
+@@ -72,6 +73,7 @@ struct mlxbf_tmfifo_vring {
+ 	struct virtqueue *vq;
+ 	struct vring_desc *desc;
+ 	struct vring_desc *desc_head;
++	struct vring_desc drop_desc;
+ 	int cur_len;
+ 	int rem_len;
+ 	u32 pkt_len;
+@@ -83,6 +85,14 @@ struct mlxbf_tmfifo_vring {
+ 	struct mlxbf_tmfifo *fifo;
+ };
  
-+			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "dcvsh-irq-0",
-+					  "dcvsh-irq-1",
-+					  "dcvsh-irq-2";
++/* Check whether vring is in drop mode. */
++#define IS_VRING_DROP(_r) ({ \
++	typeof(_r) (r) = (_r); \
++	(r->desc_head == &r->drop_desc ? true : false); })
 +
- 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
- 			clock-names = "xo", "alternate";
++/* A stub length to drop maximum length packet. */
++#define VRING_DROP_DESC_MAX_LEN		GENMASK(15, 0)
++
+ /* Interrupt types. */
+ enum {
+ 	MLXBF_TM_RX_LWM_IRQ,
+@@ -243,6 +253,7 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
+ 		vring->align = SMP_CACHE_BYTES;
+ 		vring->index = i;
+ 		vring->vdev_id = tm_vdev->vdev.id.device;
++		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
+ 		dev = &tm_vdev->vdev.dev;
  
+ 		size = vring_size(vring->num, vring->align);
+@@ -348,7 +359,7 @@ static u32 mlxbf_tmfifo_get_pkt_len(struct mlxbf_tmfifo_vring *vring,
+ 	return len;
+ }
+ 
+-static void mlxbf_tmfifo_release_pending_pkt(struct mlxbf_tmfifo_vring *vring)
++static void mlxbf_tmfifo_release_pkt(struct mlxbf_tmfifo_vring *vring)
+ {
+ 	struct vring_desc *desc_head;
+ 	u32 len = 0;
+@@ -577,19 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
+ 
+ 	if (vring->cur_len + sizeof(u64) <= len) {
+ 		/* The whole word. */
+-		if (is_rx)
+-			memcpy(addr + vring->cur_len, &data, sizeof(u64));
+-		else
+-			memcpy(&data, addr + vring->cur_len, sizeof(u64));
++		if (!IS_VRING_DROP(vring)) {
++			if (is_rx)
++				memcpy(addr + vring->cur_len, &data,
++				       sizeof(u64));
++			else
++				memcpy(&data, addr + vring->cur_len,
++				       sizeof(u64));
++		}
+ 		vring->cur_len += sizeof(u64);
+ 	} else {
+ 		/* Leftover bytes. */
+-		if (is_rx)
+-			memcpy(addr + vring->cur_len, &data,
+-			       len - vring->cur_len);
+-		else
+-			memcpy(&data, addr + vring->cur_len,
+-			       len - vring->cur_len);
++		if (!IS_VRING_DROP(vring)) {
++			if (is_rx)
++				memcpy(addr + vring->cur_len, &data,
++				       len - vring->cur_len);
++			else
++				memcpy(&data, addr + vring->cur_len,
++				       len - vring->cur_len);
++		}
+ 		vring->cur_len = len;
+ 	}
+ 
+@@ -690,8 +707,16 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
+ 	/* Get the descriptor of the next packet. */
+ 	if (!vring->desc) {
+ 		desc = mlxbf_tmfifo_get_next_pkt(vring, is_rx);
+-		if (!desc)
+-			return false;
++		if (!desc) {
++			/* Drop next Rx packet to avoid stuck. */
++			if (is_rx) {
++				desc = &vring->drop_desc;
++				vring->desc_head = desc;
++				vring->desc = desc;
++			} else {
++				return false;
++			}
++		}
+ 	} else {
+ 		desc = vring->desc;
+ 	}
+@@ -724,17 +749,24 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
+ 		vring->rem_len -= len;
+ 
+ 		/* Get the next desc on the chain. */
+-		if (vring->rem_len > 0 &&
++		if (!IS_VRING_DROP(vring) && vring->rem_len > 0 &&
+ 		    (virtio16_to_cpu(vdev, desc->flags) & VRING_DESC_F_NEXT)) {
+ 			idx = virtio16_to_cpu(vdev, desc->next);
+ 			desc = &vr->desc[idx];
+ 			goto mlxbf_tmfifo_desc_done;
+ 		}
+ 
+-		/* Done and release the pending packet. */
+-		mlxbf_tmfifo_release_pending_pkt(vring);
++		/* Done and release the packet. */
+ 		desc = NULL;
+ 		fifo->vring[is_rx] = NULL;
++		if (!IS_VRING_DROP(vring)) {
++			mlxbf_tmfifo_release_pkt(vring);
++		} else {
++			vring->pkt_len = 0;
++			vring->desc_head = NULL;
++			vring->desc = NULL;
++			return false;
++		}
+ 
+ 		/*
+ 		 * Make sure the load/store are in order before
+@@ -914,7 +946,7 @@ static void mlxbf_tmfifo_virtio_del_vqs(struct virtio_device *vdev)
+ 
+ 		/* Release the pending packet. */
+ 		if (vring->desc)
+-			mlxbf_tmfifo_release_pending_pkt(vring);
++			mlxbf_tmfifo_release_pkt(vring);
+ 		vq = vring->vq;
+ 		if (vq) {
+ 			vring->vq = NULL;
 -- 
 2.40.1
 
