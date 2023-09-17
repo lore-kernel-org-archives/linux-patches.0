@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D486FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:45:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E930C433C8;
-	Sun, 17 Sep 2023 19:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4968E6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE3BC433C7;
+	Sun, 17 Sep 2023 19:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979953;
-	bh=hMrmL8O9gKdfEZZP5+qHXRJTFmONbmVIu5cpr9kMuyQ=;
+	s=korg; t=1694979956;
+	bh=NW/uyNLXo3vGXkYnS6TWxPr93/S51NyZ6qyJGt+cIcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxObcOzxHRiw4evpTHh0hCoHce7dyl7laUOpUhgra0uo/+jTq1EqDjhKmMOprnu9w
-	 38KFMqw+4f/ISELVbdJVL6ZiLXCRDLBO+X9upkHBSi9t1S/qrEKuK3bxP3/rH9tS42
-	 jPI+Oi7X8aGR0Jg1/Imw4tmqKAfDCeOXZrQoDBgI=
+	b=pvGlvw0z4R0V31fxY87d90IR6dCW3Zvulgh9iF2PfLVptvbY6+pDfrGgnE3LwCcN8
+	 r5o4epQEMDY6Ffs6fGkBOB5tq4nOVr8UaGWtKZEDcGJVXOMWW+Hl6zZ6F29f2Ojx+v
+	 hcy4/uoyugUysYArKdBk01KXqaaVvQcABkuqkFjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.5 054/285] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
-Date: Sun, 17 Sep 2023 21:10:54 +0200
-Message-ID: <20230917191053.552843867@linuxfoundation.org>
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.5 055/285] bus: mhi: host: Skip MHI reset if device is in RDDM
+Date: Sun, 17 Sep 2023 21:10:55 +0200
+Message-ID: <20230917191053.589522625@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,35 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Qiang Yu <quic_qianyu@quicinc.com>
 
-commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
+commit cabce92dd805945a090dc6fc73b001bb35ed083a upstream.
 
-It is an almost improbable error case but when page allocating loop in
-nfs4_get_device_info() fails then we should only free the already
-allocated pages, as __free_page() can't deal with NULL arguments.
+In RDDM EE, device can not process MHI reset issued by host. In case of MHI
+power off, host is issuing MHI reset and polls for it to get cleared until
+it times out. Since this timeout can not be avoided in case of RDDM, skip
+the MHI reset in this scenarios.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Cc: <stable@vger.kernel.org>
+Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/mhi/host/pm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/nfs/pnfs_dev.c
-+++ b/fs/nfs/pnfs_dev.c
-@@ -154,7 +154,7 @@ nfs4_get_device_info(struct nfs_server *
- 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(st
  
- out_free_pages:
--	for (i = 0; i < max_pages; i++)
-+	while (--i >= 0)
- 		__free_page(pages[i]);
- 	kfree(pages);
- out_free_pdev:
+ 	/* Trigger MHI RESET so that the device will not access host memory */
+ 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
++		/* Skip MHI RESET if in RDDM state */
++		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
++			goto skip_mhi_reset;
++
+ 		dev_dbg(dev, "Triggering MHI Reset in device\n");
+ 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 
+@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(st
+ 		}
+ 	}
+ 
++skip_mhi_reset:
+ 	dev_dbg(dev,
+ 		 "Waiting for all pending event ring processing to complete\n");
+ 	mhi_event = mhi_cntrl->mhi_event;
 
 
