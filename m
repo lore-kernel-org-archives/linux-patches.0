@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278556FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361F1C433C7;
-	Sun, 17 Sep 2023 19:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124936FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EBAC433C8;
+	Sun, 17 Sep 2023 19:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978434;
-	bh=SSsuwjGufr9hYPluTV8kpTmc3OvtrcM5D7DLQ34fa1I=;
+	s=korg; t=1694978437;
+	bh=QtlieltensU9DF+x1AXt8vLxdabIm2eDEfWBE59HRKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYXfwm6gd/hr9hAXknD3b7f027BtDqBuuv07VnkM0uh56zMISYnnsOfaLxDDQcP9O
-	 YuqjdDZ3JuKkvmDqN2hZJkm+sEAsxPes+C1pF1AqvPQIp7ehIjeWtLWJu9uiP9clb6
-	 U7jzFeno/GUUvoqIPayKXWLhx6ESphjOJmKkcaqc=
+	b=xsvZQzF0K8tfpHMXC6cdNHTGwBdUKAjER17RCAq4ITsUCN35LDLvIWkzHuPvXFwxd
+	 FS4hs5/gBUJprrfGphTZuDMEEh3TL4Xa/ceyldUIG1CPcj8bEqKOCTK0EesI9BVCPG
+	 8l7v+YcVIU9mer07BgMNMgdBuIApl04EGaJNEhm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gong, Sishuai" <sishuai@purdue.edu>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/406] ALSA: seq: oss: Fix racy open/close of MIDI devices
-Date: Sun, 17 Sep 2023 21:08:32 +0200
-Message-ID: <20230917191102.678199057@linuxfoundation.org>
+Subject: [PATCH 5.10 059/406] tracing: Introduce pipe_cpumask to avoid race on trace_pipes
+Date: Sun, 17 Sep 2023 21:08:33 +0200
+Message-ID: <20230917191102.705840731@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,126 +41,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 297224fc0922e7385573a30c29ffdabb67f27b7d ]
+[ Upstream commit c2489bb7e6be2e8cdced12c16c42fa128403ac03 ]
 
-Although snd_seq_oss_midi_open() and snd_seq_oss_midi_close() can be
-called concurrently from different code paths, we have no proper data
-protection against races.  Introduce open_mutex to each seq_oss_midi
-object for avoiding the races.
+There is race issue when concurrently splice_read main trace_pipe and
+per_cpu trace_pipes which will result in data read out being different
+from what actually writen.
 
-Reported-by: "Gong, Sishuai" <sishuai@purdue.edu>
-Closes: https://lore.kernel.org/r/7DC9AF71-F481-4ABA-955F-76C535661E33@purdue.edu
-Link: https://lore.kernel.org/r/20230612125533.27461-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As suggested by Steven:
+  > I believe we should add a ref count to trace_pipe and the per_cpu
+  > trace_pipes, where if they are opened, nothing else can read it.
+  >
+  > Opening trace_pipe locks all per_cpu ref counts, if any of them are
+  > open, then the trace_pipe open will fail (and releases any ref counts
+  > it had taken).
+  >
+  > Opening a per_cpu trace_pipe will up the ref count for just that
+  > CPU buffer. This will allow multiple tasks to read different per_cpu
+  > trace_pipe files, but will prevent the main trace_pipe file from
+  > being opened.
+
+But because we only need to know whether per_cpu trace_pipe is open or
+not, using a cpumask instead of using ref count may be easier.
+
+After this patch, users will find that:
+ - Main trace_pipe can be opened by only one user, and if it is
+   opened, all per_cpu trace_pipes cannot be opened;
+ - Per_cpu trace_pipes can be opened by multiple users, but each per_cpu
+   trace_pipe can only be opened by one user. And if one of them is
+   opened, main trace_pipe cannot be opened.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230818022645.1948314-1-zhengyejian1@huawei.com
+
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_midi.c | 35 +++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ kernel/trace/trace.c | 55 ++++++++++++++++++++++++++++++++++++++------
+ kernel/trace/trace.h |  2 ++
+ 2 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
-index f73ee0798aeab..be80ce72e0c72 100644
---- a/sound/core/seq/oss/seq_oss_midi.c
-+++ b/sound/core/seq/oss/seq_oss_midi.c
-@@ -37,6 +37,7 @@ struct seq_oss_midi {
- 	struct snd_midi_event *coder;	/* MIDI event coder */
- 	struct seq_oss_devinfo *devinfo;	/* assigned OSSseq device */
- 	snd_use_lock_t use_lock;
-+	struct mutex open_mutex;
- };
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 597487a7f1bfb..2ded5012543bf 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6255,10 +6255,36 @@ tracing_max_lat_write(struct file *filp, const char __user *ubuf,
  
+ #endif
  
-@@ -171,6 +172,7 @@ snd_seq_oss_midi_check_new_port(struct snd_seq_port_info *pinfo)
- 	mdev->flags = pinfo->capability;
- 	mdev->opened = 0;
- 	snd_use_lock_init(&mdev->use_lock);
-+	mutex_init(&mdev->open_mutex);
- 
- 	/* copy and truncate the name of synth device */
- 	strlcpy(mdev->name, pinfo->name, sizeof(mdev->name));
-@@ -319,14 +321,16 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	int perm;
- 	struct seq_oss_midi *mdev;
- 	struct snd_seq_port_subscribe subs;
-+	int err;
- 
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
- 
-+	mutex_lock(&mdev->open_mutex);
- 	/* already used? */
- 	if (mdev->opened && mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -EBUSY;
-+		err = -EBUSY;
-+		goto unlock;
- 	}
- 
- 	perm = 0;
-@@ -336,14 +340,14 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 		perm |= PERM_READ;
- 	perm &= mdev->flags;
- 	if (perm == 0) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	/* already opened? */
- 	if ((mdev->opened & perm) == perm) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
-+		err = 0;
-+		goto unlock;
- 	}
- 
- 	perm &= ~mdev->opened;
-@@ -368,13 +372,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	}
- 
- 	if (! mdev->opened) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	mdev->devinfo = dp;
-+	err = 0;
++static int open_pipe_on_cpu(struct trace_array *tr, int cpu)
++{
++	if (cpu == RING_BUFFER_ALL_CPUS) {
++		if (cpumask_empty(tr->pipe_cpumask)) {
++			cpumask_setall(tr->pipe_cpumask);
++			return 0;
++		}
++	} else if (!cpumask_test_cpu(cpu, tr->pipe_cpumask)) {
++		cpumask_set_cpu(cpu, tr->pipe_cpumask);
++		return 0;
++	}
++	return -EBUSY;
++}
 +
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
--	return 0;
-+	return err;
- }
++static void close_pipe_on_cpu(struct trace_array *tr, int cpu)
++{
++	if (cpu == RING_BUFFER_ALL_CPUS) {
++		WARN_ON(!cpumask_full(tr->pipe_cpumask));
++		cpumask_clear(tr->pipe_cpumask);
++	} else {
++		WARN_ON(!cpumask_test_cpu(cpu, tr->pipe_cpumask));
++		cpumask_clear_cpu(cpu, tr->pipe_cpumask);
++	}
++}
++
+ static int tracing_open_pipe(struct inode *inode, struct file *filp)
+ {
+ 	struct trace_array *tr = inode->i_private;
+ 	struct trace_iterator *iter;
++	int cpu;
+ 	int ret;
  
- /*
-@@ -388,10 +396,9 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
+ 	ret = tracing_check_open_get_tr(tr);
+@@ -6266,13 +6292,16 @@ static int tracing_open_pipe(struct inode *inode, struct file *filp)
+ 		return ret;
  
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
--	if (! mdev->opened || mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
--	}
-+	mutex_lock(&mdev->open_mutex);
-+	if (!mdev->opened || mdev->devinfo != dp)
-+		goto unlock;
+ 	mutex_lock(&trace_types_lock);
++	cpu = tracing_get_cpu(inode);
++	ret = open_pipe_on_cpu(tr, cpu);
++	if (ret)
++		goto fail_pipe_on_cpu;
  
- 	memset(&subs, 0, sizeof(subs));
- 	if (mdev->opened & PERM_WRITE) {
-@@ -410,6 +417,8 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- 	mdev->opened = 0;
- 	mdev->devinfo = NULL;
+ 	/* create a buffer to store the information to pass to userspace */
+ 	iter = kzalloc(sizeof(*iter), GFP_KERNEL);
+ 	if (!iter) {
+ 		ret = -ENOMEM;
+-		__trace_array_put(tr);
+-		goto out;
++		goto fail_alloc_iter;
+ 	}
  
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
+ 	trace_seq_init(&iter->seq);
+@@ -6295,7 +6324,7 @@ static int tracing_open_pipe(struct inode *inode, struct file *filp)
+ 
+ 	iter->tr = tr;
+ 	iter->array_buffer = &tr->array_buffer;
+-	iter->cpu_file = tracing_get_cpu(inode);
++	iter->cpu_file = cpu;
+ 	mutex_init(&iter->mutex);
+ 	filp->private_data = iter;
+ 
+@@ -6305,12 +6334,15 @@ static int tracing_open_pipe(struct inode *inode, struct file *filp)
+ 	nonseekable_open(inode, filp);
+ 
+ 	tr->trace_ref++;
+-out:
++
+ 	mutex_unlock(&trace_types_lock);
+ 	return ret;
+ 
+ fail:
+ 	kfree(iter);
++fail_alloc_iter:
++	close_pipe_on_cpu(tr, cpu);
++fail_pipe_on_cpu:
+ 	__trace_array_put(tr);
+ 	mutex_unlock(&trace_types_lock);
+ 	return ret;
+@@ -6327,7 +6359,7 @@ static int tracing_release_pipe(struct inode *inode, struct file *file)
+ 
+ 	if (iter->trace->pipe_close)
+ 		iter->trace->pipe_close(iter);
+-
++	close_pipe_on_cpu(tr, iter->cpu_file);
+ 	mutex_unlock(&trace_types_lock);
+ 
+ 	free_cpumask_var(iter->started);
+@@ -8851,6 +8883,9 @@ static struct trace_array *trace_array_create(const char *name)
+ 	if (!alloc_cpumask_var(&tr->tracing_cpumask, GFP_KERNEL))
+ 		goto out_free_tr;
+ 
++	if (!alloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
++		goto out_free_tr;
++
+ 	tr->trace_flags = global_trace.trace_flags & ~ZEROED_TRACE_FLAGS;
+ 
+ 	cpumask_copy(tr->tracing_cpumask, cpu_all_mask);
+@@ -8892,6 +8927,7 @@ static struct trace_array *trace_array_create(const char *name)
+  out_free_tr:
+ 	ftrace_free_ftrace_ops(tr);
+ 	free_trace_buffers(tr);
++	free_cpumask_var(tr->pipe_cpumask);
+ 	free_cpumask_var(tr->tracing_cpumask);
+ 	kfree(tr->name);
+ 	kfree(tr);
+@@ -8993,6 +9029,7 @@ static int __remove_instance(struct trace_array *tr)
+ 	}
+ 	kfree(tr->topts);
+ 
++	free_cpumask_var(tr->pipe_cpumask);
+ 	free_cpumask_var(tr->tracing_cpumask);
+ 	kfree(tr->name);
+ 	kfree(tr);
+@@ -9692,12 +9729,14 @@ __init static int tracer_alloc_buffers(void)
+ 	if (trace_create_savedcmd() < 0)
+ 		goto out_free_temp_buffer;
+ 
++	if (!alloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
++		goto out_free_savedcmd;
++
+ 	/* TODO: make the number of buffers hot pluggable with CPUS */
+ 	if (allocate_trace_buffers(&global_trace, ring_buf_size) < 0) {
+ 		MEM_FAIL(1, "tracer: failed to allocate ring buffer!\n");
+-		goto out_free_savedcmd;
++		goto out_free_pipe_cpumask;
+ 	}
+-
+ 	if (global_trace.buffer_disabled)
+ 		tracing_off();
+ 
+@@ -9748,6 +9787,8 @@ __init static int tracer_alloc_buffers(void)
+ 
  	return 0;
- }
+ 
++out_free_pipe_cpumask:
++	free_cpumask_var(global_trace.pipe_cpumask);
+ out_free_savedcmd:
+ 	free_saved_cmdlines_buffer(savedcmd);
+ out_free_temp_buffer:
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 892b3d2f33b79..dfde855dafda7 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -356,6 +356,8 @@ struct trace_array {
+ 	struct list_head	events;
+ 	struct trace_event_file *trace_marker_file;
+ 	cpumask_var_t		tracing_cpumask; /* only trace on set CPUs */
++	/* one per_cpu trace_pipe can be opened by only one user */
++	cpumask_var_t		pipe_cpumask;
+ 	int			ref;
+ 	int			trace_ref;
+ #ifdef CONFIG_FUNCTION_TRACER
 -- 
 2.40.1
 
