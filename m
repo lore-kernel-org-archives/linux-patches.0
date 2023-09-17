@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205166FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA8EC433C8;
-	Sun, 17 Sep 2023 19:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51456FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D64C433C8;
+	Sun, 17 Sep 2023 19:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979575;
-	bh=3Bt46GCy8d0lu64WDJtrKg3PGlhQnCz9WbRqjGnvDxo=;
+	s=korg; t=1694979578;
+	bh=byMRyfuVWpcYGeD+/w3pNWsC76In0z3/sWU2bNkQc0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkwOUvNzzYC9jE8drSJ2h44vpXd1CUOQVh7+Z/YFCG7QJoU7byhhvCEP3iyQ6O5/R
-	 sSzAHbR66i0V5TGjSjxg2jOB1AUDtXSH4zGWSSde+vXpJjFlN7cWxh1xrZW8IthKVi
-	 YN0/2+FZtNNKCn27JLbtEixl236WUgppTXWMKlp4=
+	b=pHRds4MaU4mDj1EwXOdFr9jU1+Ny/ytksd+ixTsd9fFV2e6zzZVy1Kix+gGRwq+qb
+	 OZYUIqCbj7TRsDj8x1GaL7Dt2Cuhq9oAK4ETys5CmqlLU8pSeAcEMEfZ3P3YEmLCdS
+	 T1QkiYJjkeKeFeKZbmbN3C9hg/LW8ljfsvh4P2mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 335/406] backlight: gpio_backlight: Drop output GPIO direction check for initial power state
-Date: Sun, 17 Sep 2023 21:13:09 +0200
-Message-ID: <20230917191110.129691539@linuxfoundation.org>
+Subject: [PATCH 5.10 353/406] af_unix: Fix data-races around sk->sk_shutdown.
+Date: Sun, 17 Sep 2023 21:13:27 +0200
+Message-ID: <20230917191110.592689656@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,39 +42,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Liu <victor.liu@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit fe1328b5b2a087221e31da77e617f4c2b70f3b7f ]
+[ Upstream commit afe8764f76346ba838d4f162883e23d2fcfaa90e ]
 
-So, let's drop output GPIO direction check and only check GPIO value to set
-the initial power state.
+sk->sk_shutdown is changed under unix_state_lock(sk), but
+unix_dgram_sendmsg() calls two functions to read sk_shutdown locklessly.
 
-Fixes: 706dc68102bc ("backlight: gpio: Explicitly set the direction of the GPIO")
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20230721093342.1532531-1-victor.liu@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+  sock_alloc_send_pskb
+  `- sock_wait_for_wmem
+
+Let's use READ_ONCE() there.
+
+Note that the writer side was marked by commit e1d09c2c2f57 ("af_unix:
+Fix data races around sk->sk_shutdown.").
+
+BUG: KCSAN: data-race in sock_alloc_send_pskb / unix_release_sock
+
+write (marked) to 0xffff8880069af12c of 1 bytes by task 1 on cpu 1:
+ unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
+ unix_release+0x59/0x80 net/unix/af_unix.c:1053
+ __sock_release+0x7d/0x170 net/socket.c:654
+ sock_close+0x19/0x30 net/socket.c:1386
+ __fput+0x2a3/0x680 fs/file_table.c:384
+ ____fput+0x15/0x20 fs/file_table.c:412
+ task_work_run+0x116/0x1a0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+ syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
+ do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+read to 0xffff8880069af12c of 1 bytes by task 28650 on cpu 0:
+ sock_alloc_send_pskb+0xd2/0x620 net/core/sock.c:2767
+ unix_dgram_sendmsg+0x2f8/0x14f0 net/unix/af_unix.c:1944
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+value changed: 0x00 -> 0x03
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 28650 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/gpio_backlight.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
-index 5c5c99f7979e3..30ec5b6845335 100644
---- a/drivers/video/backlight/gpio_backlight.c
-+++ b/drivers/video/backlight/gpio_backlight.c
-@@ -87,8 +87,7 @@ static int gpio_backlight_probe(struct platform_device *pdev)
- 		/* Not booted with device tree or no phandle link to the node */
- 		bl->props.power = def_value ? FB_BLANK_UNBLANK
- 					    : FB_BLANK_POWERDOWN;
--	else if (gpiod_get_direction(gbl->gpiod) == 0 &&
--		 gpiod_get_value_cansleep(gbl->gpiod) == 0)
-+	else if (gpiod_get_value_cansleep(gbl->gpiod) == 0)
- 		bl->props.power = FB_BLANK_POWERDOWN;
- 	else
- 		bl->props.power = FB_BLANK_UNBLANK;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index e2d45631c15d7..a971385a95d92 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2315,7 +2315,7 @@ static long sock_wait_for_wmem(struct sock *sk, long timeo)
+ 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+ 		if (refcount_read(&sk->sk_wmem_alloc) < READ_ONCE(sk->sk_sndbuf))
+ 			break;
+-		if (sk->sk_shutdown & SEND_SHUTDOWN)
++		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 			break;
+ 		if (sk->sk_err)
+ 			break;
+@@ -2345,7 +2345,7 @@ struct sk_buff *sock_alloc_send_pskb(struct sock *sk, unsigned long header_len,
+ 			goto failure;
+ 
+ 		err = -EPIPE;
+-		if (sk->sk_shutdown & SEND_SHUTDOWN)
++		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 			goto failure;
+ 
+ 		if (sk_wmem_alloc_get(sk) < READ_ONCE(sk->sk_sndbuf))
 -- 
 2.40.1
 
