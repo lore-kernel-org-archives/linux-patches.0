@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183347469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76726C433C7;
-	Sun, 17 Sep 2023 20:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7D77469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18FAC433CD;
+	Sun, 17 Sep 2023 20:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982119;
-	bh=EYeHAULtVdrV2D512WBx4tlco+xwkC+kfcGPe3m1wCw=;
+	s=korg; t=1694982123;
+	bh=kX2frQTxAFZYwqFQ4Te4E5g3jHG7wuwlVXf8l45cDWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qF8Jfm9a31rwfymMLjWxZsnsoyaReW7LPx4fQBRxCKbqpbWyvcFodV0OqhjLbAQbD
-	 9o/NDrnC6NElZFkARTyfO+y9XgtdkuEwsqJPEscgfM3ISQ1tYuw0qACDNoD85+vw5t
-	 U2NEp4x9yM7qdW/cVF5dInuSer6G+u0931piJp3I=
+	b=g4zZkx7Qxr4fO216Hi2AzbBGLqDgdm6HHl8+8pfeW7sTEtxZYODz96goX86uAvZou
+	 ekYOEnLuig7deOZr5xTLo+EqPbcpqPY+/o/y5EfxRS4UBtmnxRizg6oJf2Y4tSFIkZ
+	 gZcHFe9vUA9HJ6xAlYJO+5c1xrJDaFxVKnU5A3hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Vasut <marex@denx.de>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/219] net/smc: use smc_lgr_list.lock to protect smc_lgr_list.list iterate in smcr_port_add
-Date: Sun, 17 Sep 2023 21:15:16 +0200
-Message-ID: <20230917191047.775142178@linuxfoundation.org>
+Subject: [PATCH 5.15 123/511] drm/bridge: tc358764: Fix debug print parameter order
+Date: Sun, 17 Sep 2023 21:09:10 +0200
+Message-ID: <20230917191116.841306961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,74 +36,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit f5146e3ef0a9eea405874b36178c19a4863b8989 ]
+[ Upstream commit 7f947be02aab5b154427cb5b0fffe858fc387b02 ]
 
-While doing smcr_port_add, there maybe linkgroup add into or delete
-from smc_lgr_list.list at the same time, which may result kernel crash.
-So, use smc_lgr_list.lock to protect smc_lgr_list.list iterate in
-smcr_port_add.
+The debug print parameters were swapped in the output and they were
+printed as decimal values, both the hardware address and the value.
+Update the debug print to print the parameters in correct order, and
+use hexadecimal print for both address and value.
 
-The crash calltrace show below:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP NOPTI
-CPU: 0 PID: 559726 Comm: kworker/0:92 Kdump: loaded Tainted: G
-Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS 449e491 04/01/2014
-Workqueue: events smc_ib_port_event_work [smc]
-RIP: 0010:smcr_port_add+0xa6/0xf0 [smc]
-RSP: 0000:ffffa5a2c8f67de0 EFLAGS: 00010297
-RAX: 0000000000000001 RBX: ffff9935e0650000 RCX: 0000000000000000
-RDX: 0000000000000010 RSI: ffff9935e0654290 RDI: ffff9935c8560000
-RBP: 0000000000000000 R08: 0000000000000000 R09: ffff9934c0401918
-R10: 0000000000000000 R11: ffffffffb4a5c278 R12: ffff99364029aae4
-R13: ffff99364029aa00 R14: 00000000ffffffed R15: ffff99364029ab08
-FS:  0000000000000000(0000) GS:ffff994380600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 0000000f06a10003 CR4: 0000000002770ef0
-PKRU: 55555554
-Call Trace:
- smc_ib_port_event_work+0x18f/0x380 [smc]
- process_one_work+0x19b/0x340
- worker_thread+0x30/0x370
- ? process_one_work+0x340/0x340
- kthread+0x114/0x130
- ? __kthread_cancel_work+0x50/0x50
- ret_from_fork+0x1f/0x30
-
-Fixes: 1f90a05d9ff9 ("net/smc: add smcr_port_add() and smcr_link_up() processing")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f38b7cca6d0e ("drm/bridge: tc358764: Add DSI to LVDS bridge driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230615152817.359420-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/tc358764.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index c676d92af7b7d..64b6dd439938e 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1650,6 +1650,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
- {
- 	struct smc_link_group *lgr, *n;
+diff --git a/drivers/gpu/drm/bridge/tc358764.c b/drivers/gpu/drm/bridge/tc358764.c
+index c1e35bdf9232a..ba4e869f58a4a 100644
+--- a/drivers/gpu/drm/bridge/tc358764.c
++++ b/drivers/gpu/drm/bridge/tc358764.c
+@@ -181,7 +181,7 @@ static void tc358764_read(struct tc358764 *ctx, u16 addr, u32 *val)
+ 	if (ret >= 0)
+ 		le32_to_cpus(val);
  
-+	spin_lock_bh(&smc_lgr_list.lock);
- 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
- 		struct smc_link *link;
- 
-@@ -1665,6 +1666,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
- 		if (link)
- 			smc_llc_add_link_local(link);
- 	}
-+	spin_unlock_bh(&smc_lgr_list.lock);
+-	dev_dbg(ctx->dev, "read: %d, addr: %d\n", addr, *val);
++	dev_dbg(ctx->dev, "read: addr=0x%04x data=0x%08x\n", addr, *val);
  }
  
- /* link is down - switch connections to alternate link,
+ static void tc358764_write(struct tc358764 *ctx, u16 addr, u32 val)
 -- 
 2.40.1
 
