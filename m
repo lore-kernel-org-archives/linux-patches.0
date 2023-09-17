@@ -1,30 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5BD6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7057C433C9;
-	Sun, 17 Sep 2023 20:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13576FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E842DC433CA;
+	Sun, 17 Sep 2023 20:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981791;
-	bh=+iNNSGHfsvu21/qK44sJ/ECTob1HgK0GkQsB1PCQ+QQ=;
+	s=korg; t=1694981794;
+	bh=0AXLB9jy5n20Eu+F3cEdYkIkCNUXCy6YboJAJQKsShA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfKMmghA4Tt3RjnTMG2LAhtS3YO8lK9IDHMtIwRzl1HrYj8B1goi03I1+RgXANkWR
-	 Iy1bO1lDQjXZX7Ie+gqihNKz42kD6C58gbFMfTtIcHsACKo32nb3i8ZGa7ZfKKkpMc
-	 FkYsckH91JyxapVEMOcb4AbXSK6TfbcvU3C4NX6s=
+	b=M/oyFxsnIsfjPE35YYCMzjHf/Oq7ay4jMbdV/KUpcLPpooKGzFG8rCm7HIp8dxfR8
+	 vY51uBD/NF+DeB0cACUXVDx9E0iJAfPA30jFWrhq+bemQgCCF2LL016u2vFS/RvpkP
+	 ST7XmldP6bUe6zhbpHf4+fF/F/EKXUe5YdDxif2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 172/219] KVM: SVM: Get source vCPUs from source VM for SEV-ES intrahost migration
-Date: Sun, 17 Sep 2023 21:14:59 +0200
-Message-ID: <20230917191047.220966016@linuxfoundation.org>
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 107/511] fs: ocfs2: namei: check return value of ocfs2_add_entry()
+Date: Sun, 17 Sep 2023 21:08:54 +0200
+Message-ID: <20230917191116.445069740@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,79 +44,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-commit f1187ef24eb8f36e8ad8106d22615ceddeea6097 upstream.
+[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
 
-Fix a goof where KVM tries to grab source vCPUs from the destination VM
-when doing intrahost migration.  Grabbing the wrong vCPU not only hoses
-the guest, it also crashes the host due to the VMSA pointer being left
-NULL.
+Process result of ocfs2_add_entry() in case we have an error
+value.
 
-  BUG: unable to handle page fault for address: ffffe38687000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] SMP NOPTI
-  CPU: 39 PID: 17143 Comm: sev_migrate_tes Tainted: GO       6.5.0-smp--fff2e47e6c3b-next #151
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.28.0 07/10/2023
-  RIP: 0010:__free_pages+0x15/0xd0
-  RSP: 0018:ffff923fcf6e3c78 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffffe38687000000 RCX: 0000000000000100
-  RDX: 0000000000000100 RSI: 0000000000000000 RDI: ffffe38687000000
-  RBP: ffff923fcf6e3c88 R08: ffff923fcafb0000 R09: 0000000000000000
-  R10: 0000000000000000 R11: ffffffff83619b90 R12: ffff923fa9540000
-  R13: 0000000000080007 R14: ffff923f6d35d000 R15: 0000000000000000
-  FS:  0000000000000000(0000) GS:ffff929d0d7c0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: ffffe38687000000 CR3: 0000005224c34005 CR4: 0000000000770ee0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   sev_free_vcpu+0xcb/0x110 [kvm_amd]
-   svm_vcpu_free+0x75/0xf0 [kvm_amd]
-   kvm_arch_vcpu_destroy+0x36/0x140 [kvm]
-   kvm_destroy_vcpus+0x67/0x100 [kvm]
-   kvm_arch_destroy_vm+0x161/0x1d0 [kvm]
-   kvm_put_kvm+0x276/0x560 [kvm]
-   kvm_vm_release+0x25/0x30 [kvm]
-   __fput+0x106/0x280
-   ____fput+0x12/0x20
-   task_work_run+0x86/0xb0
-   do_exit+0x2e3/0x9c0
-   do_group_exit+0xb1/0xc0
-   __x64_sys_exit_group+0x1b/0x20
-   do_syscall_64+0x41/0x90
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-   </TASK>
-  CR2: ffffe38687000000
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
-Cc: stable@vger.kernel.org
-Cc: Peter Gonda <pgonda@google.com>
-Reviewed-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/20230825022357.2852133-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/namei.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1723,7 +1723,7 @@ static void sev_migrate_from(struct kvm
- 		 * Note, the source is not required to have the same number of
- 		 * vCPUs as the destination when migrating a vanilla SEV VM.
- 		 */
--		src_vcpu = kvm_get_vcpu(dst_kvm, i);
-+		src_vcpu = kvm_get_vcpu(src_kvm, i);
- 		src_svm = to_svm(src_vcpu);
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 3c24eceeb4ffc..0b4f3d287cbc0 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -1535,6 +1535,10 @@ static int ocfs2_rename(struct user_namespace *mnt_userns,
+ 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
+ 					 OCFS2_I(old_inode)->ip_blkno,
+ 					 new_dir_bh, &target_insert);
++		if (status < 0) {
++			mlog_errno(status);
++			goto bail;
++		}
+ 	}
  
- 		/*
+ 	old_inode->i_ctime = current_time(old_inode);
+-- 
+2.40.1
+
 
 
