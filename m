@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB16746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE015C433C8;
-	Sun, 17 Sep 2023 20:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CC4746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D36C433C7;
+	Sun, 17 Sep 2023 20:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983072;
-	bh=ep9o6iEzAwIGsRM8e4QpC2fMicVo/vY4zMvHzTvnsEg=;
+	s=korg; t=1694983075;
+	bh=5mmG88hO5VSaPsHgwtUzAFpNNHhWPg9jvgKl2p0NVoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmoBVCUkQIc4JIXfqzr/Ysbln+oH6bAhMTODO36wNupKH+3HPhdV7wcPGV3pnPb8k
-	 LTQA/6vtlM/b4LwSt+Z+OL2rVZRe7gqwRqWmX91V3/i4q0Gps4gcmzeD3nFRfRMHgZ
-	 Qy6aE/LnGocNokB/kUo8VIrRzfOl04squP5nLhCA=
+	b=K7njAn2OPqqHvtMPykpUGYVxNiDflUzGz16i1lJRI4orNHQPlr/HcSbgvswr2h6k1
+	 8GcoLgYMEUdpXZbsmmVcNZrxqa/znNcWDDRizsTWYOSHk7m9xYlq8NVu1UWpOeUOXZ
+	 3zx2wg0KGvGcv7YGV34nruwWrETzdHkKYNW9JItg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Chen <liangchen.linux@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/511] veth: Fixing transmit return status for dropped packets
-Date: Sun, 17 Sep 2023 21:14:23 +0200
-Message-ID: <20230917191124.289090326@linuxfoundation.org>
+Subject: [PATCH 5.15 437/511] net: ipv6/addrconf: avoid integer underflow in ipv6_create_tempaddr
+Date: Sun, 17 Sep 2023 21:14:24 +0200
+Message-ID: <20230917191124.312038914@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,52 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Chen <liangchen.linux@gmail.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit 151e887d8ff97e2e42110ffa1fb1e6a2128fb364 ]
+[ Upstream commit f31867d0d9d82af757c1e0178b659438f4c1ea3c ]
 
-The veth_xmit function returns NETDEV_TX_OK even when packets are dropped.
-This behavior leads to incorrect calculations of statistics counts, as
-well as things like txq->trans_start updates.
+The existing code incorrectly casted a negative value (the result of a
+subtraction) to an unsigned value without checking. For example, if
+/proc/sys/net/ipv6/conf/*/temp_prefered_lft was set to 1, the preferred
+lifetime would jump to 4 billion seconds. On my machine and network the
+shortest lifetime that avoided underflow was 3 seconds.
 
-Fixes: e314dbdc1c0d ("[NET]: Virtual ethernet device driver.")
-Signed-off-by: Liang Chen <liangchen.linux@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 76506a986dc3 ("IPv6: fix DESYNC_FACTOR")
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 45ee44f66e77d..984a153804096 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -320,6 +320,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct veth_priv *rcv_priv, *priv = netdev_priv(dev);
- 	struct veth_rq *rq = NULL;
-+	int ret = NETDEV_TX_OK;
- 	struct net_device *rcv;
- 	int length = skb->len;
- 	bool use_napi = false;
-@@ -352,6 +353,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 	} else {
- drop:
- 		atomic64_inc(&priv->dropped);
-+		ret = NET_XMIT_DROP;
- 	}
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 0c0b7969840f5..6572174e2115f 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1368,7 +1368,7 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 	 * idev->desync_factor if it's larger
+ 	 */
+ 	cnf_temp_preferred_lft = READ_ONCE(idev->cnf.temp_prefered_lft);
+-	max_desync_factor = min_t(__u32,
++	max_desync_factor = min_t(long,
+ 				  idev->cnf.max_desync_factor,
+ 				  cnf_temp_preferred_lft - regen_advance);
  
- 	if (use_napi)
-@@ -359,7 +361,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	rcu_read_unlock();
- 
--	return NETDEV_TX_OK;
-+	return ret;
- }
- 
- static u64 veth_stats_tx(struct net_device *dev, u64 *packets, u64 *bytes)
 -- 
 2.40.1
 
