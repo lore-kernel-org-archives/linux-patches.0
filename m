@@ -1,26 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9D16FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0994C433C8;
-	Sun, 17 Sep 2023 19:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509AB4A3F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CA9C433C7;
+	Sun, 17 Sep 2023 19:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979605;
-	bh=sMEcIT9qnRRZaNenrMuvlPxwUZb/CYyFjR7xrDGnwX8=;
+	s=korg; t=1694979609;
+	bh=o48EqMlfIXFVaImhYipgBxT/5hzopEd7FMMDyq3jZTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssWdEl568dLe7Udwj9aXU8ykXGVJE3xNMMthTyOGnH03cVQEaGMT8V7fQPN/S/Qq6
-	 3MXYf8mrNDObhdOAe2O4F/oUMd0JHDJynBy2dSCjgFtGv7noo4iQ4BOozJa6z0FVnz
-	 s0Xo1jnVOZh1v7v+mvILg1Ue3QZr6PEqRGGN4mFs=
+	b=O6E7CzMyyWt/LUEuJAhWGZ6GSpVl2fT5m6wo19jkwn7o/s0MLpm1YwDDcy8jGV1YD
+	 s/jRyttQ/aSFzSDzn3ZmwHUxJdRnol4oeMe5a0hJzZAiHKZvk2VOsxOVZH8JEDifU2
+	 8TTL8U+xBylvBzVCJAtIPPsLWkYmkm/5zI+JPZdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
+	Jeremie Galarneau <jeremie.galarneau@efficios.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kate Stewart <kstewart@linuxfoundation.org>,
+	Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>,
+	Mukesh Ojha <mojha@codeaurora.org>,
+	Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
+	Shawn Landden <shawn@git.icu>,
+	Song Liu <songliubraving@fb.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tzvetomir Stoyanov <tstoyanov@vmware.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 337/406] x86/virt: Drop unnecessary check on extended CPUID level in cpu_has_svm()
-Date: Sun, 17 Sep 2023 21:13:11 +0200
-Message-ID: <20230917191110.180842830@linuxfoundation.org>
+Subject: [PATCH 5.10 338/406] perf top: Dont pass an ERR_PTR() directly to perf_session__delete()
+Date: Sun, 17 Sep 2023 21:13:12 +0200
+Message-ID: <20230917191110.207009186@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,42 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5df8ecfe3632d5879d1f154f7aa8de441b5d1c89 ]
+[ Upstream commit ef23cb593304bde0cc046fd4cc83ae7ea2e24f16 ]
 
-Drop the explicit check on the extended CPUID level in cpu_has_svm(), the
-kernel's cached CPUID info will leave the entire SVM leaf unset if said
-leaf is not supported by hardware.  Prior to using cached information,
-the check was needed to avoid false positives due to Intel's rather crazy
-CPUID behavior of returning the values of the maximum supported leaf if
-the specified leaf is unsupported.
+While debugging a segfault on 'perf lock contention' without an
+available perf.data file I noticed that it was basically calling:
 
-Fixes: 682a8108872f ("x86/kvm/svm: Simplify cpu_has_svm()")
-Link: https://lore.kernel.org/r/20230721201859.2307736-13-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+	perf_session__delete(ERR_PTR(-1))
+
+Resulting in:
+
+  (gdb) run lock contention
+  Starting program: /root/bin/perf lock contention
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib64/libthread_db.so.1".
+  failed to open perf.data: No such file or directory  (try 'perf record' first)
+  Initializing perf session failed
+
+  Program received signal SIGSEGV, Segmentation fault.
+  0x00000000005e7515 in auxtrace__free (session=0xffffffffffffffff) at util/auxtrace.c:2858
+  2858		if (!session->auxtrace)
+  (gdb) p session
+  $1 = (struct perf_session *) 0xffffffffffffffff
+  (gdb) bt
+  #0  0x00000000005e7515 in auxtrace__free (session=0xffffffffffffffff) at util/auxtrace.c:2858
+  #1  0x000000000057bb4d in perf_session__delete (session=0xffffffffffffffff) at util/session.c:300
+  #2  0x000000000047c421 in __cmd_contention (argc=0, argv=0x7fffffffe200) at builtin-lock.c:2161
+  #3  0x000000000047dc95 in cmd_lock (argc=0, argv=0x7fffffffe200) at builtin-lock.c:2604
+  #4  0x0000000000501466 in run_builtin (p=0xe597a8 <commands+552>, argc=2, argv=0x7fffffffe200) at perf.c:322
+  #5  0x00000000005016d5 in handle_internal_command (argc=2, argv=0x7fffffffe200) at perf.c:375
+  #6  0x0000000000501824 in run_argv (argcp=0x7fffffffe02c, argv=0x7fffffffe020) at perf.c:419
+  #7  0x0000000000501b11 in main (argc=2, argv=0x7fffffffe200) at perf.c:535
+  (gdb)
+
+So just set it to NULL after using PTR_ERR(session) to decode the error
+as perf_session__delete(NULL) is supported.
+
+The same problem was found in 'perf top' after an audit of all
+perf_session__new() failure handling.
+
+Fixes: 6ef81c55a2b6584c ("perf session: Return error code for perf_session__new() function on failure")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jeremie Galarneau <jeremie.galarneau@efficios.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kate Stewart <kstewart@linuxfoundation.org>
+Cc: Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>
+Cc: Mukesh Ojha <mojha@codeaurora.org>
+Cc: Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+Cc: Shawn Landden <shawn@git.icu>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tzvetomir Stoyanov <tstoyanov@vmware.com>
+Link: https://lore.kernel.org/lkml/ZN4Q2rxxsL08A8rd@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/virtext.h | 6 ------
- 1 file changed, 6 deletions(-)
+ tools/perf/builtin-top.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/virtext.h b/arch/x86/include/asm/virtext.h
-index 8eefa3386d8ce..331474296e6f1 100644
---- a/arch/x86/include/asm/virtext.h
-+++ b/arch/x86/include/asm/virtext.h
-@@ -95,12 +95,6 @@ static inline int cpu_has_svm(const char **msg)
- 		return 0;
+diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
+index 7c64134472c77..ee30372f77133 100644
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -1743,6 +1743,7 @@ int cmd_top(int argc, const char **argv)
+ 	top.session = perf_session__new(NULL, false, NULL);
+ 	if (IS_ERR(top.session)) {
+ 		status = PTR_ERR(top.session);
++		top.session = NULL;
+ 		goto out_delete_evlist;
  	}
  
--	if (boot_cpu_data.extended_cpuid_level < SVM_CPUID_FUNC) {
--		if (msg)
--			*msg = "can't execute cpuid_8000000a";
--		return 0;
--	}
--
- 	if (!boot_cpu_has(X86_FEATURE_SVM)) {
- 		if (msg)
- 			*msg = "svm not available";
 -- 
 2.40.1
 
