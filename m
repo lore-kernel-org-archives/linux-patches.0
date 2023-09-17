@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328C6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B942DC433C8;
-	Sun, 17 Sep 2023 19:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CB66FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFD5C433C7;
+	Sun, 17 Sep 2023 19:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979788;
-	bh=iHBJL08veOIkNVxaKdRV2T3UT28yYzXJX78NtE2UaCw=;
+	s=korg; t=1694979791;
+	bh=6j97H9MsDa6BUbr39pYGsOLvczMcdqFrmlnEJkbMTuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rctC1ytxos6OUiCSIVMv4585B3CfKn4YF2PJja5s3rHTRLYTI4mM7lZLKw/JzcuS
-	 lpp+01tqWzKlPnrN/M9FHqyarVbrEsgsdjmwFpyMPwrdmfgROlawpmWmr8ByfxD0HP
-	 TitqfHD9Dtdk+odP7sFjnkoi+buZdg2zlhRDct2w=
+	b=avxmlMtow4Sd935BrDNqARJIJU8N8aMXRE5nuRD2XdD4CHJj0uJ4/uM/9BLoIJ2nQ
+	 p2HvF+kPCGyqaCNKw1dE4jxpoYLsyAFYNeYvFeSdZYfqPuBqR0rzzDhlTEyIM0Gmml
+	 Kg1Dmq0B0z8wJFPb3ansgDZYYac1b0nUwQ86d4/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 396/406] hsr: Fix uninit-value access in fill_frame_info()
-Date: Sun, 17 Sep 2023 21:14:10 +0200
-Message-ID: <20230917191111.719568610@linuxfoundation.org>
+Subject: [PATCH 5.10 387/406] ARM: dts: samsung: exynos4210-i9100: Fix LCD screens physical size
+Date: Sun, 17 Sep 2023 21:14:01 +0200
+Message-ID: <20230917191111.481096129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,88 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
+[ Upstream commit b3f3fc32e5ff1e848555af8616318cc667457f90 ]
 
-Syzbot reports the following uninit-value access problem.
+The previous values were completely bogus, and resulted in the computed
+DPI ratio being much lower than reality, causing applications and UIs to
+misbehave.
 
-=====================================================
-BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
-BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- fill_frame_info net/hsr/hsr_forward.c:601 [inline]
- hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
- __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
- netdev_start_xmit include/linux/netdevice.h:4903 [inline]
- xmit_one net/core/dev.c:3544 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
- __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
- dev_queue_xmit include/linux/netdevice.h:3082 [inline]
- packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3087 [inline]
- packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+The new values were measured by myself with a ruler.
 
-Uninit was created at:
- slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
- kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
- __alloc_skb+0x318/0x740 net/core/skbuff.c:644
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
- packet_alloc_skb net/packet/af_packet.c:2936 [inline]
- packet_snd net/packet/af_packet.c:3030 [inline]
- packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
-It is because VLAN not yet supported in hsr driver. Return error
-when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
-
-Fixes: 451d8123f897 ("net: prp: add packet handling support")
-Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
+Cc: <stable@vger.kernel.org> # v5.8+
+Link: https://lore.kernel.org/r/20230714153720.336990-1-paul@crapouillou.net
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/exynos4210-i9100.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index aec48e670fb69..2a02cb2edec2f 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -531,6 +531,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
- 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
- 		/* FIXME: */
- 		netdev_warn_once(skb->dev, "VLAN not yet supported");
-+		return -EINVAL;
- 	}
+diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exynos4210-i9100.dts
+index ecc9d4dc707e4..d186b93144e38 100644
+--- a/arch/arm/boot/dts/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/exynos4210-i9100.dts
+@@ -170,8 +170,8 @@
+ 			power-on-delay = <10>;
+ 			reset-delay = <10>;
  
- 	frame->is_from_san = false;
+-			panel-width-mm = <90>;
+-			panel-height-mm = <154>;
++			panel-width-mm = <56>;
++			panel-height-mm = <93>;
+ 
+ 			display-timings {
+ 				timing {
 -- 
 2.40.1
 
