@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC41E6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19754C433D9;
-	Sun, 17 Sep 2023 19:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AB6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D83C43391;
+	Sun, 17 Sep 2023 19:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979742;
-	bh=cJQHA0aG0D7nS/4tWFYgU3en00NgNzLdjR8+LwKKVUM=;
+	s=korg; t=1694979746;
+	bh=o67hvdOJDzgu/PbW5ZoJ6iRD55enf6mzLj2TNI343QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwKQO+x8bwKfE0fw4TYyAF+gPvajkGgjuWo7Hb5puuXMfyMnhNFj+qGNxVrxPHdvf
-	 O0rgYU4zvQAOd+RnLLBbHoZS+ffaixjn1uJXOEqODrgB/nYO3vtNvvKghBsLrF+pyt
-	 Fi5XovpRE1JAKtwdF494r2G6P5bQtYYmqyFIrBCU=
+	b=MpVGIN65TQAlvIFJ2Rr4/TugRG18VxdJkUwrD3ccRjkGNoOygoZLBQc9qT+MZXXCS
+	 jKauFZ7X7mGKYdTofl7XhiEwTFs4rVHv2Y7CQ5IGv32EeByYPCnRSY21Pj7WkSvwEB
+	 fUS20fjO2wmpIXnAXTv0GLG8aQOh5GXmx/lG5xGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 401/406] net/tls: do not free tls_rec on async operation in bpf_exec_tx_verdict()
-Date: Sun, 17 Sep 2023 21:14:15 +0200
-Message-ID: <20230917191111.848206508@linuxfoundation.org>
+Subject: [PATCH 5.10 402/406] ipv6: fix ip6_sock_set_addr_preferences() typo
+Date: Sun, 17 Sep 2023 21:14:16 +0200
+Message-ID: <20230917191111.873593618@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,82 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cfaa80c91f6f99b9342b6557f0f0e1143e434066 ]
+[ Upstream commit 8cdd9f1aaedf823006449faa4e540026c692ac43 ]
 
-I got the below warning when do fuzzing test:
-BUG: KASAN: null-ptr-deref in scatterwalk_copychunks+0x320/0x470
-Read of size 4 at addr 0000000000000008 by task kworker/u8:1/9
+ip6_sock_set_addr_preferences() second argument should be an integer.
 
-CPU: 0 PID: 9 Comm: kworker/u8:1 Tainted: G           OE
-Hardware name: linux,dummy-virt (DT)
-Workqueue: pencrypt_parallel padata_parallel_worker
-Call trace:
- dump_backtrace+0x0/0x420
- show_stack+0x34/0x44
- dump_stack+0x1d0/0x248
- __kasan_report+0x138/0x140
- kasan_report+0x44/0x6c
- __asan_load4+0x94/0xd0
- scatterwalk_copychunks+0x320/0x470
- skcipher_next_slow+0x14c/0x290
- skcipher_walk_next+0x2fc/0x480
- skcipher_walk_first+0x9c/0x110
- skcipher_walk_aead_common+0x380/0x440
- skcipher_walk_aead_encrypt+0x54/0x70
- ccm_encrypt+0x13c/0x4d0
- crypto_aead_encrypt+0x7c/0xfc
- pcrypt_aead_enc+0x28/0x84
- padata_parallel_worker+0xd0/0x2dc
- process_one_work+0x49c/0xbdc
- worker_thread+0x124/0x880
- kthread+0x210/0x260
- ret_from_fork+0x10/0x18
+SUNRPC attempts to set IPV6_PREFER_SRC_PUBLIC were
+translated to IPV6_PREFER_SRC_TMP
 
-This is because the value of rec_seq of tls_crypto_info configured by the
-user program is too large, for example, 0xffffffffffffff. In addition, TLS
-is asynchronously accelerated. When tls_do_encryption() returns
--EINPROGRESS and sk->sk_err is set to EBADMSG due to rec_seq overflow,
-skmsg is released before the asynchronous encryption process ends. As a
-result, the UAF problem occurs during the asynchronous processing of the
-encryption module.
-
-If the operation is asynchronous and the encryption module returns
-EINPROGRESS, do not free the record information.
-
-Fixes: 635d93981786 ("net/tls: free record only on encryption error")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/20230909081434.2324940-1-liujian56@huawei.com
+Fixes: 18d5ad623275 ("ipv6: add ip6_sock_set_addr_preferences")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230911154213.713941-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/ipv6.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ac7feadb43904..50eae668578a7 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -810,7 +810,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 	psock = sk_psock_get(sk);
- 	if (!psock || !policy) {
- 		err = tls_push_record(sk, flags, record_type);
--		if (err && sk->sk_err == EBADMSG) {
-+		if (err && err != -EINPROGRESS && sk->sk_err == EBADMSG) {
- 			*copied -= sk_msg_free(sk, msg);
- 			tls_free_open_rec(sk);
- 			err = -sk->sk_err;
-@@ -839,7 +839,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 	switch (psock->eval) {
- 	case __SK_PASS:
- 		err = tls_push_record(sk, flags, record_type);
--		if (err && sk->sk_err == EBADMSG) {
-+		if (err && err != -EINPROGRESS && sk->sk_err == EBADMSG) {
- 			*copied -= sk_msg_free(sk, msg);
- 			tls_free_open_rec(sk);
- 			err = -sk->sk_err;
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 4c8f97a6da5a7..47d644de0e47c 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1249,7 +1249,7 @@ static inline int __ip6_sock_set_addr_preferences(struct sock *sk, int val)
+ 	return 0;
+ }
+ 
+-static inline int ip6_sock_set_addr_preferences(struct sock *sk, bool val)
++static inline int ip6_sock_set_addr_preferences(struct sock *sk, int val)
+ {
+ 	int ret;
+ 
 -- 
 2.40.1
 
