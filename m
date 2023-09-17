@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6F97461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BB1C433C7;
-	Sun, 17 Sep 2023 20:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651A07461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E84C433C8;
+	Sun, 17 Sep 2023 20:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981178;
-	bh=cZS+qh46bIqR0WX02KtlA5HfUGYii7eFdviKLg5sEOs=;
+	s=korg; t=1694981182;
+	bh=GrTWm9QQscidQ0GQF9B1rX0/OzKSNZLraOdxQUmqEHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TMQqP0X5oAzC04CysKJN9xHGlHRzxvMs5hVLWYnpFdvBE9cx0qxr6+vuElPVrircA
-	 S5ELAuK910qFF5BhDZbT7iA/PgPojUmLjw5a8JCo3Wu9UTTgdnKfnt8MzIxlqUfo/r
-	 //XhJrwd3walA+73mqgWYjsMABVaB8TaMtZSDfQU=
+	b=Pwn2TgRm+JYZDYDf7ZkPK7Dn9jSSMMNGxRF9h6QK+01GYdZmHVzHZEzaWOJyVR5cX
+	 EDn1yQ3lD/7CeJiaS3mzLJIU+rxcUb8qDSIoNdWOHvTS9h9y5L4XvPeBfBO9sJjBTh
+	 iMUt984vQp4tV8f5nNhZtEn+xHwTICKmisl/7UTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"David S. Miller" <davem@davemloft.net>,
-	Ajay Kaher <akaher@vmware.com>
-Subject: [PATCH 6.1 055/219] net: deal with integer overflows in kmalloc_reserve()
-Date: Sun, 17 Sep 2023 21:13:02 +0200
-Message-ID: <20230917191043.002216435@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 083/219] blk-throttle: use calculate_io/bytes_allowed() for throtl_trim_slice()
+Date: Sun, 17 Sep 2023 21:13:30 +0200
+Message-ID: <20230917191043.978499995@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -44,114 +41,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 915d975b2ffa58a14bfcf16fafe00c41315949ff upstream.
+[ Upstream commit e8368b57c006dc0e02dcd8a9dc9f2060ff5476fe ]
 
-Blamed commit changed:
-    ptr = kmalloc(size);
-    if (ptr)
-      size = ksize(ptr);
+There are no functional changes, just make the code cleaner.
 
-to:
-    size = kmalloc_size_roundup(size);
-    ptr = kmalloc(size);
-
-This allowed various crash as reported by syzbot [1]
-and Kyle Zeng.
-
-Problem is that if @size is bigger than 0x80000001,
-kmalloc_size_roundup(size) returns 2^32.
-
-kmalloc_reserve() uses a 32bit variable (obj_size),
-so 2^32 is truncated to 0.
-
-kmalloc(0) returns ZERO_SIZE_PTR which is not handled by
-skb allocations.
-
-Following trace can be triggered if a netdev->mtu is set
-close to 0x7fffffff
-
-We might in the future limit netdev->mtu to more sensible
-limit (like KMALLOC_MAX_SIZE).
-
-This patch is based on a syzbot report, and also a report
-and tentative fix from Kyle Zeng.
-
-[1]
-BUG: KASAN: user-memory-access in __build_skb_around net/core/skbuff.c:294 [inline]
-BUG: KASAN: user-memory-access in __alloc_skb+0x3c4/0x6e8 net/core/skbuff.c:527
-Write of size 32 at addr 00000000fffffd10 by task syz-executor.4/22554
-
-CPU: 1 PID: 22554 Comm: syz-executor.4 Not tainted 6.1.39-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-Call trace:
-dump_backtrace+0x1c8/0x1f4 arch/arm64/kernel/stacktrace.c:279
-show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:286
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0x120/0x1a0 lib/dump_stack.c:106
-print_report+0xe4/0x4b4 mm/kasan/report.c:398
-kasan_report+0x150/0x1ac mm/kasan/report.c:495
-kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
-memset+0x40/0x70 mm/kasan/shadow.c:44
-__build_skb_around net/core/skbuff.c:294 [inline]
-__alloc_skb+0x3c4/0x6e8 net/core/skbuff.c:527
-alloc_skb include/linux/skbuff.h:1316 [inline]
-igmpv3_newpack+0x104/0x1088 net/ipv4/igmp.c:359
-add_grec+0x81c/0x1124 net/ipv4/igmp.c:534
-igmpv3_send_cr net/ipv4/igmp.c:667 [inline]
-igmp_ifc_timer_expire+0x1b0/0x1008 net/ipv4/igmp.c:810
-call_timer_fn+0x1c0/0x9f0 kernel/time/timer.c:1474
-expire_timers kernel/time/timer.c:1519 [inline]
-__run_timers+0x54c/0x710 kernel/time/timer.c:1790
-run_timer_softirq+0x28/0x4c kernel/time/timer.c:1803
-_stext+0x380/0xfbc
-____do_softirq+0x14/0x20 arch/arm64/kernel/irq.c:79
-call_on_irq_stack+0x24/0x4c arch/arm64/kernel/entry.S:891
-do_softirq_own_stack+0x20/0x2c arch/arm64/kernel/irq.c:84
-invoke_softirq kernel/softirq.c:437 [inline]
-__irq_exit_rcu+0x1c0/0x4cc kernel/softirq.c:683
-irq_exit_rcu+0x14/0x78 kernel/softirq.c:695
-el0_interrupt+0x7c/0x2e0 arch/arm64/kernel/entry-common.c:717
-__el0_irq_handler_common+0x18/0x24 arch/arm64/kernel/entry-common.c:724
-el0t_64_irq_handler+0x10/0x1c arch/arm64/kernel/entry-common.c:729
-el0t_64_irq+0x1a0/0x1a4 arch/arm64/kernel/entry.S:584
-
-Fixes: 12d6c1d3a2ad ("skbuff: Proactively round up to kmalloc bucket size")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[Ajay: Regenerated the patch for v6.1.y]
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230816012708.1193747-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: eead0056648c ("blk-throttle: consider 'carryover_ios/bytes' in throtl_trim_slice()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ block/blk-throttle.c | 86 +++++++++++++++++++++-----------------------
+ 1 file changed, 41 insertions(+), 45 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -428,11 +428,17 @@ static void *kmalloc_reserve(unsigned in
- 			     bool *pfmemalloc)
- {
- 	bool ret_pfmemalloc = false;
--	unsigned int obj_size;
-+	size_t obj_size;
- 	void *obj;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index f1bc600c4ded6..931795da4d65d 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -697,11 +697,40 @@ static bool throtl_slice_used(struct throtl_grp *tg, bool rw)
+ 	return true;
+ }
  
- 	obj_size = SKB_HEAD_ALIGN(*size);
--	*size = obj_size = kmalloc_size_roundup(obj_size);
++static unsigned int calculate_io_allowed(u32 iops_limit,
++					 unsigned long jiffy_elapsed)
++{
++	unsigned int io_allowed;
++	u64 tmp;
 +
-+	obj_size = kmalloc_size_roundup(obj_size);
-+	/* The following cast might truncate high-order bits of obj_size, this
-+	 * is harmless because kmalloc(obj_size >= 2^32) will fail anyway.
++	/*
++	 * jiffy_elapsed should not be a big value as minimum iops can be
++	 * 1 then at max jiffy elapsed should be equivalent of 1 second as we
++	 * will allow dispatch after 1 second and after that slice should
++	 * have been trimmed.
 +	 */
-+	*size = (unsigned int)obj_size;
 +
- 	/*
- 	 * Try a regular allocation, when that fails and we're not entitled
- 	 * to the reserves, fail.
++	tmp = (u64)iops_limit * jiffy_elapsed;
++	do_div(tmp, HZ);
++
++	if (tmp > UINT_MAX)
++		io_allowed = UINT_MAX;
++	else
++		io_allowed = tmp;
++
++	return io_allowed;
++}
++
++static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
++{
++	return mul_u64_u64_div_u64(bps_limit, (u64)jiffy_elapsed, (u64)HZ);
++}
++
+ /* Trim the used slices and adjust slice start accordingly */
+ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ {
+-	unsigned long nr_slices, time_elapsed, io_trim;
+-	u64 bytes_trim, tmp;
++	unsigned long time_elapsed, io_trim;
++	u64 bytes_trim;
+ 
+ 	BUG_ON(time_before(tg->slice_end[rw], tg->slice_start[rw]));
+ 
+@@ -723,19 +752,14 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 
+ 	throtl_set_slice_end(tg, rw, jiffies + tg->td->throtl_slice);
+ 
+-	time_elapsed = jiffies - tg->slice_start[rw];
+-
+-	nr_slices = time_elapsed / tg->td->throtl_slice;
+-
+-	if (!nr_slices)
++	time_elapsed = rounddown(jiffies - tg->slice_start[rw],
++				 tg->td->throtl_slice);
++	if (!time_elapsed)
+ 		return;
+-	tmp = tg_bps_limit(tg, rw) * tg->td->throtl_slice * nr_slices;
+-	do_div(tmp, HZ);
+-	bytes_trim = tmp;
+-
+-	io_trim = (tg_iops_limit(tg, rw) * tg->td->throtl_slice * nr_slices) /
+-		HZ;
+ 
++	bytes_trim = calculate_bytes_allowed(tg_bps_limit(tg, rw),
++					     time_elapsed);
++	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed);
+ 	if (!bytes_trim && !io_trim)
+ 		return;
+ 
+@@ -749,41 +773,13 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 	else
+ 		tg->io_disp[rw] = 0;
+ 
+-	tg->slice_start[rw] += nr_slices * tg->td->throtl_slice;
++	tg->slice_start[rw] += time_elapsed;
+ 
+ 	throtl_log(&tg->service_queue,
+ 		   "[%c] trim slice nr=%lu bytes=%llu io=%lu start=%lu end=%lu jiffies=%lu",
+-		   rw == READ ? 'R' : 'W', nr_slices, bytes_trim, io_trim,
+-		   tg->slice_start[rw], tg->slice_end[rw], jiffies);
+-}
+-
+-static unsigned int calculate_io_allowed(u32 iops_limit,
+-					 unsigned long jiffy_elapsed)
+-{
+-	unsigned int io_allowed;
+-	u64 tmp;
+-
+-	/*
+-	 * jiffy_elapsed should not be a big value as minimum iops can be
+-	 * 1 then at max jiffy elapsed should be equivalent of 1 second as we
+-	 * will allow dispatch after 1 second and after that slice should
+-	 * have been trimmed.
+-	 */
+-
+-	tmp = (u64)iops_limit * jiffy_elapsed;
+-	do_div(tmp, HZ);
+-
+-	if (tmp > UINT_MAX)
+-		io_allowed = UINT_MAX;
+-	else
+-		io_allowed = tmp;
+-
+-	return io_allowed;
+-}
+-
+-static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
+-{
+-	return mul_u64_u64_div_u64(bps_limit, (u64)jiffy_elapsed, (u64)HZ);
++		   rw == READ ? 'R' : 'W', time_elapsed / tg->td->throtl_slice,
++		   bytes_trim, io_trim, tg->slice_start[rw], tg->slice_end[rw],
++		   jiffies);
+ }
+ 
+ static void __tg_update_carryover(struct throtl_grp *tg, bool rw)
+-- 
+2.40.1
+
 
 
