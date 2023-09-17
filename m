@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C513E6AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F379C433C7;
-	Sun, 17 Sep 2023 20:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B756AAC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA40C433C7;
+	Sun, 17 Sep 2023 20:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982057;
-	bh=+AxiysUv+DiW0tn5Ps9w3I0lRhwutkSeUoo6qha8VoQ=;
+	s=korg; t=1694982061;
+	bh=v+87mFBZhhIIN0WJkgXM9L5ZsAWqPMuRWGiqg2iA6nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=reREw/+OEO/FLXXR2CWhjzvNWvrQqJdibiiS2ywvKnLwDGVXca0QEMGXrgWnow37T
-	 5DEXrtlxeHCQvvXudWOezOCB9q5JQyxTQFyVvqKxICEWMdIAQT+n70NwLcDtAVEWc7
-	 RRIxKGbFuxPMsDEVTEFZAjX0bzWBnXxfA1WmqCZg=
+	b=mNmEZoe5xZ9ztsQZ976h5M4+T/07STYVrWib1MJA5DnLvKmUTqNQafkdONZX2P789
+	 P4WwgQA5PHKTcYJY1YZroR2As0+xO7unNfrAiuhc+QPmc+JNAnGj8L2JvB/9v+OmH4
+	 AVYsAsoojoWY9/NOfwVewwPr2p0m6yE6Jx88xo/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/219] ipv6: fix ip6_sock_set_addr_preferences() typo
-Date: Sun, 17 Sep 2023 21:15:38 +0200
-Message-ID: <20230917191048.556355586@linuxfoundation.org>
+Subject: [PATCH 5.15 145/511] arm64: dts: qcom: correct SPMI WLED register range encoding
+Date: Sun, 17 Sep 2023 21:09:32 +0200
+Message-ID: <20230917191117.358471812@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,44 +36,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8cdd9f1aaedf823006449faa4e540026c692ac43 ]
+[ Upstream commit d66b1d2e4afc0c8a9eb267740825240b67f6b1d1 ]
 
-ip6_sock_set_addr_preferences() second argument should be an integer.
+On PM660L, PMI8994 and PMI8998, the WLED has two address spaces and with
+size-cells=0, they should be encoded as two separate items.
 
-SUNRPC attempts to set IPV6_PREFER_SRC_PUBLIC were
-translated to IPV6_PREFER_SRC_TMP
-
-Fixes: 18d5ad623275 ("ipv6: add ip6_sock_set_addr_preferences")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230911154213.713941-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20220505154702.422108-2-krzysztof.kozlowski@linaro.org
+Stable-dep-of: 9a4ac09db3c7 ("arm64: dts: qcom: pm660l: Add missing short interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/pm660l.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/pmi8994.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index e4ceef687c1c2..8ced112167599 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -1322,7 +1322,7 @@ static inline int __ip6_sock_set_addr_preferences(struct sock *sk, int val)
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+index 05086cbe573be..536bf9920fa92 100644
+--- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+@@ -67,7 +67,7 @@ pmic@3 {
  
--static inline int ip6_sock_set_addr_preferences(struct sock *sk, bool val)
-+static inline int ip6_sock_set_addr_preferences(struct sock *sk, int val)
- {
- 	int ret;
+ 		pm660l_wled: leds@d800 {
+ 			compatible = "qcom,pm660l-wled";
+-			reg = <0xd800 0xd900>;
++			reg = <0xd800>, <0xd900>;
+ 			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "ovp";
+ 			label = "backlight";
+diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+index a06ea9adae810..7b41c1ed464ac 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+@@ -35,7 +35,7 @@ pmi8994_spmi_regulators: regulators {
  
+ 		pmi8994_wled: wled@d800 {
+ 			compatible = "qcom,pmi8994-wled";
+-			reg = <0xd800 0xd900>;
++			reg = <0xd800>, <0xd900>;
+ 			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "short";
+ 			qcom,num-strings = <3>;
+diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+index 0fef5f113f05e..ef29e80c442c7 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+@@ -44,7 +44,7 @@ lab: lab {
+ 
+ 		pmi8998_wled: leds@d800 {
+ 			compatible = "qcom,pmi8998-wled";
+-			reg = <0xd800 0xd900>;
++			reg = <0xd800>, <0xd900>;
+ 			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
+ 				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "ovp", "short";
 -- 
 2.40.1
 
