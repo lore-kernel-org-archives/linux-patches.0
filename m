@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADE94A3F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986E2C433C7;
-	Sun, 17 Sep 2023 19:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A890D4A3F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5E4C433C7;
+	Sun, 17 Sep 2023 19:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979630;
-	bh=4WNUlBiYvV9MvXKchhYxmqnf7vClpOYmHhaOkqqvWdc=;
+	s=korg; t=1694979633;
+	bh=dGHJLE3bpqt+c8rACEf5EmgCGIRN9rCVhhZdzG/XVvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9TAZwvRQ+GlcJ92L85T/6eAaIVyHstsN4GbxT6VRMsXGPh0vhQmR6i0GSm53Edmk
-	 IFo7B4d/sH0by5uG4p84bNL8Ob4eOB1ftdpcs1CEcL7PMF9Mi50jNRfrdtaD+LdpDK
-	 oyVy5VSgf1x83q/tnOYV1EVsic/Rq8w+Mp65mtsI=
+	b=zwwe2wRq5uACvd4+AMOYysLgYMpOPDONXuNzAyrCcJJngz7M03XUYEg3St6cmJfPs
+	 YVYoJ9B9hcHpeFS0dKbk3diPBHGw/GnpV62RYysXDlhv5S/yvF2SlIfOI61oUvvMFr
+	 fRrH1W6puZ4gU+xDFt85oPY6bHdmCiTRKT0pbV4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ariel Marcovitch <arielmarcovitch@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 361/406] idr: fix param name in idr_alloc_cyclic() doc
-Date: Sun, 17 Sep 2023 21:13:35 +0200
-Message-ID: <20230917191110.806232110@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 370/406] ata: pata_ftide010: Add missing MODULE_DESCRIPTION
+Date: Sun, 17 Sep 2023 21:13:44 +0200
+Message-ID: <20230917191111.037215920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,35 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ariel Marcovitch <arielmarcovitch@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 2a15de80dd0f7e04a823291aa9eb49c5294f56af ]
+commit 7274eef5729037300f29d14edeb334a47a098f65 upstream.
 
-The relevant parameter is 'start' and not 'nextid'
+Add the missing MODULE_DESCRIPTION() to avoid warnings such as:
 
-Fixes: 460488c58ca8 ("idr: Remove idr_alloc_ext")
-Signed-off-by: Ariel Marcovitch <arielmarcovitch@gmail.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ata/pata_ftide010.o
+
+when compiling with W=1.
+
+Fixes: be4e456ed3a5 ("ata: Add driver for Faraday Technology FTIDE010")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/idr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/pata_ftide010.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/idr.c b/lib/idr.c
-index 7ecdfdb5309e7..13f2758c23773 100644
---- a/lib/idr.c
-+++ b/lib/idr.c
-@@ -100,7 +100,7 @@ EXPORT_SYMBOL_GPL(idr_alloc);
-  * @end: The maximum ID (exclusive).
-  * @gfp: Memory allocation flags.
-  *
-- * Allocates an unused ID in the range specified by @nextid and @end.  If
-+ * Allocates an unused ID in the range specified by @start and @end.  If
-  * @end is <= 0, it is treated as one larger than %INT_MAX.  This allows
-  * callers to use @start + N as @end as long as N is within integer range.
-  * The search for an unused ID will start at the last ID allocated and will
--- 
-2.40.1
-
+--- a/drivers/ata/pata_ftide010.c
++++ b/drivers/ata/pata_ftide010.c
+@@ -570,6 +570,7 @@ static struct platform_driver pata_ftide
+ };
+ module_platform_driver(pata_ftide010_driver);
+ 
++MODULE_DESCRIPTION("low level driver for Faraday Technology FTIDE010");
+ MODULE_AUTHOR("Linus Walleij <linus.walleij@linaro.org>");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRV_NAME);
 
 
