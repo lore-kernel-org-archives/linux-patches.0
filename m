@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B756FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE60C433C8;
-	Sun, 17 Sep 2023 19:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0F66FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F1C433C8;
+	Sun, 17 Sep 2023 19:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980587;
-	bh=W0oEmUM3Eg/m4RcBuAghDz29QYQX6m4FsadyLS08IaE=;
+	s=korg; t=1694980590;
+	bh=7HPwspJXkMXx4qSiri/iKKhuVjQ3UPFC0fU3gwFcAdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x4Meb2mqkEeg4n+jr2m6cBkg1kG6FszHOXnbYe8MmhmlbAI8/AOxPlrQ31xTbB1o9
-	 XFdsHxSajD8cfzWhbHL9+uubpm8IiYOSn5Dbcu6u4Aa6VDl47XRLrzxgsUC2Cn5UnV
-	 BdX5ttG8yFO+W5JXeQrBS4oTR7oBZP5RGTc6cbL4=
+	b=wZE/quHjbmh2Qg8Iblu3NkEc759QrwMLd1ZFDu4bt403QcS7uoFnBnXzeZ2FJRJOo
+	 dM5Hxp2mf0+kG+x04oPHs4A39uRP8+nh0i4l31xZhs34AxSnaWr2AUr41BK5h1lC1K
+	 TkNHt7NOnnXVi89H5zrHdBROOUcBmHWMLLlqFZ2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.5 195/285] hwspinlock: qcom: add missing regmap config for SFPB MMIO implementation
-Date: Sun, 17 Sep 2023 21:13:15 +0200
-Message-ID: <20230917191058.341427456@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 229/285] KVM: SVM: Skip VMSA init in sev_es_init_vmcb() if pointer is NULL
+Date: Sun, 17 Sep 2023 21:13:49 +0200
+Message-ID: <20230917191059.376715796@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -39,53 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 23316be8a9d450f33a21f1efe7d89570becbec58 upstream.
+commit 1952e74da96fb3e48b72a2d0ece78c688a5848c1 upstream.
 
-Commit 5d4753f741d8 ("hwspinlock: qcom: add support for MMIO on older
-SoCs") introduced and made regmap_config mandatory in the of_data struct
-but didn't add the regmap_config for sfpb based devices.
+Skip initializing the VMSA physical address in the VMCB if the VMSA is
+NULL, which occurs during intrahost migration as KVM initializes the VMCB
+before copying over state from the source to the destination (including
+the VMSA and its physical address).
 
-SFPB based devices can both use the legacy syscon way to probe or the
-new MMIO way and currently device that use the MMIO way are broken as
-they lack the definition of the now required regmap_config and always
-return -EINVAL (and indirectly makes fail probing everything that
-depends on it, smem, nandc with smem-parser...)
+In normal builds, __pa() is just math, so the bug isn't fatal, but with
+CONFIG_DEBUG_VIRTUAL=y, the validity of the virtual address is verified
+and passing in NULL will make the kernel unhappy.
 
-Fix this by correctly adding the missing regmap_config and restore
-function of hwspinlock on SFPB based devices with MMIO implementation.
-
+Fixes: 6defa24d3b12 ("KVM: SEV: Init target VMCBs in sev_migrate_from")
 Cc: stable@vger.kernel.org
-Fixes: 5d4753f741d8 ("hwspinlock: qcom: add support for MMIO on older SoCs")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://lore.kernel.org/r/20230716022804.21239-1-ansuelsmth@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Peter Gonda <pgonda@google.com>
+Reviewed-by: Peter Gonda <pgonda@google.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/r/20230825022357.2852133-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwspinlock/qcom_hwspinlock.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/kvm/svm/sev.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/hwspinlock/qcom_hwspinlock.c
-+++ b/drivers/hwspinlock/qcom_hwspinlock.c
-@@ -69,9 +69,18 @@ static const struct hwspinlock_ops qcom_
- 	.unlock		= qcom_hwspinlock_unlock,
- };
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2955,9 +2955,12 @@ static void sev_es_init_vmcb(struct vcpu
+ 	/*
+ 	 * An SEV-ES guest requires a VMSA area that is a separate from the
+ 	 * VMCB page. Do not include the encryption mask on the VMSA physical
+-	 * address since hardware will access it using the guest key.
++	 * address since hardware will access it using the guest key.  Note,
++	 * the VMSA will be NULL if this vCPU is the destination for intrahost
++	 * migration, and will be copied later.
+ 	 */
+-	svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
++	if (svm->sev_es.vmsa)
++		svm->vmcb->control.vmsa_pa = __pa(svm->sev_es.vmsa);
  
-+static const struct regmap_config sfpb_mutex_config = {
-+	.reg_bits		= 32,
-+	.reg_stride		= 4,
-+	.val_bits		= 32,
-+	.max_register		= 0x100,
-+	.fast_io		= true,
-+};
-+
- static const struct qcom_hwspinlock_of_data of_sfpb_mutex = {
- 	.offset = 0x4,
- 	.stride = 0x4,
-+	.regmap_config = &sfpb_mutex_config,
- };
- 
- static const struct regmap_config tcsr_msm8226_mutex_config = {
+ 	/* Can't intercept CR register access, HV can't modify CR registers */
+ 	svm_clr_intercept(svm, INTERCEPT_CR0_READ);
 
 
