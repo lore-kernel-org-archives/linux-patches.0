@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5606FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9D3C433C8;
-	Sun, 17 Sep 2023 19:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B986FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A08C433C8;
+	Sun, 17 Sep 2023 19:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978641;
-	bh=YZsCCtpphgRk17A/9eK+0hQfInKSk1GulcV+Jv+8lvg=;
+	s=korg; t=1694978644;
+	bh=sZbUM+Jh786ace82gJS/k7tVkhq3cARgEEnpe90Ejo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k1TDQlrcPJo4o+OUHCr/jjmY76Kjqp081LNzjeyu9CA1Nz8Xk0lG364xSrQkiiCZa
-	 MrqKJJDLZP/CKyuvUCJt60rDLnMsgnfI+k5oMwqkv+N8gVEtaRtwgmUUtHBayTx8zY
-	 TilwaxaApetRivrr5eWRFJLdfuPzFAfXZ/RKkDAo=
+	b=LFaeMuMFi8SuV5s+TnOxDshbtZ/XUL2J0WGAH4cUeuGw5OjEVc7ZBKyOIotNRj2d6
+	 9YGIOoeUlxtxLzzEW0g1p+WHU8lWfWBwFvm4K9HSij4TPvD97499p7yhQ19b2L4bKZ
+	 V3sJMvLj4psigVbRWMGKBk8lUorsQUyNbBfIinfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/406] mlxsw: i2c: Limit single transaction buffer size
-Date: Sun, 17 Sep 2023 21:09:32 +0200
-Message-ID: <20230917191104.251628908@linuxfoundation.org>
+Subject: [PATCH 5.10 119/406] hwmon: (tmp513) Fix the channel number in tmp51x_is_visible()
+Date: Sun, 17 Sep 2023 21:09:33 +0200
+Message-ID: <20230917191104.278661844@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,54 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit d7248f1cc835bd80e936dc5b2d94b149bdd0077d ]
+[ Upstream commit d103337e38e7e64c3d915029e947b1cb0b512737 ]
 
-Maximum size of buffer is obtained from underlying I2C adapter and in
-case adapter allows I2C transaction buffer size greater than 100 bytes,
-transaction will fail due to firmware limitation.
+The supported channels for this driver are {0..3}. Fix the incorrect
+channel in tmp51x_is_visible().
 
-As a result driver will fail initialization.
-
-Limit the maximum size of transaction buffer by 100 bytes to fit to
-firmware.
-
-Remove unnecessary calculation:
-max_t(u16, MLXSW_I2C_BLK_DEF, quirk_size).
-This condition can not happened.
-
-Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/ea0eccc0-a29f-41e4-9049-a1a13f8b16f1@roeck-us.net/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230824204456.401580-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/tmp513.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index f20dca41424c9..61d2f621d65fc 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -47,6 +47,7 @@
- #define MLXSW_I2C_MBOX_SIZE_BITS	12
- #define MLXSW_I2C_ADDR_BUF_SIZE		4
- #define MLXSW_I2C_BLK_DEF		32
-+#define MLXSW_I2C_BLK_MAX		100
- #define MLXSW_I2C_RETRY			5
- #define MLXSW_I2C_TIMEOUT_MSECS		5000
- #define MLXSW_I2C_MAX_DATA_SIZE		256
-@@ -576,7 +577,7 @@ static int mlxsw_i2c_probe(struct i2c_client *client,
- 			return -EOPNOTSUPP;
- 		}
+diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
+index 7d5f7441aceb1..b9a93ee9c2364 100644
+--- a/drivers/hwmon/tmp513.c
++++ b/drivers/hwmon/tmp513.c
+@@ -434,7 +434,7 @@ static umode_t tmp51x_is_visible(const void *_data,
  
--		mlxsw_i2c->block_size = max_t(u16, MLXSW_I2C_BLK_DEF,
-+		mlxsw_i2c->block_size = min_t(u16, MLXSW_I2C_BLK_MAX,
- 					      min_t(u16, quirks->max_read_len,
- 						    quirks->max_write_len));
- 	} else {
+ 	switch (type) {
+ 	case hwmon_temp:
+-		if (data->id == tmp512 && channel == 4)
++		if (data->id == tmp512 && channel == 3)
+ 			return 0;
+ 		switch (attr) {
+ 		case hwmon_temp_input:
 -- 
 2.40.1
 
