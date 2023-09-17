@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7EF7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FA7C433C8;
-	Sun, 17 Sep 2023 20:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2FE7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DCBC433CA;
+	Sun, 17 Sep 2023 20:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981347;
-	bh=jCCFbc5X4LWQKiUYchSWz5Nq4ZVypHv7OJB9JJscEFI=;
+	s=korg; t=1694981351;
+	bh=WTgwR3rNVRfS8eiig1YkDVDiY3+72CqaGCymbxshAJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0m18qrrSAct9LeDieLOmfh9+y3PgJpiskI7bt0v8PcHVGNXI+7SnY5Ju+NsEnatA
-	 06wE6stgnRXWLOm0for3IcZpUSD0C/Vpx7ITj7lsJKhmzrkCkFvZ9RyqbpjQXzjRQy
-	 24vqIT6Joj0+zZmrK5U0E5e6Nr9zLiIV7gcIGWlE=
+	b=uum7depqfYbCjtOoI2SEW6WfSMKgJFwuZoGaKRvxm1qZ9Zt1jBfoeIFtgL7qgEnng
+	 x/l5rE5Fs8MGoRC8eDRmeKc3fJgUJXBtGUb6XFeKiZIPV+oOOSPe8JshLRJ5Y0vo1D
+	 Vjc36VycN1PfkNMrR1fMDQ202tw10N4Jqbq4ifNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Mastykin <dmastykin@astralinux.ru>,
-	Paul Moore <paul@paul-moore.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/511] netlabel: fix shift wrapping bug in netlbl_catmap_setlong()
-Date: Sun, 17 Sep 2023 21:07:48 +0200
-Message-ID: <20230917191114.850680983@linuxfoundation.org>
+Subject: [PATCH 6.1 108/219] af_unix: Fix data-races around user->unix_inflight.
+Date: Sun, 17 Sep 2023 21:13:55 +0200
+Message-ID: <20230917191044.895133562@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,39 +39,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Mastykin <dmastykin@astralinux.ru>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit b403643d154d15176b060b82f7fc605210033edd ]
+[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
 
-There is a shift wrapping bug in this code on 32-bit architectures.
-NETLBL_CATMAP_MAPTYPE is u64, bitmap is unsigned long.
-Every second 32-bit word of catmap becomes corrupted.
+user->unix_inflight is changed under spin_lock(unix_gc_lock),
+but too_many_unix_fds() reads it locklessly.
 
-Signed-off-by: Dmitry Mastykin <dmastykin@astralinux.ru>
-Acked-by: Paul Moore <paul@paul-moore.com>
+Let's annotate the write/read accesses to user->unix_inflight.
+
+BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
+
+write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
+ unix_inflight+0x157/0x180 net/unix/scm.c:66
+ unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
+ too_many_unix_fds net/unix/scm.c:101 [inline]
+ unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+value changed: 0x000000000000000c -> 0x000000000000000d
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/unix/scm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 54c0830039470..27511c90a26f4 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -857,7 +857,8 @@ int netlbl_catmap_setlong(struct netlbl_lsm_catmap **catmap,
+diff --git a/net/unix/scm.c b/net/unix/scm.c
+index aa27a02478dc1..e8e2a00bb0f58 100644
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
+ 	}
+-	user->unix_inflight++;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
  
- 	offset -= iter->startbit;
- 	idx = offset / NETLBL_CATMAP_MAPSIZE;
--	iter->bitmap[idx] |= bitmap << (offset % NETLBL_CATMAP_MAPSIZE);
-+	iter->bitmap[idx] |= (NETLBL_CATMAP_MAPTYPE)bitmap
-+			     << (offset % NETLBL_CATMAP_MAPSIZE);
+@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
+ 	}
+-	user->unix_inflight--;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
  
- 	return 0;
+@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
+ {
+ 	struct user_struct *user = current_user();
+ 
+-	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
++	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
+ 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
+ 	return false;
  }
 -- 
 2.40.1
