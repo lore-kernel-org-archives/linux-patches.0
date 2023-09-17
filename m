@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE78B6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42694C433C8;
-	Sun, 17 Sep 2023 20:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5606FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14E2C433C8;
+	Sun, 17 Sep 2023 20:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982012;
-	bh=qB7FoAl3l9KHydFEdcIsnrJnR2num6sW/mBcErSs0kQ=;
+	s=korg; t=1694982016;
+	bh=gzCOzBRmgP41oHoDFU2KJM+9G7vE2EJS0VLeTgqK63o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOZ4ggObBca09qvaq39hh22D/khAV+anTgwWIhg6POZ/UFGQeqYjv4Gi+aZoyAhHu
-	 e5EhtAR6r/StXkedcpd7cr7h0fTqJ6sgW9pJZ9WuMIbPpsPgf/G4uwrGFN8sXO9m3s
-	 S5kU6iiUETflPFpOSoVAkfVFGv1iY+LLFNm4q3N4=
+	b=ar5sZn1xIHkqRQj36LLI7iIfTLAoOFGc9Vtl472pMK+/j9sWw4VFqEUQKnj8i8Es9
+	 rjWhq1buJIS1KTEirJYkHKugqT7r8MHQoRPE+7Pmqihb/adVVTR/oPsLJD+Gg3Q7h/
+	 3R+jCLTZYAxyCd1Dxeds8XyJKAzjjiyB3F9cMpg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/511] net/sched: sch_hfsc: Ensure inner classes have fsc curve
-Date: Sun, 17 Sep 2023 21:09:08 +0200
-Message-ID: <20230917191116.794539255@linuxfoundation.org>
+Subject: [PATCH 5.15 139/511] arm64: dts: qcom: sm8250: Mark PCIe hosts as DMA coherent
+Date: Sun, 17 Sep 2023 21:09:26 +0200
+Message-ID: <20230917191117.218419579@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,42 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Budimir Markovic <markovicbudimir@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit b3d26c5702c7d6c45456326e56d2ccf3f103e60f ]
+[ Upstream commit 339d38a436f30d0f874815eafc7de2257346bf26 ]
 
-HFSC assumes that inner classes have an fsc curve, but it is currently
-possible for classes without an fsc curve to become parents. This leads
-to bugs including a use-after-free.
+The PCIe hosts on SM8250 are cache-coherent. Mark them as such.
 
-Don't allow non-root classes without HFSC_FSC to become parents.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20230824084905.422-1-markovicbudimir@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e53bdfc00977 ("arm64: dts: qcom: sm8250: Add PCIe support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230704-topic-8250_pcie_dmac-v1-1-799603a980b0@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index c802a027b4f31..01126e285f94e 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -1012,6 +1012,10 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 		if (parent == NULL)
- 			return -ENOENT;
- 	}
-+	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
-+		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
-+		return -EINVAL;
-+	}
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 005e75dc6919e..5d6551e1fcd8d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1439,6 +1439,7 @@ pcie0: pci@1c00000 {
  
- 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
- 		return -EINVAL;
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie0_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
+@@ -1545,6 +1546,7 @@ pcie1: pci@1c08000 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie1_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
+@@ -1653,6 +1655,7 @@ pcie2: pci@1c10000 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie2_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
 -- 
 2.40.1
 
