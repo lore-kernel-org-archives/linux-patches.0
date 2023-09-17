@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21A36FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AD2C433C7;
-	Sun, 17 Sep 2023 20:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422316FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A147EC433C7;
+	Sun, 17 Sep 2023 20:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983250;
-	bh=q124JuZa/LbmWjJNMz639fT7ZOVoDDS6xFlicZHghlA=;
+	s=korg; t=1694983254;
+	bh=OL/IkHJR7x8D3Dt+rBhQ7476Q909hMWOsFRf5Exrsoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IO5F7fqXPwVxPkaIeSr9jcn4V9Uw+1GUEmdnrsputwV/WRaIvMq5Q449xtsXVloca
-	 VZg894RKBuak5k71F9LToh+6jv9fOInkwsDpu19yE7fiDRPlfZQiIhMfcNwntWeUTY
-	 OxuRPyc1nOY8QMmUdC3rtJ7yTQgKhjKWdwHyllCE=
+	b=BpUNyNpfAHzEyRgapcBqCDVdJ1mO4vj2UElgRsvY5o4iWcf5Uda8lthAmMuf29Z4E
+	 rSigZgWZKh2jDIXiBBXJJE/Fy0xtgZK6g//rETvoU/ZfpNsFVTAOIik4GwZJYmuMSM
+	 OL9Vl9FsbfuxYD8wxYYvzHrswl/GHYxWJvdzpDEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 461/511] net: hns3: remove GSO partial feature bit
-Date: Sun, 17 Sep 2023 21:14:48 +0200
-Message-ID: <20230917191124.884162526@linuxfoundation.org>
+Subject: [PATCH 5.15 488/511] block: move GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE to disk->event_flags
+Date: Sun, 17 Sep 2023 21:15:15 +0200
+Message-ID: <20230917191125.518517721@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,37 +40,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 60326634f6c54528778de18bfef1e8a7a93b3771 ]
+[ Upstream commit 1545e0b419ba1d9b9bee4061d4826340afe6b0aa ]
 
-HNS3 NIC does not support GSO partial packets segmentation. Actually tunnel
-packets for example NvGRE packets segment offload and checksum offload is
-already supported. There is no need to keep gso partial feature bit. So
-this patch removes it.
+GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE is all about the event reporting
+mechanism, so move it to the event_flags field.
 
-Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20211122130625.1136848-3-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a721de8489f ("block: don't add or resize partition on the disk with GENHD_FL_NO_PART")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 2 --
- 1 file changed, 2 deletions(-)
+ block/bdev.c               | 2 +-
+ drivers/block/paride/pcd.c | 2 +-
+ drivers/scsi/sr.c          | 5 +++--
+ include/linux/genhd.h      | 6 ++----
+ 4 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 2acf50ed6025a..3693ff55197dd 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3118,8 +3118,6 @@ static void hns3_set_default_feature(struct net_device *netdev)
+diff --git a/block/bdev.c b/block/bdev.c
+index 18abafb135e0b..b8599a4088843 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -835,7 +835,7 @@ struct block_device *blkdev_get_by_dev(dev_t dev, fmode_t mode, void *holder)
+ 		 * used in blkdev_get/put().
+ 		 */
+ 		if ((mode & FMODE_WRITE) && !bdev->bd_write_holder &&
+-		    (disk->flags & GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE)) {
++		    (disk->event_flags & DISK_EVENT_FLAG_BLOCK_ON_EXCL_WRITE)) {
+ 			bdev->bd_write_holder = true;
+ 			unblock_events = false;
+ 		}
+diff --git a/drivers/block/paride/pcd.c b/drivers/block/paride/pcd.c
+index 93ed636262328..6ac716e614e30 100644
+--- a/drivers/block/paride/pcd.c
++++ b/drivers/block/paride/pcd.c
+@@ -929,8 +929,8 @@ static int pcd_init_unit(struct pcd_unit *cd, bool autoprobe, int port,
+ 	disk->minors = 1;
+ 	strcpy(disk->disk_name, cd->name);	/* umm... */
+ 	disk->fops = &pcd_bdops;
+-	disk->flags = GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE;
+ 	disk->events = DISK_EVENT_MEDIA_CHANGE;
++	disk->event_flags = DISK_EVENT_FLAG_BLOCK_ON_EXCL_WRITE;
  
- 	netdev->priv_flags |= IFF_UNICAST_FLT;
+ 	if (!pi_init(cd->pi, autoprobe, port, mode, unit, protocol, delay,
+ 			pcd_buffer, PI_PCD, verbose, cd->name))
+diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
+index 652cd81d77753..af210910dadf2 100644
+--- a/drivers/scsi/sr.c
++++ b/drivers/scsi/sr.c
+@@ -684,9 +684,10 @@ static int sr_probe(struct device *dev)
+ 	disk->minors = 1;
+ 	sprintf(disk->disk_name, "sr%d", minor);
+ 	disk->fops = &sr_bdops;
+-	disk->flags = GENHD_FL_CD | GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE;
++	disk->flags = GENHD_FL_CD;
+ 	disk->events = DISK_EVENT_MEDIA_CHANGE | DISK_EVENT_EJECT_REQUEST;
+-	disk->event_flags = DISK_EVENT_FLAG_POLL | DISK_EVENT_FLAG_UEVENT;
++	disk->event_flags = DISK_EVENT_FLAG_POLL | DISK_EVENT_FLAG_UEVENT |
++				DISK_EVENT_FLAG_BLOCK_ON_EXCL_WRITE;
  
--	netdev->gso_partial_features |= NETIF_F_GSO_GRE_CSUM;
--
- 	netdev->features |= NETIF_F_HW_VLAN_CTAG_FILTER |
- 		NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX |
- 		NETIF_F_RXCSUM | NETIF_F_SG | NETIF_F_GSO |
+ 	blk_queue_rq_timeout(sdev->request_queue, SR_TIMEOUT);
+ 
+diff --git a/include/linux/genhd.h b/include/linux/genhd.h
+index 3234b43fefb5c..300f796b8773d 100644
+--- a/include/linux/genhd.h
++++ b/include/linux/genhd.h
+@@ -60,9 +60,6 @@ struct partition_meta_info {
+  * (``BLOCK_EXT_MAJOR``).
+  * This affects the maximum number of partitions.
+  *
+- * ``GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE`` (0x0100): event polling is
+- * blocked whenever a writer holds an exclusive lock.
+- *
+  * ``GENHD_FL_NO_PART_SCAN`` (0x0200): partition scanning is disabled.
+  * Used for loop devices in their default settings and some MMC
+  * devices.
+@@ -80,7 +77,6 @@ struct partition_meta_info {
+ #define GENHD_FL_CD				0x0008
+ #define GENHD_FL_SUPPRESS_PARTITION_INFO	0x0020
+ #define GENHD_FL_EXT_DEVT			0x0040
+-#define GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE	0x0100
+ #define GENHD_FL_NO_PART_SCAN			0x0200
+ #define GENHD_FL_HIDDEN				0x0400
+ 
+@@ -94,6 +90,8 @@ enum {
+ 	DISK_EVENT_FLAG_POLL			= 1 << 0,
+ 	/* Forward events to udev */
+ 	DISK_EVENT_FLAG_UEVENT			= 1 << 1,
++	/* Block event polling when open for exclusive write */
++	DISK_EVENT_FLAG_BLOCK_ON_EXCL_WRITE	= 1 << 2,
+ };
+ 
+ struct disk_events;
 -- 
 2.40.1
 
