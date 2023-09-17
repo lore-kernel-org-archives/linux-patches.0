@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3137461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D7DC433C7;
-	Sun, 17 Sep 2023 20:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4048A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E493C433C8;
+	Sun, 17 Sep 2023 20:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981288;
-	bh=3jofWKcPO/FI1TT3/PRbIYM6xhfWfTNYXlHQOBgf10E=;
+	s=korg; t=1694981292;
+	bh=nm7ypoet6LR8Dj5Y5Yz7q1nq8X2w+nMdmrB43yrWboA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qZ9n9ZPvPnhSkd+WBqXNu9byCdbb3ZvoI65gM4/fK6yPI3p7oqeh3dfMlm4rVVJD
-	 nnzSI0gJQ2JkfeiLsazdBe02no1RrSWenO41XRSmQG7TCakNhPiZi2ymRkTuy2kPsi
-	 axGKOvaz1RQ5Xd2/MSQ+AbUWEb/0Mvsob1vezgN0=
+	b=TLLoKEpoLkviHBkSuEokcp3/+tscaKoka3EhUZGawYZG3KvtnLxtUgEhhd+YIZvKv
+	 J71AbJaZxS5FsDxu602YnDeo3Udd71Y/ZXc1CBDfwBf9kYExiA9spxmae+mgXU+Jeb
+	 +Otz4xw/jdKDzODAedsbeRKOye0yUUjdNWskEjLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/219] ipv4: ignore dst hint for multipath routes
-Date: Sun, 17 Sep 2023 21:13:47 +0200
-Message-ID: <20230917191044.586350956@linuxfoundation.org>
+Subject: [PATCH 6.1 087/219] net/sched: fq_pie: avoid stalls in fq_pie_timer()
+Date: Sun, 17 Sep 2023 21:13:34 +0200
+Message-ID: <20230917191044.122038130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -42,69 +43,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6ac66cb03ae306c2e288a9be18226310529f5b25 ]
+[ Upstream commit 8c21ab1bae945686c602c5bfa4e3f3352c2452c5 ]
 
-Route hints when the nexthop is part of a multipath group causes packets
-in the same receive batch to be sent to the same nexthop irrespective of
-the multipath hash of the packet. So, do not extract route hint for
-packets whose destination is part of a multipath group.
+When setting a high number of flows (limit being 65536),
+fq_pie_timer() is currently using too much time as syzbot reported.
 
-A new SKB flag IPSKB_MULTIPATH is introduced for this purpose, set the
-flag when route is looked up in ip_mkroute_input() and use it in
-ip_extract_route_hint() to check for the existence of the flag.
+Add logic to yield the cpu every 2048 flows (less than 150 usec
+on debug kernels).
+It should also help by not blocking qdisc fast paths for too long.
+Worst case (65536 flows) would need 31 jiffies for a complete scan.
 
-Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Relevant extract from syzbot report:
+
+rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 0-.... } 2663 jiffies s: 873 root: 0x1/.
+rcu: blocking rcu_node structures (internal RCU debug):
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 PID: 5177 Comm: syz-executor273 Not tainted 6.5.0-syzkaller-00453-g727dbda16b83 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
+RIP: 0010:write_comp_data+0x21/0x90 kernel/kcov.c:236
+Code: 2e 0f 1f 84 00 00 00 00 00 65 8b 05 01 b2 7d 7e 49 89 f1 89 c6 49 89 d2 81 e6 00 01 00 00 49 89 f8 65 48 8b 14 25 80 b9 03 00 <a9> 00 01 ff 00 74 0e 85 f6 74 59 8b 82 04 16 00 00 85 c0 74 4f 8b
+RSP: 0018:ffffc90000007bb8 EFLAGS: 00000206
+RAX: 0000000000000101 RBX: ffffc9000dc0d140 RCX: ffffffff885893b0
+RDX: ffff88807c075940 RSI: 0000000000000100 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffffc9000dc0d178
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000555555d54380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f6b442f6130 CR3: 000000006fe1c000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <IRQ>
+ pie_calculate_probability+0x480/0x850 net/sched/sch_pie.c:415
+ fq_pie_timer+0x1da/0x4f0 net/sched/sch_fq_pie.c:387
+ call_timer_fn+0x1a0/0x580 kernel/time/timer.c:1700
+
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Link: https://lore.kernel.org/lkml/00000000000017ad3f06040bf394@google.com/
+Reported-by: syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20230829123541.3745013-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h    | 1 +
- net/ipv4/ip_input.c | 3 ++-
- net/ipv4/route.c    | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ net/sched/sch_fq_pie.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 1872f570abeda..c286344628dba 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -57,6 +57,7 @@ struct inet_skb_parm {
- #define IPSKB_FRAG_PMTU		BIT(6)
- #define IPSKB_L3SLAVE		BIT(7)
- #define IPSKB_NOPOLICY		BIT(8)
-+#define IPSKB_MULTIPATH		BIT(9)
- 
- 	u16			frag_max_size;
- };
-diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
-index e880ce77322aa..e7196ecffafc6 100644
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -584,7 +584,8 @@ static void ip_sublist_rcv_finish(struct list_head *head)
- static struct sk_buff *ip_extract_route_hint(const struct net *net,
- 					     struct sk_buff *skb, int rt_type)
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index 591d87d5e5c0f..68e6acd0f130d 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -61,6 +61,7 @@ struct fq_pie_sched_data {
+ 	struct pie_params p_params;
+ 	u32 ecn_prob;
+ 	u32 flows_cnt;
++	u32 flows_cursor;
+ 	u32 quantum;
+ 	u32 memory_limit;
+ 	u32 new_flow_count;
+@@ -375,22 +376,32 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ static void fq_pie_timer(struct timer_list *t)
  {
--	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST)
-+	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST ||
-+	    IPCB(skb)->flags & IPSKB_MULTIPATH)
- 		return NULL;
+ 	struct fq_pie_sched_data *q = from_timer(q, t, adapt_timer);
++	unsigned long next, tupdate;
+ 	struct Qdisc *sch = q->sch;
+ 	spinlock_t *root_lock; /* to lock qdisc for probability calculations */
+-	u32 idx;
++	int max_cnt, i;
  
- 	return skb;
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 51bd9a50a1d1d..a04ffc128e22b 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2146,6 +2146,7 @@ static int ip_mkroute_input(struct sk_buff *skb,
- 		int h = fib_multipath_hash(res->fi->fib_net, NULL, skb, hkeys);
+ 	rcu_read_lock();
+ 	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
+ 	spin_lock(root_lock);
  
- 		fib_select_multipath(res, h);
-+		IPCB(skb)->flags |= IPSKB_MULTIPATH;
- 	}
- #endif
+-	for (idx = 0; idx < q->flows_cnt; idx++)
+-		pie_calculate_probability(&q->p_params, &q->flows[idx].vars,
+-					  q->flows[idx].backlog);
+-
+-	/* reset the timer to fire after 'tupdate' jiffies. */
+-	if (q->p_params.tupdate)
+-		mod_timer(&q->adapt_timer, jiffies + q->p_params.tupdate);
++	/* Limit this expensive loop to 2048 flows per round. */
++	max_cnt = min_t(int, q->flows_cnt - q->flows_cursor, 2048);
++	for (i = 0; i < max_cnt; i++) {
++		pie_calculate_probability(&q->p_params,
++					  &q->flows[q->flows_cursor].vars,
++					  q->flows[q->flows_cursor].backlog);
++		q->flows_cursor++;
++	}
  
++	tupdate = q->p_params.tupdate;
++	next = 0;
++	if (q->flows_cursor >= q->flows_cnt) {
++		q->flows_cursor = 0;
++		next = tupdate;
++	}
++	if (tupdate)
++		mod_timer(&q->adapt_timer, jiffies + next);
+ 	spin_unlock(root_lock);
+ 	rcu_read_unlock();
+ }
 -- 
 2.40.1
 
