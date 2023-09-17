@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095806FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312B2C433C8;
-	Sun, 17 Sep 2023 19:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC77E6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16328C433C7;
+	Sun, 17 Sep 2023 19:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979672;
-	bh=4yBxqbBas5LNvpIPZ4wJLKbMqBlLF8YT/bW/Zs4MHbw=;
+	s=korg; t=1694979676;
+	bh=/G8BWlDkIjGduZocg1WDQaHAuCCK+6GyaYNq4ErzPxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxWHrVOSyGUcVPLHVUcctSjFnHzMRl1VieFv6227Qs7QceJRQCCz7+9Vv5qM0yaIL
-	 ZbaWGf8U3HjDAinvn+1ipef8LEJ7hjH3BF8aFyc9FczrDk7sMMIF8Q0wHHGETUMpc5
-	 BPNsHrGDZhwq9RluYi929upkfexfphnY7s6Kj9+4=
+	b=NY30yo+V+sxirek3j9UbUx04xL6BMQX81xa7bK+cmKhkhr8ICO2S94k1bgzA2yftN
+	 fcbf/wKQj+YFVGL7+SyfIFMl4Qud0tDnoo/gJ22Y8iYRGIpYjxLYui6VLTbNax/X0K
+	 japJHc4ea1SJ+kWuNqPm6Kuk3ofoyFDg6rRUSiEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 5.10 380/406] perf hists browser: Fix the number of entries for e key
-Date: Sun, 17 Sep 2023 21:13:54 +0200
-Message-ID: <20230917191111.298504266@linuxfoundation.org>
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 381/406] ACPI: APEI: explicit init of HEST and GHES in apci_init()
+Date: Sun, 17 Sep 2023 21:13:55 +0200
+Message-ID: <20230917191111.324169804@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -44,150 +40,225 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
+[ Upstream commit dc4e8c07e9e2f69387579c49caca26ba239f7270 ]
 
-The 'e' key is to toggle expand/collapse the selected entry only.  But
-the current code has a bug that it only increases the number of entries
-by 1 in the hierarchy mode so users cannot move under the current entry
-after the key stroke.  This is due to a wrong assumption in the
-hist_entry__set_folding().
+>From commit e147133a42cb ("ACPI / APEI: Make hest.c manage the estatus
+memory pool") was merged, ghes_init() relies on acpi_hest_init() to manage
+the estatus memory pool. On the other hand, ghes_init() relies on
+sdei_init() to detect the SDEI version and (un)register events. The
+dependencies are as follows:
 
-The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
-logic into single function") factored out the code, but actually it
-should be handled separately.  The hist_browser__set_folding() is to
-update fold state for each entry so it needs to traverse all (child)
-entries regardless of the current fold state.  So it increases the
-number of entries by 1.
+    ghes_init() => acpi_hest_init() => acpi_bus_init() => acpi_init()
+    ghes_init() => sdei_init()
 
-But the hist_entry__set_folding() only cares the currently selected
-entry and its all children.  So it should count all unfolded child
-entries.  This code is implemented in hist_browser__toggle_fold()
-already so we can just call it.
+HEST is not PCI-specific and initcall ordering is implicit and not
+well-defined within a level.
 
-Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Based on above, remove acpi_hest_init() from acpi_pci_root_init() and
+convert ghes_init() and sdei_init() from initcalls to explicit calls in the
+following order:
+
+    acpi_hest_init()
+    ghes_init()
+        sdei_init()
+
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 5cd474e57368 ("arm64: sdei: abort running SDEI handlers during crash")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
+ drivers/acpi/apei/ghes.c    | 19 ++++++++-----------
+ drivers/acpi/bus.c          |  2 ++
+ drivers/acpi/pci_root.c     |  3 ---
+ drivers/firmware/Kconfig    |  1 +
+ drivers/firmware/arm_sdei.c | 13 ++-----------
+ include/acpi/apei.h         |  4 +++-
+ include/linux/arm_sdei.h    |  2 ++
+ 7 files changed, 18 insertions(+), 26 deletions(-)
 
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
- 	return container_of(ms, struct callchain_list, ms)->has_children;
- }
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 9bdb5bd5fda63..8678e162181f4 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -1457,33 +1457,35 @@ static struct platform_driver ghes_platform_driver = {
+ 	.remove		= ghes_remove,
+ };
  
--static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
--{
--	return browser->he_selection ? browser->he_selection->unfolded : false;
--}
--
- static bool hist_browser__selection_unfolded(struct hist_browser *browser)
+-static int __init ghes_init(void)
++void __init ghes_init(void)
  {
- 	struct hist_entry *he = browser->he_selection;
-@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
- 	return n;
- }
+ 	int rc;
  
--static void __hist_entry__set_folding(struct hist_entry *he,
--				      struct hist_browser *hb, bool unfold)
-+static void hist_entry__set_folding(struct hist_entry *he,
-+				    struct hist_browser *hb, bool unfold)
- {
- 	hist_entry__init_have_children(he);
- 	he->unfolded = unfold ? he->has_children : false;
-@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
- 		he->nr_rows = 0;
- }
- 
--static void hist_entry__set_folding(struct hist_entry *he,
--				    struct hist_browser *browser, bool unfold)
--{
--	double percent;
--
--	percent = hist_entry__get_percent_limit(he);
--	if (he->filtered || percent < browser->min_pcnt)
--		return;
--
--	__hist_entry__set_folding(he, browser, unfold);
--
--	if (!he->depth || unfold)
--		browser->nr_hierarchy_entries++;
--	if (he->leaf)
--		browser->nr_callchain_rows += he->nr_rows;
--	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
--		browser->nr_hierarchy_entries++;
--		he->has_no_entry = true;
--		he->nr_rows = 1;
--	} else
--		he->has_no_entry = false;
--}
--
- static void
- __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
- {
- 	struct rb_node *nd;
- 	struct hist_entry *he;
-+	double percent;
- 
- 	nd = rb_first_cached(&browser->hists->entries);
- 	while (nd) {
-@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
- 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
- 
- 		hist_entry__set_folding(he, browser, unfold);
++	sdei_init();
 +
-+		percent = hist_entry__get_percent_limit(he);
-+		if (he->filtered || percent < browser->min_pcnt)
-+			continue;
-+
-+		if (!he->depth || unfold)
-+			browser->nr_hierarchy_entries++;
-+		if (he->leaf)
-+			browser->nr_callchain_rows += he->nr_rows;
-+		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
-+			browser->nr_hierarchy_entries++;
-+			he->has_no_entry = true;
-+			he->nr_rows = 1;
-+		} else
-+			he->has_no_entry = false;
+ 	if (acpi_disabled)
+-		return -ENODEV;
++		return;
+ 
+ 	switch (hest_disable) {
+ 	case HEST_NOT_FOUND:
+-		return -ENODEV;
++		return;
+ 	case HEST_DISABLED:
+ 		pr_info(GHES_PFX "HEST is not enabled!\n");
+-		return -EINVAL;
++		return;
+ 	default:
+ 		break;
  	}
- }
  
-@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
- 	if (!browser->he_selection)
+ 	if (ghes_disable) {
+ 		pr_info(GHES_PFX "GHES is not enabled!\n");
+-		return -EINVAL;
++		return;
+ 	}
+ 
+ 	ghes_nmi_init_cxt();
+ 
+ 	rc = platform_driver_register(&ghes_platform_driver);
+ 	if (rc)
+-		goto err;
++		return;
+ 
+ 	rc = apei_osc_setup();
+ 	if (rc == 0 && osc_sb_apei_support_acked)
+@@ -1494,9 +1496,4 @@ static int __init ghes_init(void)
+ 		pr_info(GHES_PFX "APEI firmware first mode is enabled by APEI bit.\n");
+ 	else
+ 		pr_info(GHES_PFX "Failed to enable APEI firmware first mode.\n");
+-
+-	return 0;
+-err:
+-	return rc;
+ }
+-device_initcall(ghes_init);
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 5e14288fcabe9..60dfe63301d00 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1252,6 +1252,8 @@ static int __init acpi_init(void)
+ 
+ 	pci_mmcfg_late_init();
+ 	acpi_iort_init();
++	acpi_hest_init();
++	ghes_init();
+ 	acpi_scan_init();
+ 	acpi_ec_init();
+ 	acpi_debugfs_init();
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index c12b5fb3e8fba..d972ea057a035 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -20,8 +20,6 @@
+ #include <linux/slab.h>
+ #include <linux/dmi.h>
+ #include <linux/platform_data/x86/apple.h>
+-#include <acpi/apei.h>	/* for acpi_hest_init() */
+-
+ #include "internal.h"
+ 
+ #define ACPI_PCI_ROOT_CLASS		"pci_bridge"
+@@ -950,7 +948,6 @@ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
+ 
+ void __init acpi_pci_root_init(void)
+ {
+-	acpi_hest_init();
+ 	if (acpi_pci_disabled)
  		return;
  
--	hist_entry__set_folding(browser->he_selection, browser, unfold);
--	browser->b.nr_entries = hist_browser__nr_entries(browser);
-+	if (unfold == browser->he_selection->unfolded)
-+		return;
-+
-+	hist_browser__toggle_fold(browser);
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index c08968c5ddf8c..807c5320dc0ff 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -72,6 +72,7 @@ config ARM_SCPI_POWER_DOMAIN
+ config ARM_SDE_INTERFACE
+ 	bool "ARM Software Delegated Exception Interface (SDEI)"
+ 	depends on ARM64
++	depends on ACPI_APEI_GHES
+ 	help
+ 	  The Software Delegated Exception Interface (SDEI) is an ARM
+ 	  standard for registering callbacks from the platform firmware
+diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
+index 5a877d76078f7..9c4ebaf1f0c8f 100644
+--- a/drivers/firmware/arm_sdei.c
++++ b/drivers/firmware/arm_sdei.c
+@@ -1063,14 +1063,14 @@ static bool __init sdei_present_acpi(void)
+ 	return true;
  }
  
- static void ui_browser__warn_lost_events(struct ui_browser *browser)
-@@ -731,8 +721,8 @@ static int hist_browser__handle_hotkey(s
- 		hist_browser__set_folding(browser, true);
- 		break;
- 	case 'e':
--		/* Expand the selected entry. */
--		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
-+		/* Toggle expand/collapse the selected entry. */
-+		hist_browser__toggle_fold(browser);
- 		break;
- 	case 'H':
- 		browser->show_headers = !browser->show_headers;
+-static int __init sdei_init(void)
++void __init sdei_init(void)
+ {
+ 	struct platform_device *pdev;
+ 	int ret;
+ 
+ 	ret = platform_driver_register(&sdei_driver);
+ 	if (ret || !sdei_present_acpi())
+-		return ret;
++		return;
+ 
+ 	pdev = platform_device_register_simple(sdei_driver.driver.name,
+ 					       0, NULL, 0);
+@@ -1080,17 +1080,8 @@ static int __init sdei_init(void)
+ 		pr_info("Failed to register ACPI:SDEI platform device %d\n",
+ 			ret);
+ 	}
+-
+-	return ret;
+ }
+ 
+-/*
+- * On an ACPI system SDEI needs to be ready before HEST:GHES tries to register
+- * its events. ACPI is initialised from a subsys_initcall(), GHES is initialised
+- * by device_initcall(). We want to be called in the middle.
+- */
+-subsys_initcall_sync(sdei_init);
+-
+ int sdei_event_handler(struct pt_regs *regs,
+ 		       struct sdei_registered_event *arg)
+ {
+diff --git a/include/acpi/apei.h b/include/acpi/apei.h
+index 680f80960c3dc..a6ac2e8b72da8 100644
+--- a/include/acpi/apei.h
++++ b/include/acpi/apei.h
+@@ -27,14 +27,16 @@ extern int hest_disable;
+ extern int erst_disable;
+ #ifdef CONFIG_ACPI_APEI_GHES
+ extern bool ghes_disable;
++void __init ghes_init(void);
+ #else
+ #define ghes_disable 1
++static inline void ghes_init(void) { }
+ #endif
+ 
+ #ifdef CONFIG_ACPI_APEI
+ void __init acpi_hest_init(void);
+ #else
+-static inline void acpi_hest_init(void) { return; }
++static inline void acpi_hest_init(void) { }
+ #endif
+ 
+ typedef int (*apei_hest_func_t)(struct acpi_hest_header *hest_hdr, void *data);
+diff --git a/include/linux/arm_sdei.h b/include/linux/arm_sdei.h
+index 0a241c5c911d8..14dc461b0e829 100644
+--- a/include/linux/arm_sdei.h
++++ b/include/linux/arm_sdei.h
+@@ -46,9 +46,11 @@ int sdei_unregister_ghes(struct ghes *ghes);
+ /* For use by arch code when CPU hotplug notifiers are not appropriate. */
+ int sdei_mask_local_cpu(void);
+ int sdei_unmask_local_cpu(void);
++void __init sdei_init(void);
+ #else
+ static inline int sdei_mask_local_cpu(void) { return 0; }
+ static inline int sdei_unmask_local_cpu(void) { return 0; }
++static inline void sdei_init(void) { }
+ #endif /* CONFIG_ARM_SDE_INTERFACE */
+ 
+ 
+-- 
+2.40.1
+
 
 
