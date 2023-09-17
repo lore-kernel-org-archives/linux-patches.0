@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE036FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB02C433C8;
-	Sun, 17 Sep 2023 20:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A3E6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC8FC433C7;
+	Sun, 17 Sep 2023 20:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982793;
-	bh=n8ZOJ5ER9DtK3NM9tRKJgVD+nzt1iah/cKD3Xc7MzAE=;
+	s=korg; t=1694982796;
+	bh=HuVoiCWovM9o2D3WB/0oNLr3gzNppIEIwTUTfE9yC+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0Wg+DyEZljpZ4bIKPQSFNFkqIbmTQ8Dh626Vj6ycmwS/lphEyqDg81JwnbWkt2NM
-	 HAvDO9aDWM7QJQMZuEaEF45LgAEhRBWm6CA+fi6VVPNHNfTKcTJ4qfhpQfM/PUxiDA
-	 2v0OSWpOyQ+U3v/TwqdRvQs0iTrLIwEjPRQFFVOk=
+	b=15jP3ZkiqHi+hrscODMqypuQEbQNi44NCDf+6u2NEjtJsoChvJlwLzygVaBqDpnzU
+	 Xl+Z0g+PmjEOD5n7ULCNUlEfv7V2ulnp7fsM/VWKhA6maM/AzHRton/tOfhazHK4DR
+	 klwyUJBubP881U3I4bZQU2sBYPnlok+Ytuu8+T94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 337/511] arm64: csum: Fix OoB access in IP checksum code for negative lengths
-Date: Sun, 17 Sep 2023 21:12:44 +0200
-Message-ID: <20230917191121.951508452@linuxfoundation.org>
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Enlin Mu <enlin.mu@unisoc.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.15 355/511] pstore/ram: Check start of empty przs during init
+Date: Sun, 17 Sep 2023 21:13:02 +0200
+Message-ID: <20230917191122.375111830@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,75 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Enlin Mu <enlin.mu@unisoc.com>
 
-commit 8bd795fedb8450ecbef18eeadbd23ed8fc7630f5 upstream.
+commit fe8c3623ab06603eb760444a032d426542212021 upstream.
 
-Although commit c2c24edb1d9c ("arm64: csum: Fix pathological zero-length
-calls") added an early return for zero-length input, syzkaller has
-popped up with an example of a _negative_ length which causes an
-undefined shift and an out-of-bounds read:
+After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
+valid"), initialization would assume a prz was valid after seeing that
+the buffer_size is zero (regardless of the buffer start position). This
+unchecked start value means it could be outside the bounds of the buffer,
+leading to future access panics when written to:
 
- | BUG: KASAN: slab-out-of-bounds in do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- | Read of size 4294966928 at addr ffff0000d7ac0170 by task syz-executor412/5975
- |
- | CPU: 0 PID: 5975 Comm: syz-executor412 Not tainted 6.4.0-rc4-syzkaller-g908f31f2a05b #0
- | Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
- | Call trace:
- |  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
- |  show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
- |  __dump_stack lib/dump_stack.c:88 [inline]
- |  dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
- |  print_address_description mm/kasan/report.c:351 [inline]
- |  print_report+0x174/0x514 mm/kasan/report.c:462
- |  kasan_report+0xd4/0x130 mm/kasan/report.c:572
- |  kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
- |  __kasan_check_read+0x20/0x30 mm/kasan/shadow.c:31
- |  do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- |  csum_partial+0x30/0x58 lib/checksum.c:128
- |  gso_make_checksum include/linux/skbuff.h:4928 [inline]
- |  __udp_gso_segment+0xaf4/0x1bc4 net/ipv4/udp_offload.c:332
- |  udp6_ufo_fragment+0x540/0xca0 net/ipv6/udp_offload.c:47
- |  ipv6_gso_segment+0x5cc/0x1760 net/ipv6/ip6_offload.c:119
- |  skb_mac_gso_segment+0x2b4/0x5b0 net/core/gro.c:141
- |  __skb_gso_segment+0x250/0x3d0 net/core/dev.c:3401
- |  skb_gso_segment include/linux/netdevice.h:4859 [inline]
- |  validate_xmit_skb+0x364/0xdbc net/core/dev.c:3659
- |  validate_xmit_skb_list+0x94/0x130 net/core/dev.c:3709
- |  sch_direct_xmit+0xe8/0x548 net/sched/sch_generic.c:327
- |  __dev_xmit_skb net/core/dev.c:3805 [inline]
- |  __dev_queue_xmit+0x147c/0x3318 net/core/dev.c:4210
- |  dev_queue_xmit include/linux/netdevice.h:3085 [inline]
- |  packet_xmit+0x6c/0x318 net/packet/af_packet.c:276
- |  packet_snd net/packet/af_packet.c:3081 [inline]
- |  packet_sendmsg+0x376c/0x4c98 net/packet/af_packet.c:3113
- |  sock_sendmsg_nosec net/socket.c:724 [inline]
- |  sock_sendmsg net/socket.c:747 [inline]
- |  __sys_sendto+0x3b4/0x538 net/socket.c:2144
+ sysdump_panic_event+0x3b4/0x5b8
+ atomic_notifier_call_chain+0x54/0x90
+ panic+0x1c8/0x42c
+ die+0x29c/0x2a8
+ die_kernel_fault+0x68/0x78
+ __do_kernel_fault+0x1c4/0x1e0
+ do_bad_area+0x40/0x100
+ do_translation_fault+0x68/0x80
+ do_mem_abort+0x68/0xf8
+ el1_da+0x1c/0xc0
+ __raw_writeb+0x38/0x174
+ __memcpy_toio+0x40/0xac
+ persistent_ram_update+0x44/0x12c
+ persistent_ram_write+0x1a8/0x1b8
+ ramoops_pstore_write+0x198/0x1e8
+ pstore_console_write+0x94/0xe0
+ ...
 
-Extend the early return to reject negative lengths as well, aligning our
-implementation with the generic code in lib/checksum.c
+To avoid this, also check if the prz start is 0 during the initialization
+phase. If not, the next prz sanity check case will discover it (start >
+size) and zap the buffer back to a sane state.
 
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: 5777eaed566a ("arm64: Implement optimised checksum routine")
-Reported-by: syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/000000000000e0e94c0603f8d213@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
+Cc: Yunlong Xing <yunlong.xing@unisoc.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
+Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
+[kees: update commit log with backtrace and clarifications]
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/lib/csum.c |    2 +-
+ fs/pstore/ram_core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/lib/csum.c
-+++ b/arch/arm64/lib/csum.c
-@@ -24,7 +24,7 @@ unsigned int __no_sanitize_address do_cs
- 	const u64 *ptr;
- 	u64 data, sum64 = 0;
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -518,7 +518,7 @@ static int persistent_ram_post_init(stru
+ 	sig ^= PERSISTENT_RAM_SIG;
  
--	if (unlikely(len == 0))
-+	if (unlikely(len <= 0))
- 		return 0;
- 
- 	offset = (unsigned long)buff & 7;
+ 	if (prz->buffer->sig == sig) {
+-		if (buffer_size(prz) == 0) {
++		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
+ 			pr_debug("found existing empty buffer\n");
+ 			return 0;
+ 		}
 
 
