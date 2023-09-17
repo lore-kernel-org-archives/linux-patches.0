@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B09D7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFB3C433C9;
-	Sun, 17 Sep 2023 19:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26AD7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BCA3C433C7;
+	Sun, 17 Sep 2023 19:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980036;
-	bh=P05KiN+n5wotkSJPiE3/G3Ak/kue4sz0UKdaGNQ0YIw=;
+	s=korg; t=1694980039;
+	bh=D8FTanhLaog0tkefOkcOEUiqo9sH1hFugOgEUEZ/32Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJ+P4Td+q9GOLcGRJfsA+0ZkqBtD4sgi1TdMS8YzierbM7qn0M5Fxza5T1wvk6BPJ
-	 CPHl8yxZf+13gUbKErRe4wV+xOB1GSLUUI7JQO0ny9vECyJzySoxX8BX5j3BUt5C4k
-	 Bupxg0W65TMVldLmD5wYJTX7Mfg4S+4iIcx/23FM=
+	b=uryOUL1cWTXeBMj3+SmMIIChauK+IXwCcX7xLUgQOReTNPywLA6/wcuGzSoisVLRx
+	 HEpX/nkMDD94A01CXEPJn+yKb64mqQX5JIBlZtN25g452MhTmHE3QwMvNFM4QO0Op8
+	 PPH6VAlAVN6EeCcG2TE1sXwDwzSnFmyMbFZ2yei8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Ivan Babrou <ivan@cloudflare.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	kernel-team@cloudflare.com,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 079/285] x86/virt: Drop unnecessary check on extended CPUID level in cpu_has_svm()
-Date: Sun, 17 Sep 2023 21:11:19 +0200
-Message-ID: <20230917191054.447364165@linuxfoundation.org>
+Subject: [PATCH 6.5 080/285] perf script: Print "cgroup" field on the same line as "comm"
+Date: Sun, 17 Sep 2023 21:11:20 +0200
+Message-ID: <20230917191054.479670333@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -39,42 +48,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ivan Babrou <ivan@cloudflare.com>
 
-[ Upstream commit 5df8ecfe3632d5879d1f154f7aa8de441b5d1c89 ]
+[ Upstream commit 8c49c6e1a7b790c4cb9f464c5485117451d91c60 ]
 
-Drop the explicit check on the extended CPUID level in cpu_has_svm(), the
-kernel's cached CPUID info will leave the entire SVM leaf unset if said
-leaf is not supported by hardware.  Prior to using cached information,
-the check was needed to avoid false positives due to Intel's rather crazy
-CPUID behavior of returning the values of the maximum supported leaf if
-the specified leaf is unsupported.
+Commit 3fd7a168bf51 ("perf script: Add 'cgroup' field for output")
+added support for printing cgroup path in perf script output.
 
-Fixes: 682a8108872f ("x86/kvm/svm: Simplify cpu_has_svm()")
-Link: https://lore.kernel.org/r/20230721201859.2307736-13-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+It was okay if you didn't want any stacks:
+
+    $ sudo perf script --comms jpegtran:23f4bf -F comm,tid,cpu,time,cgroup
+    jpegtran:23f4bf 3321915 [013] 404718.587488:  /idle.slice/polish.service
+    jpegtran:23f4bf 3321915 [031] 404718.592073:  /idle.slice/polish.service
+
+With stacks it gets messier as cgroup is printed after the stack:
+
+    $ perf script --comms jpegtran:23f4bf -F comm,tid,cpu,time,cgroup,ip,sym
+    jpegtran:23f4bf 3321915 [013] 404718.587488:
+                    5c554 compress_output
+                    570d9 jpeg_finish_compress
+                    3476e jpegtran_main
+                    330ee jpegtran::main
+                    326e2 core::ops::function::FnOnce::call_once (inlined)
+                    326e2 std::sys_common::backtrace::__rust_begin_short_backtrace
+    /idle.slice/polish.service
+    jpegtran:23f4bf 3321915 [031] 404718.592073:
+                    8474d jsimd_encode_mcu_AC_first_prepare_sse2.PADDING
+                55af68e62fff [unknown]
+    /idle.slice/polish.service
+
+Let's instead print cgroup on the same line as comm:
+
+    $ perf script --comms jpegtran:23f4bf -F comm,tid,cpu,time,cgroup,ip,sym
+    jpegtran:23f4bf 3321915 [013] 404718.587488:  /idle.slice/polish.service
+                    5c554 compress_output
+                    570d9 jpeg_finish_compress
+                    3476e jpegtran_main
+                    330ee jpegtran::main
+                    326e2 core::ops::function::FnOnce::call_once (inlined)
+                    326e2 std::sys_common::backtrace::__rust_begin_short_backtrace
+
+    jpegtran:23f4bf 3321915 [031] 404718.592073:  /idle.slice/polish.service
+                    8474d jsimd_encode_mcu_AC_first_prepare_sse2.PADDING
+                55af68e62fff [unknown]
+
+Fixes: 3fd7a168bf514979 ("perf script: Add 'cgroup' field for output")
+Signed-off-by: Ivan Babrou <ivan@cloudflare.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: kernel-team@cloudflare.com
+Link: https://lore.kernel.org/r/20230718000737.49077-1-ivan@cloudflare.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/virtext.h | 6 ------
- 1 file changed, 6 deletions(-)
+ tools/perf/builtin-script.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/include/asm/virtext.h b/arch/x86/include/asm/virtext.h
-index 3b12e6b994123..6c2e3ff3cb28f 100644
---- a/arch/x86/include/asm/virtext.h
-+++ b/arch/x86/include/asm/virtext.h
-@@ -101,12 +101,6 @@ static inline int cpu_has_svm(const char **msg)
- 		return 0;
- 	}
+diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
+index 200b3e7ea8dad..517bf25750c8b 100644
+--- a/tools/perf/builtin-script.c
++++ b/tools/perf/builtin-script.c
+@@ -2199,6 +2199,17 @@ static void process_event(struct perf_script *script,
+ 	if (PRINT_FIELD(RETIRE_LAT))
+ 		fprintf(fp, "%16" PRIu16, sample->retire_lat);
  
--	if (boot_cpu_data.extended_cpuid_level < SVM_CPUID_FUNC) {
--		if (msg)
--			*msg = "can't execute cpuid_8000000a";
--		return 0;
++	if (PRINT_FIELD(CGROUP)) {
++		const char *cgrp_name;
++		struct cgroup *cgrp = cgroup__find(machine->env,
++						   sample->cgroup);
++		if (cgrp != NULL)
++			cgrp_name = cgrp->name;
++		else
++			cgrp_name = "unknown";
++		fprintf(fp, " %s", cgrp_name);
++	}
++
+ 	if (PRINT_FIELD(IP)) {
+ 		struct callchain_cursor *cursor = NULL;
+ 
+@@ -2243,17 +2254,6 @@ static void process_event(struct perf_script *script,
+ 	if (PRINT_FIELD(CODE_PAGE_SIZE))
+ 		fprintf(fp, " %s", get_page_size_name(sample->code_page_size, str));
+ 
+-	if (PRINT_FIELD(CGROUP)) {
+-		const char *cgrp_name;
+-		struct cgroup *cgrp = cgroup__find(machine->env,
+-						   sample->cgroup);
+-		if (cgrp != NULL)
+-			cgrp_name = cgrp->name;
+-		else
+-			cgrp_name = "unknown";
+-		fprintf(fp, " %s", cgrp_name);
 -	}
 -
- 	if (!boot_cpu_has(X86_FEATURE_SVM)) {
- 		if (msg)
- 			*msg = "svm not available";
+ 	perf_sample__fprintf_ipc(sample, attr, fp);
+ 
+ 	fprintf(fp, "\n");
 -- 
 2.40.1
 
