@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1B27461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8F3C433C8;
-	Sun, 17 Sep 2023 19:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657287461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D5CC433C8;
+	Sun, 17 Sep 2023 19:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980248;
-	bh=ke7IPsbQ8+VVgMAgqTosc+thZe7aST4kpTri5PLwjuA=;
+	s=korg; t=1694980252;
+	bh=+zxxHBPprBkPfKpGfZT04Fuk/UBfcBKT1KbWid0TP1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRgwnHsff95owSKjiDR70gd9A+urcq2To6fP98pd4C+mpl9m/ouAwg54jMii4WlDy
-	 8uNqUi8Hoj/IFk9VjQfrwLypILV2dRZajAAlYFm693/SvE6HuqFBJcdtKM9ZDQAbr2
-	 bnlrr0bhzUBUVU/G9jpse25jro1PkdyYVcvwkJMI=
+	b=ci5B9QwLF5Xossc/fBBMHhBnzaWszes/pxSLgEcyNGn6HQfW4No7uZO+SKEpKQiUS
+	 A1+JR+iR9R/Yvaz7eJ6I2PMHVA3vI5SEDP7qEtZrO0HbFzPx2s8CiE3jsOBP9i1HVv
+	 Nkw8OJwQtA2+g1VZyA3n6UboG0mw24vkFyNKRCGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 100/285] selftests/bpf: Fix flaky cgroup_iter_sleepable subtest
-Date: Sun, 17 Sep 2023 21:11:40 +0200
-Message-ID: <20230917191055.141824990@linuxfoundation.org>
+Subject: [PATCH 6.5 101/285] drm/i915: mark requests for GuC virtual engines to avoid use-after-free
+Date: Sun, 17 Sep 2023 21:11:41 +0200
+Message-ID: <20230917191055.172929036@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,81 +42,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Andrzej Hajda <andrzej.hajda@intel.com>
 
-[ Upstream commit 5439cfa7fe612e7d02d5a1234feda3fa6e483ba7 ]
+[ Upstream commit 5eefc5307c983b59344a4cb89009819f580c84fa ]
 
-Occasionally, with './test_progs -j' on my vm, I will hit the
-following failure:
+References to i915_requests may be trapped by userspace inside a
+sync_file or dmabuf (dma-resv) and held indefinitely across different
+proceses. To counter-act the memory leaks, we try to not to keep
+references from the request past their completion.
+On the other side on fence release we need to know if rq->engine
+is valid and points to hw engine (true for non-virtual requests).
+To make it possible extra bit has been added to rq->execution_mask,
+for marking virtual engines.
 
-  test_cgrp_local_storage:PASS:join_cgroup /cgrp_local_storage 0 nsec
-  test_cgroup_iter_sleepable:PASS:skel_open 0 nsec
-  test_cgroup_iter_sleepable:PASS:skel_load 0 nsec
-  test_cgroup_iter_sleepable:PASS:attach_iter 0 nsec
-  test_cgroup_iter_sleepable:PASS:iter_create 0 nsec
-  test_cgroup_iter_sleepable:FAIL:cgroup_id unexpected cgroup_id: actual 1 != expected 2812
-  #48/5    cgrp_local_storage/cgroup_iter_sleepable:FAIL
-  #48      cgrp_local_storage:FAIL
-
-Finally, I decided to do some investigation since the test is introduced
-by myself. It turns out the reason is due to cgroup_fd with value 0.
-In cgroup_iter, a cgroup_fd of value 0 means the root cgroup.
-
-	/* from cgroup_iter.c */
-        if (fd)
-                cgrp = cgroup_v1v2_get_from_fd(fd);
-        else if (id)
-                cgrp = cgroup_get_from_id(id);
-        else /* walk the entire hierarchy by default. */
-                cgrp = cgroup_get_from_path("/");
-
-That is why we got cgroup_id 1 instead of expected 2812.
-
-Why we got a cgroup_fd 0? Nobody should really touch 'stdin' (fd 0) in
-test_progs. I traced 'close' syscall with stack trace and found the root
-cause, which is a bug in bpf_obj_pinning.c. Basically, the code closed
-fd 0 although it should not. Fixing the bug in bpf_obj_pinning.c also
-resolved the above cgroup_iter_sleepable subtest failure.
-
-Fixes: 3b22f98e5a05 ("selftests/bpf: Add path_fd-based BPF_OBJ_PIN and BPF_OBJ_GET tests")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230827150551.1743497-1-yonghong.song@linux.dev
+Fixes: bcb9aa45d5a0 ("Revert "drm/i915: Hold reference to intel_context over life of i915_request"")
+Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
+Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230821153035.3903006-1-andrzej.hajda@intel.com
+(cherry picked from commit 280410677af763f3871b93e794a199cfcf6fb580)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine_types.h      | 1 +
+ drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 3 +++
+ drivers/gpu/drm/i915/i915_request.c               | 7 ++-----
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c b/tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c
-index 31f1e815f6719..ee0458a5ce789 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c
-@@ -8,6 +8,7 @@
- #include <linux/unistd.h>
- #include <linux/mount.h>
- #include <sys/syscall.h>
-+#include "bpf/libbpf_internal.h"
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_types.h b/drivers/gpu/drm/i915/gt/intel_engine_types.h
+index e99a6fa03d453..a7e6775980043 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_types.h
++++ b/drivers/gpu/drm/i915/gt/intel_engine_types.h
+@@ -58,6 +58,7 @@ struct i915_perf_group;
  
- static inline int sys_fsopen(const char *fsname, unsigned flags)
- {
-@@ -155,7 +156,7 @@ static void validate_pin(int map_fd, const char *map_name, int src_value,
- 	ASSERT_OK(err, "obj_pin");
+ typedef u32 intel_engine_mask_t;
+ #define ALL_ENGINES ((intel_engine_mask_t)~0ul)
++#define VIRTUAL_ENGINES BIT(BITS_PER_TYPE(intel_engine_mask_t) - 1)
  
- 	/* cleanup */
--	if (pin_opts.path_fd >= 0)
-+	if (path_kind == PATH_FD_REL && pin_opts.path_fd >= 0)
- 		close(pin_opts.path_fd);
- 	if (old_cwd[0])
- 		ASSERT_OK(chdir(old_cwd), "restore_cwd");
-@@ -220,7 +221,7 @@ static void validate_get(int map_fd, const char *map_name, int src_value,
- 		goto cleanup;
+ struct intel_hw_status_page {
+ 	struct list_head timelines;
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+index a0e3ef1c65d24..b5b7f2fe8c78e 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -5470,6 +5470,9 @@ guc_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
  
- 	/* cleanup */
--	if (get_opts.path_fd >= 0)
-+	if (path_kind == PATH_FD_REL && get_opts.path_fd >= 0)
- 		close(get_opts.path_fd);
- 	if (old_cwd[0])
- 		ASSERT_OK(chdir(old_cwd), "restore_cwd");
+ 	ve->base.flags = I915_ENGINE_IS_VIRTUAL;
+ 
++	BUILD_BUG_ON(ilog2(VIRTUAL_ENGINES) < I915_NUM_ENGINES);
++	ve->base.mask = VIRTUAL_ENGINES;
++
+ 	intel_context_init(&ve->context, &ve->base);
+ 
+ 	for (n = 0; n < count; n++) {
+diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
+index 833b73edefdbb..eb2a3000ad66b 100644
+--- a/drivers/gpu/drm/i915/i915_request.c
++++ b/drivers/gpu/drm/i915/i915_request.c
+@@ -134,9 +134,7 @@ static void i915_fence_release(struct dma_fence *fence)
+ 	i915_sw_fence_fini(&rq->semaphore);
+ 
+ 	/*
+-	 * Keep one request on each engine for reserved use under mempressure
+-	 * do not use with virtual engines as this really is only needed for
+-	 * kernel contexts.
++	 * Keep one request on each engine for reserved use under mempressure.
+ 	 *
+ 	 * We do not hold a reference to the engine here and so have to be
+ 	 * very careful in what rq->engine we poke. The virtual engine is
+@@ -166,8 +164,7 @@ static void i915_fence_release(struct dma_fence *fence)
+ 	 * know that if the rq->execution_mask is a single bit, rq->engine
+ 	 * can be a physical engine with the exact corresponding mask.
+ 	 */
+-	if (!intel_engine_is_virtual(rq->engine) &&
+-	    is_power_of_2(rq->execution_mask) &&
++	if (is_power_of_2(rq->execution_mask) &&
+ 	    !cmpxchg(&rq->engine->request_pool, NULL, rq))
+ 		return;
+ 
 -- 
 2.40.1
 
