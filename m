@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1898553B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F2C433C7;
-	Sun, 17 Sep 2023 19:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F0553B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D791FC433CA;
+	Sun, 17 Sep 2023 19:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979304;
-	bh=TzYX9Ny9EcSiuf1MKEugoVHe4t6Fz0LkUgKhl7YCgjc=;
+	s=korg; t=1694979308;
+	bh=31TavuVgCmN9+4Z2Wkw5QCzzaBEHmH6luXnw23yOHAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lbA9mdncOZzc78eIqruufrHcjoclpphnXUHfhu3GlBVHTLwHa0/73wCFQuHkhwnxR
-	 aaWfeSxd/z0Iim68RyauIVZC01NWFJ6eWUWsKVTeAdSW1OxqXmXtxiaH2Uoj6BKgib
-	 /rBRqJve9aaMMhlIwFNwl7XT5dfhRBy6+foG8JII=
+	b=EF0wz6BKeJ+SP4WYKL3WbxX25ZNLuHcloBoRdH/PtFr3gEi7RQ72sRGtYWuM8bafq
+	 5tVIuo2BUydKk8WOXkMFr3QAWmhRHe//SwhXgiiyF7WGtg136CHOlOrra+deE1rRaE
+	 SZSs2D26gm1nmWJBV/bW3xQAJ05csfROzGUwl4uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manfred Rudigier <manfred.rudigier@omicronenergy.com>,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 5.10 273/406] igb: set max size RX buffer when store bad packet is enabled
-Date: Sun, 17 Sep 2023 21:12:07 +0200
-Message-ID: <20230917191108.468721442@linuxfoundation.org>
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 5.10 274/406] PM / devfreq: Fix leak in devfreq_dev_release()
+Date: Sun, 17 Sep 2023 21:12:08 +0200
+Message-ID: <20230917191108.501360715@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,51 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-commit bb5ed01cd2428cd25b1c88a3a9cba87055eb289f upstream.
+commit 5693d077595de721f9ddbf9d37f40e5409707dfe upstream.
 
-Increase the RX buffer size to 3K when the SBP bit is on. The size of
-the RX buffer determines the number of pages allocated which may not
-be sufficient for receive frames larger than the set MTU size.
+srcu_init_notifier_head() allocates resources that need to be released
+with a srcu_cleanup_notifier_head() call.
 
-Cc: stable@vger.kernel.org
-Fixes: 89eaefb61dc9 ("igb: Support RX-ALL feature flag.")
-Reported-by: Manfred Rudigier <manfred.rudigier@omicronenergy.com>
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported by kmemleak.
+
+Fixes: 0fe3a66410a3 ("PM / devfreq: Add new DEVFREQ_TRANSITION_NOTIFIER notifier")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/devfreq/devfreq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -4731,6 +4731,10 @@ void igb_configure_rx_ring(struct igb_ad
- static void igb_set_rx_buffer_len(struct igb_adapter *adapter,
- 				  struct igb_ring *rx_ring)
- {
-+#if (PAGE_SIZE < 8192)
-+	struct e1000_hw *hw = &adapter->hw;
-+#endif
-+
- 	/* set build_skb and buffer size flags */
- 	clear_ring_build_skb_enabled(rx_ring);
- 	clear_ring_uses_large_buffer(rx_ring);
-@@ -4741,10 +4745,9 @@ static void igb_set_rx_buffer_len(struct
- 	set_ring_build_skb_enabled(rx_ring);
+--- a/drivers/devfreq/devfreq.c
++++ b/drivers/devfreq/devfreq.c
+@@ -732,6 +732,7 @@ static void devfreq_dev_release(struct d
+ 		devfreq->profile->exit(devfreq->dev.parent);
  
- #if (PAGE_SIZE < 8192)
--	if (adapter->max_frame_size <= IGB_MAX_FRAME_BUILD_SKB)
--		return;
--
--	set_ring_uses_large_buffer(rx_ring);
-+	if (adapter->max_frame_size > IGB_MAX_FRAME_BUILD_SKB ||
-+	    rd32(E1000_RCTL) & E1000_RCTL_SBP)
-+		set_ring_uses_large_buffer(rx_ring);
- #endif
+ 	mutex_destroy(&devfreq->lock);
++	srcu_cleanup_notifier_head(&devfreq->transition_notifier_list);
+ 	kfree(devfreq);
  }
  
 
