@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ACB7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69776C433C8;
-	Sun, 17 Sep 2023 19:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1977461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0188C433C7;
+	Sun, 17 Sep 2023 19:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980715;
-	bh=XOKZl7oQambcq+F6NKXnb6wXCQgZZ6yXM/Btteup6Gg=;
+	s=korg; t=1694980718;
+	bh=DiOt5lGoDxpcpaVyitKsaZk2ZI3LFV/jcW3m8keBteI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJsOBH8m67W5mnPVChiFkNTzjqsFxHmz2d+jwmv3faTf+FTngiPM/wvMDc/EvZrpg
-	 Ymahp/Tq0414LkZOmx+eyg4lCu3L7S+bX5Jw2RfAADwFcgzHbVh3IBSKpUx1TcMa9z
-	 w6I7w6crdH1oL6IywrOs2tHVlU2mzJmT0b3zmJow=
+	b=zljWDBCCihvWqCM0H2hfVq4mFMFcINNJ2h4LOpQKqJpBfrka7oDAvYNngXUwa8GST
+	 wCNo1zsbnPU/NXfhfdvsxds08mbpCX3xM4o2Qq/hOAQ7sDy0j7p7Ia05GyMKPQz2Ed
+	 cZs4ffUat61mrGl0jcUns7Kf41rwPkcPuCjCiETs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 273/285] net: macb: fix sleep inside spinlock
-Date: Sun, 17 Sep 2023 21:14:33 +0200
-Message-ID: <20230917191100.617632670@linuxfoundation.org>
+Subject: [PATCH 6.5 274/285] veth: Update XDP feature set when bringing up device
+Date: Sun, 17 Sep 2023 21:14:34 +0200
+Message-ID: <20230917191100.644470302@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -34,101 +34,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit 403f0e771457e2b8811dc280719d11b9bacf10f4 ]
+[ Upstream commit 7a6102aa6df0d5d032b4cbc51935d1d4cda17254 ]
 
-macb_set_tx_clk() is called under a spinlock but itself calls clk_set_rate()
-which can sleep. This results in:
+There's an early return in veth_set_features() if the device is in a down
+state, which leads to the XDP feature flags not being updated when enabling
+GRO while the device is down. Which in turn leads to XDP_REDIRECT not
+working, because the redirect code now checks the flags.
 
-| BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
-| pps pps1: new PPS source ptp1
-| in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 40, name: kworker/u4:3
-| preempt_count: 1, expected: 0
-| RCU nest depth: 0, expected: 0
-| 4 locks held by kworker/u4:3/40:
-|  #0: ffff000003409148
-| macb ff0c0000.ethernet: gem-ptp-timer ptp clock registered.
-|  ((wq_completion)events_power_efficient){+.+.}-{0:0}, at: process_one_work+0x14c/0x51c
-|  #1: ffff8000833cbdd8 ((work_completion)(&pl->resolve)){+.+.}-{0:0}, at: process_one_work+0x14c/0x51c
-|  #2: ffff000004f01578 (&pl->state_mutex){+.+.}-{4:4}, at: phylink_resolve+0x44/0x4e8
-|  #3: ffff000004f06f50 (&bp->lock){....}-{3:3}, at: macb_mac_link_up+0x40/0x2ac
-| irq event stamp: 113998
-| hardirqs last  enabled at (113997): [<ffff800080e8503c>] _raw_spin_unlock_irq+0x30/0x64
-| hardirqs last disabled at (113998): [<ffff800080e84478>] _raw_spin_lock_irqsave+0xac/0xc8
-| softirqs last  enabled at (113608): [<ffff800080010630>] __do_softirq+0x430/0x4e4
-| softirqs last disabled at (113597): [<ffff80008001614c>] ____do_softirq+0x10/0x1c
-| CPU: 0 PID: 40 Comm: kworker/u4:3 Not tainted 6.5.0-11717-g9355ce8b2f50-dirty #368
-| Hardware name: ... ZynqMP ... (DT)
-| Workqueue: events_power_efficient phylink_resolve
-| Call trace:
-|  dump_backtrace+0x98/0xf0
-|  show_stack+0x18/0x24
-|  dump_stack_lvl+0x60/0xac
-|  dump_stack+0x18/0x24
-|  __might_resched+0x144/0x24c
-|  __might_sleep+0x48/0x98
-|  __mutex_lock+0x58/0x7b0
-|  mutex_lock_nested+0x24/0x30
-|  clk_prepare_lock+0x4c/0xa8
-|  clk_set_rate+0x24/0x8c
-|  macb_mac_link_up+0x25c/0x2ac
-|  phylink_resolve+0x178/0x4e8
-|  process_one_work+0x1ec/0x51c
-|  worker_thread+0x1ec/0x3e4
-|  kthread+0x120/0x124
-|  ret_from_fork+0x10/0x20
+Fix this by updating the feature flags after bringing the device up.
 
-The obvious fix is to move the call to macb_set_tx_clk() out of the
-protected area. This seems safe as rx and tx are both disabled anyway at
-this point.
-It is however not entirely clear what the spinlock shall protect. It
-could be the read-modify-write access to the NCFGR register, but this
-is accessed in macb_set_rx_mode() and macb_set_rxcsum_feature() as well
-without holding the spinlock. It could also be the register accesses
-done in mog_init_rings() or macb_init_buffers(), but again these
-functions are called without holding the spinlock in macb_hresp_error_task().
-The locking seems fishy in this driver and it might deserve another look
-before this patch is applied.
+Before this patch:
 
-Fixes: 633e98a711ac0 ("net: macb: use resolved link config in mac_link_up()")
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/r/20230908112913.1701766-1-s.hauer@pengutronix.de
+NETDEV_XDP_ACT_BASIC:		yes
+NETDEV_XDP_ACT_REDIRECT:	yes
+NETDEV_XDP_ACT_NDO_XMIT:	no
+NETDEV_XDP_ACT_XSK_ZEROCOPY:	no
+NETDEV_XDP_ACT_HW_OFFLOAD:	no
+NETDEV_XDP_ACT_RX_SG:		yes
+NETDEV_XDP_ACT_NDO_XMIT_SG:	no
+
+After this patch:
+
+NETDEV_XDP_ACT_BASIC:		yes
+NETDEV_XDP_ACT_REDIRECT:	yes
+NETDEV_XDP_ACT_NDO_XMIT:	yes
+NETDEV_XDP_ACT_XSK_ZEROCOPY:	no
+NETDEV_XDP_ACT_HW_OFFLOAD:	no
+NETDEV_XDP_ACT_RX_SG:		yes
+NETDEV_XDP_ACT_NDO_XMIT_SG:	yes
+
+Fixes: fccca038f300 ("veth: take into account device reconfiguration for xdp_features flag")
+Fixes: 66c0e13ad236 ("drivers: net: turn on XDP features")
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20230911135826.722295-1-toke@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/veth.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 82929ee76739d..2d18acf3d5eae 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -757,8 +757,6 @@ static void macb_mac_link_up(struct phylink_config *config,
- 		if (rx_pause)
- 			ctrl |= MACB_BIT(PAE);
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 2db678c0082a3..fc0d0114d8c27 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1447,6 +1447,8 @@ static int veth_open(struct net_device *dev)
+ 		netif_carrier_on(peer);
+ 	}
  
--		macb_set_tx_clk(bp, speed);
--
- 		/* Initialize rings & buffers as clearing MACB_BIT(TE) in link down
- 		 * cleared the pipeline and control registers.
- 		 */
-@@ -778,6 +776,9 @@ static void macb_mac_link_up(struct phylink_config *config,
- 
- 	spin_unlock_irqrestore(&bp->lock, flags);
- 
-+	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
-+		macb_set_tx_clk(bp, speed);
++	veth_set_xdp_features(dev);
 +
- 	/* Enable Rx and Tx; Enable PTP unicast */
- 	ctrl = macb_readl(bp, NCR);
- 	if (gem_has_ptp(bp))
+ 	return 0;
+ }
+ 
 -- 
 2.40.1
 
