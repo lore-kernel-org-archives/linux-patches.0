@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30BC6AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB67C433CB;
-	Sun, 17 Sep 2023 20:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA08E6AAC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325C0C433C8;
+	Sun, 17 Sep 2023 20:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982085;
-	bh=ooDOdC8PmgA4kwmfAvkTIrjiH3M9GDJeRd422wdJDyQ=;
+	s=korg; t=1694982088;
+	bh=8iGFIemywNA9pAO0aVGUND76TPkYJExDptrLCB9FJcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRTFS4awX0Jx64EP6/nah5UqHTKCnesYlvx2yXkDTBkE+ML7MkPGx4reLRMX/d2KK
-	 OFY99SRavsD9GsIc4tME3Rz4/NOUJQ/3h4bn0xJnrpa4q0ZeC3QilZOhA/XF1s/FV4
-	 BPslzM2O2itnyHmCWvSyAF/WTyg6URERjPSdLOQ8=
+	b=SGmfjUK1h5YYcqkrlYdFdDWQ+OtU40jUhAULubYnCuE1/NfGkFqPJiNs2250aM/FC
+	 ynSbCDO97vvnHkMSaO5fnUfCiAR7SSHqJZaPV2vkfQAdiR7LNv9r69jx12qcjkOEHw
+	 iDk76r0BuVjG7mayWBsj3TQEUF7esxZK8jiEm4nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+666c97e4686410e79649@syzkaller.appspotmail.com,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrei Vagin <avagin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 215/219] tcp: Fix bind() regression for v4-mapped-v6 non-wildcard address.
-Date: Sun, 17 Sep 2023 21:15:42 +0200
-Message-ID: <20230917191048.707271129@linuxfoundation.org>
+Subject: [PATCH 5.15 122/511] netrom: Deny concurrent connect().
+Date: Sun, 17 Sep 2023 21:09:09 +0200
+Message-ID: <20230917191116.818031074@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,68 +37,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c48ef9c4aed3632566b57ba66cec6ec78624d4cb ]
+[ Upstream commit c2f8fd7949603efb03908e05abbf7726748c8de3 ]
 
-Since bhash2 was introduced, the example below does not work as expected.
-These two bind() should conflict, but the 2nd bind() now succeeds.
+syzkaller reported null-ptr-deref [0] related to AF_NETROM.
+This is another self-accept issue from the strace log. [1]
 
-  from socket import *
+syz-executor creates an AF_NETROM socket and calls connect(), which
+is blocked at that time.  Then, sk->sk_state is TCP_SYN_SENT and
+sock->state is SS_CONNECTING.
 
-  s1 = socket(AF_INET6, SOCK_STREAM)
-  s1.bind(('::ffff:127.0.0.1', 0))
+  [pid  5059] socket(AF_NETROM, SOCK_SEQPACKET, 0) = 4
+  [pid  5059] connect(4, {sa_family=AF_NETROM, sa_data="..." <unfinished ...>
 
-  s2 = socket(AF_INET, SOCK_STREAM)
-  s2.bind(('127.0.0.1', s1.getsockname()[1]))
+Another thread calls connect() concurrently, which finally fails
+with -EINVAL.  However, the problem here is the socket state is
+reset even while the first connect() is blocked.
 
-During the 2nd bind() in inet_csk_get_port(), inet_bind2_bucket_find()
-fails to find the 1st socket's tb2, so inet_bind2_bucket_create() allocates
-a new tb2 for the 2nd socket.  Then, we call inet_csk_bind_conflict() that
-checks conflicts in the new tb2 by inet_bhash2_conflict().  However, the
-new tb2 does not include the 1st socket, thus the bind() finally succeeds.
+  [pid  5060] connect(4, NULL, 0 <unfinished ...>
+  [pid  5060] <... connect resumed>)      = -1 EINVAL (Invalid argument)
 
-In this case, inet_bind2_bucket_match() must check if AF_INET6 tb2 has
-the conflicting v4-mapped-v6 address so that inet_bind2_bucket_find()
-returns the 1st socket's tb2.
+As sk->state is TCP_CLOSE and sock->state is SS_UNCONNECTED, the
+following listen() succeeds.  Then, the first connect() looks up
+itself as a listener and puts skb into the queue with skb->sk itself.
+As a result, the next accept() gets another FD of itself as 3, and
+the first connect() finishes.
 
-Note that if we bind two sockets to 127.0.0.1 and then ::FFFF:127.0.0.1,
-the 2nd bind() fails properly for the same reason mentinoed in the previous
-commit.
+  [pid  5060] listen(4, 0 <unfinished ...>
+  [pid  5060] <... listen resumed>)       = 0
+  [pid  5060] accept(4, NULL, NULL <unfinished ...>
+  [pid  5060] <... accept resumed>)       = 3
+  [pid  5059] <... connect resumed>)      = 0
 
-Fixes: 28044fc1d495 ("net: Add a bhash2 table hashed by port and address")
+Then, accept4() is called but blocked, which causes the general protection
+fault later.
+
+  [pid  5059] accept4(4, NULL, 0x20000400, SOCK_NONBLOCK <unfinished ...>
+
+After that, another self-accept occurs by accept() and writev().
+
+  [pid  5060] accept(4, NULL, NULL <unfinished ...>
+  [pid  5061] writev(3, [{iov_base=...}] <unfinished ...>
+  [pid  5061] <... writev resumed>)       = 99
+  [pid  5060] <... accept resumed>)       = 6
+
+Finally, the leader thread close()s all FDs.  Since the three FDs
+reference the same socket, nr_release() does the cleanup for it
+three times, and the remaining accept4() causes the following fault.
+
+  [pid  5058] close(3)                    = 0
+  [pid  5058] close(4)                    = 0
+  [pid  5058] close(5)                    = -1 EBADF (Bad file descriptor)
+  [pid  5058] close(6)                    = 0
+  [pid  5058] <... exit_group resumed>)   = ?
+  [   83.456055][ T5059] general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
+
+To avoid the issue, we need to return an error for connect() if
+another connect() is in progress, as done in __inet_stream_connect().
+
+[0]:
+general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+CPU: 0 PID: 5059 Comm: syz-executor.0 Not tainted 6.5.0-rc5-syzkaller-00194-gace0ab3a4b54 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+RIP: 0010:__lock_acquire+0x109/0x5de0 kernel/locking/lockdep.c:5012
+Code: 45 85 c9 0f 84 cc 0e 00 00 44 8b 05 11 6e 23 0b 45 85 c0 0f 84 be 0d 00 00 48 ba 00 00 00 00 00 fc ff df 4c 89 d1 48 c1 e9 03 <80> 3c 11 00 0f 85 e8 40 00 00 49 81 3a a0 69 48 90 0f 84 96 0d 00
+RSP: 0018:ffffc90003d6f9e0 EFLAGS: 00010006
+RAX: ffff8880244c8000 RBX: 1ffff920007adf6c RCX: 0000000000000003
+RDX: dffffc0000000000 RSI: 0000000000000000 RDI: 0000000000000018
+RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000018 R11: 0000000000000000 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f51d519a6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f51d5158d58 CR3: 000000002943f000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ lock_acquire kernel/locking/lockdep.c:5761 [inline]
+ lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0x3a/0x50 kernel/locking/spinlock.c:162
+ prepare_to_wait+0x47/0x380 kernel/sched/wait.c:269
+ nr_accept+0x20d/0x650 net/netrom/af_netrom.c:798
+ do_accept+0x3a6/0x570 net/socket.c:1872
+ __sys_accept4_file net/socket.c:1913 [inline]
+ __sys_accept4+0x99/0x120 net/socket.c:1943
+ __do_sys_accept4 net/socket.c:1954 [inline]
+ __se_sys_accept4 net/socket.c:1951 [inline]
+ __x64_sys_accept4+0x96/0x100 net/socket.c:1951
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f51d447cae9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f51d519a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000120
+RAX: ffffffffffffffda RBX: 00007f51d459bf80 RCX: 00007f51d447cae9
+RDX: 0000000020000400 RSI: 0000000000000000 RDI: 0000000000000004
+RBP: 00007f51d44c847a R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000800 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000000b R14: 00007f51d459bf80 R15: 00007ffc25c34e48
+ </TASK>
+
+Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=152cdb63a80000 [1]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+666c97e4686410e79649@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=666c97e4686410e79649
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Andrei Vagin <avagin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netrom/af_netrom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index eb522c0374d59..d79de4b95186b 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -800,8 +800,13 @@ static bool inet_bind2_bucket_match(const struct inet_bind2_bucket *tb,
- 		return false;
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 5c04da4cfbad0..24747163122bb 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -660,6 +660,11 @@ static int nr_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		goto out_release;
+ 	}
  
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb->family)
-+	if (sk->sk_family != tb->family) {
-+		if (sk->sk_family == AF_INET)
-+			return ipv6_addr_v4mapped(&tb->v6_rcv_saddr) &&
-+				tb->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
-+
- 		return false;
++	if (sock->state == SS_CONNECTING) {
++		err = -EALREADY;
++		goto out_release;
 +	}
++
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
  
- 	if (sk->sk_family == AF_INET6)
- 		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
 -- 
 2.40.1
 
