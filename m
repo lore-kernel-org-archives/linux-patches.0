@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21E86FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF52C433C9;
-	Sun, 17 Sep 2023 20:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4FB6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C960C433CB;
+	Sun, 17 Sep 2023 20:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981147;
-	bh=K0iLyIxIV6VeFnS7XYHAMJym+dRvVQYbtW/4zXPihnY=;
+	s=korg; t=1694981151;
+	bh=slNFVex6530uEUZcuiyPBzY+EXNSvDL/pQfBR7iB2v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdtLSHJdD7B4v+HMRGQ2U5Rx1Nn+T4Vv95Yrp6Qmjz5HFMIdJKjddLzkU+QCKx0nt
-	 fomXCzeztOcvYrc/k1nB0ayYoLC/uPUJ76yh3pYAuQiGcbvExyLlYnLUctFccAXdyT
-	 Mf3BCB6SmPWPWpm9Ll5zJQKxPFNzA7xpY1UFIvYU=
+	b=raCUVgI6oG50rZ0QSMleMHloFgIh6nrkQX8h9tMNH/vA0zklmCRi6TazBs6USvYx1
+	 SutvPYumXU2gBY20QHetLKw06dD21B52hJaXmpqch37XTBWW7GWy13nxzcciK6y16Y
+	 HRXgBwGW5kavOcSzbNPN/0vfuIpFtLD1gCcguEkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Dmytro Maluka <dmy@semihalf.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/219] pwm: lpc32xx: Remove handling of PWM channels
-Date: Sun, 17 Sep 2023 21:13:26 +0200
-Message-ID: <20230917191043.835547885@linuxfoundation.org>
+Subject: [PATCH 5.15 012/511] ASoC: da7219: Check for failure reading AAD IRQ events
+Date: Sun, 17 Sep 2023 21:07:19 +0200
+Message-ID: <20230917191114.130357861@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,90 +34,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@mleia.com>
+From: Dmytro Maluka <dmy@semihalf.com>
 
-[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
+[ Upstream commit f0691dc16206f21b13c464434366e2cd632b8ed7 ]
 
-Because LPC32xx PWM controllers have only a single output which is
-registered as the only PWM device/channel per controller, it is known in
-advance that pwm->hwpwm value is always 0. On basis of this fact
-simplify the code by removing operations with pwm->hwpwm, there is no
-controls which require channel number as input.
+When handling an AAD interrupt, if IRQ events read failed (for example,
+due to i2c "Transfer while suspended" failure, i.e. when attempting to
+read it while DA7219 is suspended, which may happen due to a spurious
+AAD interrupt), the events array contains garbage uninitialized values.
+So instead of trying to interprete those values and doing any actions
+based on them (potentially resulting in misbehavior, e.g. reporting
+bogus events), refuse to handle the interrupt.
 
-Even though I wasn't aware at the time when I forward ported that patch,
-this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
-before devm_pwmchip_add() is called.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Dmytro Maluka <dmy@semihalf.com>
+Link: https://lore.kernel.org/r/20230717193737.161784-3-dmy@semihalf.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/soc/codecs/da7219-aad.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
-index 86a0ea0f6955c..806f0bb3ad6d8 100644
---- a/drivers/pwm/pwm-lpc32xx.c
-+++ b/drivers/pwm/pwm-lpc32xx.c
-@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (duty_cycles > 255)
- 		duty_cycles = 255;
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 6b368ab945be5..7d18de959439f 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -347,11 +347,15 @@ static irqreturn_t da7219_aad_irq_thread(int irq, void *data)
+ 	struct da7219_priv *da7219 = snd_soc_component_get_drvdata(component);
+ 	u8 events[DA7219_AAD_IRQ_REG_MAX];
+ 	u8 statusa;
+-	int i, report = 0, mask = 0;
++	int i, ret, report = 0, mask = 0;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~0xFFFF;
- 	val |= (period_cycles << 8) | duty_cycles;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
+ 	/* Read current IRQ events */
+-	regmap_bulk_read(da7219->regmap, DA7219_ACCDET_IRQ_EVENT_A,
+-			 events, DA7219_AAD_IRQ_REG_MAX);
++	ret = regmap_bulk_read(da7219->regmap, DA7219_ACCDET_IRQ_EVENT_A,
++			       events, DA7219_AAD_IRQ_REG_MAX);
++	if (ret) {
++		dev_warn_ratelimited(component->dev, "Failed to read IRQ events: %d\n", ret);
++		return IRQ_NONE;
++	}
  
- 	return 0;
- }
-@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (ret)
- 		return ret;
- 
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val |= PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	return 0;
- }
-@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
- 	u32 val;
- 
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	clk_disable_unprepare(lpc32xx->clk);
- }
-@@ -141,9 +141,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
- 	lpc32xx->chip.npwm = 1;
- 
- 	/* If PWM is disabled, configure the output to the default value */
--	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_PIN_LEVEL;
--	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	ret = devm_pwmchip_add(&pdev->dev, &lpc32xx->chip);
- 	if (ret < 0) {
+ 	if (!events[DA7219_AAD_IRQ_REG_A] && !events[DA7219_AAD_IRQ_REG_B])
+ 		return IRQ_NONE;
 -- 
 2.40.1
 
