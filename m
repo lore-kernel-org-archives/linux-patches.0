@@ -1,28 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D966FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A84C433C8;
-	Sun, 17 Sep 2023 19:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B896FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B874C433C7;
+	Sun, 17 Sep 2023 19:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979990;
-	bh=fMiNUMYgO4U5NqdsQNRoagXm4s1UH4+7QwnbDUM5wQs=;
+	s=korg; t=1694979994;
+	bh=EUa0AjzmjosFq2QWhjih8GwoE1puji7XLs95WTaL42A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1S4avnEEC7F8dlq+RWmGSS2cssQxAANmAAB12965YXcuZnS1QH/FVNlBBlJDd587C
-	 XwecZU7i1rNyscMn5YWJpSTWfRw7ARmSrj1L9vRdpqrdhcThOqnII4mWUEzRnlbr5N
-	 R4qQTHZWgwJ6BuK0MlcJtWWAvSXCOJFTDKfo+8oA=
+	b=YMAEMa59CAt8xgOUNikdC1wP8sp4ixC7eiJ9N6Ho3o5APWJWC8cz+P3e8R8uYvtl5
+	 tmr5h4zFaDIJPpydhVQ4se8oelgrCvvAYLwDFdZT/aQfWWd79FEENycRxr09NSssfb
+	 nbncIG+3Fcsu7q6Q+us+bnCWwpcCOcWEw/CscUE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 037/285] lib/test_meminit: allocate pages up to order MAX_ORDER
-Date: Sun, 17 Sep 2023 21:10:37 +0200
-Message-ID: <20230917191052.955528450@linuxfoundation.org>
+	Kalesh Singh <kaleshsingh@google.com>,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>,
+	Barry Song <baohua@kernel.org>,
+	Brian Geffon <bgeffon@google.com>,
+	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
+	Lecopzer Chen <lecopzer.chen@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Steven Barrett <steven@liquorix.net>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.5 038/285] Multi-gen LRU: avoid race in inc_min_seq()
+Date: Sun, 17 Sep 2023 21:10:38 +0200
+Message-ID: <20230917191052.988461946@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,44 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Donnellan <ajd@linux.ibm.com>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-commit efb78fa86e95832b78ca0ba60f3706788a818938 upstream.
+commit bb5e7f234eacf34b65be67ebb3613e3b8cf11b87 upstream.
 
-test_pages() tests the page allocator by calling alloc_pages() with
-different orders up to order 10.
+inc_max_seq() will try to inc_min_seq() if nr_gens == MAX_NR_GENS. This
+is because the generations are reused (the last oldest now empty
+generation will become the next youngest generation).
 
-However, different architectures and platforms support different maximum
-contiguous allocation sizes.  The default maximum allocation order
-(MAX_ORDER) is 10, but architectures can use CONFIG_ARCH_FORCE_MAX_ORDER
-to override this.  On platforms where this is less than 10, test_meminit()
-will blow up with a WARN().  This is expected, so let's not do that.
+inc_min_seq() is retried until successful, dropping the lru_lock
+and yielding the CPU on each failure, and retaking the lock before
+trying again:
 
-Replace the hardcoded "10" with the MAX_ORDER macro so that we test
-allocations up to the expected platform limit.
+        while (!inc_min_seq(lruvec, type, can_swap)) {
+                spin_unlock_irq(&lruvec->lru_lock);
+                cond_resched();
+                spin_lock_irq(&lruvec->lru_lock);
+        }
 
-Link: https://lkml.kernel.org/r/20230714015238.47931-1-ajd@linux.ibm.com
-Fixes: 5015a300a522 ("lib: introduce test_meminit module")
-Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
+However, the initial condition that required incrementing the min_seq
+(nr_gens == MAX_NR_GENS) is not retested. This can change by another
+call to inc_max_seq() from run_aging() with force_scan=true from the
+debugfs interface.
+
+Since the eviction stalls when the nr_gens == MIN_NR_GENS, avoid
+unnecessarily incrementing the min_seq by rechecking the number of
+generations before each attempt.
+
+This issue was uncovered in previous discussion on the list by Yu Zhao
+and Aneesh Kumar [1].
+
+[1] https://lore.kernel.org/linux-mm/CAOUHufbO7CaVm=xjEb1avDhHVvnC8pJmGyKcFf2iY_dpf+zR3w@mail.gmail.com/
+
+Link: https://lkml.kernel.org/r/20230802025606.346758-2-kaleshsingh@google.com
+Fixes: d6c3af7d8a2b ("mm: multi-gen LRU: debugfs interface")
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> [mediatek]
+Tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Steven Barrett <steven@liquorix.net>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_meminit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -93,7 +93,7 @@ static int __init test_pages(int *total_
- 	int failures = 0, num_tests = 0;
- 	int i;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4440,7 +4440,7 @@ static void inc_max_seq(struct lruvec *l
+ 	int prev, next;
+ 	int type, zone;
+ 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
+-
++restart:
+ 	spin_lock_irq(&lruvec->lru_lock);
  
--	for (i = 0; i < 10; i++)
-+	for (i = 0; i <= MAX_ORDER; i++)
- 		num_tests += do_alloc_pages_order(i, &failures);
+ 	VM_WARN_ON_ONCE(!seq_is_valid(lruvec));
+@@ -4451,11 +4451,12 @@ static void inc_max_seq(struct lruvec *l
  
- 	REPORT_FAILURES_IN_FN();
+ 		VM_WARN_ON_ONCE(!force_scan && (type == LRU_GEN_FILE || can_swap));
+ 
+-		while (!inc_min_seq(lruvec, type, can_swap)) {
+-			spin_unlock_irq(&lruvec->lru_lock);
+-			cond_resched();
+-			spin_lock_irq(&lruvec->lru_lock);
+-		}
++		if (inc_min_seq(lruvec, type, can_swap))
++			continue;
++
++		spin_unlock_irq(&lruvec->lru_lock);
++		cond_resched();
++		goto restart;
+ 	}
+ 
+ 	/*
 
 
