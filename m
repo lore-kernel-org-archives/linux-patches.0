@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BDC6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB1DC433C7;
-	Sun, 17 Sep 2023 19:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6216FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:45:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B8AC433CD;
+	Sun, 17 Sep 2023 19:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979898;
-	bh=l1rvJ6xUA7kc+gpv2k95Nk+XnIFUu0vfssRNHbxKfbM=;
+	s=korg; t=1694979901;
+	bh=Jj/hGPN/0MayU1mH5l+kZvS7GV3yRqQmbua9Op/740E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPmZj6HtQ+8/Aj+gYyu8rEKPcPkSzCN/KgVjsTeYYJV/31YeCZGoiBqhRNylbqHQX
-	 zv2KrytdCt4RYlESa6OZkUjJWzPSDq/vzjoHugjP8ItTVz9Pk9EehvFX6xcrxzAqLi
-	 5HU4uso+63LnujYUuktGM1vLllpVx2RzxnIv+Bec=
+	b=klZCguJj+LYsvo6VNNN9cpmUZQWmgIWDbE/y/wPCiMagIiHEPmbZolRfswK4q55qX
+	 l5ZYCueshbOePXevv+QcgXjLlK3k1mCnIK27DUu1BRB4OU3cEEENJILQvwFlPjls0z
+	 8CymO3Sm1UBTza7yV0B9htpcFqlCUA4S3Wyz8Dgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Rangankar <mrangankar@marvell.com>,
+	Quinn Tran <qutran@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 013/285] scsi: qla2xxx: Remove unsupported ql2xenabledif option
-Date: Sun, 17 Sep 2023 21:10:13 +0200
-Message-ID: <20230917191052.081440911@linuxfoundation.org>
+Subject: [PATCH 6.5 004/285] scsi: qla2xxx: Adjust IOCB resource on qpair create
+Date: Sun, 17 Sep 2023 21:10:04 +0200
+Message-ID: <20230917191051.785147703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,75 +41,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit e9105c4b7a9208a21a9bda133707624f12ddabc2 upstream.
+commit efa74a62aaa2429c04fe6cb277b3bf6739747d86 upstream.
 
-User accidently passed module parameter ql2xenabledif=1 which is
-unsupported. However, driver still initialized which lead to guard tag
-errors during device discovery.
+During NVMe queue creation, a new qpair is created. FW resource limit needs
+to be re-adjusted to take into account the new qpair. Otherwise, NVMe
+command can not go through.  This issue was discovered while
+testing/forcing FW execution to fail at load time.
 
-Remove unsupported ql2xenabledif=1 option and validate the user input.
+Add call to readjust IOCB and exchange limit.
+
+In addition, get FW state command and require FW to be running. Otherwise,
+error is generated.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230821130045.34850-7-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230714070104.40052-3-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |    2 --
- drivers/scsi/qla2xxx/qla_dbg.c  |    2 +-
- drivers/scsi/qla2xxx/qla_os.c   |    9 +++++++--
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_gbl.h  |    1 
+ drivers/scsi/qla2xxx/qla_init.c |   52 +++++++++++++++++++++++++---------------
+ drivers/scsi/qla2xxx/qla_mbx.c  |    3 ++
+ drivers/scsi/qla2xxx/qla_nvme.c |    1 
+ 4 files changed, 38 insertions(+), 19 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -3093,8 +3093,6 @@ qla24xx_vport_create(struct fc_vport *fc
- 			vha->flags.difdix_supported = 1;
- 			ql_dbg(ql_dbg_user, vha, 0x7082,
- 			    "Registered for DIF/DIX type 1 and 3 protection.\n");
--			if (ql2xenabledif == 1)
--				prot = SHOST_DIX_TYPE0_PROTECTION;
- 			scsi_host_set_prot(vha->host,
- 			    prot | SHOST_DIF_TYPE1_PROTECTION
- 			    | SHOST_DIF_TYPE2_PROTECTION
---- a/drivers/scsi/qla2xxx/qla_dbg.c
-+++ b/drivers/scsi/qla2xxx/qla_dbg.c
-@@ -18,7 +18,7 @@
-  * | Queue Command and IO tracing |       0x3074       | 0x300b         |
-  * |                              |                    | 0x3027-0x3028  |
-  * |                              |                    | 0x303d-0x3041  |
-- * |                              |                    | 0x302d,0x3033  |
-+ * |                              |                    | 0x302e,0x3033  |
-  * |                              |                    | 0x3036,0x3038  |
-  * |                              |                    | 0x303a		|
-  * | DPC Thread                   |       0x4023       | 0x4002,0x4013  |
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -3288,6 +3288,13 @@ qla2x00_probe_one(struct pci_dev *pdev,
- 	host->max_id = ha->max_fibre_devices;
- 	host->cmd_per_lun = 3;
- 	host->unique_id = host->host_no;
+--- a/drivers/scsi/qla2xxx/qla_gbl.h
++++ b/drivers/scsi/qla2xxx/qla_gbl.h
+@@ -143,6 +143,7 @@ void qla_edif_sess_down(struct scsi_qla_
+ void qla_edif_clear_appdata(struct scsi_qla_host *vha,
+ 			    struct fc_port *fcport);
+ const char *sc_to_str(uint16_t cmd);
++void qla_adjust_iocb_limit(scsi_qla_host_t *vha);
+ 
+ /*
+  * Global Data in qla_os.c source file.
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4147,41 +4147,55 @@ out:
+ 	return ha->flags.lr_detected;
+ }
+ 
+-void qla_init_iocb_limit(scsi_qla_host_t *vha)
++static void __qla_adjust_iocb_limit(struct qla_qpair *qpair)
+ {
+-	u16 i, num_qps;
+-	u32 limit;
+-	struct qla_hw_data *ha = vha->hw;
++	u8 num_qps;
++	u16 limit;
++	struct qla_hw_data *ha = qpair->vha->hw;
+ 
+ 	num_qps = ha->num_qpairs + 1;
+ 	limit = (ha->orig_fw_iocb_count * QLA_IOCB_PCT_LIMIT) / 100;
+ 
+-	ha->base_qpair->fwres.iocbs_total = ha->orig_fw_iocb_count;
+-	ha->base_qpair->fwres.iocbs_limit = limit;
+-	ha->base_qpair->fwres.iocbs_qp_limit = limit / num_qps;
+-	ha->base_qpair->fwres.iocbs_used = 0;
++	qpair->fwres.iocbs_total = ha->orig_fw_iocb_count;
++	qpair->fwres.iocbs_limit = limit;
++	qpair->fwres.iocbs_qp_limit = limit / num_qps;
 +
-+	if (ql2xenabledif && ql2xenabledif != 2) {
-+		ql_log(ql_log_warn, base_vha, 0x302d,
-+		       "Invalid value for ql2xenabledif, resetting it to default (2)\n");
-+		ql2xenabledif = 2;
++	qpair->fwres.exch_total = ha->orig_fw_xcb_count;
++	qpair->fwres.exch_limit = (ha->orig_fw_xcb_count *
++				   QLA_IOCB_PCT_LIMIT) / 100;
++}
+ 
+-	ha->base_qpair->fwres.exch_total = ha->orig_fw_xcb_count;
+-	ha->base_qpair->fwres.exch_limit = (ha->orig_fw_xcb_count *
+-					    QLA_IOCB_PCT_LIMIT) / 100;
++void qla_init_iocb_limit(scsi_qla_host_t *vha)
++{
++	u8 i;
++	struct qla_hw_data *ha = vha->hw;
++
++	 __qla_adjust_iocb_limit(ha->base_qpair);
++	ha->base_qpair->fwres.iocbs_used = 0;
+ 	ha->base_qpair->fwres.exch_used  = 0;
+ 
+ 	for (i = 0; i < ha->max_qpairs; i++) {
+ 		if (ha->queue_pair_map[i])  {
+-			ha->queue_pair_map[i]->fwres.iocbs_total =
+-				ha->orig_fw_iocb_count;
+-			ha->queue_pair_map[i]->fwres.iocbs_limit = limit;
+-			ha->queue_pair_map[i]->fwres.iocbs_qp_limit =
+-				limit / num_qps;
++			__qla_adjust_iocb_limit(ha->queue_pair_map[i]);
+ 			ha->queue_pair_map[i]->fwres.iocbs_used = 0;
+-			ha->queue_pair_map[i]->fwres.exch_total = ha->orig_fw_xcb_count;
+-			ha->queue_pair_map[i]->fwres.exch_limit =
+-				(ha->orig_fw_xcb_count * QLA_IOCB_PCT_LIMIT) / 100;
+ 			ha->queue_pair_map[i]->fwres.exch_used = 0;
+ 		}
+ 	}
+ }
+ 
++void qla_adjust_iocb_limit(scsi_qla_host_t *vha)
++{
++	u8 i;
++	struct qla_hw_data *ha = vha->hw;
++
++	__qla_adjust_iocb_limit(ha->base_qpair);
++
++	for (i = 0; i < ha->max_qpairs; i++) {
++		if (ha->queue_pair_map[i])
++			__qla_adjust_iocb_limit(ha->queue_pair_map[i]);
 +	}
++}
 +
- 	if (IS_T10_PI_CAPABLE(ha) && ql2xenabledif)
- 		host->max_cmd_len = 32;
- 	else
-@@ -3524,8 +3531,6 @@ skip_dpc:
- 			base_vha->flags.difdix_supported = 1;
- 			ql_dbg(ql_dbg_init, base_vha, 0x00f1,
- 			    "Registering for DIF/DIX type 1 and 3 protection.\n");
--			if (ql2xenabledif == 1)
--				prot = SHOST_DIX_TYPE0_PROTECTION;
- 			if (ql2xprotmask)
- 				scsi_host_set_prot(host, ql2xprotmask);
- 			else
+ /**
+  * qla2x00_setup_chip() - Load and start RISC firmware.
+  * @vha: HA context
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -2213,6 +2213,9 @@ qla2x00_get_firmware_state(scsi_qla_host
+ 	ql_dbg(ql_dbg_mbx + ql_dbg_verbose, vha, 0x1054,
+ 	    "Entered %s.\n", __func__);
+ 
++	if (!ha->flags.fw_started)
++		return QLA_FUNCTION_FAILED;
++
+ 	mcp->mb[0] = MBC_GET_FIRMWARE_STATE;
+ 	mcp->out_mb = MBX_0;
+ 	if (IS_FWI2_CAPABLE(vha->hw))
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -132,6 +132,7 @@ static int qla_nvme_alloc_queue(struct n
+ 			       "Failed to allocate qpair\n");
+ 			return -EINVAL;
+ 		}
++		qla_adjust_iocb_limit(vha);
+ 	}
+ 	*handle = qpair;
+ 
 
 
