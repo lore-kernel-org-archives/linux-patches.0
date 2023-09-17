@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22316AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F41C433C7;
-	Sun, 17 Sep 2023 20:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71DE6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4852EC433C8;
+	Sun, 17 Sep 2023 20:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982294;
-	bh=bLEMVbFUfEN+kImHlLz8EATfvQljU3HlwIsDG7hobe0=;
+	s=korg; t=1694982297;
+	bh=/npIhWllJrVy1wJ+8KdFGk1IVnZHjCwVgpcx+bhGgrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7JOlHppQ+OVcLAU7odV3ybQ8MBV5TwwTbdhwpxl4Nc/mGF8HJg0n4i+hnpJLoV7K
-	 tcXD0g7oiju8W0Fg/AkouJYmLt2cQaIGVM6XjuYcsue9gCFAIeCqMHW7itGPeBDZpF
-	 D/VpsS4jEhGVyyOTLzn1sl6rRMLze7+c4KiftASg=
+	b=p98875tubh8PEGdkRAMveVYiZeLf4w2qrnrUpi7Q/CAN7SsbI5+RqSpH5jy6k4Mdu
+	 viPWAhtoK2ksNTlR0DA4GffOhvhroTH9nVb2Oohm3URj/GkA3dWxys8Wtr0eky/IqN
+	 UDkO+FcqWX0mTQY53t9rKRoaXY5ILCr/6npPzQco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 208/511] PCI/ASPM: Use RMW accessors for changing LNKCTL
-Date: Sun, 17 Sep 2023 21:10:35 +0200
-Message-ID: <20230917191118.844763669@linuxfoundation.org>
+Subject: [PATCH 5.15 209/511] clk: imx8mp: fix sai4 clock
+Date: Sun, 17 Sep 2023 21:10:36 +0200
+Message-ID: <20230917191118.868302957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -36,107 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
+[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
 
-Don't assume that the device is fully under the control of ASPM and use RMW
-capability accessors which do proper locking to avoid losing concurrent
-updates to the register values.
+The reference manual don't mention a SAI4 hardware block. This would be
+clock slice 78 which is skipped (TRM, page 237). Remove any reference to
+this clock to align the driver with the reality.
 
-If configuration fails in pcie_aspm_configure_common_clock(), the
-function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
-only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
-than the content of the whole LNKCTL registers. It aligns better with
-how pcie_lnkctl_clear_and_set() expects its parameter and makes the
-code more obvious to understand.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 3078de668f911..4a2c229205fd0 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -249,7 +249,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- {
- 	int same_clock = 1;
--	u16 reg16, parent_reg, child_reg[8];
-+	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
- 	struct pci_dev *child, *parent = link->pdev;
- 	struct pci_bus *linkbus = parent->subordinate;
- 	/*
-@@ -271,6 +271,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 0191457fb3cfc..2f898c0bc867c 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -176,10 +176,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext3", "clk_ext4", };
  
- 	/* Port might be already in common clock mode */
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-+	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
- 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
- 		bool consistent = true;
- 
-@@ -287,34 +288,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- 		pci_info(parent, "ASPM: current common clock configuration is inconsistent, reconfiguring\n");
- 	}
- 
-+	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
- 	/* Configure downstream component, all functions */
- 	list_for_each_entry(child, &linkbus->devices, bus_list) {
- 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
--		child_reg[PCI_FUNC(child->devfn)] = reg16;
--		if (same_clock)
--			reg16 |= PCI_EXP_LNKCTL_CCC;
--		else
--			reg16 &= ~PCI_EXP_LNKCTL_CCC;
--		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
-+		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
-+		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, ccc);
- 	}
- 
- 	/* Configure upstream component */
--	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
--	parent_reg = reg16;
--	if (same_clock)
--		reg16 |= PCI_EXP_LNKCTL_CCC;
--	else
--		reg16 &= ~PCI_EXP_LNKCTL_CCC;
--	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
-+	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CCC, ccc);
- 
- 	if (pcie_retrain_link(link)) {
- 
- 		/* Training failed. Restore common clock configurations */
- 		pci_err(parent, "ASPM: Could not configure common clock\n");
- 		list_for_each_entry(child, &linkbus->devices, bus_list)
--			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
--					   child_reg[PCI_FUNC(child->devfn)]);
--		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
-+			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+							   PCI_EXP_LNKCTL_CCC,
-+							   child_old_ccc[PCI_FUNC(child->devfn)]);
-+		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
- 	}
- }
- 
+-static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+-						"clk_ext1", "clk_ext2", };
+-
+ static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext2", "clk_ext3", };
+@@ -566,7 +562,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
+ 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
+ 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
+-	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
+ 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
+ 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
+ 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
 -- 
 2.40.1
 
