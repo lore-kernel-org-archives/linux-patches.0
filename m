@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FEC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80338C433C9;
-	Sun, 17 Sep 2023 19:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5166FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF2FC433C7;
+	Sun, 17 Sep 2023 19:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978720;
-	bh=jOHNDsp+TXpMHBJqSN+GES1vi7+DW/CWF7oTN6/u0GY=;
+	s=korg; t=1694978723;
+	bh=NN4lHcxXuJ64yZnY0INnK/Y4gnVUuwxBD/Ekvvart74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1hM3Oyjz9Pb+IUHbegy4nUj5PjDjFgwlvY9l7nt69ftLRiv2O1iCdiFSdb0plUin
-	 qODQgzKy5kkS6Vvy15eZ0pYCT+1QRHRJol9SGbGvext80YZvv38cXvJ3+eNYaVLKDl
-	 F8U++xhPVv4hT198MID843LZiAxRMikyDlmS5FmQ=
+	b=IhCNh8uScA0c/uiCby/qhV49fJ0aPHzCef/uXm+ZWjjSEA363m3ic+Iu+0uUhf7Ar
+	 0NL+xUCeU5eK658T4GVKTmz65FP6l5A2DQO9sTBmlWwzvZOVW0SY4bfP9jrXeEuYWV
+	 vAtsHnKT9XtViFiY/UnFmTby0QZavyDZtnrSibTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/406] wifi: ath9k: use IS_ERR() with debugfs_create_dir()
-Date: Sun, 17 Sep 2023 21:09:29 +0200
-Message-ID: <20230917191104.168509155@linuxfoundation.org>
+Subject: [PATCH 5.10 116/406] net: arcnet: Do not call kfree_skb() under local_irq_disable()
+Date: Sun, 17 Sep 2023 21:09:30 +0200
+Message-ID: <20230917191104.196044547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -35,46 +34,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Ming <machel@vivo.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 1e4134610d93271535ecf900a676e1f094e9944c ]
+[ Upstream commit 786c96e92fb9e854cb8b0cb7399bb2fb28e15c4b ]
 
-The debugfs_create_dir() function returns error pointers,
-it never returns NULL. Most incorrect error checks were fixed,
-but the one in ath9k_htc_init_debug() was forgotten.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+local_irq_disable(). Compile tested only.
 
-Fix the remaining error check.
-
-Fixes: e5facc75fa91 ("ath9k_htc: Cleanup HTC debugfs")
-Signed-off-by: Wang Ming <machel@vivo.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230713030358.12379-1-machel@vivo.com
+Fixes: 05fcd31cc472 ("arcnet: add err_skb package for package status feedback")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 +-
+ drivers/net/arcnet/arcnet.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index b3ed65e5c4da8..c55aab01fff5d 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -491,7 +491,7 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
+diff --git a/drivers/net/arcnet/arcnet.c b/drivers/net/arcnet/arcnet.c
+index d76dd7d14299e..a7899405a51a5 100644
+--- a/drivers/net/arcnet/arcnet.c
++++ b/drivers/net/arcnet/arcnet.c
+@@ -468,7 +468,7 @@ static void arcnet_reply_tasklet(unsigned long data)
  
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (!priv->debug.debugfs_phy)
-+	if (IS_ERR(priv->debug.debugfs_phy))
- 		return -ENOMEM;
+ 	ret = sock_queue_err_skb(sk, ackskb);
+ 	if (ret)
+-		kfree_skb(ackskb);
++		dev_kfree_skb_irq(ackskb);
  
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
+ 	local_irq_enable();
+ };
 -- 
 2.40.1
 
