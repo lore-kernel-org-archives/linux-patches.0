@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE68C7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49521C433CA;
-	Sun, 17 Sep 2023 19:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF1D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B65C433C7;
+	Sun, 17 Sep 2023 19:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980735;
-	bh=0OkTqLyonjHcozqm8YV7DWh56hBi+T+Ce5QdOx4zmKI=;
+	s=korg; t=1694980739;
+	bh=YrO9HJhduO8DQw+7lL19OCPG7qVa7OrwcE1G2jThcfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kN4MsNPC1OjTa5T0XVcnBP/b+BcCXOAayNw9vvaVkB2GzP1fjg7Osh4zu7rtfq6AN
-	 amXORSlQ3MsnkJvBgonVvs2T8jBfv6ZdJksGIh46wLdggUZRgVa4Z9V+xRKSoLorqa
-	 UGT2l6QfZQgvTLF03xQS2dxE0yVTSTouBR2PSoYY=
+	b=IAfTN5MJnW5M/Srm0EuIrMNjbzDfhtkkxJxFakrSHBG3PHkwc8azS+1VUeR4Wh2z/
+	 Ce1E9MLbfQK75aA0wz7zajBoiLb/HFyHItQDEH+KtU+k4RUBSaIH7p6FFl0W6dKpSD
+	 gfwP2Q8ibyti73ftBkD9qXfwwEgMzdOh6LS4D6q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrei Vagin <avagin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 278/285] tcp: Fix bind() regression for v4-mapped-v6 non-wildcard address.
-Date: Sun, 17 Sep 2023 21:14:38 +0200
-Message-ID: <20230917191100.764547224@linuxfoundation.org>
+Subject: [PATCH 6.5 279/285] selftest: tcp: Fix address length in bind_wildcard.c.
+Date: Sun, 17 Sep 2023 21:14:39 +0200
+Message-ID: <20230917191100.795634198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -44,62 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c48ef9c4aed3632566b57ba66cec6ec78624d4cb ]
+[ Upstream commit 0071d15517b4a3d265abc00395beb1138e7236c7 ]
 
-Since bhash2 was introduced, the example below does not work as expected.
-These two bind() should conflict, but the 2nd bind() now succeeds.
+The selftest passes the IPv6 address length for an IPv4 address.
+We should pass the correct length.
 
-  from socket import *
+Note inet_bind_sk() does not check if the size is larger than
+sizeof(struct sockaddr_in), so there is no real bug in this
+selftest.
 
-  s1 = socket(AF_INET6, SOCK_STREAM)
-  s1.bind(('::ffff:127.0.0.1', 0))
-
-  s2 = socket(AF_INET, SOCK_STREAM)
-  s2.bind(('127.0.0.1', s1.getsockname()[1]))
-
-During the 2nd bind() in inet_csk_get_port(), inet_bind2_bucket_find()
-fails to find the 1st socket's tb2, so inet_bind2_bucket_create() allocates
-a new tb2 for the 2nd socket.  Then, we call inet_csk_bind_conflict() that
-checks conflicts in the new tb2 by inet_bhash2_conflict().  However, the
-new tb2 does not include the 1st socket, thus the bind() finally succeeds.
-
-In this case, inet_bind2_bucket_match() must check if AF_INET6 tb2 has
-the conflicting v4-mapped-v6 address so that inet_bind2_bucket_find()
-returns the 1st socket's tb2.
-
-Note that if we bind two sockets to 127.0.0.1 and then ::FFFF:127.0.0.1,
-the 2nd bind() fails properly for the same reason mentinoed in the previous
-commit.
-
-Fixes: 28044fc1d495 ("net: Add a bhash2 table hashed by port and address")
+Fixes: 13715acf8ab5 ("selftest: Add test for bind() conflicts.")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Andrei Vagin <avagin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/bind_wildcard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index fb13a28577b01..ae5e786a0598d 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -800,8 +800,13 @@ static bool inet_bind2_bucket_match(const struct inet_bind2_bucket *tb,
- 		return false;
+diff --git a/tools/testing/selftests/net/bind_wildcard.c b/tools/testing/selftests/net/bind_wildcard.c
+index 58edfc15d28bd..e7ebe72e879d7 100644
+--- a/tools/testing/selftests/net/bind_wildcard.c
++++ b/tools/testing/selftests/net/bind_wildcard.c
+@@ -100,7 +100,7 @@ void bind_sockets(struct __test_metadata *_metadata,
+ TEST_F(bind_wildcard, v4_v6)
+ {
+ 	bind_sockets(_metadata, self,
+-		     (struct sockaddr *)&self->addr4, sizeof(self->addr6),
++		     (struct sockaddr *)&self->addr4, sizeof(self->addr4),
+ 		     (struct sockaddr *)&self->addr6, sizeof(self->addr6));
+ }
  
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb->family)
-+	if (sk->sk_family != tb->family) {
-+		if (sk->sk_family == AF_INET)
-+			return ipv6_addr_v4mapped(&tb->v6_rcv_saddr) &&
-+				tb->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
-+
- 		return false;
-+	}
- 
- 	if (sk->sk_family == AF_INET6)
- 		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
 -- 
 2.40.1
 
