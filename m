@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D7F7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A58C433C8;
-	Sun, 17 Sep 2023 19:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825EF7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA321C433C8;
+	Sun, 17 Sep 2023 19:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980728;
-	bh=wRz8YXhuXmrqgsdARvBksEvOfQWBlszKHOPlOLKDxNE=;
+	s=korg; t=1694980732;
+	bh=3fcUOHth4kaVtX23H5EAUVcPC2IS6H2+6uJ3M//h5v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qziE2dqR5SQGbMmdFdCX00Ci3z/nrXDzVc4nj4D0YeWEsUTzPjV5xMEr8p5LvZAMe
-	 lk7MXlqXWL/h7Ir2qKwguUd23IYes0ZAH1xh4vQ2uf0dqPmgCdhbkCYPnNzQ4XC8X7
-	 Q90oCYxWnZDcDn7oMr3yY3TlE5SqIBuqh3vYYnq8=
+	b=LubX7YSKCRac+H2McX9ZDxjqSlxX7bnxxURoeQ5m/6XCcJP6GGvQZ+EB8uCV5c9i1
+	 jhY74WMkYi2QYRVQMDIMjTA4ZGhgxXUcmD0c9xwt3gNKkZa2Ws/4F/MGTaVzg9Ugsp
+	 Fr0sbxE8KCFpHEwa4Zs/GAuA7nyU/pDJl0z7pBZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 277/285] tcp: Fix bind() regression for v4-mapped-v6 wildcard address.
-Date: Sun, 17 Sep 2023 21:14:37 +0200
-Message-ID: <20230917191100.734178961@linuxfoundation.org>
+Subject: [PATCH 6.5 260/285] net: dsa: sja1105: hide all multicast addresses from "bridge fdb show"
+Date: Sun, 17 Sep 2023 21:14:20 +0200
+Message-ID: <20230917191100.250410607@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,81 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit aa99e5f87bd54db55dd37cb130bd5eb55933027f ]
+[ Upstream commit 02c652f5465011126152bbd93b6a582a1d0c32f1 ]
 
-Andrei Vagin reported bind() regression with strace logs.
+Commit 4d9423549501 ("net: dsa: sja1105: offload bridge port flags to
+device") has partially hidden some multicast entries from showing up in
+the "bridge fdb show" output, but it wasn't enough. Addresses which are
+added through "bridge mdb add" still show up. Hide them all.
 
-If we bind() a TCPv6 socket to ::FFFF:0.0.0.0 and then bind() a TCPv4
-socket to 127.0.0.1, the 2nd bind() should fail but now succeeds.
-
-  from socket import *
-
-  s1 = socket(AF_INET6, SOCK_STREAM)
-  s1.bind(('::ffff:0.0.0.0', 0))
-
-  s2 = socket(AF_INET, SOCK_STREAM)
-  s2.bind(('127.0.0.1', s1.getsockname()[1]))
-
-During the 2nd bind(), if tb->family is AF_INET6 and sk->sk_family is
-AF_INET in inet_bind2_bucket_match_addr_any(), we still need to check
-if tb has the v4-mapped-v6 wildcard address.
-
-The example above does not work after commit 5456262d2baa ("net: Fix
-incorrect address comparison when searching for a bind2 bucket"), but
-the blamed change is not the commit.
-
-Before the commit, the leading zeros of ::FFFF:0.0.0.0 were treated
-as 0.0.0.0, and the sequence above worked by chance.  Technically, this
-case has been broken since bhash2 was introduced.
-
-Note that if we bind() two sockets to 127.0.0.1 and then ::FFFF:0.0.0.0,
-the 2nd bind() fails properly because we fall back to using bhash to
-detect conflicts for the v4-mapped-v6 address.
-
-Fixes: 28044fc1d495 ("net: Add a bhash2 table hashed by port and address")
-Reported-by: Andrei Vagin <avagin@google.com>
-Closes: https://lore.kernel.org/netdev/ZPuYBOFC8zsK6r9T@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 291d1e72b756 ("net: dsa: sja1105: Add support for FDB and MDB management")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h         | 5 +++++
- net/ipv4/inet_hashtables.c | 3 ++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index b08bd694385aa..a14ac821fb36f 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -784,6 +784,11 @@ static inline bool ipv6_addr_v4mapped(const struct in6_addr *a)
- 					cpu_to_be32(0x0000ffff))) == 0UL;
- }
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index b6deba4a75121..ba65a95b0c372 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -1875,13 +1875,14 @@ static int sja1105_fdb_dump(struct dsa_switch *ds, int port,
+ 		if (!(l2_lookup.destports & BIT(port)))
+ 			continue;
  
-+static inline bool ipv6_addr_v4mapped_any(const struct in6_addr *a)
-+{
-+	return ipv6_addr_v4mapped(a) && ipv4_is_zeronet(a->s6_addr32[3]);
-+}
+-		/* We need to hide the FDB entry for unknown multicast */
+-		if (l2_lookup.macaddr == SJA1105_UNKNOWN_MULTICAST &&
+-		    l2_lookup.mask_macaddr == SJA1105_UNKNOWN_MULTICAST)
+-			continue;
+-
+ 		u64_to_ether_addr(l2_lookup.macaddr, macaddr);
+ 
++		/* Hardware FDB is shared for fdb and mdb, "bridge fdb show"
++		 * only wants to see unicast
++		 */
++		if (is_multicast_ether_addr(macaddr))
++			continue;
 +
- static inline bool ipv6_addr_v4mapped_loopback(const struct in6_addr *a)
- {
- 	return ipv6_addr_v4mapped(a) && ipv4_is_loopback(a->s6_addr32[3]);
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 1ab81534f8c55..fb13a28577b01 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -819,7 +819,8 @@ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family != tb->family) {
- 		if (sk->sk_family == AF_INET)
--			return ipv6_addr_any(&tb->v6_rcv_saddr);
-+			return ipv6_addr_any(&tb->v6_rcv_saddr) ||
-+				ipv6_addr_v4mapped_any(&tb->v6_rcv_saddr);
- 
- 		return false;
- 	}
+ 		/* We need to hide the dsa_8021q VLANs from the user. */
+ 		if (vid_is_dsa_8021q(l2_lookup.vlanid))
+ 			l2_lookup.vlanid = 0;
 -- 
 2.40.1
 
