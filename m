@@ -1,37 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D4F6FA7;
-	Sun, 17 Sep 2023 20:06:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E611C433C9;
-	Sun, 17 Sep 2023 20:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AB17472
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF82C433C8;
+	Sun, 17 Sep 2023 20:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981164;
-	bh=OwuYqBXSKFkqO6BZYKjTziP8vGOUgaxhrGsonnA6eaM=;
+	s=korg; t=1694981168;
+	bh=HYvtY76aYPQAtWIaBof33Vwkl8JkYMpvA6TbUG3RGCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpLlCcmyNucvJWVybovy14aXDUmuq5H1NaUHAKFC9VvGWb0mAev76mpk4tmvjLeW+
-	 REcRD0Gv/51vC9EJkWcZ+tf+XHeICff0eHpkX7Ri6oQpqf+TRFvfarzFecEGZkUQLf
-	 NeRPJmE5Mbzxj3bT/C3cXD5tmqbcHyGApPIGY2os=
+	b=VbPnj+qdzuhDQ28AX/lof9PyU0tMi4H1aRRJwDmTt8I+A67ww9/Nzw4ah0jY6Isb/
+	 JD8jh7hKFnKxUJVly2nMSATI4amQndR+6P4fsaSiByENoeN/oHuNJ4genJuCjofVRH
+	 LSrPjEBJMSgESP/lE1ORjKLBJCUkbcXrrd0WXXTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	bpf@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ben Hutchings <benh@debian.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/219] perf test stat_bpf_counters_cgrp: Enhance perf stat cgroup BPF counter test
-Date: Sun, 17 Sep 2023 21:13:28 +0200
-Message-ID: <20230917191043.901641440@linuxfoundation.org>
+Subject: [PATCH 5.15 015/511] m68k: Fix invalid .section syntax
+Date: Sun, 17 Sep 2023 21:07:22 +0200
+Message-ID: <20230917191114.201180402@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,52 +37,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit a84260e314029e6dc9904fd6eabf8d9fd7965351 ]
+[ Upstream commit 922a9bd138101e3e5718f0f4d40dba68ef89bb43 ]
 
-It has system-wide test and cpu-list test but the cpu-list test fails
-sometimes.  It runs sleep command on CPU1 and measure both user.slice
-and system.slice cgroups by default (on systemd-based systems).
+gas supports several different forms for .section for ELF targets,
+including:
+    .section NAME [, "FLAGS"[, @TYPE[,FLAG_SPECIFIC_ARGUMENTS]]]
+and:
+    .section "NAME"[, #FLAGS...]
 
-But if the system was idle enough, sometime the system.slice gets no
-count and it makes the test failing.  Maybe that's because it only looks
-at the CPU1, let's add CPU0 to increase the chance it finds some tasks.
+In several places we use a mix of these two forms:
+    .section NAME, #FLAGS...
 
-Fixes: 7901086014bbaa3a ("perf test: Add a new test for perf stat cgroup BPF counter")
-Reported-by: Arnaldo Carvalho de Melo <acme@kernel.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20230825164152.165610-3-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+A current development snapshot of binutils (2.40.50.20230611) treats
+this mixed syntax as an error.
+
+Change to consistently use:
+    .section NAME, "FLAGS"
+as is used elsewhere in the kernel.
+
+Link: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=m68k&ver=6.4%7Erc6-1%7Eexp1&stamp=1686907300&raw=1
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Tested-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Link: https://lore.kernel.org/r/ZIyBaueWT9jnTwRC@decadent.org.uk
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters_cgrp.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/m68k/fpsp040/skeleton.S       | 4 ++--
+ arch/m68k/ifpsp060/os.S            | 4 ++--
+ arch/m68k/kernel/relocate_kernel.S | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-index a74440a00b6b6..e75d0780dc788 100755
---- a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-@@ -60,7 +60,7 @@ check_system_wide_counted()
+diff --git a/arch/m68k/fpsp040/skeleton.S b/arch/m68k/fpsp040/skeleton.S
+index 439395aa6fb42..081922c72daaa 100644
+--- a/arch/m68k/fpsp040/skeleton.S
++++ b/arch/m68k/fpsp040/skeleton.S
+@@ -499,13 +499,13 @@ in_ea:
+ 	dbf	%d0,morein
+ 	rts
  
- check_cpu_list_counted()
- {
--	check_cpu_list_counted_output=$(perf stat -C 1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
-+	check_cpu_list_counted_output=$(perf stat -C 0,1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
- 	if echo ${check_cpu_list_counted_output} | grep -q -F "<not "; then
- 		echo "Some CPU events are not counted"
- 		if [ "${verbose}" = "1" ]; then
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:
+ 	jbsr	fpsp040_die
+ 	jbra	.Lnotkern
+ 
+-	.section __ex_table,#alloc
++	.section __ex_table,"a"
+ 	.align	4
+ 
+ 	.long	in_ea,1b
+diff --git a/arch/m68k/ifpsp060/os.S b/arch/m68k/ifpsp060/os.S
+index 7a0d6e4280665..89e2ec224ab6c 100644
+--- a/arch/m68k/ifpsp060/os.S
++++ b/arch/m68k/ifpsp060/os.S
+@@ -379,11 +379,11 @@ _060_real_access:
+ 
+ 
+ | Execption handling for movs access to illegal memory
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:	moveq		#-1,%d1
+ 	rts
+-.section __ex_table,#alloc
++.section __ex_table,"a"
+ 	.align 4
+ 	.long	dmrbuae,1b
+ 	.long	dmrwuae,1b
+diff --git a/arch/m68k/kernel/relocate_kernel.S b/arch/m68k/kernel/relocate_kernel.S
+index ab0f1e7d46535..f7667079e08e9 100644
+--- a/arch/m68k/kernel/relocate_kernel.S
++++ b/arch/m68k/kernel/relocate_kernel.S
+@@ -26,7 +26,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcopy),%a4
+ 2:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 2b+2
+ 	.previous
+ 
+@@ -49,7 +49,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcont040),%a4
+ 5:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 5b+2
+ 	.previous
+ 
 -- 
 2.40.1
 
