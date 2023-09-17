@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96A96FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE244C433C7;
-	Sun, 17 Sep 2023 20:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF336FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E9FC433C7;
+	Sun, 17 Sep 2023 20:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981808;
-	bh=t5glHwnkzYNf+tRWGVe75DJYnyxEruDdfVgx8/qfuQ8=;
+	s=korg; t=1694981811;
+	bh=c/wQLWk58pfvRlGpgrBPF8/W/N4WX+MtsaSiGvB6Afc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1hrNa8UOp/ml2vF1YFJ5pJErpAB3rmIHz/cYGDuI9msoXy7Zzwyg8xzxXJfogP4Q
-	 1jP+U++nKzMhDCG6Y2ybWsR9rFSs60y40HRIjJ454fHh6N7eQAtpw79bZrbFblEsmO
-	 BeZSXyWQTFYIzNmf7OZrGLz4tJpZ484zZ5/A2ow4=
+	b=PvnDNU4JnLrbi4gP5lfERn1lmgF7LhMXdFIs9ZqLaNkY26INkxkAgkVRJLhNqpQRd
+	 yAQ5+8eCYdEwXZHXqcaxNVzrn9dZTECfbgQnBqtCqEnYteLlgIDB8YBZU9ZNTvAJ+q
+	 TAd9+xraIYt63czbehr7Na2Aljfi/px4A3VYepQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/511] wifi: mwifiex: Fix missed return in oob checks failed path
-Date: Sun, 17 Sep 2023 21:08:56 +0200
-Message-ID: <20230917191116.491664499@linuxfoundation.org>
+	"dengqiao.joey" <dengqiao.joey@bytedance.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 175/219] KVM: SVM: Set target pCPU during IRTE update if target vCPU is running
+Date: Sun, 17 Sep 2023 21:15:02 +0200
+Message-ID: <20230917191047.309017429@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,55 +39,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 2785851c627f2db05f9271f7f63661b5dbd95c4c ]
+commit f3cebc75e7425d6949d726bb8e937095b0aef025 upstream.
 
-Add missed return in mwifiex_uap_queue_bridged_pkt() and
-mwifiex_process_rx_packet().
+Update the target pCPU for IOMMU doorbells when updating IRTE routing if
+KVM is actively running the associated vCPU.  KVM currently only updates
+the pCPU when loading the vCPU (via avic_vcpu_load()), and so doorbell
+events will be delayed until the vCPU goes through a put+load cycle (which
+might very well "never" happen for the lifetime of the VM).
 
-Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230810083911.3725248-1-pinkperfect2021@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To avoid inserting a stale pCPU, e.g. due to racing between updating IRTE
+routing and vCPU load/put, get the pCPU information from the vCPU's
+Physical APIC ID table entry (a.k.a. avic_physical_id_cache in KVM) and
+update the IRTE while holding ir_list_lock.  Add comments with --verbose
+enabled to explain exactly what is and isn't protected by ir_list_lock.
+
+Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
+Reported-by: dengqiao.joey <dengqiao.joey@bytedance.com>
+Cc: stable@vger.kernel.org
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Link: https://lore.kernel.org/r/20230808233132.2499764-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c   | 1 +
- drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 1 +
- 2 files changed, 2 insertions(+)
+ arch/x86/kvm/svm/avic.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 685a5b6697046..3c555946cb2cc 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -104,6 +104,7 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 			    skb->len, rx_pkt_off);
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return -1;
- 	}
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -810,6 +810,7 @@ static int svm_ir_list_add(struct vcpu_s
+ 	int ret = 0;
+ 	unsigned long flags;
+ 	struct amd_svm_iommu_ir *ir;
++	u64 entry;
  
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index b3915bfd38693..d6493638e7028 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -122,6 +122,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return;
- 	}
+ 	/**
+ 	 * In some cases, the existing irte is updated and re-set,
+@@ -843,6 +844,18 @@ static int svm_ir_list_add(struct vcpu_s
+ 	ir->data = pi->ir_data;
  
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
--- 
-2.40.1
-
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
++
++	/*
++	 * Update the target pCPU for IOMMU doorbells if the vCPU is running.
++	 * If the vCPU is NOT running, i.e. is blocking or scheduled out, KVM
++	 * will update the pCPU info when the vCPU awkened and/or scheduled in.
++	 * See also avic_vcpu_load().
++	 */
++	entry = READ_ONCE(*(svm->avic_physical_id_cache));
++	if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK)
++		amd_iommu_update_ga(entry & AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK,
++				    true, pi->ir_data);
++
+ 	list_add(&ir->node, &svm->ir_list);
+ 	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
+ out:
+@@ -1067,6 +1080,13 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
+ 	if (kvm_vcpu_is_blocking(vcpu))
+ 		return;
+ 
++	/*
++	 * Grab the per-vCPU interrupt remapping lock even if the VM doesn't
++	 * _currently_ have assigned devices, as that can change.  Holding
++	 * ir_list_lock ensures that either svm_ir_list_add() will consume
++	 * up-to-date entry information, or that this task will wait until
++	 * svm_ir_list_add() completes to set the new target pCPU.
++	 */
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
+ 
+ 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
+@@ -1102,6 +1122,14 @@ void avic_vcpu_put(struct kvm_vcpu *vcpu
+ 	if (!(entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK))
+ 		return;
+ 
++	/*
++	 * Take and hold the per-vCPU interrupt remapping lock while updating
++	 * the Physical ID entry even though the lock doesn't protect against
++	 * multiple writers (see above).  Holding ir_list_lock ensures that
++	 * either svm_ir_list_add() will consume up-to-date entry information,
++	 * or that this task will wait until svm_ir_list_add() completes to
++	 * mark the vCPU as not running.
++	 */
+ 	spin_lock_irqsave(&svm->ir_list_lock, flags);
+ 
+ 	avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
 
 
