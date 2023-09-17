@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF84F746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A74FC433C7;
-	Sun, 17 Sep 2023 20:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6DC746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894F3C433C9;
+	Sun, 17 Sep 2023 20:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983051;
-	bh=muDtx0IPLQwvepeTe6y4RStc7A5tyrUojWhDuhDpv+w=;
+	s=korg; t=1694983055;
+	bh=7uH/qq8VLOiF/0vLOzykWm45WKF3kYKYmFRriAp1L2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzCHm4DuBpp8cfy7X0pttgEk9NO5USOBds5MsiXkjCOXF7was7dLEqTAH+gbjPuZz
-	 IeKpoj4NDCjUVrIhBCfj4+WSay1nLAPbobl5x32zu8ZsSIFwinnykWyc58HaRIi70R
-	 bTqXXqSL64jpSGR3NyWCaMY+F4c3dkhnXy0LX06g=
+	b=IMrrvX7eNR4+h9UxpGSiDCT8/0dwDWvz39qnj4JVThkjYhoAmYDumH0rYtPkNFJ3n
+	 PxA5uiEti0Pxl1hw5kU1bXpWMSF9vjwzgkvs/wG3kne40mjTCpyPro+K2ckIluKXSZ
+	 JYDmad4qGZLuUOS10WZO0UrGQ7MjuEoVmBHiXFlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+822d1359297e2694f873@syzkaller.appspotmail.com,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 431/511] xsk: Fix xsk_diag use-after-free error during socket cleanup
-Date: Sun, 17 Sep 2023 21:14:18 +0200
-Message-ID: <20230917191124.174314960@linuxfoundation.org>
+Subject: [PATCH 5.15 432/511] ceph: make members in struct ceph_mds_request_args_ext a union
+Date: Sun, 17 Sep 2023 21:14:19 +0200
+Message-ID: <20230917191124.197154600@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,56 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 3e019d8a05a38abb5c85d4f1e85fda964610aa14 ]
+[ Upstream commit 3af5ae22030cb59fab4fba35f5a2b62f47e14df9 ]
 
-Fix a use-after-free error that is possible if the xsk_diag interface
-is used after the socket has been unbound from the device. This can
-happen either due to the socket being closed or the device
-disappearing. In the early days of AF_XDP, the way we tested that a
-socket was not bound to a device was to simply check if the netdevice
-pointer in the xsk socket structure was NULL. Later, a better system
-was introduced by having an explicit state variable in the xsk socket
-struct. For example, the state of a socket that is on the way to being
-closed and has been unbound from the device is XSK_UNBOUND.
+In ceph mainline it will allow to set the btime in the setattr request
+and just add a 'btime' member in the union 'ceph_mds_request_args' and
+then bump up the header version to 4. That means the total size of union
+'ceph_mds_request_args' will increase sizeof(struct ceph_timespec) bytes,
+but in kclient it will increase the sizeof(setattr_ext) bytes for each
+request.
 
-The commit in the Fixes tag below deleted the old way of signalling
-that a socket is unbound, setting dev to NULL. This in the belief that
-all code using the old way had been exterminated. That was
-unfortunately not true as the xsk diagnostics code was still using the
-old way and thus does not work as intended when a socket is going
-down. Fix this by introducing a test against the state variable. If
-the socket is in the state XSK_UNBOUND, simply abort the diagnostic's
-netlink operation.
+Since the MDS will always depend on the header's vesion and front_len
+members to decode the 'ceph_mds_request_head' struct, at the same time
+kclient hasn't supported the 'btime' feature yet in setattr request,
+so it's safe to do this change here.
 
-Fixes: 18b1ab7aa76b ("xsk: Fix race at socket teardown")
-Reported-by: syzbot+822d1359297e2694f873@syzkaller.appspotmail.com
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+822d1359297e2694f873@syzkaller.appspotmail.com
-Tested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/bpf/20230831100119.17408-1-magnus.karlsson@gmail.com
+This will save 48 bytes memories for each request.
+
+Fixes: 4f1ddb1ea874 ("ceph: implement updated ceph_mds_request_head structure")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_diag.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/ceph/ceph_fs.h | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/net/xdp/xsk_diag.c b/net/xdp/xsk_diag.c
-index c014217f5fa7d..22b36c8143cfd 100644
---- a/net/xdp/xsk_diag.c
-+++ b/net/xdp/xsk_diag.c
-@@ -111,6 +111,9 @@ static int xsk_diag_fill(struct sock *sk, struct sk_buff *nlskb,
- 	sock_diag_save_cookie(sk, msg->xdiag_cookie);
+diff --git a/include/linux/ceph/ceph_fs.h b/include/linux/ceph/ceph_fs.h
+index bc2699feddbeb..8038279a14fa0 100644
+--- a/include/linux/ceph/ceph_fs.h
++++ b/include/linux/ceph/ceph_fs.h
+@@ -459,17 +459,19 @@ union ceph_mds_request_args {
+ } __attribute__ ((packed));
  
- 	mutex_lock(&xs->mutex);
-+	if (READ_ONCE(xs->state) == XSK_UNBOUND)
-+		goto out_nlmsg_trim;
-+
- 	if ((req->xdiag_show & XDP_SHOW_INFO) && xsk_diag_put_info(xs, nlskb))
- 		goto out_nlmsg_trim;
+ union ceph_mds_request_args_ext {
+-	union ceph_mds_request_args old;
+-	struct {
+-		__le32 mode;
+-		__le32 uid;
+-		__le32 gid;
+-		struct ceph_timespec mtime;
+-		struct ceph_timespec atime;
+-		__le64 size, old_size;       /* old_size needed by truncate */
+-		__le32 mask;                 /* CEPH_SETATTR_* */
+-		struct ceph_timespec btime;
+-	} __attribute__ ((packed)) setattr_ext;
++	union {
++		union ceph_mds_request_args old;
++		struct {
++			__le32 mode;
++			__le32 uid;
++			__le32 gid;
++			struct ceph_timespec mtime;
++			struct ceph_timespec atime;
++			__le64 size, old_size;       /* old_size needed by truncate */
++			__le32 mask;                 /* CEPH_SETATTR_* */
++			struct ceph_timespec btime;
++		} __attribute__ ((packed)) setattr_ext;
++	};
+ };
  
+ #define CEPH_MDS_FLAG_REPLAY		1 /* this is a replayed op */
 -- 
 2.40.1
 
