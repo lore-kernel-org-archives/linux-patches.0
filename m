@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB68B7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481D0C433C9;
-	Sun, 17 Sep 2023 20:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7527461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905CAC433C8;
+	Sun, 17 Sep 2023 20:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981957;
-	bh=Hz5E8IdhQqvW8pmiX2wABcPkRWvWRxLx3W0tRpkxf58=;
+	s=korg; t=1694981961;
+	bh=wN3EMAP5Kp9JzYiKCUJg54CuzucsgJu1Yf995neI9K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nd05krKVg+ddqPTgDSUF1fxvLO4HBAszI4lfHrd0lP9Q8D7s2xUJyTMdRDp1nflRO
-	 +3bTmpQG1nRrReQBn/kvVIZqPGqvr8U2CQLpKiRM9sHXeYutgMWmzahtmymHRA2Wyx
-	 dfotBX6jpnCRwXoAw4g96ju8zdUhuaOHiFdDioPU=
+	b=HljAX2xr+FzIRB0AcPvRsVdcJcOVXdd6PWMQsm4aKlseDDduYMYNgOqUn2jQmDLE8
+	 BS9PHXTPIlIVm+T5uv7sOSkgLxKeNzOy1GPURYcZRYoFPNHK7xFBayTLIWhBQNlSQI
+	 urgsGV5nTrKQSASswg/8RLKPiryn+ZFKrnD3xtWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanan Yang <yanan.yang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/219] net: dsa: sja1105: fix multicast forwarding working only for last added mdb entry
-Date: Sun, 17 Sep 2023 21:15:25 +0200
-Message-ID: <20230917191048.105167413@linuxfoundation.org>
+Subject: [PATCH 5.15 132/511] arm64: dts: qcom: sm8250-edo: Add gpio line names for TLMM
+Date: Sun, 17 Sep 2023 21:09:19 +0200
+Message-ID: <20230917191117.051839142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,222 +36,432 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 7cef293b9a634a05fcce9e1df4aee3aeed023345 ]
+[ Upstream commit 40b398beabdfe0e9088b13976e56b1dc706fe851 ]
 
-The commit cited in Fixes: did 2 things: it refactored the read-back
-polling from sja1105_dynamic_config_read() into a new function,
-sja1105_dynamic_config_wait_complete(), and it called that from
-sja1105_dynamic_config_write() too.
+Sony ever so graciously provides GPIO line names in their downstream
+kernel (though sometimes they are not 100% accurate and you can judge
+that by simply looking at them and with what drivers they are used).
 
-What is problematic is the refactoring.
+Add these to the PDX203&206 DTSIs to better document the hardware.
 
-The refactored code from sja1105_dynamic_config_poll_valid() works like
-the previous one, but the problem is that it uses another packed_buf[]
-SPI buffer, and there was code at the end of sja1105_dynamic_config_read()
-which was relying on the read-back packed_buf[]:
+Diff between 203 and 206:
+<                         "CAM_PWR_A_CS",
+>                         "FRONTC_PWR_EN",
+<                         "CAM4_MCLK",
+<                         "TOF_RST_N",
+>                         "NC",
+>                         "NC",
+<                         "WLC_I2C_SDA",
+<                         "WLC_I2C_SCL", /* GPIO_120 */
+>                         "NC",
+>                         "NC",
+<                         "WLC_INT_N",
+>                         "NC",
 
-	/* Don't dereference possibly NULL pointer - maybe caller
-	 * only wanted to see whether the entry existed or not.
-	 */
-	if (entry)
-		ops->entry_packing(packed_buf, entry, UNPACK);
+Which makes sense, as 203 has a 3D iToF, slightly different camera
+power wiring and WLC (WireLess Charging).
 
-After the change, the packed_buf[] that this code sees is no longer the
-entry read back from hardware, but the original entry that the caller
-passed to the sja1105_dynamic_config_read(), packed into this buffer.
-
-This difference is the most notable with the SJA1105_SEARCH uses from
-sja1105pqrs_fdb_add() - used for both fdb and mdb. There, we have logic
-added by commit 728db843df88 ("net: dsa: sja1105: ignore the FDB entry
-for unknown multicast when adding a new address") to figure out whether
-the address we're trying to add matches on any existing hardware entry,
-with the exception of the catch-all multicast address.
-
-That logic was broken, because with sja1105_dynamic_config_read() not
-working properly, it doesn't return us the entry read back from
-hardware, but the entry that we passed to it. And, since for multicast,
-a match will always exist, it will tell us that any mdb entry already
-exists at index=0 L2 Address Lookup table. It is index=0 because the
-caller doesn't know the index - it wants to find it out, and
-sja1105_dynamic_config_read() does:
-
-	if (index < 0) { // SJA1105_SEARCH
-		/* Avoid copying a signed negative number to an u64 */
-		cmd.index = 0; // <- this
-		cmd.search = true;
-	} else {
-		cmd.index = index;
-		cmd.search = false;
-	}
-
-So, to the caller of sja1105_dynamic_config_read(), the returned info
-looks entirely legit, and it will add all mdb entries to FDB index 0.
-There, they will always overwrite each other (not to mention,
-potentially they can also overwrite a pre-existing bridge fdb entry),
-and the user-visible impact will be that only the last mdb entry will be
-forwarded as it should. The others won't (will be flooded or dropped,
-depending on the egress flood settings).
-
-Fixing is a bit more complicated, and involves either passing the same
-packed_buf[] to sja1105_dynamic_config_wait_complete(), or moving all
-the extra processing on the packed_buf[] to
-sja1105_dynamic_config_wait_complete(). I've opted for the latter,
-because it makes sja1105_dynamic_config_wait_complete() a bit more
-self-contained.
-
-Fixes: df405910ab9f ("net: dsa: sja1105: wait for dynamic config command completion on writes too")
-Reported-by: Yanan Yang <yanan.yang@nxp.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230614-topic-edo_pinsgpiopmic-v2-1-6f90bba54c53@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: a422c6a91a66 ("arm64: dts: qcom: sm8250-edo: Rectify gpio-keys")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/dsa/sja1105/sja1105_dynamic_config.c  | 80 +++++++++----------
- 1 file changed, 37 insertions(+), 43 deletions(-)
+ .../qcom/sm8250-sony-xperia-edo-pdx203.dts    | 183 ++++++++++++++++++
+ .../qcom/sm8250-sony-xperia-edo-pdx206.dts    | 183 ++++++++++++++++++
+ 2 files changed, 366 insertions(+)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
-index 93d47dab8d3e9..984c0e604e8de 100644
---- a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
-+++ b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
-@@ -1175,18 +1175,15 @@ const struct sja1105_dynamic_table_ops sja1110_dyn_ops[BLK_IDX_MAX_DYN] = {
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
+index 79afeb07f4a24..9b758385faafd 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
+@@ -13,3 +13,186 @@ / {
+ };
  
- static int
- sja1105_dynamic_config_poll_valid(struct sja1105_private *priv,
--				  struct sja1105_dyn_cmd *cmd,
--				  const struct sja1105_dynamic_table_ops *ops)
-+				  const struct sja1105_dynamic_table_ops *ops,
-+				  void *entry, bool check_valident,
-+				  bool check_errors)
- {
- 	u8 packed_buf[SJA1105_MAX_DYN_CMD_SIZE] = {};
-+	struct sja1105_dyn_cmd cmd = {};
- 	int rc;
- 
--	/* We don't _need_ to read the full entry, just the command area which
--	 * is a fixed SJA1105_SIZE_DYN_CMD. But our cmd_packing() API expects a
--	 * buffer that contains the full entry too. Additionally, our API
--	 * doesn't really know how many bytes into the buffer does the command
--	 * area really begin. So just read back the whole entry.
--	 */
-+	/* Read back the whole entry + command structure. */
- 	rc = sja1105_xfer_buf(priv, SPI_READ, ops->addr, packed_buf,
- 			      ops->packed_size);
- 	if (rc)
-@@ -1195,11 +1192,25 @@ sja1105_dynamic_config_poll_valid(struct sja1105_private *priv,
- 	/* Unpack the command structure, and return it to the caller in case it
- 	 * needs to perform further checks on it (VALIDENT).
- 	 */
--	memset(cmd, 0, sizeof(*cmd));
--	ops->cmd_packing(packed_buf, cmd, UNPACK);
-+	ops->cmd_packing(packed_buf, &cmd, UNPACK);
- 
- 	/* Hardware hasn't cleared VALID => still working on it */
--	return cmd->valid ? -EAGAIN : 0;
-+	if (cmd.valid)
-+		return -EAGAIN;
+ /delete-node/ &vreg_l7f_1p8;
 +
-+	if (check_valident && !cmd.valident && !(ops->access & OP_VALID_ANYWAY))
-+		return -ENOENT;
++&tlmm {
++	gpio-line-names = "AP_CTI_IN", /* GPIO_0 */
++			  "MDM2AP_ERR_FATAL",
++			  "AP_CTI_OUT",
++			  "MDM2AP_STATUS",
++			  "NFC_I2C_SDA",
++			  "NFC_I2C_SCL",
++			  "NFC_EN",
++			  "NFC_CLK_REQ",
++			  "NFC_ESE_PWR_REQ",
++			  "DVDT_WRT_DET_AND",
++			  "SPK_AMP_RESET_N", /* GPIO_10 */
++			  "SPK_AMP_INT_N",
++			  "APPS_I2C_1_SDA",
++			  "APPS_I2C_1_SCL",
++			  "NC",
++			  "TX_GTR_THRES_IN",
++			  "HST_BT_UART_CTS",
++			  "HST_BT_UART_RFR",
++			  "HST_BT_UART_TX",
++			  "HST_BT_UART_RX",
++			  "HST_WLAN_EN", /* GPIO_20 */
++			  "HST_BT_EN",
++			  "RGBC_IR_PWR_EN",
++			  "FP_INT_N",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NFC_ESE_SPI_MISO",
++			  "NFC_ESE_SPI_MOSI",
++			  "NFC_ESE_SPI_SCLK", /* GPIO_30 */
++			  "NFC_ESE_SPI_CS_N",
++			  "WCD_RST_N",
++			  "NC",
++			  "SDM_DEBUG_UART_TX",
++			  "SDM_DEBUG_UART_RX",
++			  "TS_I2C_SDA",
++			  "TS_I2C_SCL",
++			  "TS_INT_N",
++			  "FP_SPI_MISO", /* GPIO_40 */
++			  "FP_SPI_MOSI",
++			  "FP_SPI_SCLK",
++			  "FP_SPI_CS_N",
++			  "APPS_I2C_0_SDA",
++			  "APPS_I2C_0_SCL",
++			  "DISP_ERR_FG",
++			  "UIM2_DETECT_EN",
++			  "NC",
++			  "NC",
++			  "NC", /* GPIO_50 */
++			  "NC",
++			  "MDM_UART_CTS",
++			  "MDM_UART_RFR",
++			  "MDM_UART_TX",
++			  "MDM_UART_RX",
++			  "AP2MDM_STATUS",
++			  "AP2MDM_ERR_FATAL",
++			  "MDM_IPC_HS_UART_TX",
++			  "MDM_IPC_HS_UART_RX",
++			  "NC", /* GPIO_60 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "USB_CC_DIR",
++			  "DISP_VSYNC",
++			  "NC",
++			  "NC",
++			  "CAM_PWR_B_CS",
++			  "NC", /* GPIO_70 */
++			  "CAM_PWR_A_CS",
++			  "SBU_SW_SEL",
++			  "SBU_SW_OE",
++			  "FP_RESET_N",
++			  "FP_RESET_N",
++			  "DISP_RESET_N",
++			  "DEBUG_GPIO0",
++			  "TRAY_DET",
++			  "CAM2_RST_N",
++			  "PCIE0_RST_N",
++			  "PCIE0_CLK_REQ_N", /* GPIO_80 */
++			  "PCIE0_WAKE_N",
++			  "DVDT_ENABLE",
++			  "DVDT_WRT_DET_OR",
++			  "NC",
++			  "PCIE2_RST_N",
++			  "PCIE2_CLK_REQ_N",
++			  "PCIE2_WAKE_N",
++			  "MDM_VFR_IRQ0",
++			  "MDM_VFR_IRQ1",
++			  "SW_SERVICE", /* GPIO_90 */
++			  "CAM_SOF",
++			  "CAM1_RST_N",
++			  "CAM0_RST_N",
++			  "CAM0_MCLK",
++			  "CAM1_MCLK",
++			  "CAM2_MCLK",
++			  "CAM3_MCLK",
++			  "CAM4_MCLK",
++			  "TOF_RST_N",
++			  "NC", /* GPIO_100 */
++			  "CCI0_I2C_SDA",
++			  "CCI0_I2C_SCL",
++			  "CCI1_I2C_SDA",
++			  "CCI1_I2C_SCL_",
++			  "CCI2_I2C_SDA",
++			  "CCI2_I2C_SCL",
++			  "CCI3_I2C_SDA",
++			  "CCI3_I2C_SCL",
++			  "CAM3_RST_N",
++			  "NFC_DWL_REQ", /* GPIO_110 */
++			  "NFC_IRQ",
++			  "XVS",
++			  "NC",
++			  "RF_ID_EXTENSION",
++			  "SPK_AMP_I2C_SDA",
++			  "SPK_AMP_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "WLC_I2C_SDA",
++			  "WLC_I2C_SCL", /* GPIO_120 */
++			  "ACC_COVER_OPEN",
++			  "ALS_PROX_INT_N",
++			  "ACCEL_INT",
++			  "WLAN_SW_CTRL",
++			  "CAMSENSOR_I2C_SDA",
++			  "CAMSENSOR_I2C_SCL",
++			  "UDON_SWITCH_SEL",
++			  "WDOG_DISABLE",
++			  "BAROMETER_INT",
++			  "NC", /* GPIO_130 */
++			  "NC",
++			  "FORCED_USB_BOOT",
++			  "NC",
++			  "NC",
++			  "WLC_INT_N",
++			  "NC",
++			  "NC",
++			  "RGBC_IR_INT",
++			  "NC",
++			  "NC", /* GPIO_140 */
++			  "NC",
++			  "BT_SLIMBUS_CLK",
++			  "BT_SLIMBUS_DATA",
++			  "HW_ID_0",
++			  "HW_ID_1",
++			  "WCD_SWR_TX_CLK",
++			  "WCD_SWR_TX_DATA0",
++			  "WCD_SWR_TX_DATA1",
++			  "WCD_SWR_RX_CLK",
++			  "WCD_SWR_RX_DATA0", /* GPIO_150 */
++			  "WCD_SWR_RX_DATA1",
++			  "SDM_DMIC_CLK1",
++			  "SDM_DMIC_DATA1",
++			  "SDM_DMIC_CLK2",
++			  "SDM_DMIC_DATA2",
++			  "SPK_AMP_I2S_CLK",
++			  "SPK_AMP_I2S_WS",
++			  "SPK_AMP_I2S_ASP_DIN",
++			  "SPK_AMP_I2S_ASP_DOUT",
++			  "COMPASS_I2C_SDA", /* GPIO_160 */
++			  "COMPASS_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "SSC_SPI_1_MISO",
++			  "SSC_SPI_1_MOSI",
++			  "SSC_SPI_1_CLK",
++			  "SSC_SPI_1_CS_N",
++			  "NC",
++			  "NC",
++			  "SSC_SENSOR_I2C_SDA", /* GPIO_170 */
++			  "SSC_SENSOR_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "HST_BLE_SNS_UART6_TX",
++			  "HST_BLE_SNS_UART6_RX",
++			  "HST_WLAN_UART_TX",
++			  "HST_WLAN_UART_RX";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+index 16c96e8385348..bf4e6a32736de 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+@@ -29,6 +29,189 @@ g-assist-key {
+ 	};
+ };
+ 
++&tlmm {
++	gpio-line-names = "AP_CTI_IN", /* GPIO_0 */
++			  "MDM2AP_ERR_FATAL",
++			  "AP_CTI_OUT",
++			  "MDM2AP_STATUS",
++			  "NFC_I2C_SDA",
++			  "NFC_I2C_SCL",
++			  "NFC_EN",
++			  "NFC_CLK_REQ",
++			  "NFC_ESE_PWR_REQ",
++			  "DVDT_WRT_DET_AND",
++			  "SPK_AMP_RESET_N", /* GPIO_10 */
++			  "SPK_AMP_INT_N",
++			  "APPS_I2C_1_SDA",
++			  "APPS_I2C_1_SCL",
++			  "NC",
++			  "TX_GTR_THRES_IN",
++			  "HST_BT_UART_CTS",
++			  "HST_BT_UART_RFR",
++			  "HST_BT_UART_TX",
++			  "HST_BT_UART_RX",
++			  "HST_WLAN_EN", /* GPIO_20 */
++			  "HST_BT_EN",
++			  "RGBC_IR_PWR_EN",
++			  "FP_INT_N",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NFC_ESE_SPI_MISO",
++			  "NFC_ESE_SPI_MOSI",
++			  "NFC_ESE_SPI_SCLK", /* GPIO_30 */
++			  "NFC_ESE_SPI_CS_N",
++			  "WCD_RST_N",
++			  "NC",
++			  "SDM_DEBUG_UART_TX",
++			  "SDM_DEBUG_UART_RX",
++			  "TS_I2C_SDA",
++			  "TS_I2C_SCL",
++			  "TS_INT_N",
++			  "FP_SPI_MISO", /* GPIO_40 */
++			  "FP_SPI_MOSI",
++			  "FP_SPI_SCLK",
++			  "FP_SPI_CS_N",
++			  "APPS_I2C_0_SDA",
++			  "APPS_I2C_0_SCL",
++			  "DISP_ERR_FG",
++			  "UIM2_DETECT_EN",
++			  "NC",
++			  "NC",
++			  "NC", /* GPIO_50 */
++			  "NC",
++			  "MDM_UART_CTS",
++			  "MDM_UART_RFR",
++			  "MDM_UART_TX",
++			  "MDM_UART_RX",
++			  "AP2MDM_STATUS",
++			  "AP2MDM_ERR_FATAL",
++			  "MDM_IPC_HS_UART_TX",
++			  "MDM_IPC_HS_UART_RX",
++			  "NC", /* GPIO_60 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "USB_CC_DIR",
++			  "DISP_VSYNC",
++			  "NC",
++			  "NC",
++			  "CAM_PWR_B_CS",
++			  "NC", /* GPIO_70 */
++			  "FRONTC_PWR_EN",
++			  "SBU_SW_SEL",
++			  "SBU_SW_OE",
++			  "FP_RESET_N",
++			  "FP_RESET_N",
++			  "DISP_RESET_N",
++			  "DEBUG_GPIO0",
++			  "TRAY_DET",
++			  "CAM2_RST_N",
++			  "PCIE0_RST_N",
++			  "PCIE0_CLK_REQ_N", /* GPIO_80 */
++			  "PCIE0_WAKE_N",
++			  "DVDT_ENABLE",
++			  "DVDT_WRT_DET_OR",
++			  "NC",
++			  "PCIE2_RST_N",
++			  "PCIE2_CLK_REQ_N",
++			  "PCIE2_WAKE_N",
++			  "MDM_VFR_IRQ0",
++			  "MDM_VFR_IRQ1",
++			  "SW_SERVICE", /* GPIO_90 */
++			  "CAM_SOF",
++			  "CAM1_RST_N",
++			  "CAM0_RST_N",
++			  "CAM0_MCLK",
++			  "CAM1_MCLK",
++			  "CAM2_MCLK",
++			  "CAM3_MCLK",
++			  "NC",
++			  "NC",
++			  "NC", /* GPIO_100 */
++			  "CCI0_I2C_SDA",
++			  "CCI0_I2C_SCL",
++			  "CCI1_I2C_SDA",
++			  "CCI1_I2C_SCL_",
++			  "CCI2_I2C_SDA",
++			  "CCI2_I2C_SCL",
++			  "CCI3_I2C_SDA",
++			  "CCI3_I2C_SCL",
++			  "CAM3_RST_N",
++			  "NFC_DWL_REQ", /* GPIO_110 */
++			  "NFC_IRQ",
++			  "XVS",
++			  "NC",
++			  "RF_ID_EXTENSION",
++			  "SPK_AMP_I2C_SDA",
++			  "SPK_AMP_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "ACC_COVER_OPEN",
++			  "ALS_PROX_INT_N",
++			  "ACCEL_INT",
++			  "WLAN_SW_CTRL",
++			  "CAMSENSOR_I2C_SDA",
++			  "CAMSENSOR_I2C_SCL",
++			  "UDON_SWITCH_SEL",
++			  "WDOG_DISABLE",
++			  "BAROMETER_INT",
++			  "NC", /* GPIO_130 */
++			  "NC",
++			  "FORCED_USB_BOOT",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "RGBC_IR_INT",
++			  "NC",
++			  "NC", /* GPIO_140 */
++			  "NC",
++			  "BT_SLIMBUS_CLK",
++			  "BT_SLIMBUS_DATA",
++			  "HW_ID_0",
++			  "HW_ID_1",
++			  "WCD_SWR_TX_CLK",
++			  "WCD_SWR_TX_DATA0",
++			  "WCD_SWR_TX_DATA1",
++			  "WCD_SWR_RX_CLK",
++			  "WCD_SWR_RX_DATA0", /* GPIO_150 */
++			  "WCD_SWR_RX_DATA1",
++			  "SDM_DMIC_CLK1",
++			  "SDM_DMIC_DATA1",
++			  "SDM_DMIC_CLK2",
++			  "SDM_DMIC_DATA2",
++			  "SPK_AMP_I2S_CLK",
++			  "SPK_AMP_I2S_WS",
++			  "SPK_AMP_I2S_ASP_DIN",
++			  "SPK_AMP_I2S_ASP_DOUT",
++			  "COMPASS_I2C_SDA", /* GPIO_160 */
++			  "COMPASS_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "SSC_SPI_1_MISO",
++			  "SSC_SPI_1_MOSI",
++			  "SSC_SPI_1_CLK",
++			  "SSC_SPI_1_CS_N",
++			  "NC",
++			  "NC",
++			  "SSC_SENSOR_I2C_SDA", /* GPIO_170 */
++			  "SSC_SENSOR_I2C_SCL",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "HST_BLE_SNS_UART6_TX",
++			  "HST_BLE_SNS_UART6_RX",
++			  "HST_WLAN_UART_TX",
++			  "HST_WLAN_UART_RX";
++};
 +
-+	if (check_errors && cmd.errors)
-+		return -EINVAL;
-+
-+	/* Don't dereference possibly NULL pointer - maybe caller
-+	 * only wanted to see whether the entry existed or not.
-+	 */
-+	if (entry)
-+		ops->entry_packing(packed_buf, entry, UNPACK);
-+
-+	return 0;
- }
- 
- /* Poll the dynamic config entry's control area until the hardware has
-@@ -1208,8 +1219,9 @@ sja1105_dynamic_config_poll_valid(struct sja1105_private *priv,
-  */
- static int
- sja1105_dynamic_config_wait_complete(struct sja1105_private *priv,
--				     struct sja1105_dyn_cmd *cmd,
--				     const struct sja1105_dynamic_table_ops *ops)
-+				     const struct sja1105_dynamic_table_ops *ops,
-+				     void *entry, bool check_valident,
-+				     bool check_errors)
- {
- 	int err, rc;
- 
-@@ -1217,7 +1229,8 @@ sja1105_dynamic_config_wait_complete(struct sja1105_private *priv,
- 				rc, rc != -EAGAIN,
- 				SJA1105_DYNAMIC_CONFIG_SLEEP_US,
- 				SJA1105_DYNAMIC_CONFIG_TIMEOUT_US,
--				false, priv, cmd, ops);
-+				false, priv, ops, entry, check_valident,
-+				check_errors);
- 	return err < 0 ? err : rc;
- }
- 
-@@ -1287,25 +1300,14 @@ int sja1105_dynamic_config_read(struct sja1105_private *priv,
- 	mutex_lock(&priv->dynamic_config_lock);
- 	rc = sja1105_xfer_buf(priv, SPI_WRITE, ops->addr, packed_buf,
- 			      ops->packed_size);
--	if (rc < 0) {
--		mutex_unlock(&priv->dynamic_config_lock);
--		return rc;
--	}
--
--	rc = sja1105_dynamic_config_wait_complete(priv, &cmd, ops);
--	mutex_unlock(&priv->dynamic_config_lock);
- 	if (rc < 0)
--		return rc;
-+		goto out;
- 
--	if (!cmd.valident && !(ops->access & OP_VALID_ANYWAY))
--		return -ENOENT;
-+	rc = sja1105_dynamic_config_wait_complete(priv, ops, entry, true, false);
-+out:
-+	mutex_unlock(&priv->dynamic_config_lock);
- 
--	/* Don't dereference possibly NULL pointer - maybe caller
--	 * only wanted to see whether the entry existed or not.
--	 */
--	if (entry)
--		ops->entry_packing(packed_buf, entry, UNPACK);
--	return 0;
-+	return rc;
- }
- 
- int sja1105_dynamic_config_write(struct sja1105_private *priv,
-@@ -1357,22 +1359,14 @@ int sja1105_dynamic_config_write(struct sja1105_private *priv,
- 	mutex_lock(&priv->dynamic_config_lock);
- 	rc = sja1105_xfer_buf(priv, SPI_WRITE, ops->addr, packed_buf,
- 			      ops->packed_size);
--	if (rc < 0) {
--		mutex_unlock(&priv->dynamic_config_lock);
--		return rc;
--	}
--
--	rc = sja1105_dynamic_config_wait_complete(priv, &cmd, ops);
--	mutex_unlock(&priv->dynamic_config_lock);
- 	if (rc < 0)
--		return rc;
-+		goto out;
- 
--	cmd = (struct sja1105_dyn_cmd) {0};
--	ops->cmd_packing(packed_buf, &cmd, UNPACK);
--	if (cmd.errors)
--		return -EINVAL;
-+	rc = sja1105_dynamic_config_wait_complete(priv, ops, NULL, false, true);
-+out:
-+	mutex_unlock(&priv->dynamic_config_lock);
- 
--	return 0;
-+	return rc;
- }
- 
- static u8 sja1105_crc8_add(u8 crc, u8 byte, u8 poly)
+ &vreg_l2f_1p3 {
+ 	regulator-min-microvolt = <1200000>;
+ 	regulator-max-microvolt = <1200000>;
 -- 
 2.40.1
 
