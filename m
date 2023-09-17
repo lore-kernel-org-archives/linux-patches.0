@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C59C6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434A1C433C7;
-	Sun, 17 Sep 2023 20:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AB96FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0E5C433C7;
+	Sun, 17 Sep 2023 20:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981452;
-	bh=mhN/REjF0Y9PX1wLUk59NBlDy7uW55ix/Z/pTilBZpA=;
+	s=korg; t=1694981456;
+	bh=l4h4Gv0ThWsrODMTOhv0lGGjdn742z+5+Kk5kGw0gQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btFPsPWJtYLs3HIhXk7W9sGfjKBvb2rd0wtWT/9cEKEqn+tx+qlnwl7BjihoeFFs1
-	 nT/v3dKbV8hEm6HnVtswdszRhf7kv7eh432rLUDh06D4HY6TVhxakfGoeG8F+x+mSi
-	 CdAtSoMKYvYx7RSJItVLrUMBgI86plmsFNRwvYEE=
+	b=KFTaxM1q9bUs5SRPL+b3iCGiZWpJbYMEKErJdT4d0oRQL2+iFNCDy2IpqKSdm5g/s
+	 1MrEgUVj04HQJA4tdULb9fG98WR6MlL8ts862+719fgbWDrWD3M1j7RpE5p5XFITPZ
+	 xSMFGoq7Kw7dLrCfmzt3hGwUJ6jU3qS5PBH6rgrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Yang <wenyang.linux@foxmail.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dylan Yudaken <dylany@fb.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Matthew Wilcox <willy@infradead.org>,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/511] eventfd: prevent underflow for eventfd semaphores
-Date: Sun, 17 Sep 2023 21:08:04 +0200
-Message-ID: <20230917191115.264721695@linuxfoundation.org>
+Subject: [PATCH 6.1 126/219] bpf: Assign bpf_tramp_run_ctx::saved_run_ctx before recursion check.
+Date: Sun, 17 Sep 2023 21:14:13 +0200
+Message-ID: <20230917191045.547661195@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,78 +37,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wen Yang <wenyang.linux@foxmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 758b492047816a3158d027e9fca660bc5bcf20bf ]
+[ Upstream commit 6764e767f4af1e35f87f3497e1182d945de37f93 ]
 
-For eventfd with flag EFD_SEMAPHORE, when its ctx->count is 0, calling
-eventfd_ctx_do_read will cause ctx->count to overflow to ULLONG_MAX.
+__bpf_prog_enter_recur() assigns bpf_tramp_run_ctx::saved_run_ctx before
+performing the recursion check which means in case of a recursion
+__bpf_prog_exit_recur() uses the previously set bpf_tramp_run_ctx::saved_run_ctx
+value.
 
-An underflow can happen with EFD_SEMAPHORE eventfds in at least the
-following three subsystems:
+__bpf_prog_enter_sleepable_recur() assigns bpf_tramp_run_ctx::saved_run_ctx
+after the recursion check which means in case of a recursion
+__bpf_prog_exit_sleepable_recur() uses an uninitialized value. This does not
+look right. If I read the entry trampoline code right, then bpf_tramp_run_ctx
+isn't initialized upfront.
 
-(1) virt/kvm/eventfd.c
-(2) drivers/vfio/virqfd.c
-(3) drivers/virt/acrn/irqfd.c
+Align __bpf_prog_enter_sleepable_recur() with __bpf_prog_enter_recur() and
+set bpf_tramp_run_ctx::saved_run_ctx before the recursion check is made.
+Remove the assignment of saved_run_ctx in kern_sys_bpf() since it happens
+a few cycles later.
 
-where (2) and (3) are just modeled after (1). An eventfd must be
-specified for use with the KVM_IRQFD ioctl(). This can also be an
-EFD_SEMAPHORE eventfd. When the eventfd count is zero or has been
-decremented to zero an underflow can be triggered when the irqfd is shut
-down by raising the KVM_IRQFD_FLAG_DEASSIGN flag in the KVM_IRQFD
-ioctl():
-
-        // ctx->count == 0
-        kvm_vm_ioctl()
-        -> kvm_irqfd()
-           -> kvm_irqfd_deassign()
-              -> irqfd_deactivate()
-                 -> irqfd_shutdown()
-                    -> eventfd_ctx_remove_wait_queue(&cnt)
-                       -> eventfd_ctx_do_read(&cnt)
-
-Userspace polling on the eventfd wouldn't notice the underflow because 1
-is always returned as the value from eventfd_read() while ctx->count
-would've underflowed. It's not a huge deal because this should only be
-happening when the irqfd is shutdown but we should still fix it and
-avoid the spurious wakeup.
-
-Fixes: cb289d6244a3 ("eventfd - allow atomic read and waitqueue remove")
-Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dylan Yudaken <dylany@fb.com>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Message-Id: <tencent_7588DFD1F365950A757310D764517A14B306@qq.com>
-[brauner: rewrite commit message and add explanation how this underflow can happen]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: e384c7b7b46d0 ("bpf, x86: Create bpf_tramp_run_ctx on the caller thread's stack")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20230830080405.251926-3-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventfd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/syscall.c    | 1 -
+ kernel/bpf/trampoline.c | 5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/eventfd.c b/fs/eventfd.c
-index 249ca6c0b7843..4a60ea932e3d9 100644
---- a/fs/eventfd.c
-+++ b/fs/eventfd.c
-@@ -189,7 +189,7 @@ void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
- {
- 	lockdep_assert_held(&ctx->wqh.lock);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 76484137233a3..0c8b7733573ee 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5135,7 +5135,6 @@ int kern_sys_bpf(int cmd, union bpf_attr *attr, unsigned int size)
+ 		}
  
--	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
-+	*cnt = ((ctx->flags & EFD_SEMAPHORE) && ctx->count) ? 1 : ctx->count;
- 	ctx->count -= *cnt;
+ 		run_ctx.bpf_cookie = 0;
+-		run_ctx.saved_run_ctx = NULL;
+ 		if (!__bpf_prog_enter_sleepable_recur(prog, &run_ctx)) {
+ 			/* recursion detected */
+ 			__bpf_prog_exit_sleepable_recur(prog, 0, &run_ctx);
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 88841e352dcdf..c4381dfcd6b09 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -955,13 +955,12 @@ u64 notrace __bpf_prog_enter_sleepable_recur(struct bpf_prog *prog,
+ 	migrate_disable();
+ 	might_fault();
+ 
++	run_ctx->saved_run_ctx = bpf_set_run_ctx(&run_ctx->run_ctx);
++
+ 	if (unlikely(this_cpu_inc_return(*(prog->active)) != 1)) {
+ 		bpf_prog_inc_misses_counter(prog);
+ 		return 0;
+ 	}
+-
+-	run_ctx->saved_run_ctx = bpf_set_run_ctx(&run_ctx->run_ctx);
+-
+ 	return bpf_prog_start_time();
  }
- EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
+ 
 -- 
 2.40.1
 
