@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC7A6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462C0C433C8;
-	Sun, 17 Sep 2023 19:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3816FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2438C433C8;
+	Sun, 17 Sep 2023 19:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979981;
-	bh=onHrFRPA+9j6npSpupJvCVNeZcgJ+kGnwq1n47Xgu5A=;
+	s=korg; t=1694979984;
+	bh=88b68nkyixpAw23If3mTEfs30JLyJSM9vPYISB9riXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+6aeZOYcZPf3BQOBkrRgKObzxoM5xNWFcW3dOyPDZ1YEePES9/SyHYY7jKvulnzr
-	 54evtxl2mH8PtKOGNWcQxexRdrfGpvyStQvslbHlTRRwyKYZ/1FIO8EnDfnW16SYHt
-	 4+suqFR2qiTdDxgy+FKA9REohcdm0+EgLwzmiSJY=
+	b=W/IUJPuAroxPbyz0XCrw90b99/DcxHk58tEjcGarBC6vM0Cp4Ab2XArdB4M+3XcWd
+	 O9mmP7kjxFz0ge1DyTXnlFTBLM+dxT9Ys9V+dEzmMy7v4wksJKKvlxpqt9nB+W+Gtf
+	 h/TgkwDhpGPVjNc36wDlPwPvkOIqSE/upa7opq98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 035/285] memcg: drop kmem.limit_in_bytes
-Date: Sun, 17 Sep 2023 21:10:35 +0200
-Message-ID: <20230917191052.881286342@linuxfoundation.org>
+	Jonathan Marek <jonathan@marek.ca>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 062/285] mailbox: qcom-ipcc: fix incorrect num_chans counting
+Date: Sun, 17 Sep 2023 21:11:02 +0200
+Message-ID: <20230917191053.850913867@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -44,86 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hocko <mhocko@suse.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-commit 86327e8eb94c52eca4f93cfece2e29d1bf52acbf upstream.
+[ Upstream commit a493208079e299aefdc15169dc80e3da3ebb718a ]
 
-kmem.limit_in_bytes (v1 way to limit kernel memory usage) has been
-deprecated since 58056f77502f ("memcg, kmem: further deprecate
-kmem.limit_in_bytes") merged in 5.16.  We haven't heard about any serious
-users since then but it seems that the mere presence of the file is
-causing more harm thatn good.  We (SUSE) have had several bug reports from
-customers where Docker based containers started to fail because a write to
-kmem.limit_in_bytes has failed.
+Breaking out early when a match is found leads to an incorrect num_chans
+value when more than one ipcc mailbox channel is used by the same device.
 
-This was unexpected because runc code only expects ENOENT (kmem disabled)
-or EBUSY (tasks already running within cgroup).  So a new error code was
-unexpected and the whole container startup failed.  This has been later
-addressed by
-https://github.com/opencontainers/runc/commit/52390d68040637dfc77f9fda6bbe70952423d380
-so current Docker runtimes do not suffer from the problem anymore.  There
-are still older version of Docker in use and likely hard to get rid of
-completely.
-
-Address this by wiping out the file completely and effectively get back to
-pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
-
-I would recommend backporting to stable trees which have picked up
-58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes").
-
-[mhocko@suse.com: restore _KMEM switch case]
-  Link: https://lkml.kernel.org/r/ZKe5wxdbvPi5Cwd7@dhcp22.suse.cz
-Link: https://lkml.kernel.org/r/20230704115240.14672-1-mhocko@kernel.org
-Signed-off-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/cgroup-v1/memory.rst |    2 --
- mm/memcontrol.c                                |   10 ----------
- 2 files changed, 12 deletions(-)
+ drivers/mailbox/qcom-ipcc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/Documentation/admin-guide/cgroup-v1/memory.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-@@ -92,8 +92,6 @@ Brief summary of control files.
-  memory.oom_control		     set/show oom controls.
-  memory.numa_stat		     show the number of memory usage per numa
- 				     node
-- memory.kmem.limit_in_bytes          This knob is deprecated and writing to
--                                     it will return -ENOTSUPP.
-  memory.kmem.usage_in_bytes          show current kernel memory allocation
-  memory.kmem.failcnt                 show the number of kernel memory usage
- 				     hits limits
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -3871,10 +3871,6 @@ static ssize_t mem_cgroup_write(struct k
- 		case _MEMSWAP:
- 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
- 			break;
--		case _KMEM:
--			/* kmem.limit_in_bytes is deprecated. */
--			ret = -EOPNOTSUPP;
--			break;
- 		case _TCP:
- 			ret = memcg_update_tcp_max(memcg, nr_pages);
- 			break;
-@@ -5086,12 +5082,6 @@ static struct cftype mem_cgroup_legacy_f
- 	},
- #endif
- 	{
--		.name = "kmem.limit_in_bytes",
--		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
--		.write = mem_cgroup_write,
--		.read_u64 = mem_cgroup_read_u64,
--	},
--	{
- 		.name = "kmem.usage_in_bytes",
- 		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
- 		.read_u64 = mem_cgroup_read_u64,
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index 7e27acf6c0cca..f597a1bd56847 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -227,10 +227,8 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+ 			ret = of_parse_phandle_with_args(client_dn, "mboxes",
+ 						"#mbox-cells", j, &curr_ph);
+ 			of_node_put(curr_ph.np);
+-			if (!ret && curr_ph.np == controller_dn) {
++			if (!ret && curr_ph.np == controller_dn)
+ 				ipcc->num_chans++;
+-				break;
+-			}
+ 		}
+ 	}
+ 
+-- 
+2.40.1
+
 
 
