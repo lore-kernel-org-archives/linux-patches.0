@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E33363DE
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D40C433C7;
-	Sun, 17 Sep 2023 19:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3FF6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D80C433CB;
+	Sun, 17 Sep 2023 19:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980549;
-	bh=QYARrcBXEoggJSNwN8JNKMgKEJSuHc2LumamX8uRB4A=;
+	s=korg; t=1694980553;
+	bh=RgNh2LVJxOuyJeU27TuKyV+rz9RGRrzzf4eFVBA/PZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IunP0vZL0WLz47TSFHNv4O6+X2vnXmho5rucvbgbVOri8KdMWt84OSwo2aHrU2k7A
-	 X9ggpaK1ffq5eJSMv5vqCeMieJPjtj5OGiT/ZxZ6nBkaJ2hfFE6O0ruFf7VYmoh5rw
-	 QM4+f5SyZ3I49Lm3L4sGqvezyMhQF/HslYyyMF70=
+	b=O6BolJk+FuP3Aju8j7UfgH6Xobrp7WsSXqRJSDnR5Elk8yYKEXZp5yhqcpjLpj64a
+	 Q/yRObSr+1/hUHAs1WJSeVVjdBfGvpbXJJktKA731p2NHcojdu12XXyIoRFtE4kGKs
+	 D7yMbsMjM3JV3Ne5WkQ90CZ30MEmnPcF/eI4jMs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Zongyo <wuzongyo@mail.ustc.edu.cn>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.5 224/285] KVM: SVM: Dont inject #UD if KVM attempts to skip SEV guest insn
-Date: Sun, 17 Sep 2023 21:13:44 +0200
-Message-ID: <20230917191059.238532047@linuxfoundation.org>
+	William R Sowerbutts <will@sowerbutts.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.5 198/285] ata: pata_falcon: fix IO base selection for Q40
+Date: Sun, 17 Sep 2023 21:13:18 +0200
+Message-ID: <20230917191058.442164997@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,104 +43,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-commit cb49631ad111570f1bad37702c11c2ae07fa2e3c upstream.
+commit 8a1f00b753ecfdb117dc1a07e68c46d80e7923ea upstream.
 
-Don't inject a #UD if KVM attempts to "emulate" to skip an instruction
-for an SEV guest, and instead resume the guest and hope that it can make
-forward progress.  When commit 04c40f344def ("KVM: SVM: Inject #UD on
-attempted emulation for SEV guest w/o insn buffer") added the completely
-arbitrary #UD behavior, there were no known scenarios where a well-behaved
-guest would induce a VM-Exit that triggered emulation, i.e. it was thought
-that injecting #UD would be helpful.
+With commit 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver
+with pata_falcon and falconide"), the Q40 IDE driver was
+replaced by pata_falcon.c.
 
-However, now that KVM (correctly) attempts to re-inject INT3/INTO, e.g. if
-a #NPF is encountered when attempting to deliver the INT3/INTO, an SEV
-guest can trigger emulation without a buffer, through no fault of its own.
-Resuming the guest and retrying the INT3/INTO is architecturally wrong,
-e.g. the vCPU will incorrectly re-hit code #DBs, but for SEV guests there
-is literally no other option that has a chance of making forward progress.
+Both IO and memory resources were defined for the Q40 IDE
+platform device, but definition of the IDE register addresses
+was modeled after the Falcon case, both in use of the memory
+resources and in including register shift and byte vs. word
+offset in the address.
 
-Drop the #UD injection for all "skip" emulation, not just those related to
-INT3/INTO, even though that means that the guest will likely end up in an
-infinite loop instead of getting a #UD (the vCPU may also crash, e.g. if
-KVM emulated everything about an instruction except for advancing RIP).
-There's no evidence that suggests that an unexpected #UD is actually
-better than hanging the vCPU, e.g. a soft-hung vCPU can still respond to
-IRQs and NMIs to generate a backtrace.
+This was correct for the Falcon case, which does not apply
+any address translation to the register addresses. In the
+Q40 case, all of device base address, byte access offset
+and register shift is included in the platform specific
+ISA access translation (in asm/mm_io.h).
 
-Reported-by: Wu Zongyo <wuzongyo@mail.ustc.edu.cn>
-Closes: https://lore.kernel.org/all/8eb933fd-2cf3-d7a9-32fe-2a1d82eac42a@mail.ustc.edu.cn
-Fixes: 6ef88d6e36c2 ("KVM: SVM: Re-inject INT3/INTO instead of retrying the instruction")
+As a consequence, such address translation gets applied
+twice, and register addresses are mangled.
+
+Use the device base address from the platform IO resource
+for Q40 (the IO address translation will then add the correct
+ISA window base address and byte access offset), with register
+shift 1. Use MMIO base address and register shift 2 as before
+for Falcon.
+
+Encode PIO_OFFSET into IO port addresses for all registers
+for Q40 except the data transfer register. Encode the MMIO
+offset there (pata_falcon_data_xfer() directly uses raw IO
+with no address translation).
+
+Reported-by: William R Sowerbutts <will@sowerbutts.com>
+Closes: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
+Link: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
+Fixes: 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver with pata_falcon and falconide")
 Cc: stable@vger.kernel.org
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230825013621.2845700-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: Finn Thain <fthain@linux-m68k.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: William R Sowerbutts <will@sowerbutts.com>
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ drivers/ata/pata_falcon.c |   50 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -365,6 +365,8 @@ static void svm_set_interrupt_shadow(str
- 		svm->vmcb->control.int_state |= SVM_INTERRUPT_SHADOW_MASK;
+--- a/drivers/ata/pata_falcon.c
++++ b/drivers/ata/pata_falcon.c
+@@ -123,8 +123,8 @@ static int __init pata_falcon_init_one(s
+ 	struct resource *base_res, *ctl_res, *irq_res;
+ 	struct ata_host *host;
+ 	struct ata_port *ap;
+-	void __iomem *base;
+-	int irq = 0;
++	void __iomem *base, *ctl_base;
++	int irq = 0, io_offset = 1, reg_shift = 2; /* Falcon defaults */
  
- }
-+static bool svm_can_emulate_instruction(struct kvm_vcpu *vcpu, int emul_type,
-+					void *insn, int insn_len);
+ 	dev_info(&pdev->dev, "Atari Falcon and Q40/Q60 PATA controller\n");
  
- static int __svm_skip_emulated_instruction(struct kvm_vcpu *vcpu,
- 					   bool commit_side_effects)
-@@ -385,6 +387,14 @@ static int __svm_skip_emulated_instructi
- 	}
+@@ -165,26 +165,34 @@ static int __init pata_falcon_init_one(s
+ 	ap->pio_mask = ATA_PIO4;
+ 	ap->flags |= ATA_FLAG_SLAVE_POSS | ATA_FLAG_NO_IORDY;
  
- 	if (!svm->next_rip) {
-+		/*
-+		 * FIXME: Drop this when kvm_emulate_instruction() does the
-+		 * right thing and treats "can't emulate" as outright failure
-+		 * for EMULTYPE_SKIP.
-+		 */
-+		if (!svm_can_emulate_instruction(vcpu, EMULTYPE_SKIP, NULL, 0))
-+			return 0;
+-	base = (void __iomem *)base_mem_res->start;
+ 	/* N.B. this assumes data_addr will be used for word-sized I/O only */
+-	ap->ioaddr.data_addr		= base + 0 + 0 * 4;
+-	ap->ioaddr.error_addr		= base + 1 + 1 * 4;
+-	ap->ioaddr.feature_addr		= base + 1 + 1 * 4;
+-	ap->ioaddr.nsect_addr		= base + 1 + 2 * 4;
+-	ap->ioaddr.lbal_addr		= base + 1 + 3 * 4;
+-	ap->ioaddr.lbam_addr		= base + 1 + 4 * 4;
+-	ap->ioaddr.lbah_addr		= base + 1 + 5 * 4;
+-	ap->ioaddr.device_addr		= base + 1 + 6 * 4;
+-	ap->ioaddr.status_addr		= base + 1 + 7 * 4;
+-	ap->ioaddr.command_addr		= base + 1 + 7 * 4;
+-
+-	base = (void __iomem *)ctl_mem_res->start;
+-	ap->ioaddr.altstatus_addr	= base + 1;
+-	ap->ioaddr.ctl_addr		= base + 1;
+-
+-	ata_port_desc(ap, "cmd 0x%lx ctl 0x%lx",
+-		      (unsigned long)base_mem_res->start,
+-		      (unsigned long)ctl_mem_res->start);
++	ap->ioaddr.data_addr = (void __iomem *)base_mem_res->start;
 +
- 		if (unlikely(!commit_side_effects))
- 			old_rflags = svm->vmcb->save.rflags;
++	if (base_res) {		/* only Q40 has IO resources */
++		io_offset = 0x10000;
++		reg_shift = 0;
++		base = (void __iomem *)base_res->start;
++		ctl_base = (void __iomem *)ctl_res->start;
++	} else {
++		base = (void __iomem *)base_mem_res->start;
++		ctl_base = (void __iomem *)ctl_mem_res->start;
++	}
++
++	ap->ioaddr.error_addr	= base + io_offset + (1 << reg_shift);
++	ap->ioaddr.feature_addr	= base + io_offset + (1 << reg_shift);
++	ap->ioaddr.nsect_addr	= base + io_offset + (2 << reg_shift);
++	ap->ioaddr.lbal_addr	= base + io_offset + (3 << reg_shift);
++	ap->ioaddr.lbam_addr	= base + io_offset + (4 << reg_shift);
++	ap->ioaddr.lbah_addr	= base + io_offset + (5 << reg_shift);
++	ap->ioaddr.device_addr	= base + io_offset + (6 << reg_shift);
++	ap->ioaddr.status_addr	= base + io_offset + (7 << reg_shift);
++	ap->ioaddr.command_addr	= base + io_offset + (7 << reg_shift);
++
++	ap->ioaddr.altstatus_addr	= ctl_base + io_offset;
++	ap->ioaddr.ctl_addr		= ctl_base + io_offset;
++
++	ata_port_desc(ap, "cmd %px ctl %px data %px",
++		      base, ctl_base, ap->ioaddr.data_addr);
  
-@@ -4651,16 +4661,25 @@ static bool svm_can_emulate_instruction(
- 	 * and cannot be decrypted by KVM, i.e. KVM would read cyphertext and
- 	 * decode garbage.
- 	 *
--	 * Inject #UD if KVM reached this point without an instruction buffer.
--	 * In practice, this path should never be hit by a well-behaved guest,
--	 * e.g. KVM doesn't intercept #UD or #GP for SEV guests, but this path
--	 * is still theoretically reachable, e.g. via unaccelerated fault-like
--	 * AVIC access, and needs to be handled by KVM to avoid putting the
--	 * guest into an infinite loop.   Injecting #UD is somewhat arbitrary,
--	 * but its the least awful option given lack of insight into the guest.
-+	 * If KVM is NOT trying to simply skip an instruction, inject #UD if
-+	 * KVM reached this point without an instruction buffer.  In practice,
-+	 * this path should never be hit by a well-behaved guest, e.g. KVM
-+	 * doesn't intercept #UD or #GP for SEV guests, but this path is still
-+	 * theoretically reachable, e.g. via unaccelerated fault-like AVIC
-+	 * access, and needs to be handled by KVM to avoid putting the guest
-+	 * into an infinite loop.   Injecting #UD is somewhat arbitrary, but
-+	 * its the least awful option given lack of insight into the guest.
-+	 *
-+	 * If KVM is trying to skip an instruction, simply resume the guest.
-+	 * If a #NPF occurs while the guest is vectoring an INT3/INTO, then KVM
-+	 * will attempt to re-inject the INT3/INTO and skip the instruction.
-+	 * In that scenario, retrying the INT3/INTO and hoping the guest will
-+	 * make forward progress is the only option that has a chance of
-+	 * success (and in practice it will work the vast majority of the time).
- 	 */
- 	if (unlikely(!insn)) {
--		kvm_queue_exception(vcpu, UD_VECTOR);
-+		if (!(emul_type & EMULTYPE_SKIP))
-+			kvm_queue_exception(vcpu, UD_VECTOR);
- 		return false;
- 	}
- 
+ 	irq_res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
+ 	if (irq_res && irq_res->start > 0) {
 
 
