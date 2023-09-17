@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82A66FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B3BC433C8;
-	Sun, 17 Sep 2023 19:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22ABA6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DE6C433C8;
+	Sun, 17 Sep 2023 19:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980501;
-	bh=Ee+0ya1oASvML6lsar80csuRInU+gy5hpNxe71fNiT8=;
+	s=korg; t=1694980505;
+	bh=8Z29cEQGLL/WMFoYptKbXIxgoVKWzegYp7l6MCQ8xwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xge3vwcBHOHarh1wKLRwNCgeMkjfU/DeHcP4H51HbsVMN3QO70V++7GGG7i8+/Gyl
-	 CM1tRDkVTBbF+ml9qa8j4d8geVWpdH2mzFl5uPZ5+JVPZaJ0NsCgwIpPpt4mcmL8pt
-	 cRw5ChAuZOR8m1ataiylP9uFoBiLOc33tvSAivfE=
+	b=aqWN70RR/IJxeiVvTGS37BcOJ15Zc3UgIOZVmm4aBiWgVxCIwUmwPEd6LRuPP+8at
+	 fjIfYNuJtjV3dJh76nLahUpFp9EBDnUSRow4vAtHVOjt67NyWvBZ2XnpgqhRowFn+G
+	 csE5IZXgGiG+Mb5hqs6XyNNh2OsE5FUolPJhVJhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 211/285] btrfs: scrub: fix grouping of read IO
-Date: Sun, 17 Sep 2023 21:13:31 +0200
-Message-ID: <20230917191058.870881178@linuxfoundation.org>
+	Liu Ying <victor.liu@nxp.com>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 6.5 212/285] drm/mxsfb: Disable overlay plane in mxsfb_plane_overlay_atomic_disable()
+Date: Sun, 17 Sep 2023 21:13:32 +0200
+Message-ID: <20230917191058.900150919@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -39,280 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Liu Ying <victor.liu@nxp.com>
 
-commit ae76d8e3e1351aa1ba09cc68dab6866d356f2e17 upstream.
+commit aa656d48e871a1b062e1bbf9474d8b831c35074c upstream.
 
-[REGRESSION]
-There are several regression reports about the scrub performance with
-v6.4 kernel.
+When disabling overlay plane in mxsfb_plane_overlay_atomic_update(),
+overlay plane's framebuffer pointer is NULL.  So, dereferencing it would
+cause a kernel Oops(NULL pointer dereferencing).  Fix the issue by
+disabling overlay plane in mxsfb_plane_overlay_atomic_disable() instead.
 
-On a PCIe 3.0 device, the old v6.3 kernel can go 3GB/s scrub speed, but
-v6.4 can only go 1GB/s, an obvious 66% performance drop.
-
-[CAUSE]
-Iostat shows a very different behavior between v6.3 and v6.4 kernel:
-
-  Device         r/s      rkB/s   rrqm/s  %rrqm r_await rareq-sz aqu-sz  %util
-  nvme0n1p3  9731.00 3425544.00 17237.00  63.92    2.18   352.02  21.18 100.00
-  nvme0n1p3 15578.00  993616.00     5.00   0.03    0.09    63.78   1.32 100.00
-
-The upper one is v6.3 while the lower one is v6.4.
-
-There are several obvious differences:
-
-- Very few read merges
-  This turns out to be a behavior change that we no longer do bio
-  plug/unplug.
-
-- Very low aqu-sz
-  This is due to the submit-and-wait behavior of flush_scrub_stripes(),
-  and extra extent/csum tree search.
-
-Both behaviors are not that obvious on SATA SSDs, as SATA SSDs have NCQ
-to merge the reads, while SATA SSDs can not handle high queue depth well
-either.
-
-[FIX]
-For now this patch focuses on the read speed fix. Dev-replace replace
-speed needs more work.
-
-For the read part, we go two directions to fix the problems:
-
-- Re-introduce blk plug/unplug to merge read requests
-  This is pretty simple, and the behavior is pretty easy to observe.
-
-  This would enlarge the average read request size to 512K.
-
-- Introduce multi-group reads and no longer wait for each group
-  Instead of the old behavior, which submits 8 stripes and waits for
-  them, here we would enlarge the total number of stripes to 16 * 8.
-  Which is 8M per device, the same limit as the old scrub in-flight
-  bios size limit.
-
-  Now every time we fill a group (8 stripes), we submit them and
-  continue to next stripes.
-
-  Only when the full 16 * 8 stripes are all filled, we submit the
-  remaining ones (the last group), and wait for all groups to finish.
-  Then submit the repair writes and dev-replace writes.
-
-  This should enlarge the queue depth.
-
-This would greatly improve the merge rate (thus read block size) and
-queue depth:
-
-Before (with regression, and cached extent/csum path):
-
- Device         r/s      rkB/s   rrqm/s  %rrqm r_await rareq-sz aqu-sz  %util
- nvme0n1p3 20666.00 1318240.00    10.00   0.05    0.08    63.79   1.63 100.00
-
-After (with all patches applied):
-
- nvme0n1p3  5165.00 2278304.00 30557.00  85.54    0.55   441.10   2.81 100.00
-
-i.e. 1287 to 2224 MB/s.
-
-CC: stable@vger.kernel.org # 6.4+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: cb285a5348e7 ("drm: mxsfb: Replace mxsfb_get_fb_paddr() with drm_fb_cma_get_gem_addr()")
+Cc: stable@vger.kernel.org # 5.19+
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230612092359.784115-1-victor.liu@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/scrub.c |   96 ++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 71 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/mxsfb/mxsfb_kms.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -43,9 +43,20 @@ struct scrub_ctx;
- /*
-  * The following value only influences the performance.
-  *
-- * This determines the batch size for stripe submitted in one go.
-+ * This detemines how many stripes would be submitted in one go,
-+ * which is 512KiB (BTRFS_STRIPE_LEN * SCRUB_STRIPES_PER_GROUP).
-  */
--#define SCRUB_STRIPES_PER_SCTX	8	/* That would be 8 64K stripe per-device. */
-+#define SCRUB_STRIPES_PER_GROUP		8
-+
-+/*
-+ * How many groups we have for each sctx.
-+ *
-+ * This would be 8M per device, the same value as the old scrub in-flight bios
-+ * size limit.
-+ */
-+#define SCRUB_GROUPS_PER_SCTX		16
-+
-+#define SCRUB_TOTAL_STRIPES		(SCRUB_GROUPS_PER_SCTX * SCRUB_STRIPES_PER_GROUP)
- 
- /*
-  * The following value times PAGE_SIZE needs to be large enough to match the
-@@ -172,7 +183,7 @@ struct scrub_stripe {
- };
- 
- struct scrub_ctx {
--	struct scrub_stripe	stripes[SCRUB_STRIPES_PER_SCTX];
-+	struct scrub_stripe	stripes[SCRUB_TOTAL_STRIPES];
- 	struct scrub_stripe	*raid56_data_stripes;
- 	struct btrfs_fs_info	*fs_info;
- 	struct btrfs_path	extent_path;
-@@ -317,10 +328,10 @@ static noinline_for_stack void scrub_fre
- 	if (!sctx)
- 		return;
- 
--	for (i = 0; i < SCRUB_STRIPES_PER_SCTX; i++)
-+	for (i = 0; i < SCRUB_TOTAL_STRIPES; i++)
- 		release_scrub_stripe(&sctx->stripes[i]);
- 
--	kfree(sctx);
-+	kvfree(sctx);
+--- a/drivers/gpu/drm/mxsfb/mxsfb_kms.c
++++ b/drivers/gpu/drm/mxsfb/mxsfb_kms.c
+@@ -611,6 +611,14 @@ static void mxsfb_plane_overlay_atomic_u
+ 	writel(ctrl, mxsfb->base + LCDC_AS_CTRL);
  }
  
- static void scrub_put_ctx(struct scrub_ctx *sctx)
-@@ -335,7 +346,10 @@ static noinline_for_stack struct scrub_c
- 	struct scrub_ctx *sctx;
- 	int		i;
- 
--	sctx = kzalloc(sizeof(*sctx), GFP_KERNEL);
-+	/* Since sctx has inline 128 stripes, it can go beyond 64K easily.  Use
-+	 * kvzalloc().
-+	 */
-+	sctx = kvzalloc(sizeof(*sctx), GFP_KERNEL);
- 	if (!sctx)
- 		goto nomem;
- 	refcount_set(&sctx->refs, 1);
-@@ -345,7 +359,7 @@ static noinline_for_stack struct scrub_c
- 	sctx->extent_path.skip_locking = 1;
- 	sctx->csum_path.search_commit_root = 1;
- 	sctx->csum_path.skip_locking = 1;
--	for (i = 0; i < SCRUB_STRIPES_PER_SCTX; i++) {
-+	for (i = 0; i < SCRUB_TOTAL_STRIPES; i++) {
- 		int ret;
- 
- 		ret = init_scrub_stripe(fs_info, &sctx->stripes[i]);
-@@ -1659,6 +1673,28 @@ static bool stripe_has_metadata_error(st
- 	return false;
- }
- 
-+static void submit_initial_group_read(struct scrub_ctx *sctx,
-+				      unsigned int first_slot,
-+				      unsigned int nr_stripes)
++static void mxsfb_plane_overlay_atomic_disable(struct drm_plane *plane,
++					       struct drm_atomic_state *state)
 +{
-+	struct blk_plug plug;
++	struct mxsfb_drm_private *mxsfb = to_mxsfb_drm_private(plane->dev);
 +
-+	ASSERT(first_slot < SCRUB_TOTAL_STRIPES);
-+	ASSERT(first_slot + nr_stripes <= SCRUB_TOTAL_STRIPES);
-+
-+	scrub_throttle_dev_io(sctx, sctx->stripes[0].dev,
-+			      btrfs_stripe_nr_to_offset(nr_stripes));
-+	blk_start_plug(&plug);
-+	for (int i = 0; i < nr_stripes; i++) {
-+		struct scrub_stripe *stripe = &sctx->stripes[first_slot + i];
-+
-+		/* Those stripes should be initialized. */
-+		ASSERT(test_bit(SCRUB_STRIPE_FLAG_INITIALIZED, &stripe->state));
-+		scrub_submit_initial_read(sctx, stripe);
-+	}
-+	blk_finish_plug(&plug);
++	writel(0, mxsfb->base + LCDC_AS_CTRL);
 +}
 +
- static int flush_scrub_stripes(struct scrub_ctx *sctx)
- {
- 	struct btrfs_fs_info *fs_info = sctx->fs_info;
-@@ -1671,11 +1707,11 @@ static int flush_scrub_stripes(struct sc
+ static bool mxsfb_format_mod_supported(struct drm_plane *plane,
+ 				       uint32_t format,
+ 				       uint64_t modifier)
+@@ -626,6 +634,7 @@ static const struct drm_plane_helper_fun
+ static const struct drm_plane_helper_funcs mxsfb_plane_overlay_helper_funcs = {
+ 	.atomic_check = mxsfb_plane_atomic_check,
+ 	.atomic_update = mxsfb_plane_overlay_atomic_update,
++	.atomic_disable = mxsfb_plane_overlay_atomic_disable,
+ };
  
- 	ASSERT(test_bit(SCRUB_STRIPE_FLAG_INITIALIZED, &sctx->stripes[0].state));
- 
--	scrub_throttle_dev_io(sctx, sctx->stripes[0].dev,
--			      btrfs_stripe_nr_to_offset(nr_stripes));
--	for (int i = 0; i < nr_stripes; i++) {
--		stripe = &sctx->stripes[i];
--		scrub_submit_initial_read(sctx, stripe);
-+	/* Submit the stripes which are populated but not submitted. */
-+	if (nr_stripes % SCRUB_STRIPES_PER_GROUP) {
-+		const int first_slot = round_down(nr_stripes, SCRUB_STRIPES_PER_GROUP);
-+
-+		submit_initial_group_read(sctx, first_slot, nr_stripes - first_slot);
- 	}
- 
- 	for (int i = 0; i < nr_stripes; i++) {
-@@ -1755,21 +1791,19 @@ static void raid56_scrub_wait_endio(stru
- 
- static int queue_scrub_stripe(struct scrub_ctx *sctx, struct btrfs_block_group *bg,
- 			      struct btrfs_device *dev, int mirror_num,
--			      u64 logical, u32 length, u64 physical)
-+			      u64 logical, u32 length, u64 physical,
-+			      u64 *found_logical_ret)
- {
- 	struct scrub_stripe *stripe;
- 	int ret;
- 
--	/* No available slot, submit all stripes and wait for them. */
--	if (sctx->cur_stripe >= SCRUB_STRIPES_PER_SCTX) {
--		ret = flush_scrub_stripes(sctx);
--		if (ret < 0)
--			return ret;
--	}
-+	/*
-+	 * There should always be one slot left, as caller filling the last
-+	 * slot should flush them all.
-+	 */
-+	ASSERT(sctx->cur_stripe < SCRUB_TOTAL_STRIPES);
- 
- 	stripe = &sctx->stripes[sctx->cur_stripe];
--
--	/* We can queue one stripe using the remaining slot. */
- 	scrub_reset_stripe(stripe);
- 	ret = scrub_find_fill_first_stripe(bg, &sctx->extent_path,
- 					   &sctx->csum_path, dev, physical,
-@@ -1777,7 +1811,20 @@ static int queue_scrub_stripe(struct scr
- 	/* Either >0 as no more extents or <0 for error. */
- 	if (ret)
- 		return ret;
-+	if (found_logical_ret)
-+		*found_logical_ret = stripe->logical;
- 	sctx->cur_stripe++;
-+
-+	/* We filled one group, submit it. */
-+	if (sctx->cur_stripe % SCRUB_STRIPES_PER_GROUP == 0) {
-+		const int first_slot = sctx->cur_stripe - SCRUB_STRIPES_PER_GROUP;
-+
-+		submit_initial_group_read(sctx, first_slot, SCRUB_STRIPES_PER_GROUP);
-+	}
-+
-+	/* Last slot used, flush them all. */
-+	if (sctx->cur_stripe == SCRUB_TOTAL_STRIPES)
-+		return flush_scrub_stripes(sctx);
- 	return 0;
- }
- 
-@@ -1990,6 +2037,7 @@ static int scrub_simple_mirror(struct sc
- 	path.skip_locking = 1;
- 	/* Go through each extent items inside the logical range */
- 	while (cur_logical < logical_end) {
-+		u64 found_logical;
- 		u64 cur_physical = physical + cur_logical - logical_start;
- 
- 		/* Canceled? */
-@@ -2014,7 +2062,7 @@ static int scrub_simple_mirror(struct sc
- 
- 		ret = queue_scrub_stripe(sctx, bg, device, mirror_num,
- 					 cur_logical, logical_end - cur_logical,
--					 cur_physical);
-+					 cur_physical, &found_logical);
- 		if (ret > 0) {
- 			/* No more extent, just update the accounting */
- 			sctx->stat.last_physical = physical + logical_length;
-@@ -2024,9 +2072,7 @@ static int scrub_simple_mirror(struct sc
- 		if (ret < 0)
- 			break;
- 
--		ASSERT(sctx->cur_stripe > 0);
--		cur_logical = sctx->stripes[sctx->cur_stripe - 1].logical
--			      + BTRFS_STRIPE_LEN;
-+		cur_logical = found_logical + BTRFS_STRIPE_LEN;
- 
- 		/* Don't hold CPU for too long time */
- 		cond_resched();
+ static const struct drm_plane_funcs mxsfb_plane_funcs = {
 
 
