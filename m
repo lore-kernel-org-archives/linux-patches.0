@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA79B6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF6CC433C8;
-	Sun, 17 Sep 2023 20:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023036FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1CBC433C7;
+	Sun, 17 Sep 2023 20:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982311;
-	bh=GNtXm/v3ZH04gLre4frixT8A8og85shI97CjxR6u21s=;
+	s=korg; t=1694982314;
+	bh=Ie9x39uNWqJuutV98pWevYqwgPrZv+F5ustRNNHFkZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nstniLx5iHiWyaa3c0EH4DBI9jcfHWrYs+UMtwsp44443k3Ewm7oRjT/5GqXpIjjv
-	 nq4ITxj5L3jWumQxUScPdMGA6ZzbgxWQO7hEKhrqr8B2pLkFyp6Pn2fc2KsmlRbF20
-	 sAYQxDGJUdm6q4b+WvgP2hoZxslOV3CY/Rx4WMq0=
+	b=ju/Hw7u3LDnb2S0CPikE6um9SVF5rXGYNszbx5D85zxHC2qZWq9UN6FfS74L7czeF
+	 6NNM+Gx1wfy0HmhAE6oPbX0L1RenTseUkxmyO3BXB1bVMgq1/RfPMbhoiWNmxAjp5S
+	 /ZPz+/OpAGmUqJo08b3J9RGc/fazrKdQODC0Mkmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/511] md/raid0: Factor out helper for mapping and submitting a bio
-Date: Sun, 17 Sep 2023 21:10:14 +0200
-Message-ID: <20230917191118.340955668@linuxfoundation.org>
+Subject: [PATCH 5.15 188/511] md/raid0: Fix performance regression for large sequential writes
+Date: Sun, 17 Sep 2023 21:10:15 +0200
+Message-ID: <20230917191118.365329960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -43,141 +43,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit af50e20afb401cc203bd2a9ff62ece0ae4976103 ]
+[ Upstream commit 319ff40a542736d67e5bce18635de35d0e7a0bff ]
 
-Factor out helper function for mapping and submitting a bio out of
-raid0_make_request(). We will use it later for submitting both parts of
-a split bio.
+Commit f00d7c85be9e ("md/raid0: fix up bio splitting.") among other
+things changed how bio that needs to be split is submitted. Before this
+commit, we have split the bio, mapped and submitted each part. After
+this commit, we map only the first part of the split bio and submit the
+second part unmapped. Due to bio sorting in __submit_bio_noacct() this
+results in the following request ordering:
 
+  9,0   18     1181     0.525037895 15995  Q  WS 1479315464 + 63392
+
+  Split off chunk-sized (1024 sectors) request:
+
+  9,0   18     1182     0.629019647 15995  X  WS 1479315464 / 1479316488
+
+  Request is unaligned to the chunk so it's split in
+  raid0_make_request().  This is the first part mapped and punted to
+  bio_list:
+
+  8,0   18     7053     0.629020455 15995  A  WS 739921928 + 1016 <- (9,0) 1479315464
+
+  Now raid0_make_request() returns, second part is postponed on
+  bio_list. __submit_bio_noacct() resorts the bio_list, mapped request
+  is submitted to the underlying device:
+
+  8,0   18     7054     0.629022782 15995  G  WS 739921928 + 1016
+
+  Now we take another request from the bio_list which is the remainder
+  of the original huge request. Split off another chunk-sized bit from
+  it and the situation repeats:
+
+  9,0   18     1183     0.629024499 15995  X  WS 1479316488 / 1479317512
+  8,16  18     6998     0.629025110 15995  A  WS 739921928 + 1016 <- (9,0) 1479316488
+  8,16  18     6999     0.629026728 15995  G  WS 739921928 + 1016
+  ...
+  9,0   18     1184     0.629032940 15995  X  WS 1479317512 / 1479318536 [libnetacq-write]
+  8,0   18     7059     0.629033294 15995  A  WS 739922952 + 1016 <- (9,0) 1479317512
+  8,0   18     7060     0.629033902 15995  G  WS 739922952 + 1016
+  ...
+
+  This repeats until we consume the whole original huge request. Now we
+  finally get to processing the second parts of the split off requests
+  (in reverse order):
+
+  8,16  18     7181     0.629161384 15995  A  WS 739952640 + 8 <- (9,0) 1479377920
+  8,0   18     7239     0.629162140 15995  A  WS 739952640 + 8 <- (9,0) 1479376896
+  8,16  18     7186     0.629163881 15995  A  WS 739951616 + 8 <- (9,0) 1479375872
+  8,0   18     7242     0.629164421 15995  A  WS 739951616 + 8 <- (9,0) 1479374848
+  ...
+
+I guess it is obvious that this IO pattern is extremely inefficient way
+to perform sequential IO. It also makes bio_list to grow to rather long
+lengths.
+
+Change raid0_make_request() to map both parts of the split bio. Since we
+know we are provided with at most chunk-sized bios, we will always need
+to split the incoming bio at most once.
+
+Fixes: f00d7c85be9e ("md/raid0: fix up bio splitting.")
 Signed-off-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230814092720.3931-1-jack@suse.cz
+Link: https://lore.kernel.org/r/20230814092720.3931-2-jack@suse.cz
 Signed-off-by: Song Liu <song@kernel.org>
-Stable-dep-of: 319ff40a5427 ("md/raid0: Fix performance regression for large sequential writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid0.c | 79 +++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 39 deletions(-)
+ drivers/md/raid0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index 6917d72c18132..eca0022588c6d 100644
+index eca0022588c6d..b1df1877c864b 100644
 --- a/drivers/md/raid0.c
 +++ b/drivers/md/raid0.c
-@@ -570,54 +570,21 @@ static void raid0_handle_discard(struct mddev *mddev, struct bio *bio)
- 	bio_endio(bio);
- }
- 
--static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
-+static void raid0_map_submit_bio(struct mddev *mddev, struct bio *bio)
- {
- 	struct r0conf *conf = mddev->private;
- 	struct strip_zone *zone;
- 	struct md_rdev *tmp_dev;
--	sector_t bio_sector;
--	sector_t sector;
--	sector_t orig_sector;
--	unsigned chunk_sects;
--	unsigned sectors;
--
--	if (unlikely(bio->bi_opf & REQ_PREFLUSH)
--	    && md_flush_request(mddev, bio))
--		return true;
--
--	if (unlikely((bio_op(bio) == REQ_OP_DISCARD))) {
--		raid0_handle_discard(mddev, bio);
--		return true;
--	}
--
--	bio_sector = bio->bi_iter.bi_sector;
--	sector = bio_sector;
--	chunk_sects = mddev->chunk_sectors;
--
--	sectors = chunk_sects -
--		(likely(is_power_of_2(chunk_sects))
--		 ? (sector & (chunk_sects-1))
--		 : sector_div(sector, chunk_sects));
--
--	/* Restore due to sector_div */
--	sector = bio_sector;
--
--	if (sectors < bio_sectors(bio)) {
--		struct bio *split = bio_split(bio, sectors, GFP_NOIO,
--					      &mddev->bio_set);
--		bio_chain(split, bio);
+@@ -640,7 +640,7 @@ static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
+ 		struct bio *split = bio_split(bio, sectors, GFP_NOIO,
+ 					      &mddev->bio_set);
+ 		bio_chain(split, bio);
 -		submit_bio_noacct(bio);
--		bio = split;
--	}
-+	sector_t bio_sector = bio->bi_iter.bi_sector;
-+	sector_t sector = bio_sector;
- 
- 	if (bio->bi_pool != &mddev->bio_set)
- 		md_account_bio(mddev, &bio);
- 
--	orig_sector = sector;
- 	zone = find_zone(mddev->private, &sector);
- 	switch (conf->layout) {
- 	case RAID0_ORIG_LAYOUT:
--		tmp_dev = map_sector(mddev, zone, orig_sector, &sector);
-+		tmp_dev = map_sector(mddev, zone, bio_sector, &sector);
- 		break;
- 	case RAID0_ALT_MULTIZONE_LAYOUT:
- 		tmp_dev = map_sector(mddev, zone, sector, &sector);
-@@ -625,13 +592,13 @@ static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
- 	default:
- 		WARN(1, "md/raid0:%s: Invalid layout\n", mdname(mddev));
- 		bio_io_error(bio);
--		return true;
-+		return;
++		raid0_map_submit_bio(mddev, bio);
+ 		bio = split;
  	}
- 
- 	if (unlikely(is_rdev_broken(tmp_dev))) {
- 		bio_io_error(bio);
- 		md_error(mddev, tmp_dev);
--		return true;
-+		return;
- 	}
- 
- 	bio_set_dev(bio, tmp_dev->bdev);
-@@ -644,6 +611,40 @@ static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
- 	mddev_check_writesame(mddev, bio);
- 	mddev_check_write_zeroes(mddev, bio);
- 	submit_bio_noacct(bio);
-+}
-+
-+static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
-+{
-+	sector_t sector;
-+	unsigned chunk_sects;
-+	unsigned sectors;
-+
-+	if (unlikely(bio->bi_opf & REQ_PREFLUSH)
-+	    && md_flush_request(mddev, bio))
-+		return true;
-+
-+	if (unlikely((bio_op(bio) == REQ_OP_DISCARD))) {
-+		raid0_handle_discard(mddev, bio);
-+		return true;
-+	}
-+
-+	sector = bio->bi_iter.bi_sector;
-+	chunk_sects = mddev->chunk_sectors;
-+
-+	sectors = chunk_sects -
-+		(likely(is_power_of_2(chunk_sects))
-+		 ? (sector & (chunk_sects-1))
-+		 : sector_div(sector, chunk_sects));
-+
-+	if (sectors < bio_sectors(bio)) {
-+		struct bio *split = bio_split(bio, sectors, GFP_NOIO,
-+					      &mddev->bio_set);
-+		bio_chain(split, bio);
-+		submit_bio_noacct(bio);
-+		bio = split;
-+	}
-+
-+	raid0_map_submit_bio(mddev, bio);
- 	return true;
- }
  
 -- 
 2.40.1
