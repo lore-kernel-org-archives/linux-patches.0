@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7197D6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96655C433C8;
-	Sun, 17 Sep 2023 19:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06FA6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE7BC433C8;
+	Sun, 17 Sep 2023 19:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979544;
-	bh=ieyQsGSs6+0LpZ4aPBLP4zINCP5zCvV9ufkLAa25aTE=;
+	s=korg; t=1694979547;
+	bh=jrAa2La0ek9WwlO+z0FJ2jz9Nh/J+dy+uac7CySN/Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cxLYXIOdzy7Xbwas9dhxJBKANREYgp+1zf5Opr5XecLguhO90Ox4i8PdoaW9Y//aa
-	 voLKfkRYrpnODdzBf0Prlr+Wc8R80JNm2Jy0pvFn56y9pxLj2SqetxtY9wM1mK+MiB
-	 2tL2rQ4+YapQEgceFLPVG8A+cdByJ/RV0m9IaV+E=
+	b=APJws9w47IvpCoEgdVlKhOWfiq7uASZlB/cWw1XJgtN/6+v1h1GfjTHApRQOPz5yW
+	 ypTTtdWCJVHyrU9pxGoaGygd9AGFQwedzoC6pZraTSoUSgVoPU2pM020icagouilJj
+	 Rq8Jkk1N26HXZ+YeXD+pO+56GhibNAfw7tTheYOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	Hang Yuan <hang.yuan@linux.intel.com>,
+	Colin Xu <colin.xu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 344/406] net: read sk->sk_family once in sk_mc_loop()
-Date: Sun, 17 Sep 2023 21:13:18 +0200
-Message-ID: <20230917191110.361086353@linuxfoundation.org>
+Subject: [PATCH 5.10 345/406] drm/i915/gvt: Save/restore HW status to support GVT suspend/resume
+Date: Sun, 17 Sep 2023 21:13:19 +0200
+Message-ID: <20230917191110.386938233@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,85 +41,344 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Colin Xu <colin.xu@intel.com>
 
-[ Upstream commit a3e0fdf71bbe031de845e8e08ed7fba49f9c702c ]
+[ Upstream commit 5f60b12edcd0c2e83650a6f9aa4a969bd9fc5732 ]
 
-syzbot is playing with IPV6_ADDRFORM quite a lot these days,
-and managed to hit the WARN_ON_ONCE(1) in sk_mc_loop()
+This patch save/restore necessary GVT info during i915 suspend/resume so
+that GVT enabled QEMU VM can continue running.
 
-We have many more similar issues to fix.
+Only GGTT and fence regs are saved/restored now. GVT will save GGTT
+entries on each host_entry update, restore the saved dirty entries
+and re-init fence regs in resume routine.
 
-WARNING: CPU: 1 PID: 1593 at net/core/sock.c:782 sk_mc_loop+0x165/0x260
-Modules linked in:
-CPU: 1 PID: 1593 Comm: kworker/1:3 Not tainted 6.1.40-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-Workqueue: events_power_efficient gc_worker
-RIP: 0010:sk_mc_loop+0x165/0x260 net/core/sock.c:782
-Code: 34 1b fd 49 81 c7 18 05 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 20 00 74 08 4c 89 ff e8 25 36 6d fd 4d 8b 37 eb 13 e8 db 33 1b fd <0f> 0b b3 01 eb 34 e8 d0 33 1b fd 45 31 f6 49 83 c6 38 4c 89 f0 48
-RSP: 0018:ffffc90000388530 EFLAGS: 00010246
-RAX: ffffffff846d9b55 RBX: 0000000000000011 RCX: ffff88814f884980
-RDX: 0000000000000102 RSI: ffffffff87ae5160 RDI: 0000000000000011
-RBP: ffffc90000388550 R08: 0000000000000003 R09: ffffffff846d9a65
-R10: 0000000000000002 R11: ffff88814f884980 R12: dffffc0000000000
-R13: ffff88810dbee000 R14: 0000000000000010 R15: ffff888150084000
-FS: 0000000000000000(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000180 CR3: 000000014ee5b000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<IRQ>
-[<ffffffff8507734f>] ip6_finish_output2+0x33f/0x1ae0 net/ipv6/ip6_output.c:83
-[<ffffffff85062766>] __ip6_finish_output net/ipv6/ip6_output.c:200 [inline]
-[<ffffffff85062766>] ip6_finish_output+0x6c6/0xb10 net/ipv6/ip6_output.c:211
-[<ffffffff85061f8c>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff85061f8c>] ip6_output+0x2bc/0x3d0 net/ipv6/ip6_output.c:232
-[<ffffffff852071cf>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff852071cf>] ip6_local_out+0x10f/0x140 net/ipv6/output_core.c:161
-[<ffffffff83618fb4>] ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:483 [inline]
-[<ffffffff83618fb4>] ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:529 [inline]
-[<ffffffff83618fb4>] ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
-[<ffffffff83618fb4>] ipvlan_queue_xmit+0x1174/0x1be0 drivers/net/ipvlan/ipvlan_core.c:677
-[<ffffffff8361ddd9>] ipvlan_start_xmit+0x49/0x100 drivers/net/ipvlan/ipvlan_main.c:229
-[<ffffffff84763fc0>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
-[<ffffffff84763fc0>] xmit_one net/core/dev.c:3644 [inline]
-[<ffffffff84763fc0>] dev_hard_start_xmit+0x320/0x980 net/core/dev.c:3660
-[<ffffffff8494c650>] sch_direct_xmit+0x2a0/0x9c0 net/sched/sch_generic.c:342
-[<ffffffff8494d883>] qdisc_restart net/sched/sch_generic.c:407 [inline]
-[<ffffffff8494d883>] __qdisc_run+0xb13/0x1e70 net/sched/sch_generic.c:415
-[<ffffffff8478c426>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
-[<ffffffff84796eac>] net_tx_action+0x7ac/0x940 net/core/dev.c:5247
-[<ffffffff858002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:599
-[<ffffffff814c3fe8>] invoke_softirq kernel/softirq.c:430 [inline]
-[<ffffffff814c3fe8>] __irq_exit_rcu+0xc8/0x170 kernel/softirq.c:683
-[<ffffffff814c3f09>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:695
+V2:
+- Change kzalloc/kfree to vzalloc/vfree since the space allocated
+from kmalloc may not enough for all saved GGTT entries.
+- Keep gvt suspend/resume wrapper in intel_gvt.h/intel_gvt.c and
+move the actual implementation to gvt.h/gvt.c. (zhenyu)
+- Check gvt config on and active with intel_gvt_active(). (zhenyu)
 
-Fixes: 7ad6848c7e81 ("ip: fix mc_loop checks for tunnels with multicast outer addresses")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230830101244.1146934-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+V3: (zhenyu)
+- Incorrect copy length. Should be num entries * entry size.
+- Use memcpy_toio()/memcpy_fromio() instead of memcpy for iomem.
+- Add F_PM_SAVE flags to indicate which MMIOs to save/restore for PM.
+
+V4:
+Rebase.
+
+V5:
+Fail intel_gvt_save_ggtt as -ENOMEM if fail to alloc memory to save
+ggtt. Free allocated ggtt_entries on failure.
+
+V6:
+Save host entry to per-vGPU gtt.ggtt_mm on each host_entry update.
+
+V7:
+Restore GGTT entry based on present bit.
+Split fence restore and mmio restore in different functions.
+
+Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Signed-off-by: Hang Yuan <hang.yuan@linux.intel.com>
+Signed-off-by: Colin Xu <colin.xu@intel.com>
+Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Link: http://patchwork.freedesktop.org/patch/msgid/20201027045308.158955-1-colin.xu@intel.com
+Stable-dep-of: a90c367e5af6 ("drm/i915/gvt: Drop unused helper intel_vgpu_reset_gtt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gvt/gtt.c      | 64 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/i915/gvt/gtt.h      |  4 ++
+ drivers/gpu/drm/i915/gvt/gvt.c      |  9 ++++
+ drivers/gpu/drm/i915/gvt/gvt.h      |  3 ++
+ drivers/gpu/drm/i915/gvt/handlers.c | 44 ++++++++++++++++++--
+ drivers/gpu/drm/i915/gvt/mmio.h     |  4 ++
+ drivers/gpu/drm/i915/intel_gvt.c    | 15 +++++++
+ drivers/gpu/drm/i915/intel_gvt.h    |  5 +++
+ 8 files changed, 145 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 742356cfd07c4..e2d45631c15d7 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -690,7 +690,8 @@ bool sk_mc_loop(struct sock *sk)
- 		return false;
- 	if (!sk)
- 		return true;
--	switch (sk->sk_family) {
-+	/* IPV6_ADDRFORM can change sk->sk_family under us. */
-+	switch (READ_ONCE(sk->sk_family)) {
- 	case AF_INET:
- 		return inet_sk(sk)->mc_loop;
- #if IS_ENABLED(CONFIG_IPV6)
+diff --git a/drivers/gpu/drm/i915/gvt/gtt.c b/drivers/gpu/drm/i915/gvt/gtt.c
+index 0201f9b5f87e7..2029f8521a5dc 100644
+--- a/drivers/gpu/drm/i915/gvt/gtt.c
++++ b/drivers/gpu/drm/i915/gvt/gtt.c
+@@ -636,9 +636,18 @@ static void ggtt_set_host_entry(struct intel_vgpu_mm *mm,
+ 		struct intel_gvt_gtt_entry *entry, unsigned long index)
+ {
+ 	struct intel_gvt_gtt_pte_ops *pte_ops = mm->vgpu->gvt->gtt.pte_ops;
++	unsigned long offset = index;
+ 
+ 	GEM_BUG_ON(mm->type != INTEL_GVT_MM_GGTT);
+ 
++	if (vgpu_gmadr_is_aperture(mm->vgpu, index << I915_GTT_PAGE_SHIFT)) {
++		offset -= (vgpu_aperture_gmadr_base(mm->vgpu) >> PAGE_SHIFT);
++		mm->ggtt_mm.host_ggtt_aperture[offset] = entry->val64;
++	} else if (vgpu_gmadr_is_hidden(mm->vgpu, index << I915_GTT_PAGE_SHIFT)) {
++		offset -= (vgpu_hidden_gmadr_base(mm->vgpu) >> PAGE_SHIFT);
++		mm->ggtt_mm.host_ggtt_hidden[offset] = entry->val64;
++	}
++
+ 	pte_ops->set_entry(NULL, entry, index, false, 0, mm->vgpu);
+ }
+ 
+@@ -1953,6 +1962,21 @@ static struct intel_vgpu_mm *intel_vgpu_create_ggtt_mm(struct intel_vgpu *vgpu)
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
++	mm->ggtt_mm.host_ggtt_aperture = vzalloc((vgpu_aperture_sz(vgpu) >> PAGE_SHIFT) * sizeof(u64));
++	if (!mm->ggtt_mm.host_ggtt_aperture) {
++		vfree(mm->ggtt_mm.virtual_ggtt);
++		vgpu_free_mm(mm);
++		return ERR_PTR(-ENOMEM);
++	}
++
++	mm->ggtt_mm.host_ggtt_hidden = vzalloc((vgpu_hidden_sz(vgpu) >> PAGE_SHIFT) * sizeof(u64));
++	if (!mm->ggtt_mm.host_ggtt_hidden) {
++		vfree(mm->ggtt_mm.host_ggtt_aperture);
++		vfree(mm->ggtt_mm.virtual_ggtt);
++		vgpu_free_mm(mm);
++		return ERR_PTR(-ENOMEM);
++	}
++
+ 	return mm;
+ }
+ 
+@@ -1980,6 +2004,8 @@ void _intel_vgpu_mm_release(struct kref *mm_ref)
+ 		invalidate_ppgtt_mm(mm);
+ 	} else {
+ 		vfree(mm->ggtt_mm.virtual_ggtt);
++		vfree(mm->ggtt_mm.host_ggtt_aperture);
++		vfree(mm->ggtt_mm.host_ggtt_hidden);
+ 	}
+ 
+ 	vgpu_free_mm(mm);
+@@ -2861,3 +2887,41 @@ void intel_vgpu_reset_gtt(struct intel_vgpu *vgpu)
+ 	intel_vgpu_destroy_all_ppgtt_mm(vgpu);
+ 	intel_vgpu_reset_ggtt(vgpu, true);
+ }
++
++/**
++ * intel_gvt_restore_ggtt - restore all vGPU's ggtt entries
++ * @gvt: intel gvt device
++ *
++ * This function is called at driver resume stage to restore
++ * GGTT entries of every vGPU.
++ *
++ */
++void intel_gvt_restore_ggtt(struct intel_gvt *gvt)
++{
++	struct intel_vgpu *vgpu;
++	struct intel_vgpu_mm *mm;
++	int id;
++	gen8_pte_t pte;
++	u32 idx, num_low, num_hi, offset;
++
++	/* Restore dirty host ggtt for all vGPUs */
++	idr_for_each_entry(&(gvt)->vgpu_idr, vgpu, id) {
++		mm = vgpu->gtt.ggtt_mm;
++
++		num_low = vgpu_aperture_sz(vgpu) >> PAGE_SHIFT;
++		offset = vgpu_aperture_gmadr_base(vgpu) >> PAGE_SHIFT;
++		for (idx = 0; idx < num_low; idx++) {
++			pte = mm->ggtt_mm.host_ggtt_aperture[idx];
++			if (pte & _PAGE_PRESENT)
++				write_pte64(vgpu->gvt->gt->ggtt, offset + idx, pte);
++		}
++
++		num_hi = vgpu_hidden_sz(vgpu) >> PAGE_SHIFT;
++		offset = vgpu_hidden_gmadr_base(vgpu) >> PAGE_SHIFT;
++		for (idx = 0; idx < num_hi; idx++) {
++			pte = mm->ggtt_mm.host_ggtt_hidden[idx];
++			if (pte & _PAGE_PRESENT)
++				write_pte64(vgpu->gvt->gt->ggtt, offset + idx, pte);
++		}
++	}
++}
+diff --git a/drivers/gpu/drm/i915/gvt/gtt.h b/drivers/gpu/drm/i915/gvt/gtt.h
+index 52d0d88abd86a..b0e173f2d9904 100644
+--- a/drivers/gpu/drm/i915/gvt/gtt.h
++++ b/drivers/gpu/drm/i915/gvt/gtt.h
+@@ -164,6 +164,9 @@ struct intel_vgpu_mm {
+ 		} ppgtt_mm;
+ 		struct {
+ 			void *virtual_ggtt;
++			/* Save/restore for PM */
++			u64 *host_ggtt_aperture;
++			u64 *host_ggtt_hidden;
+ 			struct list_head partial_pte_list;
+ 		} ggtt_mm;
+ 	};
+@@ -280,5 +283,6 @@ int intel_vgpu_emulate_ggtt_mmio_write(struct intel_vgpu *vgpu,
+ 	unsigned int off, void *p_data, unsigned int bytes);
+ 
+ void intel_vgpu_destroy_all_ppgtt_mm(struct intel_vgpu *vgpu);
++void intel_gvt_restore_ggtt(struct intel_gvt *gvt);
+ 
+ #endif /* _GVT_GTT_H_ */
+diff --git a/drivers/gpu/drm/i915/gvt/gvt.c b/drivers/gpu/drm/i915/gvt/gvt.c
+index 5c9ef8e58a087..87f22a88925ce 100644
+--- a/drivers/gpu/drm/i915/gvt/gvt.c
++++ b/drivers/gpu/drm/i915/gvt/gvt.c
+@@ -405,6 +405,15 @@ int intel_gvt_init_device(struct drm_i915_private *i915)
+ 	return ret;
+ }
+ 
++int
++intel_gvt_pm_resume(struct intel_gvt *gvt)
++{
++	intel_gvt_restore_fence(gvt);
++	intel_gvt_restore_mmio(gvt);
++	intel_gvt_restore_ggtt(gvt);
++	return 0;
++}
++
+ int
+ intel_gvt_register_hypervisor(struct intel_gvt_mpt *m)
+ {
+diff --git a/drivers/gpu/drm/i915/gvt/gvt.h b/drivers/gpu/drm/i915/gvt/gvt.h
+index a81cf0f01e78e..b3d6355dd797d 100644
+--- a/drivers/gpu/drm/i915/gvt/gvt.h
++++ b/drivers/gpu/drm/i915/gvt/gvt.h
+@@ -255,6 +255,8 @@ struct intel_gvt_mmio {
+ #define F_CMD_ACCESS	(1 << 3)
+ /* This reg has been accessed by a VM */
+ #define F_ACCESSED	(1 << 4)
++/* This reg requires save & restore during host PM suspend/resume */
++#define F_PM_SAVE	(1 << 5)
+ /* This reg could be accessed by unaligned address */
+ #define F_UNALIGN	(1 << 6)
+ /* This reg is in GVT's mmio save-restor list and in hardware
+@@ -685,6 +687,7 @@ void intel_gvt_debugfs_remove_vgpu(struct intel_vgpu *vgpu);
+ void intel_gvt_debugfs_init(struct intel_gvt *gvt);
+ void intel_gvt_debugfs_clean(struct intel_gvt *gvt);
+ 
++int intel_gvt_pm_resume(struct intel_gvt *gvt);
+ 
+ #include "trace.h"
+ #include "mpt.h"
+diff --git a/drivers/gpu/drm/i915/gvt/handlers.c b/drivers/gpu/drm/i915/gvt/handlers.c
+index 606e6c315fe24..55ce7aaabf893 100644
+--- a/drivers/gpu/drm/i915/gvt/handlers.c
++++ b/drivers/gpu/drm/i915/gvt/handlers.c
+@@ -3135,9 +3135,10 @@ static int init_skl_mmio_info(struct intel_gvt *gvt)
+ 	MMIO_DFH(TRVATTL3PTRDW(2), D_SKL_PLUS, F_CMD_ACCESS, NULL, NULL);
+ 	MMIO_DFH(TRVATTL3PTRDW(3), D_SKL_PLUS, F_CMD_ACCESS, NULL, NULL);
+ 	MMIO_DFH(TRVADR, D_SKL_PLUS, F_CMD_ACCESS, NULL, NULL);
+-	MMIO_DFH(TRTTE, D_SKL_PLUS, F_CMD_ACCESS,
+-		NULL, gen9_trtte_write);
+-	MMIO_DH(_MMIO(0x4dfc), D_SKL_PLUS, NULL, gen9_trtt_chicken_write);
++	MMIO_DFH(TRTTE, D_SKL_PLUS, F_CMD_ACCESS | F_PM_SAVE,
++		 NULL, gen9_trtte_write);
++	MMIO_DFH(_MMIO(0x4dfc), D_SKL_PLUS, F_PM_SAVE,
++		 NULL, gen9_trtt_chicken_write);
+ 
+ 	MMIO_D(_MMIO(0x46430), D_SKL_PLUS);
+ 
+@@ -3686,3 +3687,40 @@ int intel_vgpu_mmio_reg_rw(struct intel_vgpu *vgpu, unsigned int offset,
+ 		intel_vgpu_default_mmio_read(vgpu, offset, pdata, bytes) :
+ 		intel_vgpu_default_mmio_write(vgpu, offset, pdata, bytes);
+ }
++
++void intel_gvt_restore_fence(struct intel_gvt *gvt)
++{
++	struct intel_vgpu *vgpu;
++	int i, id;
++
++	idr_for_each_entry(&(gvt)->vgpu_idr, vgpu, id) {
++		mmio_hw_access_pre(gvt->gt);
++		for (i = 0; i < vgpu_fence_sz(vgpu); i++)
++			intel_vgpu_write_fence(vgpu, i, vgpu_vreg64(vgpu, fence_num_to_offset(i)));
++		mmio_hw_access_post(gvt->gt);
++	}
++}
++
++static inline int mmio_pm_restore_handler(struct intel_gvt *gvt,
++					  u32 offset, void *data)
++{
++	struct intel_vgpu *vgpu = data;
++	struct drm_i915_private *dev_priv = gvt->gt->i915;
++
++	if (gvt->mmio.mmio_attribute[offset >> 2] & F_PM_SAVE)
++		I915_WRITE(_MMIO(offset), vgpu_vreg(vgpu, offset));
++
++	return 0;
++}
++
++void intel_gvt_restore_mmio(struct intel_gvt *gvt)
++{
++	struct intel_vgpu *vgpu;
++	int id;
++
++	idr_for_each_entry(&(gvt)->vgpu_idr, vgpu, id) {
++		mmio_hw_access_pre(gvt->gt);
++		intel_gvt_for_each_tracked_mmio(gvt, mmio_pm_restore_handler, vgpu);
++		mmio_hw_access_post(gvt->gt);
++	}
++}
+diff --git a/drivers/gpu/drm/i915/gvt/mmio.h b/drivers/gpu/drm/i915/gvt/mmio.h
+index cc4812648bf4a..9e862dc73579b 100644
+--- a/drivers/gpu/drm/i915/gvt/mmio.h
++++ b/drivers/gpu/drm/i915/gvt/mmio.h
+@@ -104,4 +104,8 @@ int intel_vgpu_mmio_reg_rw(struct intel_vgpu *vgpu, unsigned int offset,
+ 
+ int intel_vgpu_mask_mmio_write(struct intel_vgpu *vgpu, unsigned int offset,
+ 				  void *p_data, unsigned int bytes);
++
++void intel_gvt_restore_fence(struct intel_gvt *gvt);
++void intel_gvt_restore_mmio(struct intel_gvt *gvt);
++
+ #endif
+diff --git a/drivers/gpu/drm/i915/intel_gvt.c b/drivers/gpu/drm/i915/intel_gvt.c
+index 99fe8aef1c67f..4e70c1a9ef2ed 100644
+--- a/drivers/gpu/drm/i915/intel_gvt.c
++++ b/drivers/gpu/drm/i915/intel_gvt.c
+@@ -24,6 +24,7 @@
+ #include "i915_drv.h"
+ #include "i915_vgpu.h"
+ #include "intel_gvt.h"
++#include "gvt/gvt.h"
+ 
+ /**
+  * DOC: Intel GVT-g host support
+@@ -147,3 +148,17 @@ void intel_gvt_driver_remove(struct drm_i915_private *dev_priv)
+ 
+ 	intel_gvt_clean_device(dev_priv);
+ }
++
++/**
++ * intel_gvt_resume - GVT resume routine wapper
++ *
++ * @dev_priv: drm i915 private *
++ *
++ * This function is called at the i915 driver resume stage to restore required
++ * HW status for GVT so that vGPU can continue running after resumed.
++ */
++void intel_gvt_resume(struct drm_i915_private *dev_priv)
++{
++	if (intel_gvt_active(dev_priv))
++		intel_gvt_pm_resume(dev_priv->gvt);
++}
+diff --git a/drivers/gpu/drm/i915/intel_gvt.h b/drivers/gpu/drm/i915/intel_gvt.h
+index 502fad8a8652c..d7d3fb6186fdd 100644
+--- a/drivers/gpu/drm/i915/intel_gvt.h
++++ b/drivers/gpu/drm/i915/intel_gvt.h
+@@ -33,6 +33,7 @@ int intel_gvt_init_device(struct drm_i915_private *dev_priv);
+ void intel_gvt_clean_device(struct drm_i915_private *dev_priv);
+ int intel_gvt_init_host(void);
+ void intel_gvt_sanitize_options(struct drm_i915_private *dev_priv);
++void intel_gvt_resume(struct drm_i915_private *dev_priv);
+ #else
+ static inline int intel_gvt_init(struct drm_i915_private *dev_priv)
+ {
+@@ -46,6 +47,10 @@ static inline void intel_gvt_driver_remove(struct drm_i915_private *dev_priv)
+ static inline void intel_gvt_sanitize_options(struct drm_i915_private *dev_priv)
+ {
+ }
++
++static inline void intel_gvt_resume(struct drm_i915_private *dev_priv)
++{
++}
+ #endif
+ 
+ #endif /* _INTEL_GVT_H_ */
 -- 
 2.40.1
 
