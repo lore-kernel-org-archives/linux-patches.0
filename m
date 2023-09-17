@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971AE6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C9AC433CD;
-	Sun, 17 Sep 2023 19:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7626FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75964C433C8;
+	Sun, 17 Sep 2023 19:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980611;
-	bh=Xc4Dztb/+WFXUv0Zi81Xz4/bxsHRxVl33b4jdQl7iIk=;
+	s=korg; t=1694980615;
+	bh=P/7bbUwXrpb4PrL0+RkWVpGg1KozRuNksUEphJvx7M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyCLecM44yhJkv4f1P6wOIidJf9JIMHBTJ5JDR7gLu0WgpBVwKH3Oxqq/+ngEi+aA
-	 LQv6CNDRVexsWgC4QTinSs+WnImpCMQLHq+m038l170bGB97lSUYe9n549m48eAXdx
-	 xGUf/U2FBLe+tuhnHcV6dntFmXnjTiEsCenacPns=
+	b=V1JsKey2i8AK3U2hjLgA6qufc304g4f00OG2IT2wuXUCil3NH/2jEqDWPTue7nYrF
+	 ouxb77betP6JZR3zY+eI4ufSlCi8bFqHulhII6JS1s4UGO8hcEZnFvjrkCL/VD7YZy
+	 byPdxccyf6z0OohxtClLi6z8xTu3dWXT6xwrF7uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	stable@kernel.org,
 	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 243/285] regulator: raa215300: Change the scope of the variables {clkin_name, xin_name}
-Date: Sun, 17 Sep 2023 21:14:03 +0200
-Message-ID: <20230917191059.769363564@linuxfoundation.org>
+Subject: [PATCH 6.5 244/285] regulator: raa215300: Fix resource leak in case of error
+Date: Sun, 17 Sep 2023 21:14:04 +0200
+Message-ID: <20230917191059.797074808@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -36,6 +35,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
@@ -44,73 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 42a95739c5bc4d7a6e93a43117e9283598ba2287 ]
+[ Upstream commit e21ac64e669e960688e79bf5babeed63132dac8a ]
 
-Change the scope of the variables {clkin_name, xin_name} from global->local
-to fix the below warning.
+The clk_register_clkdev() allocates memory by calling vclkdev_alloc() and
+this memory is not freed in the error path. Similarly, resources allocated
+by clk_register_fixed_rate() are not freed in the error path.
 
-drivers/regulator/raa215300.c:42:12: sparse: sparse: symbol 'xin_name' was
-not declared. Should it be static?
+Fix these issues by using devm_clk_hw_register_fixed_rate() and
+devm_clk_hw_register_clkdev().
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306250552.Fan9WTiN-lkp@intel.com/
+After this, the static variable clk is not needed. Replace it with 
+local variable hw in probe() and drop calling clk_unregister_fixed_rate()
+from raa215300_rtc_unregister_device().
+
+Fixes: 7bce16630837 ("regulator: Add Renesas PMIC RAA215300 driver")
+Cc: stable@kernel.org
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230629104200.102663-1-biju.das.jz@bp.renesas.com
+Link: https://lore.kernel.org/r/20230816135550.146657-2-biju.das.jz@bp.renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: e21ac64e669e ("regulator: raa215300: Fix resource leak in case of error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/raa215300.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/regulator/raa215300.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/regulator/raa215300.c b/drivers/regulator/raa215300.c
-index 24a1c89f5dbc9..8e1a4c86b9789 100644
+index 8e1a4c86b9789..253645696d0bb 100644
 --- a/drivers/regulator/raa215300.c
 +++ b/drivers/regulator/raa215300.c
 @@ -38,8 +38,6 @@
  #define RAA215300_REG_BLOCK_EN_RTC_EN	BIT(6)
  #define RAA215300_RTC_DEFAULT_ADDR	0x6f
  
--const char *clkin_name = "clkin";
--const char *xin_name = "xin";
- static struct clk *clk;
- 
- static const struct regmap_config raa215300_regmap_config = {
-@@ -71,8 +69,10 @@ static int raa215300_clk_present(struct i2c_client *client, const char *name)
- static int raa215300_i2c_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
--	const char *clk_name = xin_name;
-+	const char *clkin_name = "clkin";
- 	unsigned int pmic_version, val;
-+	const char *xin_name = "xin";
-+	const char *clk_name = NULL;
- 	struct regmap *regmap;
- 	int ret;
- 
-@@ -114,15 +114,17 @@ static int raa215300_i2c_probe(struct i2c_client *client)
- 	ret = raa215300_clk_present(client, xin_name);
- 	if (ret < 0) {
- 		return ret;
--	} else if (!ret) {
-+	} else if (ret) {
-+		clk_name = xin_name;
-+	} else {
- 		ret = raa215300_clk_present(client, clkin_name);
- 		if (ret < 0)
- 			return ret;
+-static struct clk *clk;
 -
--		clk_name = clkin_name;
-+		if (ret)
-+			clk_name = clkin_name;
- 	}
+ static const struct regmap_config raa215300_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+@@ -49,10 +47,6 @@ static const struct regmap_config raa215300_regmap_config = {
+ static void raa215300_rtc_unregister_device(void *data)
+ {
+ 	i2c_unregister_device(data);
+-	if (!clk) {
+-		clk_unregister_fixed_rate(clk);
+-		clk = NULL;
+-	}
+ }
  
--	if (ret) {
-+	if (clk_name) {
- 		char *name = pmic_version >= 0x12 ? "isl1208" : "raa215300_a0";
- 		struct device_node *np = client->dev.of_node;
+ static int raa215300_clk_present(struct i2c_client *client, const char *name)
+@@ -130,10 +124,16 @@ static int raa215300_i2c_probe(struct i2c_client *client)
  		u32 addr = RAA215300_RTC_DEFAULT_ADDR;
+ 		struct i2c_board_info info = {};
+ 		struct i2c_client *rtc_client;
++		struct clk_hw *hw;
+ 		ssize_t size;
+ 
+-		clk = clk_register_fixed_rate(NULL, clk_name, NULL, 0, 32000);
+-		clk_register_clkdev(clk, clk_name, NULL);
++		hw = devm_clk_hw_register_fixed_rate(dev, clk_name, NULL, 0, 32000);
++		if (IS_ERR(hw))
++			return PTR_ERR(hw);
++
++		ret = devm_clk_hw_register_clkdev(dev, hw, clk_name, NULL);
++		if (ret)
++			return dev_err_probe(dev, ret, "Failed to initialize clkdev\n");
+ 
+ 		if (np) {
+ 			int i;
 -- 
 2.40.1
 
