@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D90D6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77CEC433C7;
-	Sun, 17 Sep 2023 20:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001E86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60514C433CA;
+	Sun, 17 Sep 2023 20:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981520;
-	bh=T7ejpg3fexGo391X7XnwW+7/3BbiAVlvGKveYmZV694=;
+	s=korg; t=1694981523;
+	bh=zFFndBCA4jPEanrTrnDot9fVPdEZz77DjefeKcZSePU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3lbep6+BBmSb7o5J5QBcY7wV5IffoorrGo8nFWD1TT/28l6gIRsyI7ziOsB37aK4
-	 bL8dlKzHjnflFn5+qdh3YMO9ACNvqvuMQHZG7KsF4ZhcprxbbMy4eA54DyAvar9nmg
-	 YbE11hBX6pYp2XEzc6qmHD7/12Xc0ESJpbVMsh6g=
+	b=cGn3B8Ca4hbESYektHedpPOj/HBKg5e2XQC2qatShyV+tRgW4NVm3EiVcb7ngmQY3
+	 EBqhkYruasHhDfRVGH/sjd/8PNldZMZeqpECRYTQxp+wds1K+GyprQVZ7hI/r3ux2j
+	 3h0SsjrEZs5wDAL8URD3yhLYavFYkrSFvhK28VvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 053/511] udf: Check consistency of Space Bitmap Descriptor
-Date: Sun, 17 Sep 2023 21:08:00 +0200
-Message-ID: <20230917191115.161839873@linuxfoundation.org>
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 135/219] sh: boards: Fix CEU buffer size passed to dma_declare_coherent_memory()
+Date: Sun, 17 Sep 2023 21:14:22 +0200
+Message-ID: <20230917191045.869397707@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,90 +39,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-commit 1e0d4adf17e7ef03281d7b16555e7c1508c8ed2d upstream.
+[ Upstream commit fb60211f377b69acffead3147578f86d0092a7a5 ]
 
-Bits, which are related to Bitmap Descriptor logical blocks,
-are not reset when buffer headers are allocated for them. As the
-result, these logical blocks can be treated as free and
-be used for other blocks.This can cause usage of one buffer header
-for several types of data. UDF issues WARNING in this situation:
+In all these cases, the last argument to dma_declare_coherent_memory() is
+the buffer end address, but the expected value should be the size of the
+reserved region.
 
-WARNING: CPU: 0 PID: 2703 at fs/udf/inode.c:2014
-  __udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
-
-RIP: 0010:__udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
-Call Trace:
- udf_setup_indirect_aext+0x573/0x880 fs/udf/inode.c:1980
- udf_add_aext+0x208/0x2e0 fs/udf/inode.c:2067
- udf_insert_aext fs/udf/inode.c:2233 [inline]
- udf_update_extents fs/udf/inode.c:1181 [inline]
- inode_getblk+0x1981/0x3b70 fs/udf/inode.c:885
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-[JK: Somewhat cleaned up the boundary checks]
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 39fb993038e1 ("media: arch: sh: ap325rxa: Use new renesas-ceu camera driver")
+Fixes: c2f9b05fd5c1 ("media: arch: sh: ecovec: Use new renesas-ceu camera driver")
+Fixes: f3590dc32974 ("media: arch: sh: kfr2r09: Use new renesas-ceu camera driver")
+Fixes: 186c446f4b84 ("media: arch: sh: migor: Use new renesas-ceu camera driver")
+Fixes: 1a3c230b4151 ("media: arch: sh: ms7724se: Use new renesas-ceu camera driver")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20230724120742.2187-1-petrtesarik@huaweicloud.com
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/balloc.c |   31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ arch/sh/boards/mach-ap325rxa/setup.c | 2 +-
+ arch/sh/boards/mach-ecovec24/setup.c | 6 ++----
+ arch/sh/boards/mach-kfr2r09/setup.c  | 2 +-
+ arch/sh/boards/mach-migor/setup.c    | 2 +-
+ arch/sh/boards/mach-se/7724/setup.c  | 6 ++----
+ 5 files changed, 7 insertions(+), 11 deletions(-)
 
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -36,18 +36,41 @@ static int read_block_bitmap(struct supe
- 			     unsigned long bitmap_nr)
- {
- 	struct buffer_head *bh = NULL;
--	int retval = 0;
-+	int i;
-+	int max_bits, off, count;
- 	struct kernel_lb_addr loc;
+diff --git a/arch/sh/boards/mach-ap325rxa/setup.c b/arch/sh/boards/mach-ap325rxa/setup.c
+index c77b5f00a66a3..d8f8dca4d7968 100644
+--- a/arch/sh/boards/mach-ap325rxa/setup.c
++++ b/arch/sh/boards/mach-ap325rxa/setup.c
+@@ -530,7 +530,7 @@ static int __init ap325rxa_devices_setup(void)
+ 	device_initialize(&ap325rxa_ceu_device.dev);
+ 	dma_declare_coherent_memory(&ap325rxa_ceu_device.dev,
+ 			ceu_dma_membase, ceu_dma_membase,
+-			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
++			CEU_BUFFER_MEMORY_SIZE);
  
- 	loc.logicalBlockNum = bitmap->s_extPosition;
- 	loc.partitionReferenceNum = UDF_SB(sb)->s_partition;
+ 	platform_device_add(&ap325rxa_ceu_device);
  
- 	bh = udf_tread(sb, udf_get_lb_pblock(sb, &loc, block));
-+	bitmap->s_block_bitmap[bitmap_nr] = bh;
- 	if (!bh)
--		retval = -EIO;
-+		return -EIO;
+diff --git a/arch/sh/boards/mach-ecovec24/setup.c b/arch/sh/boards/mach-ecovec24/setup.c
+index 674da7ebd8b7f..7ec03d4a4edf0 100644
+--- a/arch/sh/boards/mach-ecovec24/setup.c
++++ b/arch/sh/boards/mach-ecovec24/setup.c
+@@ -1454,15 +1454,13 @@ static int __init arch_setup(void)
+ 	device_initialize(&ecovec_ceu_devices[0]->dev);
+ 	dma_declare_coherent_memory(&ecovec_ceu_devices[0]->dev,
+ 				    ceu0_dma_membase, ceu0_dma_membase,
+-				    ceu0_dma_membase +
+-				    CEU_BUFFER_MEMORY_SIZE - 1);
++				    CEU_BUFFER_MEMORY_SIZE);
+ 	platform_device_add(ecovec_ceu_devices[0]);
  
--	bitmap->s_block_bitmap[bitmap_nr] = bh;
--	return retval;
-+	/* Check consistency of Space Bitmap buffer. */
-+	max_bits = sb->s_blocksize * 8;
-+	if (!bitmap_nr) {
-+		off = sizeof(struct spaceBitmapDesc) << 3;
-+		count = min(max_bits - off, bitmap->s_nr_groups);
-+	} else {
-+		/*
-+		 * Rough check if bitmap number is too big to have any bitmap
-+		 * blocks reserved.
-+		 */
-+		if (bitmap_nr >
-+		    (bitmap->s_nr_groups >> (sb->s_blocksize_bits + 3)) + 2)
-+			return 0;
-+		off = 0;
-+		count = bitmap->s_nr_groups - bitmap_nr * max_bits +
-+				(sizeof(struct spaceBitmapDesc) << 3);
-+		count = min(count, max_bits);
-+	}
-+
-+	for (i = 0; i < count; i++)
-+		if (udf_test_bit(i + off, bh->b_data))
-+			return -EFSCORRUPTED;
-+	return 0;
- }
+ 	device_initialize(&ecovec_ceu_devices[1]->dev);
+ 	dma_declare_coherent_memory(&ecovec_ceu_devices[1]->dev,
+ 				    ceu1_dma_membase, ceu1_dma_membase,
+-				    ceu1_dma_membase +
+-				    CEU_BUFFER_MEMORY_SIZE - 1);
++				    CEU_BUFFER_MEMORY_SIZE);
+ 	platform_device_add(ecovec_ceu_devices[1]);
  
- static int __load_block_bitmap(struct super_block *sb,
+ 	gpiod_add_lookup_table(&cn12_power_gpiod_table);
+diff --git a/arch/sh/boards/mach-kfr2r09/setup.c b/arch/sh/boards/mach-kfr2r09/setup.c
+index 20f4db778ed6a..c6d556dfbbbe6 100644
+--- a/arch/sh/boards/mach-kfr2r09/setup.c
++++ b/arch/sh/boards/mach-kfr2r09/setup.c
+@@ -603,7 +603,7 @@ static int __init kfr2r09_devices_setup(void)
+ 	device_initialize(&kfr2r09_ceu_device.dev);
+ 	dma_declare_coherent_memory(&kfr2r09_ceu_device.dev,
+ 			ceu_dma_membase, ceu_dma_membase,
+-			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
++			CEU_BUFFER_MEMORY_SIZE);
+ 
+ 	platform_device_add(&kfr2r09_ceu_device);
+ 
+diff --git a/arch/sh/boards/mach-migor/setup.c b/arch/sh/boards/mach-migor/setup.c
+index f60061283c482..773ee767d0c4e 100644
+--- a/arch/sh/boards/mach-migor/setup.c
++++ b/arch/sh/boards/mach-migor/setup.c
+@@ -604,7 +604,7 @@ static int __init migor_devices_setup(void)
+ 	device_initialize(&migor_ceu_device.dev);
+ 	dma_declare_coherent_memory(&migor_ceu_device.dev,
+ 			ceu_dma_membase, ceu_dma_membase,
+-			ceu_dma_membase + CEU_BUFFER_MEMORY_SIZE - 1);
++			CEU_BUFFER_MEMORY_SIZE);
+ 
+ 	platform_device_add(&migor_ceu_device);
+ 
+diff --git a/arch/sh/boards/mach-se/7724/setup.c b/arch/sh/boards/mach-se/7724/setup.c
+index b60a2626e18b2..6495f93540654 100644
+--- a/arch/sh/boards/mach-se/7724/setup.c
++++ b/arch/sh/boards/mach-se/7724/setup.c
+@@ -940,15 +940,13 @@ static int __init devices_setup(void)
+ 	device_initialize(&ms7724se_ceu_devices[0]->dev);
+ 	dma_declare_coherent_memory(&ms7724se_ceu_devices[0]->dev,
+ 				    ceu0_dma_membase, ceu0_dma_membase,
+-				    ceu0_dma_membase +
+-				    CEU_BUFFER_MEMORY_SIZE - 1);
++				    CEU_BUFFER_MEMORY_SIZE);
+ 	platform_device_add(ms7724se_ceu_devices[0]);
+ 
+ 	device_initialize(&ms7724se_ceu_devices[1]->dev);
+ 	dma_declare_coherent_memory(&ms7724se_ceu_devices[1]->dev,
+ 				    ceu1_dma_membase, ceu1_dma_membase,
+-				    ceu1_dma_membase +
+-				    CEU_BUFFER_MEMORY_SIZE - 1);
++				    CEU_BUFFER_MEMORY_SIZE);
+ 	platform_device_add(ms7724se_ceu_devices[1]);
+ 
+ 	return platform_add_devices(ms7724se_devices,
+-- 
+2.40.1
+
 
 
