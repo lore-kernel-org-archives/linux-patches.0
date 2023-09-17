@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2B06FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059B3C433CB;
-	Sun, 17 Sep 2023 19:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218E26FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8434BC433CC;
+	Sun, 17 Sep 2023 19:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979721;
-	bh=hpATzd7nE4lsaEEUFJBSnx47npLiapextnnGoRcuCKw=;
+	s=korg; t=1694979725;
+	bh=E3xRYUy+KMa+QAgELBofk27Jm6n9EGVRkfDrK1aHfog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHaEAFUis1BOX+NAtQSD8IxZuxUP+O4LZLBtaqRiroM12cAYiJoa2mQtx6IeEMDAo
-	 vNdqJCEI2Yvvhl3x+xNcD8Fy5dMHvWHJOTkls5zAGArjLV/oxluWtTzzNjCAZKv4yT
-	 fMNAZ2pd9u0yVIwBfm8HZooPfSkhC8VbnHvD0K7g=
+	b=s3BnXui96ozGRNo3JBUuMlrrW80TP7oQq0Y3vbnZiJRqG6wyJdOJGcr6Hj7X93X/8
+	 kqb7nmRMJR7vAABnoWj50BTAvzrQpscJ8NpKgI5FDObM8oBtBzBDcDW2PXQ1T9+ZkD
+	 BEskTQBSbrFFGoWuRcFi9tbMMvqia7d+401Tuw/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Aleksey Nasibulin <alealexpro100@ya.ru>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 360/406] s390/zcrypt: dont leak memory if dev_set_name() fails
-Date: Sun, 17 Sep 2023 21:13:34 +0200
-Message-ID: <20230917191110.781429368@linuxfoundation.org>
+Subject: [PATCH 5.10 388/406] ARM: dts: BCM5301X: Extend RAM to full 256MB for Linksys EA6500 V2
+Date: Sun, 17 Sep 2023 21:14:02 +0200
+Message-ID: <20230917191111.511159454@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -35,41 +36,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Aleksey Nasibulin <alealexpro100@ya.ru>
 
-[ Upstream commit 6252f47b78031979ad919f971dc8468b893488bd ]
+[ Upstream commit 91994e59079dcb455783d3f9ea338eea6f671af3 ]
 
-When dev_set_name() fails, zcdn_create() doesn't free the newly
-allocated resources. Do it.
+Linksys ea6500-v2 have 256MB of ram. Currently we only use 128MB.
+Expand the definition to use all the available RAM.
 
-Fixes: 00fab2350e6b ("s390/zcrypt: multiple zcrypt device nodes support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230831110000.24279-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 03e96644d7a8 ("ARM: dts: BCM5301X: Add basic DT for Linksys EA6500 V2")
+Signed-off-by: Aleksey Nasibulin <alealexpro100@ya.ru>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org
+Acked-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230712014017.28123-1-ansuelsmth@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index 3b9eda311c273..b518009715eeb 100644
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -399,6 +399,7 @@ static int zcdn_create(const char *name)
- 			 ZCRYPT_NAME "_%d", (int) MINOR(devt));
- 	nodename[sizeof(nodename)-1] = '\0';
- 	if (dev_set_name(&zcdndev->device, nodename)) {
-+		kfree(zcdndev);
- 		rc = -EINVAL;
- 		goto unlockout;
- 	}
+diff --git a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
+index cd797b4202ad8..01c48faabfade 100644
+--- a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
++++ b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
+@@ -19,7 +19,8 @@
+ 
+ 	memory@0 {
+ 		device_type = "memory";
+-		reg = <0x00000000 0x08000000>;
++		reg = <0x00000000 0x08000000>,
++		      <0x88000000 0x08000000>;
+ 	};
+ 
+ 	gpio-keys {
 -- 
 2.40.1
 
