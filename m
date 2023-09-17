@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4048A7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E493C433C8;
-	Sun, 17 Sep 2023 20:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB997461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C85C433C8;
+	Sun, 17 Sep 2023 20:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981292;
-	bh=nm7ypoet6LR8Dj5Y5Yz7q1nq8X2w+nMdmrB43yrWboA=;
+	s=korg; t=1694981295;
+	bh=Ioo8fHVGgVXHP06uxeQShqXpXEf2KZExHNqYEDlhZWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLLoKEpoLkviHBkSuEokcp3/+tscaKoka3EhUZGawYZG3KvtnLxtUgEhhd+YIZvKv
-	 J71AbJaZxS5FsDxu602YnDeo3Udd71Y/ZXc1CBDfwBf9kYExiA9spxmae+mgXU+Jeb
-	 +Otz4xw/jdKDzODAedsbeRKOye0yUUjdNWskEjLI=
+	b=gjRge0D0s+PeHL3I2Y2YhA4ntEhlLjGXee+0QicB0T+Tqk3GqZnsF35F5rFSZwe8G
+	 h/KWUSZHECPDhOzGZ7lm0rUFho0qqzNaLMbxA9lLxbnmetgUbPxeHHznbmo5H6pGj9
+	 wgGJ7XTBmGCLkZp2p8llYeUlnlA9O+aeUdVZI21Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Martin Kohn <m.kohn@welotec.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/219] net/sched: fq_pie: avoid stalls in fq_pie_timer()
-Date: Sun, 17 Sep 2023 21:13:34 +0200
-Message-ID: <20230917191044.122038130@linuxfoundation.org>
+Subject: [PATCH 5.15 034/511] net: usb: qmi_wwan: add Quectel EM05GV2
+Date: Sun, 17 Sep 2023 21:07:41 +0200
+Message-ID: <20230917191114.672637175@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,118 +36,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Martin Kohn <m.kohn@welotec.com>
 
-[ Upstream commit 8c21ab1bae945686c602c5bfa4e3f3352c2452c5 ]
+[ Upstream commit d4480c9bb9258db9ddf2e632f6ef81e96b41089c ]
 
-When setting a high number of flows (limit being 65536),
-fq_pie_timer() is currently using too much time as syzbot reported.
+Add support for Quectel EM05GV2 (G=global) with vendor ID
+0x2c7c and product ID 0x030e
 
-Add logic to yield the cpu every 2048 flows (less than 150 usec
-on debug kernels).
-It should also help by not blocking qdisc fast paths for too long.
-Worst case (65536 flows) would need 31 jiffies for a complete scan.
+Enabling DTR on this modem was necessary to ensure stable operation.
+Patch for usb: serial: option: is also in progress.
 
-Relevant extract from syzbot report:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030e Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 0-.... } 2663 jiffies s: 873 root: 0x1/.
-rcu: blocking rcu_node structures (internal RCU debug):
-Sending NMI from CPU 1 to CPUs 0:
-NMI backtrace for cpu 0
-CPU: 0 PID: 5177 Comm: syz-executor273 Not tainted 6.5.0-syzkaller-00453-g727dbda16b83 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
-RIP: 0010:write_comp_data+0x21/0x90 kernel/kcov.c:236
-Code: 2e 0f 1f 84 00 00 00 00 00 65 8b 05 01 b2 7d 7e 49 89 f1 89 c6 49 89 d2 81 e6 00 01 00 00 49 89 f8 65 48 8b 14 25 80 b9 03 00 <a9> 00 01 ff 00 74 0e 85 f6 74 59 8b 82 04 16 00 00 85 c0 74 4f 8b
-RSP: 0018:ffffc90000007bb8 EFLAGS: 00000206
-RAX: 0000000000000101 RBX: ffffc9000dc0d140 RCX: ffffffff885893b0
-RDX: ffff88807c075940 RSI: 0000000000000100 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffc9000dc0d178
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  0000555555d54380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f6b442f6130 CR3: 000000006fe1c000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <NMI>
- </NMI>
- <IRQ>
- pie_calculate_probability+0x480/0x850 net/sched/sch_pie.c:415
- fq_pie_timer+0x1da/0x4f0 net/sched/sch_fq_pie.c:387
- call_timer_fn+0x1a0/0x580 kernel/time/timer.c:1700
-
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Link: https://lore.kernel.org/lkml/00000000000017ad3f06040bf394@google.com/
-Reported-by: syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20230829123541.3745013-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Martin Kohn <m.kohn@welotec.com>
+Link: https://lore.kernel.org/r/AM0PR04MB57648219DE893EE04FA6CC759701A@AM0PR04MB5764.eurprd04.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 591d87d5e5c0f..68e6acd0f130d 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -61,6 +61,7 @@ struct fq_pie_sched_data {
- 	struct pie_params p_params;
- 	u32 ecn_prob;
- 	u32 flows_cnt;
-+	u32 flows_cursor;
- 	u32 quantum;
- 	u32 memory_limit;
- 	u32 new_flow_count;
-@@ -375,22 +376,32 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- static void fq_pie_timer(struct timer_list *t)
- {
- 	struct fq_pie_sched_data *q = from_timer(q, t, adapt_timer);
-+	unsigned long next, tupdate;
- 	struct Qdisc *sch = q->sch;
- 	spinlock_t *root_lock; /* to lock qdisc for probability calculations */
--	u32 idx;
-+	int max_cnt, i;
- 
- 	rcu_read_lock();
- 	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
- 
--	for (idx = 0; idx < q->flows_cnt; idx++)
--		pie_calculate_probability(&q->p_params, &q->flows[idx].vars,
--					  q->flows[idx].backlog);
--
--	/* reset the timer to fire after 'tupdate' jiffies. */
--	if (q->p_params.tupdate)
--		mod_timer(&q->adapt_timer, jiffies + q->p_params.tupdate);
-+	/* Limit this expensive loop to 2048 flows per round. */
-+	max_cnt = min_t(int, q->flows_cnt - q->flows_cursor, 2048);
-+	for (i = 0; i < max_cnt; i++) {
-+		pie_calculate_probability(&q->p_params,
-+					  &q->flows[q->flows_cursor].vars,
-+					  q->flows[q->flows_cursor].backlog);
-+		q->flows_cursor++;
-+	}
- 
-+	tupdate = q->p_params.tupdate;
-+	next = 0;
-+	if (q->flows_cursor >= q->flows_cnt) {
-+		q->flows_cursor = 0;
-+		next = tupdate;
-+	}
-+	if (tupdate)
-+		mod_timer(&q->adapt_timer, jiffies + next);
- 	spin_unlock(root_lock);
- 	rcu_read_unlock();
- }
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 9dde1f8358e3f..5c516bf4d3a5f 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1412,6 +1412,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0191, 4)},	/* Quectel EG91 */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0195, 4)},	/* Quectel EG95 */
+ 	{QMI_FIXED_INTF(0x2c7c, 0x0296, 4)},	/* Quectel BG96 */
++	{QMI_QUIRK_SET_DTR(0x2c7c, 0x030e, 4)},	/* Quectel EM05GV2 */
+ 	{QMI_QUIRK_SET_DTR(0x2cb7, 0x0104, 4)},	/* Fibocom NL678 series */
+ 	{QMI_FIXED_INTF(0x0489, 0xe0b4, 0)},	/* Foxconn T77W968 LTE */
+ 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
 -- 
 2.40.1
 
