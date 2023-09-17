@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11044746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:28:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716ECC433C7;
-	Sun, 17 Sep 2023 20:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EEF746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:28:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9199C433C7;
+	Sun, 17 Sep 2023 20:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982485;
-	bh=JPGA3W0HcypMItbpvN4qVur4mK4yi0qm8SmXcKJ+jNI=;
+	s=korg; t=1694982489;
+	bh=lAMLeGZF2o5fsh+YHDfgUMYLifa1m9/oV2s/eVmMcNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJukPc9ut4EPqQ4XNRKVruzHRraO+fFayLl4ShQHqmCCwgOrll2QbMSnPB6ySBL4Y
-	 NpngDT+bSBypADPjKgAGNs9T/ALZ94YLUV2/mnNgqvb0geM2hIB4/qYcEsE8LmyESp
-	 5G6WrhnXcUQEzj0tvQ1AibVVX8+COJHom1uLch78=
+	b=AV0S9GJY9mUxU+fpO80v22kLPVIVstcsEXNlNz7RJrGDtHaEVHZIPztRVJDsVnXYt
+	 K05aUxUgn2y5L7MWL35HfqbbfChkjU80Sxdgfcyou+RwD+GhZEM9kxaYlrD65l8az6
+	 zLtHiiC6B1olsUcfsvje8IfoFNlqQSvDr1CVuCLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/511] coresight: tmc: Explicit type conversions to prevent integer overflow
-Date: Sun, 17 Sep 2023 21:11:31 +0200
-Message-ID: <20230917191120.213622033@linuxfoundation.org>
+Subject: [PATCH 5.15 265/511] dma-buf/sync_file: Fix docs syntax
+Date: Sun, 17 Sep 2023 21:11:32 +0200
+Message-ID: <20230917191120.238896021@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,87 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruidong Tian <tianruidong@linux.alibaba.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit fd380097cdb305582b7a1f9476391330299d2c59 ]
+[ Upstream commit 05d56d8079d510a2994039470f65bea85f0075ee ]
 
-Perf cs_etm session executed unexpectedly when AUX buffer > 1G.
+Fixes the warning:
 
-  perf record -C 0 -m ,2G -e cs_etm// -- <workload>
-  [ perf record: Captured and wrote 2.615 MB perf.data ]
+  include/uapi/linux/sync_file.h:77: warning: Function parameter or member 'num_fences' not described in 'sync_file_info'
 
-Perf only collect about 2M perf data rather than 2G. This is becasuse
-the operation, "nr_pages << PAGE_SHIFT", in coresight tmc driver, will
-overflow when nr_pages >= 0x80000(correspond to 1G AUX buffer). The
-overflow cause buffer allocation to fail, and TMC driver will alloc
-minimal buffer size(1M). You can just get about 2M perf data(1M AUX
-buffer + perf data header) at least.
-
-Explicit convert nr_pages to 64 bit to avoid overflow.
-
-Fixes: 22f429f19c41 ("coresight: etm-perf: Add support for ETR backend")
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Fixes: 2e499bbc1a92 ("coresight: tmc: implementing TMC-ETF AUX space API")
-Signed-off-by: Ruidong Tian <tianruidong@linux.alibaba.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230804081514.120171-2-tianruidong@linux.alibaba.com
+Fixes: 2d75c88fefb2 ("staging/android: refactor SYNC IOCTLs")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230724145000.125880-1-robdclark@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etf.c | 2 +-
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 5 +++--
- drivers/hwtracing/coresight/coresight-tmc.h     | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ include/uapi/linux/sync_file.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-index cd0fb7bfba684..e9c2b0796f372 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-@@ -428,7 +428,7 @@ static int tmc_set_etf_buffer(struct coresight_device *csdev,
- 		return -EINVAL;
- 
- 	/* wrap head around to the amount of space we have */
--	head = handle->head & ((buf->nr_pages << PAGE_SHIFT) - 1);
-+	head = handle->head & (((unsigned long)buf->nr_pages << PAGE_SHIFT) - 1);
- 
- 	/* find the page to write to */
- 	buf->cur = head / PAGE_SIZE;
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index 0000d0c6068fd..b9cd1f9555523 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -47,7 +47,8 @@ struct etr_perf_buffer {
- };
- 
- /* Convert the perf index to an offset within the ETR buffer */
--#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
-+#define PERF_IDX2OFF(idx, buf)		\
-+		((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
- 
- /* Lower limit for ETR hardware buffer */
- #define TMC_ETR_PERF_MIN_BUF_SIZE	SZ_1M
-@@ -1232,7 +1233,7 @@ alloc_etr_buf(struct tmc_drvdata *drvdata, struct perf_event *event,
- 	 * than the size requested via sysfs.
- 	 */
- 	if ((nr_pages << PAGE_SHIFT) > drvdata->size) {
--		etr_buf = tmc_alloc_etr_buf(drvdata, (nr_pages << PAGE_SHIFT),
-+		etr_buf = tmc_alloc_etr_buf(drvdata, ((ssize_t)nr_pages << PAGE_SHIFT),
- 					    0, node, NULL);
- 		if (!IS_ERR(etr_buf))
- 			goto done;
-diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-index b91ec7dde7bc9..3655b3bfb2e32 100644
---- a/drivers/hwtracing/coresight/coresight-tmc.h
-+++ b/drivers/hwtracing/coresight/coresight-tmc.h
-@@ -321,7 +321,7 @@ ssize_t tmc_sg_table_get_data(struct tmc_sg_table *sg_table,
- static inline unsigned long
- tmc_sg_table_buf_size(struct tmc_sg_table *sg_table)
- {
--	return sg_table->data_pages.nr_pages << PAGE_SHIFT;
-+	return (unsigned long)sg_table->data_pages.nr_pages << PAGE_SHIFT;
- }
- 
- struct coresight_device *tmc_etr_get_catu_device(struct tmc_drvdata *drvdata);
+diff --git a/include/uapi/linux/sync_file.h b/include/uapi/linux/sync_file.h
+index ee2dcfb3d6602..d7f7c04a6e0c1 100644
+--- a/include/uapi/linux/sync_file.h
++++ b/include/uapi/linux/sync_file.h
+@@ -52,7 +52,7 @@ struct sync_fence_info {
+  * @name:	name of fence
+  * @status:	status of fence. 1: signaled 0:active <0:error
+  * @flags:	sync_file_info flags
+- * @num_fences	number of fences in the sync_file
++ * @num_fences:	number of fences in the sync_file
+  * @pad:	padding for 64-bit alignment, should always be zero
+  * @sync_fence_info: pointer to array of structs sync_fence_info with all
+  *		 fences in the sync_file
 -- 
 2.40.1
 
