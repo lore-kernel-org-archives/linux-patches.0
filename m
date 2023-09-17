@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28556FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CD9C433C8;
-	Sun, 17 Sep 2023 20:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0E6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:01:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB89C433CD;
+	Sun, 17 Sep 2023 20:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980858;
-	bh=zN3Kws0VJ8AZiV2HttOJBv0FpVnto5tjsD7g+us9tSA=;
+	s=korg; t=1694980862;
+	bh=MZK+mCg1TYkhQHD/khNxC+P/EEVoCKRmWgMtOJdO4P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxoYbC1q/mlLhgk9oLZy9D+gNi4s1zgZUGH/t9pSdNUwRZ+tAXhOtafMKQHEWflJ1
-	 31am5fJvNktKNccGAuM7mZw9chDPtxRDdxu11dmsoFR0yw6ZztI0W9qJmmP5l59NqX
-	 DzFW/2+ecVhf+AqADr0fJFkKLFfHBXtBKZgpVLaw=
+	b=1PSovpHi1ArTO4JWt8jAIhgXaCC99jj4O53eCEbA6OFum7yrZSb5gM6flBd76ZAc1
+	 Yc22uEDopfEnqZqEk7fOZ3WtTb5V7KjkScp42pkFY2y8JbUe6/VwbkqCAfOVYzzGZc
+	 cGQTRYV42AhDswLmheH2Pi/Ii9kBPwOol6ou+o7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Mohan Kumar D <mkumard@nvidia.com>,
-	Sameer Pujar <spujar@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 029/219] ASoC: tegra: Fix SFC conversion for few rates
-Date: Sun, 17 Sep 2023 21:12:36 +0200
-Message-ID: <20230917191042.050557110@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6.1 030/219] clk: qcom: turingcc-qcs404: fix missing resume during probe
+Date: Sun, 17 Sep 2023 21:12:37 +0200
+Message-ID: <20230917191042.086977827@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,194 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit d900d9a435ca95a386f49424f3689cd17ec201da upstream.
+commit a9f71a033587c9074059132d34c74eabbe95ef26 upstream.
 
-Sample rate conversions for rates greater than 48kHz are found to be
-failing. It means x->y conversions fail when either x or y is greater
-than 48kHz.
+Drivers that enable runtime PM must make sure that the controller is
+runtime resumed before accessing its registers to prevent the power
+domain from being disabled.
 
-This happens because, tegra210_sfc_rate_to_idx() returns incorrect
-index for rates greater than 48kHz. This actually depends on the
-tegra210_sfc_rates[] array and it is not in sync with frequency
-values of SFC TX/RX register. To be precise, 64kHz entry is missing
-in above array defined in the driver. Due to this wrong index is
-returned and this results in incorrect programming of coefficients.
-
-To fix this, align the tegra210_sfc_rates[] array with SFC register
-specification and thus add 64kHz entry to it. Also, the coefficient
-table is updated to reflect that none of the conversions are supported
-for 64kHz.
-
-Fixes: b2f74ec53a6c ("ASoC: tegra: Add Tegra210 based SFC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Reviewed-by: Mohan Kumar D <mkumard@nvidia.com>
-Reviewed-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://lore.kernel.org/r/Message-Id: <1687433656-7892-2-git-send-email-spujar@nvidia.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 892df0191b29 ("clk: qcom: Add QCS404 TuringCC")
+Cc: stable@vger.kernel.org      # 5.2
+Cc: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230718132902.21430-9-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_sfc.c |   31 ++++++++++++++++++++++++++++++-
- sound/soc/tegra/tegra210_sfc.h |    4 ++--
- 2 files changed, 32 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/turingcc-qcs404.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/sound/soc/tegra/tegra210_sfc.c
-+++ b/sound/soc/tegra/tegra210_sfc.c
-@@ -2,7 +2,7 @@
- //
- // tegra210_sfc.c - Tegra210 SFC driver
- //
--// Copyright (c) 2021 NVIDIA CORPORATION.  All rights reserved.
-+// Copyright (c) 2021-2023 NVIDIA CORPORATION.  All rights reserved.
+--- a/drivers/clk/qcom/turingcc-qcs404.c
++++ b/drivers/clk/qcom/turingcc-qcs404.c
+@@ -125,11 +125,22 @@ static int turingcc_probe(struct platfor
+ 		return ret;
+ 	}
  
- #include <linux/clk.h>
- #include <linux/device.h>
-@@ -42,6 +42,7 @@ static const int tegra210_sfc_rates[TEGR
- 	32000,
- 	44100,
- 	48000,
-+	64000,
- 	88200,
- 	96000,
- 	176400,
-@@ -2857,6 +2858,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_8to32,
- 		coef_8to44,
- 		coef_8to48,
-+		UNSUPP_CONV,
- 		coef_8to88,
- 		coef_8to96,
- 		UNSUPP_CONV,
-@@ -2872,6 +2874,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_11to32,
- 		coef_11to44,
- 		coef_11to48,
-+		UNSUPP_CONV,
- 		coef_11to88,
- 		coef_11to96,
- 		UNSUPP_CONV,
-@@ -2887,6 +2890,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_16to32,
- 		coef_16to44,
- 		coef_16to48,
-+		UNSUPP_CONV,
- 		coef_16to88,
- 		coef_16to96,
- 		coef_16to176,
-@@ -2902,6 +2906,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_22to32,
- 		coef_22to44,
- 		coef_22to48,
-+		UNSUPP_CONV,
- 		coef_22to88,
- 		coef_22to96,
- 		coef_22to176,
-@@ -2917,6 +2922,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_24to32,
- 		coef_24to44,
- 		coef_24to48,
-+		UNSUPP_CONV,
- 		coef_24to88,
- 		coef_24to96,
- 		coef_24to176,
-@@ -2932,6 +2938,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		BYPASS_CONV,
- 		coef_32to44,
- 		coef_32to48,
-+		UNSUPP_CONV,
- 		coef_32to88,
- 		coef_32to96,
- 		coef_32to176,
-@@ -2947,6 +2954,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_44to32,
- 		BYPASS_CONV,
- 		coef_44to48,
-+		UNSUPP_CONV,
- 		coef_44to88,
- 		coef_44to96,
- 		coef_44to176,
-@@ -2962,11 +2970,28 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_48to32,
- 		coef_48to44,
- 		BYPASS_CONV,
-+		UNSUPP_CONV,
- 		coef_48to88,
- 		coef_48to96,
- 		coef_48to176,
- 		coef_48to192,
- 	},
-+	/* Convertions from 64 kHz */
-+	{
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+		UNSUPP_CONV,
-+	},
- 	/* Convertions from 88.2 kHz */
- 	{
- 		coef_88to8,
-@@ -2977,6 +3002,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_88to32,
- 		coef_88to44,
- 		coef_88to48,
-+		UNSUPP_CONV,
- 		BYPASS_CONV,
- 		coef_88to96,
- 		coef_88to176,
-@@ -2991,6 +3017,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_96to32,
- 		coef_96to44,
- 		coef_96to48,
-+		UNSUPP_CONV,
- 		coef_96to88,
- 		BYPASS_CONV,
- 		coef_96to176,
-@@ -3006,6 +3033,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_176to32,
- 		coef_176to44,
- 		coef_176to48,
-+		UNSUPP_CONV,
- 		coef_176to88,
- 		coef_176to96,
- 		BYPASS_CONV,
-@@ -3021,6 +3049,7 @@ static s32 *coef_addr_table[TEGRA210_SFC
- 		coef_192to32,
- 		coef_192to44,
- 		coef_192to48,
-+		UNSUPP_CONV,
- 		coef_192to88,
- 		coef_192to96,
- 		coef_192to176,
---- a/sound/soc/tegra/tegra210_sfc.h
-+++ b/sound/soc/tegra/tegra210_sfc.h
-@@ -2,7 +2,7 @@
- /*
-  * tegra210_sfc.h - Definitions for Tegra210 SFC driver
-  *
-- * Copyright (c) 2021 NVIDIA CORPORATION.  All rights reserved.
-+ * Copyright (c) 2021-2023 NVIDIA CORPORATION.  All rights reserved.
-  *
-  */
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret)
++		return ret;
++
+ 	ret = qcom_cc_probe(pdev, &turingcc_desc);
+ 	if (ret < 0)
+-		return ret;
++		goto err_put_rpm;
++
++	pm_runtime_put(&pdev->dev);
  
-@@ -47,7 +47,7 @@
- #define TEGRA210_SFC_EN_SHIFT			0
- #define TEGRA210_SFC_EN				(1 << TEGRA210_SFC_EN_SHIFT)
+ 	return 0;
++
++err_put_rpm:
++	pm_runtime_put_sync(&pdev->dev);
++
++	return ret;
+ }
  
--#define TEGRA210_SFC_NUM_RATES 12
-+#define TEGRA210_SFC_NUM_RATES 13
- 
- /* Fields in TEGRA210_SFC_COEF_RAM */
- #define TEGRA210_SFC_COEF_RAM_EN		BIT(0)
+ static const struct dev_pm_ops turingcc_pm_ops = {
 
 
