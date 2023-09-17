@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD6C7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEAC433C7;
-	Sun, 17 Sep 2023 20:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376D47461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96ADEC433C8;
+	Sun, 17 Sep 2023 20:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981246;
-	bh=b+V31BBjD3CwwNhml09pQHdTAJzNUr50Y2ienUkZMWU=;
+	s=korg; t=1694981250;
+	bh=Bjts4zYnTepW+eoLhxYTZokRLTZcJNOeJJf0ZOpv874=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEla88/NLm+N7NEbUINd8DInP9DSl24meObPMa6e7FAqTgxrLcseTJ1OqfetVRW0t
-	 OjE6YT7agqrutOqHmJziaUsqRbj8mnDcSv8/2U8fIX1zyiXyt875Y3TGHelR94CUuC
-	 4KtfPwNCIMbN9PHDPFDXqmPk5AWYd86EPrIz/M+o=
+	b=gp3gXBdyaOpjFdj2y7RLZ05tgRE4KqZ359in9UG7jdcywraBh+KHlTpKHwg5jutvI
+	 tfZ12Nws1Yyzyd5Qh7rZ4dxWDeHoiB3JzqYSE7XgO0KG8k/B2EX4DAfHJCXTO7PewI
+	 p+bxWQTaaL/yXb/Rwi5/xfjyQ2S6oxXffUy/25mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Yan Zhao <yan.y.zhao@intel.com>,
+	Yongwei Ma <yongwei.ma@intel.com>,
+	Zhi Wang <zhi.a.wang@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/511] ovl: Always reevaluate the file signature for IMA
-Date: Sun, 17 Sep 2023 21:07:35 +0200
-Message-ID: <20230917191114.507146954@linuxfoundation.org>
+Subject: [PATCH 6.1 095/219] drm/i915/gvt: Put the page reference obtained by KVMs gfn_to_pfn()
+Date: Sun, 17 Sep 2023 21:13:42 +0200
+Message-ID: <20230917191044.410496538@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,46 +39,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Snowberg <eric.snowberg@oracle.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
+[ Upstream commit 708e49583d7da863898b25dafe4bcd799c414278 ]
 
-Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version")
-partially closed an IMA integrity issue when directly modifying a file
-on the lower filesystem.  If the overlay file is first opened by a user
-and later the lower backing file is modified by root, but the extended
-attribute is NOT updated, the signature validation succeeds with the old
-original signature.
+Put the struct page reference acquired by gfn_to_pfn(), KVM's API is that
+the caller is ultimately responsible for dropping any reference.
 
-Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
-force signature reevaluation on every file access until a fine grained
-solution can be found.
+Note, kvm_release_pfn_clean() ensures the pfn is actually a refcounted
+struct page before trying to put any references.
 
-Signed-off-by: Eric Snowberg <eric.snowberg@oracle.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: b901b252b6cf ("drm/i915/gvt: Add 2M huge gtt support")
+Reviewed-by: Yan Zhao <yan.y.zhao@intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Reviewed-by: Zhi Wang <zhi.a.wang@intel.com>
+Link: https://lore.kernel.org/r/20230729013535.1070024-6-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gvt/gtt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 5310271cf2e38..e18025b5c8872 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -2140,7 +2140,7 @@ static int ovl_fill_super(struct super_block *sb, void *data, int silent)
- 		ovl_trusted_xattr_handlers;
- 	sb->s_fs_info = ofs;
- 	sb->s_flags |= SB_POSIXACL;
--	sb->s_iflags |= SB_I_SKIP_SYNC;
-+	sb->s_iflags |= SB_I_SKIP_SYNC | SB_I_IMA_UNVERIFIABLE_SIGNATURE;
+diff --git a/drivers/gpu/drm/i915/gvt/gtt.c b/drivers/gpu/drm/i915/gvt/gtt.c
+index 92462cd4bf7cc..980d671ac3595 100644
+--- a/drivers/gpu/drm/i915/gvt/gtt.c
++++ b/drivers/gpu/drm/i915/gvt/gtt.c
+@@ -1179,6 +1179,7 @@ static int is_2MB_gtt_possible(struct intel_vgpu *vgpu,
+ {
+ 	const struct intel_gvt_gtt_pte_ops *ops = vgpu->gvt->gtt.pte_ops;
+ 	kvm_pfn_t pfn;
++	int ret;
  
- 	err = -ENOMEM;
- 	root_dentry = ovl_get_root(sb, upperpath.dentry, oe);
+ 	if (!HAS_PAGE_SIZES(vgpu->gvt->gt->i915, I915_GTT_PAGE_SIZE_2M))
+ 		return 0;
+@@ -1192,7 +1193,9 @@ static int is_2MB_gtt_possible(struct intel_vgpu *vgpu,
+ 	if (!pfn_valid(pfn))
+ 		return -EINVAL;
+ 
+-	return PageTransHuge(pfn_to_page(pfn));
++	ret = PageTransHuge(pfn_to_page(pfn));
++	kvm_release_pfn_clean(pfn);
++	return ret;
+ }
+ 
+ static int split_2MB_gtt_entry(struct intel_vgpu *vgpu,
 -- 
 2.40.1
 
