@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5173C6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B168EC433D9;
-	Sun, 17 Sep 2023 20:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0F36FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC63C433A9;
+	Sun, 17 Sep 2023 20:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981582;
-	bh=TTPbVlK/bwy8GzrG/ykxT0B8gc6AxMVjY9eJcl9cuvY=;
+	s=korg; t=1694981585;
+	bh=6YOjiR7HTNX4cXM31+4HXiEOCAUoZwgIXcuhhgKnE+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4PEWyfoR2RcnVn12VBEfqPUmKmBPHkY7LgJ4yzSnBkuSO34THXXuv13W+g739cQe
-	 CeD4oQTTZoR/ppvaOSIQLooSoLgKrUCkM1O3Jh78QZGsXXkqftSzTPTin70/cwKUNU
-	 HBn0m+j4GWuCk26JVCftG3yz1iEAQYYB2fZMYv3o=
+	b=q4/aqU/NWYW7Hj/7IUhpn2SVvBpv+4n1IpNm9W1d7YZhroeqBpNRNgmNp9x4K+Mh1
+	 jIsQm7XxYvbaU8nTqeSQHx6TGuR1Ok5IAJUXrSWydytw1tqpxQvhGplg8lyyCi/6KF
+	 6gv/sATAssxDV1i7s+59g7vXbrQLJZoQHKSBimzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 143/219] jbd2: correct the end of the journal recovery scan range
-Date: Sun, 17 Sep 2023 21:14:30 +0200
-Message-ID: <20230917191046.174824976@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 075/511] ACPI: x86: s2idle: Post-increment variables when getting constraints
+Date: Sun, 17 Sep 2023 21:08:22 +0200
+Message-ID: <20230917191115.689339130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,80 +38,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 2dfba3bb40ad8536b9fa802364f2d40da31aa88e upstream.
+[ Upstream commit 3c6b1212d20bbbffcad5709ab0f2d5ed9b5859a8 ]
 
-We got a filesystem inconsistency issue below while running generic/475
-I/O failure pressure test with fast_commit feature enabled.
+When code uses a pre-increment it makes the reader question "why".
+In the constraint fetching code there is no reason for the variables
+to be pre-incremented so adjust to post-increment.
+No intended functional changes.
 
- Symlink /p3/d3/d1c/d6c/dd6/dce/l101 (inode #132605) is invalid.
-
-If fast_commit feature is enabled, a special fast_commit journal area is
-appended to the end of the normal journal area. The journal->j_last
-point to the first unused block behind the normal journal area instead
-of the whole log area, and the journal->j_fc_last point to the first
-unused block behind the fast_commit journal area. While doing journal
-recovery, do_one_pass(PASS_SCAN) should first scan the normal journal
-area and turn around to the first block once it meet journal->j_last,
-but the wrap() macro misuse the journal->j_fc_last, so the recovering
-could not read the next magic block (commit block perhaps) and would end
-early mistakenly and missing tN and every transaction after it in the
-following example. Finally, it could lead to filesystem inconsistency.
-
- | normal journal area                             | fast commit area |
- +-------------------------------------------------+------------------+
- | tN(rere) | tN+1 |~| tN-x |...| tN-1 | tN(front) |       ....       |
- +-------------------------------------------------+------------------+
-                     /                             /                  /
-                start               journal->j_last journal->j_fc_last
-
-This patch fix it by use the correct ending journal->j_last.
-
-Fixes: 5b849b5f96b4 ("jbd2: fast commit recovery path")
-Cc: stable@kernel.org
-Reported-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/linux-ext4/20230613043120.GB1584772@mit.edu/
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230626073322.3956567-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 9cc8cd086f05 ("ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/recovery.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/acpi/x86/s2idle.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/jbd2/recovery.c
-+++ b/fs/jbd2/recovery.c
-@@ -229,12 +229,8 @@ static int count_tags(journal_t *journal
- /* Make sure we wrap around the log correctly! */
- #define wrap(journal, var)						\
- do {									\
--	unsigned long _wrap_last =					\
--		jbd2_has_feature_fast_commit(journal) ?			\
--			(journal)->j_fc_last : (journal)->j_last;	\
--									\
--	if (var >= _wrap_last)						\
--		var -= (_wrap_last - (journal)->j_first);		\
-+	if (var >= (journal)->j_last)					\
-+		var -= ((journal)->j_last - (journal)->j_first);	\
- } while (0)
+diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
+index 4a11a38764321..7658953dfce8f 100644
+--- a/drivers/acpi/x86/s2idle.c
++++ b/drivers/acpi/x86/s2idle.c
+@@ -121,13 +121,13 @@ static void lpi_device_get_constraints_amd(void)
+ 			acpi_handle_debug(lps0_device_handle,
+ 					  "LPI: constraints list begin:\n");
  
- static int fc_do_one_pass(journal_t *journal,
-@@ -517,9 +513,7 @@ static int do_one_pass(journal_t *journa
- 				break;
+-			for (j = 0; j < package->package.count; ++j) {
++			for (j = 0; j < package->package.count; j++) {
+ 				union acpi_object *info_obj = &package->package.elements[j];
+ 				struct lpi_device_constraint_amd dev_info = {};
+ 				struct lpi_constraints *list;
+ 				acpi_status status;
  
- 		jbd2_debug(2, "Scanning for sequence ID %u at %lu/%lu\n",
--			  next_commit_ID, next_log_block,
--			  jbd2_has_feature_fast_commit(journal) ?
--			  journal->j_fc_last : journal->j_last);
-+			  next_commit_ID, next_log_block, journal->j_last);
+-				for (k = 0; k < info_obj->package.count; ++k) {
++				for (k = 0; k < info_obj->package.count; k++) {
+ 					union acpi_object *obj = &info_obj->package.elements[k];
  
- 		/* Skip over each chunk of the transaction looking
- 		 * either the next descriptor block or the final commit
+ 					list = &lpi_constraints_table[lpi_constraints_table_size];
+@@ -212,7 +212,7 @@ static void lpi_device_get_constraints(void)
+ 		if (!package)
+ 			continue;
+ 
+-		for (j = 0; j < package->package.count; ++j) {
++		for (j = 0; j < package->package.count; j++) {
+ 			union acpi_object *element =
+ 					&(package->package.elements[j]);
+ 
+@@ -244,7 +244,7 @@ static void lpi_device_get_constraints(void)
+ 
+ 		constraint->min_dstate = -1;
+ 
+-		for (j = 0; j < package_count; ++j) {
++		for (j = 0; j < package_count; j++) {
+ 			union acpi_object *info_obj = &info.package[j];
+ 			union acpi_object *cnstr_pkg;
+ 			union acpi_object *obj;
+-- 
+2.40.1
+
 
 
