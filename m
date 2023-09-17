@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F816FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24A7C433C8;
-	Sun, 17 Sep 2023 19:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DCA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF41C433C8;
+	Sun, 17 Sep 2023 19:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980663;
-	bh=jN+IicPruRospwHvB2lRxnl7vJMNQhqiZT+iDE685/w=;
+	s=korg; t=1694980666;
+	bh=qCq6k/gQNnloDQHJnIcmU4nphPxyqxkn4XUygxtuXxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IMNwUByOm64NXHZBsg9TolJ2j6UGjaW+73xMRUu/iShDuE5QSXV2J3qtmZY1BFSe
-	 zQXZ5FgjaQ7B9R+Hx2LD/cBFBaw2vtaSeMMpY6oPqg1+CyZKFeIq5bPp5E9E+MRR4b
-	 5xA3wRIS+JyZB2ai/5QFDMY7GdJBSKVFDTW/WeLY=
+	b=mdk0J6mLxu2fLzj2b5T/AcYB84kH+AgDN7LZlfmYsFfm5yHH8HjfxdP5TJy/O5IIu
+	 AT5Lg54FeCljfp12ZPKVhwWpf0hkJNGgmwRxTyhz19YcfBT4And2XCohsyI13iLe5B
+	 ninz7f2n8ufipJ2TEXkH8tO4uKhDBIG6vlSJkYRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 257/285] hsr: Fix uninit-value access in fill_frame_info()
-Date: Sun, 17 Sep 2023 21:14:17 +0200
-Message-ID: <20230917191100.165452583@linuxfoundation.org>
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.5 231/285] MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install regression
+Date: Sun, 17 Sep 2023 21:13:51 +0200
+Message-ID: <20230917191059.432804909@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -35,96 +35,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
+commit a79a404e6c2241ebc528b9ebf4c0832457b498c3 upstream.
 
-Syzbot reports the following uninit-value access problem.
+Remove a build-time check for the presence of the GCC `-msym32' option.
+This option has been there since GCC 4.1.0, which is below the minimum
+required as at commit 805b2e1d427a ("kbuild: include Makefile.compiler
+only when compiler is needed"), when an error message:
 
-=====================================================
-BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
-BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- fill_frame_info net/hsr/hsr_forward.c:601 [inline]
- hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
- hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
- __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
- netdev_start_xmit include/linux/netdevice.h:4903 [inline]
- xmit_one net/core/dev.c:3544 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
- __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
- dev_queue_xmit include/linux/netdevice.h:3082 [inline]
- packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3087 [inline]
- packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+arch/mips/Makefile:306: *** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
 
-Uninit was created at:
- slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
- kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
- __alloc_skb+0x318/0x740 net/core/skbuff.c:644
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
- packet_alloc_skb net/packet/af_packet.c:2936 [inline]
- packet_snd net/packet/af_packet.c:3030 [inline]
- packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- sock_sendmsg net/socket.c:753 [inline]
- __sys_sendto+0x781/0xa30 net/socket.c:2176
- __do_sys_sendto net/socket.c:2188 [inline]
- __se_sys_sendto net/socket.c:2184 [inline]
- __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+started to trigger for the `modules_install' target with configurations
+such as `decstation_64_defconfig' that set CONFIG_CPU_DADDI_WORKAROUNDS,
+because said commit has made `cc-option-yn' an undefined function for
+non-build targets.
 
-It is because VLAN not yet supported in hsr driver. Return error
-when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
-
-Fixes: 451d8123f897 ("net: prp: add packet handling support")
-Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 805b2e1d427a ("kbuild: include Makefile.compiler only when compiler is needed")
+Cc: stable@vger.kernel.org # v5.13+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/hsr/hsr_forward.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 629daacc96071..b71dab630a873 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -594,6 +594,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
- 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
- 		/* FIXME: */
- 		netdev_warn_once(skb->dev, "VLAN not yet supported");
-+		return -EINVAL;
- 	}
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -299,8 +299,8 @@ ifdef CONFIG_64BIT
+     endif
+   endif
  
- 	frame->is_from_san = false;
--- 
-2.40.1
-
+-  ifeq ($(KBUILD_SYM32)$(call cc-option-yn,-msym32), yy)
+-    cflags-y += -msym32 -DKBUILD_64BIT_SYM32
++  ifeq ($(KBUILD_SYM32), y)
++    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
+   else
+     ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
+       $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
 
 
