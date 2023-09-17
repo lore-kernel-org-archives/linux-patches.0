@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE5D6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9A6C433C7;
-	Sun, 17 Sep 2023 19:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DCA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4B2C433C8;
+	Sun, 17 Sep 2023 19:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978541;
-	bh=TDk+9EUg8oiRJcmpitO3eBZv1qnb2ZaB1mB/jCmxInA=;
+	s=korg; t=1694978545;
+	bh=26VnrdFhRA3LrWDAJiJJr01QZQLJEfZxCiMkCcBm5U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDw1lCZ7TEleIVID5zcCVBKERehL3d970VAegr7VnSzqnfU8Acb9KILxalGvLHYVU
-	 pEIZgW5zy9Ew9ubd9jqn2HBac8jGccHssy+S3eh09qPDwJU+59uLYT4zkMKlXiBOOp
-	 5kIXOyCW6MAYmcnvAwEy4fOH1+f88vOf20+f/r+Y=
+	b=NhnJJpysmlbwcDzfYBvkwG6rs7j/k2QppWNqp3BF6+n4uJjg4PDmKpwfRn71wU4y3
+	 znAYplkAQQHSiYkz88AwQl6PY+2EdXDMhBV9XwHfmE4TUoxc9ePP/PmYab2Ge3AI1f
+	 3FozaZ1uVnSZFawpe84g9ZxjgQY4sTnM4ijv98fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/406] wifi: mt76: testmode: add nla_policy for MT76_TM_ATTR_TX_LENGTH
-Date: Sun, 17 Sep 2023 21:09:03 +0200
-Message-ID: <20230917191103.480691328@linuxfoundation.org>
+Subject: [PATCH 5.10 090/406] spi: tegra20-sflash: fix to check return value of platform_get_irq() in tegra_sflash_probe()
+Date: Sun, 17 Sep 2023 21:09:04 +0200
+Message-ID: <20230917191103.507289011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,39 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 74f12d511625e603fac8c0c2b6872e687e56dd61 ]
+[ Upstream commit 29a449e765ff70a5bd533be94babb6d36985d096 ]
 
-It seems that the nla_policy in mt76_tm_policy is missed for attribute
-MT76_TM_ATTR_TX_LENGTH. This patch adds the correct description to make
-sure the
+The platform_get_irq might be failed and return a negative result. So
+there should have an error handling code.
 
-  u32 val = nla_get_u32(tb[MT76_TM_ATTR_TX_LENGTH]);
+Fixed this by adding an error handling code.
 
-in function mt76_testmode_cmd() is safe and will not result in
-out-of-attribute read.
-
-Fixes: f0efa8621550 ("mt76: add API for testmode support")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 8528547bcc33 ("spi: tegra: add spi driver for sflash controller")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_71FC162D589E4788C2152AAC84CD8D5C6D06@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/testmode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-tegra20-sflash.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/testmode.c b/drivers/net/wireless/mediatek/mt76/testmode.c
-index 883f59c7a7e4a..7ab99efb7f9b0 100644
---- a/drivers/net/wireless/mediatek/mt76/testmode.c
-+++ b/drivers/net/wireless/mediatek/mt76/testmode.c
-@@ -6,6 +6,7 @@ static const struct nla_policy mt76_tm_policy[NUM_MT76_TM_ATTRS] = {
- 	[MT76_TM_ATTR_RESET] = { .type = NLA_FLAG },
- 	[MT76_TM_ATTR_STATE] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_COUNT] = { .type = NLA_U32 },
-+	[MT76_TM_ATTR_TX_LENGTH] = { .type = NLA_U32 },
- 	[MT76_TM_ATTR_TX_RATE_MODE] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_RATE_NSS] = { .type = NLA_U8 },
- 	[MT76_TM_ATTR_TX_RATE_IDX] = { .type = NLA_U8 },
+diff --git a/drivers/spi/spi-tegra20-sflash.c b/drivers/spi/spi-tegra20-sflash.c
+index cfb7de7379376..62e50830b7f95 100644
+--- a/drivers/spi/spi-tegra20-sflash.c
++++ b/drivers/spi/spi-tegra20-sflash.c
+@@ -456,7 +456,11 @@ static int tegra_sflash_probe(struct platform_device *pdev)
+ 		goto exit_free_master;
+ 	}
+ 
+-	tsd->irq = platform_get_irq(pdev, 0);
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
++		goto exit_free_master;
++	tsd->irq = ret;
++
+ 	ret = request_irq(tsd->irq, tegra_sflash_isr, 0,
+ 			dev_name(&pdev->dev), tsd);
+ 	if (ret < 0) {
 -- 
 2.40.1
 
