@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C9B6FDD
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFDEC433C8;
-	Sun, 17 Sep 2023 20:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4FA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25960C433C8;
+	Sun, 17 Sep 2023 20:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981678;
-	bh=IElLcl7hKP5cIjm1uOSGAn9LI5C1J2KQwLWTutCt7kY=;
+	s=korg; t=1694981681;
+	bh=woZeRbhD2ErIMQ85pRRe83sRaxWDG3PfhTNE35iXPcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2+zxMLOy1pKoAZTq2oFMrHrCHbmmEXceVeq82mX6oAXaXQqyBWylVXdLytlPjMOu
-	 dkJvZ9vu0bgo2WkzRNonXxp7MqBT8OzSjNCCQoatsoqfb+rDmKQ65I2qAE4AVQqh2p
-	 kusGnNRd1M8HA9pFBivaN0+CFf8hmz0gWWu2ddHU=
+	b=x0lo8afNareJ1oj6StO1oFR+5JvrVEVDeuc5wCmFXwBzHBuYWAraN+q5LAjY2rsMb
+	 g6fHsPu2JRruAWFtktWuP9+781K1l1l1NLAdBuUTOE2KsHKMl9rASMW0tRZJ7+SRxz
+	 JzP/vJy4fGAbK3jTo7KEqyPHreoyCj4NrXSvE2IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 157/219] btrfs: free qgroup rsv on io failure
-Date: Sun, 17 Sep 2023 21:14:44 +0200
-Message-ID: <20230917191046.725838396@linuxfoundation.org>
+	Polaris Pi <pinkperfect2021@gmail.com>,
+	Matthew Wang <matthewmwang@chromium.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 092/511] wifi: mwifiex: Fix OOB and integer underflow when rx packets
+Date: Sun, 17 Sep 2023 21:08:39 +0200
+Message-ID: <20230917191116.091489898@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,50 +38,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Polaris Pi <pinkperfect2021@gmail.com>
 
-commit e28b02118b94e42be3355458a2406c6861e2dd32 upstream.
+[ Upstream commit 11958528161731c58e105b501ed60b83a91ea941 ]
 
-If we do a write whose bio suffers an error, we will never reclaim the
-qgroup reserved space for it. We allocate the space in the write_iter
-codepath, then release the reservation as we allocate the ordered
-extent, but we only create a delayed ref if the ordered extent finishes.
-If it has an error, we simply leak the rsv. This is apparent in running
-any error injecting (dmerror) fstests like btrfs/146 or btrfs/160. Such
-tests fail due to dmesg on umount complaining about the leaked qgroup
-data space.
+Make sure mwifiex_process_mgmt_packet,
+mwifiex_process_sta_rx_packet and mwifiex_process_uap_rx_packet,
+mwifiex_uap_queue_bridged_pkt and mwifiex_process_rx_packet
+not out-of-bounds access the skb->data buffer.
 
-When we clean up other aspects of space on failed ordered_extents, also
-free the qgroup rsv.
-
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-CC: stable@vger.kernel.org # 5.10+
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2dbaf751b1de ("mwifiex: report received management frames to cfg80211")
+Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
+Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230723070741.1544662-1-pinkperfect2021@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/sta_rx.c | 11 ++++++++++-
+ .../net/wireless/marvell/mwifiex/uap_txrx.c   | 19 +++++++++++++++++++
+ drivers/net/wireless/marvell/mwifiex/util.c   | 10 +++++++---
+ 3 files changed, 36 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3393,6 +3393,13 @@ out:
- 			btrfs_free_reserved_extent(fs_info,
- 					ordered_extent->disk_bytenr,
- 					ordered_extent->disk_num_bytes, 1);
-+			/*
-+			 * Actually free the qgroup rsv which was released when
-+			 * the ordered extent was created.
-+			 */
-+			btrfs_qgroup_free_refroot(fs_info, inode->root->root_key.objectid,
-+						  ordered_extent->qgroup_rsv,
-+						  BTRFS_QGROUP_RSV_DATA);
- 		}
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+index 0d2adf8879005..685a5b6697046 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+@@ -98,6 +98,14 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
+ 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+ 
++	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
++		mwifiex_dbg(priv->adapter, ERROR,
++			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
++			    skb->len, rx_pkt_off);
++		priv->stats.rx_dropped++;
++		dev_kfree_skb_any(skb);
++	}
++
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+ 		     sizeof(bridge_tunnel_header))) ||
+ 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
+@@ -206,7 +214,8 @@ int mwifiex_process_sta_rx_packet(struct mwifiex_private *priv,
+ 
+ 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_offset;
+ 
+-	if ((rx_pkt_offset + rx_pkt_length) > (u16) skb->len) {
++	if ((rx_pkt_offset + rx_pkt_length) > skb->len ||
++	    sizeof(rx_pkt_hdr->eth803_hdr) + rx_pkt_offset > skb->len) {
+ 		mwifiex_dbg(adapter, ERROR,
+ 			    "wrong rx packet: len=%d, rx_pkt_offset=%d, rx_pkt_length=%d\n",
+ 			    skb->len, rx_pkt_offset, rx_pkt_length);
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+index 245ff644f81e3..b3915bfd38693 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+@@ -115,6 +115,15 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 		return;
  	}
  
++	if (sizeof(*rx_pkt_hdr) +
++	    le16_to_cpu(uap_rx_pd->rx_pkt_offset) > skb->len) {
++		mwifiex_dbg(adapter, ERROR,
++			    "wrong rx packet offset: len=%d,rx_pkt_offset=%d\n",
++			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
++		priv->stats.rx_dropped++;
++		dev_kfree_skb_any(skb);
++	}
++
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+ 		     sizeof(bridge_tunnel_header))) ||
+ 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
+@@ -379,6 +388,16 @@ int mwifiex_process_uap_rx_packet(struct mwifiex_private *priv,
+ 	rx_pkt_type = le16_to_cpu(uap_rx_pd->rx_pkt_type);
+ 	rx_pkt_hdr = (void *)uap_rx_pd + le16_to_cpu(uap_rx_pd->rx_pkt_offset);
+ 
++	if (le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
++	    sizeof(rx_pkt_hdr->eth803_hdr) > skb->len) {
++		mwifiex_dbg(adapter, ERROR,
++			    "wrong rx packet for struct ethhdr: len=%d, offset=%d\n",
++			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
++		priv->stats.rx_dropped++;
++		dev_kfree_skb_any(skb);
++		return 0;
++	}
++
+ 	ether_addr_copy(ta, rx_pkt_hdr->eth803_hdr.h_source);
+ 
+ 	if ((le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
+diff --git a/drivers/net/wireless/marvell/mwifiex/util.c b/drivers/net/wireless/marvell/mwifiex/util.c
+index d583fa600a296..1f5a6dab9ce55 100644
+--- a/drivers/net/wireless/marvell/mwifiex/util.c
++++ b/drivers/net/wireless/marvell/mwifiex/util.c
+@@ -405,11 +405,15 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
+ 	}
+ 
+ 	rx_pd = (struct rxpd *)skb->data;
++	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
++	if (pkt_len < sizeof(struct ieee80211_hdr) + sizeof(pkt_len)) {
++		mwifiex_dbg(priv->adapter, ERROR, "invalid rx_pkt_length");
++		return -1;
++	}
+ 
+ 	skb_pull(skb, le16_to_cpu(rx_pd->rx_pkt_offset));
+ 	skb_pull(skb, sizeof(pkt_len));
+-
+-	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
++	pkt_len -= sizeof(pkt_len);
+ 
+ 	ieee_hdr = (void *)skb->data;
+ 	if (ieee80211_is_mgmt(ieee_hdr->frame_control)) {
+@@ -422,7 +426,7 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
+ 		skb->data + sizeof(struct ieee80211_hdr),
+ 		pkt_len - sizeof(struct ieee80211_hdr));
+ 
+-	pkt_len -= ETH_ALEN + sizeof(pkt_len);
++	pkt_len -= ETH_ALEN;
+ 	rx_pd->rx_pkt_length = cpu_to_le16(pkt_len);
+ 
+ 	cfg80211_rx_mgmt(&priv->wdev, priv->roc_cfg.chan.center_freq,
+-- 
+2.40.1
+
 
 
