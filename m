@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FC26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358CCC433C7;
-	Sun, 17 Sep 2023 19:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169C16FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD82C433C8;
+	Sun, 17 Sep 2023 19:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978654;
-	bh=0lCvPl2emCW/skxaV+tcY0MsWBt0HEJZLlDEp6WmGUU=;
+	s=korg; t=1694978657;
+	bh=Vlz6MAxwXpE8C7ZZ6/v4li7J/ccwy4UJ5mYYNYpXtto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6dp+G013wnuuiUUK7rPCCjEZeD33XU22MbbZiw6hQA4bepxMYjfpK18zHyHutKv8
-	 Mjb04VbgegYbvyo246xa4h3JSD7kJ+oy5w9QXh0TOgmS97sdybWxi55S2j0KDfP2pL
-	 0saQTpOoJTsUXPLhxGA2dDvj+KCOkcpx4/12vWpE=
+	b=krG/V52mmAJDVIiUgJZzRyxPuyTgQVquRKF206NMXB+vIMWiloSCZ3kUMLpw/wHhR
+	 i8M+YwLLeCUZDGLwS6Z8UwppcaD1YPeSmOsAZntTS614HJYw/oR78Jk70o/5AzQg52
+	 pC7hylWxuJjinyURZJdHddKoQReMgHORhKSTnhOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Robert Foss <rfoss@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 122/406] drm/bridge: tc358764: Fix debug print parameter order
-Date: Sun, 17 Sep 2023 21:09:36 +0200
-Message-ID: <20230917191104.360616493@linuxfoundation.org>
+Subject: [PATCH 5.10 123/406] quota: factor out dquot_write_dquot()
+Date: Sun, 17 Sep 2023 21:09:37 +0200
+Message-ID: <20230917191104.387443927@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,38 +40,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 7f947be02aab5b154427cb5b0fffe858fc387b02 ]
+[ Upstream commit 024128477809f8073d870307c8157b8826ebfd08 ]
 
-The debug print parameters were swapped in the output and they were
-printed as decimal values, both the hardware address and the value.
-Update the debug print to print the parameters in correct order, and
-use hexadecimal print for both address and value.
+Refactor out dquot_write_dquot() to reduce duplicate code.
 
-Fixes: f38b7cca6d0e ("drm/bridge: tc358764: Add DSI to LVDS bridge driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230615152817.359420-1-marex@denx.de
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230630110822.3881712-2-libaokun1@huawei.com>
+Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358764.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/quota/dquot.c | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358764.c b/drivers/gpu/drm/bridge/tc358764.c
-index d89394bc5aa4d..ea1445e09e6f1 100644
---- a/drivers/gpu/drm/bridge/tc358764.c
-+++ b/drivers/gpu/drm/bridge/tc358764.c
-@@ -180,7 +180,7 @@ static void tc358764_read(struct tc358764 *ctx, u16 addr, u32 *val)
- 	if (ret >= 0)
- 		le32_to_cpus(val);
- 
--	dev_dbg(ctx->dev, "read: %d, addr: %d\n", addr, *val);
-+	dev_dbg(ctx->dev, "read: addr=0x%04x data=0x%08x\n", addr, *val);
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index 8d0cd68fc90a4..de4bebdc6e773 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -630,6 +630,18 @@ int dquot_scan_active(struct super_block *sb,
  }
+ EXPORT_SYMBOL(dquot_scan_active);
  
- static void tc358764_write(struct tc358764 *ctx, u16 addr, u32 val)
++static inline int dquot_write_dquot(struct dquot *dquot)
++{
++	int ret = dquot->dq_sb->dq_op->write_dquot(dquot);
++	if (ret < 0) {
++		quota_error(dquot->dq_sb, "Can't write quota structure "
++			    "(error %d). Quota may get out of sync!", ret);
++		/* Clear dirty bit anyway to avoid infinite loop. */
++		clear_dquot_dirty(dquot);
++	}
++	return ret;
++}
++
+ /* Write all dquot structures to quota files */
+ int dquot_writeback_dquots(struct super_block *sb, int type)
+ {
+@@ -660,16 +672,9 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
+ 			 * use count */
+ 			dqgrab(dquot);
+ 			spin_unlock(&dq_list_lock);
+-			err = sb->dq_op->write_dquot(dquot);
+-			if (err) {
+-				/*
+-				 * Clear dirty bit anyway to avoid infinite
+-				 * loop here.
+-				 */
+-				clear_dquot_dirty(dquot);
+-				if (!ret)
+-					ret = err;
+-			}
++			err = dquot_write_dquot(dquot);
++			if (err && !ret)
++				ret = err;
+ 			dqput(dquot);
+ 			spin_lock(&dq_list_lock);
+ 		}
+@@ -767,8 +772,6 @@ static struct shrinker dqcache_shrinker = {
+  */
+ void dqput(struct dquot *dquot)
+ {
+-	int ret;
+-
+ 	if (!dquot)
+ 		return;
+ #ifdef CONFIG_QUOTA_DEBUG
+@@ -796,17 +799,7 @@ void dqput(struct dquot *dquot)
+ 	if (dquot_dirty(dquot)) {
+ 		spin_unlock(&dq_list_lock);
+ 		/* Commit dquot before releasing */
+-		ret = dquot->dq_sb->dq_op->write_dquot(dquot);
+-		if (ret < 0) {
+-			quota_error(dquot->dq_sb, "Can't write quota structure"
+-				    " (error %d). Quota may get out of sync!",
+-				    ret);
+-			/*
+-			 * We clear dirty bit anyway, so that we avoid
+-			 * infinite loop here
+-			 */
+-			clear_dquot_dirty(dquot);
+-		}
++		dquot_write_dquot(dquot);
+ 		goto we_slept;
+ 	}
+ 	if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
 -- 
 2.40.1
 
