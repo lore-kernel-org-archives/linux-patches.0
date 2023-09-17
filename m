@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC9F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AC4C433C8;
-	Sun, 17 Sep 2023 19:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F816FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24A7C433C8;
+	Sun, 17 Sep 2023 19:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980659;
-	bh=xwEBM2F7ViCdlwYb/SdFxtF9OzLa8Kb7sm6ep900lHk=;
+	s=korg; t=1694980663;
+	bh=jN+IicPruRospwHvB2lRxnl7vJMNQhqiZT+iDE685/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qmog1rd/iKXGS2r/1k56EAoFvfukiMQFHusE4aquY0Iwha4CVVPeYuPYWi2oCPmTQ
-	 qIUXjWWb6udTYb3gJ5lH3tBlnNJY5u+u4Ta7IZxF4H+yonL7QEGBmYGmjkCaxfzZuN
-	 Nf3pJoIFggCnC5d9pj3SQbTuUX7+ajv1VjkAY9M8=
+	b=1IMNwUByOm64NXHZBsg9TolJ2j6UGjaW+73xMRUu/iShDuE5QSXV2J3qtmZY1BFSe
+	 zQXZ5FgjaQ7B9R+Hx2LD/cBFBaw2vtaSeMMpY6oPqg1+CyZKFeIq5bPp5E9E+MRR4b
+	 5xA3wRIS+JyZB2ai/5QFDMY7GdJBSKVFDTW/WeLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 256/285] net: ethernet: mtk_eth_soc: fix possible NULL pointer dereference in mtk_hwlro_get_fdir_all()
-Date: Sun, 17 Sep 2023 21:14:16 +0200
-Message-ID: <20230917191100.137185501@linuxfoundation.org>
+Subject: [PATCH 6.5 257/285] hsr: Fix uninit-value access in fill_frame_info()
+Date: Sun, 17 Sep 2023 21:14:17 +0200
+Message-ID: <20230917191100.165452583@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,37 +41,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit e4c79810755f66c9a933ca810da2724133b1165a ]
+[ Upstream commit 484b4833c604c0adcf19eac1ca14b60b757355b5 ]
 
-rule_locs is allocated in ethtool_get_rxnfc and the size is determined by
-rule_cnt from user space. So rule_cnt needs to be check before using
-rule_locs to avoid NULL pointer dereference.
+Syzbot reports the following uninit-value access problem.
 
-Fixes: 7aab747e5563 ("net: ethernet: mediatek: add ethtool functions to configure RX flows of HW LRO")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+=====================================================
+BUG: KMSAN: uninit-value in fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+BUG: KMSAN: uninit-value in hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ fill_frame_info net/hsr/hsr_forward.c:601 [inline]
+ hsr_forward_skb+0x9bd/0x30f0 net/hsr/hsr_forward.c:616
+ hsr_dev_xmit+0x192/0x330 net/hsr/hsr_device.c:223
+ __netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+ xmit_one net/core/dev.c:3544 [inline]
+ dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3560
+ __dev_queue_xmit+0x34d0/0x52a0 net/core/dev.c:4340
+ dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+ packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
+ packet_snd net/packet/af_packet.c:3087 [inline]
+ packet_sendmsg+0x8b1d/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+Uninit was created at:
+ slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+ kmalloc_reserve+0x148/0x470 net/core/skbuff.c:559
+ __alloc_skb+0x318/0x740 net/core/skbuff.c:644
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6299
+ sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2794
+ packet_alloc_skb net/packet/af_packet.c:2936 [inline]
+ packet_snd net/packet/af_packet.c:3030 [inline]
+ packet_sendmsg+0x70e8/0x9f30 net/packet/af_packet.c:3119
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ __sys_sendto+0x781/0xa30 net/socket.c:2176
+ __do_sys_sendto net/socket.c:2188 [inline]
+ __se_sys_sendto net/socket.c:2184 [inline]
+ __ia32_sys_sendto+0x11f/0x1c0 net/socket.c:2184
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+It is because VLAN not yet supported in hsr driver. Return error
+when protocol is ETH_P_8021Q in fill_frame_info() now to fix it.
+
+Fixes: 451d8123f897 ("net: prp: add packet handling support")
+Reported-by: syzbot+bf7e6250c7ce248f3ec9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bf7e6250c7ce248f3ec9
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/hsr/hsr_forward.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 2d15342c260ae..7f0807672071f 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2860,6 +2860,9 @@ static int mtk_hwlro_get_fdir_all(struct net_device *dev,
- 	int i;
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 629daacc96071..b71dab630a873 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -594,6 +594,7 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+ 		netdev_warn_once(skb->dev, "VLAN not yet supported");
++		return -EINVAL;
+ 	}
  
- 	for (i = 0; i < MTK_MAX_LRO_IP_CNT; i++) {
-+		if (cnt == cmd->rule_cnt)
-+			return -EMSGSIZE;
-+
- 		if (mac->hwlro_ip[i]) {
- 			rule_locs[cnt] = i;
- 			cnt++;
+ 	frame->is_from_san = false;
 -- 
 2.40.1
 
