@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D267461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1666C433C7;
-	Sun, 17 Sep 2023 19:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114537461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8B2C433CA;
+	Sun, 17 Sep 2023 19:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980110;
-	bh=IFK0CWamUz1bH+HfxUv1NDI9JlSix+HSjGjtywd7gtk=;
+	s=korg; t=1694980113;
+	bh=EFNQ6yXt0cCWJy3EtzKj5AiRiApdkqUgpA/tXOI6UL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQ11yP43nXSfzm0Wt2Jic4uCETRDBTRglg6VuO9r9xx/aE36xFJjCxNmgOvb+uC9d
-	 iRlptCgTn61If3w14Y8pCm74jPt5jJ7RLhJ86RuaGLsZbOxl0F2L0tveeT/5wQZwDb
-	 G36N21hMS03jVio27663/VOTprQkbroxzHcdzi1o=
+	b=Z1Zyluq3yyK+7KJ2DGmZkHJGkjWCm79VKImKp/sPRECgFDoxDePcRnmXfyMVRuntj
+	 C11v229VN2YOjCJKA3AeiRJyS0CWmeHzNVmZMYPuEfxAs5KpJWNhra0SKDjESRdJUP
+	 dmijvr6817v+28ny9KRZzuPT8aSpxKkxc385vylg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 6.5 063/285] kconfig: fix possible buffer overflow
-Date: Sun, 17 Sep 2023 21:11:03 +0200
-Message-ID: <20230917191053.890593865@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 093/285] pwm: lpc32xx: Remove handling of PWM channels
+Date: Sun, 17 Sep 2023 21:11:33 +0200
+Message-ID: <20230917191054.914789261@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -35,42 +36,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Vladimir Zapolskiy <vz@mleia.com>
 
-[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
+[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
 
-Buffer 'new_argv' is accessed without bound check after accessing with
-bound check via 'new_argc' index.
+Because LPC32xx PWM controllers have only a single output which is
+registered as the only PWM device/channel per controller, it is known in
+advance that pwm->hwpwm value is always 0. On basis of this fact
+simplify the code by removing operations with pwm->hwpwm, there is no
+controls which require channel number as input.
 
-Fixes: e298f3b49def ("kconfig: add built-in function support")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Even though I wasn't aware at the time when I forward ported that patch,
+this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
+before devm_pwmchip_add() is called.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/preprocess.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
-index 748da578b418c..d1f5bcff4b62d 100644
---- a/scripts/kconfig/preprocess.c
-+++ b/scripts/kconfig/preprocess.c
-@@ -396,6 +396,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
+diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
+index 86a0ea0f6955c..806f0bb3ad6d8 100644
+--- a/drivers/pwm/pwm-lpc32xx.c
++++ b/drivers/pwm/pwm-lpc32xx.c
+@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	if (duty_cycles > 255)
+ 		duty_cycles = 255;
  
- 		p++;
- 	}
-+
-+	if (new_argc >= FUNCTION_MAX_ARGS)
-+		pperror("too many function arguments");
- 	new_argv[new_argc++] = prev;
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~0xFFFF;
+ 	val |= (period_cycles << 8) | duty_cycles;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
  
- 	/*
+ 	return 0;
+ }
+@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	if (ret)
+ 		return ret;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val |= PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	return 0;
+ }
+@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
+ 	u32 val;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	clk_disable_unprepare(lpc32xx->clk);
+ }
+@@ -141,9 +141,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
+ 	lpc32xx->chip.npwm = 1;
+ 
+ 	/* If PWM is disabled, configure the output to the default value */
+-	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_PIN_LEVEL;
+-	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	ret = devm_pwmchip_add(&pdev->dev, &lpc32xx->chip);
+ 	if (ret < 0) {
 -- 
 2.40.1
 
