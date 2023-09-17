@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE576FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1A9C433C7;
-	Sun, 17 Sep 2023 20:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8986FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8036AC433C9;
+	Sun, 17 Sep 2023 20:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981554;
-	bh=y7YZEzoHXN/EV/gsISXQF1ZLBTwwmzADHeQS/JtHO2w=;
+	s=korg; t=1694981557;
+	bh=2NnO2pLOzToTkxrJytKxraV2QfcI5DQqP1RgHN0kczM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4toLLXUNCgbextcf0jPtF2xlLuh9+V17P4Lr1z9/K5a5V85k4vW5QncKrUjJAea1
-	 XmgkCpERfDl+rJyHYfNYxQtaxjrp7OKCPugybTJobfhgXj0Mb47TCS/OhOn6BtYdGZ
-	 F59q8Nut5HHFHC6WKhwKfQU0HUTuxEaV1OepxH9s=
+	b=htQHDNyaZ0KxmRRHs/9/Dl4jEsii8Rv9MB4G7BhtHcjs7M+M9rt4QhiAvbPXfeiI5
+	 HlSM8iULOs8ohyrlNYgptwBWF1SwLJeRQ+oSVvnVZ6p4iqghfvsQ+lecCoKHjH8ryo
+	 5umIoOW+L2Xr2/EKL38Z+a1eF401aCfmqPl5Brfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Will Deacon <will@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/511] perf/imx_ddr: dont enable counter0 if none of 4 counters are used
-Date: Sun, 17 Sep 2023 21:08:18 +0200
-Message-ID: <20230917191115.594432942@linuxfoundation.org>
+Subject: [PATCH 6.1 122/219] net: dsa: sja1105: fix -ENOSPC when replacing the same tc-cbs too many times
+Date: Sun, 17 Sep 2023 21:14:09 +0200
+Message-ID: <20230917191045.387863974@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,92 +36,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit f4e2bd91ddf5e8543cbe7ad80b3fba3d2dc63fa3 ]
+[ Upstream commit 894cafc5c62ccced758077bd4e970dc714c42637 ]
 
-In current driver, counter0 will be enabled after ddr_perf_pmu_enable()
-is called even though none of the 4 counters are used. This will cause
-counter0 continue to count until ddr_perf_pmu_disabled() is called. If
-pmu is not disabled all the time, the pmu interrupt will be asserted
-from time to time due to counter0 will overflow and irq handler will
-clear it. It's not an expected behavior. This patch will not enable
-counter0 if none of 4 counters are used.
+After running command [2] too many times in a row:
 
-Fixes: 9a66d36cc7ac ("drivers/perf: imx_ddr: Add DDR performance counter support to perf")
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230811015438.1999307-2-xu.yang_2@nxp.com
-Signed-off-by: Will Deacon <will@kernel.org>
+[1] $ tc qdisc add dev sw2p0 root handle 1: mqprio num_tc 8 \
+	map 0 1 2 3 4 5 6 7 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
+[2] $ tc qdisc replace dev sw2p0 parent 1:1 cbs offload 1 \
+	idleslope 120000 sendslope -880000 locredit -1320 hicredit 180
+
+(aka more than priv->info->num_cbs_shapers times)
+
+we start seeing the following error message:
+
+Error: Specified device failed to setup cbs hardware offload.
+
+This comes from the fact that ndo_setup_tc(TC_SETUP_QDISC_CBS) presents
+the same API for the qdisc create and replace cases, and the sja1105
+driver fails to distinguish between the 2. Thus, it always thinks that
+it must allocate the same shaper for a {port, queue} pair, when it may
+instead have to replace an existing one.
+
+Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/fsl_imx8_ddr_perf.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
-index b1b2a55de77fc..4daa782c48df0 100644
---- a/drivers/perf/fsl_imx8_ddr_perf.c
-+++ b/drivers/perf/fsl_imx8_ddr_perf.c
-@@ -102,6 +102,7 @@ struct ddr_pmu {
- 	const struct fsl_ddr_devtype_data *devtype_data;
- 	int irq;
- 	int id;
-+	int active_counter;
- };
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 377f177502003..9dd5cdcda2843 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2123,6 +2123,18 @@ static void sja1105_bridge_leave(struct dsa_switch *ds, int port,
  
- static ssize_t ddr_perf_identifier_show(struct device *dev,
-@@ -496,6 +497,10 @@ static void ddr_perf_event_start(struct perf_event *event, int flags)
+ #define BYTES_PER_KBIT (1000LL / 8)
  
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, true);
- 
-+	if (!pmu->active_counter++)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, true);
++static int sja1105_find_cbs_shaper(struct sja1105_private *priv,
++				   int port, int prio)
++{
++	int i;
 +
- 	hwc->state = 0;
- }
- 
-@@ -550,6 +555,10 @@ static void ddr_perf_event_stop(struct perf_event *event, int flags)
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, false);
- 	ddr_perf_event_update(event);
- 
-+	if (!--pmu->active_counter)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, false);
++	for (i = 0; i < priv->info->num_cbs_shapers; i++)
++		if (priv->cbs[i].port == port && priv->cbs[i].prio == prio)
++			return i;
 +
- 	hwc->state |= PERF_HES_STOPPED;
- }
- 
-@@ -568,25 +577,10 @@ static void ddr_perf_event_del(struct perf_event *event, int flags)
- 
- static void ddr_perf_pmu_enable(struct pmu *pmu)
++	return -1;
++}
++
+ static int sja1105_find_unused_cbs_shaper(struct sja1105_private *priv)
  {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	/* enable cycle counter if cycle is not active event list */
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      true);
- }
+ 	int i;
+@@ -2163,9 +2175,14 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ 	if (!offload->enable)
+ 		return sja1105_delete_cbs_shaper(priv, port, offload->queue);
  
- static void ddr_perf_pmu_disable(struct pmu *pmu)
- {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      false);
- }
+-	index = sja1105_find_unused_cbs_shaper(priv);
+-	if (index < 0)
+-		return -ENOSPC;
++	/* The user may be replacing an existing shaper */
++	index = sja1105_find_cbs_shaper(priv, port, offload->queue);
++	if (index < 0) {
++		/* That isn't the case - see if we can allocate a new one */
++		index = sja1105_find_unused_cbs_shaper(priv);
++		if (index < 0)
++			return -ENOSPC;
++	}
  
- static int ddr_perf_init(struct ddr_pmu *pmu, void __iomem *base,
+ 	cbs = &priv->cbs[index];
+ 	cbs->port = port;
 -- 
 2.40.1
 
