@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706F53B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E208FC433C8;
-	Sun, 17 Sep 2023 19:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AE53B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F0BC433C7;
+	Sun, 17 Sep 2023 19:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979315;
-	bh=Nk+uhoeS+GC/gM+xgHH0UlHdEWoYGCSEcCYEi5WJo8k=;
+	s=korg; t=1694979318;
+	bh=s+vTHCBQuFiC/dW4Upd3TRl0y4Q18HJadIPJ4EKFFGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwbcvT8OCHcrGkaCk+XQm3R9+T0pVHqNYOHYecgGrlHPiqGrnB8r4ZjXLNSrXlyMt
-	 fj0mU8j4L+ZbHT13/6lCpKHJdXOsObpGAfsUUlix4CUhLGb6Zi0An5W6PaPzmMQ1Xn
-	 qUvP88P2xZcX75yjNlrdJYRRPsG8008e7L1SlWY4=
+	b=e3igZZkN8C72sO6k6onVmwGS2KaiyFzMLD+dlj33/yQ0tsndBLkl1vpueDmO36whi
+	 dDORx67wuYjOQSaI5lYban0j2pJBAA3Wt+G7BSV2WY2x+GhWqn6wc2ZPGBDqurHj8D
+	 /OFbVmo9lajrH2WJQqJNESptzGQr5zuizeRPcET8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bernard Metzler <bmt@zurich.ibm.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 250/406] RDMA/siw: Balance the reference of cep->kref in the error path
-Date: Sun, 17 Sep 2023 21:11:44 +0200
-Message-ID: <20230917191107.767170118@linuxfoundation.org>
+Subject: [PATCH 5.10 251/406] RDMA/siw: Correct wrong debug message
+Date: Sun, 17 Sep 2023 21:11:45 +0200
+Message-ID: <20230917191107.796121629@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,46 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit b056327bee09e6b86683d3f709a438ccd6031d72 ]
+[ Upstream commit bee024d20451e4ce04ea30099cad09f7f75d288b ]
 
-The siw_connect can go to err in below after cep is allocated successfully:
+We need to print num_sle first then pbl->max_buf per the condition.
+Also replace mem->pbl with pbl while at it.
 
-1. If siw_cm_alloc_work returns failure. In this case socket is not
-assoicated with cep so siw_cep_put can't be called by siw_socket_disassoc.
-We need to call siw_cep_put twice since cep->kref is increased once after
-it was initialized.
-
-2. If siw_cm_queue_work can't find a work, which means siw_cep_get is not
-called in siw_cm_queue_work, so cep->kref is increased twice by siw_cep_get
-and when associate socket with cep after it was initialized. So we need to
-call siw_cep_put three times (one in siw_socket_disassoc).
-
-3. siw_send_mpareqrep returns error, this scenario is similar as 2.
-
-So we need to remove one siw_cep_put in the error path.
-
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
 Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://lore.kernel.org/r/20230821133255.31111-2-guoqing.jiang@linux.dev
+Link: https://lore.kernel.org/r/20230821133255.31111-3-guoqing.jiang@linux.dev
 Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index b87ba4c9fccf1..de5ab282ac748 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1490,7 +1490,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index d043793ff0f53..1d4e0dc550e42 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -1487,7 +1487,7 @@ int siw_map_mr_sg(struct ib_mr *base_mr, struct scatterlist *sl, int num_sle,
  
- 		cep->cm_id = NULL;
- 		id->rem_ref(id);
--		siw_cep_put(cep);
- 
- 		qp->cep = NULL;
- 		siw_cep_put(cep);
+ 	if (pbl->max_buf < num_sle) {
+ 		siw_dbg_mem(mem, "too many SGE's: %d > %d\n",
+-			    mem->pbl->max_buf, num_sle);
++			    num_sle, pbl->max_buf);
+ 		return -ENOMEM;
+ 	}
+ 	for_each_sg(sl, slp, num_sle, i) {
 -- 
 2.40.1
 
