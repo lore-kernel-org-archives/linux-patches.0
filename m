@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1597461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD7EC433C8;
-	Sun, 17 Sep 2023 19:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D037461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5440BC433C8;
+	Sun, 17 Sep 2023 19:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980774;
-	bh=JXbuv8xzCrtIJliXqQOe0gj2JxD2APhy0dL+VzL7t2Q=;
+	s=korg; t=1694980777;
+	bh=OH1k8rbvvVB1rZHEBI3odmcCE3gOQb2IF9kaoE3ZIxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P794QZu4fWAJjiCP6pe72MvRThgok4ZFRjop9AjJ97fflynL5Xg143pY4BeMdX8C7
-	 qV10wJDfe+oQMybEsYP0BKzR3PJFzNkUeu7f/DN/g9BuzaZxscCY5LBR9QXBaouEl2
-	 IHaHshiXS6DWHEVKG4nabVfIKuV7k5SD8k1VraJ8=
+	b=oTIN1OSKVge5rZdPs+WmUbKnoGQCF2UymzWvxJHSNg5pDuwjHj+SWoPTLxW9M3ErT
+	 cM4+PgaZzmG2fNa03OSg5YdZkayU/yxO2DxyC4aNq4T5iYpubnoszOgOMoKamcyDpL
+	 x1rsjhJLlSMWRi3/VdszEY7MqMMNUx5PrlmFfQGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Hayes Wang <hayeswang@realtek.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 264/285] net: dsa: sja1105: block FDB accesses that are concurrent with a switch reset
-Date: Sun, 17 Sep 2023 21:14:24 +0200
-Message-ID: <20230917191100.361496015@linuxfoundation.org>
+Subject: [PATCH 6.5 265/285] r8152: check budget for r8152_poll()
+Date: Sun, 17 Sep 2023 21:14:25 +0200
+Message-ID: <20230917191100.388261923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,55 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hayes Wang <hayeswang@realtek.com>
 
-[ Upstream commit 86899e9e1e29e854b5f6dcc24ba4f75f792c89aa ]
+[ Upstream commit a7b8d60b37237680009dd0b025fe8c067aba0ee3 ]
 
-Currently, when we add the first sja1105 port to a bridge with
-vlan_filtering 1, then we sometimes see this output:
+According to the document of napi, there is no rx process when the
+budget is 0. Therefore, r8152_poll() has to return 0 directly when the
+budget is equal to 0.
 
-sja1105 spi2.2: port 4 failed to read back entry for be:79:b4:9e:9e:96 vid 3088: -ENOENT
-sja1105 spi2.2: Reset switch and programmed static config. Reason: VLAN filtering
-sja1105 spi2.2: port 0 failed to add be:79:b4:9e:9e:96 vid 0 to fdb: -2
-
-It is because sja1105_fdb_add() runs from the dsa_owq which is no longer
-serialized with switch resets since it dropped the rtnl_lock() in the
-blamed commit.
-
-Either performing the FDB accesses before the reset, or after the reset,
-is equally fine, because sja1105_static_fdb_change() backs up those
-changes in the static config, but FDB access during reset isn't ok.
-
-Make sja1105_static_config_reload() take the fdb_lock to fix that.
-
-Fixes: 0faf890fc519 ("net: dsa: drop rtnl_lock from dsa_slave_switchdev_event_work")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Fixes: d2187f8e4454 ("r8152: divide the tx and rx bottom functions")
+Signed-off-by: Hayes Wang <hayeswang@realtek.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/r8152.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 79927191ac623..013976b0af9f1 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2304,6 +2304,7 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 	int rc, i;
- 	s64 now;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 0738baa5b82e4..e88bedca8f32f 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -2629,6 +2629,9 @@ static int r8152_poll(struct napi_struct *napi, int budget)
+ 	struct r8152 *tp = container_of(napi, struct r8152, napi);
+ 	int work_done;
  
-+	mutex_lock(&priv->fdb_lock);
- 	mutex_lock(&priv->mgmt_lock);
++	if (!budget)
++		return 0;
++
+ 	work_done = rx_bottom(tp, budget);
  
- 	mac = priv->static_config.tables[BLK_IDX_MAC_CONFIG].entries;
-@@ -2416,6 +2417,7 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 		goto out;
- out:
- 	mutex_unlock(&priv->mgmt_lock);
-+	mutex_unlock(&priv->fdb_lock);
- 
- 	return rc;
- }
+ 	if (work_done < budget) {
 -- 
 2.40.1
 
