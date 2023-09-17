@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F577461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECEFC433C9;
-	Sun, 17 Sep 2023 20:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D637461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6D8C433C9;
+	Sun, 17 Sep 2023 20:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981886;
-	bh=zkkY760X1gjJPc74LEZBIREv/7Hicw10U67v/zKDGVA=;
+	s=korg; t=1694981889;
+	bh=O68uv2Qp8pKV87GjEPT88Jjk1JlCqVYyw63/MmEdniA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDBYXmh8SnQI4eeUli2sX5gt1KFZfFEH2kaofrFovzne0yxsUuaNps/MgTiVGG1my
-	 jEfMealWRm4Kjb/Mss3E9FmHBis+g1O5eqy8anmxja9XWRlogYYmT1sOcozMVZ3GF0
-	 cBZp3N7QgsUZ0/A0f+nDjLKuDoqsZIH6bUFu25nE=
+	b=x6Nlxth/vt7yJwEWhbBrsoPv3MFJgl4bmC28yjSQXvLwDPdIVAJEntKSGlR5J2b/y
+	 rKTLfudJXt3DTHAnogHkn1Rd+y/ztWoyLKsEteXvNUX0eqHh7Jc0QzCu5FfjCvurXZ
+	 mMaXVJDdkqzWMEwUgZAS1CK2ZBVzzeHoZGVqp7cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/511] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
-Date: Sun, 17 Sep 2023 21:08:37 +0200
-Message-ID: <20230917191116.044457055@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 156/219] btrfs: fix start transaction qgroup rsv double free
+Date: Sun, 17 Sep 2023 21:14:43 +0200
+Message-ID: <20230917191046.688260869@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,53 +36,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
+commit a6496849671a5bc9218ecec25a983253b34351b1 upstream.
 
-In case of an RX overflow error from the CAN controller and an OOM
-where no skb can be allocated, the error counters are not incremented.
+btrfs_start_transaction reserves metadata space of the PERTRANS type
+before it identifies a transaction to start/join. This allows flushing
+when reserving that space without a deadlock. However, it results in a
+race which temporarily breaks qgroup rsv accounting.
 
-Fix this by first incrementing the error counters and then allocate
-the skb.
+T1                                              T2
+start_transaction
+do_stuff
+                                            start_transaction
+                                                qgroup_reserve_meta_pertrans
+commit_transaction
+    qgroup_free_meta_all_pertrans
+                                            hit an error starting txn
+                                            goto reserve_fail
+                                            qgroup_free_meta_pertrans (already freed!)
 
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The basic issue is that there is nothing preventing another commit from
+committing before start_transaction finishes (in fact sometimes we
+intentionally wait for it) so any error path that frees the reserve is
+at risk of this race.
+
+While this exact space was getting freed anyway, and it's not a huge
+deal to double free it (just a warning, the free code catches this), it
+can result in incorrectly freeing some other pertrans reservation in
+this same reservation, which could then lead to spuriously granting
+reservations we might not have the space for. Therefore, I do believe it
+is worth fixing.
+
+To fix it, use the existing prealloc->pertrans conversion mechanism.
+When we first reserve the space, we reserve prealloc space and only when
+we are sure we have a transaction do we convert it to pertrans. This way
+any racing commits do not blow away our reservation, but we still get a
+pertrans reservation that is freed when _this_ transaction gets committed.
+
+This issue can be reproduced by running generic/269 with either qgroups
+or squotas enabled via mkfs on the scratch device.
+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+CC: stable@vger.kernel.org # 5.10+
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/transaction.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 5d6062fbebfcc..7dc4fb574e459 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -382,6 +382,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -580,8 +580,13 @@ start_transaction(struct btrfs_root *roo
+ 		u64 delayed_refs_bytes = 0;
+ 
+ 		qgroup_reserved = num_items * fs_info->nodesize;
+-		ret = btrfs_qgroup_reserve_meta_pertrans(root, qgroup_reserved,
+-				enforce_qgroups);
++		/*
++		 * Use prealloc for now, as there might be a currently running
++		 * transaction that could free this reserved space prematurely
++		 * by committing.
++		 */
++		ret = btrfs_qgroup_reserve_meta_prealloc(root, qgroup_reserved,
++							 enforce_qgroups, false);
+ 		if (ret)
+ 			return ERR_PTR(ret);
+ 
+@@ -693,6 +698,14 @@ again:
+ 		h->reloc_reserved = reloc_reserved;
  	}
  
- 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
-+		stats->rx_over_errors++;
-+		stats->rx_errors++;
++	/*
++	 * Now that we have found a transaction to be a part of, convert the
++	 * qgroup reservation from prealloc to pertrans. A different transaction
++	 * can't race in and free our pertrans out from under us.
++	 */
++	if (qgroup_reserved)
++		btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
 +
- 		skb = alloc_can_err_skb(netdev, &cf);
- 		if (!skb)
- 			goto resubmit_urb;
-@@ -389,8 +392,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		cf->can_id |= CAN_ERR_CRTL;
- 		cf->len = CAN_ERR_DLC;
- 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
--		stats->rx_over_errors++;
--		stats->rx_errors++;
- 		netif_rx(skb);
- 	}
+ got_it:
+ 	if (!current->journal_info)
+ 		current->journal_info = h;
+@@ -740,7 +753,7 @@ alloc_fail:
+ 		btrfs_block_rsv_release(fs_info, &fs_info->trans_block_rsv,
+ 					num_bytes, NULL);
+ reserve_fail:
+-	btrfs_qgroup_free_meta_pertrans(root, qgroup_reserved);
++	btrfs_qgroup_free_meta_prealloc(root, qgroup_reserved);
+ 	return ERR_PTR(ret);
+ }
  
--- 
-2.40.1
-
 
 
