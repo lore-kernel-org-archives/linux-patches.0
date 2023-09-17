@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617106FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7F0C433C9;
-	Sun, 17 Sep 2023 20:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32AE6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138EEC433CC;
+	Sun, 17 Sep 2023 20:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982766;
-	bh=fHIUbgPVO+5Q079EtvrwLkWEykkyaM3U+RqB7Jl4Tpk=;
+	s=korg; t=1694982769;
+	bh=ZjU1oZs2HX0PNzriJlZzzSLas/ICsjgqpteEO6/z1tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB8ZZoedVGnpUQqMxU/IxXQ3U14OwFSE7RnolBjDWrS0nU1RryyVJZRv2yJGTkZh2
-	 H1t44nxEGshf6KHlEzXBXK6Uof9DTGjGEq0vZXu874qpIk7Bxi3Pr6/nCdd2EKRu0o
-	 qzJfBP/Y0HVMRSc6U3EmmL4lJSvHp4QyxT9ChfI8=
+	b=qPbQ4n6yEv5AbV6U06GIi/BgYNQD0Q0bKGUQch/jmPMRUailJWdpjpgWYnNpZndWh
+	 xjyTIfDFnSV6mFvjCLNLFDTfX6mNkKRZ9oVb+iTOvq+quV5gF3timSOKbeWpip1vQ1
+	 5MGnFglUze17U4GkR32XHP01HkldzYIxCG5mS2fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 347/511] parisc: Fix /proc/cpuinfo output for lscpu
-Date: Sun, 17 Sep 2023 21:12:54 +0200
-Message-ID: <20230917191122.186191248@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.15 348/511] bpf: Fix issue in verifying allow_ptr_leaks
+Date: Sun, 17 Sep 2023 21:12:55 +0200
+Message-ID: <20230917191122.210811783@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -38,61 +42,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-commit 9f5ba4b3e1b3c123eeca5d2d09161e8720048b5c upstream.
+commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
 
-The lscpu command is broken since commit cab56b51ec0e ("parisc: Fix
-device names in /proc/iomem") added the PA pathname to all PA
-devices, includig the CPUs.
+After we converted the capabilities of our networking-bpf program from
+cap_sys_admin to cap_net_admin+cap_bpf, our networking-bpf program
+failed to start. Because it failed the bpf verifier, and the error log
+is "R3 pointer comparison prohibited".
 
-lscpu parses /proc/cpuinfo and now believes it found different CPU
-types since every CPU is listed with an unique identifier (PA
-pathname).
+A simple reproducer as follows,
 
-Fix this problem by simply dropping the PA pathname when listing the
-CPUs in /proc/cpuinfo. There is no need to show the pathname in this
-procfs file.
+SEC("cls-ingress")
+int ingress(struct __sk_buff *skb)
+{
+	struct iphdr *iph = (void *)(long)skb->data + sizeof(struct ethhdr);
 
-Fixes: cab56b51ec0e ("parisc: Fix device names in /proc/iomem")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v4.9+
+	if ((long)(iph + 1) > (long)skb->data_end)
+		return TC_ACT_STOLEN;
+	return TC_ACT_OK;
+}
+
+Per discussion with Yonghong and Alexei [1], comparison of two packet
+pointers is not a pointer leak. This patch fixes it.
+
+Our local kernel is 6.1.y and we expect this fix to be backported to
+6.1.y, so stable is CCed.
+
+[1]. https://lore.kernel.org/bpf/CAADnVQ+Nmspr7Si+pxWn8zkE7hX-7s93ugwC+94aXSy4uQ9vBg@mail.gmail.com/
+
+Suggested-by: Yonghong Song <yonghong.song@linux.dev>
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230823020703.3790-2-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/processor.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/arch/parisc/kernel/processor.c
-+++ b/arch/parisc/kernel/processor.c
-@@ -372,10 +372,18 @@ int
- show_cpuinfo (struct seq_file *m, void *v)
- {
- 	unsigned long cpu;
-+	char cpu_name[60], *p;
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9193,6 +9193,12 @@ static int check_cond_jmp_op(struct bpf_
+ 		return -EINVAL;
+ 	}
+ 
++	/* check src2 operand */
++	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
++	if (err)
++		return err;
 +
-+	/* strip PA path from CPU name to not confuse lscpu */
-+	strlcpy(cpu_name, per_cpu(cpu_data, 0).dev->name, sizeof(cpu_name));
-+	p = strrchr(cpu_name, '[');
-+	if (p)
-+		*(--p) = 0;
++	dst_reg = &regs[insn->dst_reg];
+ 	if (BPF_SRC(insn->code) == BPF_X) {
+ 		if (insn->imm != 0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -9204,12 +9210,13 @@ static int check_cond_jmp_op(struct bpf_
+ 		if (err)
+ 			return err;
  
- 	for_each_online_cpu(cpu) {
--		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
- #ifdef CONFIG_SMP
-+		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
-+
- 		if (0 == cpuinfo->hpa)
- 			continue;
- #endif
-@@ -420,8 +428,7 @@ show_cpuinfo (struct seq_file *m, void *
+-		if (is_pointer_value(env, insn->src_reg)) {
++		src_reg = &regs[insn->src_reg];
++		if (!(reg_is_pkt_pointer_any(dst_reg) && reg_is_pkt_pointer_any(src_reg)) &&
++		    is_pointer_value(env, insn->src_reg)) {
+ 			verbose(env, "R%d pointer comparison prohibited\n",
+ 				insn->src_reg);
+ 			return -EACCES;
+ 		}
+-		src_reg = &regs[insn->src_reg];
+ 	} else {
+ 		if (insn->src_reg != BPF_REG_0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -9217,12 +9224,6 @@ static int check_cond_jmp_op(struct bpf_
+ 		}
+ 	}
  
- 		seq_printf(m, "model\t\t: %s - %s\n",
- 				 boot_cpu_data.pdc.sys_model_name,
--				 cpuinfo->dev ?
--				 cpuinfo->dev->name : "Unknown");
-+				 cpu_name);
+-	/* check src2 operand */
+-	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
+-	if (err)
+-		return err;
+-
+-	dst_reg = &regs[insn->dst_reg];
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
  
- 		seq_printf(m, "hversion\t: 0x%08x\n"
- 			        "sversion\t: 0x%08x\n",
+ 	if (BPF_SRC(insn->code) == BPF_K) {
 
 
