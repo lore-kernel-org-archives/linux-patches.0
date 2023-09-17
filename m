@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752F77469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:23:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB694C433C8;
-	Sun, 17 Sep 2023 20:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC127469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:23:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37823C433C8;
+	Sun, 17 Sep 2023 20:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982181;
-	bh=1yliCO3K+vMfug6sGyeGRcwF21IfquVzXW749NFXzMc=;
+	s=korg; t=1694982184;
+	bh=Sl0ev05CArq4Iwp4ljBosJKpu7HXTmJAbOOvlpC0fPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYzf0gjgyjyycn1nOyAlTYLIH1DFbjKgvrxyWg6njrcsaSTbxUNybXTgC/2FdvXL5
-	 yNivi6oCuhoTW3Hg5aaw1HYAhnAmr8+7rqxzVc+Lp3rNEW1jSkn3b9K2Bw8imRYDwZ
-	 1rT+s+9gKo+a15jmvX3QhKpZ1LrYtOmJBX4ardqs=
+	b=dFfETwqI3zqxHPPP8gjzwYpTpIJAKK479WU1lPn4Q2LFtHGApI8nEekxq2sZNjihF
+	 LzBTeeQmUUOcdTix3L3nNGDw1MzxecFR37Bm4vs70fvTeM8EsoQ64emvs6hrJTs/2N
+	 +jxfvkh0rkdyWf+eFc/r2e+Jq1lkyNg3eNZLt5IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 175/511] smackfs: Prevent underflow in smk_set_cipso()
-Date: Sun, 17 Sep 2023 21:10:02 +0200
-Message-ID: <20230917191118.058931791@linuxfoundation.org>
+Subject: [PATCH 5.15 176/511] drm/amd/pm: fix variable dereferenced issue in amdgpu_device_attr_create()
+Date: Sun, 17 Sep 2023 21:10:03 +0200
+Message-ID: <20230917191118.081849178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,35 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 3ad49d37cf5759c3b8b68d02e3563f633d9c1aee ]
+[ Upstream commit 25e6373a5b8efc623443f2699d2b929bf3067d76 ]
 
-There is a upper bound to "catlen" but no lower bound to prevent
-negatives.  I don't see that this necessarily causes a problem but we
-may as well be safe.
+- fix variable ('attr') dereferenced issue.
+- using condition check instead of BUG_ON().
 
-Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Fixes: 4e01847c38f7 ("drm/amdgpu: optimize amdgpu device attribute code")
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index 658eab05599e6..27fd7744e0fc0 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -895,7 +895,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index 6aaf1230655f4..73794c1c12082 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -2134,15 +2134,19 @@ static int amdgpu_device_attr_create(struct amdgpu_device *adev,
+ 				     uint32_t mask, struct list_head *attr_list)
+ {
+ 	int ret = 0;
+-	struct device_attribute *dev_attr = &attr->dev_attr;
+-	const char *name = dev_attr->attr.name;
+ 	enum amdgpu_device_attr_states attr_states = ATTR_STATE_SUPPORTED;
+ 	struct amdgpu_device_attr_entry *attr_entry;
++	struct device_attribute *dev_attr;
++	const char *name;
  
- 	ret = sscanf(rule, "%d", &catlen);
--	if (ret != 1 || catlen > SMACK_CIPSO_MAXCATNUM)
-+	if (ret != 1 || catlen < 0 || catlen > SMACK_CIPSO_MAXCATNUM)
- 		goto out;
+ 	int (*attr_update)(struct amdgpu_device *adev, struct amdgpu_device_attr *attr,
+ 			   uint32_t mask, enum amdgpu_device_attr_states *states) = default_attr_update;
  
- 	if (format == SMK_FIXED24_FMT &&
+-	BUG_ON(!attr);
++	if (!attr)
++		return -EINVAL;
++
++	dev_attr = &attr->dev_attr;
++	name = dev_attr->attr.name;
+ 
+ 	attr_update = attr->attr_update ? attr->attr_update : default_attr_update;
+ 
 -- 
 2.40.1
 
