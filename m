@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11306C433CA;
-	Sun, 17 Sep 2023 20:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A416FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16DFC433C7;
+	Sun, 17 Sep 2023 20:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981157;
-	bh=AcUDdRyH7qYeCFpzWUgeeRK7h+hUf9upgMa7Ss0V+XQ=;
+	s=korg; t=1694981161;
+	bh=27EL6QPSkvalQGsGgaRVNqzTyKk7T8Emu7lIq9XJmp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMoFO+O82FEk+MmW9FYv3h0Snra3ykzPhJdE2oLmMOibKPwAJvTg4M0b0ThF7I5YV
-	 iK0Q+Iyvv2O85R1mArP25O0oPWOSaVOlBtgsPKGkONq5VgpU4Cus4LfRNle1ssmkeC
-	 2mCnRKUfG5Bn1a8L2ulNam/JNmP4zyjlHmEqDDVU=
+	b=BZGkU9Y4y4acmbXG8wmIZ3bUSfcwdE21UEvFFRgco5lKRaS0uaZwoApu2d/W9zOnS
+	 WMlbv5YdkH+v7jrWxsZezSydT4m7orRbZLQAxVRXMSa9k4VFQjEiE/eW1FJKIT8aRu
+	 1LF02piL7lSPsOfydnF78j/QQlxOC24PlXXtiCNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	linuxppc-dev@lists.ozlabs.org,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jiri Benc <jbenc@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/219] perf test stat_bpf_counters_cgrp: Fix shellcheck issue about logical operators
-Date: Sun, 17 Sep 2023 21:13:27 +0200
-Message-ID: <20230917191043.869526841@linuxfoundation.org>
+Subject: [PATCH 5.15 014/511] vxlan: generalize vxlan_parse_gpe_hdr and remove unused args
+Date: Sun, 17 Sep 2023 21:07:21 +0200
+Message-ID: <20230917191114.177877991@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,122 +36,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Jiri Benc <jbenc@redhat.com>
 
-[ Upstream commit 0dd1f815545d7210150642741c364521cc5cf116 ]
+[ Upstream commit 17a0a64448b568442a101de09575f81ffdc45d15 ]
 
-Running shellcheck on lock_contention.sh generates below warning:
+The vxlan_parse_gpe_hdr function extracts the next protocol value from
+the GPE header and marks GPE bits as parsed.
 
-In stat_bpf_counters_cgrp.sh line 28:
-	if [ -d /sys/fs/cgroup/system.slice -a -d /sys/fs/cgroup/user.slice ]; then
-                                            ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.
+In order to be used in the next patch, split the function into protocol
+extraction and bit marking. The bit marking is meaningful only in
+vxlan_rcv; move it directly there.
 
-In stat_bpf_counters_cgrp.sh line 34:
-	local self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
-        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
-              ^-------^ SC2155 (warning): Declare and assign separately to avoid masking return values.
-                        ^-- SC2046 (warning): Quote this to prevent word splitting.
+Rename the function to vxlan_parse_gpe_proto to reflect what it now
+does. Remove unused arguments skb and vxflags. Move the function earlier
+in the file to allow it to be called from more places in the next patch.
 
-In stat_bpf_counters_cgrp.sh line 51:
-	local output
-        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
-
-In stat_bpf_counters_cgrp.sh line 65:
-	local output
-        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
-
-Fixed above warnings by:
-- Changing the expression [p -a q] to [p] && [q].
-- Fixing shellcheck warnings for local usage, by prefixing
-  function name to the variable.
-
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230709182800.53002-6-atrajeev@linux.vnet.ibm.com
-Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: a84260e31402 ("perf test stat_bpf_counters_cgrp: Enhance perf stat cgroup BPF counter test")
+Signed-off-by: Jiri Benc <jbenc@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../tests/shell/stat_bpf_counters_cgrp.sh     | 28 ++++++++-----------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 58 ++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 30 deletions(-)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-index d724855d097c2..a74440a00b6b6 100755
---- a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
-@@ -25,22 +25,22 @@ check_bpf_counter()
- find_cgroups()
- {
- 	# try usual systemd slices first
--	if [ -d /sys/fs/cgroup/system.slice -a -d /sys/fs/cgroup/user.slice ]; then
-+	if [ -d /sys/fs/cgroup/system.slice ] && [ -d /sys/fs/cgroup/user.slice ]; then
- 		test_cgroups="system.slice,user.slice"
- 		return
- 	fi
- 
- 	# try root and self cgroups
--	local self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
--	if [ -z ${self_cgrp} ]; then
-+	find_cgroups_self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
-+	if [ -z ${find_cgroups_self_cgrp} ]; then
- 		# cgroup v2 doesn't specify perf_event
--		self_cgrp=$(grep ^0: /proc/self/cgroup | cut -d: -f3)
-+		find_cgroups_self_cgrp=$(grep ^0: /proc/self/cgroup | cut -d: -f3)
- 	fi
- 
--	if [ -z ${self_cgrp} ]; then
-+	if [ -z ${find_cgroups_self_cgrp} ]; then
- 		test_cgroups="/"
- 	else
--		test_cgroups="/,${self_cgrp}"
-+		test_cgroups="/,${find_cgroups_self_cgrp}"
- 	fi
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 106b66570e046..41b1b23fdd3e9 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -730,6 +730,32 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
+ 	return 1;
  }
  
-@@ -48,13 +48,11 @@ find_cgroups()
- # Just check if it runs without failure and has non-zero results.
- check_system_wide_counted()
- {
--	local output
--
--	output=$(perf stat -a --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, sleep 1  2>&1)
--	if echo ${output} | grep -q -F "<not "; then
-+	check_system_wide_counted_output=$(perf stat -a --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, sleep 1  2>&1)
-+	if echo ${check_system_wide_counted_output} | grep -q -F "<not "; then
- 		echo "Some system-wide events are not counted"
- 		if [ "${verbose}" = "1" ]; then
--			echo ${output}
-+			echo ${check_system_wide_counted_output}
- 		fi
- 		exit 1
- 	fi
-@@ -62,13 +60,11 @@ check_system_wide_counted()
++static bool vxlan_parse_gpe_proto(struct vxlanhdr *hdr, __be16 *protocol)
++{
++	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)hdr;
++
++	/* Need to have Next Protocol set for interfaces in GPE mode. */
++	if (!gpe->np_applied)
++		return false;
++	/* "The initial version is 0. If a receiver does not support the
++	 * version indicated it MUST drop the packet.
++	 */
++	if (gpe->version != 0)
++		return false;
++	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
++	 * processing MUST occur." However, we don't implement OAM
++	 * processing, thus drop the packet.
++	 */
++	if (gpe->oam_flag)
++		return false;
++
++	*protocol = tun_p_to_eth_p(gpe->next_protocol);
++	if (!*protocol)
++		return false;
++
++	return true;
++}
++
+ static struct vxlanhdr *vxlan_gro_remcsum(struct sk_buff *skb,
+ 					  unsigned int off,
+ 					  struct vxlanhdr *vh, size_t hdrlen,
+@@ -1738,35 +1764,6 @@ static void vxlan_parse_gbp_hdr(struct vxlanhdr *unparsed,
+ 	unparsed->vx_flags &= ~VXLAN_GBP_USED_BITS;
+ }
  
- check_cpu_list_counted()
- {
--	local output
+-static bool vxlan_parse_gpe_hdr(struct vxlanhdr *unparsed,
+-				__be16 *protocol,
+-				struct sk_buff *skb, u32 vxflags)
+-{
+-	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)unparsed;
 -
--	output=$(perf stat -C 1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
--	if echo ${output} | grep -q -F "<not "; then
-+	check_cpu_list_counted_output=$(perf stat -C 1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
-+	if echo ${check_cpu_list_counted_output} | grep -q -F "<not "; then
- 		echo "Some CPU events are not counted"
- 		if [ "${verbose}" = "1" ]; then
--			echo ${output}
-+			echo ${check_cpu_list_counted_output}
- 		fi
- 		exit 1
- 	fi
+-	/* Need to have Next Protocol set for interfaces in GPE mode. */
+-	if (!gpe->np_applied)
+-		return false;
+-	/* "The initial version is 0. If a receiver does not support the
+-	 * version indicated it MUST drop the packet.
+-	 */
+-	if (gpe->version != 0)
+-		return false;
+-	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
+-	 * processing MUST occur." However, we don't implement OAM
+-	 * processing, thus drop the packet.
+-	 */
+-	if (gpe->oam_flag)
+-		return false;
+-
+-	*protocol = tun_p_to_eth_p(gpe->next_protocol);
+-	if (!*protocol)
+-		return false;
+-
+-	unparsed->vx_flags &= ~VXLAN_GPE_USED_BITS;
+-	return true;
+-}
+-
+ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
+ 			  struct vxlan_sock *vs,
+ 			  struct sk_buff *skb, __be32 vni)
+@@ -1867,8 +1864,9 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
+ 	 * used by VXLAN extensions if explicitly requested.
+ 	 */
+ 	if (vs->flags & VXLAN_F_GPE) {
+-		if (!vxlan_parse_gpe_hdr(&unparsed, &protocol, skb, vs->flags))
++		if (!vxlan_parse_gpe_proto(&unparsed, &protocol))
+ 			goto drop;
++		unparsed.vx_flags &= ~VXLAN_GPE_USED_BITS;
+ 		raw_proto = true;
+ 	}
+ 
 -- 
 2.40.1
 
