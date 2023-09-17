@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B68F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:28:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED9C433C8;
-	Sun, 17 Sep 2023 19:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BBA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:28:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FF8C433C8;
+	Sun, 17 Sep 2023 19:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978934;
-	bh=cxB7khqM1v8+lXQ80FFw43GpUjhAjgE1niTyNPcHQb8=;
+	s=korg; t=1694978937;
+	bh=wySRDyCH0m4g9fmdSC+RnQEutCJw/NjjdwTQUpr8yFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb27iayx8C6ZPE6ZqEcGXZkP+ZWcxXPxEY1bwi6DN1k1fv6hM/kvxXODPIDWatC6Y
-	 U4q9fxBTzdA5UoO6kMvLjlNIxmrDUL4yrtazylCpcc7s11mgQWCtJy70KsEz3CD+Ds
-	 i3N1qDOzeTKD/0+wGrAmepib3VJ66TFmkcjZoLG8=
+	b=rs1eO3O01jTOCC7OT1HTe0bFu85Rn4VYfZOXtNUEd+AxDAubcr5NHbxKuz90WNVFd
+	 kX91H6vT4BEEJkGzJauFSmAAl9s7mXAlqYuNaaoavqxKGdbUpVqNxZE1HnPs1/ZSr3
+	 FYYzMCPi1TRQL8seWKPSp9X58/Ph4fNkJ85YDedk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/406] ARM: dts: s5pv210: adjust node names to DT spec
-Date: Sun, 17 Sep 2023 21:09:55 +0200
-Message-ID: <20230917191104.882416951@linuxfoundation.org>
+Subject: [PATCH 5.10 142/406] ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
+Date: Sun, 17 Sep 2023 21:09:56 +0200
+Message-ID: <20230917191104.908372532@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,230 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b04544ac0d1f2a51e0f3234045343aa741d64e7b ]
+[ Upstream commit b77904ba177a9c67b6dbc3637fdf1faa22df6e5c ]
 
-The Devicetree specification expects device node names to have a generic
-name, representing the class of a device.  Also the convention for node
-names is to use hyphens, not underscores.
+Backlight is supplied by DC5V regulator.  The DTS has no PMIC node, so
+just add a regulator-fixed to solve it and fix dtbs_check warning:
 
-No functional changes.
+  s5pv210-smdkv210.dtb: backlight: 'power-supply' is a required property
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20201027170947.132725-10-krzk@kernel.org
+Link: https://lore.kernel.org/r/20230421095721.31857-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s5pv210-aquila.dts   | 12 ++++++------
- arch/arm/boot/dts/s5pv210-aries.dtsi   |  4 ++--
- arch/arm/boot/dts/s5pv210-goni.dts     | 14 +++++++-------
- arch/arm/boot/dts/s5pv210-smdkv210.dts | 20 ++++++++++----------
- 4 files changed, 25 insertions(+), 25 deletions(-)
+ arch/arm/boot/dts/s5pv210-smdkv210.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm/boot/dts/s5pv210-aquila.dts b/arch/arm/boot/dts/s5pv210-aquila.dts
-index 8e57e5a1f0c51..6423348034b68 100644
---- a/arch/arm/boot/dts/s5pv210-aquila.dts
-+++ b/arch/arm/boot/dts/s5pv210-aquila.dts
-@@ -277,37 +277,37 @@ &keypad {
- 			<&keypad_col0>, <&keypad_col1>, <&keypad_col2>;
- 	status = "okay";
- 
--	key_1 {
-+	key-1 {
- 		keypad,row = <0>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CONNECT>;
- 	};
- 
--	key_2 {
-+	key-2 {
- 		keypad,row = <0>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_BACK>;
- 	};
- 
--	key_3 {
-+	key-3 {
- 		keypad,row = <1>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CAMERA_FOCUS>;
- 	};
- 
--	key_4 {
-+	key-4 {
- 		keypad,row = <1>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_VOLUMEUP>;
- 	};
- 
--	key_5 {
-+	key-5 {
- 		keypad,row = <2>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CAMERA>;
- 	};
- 
--	key_6 {
-+	key-6 {
- 		keypad,row = <2>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_VOLUMEDOWN>;
-diff --git a/arch/arm/boot/dts/s5pv210-aries.dtsi b/arch/arm/boot/dts/s5pv210-aries.dtsi
-index 984bc8dc5e4bd..8f7dcd7af0bc9 100644
---- a/arch/arm/boot/dts/s5pv210-aries.dtsi
-+++ b/arch/arm/boot/dts/s5pv210-aries.dtsi
-@@ -54,7 +54,7 @@ pmic_ap_clk: clock-0 {
- 		clock-frequency = <32768>;
- 	};
- 
--	bt_codec: bt_sco {
-+	bt_codec: bt-sco {
- 		compatible = "linux,bt-sco";
- 		#sound-dai-cells = <0>;
- 	};
-@@ -113,7 +113,7 @@ i2c_sound: i2c-gpio-0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&sound_i2c_pins>;
- 
--		wm8994: wm8994@1a {
-+		wm8994: audio-codec@1a {
- 			compatible = "wlf,wm8994";
- 			reg = <0x1a>;
- 
-diff --git a/arch/arm/boot/dts/s5pv210-goni.dts b/arch/arm/boot/dts/s5pv210-goni.dts
-index ad8d5d2fa32d7..5c1e12d39747b 100644
---- a/arch/arm/boot/dts/s5pv210-goni.dts
-+++ b/arch/arm/boot/dts/s5pv210-goni.dts
-@@ -259,37 +259,37 @@ &keypad {
- 			<&keypad_col0>, <&keypad_col1>, <&keypad_col2>;
- 	status = "okay";
- 
--	key_1 {
-+	key-1 {
- 		keypad,row = <0>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CONNECT>;
- 	};
- 
--	key_2 {
-+	key-2 {
- 		keypad,row = <0>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_BACK>;
- 	};
- 
--	key_3 {
-+	key-3 {
- 		keypad,row = <1>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CAMERA_FOCUS>;
- 	};
- 
--	key_4 {
-+	key-4 {
- 		keypad,row = <1>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_VOLUMEUP>;
- 	};
- 
--	key_5 {
-+	key-5 {
- 		keypad,row = <2>;
- 		keypad,column = <1>;
- 		linux,code = <KEY_CAMERA>;
- 	};
- 
--	key_6 {
-+	key-6 {
- 		keypad,row = <2>;
- 		keypad,column = <2>;
- 		linux,code = <KEY_VOLUMEDOWN>;
-@@ -353,7 +353,7 @@ &i2c2 {
- 	samsung,i2c-slave-addr = <0x10>;
- 	status = "okay";
- 
--	tsp@4a {
-+	touchscreen@4a {
- 		compatible = "atmel,maxtouch";
- 		reg = <0x4a>;
- 		interrupt-parent = <&gpj0>;
 diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-index 7459e41e8ef13..fbae768d65e27 100644
+index fbae768d65e27..6e26c67e0a26e 100644
 --- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
 +++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-@@ -76,61 +76,61 @@ &keypad {
- 			<&keypad_col6>, <&keypad_col7>;
- 	status = "okay";
- 
--	key_1 {
-+	key-1 {
- 		keypad,row = <0>;
- 		keypad,column = <3>;
- 		linux,code = <KEY_1>;
+@@ -55,6 +55,14 @@ backlight {
+ 		default-brightness-level = <6>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pwm3_out>;
++		power-supply = <&dc5v_reg>;
++	};
++
++	dc5v_reg: regulator-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "DC5V";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
  	};
+ };
  
--	key_2 {
-+	key-2 {
- 		keypad,row = <0>;
- 		keypad,column = <4>;
- 		linux,code = <KEY_2>;
- 	};
- 
--	key_3 {
-+	key-3 {
- 		keypad,row = <0>;
- 		keypad,column = <5>;
- 		linux,code = <KEY_3>;
- 	};
- 
--	key_4 {
-+	key-4 {
- 		keypad,row = <0>;
- 		keypad,column = <6>;
- 		linux,code = <KEY_4>;
- 	};
- 
--	key_5 {
-+	key-5 {
- 		keypad,row = <0
- 		>;
- 		keypad,column = <7>;
- 		linux,code = <KEY_5>;
- 	};
- 
--	key_6 {
-+	key-6 {
- 		keypad,row = <1>;
- 		keypad,column = <3>;
- 		linux,code = <KEY_A>;
- 	};
--	key_7 {
-+	key-7 {
- 		keypad,row = <1>;
- 		keypad,column = <4>;
- 		linux,code = <KEY_B>;
- 	};
- 
--	key_8 {
-+	key-8 {
- 		keypad,row = <1>;
- 		keypad,column = <5>;
- 		linux,code = <KEY_C>;
- 	};
- 
--	key_9 {
-+	key-9 {
- 		keypad,row = <1>;
- 		keypad,column = <6>;
- 		linux,code = <KEY_D>;
- 	};
- 
--	key_10 {
-+	key-10 {
- 		keypad,row = <1>;
- 		keypad,column = <7>;
- 		linux,code = <KEY_E>;
 -- 
 2.40.1
 
