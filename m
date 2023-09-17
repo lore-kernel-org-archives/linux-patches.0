@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F3B6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1F0C433CA;
-	Sun, 17 Sep 2023 20:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E22553AB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF45CC433C9;
+	Sun, 17 Sep 2023 20:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983233;
-	bh=QrqlO+QV4/YxQ25WSJjUFCai9grA00zl4FP8WglFa/Y=;
+	s=korg; t=1694983237;
+	bh=0qbdonscsnn4D9pd+Jd+UNziaLJAvZZit9ufjHHQrVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLhrO0Fb3wTMgL/LISsi2fGWYk2nju4D0GAGNY4zS9kvzVmVccZt2jv2QgzYCK6Od
-	 yz4Jbpx36cNwiyceWYYeepgRBNzLj2wsQPYaGQtqs6qGcmKo6pnu0ev8NcNnOSnp34
-	 zdVGShVC2geMz+6mFzFNJA7v+Ns2MnOOH5NmQWV8=
+	b=r8qs5zWula2ruGcOjE/BTAtFqMNxJ7qAIOhnpad/pEMHwSpI4CGZPKNQCJTaEzPj5
+	 Uy5aLjEMnOHfOM9UaAK2JQxgc78RJUn1tgapyhD9BueQ9WSsxT9MVaR9vGNdZX8ZtV
+	 aOPGBcz3XVwP/TZxSK+cA6nscu6QKx28qt+W4Ntg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.15 483/511] perf tools: Handle old data in PERF_RECORD_ATTR
-Date: Sun, 17 Sep 2023 21:15:10 +0200
-Message-ID: <20230917191125.402131019@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 484/511] perf hists browser: Fix the number of entries for e key
+Date: Sun, 17 Sep 2023 21:15:11 +0200
+Message-ID: <20230917191125.425292314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -47,88 +46,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-commit 9bf63282ea77a531ea58acb42fb3f40d2d1e4497 upstream.
+commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
 
-The PERF_RECORD_ATTR is used for a pipe mode to describe an event with
-attribute and IDs.  The ID table comes after the attr and it calculate
-size of the table using the total record size and the attr size.
+The 'e' key is to toggle expand/collapse the selected entry only.  But
+the current code has a bug that it only increases the number of entries
+by 1 in the hierarchy mode so users cannot move under the current entry
+after the key stroke.  This is due to a wrong assumption in the
+hist_entry__set_folding().
 
-  n_ids = (total_record_size - end_of_the_attr_field) / sizeof(u64)
+The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
+logic into single function") factored out the code, but actually it
+should be handled separately.  The hist_browser__set_folding() is to
+update fold state for each entry so it needs to traverse all (child)
+entries regardless of the current fold state.  So it increases the
+number of entries by 1.
 
-This is fine for most use cases, but sometimes it saves the pipe output
-in a file and then process it later.  And it becomes a problem if there
-is a change in attr size between the record and report.
+But the hist_entry__set_folding() only cares the currently selected
+entry and its all children.  So it should count all unfolded child
+entries.  This code is implemented in hist_browser__toggle_fold()
+already so we can just call it.
 
-  $ perf record -o- > perf-pipe.data  # old version
-  $ perf report -i- < perf-pipe.data  # new version
-
-For example, if the attr size is 128 and it has 4 IDs, then it would
-save them in 168 byte like below:
-
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 128 byte: perf event attr { .size = 128, ... },
-  32 byte: event IDs [] = { 1234, 1235, 1236, 1237 },
-
-But when report later, it thinks the attr size is 136 then it only read
-the last 3 entries as ID.
-
-   8 byte: perf event header { .type = PERF_RECORD_ATTR, .size = 168 },
- 136 byte: perf event attr { .size = 136, ... },
-  24 byte: event IDs [] = { 1235, 1236, 1237 },  // 1234 is missing
-
-So it should use the recorded version of the attr.  The attr has the
-size field already then it should honor the size when reading data.
-
-Fixes: 2c46dbb517a10b18 ("perf: Convert perf header attrs into attr events")
+Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tom Zanussi <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230825152552.112913-1-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/header.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 34 deletions(-)
 
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -4200,7 +4200,8 @@ int perf_event__process_attr(struct perf
- 			     union perf_event *event,
- 			     struct evlist **pevlist)
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
+ 	return container_of(ms, struct callchain_list, ms)->has_children;
+ }
+ 
+-static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
+-{
+-	return browser->he_selection ? browser->he_selection->unfolded : false;
+-}
+-
+ static bool hist_browser__selection_unfolded(struct hist_browser *browser)
  {
--	u32 i, ids, n_ids;
-+	u32 i, n_ids;
-+	u64 *ids;
- 	struct evsel *evsel;
- 	struct evlist *evlist = *pevlist;
+ 	struct hist_entry *he = browser->he_selection;
+@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
+ 	return n;
+ }
  
-@@ -4216,9 +4217,8 @@ int perf_event__process_attr(struct perf
+-static void __hist_entry__set_folding(struct hist_entry *he,
+-				      struct hist_browser *hb, bool unfold)
++static void hist_entry__set_folding(struct hist_entry *he,
++				    struct hist_browser *hb, bool unfold)
+ {
+ 	hist_entry__init_have_children(he);
+ 	he->unfolded = unfold ? he->has_children : false;
+@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
+ 		he->nr_rows = 0;
+ }
  
- 	evlist__add(evlist, evsel);
+-static void hist_entry__set_folding(struct hist_entry *he,
+-				    struct hist_browser *browser, bool unfold)
+-{
+-	double percent;
+-
+-	percent = hist_entry__get_percent_limit(he);
+-	if (he->filtered || percent < browser->min_pcnt)
+-		return;
+-
+-	__hist_entry__set_folding(he, browser, unfold);
+-
+-	if (!he->depth || unfold)
+-		browser->nr_hierarchy_entries++;
+-	if (he->leaf)
+-		browser->nr_callchain_rows += he->nr_rows;
+-	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
+-		browser->nr_hierarchy_entries++;
+-		he->has_no_entry = true;
+-		he->nr_rows = 1;
+-	} else
+-		he->has_no_entry = false;
+-}
+-
+ static void
+ __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
+ {
+ 	struct rb_node *nd;
+ 	struct hist_entry *he;
++	double percent;
  
--	ids = event->header.size;
--	ids -= (void *)&event->attr.id - (void *)event;
--	n_ids = ids / sizeof(u64);
-+	n_ids = event->header.size - sizeof(event->header) - event->attr.attr.size;
-+	n_ids = n_ids / sizeof(u64);
- 	/*
- 	 * We don't have the cpu and thread maps on the header, so
- 	 * for allocating the perf_sample_id table we fake 1 cpu and
-@@ -4227,8 +4227,9 @@ int perf_event__process_attr(struct perf
- 	if (perf_evsel__alloc_id(&evsel->core, 1, n_ids))
- 		return -ENOMEM;
+ 	nd = rb_first_cached(&browser->hists->entries);
+ 	while (nd) {
+@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
+ 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
  
-+	ids = (void *)&event->attr.attr + event->attr.attr.size;
- 	for (i = 0; i < n_ids; i++) {
--		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, event->attr.id[i]);
-+		perf_evlist__id_add(&evlist->core, &evsel->core, 0, i, ids[i]);
+ 		hist_entry__set_folding(he, browser, unfold);
++
++		percent = hist_entry__get_percent_limit(he);
++		if (he->filtered || percent < browser->min_pcnt)
++			continue;
++
++		if (!he->depth || unfold)
++			browser->nr_hierarchy_entries++;
++		if (he->leaf)
++			browser->nr_callchain_rows += he->nr_rows;
++		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
++			browser->nr_hierarchy_entries++;
++			he->has_no_entry = true;
++			he->nr_rows = 1;
++		} else
++			he->has_no_entry = false;
  	}
+ }
  
- 	return 0;
+@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
+ 	if (!browser->he_selection)
+ 		return;
+ 
+-	hist_entry__set_folding(browser->he_selection, browser, unfold);
+-	browser->b.nr_entries = hist_browser__nr_entries(browser);
++	if (unfold == browser->he_selection->unfolded)
++		return;
++
++	hist_browser__toggle_fold(browser);
+ }
+ 
+ static void ui_browser__warn_lost_events(struct ui_browser *browser)
+@@ -732,8 +722,8 @@ static int hist_browser__handle_hotkey(s
+ 		hist_browser__set_folding(browser, true);
+ 		break;
+ 	case 'e':
+-		/* Expand the selected entry. */
+-		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
++		/* Toggle expand/collapse the selected entry. */
++		hist_browser__toggle_fold(browser);
+ 		break;
+ 	case 'H':
+ 		browser->show_headers = !browser->show_headers;
 
 
