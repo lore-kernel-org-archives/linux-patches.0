@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92E16FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1802CC433CD;
-	Sun, 17 Sep 2023 20:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2056FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB8AC433C8;
+	Sun, 17 Sep 2023 20:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980954;
-	bh=Ib/M55cvfB37uLiofTWwMSszBjIXjlgqLRJvZ4US3u8=;
+	s=korg; t=1694980958;
+	bh=pDHgO5lrPCh7mPnYE6Vytf7kHtKK+s65hAipoN30L2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZhzAkjVYslSSWF73n1g50qw8Iz6jomMHBby9gIsw5jfh3G/Oqg96K0mUIot8jQvg
-	 G+OPzK4SR2xvUQyoQq9Z2UH+WchM0VWSWygOnymGSvlEawgwS264/KrcRLv8fio7yp
-	 8O5ya5T9D/qkiufwXjKx2vx8jov8uIrILj0I/+zM=
+	b=CdBWjpqKsO7t7zuhxc4+Z7tAcYGqDaPedCCrnqcdIKOIZ00df8rC5tK8FiaqZQIzM
+	 azywFdhhjgTvdYQt8AJ+yLjn7C7Vr2f9nVB9h+EiZqd2sYLmxjvtxDDvxXoTzcMDm3
+	 L0VJikVBHoVdIOMO7lmmUBrFeaVa0T1AeCDvEClE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 027/219] clk: qcom: camcc-sc7180: fix async resume during probe
-Date: Sun, 17 Sep 2023 21:12:34 +0200
-Message-ID: <20230917191041.977768577@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 018/219] scsi: qla2xxx: Fix session hang in gnl
+Date: Sun, 17 Sep 2023 21:12:25 +0200
+Message-ID: <20230917191041.653723421@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -40,35 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Quinn Tran <qutran@marvell.com>
 
-commit c948ff727e25297f3a703eb5349dd66aabf004e4 upstream.
+commit 39d22740712c7563a2e18c08f033deeacdaf66e7 upstream.
 
-To make sure that the controller is runtime resumed and its power domain
-is enabled before accessing its registers during probe, the synchronous
-runtime PM interface must be used.
+Connection does not resume after a host reset / chip reset. The cause of
+the blockage is due to the FCF_ASYNC_ACTIVE left on. The gnl command was
+interrupted by the chip reset. On exiting the command, this flag should be
+turn off to allow relogin to reoccur. Clear this flag to prevent blockage.
 
-Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230718132902.21430-2-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 17e64648aa47 ("scsi: qla2xxx: Correct fcport flags handling")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230714070104.40052-7-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/camcc-sc7180.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/camcc-sc7180.c
-+++ b/drivers/clk/qcom/camcc-sc7180.c
-@@ -1664,7 +1664,7 @@ static int cam_cc_sc7180_probe(struct pl
- 		return ret;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1135,7 +1135,7 @@ int qla24xx_async_gnl(struct scsi_qla_ho
+ 	u16 *mb;
  
--	ret = pm_runtime_get(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret)
- 		return ret;
+ 	if (!vha->flags.online || (fcport->flags & FCF_ASYNC_SENT))
+-		return rval;
++		goto done;
+ 
+ 	ql_dbg(ql_dbg_disc, vha, 0x20d9,
+ 	    "Async-gnlist WWPN %8phC \n", fcport->port_name);
+@@ -1189,8 +1189,9 @@ int qla24xx_async_gnl(struct scsi_qla_ho
+ done_free_sp:
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
++	fcport->flags &= ~(FCF_ASYNC_SENT);
+ done:
+-	fcport->flags &= ~(FCF_ASYNC_ACTIVE | FCF_ASYNC_SENT);
++	fcport->flags &= ~(FCF_ASYNC_ACTIVE);
+ 	return rval;
+ }
  
 
 
