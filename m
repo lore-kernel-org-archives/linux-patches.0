@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755DB6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB0CC433C8;
-	Sun, 17 Sep 2023 20:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF226FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B7FC433C8;
+	Sun, 17 Sep 2023 20:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982929;
-	bh=0ixHSCuY9Bc03F57kY1emfPNryKRzhcZJD9hpZ+Sul0=;
+	s=korg; t=1694982932;
+	bh=AjRC50IHzuy87YbJ74UKgIMxGAr8sw22mgae7QWAWU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMwcEOTV+MAlzDkHyBs1QTEiUBeHNdke43+w33C65f1ufL6/1DiLYb+I/ACUYRJIN
-	 GSRVDCxxfSjwPQNNEDmxSg7zD1o9ej9j9jpRoJ8Jgfc7vGbrcxl1996K9ddSZEomZn
-	 Z/Eav/DchnNHhyAmLkXKvaYpOJu0F3TxULxJl8V4=
+	b=sUt+cqFTRqqyys4eJDzEG3UxofT9mpsZ+CBPjROsj2FOMmua6OIensxwQO6QWhjxk
+	 5sgaBpo0GrVEyXswMK1zCYz1bOpm9YiXn6k2dzqkKx71QBrxVnMi/wCPjL4dWxYTP4
+	 juUXfYgn5866Z9/iDCXIakGBLxixKjfgqZ4lUJ8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 394/511] lib/test_meminit: allocate pages up to order MAX_ORDER
-Date: Sun, 17 Sep 2023 21:13:41 +0200
-Message-ID: <20230917191123.308366539@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 395/511] parisc: led: Fix LAN receive and transmit LEDs
+Date: Sun, 17 Sep 2023 21:13:42 +0200
+Message-ID: <20230917191123.331934747@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,44 +38,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Donnellan <ajd@linux.ibm.com>
+From: Helge Deller <deller@gmx.de>
 
-commit efb78fa86e95832b78ca0ba60f3706788a818938 upstream.
+commit 4db89524b084f712a887256391fc19d9f66c8e55 upstream.
 
-test_pages() tests the page allocator by calling alloc_pages() with
-different orders up to order 10.
+Fix the LAN receive and LAN transmit LEDs, which where swapped
+up to now.
 
-However, different architectures and platforms support different maximum
-contiguous allocation sizes.  The default maximum allocation order
-(MAX_ORDER) is 10, but architectures can use CONFIG_ARCH_FORCE_MAX_ORDER
-to override this.  On platforms where this is less than 10, test_meminit()
-will blow up with a WARN().  This is expected, so let's not do that.
-
-Replace the hardcoded "10" with the MAX_ORDER macro so that we test
-allocations up to the expected platform limit.
-
-Link: https://lkml.kernel.org/r/20230714015238.47931-1-ajd@linux.ibm.com
-Fixes: 5015a300a522 ("lib: introduce test_meminit module")
-Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_meminit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/include/asm/led.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -86,7 +86,7 @@ static int __init test_pages(int *total_
- 	int failures = 0, num_tests = 0;
- 	int i;
+--- a/arch/parisc/include/asm/led.h
++++ b/arch/parisc/include/asm/led.h
+@@ -11,8 +11,8 @@
+ #define	LED1		0x02
+ #define	LED0		0x01		/* bottom (or furthest left) LED */
  
--	for (i = 0; i < 10; i++)
-+	for (i = 0; i <= MAX_ORDER; i++)
- 		num_tests += do_alloc_pages_order(i, &failures);
+-#define	LED_LAN_TX	LED0		/* for LAN transmit activity */
+-#define	LED_LAN_RCV	LED1		/* for LAN receive activity */
++#define	LED_LAN_RCV	LED0		/* for LAN receive activity */
++#define	LED_LAN_TX	LED1		/* for LAN transmit activity */
+ #define	LED_DISK_IO	LED2		/* for disk activity */
+ #define	LED_HEARTBEAT	LED3		/* heartbeat */
  
- 	REPORT_FAILURES_IN_FN();
 
 
