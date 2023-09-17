@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DB16FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F12C433C9;
-	Sun, 17 Sep 2023 20:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C956FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F1BC433C7;
+	Sun, 17 Sep 2023 20:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981747;
-	bh=F2m1EVKy1K9iSC7HylGIBeFybQxx8lgcnXVWGZl6mNU=;
+	s=korg; t=1694981750;
+	bh=tynlqowZxBPGcPTu+V1o+rPwNwlQCUc5cvgswCIWO2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvMDVwkdB8/DE7iADaRZ4npq2dV8dyQwPlr69wtc2JV4HOVqjFGRvC5LJSD4xjbPR
-	 Vv5P4LZUgFjUHN1Fks4r69RabNQverW0lG5EbDjHNWeFsFXRkDFLK2rSKAsYWHJtgV
-	 FAE2tph10McwalaZW61tgPhaY6Vl8Exh6cSO1cN4=
+	b=iwOR0rkFRXzpup50RcPb4BJLejtcG+gfJ+ccFEapJGr+FiIC3nU+5LGJu/lTIDUrb
+	 O5kDTd0VwkNGlcd22BIx1/5gIuK7hTOyH5cHsGfbDF98RSlES6cZQNUiYOIpi7LZy+
+	 Ft/SVuNUzUkgH2Jj16emyCFBCsHswwtgNP2e00BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lin Ma <linma@zju.edu.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 101/511] net-memcg: Fix scope of sockmem pressure indicators
-Date: Sun, 17 Sep 2023 21:08:48 +0200
-Message-ID: <20230917191116.304320785@linuxfoundation.org>
+Subject: [PATCH 5.15 088/511] wifi: mt76: testmode: add nla_policy for MT76_TM_ATTR_TX_LENGTH
+Date: Sun, 17 Sep 2023 21:08:35 +0200
+Message-ID: <20230917191115.996918673@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,84 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit ac8a52962164a50e693fa021d3564d7745b83a7f ]
+[ Upstream commit 74f12d511625e603fac8c0c2b6872e687e56dd61 ]
 
-Now there are two indicators of socket memory pressure sit inside
-struct mem_cgroup, socket_pressure and tcpmem_pressure, indicating
-memory reclaim pressure in memcg->memory and ->tcpmem respectively.
+It seems that the nla_policy in mt76_tm_policy is missed for attribute
+MT76_TM_ATTR_TX_LENGTH. This patch adds the correct description to make
+sure the
 
-When in legacy mode (cgroupv1), the socket memory is charged into
-->tcpmem which is independent of ->memory, so socket_pressure has
-nothing to do with socket's pressure at all. Things could be worse
-by taking socket_pressure into consideration in legacy mode, as a
-pressure in ->memory can lead to premature reclamation/throttling
-in socket.
+  u32 val = nla_get_u32(tb[MT76_TM_ATTR_TX_LENGTH]);
 
-While for the default mode (cgroupv2), the socket memory is charged
-into ->memory, and ->tcpmem/->tcpmem_pressure are simply not used.
+in function mt76_testmode_cmd() is safe and will not result in
+out-of-attribute read.
 
-So {socket,tcpmem}_pressure are only used in default/legacy mode
-respectively for indicating socket memory pressure. This patch fixes
-the pieces of code that make mixed use of both.
-
-Fixes: 8e8ae645249b ("mm: memcontrol: hook up vmpressure to socket pressure")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f0efa8621550 ("mt76: add API for testmode support")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 9 +++++++--
- mm/vmpressure.c            | 8 ++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/testmode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 4f189b17dafcc..94df87cb69c3b 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -310,6 +310,11 @@ struct mem_cgroup {
- 	atomic_long_t		memory_events[MEMCG_NR_MEMORY_EVENTS];
- 	atomic_long_t		memory_events_local[MEMCG_NR_MEMORY_EVENTS];
- 
-+	/*
-+	 * Hint of reclaim pressure for socket memroy management. Note
-+	 * that this indicator should NOT be used in legacy cgroup mode
-+	 * where socket memory is accounted/charged separately.
-+	 */
- 	unsigned long		socket_pressure;
- 
- 	/* Legacy tcp memory accounting */
-@@ -1627,8 +1632,8 @@ void mem_cgroup_sk_alloc(struct sock *sk);
- void mem_cgroup_sk_free(struct sock *sk);
- static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
- {
--	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && memcg->tcpmem_pressure)
--		return true;
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
-+		return !!memcg->tcpmem_pressure;
- 	do {
- 		if (time_before(jiffies, memcg->socket_pressure))
- 			return true;
-diff --git a/mm/vmpressure.c b/mm/vmpressure.c
-index 76518e4166dc9..383e0463c0258 100644
---- a/mm/vmpressure.c
-+++ b/mm/vmpressure.c
-@@ -244,6 +244,14 @@ void vmpressure(gfp_t gfp, struct mem_cgroup *memcg, bool tree,
- 	if (mem_cgroup_disabled())
- 		return;
- 
-+	/*
-+	 * The in-kernel users only care about the reclaim efficiency
-+	 * for this @memcg rather than the whole subtree, and there
-+	 * isn't and won't be any in-kernel user in a legacy cgroup.
-+	 */
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && !tree)
-+		return;
-+
- 	vmpr = memcg_to_vmpressure(memcg);
- 
- 	/*
+diff --git a/drivers/net/wireless/mediatek/mt76/testmode.c b/drivers/net/wireless/mediatek/mt76/testmode.c
+index f73ffbd6e622d..0109433e8c2fe 100644
+--- a/drivers/net/wireless/mediatek/mt76/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/testmode.c
+@@ -6,6 +6,7 @@ static const struct nla_policy mt76_tm_policy[NUM_MT76_TM_ATTRS] = {
+ 	[MT76_TM_ATTR_RESET] = { .type = NLA_FLAG },
+ 	[MT76_TM_ATTR_STATE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_COUNT] = { .type = NLA_U32 },
++	[MT76_TM_ATTR_TX_LENGTH] = { .type = NLA_U32 },
+ 	[MT76_TM_ATTR_TX_RATE_MODE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_NSS] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_IDX] = { .type = NLA_U8 },
 -- 
 2.40.1
 
