@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5455746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DAAC433C7;
-	Sun, 17 Sep 2023 20:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E6E746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A78AC433CA;
+	Sun, 17 Sep 2023 20:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983119;
-	bh=jA4DAkjQfIPuZ5CXZknTC+5hGbPVpEtQ1npU7FRJrRE=;
+	s=korg; t=1694983122;
+	bh=H+qykmsIdwf7MzEaj3tEiSH2jJEDMcSvWkQeAB7Ei98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYdhGQ/QGhvv3dn1fkCUxHYRuKSwDvaC+xJv4Q68tsdXG8Yp6JUYAnhwnVMuoRiJ0
-	 SNhG3jZG3rjiVr3fsEaUHYpIm2Zhd39m16QDwQmeJ75I4qdPFruMwfUOkMQBOs3tzC
-	 hEYPfLJAd7EqT9jJTYIi399+0cQ6+lsXrGx2Dwgo=
+	b=zalFDr5+z0OaPyzfHGrj/SXkP+ZMUh6mHLJj2GVaj+ohqnVD7gVrZnp28tnVOZpSk
+	 o4DVELQU1vGoFsQXj6FcUQWsqegZJPmn4ULp0wo2YNWcNffXyZFqOA22XA3kXdKkf+
+	 Q4BrmBWDBrwoY8Jd/JB7xR2cCou3uwkWD+WmLh/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ariel Marcovitch <arielmarcovitch@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 449/511] s390/zcrypt: dont leak memory if dev_set_name() fails
-Date: Sun, 17 Sep 2023 21:14:36 +0200
-Message-ID: <20230917191124.591704460@linuxfoundation.org>
+Subject: [PATCH 5.15 450/511] idr: fix param name in idr_alloc_cyclic() doc
+Date: Sun, 17 Sep 2023 21:14:37 +0200
+Message-ID: <20230917191124.620916095@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,35 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ariel Marcovitch <arielmarcovitch@gmail.com>
 
-[ Upstream commit 6252f47b78031979ad919f971dc8468b893488bd ]
+[ Upstream commit 2a15de80dd0f7e04a823291aa9eb49c5294f56af ]
 
-When dev_set_name() fails, zcdn_create() doesn't free the newly
-allocated resources. Do it.
+The relevant parameter is 'start' and not 'nextid'
 
-Fixes: 00fab2350e6b ("s390/zcrypt: multiple zcrypt device nodes support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230831110000.24279-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 460488c58ca8 ("idr: Remove idr_alloc_ext")
+Signed-off-by: Ariel Marcovitch <arielmarcovitch@gmail.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/idr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index 356318746dd16..17b3f1ea3a5c2 100644
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -398,6 +398,7 @@ static int zcdn_create(const char *name)
- 			 ZCRYPT_NAME "_%d", (int) MINOR(devt));
- 	nodename[sizeof(nodename)-1] = '\0';
- 	if (dev_set_name(&zcdndev->device, nodename)) {
-+		kfree(zcdndev);
- 		rc = -EINVAL;
- 		goto unlockout;
- 	}
+diff --git a/lib/idr.c b/lib/idr.c
+index 7ecdfdb5309e7..13f2758c23773 100644
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -100,7 +100,7 @@ EXPORT_SYMBOL_GPL(idr_alloc);
+  * @end: The maximum ID (exclusive).
+  * @gfp: Memory allocation flags.
+  *
+- * Allocates an unused ID in the range specified by @nextid and @end.  If
++ * Allocates an unused ID in the range specified by @start and @end.  If
+  * @end is <= 0, it is treated as one larger than %INT_MAX.  This allows
+  * callers to use @start + N as @end as long as N is within integer range.
+  * The search for an unused ID will start at the last ID allocated and will
 -- 
 2.40.1
 
