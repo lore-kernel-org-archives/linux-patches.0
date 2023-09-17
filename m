@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05926FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4295FC433C8;
-	Sun, 17 Sep 2023 19:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A66A6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C029BC433CA;
+	Sun, 17 Sep 2023 19:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978266;
-	bh=Re4exPXMKvl9PWuePSW4OILKWWumADNtOmgu4jw0U/U=;
+	s=korg; t=1694978270;
+	bh=4hVgwasJvVWwtfomdGNIGly291U2IrCz94qc0IcCJA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezzd11Gti3/tbmRZe2r9Y22ivElI0cLVe+HKE2ISgl9HSDAL10OeqJTUc42c9LI3q
-	 fGQE7VHeSW3shhcncSp9nsmc65LvjSHeI8LfyGb8yQsjciyxafhyAmHnmxesOUBmGR
-	 5Tx0hBvckRetHFtxOXdwAw+sizqvoPBNBTbXkJdk=
+	b=Vcysajs3wTxjPPUYDVvcFRdqI3ZcINK/XZyMjbZET+KDLj2iGjCc36aIextRVi/t6
+	 g985zYpMneR5rQMIt4JY9y7OXi0Ki4qWiTJmzAIMNgRjCytNXjYGZZvHtZyovDMQp1
+	 QG6tBA9zjEcrbYxTdrisUf01Jc8WZBBva0e0XQZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Burykin <burikin@ivk.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/406] media: pci: cx23885: fix error handling for cx23885 ATSC boards
-Date: Sun, 17 Sep 2023 21:08:04 +0200
-Message-ID: <20230917191101.949753690@linuxfoundation.org>
+Subject: [PATCH 5.10 031/406] 9p: virtio: make sure offs is initialized in zc_request
+Date: Sun, 17 Sep 2023 21:08:05 +0200
+Message-ID: <20230917191101.975013319@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,61 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Burykin <burikin@ivk.ru>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 4aaa96b59df5fac41ba891969df6b092061ea9d7 ]
+[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
 
-After having been assigned to NULL value at cx23885-dvb.c:1202,
-pointer '0' is dereferenced at cx23885-dvb.c:2469.
+Similarly to the previous patch: offs can be used in handle_rerrors
+without initializing on small payloads; in this case handle_rerrors will
+not use it because of the size check, but it doesn't hurt to make sure
+it is zero to please scan-build.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This fixes the following warning:
+net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
+                handle_rerror(req, in_hdr_len, offs, in_pages);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Nikolay Burykin <burikin@ivk.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx23885/cx23885-dvb.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ net/9p/trans_virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/cx23885/cx23885-dvb.c b/drivers/media/pci/cx23885/cx23885-dvb.c
-index 45c2f4afceb82..9b437faf2c3f6 100644
---- a/drivers/media/pci/cx23885/cx23885-dvb.c
-+++ b/drivers/media/pci/cx23885/cx23885-dvb.c
-@@ -2459,16 +2459,10 @@ static int dvb_register(struct cx23885_tsport *port)
- 			request_module("%s", info.type);
- 			client_tuner = i2c_new_client_device(&dev->i2c_bus[1].i2c_adap, &info);
- 			if (!i2c_client_has_driver(client_tuner)) {
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			if (!try_module_get(client_tuner->dev.driver->owner)) {
- 				i2c_unregister_device(client_tuner);
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			port->i2c_client_tuner = client_tuner;
-@@ -2505,16 +2499,10 @@ static int dvb_register(struct cx23885_tsport *port)
- 			request_module("%s", info.type);
- 			client_tuner = i2c_new_client_device(&dev->i2c_bus[1].i2c_adap, &info);
- 			if (!i2c_client_has_driver(client_tuner)) {
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			if (!try_module_get(client_tuner->dev.driver->owner)) {
- 				i2c_unregister_device(client_tuner);
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			port->i2c_client_tuner = client_tuner;
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index f582351d84ecb..36b5f72e2165c 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -394,7 +394,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
+ 	struct page **in_pages = NULL, **out_pages = NULL;
+ 	struct virtio_chan *chan = client->trans;
+ 	struct scatterlist *sgs[4];
+-	size_t offs;
++	size_t offs = 0;
+ 	int need_drop = 0;
+ 	int kicked = 0;
+ 
 -- 
 2.40.1
 
