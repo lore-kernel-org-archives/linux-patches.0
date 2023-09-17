@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382A26FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942F6C433C8;
-	Sun, 17 Sep 2023 19:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C3F6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34994C433CA;
+	Sun, 17 Sep 2023 19:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978497;
-	bh=Bo+7yMXCxWVtkbzIKOm7llvRL1HC7DrLJYkGElYr+4s=;
+	s=korg; t=1694978500;
+	bh=RKNB913EeKKdX1GUYYjiWzUwXEMPPZSMXgTmfdhCZcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2i95p03Q8qtIvslpbaFtRQ3faGBwNT0BL2dxlHLH/S9P0NbFYIxxAcTTcwKSXvy8q
-	 K9Hm0dlG2k6/Jd8gieTqot0Ov09ov9yaa/LZu3m8M5FsGHqlNRexPPVk4O1THNFqkQ
-	 aPCz5VW4flKiDasw9fEBUN+O3Gc1LfqR5h8lkmOw=
+	b=vUTjAvjp3MWlgW7fIq5xgPnAO+oQfl0CLSrXxgpozEiafIgwv5UP7mkdtpUCj2jfK
+	 Isd3mEUqRaAHeYKo8ZJAnB5v3atnfpPOTNp/Y7gsrlVUdEm3PIUZ3pPUyOKp6DtF/l
+	 qeGGqL9QYclmMRAxVgJdfh8jp6mhJxJbbF9Y1sZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Ani Sinha <anisinha@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/406] selftests/resctrl: Close perf value read fd on errors
-Date: Sun, 17 Sep 2023 21:08:49 +0200
-Message-ID: <20230917191103.115988923@linuxfoundation.org>
+Subject: [PATCH 5.10 050/406] vmbus_testing: fix wrong python syntax for integer value comparison
+Date: Sun, 17 Sep 2023 21:08:24 +0200
+Message-ID: <20230917191102.464221750@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -36,87 +34,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
+[ Upstream commit ed0cf84e9cc42e6310961c87709621f1825c2bb8 ]
 
-Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
+It is incorrect in python to compare integer values using the "is" keyword.
+The "is" keyword in python is used to compare references to two objects,
+not their values. Newer version of python3 (version 3.8) throws a warning
+when such incorrect comparison is made. For value comparison, "==" should
+be used.
 
-Close fd_lm only in cat_val() to make it easier to track it is always
-closed.
+Fix this in the code and suppress the following warning:
 
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+/usr/sbin/vmbus_testing:167: SyntaxWarning: "is" with a literal. Did you mean "=="?
+
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20230705134408.6302-1-anisinha@redhat.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tools/hv/vmbus_testing | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 5922cc1b03867..b3c0e858c4e07 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -89,21 +89,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
- static int get_llc_perf(unsigned long *llc_perf_miss)
- {
- 	__u64 total_misses;
-+	int ret;
+diff --git a/tools/hv/vmbus_testing b/tools/hv/vmbus_testing
+index e7212903dd1d9..4467979d8f699 100755
+--- a/tools/hv/vmbus_testing
++++ b/tools/hv/vmbus_testing
+@@ -164,7 +164,7 @@ def recursive_file_lookup(path, file_map):
+ def get_all_devices_test_status(file_map):
  
- 	/* Stop counters after one span to get miss rate */
+         for device in file_map:
+-                if (get_test_state(locate_state(device, file_map)) is 1):
++                if (get_test_state(locate_state(device, file_map)) == 1):
+                         print("Testing = ON for: {}"
+                               .format(device.split("/")[5]))
+                 else:
+@@ -203,7 +203,7 @@ def write_test_files(path, value):
+ def set_test_state(state_path, state_value, quiet):
  
- 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
- 
--	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
-+	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
-+	if (ret == -1) {
- 		perror("Could not get llc misses through perf");
--
- 		return -1;
- 	}
- 
- 	total_misses = rf_cqm.values[0].value;
--
--	close(fd_lm);
--
- 	*llc_perf_miss = total_misses;
- 
- 	return 0;
-@@ -256,17 +254,23 @@ int cat_val(struct resctrl_val_param *param)
- 					 memflush, operation, resctrl_val)) {
- 				fprintf(stderr, "Error-running fill buffer\n");
- 				ret = -1;
--				break;
-+				goto pe_close;
- 			}
- 
- 			sleep(1);
- 			ret = measure_cache_vals(param, bm_pid);
- 			if (ret)
--				break;
-+				goto pe_close;
-+
-+			close(fd_lm);
- 		} else {
- 			break;
- 		}
- 	}
- 
- 	return ret;
-+
-+pe_close:
-+	close(fd_lm);
-+	return ret;
- }
+         write_test_files(state_path, state_value)
+-        if (get_test_state(state_path) is 1):
++        if (get_test_state(state_path) == 1):
+                 if (not quiet):
+                         print("Testing = ON for device: {}"
+                               .format(state_path.split("/")[5]))
 -- 
 2.40.1
 
