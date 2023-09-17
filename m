@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E22553AB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF45CC433C9;
-	Sun, 17 Sep 2023 20:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDACE53AB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473F7C433C8;
+	Sun, 17 Sep 2023 20:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983237;
-	bh=0qbdonscsnn4D9pd+Jd+UNziaLJAvZZit9ufjHHQrVM=;
+	s=korg; t=1694983240;
+	bh=v7McN2ILIZvBGbn/NT91eDbi43k7lmNm7D/QZQHBAuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8qs5zWula2ruGcOjE/BTAtFqMNxJ7qAIOhnpad/pEMHwSpI4CGZPKNQCJTaEzPj5
-	 Uy5aLjEMnOHfOM9UaAK2JQxgc78RJUn1tgapyhD9BueQ9WSsxT9MVaR9vGNdZX8ZtV
-	 aOPGBcz3XVwP/TZxSK+cA6nscu6QKx28qt+W4Ntg=
+	b=n2ObDjCFOZM54Q/ApxQ8gKZZ52RlvFu8hCQnOZRm+ZbM9GYWwJ/6FWM4wkuPSHUpk
+	 Nsv9ECPVou03oHYFZ8uYABoWkjfW+8IHfQCjknCwzM5ChNzAlm6BpSOyZoGJ06Hrdl
+	 d86YsueKes9kzAG5zBA3x0UCtQIXIvsJs33MuL34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 5.15 484/511] perf hists browser: Fix the number of entries for e key
-Date: Sun, 17 Sep 2023 21:15:11 +0200
-Message-ID: <20230917191125.425292314@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 485/511] pcd: move the identify buffer into pcd_identify
+Date: Sun, 17 Sep 2023 21:15:12 +0200
+Message-ID: <20230917191125.448749640@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -44,150 +40,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
+[ Upstream commit 7d8b72aaddd3ec5f350d3e9988d6735a7b9b18e9 ]
 
-The 'e' key is to toggle expand/collapse the selected entry only.  But
-the current code has a bug that it only increases the number of entries
-by 1 in the hierarchy mode so users cannot move under the current entry
-after the key stroke.  This is due to a wrong assumption in the
-hist_entry__set_folding().
+No need to pass it through a bunch of functions.
 
-The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
-logic into single function") factored out the code, but actually it
-should be handled separately.  The hist_browser__set_folding() is to
-update fold state for each entry so it needs to traverse all (child)
-entries regardless of the current fold state.  So it increases the
-number of entries by 1.
-
-But the hist_entry__set_folding() only cares the currently selected
-entry and its all children.  So it should count all unfolded child
-entries.  This code is implemented in hist_browser__toggle_fold()
-already so we can just call it.
-
-Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a721de8489f ("block: don't add or resize partition on the disk with GENHD_FL_NO_PART")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
+ drivers/block/paride/pcd.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
- 	return container_of(ms, struct callchain_list, ms)->has_children;
+diff --git a/drivers/block/paride/pcd.c b/drivers/block/paride/pcd.c
+index f9cdd11f02f58..8903fdaa20466 100644
+--- a/drivers/block/paride/pcd.c
++++ b/drivers/block/paride/pcd.c
+@@ -630,10 +630,11 @@ static int pcd_drive_status(struct cdrom_device_info *cdi, int slot_nr)
+ 	return CDS_DISC_OK;
  }
  
--static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
--{
--	return browser->he_selection ? browser->he_selection->unfolded : false;
--}
--
- static bool hist_browser__selection_unfolded(struct hist_browser *browser)
+-static int pcd_identify(struct pcd_unit *cd, char *id)
++static int pcd_identify(struct pcd_unit *cd)
  {
- 	struct hist_entry *he = browser->he_selection;
-@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
- 	return n;
- }
+-	int k, s;
+ 	char id_cmd[12] = { 0x12, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0 };
++	char id[18];
++	int k, s;
  
--static void __hist_entry__set_folding(struct hist_entry *he,
--				      struct hist_browser *hb, bool unfold)
-+static void hist_entry__set_folding(struct hist_entry *he,
-+				    struct hist_browser *hb, bool unfold)
+ 	pcd_bufblk = -1;
+ 
+@@ -664,15 +665,15 @@ static int pcd_identify(struct pcd_unit *cd, char *id)
+  * returns  0, with id set if drive is detected
+  *	    -1, if drive detection failed
+  */
+-static int pcd_probe(struct pcd_unit *cd, int ms, char *id)
++static int pcd_probe(struct pcd_unit *cd, int ms)
  {
- 	hist_entry__init_have_children(he);
- 	he->unfolded = unfold ? he->has_children : false;
-@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
- 		he->nr_rows = 0;
- }
- 
--static void hist_entry__set_folding(struct hist_entry *he,
--				    struct hist_browser *browser, bool unfold)
--{
--	double percent;
--
--	percent = hist_entry__get_percent_limit(he);
--	if (he->filtered || percent < browser->min_pcnt)
--		return;
--
--	__hist_entry__set_folding(he, browser, unfold);
--
--	if (!he->depth || unfold)
--		browser->nr_hierarchy_entries++;
--	if (he->leaf)
--		browser->nr_callchain_rows += he->nr_rows;
--	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
--		browser->nr_hierarchy_entries++;
--		he->has_no_entry = true;
--		he->nr_rows = 1;
--	} else
--		he->has_no_entry = false;
--}
--
- static void
- __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
- {
- 	struct rb_node *nd;
- 	struct hist_entry *he;
-+	double percent;
- 
- 	nd = rb_first_cached(&browser->hists->entries);
- 	while (nd) {
-@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
- 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
- 
- 		hist_entry__set_folding(he, browser, unfold);
-+
-+		percent = hist_entry__get_percent_limit(he);
-+		if (he->filtered || percent < browser->min_pcnt)
-+			continue;
-+
-+		if (!he->depth || unfold)
-+			browser->nr_hierarchy_entries++;
-+		if (he->leaf)
-+			browser->nr_callchain_rows += he->nr_rows;
-+		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
-+			browser->nr_hierarchy_entries++;
-+			he->has_no_entry = true;
-+			he->nr_rows = 1;
-+		} else
-+			he->has_no_entry = false;
+ 	if (ms == -1) {
+ 		for (cd->drive = 0; cd->drive <= 1; cd->drive++)
+-			if (!pcd_reset(cd) && !pcd_identify(cd, id))
++			if (!pcd_reset(cd) && !pcd_identify(cd))
+ 				return 0;
+ 	} else {
+ 		cd->drive = ms;
+-		if (!pcd_reset(cd) && !pcd_identify(cd, id))
++		if (!pcd_reset(cd) && !pcd_identify(cd))
+ 			return 0;
  	}
- }
+ 	return -1;
+@@ -709,7 +710,6 @@ static void pcd_probe_capabilities(void)
  
-@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
- 	if (!browser->he_selection)
- 		return;
+ static int pcd_detect(void)
+ {
+-	char id[18];
+ 	int k, unit;
+ 	struct pcd_unit *cd;
  
--	hist_entry__set_folding(browser->he_selection, browser, unfold);
--	browser->b.nr_entries = hist_browser__nr_entries(browser);
-+	if (unfold == browser->he_selection->unfolded)
-+		return;
-+
-+	hist_browser__toggle_fold(browser);
- }
- 
- static void ui_browser__warn_lost_events(struct ui_browser *browser)
-@@ -732,8 +722,8 @@ static int hist_browser__handle_hotkey(s
- 		hist_browser__set_folding(browser, true);
- 		break;
- 	case 'e':
--		/* Expand the selected entry. */
--		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
-+		/* Toggle expand/collapse the selected entry. */
-+		hist_browser__toggle_fold(browser);
- 		break;
- 	case 'H':
- 		browser->show_headers = !browser->show_headers;
+@@ -727,7 +727,7 @@ static int pcd_detect(void)
+ 		cd = pcd;
+ 		if (cd->disk && pi_init(cd->pi, 1, -1, -1, -1, -1, -1,
+ 			    pcd_buffer, PI_PCD, verbose, cd->name)) {
+-			if (!pcd_probe(cd, -1, id)) {
++			if (!pcd_probe(cd, -1)) {
+ 				cd->present = 1;
+ 				k++;
+ 			} else
+@@ -744,7 +744,7 @@ static int pcd_detect(void)
+ 				     conf[D_UNI], conf[D_PRO], conf[D_DLY],
+ 				     pcd_buffer, PI_PCD, verbose, cd->name)) 
+ 				continue;
+-			if (!pcd_probe(cd, conf[D_SLV], id)) {
++			if (!pcd_probe(cd, conf[D_SLV])) {
+ 				cd->present = 1;
+ 				k++;
+ 			} else
+-- 
+2.40.1
+
 
 
