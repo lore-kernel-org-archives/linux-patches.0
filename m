@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6C76FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BC3C433C8;
-	Sun, 17 Sep 2023 20:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EA16FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:16:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A47C433C7;
+	Sun, 17 Sep 2023 20:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981771;
-	bh=AlXt6GNWNpbiS8Pk0BDfknoSZiALMXK3CCv0XIPyBFw=;
+	s=korg; t=1694981774;
+	bh=+YSvmt0ZW6DngcsUv6UHm6opbvIqOxN2huuJEEz+JUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwiX/Xs6CkDEVEduDP1Pbxu18ArNJBWIQA9nnUzpZkuhmQzw27Q4Gy89/07r+GN5Q
-	 QJCkrIaZzQYjV/Z3BtJVJC+IMVllQw9OwAEdWa4wDFyA+JsianAHt4/bf6tROr3uZK
-	 aWQ9m4w+mjWsIjYhl68n6PQiASADKyY3xVDbx38k=
+	b=rA9VklqDYYQt2D5joiuxksX6KC99F8Yk/Xpe6aVWLHvlFXG93KDO3oVQVpYOfkRwf
+	 k4AB2bXg9/CGbOShVucv3z/pjyNe2aHGBK7iyzf7h2EOI957HLwX23O4lahQHfnxiH
+	 85sxlHYQ1fSQLF3Kdf/0aQLHzTPkMdMAsgAPN2m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/511] hwrng: iproc-rng200 - Implement suspend and resume calls
-Date: Sun, 17 Sep 2023 21:08:51 +0200
-Message-ID: <20230917191116.375512959@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 170/219] KVM: SVM: Take and hold ir_list_lock when updating vCPUs Physical ID entry
+Date: Sun, 17 Sep 2023 21:14:57 +0200
+Message-ID: <20230917191047.158597262@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,79 +36,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 8e03dd62e5be811efbf0cbeba47e79e793519105 ]
+commit 4c08e737f056fec930b416a2bd37ed266d724f95 upstream.
 
-Chips such as BCM7278 support system wide suspend/resume which will
-cause the HWRNG block to lose its state and reset to its power on reset
-register values. We need to cleanup and re-initialize the HWRNG for it
-to be functional coming out of a system suspend cycle.
+Hoist the acquisition of ir_list_lock from avic_update_iommu_vcpu_affinity()
+to its two callers, avic_vcpu_load() and avic_vcpu_put(), specifically to
+encapsulate the write to the vCPU's entry in the AVIC Physical ID table.
+This will allow a future fix to pull information from the Physical ID entry
+when updating the IRTE, without potentially consuming stale information,
+i.e. without racing with the vCPU being (un)loaded.
 
-Fixes: c3577f6100ca ("hwrng: iproc-rng200 - Add support for BCM7278")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a comment to call out that ir_list_lock does NOT protect against
+multiple writers, specifically that reading the Physical ID entry in
+avic_vcpu_put() outside of the lock is safe.
+
+To preserve some semblance of independence from ir_list_lock, keep the
+READ_ONCE() in avic_vcpu_load() even though acuiring the spinlock
+effectively ensures the load(s) will be generated after acquiring the
+lock.
+
+Cc: stable@vger.kernel.org
+Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Link: https://lore.kernel.org/r/20230808233132.2499764-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/iproc-rng200.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/x86/kvm/svm/avic.c |   31 +++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/char/hw_random/iproc-rng200.c b/drivers/char/hw_random/iproc-rng200.c
-index a43743887db19..9142a63b92b30 100644
---- a/drivers/char/hw_random/iproc-rng200.c
-+++ b/drivers/char/hw_random/iproc-rng200.c
-@@ -189,6 +189,8 @@ static int iproc_rng200_probe(struct platform_device *pdev)
- 		return PTR_ERR(priv->base);
- 	}
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -1022,10 +1022,11 @@ static inline int
+ avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int cpu, bool r)
+ {
+ 	int ret = 0;
+-	unsigned long flags;
+ 	struct amd_svm_iommu_ir *ir;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
  
-+	dev_set_drvdata(dev, priv);
++	lockdep_assert_held(&svm->ir_list_lock);
 +
- 	priv->rng.name = "iproc-rng200";
- 	priv->rng.read = iproc_rng200_read;
- 	priv->rng.init = iproc_rng200_init;
-@@ -206,6 +208,28 @@ static int iproc_rng200_probe(struct platform_device *pdev)
- 	return 0;
+ 	if (!kvm_arch_has_assigned_device(vcpu->kvm))
+ 		return 0;
+ 
+@@ -1033,19 +1034,15 @@ avic_update_iommu_vcpu_affinity(struct k
+ 	 * Here, we go through the per-vcpu ir_list to update all existing
+ 	 * interrupt remapping table entry targeting this vcpu.
+ 	 */
+-	spin_lock_irqsave(&svm->ir_list_lock, flags);
+-
+ 	if (list_empty(&svm->ir_list))
+-		goto out;
++		return 0;
+ 
+ 	list_for_each_entry(ir, &svm->ir_list, node) {
+ 		ret = amd_iommu_update_ga(cpu, r, ir->data);
+ 		if (ret)
+-			break;
++			return ret;
+ 	}
+-out:
+-	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
+-	return ret;
++	return 0;
  }
  
-+static int __maybe_unused iproc_rng200_suspend(struct device *dev)
-+{
-+	struct iproc_rng200_dev *priv = dev_get_drvdata(dev);
+ void avic_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+@@ -1053,6 +1050,7 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
+ 	u64 entry;
+ 	int h_physical_id = kvm_cpu_get_apicid(cpu);
+ 	struct vcpu_svm *svm = to_svm(vcpu);
++	unsigned long flags;
+ 
+ 	lockdep_assert_preemption_disabled();
+ 
+@@ -1069,6 +1067,8 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
+ 	if (kvm_vcpu_is_blocking(vcpu))
+ 		return;
+ 
++	spin_lock_irqsave(&svm->ir_list_lock, flags);
 +
-+	iproc_rng200_cleanup(&priv->rng);
+ 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
+ 
+ 	entry &= ~AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK;
+@@ -1077,25 +1077,40 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
+ 
+ 	WRITE_ONCE(*(svm->avic_physical_id_cache), entry);
+ 	avic_update_iommu_vcpu_affinity(vcpu, h_physical_id, true);
 +
-+	return 0;
-+}
++	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
+ }
+ 
+ void avic_vcpu_put(struct kvm_vcpu *vcpu)
+ {
+ 	u64 entry;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
++	unsigned long flags;
+ 
+ 	lockdep_assert_preemption_disabled();
+ 
++	/*
++	 * Note, reading the Physical ID entry outside of ir_list_lock is safe
++	 * as only the pCPU that has loaded (or is loading) the vCPU is allowed
++	 * to modify the entry, and preemption is disabled.  I.e. the vCPU
++	 * can't be scheduled out and thus avic_vcpu_{put,load}() can't run
++	 * recursively.
++	 */
+ 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
+ 
+ 	/* Nothing to do if IsRunning == '0' due to vCPU blocking. */
+ 	if (!(entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK))
+ 		return;
+ 
++	spin_lock_irqsave(&svm->ir_list_lock, flags);
 +
-+static int __maybe_unused iproc_rng200_resume(struct device *dev)
-+{
-+	struct iproc_rng200_dev *priv =  dev_get_drvdata(dev);
+ 	avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
+ 
+ 	entry &= ~AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK;
+ 	WRITE_ONCE(*(svm->avic_physical_id_cache), entry);
 +
-+	iproc_rng200_init(&priv->rng);
++	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
 +
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops iproc_rng200_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(iproc_rng200_suspend, iproc_rng200_resume)
-+};
-+
- static const struct of_device_id iproc_rng200_of_match[] = {
- 	{ .compatible = "brcm,bcm2711-rng200", },
- 	{ .compatible = "brcm,bcm7211-rng200", },
-@@ -219,6 +243,7 @@ static struct platform_driver iproc_rng200_driver = {
- 	.driver = {
- 		.name		= "iproc-rng200",
- 		.of_match_table = iproc_rng200_of_match,
-+		.pm		= &iproc_rng200_pm_ops,
- 	},
- 	.probe		= iproc_rng200_probe,
- };
--- 
-2.40.1
-
+ }
+ 
+ void avic_refresh_virtual_apic_mode(struct kvm_vcpu *vcpu)
 
 
