@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06D57469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1EDC433D9;
-	Sun, 17 Sep 2023 20:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EABD7469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:22:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A35C43391;
+	Sun, 17 Sep 2023 20:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982129;
-	bh=hu5f2U/+CB2cLIdbYB02a4GKtiBmoPC3O6ik0hkcApY=;
+	s=korg; t=1694982133;
+	bh=wX82i+1CkqeYMhEz+/1naEF18uM469DYvYRDf2zAikQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lorWBB/dBG6hlly8lQ76BwZr1XL830KJI9D04iaPNA9Y4iS7clvsyuANftikIx4Dp
-	 898nVIdGUmEA1hNofvikLRhEMckaVW+BOEv1SZ02RPzTwFadHDvaqZPbBOw5jXtiQo
-	 I6KDgvT8y1Wv7tiAXijas/R7DRQ3OhUyX+ipg3io=
+	b=MH/m+RHCZ3Obae15gxud4YY5T/tneAxCgV5hdWXnGVvSCOoPtbr4kTToIJylPFuG0
+	 KF1A7MDsqBjBRTVHDajBYuH3oNeqbV2yuB7Eg1eEHlPlw9uVidOAWOVNWhGLHwmo2J
+	 wuZ5S04MW095Q/BLb2YnX/phACdCNJPT+obJPd90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Rae Moar <rmoar@google.com>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/219] kunit: Fix wild-memory-access bug in kunit_free_suite_set()
-Date: Sun, 17 Sep 2023 21:15:12 +0200
-Message-ID: <20230917191047.638651046@linuxfoundation.org>
+Subject: [PATCH 5.15 154/511] ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
+Date: Sun, 17 Sep 2023 21:09:41 +0200
+Message-ID: <20230917191117.569578895@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,126 +35,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2810c1e99867a811e631dd24e63e6c1e3b78a59d ]
+[ Upstream commit b77904ba177a9c67b6dbc3637fdf1faa22df6e5c ]
 
-Inject fault while probing kunit-example-test.ko, if kstrdup()
-fails in mod_sysfs_setup() in load_module(), the mod->state will
-switch from MODULE_STATE_COMING to MODULE_STATE_GOING instead of
-from MODULE_STATE_LIVE to MODULE_STATE_GOING, so only
-kunit_module_exit() will be called without kunit_module_init(), and
-the mod->kunit_suites is no set correctly and the free in
-kunit_free_suite_set() will cause below wild-memory-access bug.
+Backlight is supplied by DC5V regulator.  The DTS has no PMIC node, so
+just add a regulator-fixed to solve it and fix dtbs_check warning:
 
-The mod->state state machine when load_module() succeeds:
+  s5pv210-smdkv210.dtb: backlight: 'power-supply' is a required property
 
-MODULE_STATE_UNFORMED ---> MODULE_STATE_COMING ---> MODULE_STATE_LIVE
-	 ^						|
-	 |						| delete_module
-	 +---------------- MODULE_STATE_GOING <---------+
-
-The mod->state state machine when load_module() fails at
-mod_sysfs_setup():
-
-MODULE_STATE_UNFORMED ---> MODULE_STATE_COMING ---> MODULE_STATE_GOING
-	^						|
-	|						|
-	+-----------------------------------------------+
-
-Call kunit_module_init() at MODULE_STATE_COMING state to fix the issue
-because MODULE_STATE_LIVE is transformed from it.
-
- Unable to handle kernel paging request at virtual address ffffff341e942a88
- KASAN: maybe wild-memory-access in range [0x0003f9a0f4a15440-0x0003f9a0f4a15447]
- Mem abort info:
-   ESR = 0x0000000096000004
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
-   FSC = 0x04: level 0 translation fault
- Data abort info:
-   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
- swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000441ea000
- [ffffff341e942a88] pgd=0000000000000000, p4d=0000000000000000
- Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
- Modules linked in: kunit_example_test(-) cfg80211 rfkill 8021q garp mrp stp llc ipv6 [last unloaded: kunit_example_test]
- CPU: 3 PID: 2035 Comm: modprobe Tainted: G        W        N 6.5.0-next-20230828+ #136
- Hardware name: linux,dummy-virt (DT)
- pstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : kfree+0x2c/0x70
- lr : kunit_free_suite_set+0xcc/0x13c
- sp : ffff8000829b75b0
- x29: ffff8000829b75b0 x28: ffff8000829b7b90 x27: 0000000000000000
- x26: dfff800000000000 x25: ffffcd07c82a7280 x24: ffffcd07a50ab300
- x23: ffffcd07a50ab2e8 x22: 1ffff00010536ec0 x21: dfff800000000000
- x20: ffffcd07a50ab2f0 x19: ffffcd07a50ab2f0 x18: 0000000000000000
- x17: 0000000000000000 x16: 0000000000000000 x15: ffffcd07c24b6764
- x14: ffffcd07c24b63c0 x13: ffffcd07c4cebb94 x12: ffff700010536ec7
- x11: 1ffff00010536ec6 x10: ffff700010536ec6 x9 : dfff800000000000
- x8 : 00008fffefac913a x7 : 0000000041b58ab3 x6 : 0000000000000000
- x5 : 1ffff00010536ec5 x4 : ffff8000829b7628 x3 : dfff800000000000
- x2 : ffffff341e942a80 x1 : ffffcd07a50aa000 x0 : fffffc0000000000
- Call trace:
-  kfree+0x2c/0x70
-  kunit_free_suite_set+0xcc/0x13c
-  kunit_module_notify+0xd8/0x360
-  blocking_notifier_call_chain+0xc4/0x128
-  load_module+0x382c/0x44a4
-  init_module_from_file+0xd4/0x128
-  idempotent_init_module+0x2c8/0x524
-  __arm64_sys_finit_module+0xac/0x100
-  invoke_syscall+0x6c/0x258
-  el0_svc_common.constprop.0+0x160/0x22c
-  do_el0_svc+0x44/0x5c
-  el0_svc+0x38/0x78
-  el0t_64_sync_handler+0x13c/0x158
-  el0t_64_sync+0x190/0x194
- Code: aa0003e1 b25657e0 d34cfc42 8b021802 (f9400440)
- ---[ end trace 0000000000000000 ]---
- Kernel panic - not syncing: Oops: Fatal exception
- SMP: stopping secondary CPUs
- Kernel Offset: 0x4d0742200000 from 0xffff800080000000
- PHYS_OFFSET: 0xffffee43c0000000
- CPU features: 0x88000203,3c020000,1000421b
- Memory Limit: none
- Rebooting in 1 seconds..
-
-Fixes: 3d6e44623841 ("kunit: unify module and builtin suite definitions")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Rae Moar <rmoar@google.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230421095721.31857-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/s5pv210-smdkv210.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/lib/kunit/test.c b/lib/kunit/test.c
-index 184df6f701b48..a90bd265d73db 100644
---- a/lib/kunit/test.c
-+++ b/lib/kunit/test.c
-@@ -667,12 +667,13 @@ static int kunit_module_notify(struct notifier_block *nb, unsigned long val,
+diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+index fbae768d65e27..6e26c67e0a26e 100644
+--- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
++++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+@@ -55,6 +55,14 @@ backlight {
+ 		default-brightness-level = <6>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pwm3_out>;
++		power-supply = <&dc5v_reg>;
++	};
++
++	dc5v_reg: regulator-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "DC5V";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
+ 	};
+ };
  
- 	switch (val) {
- 	case MODULE_STATE_LIVE:
--		kunit_module_init(mod);
- 		break;
- 	case MODULE_STATE_GOING:
- 		kunit_module_exit(mod);
- 		break;
- 	case MODULE_STATE_COMING:
-+		kunit_module_init(mod);
-+		break;
- 	case MODULE_STATE_UNFORMED:
- 		break;
- 	}
 -- 
 2.40.1
 
