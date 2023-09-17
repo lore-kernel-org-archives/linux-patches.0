@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E427568A
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:31:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2D1C433C8;
-	Sun, 17 Sep 2023 19:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAF410F9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA3BC433C8;
+	Sun, 17 Sep 2023 19:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979085;
-	bh=szGC2KVr3p1VHaOhcU98A86GfFUw8c48MTWaA+N65XI=;
+	s=korg; t=1694979088;
+	bh=K08NqUdJjDJ2RSQeN8ikpd6gjanTkbkD3ytlr5NYKo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oavvXjzCGsCG+co5OZv4bjhvdMyOR20DuMSoPZIwi956pbkVghyypVyQjqZOnCFhs
-	 /LcKy4GvJn0GmN3/KH8aH+r6cgRl3wuqPbMzLZD2yYeyZww48FZpHcAONetJ/+gUR/
-	 0+2SPpGrlymBzFCsGlmjeCuFdCbKbHtCp3qWykNc=
+	b=EuX7F6WlYUSkfOSuPA09c85/iCHFVkMzu2fnDLfXlcJkmuFeFJGC7dxqNH8eayf6P
+	 NUTtKGyjimc+89HjwKOl6e264qGcFRlMdZvCEPiBdf87goFRiuLXb6RRGoLXNOzLbb
+	 ht+5AKwiIkXbiy96bEQBYRDXOPmwlR8j+P3vFrec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Qi Liu <liuqi115@huawei.com>,
+	John Garry <john.garry@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/406] powerpc: Dont include lppaca.h in paca.h
-Date: Sun, 17 Sep 2023 21:10:46 +0200
-Message-ID: <20230917191106.270524564@linuxfoundation.org>
+Subject: [PATCH 5.10 210/406] scsi: hisi_sas: Modify v3 HW SSP underflow error processing
+Date: Sun, 17 Sep 2023 21:11:04 +0200
+Message-ID: <20230917191106.736391060@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,132 +42,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 1aa000667669fa855853decbb1c69e974d8ff716 ]
+[ Upstream commit 62413199cd6d2906c121c2dfa3d7b82fd05f08db ]
 
-By adding a forward declaration for struct lppaca we can untangle paca.h
-and lppaca.h. Also move get_lppaca() into lppaca.h for consistency.
+In case of SSP underflow allow the response frame IU to be examined for
+setting the response stat value rather than always setting
+SAS_DATA_UNDERRUN.
 
-Add includes of lppaca.h to some files that need it.
+This will mean that we call sas_ssp_task_response() in those scenarios and
+may send sense data to upper layer.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230823055317.751786-3-mpe@ellerman.id.au
-Stable-dep-of: eac030b22ea1 ("powerpc/pseries: Rework lppaca_shared_proc() to avoid DEBUG_PREEMPT")
+Such a condition would be for bad blocks were we just reporting an
+underflow error to upper layer, but now the sense data will tell
+immediately that the media is faulty.
+
+Link: https://lore.kernel.org/r/1645703489-87194-7-git-send-email-john.garry@huawei.com
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Qi Liu <liuqi115@huawei.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: f5393a5602ca ("scsi: hisi_sas: Fix normally completed I/O analysed as failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/lppaca.h         | 4 ++++
- arch/powerpc/include/asm/paca.h           | 6 +-----
- arch/powerpc/include/asm/paravirt.h       | 1 +
- arch/powerpc/include/asm/plpar_wrappers.h | 1 +
- arch/powerpc/kvm/book3s_hv_ras.c          | 1 +
- arch/powerpc/mm/book3s64/slb.c            | 1 +
- arch/powerpc/xmon/xmon.c                  | 1 +
- 7 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 39 +++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/lppaca.h b/arch/powerpc/include/asm/lppaca.h
-index c390ec377baed..5d509ba0550b5 100644
---- a/arch/powerpc/include/asm/lppaca.h
-+++ b/arch/powerpc/include/asm/lppaca.h
-@@ -130,6 +130,10 @@ static inline bool lppaca_shared_proc(struct lppaca *l)
- 	return !!(l->__old_status & LPPACA_OLD_SHARED_PROC);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 59ac0f8e6d5c3..937e4ba46134e 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -392,6 +392,8 @@
+ #define CMPLT_HDR_ERROR_PHASE_MSK   (0xff << CMPLT_HDR_ERROR_PHASE_OFF)
+ #define CMPLT_HDR_RSPNS_XFRD_OFF	10
+ #define CMPLT_HDR_RSPNS_XFRD_MSK	(0x1 << CMPLT_HDR_RSPNS_XFRD_OFF)
++#define CMPLT_HDR_RSPNS_GOOD_OFF	11
++#define CMPLT_HDR_RSPNS_GOOD_MSK	(0x1 << CMPLT_HDR_RSPNS_GOOD_OFF)
+ #define CMPLT_HDR_ERX_OFF		12
+ #define CMPLT_HDR_ERX_MSK		(0x1 << CMPLT_HDR_ERX_OFF)
+ #define CMPLT_HDR_ABORT_STAT_OFF	13
+@@ -2115,7 +2117,7 @@ static irqreturn_t fatal_axi_int_v3_hw(int irq_no, void *p)
+ 	return IRQ_HANDLED;
  }
  
-+#ifdef CONFIG_PPC_PSERIES
-+#define get_lppaca()	(get_paca()->lppaca_ptr)
-+#endif
+-static void
++static bool
+ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	       struct hisi_sas_slot *slot)
+ {
+@@ -2133,6 +2135,15 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	switch (task->task_proto) {
+ 	case SAS_PROTOCOL_SSP:
+ 		if (dma_rx_err_type & RX_DATA_LEN_UNDERFLOW_MSK) {
++			/*
++			 * If returned response frame is incorrect because of data underflow,
++			 * but I/O information has been written to the host memory, we examine
++			 * response IU.
++			 */
++			if (!(complete_hdr->dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
++				(complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
++				return false;
 +
- /*
-  * SLB shadow buffer structure as defined in the PAPR.  The save_area
-  * contains adjacent ESID and VSID pairs for each shadowed SLB.  The
-diff --git a/arch/powerpc/include/asm/paca.h b/arch/powerpc/include/asm/paca.h
-index 9454d29ff4b47..555aa3580e160 100644
---- a/arch/powerpc/include/asm/paca.h
-+++ b/arch/powerpc/include/asm/paca.h
-@@ -14,7 +14,6 @@
+ 			ts->residual = trans_tx_fail_type;
+ 			ts->stat = SAS_DATA_UNDERRUN;
+ 		} else if (dw3 & CMPLT_HDR_IO_IN_TARGET_MSK) {
+@@ -2164,6 +2175,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	default:
+ 		break;
+ 	}
++	return true;
+ }
  
- #include <linux/string.h>
- #include <asm/types.h>
--#include <asm/lppaca.h>
- #include <asm/mmu.h>
- #include <asm/page.h>
- #ifdef CONFIG_PPC_BOOK3E
-@@ -45,14 +44,11 @@ extern unsigned int debug_smp_processor_id(void); /* from linux/smp.h */
- #define get_paca()	local_paca
- #endif
+ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+@@ -2238,19 +2250,20 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+ 	if ((dw0 & CMPLT_HDR_CMPLT_MSK) == 0x3) {
+ 		u32 *error_info = hisi_sas_status_buf_addr_mem(slot);
  
--#ifdef CONFIG_PPC_PSERIES
--#define get_lppaca()	(get_paca()->lppaca_ptr)
--#endif
--
- #define get_slb_shadow()	(get_paca()->slb_shadow_ptr)
+-		slot_err_v3_hw(hisi_hba, task, slot);
+-		if (ts->stat != SAS_DATA_UNDERRUN)
+-			dev_info(dev, "erroneous completion iptt=%d task=%pK dev id=%d addr=%016llx CQ hdr: 0x%x 0x%x 0x%x 0x%x Error info: 0x%x 0x%x 0x%x 0x%x\n",
+-				 slot->idx, task, sas_dev->device_id,
+-				 SAS_ADDR(device->sas_addr),
+-				 dw0, dw1, complete_hdr->act, dw3,
+-				 error_info[0], error_info[1],
+-				 error_info[2], error_info[3]);
+-		if (unlikely(slot->abort)) {
+-			sas_task_abort(task);
+-			return;
++		if (slot_err_v3_hw(hisi_hba, task, slot)) {
++			if (ts->stat != SAS_DATA_UNDERRUN)
++				dev_info(dev, "erroneous completion iptt=%d task=%pK dev id=%d addr=%016llx CQ hdr: 0x%x 0x%x 0x%x 0x%x Error info: 0x%x 0x%x 0x%x 0x%x\n",
++					slot->idx, task, sas_dev->device_id,
++					SAS_ADDR(device->sas_addr),
++					dw0, dw1, complete_hdr->act, dw3,
++					error_info[0], error_info[1],
++					error_info[2], error_info[3]);
++			if (unlikely(slot->abort)) {
++				sas_task_abort(task);
++				return;
++			}
++			goto out;
+ 		}
+-		goto out;
+ 	}
  
- struct task_struct;
- struct rtas_args;
-+struct lppaca;
- 
- /*
-  * Defines the layout of the paca.
-diff --git a/arch/powerpc/include/asm/paravirt.h b/arch/powerpc/include/asm/paravirt.h
-index 588bfb9a0579c..546c725013789 100644
---- a/arch/powerpc/include/asm/paravirt.h
-+++ b/arch/powerpc/include/asm/paravirt.h
-@@ -6,6 +6,7 @@
- #include <asm/smp.h>
- #ifdef CONFIG_PPC64
- #include <asm/paca.h>
-+#include <asm/lppaca.h>
- #include <asm/hvcall.h>
- #endif
- 
-diff --git a/arch/powerpc/include/asm/plpar_wrappers.h b/arch/powerpc/include/asm/plpar_wrappers.h
-index ece84a430701f..7796cc05e2c8d 100644
---- a/arch/powerpc/include/asm/plpar_wrappers.h
-+++ b/arch/powerpc/include/asm/plpar_wrappers.h
-@@ -9,6 +9,7 @@
- 
- #include <asm/hvcall.h>
- #include <asm/paca.h>
-+#include <asm/lppaca.h>
- #include <asm/page.h>
- 
- static inline long poll_pending(void)
-diff --git a/arch/powerpc/kvm/book3s_hv_ras.c b/arch/powerpc/kvm/book3s_hv_ras.c
-index 6028628ea3acf..7c693b3ee34b9 100644
---- a/arch/powerpc/kvm/book3s_hv_ras.c
-+++ b/arch/powerpc/kvm/book3s_hv_ras.c
-@@ -9,6 +9,7 @@
- #include <linux/kvm.h>
- #include <linux/kvm_host.h>
- #include <linux/kernel.h>
-+#include <asm/lppaca.h>
- #include <asm/opal.h>
- #include <asm/mce.h>
- #include <asm/machdep.h>
-diff --git a/arch/powerpc/mm/book3s64/slb.c b/arch/powerpc/mm/book3s64/slb.c
-index c30fcbfa0e326..ccf0a876a7bd0 100644
---- a/arch/powerpc/mm/book3s64/slb.c
-+++ b/arch/powerpc/mm/book3s64/slb.c
-@@ -13,6 +13,7 @@
- #include <asm/mmu.h>
- #include <asm/mmu_context.h>
- #include <asm/paca.h>
-+#include <asm/lppaca.h>
- #include <asm/ppc-opcode.h>
- #include <asm/cputable.h>
- #include <asm/cacheflush.h>
-diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
-index 2872b66d9fec7..3de2adc0a8074 100644
---- a/arch/powerpc/xmon/xmon.c
-+++ b/arch/powerpc/xmon/xmon.c
-@@ -58,6 +58,7 @@
- #ifdef CONFIG_PPC64
- #include <asm/hvcall.h>
- #include <asm/paca.h>
-+#include <asm/lppaca.h>
- #endif
- 
- #include "nonstdio.h"
+ 	switch (task->task_proto) {
 -- 
 2.40.1
 
