@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CE27461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F52C433C8;
-	Sun, 17 Sep 2023 20:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6897C7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9870C433C8;
+	Sun, 17 Sep 2023 20:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981367;
-	bh=8zOJlEz+k1n1oZkmBvK4nE5JKLVFPHuajh9o5wt/efA=;
+	s=korg; t=1694981371;
+	bh=LXQG59NY1Ui8+kZKjz7n41ZZ3NwW8aKFD00QyNvGZeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHR85U/jaH5I7HpkZcJVzojsoKjHrO6eaQqCqwKobZ1uPcBc6BPxLDQsHiz8WvkdH
-	 U2tLTIIcwGqxs8/0BZSlsy4hXodkGr+xPKc1G/7c5ghqTA4U1Lc+vP1y643I6CBn+G
-	 0Ms4cI1cZIC9BhmnX9xgjM9S7W8Vrlo/JnFoeUC0=
+	b=Cl5Mkg4RJsX4cSoaQMHnjMXLUhI5FpVaM1P1x8OuHN/tD/nze6lxqek6uAVeDFHG2
+	 Yw+nSa7IJTnweAQfuemmhkF6qJe1w4b4qDJagu/5Fj85t39MOWQ3BcfToyHeS6+SBp
+	 BGWYdpkJjy01UYopQEX4iHwtNSHOl6pclZUQMzOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/219] sctp: annotate data-races around sk->sk_wmem_queued
-Date: Sun, 17 Sep 2023 21:13:35 +0200
-Message-ID: <20230917191044.157770805@linuxfoundation.org>
+Subject: [PATCH 5.15 044/511] scsi: storvsc: Always set no_report_opcodes
+Date: Sun, 17 Sep 2023 21:07:51 +0200
+Message-ID: <20230917191114.929892472@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,154 +36,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit dc9511dd6f37fe803f6b15b61b030728d7057417 ]
+[ Upstream commit 31d16e712bdcaee769de4780f72ff8d6cd3f0589 ]
 
-sk->sk_wmem_queued can be read locklessly from sctp_poll()
+Hyper-V synthetic SCSI devices do not support the MAINTENANCE_IN SCSI
+command, so scsi_report_opcode() always fails, resulting in messages like
+this:
 
-Use sk_wmem_queued_add() when the field is changed,
-and add READ_ONCE() annotations in sctp_writeable()
-and sctp_assocs_seq_show()
+hv_storvsc <guid>: tag#205 cmd 0xa3 status: scsi 0x2 srb 0x86 hv 0xc0000001
 
-syzbot reported:
+The recently added support for command duration limits calls
+scsi_report_opcode() four times as each device comes online, which
+significantly increases the number of messages logged in a system with many
+disks.
 
-BUG: KCSAN: data-race in sctp_poll / sctp_wfree
+Fix the problem by always marking Hyper-V synthetic SCSI devices as not
+supporting scsi_report_opcode(). With this setting, the MAINTENANCE_IN SCSI
+command is not issued and no messages are logged.
 
-read-write to 0xffff888149d77810 of 4 bytes by interrupt on cpu 0:
-sctp_wfree+0x170/0x4a0 net/sctp/socket.c:9147
-skb_release_head_state+0xb7/0x1a0 net/core/skbuff.c:988
-skb_release_all net/core/skbuff.c:1000 [inline]
-__kfree_skb+0x16/0x140 net/core/skbuff.c:1016
-consume_skb+0x57/0x180 net/core/skbuff.c:1232
-sctp_chunk_destroy net/sctp/sm_make_chunk.c:1503 [inline]
-sctp_chunk_put+0xcd/0x130 net/sctp/sm_make_chunk.c:1530
-sctp_datamsg_put+0x29a/0x300 net/sctp/chunk.c:128
-sctp_chunk_free+0x34/0x50 net/sctp/sm_make_chunk.c:1515
-sctp_outq_sack+0xafa/0xd70 net/sctp/outqueue.c:1381
-sctp_cmd_process_sack net/sctp/sm_sideeffect.c:834 [inline]
-sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1366 [inline]
-sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
-sctp_do_sm+0x12c7/0x31b0 net/sctp/sm_sideeffect.c:1169
-sctp_assoc_bh_rcv+0x2b2/0x430 net/sctp/associola.c:1051
-sctp_inq_push+0x108/0x120 net/sctp/inqueue.c:80
-sctp_rcv+0x116e/0x1340 net/sctp/input.c:243
-sctp6_rcv+0x25/0x40 net/sctp/ipv6.c:1120
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-process_backlog+0x21f/0x380 net/core/dev.c:5894
-__napi_poll+0x60/0x3b0 net/core/dev.c:6460
-napi_poll net/core/dev.c:6527 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6660
-__do_softirq+0xc1/0x265 kernel/softirq.c:553
-run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
-smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
-kthread+0x1d7/0x210 kernel/kthread.c:389
-ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-read to 0xffff888149d77810 of 4 bytes by task 17828 on cpu 1:
-sctp_writeable net/sctp/socket.c:9304 [inline]
-sctp_poll+0x265/0x410 net/sctp/socket.c:8671
-sock_poll+0x253/0x270 net/socket.c:1374
-vfs_poll include/linux/poll.h:88 [inline]
-do_pollfd fs/select.c:873 [inline]
-do_poll fs/select.c:921 [inline]
-do_sys_poll+0x636/0xc00 fs/select.c:1015
-__do_sys_ppoll fs/select.c:1121 [inline]
-__se_sys_ppoll+0x1af/0x1f0 fs/select.c:1101
-__x64_sys_ppoll+0x67/0x80 fs/select.c:1101
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00019e80 -> 0x0000cc80
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 17828 Comm: syz-executor.1 Not tainted 6.5.0-rc7-syzkaller-00185-g28f20a19294d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230830094519.950007-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1686343101-18930-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/proc.c   |  2 +-
- net/sctp/socket.c | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/scsi/storvsc_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sctp/proc.c b/net/sctp/proc.c
-index f13d6a34f32f2..ec00ee75d59a6 100644
---- a/net/sctp/proc.c
-+++ b/net/sctp/proc.c
-@@ -282,7 +282,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
- 		assoc->init_retries, assoc->shutdown_retries,
- 		assoc->rtx_data_chunks,
- 		refcount_read(&sk->sk_wmem_alloc),
--		sk->sk_wmem_queued,
-+		READ_ONCE(sk->sk_wmem_queued),
- 		sk->sk_sndbuf,
- 		sk->sk_rcvbuf);
- 	seq_printf(seq, "\n");
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index a11b0d903514c..32e3669adf146 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -68,7 +68,7 @@
- #include <net/sctp/stream_sched.h>
- 
- /* Forward declarations for internal helper functions. */
--static bool sctp_writeable(struct sock *sk);
-+static bool sctp_writeable(const struct sock *sk);
- static void sctp_wfree(struct sk_buff *skb);
- static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
- 				size_t msg_len);
-@@ -139,7 +139,7 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
- 
- 	refcount_add(sizeof(struct sctp_chunk), &sk->sk_wmem_alloc);
- 	asoc->sndbuf_used += chunk->skb->truesize + sizeof(struct sctp_chunk);
--	sk->sk_wmem_queued += chunk->skb->truesize + sizeof(struct sctp_chunk);
-+	sk_wmem_queued_add(sk, chunk->skb->truesize + sizeof(struct sctp_chunk));
- 	sk_mem_charge(sk, chunk->skb->truesize);
- }
- 
-@@ -9139,7 +9139,7 @@ static void sctp_wfree(struct sk_buff *skb)
- 	struct sock *sk = asoc->base.sk;
- 
- 	sk_mem_uncharge(sk, skb->truesize);
--	sk->sk_wmem_queued -= skb->truesize + sizeof(struct sctp_chunk);
-+	sk_wmem_queued_add(sk, -(skb->truesize + sizeof(struct sctp_chunk)));
- 	asoc->sndbuf_used -= skb->truesize + sizeof(struct sctp_chunk);
- 	WARN_ON(refcount_sub_and_test(sizeof(struct sctp_chunk),
- 				      &sk->sk_wmem_alloc));
-@@ -9292,9 +9292,9 @@ void sctp_write_space(struct sock *sk)
-  * UDP-style sockets or TCP-style sockets, this code should work.
-  *  - Daisy
-  */
--static bool sctp_writeable(struct sock *sk)
-+static bool sctp_writeable(const struct sock *sk)
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index 9f8ebbec7bc39..5caf7bd5877f9 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1627,6 +1627,8 @@ static int storvsc_device_configure(struct scsi_device *sdevice)
  {
--	return sk->sk_sndbuf > sk->sk_wmem_queued;
-+	return READ_ONCE(sk->sk_sndbuf) > READ_ONCE(sk->sk_wmem_queued);
- }
+ 	blk_queue_rq_timeout(sdevice->request_queue, (storvsc_timeout * HZ));
  
- /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
++	/* storvsc devices don't support MAINTENANCE_IN SCSI cmd */
++	sdevice->no_report_opcodes = 1;
+ 	sdevice->no_write_same = 1;
+ 
+ 	/*
 -- 
 2.40.1
 
