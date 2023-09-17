@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABBC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD7CC433C8;
-	Sun, 17 Sep 2023 19:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5606FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:24:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9D3C433C8;
+	Sun, 17 Sep 2023 19:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978638;
-	bh=mpZmzzQj5XkmF6c6HJBdoATnBS1tsb+jAhdxe1miXSU=;
+	s=korg; t=1694978641;
+	bh=YZsCCtpphgRk17A/9eK+0hQfInKSk1GulcV+Jv+8lvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lhs7q6yqBgFSu24H6pxk3u/NWWz5loO0F1xF+qykS/Nx3pcM9x9pjvnJ/nf1AZ3Sx
-	 8fk5QzGmVKKBviT1cd+qFaSwT3Hkr863XrZI3sSmzNJoz210vt3h3z7xU9PpgD6j6k
-	 ei9mOL1+8o8x1zXXntiES6AU3RxEjtgPeb2psSNI=
+	b=k1TDQlrcPJo4o+OUHCr/jjmY76Kjqp081LNzjeyu9CA1Nz8Xk0lG364xSrQkiiCZa
+	 MrqKJJDLZP/CKyuvUCJt60rDLnMsgnfI+k5oMwqkv+N8gVEtaRtwgmUUtHBayTx8zY
+	 TilwaxaApetRivrr5eWRFJLdfuPzFAfXZ/RKkDAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/406] wifi: mwifiex: Fix missed return in oob checks failed path
-Date: Sun, 17 Sep 2023 21:09:23 +0200
-Message-ID: <20230917191104.007010734@linuxfoundation.org>
+Subject: [PATCH 5.10 118/406] mlxsw: i2c: Limit single transaction buffer size
+Date: Sun, 17 Sep 2023 21:09:32 +0200
+Message-ID: <20230917191104.251628908@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,49 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 2785851c627f2db05f9271f7f63661b5dbd95c4c ]
+[ Upstream commit d7248f1cc835bd80e936dc5b2d94b149bdd0077d ]
 
-Add missed return in mwifiex_uap_queue_bridged_pkt() and
-mwifiex_process_rx_packet().
+Maximum size of buffer is obtained from underlying I2C adapter and in
+case adapter allows I2C transaction buffer size greater than 100 bytes,
+transaction will fail due to firmware limitation.
 
-Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230810083911.3725248-1-pinkperfect2021@gmail.com
+As a result driver will fail initialization.
+
+Limit the maximum size of transaction buffer by 100 bytes to fit to
+firmware.
+
+Remove unnecessary calculation:
+max_t(u16, MLXSW_I2C_BLK_DEF, quirk_size).
+This condition can not happened.
+
+Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c   | 1 +
- drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/i2c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 685a5b6697046..3c555946cb2cc 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -104,6 +104,7 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 			    skb->len, rx_pkt_off);
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return -1;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
+index f20dca41424c9..61d2f621d65fc 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
+@@ -47,6 +47,7 @@
+ #define MLXSW_I2C_MBOX_SIZE_BITS	12
+ #define MLXSW_I2C_ADDR_BUF_SIZE		4
+ #define MLXSW_I2C_BLK_DEF		32
++#define MLXSW_I2C_BLK_MAX		100
+ #define MLXSW_I2C_RETRY			5
+ #define MLXSW_I2C_TIMEOUT_MSECS		5000
+ #define MLXSW_I2C_MAX_DATA_SIZE		256
+@@ -576,7 +577,7 @@ static int mlxsw_i2c_probe(struct i2c_client *client,
+ 			return -EOPNOTSUPP;
+ 		}
  
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index f46afd7f1b6a4..5c5beedd6aa7b 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -122,6 +122,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return;
- 	}
- 
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+-		mlxsw_i2c->block_size = max_t(u16, MLXSW_I2C_BLK_DEF,
++		mlxsw_i2c->block_size = min_t(u16, MLXSW_I2C_BLK_MAX,
+ 					      min_t(u16, quirks->max_read_len,
+ 						    quirks->max_write_len));
+ 	} else {
 -- 
 2.40.1
 
