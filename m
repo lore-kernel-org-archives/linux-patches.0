@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36CE6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF114C433C8;
-	Sun, 17 Sep 2023 19:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596266FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8144C433C9;
+	Sun, 17 Sep 2023 19:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979774;
-	bh=FpSPxfm3VxP98PpFKXPHPL1zOXRWtlRJWFLPSm5doO4=;
+	s=korg; t=1694979778;
+	bh=X3sR6X595CJRfhGlAmmPylyQrWfbX3mWpNOo1swWc+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1Yr8iUy09OnBYlJy9/t07bda3s5D710YEpP7DyPNPXKSglbIME85P6aeF0OvMVNW
-	 5KaDE2iK/GjddkRJiDDpE2eTDWqWh0KlfP4gYbzY5fHFgSHLqHuOcktpFulN5zIRsQ
-	 QAqydtpFEtnes8/nkMzfJ6yRvMn1D2oZF8tSL+mM=
+	b=Ba3J8AE9N5lsmivGnTJ9e+Al2FvlLuSWcoaMeoLlXuqk3aFImQXTz6rkVObTOzu4N
+	 Ia8jl8tM5I6lJ33iMKOQLNNb1FShCksWeJNpnRaibc6lkTBtSjPK6KoWBeogMWlExC
+	 E4QLMewstO7/DaUCoAROSw+ujyMLFb2yeD9xaiLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/406] kselftest/runner.sh: Propagate SIGTERM to runner child
-Date: Sun, 17 Sep 2023 21:14:06 +0200
-Message-ID: <20230917191111.616204672@linuxfoundation.org>
+Subject: [PATCH 5.10 393/406] net/smc: use smc_lgr_list.lock to protect smc_lgr_list.list iterate in smcr_port_add
+Date: Sun, 17 Sep 2023 21:14:07 +0200
+Message-ID: <20230917191111.642381695@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,56 +34,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 9616cb34b08ec86642b162eae75c5a7ca8debe3c ]
+[ Upstream commit f5146e3ef0a9eea405874b36178c19a4863b8989 ]
 
-Timeouts in kselftest are done using the "timeout" command with the
-"--foreground" option. Without the "foreground" option, it is not
-possible for a user to cancel the runner using SIGINT, because the
-signal is not propagated to timeout which is running in a different
-process group. The "forground" options places the timeout in the same
-process group as its parent, but only sends the SIGTERM (on timeout)
-signal to the forked process. Unfortunately, this does not play nice
-with all kselftests, e.g. "net:fcnal-test.sh", where the child
-processes will linger because timeout does not send SIGTERM to the
-group.
+While doing smcr_port_add, there maybe linkgroup add into or delete
+from smc_lgr_list.list at the same time, which may result kernel crash.
+So, use smc_lgr_list.lock to protect smc_lgr_list.list iterate in
+smcr_port_add.
 
-Some users have noted these hangs [1].
+The crash calltrace show below:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP NOPTI
+CPU: 0 PID: 559726 Comm: kworker/0:92 Kdump: loaded Tainted: G
+Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS 449e491 04/01/2014
+Workqueue: events smc_ib_port_event_work [smc]
+RIP: 0010:smcr_port_add+0xa6/0xf0 [smc]
+RSP: 0000:ffffa5a2c8f67de0 EFLAGS: 00010297
+RAX: 0000000000000001 RBX: ffff9935e0650000 RCX: 0000000000000000
+RDX: 0000000000000010 RSI: ffff9935e0654290 RDI: ffff9935c8560000
+RBP: 0000000000000000 R08: 0000000000000000 R09: ffff9934c0401918
+R10: 0000000000000000 R11: ffffffffb4a5c278 R12: ffff99364029aae4
+R13: ffff99364029aa00 R14: 00000000ffffffed R15: ffff99364029ab08
+FS:  0000000000000000(0000) GS:ffff994380600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 0000000f06a10003 CR4: 0000000002770ef0
+PKRU: 55555554
+Call Trace:
+ smc_ib_port_event_work+0x18f/0x380 [smc]
+ process_one_work+0x19b/0x340
+ worker_thread+0x30/0x370
+ ? process_one_work+0x340/0x340
+ kthread+0x114/0x130
+ ? __kthread_cancel_work+0x50/0x50
+ ret_from_fork+0x1f/0x30
 
-Fix this by nesting the timeout with an additional timeout without the
-foreground option.
-
-Link: https://lore.kernel.org/all/7650b2eb-0aee-a2b0-2e64-c9bc63210f67@alu.unizg.hr/ # [1]
-Fixes: 651e0d881461 ("kselftest/runner: allow to properly deliver signals to tests")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 1f90a05d9ff9 ("net/smc: add smcr_port_add() and smcr_link_up() processing")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest/runner.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/smc/smc_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/kselftest/runner.sh b/tools/testing/selftests/kselftest/runner.sh
-index a9ba782d8ca0f..83616f0779a7e 100644
---- a/tools/testing/selftests/kselftest/runner.sh
-+++ b/tools/testing/selftests/kselftest/runner.sh
-@@ -33,7 +33,8 @@ tap_timeout()
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index e84241ff4ac4f..ab9ecdd1af0ac 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1101,6 +1101,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
  {
- 	# Make sure tests will time out if utility is available.
- 	if [ -x /usr/bin/timeout ] ; then
--		/usr/bin/timeout --foreground "$kselftest_timeout" $1
-+		/usr/bin/timeout --foreground "$kselftest_timeout" \
-+			/usr/bin/timeout "$kselftest_timeout" $1
- 	else
- 		$1
- 	fi
+ 	struct smc_link_group *lgr, *n;
+ 
++	spin_lock_bh(&smc_lgr_list.lock);
+ 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
+ 		struct smc_link *link;
+ 
+@@ -1115,6 +1116,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
+ 		if (link)
+ 			smc_llc_add_link_local(link);
+ 	}
++	spin_unlock_bh(&smc_lgr_list.lock);
+ }
+ 
+ /* link is down - switch connections to alternate link,
 -- 
 2.40.1
 
