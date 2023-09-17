@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D5B6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9974C43397;
-	Sun, 17 Sep 2023 20:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431436FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5FDC433D9;
+	Sun, 17 Sep 2023 20:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982731;
-	bh=+NCsc/jLzTdVd9HBKtyxGMjKBIi1rg3gPnT4vbch1Fo=;
+	s=korg; t=1694982735;
+	bh=uhF1fijXK+p5G1PQra4twAF/A0nzvIGHfPLr9JQ51M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/wqHNOT8Cf+k8t6I8/0ft9DF15qfVUl7rECYAFY111dfzh/nM95vwZmXBozeOGKq
-	 KUIWPRuUqBixJZSVr+FXEXf3ifORhJLb+WkKYs4hRBbMyaPbPUaLjIdKncrbZtYgYw
-	 lpWmCZeWnaSIi26yroXjG+8DcpMT4PSvQFnfBu1M=
+	b=11Te9j8DLz4Fkil+p6GsZRQqHAqd54Tenul9rfMPJPJtGBs7peP5keuRCgHIQnAwK
+	 1ORgVj8WZHzTw7rMz+BBY3u4XRGBgA3ZU98K5Sbu6j6AMD0ipKJbtyiW5KTkbf1uiE
+	 wuKAgrc7hX+bXH7xchK+inzL8DITWuCLES5Ia0z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Michael Walle <michael@walle.cc>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/511] leds: trigger: tty: Do not use LED_ON/OFF constants, use led_blink_set_oneshot instead
-Date: Sun, 17 Sep 2023 21:12:16 +0200
-Message-ID: <20230917191121.287912094@linuxfoundation.org>
+Subject: [PATCH 5.15 310/511] mtd: spi-nor: Check bus width while setting QE bit
+Date: Sun, 17 Sep 2023 21:12:17 +0200
+Message-ID: <20230917191121.311458428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -34,79 +35,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-[ Upstream commit 730094577e0c37e1bc40be37cbd41f71b0a8a2a4 ]
+[ Upstream commit f01d8155a92e33cdaa85d20bfbe6c441907b3c1f ]
 
-The tty LED trigger uses the obsolete LED_ON & LED_OFF constants when
-setting LED brightness. This is bad because the LED_ON constant is equal
-to 1, and so when activating the tty LED trigger on a LED class device
-with max_brightness greater than 1, the LED is dimmer than it can be
-(when max_brightness is 255, the LED is very dimm indeed; some devices
-translate 1/255 to 0, so the LED is OFF all the time).
+spi_nor_write_16bit_sr_and_check() should also check if bus width is
+4 before setting QE bit.
 
-Instead of directly setting brightness to a specific value, use the
-led_blink_set_oneshot() function from LED core to configure the blink.
-This function takes the current configured brightness as blink
-brightness if not zero, and max brightness otherwise.
-
-This also changes the behavior of the TTY LED trigger. Previously if
-rx/tx stats kept changing, the LED was ON all the time they kept
-changing. With this patch the LED will blink on TTY activity.
-
-Fixes: fd4a641ac88f ("leds: trigger: implement a tty trigger")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://lore.kernel.org/r/20230802090753.13611-1-kabel@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 39d1e3340c73 ("mtd: spi-nor: Fix clearing of QE bit on lock()/unlock()")
+Suggested-by: Michael Walle <michael@walle.cc>
+Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Link: https://lore.kernel.org/r/20230818064524.1229100-2-hsinyi@chromium.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-tty.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/mtd/spi-nor/core.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-tty.c b/drivers/leds/trigger/ledtrig-tty.c
-index f62db7e520b52..8ae0d2d284aff 100644
---- a/drivers/leds/trigger/ledtrig-tty.c
-+++ b/drivers/leds/trigger/ledtrig-tty.c
-@@ -7,6 +7,8 @@
- #include <linux/tty.h>
- #include <uapi/linux/serial.h>
- 
-+#define LEDTRIG_TTY_INTERVAL	50
-+
- struct ledtrig_tty_data {
- 	struct led_classdev *led_cdev;
- 	struct delayed_work dwork;
-@@ -122,17 +124,19 @@ static void ledtrig_tty_work(struct work_struct *work)
- 
- 	if (icount.rx != trigger_data->rx ||
- 	    icount.tx != trigger_data->tx) {
--		led_set_brightness_sync(trigger_data->led_cdev, LED_ON);
-+		unsigned long interval = LEDTRIG_TTY_INTERVAL;
-+
-+		led_blink_set_oneshot(trigger_data->led_cdev, &interval,
-+				      &interval, 0);
- 
- 		trigger_data->rx = icount.rx;
- 		trigger_data->tx = icount.tx;
--	} else {
--		led_set_brightness_sync(trigger_data->led_cdev, LED_OFF);
- 	}
- 
- out:
- 	mutex_unlock(&trigger_data->mutex);
--	schedule_delayed_work(&trigger_data->dwork, msecs_to_jiffies(100));
-+	schedule_delayed_work(&trigger_data->dwork,
-+			      msecs_to_jiffies(LEDTRIG_TTY_INTERVAL * 2));
- }
- 
- static struct attribute *ledtrig_tty_attrs[] = {
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 1e61c2364622f..e115aab7243e1 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -980,21 +980,22 @@ static int spi_nor_write_16bit_sr_and_check(struct spi_nor *nor, u8 sr1)
+ 		ret = spi_nor_read_cr(nor, &sr_cr[1]);
+ 		if (ret)
+ 			return ret;
+-	} else if (nor->params->quad_enable) {
++	} else if (spi_nor_get_protocol_width(nor->read_proto) == 4 &&
++		   spi_nor_get_protocol_width(nor->write_proto) == 4 &&
++		   nor->params->quad_enable) {
+ 		/*
+ 		 * If the Status Register 2 Read command (35h) is not
+ 		 * supported, we should at least be sure we don't
+ 		 * change the value of the SR2 Quad Enable bit.
+ 		 *
+-		 * We can safely assume that when the Quad Enable method is
+-		 * set, the value of the QE bit is one, as a consequence of the
+-		 * nor->params->quad_enable() call.
++		 * When the Quad Enable method is set and the buswidth is 4, we
++		 * can safely assume that the value of the QE bit is one, as a
++		 * consequence of the nor->params->quad_enable() call.
+ 		 *
+-		 * We can safely assume that the Quad Enable bit is present in
+-		 * the Status Register 2 at BIT(1). According to the JESD216
+-		 * revB standard, BFPT DWORDS[15], bits 22:20, the 16-bit
+-		 * Write Status (01h) command is available just for the cases
+-		 * in which the QE bit is described in SR2 at BIT(1).
++		 * According to the JESD216 revB standard, BFPT DWORDS[15],
++		 * bits 22:20, the 16-bit Write Status (01h) command is
++		 * available just for the cases in which the QE bit is
++		 * described in SR2 at BIT(1).
+ 		 */
+ 		sr_cr[1] = SR2_QUAD_EN_BIT1;
+ 	} else {
 -- 
 2.40.1
 
