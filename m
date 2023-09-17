@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F66D7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8E2C433CB;
-	Sun, 17 Sep 2023 19:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF9D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B603C433C8;
+	Sun, 17 Sep 2023 19:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980095;
-	bh=hTOAsfiY43lOyOlS24RxzyU7xwTUPzYWIHy0q4+sDzk=;
+	s=korg; t=1694980098;
+	bh=Vau5G+CBgokjMKhd6RpkfPAFS5dcdLP8y20J3yJG6WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AYbQJ29nzHOTub0jtA//oqyFIPI5N8YelI0CTZVKbFh1cEpeIxnNFowqjDOIeMNAa
-	 gF8AAGHDkqkFukIHMyfAqF/di/kn+d4VYM2Stfawv+2ESf9IwTTMz2/nUf6yhcuzP4
-	 AYTIZiw2pSYgzupV1egY/A4B8tH3VU1e3MzDUpyM=
+	b=G7O0EkGtYTJCRyBYVpc0H6L+PAETRRATuCtF1Si+9ROtyLKJAFIET5QmFXky0UCvd
+	 3nCErCB0zsPewuSt7aMxpSv148QEAV6624qwElpe0D/wDfARVhyv+7/tDx5v5wlDgg
+	 q7HsUbxtqcfd+DS+lXAhTkJ8OBkwejJxr38HfCfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
+	Liu Ying <victor.liu@nxp.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 069/285] backlight: lp855x: Initialize PWM state on first brightness change
-Date: Sun, 17 Sep 2023 21:11:09 +0200
-Message-ID: <20230917191054.111835571@linuxfoundation.org>
+Subject: [PATCH 6.5 070/285] backlight: gpio_backlight: Drop output GPIO direction check for initial power state
+Date: Sun, 17 Sep 2023 21:11:10 +0200
+Message-ID: <20230917191054.143520915@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -35,96 +37,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Ying Liu <victor.liu@nxp.com>
 
-[ Upstream commit 4c09e20b3c85f60353ace21092e34f35f5e3ab00 ]
+[ Upstream commit fe1328b5b2a087221e31da77e617f4c2b70f3b7f ]
 
-As pointed out by Uwe Kleine-König[1], the changes introduced in
-commit c1ff7da03e16 ("video: backlight: lp855x: Get PWM for PWM mode
-during probe") caused the PWM state set up by the bootloader to be
-re-set when the driver is probed. This differs from the behavior from
-before that patch, where the PWM state would be initialized on the
-first brightness change.
+So, let's drop output GPIO direction check and only check GPIO value to set
+the initial power state.
 
-Fix this by moving the PWM state initialization into the PWM control
-function. Add a new variable, needs_pwm_init, to the device info struct
-to allow us to check whether we need the initialization, or whether it
-has already been done.
-
-[1] https://lore.kernel.org/lkml/20230614083953.e4kkweddjz7wztby@pengutronix.de/
-
-Fixes: c1ff7da03e16 ("video: backlight: lp855x: Get PWM for PWM mode during probe")
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://lore.kernel.org/r/20230714121440.7717-2-aweber.kernel@gmail.com
+Fixes: 706dc68102bc ("backlight: gpio: Explicitly set the direction of the GPIO")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230721093342.1532531-1-victor.liu@nxp.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/lp855x_bl.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/video/backlight/gpio_backlight.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
-index 1c9e921bca14a..349ec324bc1ea 100644
---- a/drivers/video/backlight/lp855x_bl.c
-+++ b/drivers/video/backlight/lp855x_bl.c
-@@ -71,6 +71,7 @@ struct lp855x {
- 	struct device *dev;
- 	struct lp855x_platform_data *pdata;
- 	struct pwm_device *pwm;
-+	bool needs_pwm_init;
- 	struct regulator *supply;	/* regulator for VDD input */
- 	struct regulator *enable;	/* regulator for EN/VDDIO input */
- };
-@@ -220,7 +221,15 @@ static void lp855x_pwm_ctrl(struct lp855x *lp, int br, int max_br)
- {
- 	struct pwm_state state;
- 
--	pwm_get_state(lp->pwm, &state);
-+	if (lp->needs_pwm_init) {
-+		pwm_init_state(lp->pwm, &state);
-+		/* Legacy platform data compatibility */
-+		if (lp->pdata->period_ns > 0)
-+			state.period = lp->pdata->period_ns;
-+		lp->needs_pwm_init = false;
-+	} else {
-+		pwm_get_state(lp->pwm, &state);
-+	}
- 
- 	state.duty_cycle = div_u64(br * state.period, max_br);
- 	state.enabled = state.duty_cycle;
-@@ -387,7 +396,6 @@ static int lp855x_probe(struct i2c_client *cl)
- 	const struct i2c_device_id *id = i2c_client_get_device_id(cl);
- 	const struct acpi_device_id *acpi_id = NULL;
- 	struct device *dev = &cl->dev;
--	struct pwm_state pwmstate;
- 	struct lp855x *lp;
- 	int ret;
- 
-@@ -470,15 +478,11 @@ static int lp855x_probe(struct i2c_client *cl)
- 		else
- 			return dev_err_probe(dev, ret, "getting PWM\n");
- 
-+		lp->needs_pwm_init = false;
- 		lp->mode = REGISTER_BASED;
- 		dev_dbg(dev, "mode: register based\n");
- 	} else {
--		pwm_init_state(lp->pwm, &pwmstate);
--		/* Legacy platform data compatibility */
--		if (lp->pdata->period_ns > 0)
--			pwmstate.period = lp->pdata->period_ns;
--		pwm_apply_state(lp->pwm, &pwmstate);
--
-+		lp->needs_pwm_init = true;
- 		lp->mode = PWM_BASED;
- 		dev_dbg(dev, "mode: PWM based\n");
- 	}
+diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
+index 5c5c99f7979e3..30ec5b6845335 100644
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -87,8 +87,7 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 		/* Not booted with device tree or no phandle link to the node */
+ 		bl->props.power = def_value ? FB_BLANK_UNBLANK
+ 					    : FB_BLANK_POWERDOWN;
+-	else if (gpiod_get_direction(gbl->gpiod) == 0 &&
+-		 gpiod_get_value_cansleep(gbl->gpiod) == 0)
++	else if (gpiod_get_value_cansleep(gbl->gpiod) == 0)
+ 		bl->props.power = FB_BLANK_POWERDOWN;
+ 	else
+ 		bl->props.power = FB_BLANK_UNBLANK;
 -- 
 2.40.1
 
