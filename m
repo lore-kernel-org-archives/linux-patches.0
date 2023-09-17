@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F307469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2507DC433C8;
-	Sun, 17 Sep 2023 20:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3AE7469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE59C433C7;
+	Sun, 17 Sep 2023 20:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982232;
-	bh=yqSeU8PxHpGOv5MQrnnbM7hNOSUhUUBIhPr8OL38L08=;
+	s=korg; t=1694982236;
+	bh=hWj8oB3GCUHxxY8NYMKacFgVqS/jagG3B6kZs/VEciY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnGTta5qBG6lOVm+yx+f9tk4r065U3VR1xoPSPFBaFMGg+3L7Kl0Vt84jbKdb7WEd
-	 DcuWUb/5xb2zaV2hDEjaJMRJWlQYlQmd/ABrUHAfXFiCrrKQgUHLEQdb43/zGDCQVk
-	 YYgIHIk6RukfA0bVODgxUdQRxkDn8OCpddHXNq4Y=
+	b=qvr4WxNjsY30FEY46VcGr9a8WPIDQCaWe2L6MA8GIFT8tx4+PKiSot0yW+OaiKS2Z
+	 9gA5dXrMOCPMPIlj2eh5b3PacWrHuUKRtQ+wiPI/r2SqGn6xnY7iClRtLvmTPcyuVZ
+	 5xOn1hDCvMWUEmB2/4C9r6ntiFIwB/strhcNsGbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Nishanth Menon <nm@ti.com>,
+	kernel test robot <lkp@intel.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/511] ARM: dts: samsung: s3c6410-mini6410: correct ethernet reg addresses (split)
-Date: Sun, 17 Sep 2023 21:09:40 +0200
-Message-ID: <20230917191117.546216230@linuxfoundation.org>
+Subject: [PATCH 5.15 184/511] bus: ti-sysc: Fix cast to enum warning
+Date: Sun, 17 Sep 2023 21:10:11 +0200
+Message-ID: <20230917191118.271411092@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,34 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit cf0cb2af6a18f28b84f9f1416bff50ca60d6e98a ]
+[ Upstream commit de44bf2f7683347f75690ef6cf61a1d5ba8f0891 ]
 
-The davicom,dm9000 Ethernet Controller accepts two reg addresses.
+Fix warning for "cast to smaller integer type 'enum sysc_soc' from 'const
+void *'".
 
-Fixes: a43736deb47d ("ARM: dts: Add dts file for S3C6410-based Mini6410 board")
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20230713152926.82884-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Nishanth Menon <nm@ti.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202308150723.ziuGCdM3-lkp@intel.com/
+Fixes: e1e1e9bb9d94 ("bus: ti-sysc: Fix build warning for 64-bit build")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s3c6410-mini6410.dts | 2 +-
+ drivers/bus/ti-sysc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/s3c6410-mini6410.dts b/arch/arm/boot/dts/s3c6410-mini6410.dts
-index 17097da36f5ed..0b07b3c319604 100644
---- a/arch/arm/boot/dts/s3c6410-mini6410.dts
-+++ b/arch/arm/boot/dts/s3c6410-mini6410.dts
-@@ -51,7 +51,7 @@ srom-cs1-bus@18000000 {
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index b756807501f69..436c0f3563d79 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -3055,7 +3055,7 @@ static int sysc_init_static_data(struct sysc *ddata)
  
- 		ethernet@18000000 {
- 			compatible = "davicom,dm9000";
--			reg = <0x18000000 0x2 0x18000004 0x2>;
-+			reg = <0x18000000 0x2>, <0x18000004 0x2>;
- 			interrupt-parent = <&gpn>;
- 			interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
- 			davicom,no-eeprom;
+ 	match = soc_device_match(sysc_soc_match);
+ 	if (match && match->data)
+-		sysc_soc->soc = (enum sysc_soc)match->data;
++		sysc_soc->soc = (enum sysc_soc)(uintptr_t)match->data;
+ 
+ 	/*
+ 	 * Check and warn about possible old incomplete dtb. We now want to see
 -- 
 2.40.1
 
