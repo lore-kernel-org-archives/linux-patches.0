@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1E61C10
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45EAC433C8;
-	Sun, 17 Sep 2023 20:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFFC53AB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA15C433C8;
+	Sun, 17 Sep 2023 20:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982636;
-	bh=EYxifG7ud6lC6iel/Qh75GXGkK9/iFv5GllcbOBeLZc=;
+	s=korg; t=1694982639;
+	bh=YvC0dr+zu7mAeDNp+ZQoXUQMr5NviGrxytYjW4hinmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzur/lbjVIqLHYRpZUfP+40tHGxIwqWHY07zb1OqqNoGN48s++b+4it6mnZO/fMv5
-	 9uTiNhleUdR5FRKSbg0TEp6ogIp/WmjUMpfMiiR+nwTQ7R4mYU/051nEDscADJeseT
-	 EVKoY0Hzeq5JdMpeYtGtk5rJON2jVZomMlf0TEAc=
+	b=O4KfvU7MSFhny3QDOPzTY7P1CFqZWFjxX/zi3C0Y+BK4VziSwEWk+0AnnbHnJOxBk
+	 h0zoFNm3lgpm2y4aHR4POmUMRyBvzGalBug4xAmujmuIfTX1YQ2/GJRUZph78V9yr7
+	 jbQ0iQtl1I1NIW47h7A0LSdWD6ZqCdoe0NWE5ToU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 278/511] USB: gadget: f_mass_storage: Fix unused variable warning
-Date: Sun, 17 Sep 2023 21:11:45 +0200
-Message-ID: <20230917191120.548682594@linuxfoundation.org>
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Marek Vasut <marex@denx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>
+Subject: [PATCH 5.15 279/511] media: ov5640: Enable MIPI interface in ov5640_set_power_mipi()
+Date: Sun, 17 Sep 2023 21:11:46 +0200
+Message-ID: <20230917191120.571367183@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -39,35 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 55c3e571d2a0aabef4f1354604443f1c415d2e85 ]
+[ Upstream commit 98cb72d3b9c5e03b10fa993752ecfcbd9c572d8c ]
 
-Fix a "variable set but not used" warning in f_mass_storage.c.  rc is
-used if	verbose debugging is enabled but not otherwise.
+Set OV5640_REG_IO_MIPI_CTRL00 bit 2 to 1 instead of 0, since 1 means
+MIPI CSI2 interface, while 0 means CPI parallel interface.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: d5e2b67aae79 ("USB: g_mass_storage: template f_mass_storage.c file created")
-Link: https://lore.kernel.org/r/cfed16c7-aa46-494b-ba84-b0e0dc99be3a@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In the ov5640_set_power_mipi() the interface should obviously be set
+to MIPI CSI2 since this functions is used to power up the sensor when
+operated in MIPI CSI2 mode. The sensor should not be in CPI mode in
+that case.
+
+This fixes a corner case where capturing the first frame on i.MX8MN
+with CSI/ISI resulted in corrupted frame.
+
+Fixes: aa4bb8b8838f ("media: ov5640: Re-work MIPI startup sequence")
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Tested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com> # [Test on imx6q]
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Jai Luthra <j-luthra@ti.com> # [Test on bplay, sk-am62]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov5640.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 6ad669dde41c8..5bd76c6d38e74 100644
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -919,7 +919,7 @@ static void invalidate_sub(struct fsg_lun *curlun)
- {
- 	struct file	*filp = curlun->filp;
- 	struct inode	*inode = file_inode(filp);
--	unsigned long	rc;
-+	unsigned long __maybe_unused	rc;
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index a141552531f7e..13144e87f47a1 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -1968,9 +1968,9 @@ static int ov5640_set_power_mipi(struct ov5640_dev *sensor, bool on)
+ 	 *		  "ov5640_set_stream_mipi()")
+ 	 * [4] = 0	: Power up MIPI HS Tx
+ 	 * [3] = 0	: Power up MIPI LS Rx
+-	 * [2] = 0	: MIPI interface disabled
++	 * [2] = 1	: MIPI interface enabled
+ 	 */
+-	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x40);
++	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x44);
+ 	if (ret)
+ 		return ret;
  
- 	rc = invalidate_mapping_pages(inode->i_mapping, 0, -1);
- 	VLDBG(curlun, "invalidate_mapping_pages -> %ld\n", rc);
 -- 
 2.40.1
 
