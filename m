@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3496FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E76C433C7;
-	Sun, 17 Sep 2023 19:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643576FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71BCC433C8;
+	Sun, 17 Sep 2023 19:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978729;
-	bh=cId8JY4S2CXaRBB3kwes3GF5hNacwQmzllgO+USdvaA=;
+	s=korg; t=1694978733;
+	bh=eJWFwnU1uIKWYmyeVC5JGQo4d1N+873TZ/zoH8zb6z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOK94HbJFAJZ9LsJ4NQWaECAlqVio1apXWMaP7r5PiQZ2Xep6SGuiaAt7q/owidsM
-	 gBxB94BIJYTpgpulcG4W9SYEtCd81eLVVmhl16/IqSEQaxKQsejpA9a+4vIOhJNi+Y
-	 miDQCZp0984e5fDehOq6EKO26bFZdbbrCNAgo4uE=
+	b=UjeP01AYD8IwOpxga6V4vxCelolsl2LOvTevnKsgHJN0HXztXM5GFAODWxyrjoh3k
+	 NErIWn1n5x490VlSqPY7fbhDraMU0gsNjXRs5uymoI2t0UhpKg2DZz/rEE/SWcZLuW
+	 mIoBeMU2A2zlSkjJRK3aUL8sbp+hEAzFstJZWOdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kalle Valo <kvalo@kernel.org>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/406] wifi: mwifiex: fix memory leak in mwifiex_histogram_read()
-Date: Sun, 17 Sep 2023 21:09:22 +0200
-Message-ID: <20230917191103.978552171@linuxfoundation.org>
+Subject: [PATCH 5.10 137/406] drm/etnaviv: fix dumping of active MMU context
+Date: Sun, 17 Sep 2023 21:09:51 +0200
+Message-ID: <20230917191104.778578069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,50 +40,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 9c8fd72a5c2a031cbc680a2990107ecd958ffcdb ]
+[ Upstream commit 20faf2005ec85fa1a6acc9a74ff27de667f90576 ]
 
-Always free the zeroed page on return from 'mwifiex_histogram_read()'.
+gpu->mmu_context is the MMU context of the last job in the HW queue, which
+isn't necessarily the same as the context from the bad job. Dump the MMU
+context from the scheduler determined bad submit to make it work as intended.
 
-Fixes: cbf6e05527a7 ("mwifiex: add rx histogram statistics support")
-
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230802160726.85545-1-dmantipov@yandex.ru
+Fixes: 17e4660ae3d7 ("drm/etnaviv: implement per-process address spaces on MMUv2")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/debugfs.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_dump.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/debugfs.c b/drivers/net/wireless/marvell/mwifiex/debugfs.c
-index dded92db1f373..1e7dc724c6a94 100644
---- a/drivers/net/wireless/marvell/mwifiex/debugfs.c
-+++ b/drivers/net/wireless/marvell/mwifiex/debugfs.c
-@@ -265,8 +265,11 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
- 	if (!p)
- 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_dump.c b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+index 706af0304ca4c..7b57d01ba865b 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_dump.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+@@ -125,9 +125,9 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 		return;
+ 	etnaviv_dump_core = false;
  
--	if (!priv || !priv->hist_data)
--		return -EFAULT;
-+	if (!priv || !priv->hist_data) {
-+		ret = -EFAULT;
-+		goto free_and_exit;
-+	}
-+
- 	phist_data = priv->hist_data;
+-	mutex_lock(&gpu->mmu_context->lock);
++	mutex_lock(&submit->mmu_context->lock);
  
- 	p += sprintf(p, "\n"
-@@ -321,6 +324,8 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
- 	ret = simple_read_from_buffer(ubuf, count, ppos, (char *)page,
- 				      (unsigned long)p - page);
+-	mmu_size = etnaviv_iommu_dump_size(gpu->mmu_context);
++	mmu_size = etnaviv_iommu_dump_size(submit->mmu_context);
  
-+free_and_exit:
-+	free_page(page);
- 	return ret;
- }
+ 	/* We always dump registers, mmu, ring, hanging cmdbuf and end marker */
+ 	n_obj = 5;
+@@ -157,7 +157,7 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 	iter.start = __vmalloc(file_size, GFP_KERNEL | __GFP_NOWARN |
+ 			__GFP_NORETRY);
+ 	if (!iter.start) {
+-		mutex_unlock(&gpu->mmu_context->lock);
++		mutex_unlock(&submit->mmu_context->lock);
+ 		dev_warn(gpu->dev, "failed to allocate devcoredump file\n");
+ 		return;
+ 	}
+@@ -169,18 +169,18 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 	memset(iter.hdr, 0, iter.data - iter.start);
  
+ 	etnaviv_core_dump_registers(&iter, gpu);
+-	etnaviv_core_dump_mmu(&iter, gpu->mmu_context, mmu_size);
++	etnaviv_core_dump_mmu(&iter, submit->mmu_context, mmu_size);
+ 	etnaviv_core_dump_mem(&iter, ETDUMP_BUF_RING, gpu->buffer.vaddr,
+ 			      gpu->buffer.size,
+ 			      etnaviv_cmdbuf_get_va(&gpu->buffer,
+-					&gpu->mmu_context->cmdbuf_mapping));
++					&submit->mmu_context->cmdbuf_mapping));
+ 
+ 	etnaviv_core_dump_mem(&iter, ETDUMP_BUF_CMD,
+ 			      submit->cmdbuf.vaddr, submit->cmdbuf.size,
+ 			      etnaviv_cmdbuf_get_va(&submit->cmdbuf,
+-					&gpu->mmu_context->cmdbuf_mapping));
++					&submit->mmu_context->cmdbuf_mapping));
+ 
+-	mutex_unlock(&gpu->mmu_context->lock);
++	mutex_unlock(&submit->mmu_context->lock);
+ 
+ 	/* Reserve space for the bomap */
+ 	if (n_bomap_pages) {
 -- 
 2.40.1
 
