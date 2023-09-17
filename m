@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596266FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8144C433C9;
-	Sun, 17 Sep 2023 19:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43B26FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AF8C433C8;
+	Sun, 17 Sep 2023 19:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979778;
-	bh=X3sR6X595CJRfhGlAmmPylyQrWfbX3mWpNOo1swWc+w=;
+	s=korg; t=1694979781;
+	bh=hTuAOaifu5bj/xylVDvhcg1eNrwgDLExuGQF+5m0Piw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ba3J8AE9N5lsmivGnTJ9e+Al2FvlLuSWcoaMeoLlXuqk3aFImQXTz6rkVObTOzu4N
-	 Ia8jl8tM5I6lJ33iMKOQLNNb1FShCksWeJNpnRaibc6lkTBtSjPK6KoWBeogMWlExC
-	 E4QLMewstO7/DaUCoAROSw+ujyMLFb2yeD9xaiLQ=
+	b=oEDE3Xqmn7rVuOmqwGcwv99YFzhxOBouzF3HFQBHJAc17aDQFM5E4d86wKrt1q0br
+	 9Ws2chqOiyTsrMQV46ZCIDJ6uRR3JUT/F+JYiD3SYJnuHRLZ13QbidCitcGyL8x6n8
+	 CWZjHsMm/sLTITdW5v0TGGKCNHVYdZrQmTTDq9ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Marcin Wojtas <mw@semihalf.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 393/406] net/smc: use smc_lgr_list.lock to protect smc_lgr_list.list iterate in smcr_port_add
-Date: Sun, 17 Sep 2023 21:14:07 +0200
-Message-ID: <20230917191111.642381695@linuxfoundation.org>
+Subject: [PATCH 5.10 394/406] net: ethernet: mvpp2_main: fix possible OOB write in mvpp2_ethtool_get_rxnfc()
+Date: Sun, 17 Sep 2023 21:14:08 +0200
+Message-ID: <20230917191111.667682956@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,70 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit f5146e3ef0a9eea405874b36178c19a4863b8989 ]
+[ Upstream commit 51fe0a470543f345e3c62b6798929de3ddcedc1d ]
 
-While doing smcr_port_add, there maybe linkgroup add into or delete
-from smc_lgr_list.list at the same time, which may result kernel crash.
-So, use smc_lgr_list.lock to protect smc_lgr_list.list iterate in
-smcr_port_add.
+rules is allocated in ethtool_get_rxnfc and the size is determined by
+rule_cnt from user space. So rule_cnt needs to be check before using
+rules to avoid OOB writing or NULL pointer dereference.
 
-The crash calltrace show below:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP NOPTI
-CPU: 0 PID: 559726 Comm: kworker/0:92 Kdump: loaded Tainted: G
-Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS 449e491 04/01/2014
-Workqueue: events smc_ib_port_event_work [smc]
-RIP: 0010:smcr_port_add+0xa6/0xf0 [smc]
-RSP: 0000:ffffa5a2c8f67de0 EFLAGS: 00010297
-RAX: 0000000000000001 RBX: ffff9935e0650000 RCX: 0000000000000000
-RDX: 0000000000000010 RSI: ffff9935e0654290 RDI: ffff9935c8560000
-RBP: 0000000000000000 R08: 0000000000000000 R09: ffff9934c0401918
-R10: 0000000000000000 R11: ffffffffb4a5c278 R12: ffff99364029aae4
-R13: ffff99364029aa00 R14: 00000000ffffffed R15: ffff99364029ab08
-FS:  0000000000000000(0000) GS:ffff994380600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 0000000f06a10003 CR4: 0000000002770ef0
-PKRU: 55555554
-Call Trace:
- smc_ib_port_event_work+0x18f/0x380 [smc]
- process_one_work+0x19b/0x340
- worker_thread+0x30/0x370
- ? process_one_work+0x340/0x340
- kthread+0x114/0x130
- ? __kthread_cancel_work+0x50/0x50
- ret_from_fork+0x1f/0x30
-
-Fixes: 1f90a05d9ff9 ("net/smc: add smcr_port_add() and smcr_link_up() processing")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Fixes: 90b509b39ac9 ("net: mvpp2: cls: Add Classification offload support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index e84241ff4ac4f..ab9ecdd1af0ac 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1101,6 +1101,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
- {
- 	struct smc_link_group *lgr, *n;
- 
-+	spin_lock_bh(&smc_lgr_list.lock);
- 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
- 		struct smc_link *link;
- 
-@@ -1115,6 +1116,7 @@ void smcr_port_add(struct smc_ib_device *smcibdev, u8 ibport)
- 		if (link)
- 			smc_llc_add_link_local(link);
- 	}
-+	spin_unlock_bh(&smc_lgr_list.lock);
- }
- 
- /* link is down - switch connections to alternate link,
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 68c5ed8716c84..e0e6275b3e20c 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5201,6 +5201,11 @@ static int mvpp2_ethtool_get_rxnfc(struct net_device *dev,
+ 		break;
+ 	case ETHTOOL_GRXCLSRLALL:
+ 		for (i = 0; i < MVPP2_N_RFS_ENTRIES_PER_FLOW; i++) {
++			if (loc == info->rule_cnt) {
++				ret = -EMSGSIZE;
++				break;
++			}
++
+ 			if (port->rfs_rules[i])
+ 				rules[loc++] = i;
+ 		}
 -- 
 2.40.1
 
