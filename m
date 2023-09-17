@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A628C433CD;
-	Sun, 17 Sep 2023 20:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AF6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5C9C433C8;
+	Sun, 17 Sep 2023 20:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981134;
-	bh=t7h2EM9HYJE6ootVcH3EadxRnyLeZX2q5CR5aCSViSo=;
+	s=korg; t=1694981137;
+	bh=Nrma6c7AP1tkwZcx7bgNzKQHTm4cdwzwprwGkQgq8zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSRPsfz+Eeo5tfRlFKhV4fEgzcbhxHz+J7q+tx/i9L2gpNzgjKS8na11iFF7IKshY
-	 zSxTIEnF+htoKMofXWYPS18jl9ZzZpxN94JIjViR9nSkgeBUT7N7KsRZfolrVBQpOQ
-	 MYihcZ5WTcPEmwmxZd4mhyGpNAo+jg+4FJcMkrWI=
+	b=yqP3VSgRurMxIREktL10oGhGCSY27jIVhQ5E+UegFNbr9Gdohk6ng17YbXVFlwT62
+	 WzNCGnXEGz4/iIYAzrY+v3gf2ZiwyEkf/qHa8qTovAWPDqKj4QZkLu55ArHOGDEM6U
+	 ci4sZxK1g/uVgThI6Rg7ZdtDJ2A25jMm7111f1Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 010/511] ksmbd: no response from compound read
-Date: Sun, 17 Sep 2023 21:07:17 +0200
-Message-ID: <20230917191114.081889800@linuxfoundation.org>
+	Raag Jadav <raag.jadav@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 078/219] watchdog: intel-mid_wdt: add MODULE_ALIAS() to allow auto-load
+Date: Sun, 17 Sep 2023 21:13:25 +0200
+Message-ID: <20230917191043.798010358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,43 +38,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit e202a1e8634b186da38cbbff85382ea2b9e297cf ]
+[ Upstream commit cf38e7691c85f1b09973b22a0b89bf1e1228d2f9 ]
 
-ksmbd doesn't support compound read. If client send read-read in
-compound to ksmbd, there can be memory leak from read buffer.
-Windows and linux clients doesn't send it to server yet. For now,
-No response from compound read. compound read will be supported soon.
+When built with CONFIG_INTEL_MID_WATCHDOG=m, currently the driver
+needs to be loaded manually, for the lack of module alias.
+This causes unintended resets in cases where watchdog timer is
+set-up by bootloader and the driver is not explicitly loaded.
+Add MODULE_ALIAS() to load the driver automatically at boot and
+avoid this issue.
 
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21587, ZDI-CAN-21588
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 87a1ef8058d9 ("watchdog: add Intel MID watchdog driver support")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230811120220.31578-1-raag.jadav@intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/watchdog/intel-mid_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index f5506853ac0fa..e0b54cd70f041 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -6253,6 +6253,11 @@ int smb2_read(struct ksmbd_work *work)
- 
- 	rsp_org = work->response_buf;
- 	WORK_BUFFERS(work, req, rsp);
-+	if (work->next_smb2_rcv_hdr_off) {
-+		work->send_no_response = 1;
-+		err = -EOPNOTSUPP;
-+		goto out;
-+	}
- 
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_PIPE)) {
+diff --git a/drivers/watchdog/intel-mid_wdt.c b/drivers/watchdog/intel-mid_wdt.c
+index 9b2173f765c8c..fb7fae750181b 100644
+--- a/drivers/watchdog/intel-mid_wdt.c
++++ b/drivers/watchdog/intel-mid_wdt.c
+@@ -203,3 +203,4 @@ module_platform_driver(mid_wdt_driver);
+ MODULE_AUTHOR("David Cohen <david.a.cohen@linux.intel.com>");
+ MODULE_DESCRIPTION("Watchdog Driver for Intel MID platform");
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:intel_mid_wdt");
 -- 
 2.40.1
 
