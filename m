@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02506FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3497CC433C7;
-	Sun, 17 Sep 2023 19:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659C16FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ED1C433CB;
+	Sun, 17 Sep 2023 19:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979644;
-	bh=l+71RpglJvj/Nyybl4B6VqFS8YpKPz6U2/5A3cHTKSA=;
+	s=korg; t=1694979648;
+	bh=XQ0Oxz7aKNc6zcRMUNrly53tjKamtM31vkfh0wSYvX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV8/mYWWAQPIgAAdPaDeRkItOjjgCbkRWOtwiJgIje3U59G2OeB5Vtn34R3pnrZtN
-	 q1AgpmRo7/1e6SS68ucVasHJ8zOMd4yY4CLbA2SjzTX6FHFIEYGjL9bAPjr4hHwTYs
-	 3UkoIt3kPhY5EBeHK/bBiQ/0ynSD4q7SqbfGIXqU=
+	b=m4Vm1+7XcFUHgNC0cOleXSfpAizCS4LP50neu4WkL3nmCOpmQzvhAE/QHExo6ANk5
+	 ySpSzwFqWsKAsoZTWYdp2IzN8Z+fPiwgoloRf0TpaGKkGsAE1wjT71JWSmVBtpo/7n
+	 NAvEFb2V2ljhY+Ur6FmSKY53rE3Q7OwH0GIlMnEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 373/406] btrfs: use the correct superblock to compare fsid in btrfs_validate_super
-Date: Sun, 17 Sep 2023 21:13:47 +0200
-Message-ID: <20230917191111.120059939@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 374/406] mtd: rawnand: brcmnand: Fix crash during the panic_write
+Date: Sun, 17 Sep 2023 21:13:48 +0200
+Message-ID: <20230917191111.146520993@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,57 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: William Zhang <william.zhang@broadcom.com>
 
-commit d167aa76dc0683828588c25767da07fb549e4f48 upstream.
+commit e66dd317194daae0475fe9e5577c80aa97f16cb9 upstream.
 
-The function btrfs_validate_super() should verify the fsid in the provided
-superblock argument. Because, all its callers expect it to do that.
+When executing a NAND command within the panic write path, wait for any
+pending command instead of calling BUG_ON to avoid crashing while
+already crashing.
 
-Such as in the following stack:
-
-   write_all_supers()
-       sb = fs_info->super_for_commit;
-       btrfs_validate_write_super(.., sb)
-         btrfs_validate_super(.., sb, ..)
-
-   scrub_one_super()
-	btrfs_validate_super(.., sb, ..)
-
-And
-   check_dev_super()
-	btrfs_validate_super(.., sb, ..)
-
-However, it currently verifies the fs_info::super_copy::fsid instead,
-which is not correct.  Fix this using the correct fsid in the superblock
-argument.
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
+Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-4-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2496,11 +2496,10 @@ static int validate_super(struct btrfs_f
- 		ret = -EINVAL;
- 	}
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -1543,7 +1543,17 @@ static void brcmnand_send_cmd(struct brc
  
--	if (memcmp(fs_info->fs_devices->fsid, fs_info->super_copy->fsid,
--		   BTRFS_FSID_SIZE)) {
-+	if (memcmp(fs_info->fs_devices->fsid, sb->fsid, BTRFS_FSID_SIZE) != 0) {
- 		btrfs_err(fs_info,
- 		"superblock fsid doesn't match fsid of fs_devices: %pU != %pU",
--			fs_info->super_copy->fsid, fs_info->fs_devices->fsid);
-+			  sb->fsid, fs_info->fs_devices->fsid);
- 		ret = -EINVAL;
- 	}
+ 	dev_dbg(ctrl->dev, "send native cmd %d addr 0x%llx\n", cmd, cmd_addr);
  
+-	BUG_ON(ctrl->cmd_pending != 0);
++	/*
++	 * If we came here through _panic_write and there is a pending
++	 * command, try to wait for it. If it times out, rather than
++	 * hitting BUG_ON, just return so we don't crash while crashing.
++	 */
++	if (oops_in_progress) {
++		if (ctrl->cmd_pending &&
++			bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0))
++			return;
++	} else
++		BUG_ON(ctrl->cmd_pending != 0);
+ 	ctrl->cmd_pending = cmd;
+ 
+ 	ret = bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0);
 
 
