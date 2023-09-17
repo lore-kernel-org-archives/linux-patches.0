@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974E76FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012D5C433C8;
-	Sun, 17 Sep 2023 19:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43E6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DF6C433C8;
+	Sun, 17 Sep 2023 19:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978702;
-	bh=MOVyykII4hHfk8k0eYfoqnjSTkU09pfpSnbDXx/P9tI=;
+	s=korg; t=1694978706;
+	bh=JYWJegLcKERqJWz7nrwR6Mxr0P4VmF8vCjFDr+IITqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqU64/dBhiyocNVl2KPiOlpoodZRH9UX5Owm7qn62ePDcAwHLRPl65gCjIs6snIPP
-	 fTYBwqDXCmZf7EjSgCfFExHU79zBt4S9y0Lv7Jz+YCmjEdNDAoxZHlLZQ2aQeXu9II
-	 HDJ+lB3XMivfl0l6UUTDIYsxHg2MpT7eUK4+A8Ys=
+	b=trYIiM1ZPRc+Tr7M42HhOSko2PsxKxqYS55RQoAl0P4CU5tNJdi02kRhYGoNoSplz
+	 MeJG4fqdcX+tB5DGPc5Pdp6qi3i77aBVdOoOOeFsb9lmMAiomXiJBuHwB07gmNpENo
+	 J5dE02BknCVC3lK1+9nbYbY6t8Bz2VgzVMJ50tzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/406] ARM: dts: BCM53573: Add cells sizes to PCIe node
-Date: Sun, 17 Sep 2023 21:09:49 +0200
-Message-ID: <20230917191104.726725264@linuxfoundation.org>
+Subject: [PATCH 5.10 111/406] wifi: ath9k: fix races between ath9k_wmi_cmd and ath9k_wmi_ctrl_rx
+Date: Sun, 17 Sep 2023 21:09:25 +0200
+Message-ID: <20230917191104.060527422@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,42 +42,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 3392ef368d9b04622fe758b1079b512664b6110a ]
+[ Upstream commit b674fb513e2e7a514fcde287c0f73915d393fdb6 ]
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: pcie@2000: '#address-cells' is a required property
-        From schema: /lib/python3.10/site-packages/dtschema/schemas/pci/pci-bus.yaml
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: pcie@2000: '#size-cells' is a required property
-        From schema: /lib/python3.10/site-packages/dtschema/schemas/pci/pci-bus.yaml
+Currently, the synchronization between ath9k_wmi_cmd() and
+ath9k_wmi_ctrl_rx() is exposed to a race condition which, although being
+rather unlikely, can lead to invalid behaviour of ath9k_wmi_cmd().
 
-Two properties that need to be added later are "device_type" and
-"ranges". Adding "device_type" on its own causes a new warning and the
-value of "ranges" needs to be determined yet.
+Consider the following scenario:
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-3-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+CPU0					CPU1
+
+ath9k_wmi_cmd(...)
+  mutex_lock(&wmi->op_mutex)
+  ath9k_wmi_cmd_issue(...)
+  wait_for_completion_timeout(...)
+  ---
+  timeout
+  ---
+					/* the callback is being processed
+					 * before last_seq_id became zero
+					 */
+					ath9k_wmi_ctrl_rx(...)
+					  spin_lock_irqsave(...)
+					  /* wmi->last_seq_id check here
+					   * doesn't detect timeout yet
+					   */
+					  spin_unlock_irqrestore(...)
+  /* last_seq_id is zeroed to
+   * indicate there was a timeout
+   */
+  wmi->last_seq_id = 0
+  mutex_unlock(&wmi->op_mutex)
+  return -ETIMEDOUT
+
+ath9k_wmi_cmd(...)
+  mutex_lock(&wmi->op_mutex)
+  /* the buffer is replaced with
+   * another one
+   */
+  wmi->cmd_rsp_buf = rsp_buf
+  wmi->cmd_rsp_len = rsp_len
+  ath9k_wmi_cmd_issue(...)
+    spin_lock_irqsave(...)
+    spin_unlock_irqrestore(...)
+  wait_for_completion_timeout(...)
+					/* the continuation of the
+					 * callback left after the first
+					 * ath9k_wmi_cmd call
+					 */
+					  ath9k_wmi_rsp_callback(...)
+					    /* copying data designated
+					     * to already timeouted
+					     * WMI command into an
+					     * inappropriate wmi_cmd_buf
+					     */
+					    memcpy(...)
+					    complete(&wmi->cmd_wait)
+  /* awakened by the bogus callback
+   * => invalid return result
+   */
+  mutex_unlock(&wmi->op_mutex)
+  return 0
+
+To fix this, update last_seq_id on timeout path inside ath9k_wmi_cmd()
+under the wmi_lock. Move ath9k_wmi_rsp_callback() under wmi_lock inside
+ath9k_wmi_ctrl_rx() so that the wmi->cmd_wait can be completed only for
+initially designated wmi_cmd call, otherwise the path would be rejected
+with last_seq_id check.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230425192607.18015-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm53573.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath9k/wmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
-index 3cb71829e8597..eed1a6147f0bf 100644
---- a/arch/arm/boot/dts/bcm53573.dtsi
-+++ b/arch/arm/boot/dts/bcm53573.dtsi
-@@ -127,6 +127,9 @@ uart0: serial@300 {
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index d652c647d56b5..04f363cb90fe5 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -242,10 +242,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 		goto free_skb;
+ 	}
+-	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
  
- 		pcie0: pcie@2000 {
- 			reg = <0x00002000 0x1000>;
-+
-+			#address-cells = <3>;
-+			#size-cells = <2>;
- 		};
+ 	/* WMI command response */
+ 	ath9k_wmi_rsp_callback(wmi, skb);
++	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
  
- 		usb2: usb2@4000 {
+ free_skb:
+ 	kfree_skb(skb);
+@@ -308,8 +308,8 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 	struct ath_common *common = ath9k_hw_common(ah);
+ 	u16 headroom = sizeof(struct htc_frame_hdr) +
+ 		       sizeof(struct wmi_cmd_hdr);
++	unsigned long time_left, flags;
+ 	struct sk_buff *skb;
+-	unsigned long time_left;
+ 	int ret = 0;
+ 
+ 	if (ah->ah_flags & AH_UNPLUGGED)
+@@ -345,7 +345,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 	if (!time_left) {
+ 		ath_dbg(common, WMI, "Timeout waiting for WMI command: %s\n",
+ 			wmi_cmd_to_name(cmd_id));
++		spin_lock_irqsave(&wmi->wmi_lock, flags);
+ 		wmi->last_seq_id = 0;
++		spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 		mutex_unlock(&wmi->op_mutex);
+ 		return -ETIMEDOUT;
+ 	}
 -- 
 2.40.1
 
