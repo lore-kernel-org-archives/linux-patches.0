@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00D36FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185EAC433D9;
-	Sun, 17 Sep 2023 20:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA586FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EABDC433C8;
+	Sun, 17 Sep 2023 20:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982885;
-	bh=Q2kWr1iI+mdzOl6L2jgDpM38gQtYZ4s87VxJZnqbyac=;
+	s=korg; t=1694982888;
+	bh=MnC638qkiLvcdOAJ2ufXxqF+65DxUE3xhsSPjPoikQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fwn9fF1CJ2hnmZsSMJXfJfZQ4aa8cxUSGfP+IgUwaukTHBzTMzyTBf6KqbjKk8jcZ
-	 9bPPKM5XYqTziyVaJwbsqrL8XxmerZmxGJL2sDGF/IU2c5B+n5Ba8qAFz6Oubw8Cgs
-	 0UMV+CX1ou7rIlNVBg6mdkpZJ8EnGmJcEscER1A4=
+	b=prCr2FNG3zhhZVfiNN3qmYCYK9FF4NoJE4Lnc3kcMR5/jTNNR4Fgy4b4ot2/gVMfC
+	 TG0gALks3QmXHM11EraU2/qzo6PbLOuf59xDqBHITC8+Mt4G/pmHk5eG3mEn1HLYwN
+	 0bXZDZA6p2ws/urBokwNSiWLc4Yx8RAgoxAO/61c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 382/511] scsi: qla2xxx: Turn off noisy message log
-Date: Sun, 17 Sep 2023 21:13:29 +0200
-Message-ID: <20230917191123.024386354@linuxfoundation.org>
+Subject: [PATCH 5.15 383/511] scsi: qla2xxx: Fix session hang in gnl
+Date: Sun, 17 Sep 2023 21:13:30 +0200
+Message-ID: <20230917191123.047774681@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -43,31 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Quinn Tran <qutran@marvell.com>
 
-commit 8ebaa45163a3fedc885c1dc7d43ea987a2f00a06 upstream.
+commit 39d22740712c7563a2e18c08f033deeacdaf66e7 upstream.
 
-Some consider noisy log as test failure.  Turn off noisy message log.
+Connection does not resume after a host reset / chip reset. The cause of
+the blockage is due to the FCF_ASYNC_ACTIVE left on. The gnl command was
+interrupted by the chip reset. On exiting the command, this flag should be
+turn off to allow relogin to reoccur. Clear this flag to prevent blockage.
 
 Cc: stable@vger.kernel.org
+Fixes: 17e64648aa47 ("scsi: qla2xxx: Correct fcport flags handling")
 Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-8-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230714070104.40052-7-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -653,7 +653,7 @@ static int qla_nvme_post_cmd(struct nvme
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1136,7 +1136,7 @@ int qla24xx_async_gnl(struct scsi_qla_ho
+ 	u16 *mb;
  
- 	rval = qla2x00_start_nvme_mq(sp);
- 	if (rval != QLA_SUCCESS) {
--		ql_log(ql_log_warn, vha, 0x212d,
-+		ql_dbg(ql_dbg_io + ql_dbg_verbose, vha, 0x212d,
- 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
+ 	if (!vha->flags.online || (fcport->flags & FCF_ASYNC_SENT))
+-		return rval;
++		goto done;
+ 
+ 	ql_dbg(ql_dbg_disc, vha, 0x20d9,
+ 	    "Async-gnlist WWPN %8phC \n", fcport->port_name);
+@@ -1190,8 +1190,9 @@ int qla24xx_async_gnl(struct scsi_qla_ho
+ done_free_sp:
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
++	fcport->flags &= ~(FCF_ASYNC_SENT);
+ done:
+-	fcport->flags &= ~(FCF_ASYNC_ACTIVE | FCF_ASYNC_SENT);
++	fcport->flags &= ~(FCF_ASYNC_ACTIVE);
+ 	return rval;
+ }
+ 
 
 
