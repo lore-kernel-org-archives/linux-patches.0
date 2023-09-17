@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8319746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:28:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE566C433CB;
-	Sun, 17 Sep 2023 20:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D87746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:28:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409C0C433C8;
+	Sun, 17 Sep 2023 20:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982534;
-	bh=yYh8Gu/RdDYUANlb4Ubcs8TAj2K9Y5EqgiK40stDghQ=;
+	s=korg; t=1694982537;
+	bh=JC7pSxbPJI1E8ztyouvxB8uRQowbt0etqIxQXNfp++E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrobA0Pb97KBRmuwHAVJoTiClAN6RSxPCu5Cq6jLVvkJw/UJPKaL81ttGZqyxsk9v
-	 OjI5agY+pN/8p0SNRH0NMxVEx8/YWRAG3tWFNx5QahI2bymDJB5tqWVhtIJ0l6j0vO
-	 3CkUQEbvoLaWMkDav6CqGGiJf5WVvFj5W0cGOzRo=
+	b=epdcrR/YcNQCJ5jdH7XNnFHnY06lfJCTAoWmjPz3TmvTRXWANTD20SoANhd3T4fHR
+	 PyCg4BEw0xrMqW7binDDyaOaDI0eNEc+hpN2fGOh+LKGLODxj7h3VJQbM6nrIBHYD1
+	 6MI4GAldkomxyZrm/HkonMHqVUDEm3eigS296Poo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 251/511] scsi: RDMA/srp: Fix residual handling
-Date: Sun, 17 Sep 2023 21:11:18 +0200
-Message-ID: <20230917191119.882521896@linuxfoundation.org>
+Subject: [PATCH 5.15 242/511] media: dvb-usb: m920x: Fix a potential memory leak in m920x_i2c_xfer()
+Date: Sun, 17 Sep 2023 21:11:09 +0200
+Message-ID: <20230917191119.659860178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,47 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 89e637c19b2441aabc8dbf22a8745b932fd6996e ]
+[ Upstream commit ea9ef6c2e001c5dc94bee35ebd1c8a98621cf7b8 ]
 
-Although the code for residual handling in the SRP initiator follows the
-SCSI documentation, that documentation has never been correct. Because
-scsi_finish_command() starts from the data buffer length and subtracts the
-residual, scsi_set_resid() must not be called if a residual overflow
-occurs. Hence remove the scsi_set_resid() calls from the SRP initiator if a
-residual overflow occurrs.
+'read' is freed when it is known to be NULL, but not when a read error
+occurs.
 
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Fixes: 9237f04e12cc ("scsi: core: Fix scsi_get/set_resid() interface")
-Fixes: e714531a349f ("IB/srp: Fix residual handling")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230724200843.3376570-3-bvanassche@acm.org
-Acked-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Revert the logic to avoid a small leak, should a m920x_read() call fail.
+
+Fixes: a2ab06d7c4d6 ("media: m920x: don't use stack on USB reads")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/media/usb/dvb-usb/m920x.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index a6117a7d0ab17..7701204fe5423 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -1978,12 +1978,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
+diff --git a/drivers/media/usb/dvb-usb/m920x.c b/drivers/media/usb/dvb-usb/m920x.c
+index 691e05833db19..da81fa189b5d5 100644
+--- a/drivers/media/usb/dvb-usb/m920x.c
++++ b/drivers/media/usb/dvb-usb/m920x.c
+@@ -277,7 +277,6 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+ 			char *read = kmalloc(1, GFP_KERNEL);
+ 			if (!read) {
+ 				ret = -ENOMEM;
+-				kfree(read);
+ 				goto unlock;
+ 			}
  
- 		if (unlikely(rsp->flags & SRP_RSP_FLAG_DIUNDER))
- 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_in_res_cnt));
--		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DIOVER))
--			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_in_res_cnt));
- 		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOUNDER))
- 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_out_res_cnt));
--		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOOVER))
--			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_out_res_cnt));
+@@ -288,8 +287,10 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
  
- 		srp_free_req(ch, req, scmnd,
- 			     be32_to_cpu(rsp->req_lim_delta));
+ 				if ((ret = m920x_read(d->udev, M9206_I2C, 0x0,
+ 						      0x20 | stop,
+-						      read, 1)) != 0)
++						      read, 1)) != 0) {
++					kfree(read);
+ 					goto unlock;
++				}
+ 				msg[i].buf[j] = read[0];
+ 			}
+ 
 -- 
 2.40.1
 
