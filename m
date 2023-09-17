@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADBB7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B39AC433CB;
-	Sun, 17 Sep 2023 20:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690487461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6D9C433C8;
+	Sun, 17 Sep 2023 20:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981859;
-	bh=PaiwCa8YASqUgRZoQ6FR+7Iuuy7XSjYUnbQvHj9uvzg=;
+	s=korg; t=1694981862;
+	bh=7r2XjeQSronMV+K4uPDGh3gE5PxyFdbnwPFYrDGvyPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oS7zkKlle9eJUZGUGeViI96haVLo7kUCiuQjaYnTubUrtLlvzOlszWu5PvXbhEbCU
-	 OqFkZgjZ4sMTFaobfqFgd1PiUzFa/tH4k4HVOzLYX3cNSso6CzjlXt9KnhHCfgyDbK
-	 G4mys0Wa/3RhtcOtHjtWnbJdckQBQXHYVXvZHyWE=
+	b=hd762e9jPTNb+ZV4rlL/ISHuF+1DLUwRN+mYd0SlHxp0Su+i6SYF/+hrp/2+50zMp
+	 OjbVQqmW9l1ULRi43T6gMPQ8GEBg9z4KQZYV635WW/QKcTxp0hKZ4LOh1I4Lmk8RzP
+	 i57QjBcCR7WIoRYiOgKwzo/BjC8/LHewb8tKuQB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/511] wifi: ath9k: use IS_ERR() with debugfs_create_dir()
-Date: Sun, 17 Sep 2023 21:09:03 +0200
-Message-ID: <20230917191116.677276287@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 155/219] btrfs: zoned: do not zone finish data relocation block group
+Date: Sun, 17 Sep 2023 21:14:42 +0200
+Message-ID: <20230917191046.648509908@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,48 +35,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Ming <machel@vivo.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 1e4134610d93271535ecf900a676e1f094e9944c ]
+commit 332581bde2a419d5f12a93a1cdc2856af649a3cc upstream.
 
-The debugfs_create_dir() function returns error pointers,
-it never returns NULL. Most incorrect error checks were fixed,
-but the one in ath9k_htc_init_debug() was forgotten.
+When multiple writes happen at once, we may need to sacrifice a currently
+active block group to be zone finished for a new allocation. We choose a
+block group with the least free space left, and zone finish it.
 
-Fix the remaining error check.
+To do the finishing, we need to send IOs for already allocated region
+and wait for them and on-going IOs. Otherwise, these IOs fail because the
+zone is already finished at the time the IO reach a device.
 
-Fixes: e5facc75fa91 ("ath9k_htc: Cleanup HTC debugfs")
-Signed-off-by: Wang Ming <machel@vivo.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230713030358.12379-1-machel@vivo.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, if a block group dedicated to the data relocation is zone
+finished, there is a chance that finishing it before an ongoing write IO
+reaches the device. That is because there is timing gap between an
+allocation is done (block_group->reservations == 0, as pre-allocation is
+done) and an ordered extent is created when the relocation IO starts.
+Thus, if we finish the zone between them, we can fail the IOs.
+
+We cannot simply use "fs_info->data_reloc_bg == block_group->start" to
+avoid the zone finishing. Because, the data_reloc_bg may already switch to
+a new block group, while there are still ongoing write IOs to the old
+data_reloc_bg.
+
+So, this patch reworks the BLOCK_GROUP_FLAG_ZONED_DATA_RELOC bit to
+indicate there is a data relocation allocation and/or ongoing write to the
+block group. The bit is set on allocation and cleared in end_io function of
+the last IO for the currently allocated region.
+
+To change the timing of the bit setting also solves the issue that the bit
+being left even after there is no IO going on. With the current code, if
+the data_reloc_bg switches after the last IO to the current data_reloc_bg,
+the bit is set at this timing and there is no one clearing that bit. As a
+result, that block group is kept unallocatable for anything.
+
+Fixes: 343d8a30851c ("btrfs: zoned: prevent allocation from previous data relocation BG")
+Fixes: 74e91b12b115 ("btrfs: zoned: zone finish unused block group")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent-tree.c |   43 +++++++++++++++++++++++--------------------
+ fs/btrfs/zoned.c       |   16 +++++++++++++---
+ 2 files changed, 36 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index b3ed65e5c4da8..c55aab01fff5d 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -491,7 +491,7 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -3810,7 +3810,8 @@ static int do_allocation_zoned(struct bt
+ 	       fs_info->data_reloc_bg == 0);
  
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (!priv->debug.debugfs_phy)
-+	if (IS_ERR(priv->debug.debugfs_phy))
- 		return -ENOMEM;
+ 	if (block_group->ro ||
+-	    test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags)) {
++	    (!ffe_ctl->for_data_reloc &&
++	     test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags))) {
+ 		ret = 1;
+ 		goto out;
+ 	}
+@@ -3853,8 +3854,26 @@ static int do_allocation_zoned(struct bt
+ 	if (ffe_ctl->for_treelog && !fs_info->treelog_bg)
+ 		fs_info->treelog_bg = block_group->start;
  
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
--- 
-2.40.1
-
+-	if (ffe_ctl->for_data_reloc && !fs_info->data_reloc_bg)
+-		fs_info->data_reloc_bg = block_group->start;
++	if (ffe_ctl->for_data_reloc) {
++		if (!fs_info->data_reloc_bg)
++			fs_info->data_reloc_bg = block_group->start;
++		/*
++		 * Do not allow allocations from this block group, unless it is
++		 * for data relocation. Compared to increasing the ->ro, setting
++		 * the ->zoned_data_reloc_ongoing flag still allows nocow
++		 * writers to come in. See btrfs_inc_nocow_writers().
++		 *
++		 * We need to disable an allocation to avoid an allocation of
++		 * regular (non-relocation data) extent. With mix of relocation
++		 * extents and regular extents, we can dispatch WRITE commands
++		 * (for relocation extents) and ZONE APPEND commands (for
++		 * regular extents) at the same time to the same zone, which
++		 * easily break the write pointer.
++		 *
++		 * Also, this flag avoids this block group to be zone finished.
++		 */
++		set_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags);
++	}
+ 
+ 	ffe_ctl->found_offset = start + block_group->alloc_offset;
+ 	block_group->alloc_offset += num_bytes;
+@@ -3872,24 +3891,8 @@ static int do_allocation_zoned(struct bt
+ out:
+ 	if (ret && ffe_ctl->for_treelog)
+ 		fs_info->treelog_bg = 0;
+-	if (ret && ffe_ctl->for_data_reloc &&
+-	    fs_info->data_reloc_bg == block_group->start) {
+-		/*
+-		 * Do not allow further allocations from this block group.
+-		 * Compared to increasing the ->ro, setting the
+-		 * ->zoned_data_reloc_ongoing flag still allows nocow
+-		 *  writers to come in. See btrfs_inc_nocow_writers().
+-		 *
+-		 * We need to disable an allocation to avoid an allocation of
+-		 * regular (non-relocation data) extent. With mix of relocation
+-		 * extents and regular extents, we can dispatch WRITE commands
+-		 * (for relocation extents) and ZONE APPEND commands (for
+-		 * regular extents) at the same time to the same zone, which
+-		 * easily break the write pointer.
+-		 */
+-		set_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags);
++	if (ret && ffe_ctl->for_data_reloc)
+ 		fs_info->data_reloc_bg = 0;
+-	}
+ 	spin_unlock(&fs_info->relocation_bg_lock);
+ 	spin_unlock(&fs_info->treelog_bg_lock);
+ 	spin_unlock(&block_group->lock);
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2009,6 +2009,10 @@ static int do_zone_finish(struct btrfs_b
+ 	 * and block_group->meta_write_pointer for metadata.
+ 	 */
+ 	if (!fully_written) {
++		if (test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags)) {
++			spin_unlock(&block_group->lock);
++			return -EAGAIN;
++		}
+ 		spin_unlock(&block_group->lock);
+ 
+ 		ret = btrfs_inc_block_group_ro(block_group, false);
+@@ -2037,7 +2041,9 @@ static int do_zone_finish(struct btrfs_b
+ 			return 0;
+ 		}
+ 
+-		if (block_group->reserved) {
++		if (block_group->reserved ||
++		    test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC,
++			     &block_group->runtime_flags)) {
+ 			spin_unlock(&block_group->lock);
+ 			btrfs_dec_block_group_ro(block_group);
+ 			return -EAGAIN;
+@@ -2268,7 +2274,10 @@ void btrfs_zoned_release_data_reloc_bg(s
+ 
+ 	/* All relocation extents are written. */
+ 	if (block_group->start + block_group->alloc_offset == logical + length) {
+-		/* Now, release this block group for further allocations. */
++		/*
++		 * Now, release this block group for further allocations and
++		 * zone finish.
++		 */
+ 		clear_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC,
+ 			  &block_group->runtime_flags);
+ 	}
+@@ -2292,7 +2301,8 @@ int btrfs_zone_finish_one_bg(struct btrf
+ 
+ 		spin_lock(&block_group->lock);
+ 		if (block_group->reserved || block_group->alloc_offset == 0 ||
+-		    (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM)) {
++		    (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM) ||
++		    test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags)) {
+ 			spin_unlock(&block_group->lock);
+ 			continue;
+ 		}
 
 
