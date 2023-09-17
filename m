@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBFF6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24353C433C8;
-	Sun, 17 Sep 2023 20:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD927461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9041FC433CA;
+	Sun, 17 Sep 2023 20:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982040;
-	bh=l7uAbJLNv5VMvZpJIxuMKIvRG0NyjozB0cFeYKLFcmw=;
+	s=korg; t=1694982044;
+	bh=HYnnRKivZEj5Kd/VP5avnkvVC8SdaXYCVyO0Ty72h+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ja1OMQfNcSrEQu06BDVz4buBw8mwEeentt2xpLRS+uRv6dwuFRvex04odlpszSovc
-	 QAirO6pynFdLAX3ekW2lpHupggmLsrpxUVW9d7GKqMKo065uc1BmAGUq7U0wFtGtEV
-	 2GcNpwePZe79w2Y8iU0bgzxcwdVUkw7WhL4x3vKo=
+	b=TSjMg5p7LB2KquqdQCCcjelQjD1ezCbWb1nAOf1yzP/VlIPXsplBiMhF7z9CsuoVi
+	 tskaAAVg/H7U2QBGhhCgnzrp06f9yEv721Yl4ksa9EHkCpAxH0UEOo0rzwtyNsayI5
+	 5dP2ITMM21VjQOPpMcxskYPDOoT52zwNZ3vtQI8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini Katakam <harini.katakam@xilinx.com>,
-	Michal Simek <michal.simek@xilinx.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/219] net: macb: Enable PTP unicast
-Date: Sun, 17 Sep 2023 21:15:36 +0200
-Message-ID: <20230917191048.488595561@linuxfoundation.org>
+Subject: [PATCH 5.15 143/511] arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys wakeup again
+Date: Sun, 17 Sep 2023 21:09:30 +0200
+Message-ID: <20230917191117.311747757@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,82 +37,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harini Katakam <harini.katakam@xilinx.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ee4e92c26c60b7344b7261035683a37da5a6119b ]
+[ Upstream commit b8fbeea0253211d97c579eae787274633d3eaf0d ]
 
-Enable transmission and reception of PTP unicast packets by
-updating PTP unicast config bit and setting current HW mac
-address as allowed address in PTP unicast filter registers.
+gpio-keys,wakeup is a deprecated property:
 
-Signed-off-by: Harini Katakam <harini.katakam@xilinx.com>
-Signed-off-by: Michal Simek <michal.simek@xilinx.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 403f0e771457 ("net: macb: fix sleep inside spinlock")
+  m8250-sony-xperia-edo-pdx206.dtb: gpio-keys: key-camera-focus: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
+
+Fixes: a422c6a91a66 ("arm64: dts: qcom: sm8250-edo: Rectify gpio-keys")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230711063011.16222-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb.h      |  4 ++++
- drivers/net/ethernet/cadence/macb_main.c | 13 +++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
-index 9c410f93a1039..1aa578c1ca4ad 100644
---- a/drivers/net/ethernet/cadence/macb.h
-+++ b/drivers/net/ethernet/cadence/macb.h
-@@ -95,6 +95,8 @@
- #define GEM_SA4B		0x00A0 /* Specific4 Bottom */
- #define GEM_SA4T		0x00A4 /* Specific4 Top */
- #define GEM_WOL			0x00b8 /* Wake on LAN */
-+#define GEM_RXPTPUNI		0x00D4 /* PTP RX Unicast address */
-+#define GEM_TXPTPUNI		0x00D8 /* PTP TX Unicast address */
- #define GEM_EFTSH		0x00e8 /* PTP Event Frame Transmitted Seconds Register 47:32 */
- #define GEM_EFRSH		0x00ec /* PTP Event Frame Received Seconds Register 47:32 */
- #define GEM_PEFTSH		0x00f0 /* PTP Peer Event Frame Transmitted Seconds Register 47:32 */
-@@ -245,6 +247,8 @@
- #define MACB_TZQ_OFFSET		12 /* Transmit zero quantum pause frame */
- #define MACB_TZQ_SIZE		1
- #define MACB_SRTSM_OFFSET	15 /* Store Receive Timestamp to Memory */
-+#define MACB_PTPUNI_OFFSET	20 /* PTP Unicast packet enable */
-+#define MACB_PTPUNI_SIZE	1
- #define MACB_OSSMODE_OFFSET	24 /* Enable One Step Synchro Mode */
- #define MACB_OSSMODE_SIZE	1
- #define MACB_MIIONRGMII_OFFSET	28 /* MII Usage on RGMII Interface */
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 5fb991835078a..9470e895591e5 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -288,6 +288,11 @@ static void macb_set_hwaddr(struct macb *bp)
- 	top = cpu_to_le16(*((u16 *)(bp->dev->dev_addr + 4)));
- 	macb_or_gem_writel(bp, SA1T, top);
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index 60c62fbc2650d..e622cbe167b0d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -60,7 +60,7 @@ key-camera-focus {
+ 			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
+ 			debounce-interval = <15>;
+ 			linux,can-disable;
+-			gpio-key,wakeup;
++			wakeup-source;
+ 		};
  
-+	if (gem_has_ptp(bp)) {
-+		gem_writel(bp, RXPTPUNI, bottom);
-+		gem_writel(bp, TXPTPUNI, bottom);
-+	}
-+
- 	/* Clear unused address register sets */
- 	macb_or_gem_writel(bp, SA2B, 0);
- 	macb_or_gem_writel(bp, SA2T, 0);
-@@ -721,8 +726,12 @@ static void macb_mac_link_up(struct phylink_config *config,
+ 		key-camera-snapshot {
+@@ -69,7 +69,7 @@ key-camera-snapshot {
+ 			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
+ 			debounce-interval = <15>;
+ 			linux,can-disable;
+-			gpio-key,wakeup;
++			wakeup-source;
+ 		};
  
- 	spin_unlock_irqrestore(&bp->lock, flags);
- 
--	/* Enable Rx and Tx */
--	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(RE) | MACB_BIT(TE));
-+	/* Enable Rx and Tx; Enable PTP unicast */
-+	ctrl = macb_readl(bp, NCR);
-+	if (gem_has_ptp(bp))
-+		ctrl |= MACB_BIT(PTPUNI);
-+
-+	macb_writel(bp, NCR, ctrl | MACB_BIT(RE) | MACB_BIT(TE));
- 
- 	netif_tx_wake_all_queues(ndev);
- }
+ 		vol-down {
 -- 
 2.40.1
 
