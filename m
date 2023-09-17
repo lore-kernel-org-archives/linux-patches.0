@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30D06FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C40FC433C9;
-	Sun, 17 Sep 2023 20:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D206FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128BFC433C7;
+	Sun, 17 Sep 2023 20:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981726;
-	bh=yzctLx6ZM+yWO4xejStXSNFsBfXorro05HnJ/ZQC2/s=;
+	s=korg; t=1694981729;
+	bh=R6YIIQ6uXG3LZkVoXrYu0yNDi4GnT4EYC34PaRmc3kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQFvhCuPn1WYfl4m6qj4a2++J461ywyYU16tSk+PFvvnpHPLs6azBCJr6izcpNeDH
-	 tXk+xwWMBqmWbs7nKvdgrBi8z2ZVh3Y2hoNGs3dNDs1Z3G5HUScs+Mn00Myh8KCOkB
-	 lcpVerqk+9jX+XOq374Xh/qZrepTFGvycfl5kfMk=
+	b=cYZULdgiy141TJ2BM/3SYgfmuqjMqzIOhcPB0Q+BnhT96CBT6RwJNZdp8PdF+RHtw
+	 GdSPpjn2GRQREXLyhAur2dqdRXzSrM+syi8mEMJFcHnF3DZhCAfI5iu9yomGaBAKjb
+	 JNXRD2nXyTkTmJDiikh1dG/HvZHrj1ptK5JzGobI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/511] Bluetooth: Fix potential use-after-free when clear keys
-Date: Sun, 17 Sep 2023 21:08:45 +0200
-Message-ID: <20230917191116.233582861@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 164/219] mtd: rawnand: brcmnand: Fix potential out-of-bounds access in oob write
+Date: Sun, 17 Sep 2023 21:14:51 +0200
+Message-ID: <20230917191046.965851512@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,80 +36,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Min Li <lm0963hack@gmail.com>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 3673952cf0c6cf81b06c66a0b788abeeb02ff3ae ]
+commit 5d53244186c9ac58cb88d76a0958ca55b83a15cd upstream.
 
-Similar to commit c5d2b6fa26b5 ("Bluetooth: Fix use-after-free in
-hci_remove_ltk/hci_remove_irk"). We can not access k after kfree_rcu()
-call.
+When the oob buffer length is not in multiple of words, the oob write
+function does out-of-bounds read on the oob source buffer at the last
+iteration. Fix that by always checking length limit on the oob buffer
+read and fill with 0xff when reaching the end of the buffer to the oob
+registers.
 
-Fixes: d7d41682efc2 ("Bluetooth: Fix Suspicious RCU usage warnings")
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-5-william.zhang@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 682a09e7fea66..e777ccf76b2b7 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2355,9 +2355,9 @@ void hci_uuids_clear(struct hci_dev *hdev)
- 
- void hci_link_keys_clear(struct hci_dev *hdev)
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -1461,19 +1461,33 @@ static int write_oob_to_regs(struct brcm
+ 			     const u8 *oob, int sas, int sector_1k)
  {
--	struct link_key *key;
-+	struct link_key *key, *tmp;
+ 	int tbytes = sas << sector_1k;
+-	int j;
++	int j, k = 0;
++	u32 last = 0xffffffff;
++	u8 *plast = (u8 *)&last;
  
--	list_for_each_entry(key, &hdev->link_keys, list) {
-+	list_for_each_entry_safe(key, tmp, &hdev->link_keys, list) {
- 		list_del_rcu(&key->list);
- 		kfree_rcu(key, rcu);
- 	}
-@@ -2365,9 +2365,9 @@ void hci_link_keys_clear(struct hci_dev *hdev)
+ 	/* Adjust OOB values for 1K sector size */
+ 	if (sector_1k && (i & 0x01))
+ 		tbytes = max(0, tbytes - (int)ctrl->max_oob);
+ 	tbytes = min_t(int, tbytes, ctrl->max_oob);
  
- void hci_smp_ltks_clear(struct hci_dev *hdev)
- {
--	struct smp_ltk *k;
-+	struct smp_ltk *k, *tmp;
+-	for (j = 0; j < tbytes; j += 4)
++	/*
++	 * tbytes may not be multiple of words. Make sure we don't read out of
++	 * the boundary and stop at last word.
++	 */
++	for (j = 0; (j + 3) < tbytes; j += 4)
+ 		oob_reg_write(ctrl, j,
+ 				(oob[j + 0] << 24) |
+ 				(oob[j + 1] << 16) |
+ 				(oob[j + 2] <<  8) |
+ 				(oob[j + 3] <<  0));
++
++	/* handle the remaing bytes */
++	while (j < tbytes)
++		plast[k++] = oob[j++];
++
++	if (tbytes & 0x3)
++		oob_reg_write(ctrl, (tbytes & ~0x3), (__force u32)cpu_to_be32(last));
++
+ 	return tbytes;
+ }
  
--	list_for_each_entry(k, &hdev->long_term_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
- 	}
-@@ -2375,9 +2375,9 @@ void hci_smp_ltks_clear(struct hci_dev *hdev)
- 
- void hci_smp_irks_clear(struct hci_dev *hdev)
- {
--	struct smp_irk *k;
-+	struct smp_irk *k, *tmp;
- 
--	list_for_each_entry(k, &hdev->identity_resolving_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
- 	}
-@@ -2385,9 +2385,9 @@ void hci_smp_irks_clear(struct hci_dev *hdev)
- 
- void hci_blocked_keys_clear(struct hci_dev *hdev)
- {
--	struct blocked_key *b;
-+	struct blocked_key *b, *tmp;
- 
--	list_for_each_entry(b, &hdev->blocked_keys, list) {
-+	list_for_each_entry_safe(b, tmp, &hdev->blocked_keys, list) {
- 		list_del_rcu(&b->list);
- 		kfree_rcu(b, rcu);
- 	}
--- 
-2.40.1
-
 
 
