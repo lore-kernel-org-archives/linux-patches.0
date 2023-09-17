@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98FD6ABA
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD512C433C9;
-	Sun, 17 Sep 2023 19:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5DD6ABA
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491A4C433C8;
+	Sun, 17 Sep 2023 19:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980215;
-	bh=xISA6xyRw5FxX2IDrEiApsbDZU95zBpq9gBj5b7LfKM=;
+	s=korg; t=1694980218;
+	bh=XG1yvnM742iSHLXc8KxlOVseL3j9d68UH6NIHQott54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gr6rM4Js8WTID3yRK+39DqbM4x42DtZ0+xRxukkOd+n9kYf7OPt8VlSAQ2ri7I8tS
-	 VViS2Pl3ANXjMJK7p7S2KYNwdL98d3c21eWO5XnkX0Jpyz8smBYF7GTU+S7moLt7nQ
-	 awwudsxmfi4l0ep4nlBFXGCJeEUdkaErirKobnlE=
+	b=zrsaOLtTuuVL+dE48LDaprijam81Fc50Syi3C4B2zHrRXh1ACfguCfALjWpgTaEz+
+	 XcveOdzXkqyceX/ywbKyRYRjHoljNwos2W3rcH+y1SFMNfpFwsrGdwEsjk4RSJt99C
+	 2+F+x8HfZCqsDYooWVdFBfekYl/gFaDwgf0Fb0ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 125/285] ipv6: ignore dst hint for multipath routes
-Date: Sun, 17 Sep 2023 21:12:05 +0200
-Message-ID: <20230917191055.991957669@linuxfoundation.org>
+Subject: [PATCH 6.5 126/285] selftests/bpf: Fix a CI failure caused by vsock write
+Date: Sun, 17 Sep 2023 21:12:06 +0200
+Message-ID: <20230917191056.028842505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,71 +40,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 8423be8926aa82cd2e28bba5cc96ccb72c7ce6be ]
+[ Upstream commit c1970e26bdc1209974bb5cf31cc23f2b7ad6ce50 ]
 
-Route hints when the nexthop is part of a multipath group causes packets
-in the same receive batch to be sent to the same nexthop irrespective of
-the multipath hash of the packet. So, do not extract route hint for
-packets whose destination is part of a multipath group.
+While commit 90f0074cd9f9 ("selftests/bpf: fix a CI failure caused by vsock sockmap test")
+fixes a receive failure of vsock sockmap test, there is still a write failure:
 
-A new SKB flag IP6SKB_MULTIPATH is introduced for this purpose, set the
-flag when route is looked up in fib6_select_path() and use it in
-ip6_can_use_hint() to check for the existence of the flag.
+Error: #211/79 sockmap_listen/sockmap VSOCK test_vsock_redir
+Error: #211/79 sockmap_listen/sockmap VSOCK test_vsock_redir
+  ./test_progs:vsock_unix_redir_connectible:1501: egress: write: Transport endpoint is not connected
+  vsock_unix_redir_connectible:FAIL:1501
+  ./test_progs:vsock_unix_redir_connectible:1501: ingress: write: Transport endpoint is not connected
+  vsock_unix_redir_connectible:FAIL:1501
+  ./test_progs:vsock_unix_redir_connectible:1501: egress: write: Transport endpoint is not connected
+  vsock_unix_redir_connectible:FAIL:1501
 
-Fixes: 197dbf24e360 ("ipv6: introduce and uses route look hints for list input.")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The reason is that the vsock connection in the test is set to ESTABLISHED state
+by function virtio_transport_recv_pkt, which is executed in a workqueue thread,
+so when the user space test thread runs before the workqueue thread, this
+problem occurs.
+
+To fix it, before writing the connection, wait for it to be connected.
+
+Fixes: d61bd8c1fd02 ("selftests/bpf: add a test case for vsock sockmap")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230901031037.3314007-1-xukuohai@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ipv6.h | 1 +
- net/ipv6/ip6_input.c | 3 ++-
- net/ipv6/route.c     | 3 +++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ .../bpf/prog_tests/sockmap_helpers.h          | 26 +++++++++++++++++++
+ .../selftests/bpf/prog_tests/sockmap_listen.c |  7 +++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
-index 660012997f54c..644e69354cba6 100644
---- a/include/linux/ipv6.h
-+++ b/include/linux/ipv6.h
-@@ -146,6 +146,7 @@ struct inet6_skb_parm {
- #define IP6SKB_JUMBOGRAM      128
- #define IP6SKB_SEG6	      256
- #define IP6SKB_FAKEJUMBO      512
-+#define IP6SKB_MULTIPATH      1024
- };
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_helpers.h b/tools/testing/selftests/bpf/prog_tests/sockmap_helpers.h
+index d12665490a905..36d829a65aa44 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_helpers.h
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_helpers.h
+@@ -179,6 +179,32 @@
+ 		__ret;                                                         \
+ 	})
  
- #if defined(CONFIG_NET_L3_MASTER_DEV)
-diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
-index d94041bb42872..b8378814532ce 100644
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -99,7 +99,8 @@ static bool ip6_can_use_hint(const struct sk_buff *skb,
- static struct sk_buff *ip6_extract_route_hint(const struct net *net,
- 					      struct sk_buff *skb)
- {
--	if (fib6_routes_require_src(net) || fib6_has_custom_rules(net))
-+	if (fib6_routes_require_src(net) || fib6_has_custom_rules(net) ||
-+	    IP6CB(skb)->flags & IP6SKB_MULTIPATH)
- 		return NULL;
- 
- 	return skb;
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 56a55585eb798..a02328c93a537 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -424,6 +424,9 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 	if (match->nh && have_oif_match && res->nh)
- 		return;
- 
-+	if (skb)
-+		IP6CB(skb)->flags |= IP6SKB_MULTIPATH;
++static inline int poll_connect(int fd, unsigned int timeout_sec)
++{
++	struct timeval timeout = { .tv_sec = timeout_sec };
++	fd_set wfds;
++	int r, eval;
++	socklen_t esize = sizeof(eval);
 +
- 	/* We might have already computed the hash for ICMPv6 errors. In such
- 	 * case it will always be non-zero. Otherwise now is the time to do it.
- 	 */
++	FD_ZERO(&wfds);
++	FD_SET(fd, &wfds);
++
++	r = select(fd + 1, NULL, &wfds, NULL, &timeout);
++	if (r == 0)
++		errno = ETIME;
++	if (r != 1)
++		return -1;
++
++	if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &eval, &esize) < 0)
++		return -1;
++	if (eval != 0) {
++		errno = eval;
++		return -1;
++	}
++
++	return 0;
++}
++
+ static inline int poll_read(int fd, unsigned int timeout_sec)
+ {
+ 	struct timeval timeout = { .tv_sec = timeout_sec };
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+index 5674a9d0cacf0..8df8cbb447f10 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+@@ -1452,11 +1452,18 @@ static int vsock_socketpair_connectible(int sotype, int *v0, int *v1)
+ 	if (p < 0)
+ 		goto close_cli;
+ 
++	if (poll_connect(c, IO_TIMEOUT_SEC) < 0) {
++		FAIL_ERRNO("poll_connect");
++		goto close_acc;
++	}
++
+ 	*v0 = p;
+ 	*v1 = c;
+ 
+ 	return 0;
+ 
++close_acc:
++	close(p);
+ close_cli:
+ 	close(c);
+ close_srv:
 -- 
 2.40.1
 
