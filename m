@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362406FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D9BC433C8;
-	Sun, 17 Sep 2023 19:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A53F6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A84C433C7;
+	Sun, 17 Sep 2023 19:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978993;
-	bh=Z8iQkIBdP4DJS5ywdVGAWzgQyIHFi07cLIafG8D/bgs=;
+	s=korg; t=1694978996;
+	bh=qWm2r3RRo+6faBoN6sXlAFt3IEpaPdz/woXEqN5QTTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFO6rfLiiKhNTU16tKoI6Uj6OLlzr8YUGTjUFBJOCv0tkdt4NwI50chOzxpFZ2KXM
-	 ZS8U5jj7irRF1EKmk5qD2w189ODozzsVS1VGErhcDUf0ZsQ6k30jmIu83kHcDlzYH9
-	 d0EwuGGabU7f/ydm2Ewtu7wuiDw9JlM2j58vlGhM=
+	b=QusSO6qx5VUbWcY/hMMUecZ+0a5Q7lmz5o4G+j0UZ4SoewN2N56vQIK0w2xHZWIgm
+	 V9/l5dPWGOi/CnHOAlmJu6vaK597m9PpPIfQXZPLKQlM0yWIPS5rHJlKYFewH0RaGo
+	 d8B+sRL7XBlsWYPskb0YC0e8AoqmmpPnmbg0l5S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 165/406] drm/mediatek: Fix potential memory leak if vmap() fail
-Date: Sun, 17 Sep 2023 21:10:19 +0200
-Message-ID: <20230917191105.539236122@linuxfoundation.org>
+Subject: [PATCH 5.10 183/406] clk: imx8mp: fix sai4 clock
+Date: Sun, 17 Sep 2023 21:10:37 +0200
+Message-ID: <20230917191106.035940529@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -44,43 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit 379091e0f6d179d1a084c65de90fa44583b14a70 ]
+[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
 
-Also return -ENOMEM if such a failure happens, the implement should take
-responsibility for the error handling.
+The reference manual don't mention a SAI4 hardware block. This would be
+clock slice 78 which is skipped (TRM, page 237). Remove any reference to
+this clock to align the driver with the reality.
 
-Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230706134000.130098-1-suijingfeng@loongson.cn/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8mp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 29702dd8631d4..fe64bf2176f30 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -249,7 +249,11 @@ void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj)
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 98a4711ef38d0..148572852e70f 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -181,10 +181,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext3", "clk_ext4", };
  
- 	mtk_gem->kvaddr = vmap(mtk_gem->pages, npages, VM_MAP,
- 			       pgprot_writecombine(PAGE_KERNEL));
+-static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+-						"clk_ext1", "clk_ext2", };
 -
-+	if (!mtk_gem->kvaddr) {
-+		kfree(sgt);
-+		kfree(mtk_gem->pages);
-+		return -ENOMEM;
-+	}
- out:
- 	kfree(sgt);
- 
+ static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext2", "clk_ext3", };
+@@ -596,7 +592,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
+ 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
+ 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
+-	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
+ 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
+ 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
+ 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
 -- 
 2.40.1
 
