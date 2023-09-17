@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9096FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F0EC433C8;
-	Sun, 17 Sep 2023 20:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188756FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:04:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CF5C433C8;
+	Sun, 17 Sep 2023 20:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981095;
-	bh=9gr4e9nS4lnp5w4BTZiIuQ3PP4VMbCs4Y+OGGNAv5CM=;
+	s=korg; t=1694981098;
+	bh=5Pmg9OXoWvpnR6PUsZbQyaUIdkPPLWP65j5d6R+QSLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQPZ/LQ3Ul1TEQPBJQOyMLDZCqCBp9a/Rz7qzsuW8x7mFd18IVvDFsmgNM9GXzoP8
-	 mdtRAcCGwHOZJmWtorweR4G7NjQwliS9Z2KmA9srRs/7FiKfpSw2Py/xNpW68RCHQh
-	 PUYI/yXSbDXTG95VbNxhQ3l76wezNQnmCZHChbik=
+	b=jJxVNhvIIr/9mJo9WHsb9RrGF9KD9J1obdiFxLP2KGHWsDy41OGBlJLSYIIPkKYxM
+	 gGjc/t96Checw6Owo9O0pXtt31YDba2Xn0pW0DFuU/g2G6Jimtmz3jYI68aycO7r4B
+	 Zr9CO7IAm06KeGfC9xD8aXQZzNEw8vEm+mOHEyEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/511] phy: qcom-snps-femto-v2: use qcom_snps_hsphy_suspend/resume error code
-Date: Sun, 17 Sep 2023 21:07:12 +0200
-Message-ID: <20230917191113.964500398@linuxfoundation.org>
+Subject: [PATCH 6.1 073/219] x86/virt: Drop unnecessary check on extended CPUID level in cpu_has_svm()
+Date: Sun, 17 Sep 2023 21:13:20 +0200
+Message-ID: <20230917191043.632001603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,49 +35,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrien Thierry <athierry@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 8932089b566c24ea19b57e37704c492678de1420 ]
+[ Upstream commit 5df8ecfe3632d5879d1f154f7aa8de441b5d1c89 ]
 
-The return value from qcom_snps_hsphy_suspend/resume is not used. Make
-sure qcom_snps_hsphy_runtime_suspend/resume return this value as well.
+Drop the explicit check on the extended CPUID level in cpu_has_svm(), the
+kernel's cached CPUID info will leave the entire SVM leaf unset if said
+leaf is not supported by hardware.  Prior to using cached information,
+the check was needed to avoid false positives due to Intel's rather crazy
+CPUID behavior of returning the values of the maximum supported leaf if
+the specified leaf is unsupported.
 
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
-Link: https://lore.kernel.org/r/20230629144542.14906-4-athierry@redhat.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 682a8108872f ("x86/kvm/svm: Simplify cpu_has_svm()")
+Link: https://lore.kernel.org/r/20230721201859.2307736-13-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/virtext.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index abb9264569336..173d166ed8295 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -171,8 +171,7 @@ static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
- 	if (!hsphy->phy_initialized)
+diff --git a/arch/x86/include/asm/virtext.h b/arch/x86/include/asm/virtext.h
+index 3b12e6b994123..6c2e3ff3cb28f 100644
+--- a/arch/x86/include/asm/virtext.h
++++ b/arch/x86/include/asm/virtext.h
+@@ -101,12 +101,6 @@ static inline int cpu_has_svm(const char **msg)
  		return 0;
+ 	}
  
--	qcom_snps_hsphy_suspend(hsphy);
--	return 0;
-+	return qcom_snps_hsphy_suspend(hsphy);
- }
- 
- static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
-@@ -182,8 +181,7 @@ static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
- 	if (!hsphy->phy_initialized)
- 		return 0;
- 
--	qcom_snps_hsphy_resume(hsphy);
--	return 0;
-+	return qcom_snps_hsphy_resume(hsphy);
- }
- 
- static int qcom_snps_hsphy_set_mode(struct phy *phy, enum phy_mode mode,
+-	if (boot_cpu_data.extended_cpuid_level < SVM_CPUID_FUNC) {
+-		if (msg)
+-			*msg = "can't execute cpuid_8000000a";
+-		return 0;
+-	}
+-
+ 	if (!boot_cpu_has(X86_FEATURE_SVM)) {
+ 		if (msg)
+ 			*msg = "svm not available";
 -- 
 2.40.1
 
