@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EE16FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83539C433C7;
-	Sun, 17 Sep 2023 19:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E666FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11189C433C8;
+	Sun, 17 Sep 2023 19:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980461;
-	bh=iHFNubh9oG6MzJKPGf5stIQyYH+qBewnVirr+30LCpU=;
+	s=korg; t=1694980464;
+	bh=dmsLguZ9znPnsJmAtocGyeM80bpyU/35NFFfSP2TJT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf0i0Or0NhrQEPLZcg3ImxG2s/zJhaYe9t4NtSRxLC8m/uaWyiTdKoi7pPYYv01EX
-	 Z3LeaXBQ+TLD4v5D/wD/Dm/3n/q6O/pv7ZxdrFFl71hVaGKnu45XHu+23CDMe3ZMqy
-	 lGSB5YyJMVlnnEAvIfjg6nH7BoQwQx3RTIG4wSVU=
+	b=0caAjBwgMCTqjVSTWVBRxIW8D0yVdulUz9X00GfK5wMz/2F5Om4hqpPSfvm+32wFq
+	 ym3x9pDhAd/LlidCihelhI/dDH0mMKv63Vs9QsmGssK2JVLvMLLmuH3b2/3oxTLGet
+	 w+KX1D3o3eteahCVORJmgEFsYr7/CIAAwHp1+p+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 168/285] net: hns3: fix byte order conversion issue in hclge_dbg_fd_tcam_read()
-Date: Sun, 17 Sep 2023 21:12:48 +0200
-Message-ID: <20230917191057.462477733@linuxfoundation.org>
+Subject: [PATCH 6.5 169/285] net: hns3: fix debugfs concurrency issue between kfree buffer and read
+Date: Sun, 17 Sep 2023 21:12:49 +0200
+Message-ID: <20230917191057.493860481@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,65 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Hao Chen <chenhao418@huawei.com>
 
-[ Upstream commit efccf655e99b6907ca07a466924e91805892e7d3 ]
+[ Upstream commit c295160b1d95e885f1af4586a221cb221d232d10 ]
 
-req1->tcam_data is defined as "u8 tcam_data[8]", and we convert it as
-(u32 *) without considerring byte order conversion,
-it may result in printing wrong data for tcam_data.
+Now in hns3_dbg_uninit(), there may be concurrency between
+kfree buffer and read, it may result in memory error.
 
-Convert tcam_data to (__le32 *) first to fix it.
+Moving debugfs_remove_recursive() in front of kfree buffer to ensure
+they don't happen at the same time.
 
-Fixes: b5a0b70d77b9 ("net: hns3: refactor dump fd tcam of debugfs")
+Fixes: 5e69ea7ee2a6 ("net: hns3: refactor the debugfs process")
 Signed-off-by: Hao Chen <chenhao418@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-index f01a7a9ee02ca..ff3f8f424ad90 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-@@ -1519,7 +1519,7 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
- 	struct hclge_desc desc[3];
- 	int pos = 0;
- 	int ret, i;
--	u32 *req;
-+	__le32 *req;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index f276b5ecb431f..26fb6fefcb9d9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -1411,9 +1411,9 @@ int hns3_dbg_init(struct hnae3_handle *handle)
+ 	return 0;
  
- 	hclge_cmd_setup_basic_desc(&desc[0], HCLGE_OPC_FD_TCAM_OP, true);
- 	desc[0].flag |= cpu_to_le16(HCLGE_COMM_CMD_FLAG_NEXT);
-@@ -1544,22 +1544,22 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
- 			 tcam_msg.loc);
- 
- 	/* tcam_data0 ~ tcam_data1 */
--	req = (u32 *)req1->tcam_data;
-+	req = (__le32 *)req1->tcam_data;
- 	for (i = 0; i < 2; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
- 	/* tcam_data2 ~ tcam_data7 */
--	req = (u32 *)req2->tcam_data;
-+	req = (__le32 *)req2->tcam_data;
- 	for (i = 0; i < 6; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
- 	/* tcam_data8 ~ tcam_data12 */
--	req = (u32 *)req3->tcam_data;
-+	req = (__le32 *)req3->tcam_data;
- 	for (i = 0; i < 5; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
+ out:
+-	mutex_destroy(&handle->dbgfs_lock);
+ 	debugfs_remove_recursive(handle->hnae3_dbgfs);
+ 	handle->hnae3_dbgfs = NULL;
++	mutex_destroy(&handle->dbgfs_lock);
  	return ret;
  }
+ 
+@@ -1421,6 +1421,9 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ {
+ 	u32 i;
+ 
++	debugfs_remove_recursive(handle->hnae3_dbgfs);
++	handle->hnae3_dbgfs = NULL;
++
+ 	for (i = 0; i < ARRAY_SIZE(hns3_dbg_cmd); i++)
+ 		if (handle->dbgfs_buf[i]) {
+ 			kvfree(handle->dbgfs_buf[i]);
+@@ -1428,8 +1431,6 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ 		}
+ 
+ 	mutex_destroy(&handle->dbgfs_lock);
+-	debugfs_remove_recursive(handle->hnae3_dbgfs);
+-	handle->hnae3_dbgfs = NULL;
+ }
+ 
+ void hns3_dbg_register_debugfs(const char *debugfs_dir_name)
 -- 
 2.40.1
 
