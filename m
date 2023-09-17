@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407536FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5CAC433C7;
-	Sun, 17 Sep 2023 19:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3885A6ABA
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E5EC433C8;
+	Sun, 17 Sep 2023 19:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980208;
-	bh=QoMy6hAzx2AtxZOxJL87yM76XEFe735vEhjVxp/v2U0=;
+	s=korg; t=1694980212;
+	bh=WIrxuUFB3E5sxeyiqb+dAE8dMIS1mvxSddUnuOxb5nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdUrziZEiznSL3wCyfB+LtYGtolBW07GrK3zmhpzKGKZEl+9U5XK0fThdRRm4Avec
-	 HE/wZHIdxgaEFDdDQGu1SQOMV1Zb9VILJd0rzl9ejyu2XmXQk9r3W3iZ8NPC+TmWcA
-	 OTHK9zCanQHZkgMANZjLLbCg8YW5vKVll8mKrH/Q=
+	b=gZN+8rotW26HFvNI84mBDrK6b+Y9Mzr+NPmpFtLcGMYnSN+kv0WOUzsw6qLh/3sRR
+	 XSHflepdeN/P+l4oG0LLzC5Mb2M54vAsP9MDmG2Ze1Mk16bywMRWlZVPV5kYcQ2Z4J
+	 +C1IuFqsg2tfiolAEq5mchzXyxjjpU1XUduHOYyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yangbo Lu <yangbo.lu@nxp.com>,
+	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 123/285] net: annotate data-races around sk->sk_bind_phc
-Date: Sun, 17 Sep 2023 21:12:03 +0200
-Message-ID: <20230917191055.921019545@linuxfoundation.org>
+Subject: [PATCH 6.5 124/285] ipv4: ignore dst hint for multipath routes
+Date: Sun, 17 Sep 2023 21:12:04 +0200
+Message-ID: <20230917191055.954859680@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,57 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
 
-[ Upstream commit 251cd405a9e6e70b92fe5afbdd17fd5caf9d3266 ]
+[ Upstream commit 6ac66cb03ae306c2e288a9be18226310529f5b25 ]
 
-sk->sk_bind_phc is read locklessly. Add corresponding annotations.
+Route hints when the nexthop is part of a multipath group causes packets
+in the same receive batch to be sent to the same nexthop irrespective of
+the multipath hash of the packet. So, do not extract route hint for
+packets whose destination is part of a multipath group.
 
-Fixes: d463126e23f1 ("net: sock: extend SO_TIMESTAMPING for PHC binding")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Yangbo Lu <yangbo.lu@nxp.com>
+A new SKB flag IPSKB_MULTIPATH is introduced for this purpose, set the
+flag when route is looked up in ip_mkroute_input() and use it in
+ip_extract_route_hint() to check for the existence of the flag.
+
+Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
+Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 4 ++--
- net/socket.c    | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/net/ip.h    | 1 +
+ net/ipv4/ip_input.c | 3 ++-
+ net/ipv4/route.c    | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index fea5961c51fd1..0a687c8fbed7f 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -894,7 +894,7 @@ static int sock_timestamping_bind_phc(struct sock *sk, int phc_index)
- 	if (!match)
- 		return -EINVAL;
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 9276cea775cc2..3489a1cca5e7b 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -57,6 +57,7 @@ struct inet_skb_parm {
+ #define IPSKB_FRAG_PMTU		BIT(6)
+ #define IPSKB_L3SLAVE		BIT(7)
+ #define IPSKB_NOPOLICY		BIT(8)
++#define IPSKB_MULTIPATH		BIT(9)
  
--	sk->sk_bind_phc = phc_index;
-+	WRITE_ONCE(sk->sk_bind_phc, phc_index);
+ 	u16			frag_max_size;
+ };
+diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
+index fe9ead9ee863d..5e9c8156656a7 100644
+--- a/net/ipv4/ip_input.c
++++ b/net/ipv4/ip_input.c
+@@ -584,7 +584,8 @@ static void ip_sublist_rcv_finish(struct list_head *head)
+ static struct sk_buff *ip_extract_route_hint(const struct net *net,
+ 					     struct sk_buff *skb, int rt_type)
+ {
+-	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST)
++	if (fib4_has_custom_rules(net) || rt_type == RTN_BROADCAST ||
++	    IPCB(skb)->flags & IPSKB_MULTIPATH)
+ 		return NULL;
  
- 	return 0;
- }
-@@ -1719,7 +1719,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- 	case SO_TIMESTAMPING_OLD:
- 		lv = sizeof(v.timestamping);
- 		v.timestamping.flags = READ_ONCE(sk->sk_tsflags);
--		v.timestamping.bind_phc = sk->sk_bind_phc;
-+		v.timestamping.bind_phc = READ_ONCE(sk->sk_bind_phc);
- 		break;
+ 	return skb;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 92fede388d520..33626619aee79 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -2144,6 +2144,7 @@ static int ip_mkroute_input(struct sk_buff *skb,
+ 		int h = fib_multipath_hash(res->fi->fib_net, NULL, skb, hkeys);
  
- 	case SO_RCVTIMEO_OLD:
-diff --git a/net/socket.c b/net/socket.c
-index 6bba7818b593d..b5639a6500158 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -935,7 +935,7 @@ void __sock_recv_timestamp(struct msghdr *msg, struct sock *sk,
+ 		fib_select_multipath(res, h);
++		IPCB(skb)->flags |= IPSKB_MULTIPATH;
+ 	}
+ #endif
  
- 		if (tsflags & SOF_TIMESTAMPING_BIND_PHC)
- 			hwtstamp = ptp_convert_timestamp(&hwtstamp,
--							 sk->sk_bind_phc);
-+							 READ_ONCE(sk->sk_bind_phc));
- 
- 		if (ktime_to_timespec64_cond(hwtstamp, tss.ts + 2)) {
- 			empty = 0;
 -- 
 2.40.1
 
