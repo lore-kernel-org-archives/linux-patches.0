@@ -1,32 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172A96FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EF4C433CC;
-	Sun, 17 Sep 2023 19:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660566FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91FEC433C7;
+	Sun, 17 Sep 2023 19:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979437;
-	bh=V+kG6wcBH4YI6FkQ+wBDconbAVb6NKoscB3oeRnF3n8=;
+	s=korg; t=1694979441;
+	bh=NFGLPXotMlmt/ogv0HcxmMRi+Tvf4FVY3Nf4dGmM8LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QoQPFRr/sYdTtjITlZAA8oAF+PnMOeIXTk5xR7aNAIPrxmJ/wdGejIiohaLXi//Dw
-	 fgLRFuyh1FCgYY0fJHBjQdl6XMd5K26Z2XikZ2epfTcPqypYdmT4Z8pcfD7rme7fC6
-	 VqsuXLKwqpOXBj61A+9REskZNR/TI1k0XLJN8Jgw=
+	b=QohPknpaytKGukyOmVX66b8YkYzh87Jmgf73gm1E8d81C/pgBci12yTd58KyVsJo5
+	 MHz31QWJtP1d6nnr2+GnX2ncI/TThrRgL3Ef0kDfB8VHk/axnWsByMw3UsStd8E19H
+	 IRvnGtuaeDpCVTPbXo9u1jlYx7zerNULVsZ1wZoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Vijay Balakrishna <vijayb@linux.microsoft.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>,
-	"Guilherme G . Piccoli" <gpiccoli@igalia.com>
-Subject: [PATCH 5.10 276/406] printk: ringbuffer: Fix truncating buffer size min_t cast
-Date: Sun, 17 Sep 2023 21:12:10 +0200
-Message-ID: <20230917191108.562283285@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 306/406] USB: core: Change usb_get_device_descriptor() API
+Date: Sun, 17 Sep 2023 21:12:40 +0200
+Message-ID: <20230917191109.387438566@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -45,49 +38,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 53e9e33ede37a247d926db5e4a9e56b55204e66c upstream.
+commit de28e469da75359a2bb8cd8778b78aa64b1be1f4 upstream.
 
-If an output buffer size exceeded U16_MAX, the min_t(u16, ...) cast in
-copy_data() was causing writes to truncate. This manifested as output
-bytes being skipped, seen as %NUL bytes in pstore dumps when the available
-record size was larger than 65536. Fix the cast to no longer truncate
-the calculation.
+The usb_get_device_descriptor() routine reads the device descriptor
+from the udev device and stores it directly in udev->descriptor.  This
+interface is error prone, because the USB subsystem expects in-memory
+copies of a device's descriptors to be immutable once the device has
+been initialized.
 
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: John Ogness <john.ogness@linutronix.de>
-Reported-by: Vijay Balakrishna <vijayb@linux.microsoft.com>
-Link: https://lore.kernel.org/lkml/d8bb1ec7-a4c5-43a2-9de0-9643a70b899f@linux.microsoft.com/
-Fixes: b6cf8b3f3312 ("printk: add lockless ringbuffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Tested-by: Vijay Balakrishna <vijayb@linux.microsoft.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com> # Steam Deck
-Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
-Tested-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20230811054528.never.165-kees@kernel.org
+The interface is changed so that the device descriptor is left in a
+kmalloc-ed buffer, not copied into the usb_device structure.  A
+pointer to the buffer is returned to the caller, who is then
+responsible for kfree-ing it.  The corresponding changes needed in the
+various callers are fairly small.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/d0111bb6-56c1-4f90-adf2-6cfe152f6561@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/printk/printk_ringbuffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/hcd.c     |   10 +++++++---
+ drivers/usb/core/hub.c     |   44 +++++++++++++++++++++++---------------------
+ drivers/usb/core/message.c |   29 ++++++++++++-----------------
+ drivers/usb/core/usb.h     |    4 ++--
+ 4 files changed, 44 insertions(+), 43 deletions(-)
 
---- a/kernel/printk/printk_ringbuffer.c
-+++ b/kernel/printk/printk_ringbuffer.c
-@@ -1726,7 +1726,7 @@ static bool copy_data(struct prb_data_ri
- 	if (!buf || !buf_size)
- 		return true;
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -982,6 +982,7 @@ static int register_root_hub(struct usb_
+ {
+ 	struct device *parent_dev = hcd->self.controller;
+ 	struct usb_device *usb_dev = hcd->self.root_hub;
++	struct usb_device_descriptor *descr;
+ 	const int devnum = 1;
+ 	int retval;
  
--	data_size = min_t(u16, buf_size, len);
-+	data_size = min_t(unsigned int, buf_size, len);
+@@ -993,13 +994,16 @@ static int register_root_hub(struct usb_
+ 	mutex_lock(&usb_bus_idr_lock);
  
- 	memcpy(&buf[0], data, data_size); /* LMM(copy_data:A) */
- 	return true;
+ 	usb_dev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
+-	retval = usb_get_device_descriptor(usb_dev, USB_DT_DEVICE_SIZE);
+-	if (retval != sizeof usb_dev->descriptor) {
++	descr = usb_get_device_descriptor(usb_dev);
++	if (IS_ERR(descr)) {
++		retval = PTR_ERR(descr);
+ 		mutex_unlock(&usb_bus_idr_lock);
+ 		dev_dbg (parent_dev, "can't read %s device descriptor %d\n",
+ 				dev_name(&usb_dev->dev), retval);
+-		return (retval < 0) ? retval : -EMSGSIZE;
++		return retval;
+ 	}
++	usb_dev->descriptor = *descr;
++	kfree(descr);
+ 
+ 	if (le16_to_cpu(usb_dev->descriptor.bcdUSB) >= 0x0201) {
+ 		retval = usb_get_bos_descriptor(usb_dev);
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2646,12 +2646,17 @@ int usb_authorize_device(struct usb_devi
+ 	}
+ 
+ 	if (usb_dev->wusb) {
+-		result = usb_get_device_descriptor(usb_dev, sizeof(usb_dev->descriptor));
+-		if (result < 0) {
++		struct usb_device_descriptor *descr;
++
++		descr = usb_get_device_descriptor(usb_dev);
++		if (IS_ERR(descr)) {
++			result = PTR_ERR(descr);
+ 			dev_err(&usb_dev->dev, "can't re-read device descriptor for "
+ 				"authorization: %d\n", result);
+ 			goto error_device_descriptor;
+ 		}
++		usb_dev->descriptor = *descr;
++		kfree(descr);
+ 	}
+ 
+ 	usb_dev->authorized = 1;
+@@ -4680,7 +4685,7 @@ hub_port_init(struct usb_hub *hub, struc
+ 	const char		*driver_name;
+ 	bool			do_new_scheme;
+ 	int			maxp0;
+-	struct usb_device_descriptor	*buf;
++	struct usb_device_descriptor	*buf, *descr;
+ 
+ 	buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
+ 	if (!buf)
+@@ -4913,15 +4918,16 @@ hub_port_init(struct usb_hub *hub, struc
+ 		usb_ep0_reinit(udev);
+ 	}
+ 
+-	retval = usb_get_device_descriptor(udev, USB_DT_DEVICE_SIZE);
+-	if (retval < (signed)sizeof(udev->descriptor)) {
++	descr = usb_get_device_descriptor(udev);
++	if (IS_ERR(descr)) {
++		retval = PTR_ERR(descr);
+ 		if (retval != -ENODEV)
+ 			dev_err(&udev->dev, "device descriptor read/all, error %d\n",
+ 					retval);
+-		if (retval >= 0)
+-			retval = -ENOMSG;
+ 		goto fail;
+ 	}
++	udev->descriptor = *descr;
++	kfree(descr);
+ 
+ 	/*
+ 	 * Some superspeed devices have finished the link training process
+@@ -5038,7 +5044,7 @@ hub_power_remaining(struct usb_hub *hub)
+ 
+ 
+ static int descriptors_changed(struct usb_device *udev,
+-		struct usb_device_descriptor *old_device_descriptor,
++		struct usb_device_descriptor *new_device_descriptor,
+ 		struct usb_host_bos *old_bos)
+ {
+ 	int		changed = 0;
+@@ -5049,8 +5055,8 @@ static int descriptors_changed(struct us
+ 	int		length;
+ 	char		*buf;
+ 
+-	if (memcmp(&udev->descriptor, old_device_descriptor,
+-			sizeof(*old_device_descriptor)) != 0)
++	if (memcmp(&udev->descriptor, new_device_descriptor,
++			sizeof(*new_device_descriptor)) != 0)
+ 		return 1;
+ 
+ 	if ((old_bos && !udev->bos) || (!old_bos && udev->bos))
+@@ -5370,9 +5376,8 @@ static void hub_port_connect_change(stru
+ {
+ 	struct usb_port *port_dev = hub->ports[port1 - 1];
+ 	struct usb_device *udev = port_dev->child;
+-	struct usb_device_descriptor descriptor;
++	struct usb_device_descriptor *descr;
+ 	int status = -ENODEV;
+-	int retval;
+ 
+ 	dev_dbg(&port_dev->dev, "status %04x, change %04x, %s\n", portstatus,
+ 			portchange, portspeed(hub, portstatus));
+@@ -5399,23 +5404,20 @@ static void hub_port_connect_change(stru
+ 			 * changed device descriptors before resuscitating the
+ 			 * device.
+ 			 */
+-			descriptor = udev->descriptor;
+-			retval = usb_get_device_descriptor(udev,
+-					sizeof(udev->descriptor));
+-			if (retval < 0) {
++			descr = usb_get_device_descriptor(udev);
++			if (IS_ERR(descr)) {
+ 				dev_dbg(&udev->dev,
+-						"can't read device descriptor %d\n",
+-						retval);
++						"can't read device descriptor %ld\n",
++						PTR_ERR(descr));
+ 			} else {
+-				if (descriptors_changed(udev, &descriptor,
++				if (descriptors_changed(udev, descr,
+ 						udev->bos)) {
+ 					dev_dbg(&udev->dev,
+ 							"device descriptor has changed\n");
+-					/* for disconnect() calls */
+-					udev->descriptor = descriptor;
+ 				} else {
+ 					status = 0; /* Nothing to do */
+ 				}
++				kfree(descr);
+ 			}
+ #ifdef CONFIG_PM
+ 		} else if (udev->state == USB_STATE_SUSPENDED &&
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -1039,39 +1039,34 @@ char *usb_cache_string(struct usb_device
+ }
+ 
+ /*
+- * usb_get_device_descriptor - (re)reads the device descriptor (usbcore)
+- * @dev: the device whose device descriptor is being updated
+- * @size: how much of the descriptor to read
++ * usb_get_device_descriptor - read the device descriptor
++ * @udev: the device whose device descriptor should be read
+  * Context: !in_interrupt ()
+  *
+- * Updates the copy of the device descriptor stored in the device structure,
+- * which dedicates space for this purpose.
+- *
+  * Not exported, only for use by the core.  If drivers really want to read
+  * the device descriptor directly, they can call usb_get_descriptor() with
+  * type = USB_DT_DEVICE and index = 0.
+  *
+- * This call is synchronous, and may not be used in an interrupt context.
+- *
+- * Return: The number of bytes received on success, or else the status code
+- * returned by the underlying usb_control_msg() call.
++ * Returns: a pointer to a dynamically allocated usb_device_descriptor
++ * structure (which the caller must deallocate), or an ERR_PTR value.
+  */
+-int usb_get_device_descriptor(struct usb_device *dev, unsigned int size)
++struct usb_device_descriptor *usb_get_device_descriptor(struct usb_device *udev)
+ {
+ 	struct usb_device_descriptor *desc;
+ 	int ret;
+ 
+-	if (size > sizeof(*desc))
+-		return -EINVAL;
+ 	desc = kmalloc(sizeof(*desc), GFP_NOIO);
+ 	if (!desc)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
++
++	ret = usb_get_descriptor(udev, USB_DT_DEVICE, 0, desc, sizeof(*desc));
++	if (ret == sizeof(*desc))
++		return desc;
+ 
+-	ret = usb_get_descriptor(dev, USB_DT_DEVICE, 0, desc, size);
+ 	if (ret >= 0)
+-		memcpy(&dev->descriptor, desc, size);
++		ret = -EMSGSIZE;
+ 	kfree(desc);
+-	return ret;
++	return ERR_PTR(ret);
+ }
+ 
+ /*
+--- a/drivers/usb/core/usb.h
++++ b/drivers/usb/core/usb.h
+@@ -42,8 +42,8 @@ extern bool usb_endpoint_is_ignored(stru
+ 		struct usb_endpoint_descriptor *epd);
+ extern int usb_remove_device(struct usb_device *udev);
+ 
+-extern int usb_get_device_descriptor(struct usb_device *dev,
+-		unsigned int size);
++extern struct usb_device_descriptor *usb_get_device_descriptor(
++		struct usb_device *udev);
+ extern int usb_set_isoch_delay(struct usb_device *dev);
+ extern int usb_get_bos_descriptor(struct usb_device *dev);
+ extern void usb_release_bos_descriptor(struct usb_device *dev);
 
 
