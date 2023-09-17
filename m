@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122DD746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D965C433C7;
-	Sun, 17 Sep 2023 20:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C079C746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D3C433C7;
+	Sun, 17 Sep 2023 20:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982424;
-	bh=+k30atOaqZJfH+8SUA1bOo+A0WX3mbgww5E1qonecdk=;
+	s=korg; t=1694982428;
+	bh=/gMtv0zdYWDSWA4rZgL0gPJveZZP3KrsC4hO8kKHadU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WH1AGTuiEm9dT39wc0skyhAOZxGPc++mxt66s4pQqRmyCVa1EF9wlnmsDFH0bOE3P
-	 lQRsj7OzxxSpO8MnDJERqs4phgUI3fWaJyMDWyQX6a0dM69ayctvUVolRcurOpo5rl
-	 480iEZ3fl6E8MKdAMk0VNhMMHfoXK+CoISJzKQgM=
+	b=QwVwte29ZuZFZKTU4CXH7GDJfaW2ndOVefA6XGyO/c3xEGfVJ0aayhRwL/MRXDiar
+	 BBZdR2I62MpbPnZLThARZX/4Juh/om8TPiC8k7nazaDy9eTO6iuoLZrBz7EKK1SAAs
+	 gF0JEPpA3b9LqJxTshfab3Q1yWQXeqMWmX0Pqz0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 219/511] wifi: ath10k: Use RMW accessors for changing LNKCTL
-Date: Sun, 17 Sep 2023 21:10:46 +0200
-Message-ID: <20230917191119.101441190@linuxfoundation.org>
+Subject: [PATCH 5.15 220/511] PCI: dwc: Add start_link/stop_link inlines
+Date: Sun, 17 Sep 2023 21:10:47 +0200
+Message-ID: <20230917191119.124688401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -37,63 +36,203 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
+[ Upstream commit a37beefbde8802a4eab2545fee1b1780a03f2aa0 ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+Factor out this pattern:
 
-Use RMW capability accessors which does proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
+  if (!pci->ops || !pci->ops->start_link)
+    return -EINVAL;
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 76d870ed09ab ("ath10k: enable ASPM")
-Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  return pci->ops->start_link(pci);
+
+into a new dw_pcie_start_link() wrapper and do the same for the stop_link()
+method.
+
+Note that dw_pcie_ep_start() previously returned -EINVAL if there was no
+platform start_link() method, which didn't make much sense since that is
+not an error.  It will now return 0 in that case.
+
+As a side-effect, drop the empty start_link() and dummy dw_pcie_ops
+instances from the generic DW PCIe and Layerscape EP platform drivers.
+
+[bhelgaas: commit log]
+Link: https://lore.kernel.org/r/20220624143428.8334-14-Sergey.Semin@baikalelectronics.ru
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Stable-dep-of: 17cf8661ee0f ("PCI: layerscape: Add workaround for lost link capabilities during reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pci-layerscape-ep.c    | 12 ------------
+ drivers/pci/controller/dwc/pcie-designware-ep.c   |  8 ++------
+ drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++------
+ drivers/pci/controller/dwc/pcie-designware-plat.c | 10 ----------
+ drivers/pci/controller/dwc/pcie-designware.h      | 14 ++++++++++++++
+ 5 files changed, 20 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index 85a30c301dad7..3a62f66973137 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
- 	ath10k_pci_irq_enable(ar);
- 	ath10k_pci_rx_post(ar);
+diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+index 39f4664bd84c7..ad99707b3b994 100644
+--- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
++++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
+@@ -32,15 +32,6 @@ struct ls_pcie_ep {
+ 	const struct ls_pcie_ep_drvdata *drvdata;
+ };
  
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl);
-+	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC,
-+					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
+-static int ls_pcie_establish_link(struct dw_pcie *pci)
+-{
+-	return 0;
+-}
+-
+-static const struct dw_pcie_ops dw_ls_pcie_ep_ops = {
+-	.start_link = ls_pcie_establish_link,
+-};
+-
+ static const struct pci_epc_features*
+ ls_pcie_ep_get_features(struct dw_pcie_ep *ep)
+ {
+@@ -106,19 +97,16 @@ static const struct dw_pcie_ep_ops ls_pcie_ep_ops = {
  
- 	return 0;
+ static const struct ls_pcie_ep_drvdata ls1_ep_drvdata = {
+ 	.ops = &ls_pcie_ep_ops,
+-	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
+ };
+ 
+ static const struct ls_pcie_ep_drvdata ls2_ep_drvdata = {
+ 	.func_offset = 0x20000,
+ 	.ops = &ls_pcie_ep_ops,
+-	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
+ };
+ 
+ static const struct ls_pcie_ep_drvdata lx2_ep_drvdata = {
+ 	.func_offset = 0x8000,
+ 	.ops = &ls_pcie_ep_ops,
+-	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
+ };
+ 
+ static const struct of_device_id ls_pcie_ep_of_match[] = {
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 2af4ed90e12b3..5023b7f704d2f 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -434,8 +434,7 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+ 
+-	if (pci->ops && pci->ops->stop_link)
+-		pci->ops->stop_link(pci);
++	dw_pcie_stop_link(pci);
  }
-@@ -2821,8 +2822,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
  
- 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
- 				  &ar_pci->link_ctl);
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
+ static int dw_pcie_ep_start(struct pci_epc *epc)
+@@ -443,10 +442,7 @@ static int dw_pcie_ep_start(struct pci_epc *epc)
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
  
- 	/*
- 	 * Bring the target up cleanly.
+-	if (!pci->ops || !pci->ops->start_link)
+-		return -EINVAL;
+-
+-	return pci->ops->start_link(pci);
++	return dw_pcie_start_link(pci);
+ }
+ 
+ static const struct pci_epc_features*
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 7cd4593ad12fa..f561e87cd5f6e 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -402,8 +402,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 
+ 	dw_pcie_setup_rc(pp);
+ 
+-	if (!dw_pcie_link_up(pci) && pci->ops && pci->ops->start_link) {
+-		ret = pci->ops->start_link(pci);
++	if (!dw_pcie_link_up(pci)) {
++		ret = dw_pcie_start_link(pci);
+ 		if (ret)
+ 			goto err_free_msi;
+ 	}
+@@ -420,8 +420,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 	return 0;
+ 
+ err_stop_link:
+-	if (pci->ops && pci->ops->stop_link)
+-		pci->ops->stop_link(pci);
++	dw_pcie_stop_link(pci);
+ 
+ err_free_msi:
+ 	if (pp->has_msi_ctrl)
+@@ -437,8 +436,7 @@ void dw_pcie_host_deinit(struct pcie_port *pp)
+ 	pci_stop_root_bus(pp->bridge->bus);
+ 	pci_remove_root_bus(pp->bridge->bus);
+ 
+-	if (pci->ops && pci->ops->stop_link)
+-		pci->ops->stop_link(pci);
++	dw_pcie_stop_link(pci);
+ 
+ 	if (pp->has_msi_ctrl)
+ 		dw_pcie_free_msi(pp);
+diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+index 8851eb161a0eb..107318ad22817 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-plat.c
++++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+@@ -36,15 +36,6 @@ static const struct of_device_id dw_plat_pcie_of_match[];
+ static const struct dw_pcie_host_ops dw_plat_pcie_host_ops = {
+ };
+ 
+-static int dw_plat_pcie_establish_link(struct dw_pcie *pci)
+-{
+-	return 0;
+-}
+-
+-static const struct dw_pcie_ops dw_pcie_ops = {
+-	.start_link = dw_plat_pcie_establish_link,
+-};
+-
+ static void dw_plat_pcie_ep_init(struct dw_pcie_ep *ep)
+ {
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+@@ -142,7 +133,6 @@ static int dw_plat_pcie_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	pci->dev = dev;
+-	pci->ops = &dw_pcie_ops;
+ 
+ 	dw_plat_pcie->pci = pci;
+ 	dw_plat_pcie->mode = mode;
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 7d6e9b7576be5..8ba2392926346 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -365,6 +365,20 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
+ 	dw_pcie_writel_dbi(pci, reg, val);
+ }
+ 
++static inline int dw_pcie_start_link(struct dw_pcie *pci)
++{
++	if (pci->ops && pci->ops->start_link)
++		return pci->ops->start_link(pci);
++
++	return 0;
++}
++
++static inline void dw_pcie_stop_link(struct dw_pcie *pci)
++{
++	if (pci->ops && pci->ops->stop_link)
++		pci->ops->stop_link(pci);
++}
++
+ #ifdef CONFIG_PCIE_DW_HOST
+ irqreturn_t dw_handle_msi_irq(struct pcie_port *pp);
+ void dw_pcie_setup_rc(struct pcie_port *pp);
 -- 
 2.40.1
 
