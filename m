@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91056FD6
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4394C433CB;
-	Sun, 17 Sep 2023 19:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C6A63BB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B559C433C8;
+	Sun, 17 Sep 2023 19:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980478;
-	bh=iiGWqYnUKvDlZ9Ijatx7wxPfkP1i3kaU/POtqO6EFYU=;
+	s=korg; t=1694980481;
+	bh=R319RyPyS26RBAlcChmTcoVvQ63P9L1u9oKIz/Bmk+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHcTt+a49GPlNvWRMSozdzg/r1dZTfTEO1WNPqFgxQ53D/A71jZ+qqHNx8SjDGelU
-	 esofviVEMa6B0KtTCG0cODlXoj2bb3xfSz42YyjyeDQz8NHq0qtjUNZ+GabB1BOu6S
-	 KBWGua+p1hCFppIghXpoUaXdGdB5wbHEwHI+2bIw=
+	b=MWRSpIlHQCdjlJlu0Yi8YcReqvF/+uPxOro1A/OY7ai6Jg8L7Z8YNIGYD+7ekDLnt
+	 2AOG/3oL/NukiFSCiNZZGlEHOqi9/ndIoV1CL4qiDmAJnykG0k1bzxzyOE8oQdNd6r
+	 V16vlbCHenJN8vubH+iXMy1VId6q6myDTDnN9gAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 196/285] memcontrol: ensure memcg acquired by id is properly set up
-Date: Sun, 17 Sep 2023 21:13:16 +0200
-Message-ID: <20230917191058.374856598@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.5 205/285] btrfs: dont start transaction when joining with TRANS_JOIN_NOSTART
+Date: Sun, 17 Sep 2023 21:13:25 +0200
+Message-ID: <20230917191058.669956635@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -45,131 +39,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 6f0df8e16eb543167f2929cb756e695709a3551d upstream.
+commit 4490e803e1fe9fab8db5025e44e23b55df54078b upstream.
 
-In the eviction recency check, we attempt to retrieve the memcg to which
-the folio belonged when it was evicted, by the memcg id stored in the
-shadow entry.  However, there is a chance that the retrieved memcg is not
-the original memcg that has been killed, but a new one which happens to
-have the same id.
+When joining a transaction with TRANS_JOIN_NOSTART, if we don't find a
+running transaction we end up creating one. This goes against the purpose
+of TRANS_JOIN_NOSTART which is to join a running transaction if its state
+is at or below the state TRANS_STATE_COMMIT_START, otherwise return an
+-ENOENT error and don't start a new transaction. So fix this to not create
+a new transaction if there's no running transaction at or below that
+state.
 
-This is a somewhat unfortunate, but acceptable and rare inaccuracy in the
-heuristics.  However, if we retrieve this new memcg between its allocation
-and when it is properly attached to the memcg hierarchy, we could run into
-the following NULL pointer exception during the memcg hierarchy traversal
-done in mem_cgroup_get_nr_swap_pages():
-
-[ 155757.793456] BUG: kernel NULL pointer dereference, address: 00000000000000c0
-[ 155757.807568] #PF: supervisor read access in kernel mode
-[ 155757.818024] #PF: error_code(0x0000) - not-present page
-[ 155757.828482] PGD 401f77067 P4D 401f77067 PUD 401f76067 PMD 0
-[ 155757.839985] Oops: 0000 [#1] SMP
-[ 155757.887870] RIP: 0010:mem_cgroup_get_nr_swap_pages+0x3d/0xb0
-[ 155757.899377] Code: 29 19 4a 02 48 39 f9 74 63 48 8b 97 c0 00 00 00 48 8b b7 58 02 00 00 48 2b b7 c0 01 00 00 48 39 f0 48 0f 4d c6 48 39 d1 74 42 <48> 8b b2 c0 00 00 00 48 8b ba 58 02 00 00 48 2b ba c0 01 00 00 48
-[ 155757.937125] RSP: 0018:ffffc9002ecdfbc8 EFLAGS: 00010286
-[ 155757.947755] RAX: 00000000003a3b1c RBX: 000007ffffffffff RCX: ffff888280183000
-[ 155757.962202] RDX: 0000000000000000 RSI: 0007ffffffffffff RDI: ffff888bbc2d1000
-[ 155757.976648] RBP: 0000000000000001 R08: 000000000000000b R09: ffff888ad9cedba0
-[ 155757.991094] R10: ffffea0039c07900 R11: 0000000000000010 R12: ffff888b23a7b000
-[ 155758.005540] R13: 0000000000000000 R14: ffff888bbc2d1000 R15: 000007ffffc71354
-[ 155758.019991] FS:  00007f6234c68640(0000) GS:ffff88903f9c0000(0000) knlGS:0000000000000000
-[ 155758.036356] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 155758.048023] CR2: 00000000000000c0 CR3: 0000000a83eb8004 CR4: 00000000007706e0
-[ 155758.062473] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 155758.076924] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[ 155758.091376] PKRU: 55555554
-[ 155758.096957] Call Trace:
-[ 155758.102016]  <TASK>
-[ 155758.106502]  ? __die+0x78/0xc0
-[ 155758.112793]  ? page_fault_oops+0x286/0x380
-[ 155758.121175]  ? exc_page_fault+0x5d/0x110
-[ 155758.129209]  ? asm_exc_page_fault+0x22/0x30
-[ 155758.137763]  ? mem_cgroup_get_nr_swap_pages+0x3d/0xb0
-[ 155758.148060]  workingset_test_recent+0xda/0x1b0
-[ 155758.157133]  workingset_refault+0xca/0x1e0
-[ 155758.165508]  filemap_add_folio+0x4d/0x70
-[ 155758.173538]  page_cache_ra_unbounded+0xed/0x190
-[ 155758.182919]  page_cache_sync_ra+0xd6/0x1e0
-[ 155758.191738]  filemap_read+0x68d/0xdf0
-[ 155758.199495]  ? mlx5e_napi_poll+0x123/0x940
-[ 155758.207981]  ? __napi_schedule+0x55/0x90
-[ 155758.216095]  __x64_sys_pread64+0x1d6/0x2c0
-[ 155758.224601]  do_syscall_64+0x3d/0x80
-[ 155758.232058]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-[ 155758.242473] RIP: 0033:0x7f62c29153b5
-[ 155758.249938] Code: e8 48 89 75 f0 89 7d f8 48 89 4d e0 e8 b4 e6 f7 ff 41 89 c0 4c 8b 55 e0 48 8b 55 e8 48 8b 75 f0 8b 7d f8 b8 11 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 33 44 89 c7 48 89 45 f8 e8 e7 e6 f7 ff 48 8b
-[ 155758.288005] RSP: 002b:00007f6234c5ffd0 EFLAGS: 00000293 ORIG_RAX: 0000000000000011
-[ 155758.303474] RAX: ffffffffffffffda RBX: 00007f628c4e70c0 RCX: 00007f62c29153b5
-[ 155758.318075] RDX: 000000000003c041 RSI: 00007f61d2986000 RDI: 0000000000000076
-[ 155758.332678] RBP: 00007f6234c5fff0 R08: 0000000000000000 R09: 0000000064d5230c
-[ 155758.347452] R10: 000000000027d450 R11: 0000000000000293 R12: 000000000003c041
-[ 155758.362044] R13: 00007f61d2986000 R14: 00007f629e11b060 R15: 000000000027d450
-[ 155758.376661]  </TASK>
-
-This patch fixes the issue by moving the memcg's id publication from the
-alloc stage to online stage, ensuring that any memcg acquired via id must
-be connected to the memcg tree.
-
-Link: https://lkml.kernel.org/r/20230823225430.166925-1-nphamcs@gmail.com
-Fixes: f78dfc7b77d5 ("workingset: fix confusion around eviction vs refault container")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Co-developed-by: Nhat Pham <nphamcs@gmail.com>
-Signed-off-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+CC: stable@vger.kernel.org # 4.14+
+Fixes: a6d155d2e363 ("Btrfs: fix deadlock between fiemap and transaction commits")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ fs/btrfs/transaction.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -5329,7 +5329,6 @@ static struct mem_cgroup *mem_cgroup_all
- 	INIT_LIST_HEAD(&memcg->deferred_split_queue.split_queue);
- 	memcg->deferred_split_queue.split_queue_len = 0;
- #endif
--	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
- 	lru_gen_init_memcg(memcg);
- 	return memcg;
- fail:
-@@ -5401,14 +5400,27 @@ static int mem_cgroup_css_online(struct
- 	if (alloc_shrinker_info(memcg))
- 		goto offline_kmem;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -292,10 +292,11 @@ loop:
+ 	spin_unlock(&fs_info->trans_lock);
  
--	/* Online state pins memcg ID, memcg ID pins CSS */
--	refcount_set(&memcg->id.ref, 1);
--	css_get(css);
--
- 	if (unlikely(mem_cgroup_is_root(memcg)))
- 		queue_delayed_work(system_unbound_wq, &stats_flush_dwork,
- 				   FLUSH_TIME);
- 	lru_gen_online_memcg(memcg);
-+
-+	/* Online state pins memcg ID, memcg ID pins CSS */
-+	refcount_set(&memcg->id.ref, 1);
-+	css_get(css);
-+
-+	/*
-+	 * Ensure mem_cgroup_from_id() works once we're fully online.
-+	 *
-+	 * We could do this earlier and require callers to filter with
-+	 * css_tryget_online(). But right now there are no users that
-+	 * need earlier access, and the workingset code relies on the
-+	 * cgroup tree linkage (mem_cgroup_get_nr_swap_pages()). So
-+	 * publish it here at the end of onlining. This matches the
-+	 * regular ID destruction during offlining.
-+	 */
-+	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
-+
- 	return 0;
- offline_kmem:
- 	memcg_offline_kmem(memcg);
+ 	/*
+-	 * If we are ATTACH, we just want to catch the current transaction,
+-	 * and commit it. If there is no transaction, just return ENOENT.
++	 * If we are ATTACH or TRANS_JOIN_NOSTART, we just want to catch the
++	 * current transaction, and commit it. If there is no transaction, just
++	 * return ENOENT.
+ 	 */
+-	if (type == TRANS_ATTACH)
++	if (type == TRANS_ATTACH || type == TRANS_JOIN_NOSTART)
+ 		return -ENOENT;
+ 
+ 	/*
 
 
