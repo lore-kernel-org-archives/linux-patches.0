@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B240C6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C161EC433C8;
-	Sun, 17 Sep 2023 19:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122216FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAF3C433C9;
+	Sun, 17 Sep 2023 19:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979860;
-	bh=zfZICG2oq/ZB60ihnsb9cWRv+5wFq8oHuhem0VFuE20=;
+	s=korg; t=1694979863;
+	bh=TO+8SN8WaTqa5n7iUA4tChfNMY6fPhJDhT2b9/YUusM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwE7d+MZw/NynF2hBOrrkedti5XJcprBeUfoLaL84GJoo1vbXNaPYEQviU5YTKH9Y
-	 tr20GVM7pEsDYEHuaxEDKLjld+bqtK71+22wxziN/ADszOnvu8INk/pJdPVeoOw+9f
-	 riyuHmEX4mtYM8QU1xhZ7PSrz2+56EYfHC/aiQ/I=
+	b=KGHWpXbs7d69079Z0PRsKsIf4pCzn1jNIFz2Z7OV0I0jDwvj9BJ59JEnmUaD/Usbe
+	 PJsbeM2bwfdAtpdJjvfz9TNc9KMPMeKBkFQ6MXofLJFkFWI6G9hISajnvAB8whl0T4
+	 1riffn5vC0ijpS43eG8nkJ/sGW+Vx7cCG/EsfTSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.5 027/285] clk: qcom: turingcc-qcs404: fix missing resume during probe
-Date: Sun, 17 Sep 2023 21:10:27 +0200
-Message-ID: <20230917191052.593015081@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.5 028/285] ARM: dts: qcom: msm8974pro-castor: correct inverted X of touchscreen
+Date: Sun, 17 Sep 2023 21:10:28 +0200
+Message-ID: <20230917191052.637842973@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -39,50 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit a9f71a033587c9074059132d34c74eabbe95ef26 upstream.
+commit 43db69268149049540b1d2bbe8a69e59d5cb43b6 upstream.
 
-Drivers that enable runtime PM must make sure that the controller is
-runtime resumed before accessing its registers to prevent the power
-domain from being disabled.
+There is no syna,f11-flip-x property, so assume intention was to use
+touchscreen-inverted-x.
 
-Fixes: 892df0191b29 ("clk: qcom: Add QCS404 TuringCC")
-Cc: stable@vger.kernel.org      # 5.2
-Cc: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230718132902.21430-9-johan+linaro@kernel.org
+Fixes: ab80661883de ("ARM: dts: qcom: msm8974: Add Sony Xperia Z2 Tablet")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230720115335.137354-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/turingcc-qcs404.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/turingcc-qcs404.c
-+++ b/drivers/clk/qcom/turingcc-qcs404.c
-@@ -125,11 +125,22 @@ static int turingcc_probe(struct platfor
- 		return ret;
- 	}
+--- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+@@ -132,8 +132,8 @@
  
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = qcom_cc_probe(pdev, &turingcc_desc);
- 	if (ret < 0)
--		return ret;
-+		goto err_put_rpm;
-+
-+	pm_runtime_put(&pdev->dev);
- 
- 	return 0;
-+
-+err_put_rpm:
-+	pm_runtime_put_sync(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct dev_pm_ops turingcc_pm_ops = {
+ 		rmi-f11@11 {
+ 			reg = <0x11>;
+-			syna,f11-flip-x = <1>;
+ 			syna,sensor-type = <1>;
++			touchscreen-inverted-x;
+ 		};
+ 	};
+ };
 
 
