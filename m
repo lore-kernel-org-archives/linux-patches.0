@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E456FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CECCC433C7;
-	Sun, 17 Sep 2023 20:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447D16FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13AFC433C8;
+	Sun, 17 Sep 2023 20:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982854;
-	bh=QMUIdC3tb+Q5Omz5+KlaG6f9BRGSDVU2vZwTtomO9ik=;
+	s=korg; t=1694982858;
+	bh=FaqYkUGW7CoszLGPfReaDOCaeOuOJh4hzqYttYZVx4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oi2MXmp0BAt9zU8QpygmBPTG7K6k3DssdQkEcXXnKsB/eVnyI1f5F40IVsb/8E82j
-	 d0jREB7O3PcGIvW3xzgvtb3aKv1+2SHn4ehSk+5PWjyWn+1BT+daiDJ8Iqh02sykgz
-	 9Eib+szRCNCD5VaVspJ/YJlmYTlT4p+yIcPgfmIg=
+	b=rBUfujwhSZCYbUGDpeBs47bzN8g80xE6tIca/eXCiNzgXFidwsyY6DzFnLGLAQ7yQ
+	 CpFpx1X71Rm+n3/+BLvWwQHj/66q3Gf75vIPcvm/R7UZ43CuTIZeKTAdFlyRSjFXrS
+	 7ncBQBTQsfWRpkhHeKzp3/eHIbUoFr3nTmwvgu6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 339/511] media: venus: hfi_venus: Write to VIDC_CTRL_INIT after unmasking interrupts
-Date: Sun, 17 Sep 2023 21:12:46 +0200
-Message-ID: <20230917191121.998320347@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 340/511] Revert "scsi: qla2xxx: Fix buffer overrun"
+Date: Sun, 17 Sep 2023 21:12:47 +0200
+Message-ID: <20230917191122.022629804@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,42 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit d74e481609808330b4625b3691cf01e1f56e255e upstream.
+commit 641671d97b9199f1ba35ccc2222d4b189a6a5de5 upstream.
 
-The startup procedure shouldn't be started with interrupts masked, as that
-may entail silent failures.
+Revert due to Get PLOGI Template failed.
+This reverts commit b68710a8094fdffe8dd4f7a82c82649f479bb453.
 
-Kick off initialization only after the interrupts are unmasked.
-
-Cc: stable@vger.kernel.org # v4.12+
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230821130045.34850-9-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    2 +-
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -453,7 +453,6 @@ static int venus_boot_core(struct venus_
- 	void __iomem *wrapper_base = hdev->core->wrapper_base;
- 	int ret = 0;
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -5575,7 +5575,7 @@ static void qla_get_login_template(scsi_
+ 	__be32 *q;
  
--	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	if (IS_V6(hdev->core)) {
- 		mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
- 		mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
-@@ -464,6 +463,7 @@ static int venus_boot_core(struct venus_
- 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
- 	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
- 
-+	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	while (!ctrl_status && count < max_tries) {
- 		ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
- 		if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
+ 	memset(ha->init_cb, 0, ha->init_cb_size);
+-	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
++	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
+ 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
+ 					    ha->init_cb, sz);
+ 	if (rval != QLA_SUCCESS) {
 
 
