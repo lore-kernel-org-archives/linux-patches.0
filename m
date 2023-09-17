@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6A87461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A8FC433C8;
-	Sun, 17 Sep 2023 20:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2917461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:07:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59324C433C8;
+	Sun, 17 Sep 2023 20:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981236;
-	bh=xT/47CTBSe2/Ve7nx8ddM7CbtVNpAiUjmQi6uRWSn/Y=;
+	s=korg; t=1694981240;
+	bh=SM6FWDr6UdDKy/WxOj5WYVATFWShERTv+Jg2E64G2Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbqZrKk2vOvaNDtuy3Pp6Q480DxyXCEsI+prpD2LNsDDvDNtfFNUFd5eNPhgw66+t
-	 BlbIysSMazyCS1kM7snDUvq5nPlAOgJCt66hcn9FP2YauttC/EpxVL+26MpTEylSnu
-	 zddLC1UOmrmD+Xwlk805ptvL8JiaxW+AFVL5/ZhQ=
+	b=yKHIxgb3yQcB1YA15hM9cMFKAfmn7Y3zsnT0RPPKSKDlXuuf2TA4HUOg5y6MEf/Dh
+	 3o9zgdUVSGbBmwKBJ+U1HObVQlRzdhsOGDuG9FVuC+tXYxlIQVKtT0qzxE9B1TEBCC
+	 +ny1jSZb7soFQr6XODU5zl2VcwVs/YR8iGB4KD6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Leo Chen <sancchen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/219] ceph: make members in struct ceph_mds_request_args_ext a union
-Date: Sun, 17 Sep 2023 21:13:40 +0200
-Message-ID: <20230917191044.342474661@linuxfoundation.org>
+Subject: [PATCH 5.15 027/511] drm/amd/display: Exit idle optimizations before attempt to access PHY
+Date: Sun, 17 Sep 2023 21:07:34 +0200
+Message-ID: <20230917191114.481521453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,72 +39,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Leo Chen <sancchen@amd.com>
 
-[ Upstream commit 3af5ae22030cb59fab4fba35f5a2b62f47e14df9 ]
+[ Upstream commit de612738e9771bd66aeb20044486c457c512f684 ]
 
-In ceph mainline it will allow to set the btime in the setattr request
-and just add a 'btime' member in the union 'ceph_mds_request_args' and
-then bump up the header version to 4. That means the total size of union
-'ceph_mds_request_args' will increase sizeof(struct ceph_timespec) bytes,
-but in kclient it will increase the sizeof(setattr_ext) bytes for each
-request.
+[Why & How]
+DMUB may hang when powering down pixel clocks due to no dprefclk.
 
-Since the MDS will always depend on the header's vesion and front_len
-members to decode the 'ceph_mds_request_head' struct, at the same time
-kclient hasn't supported the 'btime' feature yet in setattr request,
-so it's safe to do this change here.
+It is fixed by exiting idle optimization before the attempt to access PHY.
 
-This will save 48 bytes memories for each request.
-
-Fixes: 4f1ddb1ea874 ("ceph: implement updated ceph_mds_request_head structure")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ceph/ceph_fs.h | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/ceph/ceph_fs.h b/include/linux/ceph/ceph_fs.h
-index 49586ff261520..b4fa2a25b7d95 100644
---- a/include/linux/ceph/ceph_fs.h
-+++ b/include/linux/ceph/ceph_fs.h
-@@ -462,17 +462,19 @@ union ceph_mds_request_args {
- } __attribute__ ((packed));
- 
- union ceph_mds_request_args_ext {
--	union ceph_mds_request_args old;
--	struct {
--		__le32 mode;
--		__le32 uid;
--		__le32 gid;
--		struct ceph_timespec mtime;
--		struct ceph_timespec atime;
--		__le64 size, old_size;       /* old_size needed by truncate */
--		__le32 mask;                 /* CEPH_SETATTR_* */
--		struct ceph_timespec btime;
--	} __attribute__ ((packed)) setattr_ext;
-+	union {
-+		union ceph_mds_request_args old;
-+		struct {
-+			__le32 mode;
-+			__le32 uid;
-+			__le32 gid;
-+			struct ceph_timespec mtime;
-+			struct ceph_timespec atime;
-+			__le64 size, old_size;       /* old_size needed by truncate */
-+			__le32 mask;                 /* CEPH_SETATTR_* */
-+			struct ceph_timespec btime;
-+		} __attribute__ ((packed)) setattr_ext;
-+	};
- };
- 
- #define CEPH_MDS_FLAG_REPLAY		1 /* this is a replayed op */
+diff --git a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+index 46d7e75e4553e..52142d272c868 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -1744,10 +1744,13 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 			hws->funcs.edp_backlight_control(edp_link_with_sink, false);
+ 		}
+ 		/*resume from S3, no vbios posting, no need to power down again*/
++		clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
++
+ 		power_down_all_hw_blocks(dc);
+ 		disable_vga_and_power_gate_all_controllers(dc);
+ 		if (edp_link_with_sink && !keep_edp_vdd_on)
+ 			dc->hwss.edp_power_control(edp_link_with_sink, false);
++		clk_mgr_optimize_pwr_state(dc, dc->clk_mgr);
+ 	}
+ 	bios_set_scratch_acc_mode_change(dc->ctx->dc_bios, 1);
+ }
 -- 
 2.40.1
 
