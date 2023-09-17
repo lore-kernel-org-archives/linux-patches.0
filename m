@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317386FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4833AC433C9;
-	Sun, 17 Sep 2023 20:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A16FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BA7C433C8;
+	Sun, 17 Sep 2023 20:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981469;
-	bh=2vtMenHrl21HECctR9PrNxwE4r+FsnVLBiIzzarv9sY=;
+	s=korg; t=1694981473;
+	bh=ksnFQqd8QVyl/TCJtoA49RjD6rBwcsdQwTdvUAvfOuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcsI9ob/o57PYdTKaySjHHdZQGBPZ1MM0jkA8DrQm+NFXtSGPp8KvDzaspz7+I9C1
-	 3i2Q9fq7V9Kf6/MHhZz7ipruJvqFpgJ1czeGFWXH2D+g/XVJ9PGIkUyGa4HWCv0F+k
-	 7xCpwtX3L+FKUdUTPG+yX1PTDInyDHcPK0Ctq5e8=
+	b=Nr8nB3aLx5wB8ryH4/d/bk6LTEhiKXkGtGqJ8SfRWdB/RMC05Cw7ln90R858sZIyQ
+	 koSVbzPQgwyCWv1oWOHWXOm3Hr7+D+Ea7ld4UttJrt08GPGj8DoLWAViV3AsNX/PTL
+	 C9GzQ+wxIPYl0v9RpHHz3caTscoirKQLxjiYtI6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Leong <wmliang@infosec.exchange>,
-	Wander Lairson Costa <wander@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Andy Lutomirski <luto@amacapital.net>,
+	Will Drewry <wad@chromium.org>,
+	linux-kselftest@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/219] netfilter: nfnetlink_osf: avoid OOB read
-Date: Sun, 17 Sep 2023 21:14:15 +0200
-Message-ID: <20230917191045.620886898@linuxfoundation.org>
+Subject: [PATCH 5.15 060/511] selftests/harness: Actually report SKIP for signal tests
+Date: Sun, 17 Sep 2023 21:08:07 +0200
+Message-ID: <20230917191115.336254135@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,61 +39,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit f4f8a7803119005e87b716874bec07c751efafec ]
+[ Upstream commit b3d46e11fec0c5a8972e5061bb1462119ae5736d ]
 
-The opt_num field is controlled by user mode and is not currently
-validated inside the kernel. An attacker can take advantage of this to
-trigger an OOB read and potentially leak information.
+Tests that were expecting a signal were not correctly checking for a
+SKIP condition. Move the check before the signal checking when
+processing test result.
 
-BUG: KASAN: slab-out-of-bounds in nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
-Read of size 2 at addr ffff88804bc64272 by task poc/6431
-
-CPU: 1 PID: 6431 Comm: poc Not tainted 6.0.0-rc4 #1
-Call Trace:
- nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
- nf_osf_find+0x186/0x2f0 net/netfilter/nfnetlink_osf.c:281
- nft_osf_eval+0x37f/0x590 net/netfilter/nft_osf.c:47
- expr_call_ops_eval net/netfilter/nf_tables_core.c:214
- nft_do_chain+0x2b0/0x1490 net/netfilter/nf_tables_core.c:264
- nft_do_chain_ipv4+0x17c/0x1f0 net/netfilter/nft_chain_filter.c:23
- [..]
-
-Also add validation to genre, subtype and version fields.
-
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Reported-by: Lucas Leong <wmliang@infosec.exchange>
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Andy Lutomirski <luto@amacapital.net>
+Cc: Will Drewry <wad@chromium.org>
+Cc: linux-kselftest@vger.kernel.org
+Fixes: 9847d24af95c ("selftests/harness: Refactor XFAIL into SKIP")
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/kselftest_harness.h | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index 8f1bfa6ccc2d9..50723ba082890 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -315,6 +315,14 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
- 
- 	f = nla_data(osf_attrs[OSF_ATTR_FINGER]);
- 
-+	if (f->opt_num > ARRAY_SIZE(f->opt))
-+		return -EINVAL;
-+
-+	if (!memchr(f->genre, 0, MAXGENRELEN) ||
-+	    !memchr(f->subtype, 0, MAXGENRELEN) ||
-+	    !memchr(f->version, 0, MAXGENRELEN))
-+		return -EINVAL;
-+
- 	kf = kmalloc(sizeof(struct nf_osf_finger), GFP_KERNEL);
- 	if (!kf)
- 		return -ENOMEM;
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index 11779405dc804..a6ea2bd63a831 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -916,7 +916,11 @@ void __wait_for_test(struct __test_metadata *t)
+ 		fprintf(TH_LOG_STREAM,
+ 			"# %s: Test terminated by timeout\n", t->name);
+ 	} else if (WIFEXITED(status)) {
+-		if (t->termsig != -1) {
++		if (WEXITSTATUS(status) == 255) {
++			/* SKIP */
++			t->passed = 1;
++			t->skip = 1;
++		} else if (t->termsig != -1) {
+ 			t->passed = 0;
+ 			fprintf(TH_LOG_STREAM,
+ 				"# %s: Test exited normally instead of by signal (code: %d)\n",
+@@ -928,11 +932,6 @@ void __wait_for_test(struct __test_metadata *t)
+ 			case 0:
+ 				t->passed = 1;
+ 				break;
+-			/* SKIP */
+-			case 255:
+-				t->passed = 1;
+-				t->skip = 1;
+-				break;
+ 			/* Other failure, assume step report. */
+ 			default:
+ 				t->passed = 0;
 -- 
 2.40.1
 
