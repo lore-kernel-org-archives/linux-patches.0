@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021BE7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BB9C433C7;
-	Sun, 17 Sep 2023 20:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A68A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EDFC433C7;
+	Sun, 17 Sep 2023 20:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981971;
-	bh=kmW15roF7+RoVm7TXv3fKfC0O++K/5LYnoqpzTzcVrk=;
+	s=korg; t=1694981975;
+	bh=lD1Gf/UAwUgi6BCmURQ6ngoMx6ULJ4Xs5n/IfpGVCeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcjrUIn3UEvu1u8mIjSk6/itx0lVNQKsBJQv4Z/qXbL3ZlNt6Wt3VcwK+11TyCLgK
-	 q6g8mcmPjBYb6icX7IVgzJgGgaem5N/5vo5bnbizPHcZwRoGZvWrw9QA4oru+iGbPL
-	 SyM97tTM+6/UuSypErBttrzbUD5MD2oWdRvEyoRk=
+	b=PruzooP5v3JUoF+DJhY93tOAYtnnCwOEkKf19t52XEdkqM1iF0BEk6PiQfJ5axFRY
+	 Rg8IaeLInsi6cnqTEJeMObkvAX2XnEbBYL7MHmsMZdYwpzH8E8257f8ijVsabOc8e1
+	 NNcAOz5V0M/QpMTTuxE16/AH8cc5lu9fEq12ESZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/219] net: dsa: sja1105: block FDB accesses that are concurrent with a switch reset
-Date: Sun, 17 Sep 2023 21:15:27 +0200
-Message-ID: <20230917191048.172290062@linuxfoundation.org>
+Subject: [PATCH 6.1 187/219] kselftest/runner.sh: Propagate SIGTERM to runner child
+Date: Sun, 17 Sep 2023 21:15:14 +0200
+Message-ID: <20230917191047.707727101@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -34,61 +34,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 86899e9e1e29e854b5f6dcc24ba4f75f792c89aa ]
+[ Upstream commit 9616cb34b08ec86642b162eae75c5a7ca8debe3c ]
 
-Currently, when we add the first sja1105 port to a bridge with
-vlan_filtering 1, then we sometimes see this output:
+Timeouts in kselftest are done using the "timeout" command with the
+"--foreground" option. Without the "foreground" option, it is not
+possible for a user to cancel the runner using SIGINT, because the
+signal is not propagated to timeout which is running in a different
+process group. The "forground" options places the timeout in the same
+process group as its parent, but only sends the SIGTERM (on timeout)
+signal to the forked process. Unfortunately, this does not play nice
+with all kselftests, e.g. "net:fcnal-test.sh", where the child
+processes will linger because timeout does not send SIGTERM to the
+group.
 
-sja1105 spi2.2: port 4 failed to read back entry for be:79:b4:9e:9e:96 vid 3088: -ENOENT
-sja1105 spi2.2: Reset switch and programmed static config. Reason: VLAN filtering
-sja1105 spi2.2: port 0 failed to add be:79:b4:9e:9e:96 vid 0 to fdb: -2
+Some users have noted these hangs [1].
 
-It is because sja1105_fdb_add() runs from the dsa_owq which is no longer
-serialized with switch resets since it dropped the rtnl_lock() in the
-blamed commit.
+Fix this by nesting the timeout with an additional timeout without the
+foreground option.
 
-Either performing the FDB accesses before the reset, or after the reset,
-is equally fine, because sja1105_static_fdb_change() backs up those
-changes in the static config, but FDB access during reset isn't ok.
-
-Make sja1105_static_config_reload() take the fdb_lock to fix that.
-
-Fixes: 0faf890fc519 ("net: dsa: drop rtnl_lock from dsa_slave_switchdev_event_work")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/all/7650b2eb-0aee-a2b0-2e64-c9bc63210f67@alu.unizg.hr/ # [1]
+Fixes: 651e0d881461 ("kselftest/runner: allow to properly deliver signals to tests")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/kselftest/runner.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index c6c74e302e4dd..f1f1368e8146f 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2304,6 +2304,7 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 	int rc, i;
- 	s64 now;
- 
-+	mutex_lock(&priv->fdb_lock);
- 	mutex_lock(&priv->mgmt_lock);
- 
- 	mac = priv->static_config.tables[BLK_IDX_MAC_CONFIG].entries;
-@@ -2418,6 +2419,7 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 		goto out;
- out:
- 	mutex_unlock(&priv->mgmt_lock);
-+	mutex_unlock(&priv->fdb_lock);
- 
- 	return rc;
- }
+diff --git a/tools/testing/selftests/kselftest/runner.sh b/tools/testing/selftests/kselftest/runner.sh
+index 294619ade49fe..1333ab1eda708 100644
+--- a/tools/testing/selftests/kselftest/runner.sh
++++ b/tools/testing/selftests/kselftest/runner.sh
+@@ -35,7 +35,8 @@ tap_timeout()
+ {
+ 	# Make sure tests will time out if utility is available.
+ 	if [ -x /usr/bin/timeout ] ; then
+-		/usr/bin/timeout --foreground "$kselftest_timeout" $1
++		/usr/bin/timeout --foreground "$kselftest_timeout" \
++			/usr/bin/timeout "$kselftest_timeout" $1
+ 	else
+ 		$1
+ 	fi
 -- 
 2.40.1
 
