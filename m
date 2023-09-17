@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946336FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:56:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0500BC433C8;
-	Sun, 17 Sep 2023 19:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E236FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C65C433C7;
+	Sun, 17 Sep 2023 19:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980618;
-	bh=c0XpvEZyVkD1UMLnB4D088iBpGM6Lv7hcNfm1QUQ3WE=;
+	s=korg; t=1694980621;
+	bh=oBvDjh8jQSw8VSGougWxxafuSCSst34B5Z0jnZ34Zdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6+LWLMbkxJrO18hBTtGAYP1fJnbxGIC1tZT1hxcRFNifeM6pZM1A1c6ILH7YWJs9
-	 AkDSjS4BxpNQnUEQ3tTRGg4t9b8vXCRyBSkSrsr/8cWKCGsETpcfPcHWKajyUQT+Bj
-	 O7l8lILe4hm0igzpcAphMXhU8+Z2+6Qu3nOwNjCc=
+	b=rOKNLTOHaGRYF+hp3bZQCpykJ1vh8dfZgJ6BRi3JVpP+hjTTu489s+CANnKhR5+0o
+	 eBSarH8IvTcPJkAx8n+UhbhcZMgciTDhWI61Z0mdUxa6Wy/Mi+4nTO4l6E5hMOARzK
+	 IpQ3tKCfzEmBui+1p2lnxU3KXAYiiPhQRLowdKW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	kernel test robot <lkp@intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Rae Moar <rmoar@google.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 245/285] parisc: sba_iommu: Fix build warning if procfs if disabled
-Date: Sun, 17 Sep 2023 21:14:05 +0200
-Message-ID: <20230917191059.825159734@linuxfoundation.org>
+Subject: [PATCH 6.5 246/285] kunit: Fix wild-memory-access bug in kunit_free_suite_set()
+Date: Sun, 17 Sep 2023 21:14:06 +0200
+Message-ID: <20230917191059.852823396@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,88 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 6428bc7bd3f35e43c8cb7359cb89d83248d339d2 ]
+[ Upstream commit 2810c1e99867a811e631dd24e63e6c1e3b78a59d ]
 
-Clean up the code, e.g. make proc_mckinley_root static, drop the now
-empty mckinley header file and remove some unneeded ifdefs around procfs
-functions.
+Inject fault while probing kunit-example-test.ko, if kstrdup()
+fails in mod_sysfs_setup() in load_module(), the mod->state will
+switch from MODULE_STATE_COMING to MODULE_STATE_GOING instead of
+from MODULE_STATE_LIVE to MODULE_STATE_GOING, so only
+kunit_module_exit() will be called without kunit_module_init(), and
+the mod->kunit_suites is no set correctly and the free in
+kunit_free_suite_set() will cause below wild-memory-access bug.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202308300800.Jod4sHzM-lkp@intel.com/
-Fixes: 77e0ddf097d6 ("parisc: ccio-dma: Create private runway procfs root entry")
+The mod->state state machine when load_module() succeeds:
+
+MODULE_STATE_UNFORMED ---> MODULE_STATE_COMING ---> MODULE_STATE_LIVE
+	 ^						|
+	 |						| delete_module
+	 +---------------- MODULE_STATE_GOING <---------+
+
+The mod->state state machine when load_module() fails at
+mod_sysfs_setup():
+
+MODULE_STATE_UNFORMED ---> MODULE_STATE_COMING ---> MODULE_STATE_GOING
+	^						|
+	|						|
+	+-----------------------------------------------+
+
+Call kunit_module_init() at MODULE_STATE_COMING state to fix the issue
+because MODULE_STATE_LIVE is transformed from it.
+
+ Unable to handle kernel paging request at virtual address ffffff341e942a88
+ KASAN: maybe wild-memory-access in range [0x0003f9a0f4a15440-0x0003f9a0f4a15447]
+ Mem abort info:
+   ESR = 0x0000000096000004
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x04: level 0 translation fault
+ Data abort info:
+   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+ swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000441ea000
+ [ffffff341e942a88] pgd=0000000000000000, p4d=0000000000000000
+ Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+ Modules linked in: kunit_example_test(-) cfg80211 rfkill 8021q garp mrp stp llc ipv6 [last unloaded: kunit_example_test]
+ CPU: 3 PID: 2035 Comm: modprobe Tainted: G        W        N 6.5.0-next-20230828+ #136
+ Hardware name: linux,dummy-virt (DT)
+ pstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : kfree+0x2c/0x70
+ lr : kunit_free_suite_set+0xcc/0x13c
+ sp : ffff8000829b75b0
+ x29: ffff8000829b75b0 x28: ffff8000829b7b90 x27: 0000000000000000
+ x26: dfff800000000000 x25: ffffcd07c82a7280 x24: ffffcd07a50ab300
+ x23: ffffcd07a50ab2e8 x22: 1ffff00010536ec0 x21: dfff800000000000
+ x20: ffffcd07a50ab2f0 x19: ffffcd07a50ab2f0 x18: 0000000000000000
+ x17: 0000000000000000 x16: 0000000000000000 x15: ffffcd07c24b6764
+ x14: ffffcd07c24b63c0 x13: ffffcd07c4cebb94 x12: ffff700010536ec7
+ x11: 1ffff00010536ec6 x10: ffff700010536ec6 x9 : dfff800000000000
+ x8 : 00008fffefac913a x7 : 0000000041b58ab3 x6 : 0000000000000000
+ x5 : 1ffff00010536ec5 x4 : ffff8000829b7628 x3 : dfff800000000000
+ x2 : ffffff341e942a80 x1 : ffffcd07a50aa000 x0 : fffffc0000000000
+ Call trace:
+  kfree+0x2c/0x70
+  kunit_free_suite_set+0xcc/0x13c
+  kunit_module_notify+0xd8/0x360
+  blocking_notifier_call_chain+0xc4/0x128
+  load_module+0x382c/0x44a4
+  init_module_from_file+0xd4/0x128
+  idempotent_init_module+0x2c8/0x524
+  __arm64_sys_finit_module+0xac/0x100
+  invoke_syscall+0x6c/0x258
+  el0_svc_common.constprop.0+0x160/0x22c
+  do_el0_svc+0x44/0x5c
+  el0_svc+0x38/0x78
+  el0t_64_sync_handler+0x13c/0x158
+  el0t_64_sync+0x190/0x194
+ Code: aa0003e1 b25657e0 d34cfc42 8b021802 (f9400440)
+ ---[ end trace 0000000000000000 ]---
+ Kernel panic - not syncing: Oops: Fatal exception
+ SMP: stopping secondary CPUs
+ Kernel Offset: 0x4d0742200000 from 0xffff800080000000
+ PHYS_OFFSET: 0xffffee43c0000000
+ CPU features: 0x88000203,3c020000,1000421b
+ Memory Limit: none
+ Rebooting in 1 seconds..
+
+Fixes: 3d6e44623841 ("kunit: unify module and builtin suite definitions")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Rae Moar <rmoar@google.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/mckinley.h |  8 --------
- drivers/parisc/sba_iommu.c         | 10 ++--------
- 2 files changed, 2 insertions(+), 16 deletions(-)
- delete mode 100644 arch/parisc/include/asm/mckinley.h
+ lib/kunit/test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/parisc/include/asm/mckinley.h b/arch/parisc/include/asm/mckinley.h
-deleted file mode 100644
-index 1314390b9034b..0000000000000
---- a/arch/parisc/include/asm/mckinley.h
-+++ /dev/null
-@@ -1,8 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--#ifndef ASM_PARISC_MCKINLEY_H
--#define ASM_PARISC_MCKINLEY_H
--
--/* declared in arch/parisc/kernel/setup.c */
--extern struct proc_dir_entry * proc_mckinley_root;
--
--#endif /*ASM_PARISC_MCKINLEY_H*/
-diff --git a/drivers/parisc/sba_iommu.c b/drivers/parisc/sba_iommu.c
-index 8f28f8696bf32..b8e91cbb60567 100644
---- a/drivers/parisc/sba_iommu.c
-+++ b/drivers/parisc/sba_iommu.c
-@@ -46,8 +46,6 @@
- #include <linux/module.h>
+diff --git a/lib/kunit/test.c b/lib/kunit/test.c
+index 84e4666555c94..e8c9dd9d73a30 100644
+--- a/lib/kunit/test.c
++++ b/lib/kunit/test.c
+@@ -744,12 +744,13 @@ static int kunit_module_notify(struct notifier_block *nb, unsigned long val,
  
- #include <asm/ropes.h>
--#include <asm/mckinley.h>	/* for proc_mckinley_root */
--#include <asm/runway.h>		/* for proc_runway_root */
- #include <asm/page.h>		/* for PAGE0 */
- #include <asm/pdc.h>		/* for PDC_MODEL_* */
- #include <asm/pdcpat.h>		/* for is_pdc_pat() */
-@@ -122,7 +120,7 @@ MODULE_PARM_DESC(sba_reserve_agpgart, "Reserve half of IO pdir as AGPGART");
- #endif
- 
- static struct proc_dir_entry *proc_runway_root __ro_after_init;
--struct proc_dir_entry *proc_mckinley_root __ro_after_init;
-+static struct proc_dir_entry *proc_mckinley_root __ro_after_init;
- 
- /************************************
- ** SBA register read and write support
-@@ -1899,9 +1897,7 @@ static int __init sba_driver_callback(struct parisc_device *dev)
- 	int i;
- 	char *version;
- 	void __iomem *sba_addr = ioremap(dev->hpa.start, SBA_FUNC_SIZE);
--#ifdef CONFIG_PROC_FS
--	struct proc_dir_entry *root;
--#endif
-+	struct proc_dir_entry *root __maybe_unused;
- 
- 	sba_dump_ranges(sba_addr);
- 
-@@ -1967,7 +1963,6 @@ static int __init sba_driver_callback(struct parisc_device *dev)
- 
- 	hppa_dma_ops = &sba_ops;
- 
--#ifdef CONFIG_PROC_FS
- 	switch (dev->id.hversion) {
- 	case PLUTO_MCKINLEY_PORT:
- 		if (!proc_mckinley_root)
-@@ -1985,7 +1980,6 @@ static int __init sba_driver_callback(struct parisc_device *dev)
- 
- 	proc_create_single("sba_iommu", 0, root, sba_proc_info);
- 	proc_create_single("sba_iommu-bitmap", 0, root, sba_proc_bitmap_info);
--#endif
- 	return 0;
- }
- 
+ 	switch (val) {
+ 	case MODULE_STATE_LIVE:
+-		kunit_module_init(mod);
+ 		break;
+ 	case MODULE_STATE_GOING:
+ 		kunit_module_exit(mod);
+ 		break;
+ 	case MODULE_STATE_COMING:
++		kunit_module_init(mod);
++		break;
+ 	case MODULE_STATE_UNFORMED:
+ 		break;
+ 	}
 -- 
 2.40.1
 
