@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B245F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2246EC433CB;
-	Sun, 17 Sep 2023 20:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794506FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B895AC433C9;
+	Sun, 17 Sep 2023 20:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981698;
-	bh=hBl5ak4Es+nNBCrKLcbYU6LdM4tRBTSRERIIhECx0bQ=;
+	s=korg; t=1694981702;
+	bh=eGZavbAJ/BEdPc48VFJ+yYOoNI2pYU26QiQ4qKJKttY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQZf6OXTK9UYADIQhKLZNWL19mDpwIevqBG8i8zEiTmL7Hxc7UTEujT95X/Djb/X7
-	 aTINpsUGUfb1bPMN4rA+Tp/vGpUdV6UEZLOYOeddlamrn+bsotiMrEN3p6R5KXVl6i
-	 jtP+GXnYA2i+2hHfnWM/P9+2S/CoPh02iqF0u2P0=
+	b=j4VuRvF2GwwSLz1KvVtAQ5e2py2di3JUw0tTg9widmrBPPSXh0vYgmN+scJt0La7c
+	 yTjDsVvSjb0edvG9LPrFgFYZu0jrxtlH8yxGIM1aebzbi1FzR7dTOO5B/7JT8tIqrp
+	 pihOtEdrsbODFk2tGqJsZBq/mMhYrPkClkunHBEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 160/219] btrfs: zoned: re-enable metadata over-commit for zoned mode
-Date: Sun, 17 Sep 2023 21:14:47 +0200
-Message-ID: <20230917191046.830166954@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 095/511] crypto: stm32 - Properly handle pm_runtime_get failing
+Date: Sun, 17 Sep 2023 21:08:42 +0200
+Message-ID: <20230917191116.160985123@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -34,48 +34,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 5b135b382a360f4c87cf8896d1465b0b07f10cb0 upstream.
+[ Upstream commit aec48805163338f8413118796c1dd035661b9140 ]
 
-Now that, we can re-enable metadata over-commit. As we moved the activation
-from the reservation time to the write time, we no longer need to ensure
-all the reserved bytes is properly activated.
+If pm_runtime_get() (disguised as pm_runtime_resume_and_get()) fails, this
+means the clk wasn't prepared and enabled. Returning early in this case
+however is wrong as then the following resource frees are skipped and this
+is never catched up. So do all the cleanups but clk_disable_unprepare().
 
-Without the metadata over-commit, it suffers from lower performance because
-it needs to flush the delalloc items more often and allocate more block
-groups. Re-enabling metadata over-commit will solve the issue.
+Also don't emit a warning, as stm32_hash_runtime_resume() already emitted
+one.
 
-Fixes: 79417d040f4f ("btrfs: zoned: disable metadata overcommit for zoned")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Note that the return value of stm32_hash_remove() is mostly ignored by
+the device core. The only effect of returning zero instead of an error
+value is to suppress another warning in platform_remove(). So return 0
+even if pm_runtime_resume_and_get() failed.
+
+Fixes: 8b4d566de6a5 ("crypto: stm32/hash - Add power management support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/space-info.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/crypto/stm32/stm32-hash.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -404,11 +404,7 @@ int btrfs_can_overcommit(struct btrfs_fs
- 		return 0;
+diff --git a/drivers/crypto/stm32/stm32-hash.c b/drivers/crypto/stm32/stm32-hash.c
+index d33006d43f761..e3f765434d64e 100644
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -1566,9 +1566,7 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	if (!hdev)
+ 		return -ENODEV;
  
- 	used = btrfs_space_info_used(space_info, true);
--	if (test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags) &&
--	    (space_info->flags & BTRFS_BLOCK_GROUP_METADATA))
--		avail = 0;
--	else
--		avail = calc_available_free_space(fs_info, space_info, flush);
-+	avail = calc_available_free_space(fs_info, space_info, flush);
+-	ret = pm_runtime_resume_and_get(hdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(hdev->dev);
  
- 	if (used + bytes < writable_total_bytes(fs_info, space_info) + avail)
- 		return 1;
+ 	stm32_hash_unregister_algs(hdev);
+ 
+@@ -1584,7 +1582,8 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	pm_runtime_disable(hdev->dev);
+ 	pm_runtime_put_noidle(hdev->dev);
+ 
+-	clk_disable_unprepare(hdev->clk);
++	if (ret >= 0)
++		clk_disable_unprepare(hdev->clk);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
