@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF8E23DF
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272A0C433CA;
-	Sun, 17 Sep 2023 19:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357BB23DF
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990B3C433C9;
+	Sun, 17 Sep 2023 19:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979010;
-	bh=RZO44Znq2zrn5Uph3/CMP3Npd9Xls8PicAktP5JGOE4=;
+	s=korg; t=1694979014;
+	bh=CyN0hH+5GTf52Cey38yjIJ4WJ297OcjRw/p2+MO4TjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTvKtwWI7x4j9T/RNKVGXfQoZXm88HKSwZWz/c+qef3BOLieF1KmiBKGX3irN6Ae3
-	 gvLwAlo5GEseHZNN8OWesSe1mbdHFydSk77+alpyfDdIl409mym/DX/aLJIjnEQVCP
-	 1STs5TY2UXFiLPutr//frRreBCG3LwQfgkNkyfYw=
+	b=2hRjKgTKlInNJxLo4ipEu3XnhF1z1+vjeOC6m91t6lAfV9m0mnmGs0y5tb4k/wRkr
+	 xcWIkZikT59B97gW8tAmaoFWE2PGH0Un+1h6Nrr4zpQYQPYxIdhMp2dA8kKIsc6SBv
+	 zzOE9mjCrPbASq1DxjdaHDq64mY051JfCXC/uuNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/406] powerpc/perf: Convert fsl_emb notifier to state machine callbacks
-Date: Sun, 17 Sep 2023 21:10:41 +0200
-Message-ID: <20230917191106.142450587@linuxfoundation.org>
+Subject: [PATCH 5.10 188/406] drm/amdgpu: Use RMW accessors for changing LNKCTL
+Date: Sun, 17 Sep 2023 21:10:42 +0200
+Message-ID: <20230917191106.168552982@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,88 +36,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 34daf445f82bd3a4df852bb5f1dffd792ac830a0 ]
+[ Upstream commit ce7d88110b9ed5f33fe79ea6d4ed049fb0e57bce ]
 
-  CC      arch/powerpc/perf/core-fsl-emb.o
-arch/powerpc/perf/core-fsl-emb.c:675:6: error: no previous prototype for 'hw_perf_event_setup' [-Werror=missing-prototypes]
-  675 | void hw_perf_event_setup(int cpu)
-      |      ^~~~~~~~~~~~~~~~~~~
+Don't assume that only the driver would be accessing LNKCTL. ASPM policy
+changes can trigger write to LNKCTL outside of driver's control.  And in
+the case of upstream bridge, the driver does not even own the device it's
+changing the registers for.
 
-Looks like fsl_emb was completely missed by commit 3f6da3905398 ("perf:
-Rework and fix the arch CPU-hotplug hooks")
+Use RMW capability accessors which do proper locking to avoid losing
+concurrent updates to the register value.
 
-So, apply same changes as commit 3f6da3905398 ("perf: Rework and fix
-the arch CPU-hotplug hooks") then commit 57ecde42cc74 ("powerpc/perf:
-Convert book3s notifier to state machine callbacks")
-
-While at it, also fix following error:
-
-arch/powerpc/perf/core-fsl-emb.c: In function 'perf_event_interrupt':
-arch/powerpc/perf/core-fsl-emb.c:648:13: error: variable 'found' set but not used [-Werror=unused-but-set-variable]
-  648 |         int found = 0;
-      |             ^~~~~
-
-Fixes: 3f6da3905398 ("perf: Rework and fix the arch CPU-hotplug hooks")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/603e1facb32608f88f40b7d7b9094adc50e7b2dc.1692349125.git.christophe.leroy@csgroup.eu
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
+Fixes: 62a37553414a ("drm/amdgpu: add si implementation v10")
+Link: https://lore.kernel.org/r/20230717120503.15276-6-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/core-fsl-emb.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/cik.c | 36 +++++++++-----------------------
+ drivers/gpu/drm/amd/amdgpu/si.c  | 36 +++++++++-----------------------
+ 2 files changed, 20 insertions(+), 52 deletions(-)
 
-diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
-index ee721f420a7ba..1a53ab08447cb 100644
---- a/arch/powerpc/perf/core-fsl-emb.c
-+++ b/arch/powerpc/perf/core-fsl-emb.c
-@@ -645,7 +645,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	struct cpu_hw_events *cpuhw = this_cpu_ptr(&cpu_hw_events);
- 	struct perf_event *event;
- 	unsigned long val;
--	int found = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
+index 5442df0941024..453464914f353 100644
+--- a/drivers/gpu/drm/amd/amdgpu/cik.c
++++ b/drivers/gpu/drm/amd/amdgpu/cik.c
+@@ -1509,17 +1509,8 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
  
- 	for (i = 0; i < ppmu->n_counter; ++i) {
- 		event = cpuhw->event[i];
-@@ -654,7 +653,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 		if ((int)val < 0) {
- 			if (event) {
- 				/* event has overflowed */
--				found = 1;
- 				record_and_restart(event, val, regs);
- 			} else {
- 				/*
-@@ -672,11 +670,13 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	isync();
- }
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
+-
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
+-
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
  
--void hw_perf_event_setup(int cpu)
-+static int fsl_emb_pmu_prepare_cpu(unsigned int cpu)
- {
- 	struct cpu_hw_events *cpuhw = &per_cpu(cpu_hw_events, cpu);
+ 			tmp = RREG32_PCIE(ixPCIE_LC_STATUS1);
+ 			max_lw = (tmp & PCIE_LC_STATUS1__LC_DETECTED_LINK_WIDTH_MASK) >>
+@@ -1572,21 +1563,14 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+ 				msleep(100);
  
- 	memset(cpuhw, 0, sizeof(*cpuhw));
-+
-+	return 0;
- }
+ 				/* linkctl */
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
+-							   tmp16);
+-
+-				pcie_capability_read_word(adev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(adev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
  
- int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
-@@ -689,6 +689,8 @@ int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
- 		pmu->name);
+ 				/* linkctl2 */
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
+diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
+index e5e336fd9e941..b7e1201d46f97 100644
+--- a/drivers/gpu/drm/amd/amdgpu/si.c
++++ b/drivers/gpu/drm/amd/amdgpu/si.c
+@@ -2159,17 +2159,8 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
  
- 	perf_pmu_register(&fsl_emb_pmu, "cpu", PERF_TYPE_RAW);
-+	cpuhp_setup_state(CPUHP_PERF_POWER, "perf/powerpc:prepare",
-+			  fsl_emb_pmu_prepare_cpu, NULL);
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
+-
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
+-
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
  
- 	return 0;
- }
+ 			tmp = RREG32_PCIE(PCIE_LC_STATUS1);
+ 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
+@@ -2214,21 +2205,14 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+ 
+ 				mdelay(100);
+ 
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
+-							   tmp16);
+-
+-				pcie_capability_read_word(adev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(adev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
+ 
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
+ 							  &tmp16);
 -- 
 2.40.1
 
