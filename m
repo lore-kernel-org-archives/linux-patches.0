@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C353B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA17C433CB;
-	Sun, 17 Sep 2023 19:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB23253B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFF6C433CB;
+	Sun, 17 Sep 2023 19:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979260;
-	bh=ie/INl2iRr6QRJ7kv5SCZodNxxEst90GtIK6BBtwQU0=;
+	s=korg; t=1694979263;
+	bh=Bhnitx0QGB2byprSZoc86jE/lwSfMTPaayiWrEK7DGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iP60xOBMPDCGBeeGxPN2y/hijJVwXQLAKLqLtZUbsPWYSTLtUtpwd5xlYqvSlzbKz
-	 dS4WYVX7PEFFV57kszOKBeQgATr+k0HQOt/eNL68k6bb0bqcdzaD7y9aLsBKJfpsNM
-	 BYtKSTYNsAfa5+ccB6ZSPUKI+sDtYJsuuA2yhe2I=
+	b=yQAukjD444nVmnCCnBJ9NA+h31WRowMXQuU34bM/qaGqrCX/LePhf5EoPHw9UWaTb
+	 wplQTdP6L0MTLwuQ1vgXzcGAWPhWiT8x402VlnqV6ZauL0r/0GLk4pGNqOHwB1F5XS
+	 45ly40p0dOYgP64QzB9siwg3uPc/g+7MZq+SV8ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Michael Walle <michael@walle.cc>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 261/406] leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that is always false
-Date: Sun, 17 Sep 2023 21:11:55 +0200
-Message-ID: <20230917191108.094879104@linuxfoundation.org>
+Subject: [PATCH 5.10 262/406] mtd: spi-nor: Check bus width while setting QE bit
+Date: Sun, 17 Sep 2023 21:11:56 +0200
+Message-ID: <20230917191108.126558712@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,56 +35,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-[ Upstream commit c3f853184bed04105682383c2971798c572226b5 ]
+[ Upstream commit f01d8155a92e33cdaa85d20bfbe6c441907b3c1f ]
 
-At the time we call
-    BUG_ON(props.color == LED_COLOR_ID_MULTI);
-the props variable is still initialized to zero.
+spi_nor_write_16bit_sr_and_check() should also check if bus width is
+4 before setting QE bit.
 
-Call the BUG_ON only after we parse fwnode into props.
-
-Fixes: 77dce3a22e89 ("leds: disallow /sys/class/leds/*:multi:* for now")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://lore.kernel.org/r/20230801151623.30387-1-kabel@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 39d1e3340c73 ("mtd: spi-nor: Fix clearing of QE bit on lock()/unlock()")
+Suggested-by: Michael Walle <michael@walle.cc>
+Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Link: https://lore.kernel.org/r/20230818064524.1229100-2-hsinyi@chromium.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/spi-nor/core.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
-index c4e780bdb3852..2cf5897339ac1 100644
---- a/drivers/leds/led-core.c
-+++ b/drivers/leds/led-core.c
-@@ -425,15 +425,15 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
- 	struct fwnode_handle *fwnode = init_data->fwnode;
- 	const char *devicename = init_data->devicename;
- 
--	/* We want to label LEDs that can produce full range of colors
--	 * as RGB, not multicolor */
--	BUG_ON(props.color == LED_COLOR_ID_MULTI);
--
- 	if (!led_classdev_name)
- 		return -EINVAL;
- 
- 	led_parse_fwnode_props(dev, fwnode, &props);
- 
-+	/* We want to label LEDs that can produce full range of colors
-+	 * as RGB, not multicolor */
-+	BUG_ON(props.color == LED_COLOR_ID_MULTI);
-+
- 	if (props.label) {
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 3422152319321..09e112f376918 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -800,21 +800,22 @@ static int spi_nor_write_16bit_sr_and_check(struct spi_nor *nor, u8 sr1)
+ 		ret = spi_nor_read_cr(nor, &sr_cr[1]);
+ 		if (ret)
+ 			return ret;
+-	} else if (nor->params->quad_enable) {
++	} else if (spi_nor_get_protocol_width(nor->read_proto) == 4 &&
++		   spi_nor_get_protocol_width(nor->write_proto) == 4 &&
++		   nor->params->quad_enable) {
  		/*
- 		 * If init_data.devicename is NULL, then it indicates that
+ 		 * If the Status Register 2 Read command (35h) is not
+ 		 * supported, we should at least be sure we don't
+ 		 * change the value of the SR2 Quad Enable bit.
+ 		 *
+-		 * We can safely assume that when the Quad Enable method is
+-		 * set, the value of the QE bit is one, as a consequence of the
+-		 * nor->params->quad_enable() call.
++		 * When the Quad Enable method is set and the buswidth is 4, we
++		 * can safely assume that the value of the QE bit is one, as a
++		 * consequence of the nor->params->quad_enable() call.
+ 		 *
+-		 * We can safely assume that the Quad Enable bit is present in
+-		 * the Status Register 2 at BIT(1). According to the JESD216
+-		 * revB standard, BFPT DWORDS[15], bits 22:20, the 16-bit
+-		 * Write Status (01h) command is available just for the cases
+-		 * in which the QE bit is described in SR2 at BIT(1).
++		 * According to the JESD216 revB standard, BFPT DWORDS[15],
++		 * bits 22:20, the 16-bit Write Status (01h) command is
++		 * available just for the cases in which the QE bit is
++		 * described in SR2 at BIT(1).
+ 		 */
+ 		sr_cr[1] = SR2_QUAD_EN_BIT1;
+ 	} else {
 -- 
 2.40.1
 
