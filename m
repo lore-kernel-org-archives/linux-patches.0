@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9216FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2040BC116A1;
-	Sun, 17 Sep 2023 20:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFA06FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EBCC433D9;
+	Sun, 17 Sep 2023 20:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981541;
-	bh=94em+2BDGlriAe3FyMNVbtEuUYTf5gzHm7ZHnHSvaJc=;
+	s=korg; t=1694981544;
+	bh=LAL75a4BUGuVd4UwNul30KXDiBrVcL419ANdBzGMi9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1rdRIHsDVCcPmEqgiMda0i4VRfWBwD4Zw2kXjGXXxdrdbofxQ8UyM/+HasFZGQWy
-	 NEN+UQeGXckOhS7Mb/LRJ8SCaLvVXWpJRWUW21DudItOtuynWr2XA75z2emCNzB67E
-	 hBzoX5/SjF3iiBgKAZjxfOrympS22BLfkeFoY7kU=
+	b=jZKNPwXKpA1zQE8zcjkG25fGi1PAsXLj1HdCbSLb6egug+HVaTj33IeCW4eccOtSO
+	 0oKKZJZ10ZnB6RfiFncM6kFS+qvwqz8fnuBrDqD5+E2r0x7gObC4//BuEfQV0LbUkv
+	 D7xAZaF7+JyJg5VhTmqoS0Eb/i77gJKbFzodqP0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/511] selftests/resctrl: Close perf value read fd on errors
-Date: Sun, 17 Sep 2023 21:08:16 +0200
-Message-ID: <20230917191115.547174684@linuxfoundation.org>
+	Pavel Kozlov <pavel.kozlov@synopsys.com>,
+	Vineet Gupta <vgupta@kernel.org>
+Subject: [PATCH 6.1 138/219] ARC: atomics: Add compiler barrier to atomic operations...
+Date: Sun, 17 Sep 2023 21:14:25 +0200
+Message-ID: <20230917191045.982074382@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,91 +33,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Pavel Kozlov <pavel.kozlov@synopsys.com>
 
-[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
+commit 42f51fb24fd39cc547c086ab3d8a314cc603a91c upstream.
 
-Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
+... to avoid unwanted gcc optimizations
 
-Close fd_lm only in cat_val() to make it easier to track it is always
-closed.
+SMP kernels fail to boot with commit 596ff4a09b89
+("cpumask: re-introduce constant-sized cpumask optimizations").
 
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+|
+| percpu: BUG: failure at mm/percpu.c:2981/pcpu_build_alloc_info()!
+|
+
+The write operation performed by the SCOND instruction in the atomic
+inline asm code is not properly passed to the compiler. The compiler
+cannot correctly optimize a nested loop that runs through the cpumask
+in the pcpu_build_alloc_info() function.
+
+Fix this by add a compiler barrier (memory clobber in inline asm).
+
+Apparently atomic ops used to have memory clobber implicitly via
+surrounding smp_mb(). However commit b64be6836993c431e
+("ARC: atomics: implement relaxed variants") removed the smp_mb() for
+the relaxed variants, but failed to add the explicit compiler barrier.
+
+Link: https://github.com/foss-for-synopsys-dwc-arc-processors/linux/issues/135
+Cc: <stable@vger.kernel.org> # v6.3+
+Fixes: b64be6836993c43 ("ARC: atomics: implement relaxed variants")
+Signed-off-by: Pavel Kozlov <pavel.kozlov@synopsys.com>
+Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+[vgupta: tweaked the changelog and added Fixes tag]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ arch/arc/include/asm/atomic-llsc.h    |    6 +++---
+ arch/arc/include/asm/atomic64-arcv2.h |    6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 0485863a169f2..338f714453935 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -89,21 +89,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
- static int get_llc_perf(unsigned long *llc_perf_miss)
- {
- 	__u64 total_misses;
-+	int ret;
+--- a/arch/arc/include/asm/atomic-llsc.h
++++ b/arch/arc/include/asm/atomic-llsc.h
+@@ -18,7 +18,7 @@ static inline void arch_atomic_##op(int
+ 	: [val]	"=&r"	(val) /* Early clobber to prevent reg reuse */	\
+ 	: [ctr]	"r"	(&v->counter), /* Not "m": llock only supports reg direct addr mode */	\
+ 	  [i]	"ir"	(i)						\
+-	: "cc");							\
++	: "cc", "memory");						\
+ }									\
  
- 	/* Stop counters after one span to get miss rate */
- 
- 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
- 
--	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
-+	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
-+	if (ret == -1) {
- 		perror("Could not get llc misses through perf");
--
- 		return -1;
- 	}
- 
- 	total_misses = rf_cqm.values[0].value;
--
--	close(fd_lm);
--
- 	*llc_perf_miss = total_misses;
- 
- 	return 0;
-@@ -258,19 +256,25 @@ int cat_val(struct resctrl_val_param *param)
- 					 memflush, operation, resctrl_val)) {
- 				fprintf(stderr, "Error-running fill buffer\n");
- 				ret = -1;
--				break;
-+				goto pe_close;
- 			}
- 
- 			sleep(1);
- 			ret = measure_cache_vals(param, bm_pid);
- 			if (ret)
--				break;
-+				goto pe_close;
-+
-+			close(fd_lm);
- 		} else {
- 			break;
- 		}
- 	}
- 
- 	return ret;
-+
-+pe_close:
-+	close(fd_lm);
-+	return ret;
+ #define ATOMIC_OP_RETURN(op, asm_op)				\
+@@ -34,7 +34,7 @@ static inline int arch_atomic_##op##_ret
+ 	: [val]	"=&r"	(val)						\
+ 	: [ctr]	"r"	(&v->counter),					\
+ 	  [i]	"ir"	(i)						\
+-	: "cc");							\
++	: "cc", "memory");						\
+ 									\
+ 	return val;							\
  }
+@@ -56,7 +56,7 @@ static inline int arch_atomic_fetch_##op
+ 	  [orig] "=&r" (orig)						\
+ 	: [ctr]	"r"	(&v->counter),					\
+ 	  [i]	"ir"	(i)						\
+-	: "cc");							\
++	: "cc", "memory");						\
+ 									\
+ 	return orig;							\
+ }
+--- a/arch/arc/include/asm/atomic64-arcv2.h
++++ b/arch/arc/include/asm/atomic64-arcv2.h
+@@ -60,7 +60,7 @@ static inline void arch_atomic64_##op(s6
+ 	"	bnz     1b		\n"				\
+ 	: "=&r"(val)							\
+ 	: "r"(&v->counter), "ir"(a)					\
+-	: "cc");							\
++	: "cc", "memory");						\
+ }									\
  
- /*
--- 
-2.40.1
-
+ #define ATOMIC64_OP_RETURN(op, op1, op2)		        	\
+@@ -77,7 +77,7 @@ static inline s64 arch_atomic64_##op##_r
+ 	"	bnz     1b		\n"				\
+ 	: [val] "=&r"(val)						\
+ 	: "r"(&v->counter), "ir"(a)					\
+-	: "cc");	/* memory clobber comes from smp_mb() */	\
++	: "cc", "memory");						\
+ 									\
+ 	return val;							\
+ }
+@@ -99,7 +99,7 @@ static inline s64 arch_atomic64_fetch_##
+ 	"	bnz     1b		\n"				\
+ 	: "=&r"(orig), "=&r"(val)					\
+ 	: "r"(&v->counter), "ir"(a)					\
+-	: "cc");	/* memory clobber comes from smp_mb() */	\
++	: "cc", "memory");						\
+ 									\
+ 	return orig;							\
+ }
 
 
