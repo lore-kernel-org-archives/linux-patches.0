@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEA76FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE229C433C8;
-	Sun, 17 Sep 2023 19:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095806FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:41:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312B2C433C8;
+	Sun, 17 Sep 2023 19:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979669;
-	bh=IOxrloBRfVLrluzu2G4Fdv+mF/WxeGjr9TxLYbzVGpY=;
+	s=korg; t=1694979672;
+	bh=4yBxqbBas5LNvpIPZ4wJLKbMqBlLF8YT/bW/Zs4MHbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yDp5aXhyt1mI9z58UjZy7BR2cXrhijESRgYUOr2OR4H3gz/vs5OVcTU6YxXNjFuKm
-	 uzjSyUvSPXBd4CVIl+zBMD8eSeTG/r+1qzID/BEIX9Fg9QwHzfNxY8gwy/J4KNFeaJ
-	 y8i4BxyqVZdzM5LbOKufKnacMnk89I3DlVUEgpCY=
+	b=dxWHrVOSyGUcVPLHVUcctSjFnHzMRl1VieFv6227Qs7QceJRQCCz7+9Vv5qM0yaIL
+	 ZbaWGf8U3HjDAinvn+1ipef8LEJ7hjH3BF8aFyc9FczrDk7sMMIF8Q0wHHGETUMpc5
+	 BPNsHrGDZhwq9RluYi929upkfexfphnY7s6Kj9+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 362/406] ip_tunnels: use DEV_STATS_INC()
-Date: Sun, 17 Sep 2023 21:13:36 +0200
-Message-ID: <20230917191110.831519422@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.10 380/406] perf hists browser: Fix the number of entries for e key
+Date: Sun, 17 Sep 2023 21:13:54 +0200
+Message-ID: <20230917191111.298504266@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,128 +44,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 9b271ebaf9a2c5c566a54bc6cd915962e8241130 ]
+commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
 
-syzbot/KCSAN reported data-races in iptunnel_xmit_stats() [1]
+The 'e' key is to toggle expand/collapse the selected entry only.  But
+the current code has a bug that it only increases the number of entries
+by 1 in the hierarchy mode so users cannot move under the current entry
+after the key stroke.  This is due to a wrong assumption in the
+hist_entry__set_folding().
 
-This can run from multiple cpus without mutual exclusion.
+The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
+logic into single function") factored out the code, but actually it
+should be handled separately.  The hist_browser__set_folding() is to
+update fold state for each entry so it needs to traverse all (child)
+entries regardless of the current fold state.  So it increases the
+number of entries by 1.
 
-Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
+But the hist_entry__set_folding() only cares the currently selected
+entry and its all children.  So it should count all unfolded child
+entries.  This code is implemented in hist_browser__toggle_fold()
+already so we can just call it.
 
-[1]
-BUG: KCSAN: data-race in iptunnel_xmit / iptunnel_xmit
-
-read-write to 0xffff8881353df170 of 8 bytes by task 30263 on cpu 1:
-iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
-iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
-ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-__bpf_tx_skb net/core/filter.c:2129 [inline]
-__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
-__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
-____bpf_clone_redirect net/core/filter.c:2453 [inline]
-bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
-___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
-__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
-bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
-__bpf_prog_run include/linux/filter.h:609 [inline]
-bpf_prog_run include/linux/filter.h:616 [inline]
-bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
-bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
-bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
-__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
-__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read-write to 0xffff8881353df170 of 8 bytes by task 30249 on cpu 0:
-iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
-iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
-ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-__bpf_tx_skb net/core/filter.c:2129 [inline]
-__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
-__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
-____bpf_clone_redirect net/core/filter.c:2453 [inline]
-bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
-___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
-__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
-bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
-__bpf_prog_run include/linux/filter.h:609 [inline]
-bpf_prog_run include/linux/filter.h:616 [inline]
-bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
-bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
-bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
-__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
-__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x0000000000018830 -> 0x0000000000018831
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 30249 Comm: syz-executor.4 Not tainted 6.5.0-syzkaller-11704-g3f86ed6ec0b3 #0
-
-Fixes: 039f50629b7f ("ip_tunnel: Move stats update to iptunnel_xmit()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip_tunnels.h | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 34 deletions(-)
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 1ddd401a8981f..58d8e6260aa13 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -455,15 +455,14 @@ static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
- 		tstats->tx_packets++;
- 		u64_stats_update_end(&tstats->syncp);
- 		put_cpu_ptr(tstats);
-+		return;
-+	}
-+
-+	if (pkt_len < 0) {
-+		DEV_STATS_INC(dev, tx_errors);
-+		DEV_STATS_INC(dev, tx_aborted_errors);
- 	} else {
--		struct net_device_stats *err_stats = &dev->stats;
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
+ 	return container_of(ms, struct callchain_list, ms)->has_children;
+ }
+ 
+-static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
+-{
+-	return browser->he_selection ? browser->he_selection->unfolded : false;
+-}
 -
--		if (pkt_len < 0) {
--			err_stats->tx_errors++;
--			err_stats->tx_aborted_errors++;
--		} else {
--			err_stats->tx_dropped++;
--		}
-+		DEV_STATS_INC(dev, tx_dropped);
+ static bool hist_browser__selection_unfolded(struct hist_browser *browser)
+ {
+ 	struct hist_entry *he = browser->he_selection;
+@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
+ 	return n;
+ }
+ 
+-static void __hist_entry__set_folding(struct hist_entry *he,
+-				      struct hist_browser *hb, bool unfold)
++static void hist_entry__set_folding(struct hist_entry *he,
++				    struct hist_browser *hb, bool unfold)
+ {
+ 	hist_entry__init_have_children(he);
+ 	he->unfolded = unfold ? he->has_children : false;
+@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
+ 		he->nr_rows = 0;
+ }
+ 
+-static void hist_entry__set_folding(struct hist_entry *he,
+-				    struct hist_browser *browser, bool unfold)
+-{
+-	double percent;
+-
+-	percent = hist_entry__get_percent_limit(he);
+-	if (he->filtered || percent < browser->min_pcnt)
+-		return;
+-
+-	__hist_entry__set_folding(he, browser, unfold);
+-
+-	if (!he->depth || unfold)
+-		browser->nr_hierarchy_entries++;
+-	if (he->leaf)
+-		browser->nr_callchain_rows += he->nr_rows;
+-	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
+-		browser->nr_hierarchy_entries++;
+-		he->has_no_entry = true;
+-		he->nr_rows = 1;
+-	} else
+-		he->has_no_entry = false;
+-}
+-
+ static void
+ __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
+ {
+ 	struct rb_node *nd;
+ 	struct hist_entry *he;
++	double percent;
+ 
+ 	nd = rb_first_cached(&browser->hists->entries);
+ 	while (nd) {
+@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
+ 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
+ 
+ 		hist_entry__set_folding(he, browser, unfold);
++
++		percent = hist_entry__get_percent_limit(he);
++		if (he->filtered || percent < browser->min_pcnt)
++			continue;
++
++		if (!he->depth || unfold)
++			browser->nr_hierarchy_entries++;
++		if (he->leaf)
++			browser->nr_callchain_rows += he->nr_rows;
++		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
++			browser->nr_hierarchy_entries++;
++			he->has_no_entry = true;
++			he->nr_rows = 1;
++		} else
++			he->has_no_entry = false;
  	}
  }
  
--- 
-2.40.1
-
+@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
+ 	if (!browser->he_selection)
+ 		return;
+ 
+-	hist_entry__set_folding(browser->he_selection, browser, unfold);
+-	browser->b.nr_entries = hist_browser__nr_entries(browser);
++	if (unfold == browser->he_selection->unfolded)
++		return;
++
++	hist_browser__toggle_fold(browser);
+ }
+ 
+ static void ui_browser__warn_lost_events(struct ui_browser *browser)
+@@ -731,8 +721,8 @@ static int hist_browser__handle_hotkey(s
+ 		hist_browser__set_folding(browser, true);
+ 		break;
+ 	case 'e':
+-		/* Expand the selected entry. */
+-		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
++		/* Toggle expand/collapse the selected entry. */
++		hist_browser__toggle_fold(browser);
+ 		break;
+ 	case 'H':
+ 		browser->show_headers = !browser->show_headers;
 
 
