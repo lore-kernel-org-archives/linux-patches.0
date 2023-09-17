@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5397461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C08FC433C8;
-	Sun, 17 Sep 2023 19:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5747F7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B549DC433CD;
+	Sun, 17 Sep 2023 19:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980155;
-	bh=hMEletprRqEIdeMQWJ2ikzpmvq7A/K03EOMTNoEhL4U=;
+	s=korg; t=1694980159;
+	bh=B5DqDUM2XbeQIDrH47tq2TTQ3eVn0cfDgVEFaUw2H6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSexr2C1onfpREVCHoT0O6EL//OSukMSxO2hofbpPkO/CCaW+c5ore7TBxu91v3dE
-	 IpCCJOk9dUpZ9OUpoW0g92mqLBgZTJB50g9DSrP/5T1hLoBvd09oSLXV1yMhRZttF9
-	 a54peUxq7C1Re6T6uzKOGKzIAN5dNMp6hjJDzfxg=
+	b=cjGOI4RMqCPQ8zkmJDgh2WTbiOMp2kNuTEjnwDsZML6g39ylcsdHH14JDbPPspXQY
+	 EYkhv8IkkhqZK1EftwkV+vcSFBzpkwc8MzyGO7FuBQppC6vzS0DPpbcZnocfvJX5Dc
+	 5q4QuEptukkuaHu1UwQpRaiaHEEdE36Lc7Wzlq8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Florian Westphal <fw@strlen.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	linux-hardening@vger.kernel.org,
+	Justin Stitt <justinstitt@google.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 111/285] net: fib: avoid warn splat in flow dissector
-Date: Sun, 17 Sep 2023 21:11:51 +0200
-Message-ID: <20230917191055.501113839@linuxfoundation.org>
+Subject: [PATCH 6.5 094/285] accel/ivpu: refactor deprecated strncpy
+Date: Sun, 17 Sep 2023 21:11:34 +0200
+Message-ID: <20230917191054.946681501@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,75 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Justin Stitt <justinstitt@google.com>
 
-[ Upstream commit 8aae7625ff3f0bd5484d01f1b8d5af82e44bec2d ]
+[ Upstream commit 4b2fd81f2af7147e844ecec0c5c07a16bca6b86e ]
 
-New skbs allocated via nf_send_reset() have skb->dev == NULL.
+`strncpy` is deprecated for use on NUL-terminated destination strings [1].
 
-fib*_rules_early_flow_dissect helpers already have a 'struct net'
-argument but its not passed down to the flow dissector core, which
-will then WARN as it can't derive a net namespace to use:
+A suitable replacement is `strscpy` [2] due to the fact that it
+guarantees NUL-termination on its destination buffer argument which is
+_not_ the case for `strncpy`!
 
- WARNING: CPU: 0 PID: 0 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0xa91/0x1cd0
- [..]
-  ip_route_me_harder+0x143/0x330
-  nf_send_reset+0x17c/0x2d0 [nf_reject_ipv4]
-  nft_reject_inet_eval+0xa9/0xf2 [nft_reject_inet]
-  nft_do_chain+0x198/0x5d0 [nf_tables]
-  nft_do_chain_inet+0xa4/0x110 [nf_tables]
-  nf_hook_slow+0x41/0xc0
-  ip_local_deliver+0xce/0x110
-  ..
+Also remove extraneous if-statement as it can never be entered. The
+return value from `strncpy` is it's first argument. In this case,
+`...dyndbg_cmd` is an array:
+| 	char dyndbg_cmd[VPU_DYNDBG_CMD_MAX_LEN];
+             ^^^^^^^^^^
+This can never be NULL which means `strncpy`'s return value cannot be
+NULL here. Just use `strscpy` which is more robust and results in
+simpler and less ambiguous code.
 
-Cc: Stanislav Fomichev <sdf@google.com>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Fixes: 812fa71f0d96 ("netfilter: Dissect flow after packet mangling")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217826
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230830110043.30497-1-fw@strlen.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Moreover, remove needless `... - 1` as `strscpy`'s implementation
+ensures NUL-termination and we do not need to carefully dance around
+ending boundaries with a "- 1" anymore.
+
+Fixes: 5d7422cfb498 ("accel/ivpu: Add IPC driver and JSM messages")
+Link: www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
+Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
+Link: https://github.com/KSPP/linux/issues/90
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230824-strncpy-drivers-accel-ivpu-ivpu_jsm_msg-c-v1-1-12d9b52d2dff@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip6_fib.h | 5 ++++-
- include/net/ip_fib.h  | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_jsm_msg.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/net/ip6_fib.h b/include/net/ip6_fib.h
-index 05e6f756feafe..9ba6413fd2e3e 100644
---- a/include/net/ip6_fib.h
-+++ b/include/net/ip6_fib.h
-@@ -604,7 +604,10 @@ static inline bool fib6_rules_early_flow_dissect(struct net *net,
- 	if (!net->ipv6.fib6_rules_require_fldissect)
- 		return false;
+diff --git a/drivers/accel/ivpu/ivpu_jsm_msg.c b/drivers/accel/ivpu/ivpu_jsm_msg.c
+index 831bfd2b2d39d..bdddef2c59eec 100644
+--- a/drivers/accel/ivpu/ivpu_jsm_msg.c
++++ b/drivers/accel/ivpu/ivpu_jsm_msg.c
+@@ -118,8 +118,7 @@ int ivpu_jsm_dyndbg_control(struct ivpu_device *vdev, char *command, size_t size
+ 	struct vpu_jsm_msg resp;
+ 	int ret;
  
--	skb_flow_dissect_flow_keys(skb, flkeys, flag);
-+	memset(flkeys, 0, sizeof(*flkeys));
-+	__skb_flow_dissect(net, skb, &flow_keys_dissector,
-+			   flkeys, NULL, 0, 0, 0, flag);
-+
- 	fl6->fl6_sport = flkeys->ports.src;
- 	fl6->fl6_dport = flkeys->ports.dst;
- 	fl6->flowi6_proto = flkeys->basic.ip_proto;
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index a378eff827c74..f0c13864180e2 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -418,7 +418,10 @@ static inline bool fib4_rules_early_flow_dissect(struct net *net,
- 	if (!net->ipv4.fib_rules_require_fldissect)
- 		return false;
+-	if (!strncpy(req.payload.dyndbg_control.dyndbg_cmd, command, VPU_DYNDBG_CMD_MAX_LEN - 1))
+-		return -ENOMEM;
++	strscpy(req.payload.dyndbg_control.dyndbg_cmd, command, VPU_DYNDBG_CMD_MAX_LEN);
  
--	skb_flow_dissect_flow_keys(skb, flkeys, flag);
-+	memset(flkeys, 0, sizeof(*flkeys));
-+	__skb_flow_dissect(net, skb, &flow_keys_dissector,
-+			   flkeys, NULL, 0, 0, 0, flag);
-+
- 	fl4->fl4_sport = flkeys->ports.src;
- 	fl4->fl4_dport = flkeys->ports.dst;
- 	fl4->flowi4_proto = flkeys->basic.ip_proto;
+ 	ret = ivpu_ipc_send_receive(vdev, &req, VPU_JSM_MSG_DYNDBG_CONTROL_RSP, &resp,
+ 				    VPU_IPC_CHAN_ASYNC_CMD, vdev->timeout.jsm);
 -- 
 2.40.1
 
