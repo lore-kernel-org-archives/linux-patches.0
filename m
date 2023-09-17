@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519EA6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9D7C433C9;
-	Sun, 17 Sep 2023 19:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71256FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:42:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414CDC433C8;
+	Sun, 17 Sep 2023 19:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979767;
-	bh=nKg0LR51CqFQaZ7KBf8mSVgSXyLc7pwwV+BcnboE+E4=;
+	s=korg; t=1694979770;
+	bh=4ISxu4GT0rr/bUagCwkDwlOkr7cizbNOUAoXNke0mS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bx6GsCihp7/4D2svzAKzwdZ6JUkKIIaXInqqFo3Nn4ISgF7v+uBiFmD5j9JKpu+m1
-	 FgNTug1Ym+YcQ5yiglqNU2g3ocLRWhiXf+AsnidCH+tEe1tsgxwxQ0j/B0aXqo5ZP1
-	 CNRZ0HwAjM2utW72qpRTAHaODv76CitQ9PHboQf8=
+	b=H010ptV4xK4o93IaY5aaFNOlQsqPDfWf1uv0zmCT3lBlGjS10G1EsHF7+MTBx5WY0
+	 o03QhwUSQgIgE9EGiIS+I8kwsfLeR7gl50P/GmK6DI0jyBxO04pXtLZSWe5C72uqbf
+	 I/IbY94PZktM5pTw54gVj9JDmDNrUrRhMTpBfGLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	"David S. Miller" <davem@davemloft.net>,
+	SeongJae Park <sjpark@amazon.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 390/406] net: ipv4: fix one memleak in __inet_del_ifa()
-Date: Sun, 17 Sep 2023 21:14:04 +0200
-Message-ID: <20230917191111.563185983@linuxfoundation.org>
+Subject: [PATCH 5.10 391/406] selftests/kselftest/runner/run_one(): allow running non-executable files
+Date: Sun, 17 Sep 2023 21:14:05 +0200
+Message-ID: <20230917191111.589444867@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,83 +42,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: SeongJae Park <sjpark@amazon.de>
 
-[ Upstream commit ac28b1ec6135649b5d78b028e47264cb3ebca5ea ]
+[ Upstream commit 303f8e2d02002dbe331cab7813ee091aead3cd39 ]
 
-I got the below warning when do fuzzing test:
-unregister_netdevice: waiting for bond0 to become free. Usage count = 2
+When running a test program, 'run_one()' checks if the program has the
+execution permission and fails if it doesn't.  However, it's easy to
+mistakenly lose the permissions, as some common tools like 'diff' don't
+support the permission change well[1].  Compared to that, making mistakes
+in the test program's path would only rare, as those are explicitly listed
+in 'TEST_PROGS'.  Therefore, it might make more sense to resolve the
+situation on our own and run the program.
 
-It can be repoduced via:
+For this reason, this commit makes the test program runner function still
+print the warning message but to try parsing the interpreter of the
+program and to explicitly run it with the interpreter, in this case.
 
-ip link add bond0 type bond
-sysctl -w net.ipv4.conf.bond0.promote_secondaries=1
-ip addr add 4.117.174.103/0 scope 0x40 dev bond0
-ip addr add 192.168.100.111/255.255.255.254 scope 0 dev bond0
-ip addr add 0.0.0.4/0 scope 0x40 secondary dev bond0
-ip addr del 4.117.174.103/0 scope 0x40 dev bond0
-ip link delete bond0 type bond
+[1] https://lore.kernel.org/mm-commits/YRJisBs9AunccCD4@kroah.com/
 
-In this reproduction test case, an incorrect 'last_prim' is found in
-__inet_del_ifa(), as a result, the secondary address(0.0.0.4/0 scope 0x40)
-is lost. The memory of the secondary address is leaked and the reference of
-in_device and net_device is leaked.
-
-Fix this problem:
-Look for 'last_prim' starting at location of the deleted IP and inserting
-the promoted IP into the location of 'last_prim'.
-
-Fixes: 0ff60a45678e ("[IPV4]: Fix secondary IP addresses after promotion")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lkml.kernel.org/r/20210810164534.25902-1-sj38.park@gmail.com
+Signed-off-by: SeongJae Park <sjpark@amazon.de>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 9616cb34b08e ("kselftest/runner.sh: Propagate SIGTERM to runner child")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/kselftest/runner.sh | 28 +++++++++++++--------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index 88b6120878cd9..da1ca8081c035 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -351,14 +351,14 @@ static void __inet_del_ifa(struct in_device *in_dev,
+diff --git a/tools/testing/selftests/kselftest/runner.sh b/tools/testing/selftests/kselftest/runner.sh
+index cc9c846585f05..a9ba782d8ca0f 100644
+--- a/tools/testing/selftests/kselftest/runner.sh
++++ b/tools/testing/selftests/kselftest/runner.sh
+@@ -33,9 +33,9 @@ tap_timeout()
  {
- 	struct in_ifaddr *promote = NULL;
- 	struct in_ifaddr *ifa, *ifa1;
--	struct in_ifaddr *last_prim;
-+	struct in_ifaddr __rcu **last_prim;
- 	struct in_ifaddr *prev_prom = NULL;
- 	int do_promote = IN_DEV_PROMOTE_SECONDARIES(in_dev);
+ 	# Make sure tests will time out if utility is available.
+ 	if [ -x /usr/bin/timeout ] ; then
+-		/usr/bin/timeout --foreground "$kselftest_timeout" "$1"
++		/usr/bin/timeout --foreground "$kselftest_timeout" $1
+ 	else
+-		"$1"
++		$1
+ 	fi
+ }
  
- 	ASSERT_RTNL();
+@@ -65,17 +65,25 @@ run_one()
  
- 	ifa1 = rtnl_dereference(*ifap);
--	last_prim = rtnl_dereference(in_dev->ifa_list);
-+	last_prim = ifap;
- 	if (in_dev->dead)
- 		goto no_promotions;
- 
-@@ -372,7 +372,7 @@ static void __inet_del_ifa(struct in_device *in_dev,
- 		while ((ifa = rtnl_dereference(*ifap1)) != NULL) {
- 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) &&
- 			    ifa1->ifa_scope <= ifa->ifa_scope)
--				last_prim = ifa;
-+				last_prim = &ifa->ifa_next;
- 
- 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) ||
- 			    ifa1->ifa_mask != ifa->ifa_mask ||
-@@ -436,9 +436,9 @@ static void __inet_del_ifa(struct in_device *in_dev,
- 
- 			rcu_assign_pointer(prev_prom->ifa_next, next_sec);
- 
--			last_sec = rtnl_dereference(last_prim->ifa_next);
-+			last_sec = rtnl_dereference(*last_prim);
- 			rcu_assign_pointer(promote->ifa_next, last_sec);
--			rcu_assign_pointer(last_prim->ifa_next, promote);
-+			rcu_assign_pointer(*last_prim, promote);
- 		}
- 
- 		promote->ifa_flags &= ~IFA_F_SECONDARY;
+ 	TEST_HDR_MSG="selftests: $DIR: $BASENAME_TEST"
+ 	echo "# $TEST_HDR_MSG"
+-	if [ ! -x "$TEST" ]; then
+-		echo -n "# Warning: file $TEST is "
+-		if [ ! -e "$TEST" ]; then
+-			echo "missing!"
+-		else
+-			echo "not executable, correct this."
+-		fi
++	if [ ! -e "$TEST" ]; then
++		echo "# Warning: file $TEST is missing!"
+ 		echo "not ok $test_num $TEST_HDR_MSG"
+ 	else
++		cmd="./$BASENAME_TEST"
++		if [ ! -x "$TEST" ]; then
++			echo "# Warning: file $TEST is not executable"
++
++			if [ $(head -n 1 "$TEST" | cut -c -2) = "#!" ]
++			then
++				interpreter=$(head -n 1 "$TEST" | cut -c 3-)
++				cmd="$interpreter ./$BASENAME_TEST"
++			else
++				echo "not ok $test_num $TEST_HDR_MSG"
++				return
++			fi
++		fi
+ 		cd `dirname $TEST` > /dev/null
+-		((((( tap_timeout ./$BASENAME_TEST 2>&1; echo $? >&3) |
++		((((( tap_timeout "$cmd" 2>&1; echo $? >&3) |
+ 			tap_prefix >&4) 3>&1) |
+ 			(read xs; exit $xs)) 4>>"$logfile" &&
+ 		echo "ok $test_num $TEST_HDR_MSG") ||
 -- 
 2.40.1
 
