@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948F07469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6B7C433C7;
-	Sun, 17 Sep 2023 20:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48517469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51635C433C7;
+	Sun, 17 Sep 2023 20:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982301;
-	bh=c8HHZ3Cc8qIi52O5A5pbVM4eoa4HFjhVd4Ji/04RUmA=;
+	s=korg; t=1694982304;
+	bh=pv+TjT0f91QxPwiUXdsxjCN2P1cZEoCh1ZGXK/Dm2MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXHLEv7dFwYigK9GTei86wL1wiKTSQ7ybBc+huuj0E5ztRZIq4RPKN/XXX6zgT4CK
-	 XO+WNDbgqRUc0PkdytrEN9D6vnkuqoEQyW1p0DNfmblbdqIbw+aSPfPLPAEjBFNRNI
-	 54ZheEf6I86UruzxjkQlAve/lfopaS0H+pAq8xMA=
+	b=I1KDHVycmJT0SIUpjEQAkLvdypY4IPUTdJ3vg0dNOg9YCvnK2oZKkymchNXFanBHs
+	 eKLdBf8y2w/74glnglCCb5fQuNCZUad3TF7UmGqtTegu+XN+h1Rq3Jt4JBHlGj/DrF
+	 o0gMHWo+QqJf9eEIcb8RvSlL7VC+RuxEh1R2aAy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/511] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
-Date: Sun, 17 Sep 2023 21:10:37 +0200
-Message-ID: <20230917191118.891801453@linuxfoundation.org>
+Subject: [PATCH 5.15 211/511] powerpc/radix: Move some functions into #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
+Date: Sun, 17 Sep 2023 21:10:38 +0200
+Message-ID: <20230917191118.915041718@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,75 +41,343 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
+[ Upstream commit 4a9dd8f292efd614f0a18452e6474fe19ae17b47 ]
 
-Reconfiguring the clock divider to the exact same value is observed
-on an i.MX8MN to often cause a longer than usual clock pause, probably
-because the divider restarts counting whenever the register is rewritten.
+With skiboot_defconfig, Clang reports:
 
-This issue doesn't show up normally, because the clock framework will
-take care to not call set_rate when the clock rate is the same.
-However, when we reconfigure an upstream clock, the common code will
-call set_rate with the newly calculated rate on all children, e.g.:
+  CC      arch/powerpc/mm/book3s64/radix_tlb.o
+arch/powerpc/mm/book3s64/radix_tlb.c:419:20: error: unused function '_tlbie_pid_lpid' [-Werror,-Wunused-function]
+static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+                   ^
+arch/powerpc/mm/book3s64/radix_tlb.c:663:20: error: unused function '_tlbie_va_range_lpid' [-Werror,-Wunused-function]
+static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
+                   ^
 
-  - sai5 is running normally and divides Audio PLL out by 16.
-  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
-  - rates for children are recalculated and rates are set recursively
-  - imx8m_clk_composite_divider_set_rate(sai5) is called with
-    32/16 = 2Hz more
-  - imx8m_clk_composite_divider_set_rate computes same divider as before
-  - divider register is written, so it restarts counting from zero and
-    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
+This is because those functions are only called from functions
+enclosed in a #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
 
-Some external clock consumers can be upset by such unexpected clock pauses,
-so let's make sure we only rewrite the divider value when the value to be
-written is actually different.
+Move below functions inside that #ifdef
+* __tlbie_pid_lpid(unsigned long pid,
+* __tlbie_va_lpid(unsigned long va, unsigned long pid,
+* fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
+* _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+* fixup_tlbie_va_range_lpid(unsigned long va,
+* __tlbie_va_range_lpid(unsigned long start, unsigned long end,
+* _tlbie_va_range_lpid(unsigned long start, unsigned long end,
 
-Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: f0c6fbbb9050 ("KVM: PPC: Book3S HV: Add support for H_RPT_INVALIDATE")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307260802.Mjr99P5O-lkp@intel.com/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/3d72efd39f986ee939d068af69fdce28bd600766.1691568093.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/powerpc/mm/book3s64/radix_tlb.c | 240 ++++++++++++++-------------
+ 1 file changed, 121 insertions(+), 119 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index 04e728538cefe..75e05582cb24f 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -97,7 +97,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 	int prediv_value;
- 	int div_value;
- 	int ret;
--	u32 val;
-+	u32 orig, val;
+diff --git a/arch/powerpc/mm/book3s64/radix_tlb.c b/arch/powerpc/mm/book3s64/radix_tlb.c
+index 5172d5cec2c06..6972fd5d423c0 100644
+--- a/arch/powerpc/mm/book3s64/radix_tlb.c
++++ b/arch/powerpc/mm/book3s64/radix_tlb.c
+@@ -127,21 +127,6 @@ static __always_inline void __tlbie_pid(unsigned long pid, unsigned long ric)
+ 	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+ }
  
- 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
- 						&prediv_value, &div_value);
-@@ -106,13 +106,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+-static __always_inline void __tlbie_pid_lpid(unsigned long pid,
+-					     unsigned long lpid,
+-					     unsigned long ric)
+-{
+-	unsigned long rb, rs, prs, r;
+-
+-	rb = PPC_BIT(53); /* IS = 1 */
+-	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
+-	prs = 1; /* process scoped */
+-	r = 1;   /* radix format */
+-
+-	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
+-		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
+-	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+-}
+ static __always_inline void __tlbie_lpid(unsigned long lpid, unsigned long ric)
+ {
+ 	unsigned long rb,rs,prs,r;
+@@ -202,23 +187,6 @@ static __always_inline void __tlbie_va(unsigned long va, unsigned long pid,
+ 	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+ }
  
- 	spin_lock_irqsave(divider->lock, flags);
+-static __always_inline void __tlbie_va_lpid(unsigned long va, unsigned long pid,
+-					    unsigned long lpid,
+-					    unsigned long ap, unsigned long ric)
+-{
+-	unsigned long rb, rs, prs, r;
+-
+-	rb = va & ~(PPC_BITMASK(52, 63));
+-	rb |= ap << PPC_BITLSHIFT(58);
+-	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
+-	prs = 1; /* process scoped */
+-	r = 1;   /* radix format */
+-
+-	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
+-		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
+-	trace_tlbie(0, 0, rb, rs, ric, prs, r);
+-}
+-
+ static __always_inline void __tlbie_lpid_va(unsigned long va, unsigned long lpid,
+ 					    unsigned long ap, unsigned long ric)
+ {
+@@ -264,22 +232,6 @@ static inline void fixup_tlbie_va_range(unsigned long va, unsigned long pid,
+ 	}
+ }
  
--	val = readl(divider->reg);
--	val &= ~((clk_div_mask(divider->width) << divider->shift) |
--			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
-+	orig = readl(divider->reg);
-+	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
-+		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
+-static inline void fixup_tlbie_va_range_lpid(unsigned long va,
+-					     unsigned long pid,
+-					     unsigned long lpid,
+-					     unsigned long ap)
+-{
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
+-	}
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_va_lpid(va, pid, lpid, ap, RIC_FLUSH_TLB);
+-	}
+-}
+-
+ static inline void fixup_tlbie_pid(unsigned long pid)
+ {
+ 	/*
+@@ -299,26 +251,6 @@ static inline void fixup_tlbie_pid(unsigned long pid)
+ 	}
+ }
  
- 	val |= (u32)(prediv_value  - 1) << divider->shift;
- 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
--	writel(val, divider->reg);
+-static inline void fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
+-{
+-	/*
+-	 * We can use any address for the invalidation, pick one which is
+-	 * probably unused as an optimisation.
+-	 */
+-	unsigned long va = ((1UL << 52) - 1);
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
+-	}
+-
+-	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
+-		asm volatile("ptesync" : : : "memory");
+-		__tlbie_va_lpid(va, pid, lpid, mmu_get_ap(MMU_PAGE_64K),
+-				RIC_FLUSH_TLB);
+-	}
+-}
+-
+ static inline void fixup_tlbie_lpid_va(unsigned long va, unsigned long lpid,
+ 				       unsigned long ap)
+ {
+@@ -416,31 +348,6 @@ static inline void _tlbie_pid(unsigned long pid, unsigned long ric)
+ 	asm volatile("eieio; tlbsync; ptesync": : :"memory");
+ }
+ 
+-static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
+-				   unsigned long ric)
+-{
+-	asm volatile("ptesync" : : : "memory");
+-
+-	/*
+-	 * Workaround the fact that the "ric" argument to __tlbie_pid
+-	 * must be a compile-time contraint to match the "i" constraint
+-	 * in the asm statement.
+-	 */
+-	switch (ric) {
+-	case RIC_FLUSH_TLB:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_TLB);
+-		fixup_tlbie_pid_lpid(pid, lpid);
+-		break;
+-	case RIC_FLUSH_PWC:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
+-		break;
+-	case RIC_FLUSH_ALL:
+-	default:
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_ALL);
+-		fixup_tlbie_pid_lpid(pid, lpid);
+-	}
+-	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
+-}
+ struct tlbiel_pid {
+ 	unsigned long pid;
+ 	unsigned long ric;
+@@ -566,20 +473,6 @@ static inline void __tlbie_va_range(unsigned long start, unsigned long end,
+ 	fixup_tlbie_va_range(addr - page_size, pid, ap);
+ }
+ 
+-static inline void __tlbie_va_range_lpid(unsigned long start, unsigned long end,
+-					 unsigned long pid, unsigned long lpid,
+-					 unsigned long page_size,
+-					 unsigned long psize)
+-{
+-	unsigned long addr;
+-	unsigned long ap = mmu_get_ap(psize);
+-
+-	for (addr = start; addr < end; addr += page_size)
+-		__tlbie_va_lpid(addr, pid, lpid, ap, RIC_FLUSH_TLB);
+-
+-	fixup_tlbie_va_range_lpid(addr - page_size, pid, lpid, ap);
+-}
+-
+ static __always_inline void _tlbie_va(unsigned long va, unsigned long pid,
+ 				      unsigned long psize, unsigned long ric)
+ {
+@@ -660,18 +553,6 @@ static inline void _tlbie_va_range(unsigned long start, unsigned long end,
+ 	asm volatile("eieio; tlbsync; ptesync": : :"memory");
+ }
+ 
+-static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
+-					unsigned long pid, unsigned long lpid,
+-					unsigned long page_size,
+-					unsigned long psize, bool also_pwc)
+-{
+-	asm volatile("ptesync" : : : "memory");
+-	if (also_pwc)
+-		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
+-	__tlbie_va_range_lpid(start, end, pid, lpid, page_size, psize);
+-	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
+-}
+-
+ static inline void _tlbiel_va_range_multicast(struct mm_struct *mm,
+ 				unsigned long start, unsigned long end,
+ 				unsigned long pid, unsigned long page_size,
+@@ -1468,6 +1349,127 @@ void radix__flush_tlb_all(void)
+ }
+ 
+ #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
++static __always_inline void __tlbie_pid_lpid(unsigned long pid,
++					     unsigned long lpid,
++					     unsigned long ric)
++{
++	unsigned long rb, rs, prs, r;
 +
-+	if (val != orig)
-+		writel(val, divider->reg);
- 
- 	spin_unlock_irqrestore(divider->lock, flags);
- 
++	rb = PPC_BIT(53); /* IS = 1 */
++	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
++	prs = 1; /* process scoped */
++	r = 1;   /* radix format */
++
++	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
++		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
++	trace_tlbie(0, 0, rb, rs, ric, prs, r);
++}
++
++static __always_inline void __tlbie_va_lpid(unsigned long va, unsigned long pid,
++					    unsigned long lpid,
++					    unsigned long ap, unsigned long ric)
++{
++	unsigned long rb, rs, prs, r;
++
++	rb = va & ~(PPC_BITMASK(52, 63));
++	rb |= ap << PPC_BITLSHIFT(58);
++	rs = (pid << PPC_BITLSHIFT(31)) | (lpid & ~(PPC_BITMASK(0, 31)));
++	prs = 1; /* process scoped */
++	r = 1;   /* radix format */
++
++	asm volatile(PPC_TLBIE_5(%0, %4, %3, %2, %1)
++		     : : "r"(rb), "i"(r), "i"(prs), "i"(ric), "r"(rs) : "memory");
++	trace_tlbie(0, 0, rb, rs, ric, prs, r);
++}
++
++static inline void fixup_tlbie_pid_lpid(unsigned long pid, unsigned long lpid)
++{
++	/*
++	 * We can use any address for the invalidation, pick one which is
++	 * probably unused as an optimisation.
++	 */
++	unsigned long va = ((1UL << 52) - 1);
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
++	}
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_va_lpid(va, pid, lpid, mmu_get_ap(MMU_PAGE_64K),
++				RIC_FLUSH_TLB);
++	}
++}
++
++static inline void _tlbie_pid_lpid(unsigned long pid, unsigned long lpid,
++				   unsigned long ric)
++{
++	asm volatile("ptesync" : : : "memory");
++
++	/*
++	 * Workaround the fact that the "ric" argument to __tlbie_pid
++	 * must be a compile-time contraint to match the "i" constraint
++	 * in the asm statement.
++	 */
++	switch (ric) {
++	case RIC_FLUSH_TLB:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_TLB);
++		fixup_tlbie_pid_lpid(pid, lpid);
++		break;
++	case RIC_FLUSH_PWC:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
++		break;
++	case RIC_FLUSH_ALL:
++	default:
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_ALL);
++		fixup_tlbie_pid_lpid(pid, lpid);
++	}
++	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
++}
++
++static inline void fixup_tlbie_va_range_lpid(unsigned long va,
++					     unsigned long pid,
++					     unsigned long lpid,
++					     unsigned long ap)
++{
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_ERAT_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_pid_lpid(0, lpid, RIC_FLUSH_TLB);
++	}
++
++	if (cpu_has_feature(CPU_FTR_P9_TLBIE_STQ_BUG)) {
++		asm volatile("ptesync" : : : "memory");
++		__tlbie_va_lpid(va, pid, lpid, ap, RIC_FLUSH_TLB);
++	}
++}
++
++static inline void __tlbie_va_range_lpid(unsigned long start, unsigned long end,
++					 unsigned long pid, unsigned long lpid,
++					 unsigned long page_size,
++					 unsigned long psize)
++{
++	unsigned long addr;
++	unsigned long ap = mmu_get_ap(psize);
++
++	for (addr = start; addr < end; addr += page_size)
++		__tlbie_va_lpid(addr, pid, lpid, ap, RIC_FLUSH_TLB);
++
++	fixup_tlbie_va_range_lpid(addr - page_size, pid, lpid, ap);
++}
++
++static inline void _tlbie_va_range_lpid(unsigned long start, unsigned long end,
++					unsigned long pid, unsigned long lpid,
++					unsigned long page_size,
++					unsigned long psize, bool also_pwc)
++{
++	asm volatile("ptesync" : : : "memory");
++	if (also_pwc)
++		__tlbie_pid_lpid(pid, lpid, RIC_FLUSH_PWC);
++	__tlbie_va_range_lpid(start, end, pid, lpid, page_size, psize);
++	asm volatile("eieio; tlbsync; ptesync" : : : "memory");
++}
++
+ /*
+  * Performs process-scoped invalidations for a given LPID
+  * as part of H_RPT_INVALIDATE hcall.
 -- 
 2.40.1
 
