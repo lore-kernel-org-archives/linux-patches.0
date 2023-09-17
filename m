@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CB66FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFD5C433C7;
-	Sun, 17 Sep 2023 19:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDC16FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D02C433C8;
+	Sun, 17 Sep 2023 19:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979791;
-	bh=6j97H9MsDa6BUbr39pYGsOLvczMcdqFrmlnEJkbMTuY=;
+	s=korg; t=1694979795;
+	bh=uA8RB6h7yRdEtP85NGQF5CFCuIx7gBine8YAo5qDZOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avxmlMtow4Sd935BrDNqARJIJU8N8aMXRE5nuRD2XdD4CHJj0uJ4/uM/9BLoIJ2nQ
-	 p2HvF+kPCGyqaCNKw1dE4jxpoYLsyAFYNeYvFeSdZYfqPuBqR0rzzDhlTEyIM0Gmml
-	 Kg1Dmq0B0z8wJFPb3ansgDZYYac1b0nUwQ86d4/E=
+	b=ztlFENfHUb6fomd4QuPN+DwklPF609OTdb0TSdOnUUsueCtNvmTyN2cHT+29/fFoD
+	 6bcGtv/4ZKhCrgbSG91RVhafJpzuwfwlgZIzoLghDLZwCBvtjgZlIr632VP8ZafU+8
+	 1P4Vz135pPi8XsM9tc0mHH7JaI1sWud0v6gkShB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 387/406] ARM: dts: samsung: exynos4210-i9100: Fix LCD screens physical size
-Date: Sun, 17 Sep 2023 21:14:01 +0200
-Message-ID: <20230917191111.481096129@linuxfoundation.org>
+	Lars Ekman <uablrek@gmail.com>,
+	Quan Tian <qtian@vmware.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 001/285] net/ipv6: SKB symmetric hash should incorporate transport ports
+Date: Sun, 17 Sep 2023 21:10:01 +0200
+Message-ID: <20230917191051.690715346@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
-References: <20230917191101.035638219@linuxfoundation.org>
+In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
+References: <20230917191051.639202302@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,48 +37,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Quan Tian <qtian@vmware.com>
 
-[ Upstream commit b3f3fc32e5ff1e848555af8616318cc667457f90 ]
+commit a5e2151ff9d5852d0ababbbcaeebd9646af9c8d9 upstream.
 
-The previous values were completely bogus, and resulted in the computed
-DPI ratio being much lower than reality, causing applications and UIs to
-misbehave.
+__skb_get_hash_symmetric() was added to compute a symmetric hash over
+the protocol, addresses and transport ports, by commit eb70db875671
+("packet: Use symmetric hash for PACKET_FANOUT_HASH."). It uses
+flow_keys_dissector_symmetric_keys as the flow_dissector to incorporate
+IPv4 addresses, IPv6 addresses and ports. However, it should not specify
+the flag as FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL, which stops further
+dissection when an IPv6 flow label is encountered, making transport
+ports not being incorporated in such case.
 
-The new values were measured by myself with a ruler.
+As a consequence, the symmetric hash is based on 5-tuple for IPv4 but
+3-tuple for IPv6 when flow label is present. It caused a few problems,
+e.g. when nft symhash and openvswitch l4_sym rely on the symmetric hash
+to perform load balancing as different L4 flows between two given IPv6
+addresses would always get the same symmetric hash, leading to uneven
+traffic distribution.
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
-Cc: <stable@vger.kernel.org> # v5.8+
-Link: https://lore.kernel.org/r/20230714153720.336990-1-paul@crapouillou.net
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Removing the use of FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL makes sure the
+symmetric hash is based on 5-tuple for both IPv4 and IPv6 consistently.
+
+Fixes: eb70db875671 ("packet: Use symmetric hash for PACKET_FANOUT_HASH.")
+Reported-by: Lars Ekman <uablrek@gmail.com>
+Closes: https://github.com/antrea-io/antrea/issues/5457
+Signed-off-by: Quan Tian <qtian@vmware.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4210-i9100.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/flow_dissector.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exynos4210-i9100.dts
-index ecc9d4dc707e4..d186b93144e38 100644
---- a/arch/arm/boot/dts/exynos4210-i9100.dts
-+++ b/arch/arm/boot/dts/exynos4210-i9100.dts
-@@ -170,8 +170,8 @@
- 			power-on-delay = <10>;
- 			reset-delay = <10>;
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1780,8 +1780,7 @@ u32 __skb_get_hash_symmetric(const struc
  
--			panel-width-mm = <90>;
--			panel-height-mm = <154>;
-+			panel-width-mm = <56>;
-+			panel-height-mm = <93>;
+ 	memset(&keys, 0, sizeof(keys));
+ 	__skb_flow_dissect(NULL, skb, &flow_keys_dissector_symmetric,
+-			   &keys, NULL, 0, 0, 0,
+-			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
++			   &keys, NULL, 0, 0, 0, 0);
  
- 			display-timings {
- 				timing {
--- 
-2.40.1
-
+ 	return __flow_hash_from_keys(&keys, &hashrnd);
+ }
 
 
