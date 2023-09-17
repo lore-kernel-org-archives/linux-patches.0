@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D3A7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E74C433C8;
-	Sun, 17 Sep 2023 19:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC487461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A5DC433C8;
+	Sun, 17 Sep 2023 19:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980185;
-	bh=NIJXgV6Lh/xo5etx9KL1kPX2rC34vNnt7e7MVbU6r7s=;
+	s=korg; t=1694980188;
+	bh=9lrfTbkBx26M8D/VKaSXa7Wz15s1OK3G1TcfOaqbTRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqHef7qDO8DUP4VO0y5MGZpfDfh4WfRetTOb8cJK/EzfEFcd4BExyHq/QgT1qBzEK
-	 tnNNC3HBzwrPBG/iU9/Ets45Lg1LVhX2b5uDN2o6prCnm1R/uurHMVnb7sXXMUNQvt
-	 9mW9SAXCqmHnd0ilenceOyptToGF9Nl494MH5QhI=
+	b=TojAR1oPd8VU1E+cuYo8SXQuC6paE6qqC6NmKXulAL1NF7KRjI9oMZeNvUzxF/xNs
+	 ktwTygEi7AsvMOE2IxLkBOYntl9v5bvXh/q5jAihPLMzWzd/rur+aA7UDJ0f0LcmiT
+	 Q8N+eCNlK6ab/euersLHOGNX1oQSMj11WBKjPWwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 117/285] drm/amd/display: fix mode scaling (RMX_.*)
-Date: Sun, 17 Sep 2023 21:11:57 +0200
-Message-ID: <20230917191055.718933403@linuxfoundation.org>
+Subject: [PATCH 6.5 118/285] net/handshake: fix null-ptr-deref in handshake_nl_done_doit()
+Date: Sun, 17 Sep 2023 21:11:58 +0200
+Message-ID: <20230917191055.752485064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,42 +43,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ea7971af7a911a7a388b4c47db2a231a6b8dcc29 ]
+[ Upstream commit 82ba0ff7bf0483d962e592017bef659ae022d754 ]
 
-As made mention of in commit 4a2df0d1f28e ("drm/amd/display: Fixed
-non-native modes not lighting up"), we shouldn't call
-drm_mode_set_crtcinfo() once the crtc timings have been decided. Since,
-it can cause settings to be unintentionally overwritten. So, since
-dm_state is never NULL now, we can use old_stream to determine if we
-should call drm_mode_set_crtcinfo() because we only need to set the crtc
-timing parameters for entirely new streams.
+We should not call trace_handshake_cmd_done_err() if socket lookup has failed.
 
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Fixes: bd49f19039c1 ("drm/amd/display: Always set crtcinfo from create_stream_for_sink")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Also we should call trace_handshake_cmd_done_err() before releasing the file,
+otherwise dereferencing sock->sk can return garbage.
+
+This also reverts 7afc6d0a107f ("net/handshake: Fix uninitialized local variable")
+
+Unable to handle kernel paging request at virtual address dfff800000000003
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+Mem abort info:
+ESR = 0x0000000096000005
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x05: level 1 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[dfff800000000003] address between user and kernel address ranges
+Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 1 PID: 5986 Comm: syz-executor292 Not tainted 6.5.0-rc7-syzkaller-gfe4469582053 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : handshake_nl_done_doit+0x198/0x9c8 net/handshake/netlink.c:193
+lr : handshake_nl_done_doit+0x180/0x9c8
+sp : ffff800096e37180
+x29: ffff800096e37200 x28: 1ffff00012dc6e34 x27: dfff800000000000
+x26: ffff800096e373d0 x25: 0000000000000000 x24: 00000000ffffffa8
+x23: ffff800096e373f0 x22: 1ffff00012dc6e38 x21: 0000000000000000
+x20: ffff800096e371c0 x19: 0000000000000018 x18: 0000000000000000
+x17: 0000000000000000 x16: ffff800080516cc4 x15: 0000000000000001
+x14: 1fffe0001b14aa3b x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000003
+x8 : 0000000000000003 x7 : ffff800080afe47c x6 : 0000000000000000
+x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffff800080a88078
+x2 : 0000000000000001 x1 : 00000000ffffffa8 x0 : 0000000000000000
+Call trace:
+handshake_nl_done_doit+0x198/0x9c8 net/handshake/netlink.c:193
+genl_family_rcv_msg_doit net/netlink/genetlink.c:970 [inline]
+genl_family_rcv_msg net/netlink/genetlink.c:1050 [inline]
+genl_rcv_msg+0x96c/0xc50 net/netlink/genetlink.c:1067
+netlink_rcv_skb+0x214/0x3c4 net/netlink/af_netlink.c:2549
+genl_rcv+0x38/0x50 net/netlink/genetlink.c:1078
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x660/0x8d4 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x834/0xb18 net/netlink/af_netlink.c:1914
+sock_sendmsg_nosec net/socket.c:725 [inline]
+sock_sendmsg net/socket.c:748 [inline]
+____sys_sendmsg+0x56c/0x840 net/socket.c:2494
+___sys_sendmsg net/socket.c:2548 [inline]
+__sys_sendmsg+0x26c/0x33c net/socket.c:2577
+__do_sys_sendmsg net/socket.c:2586 [inline]
+__se_sys_sendmsg net/socket.c:2584 [inline]
+__arm64_sys_sendmsg+0x80/0x94 net/socket.c:2584
+__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
+invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
+el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
+do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
+el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
+el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
+el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
+Code: 12800108 b90043e8 910062b3 d343fe68 (387b6908)
+
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/handshake/netlink.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 3a7e7d2ce847b..e8e238865b021 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5990,7 +5990,7 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 1086653e1fada..d0bc1dd8e65a8 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -157,26 +157,24 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct net *net = sock_net(skb->sk);
+-	struct handshake_req *req = NULL;
+-	struct socket *sock = NULL;
++	struct handshake_req *req;
++	struct socket *sock;
+ 	int fd, status, err;
  
- 	if (recalculate_timing)
- 		drm_mode_set_crtcinfo(&saved_mode, 0);
--	else
-+	else if (!old_stream)
- 		drm_mode_set_crtcinfo(&mode, 0);
+ 	if (GENL_REQ_ATTR_CHECK(info, HANDSHAKE_A_DONE_SOCKFD))
+ 		return -EINVAL;
+ 	fd = nla_get_u32(info->attrs[HANDSHAKE_A_DONE_SOCKFD]);
  
- 	/*
+-	err = 0;
+ 	sock = sockfd_lookup(fd, &err);
+-	if (err) {
+-		err = -EBADF;
+-		goto out_status;
+-	}
++	if (!sock)
++		return err;
+ 
+ 	req = handshake_req_hash_lookup(sock->sk);
+ 	if (!req) {
+ 		err = -EBUSY;
++		trace_handshake_cmd_done_err(net, req, sock->sk, err);
+ 		fput(sock->file);
+-		goto out_status;
++		return err;
+ 	}
+ 
+ 	trace_handshake_cmd_done(net, req, sock->sk, fd);
+@@ -188,10 +186,6 @@ int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info)
+ 	handshake_complete(req, status, info);
+ 	fput(sock->file);
+ 	return 0;
+-
+-out_status:
+-	trace_handshake_cmd_done_err(net, req, sock->sk, err);
+-	return err;
+ }
+ 
+ static unsigned int handshake_net_id;
 -- 
 2.40.1
 
