@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E0F7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15895C433C8;
-	Sun, 17 Sep 2023 20:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471307461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A832BC433C8;
+	Sun, 17 Sep 2023 20:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981903;
-	bh=ceRQjJHz2eMEvq2zvIyNOwBhmaZ67fxhY/J9YhgFQzM=;
+	s=korg; t=1694981907;
+	bh=T2Tl6WgiHZghGvk3lPvU0D6PB9CZNRtV45MbXsCj4w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w77y1torMUL74cn2ftQi8DZ9D3QtHxrFEhdrHHsg2FAWrD6g1hRpPHwSC/F0muWpz
-	 +TN1LWHm9xEZLdxl0mnPbNED7TxyhPOTbq219reQG/gQNhRTkX7biTrwS4ngcjmG3l
-	 qlnzNqe8JU55Fp7zFa+s04l4lJX+Vsj7vkWsk9x4=
+	b=Etm60sY3CH98tBfYeKYr+2q0RE241YRQldG24V2zu3m42VnyYHxcIaCtGEg/Wqod0
+	 CJAec2ybWM8+yLNgHk22qclEflI32XoSjh4TVwabxzAGvThMXCz4Fmu+nW1YOzFffO
+	 2vB1B44jUuEVEYL9MCArvN2ekGY1a89SZnBmWm98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Marcin Wojtas <mw@semihalf.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/511] quota: factor out dquot_write_dquot()
-Date: Sun, 17 Sep 2023 21:09:11 +0200
-Message-ID: <20230917191116.865028814@linuxfoundation.org>
+Subject: [PATCH 6.1 191/219] net: ethernet: mvpp2_main: fix possible OOB write in mvpp2_ethtool_get_rxnfc()
+Date: Sun, 17 Sep 2023 21:15:18 +0200
+Message-ID: <20230917191047.844782197@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,96 +38,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 024128477809f8073d870307c8157b8826ebfd08 ]
+[ Upstream commit 51fe0a470543f345e3c62b6798929de3ddcedc1d ]
 
-Refactor out dquot_write_dquot() to reduce duplicate code.
+rules is allocated in ethtool_get_rxnfc and the size is determined by
+rule_cnt from user space. So rule_cnt needs to be check before using
+rules to avoid OOB writing or NULL pointer dereference.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230630110822.3881712-2-libaokun1@huawei.com>
-Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
+Fixes: 90b509b39ac9 ("net: mvpp2: cls: Add Classification offload support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Marcin Wojtas <mw@semihalf.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index b88f5a2f6032b..fae2dbd663020 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -628,6 +628,18 @@ int dquot_scan_active(struct super_block *sb,
- }
- EXPORT_SYMBOL(dquot_scan_active);
- 
-+static inline int dquot_write_dquot(struct dquot *dquot)
-+{
-+	int ret = dquot->dq_sb->dq_op->write_dquot(dquot);
-+	if (ret < 0) {
-+		quota_error(dquot->dq_sb, "Can't write quota structure "
-+			    "(error %d). Quota may get out of sync!", ret);
-+		/* Clear dirty bit anyway to avoid infinite loop. */
-+		clear_dquot_dirty(dquot);
-+	}
-+	return ret;
-+}
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index b399bdb1ca362..f936640cca4e6 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5578,6 +5578,11 @@ static int mvpp2_ethtool_get_rxnfc(struct net_device *dev,
+ 		break;
+ 	case ETHTOOL_GRXCLSRLALL:
+ 		for (i = 0; i < MVPP2_N_RFS_ENTRIES_PER_FLOW; i++) {
++			if (loc == info->rule_cnt) {
++				ret = -EMSGSIZE;
++				break;
++			}
 +
- /* Write all dquot structures to quota files */
- int dquot_writeback_dquots(struct super_block *sb, int type)
- {
-@@ -658,16 +670,9 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
- 			 * use count */
- 			dqgrab(dquot);
- 			spin_unlock(&dq_list_lock);
--			err = sb->dq_op->write_dquot(dquot);
--			if (err) {
--				/*
--				 * Clear dirty bit anyway to avoid infinite
--				 * loop here.
--				 */
--				clear_dquot_dirty(dquot);
--				if (!ret)
--					ret = err;
--			}
-+			err = dquot_write_dquot(dquot);
-+			if (err && !ret)
-+				ret = err;
- 			dqput(dquot);
- 			spin_lock(&dq_list_lock);
+ 			if (port->rfs_rules[i])
+ 				rules[loc++] = i;
  		}
-@@ -765,8 +770,6 @@ static struct shrinker dqcache_shrinker = {
-  */
- void dqput(struct dquot *dquot)
- {
--	int ret;
--
- 	if (!dquot)
- 		return;
- #ifdef CONFIG_QUOTA_DEBUG
-@@ -794,17 +797,7 @@ void dqput(struct dquot *dquot)
- 	if (dquot_dirty(dquot)) {
- 		spin_unlock(&dq_list_lock);
- 		/* Commit dquot before releasing */
--		ret = dquot->dq_sb->dq_op->write_dquot(dquot);
--		if (ret < 0) {
--			quota_error(dquot->dq_sb, "Can't write quota structure"
--				    " (error %d). Quota may get out of sync!",
--				    ret);
--			/*
--			 * We clear dirty bit anyway, so that we avoid
--			 * infinite loop here
--			 */
--			clear_dquot_dirty(dquot);
--		}
-+		dquot_write_dquot(dquot);
- 		goto we_slept;
- 	}
- 	if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
 -- 
 2.40.1
 
