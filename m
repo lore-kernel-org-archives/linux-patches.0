@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EC26FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FB7C433C7;
-	Sun, 17 Sep 2023 19:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EE26FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C3EC433C8;
+	Sun, 17 Sep 2023 19:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980401;
-	bh=TDTadUzuQRitMOZFKaYg50zEo2lOJChy+YIKEgB/RHw=;
+	s=korg; t=1694980405;
+	bh=6IFN7eBNzdgsiyIOaxSkAzdOdB2GcfDlBlORgjQoKuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ax8oTEyHDS1ehNjYaZ1X8jFWt4+9aZysMiMjrL48UzI3+94I1ISU/NBwOT0IRabt
-	 MEzsiMS8F+VHma1lUU3teZlkkJNZNDsBvrHU+j8H+EjqVNM5T5lPt+z8VI43L3kkca
-	 rIUN8Ju1ccd0Z7pU4NCARkbMCsy0h05lJS2l4Bys=
+	b=SQNygI5KLeq5BGpCqUWuNiQ5RuTfI3JWZ8zmo10VDHgLEyNvZNwRqF1sCv+kXx3FJ
+	 DOEp2y6wdgw7LfA77FcTRwiAe0d3je+AOchD1DvraRas3B6ShrPWPAv5x8wL8KJus6
+	 POwfUka/Y+hWatX2M7UOQYYUEVOS5vGcIn+6C7zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 164/285] netfilter: nft_set_rbtree: skip sync GC for new elements in this transaction
-Date: Sun, 17 Sep 2023 21:12:44 +0200
-Message-ID: <20230917191057.334514055@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.5 182/285] misc: fastrpc: Fix remote heap allocation request
+Date: Sun, 17 Sep 2023 21:13:02 +0200
+Message-ID: <20230917191057.924572130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,51 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-[ Upstream commit 2ee52ae94baabf7ee09cf2a8d854b990dac5d0e4 ]
+commit ada6c2d99aedd1eac2f633d03c652e070bc2ea74 upstream.
 
-New elements in this transaction might expired before such transaction
-ends. Skip sync GC for such elements otherwise commit path might walk
-over an already released object. Once transaction is finished, async GC
-will collect such expired element.
+Remote heap is used by DSP audioPD on need basis. This memory is
+allocated from reserved CMA memory region and is then shared with
+audioPD to use it for it's functionality.
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Current implementation of remote heap is not allocating the memory
+from CMA region, instead it is allocating the memory from SMMU
+context bank. The arguments passed to scm call for the reassignment
+of ownership is also not correct. Added changes to allocate CMA
+memory and have a proper ownership reassignment.
+
+Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230811115643.38578-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_rbtree.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/misc/fastrpc.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index c6435e7092319..f250b5399344a 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -312,6 +312,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
- 	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
-+	u8 cur_genmask = nft_genmask_cur(net);
- 	u8 genmask = nft_genmask_next(net);
- 	int d, err;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1871,7 +1871,11 @@ static int fastrpc_req_mmap(struct fastr
+ 		return -EINVAL;
+ 	}
  
-@@ -357,8 +358,11 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		if (!nft_set_elem_active(&rbe->ext, genmask))
- 			continue;
+-	err = fastrpc_buf_alloc(fl, fl->sctx->dev, req.size, &buf);
++	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
++		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
++	else
++		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
++
+ 	if (err) {
+ 		dev_err(dev, "failed to allocate buffer\n");
+ 		return err;
+@@ -1910,12 +1914,8 @@ static int fastrpc_req_mmap(struct fastr
  
--		/* perform garbage collection to avoid bogus overlap reports. */
--		if (nft_set_elem_expired(&rbe->ext)) {
-+		/* perform garbage collection to avoid bogus overlap reports
-+		 * but skip new elements in this transaction.
-+		 */
-+		if (nft_set_elem_expired(&rbe->ext) &&
-+		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
- 			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
- 			if (err < 0)
- 				return err;
--- 
-2.40.1
-
+ 	/* Add memory to static PD pool, protection thru hypervisor */
+ 	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+-		struct qcom_scm_vmperm perm;
+-
+-		perm.vmid = QCOM_SCM_VMID_HLOS;
+-		perm.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(buf->phys, buf->size,
+-			&fl->cctx->perms, &perm, 1);
++		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
++			&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
+ 		if (err) {
+ 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 					buf->phys, buf->size, err);
 
 
