@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4346AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF9EC433C9;
-	Sun, 17 Sep 2023 20:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DD56AAC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC48C433C7;
+	Sun, 17 Sep 2023 20:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982071;
-	bh=uf0H6mFhprfZJ4IOR3/B3qBU2Kvvyb9xOSAyA78Lohw=;
+	s=korg; t=1694982075;
+	bh=xpKGV79LMQjIvPdw+UVYlas2kTLW9qMnILBDGHD4vlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYgbiMgG/CyYugpR5E1jrmb+jFgNhaN7q2c0r7wXeGbDCFLuZaBrZF7iuRVcuFWLU
-	 LpfO5unKmBC1Y2OhpiRHCUj6yUmcx4tr+/tLI2patcu+y66hF/MTUV/U8poPq+jcZR
-	 7goRflaaBtOuQduHTTzwaFF9yMppKYgNjFlJ2eAM=
+	b=xJWGdWGHO/1HuheLn5So+3iwzPNzeg4QABa981w5ZS4Us0og73XUKGTE17Euv2qeR
+	 QfKxzqNjCHQfI1yt5g8cejzaX7AsKPcWk+QvWOWuK+NVKKd1SBFuwSTYntaLSEejx+
+	 SPAOB2ODvif8382lwVhE18rlXFjbDEiBjBwEc9C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/219] tcp: Factorise sk_family-independent comparison in inet_bind2_bucket_match(_addr_any).
-Date: Sun, 17 Sep 2023 21:15:40 +0200
-Message-ID: <20230917191048.633862131@linuxfoundation.org>
+Subject: [PATCH 5.15 147/511] arm64: dts: qcom: pmi8994: Remove hardcoded linear WLED enabled-strings
+Date: Sun, 17 Sep 2023 21:09:34 +0200
+Message-ID: <20230917191117.405001279@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,88 +37,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit c6d277064b1da7f9015b575a562734de87a7e463 ]
+[ Upstream commit 9b729b0932d0e6097d9f103e9dd149ef10881f43 ]
 
-This is a prep patch to make the following patches cleaner that touch
-inet_bind2_bucket_match() and inet_bind2_bucket_match_addr_any().
+The driver now sets an appropriate default for WLED4 (and WLED5) just
+like WLED3 making this linear array from 0-3 redundant.  In addition the
+driver is now able to parse arrays of variable length solving the "all
+four strings *have to* be defined" comment.
 
-Both functions have duplicated comparison for netns, port, and l3mdev.
-Let's factorise them.
+Besides the driver will now warn when both properties are specified to
+prevent ambiguity: the length of the array is enough to imply a set
+number of strings.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: aa99e5f87bd5 ("tcp: Fix bind() regression for v4-mapped-v6 wildcard address.")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20211007213400.258371-12-marijn.suijten@somainline.org
+Stable-dep-of: 8db944326903 ("arm64: dts: qcom: pmi8994: Add missing OVP interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/qcom/pmi8994.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 38a92c8c66863..71d77b3b6536f 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -795,41 +795,39 @@ static bool inet_bind2_bucket_match(const struct inet_bind2_bucket *tb,
- 				    const struct net *net, unsigned short port,
- 				    int l3mdev, const struct sock *sk)
- {
-+	if (!net_eq(ib2_net(tb), net) || tb->port != port ||
-+	    tb->l3mdev != l3mdev)
-+		return false;
-+
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family != tb->family)
- 		return false;
- 
- 	if (sk->sk_family == AF_INET6)
--		return net_eq(ib2_net(tb), net) && tb->port == port &&
--			tb->l3mdev == l3mdev &&
--			ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
--	else
-+		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
- #endif
--		return net_eq(ib2_net(tb), net) && tb->port == port &&
--			tb->l3mdev == l3mdev && tb->rcv_saddr == sk->sk_rcv_saddr;
-+	return tb->rcv_saddr == sk->sk_rcv_saddr;
- }
- 
- bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const struct net *net,
- 				      unsigned short port, int l3mdev, const struct sock *sk)
- {
-+	if (!net_eq(ib2_net(tb), net) || tb->port != port ||
-+	    tb->l3mdev != l3mdev)
-+		return false;
-+
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family != tb->family) {
- 		if (sk->sk_family == AF_INET)
--			return net_eq(ib2_net(tb), net) && tb->port == port &&
--				tb->l3mdev == l3mdev &&
--				ipv6_addr_any(&tb->v6_rcv_saddr);
-+			return ipv6_addr_any(&tb->v6_rcv_saddr);
- 
- 		return false;
- 	}
- 
- 	if (sk->sk_family == AF_INET6)
--		return net_eq(ib2_net(tb), net) && tb->port == port &&
--			tb->l3mdev == l3mdev &&
--			ipv6_addr_any(&tb->v6_rcv_saddr);
--	else
-+		return ipv6_addr_any(&tb->v6_rcv_saddr);
- #endif
--		return net_eq(ib2_net(tb), net) && tb->port == port &&
--			tb->l3mdev == l3mdev && tb->rcv_saddr == 0;
-+	return tb->rcv_saddr == 0;
- }
- 
- /* The socket's bhash2 hashbucket spinlock must be held when this is called */
+diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+index 7b41c1ed464ac..166467b637527 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+@@ -39,8 +39,6 @@ pmi8994_wled: wled@d800 {
+ 			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "short";
+ 			qcom,num-strings = <3>;
+-			/* Yes, all four strings *have to* be defined or things won't work. */
+-			qcom,enabled-strings = <0 1 2 3>;
+ 			qcom,cabc;
+ 			qcom,external-pfet;
+ 			status = "disabled";
 -- 
 2.40.1
 
