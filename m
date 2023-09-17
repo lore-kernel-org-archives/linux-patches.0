@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4496FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B469C433C8;
-	Sun, 17 Sep 2023 20:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279B96FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B60BC433C7;
+	Sun, 17 Sep 2023 20:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981835;
-	bh=2top8UeOQ0/Y7mHJkktQrf/biDP6JXhVrkLlZ676xJU=;
+	s=korg; t=1694981839;
+	bh=rKMqKMYtPuHxuvWgsRpj7pbF/B5Vln81ztXoh/FcueA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0KM/0nw/7QhNYmRCmc/Ls1oda8C/r/G0w/paaIwp6saV+63y2+57ZyTn0CBIO8DSn
-	 Ft6YLxubW4AL85XW86w6UEO4CAs8ZvyOkmegeH5dDUKkaZIZh2oWDtxoHm0fl/VLL/
-	 DmyfrBTT0fk1PYgJQeOJjM7bqFOUBwsOJLB9ikbs=
+	b=gBGZYIK2e5KbZNGgf9bNHv00YsRbFE82/oWnghl9Bh0KPEmjXMHgZz0Ho/TMKYYpH
+	 TRj2J1k5W9YNiiu3B0r+Qrhfyf4NIX9g/KlKLarNheN6Gpi1XchNZmmndGMhin3AK6
+	 Mn+PONdvtRpBcVs1+K81gNa/NdYGzC3fv6uOb9Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.1 178/219] perf hists browser: Fix hierarchy mode header
-Date: Sun, 17 Sep 2023 21:15:05 +0200
-Message-ID: <20230917191047.399663201@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 113/511] wifi: nl80211/cfg80211: add forgotten nla_policy for BSS color attribute
+Date: Sun, 17 Sep 2023 21:09:00 +0200
+Message-ID: <20230917191116.585562351@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,47 +37,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit e2cabf2a44791f01c21f8d5189b946926e34142e upstream.
+[ Upstream commit 218d690c49b7e9c94ad0d317adbdd4af846ea0dc ]
 
-The commit ef9ff6017e3c4593 ("perf ui browser: Move the extra title
-lines from the hists browser") introduced ui_browser__gotorc_title() to
-help moving non-title lines easily.  But it missed to update the title
-for the hierarchy mode so it won't print the header line on TUI at all.
+The previous commit dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to
+NDP ranging parameters") adds a parameter for NDP ranging by introducing
+a new attribute type named NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR.
 
-  $ perf report --hierarchy
+However, the author forgot to also describe the nla_policy at
+nl80211_pmsr_ftm_req_attr_policy (net/wireless/nl80211.c). Just
+complement it to avoid malformed attribute that causes out-of-attribute
+access.
 
-Fixes: ef9ff6017e3c4593 ("perf ui browser: Move the extra title lines from the hists browser")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230731094934.1616495-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to NDP ranging parameters")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809033151.768910-1-linma@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/nl80211.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -1779,7 +1779,7 @@ static void hists_browser__hierarchy_hea
- 	hists_browser__scnprintf_hierarchy_headers(browser, headers,
- 						   sizeof(headers));
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 1b91a9c208969..ed3ec7e320ced 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -314,6 +314,7 @@ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
+ 	[NL80211_PMSR_FTM_REQ_ATTR_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_NON_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK] = { .type = NLA_FLAG },
++	[NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR] = { .type = NLA_U8 },
+ };
  
--	ui_browser__gotorc(&browser->b, 0, 0);
-+	ui_browser__gotorc_title(&browser->b, 0, 0);
- 	ui_browser__set_color(&browser->b, HE_COLORSET_ROOT);
- 	ui_browser__write_nstring(&browser->b, headers, browser->b.width + 1);
- }
+ static const struct nla_policy
+-- 
+2.40.1
+
 
 
