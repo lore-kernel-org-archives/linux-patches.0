@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA856FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A7AC433C8;
-	Sun, 17 Sep 2023 19:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2536FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72296C433C8;
+	Sun, 17 Sep 2023 19:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979655;
-	bh=LRczLULuMx8oK9CBw+MIIl9QH4VnAaYojZAvygiwMho=;
+	s=korg; t=1694979658;
+	bh=9U2mOrgmbePNLWxvJc+Bm2b4QvAgngMKZ0NRQn5tPNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AhGpiAJ5R7C1QCJY6zjqYtw2DD9vSjxiYA9P4TwAODqoj75GAQcXWlgaLyu/mfq5
-	 jL1o1U9o2WcN1x9HNrQV6Mnq9p/DdLlzVu6CcoevQDZNzEeihsqt/+CuTUPCXrWcGb
-	 7sfbA+fPNXYlGDLnSxMvuBOfnAAyI/0HShEVLehs=
+	b=b42zc4DvihzWqC/EJ433A0lmO4skR3ky2GVgVmudwS3MyClwexSSstEMYvLtLeDBt
+	 9luppbCNX90aJcca1+bKl2K+U/K9dEB2fvSgI5xZHziMxuPRnvUUpwuKOBkqw3ktIp
+	 UpsST6DYd7UySjl+jvEbwXptqTqaUtnmAbs4Yj8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 376/406] mtd: rawnand: brcmnand: Fix potential false time out warning
-Date: Sun, 17 Sep 2023 21:13:50 +0200
-Message-ID: <20230917191111.196738904@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 377/406] drm/amd/display: prevent potential division by zero errors
+Date: Sun, 17 Sep 2023 21:13:51 +0200
+Message-ID: <20230917191111.222336071@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,42 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 9cc0a598b944816f2968baf2631757f22721b996 upstream.
+commit 07e388aab042774f284a2ad75a70a194517cdad4 upstream.
 
-If system is busy during the command status polling function, the driver
-may not get the chance to poll the status register till the end of time
-out and return the premature status.  Do a final check after time out
-happens to ensure reading the correct status.
+There are two places in apply_below_the_range() where it's possible for
+a divide by zero error to occur. So, to fix this make sure the divisor
+is non-zero before attempting the computation in both cases.
 
-Fixes: 9d2ee0a60b8b ("mtd: nand: brcmnand: Check flash #WP pin status before nand erase/program")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-3-william.zhang@broadcom.com
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2637
+Fixes: a463b263032f ("drm/amd/display: Fix frames_to_insert math")
+Fixes: ded6119e825a ("drm/amd/display: Reinstate LFC optimization")
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/modules/freesync/freesync.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -1040,6 +1040,14 @@ static int bcmnand_ctrl_poll_status(stru
- 		cpu_relax();
- 	} while (time_after(limit, jiffies));
- 
-+	/*
-+	 * do a final check after time out in case the CPU was busy and the driver
-+	 * did not get enough time to perform the polling to avoid false alarms
-+	 */
-+	val = brcmnand_read_reg(ctrl, BRCMNAND_INTFC_STATUS);
-+	if ((val & mask) == expected_val)
-+		return 0;
-+
- 	dev_warn(ctrl->dev, "timeout on status poll (expected %x got %x)\n",
- 		 expected_val, val & mask);
- 
+--- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
++++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+@@ -327,7 +327,9 @@ static void apply_below_the_range(struct
+ 		 *  - Delta for CEIL: delta_from_mid_point_in_us_1
+ 		 *  - Delta for FLOOR: delta_from_mid_point_in_us_2
+ 		 */
+-		if ((last_render_time_in_us / mid_point_frames_ceil) < in_out_vrr->min_duration_in_us) {
++		if (mid_point_frames_ceil &&
++		    (last_render_time_in_us / mid_point_frames_ceil) <
++		    in_out_vrr->min_duration_in_us) {
+ 			/* Check for out of range.
+ 			 * If using CEIL produces a value that is out of range,
+ 			 * then we are forced to use FLOOR.
+@@ -374,8 +376,9 @@ static void apply_below_the_range(struct
+ 		/* Either we've calculated the number of frames to insert,
+ 		 * or we need to insert min duration frames
+ 		 */
+-		if (last_render_time_in_us / frames_to_insert <
+-				in_out_vrr->min_duration_in_us){
++		if (frames_to_insert &&
++		    (last_render_time_in_us / frames_to_insert) <
++		    in_out_vrr->min_duration_in_us){
+ 			frames_to_insert -= (frames_to_insert > 1) ?
+ 					1 : 0;
+ 		}
 
 
