@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243CA6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4207FC43395;
-	Sun, 17 Sep 2023 20:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5173C6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B168EC433D9;
+	Sun, 17 Sep 2023 20:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981578;
-	bh=SG9ZOfLKS9vTjbzpI5rfwGg4C+b6SWdZWQws2uZuyWI=;
+	s=korg; t=1694981582;
+	bh=TTPbVlK/bwy8GzrG/ykxT0B8gc6AxMVjY9eJcl9cuvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm6usNhLklbJ/UFrqJIcXs09sOhII2Qtuowgb3upOW3JsiHmzy21HBhzgxHOcXxdK
-	 5jzHu4UA5yis4x8ErNiWnYwhBvLvXlMefJB4LjXph2sMIJtftUrhRRrX4tuchewRZ1
-	 tLwC9BOxAavE6ppjo/ZZkVjlr7Upk+92XnewR0Wc=
+	b=M4PEWyfoR2RcnVn12VBEfqPUmKmBPHkY7LgJ4yzSnBkuSO34THXXuv13W+g739cQe
+	 CeD4oQTTZoR/ppvaOSIQLooSoLgKrUCkM1O3Jh78QZGsXXkqftSzTPTin70/cwKUNU
+	 HBn0m+j4GWuCk26JVCftG3yz1iEAQYYB2fZMYv3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/511] s390/paes: fix PKEY_TYPE_EP11_AES handling for secure keyblobs
-Date: Sun, 17 Sep 2023 21:08:21 +0200
-Message-ID: <20230917191115.666050759@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 143/219] jbd2: correct the end of the journal recovery scan range
+Date: Sun, 17 Sep 2023 21:14:30 +0200
+Message-ID: <20230917191046.174824976@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,44 +37,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit cba33db3fc4dbf2e54294b0e499d2335a3a00d78 ]
+commit 2dfba3bb40ad8536b9fa802364f2d40da31aa88e upstream.
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced PKEY_TYPE_EP11_AES securekey blobs as a
-supplement to the PKEY_TYPE_EP11 (which won't work in environments
-with session-bound keys). This new keyblobs has a different maximum
-size, so fix paes crypto module to accept also these larger keyblobs.
+We got a filesystem inconsistency issue below while running generic/475
+I/O failure pressure test with fast_commit feature enabled.
 
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ Symlink /p3/d3/d1c/d6c/dd6/dce/l101 (inode #132605) is invalid.
+
+If fast_commit feature is enabled, a special fast_commit journal area is
+appended to the end of the normal journal area. The journal->j_last
+point to the first unused block behind the normal journal area instead
+of the whole log area, and the journal->j_fc_last point to the first
+unused block behind the fast_commit journal area. While doing journal
+recovery, do_one_pass(PASS_SCAN) should first scan the normal journal
+area and turn around to the first block once it meet journal->j_last,
+but the wrap() macro misuse the journal->j_fc_last, so the recovering
+could not read the next magic block (commit block perhaps) and would end
+early mistakenly and missing tN and every transaction after it in the
+following example. Finally, it could lead to filesystem inconsistency.
+
+ | normal journal area                             | fast commit area |
+ +-------------------------------------------------+------------------+
+ | tN(rere) | tN+1 |~| tN-x |...| tN-1 | tN(front) |       ....       |
+ +-------------------------------------------------+------------------+
+                     /                             /                  /
+                start               journal->j_last journal->j_fc_last
+
+This patch fix it by use the correct ending journal->j_last.
+
+Fixes: 5b849b5f96b4 ("jbd2: fast commit recovery path")
+Cc: stable@kernel.org
+Reported-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/linux-ext4/20230613043120.GB1584772@mit.edu/
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230626073322.3956567-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/paes_s390.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jbd2/recovery.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/arch/s390/crypto/paes_s390.c b/arch/s390/crypto/paes_s390.c
-index a279b7d23a5e2..621322eb0e681 100644
---- a/arch/s390/crypto/paes_s390.c
-+++ b/arch/s390/crypto/paes_s390.c
-@@ -35,7 +35,7 @@
-  * and padding is also possible, the limits need to be generous.
-  */
- #define PAES_MIN_KEYSIZE 16
--#define PAES_MAX_KEYSIZE 320
-+#define PAES_MAX_KEYSIZE MAXEP11AESKEYBLOBSIZE
+--- a/fs/jbd2/recovery.c
++++ b/fs/jbd2/recovery.c
+@@ -229,12 +229,8 @@ static int count_tags(journal_t *journal
+ /* Make sure we wrap around the log correctly! */
+ #define wrap(journal, var)						\
+ do {									\
+-	unsigned long _wrap_last =					\
+-		jbd2_has_feature_fast_commit(journal) ?			\
+-			(journal)->j_fc_last : (journal)->j_last;	\
+-									\
+-	if (var >= _wrap_last)						\
+-		var -= (_wrap_last - (journal)->j_first);		\
++	if (var >= (journal)->j_last)					\
++		var -= ((journal)->j_last - (journal)->j_first);	\
+ } while (0)
  
- static u8 *ctrblk;
- static DEFINE_MUTEX(ctrblk_lock);
--- 
-2.40.1
-
+ static int fc_do_one_pass(journal_t *journal,
+@@ -517,9 +513,7 @@ static int do_one_pass(journal_t *journa
+ 				break;
+ 
+ 		jbd2_debug(2, "Scanning for sequence ID %u at %lu/%lu\n",
+-			  next_commit_ID, next_log_block,
+-			  jbd2_has_feature_fast_commit(journal) ?
+-			  journal->j_fc_last : journal->j_last);
++			  next_commit_ID, next_log_block, journal->j_last);
+ 
+ 		/* Skip over each chunk of the transaction looking
+ 		 * either the next descriptor block or the final commit
 
 
