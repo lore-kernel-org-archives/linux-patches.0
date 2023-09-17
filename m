@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E076FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D98C433C7;
-	Sun, 17 Sep 2023 19:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40AA6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:37:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56052C433C7;
+	Sun, 17 Sep 2023 19:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979448;
-	bh=xxfQCAlqZC1Pop/J1WZVRKIBwDGgv8R60zpSX0n7y8A=;
+	s=korg; t=1694979451;
+	bh=ajlvjBe5WGgFPe8O1LlDjIuXGBY35emAclw2ZOV4Buw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+fjtEVcby3Os7P8JXVmhR+Q1QKFjveeBBon8Y5KZK3zdd8UdnEJb6aIVJzfAkkQg
-	 S1CpfftZgutHYB3U4m5i9SBQFF9+e9gw70C8Qa5a+/dTU6Svj/AQXIrXMNKh2CYxFJ
-	 9Jp1wmuQDLFH00XCluEeddr1ZA/voXZAg3EfzGYE=
+	b=CX/AOgnhvoneQ3B2rlW4THez6qycG/yOaWtuaXKlLDS7vwg39lWybMA7A7/ncwasz
+	 c2GkUCjgRJdcJ9R+HNFFBJ2XfmBDOY3rPhNrrbq/76X605S/Y5swc3jKOkDg17mhX/
+	 CEURR9SXdQI8r6BEGrhpsM2Q7Fm+ewR0SaJdwEmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 316/406] io_uring: break iopolling on signal
-Date: Sun, 17 Sep 2023 21:12:50 +0200
-Message-ID: <20230917191109.643232691@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 317/406] scsi: qla2xxx: Fix deletion race condition
+Date: Sun, 17 Sep 2023 21:12:51 +0200
+Message-ID: <20230917191109.669385612@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,37 +41,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ upstream commit dc314886cb3d0e4ab2858003e8de2917f8a3ccbd ]
+commit 6dfe4344c168c6ca20fe7640649aacfcefcccb26 upstream.
 
-Don't keep spinning iopoll with a signal set. It'll eventually return
-back, e.g. by virtue of need_resched(), but it's not a nice user
-experience.
+System crash when using debug kernel due to link list corruption. The cause
+of the link list corruption is due to session deletion was allowed to queue
+up twice.  Here's the internal trace that show the same port was allowed to
+double queue for deletion on different cpu.
+
+20808683956 015 qla2xxx [0000:13:00.1]-e801:4: Scheduling sess ffff93ebf9306800 for deletion 50:06:0e:80:12:48:ff:50 fc4_type 1
+20808683957 027 qla2xxx [0000:13:00.1]-e801:4: Scheduling sess ffff93ebf9306800 for deletion 50:06:0e:80:12:48:ff:50 fc4_type 1
+
+Move the clearing/setting of deleted flag lock.
 
 Cc: stable@vger.kernel.org
-Fixes: def596e9557c9 ("io_uring: support for IO polling")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/eeba551e82cad12af30c3220125eb6cb244cc94c.1691594339.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 726b85487067 ("qla2xxx: Add framework for async fabric discovery")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230714070104.40052-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/scsi/qla2xxx/qla_init.c   |   16 ++++++++++++++--
+ drivers/scsi/qla2xxx/qla_target.c |   14 +++++++-------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2665,6 +2665,11 @@ static int io_iopoll_check(struct io_rin
- 				break;
- 		}
- 		ret = io_do_iopoll(ctx, &nr_events, min);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -483,6 +483,7 @@ static
+ void qla24xx_handle_adisc_event(scsi_qla_host_t *vha, struct event_arg *ea)
+ {
+ 	struct fc_port *fcport = ea->fcport;
++	unsigned long flags;
+ 
+ 	ql_dbg(ql_dbg_disc, vha, 0x20d2,
+ 	    "%s %8phC DS %d LS %d rc %d login %d|%d rscn %d|%d lid %d\n",
+@@ -497,9 +498,15 @@ void qla24xx_handle_adisc_event(scsi_qla
+ 		ql_dbg(ql_dbg_disc, vha, 0x2066,
+ 		    "%s %8phC: adisc fail: post delete\n",
+ 		    __func__, ea->fcport->port_name);
 +
-+		if (task_sigpending(current)) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 	} while (!ret && nr_events < min && !need_resched());
- out:
- 	mutex_unlock(&ctx->uring_lock);
++		spin_lock_irqsave(&vha->work_lock, flags);
+ 		/* deleted = 0 & logout_on_delete = force fw cleanup */
+-		fcport->deleted = 0;
++		if (fcport->deleted == QLA_SESS_DELETED)
++			fcport->deleted = 0;
++
+ 		fcport->logout_on_delete = 1;
++		spin_unlock_irqrestore(&vha->work_lock, flags);
++
+ 		qlt_schedule_sess_for_deletion(ea->fcport);
+ 		return;
+ 	}
+@@ -1405,7 +1412,6 @@ void __qla24xx_handle_gpdb_event(scsi_ql
+ 
+ 	spin_lock_irqsave(&vha->hw->tgt.sess_lock, flags);
+ 	ea->fcport->login_gen++;
+-	ea->fcport->deleted = 0;
+ 	ea->fcport->logout_on_delete = 1;
+ 
+ 	if (!ea->fcport->login_succ && !IS_SW_RESV_ADDR(ea->fcport->d_id)) {
+@@ -5639,6 +5645,8 @@ qla2x00_reg_remote_port(scsi_qla_host_t
+ void
+ qla2x00_update_fcport(scsi_qla_host_t *vha, fc_port_t *fcport)
+ {
++	unsigned long flags;
++
+ 	if (IS_SW_RESV_ADDR(fcport->d_id))
+ 		return;
+ 
+@@ -5648,7 +5656,11 @@ qla2x00_update_fcport(scsi_qla_host_t *v
+ 	qla2x00_set_fcport_disc_state(fcport, DSC_UPD_FCPORT);
+ 	fcport->login_retry = vha->hw->login_retry_count;
+ 	fcport->flags &= ~(FCF_LOGIN_NEEDED | FCF_ASYNC_SENT);
++
++	spin_lock_irqsave(&vha->work_lock, flags);
+ 	fcport->deleted = 0;
++	spin_unlock_irqrestore(&vha->work_lock, flags);
++
+ 	if (vha->hw->current_topology == ISP_CFG_NL)
+ 		fcport->logout_on_delete = 0;
+ 	else
+--- a/drivers/scsi/qla2xxx/qla_target.c
++++ b/drivers/scsi/qla2xxx/qla_target.c
+@@ -1044,10 +1044,6 @@ void qlt_free_session_done(struct work_s
+ 			(struct imm_ntfy_from_isp *)sess->iocb, SRB_NACK_LOGO);
+ 	}
+ 
+-	spin_lock_irqsave(&vha->work_lock, flags);
+-	sess->flags &= ~FCF_ASYNC_SENT;
+-	spin_unlock_irqrestore(&vha->work_lock, flags);
+-
+ 	spin_lock_irqsave(&ha->tgt.sess_lock, flags);
+ 	if (sess->se_sess) {
+ 		sess->se_sess = NULL;
+@@ -1057,7 +1053,6 @@ void qlt_free_session_done(struct work_s
+ 
+ 	qla2x00_set_fcport_disc_state(sess, DSC_DELETED);
+ 	sess->fw_login_state = DSC_LS_PORT_UNAVAIL;
+-	sess->deleted = QLA_SESS_DELETED;
+ 
+ 	if (sess->login_succ && !IS_SW_RESV_ADDR(sess->d_id)) {
+ 		vha->fcport_count--;
+@@ -1109,10 +1104,15 @@ void qlt_free_session_done(struct work_s
+ 
+ 	sess->explicit_logout = 0;
+ 	spin_unlock_irqrestore(&ha->tgt.sess_lock, flags);
+-	sess->free_pending = 0;
+ 
+ 	qla2x00_dfs_remove_rport(vha, sess);
+ 
++	spin_lock_irqsave(&vha->work_lock, flags);
++	sess->flags &= ~FCF_ASYNC_SENT;
++	sess->deleted = QLA_SESS_DELETED;
++	sess->free_pending = 0;
++	spin_unlock_irqrestore(&vha->work_lock, flags);
++
+ 	ql_dbg(ql_dbg_disc, vha, 0xf001,
+ 	    "Unregistration of sess %p %8phC finished fcp_cnt %d\n",
+ 		sess, sess->port_name, vha->fcport_count);
+@@ -1161,12 +1161,12 @@ void qlt_unreg_sess(struct fc_port *sess
+ 	 * management from being sent.
+ 	 */
+ 	sess->flags |= FCF_ASYNC_SENT;
++	sess->deleted = QLA_SESS_DELETION_IN_PROGRESS;
+ 	spin_unlock_irqrestore(&sess->vha->work_lock, flags);
+ 
+ 	if (sess->se_sess)
+ 		vha->hw->tgt.tgt_ops->clear_nacl_from_fcport_map(sess);
+ 
+-	sess->deleted = QLA_SESS_DELETION_IN_PROGRESS;
+ 	qla2x00_set_fcport_disc_state(sess, DSC_DELETE_PEND);
+ 	sess->last_rscn_gen = sess->rscn_gen;
+ 	sess->last_login_gen = sess->login_gen;
 
 
