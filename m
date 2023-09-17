@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B807461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED22FC433C7;
-	Sun, 17 Sep 2023 20:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86B07461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C777C433CB;
+	Sun, 17 Sep 2023 20:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981852;
-	bh=ZpsLx2OuMhez4FiCcOHOxDFWdzfGGidvzvkpdrEizks=;
+	s=korg; t=1694981855;
+	bh=HjYemQrhHs/MrLAxdbjSwN8PaEIGpwWO5jpPj5fSFJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USwBUEl9XtM1fqNb8bDW/enSwDlXWIbUI9PpE8uctjWz/kEb7xiqf0S/dccgw8nPD
-	 7sOrKNE5UGvVGZy+rchXNMaL+NPOxz9DduuvT3Ct4bk5Dwxf2imHXY45R+egZWwgIp
-	 sCjiNM5C6jve+zJZdxa5vsZXxXkXVI+x8kB+jXZo=
+	b=i9YIFMpdAJ5ZuCM7MxmK1tVeIb3DcnYXLNkACoM0a6aybIrTPSOLaBes+85qytdHC
+	 TKgPkubIX38uYJyOfRJUCinEkIXsJBcHIhVE8Vv0IYNXODeWEiV29xGCzyMgKUUQci
+	 dFFUILbgp6UHS8sBqiL83pIfFUseBiIpgw/fIWo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/511] Bluetooth: btusb: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Sun, 17 Sep 2023 21:09:02 +0200
-Message-ID: <20230917191116.653942988@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 181/219] perf hists browser: Fix the number of entries for e key
+Date: Sun, 17 Sep 2023 21:15:08 +0200
+Message-ID: <20230917191047.493650558@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,42 +40,154 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 2a05334d7f91ff189692089c05fc48cc1d8204de ]
+commit f6b8436bede3e80226e8b2100279c4450c73806a upstream.
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+The 'e' key is to toggle expand/collapse the selected entry only.  But
+the current code has a bug that it only increases the number of entries
+by 1 in the hierarchy mode so users cannot move under the current entry
+after the key stroke.  This is due to a wrong assumption in the
+hist_entry__set_folding().
 
-Fixes: baac6276c0a9 ("Bluetooth: btusb: handle mSBC audio over USB Endpoints")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The commit b33f922651011eff ("perf hists browser: Put hist_entry folding
+logic into single function") factored out the code, but actually it
+should be handled separately.  The hist_browser__set_folding() is to
+update fold state for each entry so it needs to traverse all (child)
+entries regardless of the current fold state.  So it increases the
+number of entries by 1.
+
+But the hist_entry__set_folding() only cares the currently selected
+entry and its all children.  So it should count all unfolded child
+entries.  This code is implemented in hist_browser__toggle_fold()
+already so we can just call it.
+
+Fixes: b33f922651011eff ("perf hists browser: Put hist_entry folding logic into single function")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230731094934.1616495-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/ui/browsers/hists.c |   58 ++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 15d253325fd8a..84a42348b3bcb 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1756,7 +1756,7 @@ static int btusb_switch_alt_setting(struct hci_dev *hdev, int new_alts)
- 		 * alternate setting.
- 		 */
- 		spin_lock_irqsave(&data->rxlock, flags);
--		kfree_skb(data->sco_skb);
-+		dev_kfree_skb_irq(data->sco_skb);
- 		data->sco_skb = NULL;
- 		spin_unlock_irqrestore(&data->rxlock, flags);
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -407,11 +407,6 @@ static bool hist_browser__selection_has_
+ 	return container_of(ms, struct callchain_list, ms)->has_children;
+ }
  
--- 
-2.40.1
-
+-static bool hist_browser__he_selection_unfolded(struct hist_browser *browser)
+-{
+-	return browser->he_selection ? browser->he_selection->unfolded : false;
+-}
+-
+ static bool hist_browser__selection_unfolded(struct hist_browser *browser)
+ {
+ 	struct hist_entry *he = browser->he_selection;
+@@ -584,8 +579,8 @@ static int hierarchy_set_folding(struct
+ 	return n;
+ }
+ 
+-static void __hist_entry__set_folding(struct hist_entry *he,
+-				      struct hist_browser *hb, bool unfold)
++static void hist_entry__set_folding(struct hist_entry *he,
++				    struct hist_browser *hb, bool unfold)
+ {
+ 	hist_entry__init_have_children(he);
+ 	he->unfolded = unfold ? he->has_children : false;
+@@ -603,34 +598,12 @@ static void __hist_entry__set_folding(st
+ 		he->nr_rows = 0;
+ }
+ 
+-static void hist_entry__set_folding(struct hist_entry *he,
+-				    struct hist_browser *browser, bool unfold)
+-{
+-	double percent;
+-
+-	percent = hist_entry__get_percent_limit(he);
+-	if (he->filtered || percent < browser->min_pcnt)
+-		return;
+-
+-	__hist_entry__set_folding(he, browser, unfold);
+-
+-	if (!he->depth || unfold)
+-		browser->nr_hierarchy_entries++;
+-	if (he->leaf)
+-		browser->nr_callchain_rows += he->nr_rows;
+-	else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
+-		browser->nr_hierarchy_entries++;
+-		he->has_no_entry = true;
+-		he->nr_rows = 1;
+-	} else
+-		he->has_no_entry = false;
+-}
+-
+ static void
+ __hist_browser__set_folding(struct hist_browser *browser, bool unfold)
+ {
+ 	struct rb_node *nd;
+ 	struct hist_entry *he;
++	double percent;
+ 
+ 	nd = rb_first_cached(&browser->hists->entries);
+ 	while (nd) {
+@@ -640,6 +613,21 @@ __hist_browser__set_folding(struct hist_
+ 		nd = __rb_hierarchy_next(nd, HMD_FORCE_CHILD);
+ 
+ 		hist_entry__set_folding(he, browser, unfold);
++
++		percent = hist_entry__get_percent_limit(he);
++		if (he->filtered || percent < browser->min_pcnt)
++			continue;
++
++		if (!he->depth || unfold)
++			browser->nr_hierarchy_entries++;
++		if (he->leaf)
++			browser->nr_callchain_rows += he->nr_rows;
++		else if (unfold && !hist_entry__has_hierarchy_children(he, browser->min_pcnt)) {
++			browser->nr_hierarchy_entries++;
++			he->has_no_entry = true;
++			he->nr_rows = 1;
++		} else
++			he->has_no_entry = false;
+ 	}
+ }
+ 
+@@ -659,8 +647,10 @@ static void hist_browser__set_folding_se
+ 	if (!browser->he_selection)
+ 		return;
+ 
+-	hist_entry__set_folding(browser->he_selection, browser, unfold);
+-	browser->b.nr_entries = hist_browser__nr_entries(browser);
++	if (unfold == browser->he_selection->unfolded)
++		return;
++
++	hist_browser__toggle_fold(browser);
+ }
+ 
+ static void ui_browser__warn_lost_events(struct ui_browser *browser)
+@@ -732,8 +722,8 @@ static int hist_browser__handle_hotkey(s
+ 		hist_browser__set_folding(browser, true);
+ 		break;
+ 	case 'e':
+-		/* Expand the selected entry. */
+-		hist_browser__set_folding_selected(browser, !hist_browser__he_selection_unfolded(browser));
++		/* Toggle expand/collapse the selected entry. */
++		hist_browser__toggle_fold(browser);
+ 		break;
+ 	case 'H':
+ 		browser->show_headers = !browser->show_headers;
 
 
