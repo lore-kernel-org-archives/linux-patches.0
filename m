@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6897C7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9870C433C8;
-	Sun, 17 Sep 2023 20:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB0D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492FFC433C9;
+	Sun, 17 Sep 2023 20:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981371;
-	bh=LXQG59NY1Ui8+kZKjz7n41ZZ3NwW8aKFD00QyNvGZeg=;
+	s=korg; t=1694981374;
+	bh=/Vlghm6b8HJHjqmUyWFkWYGVgY7uw5KV40mV4/xK7JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cl5Mkg4RJsX4cSoaQMHnjMXLUhI5FpVaM1P1x8OuHN/tD/nze6lxqek6uAVeDFHG2
-	 Yw+nSa7IJTnweAQfuemmhkF6qJe1w4b4qDJagu/5Fj85t39MOWQ3BcfToyHeS6+SBp
-	 BGWYdpkJjy01UYopQEX4iHwtNSHOl6pclZUQMzOA=
+	b=XpWHwICY6FOrMqPxJDKpas9kRrA8phCNJOKOGX4IiEumirweb0P0FIz6nsgPoVZSM
+	 VtAugD1ZBsrM97DZ5kJhBENoj5s6wL2ufb43EEuODPKTYMOSPLLe/egx4CtB7VLdOk
+	 QOoL2oPPDPZqkBc5gPf8lpr3y3f3pBtg561lwrZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/511] scsi: storvsc: Always set no_report_opcodes
-Date: Sun, 17 Sep 2023 21:07:51 +0200
-Message-ID: <20230917191114.929892472@linuxfoundation.org>
+Subject: [PATCH 6.1 111/219] af_unix: Fix data race around sk->sk_err.
+Date: Sun, 17 Sep 2023 21:13:58 +0200
+Message-ID: <20230917191044.998050275@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,50 +37,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 31d16e712bdcaee769de4780f72ff8d6cd3f0589 ]
+[ Upstream commit b192812905e4b134f7b7994b079eb647e9d2d37e ]
 
-Hyper-V synthetic SCSI devices do not support the MAINTENANCE_IN SCSI
-command, so scsi_report_opcode() always fails, resulting in messages like
-this:
+As with sk->sk_shutdown shown in the previous patch, sk->sk_err can be
+read locklessly by unix_dgram_sendmsg().
 
-hv_storvsc <guid>: tag#205 cmd 0xa3 status: scsi 0x2 srb 0x86 hv 0xc0000001
+Let's use READ_ONCE() for sk_err as well.
 
-The recently added support for command duration limits calls
-scsi_report_opcode() four times as each device comes online, which
-significantly increases the number of messages logged in a system with many
-disks.
+Note that the writer side is marked by commit cc04410af7de ("af_unix:
+annotate lockless accesses to sk->sk_err").
 
-Fix the problem by always marking Hyper-V synthetic SCSI devices as not
-supporting scsi_report_opcode(). With this setting, the MAINTENANCE_IN SCSI
-command is not issued and no messages are logged.
-
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1686343101-18930-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 9f8ebbec7bc39..5caf7bd5877f9 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1627,6 +1627,8 @@ static int storvsc_device_configure(struct scsi_device *sdevice)
- {
- 	blk_queue_rq_timeout(sdevice->request_queue, (storvsc_timeout * HZ));
- 
-+	/* storvsc devices don't support MAINTENANCE_IN SCSI cmd */
-+	sdevice->no_report_opcodes = 1;
- 	sdevice->no_write_same = 1;
- 
- 	/*
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 71990525d37e2..e5858fa5d6d57 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2692,7 +2692,7 @@ static long sock_wait_for_wmem(struct sock *sk, long timeo)
+ 			break;
+ 		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 			break;
+-		if (sk->sk_err)
++		if (READ_ONCE(sk->sk_err))
+ 			break;
+ 		timeo = schedule_timeout(timeo);
+ 	}
 -- 
 2.40.1
 
