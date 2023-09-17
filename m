@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF497469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A30CC433C8;
-	Sun, 17 Sep 2023 20:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E1F746E
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A37CC433CB;
+	Sun, 17 Sep 2023 20:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982380;
-	bh=7d7geV9xDBEnwhVwo37E+9Wnl2A5yMk28zEg2rq4dZA=;
+	s=korg; t=1694982384;
+	bh=wd5lbRiU6rwLRJ0PU99mh5oWIbEGmpEOniZJL/8igDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfAlxe+7lHX4p5Kmlk21u5lpDN9yPkvUQlJybZJIx/cE23yuPkQdEkMovCD9xFgJK
-	 XP5+5AEUhFCZ9qd8LhgKQHJt8S1LjV00lEX8H5CNaoo8xrN+7bnlqBdSgwsyG1nh08
-	 /BSQZaz7cmhtVqVbJipcee1kga6FZPZTc2KqjVII=
+	b=KqluvowoZgDYrSFjTwQoPy5AYBoRD7XqTXTf8HWat1c17ofZ9dOe9wYv8g4Chs4e1
+	 jvgkywV9WUccgpy3ciIhbc08SsY9QhddIn6M+k4c5NdZzmoli752jKkaCJ7d7H5BYT
+	 qnMXOOLpVP9gHlhJ7GT61aWSXn6szaF/O2WHnABo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Minjie Du <duminjie@vivo.com>,
+	Alok Prasad <palok@marvell.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 233/511] pNFS: Fix assignment of xprtdata.cred
-Date: Sun, 17 Sep 2023 21:11:00 +0200
-Message-ID: <20230917191119.436236838@linuxfoundation.org>
+Subject: [PATCH 5.15 234/511] RDMA/qedr: Remove a duplicate assignment in irdma_query_ah()
+Date: Sun, 17 Sep 2023 21:11:01 +0200
+Message-ID: <20230917191119.461187663@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,37 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Minjie Du <duminjie@vivo.com>
 
-[ Upstream commit c4a123d2e8c4dc91d581ee7d05c0cd51a0273fab ]
+[ Upstream commit 65e02e840847158c7ee48ca8e6e91062b0f78662 ]
 
-The comma at the end of the line was leftover from an earlier refactor
-of the _nfs4_pnfs_v3_ds_connect() function. This is technically valid C,
-so the compilers didn't catch it, but if I'm understanding how it works
-correctly it assigns the return value of rpc_clnt_add_xprtr() to
-xprtdata.cred.
+Delete a duplicate statement from this function implementation.
 
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Fixes: a12f996d3413 ("NFSv4/pNFS: Use connections to a DS that are all of the same protocol family")
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Minjie Du <duminjie@vivo.com>
+Acked-by: Alok Prasad <palok@marvell.com>
+Link: https://lore.kernel.org/r/20230706022704.1260-1-duminjie@vivo.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs_nfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index 657c242a18ff1..6b681f0c5df0d 100644
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -943,7 +943,7 @@ static int _nfs4_pnfs_v4_ds_connect(struct nfs_server *mds_srv,
- 			* Test this address for session trunking and
- 			* add as an alias
- 			*/
--			xprtdata.cred = nfs4_get_clid_cred(clp),
-+			xprtdata.cred = nfs4_get_clid_cred(clp);
- 			rpc_clnt_add_xprt(clp->cl_rpcclient, &xprt_args,
- 					  rpc_clnt_setup_test_and_add_xprt,
- 					  &rpcdata);
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 60cf83c4119e7..8ccbe761b8607 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -4310,7 +4310,6 @@ static int irdma_query_ah(struct ib_ah *ibah, struct rdma_ah_attr *ah_attr)
+ 		ah_attr->grh.traffic_class = ah->sc_ah.ah_info.tc_tos;
+ 		ah_attr->grh.hop_limit = ah->sc_ah.ah_info.hop_ttl;
+ 		ah_attr->grh.sgid_index = ah->sgid_index;
+-		ah_attr->grh.sgid_index = ah->sgid_index;
+ 		memcpy(&ah_attr->grh.dgid, &ah->dgid,
+ 		       sizeof(ah_attr->grh.dgid));
+ 	}
 -- 
 2.40.1
 
