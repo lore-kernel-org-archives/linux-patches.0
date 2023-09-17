@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546176FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B465BC433C7;
-	Sun, 17 Sep 2023 19:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17156FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FD8C433C7;
+	Sun, 17 Sep 2023 19:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978624;
-	bh=yf3rS4qAOzVPs53RUcnWgIb67gbFY3qi/GIip6tFB98=;
+	s=korg; t=1694978627;
+	bh=t+/R7J7VXGRTyQq4cFdgljW5q1f81RIvb2yoaSZ6bVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXSnS0GgCvJNMxeMPt2Z32sdrRhCQHNK3jat7JvFmcDBvC00bN2M3Rp4AWpxOwTPl
-	 kVy98ubBZBfMnicRyES5OHA4Xs4RTW1jh7wh3ecI3B9d186URAvMtSOvFRmOXs/sI5
-	 CQRgG5Xg2i92Xch5EqQY0h5U+DngJtmVX+3XjxhY=
+	b=ODbCppH2knyR/tDx+llbYZrw9S7zxRsBYkMqp1Wh3F0mqOTJhg4MqILalin8zhkuz
+	 99TekaOA6L/zaXS7l0hErrGHF15UL+wCWWZdkHPN7hReaNLqbVE4TbDcjZWuuDJ3l8
+	 zPxLh1QRgbeF3bwPgr4EzArlrzLbTInQR+1xOa8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Yonghong Song <yhs@fb.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/406] bpf: Clear the probe_addr for uprobe
-Date: Sun, 17 Sep 2023 21:08:57 +0200
-Message-ID: <20230917191103.322821027@linuxfoundation.org>
+Subject: [PATCH 5.10 084/406] tcp: tcp_enter_quickack_mode() should be static
+Date: Sun, 17 Sep 2023 21:08:58 +0200
+Message-ID: <20230917191103.347912035@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,75 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5125e757e62f6c1d5478db4c2b61a744060ddf3f ]
+[ Upstream commit 03b123debcbc8db987bda17ed8412cc011064c22 ]
 
-To avoid returning uninitialized or random values when querying the file
-descriptor (fd) and accessing probe_addr, it is necessary to clear the
-variable prior to its use.
+After commit d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP"),
+tcp_enter_quickack_mode() is only used from net/ipv4/tcp_input.c.
 
-Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230709025630.3735-6-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Cc: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20230718162049.1444938-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/trace_events.h | 3 ++-
- kernel/trace/bpf_trace.c     | 2 +-
- kernel/trace/trace_uprobe.c  | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ include/net/tcp.h    | 1 -
+ net/ipv4/tcp_input.c | 3 +--
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index e418065c2c909..6fb20722f49b7 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -745,7 +745,8 @@ extern int  perf_uprobe_init(struct perf_event *event,
- extern void perf_uprobe_destroy(struct perf_event *event);
- extern int bpf_get_uprobe_info(const struct perf_event *event,
- 			       u32 *fd_type, const char **filename,
--			       u64 *probe_offset, bool perf_type_tracepoint);
-+			       u64 *probe_offset, u64 *probe_addr,
-+			       bool perf_type_tracepoint);
- #endif
- extern int  ftrace_profile_set_filter(struct perf_event *event, int event_id,
- 				     char *filter_str);
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 1de9a6bf84711..71e0c1bc9759e 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2174,7 +2174,7 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- #ifdef CONFIG_UPROBE_EVENTS
- 		if (flags & TRACE_EVENT_FL_UPROBE)
- 			err = bpf_get_uprobe_info(event, fd_type, buf,
--						  probe_offset,
-+						  probe_offset, probe_addr,
- 						  event->attr.type == PERF_TYPE_TRACEPOINT);
- #endif
- 	}
-diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
-index f6c47361c154e..60ff36f5d7f9e 100644
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1422,7 +1422,7 @@ static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index dcca41f3a2240..b56f346020351 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -337,7 +337,6 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
+ 			struct pipe_inode_info *pipe, size_t len,
+ 			unsigned int flags);
  
- int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
- 			const char **filename, u64 *probe_offset,
--			bool perf_type_tracepoint)
-+			u64 *probe_addr, bool perf_type_tracepoint)
+-void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks);
+ static inline void tcp_dec_quickack_mode(struct sock *sk,
+ 					 const unsigned int pkts)
  {
- 	const char *pevent = trace_event_name(event->tp_event);
- 	const char *group = event->tp_event->class->system;
-@@ -1439,6 +1439,7 @@ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
- 				    : BPF_FD_TYPE_UPROBE;
- 	*filename = tu->filename;
- 	*probe_offset = tu->offset;
-+	*probe_addr = 0;
- 	return 0;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index d6dfbb88dcf5b..b8d2c45edbe02 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -286,7 +286,7 @@ static void tcp_incr_quickack(struct sock *sk, unsigned int max_quickacks)
+ 		icsk->icsk_ack.quick = quickacks;
  }
- #endif	/* CONFIG_PERF_EVENTS */
+ 
+-void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
++static void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+@@ -294,7 +294,6 @@ void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
+ 	inet_csk_exit_pingpong_mode(sk);
+ 	icsk->icsk_ack.ato = TCP_ATO_MIN;
+ }
+-EXPORT_SYMBOL(tcp_enter_quickack_mode);
+ 
+ /* Send ACKs quickly, if "quick" count is not exhausted
+  * and the session is not interactive.
 -- 
 2.40.1
 
