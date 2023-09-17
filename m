@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9DA6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0722AC433C7;
-	Sun, 17 Sep 2023 20:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49D56FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C79C433C8;
+	Sun, 17 Sep 2023 20:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983321;
-	bh=RqOYO62bmjzq9NVlLjXht/OR5ywtbYuZdoRIAMDk7r8=;
+	s=korg; t=1694983324;
+	bh=IAb2Zw1JcbGoFSMVSGo5+KNcAkX+o6kztlZtZFy9moM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7JXvKxBVBRnbqE9Sn/A3RHlasXUhd2+1yjvdCZKBkgXXFI4YZZ8LOB1XJ0fO6cUp
-	 6tBm9ycI4pzJ2yNx4vjDKeKvqZnSTbV3rYOKpfXtCDhVsxBHQxVR9/Ct/b+11PEHoE
-	 7HfYxvX50RyuI10r4QSia8QFlzOWH3j2vKu2JO/g=
+	b=JJqZmSrriEKPAUG48xcNDrEO+NoFKiMWB+cPrFMwTkYhjgOMov5IU9zyd8tF1ZVzQ
+	 CGJqzz4TFMHzs/inOW5Hm6WlTyCvYEpKrGkQ8KEWmJSR4c8u1fGXI/frOhcaty2tGR
+	 1rc/AsIR6cbZW7NYNXsiE7IPCl19R/cWUv3ZQs4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chen <chenhao418@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Liming Sun <limings@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 458/511] net: hns3: fix debugfs concurrency issue between kfree buffer and read
-Date: Sun, 17 Sep 2023 21:14:45 +0200
-Message-ID: <20230917191124.814442133@linuxfoundation.org>
+Subject: [PATCH 5.15 503/511] platform/mellanox: mlxbf-tmfifo: Drop jumbo frames
+Date: Sun, 17 Sep 2023 21:15:30 +0200
+Message-ID: <20230917191125.868332444@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,59 +42,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Chen <chenhao418@huawei.com>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit c295160b1d95e885f1af4586a221cb221d232d10 ]
+[ Upstream commit fc4c655821546239abb3cf4274d66b9747aa87dd ]
 
-Now in hns3_dbg_uninit(), there may be concurrency between
-kfree buffer and read, it may result in memory error.
+This commit drops over-sized network packets to avoid tmfifo
+queue stuck.
 
-Moving debugfs_remove_recursive() in front of kfree buffer to ensure
-they don't happen at the same time.
-
-Fixes: 5e69ea7ee2a6 ("net: hns3: refactor the debugfs process")
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/9318936c2447f76db475c985ca6d91f057efcd41.1693322547.git.limings@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-index 3158c08a3aa9c..45f245b1d331c 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-@@ -1171,9 +1171,9 @@ int hns3_dbg_init(struct hnae3_handle *handle)
- 	return 0;
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 42fcccf06157f..194f3205e5597 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -205,7 +205,7 @@ static u8 mlxbf_tmfifo_net_default_mac[ETH_ALEN] = {
+ static efi_char16_t mlxbf_tmfifo_efi_name[] = L"RshimMacAddr";
  
- out:
--	mutex_destroy(&handle->dbgfs_lock);
- 	debugfs_remove_recursive(handle->hnae3_dbgfs);
- 	handle->hnae3_dbgfs = NULL;
-+	mutex_destroy(&handle->dbgfs_lock);
- 	return ret;
- }
+ /* Maximum L2 header length. */
+-#define MLXBF_TMFIFO_NET_L2_OVERHEAD	36
++#define MLXBF_TMFIFO_NET_L2_OVERHEAD	(ETH_HLEN + VLAN_HLEN)
  
-@@ -1181,6 +1181,9 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ /* Supported virtio-net features. */
+ #define MLXBF_TMFIFO_NET_FEATURES \
+@@ -623,13 +623,14 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
+  * flag is set.
+  */
+ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+-				     struct vring_desc *desc,
++				     struct vring_desc **desc,
+ 				     bool is_rx, bool *vring_change)
  {
- 	u32 i;
+ 	struct mlxbf_tmfifo *fifo = vring->fifo;
+ 	struct virtio_net_config *config;
+ 	struct mlxbf_tmfifo_msg_hdr hdr;
+ 	int vdev_id, hdr_len;
++	bool drop_rx = false;
  
-+	debugfs_remove_recursive(handle->hnae3_dbgfs);
-+	handle->hnae3_dbgfs = NULL;
-+
- 	for (i = 0; i < ARRAY_SIZE(hns3_dbg_cmd); i++)
- 		if (handle->dbgfs_buf[i]) {
- 			kvfree(handle->dbgfs_buf[i]);
-@@ -1188,8 +1191,6 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ 	/* Read/Write packet header. */
+ 	if (is_rx) {
+@@ -649,8 +650,8 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 			if (ntohs(hdr.len) >
+ 			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
+ 					      config->mtu) +
+-			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
+-				return;
++					      MLXBF_TMFIFO_NET_L2_OVERHEAD)
++				drop_rx = true;
+ 		} else {
+ 			vdev_id = VIRTIO_ID_CONSOLE;
+ 			hdr_len = 0;
+@@ -665,16 +666,25 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 
+ 			if (!tm_dev2)
+ 				return;
+-			vring->desc = desc;
++			vring->desc = *desc;
+ 			vring = &tm_dev2->vrings[MLXBF_TMFIFO_VRING_RX];
+ 			*vring_change = true;
  		}
++
++		if (drop_rx && !IS_VRING_DROP(vring)) {
++			if (vring->desc_head)
++				mlxbf_tmfifo_release_pkt(vring);
++			*desc = &vring->drop_desc;
++			vring->desc_head = *desc;
++			vring->desc = *desc;
++		}
++
+ 		vring->pkt_len = ntohs(hdr.len) + hdr_len;
+ 	} else {
+ 		/* Network virtio has an extra header. */
+ 		hdr_len = (vring->vdev_id == VIRTIO_ID_NET) ?
+ 			   sizeof(struct virtio_net_hdr) : 0;
+-		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, desc);
++		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, *desc);
+ 		hdr.type = (vring->vdev_id == VIRTIO_ID_NET) ?
+ 			    VIRTIO_ID_NET : VIRTIO_ID_CONSOLE;
+ 		hdr.len = htons(vring->pkt_len - hdr_len);
+@@ -723,7 +733,7 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
  
- 	mutex_destroy(&handle->dbgfs_lock);
--	debugfs_remove_recursive(handle->hnae3_dbgfs);
--	handle->hnae3_dbgfs = NULL;
- }
+ 	/* Beginning of a packet. Start to Rx/Tx packet header. */
+ 	if (vring->pkt_len == 0) {
+-		mlxbf_tmfifo_rxtx_header(vring, desc, is_rx, &vring_change);
++		mlxbf_tmfifo_rxtx_header(vring, &desc, is_rx, &vring_change);
+ 		(*avail)--;
  
- void hns3_dbg_register_debugfs(const char *debugfs_dir_name)
+ 		/* Return if new packet is for another ring. */
 -- 
 2.40.1
 
