@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E41E53B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B69C433C8;
-	Sun, 17 Sep 2023 19:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F1253B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B80AC433C7;
+	Sun, 17 Sep 2023 19:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979339;
-	bh=XIHlnsQW4DWtU3JGp7kgAQFr370TeOpWNjrf+7dqtx8=;
+	s=korg; t=1694979342;
+	bh=RpmWjVB38GPanWNxyMq26KgbrZ+4BLDaXwDPShE+txk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FGxCYRB3A9FBo+E8PYM0hzzLaNadmqh+hKpjXfBGb5Tjvci0LYXCzlaCG89PH7hT
-	 pEJjo1CFtY65NcHsN54xtDiHZm+dvkYVN3uIrHqfFWPYVmpJrUxmTBWcxxFNpoEdIn
-	 k8QSN7HVgTOQ+a7UM1BLieubz4wnvT6032ZScu7A=
+	b=X8U10c2aRTKn+/tV41/4nBlPI0LT0ckstUTfWo/LJKt0MpB3hxRBw3vD9ivbreAbz
+	 EtEzY89lr31b9YftBF+29k4stniiCkZtW4X6eEvyMQJfvxY6nx3+d+t8CvBcq5Z5UR
+	 MLpqmyMOALi9Dl91MaHSd7iZT2m+q0U6mV0M8wGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/406] serial: tegra: handle clk prepare error in tegra_uart_hw_init()
-Date: Sun, 17 Sep 2023 21:11:41 +0200
-Message-ID: <20230917191107.683993510@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 277/406] scsi: core: Fix the scsi_set_resid() documentation
+Date: Sun, 17 Sep 2023 21:12:11 +0200
+Message-ID: <20230917191108.592372362@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,41 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5abd01145d0cc6cd1b7c2fe6ee0b9ea0fa13671e ]
+commit f669b8a683e4ee26fa5cafe19d71cec1786b556a upstream.
 
-In tegra_uart_hw_init(), the return value of clk_prepare_enable() should
-be checked since it might fail.
+Because scsi_finish_command() subtracts the residual from the buffer
+length, residual overflows must not be reported. Reflect this in the SCSI
+documentation. See also commit 9237f04e12cc ("scsi: core: Fix
+scsi_get/set_resid() interface")
 
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://lore.kernel.org/r/20230817105406.228674-1-yiyang13@huawei.com
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Douglas Gilbert <dgilbert@interlog.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230721160154.874010-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/scsi/scsi_mid_low_api.rst |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index 62377c831894d..fac4d90047b03 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -994,7 +994,11 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	tup->ier_shadow = 0;
- 	tup->current_baud = 0;
- 
--	clk_prepare_enable(tup->uart_clk);
-+	ret = clk_prepare_enable(tup->uart_clk);
-+	if (ret) {
-+		dev_err(tup->uport.dev, "could not enable clk\n");
-+		return ret;
-+	}
- 
- 	/* Reset the UART controller to clear all previous status.*/
- 	reset_control_assert(tup->rst);
--- 
-2.40.1
-
+--- a/Documentation/scsi/scsi_mid_low_api.rst
++++ b/Documentation/scsi/scsi_mid_low_api.rst
+@@ -1195,11 +1195,11 @@ Members of interest:
+ 		 - pointer to scsi_device object that this command is
+                    associated with.
+     resid
+-		 - an LLD should set this signed integer to the requested
++		 - an LLD should set this unsigned integer to the requested
+                    transfer length (i.e. 'request_bufflen') less the number
+                    of bytes that are actually transferred. 'resid' is
+                    preset to 0 so an LLD can ignore it if it cannot detect
+-                   underruns (overruns should be rare). If possible an LLD
++                   underruns (overruns should not be reported). An LLD
+                    should set 'resid' prior to invoking 'done'. The most
+                    interesting case is data transfers from a SCSI target
+                    device (e.g. READs) that underrun.
 
 
