@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5ED6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81832C433C7;
-	Sun, 17 Sep 2023 19:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB37E6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DC4C433C7;
+	Sun, 17 Sep 2023 19:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978228;
-	bh=wvPx/ZrU4qdFqsy2V6IHLdgHm/NgRp0rXseVuNxhHLk=;
+	s=korg; t=1694978232;
+	bh=WIqYjgr3eBtJEOX5KW6jzVZVLnxZIFp+wfTcYzjG+7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVaGhUJwAjX4t1riXTEJ72PjaCwl9lY7roQ2dxw57odyOvBUg4UuxqK3Eqvt6b/RV
-	 YU1xyZHIADU/vLJY/d+LEJlHQHg9GOTEtPtblskCx9NIPF2y7DI0xBTB6ChNtDp6nt
-	 toKyy3L6ZKRhmPL7sKT2ym4zttFoVb0UyGxwr7xQ=
+	b=GcGsfs8Khbc6N8c9HPGchn9HgPeLs+tsgONuQVCjpUCWoLE5tbMjfAX86b+071Znr
+	 7WXccK48JuJ/EBqnaNIAVWRNid8s1IAB5RnzZwBG7RN7m57oQHG6rEjizkIjCA37Yd
+	 x3QmrYHg4mvW1KsDU+zJ6e+qUO7AsaVU0YRddXyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juerg Haefliger <juerg.haefliger@canonical.com>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 5.10 019/406] fsi: master-ast-cf: Add MODULE_FIRMWARE macro
-Date: Sun, 17 Sep 2023 21:07:53 +0200
-Message-ID: <20230917191101.657709576@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.10 002/406] ARM: pxa: remove use of symbol_get()
+Date: Sun, 17 Sep 2023 21:07:36 +0200
+Message-ID: <20230917191101.129417420@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,29 +40,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juerg Haefliger <juerg.haefliger@canonical.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 3a1d7aff6e65ad6e285e28abe55abbfd484997ee upstream.
+commit 0faa29c4207e6e29cfc81b427df60e326c37083a upstream.
 
-The module loads firmware so add a MODULE_FIRMWARE macro to provide that
-information via modinfo.
+The spitz board file uses the obscure symbol_get() function
+to optionally call a function from sharpsl_pm.c if that is
+built. However, the two files are always built together
+these days, and have been for a long time, so this can
+be changed to a normal function call.
 
-Fixes: 6a794a27daca ("fsi: master-ast-cf: Add new FSI master using Aspeed ColdFire")
-Cc: stable@vger.kernel.org # 4.19+
-Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-Link: https://lore.kernel.org/r/20230628095039.26218-1-juerg.haefliger@canonical.com
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/lkml/20230731162639.GA9441@lst.de/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fsi/fsi-master-ast-cf.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/mach-pxa/sharpsl_pm.c |    2 --
+ arch/arm/mach-pxa/spitz.c      |   14 +-------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
---- a/drivers/fsi/fsi-master-ast-cf.c
-+++ b/drivers/fsi/fsi-master-ast-cf.c
-@@ -1440,3 +1440,4 @@ static struct platform_driver fsi_master
+--- a/arch/arm/mach-pxa/sharpsl_pm.c
++++ b/arch/arm/mach-pxa/sharpsl_pm.c
+@@ -220,8 +220,6 @@ void sharpsl_battery_kick(void)
+ {
+ 	schedule_delayed_work(&sharpsl_bat, msecs_to_jiffies(125));
+ }
+-EXPORT_SYMBOL(sharpsl_battery_kick);
+-
  
- module_platform_driver(fsi_master_acf);
- MODULE_LICENSE("GPL");
-+MODULE_FIRMWARE(FW_FILE_NAME);
+ static void sharpsl_battery_thread(struct work_struct *private_)
+ {
+--- a/arch/arm/mach-pxa/spitz.c
++++ b/arch/arm/mach-pxa/spitz.c
+@@ -9,7 +9,6 @@
+  */
+ 
+ #include <linux/kernel.h>
+-#include <linux/module.h>	/* symbol_get ; symbol_put */
+ #include <linux/platform_device.h>
+ #include <linux/delay.h>
+ #include <linux/gpio_keys.h>
+@@ -514,17 +513,6 @@ static struct pxa2xx_spi_chip spitz_ads7
+ 	.gpio_cs		= SPITZ_GPIO_ADS7846_CS,
+ };
+ 
+-static void spitz_bl_kick_battery(void)
+-{
+-	void (*kick_batt)(void);
+-
+-	kick_batt = symbol_get(sharpsl_battery_kick);
+-	if (kick_batt) {
+-		kick_batt();
+-		symbol_put(sharpsl_battery_kick);
+-	}
+-}
+-
+ static struct gpiod_lookup_table spitz_lcdcon_gpio_table = {
+ 	.dev_id = "spi2.1",
+ 	.table = {
+@@ -552,7 +540,7 @@ static struct corgi_lcd_platform_data sp
+ 	.max_intensity		= 0x2f,
+ 	.default_intensity	= 0x1f,
+ 	.limit_mask		= 0x0b,
+-	.kick_battery		= spitz_bl_kick_battery,
++	.kick_battery		= sharpsl_battery_kick,
+ };
+ 
+ static struct pxa2xx_spi_chip spitz_lcdcon_chip = {
 
 
