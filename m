@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0C76FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A8C433C9;
-	Sun, 17 Sep 2023 19:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382A26FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:21:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942F6C433C8;
+	Sun, 17 Sep 2023 19:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978493;
-	bh=jhsIVnDQbJ72vP42LVD0LgF17jrT/kJyLWXMJGOaINo=;
+	s=korg; t=1694978497;
+	bh=Bo+7yMXCxWVtkbzIKOm7llvRL1HC7DrLJYkGElYr+4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocw5lQ0vbtnmVO7DOxo1Y1hYPkusNvclPf7w3eZrnG20lIOma5x28t888Tp6KIV2U
-	 qmzxtfewB3K2RM7PQPI1ENLvt9PXdq7knhKboyf8+XVKu8Jle2jBZzT+yQD5kSqiDZ
-	 JcGZHLB3Nq2KIbyLEHQlvoG4obGNRXTwwjxfbTyw=
+	b=2i95p03Q8qtIvslpbaFtRQ3faGBwNT0BL2dxlHLH/S9P0NbFYIxxAcTTcwKSXvy8q
+	 K9Hm0dlG2k6/Jd8gieTqot0Ov09ov9yaa/LZu3m8M5FsGHqlNRexPPVk4O1THNFqkQ
+	 aPCz5VW4flKiDasw9fEBUN+O3Gc1LfqR5h8lkmOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
 	Babu Moger <babu.moger@amd.com>,
 	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/406] selftests/resctrl: Unmount resctrl FS if child fails to run benchmark
-Date: Sun, 17 Sep 2023 21:08:48 +0200
-Message-ID: <20230917191103.089372547@linuxfoundation.org>
+Subject: [PATCH 5.10 075/406] selftests/resctrl: Close perf value read fd on errors
+Date: Sun, 17 Sep 2023 21:08:49 +0200
+Message-ID: <20230917191103.115988923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -46,37 +45,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit f99e413eb54652e2436cc56d081176bc9a34cd8d ]
+[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
 
-A child calls PARENT_EXIT() when it fails to run a benchmark to kill
-the parent process. PARENT_EXIT() lacks unmount for the resctrl FS and
-the parent won't be there to unmount it either after it gets killed.
+Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
 
-Add the resctrl FS unmount also to PARENT_EXIT().
+Close fd_lm only in cat_val() to make it easier to track it is always
+closed.
 
-Fixes: 591a6e8588fc ("selftests/resctrl: Add basic resctrl file system operations and data")
+Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
 Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl.h | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index 36da6136af968..c38f2d58df927 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -33,6 +33,7 @@
- 	do {					\
- 		perror(err_msg);		\
- 		kill(ppid, SIGKILL);		\
-+		umount_resctrlfs();		\
- 		exit(EXIT_FAILURE);		\
- 	} while (0)
+diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
+index 5922cc1b03867..b3c0e858c4e07 100644
+--- a/tools/testing/selftests/resctrl/cache.c
++++ b/tools/testing/selftests/resctrl/cache.c
+@@ -89,21 +89,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
+ static int get_llc_perf(unsigned long *llc_perf_miss)
+ {
+ 	__u64 total_misses;
++	int ret;
  
+ 	/* Stop counters after one span to get miss rate */
+ 
+ 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
+ 
+-	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
++	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
++	if (ret == -1) {
+ 		perror("Could not get llc misses through perf");
+-
+ 		return -1;
+ 	}
+ 
+ 	total_misses = rf_cqm.values[0].value;
+-
+-	close(fd_lm);
+-
+ 	*llc_perf_miss = total_misses;
+ 
+ 	return 0;
+@@ -256,17 +254,23 @@ int cat_val(struct resctrl_val_param *param)
+ 					 memflush, operation, resctrl_val)) {
+ 				fprintf(stderr, "Error-running fill buffer\n");
+ 				ret = -1;
+-				break;
++				goto pe_close;
+ 			}
+ 
+ 			sleep(1);
+ 			ret = measure_cache_vals(param, bm_pid);
+ 			if (ret)
+-				break;
++				goto pe_close;
++
++			close(fd_lm);
+ 		} else {
+ 			break;
+ 		}
+ 	}
+ 
+ 	return ret;
++
++pe_close:
++	close(fd_lm);
++	return ret;
+ }
 -- 
 2.40.1
 
