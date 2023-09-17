@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCCA6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B000C433CB;
-	Sun, 17 Sep 2023 20:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9AD6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0285C433CC;
+	Sun, 17 Sep 2023 20:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980967;
-	bh=WnWQWnWF/TWLOGRpyJPW12sP9rL/effd7bhur1lbaCI=;
+	s=korg; t=1694980971;
+	bh=0bwpiE+GFwfeVeM2cyCfqyqLAivomrjc2cAC/CmkcNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrQYnUzyHQW8gbSgLmpIk7Al9XLGktND7gAGO33uXlaAlizJHZM9GtDrNHsAEPdIa
-	 pfNbvluKHTbEeZMzF4B766bukbgFnGznCqZ97XiQbyp9uYllHgpeXRgd9XBovFzAnt
-	 rtDVyblAdUm21vDChh2OAY8qMIMFq2txG9p5qQk0=
+	b=I3ApAOVNYDZCylVoLY5Oxvgb1X7K3+aowwdH2etghwQ3A/gg6z9QQVqDCl1LXrMuC
+	 QIp0CnCCTVc3GyErkdygubExUPgRCs9D3kKhHf0gubutAh+VVp+Al4UpqZ7uGbkK81
+	 wHWQ93UVB/d+mOGYiN+UtjM1ArJfWovEmNKXt370=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/219] mailbox: qcom-ipcc: fix incorrect num_chans counting
-Date: Sun, 17 Sep 2023 21:13:08 +0200
-Message-ID: <20230917191043.213429803@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 6.1 062/219] kconfig: fix possible buffer overflow
+Date: Sun, 17 Sep 2023 21:13:09 +0200
+Message-ID: <20230917191043.251193096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -40,37 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit a493208079e299aefdc15169dc80e3da3ebb718a ]
+[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
 
-Breaking out early when a match is found leads to an incorrect num_chans
-value when more than one ipcc mailbox channel is used by the same device.
+Buffer 'new_argv' is accessed without bound check after accessing with
+bound check via 'new_argc' index.
 
-Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Fixes: e298f3b49def ("kconfig: add built-in function support")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ scripts/kconfig/preprocess.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 7e27acf6c0cca..f597a1bd56847 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -227,10 +227,8 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
- 			ret = of_parse_phandle_with_args(client_dn, "mboxes",
- 						"#mbox-cells", j, &curr_ph);
- 			of_node_put(curr_ph.np);
--			if (!ret && curr_ph.np == controller_dn) {
-+			if (!ret && curr_ph.np == controller_dn)
- 				ipcc->num_chans++;
--				break;
--			}
- 		}
- 	}
+diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
+index 748da578b418c..d1f5bcff4b62d 100644
+--- a/scripts/kconfig/preprocess.c
++++ b/scripts/kconfig/preprocess.c
+@@ -396,6 +396,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
  
+ 		p++;
+ 	}
++
++	if (new_argc >= FUNCTION_MAX_ARGS)
++		pperror("too many function arguments");
+ 	new_argv[new_argc++] = prev;
+ 
+ 	/*
 -- 
 2.40.1
 
