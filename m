@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A94C6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A57C433C8;
-	Sun, 17 Sep 2023 19:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA336FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1502C433C8;
+	Sun, 17 Sep 2023 19:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979510;
-	bh=mITIfvHFFy+vmceEMRebARytbL8AURZoqlgZnDXFkPw=;
+	s=korg; t=1694979513;
+	bh=Dh1BkozBWXiGAH5J0CblWLCXGVYd4NMocPTkLX97MZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HB9UrcZQfr1memsM15GD0WVIq8Et396YzdiYz9VvOd7TLXEnQjVf97qjV9ZedDGuN
-	 aB3Yl95oztIlUm0bdDMLKAhPKnVDbEE6Q9ame9X5Vvh1UNkCIVWpYwaZAG3VhVzcKU
-	 lWzHQA84x/hRUXWM1T8reTmYawEF++tocCJZzHU8=
+	b=dKEefNTbd/lpiIP0183phNCw6NPGUKIoDWVhF7ncD22NpPOZ0lFqq3X3BELHuJ1Pk
+	 LR44ZEl4IxCoRQYjiUQnV+9b8yk+M0oDJgakuQfMZQCmeZ96wiEU8np7xdmb62QHKX
+	 kYidLk8GdkOCnNPDLi6c8iYGi82/OiuEy/fnlU2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 308/406] USB: core: Fix oversight in SuperSpeed initialization
-Date: Sun, 17 Sep 2023 21:12:42 +0200
-Message-ID: <20230917191109.438542342@linuxfoundation.org>
+	"Angus Ainslie (Purism)" <angus@akkea.ca>,
+	Christian Bach <christian.bach@scs.ch>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 309/406] usb: typec: tcpci: clear the fault status bit
+Date: Sun, 17 Sep 2023 21:12:43 +0200
+Message-ID: <20230917191109.464380229@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,100 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-commit 59cf445754566984fd55af19ba7146c76e6627bc upstream.
+[ Upstream commit 23e60c8daf5ec2ab1b731310761b668745fcf6ed ]
 
-Commit 85d07c556216 ("USB: core: Unite old scheme and new scheme
-descriptor reads") altered the way USB devices are enumerated
-following detection, and in the process it messed up the
-initialization of SuperSpeed (or faster) devices:
+According the "USB Type-C Port Controller Interface Specification v2.0"
+the TCPC sets the fault status register bit-7
+(AllRegistersResetToDefault) once the registers have been reset to
+their default values.
 
-[   31.650759] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 2 using xhci_hcd
-[   31.663107] usb 2-1: device descriptor read/8, error -71
-[   31.952697] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 3 using xhci_hcd
-[   31.965122] usb 2-1: device descriptor read/8, error -71
-[   32.080991] usb usb2-port1: attempt power cycle
-...
+This triggers an alert(-irq) on PTN5110 devices albeit we do mask the
+fault-irq, which may cause a kernel hang. Fix this generically by writing
+a one to the corresponding bit-7.
 
-The problem was caused by the commit forgetting that in SuperSpeed or
-faster devices, the device descriptor uses a logarithmic encoding of
-the bMaxPacketSize0 value.  (For some reason I thought the 255 case in
-the switch statement was meant for these devices, but it isn't -- it
-was meant for Wireless USB and is no longer needed.)
-
-We can fix the oversight by testing for buf->bMaxPacketSize0 = 9
-(meaning 512, the actual maxpacket size for ep0 on all SuperSpeed
-devices) and straightening out the logic that checks and adjusts our
-initial guesses of the maxpacket value.
-
-Reported-and-tested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Closes: https://lore.kernel.org/linux-usb/20230810002257.nadxmfmrobkaxgnz@synopsys.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
-Link: https://lore.kernel.org/r/8809e6c5-59d5-4d2d-ac8f-6d106658ad73@rowland.harvard.edu
+Cc: stable@vger.kernel.org
+Fixes: 74e656d6b055 ("staging: typec: Type-C Port Controller Interface driver (tcpci)")
+Reported-by: "Angus Ainslie (Purism)" <angus@akkea.ca>
+Closes: https://lore.kernel.org/all/20190508002749.14816-2-angus@akkea.ca/
+Reported-by: Christian Bach <christian.bach@scs.ch>
+Closes: https://lore.kernel.org/regressions/ZR0P278MB07737E5F1D48632897D51AC3EB329@ZR0P278MB0773.CHEP278.PROD.OUTLOOK.COM/t/
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230816172502.1155079-1-festevam@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c |   36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/usb/typec/tcpm/tcpci.c | 4 ++++
+ drivers/usb/typec/tcpm/tcpci.h | 1 +
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4633,7 +4633,7 @@ static int get_bMaxPacketSize0(struct us
- 				buf, size,
- 				initial_descriptor_timeout);
- 		switch (buf->bMaxPacketSize0) {
--		case 8: case 16: case 32: case 64: case 255:
-+		case 8: case 16: case 32: case 64: case 9:
- 			if (buf->bDescriptorType == USB_DT_DEVICE) {
- 				rc = buf->bMaxPacketSize0;
- 				break;
-@@ -4923,23 +4923,35 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (retval)
- 		goto fail;
+diff --git a/drivers/usb/typec/tcpm/tcpci.c b/drivers/usb/typec/tcpm/tcpci.c
+index 069affa5cb1ee..e34e46df80243 100644
+--- a/drivers/usb/typec/tcpm/tcpci.c
++++ b/drivers/usb/typec/tcpm/tcpci.c
+@@ -475,6 +475,10 @@ static int tcpci_init(struct tcpc_dev *tcpc)
+ 	if (time_after(jiffies, timeout))
+ 		return -ETIMEDOUT;
  
--	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
--		i = 512;
--	else
--		i = maxp0;
--	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
--		if (udev->speed == USB_SPEED_LOW ||
--				!(i == 8 || i == 16 || i == 32 || i == 64)) {
--			dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", i);
--			retval = -EMSGSIZE;
--			goto fail;
--		}
-+	/*
-+	 * Check the ep0 maxpacket guess and correct it if necessary.
-+	 * maxp0 is the value stored in the device descriptor;
-+	 * i is the value it encodes (logarithmic for SuperSpeed or greater).
-+	 */
-+	i = maxp0;
-+	if (udev->speed >= USB_SPEED_SUPER) {
-+		if (maxp0 <= 16)
-+			i = 1 << maxp0;
-+		else
-+			i = 0;		/* Invalid */
-+	}
-+	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
-+		;	/* Initial ep0 maxpacket guess is right */
-+	} else if ((udev->speed == USB_SPEED_FULL ||
-+				udev->speed == USB_SPEED_HIGH) &&
-+			(i == 8 || i == 16 || i == 32 || i == 64)) {
-+		/* Initial guess is wrong; use the descriptor's value */
- 		if (udev->speed == USB_SPEED_FULL)
- 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
- 		else
- 			dev_warn(&udev->dev, "Using ep0 maxpacket: %d\n", i);
- 		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(i);
- 		usb_ep0_reinit(udev);
-+	} else {
-+		/* Initial guess is wrong and descriptor's value is invalid */
-+		dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", maxp0);
-+		retval = -EMSGSIZE;
-+		goto fail;
- 	}
++	ret = tcpci_write16(tcpci, TCPC_FAULT_STATUS, TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT);
++	if (ret < 0)
++		return ret;
++
+ 	/* Handle vendor init */
+ 	if (tcpci->data->init) {
+ 		ret = tcpci->data->init(tcpci, tcpci->data);
+diff --git a/drivers/usb/typec/tcpm/tcpci.h b/drivers/usb/typec/tcpm/tcpci.h
+index 5ef07a56d67aa..95ce89139c6ef 100644
+--- a/drivers/usb/typec/tcpm/tcpci.h
++++ b/drivers/usb/typec/tcpm/tcpci.h
+@@ -84,6 +84,7 @@
+ #define TCPC_POWER_STATUS_VBUS_PRES	BIT(2)
  
- 	descr = usb_get_device_descriptor(udev);
+ #define TCPC_FAULT_STATUS		0x1f
++#define TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT BIT(7)
+ 
+ #define TCPC_ALERT_EXTENDED		0x21
+ 
+-- 
+2.40.1
+
 
 
