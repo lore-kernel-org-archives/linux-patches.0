@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A3746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7CCC433CB;
-	Sun, 17 Sep 2023 20:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC908746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E99C433C9;
+	Sun, 17 Sep 2023 20:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983045;
-	bh=fGTHNITZ1M/TezfSc2sck41NXx7p0SRdhk1YWh/AT2s=;
+	s=korg; t=1694983048;
+	bh=hvqXLMvh4PnQZIn2CTOAPb2mg9MTjAeOLcPHF4OQWqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzZJwowGYbDon4dTJDuCjkIsYEZCdQQ6HzCrWDPyg7peR+JqiKYLF1swMFfpK/J+8
-	 QvK2EtMklYw2u3gn3rRshzq6oXoe0Axrm46gZQKCCAu1WK2B48OhivsVl8NTh/gYAO
-	 m6sEEhKkNSmZ9FHz4hgUa4jg/qE6WCx5H7MWGAZk=
+	b=sUG0d/Ccomo9W4gWhbRKtn9n684Y3K3cKcCg6fVUYeVL6QTPN7xuNTJJnv3Rko/Wr
+	 qmE7n1WK4mHGt8RwjLSeEPx0JZENb3RH04MBKhuNoBCckDSXlOoZdE5Z0/bffg8MsA
+	 v1fUerBiRo7zi8PPe6CZyoTppxXQG8BoYmLANyDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Florian Westphal <fw@strlen.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 429/511] net: read sk->sk_family once in sk_mc_loop()
-Date: Sun, 17 Sep 2023 21:14:16 +0200
-Message-ID: <20230917191124.127406270@linuxfoundation.org>
+Subject: [PATCH 5.15 430/511] net: fib: avoid warn splat in flow dissector
+Date: Sun, 17 Sep 2023 21:14:17 +0200
+Message-ID: <20230917191124.150691887@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,85 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a3e0fdf71bbe031de845e8e08ed7fba49f9c702c ]
+[ Upstream commit 8aae7625ff3f0bd5484d01f1b8d5af82e44bec2d ]
 
-syzbot is playing with IPV6_ADDRFORM quite a lot these days,
-and managed to hit the WARN_ON_ONCE(1) in sk_mc_loop()
+New skbs allocated via nf_send_reset() have skb->dev == NULL.
 
-We have many more similar issues to fix.
+fib*_rules_early_flow_dissect helpers already have a 'struct net'
+argument but its not passed down to the flow dissector core, which
+will then WARN as it can't derive a net namespace to use:
 
-WARNING: CPU: 1 PID: 1593 at net/core/sock.c:782 sk_mc_loop+0x165/0x260
-Modules linked in:
-CPU: 1 PID: 1593 Comm: kworker/1:3 Not tainted 6.1.40-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-Workqueue: events_power_efficient gc_worker
-RIP: 0010:sk_mc_loop+0x165/0x260 net/core/sock.c:782
-Code: 34 1b fd 49 81 c7 18 05 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 20 00 74 08 4c 89 ff e8 25 36 6d fd 4d 8b 37 eb 13 e8 db 33 1b fd <0f> 0b b3 01 eb 34 e8 d0 33 1b fd 45 31 f6 49 83 c6 38 4c 89 f0 48
-RSP: 0018:ffffc90000388530 EFLAGS: 00010246
-RAX: ffffffff846d9b55 RBX: 0000000000000011 RCX: ffff88814f884980
-RDX: 0000000000000102 RSI: ffffffff87ae5160 RDI: 0000000000000011
-RBP: ffffc90000388550 R08: 0000000000000003 R09: ffffffff846d9a65
-R10: 0000000000000002 R11: ffff88814f884980 R12: dffffc0000000000
-R13: ffff88810dbee000 R14: 0000000000000010 R15: ffff888150084000
-FS: 0000000000000000(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000180 CR3: 000000014ee5b000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<IRQ>
-[<ffffffff8507734f>] ip6_finish_output2+0x33f/0x1ae0 net/ipv6/ip6_output.c:83
-[<ffffffff85062766>] __ip6_finish_output net/ipv6/ip6_output.c:200 [inline]
-[<ffffffff85062766>] ip6_finish_output+0x6c6/0xb10 net/ipv6/ip6_output.c:211
-[<ffffffff85061f8c>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff85061f8c>] ip6_output+0x2bc/0x3d0 net/ipv6/ip6_output.c:232
-[<ffffffff852071cf>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff852071cf>] ip6_local_out+0x10f/0x140 net/ipv6/output_core.c:161
-[<ffffffff83618fb4>] ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:483 [inline]
-[<ffffffff83618fb4>] ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:529 [inline]
-[<ffffffff83618fb4>] ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
-[<ffffffff83618fb4>] ipvlan_queue_xmit+0x1174/0x1be0 drivers/net/ipvlan/ipvlan_core.c:677
-[<ffffffff8361ddd9>] ipvlan_start_xmit+0x49/0x100 drivers/net/ipvlan/ipvlan_main.c:229
-[<ffffffff84763fc0>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
-[<ffffffff84763fc0>] xmit_one net/core/dev.c:3644 [inline]
-[<ffffffff84763fc0>] dev_hard_start_xmit+0x320/0x980 net/core/dev.c:3660
-[<ffffffff8494c650>] sch_direct_xmit+0x2a0/0x9c0 net/sched/sch_generic.c:342
-[<ffffffff8494d883>] qdisc_restart net/sched/sch_generic.c:407 [inline]
-[<ffffffff8494d883>] __qdisc_run+0xb13/0x1e70 net/sched/sch_generic.c:415
-[<ffffffff8478c426>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
-[<ffffffff84796eac>] net_tx_action+0x7ac/0x940 net/core/dev.c:5247
-[<ffffffff858002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:599
-[<ffffffff814c3fe8>] invoke_softirq kernel/softirq.c:430 [inline]
-[<ffffffff814c3fe8>] __irq_exit_rcu+0xc8/0x170 kernel/softirq.c:683
-[<ffffffff814c3f09>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:695
+ WARNING: CPU: 0 PID: 0 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0xa91/0x1cd0
+ [..]
+  ip_route_me_harder+0x143/0x330
+  nf_send_reset+0x17c/0x2d0 [nf_reject_ipv4]
+  nft_reject_inet_eval+0xa9/0xf2 [nft_reject_inet]
+  nft_do_chain+0x198/0x5d0 [nf_tables]
+  nft_do_chain_inet+0xa4/0x110 [nf_tables]
+  nf_hook_slow+0x41/0xc0
+  ip_local_deliver+0xce/0x110
+  ..
 
-Fixes: 7ad6848c7e81 ("ip: fix mc_loop checks for tunnels with multicast outer addresses")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230830101244.1146934-1-edumazet@google.com
+Cc: Stanislav Fomichev <sdf@google.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Fixes: 812fa71f0d96 ("netfilter: Dissect flow after packet mangling")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217826
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230830110043.30497-1-fw@strlen.de
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip6_fib.h | 5 ++++-
+ include/net/ip_fib.h  | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index ae1e9e2b82557..4b63478cf021a 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -717,7 +717,8 @@ bool sk_mc_loop(struct sock *sk)
+diff --git a/include/net/ip6_fib.h b/include/net/ip6_fib.h
+index bbb27639f2933..d72cee4dff70b 100644
+--- a/include/net/ip6_fib.h
++++ b/include/net/ip6_fib.h
+@@ -610,7 +610,10 @@ static inline bool fib6_rules_early_flow_dissect(struct net *net,
+ 	if (!net->ipv6.fib6_rules_require_fldissect)
  		return false;
- 	if (!sk)
- 		return true;
--	switch (sk->sk_family) {
-+	/* IPV6_ADDRFORM can change sk->sk_family under us. */
-+	switch (READ_ONCE(sk->sk_family)) {
- 	case AF_INET:
- 		return inet_sk(sk)->mc_loop;
- #if IS_ENABLED(CONFIG_IPV6)
+ 
+-	skb_flow_dissect_flow_keys(skb, flkeys, flag);
++	memset(flkeys, 0, sizeof(*flkeys));
++	__skb_flow_dissect(net, skb, &flow_keys_dissector,
++			   flkeys, NULL, 0, 0, 0, flag);
++
+ 	fl6->fl6_sport = flkeys->ports.src;
+ 	fl6->fl6_dport = flkeys->ports.dst;
+ 	fl6->flowi6_proto = flkeys->basic.ip_proto;
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 3417ba2d27ad6..c3324a1949c3a 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -415,7 +415,10 @@ static inline bool fib4_rules_early_flow_dissect(struct net *net,
+ 	if (!net->ipv4.fib_rules_require_fldissect)
+ 		return false;
+ 
+-	skb_flow_dissect_flow_keys(skb, flkeys, flag);
++	memset(flkeys, 0, sizeof(*flkeys));
++	__skb_flow_dissect(net, skb, &flow_keys_dissector,
++			   flkeys, NULL, 0, 0, 0, flag);
++
+ 	fl4->fl4_sport = flkeys->ports.src;
+ 	fl4->fl4_dport = flkeys->ports.dst;
+ 	fl4->flowi4_proto = flkeys->basic.ip_proto;
 -- 
 2.40.1
 
