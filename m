@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D35853B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C17C433C7;
-	Sun, 17 Sep 2023 19:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D4453B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278EEC433C8;
+	Sun, 17 Sep 2023 19:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979346;
-	bh=Xwsh/q8A1FEj8c6kej7j1BHnCIzR4o5jtAqcQ4BdGls=;
+	s=korg; t=1694979349;
+	bh=8XpjDZpP3P6Ftntz6YoVaxpiaV/simXY3XWNPQy/nLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DK/iuewewcMwMnHcxkPt2zGyNBY6Lzco0Y0YkBhQv4hpBH83WtbyvmPa/NytSIkQL
-	 q7Wojjr6M1my+IeAmvTmcbWx/ITqaIVb6FW1ZiY/s3KaFlLaHABHtCaX8c0dVGP6+M
-	 G2+MtOXhvYE6DLJLZ4WOYDNYIde9oI2dnjFYr1Nc=
+	b=ye5kBUUMTV5BNSkm4tprJCLQyh10IBl9CwRzHzNhoGifsoz3ZuiiDlziMXqbRQMl5
+	 SwyrCuIS342vey+gslkPpYXq6opMYh/fVmHEoXu+yxjdgHVVZdlaT1SB8nJdjjvl2s
+	 epV1LBMWhPpT0jqHsScVBs9vx0TVMpN7E9Hznp8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 286/406] Revert "scsi: qla2xxx: Fix buffer overrun"
-Date: Sun, 17 Sep 2023 21:12:20 +0200
-Message-ID: <20230917191108.856867961@linuxfoundation.org>
+Subject: [PATCH 5.10 287/406] scsi: mpt3sas: Perform additional retries if doorbell read returns 0
+Date: Sun, 17 Sep 2023 21:12:21 +0200
+Message-ID: <20230917191108.884582542@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,33 +39,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit 641671d97b9199f1ba35ccc2222d4b189a6a5de5 upstream.
+commit 4ca10f3e31745d35249a727ecd108eb58f0a8c5e upstream.
 
-Revert due to Get PLOGI Template failed.
-This reverts commit b68710a8094fdffe8dd4f7a82c82649f479bb453.
+The driver retries certain register reads 3 times if the returned value is
+0. This was done because the controller could return 0 for certain
+registers if other registers were being accessed concurrently by the BMC.
 
+In certain systems with increased BMC interactions, the register values
+returned can be 0 for longer than 3 retries. Change the retry count from 3
+to 30 for the affected registers to prevent problems with out-of-band
+management.
+
+Fixes: b899202901a8 ("scsi: mpt3sas: Add separate function for aero doorbell reads")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230821130045.34850-9-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20230829090020.5417-2-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c |   46 +++++++++++++++++++++++++-----------
+ drivers/scsi/mpt3sas/mpt3sas_base.h |    1 
+ 2 files changed, 34 insertions(+), 13 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -5107,7 +5107,7 @@ static void qla_get_login_template(scsi_
- 	__be32 *q;
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -131,6 +131,9 @@ _base_get_ioc_facts(struct MPT3SAS_ADAPT
+ static void
+ _base_clear_outstanding_commands(struct MPT3SAS_ADAPTER *ioc);
  
- 	memset(ha->init_cb, 0, ha->init_cb_size);
--	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
-+	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
- 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
- 					    ha->init_cb, sz);
- 	if (rval != QLA_SUCCESS) {
++static u32
++_base_readl_ext_retry(const volatile void __iomem *addr);
++
+ /**
+  * mpt3sas_base_check_cmd_timeout - Function
+  *		to check timeout and command termination due
+@@ -206,6 +209,20 @@ _base_readl_aero(const volatile void __i
+ 	return ret_val;
+ }
+ 
++static u32
++_base_readl_ext_retry(const volatile void __iomem *addr)
++{
++	u32 i, ret_val;
++
++	for (i = 0 ; i < 30 ; i++) {
++		ret_val = readl(addr);
++		if (ret_val == 0)
++			continue;
++	}
++
++	return ret_val;
++}
++
+ static inline u32
+ _base_readl(const volatile void __iomem *addr)
+ {
+@@ -861,7 +878,7 @@ mpt3sas_halt_firmware(struct MPT3SAS_ADA
+ 
+ 	dump_stack();
+ 
+-	doorbell = ioc->base_readl(&ioc->chip->Doorbell);
++	doorbell = ioc->base_readl_ext_retry(&ioc->chip->Doorbell);
+ 	if ((doorbell & MPI2_IOC_STATE_MASK) == MPI2_IOC_STATE_FAULT) {
+ 		mpt3sas_print_fault_code(ioc, doorbell &
+ 		    MPI2_DOORBELL_DATA_MASK);
+@@ -5667,7 +5684,7 @@ mpt3sas_base_get_iocstate(struct MPT3SAS
+ {
+ 	u32 s, sc;
+ 
+-	s = ioc->base_readl(&ioc->chip->Doorbell);
++	s = ioc->base_readl_ext_retry(&ioc->chip->Doorbell);
+ 	sc = s & MPI2_IOC_STATE_MASK;
+ 	return cooked ? sc : s;
+ }
+@@ -5812,7 +5829,7 @@ _base_wait_for_doorbell_ack(struct MPT3S
+ 					   __func__, count, timeout));
+ 			return 0;
+ 		} else if (int_status & MPI2_HIS_IOC2SYS_DB_STATUS) {
+-			doorbell = ioc->base_readl(&ioc->chip->Doorbell);
++			doorbell = ioc->base_readl_ext_retry(&ioc->chip->Doorbell);
+ 			if ((doorbell & MPI2_IOC_STATE_MASK) ==
+ 			    MPI2_IOC_STATE_FAULT) {
+ 				mpt3sas_print_fault_code(ioc, doorbell);
+@@ -5852,7 +5869,7 @@ _base_wait_for_doorbell_not_used(struct
+ 	count = 0;
+ 	cntdn = 1000 * timeout;
+ 	do {
+-		doorbell_reg = ioc->base_readl(&ioc->chip->Doorbell);
++		doorbell_reg = ioc->base_readl_ext_retry(&ioc->chip->Doorbell);
+ 		if (!(doorbell_reg & MPI2_DOORBELL_USED)) {
+ 			dhsprintk(ioc,
+ 				  ioc_info(ioc, "%s: successful count(%d), timeout(%d)\n",
+@@ -5989,7 +6006,7 @@ _base_handshake_req_reply_wait(struct MP
+ 	__le32 *mfp;
+ 
+ 	/* make sure doorbell is not in use */
+-	if ((ioc->base_readl(&ioc->chip->Doorbell) & MPI2_DOORBELL_USED)) {
++	if ((ioc->base_readl_ext_retry(&ioc->chip->Doorbell) & MPI2_DOORBELL_USED)) {
+ 		ioc_err(ioc, "doorbell is in use (line=%d)\n", __LINE__);
+ 		return -EFAULT;
+ 	}
+@@ -6038,7 +6055,7 @@ _base_handshake_req_reply_wait(struct MP
+ 	}
+ 
+ 	/* read the first two 16-bits, it gives the total length of the reply */
+-	reply[0] = le16_to_cpu(ioc->base_readl(&ioc->chip->Doorbell)
++	reply[0] = le16_to_cpu(ioc->base_readl_ext_retry(&ioc->chip->Doorbell)
+ 	    & MPI2_DOORBELL_DATA_MASK);
+ 	writel(0, &ioc->chip->HostInterruptStatus);
+ 	if ((_base_wait_for_doorbell_int(ioc, 5))) {
+@@ -6046,7 +6063,7 @@ _base_handshake_req_reply_wait(struct MP
+ 			__LINE__);
+ 		return -EFAULT;
+ 	}
+-	reply[1] = le16_to_cpu(ioc->base_readl(&ioc->chip->Doorbell)
++	reply[1] = le16_to_cpu(ioc->base_readl_ext_retry(&ioc->chip->Doorbell)
+ 	    & MPI2_DOORBELL_DATA_MASK);
+ 	writel(0, &ioc->chip->HostInterruptStatus);
+ 
+@@ -6057,10 +6074,10 @@ _base_handshake_req_reply_wait(struct MP
+ 			return -EFAULT;
+ 		}
+ 		if (i >=  reply_bytes/2) /* overflow case */
+-			ioc->base_readl(&ioc->chip->Doorbell);
++			ioc->base_readl_ext_retry(&ioc->chip->Doorbell);
+ 		else
+ 			reply[i] = le16_to_cpu(
+-			    ioc->base_readl(&ioc->chip->Doorbell)
++			    ioc->base_readl_ext_retry(&ioc->chip->Doorbell)
+ 			    & MPI2_DOORBELL_DATA_MASK);
+ 		writel(0, &ioc->chip->HostInterruptStatus);
+ 	}
+@@ -6906,7 +6923,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER
+ 			goto out;
+ 		}
+ 
+-		host_diagnostic = ioc->base_readl(&ioc->chip->HostDiagnostic);
++		host_diagnostic = ioc->base_readl_ext_retry(&ioc->chip->HostDiagnostic);
+ 		drsprintk(ioc,
+ 			  ioc_info(ioc, "wrote magic sequence: count(%d), host_diagnostic(0x%08x)\n",
+ 				   count, host_diagnostic));
+@@ -6926,7 +6943,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER
+ 	for (count = 0; count < (300000000 /
+ 		MPI2_HARD_RESET_PCIE_SECOND_READ_DELAY_MICRO_SEC); count++) {
+ 
+-		host_diagnostic = ioc->base_readl(&ioc->chip->HostDiagnostic);
++		host_diagnostic = ioc->base_readl_ext_retry(&ioc->chip->HostDiagnostic);
+ 
+ 		if (host_diagnostic == 0xFFFFFFFF) {
+ 			ioc_info(ioc,
+@@ -7313,10 +7330,13 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
+ 	ioc->rdpq_array_enable_assigned = 0;
+ 	ioc->use_32bit_dma = false;
+ 	ioc->dma_mask = 64;
+-	if (ioc->is_aero_ioc)
++	if (ioc->is_aero_ioc) {
+ 		ioc->base_readl = &_base_readl_aero;
+-	else
++		ioc->base_readl_ext_retry = &_base_readl_ext_retry;
++	} else {
+ 		ioc->base_readl = &_base_readl;
++		ioc->base_readl_ext_retry = &_base_readl;
++	}
+ 	r = mpt3sas_base_map_resources(ioc);
+ 	if (r)
+ 		goto out_free_resources;
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.h
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.h
+@@ -1469,6 +1469,7 @@ struct MPT3SAS_ADAPTER {
+ 	u8		diag_trigger_active;
+ 	u8		atomic_desc_capable;
+ 	BASE_READ_REG	base_readl;
++	BASE_READ_REG	base_readl_ext_retry;
+ 	struct SL_WH_MASTER_TRIGGER_T diag_trigger_master;
+ 	struct SL_WH_EVENT_TRIGGERS_T diag_trigger_event;
+ 	struct SL_WH_SCSI_TRIGGERS_T diag_trigger_scsi;
 
 
