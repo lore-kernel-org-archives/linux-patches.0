@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91516FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53319C433C7;
-	Sun, 17 Sep 2023 19:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646546FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4085C433C8;
+	Sun, 17 Sep 2023 19:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980367;
-	bh=yDFPGxL67fpqAfmQfZgOT/rDaOHK5kwCYQU6xvdrBew=;
+	s=korg; t=1694980371;
+	bh=3/uGjJZnpnKuWRnwPcOzHwvgcOuwtEsiVUQvsJ+mNFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tS5OiS1xQn4Ide887qVV0snqwjbX1TQveQfK8nW4rNHK8X9QigqlH56K4GPIz/Tls
-	 zjW9KMw2hYSWxEjyhoAXkeB5EfjEppRjpgLZoxU/Id8aKAgmFYff6hkFY/pPzaT9vg
-	 Jb5CAftT2CQE8rCnm2vzhKLasb5Qke/Z8ihjpuxs=
+	b=pbjCZ4Z5KrRZw0ypgwak7yv9yNzFyBJWJfEzcVCQXmnsILnLaCf+KcoW+s1/AUGzo
+	 McASjJZQZae0J4WMZ9iAHXq1YmX3JefZpQH5ZOlRKf6EVQ8eYM/WZPDJi1HhYAWHJI
+	 ERvpERcNLDNvWlMV0o9LCF3XYEEDKYVK06RwZdyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 172/285] net: hns3: remove GSO partial feature bit
-Date: Sun, 17 Sep 2023 21:12:52 +0200
-Message-ID: <20230917191057.588500162@linuxfoundation.org>
+Subject: [PATCH 6.5 173/285] net: enetc: distinguish error from valid pointers in enetc_fixup_clear_rss_rfs()
+Date: Sun, 17 Sep 2023 21:12:53 +0200
+Message-ID: <20230917191057.624969051@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,37 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 60326634f6c54528778de18bfef1e8a7a93b3771 ]
+[ Upstream commit 1b36955cc048c8ff6ba448dbf4be0e52f59f2963 ]
 
-HNS3 NIC does not support GSO partial packets segmentation. Actually tunnel
-packets for example NvGRE packets segment offload and checksum offload is
-already supported. There is no need to keep gso partial feature bit. So
-this patch removes it.
+enetc_psi_create() returns an ERR_PTR() or a valid station interface
+pointer, but checking for the non-NULL quality of the return code blurs
+that difference away. So if enetc_psi_create() fails, we call
+enetc_psi_destroy() when we shouldn't. This will likely result in
+crashes, since enetc_psi_create() cleans up everything after itself when
+it returns an ERR_PTR().
 
-Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f0168042a212 ("net: enetc: reimplement RFS/RSS memory clearing as PCI quirk")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/netdev/582183ef-e03b-402b-8e2d-6d9bb3c83bd9@moroto.mountain/
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230906141609.247579-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 71772213b4448..613d0a779cef2 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3315,8 +3315,6 @@ static void hns3_set_default_feature(struct net_device *netdev)
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index e0a4cb7e3f501..c153dc083aff0 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -1402,7 +1402,7 @@ static void enetc_fixup_clear_rss_rfs(struct pci_dev *pdev)
+ 		return;
  
- 	netdev->priv_flags |= IFF_UNICAST_FLT;
- 
--	netdev->gso_partial_features |= NETIF_F_GSO_GRE_CSUM;
--
- 	netdev->features |= NETIF_F_HW_VLAN_CTAG_FILTER |
- 		NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX |
- 		NETIF_F_RXCSUM | NETIF_F_SG | NETIF_F_GSO |
+ 	si = enetc_psi_create(pdev);
+-	if (si)
++	if (!IS_ERR(si))
+ 		enetc_psi_destroy(pdev);
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_FREESCALE, ENETC_DEV_ID_PF,
 -- 
 2.40.1
 
