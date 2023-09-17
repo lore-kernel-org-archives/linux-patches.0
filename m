@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5798353B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1AEC433CB;
-	Sun, 17 Sep 2023 19:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D156253B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD1CC433C7;
+	Sun, 17 Sep 2023 19:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979243;
-	bh=Oq6pa7wcUYZrQMj2CspTmtxjJUVk9CSqtHVEEyKjQCU=;
+	s=korg; t=1694979246;
+	bh=uVExRrAanT2fyP/zNDJrQJ9plTXAr7vDOkjS1GeFXVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJIjq7oF8qKqRZt6PLWKngmLnheYBzTyXBiMxSRSGBwvt2vOyQTMLfhyuR8MEmLE9
-	 NJEvyN/J6W6zyp1QztnkhUcWoUTakAuSPjMmS7dyj0fpOXzH2ngS/Y/Md2NkXIDHZs
-	 irWY7rOO3SHH77vC7WUVCRPjkV59YJKCsPiCQEmo=
+	b=Drlv0CcwCGL83MSxVV/fvJG1/bZNxZhMo8FZDyGZZJswosyNWY7TV6NBlUvT3bk+l
+	 Qc0j6OHQ7Zf4ddomDX3B5cH8vPiL7A4lrcihF/SbY9/RSPJ/PEYNiDuu4/7dP4M3Vi
+	 +ut0DRfuCSud+bgS1WJe/qXnU+LB+7yCmDzq5vjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/406] amba: bus: fix refcount leak
-Date: Sun, 17 Sep 2023 21:11:42 +0200
-Message-ID: <20230917191107.710736685@linuxfoundation.org>
+Subject: [PATCH 5.10 257/406] phy/rockchip: inno-hdmi: use correct vco_div_5 macro on rk3328
+Date: Sun, 17 Sep 2023 21:11:51 +0200
+Message-ID: <20230917191107.972753795@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,37 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit e312cbdc11305568554a9e18a2ea5c2492c183f3 ]
+[ Upstream commit 644c06dfbd0da713f772abf0a8f8581ac78e6264 ]
 
-commit 5de1540b7bc4 ("drivers/amba: create devices from device tree")
-increases the refcount of of_node, but not releases it in
-amba_device_release, so there is refcount leak. By using of_node_put
-to avoid refcount leak.
+inno_hdmi_phy_rk3328_clk_set_rate() is using the RK3228 macro
+when configuring vco_div_5 on RK3328.
 
-Fixes: 5de1540b7bc4 ("drivers/amba: create devices from device tree")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230821023928.3324283-1-peng.fan@oss.nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by using correct vco_div_5 macro for RK3328.
+
+Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20230615171005.2251032-2-jonas@kwiboo.se
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/amba/bus.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
-index 47c72447ccd59..52ab582930caa 100644
---- a/drivers/amba/bus.c
-+++ b/drivers/amba/bus.c
-@@ -363,6 +363,7 @@ static void amba_device_release(struct device *dev)
- {
- 	struct amba_device *d = to_amba_device(dev);
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+index 9ca20c947283d..b0ac1d3ee3905 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+@@ -790,8 +790,8 @@ static int inno_hdmi_phy_rk3328_clk_set_rate(struct clk_hw *hw,
+ 			 RK3328_PRE_PLL_POWER_DOWN);
  
-+	of_node_put(d->dev.of_node);
- 	if (d->res.parent)
- 		release_resource(&d->res);
- 	kfree(d);
+ 	/* Configure pre-pll */
+-	inno_update_bits(inno, 0xa0, RK3228_PCLK_VCO_DIV_5_MASK,
+-			 RK3228_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
++	inno_update_bits(inno, 0xa0, RK3328_PCLK_VCO_DIV_5_MASK,
++			 RK3328_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
+ 	inno_write(inno, 0xa1, RK3328_PRE_PLL_PRE_DIV(cfg->prediv));
+ 
+ 	val = RK3328_SPREAD_SPECTRUM_MOD_DISABLE;
 -- 
 2.40.1
 
