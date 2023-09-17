@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56ECC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CE6C433C8;
-	Sun, 17 Sep 2023 19:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CED16FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE99C433CB;
+	Sun, 17 Sep 2023 19:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978528;
-	bh=TcuPoGiBL3LlXCcDTivm6XhNkwK+WIQWFzxhQNP5A0Q=;
+	s=korg; t=1694978531;
+	bh=5mGizzpgxKLVnC+RwtJ8v7xI+KO34jzoH5Oe/0aIRXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGIKUlgGkmGWrCRbjGeFXx0PQCT8TLHrPMYUBtlzVpSmQjd7kf2+H0skA3Dez/8KI
-	 Y++E14uuImBAY1GigFGxNClYL+agoilmHV0HidT9xiCbLKD9vL6lDjseAnMgWpwMKY
-	 kGXiSLwg57WIooGUHSdivvPmORfHqS9a/G4xZQPI=
+	b=RxPBEsbfgYOvtiNuVRcgyuajOIQ58bgTTFHb0r279PBtoWDKWLZAbJdkgcg1dTxpQ
+	 Xm+PHAmEE2Wl1EPosRkfZ1fgz6S7c5mpVeyc1faIOAETg1NKt4z6fwXSwRVNrn4Eq1
+	 cpB9OVbCwTRD/x7GhknjedF/aYGB8fY5eAm879Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Will Deacon <will@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/406] perf/imx_ddr: dont enable counter0 if none of 4 counters are used
-Date: Sun, 17 Sep 2023 21:08:51 +0200
-Message-ID: <20230917191103.166215324@linuxfoundation.org>
+Subject: [PATCH 5.10 086/406] regmap: rbtree: Use alloc_flags for memory allocations
+Date: Sun, 17 Sep 2023 21:09:00 +0200
+Message-ID: <20230917191103.401478185@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,88 +41,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f4e2bd91ddf5e8543cbe7ad80b3fba3d2dc63fa3 ]
+[ Upstream commit 0c8b0bf42c8cef56f7cd9cd876fbb7ece9217064 ]
 
-In current driver, counter0 will be enabled after ddr_perf_pmu_enable()
-is called even though none of the 4 counters are used. This will cause
-counter0 continue to count until ddr_perf_pmu_disabled() is called. If
-pmu is not disabled all the time, the pmu interrupt will be asserted
-from time to time due to counter0 will overflow and irq handler will
-clear it. It's not an expected behavior. This patch will not enable
-counter0 if none of 4 counters are used.
+The kunit tests discovered a sleeping in atomic bug.  The allocations
+in the regcache-rbtree code should use the map->alloc_flags instead of
+GFP_KERNEL.
 
-Fixes: 9a66d36cc7ac ("drivers/perf: imx_ddr: Add DDR performance counter support to perf")
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230811015438.1999307-2-xu.yang_2@nxp.com
-Signed-off-by: Will Deacon <will@kernel.org>
+[    5.005510] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
+[    5.005960] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 117, name: kunit_try_catch
+[    5.006219] preempt_count: 1, expected: 0
+[    5.006414] 1 lock held by kunit_try_catch/117:
+[    5.006590]  #0: 833b9010 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
+[    5.007493] irq event stamp: 162
+[    5.007627] hardirqs last  enabled at (161): [<80786738>] crng_make_state+0x1a0/0x294
+[    5.007871] hardirqs last disabled at (162): [<80c531ec>] _raw_spin_lock_irqsave+0x7c/0x80
+[    5.008119] softirqs last  enabled at (0): [<801110ac>] copy_process+0x810/0x2138
+[    5.008356] softirqs last disabled at (0): [<00000000>] 0x0
+[    5.008688] CPU: 0 PID: 117 Comm: kunit_try_catch Tainted: G                 N 6.4.4-rc3-g0e8d2fdfb188 #1
+[    5.009011] Hardware name: Generic DT based system
+[    5.009277]  unwind_backtrace from show_stack+0x18/0x1c
+[    5.009497]  show_stack from dump_stack_lvl+0x38/0x5c
+[    5.009676]  dump_stack_lvl from __might_resched+0x188/0x2d0
+[    5.009860]  __might_resched from __kmem_cache_alloc_node+0x1dc/0x25c
+[    5.010061]  __kmem_cache_alloc_node from kmalloc_trace+0x30/0xc8
+[    5.010254]  kmalloc_trace from regcache_rbtree_write+0x26c/0x468
+[    5.010446]  regcache_rbtree_write from _regmap_write+0x88/0x140
+[    5.010634]  _regmap_write from regmap_write+0x44/0x68
+[    5.010803]  regmap_write from basic_read_write+0x8c/0x270
+[    5.010980]  basic_read_write from kunit_try_run_case+0x48/0xa0
+
+Fixes: 28644c809f44 ("regmap: Add the rbtree cache support")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/ee59d128-413c-48ad-a3aa-d9d350c80042@roeck-us.net/
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/58f12a07-5f4b-4a8f-ab84-0a42d1908cb9@moroto.mountain
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/fsl_imx8_ddr_perf.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ drivers/base/regmap/regcache-rbtree.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
-index e09bbf3890c49..8dfb67530d6bc 100644
---- a/drivers/perf/fsl_imx8_ddr_perf.c
-+++ b/drivers/perf/fsl_imx8_ddr_perf.c
-@@ -82,6 +82,7 @@ struct ddr_pmu {
- 	const struct fsl_ddr_devtype_data *devtype_data;
- 	int irq;
- 	int id;
-+	int active_counter;
- };
+diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
+index fabf87058d80b..ae6b8788d5f3f 100644
+--- a/drivers/base/regmap/regcache-rbtree.c
++++ b/drivers/base/regmap/regcache-rbtree.c
+@@ -277,7 +277,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
  
- enum ddr_perf_filter_capabilities {
-@@ -414,6 +415,10 @@ static void ddr_perf_event_start(struct perf_event *event, int flags)
+ 	blk = krealloc(rbnode->block,
+ 		       blklen * map->cache_word_size,
+-		       GFP_KERNEL);
++		       map->alloc_flags);
+ 	if (!blk)
+ 		return -ENOMEM;
  
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, true);
+@@ -286,7 +286,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
+ 	if (BITS_TO_LONGS(blklen) > BITS_TO_LONGS(rbnode->blklen)) {
+ 		present = krealloc(rbnode->cache_present,
+ 				   BITS_TO_LONGS(blklen) * sizeof(*present),
+-				   GFP_KERNEL);
++				   map->alloc_flags);
+ 		if (!present)
+ 			return -ENOMEM;
  
-+	if (!pmu->active_counter++)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, true);
-+
- 	hwc->state = 0;
- }
+@@ -320,7 +320,7 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	const struct regmap_range *range;
+ 	int i;
  
-@@ -468,6 +473,10 @@ static void ddr_perf_event_stop(struct perf_event *event, int flags)
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, false);
- 	ddr_perf_event_update(event);
+-	rbnode = kzalloc(sizeof(*rbnode), GFP_KERNEL);
++	rbnode = kzalloc(sizeof(*rbnode), map->alloc_flags);
+ 	if (!rbnode)
+ 		return NULL;
  
-+	if (!--pmu->active_counter)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, false);
-+
- 	hwc->state |= PERF_HES_STOPPED;
- }
+@@ -346,13 +346,13 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	}
  
-@@ -486,25 +495,10 @@ static void ddr_perf_event_del(struct perf_event *event, int flags)
+ 	rbnode->block = kmalloc_array(rbnode->blklen, map->cache_word_size,
+-				      GFP_KERNEL);
++				      map->alloc_flags);
+ 	if (!rbnode->block)
+ 		goto err_free;
  
- static void ddr_perf_pmu_enable(struct pmu *pmu)
- {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	/* enable cycle counter if cycle is not active event list */
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      true);
- }
+ 	rbnode->cache_present = kcalloc(BITS_TO_LONGS(rbnode->blklen),
+ 					sizeof(*rbnode->cache_present),
+-					GFP_KERNEL);
++					map->alloc_flags);
+ 	if (!rbnode->cache_present)
+ 		goto err_free_block;
  
- static void ddr_perf_pmu_disable(struct pmu *pmu)
- {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      false);
- }
- 
- static int ddr_perf_init(struct ddr_pmu *pmu, void __iomem *base,
 -- 
 2.40.1
 
