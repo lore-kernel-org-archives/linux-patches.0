@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2916FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A3CC433C8;
-	Sun, 17 Sep 2023 19:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31AA63B3
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:20:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D59DC433C7;
+	Sun, 17 Sep 2023 19:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978421;
-	bh=Sb3G0DRXqlR+3yge2tpBe3D60g4AtKyGAX1UAnYlEW0=;
+	s=korg; t=1694978424;
+	bh=mgCeKJsHxElS+ZIDRPIv72eqsJVmRilawhiH2UpRYLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBUIFmFuon/pUytEAKD8xXIUYJUYucVmsRMUQUEUtwgXC4oEvTlJr062FxF7Pp8HC
-	 1d9E95URMIYlkJIDz+X5Kk4shot4UCe7/loC6CBpH9ArXcR7h36AhgRcdisF5LZ47r
-	 SzzHQO233vnGeZpOP4FUFCJIoKdDYJ3MZN1KZSnU=
+	b=wBmOfW1+hVYBW+FZTSwjHDKznv6M4o5QD5enjVX/gzdrbMZ8uvhHIacVI2ARTbHrN
+	 TM5WeTCUNvf0jSDZ61rm0oTUgkx3Snkzu7XI9xsDOqOF41hA7lwXyOLj6otRt/PDbo
+	 rFMamyy1fy1fgCFmoB2fJPR1kwCygLoNP6NjBPls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/406] media: pulse8-cec: handle possible ping error
-Date: Sun, 17 Sep 2023 21:08:03 +0200
-Message-ID: <20230917191101.924576227@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 020/406] nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
+Date: Sun, 17 Sep 2023 21:07:54 +0200
+Message-ID: <20230917191101.685764193@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,42 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 92cbf865ea2e0f2997ff97815c6db182eb23df1b ]
+commit f83913f8c5b882a312e72b7669762f8a5c9385e4 upstream.
 
-Handle (and warn about) possible error waiting for MSGCODE_PING result.
+A syzbot stress test reported that create_empty_buffers() called from
+nilfs_lookup_dirty_data_buffers() can cause a general protection fault.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Analysis using its reproducer revealed that the back reference "mapping"
+from a page/folio has been changed to NULL after dirty page/folio gang
+lookup in nilfs_lookup_dirty_data_buffers().
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by excluding pages/folios from being collected if, after
+acquiring a lock on each page/folio, its back reference "mapping" differs
+from the pointer to the address space struct that held the page/folio.
+
+Link: https://lkml.kernel.org/r/20230805132038.6435-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000002930a705fc32b231@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/usb/pulse8/pulse8-cec.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+fs/nilfs2/segment.c | 5 +++++
+ fs/nilfs2/segment.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/cec/usb/pulse8/pulse8-cec.c b/drivers/media/cec/usb/pulse8/pulse8-cec.c
-index 04b13cdc38d2c..ba67587bd43ec 100644
---- a/drivers/media/cec/usb/pulse8/pulse8-cec.c
-+++ b/drivers/media/cec/usb/pulse8/pulse8-cec.c
-@@ -809,8 +809,11 @@ static void pulse8_ping_eeprom_work_handler(struct work_struct *work)
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -730,6 +730,11 @@ static size_t nilfs_lookup_dirty_data_bu
+ 		struct page *page = pvec.pages[i];
  
- 	mutex_lock(&pulse8->lock);
- 	cmd = MSGCODE_PING;
--	pulse8_send_and_wait(pulse8, &cmd, 1,
--			     MSGCODE_COMMAND_ACCEPTED, 0);
-+	if (pulse8_send_and_wait(pulse8, &cmd, 1,
-+				 MSGCODE_COMMAND_ACCEPTED, 0)) {
-+		dev_warn(pulse8->dev, "failed to ping EEPROM\n");
-+		goto unlock;
-+	}
- 
- 	if (pulse8->vers < 2)
- 		goto unlock;
--- 
-2.40.1
-
+ 		lock_page(page);
++		if (unlikely(page->mapping != mapping)) {
++			/* Exclude pages removed from the address space */
++			unlock_page(page);
++			continue;
++		}
+ 		if (!page_has_buffers(page))
+ 			create_empty_buffers(page, i_blocksize(inode), 0);
+ 		unlock_page(page);
 
 
