@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0528B6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189EEC433C8;
-	Sun, 17 Sep 2023 19:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362406FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D9BC433C8;
+	Sun, 17 Sep 2023 19:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978989;
-	bh=Pp1FdQPZON8lGUZA9hufGB3Z65PgVmV3gWthf/tB/eQ=;
+	s=korg; t=1694978993;
+	bh=Z8iQkIBdP4DJS5ywdVGAWzgQyIHFi07cLIafG8D/bgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBxzYffrE52rJPeWPZgzpACCLZhbI7Zwz7kxRtEvJntT48eXqGEp60IKryMOa7Uai
-	 llZX/Ebst1YQzBWfGDMr5oIEh3WMThajuSAZ7PdF07+55UY2Saf/zVAeq+/XoBUTrj
-	 xBg9bkYvE5YWqP0DZljeyN1S2qou/t6PK2tRd0xg=
+	b=hFO6rfLiiKhNTU16tKoI6Uj6OLlzr8YUGTjUFBJOCv0tkdt4NwI50chOzxpFZ2KXM
+	 ZS8U5jj7irRF1EKmk5qD2w189ODozzsVS1VGErhcDUf0ZsQ6k30jmIu83kHcDlzYH9
+	 d0EwuGGabU7f/ydm2Ewtu7wuiDw9JlM2j58vlGhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/406] PCI/ASPM: Use RMW accessors for changing LNKCTL
-Date: Sun, 17 Sep 2023 21:10:36 +0200
-Message-ID: <20230917191106.008569369@linuxfoundation.org>
+Subject: [PATCH 5.10 165/406] drm/mediatek: Fix potential memory leak if vmap() fail
+Date: Sun, 17 Sep 2023 21:10:19 +0200
+Message-ID: <20230917191105.539236122@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -36,106 +38,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
+[ Upstream commit 379091e0f6d179d1a084c65de90fa44583b14a70 ]
 
-Don't assume that the device is fully under the control of ASPM and use RMW
-capability accessors which do proper locking to avoid losing concurrent
-updates to the register values.
+Also return -ENOMEM if such a failure happens, the implement should take
+responsibility for the error handling.
 
-If configuration fails in pcie_aspm_configure_common_clock(), the
-function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
-only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
-than the content of the whole LNKCTL registers. It aligns better with
-how pcie_lnkctl_clear_and_set() expects its parameter and makes the
-code more obvious to understand.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230706134000.130098-1-suijingfeng@loongson.cn/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 7a3cf8aaec256..ef6f0ceb92f9f 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -249,7 +249,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- {
- 	int same_clock = 1;
--	u16 reg16, parent_reg, child_reg[8];
-+	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
- 	struct pci_dev *child, *parent = link->pdev;
- 	struct pci_bus *linkbus = parent->subordinate;
- 	/*
-@@ -271,6 +271,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 29702dd8631d4..fe64bf2176f30 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -249,7 +249,11 @@ void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj)
  
- 	/* Port might be already in common clock mode */
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-+	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
- 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
- 		bool consistent = true;
- 
-@@ -287,34 +288,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- 		pci_info(parent, "ASPM: current common clock configuration is inconsistent, reconfiguring\n");
- 	}
- 
-+	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
- 	/* Configure downstream component, all functions */
- 	list_for_each_entry(child, &linkbus->devices, bus_list) {
- 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
--		child_reg[PCI_FUNC(child->devfn)] = reg16;
--		if (same_clock)
--			reg16 |= PCI_EXP_LNKCTL_CCC;
--		else
--			reg16 &= ~PCI_EXP_LNKCTL_CCC;
--		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
-+		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
-+		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, ccc);
- 	}
- 
- 	/* Configure upstream component */
--	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
--	parent_reg = reg16;
--	if (same_clock)
--		reg16 |= PCI_EXP_LNKCTL_CCC;
--	else
--		reg16 &= ~PCI_EXP_LNKCTL_CCC;
--	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
-+	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CCC, ccc);
- 
- 	if (pcie_retrain_link(link)) {
- 
- 		/* Training failed. Restore common clock configurations */
- 		pci_err(parent, "ASPM: Could not configure common clock\n");
- 		list_for_each_entry(child, &linkbus->devices, bus_list)
--			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
--					   child_reg[PCI_FUNC(child->devfn)]);
--		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
-+			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+							   PCI_EXP_LNKCTL_CCC,
-+							   child_old_ccc[PCI_FUNC(child->devfn)]);
-+		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
- 	}
- }
+ 	mtk_gem->kvaddr = vmap(mtk_gem->pages, npages, VM_MAP,
+ 			       pgprot_writecombine(PAGE_KERNEL));
+-
++	if (!mtk_gem->kvaddr) {
++		kfree(sgt);
++		kfree(mtk_gem->pages);
++		return -ENOMEM;
++	}
+ out:
+ 	kfree(sgt);
  
 -- 
 2.40.1
