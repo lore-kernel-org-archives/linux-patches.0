@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC6A6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6C4C433C8;
-	Sun, 17 Sep 2023 20:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5026FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90019C433C8;
+	Sun, 17 Sep 2023 20:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981637;
-	bh=4pplBei5Wg7KZW7QUqFaQabNJfZX4g5OAjQ7xtKudYU=;
+	s=korg; t=1694981641;
+	bh=dXaDsgpMPvbqsu8mBBUjXVnKhWtL8IZA6oq494jqK9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WiC5IuzLPz70Vzz+KeI9vs7cM4JFbu21kndRTA/lCMCla6dFR/TucFXEPOCRpsfHL
-	 R42GqKK/56SULAzwJeowoFpod4dHGsOo7sGxIoeOho5zZ6sSWSlBsVAlBP7P2+dcVw
-	 i/clBovSO0PCiAP/VIulKWqbw2rEFvUKYHCI3U5s=
+	b=r317037czc4T3jfS1BmONvBPhDjZufjgrP5uEC3D05kjkoA/UypU8654zC2YbHIyo
+	 d7tC4UWn08Z9z3kA3AXikeRFQ9T+XD2Bm9DW2/AMeD8Zd1LvqvcS0cZQ2ALu/OdTO8
+	 rVp/rUlLz8GWDzmIXcVuONTs+Hktk4Prg2BMz+M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Fischer <devlists@wefi.net>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.1 150/219] ata: ahci: Add Elkhart Lake AHCI controller
-Date: Sun, 17 Sep 2023 21:14:37 +0200
-Message-ID: <20230917191046.443604604@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 082/511] hwrng: nomadik - keep clock enabled while hwrng is registered
+Date: Sun, 17 Sep 2023 21:08:29 +0200
+Message-ID: <20230917191115.851791400@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -33,65 +34,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Werner Fischer <devlists@wefi.net>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 2a2df98ec592667927b5c1351afa6493ea125c9f upstream.
+[ Upstream commit 039980de89dc9dd757418d6f296e4126cc3f86c3 ]
 
-Elkhart Lake is the successor of Apollo Lake and Gemini Lake. These
-CPUs and their PCHs are used in mobile and embedded environments.
+The nomadik driver uses devres to register itself with the hwrng core,
+the driver will be unregistered from hwrng when its device goes out of
+scope. This happens after the driver's remove function is called.
 
-With this patch I suggest that Elkhart Lake SATA controllers [1] should
-use the default LPM policy for mobile chipsets.
-The disadvantage of missing hot-plug support with this setting should
-not be an issue, as those CPUs are used in embedded environments and
-not in servers with hot-plug backplanes.
+However, nomadik's clock is disabled in the remove function. There's a
+short timeframe where nomadik is still registered with the hwrng core
+although its clock is disabled. I suppose the clock must be active to
+access the hardware and serve requests from the hwrng core.
 
-We discovered that the Elkhart Lake SATA controllers have been missing
-in ahci.c after a customer reported the throttling of his SATA SSD
-after a short period of higher I/O. We determined the high temperature
-of the SSD controller in idle mode as the root cause for that.
+Switch to devm_clk_get_enabled and let devres disable the clock and
+unregister the hwrng. This avoids the race condition.
 
-Depending on the used SSD, we have seen up to 1.8 Watt lower system
-idle power usage and up to 30°C lower SSD controller temperatures in
-our tests, when we set med_power_with_dipm manually. I have provided a
-table showing seven different SATA SSDs from ATP, Intel/Solidigm and
-Samsung [2].
-
-Intel lists a total of 3 SATA controller IDs (4B60, 4B62, 4B63) in [1]
-for those mobile PCHs.
-This commit just adds 0x4b63 as I do not have test systems with 0x4b60
-and 0x4b62 SATA controllers.
-I have tested this patch with a system which uses 0x4b63 as SATA
-controller.
-
-[1] https://sata-io.org/product/8803
-[2] https://www.thomas-krenn.com/en/wiki/SATA_Link_Power_Management#Example_LES_v4
-
-Signed-off-by: Werner Fischer <devlists@wefi.net>
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/hw_random/nomadik-rng.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -422,6 +422,8 @@ static const struct pci_device_id ahci_p
- 	{ PCI_VDEVICE(INTEL, 0x34d3), board_ahci_low_power }, /* Ice Lake LP AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d3), board_ahci_low_power }, /* Comet Lake PCH-U AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_low_power }, /* Comet Lake PCH RAID */
-+	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
-+	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_low_power }, /* Elkhart Lake AHCI */
+diff --git a/drivers/char/hw_random/nomadik-rng.c b/drivers/char/hw_random/nomadik-rng.c
+index e8f9621e79541..3774adf903a83 100644
+--- a/drivers/char/hw_random/nomadik-rng.c
++++ b/drivers/char/hw_random/nomadik-rng.c
+@@ -13,8 +13,6 @@
+ #include <linux/clk.h>
+ #include <linux/err.h>
  
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
+-static struct clk *rng_clk;
+-
+ static int nmk_rng_read(struct hwrng *rng, void *data, size_t max, bool wait)
+ {
+ 	void __iomem *base = (void __iomem *)rng->priv;
+@@ -36,21 +34,20 @@ static struct hwrng nmk_rng = {
+ 
+ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
+ {
++	struct clk *rng_clk;
+ 	void __iomem *base;
+ 	int ret;
+ 
+-	rng_clk = devm_clk_get(&dev->dev, NULL);
++	rng_clk = devm_clk_get_enabled(&dev->dev, NULL);
+ 	if (IS_ERR(rng_clk)) {
+ 		dev_err(&dev->dev, "could not get rng clock\n");
+ 		ret = PTR_ERR(rng_clk);
+ 		return ret;
+ 	}
+ 
+-	clk_prepare_enable(rng_clk);
+-
+ 	ret = amba_request_regions(dev, dev->dev.init_name);
+ 	if (ret)
+-		goto out_clk;
++		return ret;
+ 	ret = -ENOMEM;
+ 	base = devm_ioremap(&dev->dev, dev->res.start,
+ 			    resource_size(&dev->res));
+@@ -64,15 +61,12 @@ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
+ 
+ out_release:
+ 	amba_release_regions(dev);
+-out_clk:
+-	clk_disable_unprepare(rng_clk);
+ 	return ret;
+ }
+ 
+ static void nmk_rng_remove(struct amba_device *dev)
+ {
+ 	amba_release_regions(dev);
+-	clk_disable_unprepare(rng_clk);
+ }
+ 
+ static const struct amba_id nmk_rng_ids[] = {
+-- 
+2.40.1
+
 
 
