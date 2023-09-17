@@ -1,29 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657287461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D5CC433C8;
-	Sun, 17 Sep 2023 19:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BEA7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F5C433CB;
+	Sun, 17 Sep 2023 19:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980252;
-	bh=+zxxHBPprBkPfKpGfZT04Fuk/UBfcBKT1KbWid0TP1A=;
+	s=korg; t=1694980255;
+	bh=M3AKh6KQKt+8WdMFk6UOGvMfyzzadE+EGT7aXdguJao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ci5B9QwLF5Xossc/fBBMHhBnzaWszes/pxSLgEcyNGn6HQfW4No7uZO+SKEpKQiUS
-	 A1+JR+iR9R/Yvaz7eJ6I2PMHVA3vI5SEDP7qEtZrO0HbFzPx2s8CiE3jsOBP9i1HVv
-	 Nkw8OJwQtA2+g1VZyA3n6UboG0mw24vkFyNKRCGc=
+	b=Cf7ZBq9eLcvkfsTlwJv9MI9p+FV5DiRBdaHwHnwlxrOi9PGGlV7mR1Alm61UE80MH
+	 2I9SEahL24UGZcduKJsTh3fi7rmETtJ+eibL3CfopDEMb7HGkHjFdG93GwkXATqdja
+	 m8qp44uq0b90JhcyR6Y1O5E5ty3ROcL0NkbQzkk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Ian Rogers <irogers@google.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 101/285] drm/i915: mark requests for GuC virtual engines to avoid use-after-free
-Date: Sun, 17 Sep 2023 21:11:41 +0200
-Message-ID: <20230917191055.172929036@linuxfoundation.org>
+Subject: [PATCH 6.5 092/285] perf vendor events arm64: Remove L1D_CACHE_LMISS from AmpereOne list
+Date: Sun, 17 Sep 2023 21:11:32 +0200
+Message-ID: <20230917191054.880020905@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,85 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 
-[ Upstream commit 5eefc5307c983b59344a4cb89009819f580c84fa ]
+[ Upstream commit b8af10062df3c23fe002c3f187389bb263b3eb20 ]
 
-References to i915_requests may be trapped by userspace inside a
-sync_file or dmabuf (dma-resv) and held indefinitely across different
-proceses. To counter-act the memory leaks, we try to not to keep
-references from the request past their completion.
-On the other side on fence release we need to know if rq->engine
-is valid and points to hw engine (true for non-virtual requests).
-To make it possible extra bit has been added to rq->execution_mask,
-for marking virtual engines.
+amperene/cache.json file tried to include L1D_CACHE_LMISS while it
+doesn't exist in common-and-microarch.json. While this bug doesn't seem to
+cause issue in newer kernels with jevents.py script, it prevents building
+older perf tools with the backported patch.
 
-Fixes: bcb9aa45d5a0 ("Revert "drm/i915: Hold reference to intel_context over life of i915_request"")
-Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821153035.3903006-1-andrzej.hajda@intel.com
-(cherry picked from commit 280410677af763f3871b93e794a199cfcf6fb580)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: a9650b7f6fc09d16 ("perf vendor events arm64: Add AmpereOne core PMU events")
+Reported-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Closes: https://lore.kernel.org/all/76bb2e47-ce44-76ae-838e-53279047084d@oracle.com/
+Link: https://lore.kernel.org/r/20230803211331.140553-2-ilkka@os.amperecomputing.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_types.h      | 1 +
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 3 +++
- drivers/gpu/drm/i915/i915_request.c               | 7 ++-----
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ tools/perf/pmu-events/arch/arm64/ampere/ampereone/cache.json | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_types.h b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-index e99a6fa03d453..a7e6775980043 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_types.h
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-@@ -58,6 +58,7 @@ struct i915_perf_group;
- 
- typedef u32 intel_engine_mask_t;
- #define ALL_ENGINES ((intel_engine_mask_t)~0ul)
-+#define VIRTUAL_ENGINES BIT(BITS_PER_TYPE(intel_engine_mask_t) - 1)
- 
- struct intel_hw_status_page {
- 	struct list_head timelines;
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index a0e3ef1c65d24..b5b7f2fe8c78e 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -5470,6 +5470,9 @@ guc_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
- 
- 	ve->base.flags = I915_ENGINE_IS_VIRTUAL;
- 
-+	BUILD_BUG_ON(ilog2(VIRTUAL_ENGINES) < I915_NUM_ENGINES);
-+	ve->base.mask = VIRTUAL_ENGINES;
-+
- 	intel_context_init(&ve->context, &ve->base);
- 
- 	for (n = 0; n < count; n++) {
-diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 833b73edefdbb..eb2a3000ad66b 100644
---- a/drivers/gpu/drm/i915/i915_request.c
-+++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -134,9 +134,7 @@ static void i915_fence_release(struct dma_fence *fence)
- 	i915_sw_fence_fini(&rq->semaphore);
- 
- 	/*
--	 * Keep one request on each engine for reserved use under mempressure
--	 * do not use with virtual engines as this really is only needed for
--	 * kernel contexts.
-+	 * Keep one request on each engine for reserved use under mempressure.
- 	 *
- 	 * We do not hold a reference to the engine here and so have to be
- 	 * very careful in what rq->engine we poke. The virtual engine is
-@@ -166,8 +164,7 @@ static void i915_fence_release(struct dma_fence *fence)
- 	 * know that if the rq->execution_mask is a single bit, rq->engine
- 	 * can be a physical engine with the exact corresponding mask.
- 	 */
--	if (!intel_engine_is_virtual(rq->engine) &&
--	    is_power_of_2(rq->execution_mask) &&
-+	if (is_power_of_2(rq->execution_mask) &&
- 	    !cmpxchg(&rq->engine->request_pool, NULL, rq))
- 		return;
- 
+diff --git a/tools/perf/pmu-events/arch/arm64/ampere/ampereone/cache.json b/tools/perf/pmu-events/arch/arm64/ampere/ampereone/cache.json
+index fc06330542116..7a2b7b200f144 100644
+--- a/tools/perf/pmu-events/arch/arm64/ampere/ampereone/cache.json
++++ b/tools/perf/pmu-events/arch/arm64/ampere/ampereone/cache.json
+@@ -92,9 +92,6 @@
+     {
+         "ArchStdEvent": "L1D_CACHE_LMISS_RD"
+     },
+-    {
+-        "ArchStdEvent": "L1D_CACHE_LMISS"
+-    },
+     {
+         "ArchStdEvent": "L1I_CACHE_LMISS"
+     },
 -- 
 2.40.1
 
