@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF4D7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E210C433C7;
-	Sun, 17 Sep 2023 19:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFA97461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B33C433C8;
+	Sun, 17 Sep 2023 19:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980074;
-	bh=eGMwnej6m+ZnPJxqfDhehVsGkQ00rYu7rFlBh3oFOi4=;
+	s=korg; t=1694980078;
+	bh=as389TByuzmfIxj6W3nie1aVtyl7erOJgiRjG/kO0Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgbKZ7WeDaTJ3seqrKy8/9Kjz4wMZpe3MX+zmyXlI/WmOUzSHSgLG3ZL5SZxZ96+K
-	 F/D/HYLyqiVL3xCXkKDxX8iJ+TGPF21yVKBQX4UH9xpMDQOhs8KGhY9WUMim2hNY09
-	 8AholiPUZUr8Btd+BcFKDa1lix8YuKR4avvijBCc=
+	b=1Rswc55khFwmQKnePCdEKwOFDzi6Tv6EwE4KTDVo5un/RHJDClAbQxG1MiLbr3S3e
+	 aREeWlY5nDRnf+yFvHAMpZeO9zgv7/KSKvbwSjhxI7LLdsjqXgNs24fb1vjhFBjYZl
+	 18KIOUyEWB7FSr5YhZEppXlQAKe0Yo3ZXS47T2WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Budankov <alexey.budankov@linux.intel.com>,
-	Jeremie Galarneau <jeremie.galarneau@efficios.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kate Stewart <kstewart@linuxfoundation.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linaro.org>,
 	Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>,
-	Mukesh Ojha <mojha@codeaurora.org>,
-	Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Shawn Landden <shawn@git.icu>,
-	Song Liu <songliubraving@fb.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tzvetomir Stoyanov <tstoyanov@vmware.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Ross Zwisler <zwisler@chromium.org>,
+	Sean Christopherson <seanjc@google.com>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 089/285] perf top: Dont pass an ERR_PTR() directly to perf_session__delete()
-Date: Sun, 17 Sep 2023 21:11:29 +0200
-Message-ID: <20230917191054.783484646@linuxfoundation.org>
+Subject: [PATCH 6.5 090/285] perf lock: Dont pass an ERR_PTR() directly to perf_session__delete()
+Date: Sun, 17 Sep 2023 21:11:30 +0200
+Message-ID: <20230917191054.818124459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -57,7 +62,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ef23cb593304bde0cc046fd4cc83ae7ea2e24f16 ]
+[ Upstream commit abaf1e0355abb050f9c11d2d13a513caec80f7ad ]
 
 While debugging a segfault on 'perf lock contention' without an
 available perf.data file I noticed that it was basically calling:
@@ -92,44 +97,45 @@ Resulting in:
 So just set it to NULL after using PTR_ERR(session) to decode the error
 as perf_session__delete(NULL) is supported.
 
-The same problem was found in 'perf top' after an audit of all
-perf_session__new() failure handling.
-
-Fixes: 6ef81c55a2b6584c ("perf session: Return error code for perf_session__new() function on failure")
+Fixes: eef4fee5e52071d5 ("perf lock: Dynamically allocate lockhash_table")
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jeremie Galarneau <jeremie.galarneau@efficios.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kate Stewart <kstewart@linuxfoundation.org>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Mamatha Inamdar <mamatha4@linux.vnet.ibm.com>
-Cc: Mukesh Ojha <mojha@codeaurora.org>
-Cc: Nageswara R Sastry <rnsastry@linux.vnet.ibm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Cc: Shawn Landden <shawn@git.icu>
-Cc: Song Liu <songliubraving@fb.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tzvetomir Stoyanov <tstoyanov@vmware.com>
-Link: https://lore.kernel.org/lkml/ZN4Q2rxxsL08A8rd@kernel.org
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Ross Zwisler <zwisler@chromium.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/lkml/ZN4R1AYfsD2J8lRs@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-top.c | 1 +
+ tools/perf/builtin-lock.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
-index 1baa2acb3cedd..ea8c7eca5eeed 100644
---- a/tools/perf/builtin-top.c
-+++ b/tools/perf/builtin-top.c
-@@ -1805,6 +1805,7 @@ int cmd_top(int argc, const char **argv)
- 	top.session = perf_session__new(NULL, NULL);
- 	if (IS_ERR(top.session)) {
- 		status = PTR_ERR(top.session);
-+		top.session = NULL;
- 		goto out_delete_evlist;
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index c15386cb10331..0cf1c5a2e0323 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -2052,6 +2052,7 @@ static int __cmd_contention(int argc, const char **argv)
+ 	if (IS_ERR(session)) {
+ 		pr_err("Initializing perf session failed\n");
+ 		err = PTR_ERR(session);
++		session = NULL;
+ 		goto out_delete;
  	}
  
 -- 
