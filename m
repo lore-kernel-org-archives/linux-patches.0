@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214937461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2079BC433C7;
-	Sun, 17 Sep 2023 19:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A4A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAB8C433C8;
+	Sun, 17 Sep 2023 19:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980690;
-	bh=iLxdRoywkauh7b2Apk0BQR3LmdjNrX5WECw+la157RI=;
+	s=korg; t=1694980694;
+	bh=AhU7LtrBHg72XaDGIf+LuFusXWOUnhZKgskNOJg62Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+lbHz/1e8YiZedA7hvMQu4bacCDMF15rIw17ln0Lv/yair3Zz0Drgj2B0jzlouB3
-	 VjD9a5NY5hJuzXOo/e/WbjkfTD3h7RHOJvu1Sq0sUbHhDcERSxvV0+30o2MUUtgP6H
-	 m/Aqp5Xb/PikcS9vagd9dCmm7HwS0gtM6+/cMRQ8=
+	b=SwrU+RbWAqbax1IyWgGT28E/6ofS5H/TBPsJy89Zb3gVcrIZOvGfO8Us8goSQk5zq
+	 5IhDadySk9Axw1wX/JOOMONvbO22ORPgJXTn0+R9bZMeL20GH5RKF7LUMwRZGoDjbc
+	 UGZWq1vXMS6pl914gXCbhGTk0Kp1bIw7GEyhDZSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"dengqiao.joey" <dengqiao.joey@bytedance.com>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.5 228/285] KVM: SVM: Set target pCPU during IRTE update if target vCPU is running
-Date: Sun, 17 Sep 2023 21:13:48 +0200
-Message-ID: <20230917191059.349171618@linuxfoundation.org>
+	Ciprian Regus <ciprian.regus@analog.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 259/285] net:ethernet:adi:adin1110: Fix forwarding offload
+Date: Sun, 17 Sep 2023 21:14:19 +0200
+Message-ID: <20230917191100.222135649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,95 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ciprian Regus <ciprian.regus@analog.com>
 
-commit f3cebc75e7425d6949d726bb8e937095b0aef025 upstream.
+[ Upstream commit 32530dba1bd48da4437d18d9a8dbc9d2826938a6 ]
 
-Update the target pCPU for IOMMU doorbells when updating IRTE routing if
-KVM is actively running the associated vCPU.  KVM currently only updates
-the pCPU when loading the vCPU (via avic_vcpu_load()), and so doorbell
-events will be delayed until the vCPU goes through a put+load cycle (which
-might very well "never" happen for the lifetime of the VM).
+Currently, when a new fdb entry is added (with both ports of the
+ADIN2111 bridged), the driver configures the MAC filters for the wrong
+port, which results in the forwarding being done by the host, and not
+actually hardware offloaded.
 
-To avoid inserting a stale pCPU, e.g. due to racing between updating IRTE
-routing and vCPU load/put, get the pCPU information from the vCPU's
-Physical APIC ID table entry (a.k.a. avic_physical_id_cache in KVM) and
-update the IRTE while holding ir_list_lock.  Add comments with --verbose
-enabled to explain exactly what is and isn't protected by ir_list_lock.
+The ADIN2111 offloads the forwarding by setting filters on the
+destination MAC address of incoming frames. Based on these, they may be
+routed to the other port. Thus, if a frame has to be forwarded from port
+1 to port 2, the required configuration for the ADDR_FILT_UPRn register
+should set the APPLY2PORT1 bit (instead of APPLY2PORT2, as it's
+currently the case).
 
-Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
-Reported-by: dengqiao.joey <dengqiao.joey@bytedance.com>
-Cc: stable@vger.kernel.org
-Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20230808233132.2499764-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/avic.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/net/ethernet/adi/adin1110.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -791,6 +791,7 @@ static int svm_ir_list_add(struct vcpu_s
- 	int ret = 0;
- 	unsigned long flags;
- 	struct amd_svm_iommu_ir *ir;
-+	u64 entry;
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index 1c009b485188d..ca66b747b7c5d 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -1385,7 +1385,7 @@ static int adin1110_fdb_add(struct adin1110_port_priv *port_priv,
+ 		return -ENOMEM;
  
- 	/**
- 	 * In some cases, the existing irte is updated and re-set,
-@@ -824,6 +825,18 @@ static int svm_ir_list_add(struct vcpu_s
- 	ir->data = pi->ir_data;
+ 	other_port = priv->ports[!port_priv->nr];
+-	port_rules = adin1110_port_rules(port_priv, false, true);
++	port_rules = adin1110_port_rules(other_port, false, true);
+ 	eth_broadcast_addr(mask);
  
- 	spin_lock_irqsave(&svm->ir_list_lock, flags);
-+
-+	/*
-+	 * Update the target pCPU for IOMMU doorbells if the vCPU is running.
-+	 * If the vCPU is NOT running, i.e. is blocking or scheduled out, KVM
-+	 * will update the pCPU info when the vCPU awkened and/or scheduled in.
-+	 * See also avic_vcpu_load().
-+	 */
-+	entry = READ_ONCE(*(svm->avic_physical_id_cache));
-+	if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK)
-+		amd_iommu_update_ga(entry & AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK,
-+				    true, pi->ir_data);
-+
- 	list_add(&ir->node, &svm->ir_list);
- 	spin_unlock_irqrestore(&svm->ir_list_lock, flags);
- out:
-@@ -1031,6 +1044,13 @@ void avic_vcpu_load(struct kvm_vcpu *vcp
- 	if (kvm_vcpu_is_blocking(vcpu))
- 		return;
- 
-+	/*
-+	 * Grab the per-vCPU interrupt remapping lock even if the VM doesn't
-+	 * _currently_ have assigned devices, as that can change.  Holding
-+	 * ir_list_lock ensures that either svm_ir_list_add() will consume
-+	 * up-to-date entry information, or that this task will wait until
-+	 * svm_ir_list_add() completes to set the new target pCPU.
-+	 */
- 	spin_lock_irqsave(&svm->ir_list_lock, flags);
- 
- 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
-@@ -1067,6 +1087,14 @@ void avic_vcpu_put(struct kvm_vcpu *vcpu
- 	if (!(entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK))
- 		return;
- 
-+	/*
-+	 * Take and hold the per-vCPU interrupt remapping lock while updating
-+	 * the Physical ID entry even though the lock doesn't protect against
-+	 * multiple writers (see above).  Holding ir_list_lock ensures that
-+	 * either svm_ir_list_add() will consume up-to-date entry information,
-+	 * or that this task will wait until svm_ir_list_add() completes to
-+	 * mark the vCPU as not running.
-+	 */
- 	spin_lock_irqsave(&svm->ir_list_lock, flags);
- 
- 	avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
+ 	return adin1110_write_mac_address(other_port, mac_nr, (u8 *)fdb->addr,
+-- 
+2.40.1
+
 
 
