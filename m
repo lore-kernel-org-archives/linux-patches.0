@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A35B6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D43C433C7;
-	Sun, 17 Sep 2023 19:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82A66FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B3BC433C8;
+	Sun, 17 Sep 2023 19:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980498;
-	bh=GzeTNBL/nlMt+TNWsg7NRSTNqHxgav3bbsz+IwrZxJg=;
+	s=korg; t=1694980501;
+	bh=Ee+0ya1oASvML6lsar80csuRInU+gy5hpNxe71fNiT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7UiH0XYtKm6u6YZspzmPkEvQUAFporJq/Z5IT5t0T3HXIClW4H0PFRvrMK08Amqo
-	 sEnJDxpMo6OTp0SAIzsZMaju6UxvCoMpV/ER9VueXLCptf4xqF4LqX5U75DYNgor8f
-	 nbaJQCASrfmhnc4iYVp4iQyQL8hGJO2B+H40iU60=
+	b=Xge3vwcBHOHarh1wKLRwNCgeMkjfU/DeHcP4H51HbsVMN3QO70V++7GGG7i8+/Gyl
+	 CM1tRDkVTBbF+ml9qa8j4d8geVWpdH2mzFl5uPZ5+JVPZaJ0NsCgwIpPpt4mcmL8pt
+	 cRw5ChAuZOR8m1ataiylP9uFoBiLOc33tvSAivfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 210/285] btrfs: scrub: avoid unnecessary csum tree search preparing stripes
-Date: Sun, 17 Sep 2023 21:13:30 +0200
-Message-ID: <20230917191058.835215222@linuxfoundation.org>
+Subject: [PATCH 6.5 211/285] btrfs: scrub: fix grouping of read IO
+Date: Sun, 17 Sep 2023 21:13:31 +0200
+Message-ID: <20230917191058.870881178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,249 +41,278 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-commit 3c771c194402ffe20d4de68d9fc21e703179a9ce upstream.
+commit ae76d8e3e1351aa1ba09cc68dab6866d356f2e17 upstream.
 
-One of the bottleneck of the new scrub code is the extra csum tree
-search.
+[REGRESSION]
+There are several regression reports about the scrub performance with
+v6.4 kernel.
 
-The old code would only do the csum tree search for each scrub bio,
-which can be as large as 512KiB, thus they can afford to allocate a new
-path each time.
+On a PCIe 3.0 device, the old v6.3 kernel can go 3GB/s scrub speed, but
+v6.4 can only go 1GB/s, an obvious 66% performance drop.
 
-But the new scrub code is doing csum tree search for each stripe, which
-is only 64KiB, this means we'd better re-use the same csum path during
-each search.
+[CAUSE]
+Iostat shows a very different behavior between v6.3 and v6.4 kernel:
 
-This patch would introduce a per-sctx path for csum tree search, as we
-don't need to re-allocate the path every time we need to do a csum tree
-search.
+  Device         r/s      rkB/s   rrqm/s  %rrqm r_await rareq-sz aqu-sz  %util
+  nvme0n1p3  9731.00 3425544.00 17237.00  63.92    2.18   352.02  21.18 100.00
+  nvme0n1p3 15578.00  993616.00     5.00   0.03    0.09    63.78   1.32 100.00
 
-With this change we can further improve the queue depth and improve the
-scrub read performance:
+The upper one is v6.3 while the lower one is v6.4.
 
-Before (with regression and cached extent tree path):
+There are several obvious differences:
+
+- Very few read merges
+  This turns out to be a behavior change that we no longer do bio
+  plug/unplug.
+
+- Very low aqu-sz
+  This is due to the submit-and-wait behavior of flush_scrub_stripes(),
+  and extra extent/csum tree search.
+
+Both behaviors are not that obvious on SATA SSDs, as SATA SSDs have NCQ
+to merge the reads, while SATA SSDs can not handle high queue depth well
+either.
+
+[FIX]
+For now this patch focuses on the read speed fix. Dev-replace replace
+speed needs more work.
+
+For the read part, we go two directions to fix the problems:
+
+- Re-introduce blk plug/unplug to merge read requests
+  This is pretty simple, and the behavior is pretty easy to observe.
+
+  This would enlarge the average read request size to 512K.
+
+- Introduce multi-group reads and no longer wait for each group
+  Instead of the old behavior, which submits 8 stripes and waits for
+  them, here we would enlarge the total number of stripes to 16 * 8.
+  Which is 8M per device, the same limit as the old scrub in-flight
+  bios size limit.
+
+  Now every time we fill a group (8 stripes), we submit them and
+  continue to next stripes.
+
+  Only when the full 16 * 8 stripes are all filled, we submit the
+  remaining ones (the last group), and wait for all groups to finish.
+  Then submit the repair writes and dev-replace writes.
+
+  This should enlarge the queue depth.
+
+This would greatly improve the merge rate (thus read block size) and
+queue depth:
+
+Before (with regression, and cached extent/csum path):
 
  Device         r/s      rkB/s   rrqm/s  %rrqm r_await rareq-sz aqu-sz  %util
- nvme0n1p3 15875.00 1013328.00    12.00   0.08    0.08    63.83   1.35 100.00
+ nvme0n1p3 20666.00 1318240.00    10.00   0.05    0.08    63.79   1.63 100.00
 
-After (with both cached extent/csum tree path):
+After (with all patches applied):
 
- nvme0n1p3 17759.00 1133280.00    10.00   0.06    0.08    63.81   1.50 100.00
+ nvme0n1p3  5165.00 2278304.00 30557.00  85.54    0.55   441.10   2.81 100.00
 
-Fixes: e02ee89baa66 ("btrfs: scrub: switch scrub_simple_mirror() to scrub_stripe infrastructure")
+i.e. 1287 to 2224 MB/s.
+
 CC: stable@vger.kernel.org # 6.4+
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file-item.c |   36 +++++++++++++++++++++++-------------
- fs/btrfs/file-item.h |    6 +++---
- fs/btrfs/raid56.c    |    4 ++--
- fs/btrfs/scrub.c     |   29 +++++++++++++++++++----------
- 4 files changed, 47 insertions(+), 28 deletions(-)
+ fs/btrfs/scrub.c |   96 ++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 71 insertions(+), 25 deletions(-)
 
---- a/fs/btrfs/file-item.c
-+++ b/fs/btrfs/file-item.c
-@@ -597,29 +597,37 @@ fail:
-  * Each bit represents a sector. Thus caller should ensure @csum_buf passed
-  * in is large enough to contain all csums.
-  */
--int btrfs_lookup_csums_bitmap(struct btrfs_root *root, u64 start, u64 end,
--			      u8 *csum_buf, unsigned long *csum_bitmap,
--			      bool search_commit)
-+int btrfs_lookup_csums_bitmap(struct btrfs_root *root, struct btrfs_path *path,
-+			      u64 start, u64 end, u8 *csum_buf,
-+			      unsigned long *csum_bitmap)
- {
- 	struct btrfs_fs_info *fs_info = root->fs_info;
- 	struct btrfs_key key;
--	struct btrfs_path *path;
- 	struct extent_buffer *leaf;
- 	struct btrfs_csum_item *item;
- 	const u64 orig_start = start;
-+	bool free_path = false;
- 	int ret;
- 
- 	ASSERT(IS_ALIGNED(start, fs_info->sectorsize) &&
- 	       IS_ALIGNED(end + 1, fs_info->sectorsize));
- 
--	path = btrfs_alloc_path();
--	if (!path)
--		return -ENOMEM;
--
--	if (search_commit) {
--		path->skip_locking = 1;
--		path->reada = READA_FORWARD;
--		path->search_commit_root = 1;
-+	if (!path) {
-+		path = btrfs_alloc_path();
-+		if (!path)
-+			return -ENOMEM;
-+		free_path = true;
-+	}
-+
-+	/* Check if we can reuse the previous path. */
-+	if (path->nodes[0]) {
-+		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
-+
-+		if (key.objectid == BTRFS_EXTENT_CSUM_OBJECTID &&
-+		    key.type == BTRFS_EXTENT_CSUM_KEY &&
-+		    key.offset <= start)
-+			goto search_forward;
-+		btrfs_release_path(path);
- 	}
- 
- 	key.objectid = BTRFS_EXTENT_CSUM_OBJECTID;
-@@ -656,6 +664,7 @@ int btrfs_lookup_csums_bitmap(struct btr
- 		}
- 	}
- 
-+search_forward:
- 	while (start <= end) {
- 		u64 csum_end;
- 
-@@ -712,7 +721,8 @@ int btrfs_lookup_csums_bitmap(struct btr
- 	}
- 	ret = 0;
- fail:
--	btrfs_free_path(path);
-+	if (free_path)
-+		btrfs_free_path(path);
- 	return ret;
- }
- 
---- a/fs/btrfs/file-item.h
-+++ b/fs/btrfs/file-item.h
-@@ -57,9 +57,9 @@ int btrfs_lookup_csums_range(struct btrf
- int btrfs_lookup_csums_list(struct btrfs_root *root, u64 start, u64 end,
- 			    struct list_head *list, int search_commit,
- 			    bool nowait);
--int btrfs_lookup_csums_bitmap(struct btrfs_root *root, u64 start, u64 end,
--			      u8 *csum_buf, unsigned long *csum_bitmap,
--			      bool search_commit);
-+int btrfs_lookup_csums_bitmap(struct btrfs_root *root, struct btrfs_path *path,
-+			      u64 start, u64 end, u8 *csum_buf,
-+			      unsigned long *csum_bitmap);
- void btrfs_extent_item_to_extent_map(struct btrfs_inode *inode,
- 				     const struct btrfs_path *path,
- 				     struct btrfs_file_extent_item *fi,
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -2112,8 +2112,8 @@ static void fill_data_csums(struct btrfs
- 		goto error;
- 	}
- 
--	ret = btrfs_lookup_csums_bitmap(csum_root, start, start + len - 1,
--					rbio->csum_buf, rbio->csum_bitmap, false);
-+	ret = btrfs_lookup_csums_bitmap(csum_root, NULL, start, start + len - 1,
-+					rbio->csum_buf, rbio->csum_bitmap);
- 	if (ret < 0)
- 		goto error;
- 	if (bitmap_empty(rbio->csum_bitmap, len >> fs_info->sectorsize_bits))
 --- a/fs/btrfs/scrub.c
 +++ b/fs/btrfs/scrub.c
-@@ -176,6 +176,7 @@ struct scrub_ctx {
+@@ -43,9 +43,20 @@ struct scrub_ctx;
+ /*
+  * The following value only influences the performance.
+  *
+- * This determines the batch size for stripe submitted in one go.
++ * This detemines how many stripes would be submitted in one go,
++ * which is 512KiB (BTRFS_STRIPE_LEN * SCRUB_STRIPES_PER_GROUP).
+  */
+-#define SCRUB_STRIPES_PER_SCTX	8	/* That would be 8 64K stripe per-device. */
++#define SCRUB_STRIPES_PER_GROUP		8
++
++/*
++ * How many groups we have for each sctx.
++ *
++ * This would be 8M per device, the same value as the old scrub in-flight bios
++ * size limit.
++ */
++#define SCRUB_GROUPS_PER_SCTX		16
++
++#define SCRUB_TOTAL_STRIPES		(SCRUB_GROUPS_PER_SCTX * SCRUB_STRIPES_PER_GROUP)
+ 
+ /*
+  * The following value times PAGE_SIZE needs to be large enough to match the
+@@ -172,7 +183,7 @@ struct scrub_stripe {
+ };
+ 
+ struct scrub_ctx {
+-	struct scrub_stripe	stripes[SCRUB_STRIPES_PER_SCTX];
++	struct scrub_stripe	stripes[SCRUB_TOTAL_STRIPES];
  	struct scrub_stripe	*raid56_data_stripes;
  	struct btrfs_fs_info	*fs_info;
  	struct btrfs_path	extent_path;
-+	struct btrfs_path	csum_path;
- 	int			first_free;
- 	int			cur_stripe;
- 	atomic_t		cancel_req;
-@@ -342,6 +343,8 @@ static noinline_for_stack struct scrub_c
- 	sctx->fs_info = fs_info;
- 	sctx->extent_path.search_commit_root = 1;
+@@ -317,10 +328,10 @@ static noinline_for_stack void scrub_fre
+ 	if (!sctx)
+ 		return;
+ 
+-	for (i = 0; i < SCRUB_STRIPES_PER_SCTX; i++)
++	for (i = 0; i < SCRUB_TOTAL_STRIPES; i++)
+ 		release_scrub_stripe(&sctx->stripes[i]);
+ 
+-	kfree(sctx);
++	kvfree(sctx);
+ }
+ 
+ static void scrub_put_ctx(struct scrub_ctx *sctx)
+@@ -335,7 +346,10 @@ static noinline_for_stack struct scrub_c
+ 	struct scrub_ctx *sctx;
+ 	int		i;
+ 
+-	sctx = kzalloc(sizeof(*sctx), GFP_KERNEL);
++	/* Since sctx has inline 128 stripes, it can go beyond 64K easily.  Use
++	 * kvzalloc().
++	 */
++	sctx = kvzalloc(sizeof(*sctx), GFP_KERNEL);
+ 	if (!sctx)
+ 		goto nomem;
+ 	refcount_set(&sctx->refs, 1);
+@@ -345,7 +359,7 @@ static noinline_for_stack struct scrub_c
  	sctx->extent_path.skip_locking = 1;
-+	sctx->csum_path.search_commit_root = 1;
-+	sctx->csum_path.skip_locking = 1;
- 	for (i = 0; i < SCRUB_STRIPES_PER_SCTX; i++) {
+ 	sctx->csum_path.search_commit_root = 1;
+ 	sctx->csum_path.skip_locking = 1;
+-	for (i = 0; i < SCRUB_STRIPES_PER_SCTX; i++) {
++	for (i = 0; i < SCRUB_TOTAL_STRIPES; i++) {
  		int ret;
  
-@@ -1472,6 +1475,7 @@ static void scrub_stripe_reset_bitmaps(s
-  */
- static int scrub_find_fill_first_stripe(struct btrfs_block_group *bg,
- 					struct btrfs_path *extent_path,
-+					struct btrfs_path *csum_path,
- 					struct btrfs_device *dev, u64 physical,
- 					int mirror_num, u64 logical_start,
- 					u32 logical_len,
-@@ -1563,9 +1567,9 @@ static int scrub_find_fill_first_stripe(
- 		 */
- 		ASSERT(BITS_PER_LONG >= BTRFS_STRIPE_LEN >> fs_info->sectorsize_bits);
+ 		ret = init_scrub_stripe(fs_info, &sctx->stripes[i]);
+@@ -1659,6 +1673,28 @@ static bool stripe_has_metadata_error(st
+ 	return false;
+ }
  
--		ret = btrfs_lookup_csums_bitmap(csum_root, stripe->logical,
--						stripe_end, stripe->csums,
--						&csum_bitmap, true);
-+		ret = btrfs_lookup_csums_bitmap(csum_root, csum_path,
-+						stripe->logical, stripe_end,
-+						stripe->csums, &csum_bitmap);
- 		if (ret < 0)
- 			goto out;
- 		if (ret > 0)
-@@ -1767,9 +1771,9 @@ static int queue_scrub_stripe(struct scr
++static void submit_initial_group_read(struct scrub_ctx *sctx,
++				      unsigned int first_slot,
++				      unsigned int nr_stripes)
++{
++	struct blk_plug plug;
++
++	ASSERT(first_slot < SCRUB_TOTAL_STRIPES);
++	ASSERT(first_slot + nr_stripes <= SCRUB_TOTAL_STRIPES);
++
++	scrub_throttle_dev_io(sctx, sctx->stripes[0].dev,
++			      btrfs_stripe_nr_to_offset(nr_stripes));
++	blk_start_plug(&plug);
++	for (int i = 0; i < nr_stripes; i++) {
++		struct scrub_stripe *stripe = &sctx->stripes[first_slot + i];
++
++		/* Those stripes should be initialized. */
++		ASSERT(test_bit(SCRUB_STRIPE_FLAG_INITIALIZED, &stripe->state));
++		scrub_submit_initial_read(sctx, stripe);
++	}
++	blk_finish_plug(&plug);
++}
++
+ static int flush_scrub_stripes(struct scrub_ctx *sctx)
+ {
+ 	struct btrfs_fs_info *fs_info = sctx->fs_info;
+@@ -1671,11 +1707,11 @@ static int flush_scrub_stripes(struct sc
  
- 	/* We can queue one stripe using the remaining slot. */
+ 	ASSERT(test_bit(SCRUB_STRIPE_FLAG_INITIALIZED, &sctx->stripes[0].state));
+ 
+-	scrub_throttle_dev_io(sctx, sctx->stripes[0].dev,
+-			      btrfs_stripe_nr_to_offset(nr_stripes));
+-	for (int i = 0; i < nr_stripes; i++) {
+-		stripe = &sctx->stripes[i];
+-		scrub_submit_initial_read(sctx, stripe);
++	/* Submit the stripes which are populated but not submitted. */
++	if (nr_stripes % SCRUB_STRIPES_PER_GROUP) {
++		const int first_slot = round_down(nr_stripes, SCRUB_STRIPES_PER_GROUP);
++
++		submit_initial_group_read(sctx, first_slot, nr_stripes - first_slot);
+ 	}
+ 
+ 	for (int i = 0; i < nr_stripes; i++) {
+@@ -1755,21 +1791,19 @@ static void raid56_scrub_wait_endio(stru
+ 
+ static int queue_scrub_stripe(struct scrub_ctx *sctx, struct btrfs_block_group *bg,
+ 			      struct btrfs_device *dev, int mirror_num,
+-			      u64 logical, u32 length, u64 physical)
++			      u64 logical, u32 length, u64 physical,
++			      u64 *found_logical_ret)
+ {
+ 	struct scrub_stripe *stripe;
+ 	int ret;
+ 
+-	/* No available slot, submit all stripes and wait for them. */
+-	if (sctx->cur_stripe >= SCRUB_STRIPES_PER_SCTX) {
+-		ret = flush_scrub_stripes(sctx);
+-		if (ret < 0)
+-			return ret;
+-	}
++	/*
++	 * There should always be one slot left, as caller filling the last
++	 * slot should flush them all.
++	 */
++	ASSERT(sctx->cur_stripe < SCRUB_TOTAL_STRIPES);
+ 
+ 	stripe = &sctx->stripes[sctx->cur_stripe];
+-
+-	/* We can queue one stripe using the remaining slot. */
  	scrub_reset_stripe(stripe);
--	ret = scrub_find_fill_first_stripe(bg, &sctx->extent_path, dev,
--					   physical, mirror_num, logical,
--					   length, stripe);
-+	ret = scrub_find_fill_first_stripe(bg, &sctx->extent_path,
-+					   &sctx->csum_path, dev, physical,
-+					   mirror_num, logical, length, stripe);
+ 	ret = scrub_find_fill_first_stripe(bg, &sctx->extent_path,
+ 					   &sctx->csum_path, dev, physical,
+@@ -1777,7 +1811,20 @@ static int queue_scrub_stripe(struct scr
  	/* Either >0 as no more extents or <0 for error. */
  	if (ret)
  		return ret;
-@@ -1788,6 +1792,7 @@ static int scrub_raid56_parity_stripe(st
- 	struct btrfs_raid_bio *rbio;
- 	struct btrfs_io_context *bioc = NULL;
- 	struct btrfs_path extent_path = { 0 };
-+	struct btrfs_path csum_path = { 0 };
- 	struct bio *bio;
- 	struct scrub_stripe *stripe;
- 	bool all_empty = true;
-@@ -1799,12 +1804,14 @@ static int scrub_raid56_parity_stripe(st
- 	ASSERT(sctx->raid56_data_stripes);
- 
- 	/*
--	 * For data stripe search, we cannot re-use the same extent path, as
--	 * the data stripe bytenr may be smaller than previous extent.  Thus we
--	 * have to use our own extent path.
-+	 * For data stripe search, we cannot re-use the same extent/csum paths,
-+	 * as the data stripe bytenr may be smaller than previous extent.  Thus
-+	 * we have to use our own extent/csum paths.
- 	 */
- 	extent_path.search_commit_root = 1;
- 	extent_path.skip_locking = 1;
-+	csum_path.search_commit_root = 1;
-+	csum_path.skip_locking = 1;
- 
- 	for (int i = 0; i < data_stripes; i++) {
- 		int stripe_index;
-@@ -1820,7 +1827,7 @@ static int scrub_raid56_parity_stripe(st
- 
- 		scrub_reset_stripe(stripe);
- 		set_bit(SCRUB_STRIPE_FLAG_NO_REPORT, &stripe->state);
--		ret = scrub_find_fill_first_stripe(bg, &extent_path,
-+		ret = scrub_find_fill_first_stripe(bg, &extent_path, &csum_path,
- 				map->stripes[stripe_index].dev, physical, 1,
- 				full_stripe_start + btrfs_stripe_nr_to_offset(i),
- 				BTRFS_STRIPE_LEN, stripe);
-@@ -1949,6 +1956,7 @@ static int scrub_raid56_parity_stripe(st
- 	btrfs_bio_counter_dec(fs_info);
- 
- 	btrfs_release_path(&extent_path);
-+	btrfs_release_path(&csum_path);
- out:
- 	return ret;
++	if (found_logical_ret)
++		*found_logical_ret = stripe->logical;
+ 	sctx->cur_stripe++;
++
++	/* We filled one group, submit it. */
++	if (sctx->cur_stripe % SCRUB_STRIPES_PER_GROUP == 0) {
++		const int first_slot = sctx->cur_stripe - SCRUB_STRIPES_PER_GROUP;
++
++		submit_initial_group_read(sctx, first_slot, SCRUB_STRIPES_PER_GROUP);
++	}
++
++	/* Last slot used, flush them all. */
++	if (sctx->cur_stripe == SCRUB_TOTAL_STRIPES)
++		return flush_scrub_stripes(sctx);
+ 	return 0;
  }
-@@ -2243,6 +2251,7 @@ out:
- 	if (!ret)
- 		ret = ret2;
- 	btrfs_release_path(&sctx->extent_path);
-+	btrfs_release_path(&sctx->csum_path);
  
- 	if (sctx->raid56_data_stripes) {
- 		for (int i = 0; i < nr_data_stripes(map); i++)
+@@ -1990,6 +2037,7 @@ static int scrub_simple_mirror(struct sc
+ 	path.skip_locking = 1;
+ 	/* Go through each extent items inside the logical range */
+ 	while (cur_logical < logical_end) {
++		u64 found_logical;
+ 		u64 cur_physical = physical + cur_logical - logical_start;
+ 
+ 		/* Canceled? */
+@@ -2014,7 +2062,7 @@ static int scrub_simple_mirror(struct sc
+ 
+ 		ret = queue_scrub_stripe(sctx, bg, device, mirror_num,
+ 					 cur_logical, logical_end - cur_logical,
+-					 cur_physical);
++					 cur_physical, &found_logical);
+ 		if (ret > 0) {
+ 			/* No more extent, just update the accounting */
+ 			sctx->stat.last_physical = physical + logical_length;
+@@ -2024,9 +2072,7 @@ static int scrub_simple_mirror(struct sc
+ 		if (ret < 0)
+ 			break;
+ 
+-		ASSERT(sctx->cur_stripe > 0);
+-		cur_logical = sctx->stripes[sctx->cur_stripe - 1].logical
+-			      + BTRFS_STRIPE_LEN;
++		cur_logical = found_logical + BTRFS_STRIPE_LEN;
+ 
+ 		/* Don't hold CPU for too long time */
+ 		cond_resched();
 
 
