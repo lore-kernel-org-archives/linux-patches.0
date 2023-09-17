@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AC86FDB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A689C433C8;
-	Sun, 17 Sep 2023 20:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5014D6FD6
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C8AC433C8;
+	Sun, 17 Sep 2023 20:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982397;
-	bh=WlkbM/y4MgXfnBX7TtBPeiqWsHjeB5ARgIvN+s7wJXo=;
+	s=korg; t=1694982401;
+	bh=WJ0zfYIjxfnyUZLhZnYMBkOgRem9CNdNCjDCCiLVlbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykI5P8yvdUWCOAQ0SKiDUnZJJN5QHWRzv6trVe1yyg/zFtttYzGbTDk1esV3RHEND
-	 LAQGTOYmZcT/yNWV5dEaUYdxVffydWdKbCi5Y/TFGCa742ZtYNBdczM9nNrxY/KwPV
-	 OzHkIukTbBCBNKOxDzHkfVEdsPMyMkmtQQnIhA2s=
+	b=wnYdgP80jGfYjO0SuyKBxeZnFiO5wPhu+fnGxP2UszlRMc3IpCWrQz+UQkMFHmQe9
+	 lsCxmIBC6mPCxbdTwPVW7LfJZCCvts/kUnRdpJdcoPq2tmzOvgaPxE0G22N7CBgTa3
+	 3x0e1ntXAKLbDXwWbWUn3b8XjX6uZcDEd7IQEESg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Marcovitch <dmarcovitch@nvidia.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/511] iommu/amd/iommu_v2: Fix pasid_state refcount dec hit 0 warning on pasid unbind
-Date: Sun, 17 Sep 2023 21:11:05 +0200
-Message-ID: <20230917191119.561169514@linuxfoundation.org>
+Subject: [PATCH 5.15 239/511] iommu: rockchip: Fix directory table address encoding
+Date: Sun, 17 Sep 2023 21:11:06 +0200
+Message-ID: <20230917191119.585429647@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,50 +41,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Marcovitch <dmarcovitch@nvidia.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 534103bcd52ca9c1fecbc70e717b4a538dc4ded8 ]
+[ Upstream commit 6df63b7ebdaf5fcd75dceedf6967d0761e56eca1 ]
 
-When unbinding pasid - a race condition exists vs outstanding page faults.
+The physical address to the directory table is currently encoded using
+the following bit layout for IOMMU v2.
 
-To prevent this, the pasid_state object contains a refcount.
-    * set to 1 on pasid bind
-    * incremented on each ppr notification start
-    * decremented on each ppr notification done
-    * decremented on pasid unbind
+ 31:12 - Address bit 31:0
+ 11: 4 - Address bit 39:32
 
-Since refcount_dec assumes that refcount will never reach 0:
-  the current implementation causes the following to be invoked on
-  pasid unbind:
-        REFCOUNT_WARN("decrement hit 0; leaking memory")
+This is also the bit layout used by the vendor kernel.
 
-Fix this issue by changing refcount_dec to refcount_dec_and_test
-to explicitly handle refcount=1.
+However, testing has shown that addresses to the directory/page tables
+and memory pages are all encoded using the same bit layout.
 
-Fixes: 8bc54824da4e ("iommu/amd: Convert from atomic_t to refcount_t on pasid_state->count")
-Signed-off-by: Daniel Marcovitch <dmarcovitch@nvidia.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230609105146.7773-2-vasant.hegde@amd.com
+IOMMU v1:
+ 31:12 - Address bit 31:0
+
+IOMMU v2:
+ 31:12 - Address bit 31:0
+ 11: 8 - Address bit 35:32
+  7: 4 - Address bit 39:36
+
+Change to use the mk_dtentries ops to encode the directory table address
+correctly. The value written to DTE_ADDR may include the valid bit set,
+a bit that is ignored and DTE_ADDR reg read it back as 0.
+
+This also update the bit layout comment for the page address and the
+number of nybbles that are read back for DTE_ADDR comment.
+
+These changes render the dte_addr_phys and dma_addr_dte ops unused and
+is removed.
+
+Fixes: 227014b33f62 ("iommu: rockchip: Add internal ops to handle variants")
+Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
+Fixes: c987b65a574f ("iommu/rockchip: Fix physical address decoding")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20230617182540.3091374-2-jonas@kwiboo.se
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu_v2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/rockchip-iommu.c | 43 ++++------------------------------
+ 1 file changed, 5 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
-index c96cf9b217197..29a3a62b7a3ac 100644
---- a/drivers/iommu/amd/iommu_v2.c
-+++ b/drivers/iommu/amd/iommu_v2.c
-@@ -264,8 +264,8 @@ static void put_pasid_state(struct pasid_state *pasid_state)
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index e3557f8dc44ea..f9f6492c430df 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -98,8 +98,6 @@ struct rk_iommu_ops {
+ 	phys_addr_t (*pt_address)(u32 dte);
+ 	u32 (*mk_dtentries)(dma_addr_t pt_dma);
+ 	u32 (*mk_ptentries)(phys_addr_t page, int prot);
+-	phys_addr_t (*dte_addr_phys)(u32 addr);
+-	u32 (*dma_addr_dte)(dma_addr_t dt_dma);
+ 	u64 dma_bit_mask;
+ };
  
- static void put_pasid_state_wait(struct pasid_state *pasid_state)
- {
--	refcount_dec(&pasid_state->count);
--	wait_event(pasid_state->wq, !refcount_read(&pasid_state->count));
-+	if (!refcount_dec_and_test(&pasid_state->count))
-+		wait_event(pasid_state->wq, !refcount_read(&pasid_state->count));
- 	free_pasid_state(pasid_state);
+@@ -277,8 +275,8 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
+ /*
+  * In v2:
+  * 31:12 - Page address bit 31:0
+- *  11:9 - Page address bit 34:32
+- *   8:4 - Page address bit 39:35
++ * 11: 8 - Page address bit 35:32
++ *  7: 4 - Page address bit 39:36
+  *     3 - Security
+  *     2 - Writable
+  *     1 - Readable
+@@ -505,7 +503,7 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
+ 
+ 	/*
+ 	 * Check if register DTE_ADDR is working by writing DTE_ADDR_DUMMY
+-	 * and verifying that upper 5 nybbles are read back.
++	 * and verifying that upper 5 (v1) or 7 (v2) nybbles are read back.
+ 	 */
+ 	for (i = 0; i < iommu->num_mmu; i++) {
+ 		dte_addr = rk_ops->pt_address(DTE_ADDR_DUMMY);
+@@ -530,33 +528,6 @@ static int rk_iommu_force_reset(struct rk_iommu *iommu)
+ 	return 0;
  }
+ 
+-static inline phys_addr_t rk_dte_addr_phys(u32 addr)
+-{
+-	return (phys_addr_t)addr;
+-}
+-
+-static inline u32 rk_dma_addr_dte(dma_addr_t dt_dma)
+-{
+-	return dt_dma;
+-}
+-
+-#define DT_HI_MASK GENMASK_ULL(39, 32)
+-#define DTE_BASE_HI_MASK GENMASK(11, 4)
+-#define DT_SHIFT   28
+-
+-static inline phys_addr_t rk_dte_addr_phys_v2(u32 addr)
+-{
+-	u64 addr64 = addr;
+-	return (phys_addr_t)(addr64 & RK_DTE_PT_ADDRESS_MASK) |
+-	       ((addr64 & DTE_BASE_HI_MASK) << DT_SHIFT);
+-}
+-
+-static inline u32 rk_dma_addr_dte_v2(dma_addr_t dt_dma)
+-{
+-	return (dt_dma & RK_DTE_PT_ADDRESS_MASK) |
+-	       ((dt_dma & DT_HI_MASK) >> DT_SHIFT);
+-}
+-
+ static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
+ {
+ 	void __iomem *base = iommu->bases[index];
+@@ -576,7 +547,7 @@ static void log_iova(struct rk_iommu *iommu, int index, dma_addr_t iova)
+ 	page_offset = rk_iova_page_offset(iova);
+ 
+ 	mmu_dte_addr = rk_iommu_read(base, RK_MMU_DTE_ADDR);
+-	mmu_dte_addr_phys = rk_ops->dte_addr_phys(mmu_dte_addr);
++	mmu_dte_addr_phys = rk_ops->pt_address(mmu_dte_addr);
+ 
+ 	dte_addr_phys = mmu_dte_addr_phys + (4 * dte_index);
+ 	dte_addr = phys_to_virt(dte_addr_phys);
+@@ -966,7 +937,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 
+ 	for (i = 0; i < iommu->num_mmu; i++) {
+ 		rk_iommu_write(iommu->bases[i], RK_MMU_DTE_ADDR,
+-			       rk_ops->dma_addr_dte(rk_domain->dt_dma));
++			       rk_ops->mk_dtentries(rk_domain->dt_dma));
+ 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
+ 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
+ 	}
+@@ -1373,8 +1344,6 @@ static struct rk_iommu_ops iommu_data_ops_v1 = {
+ 	.pt_address = &rk_dte_pt_address,
+ 	.mk_dtentries = &rk_mk_dte,
+ 	.mk_ptentries = &rk_mk_pte,
+-	.dte_addr_phys = &rk_dte_addr_phys,
+-	.dma_addr_dte = &rk_dma_addr_dte,
+ 	.dma_bit_mask = DMA_BIT_MASK(32),
+ };
+ 
+@@ -1382,8 +1351,6 @@ static struct rk_iommu_ops iommu_data_ops_v2 = {
+ 	.pt_address = &rk_dte_pt_address_v2,
+ 	.mk_dtentries = &rk_mk_dte_v2,
+ 	.mk_ptentries = &rk_mk_pte_v2,
+-	.dte_addr_phys = &rk_dte_addr_phys_v2,
+-	.dma_addr_dte = &rk_dma_addr_dte_v2,
+ 	.dma_bit_mask = DMA_BIT_MASK(40),
+ };
  
 -- 
 2.40.1
