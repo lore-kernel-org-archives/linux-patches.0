@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5027461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA2C433C8;
-	Sun, 17 Sep 2023 20:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7EC7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CE7C433C8;
+	Sun, 17 Sep 2023 20:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981320;
-	bh=hQ/Shi1xM6zOpOqrlot7rf3I0ukxj3BWR4uhr5iDWws=;
+	s=korg; t=1694981323;
+	bh=gGoHp80SDbj9tO8UxM3mHEFyWlClC2Ab8FtrByAdvi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uecRtRoLDI241ml2LBgu4I71K2lxxEWW0egktZSmBQo929G9AUsMESrKKfbR+T4Us
-	 rIQhwrxVKE5lA+ejVq7XTC0JO3zIo7rkNSYhn//uTTb3t6/hBQy3BTfOL9KM4jtF0w
-	 4oEmhhe5K4bezl6Z1jGiXIBMmiPZf9EFPHOr4lfU=
+	b=jmRVdeAJ/R+NbsM76G1QNHq1fWdKvvr8l16OYePs9x3VAdV9+bpC/K0cyuRb5rMqY
+	 /sWOL21TUEuw/G4iKJ8t4iwfEAl/AqzZ5eBAEGc366qHp2bRbrZ3kTrx15kM6kOs0T
+	 9wNGhVuJYC0LXM8iWk3ThDCLzMXsJbn2koV9OJSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Chen <liangchen.linux@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/219] veth: Fixing transmit return status for dropped packets
-Date: Sun, 17 Sep 2023 21:13:51 +0200
-Message-ID: <20230917191044.756600990@linuxfoundation.org>
+Subject: [PATCH 5.15 038/511] scsi: qedi: Fix potential deadlock on &qedi_percpu->p_work_lock
+Date: Sun, 17 Sep 2023 21:07:45 +0200
+Message-ID: <20230917191114.773598940@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,56 +37,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liang Chen <liangchen.linux@gmail.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 151e887d8ff97e2e42110ffa1fb1e6a2128fb364 ]
+[ Upstream commit dd64f80587190265ca8a0f4be6c64c2fda6d3ac2 ]
 
-The veth_xmit function returns NETDEV_TX_OK even when packets are dropped.
-This behavior leads to incorrect calculations of statistics counts, as
-well as things like txq->trans_start updates.
+As &qedi_percpu->p_work_lock is acquired by hard IRQ qedi_msix_handler(),
+other acquisitions of the same lock under process context should disable
+IRQ, otherwise deadlock could happen if the IRQ preempts the execution
+while the lock is held in process context on the same CPU.
 
-Fixes: e314dbdc1c0d ("[NET]: Virtual ethernet device driver.")
-Signed-off-by: Liang Chen <liangchen.linux@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+qedi_cpu_offline() is one such function which acquires the lock in process
+context.
+
+[Deadlock Scenario]
+qedi_cpu_offline()
+    ->spin_lock(&p->p_work_lock)
+        <irq>
+        ->qedi_msix_handler()
+        ->edi_process_completions()
+        ->spin_lock_irqsave(&p->p_work_lock, flags); (deadlock here)
+
+This flaw was found by an experimental static analysis tool I am developing
+for IRQ-related deadlocks.
+
+The tentative patch fix the potential deadlock by spin_lock_irqsave()
+under process context.
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230726125655.4197-1-dg573847474@gmail.com
+Acked-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qedi/qedi_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 727b9278b9fe5..36c5a41f84e44 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -313,6 +313,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct veth_priv *rcv_priv, *priv = netdev_priv(dev);
- 	struct veth_rq *rq = NULL;
-+	int ret = NETDEV_TX_OK;
- 	struct net_device *rcv;
- 	int length = skb->len;
- 	bool use_napi = false;
-@@ -345,6 +346,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 	} else {
- drop:
- 		atomic64_inc(&priv->dropped);
-+		ret = NET_XMIT_DROP;
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index d2fe8ae97abc9..b36edbef5b82f 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -1979,8 +1979,9 @@ static int qedi_cpu_offline(unsigned int cpu)
+ 	struct qedi_percpu_s *p = this_cpu_ptr(&qedi_percpu);
+ 	struct qedi_work *work, *tmp;
+ 	struct task_struct *thread;
++	unsigned long flags;
+ 
+-	spin_lock_bh(&p->p_work_lock);
++	spin_lock_irqsave(&p->p_work_lock, flags);
+ 	thread = p->iothread;
+ 	p->iothread = NULL;
+ 
+@@ -1991,7 +1992,7 @@ static int qedi_cpu_offline(unsigned int cpu)
+ 			kfree(work);
  	}
  
- 	if (use_napi)
-@@ -352,7 +354,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	rcu_read_unlock();
- 
--	return NETDEV_TX_OK;
-+	return ret;
- }
- 
- static u64 veth_stats_tx(struct net_device *dev, u64 *packets, u64 *bytes)
+-	spin_unlock_bh(&p->p_work_lock);
++	spin_unlock_irqrestore(&p->p_work_lock, flags);
+ 	if (thread)
+ 		kthread_stop(thread);
+ 	return 0;
 -- 
 2.40.1
 
