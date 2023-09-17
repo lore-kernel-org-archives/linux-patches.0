@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CFC6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B7BC433C9;
-	Sun, 17 Sep 2023 19:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0247A6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23ABFC433C7;
+	Sun, 17 Sep 2023 19:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978631;
-	bh=ttceEakJVDmU0sMHFIN9sAg7p2ZrldTsO2VtG3MlzwY=;
+	s=korg; t=1694978634;
+	bh=cuoMM6I9MY1nKw4ihbBPuJyccz7PA1Y9ImGq/whZek0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vjEVtxJmYAms0mykz5Xsd2nCxSQD+0fKp2NYU4VArhlXQISSOxq1KddKZsaCYfmL
-	 ZvaFEBK7/qjq8Z77krDzQCv8132En3711mZrfB9aiEesrnWRTBxSyUBwSmrYwpQrvU
-	 hHai8IIa5TcX4d8tr4KsWH5UHuOmWv+BO9BuHfWU=
+	b=O55EINGsOMSmn4aekjFypMuI2DMktxwO68/oai8c53ifpW5h28rMDCj67zLorDRrm
+	 ueVUYNWRSYSJThdqyZhkp44M9HPyalA7Ro+tU9EUkwnAErLS8x7ooPKIal8Fv4RC/Q
+	 RxAmf8liCwleCYA3RrOnDBVvJ02KNtNKrmz5TSHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/406] hwrng: nomadik - keep clock enabled while hwrng is registered
-Date: Sun, 17 Sep 2023 21:08:59 +0200
-Message-ID: <20230917191103.375998717@linuxfoundation.org>
+Subject: [PATCH 5.10 076/406] x86/decompressor: Dont rely on upper 32 bits of GPRs being preserved
+Date: Sun, 17 Sep 2023 21:08:50 +0200
+Message-ID: <20230917191103.140295705@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,90 +34,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 039980de89dc9dd757418d6f296e4126cc3f86c3 ]
+[ Upstream commit 264b82fdb4989cf6a44a2bcd0c6ea05e8026b2ac ]
 
-The nomadik driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+The 4-to-5 level mode switch trampoline disables long mode and paging in
+order to be able to flick the LA57 bit. According to section 3.4.1.1 of
+the x86 architecture manual [0], 64-bit GPRs might not retain the upper
+32 bits of their contents across such a mode switch.
 
-However, nomadik's clock is disabled in the remove function. There's a
-short timeframe where nomadik is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
+Given that RBP, RBX and RSI are live at this point, preserve them on the
+stack, along with the return address that might be above 4G as well.
 
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
+[0] Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1: Basic Architecture
 
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  "Because the upper 32 bits of 64-bit general-purpose registers are
+   undefined in 32-bit modes, the upper 32 bits of any general-purpose
+   register are not preserved when switching from 64-bit mode to a 32-bit
+   mode (to protected mode or compatibility mode). Software must not
+   depend on these bits to maintain a value after a 64-bit to 32-bit
+   mode switch."
+
+Fixes: 194a9749c73d650c ("x86/boot/compressed/64: Handle 5-level paging boot if kernel is above 4G")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230807162720.545787-2-ardb@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/nomadik-rng.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/x86/boot/compressed/head_64.S | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/char/hw_random/nomadik-rng.c b/drivers/char/hw_random/nomadik-rng.c
-index e8f9621e79541..3774adf903a83 100644
---- a/drivers/char/hw_random/nomadik-rng.c
-+++ b/drivers/char/hw_random/nomadik-rng.c
-@@ -13,8 +13,6 @@
- #include <linux/clk.h>
- #include <linux/err.h>
+diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
+index b55e2007b30c6..473d84eb5dda9 100644
+--- a/arch/x86/boot/compressed/head_64.S
++++ b/arch/x86/boot/compressed/head_64.S
+@@ -454,11 +454,25 @@ SYM_CODE_START(startup_64)
+ 	/* Save the trampoline address in RCX */
+ 	movq	%rax, %rcx
  
--static struct clk *rng_clk;
++	/* Set up 32-bit addressable stack */
++	leaq	TRAMPOLINE_32BIT_STACK_END(%rcx), %rsp
++
++	/*
++	 * Preserve live 64-bit registers on the stack: this is necessary
++	 * because the architecture does not guarantee that GPRs will retain
++	 * their full 64-bit values across a 32-bit mode switch.
++	 */
++	pushq	%rbp
++	pushq	%rbx
++	pushq	%rsi
++
+ 	/*
+-	 * Load the address of trampoline_return() into RDI.
+-	 * It will be used by the trampoline to return to the main code.
++	 * Push the 64-bit address of trampoline_return() onto the new stack.
++	 * It will be used by the trampoline to return to the main code. Due to
++	 * the 32-bit mode switch, it cannot be kept it in a register either.
+ 	 */
+ 	leaq	trampoline_return(%rip), %rdi
++	pushq	%rdi
+ 
+ 	/* Switch to compatibility mode (CS.L = 0 CS.D = 1) via far return */
+ 	pushq	$__KERNEL32_CS
+@@ -466,6 +480,11 @@ SYM_CODE_START(startup_64)
+ 	pushq	%rax
+ 	lretq
+ trampoline_return:
++	/* Restore live 64-bit registers */
++	popq	%rsi
++	popq	%rbx
++	popq	%rbp
++
+ 	/* Restore the stack, the 32-bit trampoline uses its own stack */
+ 	leaq	rva(boot_stack_end)(%rbx), %rsp
+ 
+@@ -586,7 +605,7 @@ SYM_FUNC_END(.Lrelocated)
+ /*
+  * This is the 32-bit trampoline that will be copied over to low memory.
+  *
+- * RDI contains the return address (might be above 4G).
++ * Return address is at the top of the stack (might be above 4G).
+  * ECX contains the base address of the trampoline memory.
+  * Non zero RDX means trampoline needs to enable 5-level paging.
+  */
+@@ -596,9 +615,6 @@ SYM_CODE_START(trampoline_32bit_src)
+ 	movl	%eax, %ds
+ 	movl	%eax, %ss
+ 
+-	/* Set up new stack */
+-	leal	TRAMPOLINE_32BIT_STACK_END(%ecx), %esp
 -
- static int nmk_rng_read(struct hwrng *rng, void *data, size_t max, bool wait)
- {
- 	void __iomem *base = (void __iomem *)rng->priv;
-@@ -36,21 +34,20 @@ static struct hwrng nmk_rng = {
+ 	/* Disable paging */
+ 	movl	%cr0, %eax
+ 	btrl	$X86_CR0_PG_BIT, %eax
+@@ -658,7 +674,7 @@ SYM_CODE_END(trampoline_32bit_src)
+ 	.code64
+ SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
+ 	/* Return from the trampoline */
+-	jmp	*%rdi
++	retq
+ SYM_FUNC_END(.Lpaging_enabled)
  
- static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
- {
-+	struct clk *rng_clk;
- 	void __iomem *base;
- 	int ret;
- 
--	rng_clk = devm_clk_get(&dev->dev, NULL);
-+	rng_clk = devm_clk_get_enabled(&dev->dev, NULL);
- 	if (IS_ERR(rng_clk)) {
- 		dev_err(&dev->dev, "could not get rng clock\n");
- 		ret = PTR_ERR(rng_clk);
- 		return ret;
- 	}
- 
--	clk_prepare_enable(rng_clk);
--
- 	ret = amba_request_regions(dev, dev->dev.init_name);
- 	if (ret)
--		goto out_clk;
-+		return ret;
- 	ret = -ENOMEM;
- 	base = devm_ioremap(&dev->dev, dev->res.start,
- 			    resource_size(&dev->res));
-@@ -64,15 +61,12 @@ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
- 
- out_release:
- 	amba_release_regions(dev);
--out_clk:
--	clk_disable_unprepare(rng_clk);
- 	return ret;
- }
- 
- static void nmk_rng_remove(struct amba_device *dev)
- {
- 	amba_release_regions(dev);
--	clk_disable_unprepare(rng_clk);
- }
- 
- static const struct amba_id nmk_rng_ids[] = {
+ 	/*
 -- 
 2.40.1
 
