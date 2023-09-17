@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B4D63B8
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E51FC433C9;
-	Sun, 17 Sep 2023 20:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E0C1C10
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B65C433C7;
+	Sun, 17 Sep 2023 20:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982629;
-	bh=/+nX8+GJy4HODrREw66mN3OhhcACy+UPE+GsGu7wK+k=;
+	s=korg; t=1694982632;
+	bh=j0CbghjbDVWzVId1KbJRmR4s0DYbz7VzYRhqv9Fj9Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USarMYlAjuOpa1vyT+4nTM7KuSMxZdC+1/7Xc/JxGG/qHCyK7Jm55HmE4p6bw4IP8
-	 Dg8n8Zf4NBNhl2ErHFZWdDiUAufbf7LcJEwuNvVASk1XttEyzzkhmRz7majI/imr4B
-	 s6Z9lLGLmVK8oD/OdQlHtCsV0B/aD5BK0KQyWzXg=
+	b=Rli007F6X9bzN8kuVGOjtVaZWqPF21lApRbDy2JTQnTYZA+jD5XIdVAApqmpQg614
+	 JSL8SNSOcMR/xQODLqZ6E+xWWlVHKKAch8FJrhZrLoVX4x8+957r3w3yHyWeMNv5sZ
+	 pl5YzaM3Lt5nChbotiyUvzMOIHQ9OOCDEVobZMFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 276/511] media: go7007: Remove redundant if statement
-Date: Sun, 17 Sep 2023 21:11:43 +0200
-Message-ID: <20230917191120.501921296@linuxfoundation.org>
+Subject: [PATCH 5.15 277/511] media: venus: hfi_venus: Only consider sys_idle_indicator on V1
+Date: Sun, 17 Sep 2023 21:11:44 +0200
+Message-ID: <20230917191120.525317217@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,41 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit f33cb49081da0ec5af0888f8ecbd566bd326eed1 ]
+[ Upstream commit 6283e4834c69fa93a108efa18c6aa09c7e626f49 ]
 
-The if statement that compares msgs[i].len != 3 is always false because
-it is in a code block where msg[i].len is equal to 3. The check is
-redundant and can be removed.
+As per information from Qualcomm [1], this property is not really
+supported beyond msm8916 (HFI V1) and some newer HFI versions really
+dislike receiving it, going as far as crashing the device.
 
-As detected by cppcheck static analysis:
-drivers/media/usb/go7007/go7007-i2c.c:168:20: warning: Opposite inner
-'if' condition leads to a dead code block. [oppositeInnerCondition]
+Only consider toggling it (via the module option) on HFIV1.
+While at it, get rid of the global static variable (which defaulted
+to zero) which was never explicitly assigned to for V1.
 
-Link: https://lore.kernel.org/linux-media/20230727174007.635572-1-colin.i.king@gmail.com
+Note: [1] is a reply to the actual message in question, as lore did not
+properly receive some of the emails..
 
-Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+[1] https://lore.kernel.org/lkml/955cd520-3881-0c22-d818-13fe9a47e124@linaro.org/
+Fixes: 7ed9e0b3393c ("media: venus: hfi, vdec: v6 Add IS_V6() to existing IS_V4() if locations")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/go7007-i2c.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/usb/go7007/go7007-i2c.c b/drivers/media/usb/go7007/go7007-i2c.c
-index 38339dd2f83f7..2880370e45c8b 100644
---- a/drivers/media/usb/go7007/go7007-i2c.c
-+++ b/drivers/media/usb/go7007/go7007-i2c.c
-@@ -165,8 +165,6 @@ static int go7007_i2c_master_xfer(struct i2c_adapter *adapter,
- 		} else if (msgs[i].len == 3) {
- 			if (msgs[i].flags & I2C_M_RD)
- 				return -EIO;
--			if (msgs[i].len != 3)
--				return -EIO;
- 			if (go7007_i2c_xfer(go, msgs[i].addr, 0,
- 					(msgs[i].buf[0] << 8) | msgs[i].buf[1],
- 					0x01, &msgs[i].buf[2]) < 0)
+diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+index ce98c523b3c68..d8351f806aacc 100644
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -131,7 +131,6 @@ struct venus_hfi_device {
+ 
+ static bool venus_pkt_debug;
+ int venus_fw_debug = HFI_DEBUG_MSG_ERROR | HFI_DEBUG_MSG_FATAL;
+-static bool venus_sys_idle_indicator;
+ static bool venus_fw_low_power_mode = true;
+ static int venus_hw_rsp_timeout = 1000;
+ static bool venus_fw_coverage;
+@@ -924,17 +923,12 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+ 	if (ret)
+ 		dev_warn(dev, "setting fw debug msg ON failed (%d)\n", ret);
+ 
+-	/*
+-	 * Idle indicator is disabled by default on some 4xx firmware versions,
+-	 * enable it explicitly in order to make suspend functional by checking
+-	 * WFI (wait-for-interrupt) bit.
+-	 */
+-	if (IS_V4(hdev->core) || IS_V6(hdev->core))
+-		venus_sys_idle_indicator = true;
+-
+-	ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
+-	if (ret)
+-		dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
++	/* HFI_PROPERTY_SYS_IDLE_INDICATOR is not supported beyond 8916 (HFI V1) */
++	if (IS_V1(hdev->core)) {
++		ret = venus_sys_set_idle_message(hdev, false);
++		if (ret)
++			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
++	}
+ 
+ 	ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
+ 	if (ret)
 -- 
 2.40.1
 
