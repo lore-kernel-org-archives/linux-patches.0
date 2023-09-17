@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA456FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568C1C433C7;
-	Sun, 17 Sep 2023 19:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0266FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1908C433C7;
+	Sun, 17 Sep 2023 19:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978975;
-	bh=nhHYxWOE6uAhSAbYQREaPc7ug703pcA6OQf/fPAtZmg=;
+	s=korg; t=1694978979;
+	bh=aiihZUFwBoBw4+bdByFxju+hcAAOghYCI4ot50d5Q3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUkOXlAVkUsHo9mEtfyTKU/XmrhHCyYhaRhaGD12HWeogDrIMYqOjphPBQEQxqN5c
-	 0wsiUNqOMQVQTWm4XGATJFRfO7sC/aOZyWKj3xaPdE88Ck/b5ANXb4MQTzVE/w3O6C
-	 z1+UDica7ao+ePpGiBLJXrP2qeDCDuP82pxKNVc0=
+	b=Ke9AhBu3iaKAF7utx18wHHbPxeZFJW6zzHmsldTEoiuE2aA/HELlOG3+Q11XxU8j9
+	 Qwn81fNpvGKtmkQDCJilWhWw43Wz1b31iCyNZjCZ8FGLPvg2WFz7k6nKTKClmEg7QH
+	 2zpmuyikBY3B4VqpJ1Ax+kUG0FikDIAvS/otC1ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wu Zongyong <wuzongyong@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/406] clk: qcom: reset: Use the correct type of sleep/delay based on length
-Date: Sun, 17 Sep 2023 21:10:32 +0200
-Message-ID: <20230917191105.894023140@linuxfoundation.org>
+Subject: [PATCH 5.10 179/406] PCI: Mark NVIDIA T4 GPUs to avoid bus reset
+Date: Sun, 17 Sep 2023 21:10:33 +0200
+Message-ID: <20230917191105.921048050@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,38 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Wu Zongyong <wuzongyong@linux.alibaba.com>
 
-[ Upstream commit 181b66ee7cdd824797fc99b53bec29cf5630a04f ]
+[ Upstream commit d5af729dc2071273f14cbb94abbc60608142fd83 ]
 
-Use the fsleep() helper that (based on the length of the delay, see: [1])
-chooses the correct sleep/delay functions.
+NVIDIA T4 GPUs do not work with SBR. This problem is found when the T4 card
+is direct attached to a Root Port only. Avoid bus reset by marking T4 GPUs
+PCI_DEV_FLAGS_NO_BUS_RESET.
 
-[1] https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
-
-Fixes: 2cb8a39b6781 ("clk: qcom: reset: Allow specifying custom reset delay")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230726-topic-qcom_reset-v3-1-5958facd5db2@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4c207e7121fa ("PCI: Mark some NVIDIA GPUs to avoid bus reset")
+Link: https://lore.kernel.org/r/2dcebea53a6eb9bd212ec6d8974af2e5e0333ef6.1681129861.git.wuzongyong@linux.alibaba.com
+Signed-off-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/reset.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-index 0e914ec7aeae1..e45e32804d2c7 100644
---- a/drivers/clk/qcom/reset.c
-+++ b/drivers/clk/qcom/reset.c
-@@ -16,7 +16,8 @@ static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
- 	struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
- 
- 	rcdev->ops->assert(rcdev, id);
--	udelay(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
-+	fsleep(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
-+
- 	rcdev->ops->deassert(rcdev, id);
- 	return 0;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index c0d1134811915..1193c81f88964 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3578,7 +3578,7 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
+  */
+ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+ {
+-	if ((dev->device & 0xffc0) == 0x2340)
++	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
+ 		quirk_no_bus_reset(dev);
  }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
 -- 
 2.40.1
 
