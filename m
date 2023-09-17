@@ -1,33 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737166FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39CFC433CC;
-	Sun, 17 Sep 2023 20:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6236FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B45C433C9;
+	Sun, 17 Sep 2023 20:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981527;
-	bh=ZEAvIuWDCht/shF9li2a/rx/9A5yJL5z+MFrBmv3PX0=;
+	s=korg; t=1694981530;
+	bh=pYUG/cUpxhip6HrE2ZQIxOF8iVMv7avuRzXti6Xd1XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDiq1ADC0MSTP4tHZ0UcdpPZliPYbL9wGcf2rCQhZ4Z63Tw3I6Cot5nNMRiqOOq46
-	 aF8ts24zBivTOLZYuw4t2y2zEgp1WGVA4CQXpWkIop/WJFDP5VZ8ZuvH4Yt8wFaRji
-	 J8XOQDM9qzMcOYItq6L3XUDSpIXnETsR+OmnB3QA=
+	b=cjuEC8Tx0PFgH8mBRTkkRp775ukVUU1pAp3fV7YeJ0cREV7Fgc/XwNRX9qseeab1q
+	 mUEgFwv84YdRAEjipc1tY/ewbrIw1INVrvqJkhiKA7rKQdZJI8VLQid1jdUqPwltkz
+	 YNZVhhx1UCi1x4Ek41u8ExKCTIbTTzNTfcstai8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/511] selftests/resctrl: Dont leak buffer in fill_cache()
-Date: Sun, 17 Sep 2023 21:08:14 +0200
-Message-ID: <20230917191115.500304804@linuxfoundation.org>
+	Kalesh Singh <kaleshsingh@google.com>,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>,
+	Barry Song <baohua@kernel.org>,
+	Brian Geffon <bgeffon@google.com>,
+	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
+	Lecopzer Chen <lecopzer.chen@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Steven Barrett <steven@liquorix.net>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.1 136/219] Multi-gen LRU: avoid race in inc_min_seq()
+Date: Sun, 17 Sep 2023 21:14:23 +0200
+Message-ID: <20230917191045.908251759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,59 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-[ Upstream commit 2d320b1029ee7329ee0638181be967789775b962 ]
+commit bb5e7f234eacf34b65be67ebb3613e3b8cf11b87 upstream.
 
-The error path in fill_cache() does return before the allocated buffer
-is freed leaking the buffer.
+inc_max_seq() will try to inc_min_seq() if nr_gens == MAX_NR_GENS. This
+is because the generations are reused (the last oldest now empty
+generation will become the next youngest generation).
 
-The leak was introduced when fill_cache_read() started to return errors
-in commit c7b607fa9325 ("selftests/resctrl: Fix null pointer
-dereference on open failed"), before that both fill functions always
-returned 0.
+inc_min_seq() is retried until successful, dropping the lru_lock
+and yielding the CPU on each failure, and retaking the lock before
+trying again:
 
-Move free() earlier to prevent the mem leak.
+        while (!inc_min_seq(lruvec, type, can_swap)) {
+                spin_unlock_irq(&lruvec->lru_lock);
+                cond_resched();
+                spin_lock_irq(&lruvec->lru_lock);
+        }
 
-Fixes: c7b607fa9325 ("selftests/resctrl: Fix null pointer dereference on open failed")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, the initial condition that required incrementing the min_seq
+(nr_gens == MAX_NR_GENS) is not retested. This can change by another
+call to inc_max_seq() from run_aging() with force_scan=true from the
+debugfs interface.
+
+Since the eviction stalls when the nr_gens == MIN_NR_GENS, avoid
+unnecessarily incrementing the min_seq by rechecking the number of
+generations before each attempt.
+
+This issue was uncovered in previous discussion on the list by Yu Zhao
+and Aneesh Kumar [1].
+
+[1] https://lore.kernel.org/linux-mm/CAOUHufbO7CaVm=xjEb1avDhHVvnC8pJmGyKcFf2iY_dpf+zR3w@mail.gmail.com/
+
+Link: https://lkml.kernel.org/r/20230802025606.346758-2-kaleshsingh@google.com
+Fixes: d6c3af7d8a2b ("mm: multi-gen LRU: debugfs interface")
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> [mediatek]
+Tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Aneesh Kumar K V <aneesh.kumar@linux.ibm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Steven Barrett <steven@liquorix.net>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/vmscan.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index c20d0a7ecbe63..ab1d91328d67b 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -184,12 +184,13 @@ fill_cache(unsigned long long buf_size, int malloc_and_init, int memflush,
- 	else
- 		ret = fill_cache_write(start_ptr, end_ptr, resctrl_val);
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4331,6 +4331,7 @@ static void inc_max_seq(struct lruvec *l
+ 	int type, zone;
+ 	struct lru_gen_struct *lrugen = &lruvec->lrugen;
  
-+	free(startptr);
++restart:
+ 	spin_lock_irq(&lruvec->lru_lock);
+ 
+ 	VM_WARN_ON_ONCE(!seq_is_valid(lruvec));
+@@ -4341,11 +4342,12 @@ static void inc_max_seq(struct lruvec *l
+ 
+ 		VM_WARN_ON_ONCE(!force_scan && (type == LRU_GEN_FILE || can_swap));
+ 
+-		while (!inc_min_seq(lruvec, type, can_swap)) {
+-			spin_unlock_irq(&lruvec->lru_lock);
+-			cond_resched();
+-			spin_lock_irq(&lruvec->lru_lock);
+-		}
++		if (inc_min_seq(lruvec, type, can_swap))
++			continue;
 +
- 	if (ret) {
- 		printf("\n Error in fill cache read/write...\n");
- 		return -1;
++		spin_unlock_irq(&lruvec->lru_lock);
++		cond_resched();
++		goto restart;
  	}
  
--	free(startptr);
- 
- 	return 0;
- }
--- 
-2.40.1
-
+ 	/*
 
 
