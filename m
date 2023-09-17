@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC56FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718E6C433C7;
-	Sun, 17 Sep 2023 19:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8654A6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED72FC433CA;
+	Sun, 17 Sep 2023 19:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980444;
-	bh=oJprzHnLoRnf1LaL1ddoPS8s1NhzPIexuxyRZg3OAFg=;
+	s=korg; t=1694980447;
+	bh=a1IvbntcG5urIGhTQvW+AgA5to3Qq9gM00HgATG9TrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISmDo0avOt43NgBZ6Q3D1BuMP5VYUD1fiqQGVzSVOkefsfYrtg5Pf+wV7zksh0/tn
-	 2/AAv7hDmYvFdlAPaWETwDkY5SjHS1ZGaIWkQtFwXPSqw+O/Hbn38grxkpIF6JqaPU
-	 coBJPUYK6OMS+tkgjwpvnOQyDkgcSnaivy7J1E/s=
+	b=VGI47izXS4XI6kSkQTJMs8OjLrQyTZz38n467Lc133fa7fCUOEPUChxWJR1x5XpXL
+	 Flmz4Lvq5yiS0raPOf8tHamiFmL0VQ72eMlfu9GysY1ph8Be80wTfplK8+0ka2M/Kg
+	 XpMEYOC8iXUR3uiTDEq3w9TEqZ9XVDDWHpVC8bWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Guenter Roeck <linux@roeck-us.net>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
-	syzbot+e1246909d526a9d470fa@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 192/285] f2fs: flush inode if atomic file is aborted
-Date: Sun, 17 Sep 2023 21:13:12 +0200
-Message-ID: <20230917191058.246686095@linuxfoundation.org>
+	syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
+Subject: [PATCH 6.5 193/285] f2fs: avoid false alarm of circular locking
+Date: Sun, 17 Sep 2023 21:13:13 +0200
+Message-ID: <20230917191058.277186854@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,116 +43,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit a3ab55746612247ce3dcaac6de66f5ffc055b9df upstream.
+commit 5c13e2388bf3426fd69a89eb46e50469e9624e56 upstream.
 
-Let's flush the inode being aborted atomic operation to avoid stale dirty
-inode during eviction in this call stack:
+======================================================
+WARNING: possible circular locking dependency detected
+6.5.0-rc5-syzkaller-00353-gae545c3283dc #0 Not tainted
+------------------------------------------------------
+syz-executor273/5027 is trying to acquire lock:
+ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
+ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
 
-  f2fs_mark_inode_dirty_sync+0x22/0x40 [f2fs]
-  f2fs_abort_atomic_write+0xc4/0xf0 [f2fs]
-  f2fs_evict_inode+0x3f/0x690 [f2fs]
-  ? sugov_start+0x140/0x140
-  evict+0xc3/0x1c0
-  evict_inodes+0x17b/0x210
-  generic_shutdown_super+0x32/0x120
-  kill_block_super+0x21/0x50
-  deactivate_locked_super+0x31/0x90
-  cleanup_mnt+0x100/0x160
-  task_work_run+0x59/0x90
-  do_exit+0x33b/0xa50
-  do_group_exit+0x2d/0x80
-  __x64_sys_exit_group+0x14/0x20
-  do_syscall_64+0x3b/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+but task is already holding lock:
+ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
+ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_add_dentry+0x92/0x230 fs/f2fs/dir.c:783
 
-This triggers f2fs_bug_on() in f2fs_evict_inode:
- f2fs_bug_on(sbi, is_inode_flag_set(inode, FI_DIRTY_INODE));
+which lock already depends on the new lock.
 
-This fixes the syzbot report:
+the existing dependency chain (in reverse order) is:
 
-loop0: detected capacity change from 0 to 131072
-F2FS-fs (loop0): invalid crc value
-F2FS-fs (loop0): Found nat_bits in checkpoint
-F2FS-fs (loop0): Mounted with checkpoint version = 48b305e4
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/inode.c:869!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 0 PID: 5014 Comm: syz-executor220 Not tainted 6.4.0-syzkaller-11479-g6cd06ab12d1a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-RIP: 0010:f2fs_evict_inode+0x172d/0x1e00 fs/f2fs/inode.c:869
-Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 6a 06 00 00 8b 75 40 ba 01 00 00 00 4c 89 e7 e8 6d ce 06 00 e9 aa fc ff ff e8 63 22 e2 fd <0f> 0b e8 5c 22 e2 fd 48 c7 c0 a8 3a 18 8d 48 ba 00 00 00 00 00 fc
-RSP: 0018:ffffc90003a6fa00 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-RDX: ffff8880273b8000 RSI: ffffffff83a2bd0d RDI: 0000000000000007
-RBP: ffff888077db91b0 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888029a3c000
-R13: ffff888077db9660 R14: ffff888029a3c0b8 R15: ffff888077db9c50
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1909bb9000 CR3: 00000000276a9000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- evict+0x2ed/0x6b0 fs/inode.c:665
- dispose_list+0x117/0x1e0 fs/inode.c:698
- evict_inodes+0x345/0x440 fs/inode.c:748
- generic_shutdown_super+0xaf/0x480 fs/super.c:478
- kill_block_super+0x64/0xb0 fs/super.c:1417
- kill_f2fs_super+0x2af/0x3c0 fs/f2fs/super.c:4704
- deactivate_locked_super+0x98/0x160 fs/super.c:330
- deactivate_super+0xb1/0xd0 fs/super.c:361
- cleanup_mnt+0x2ae/0x3d0 fs/namespace.c:1254
- task_work_run+0x16f/0x270 kernel/task_work.c:179
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0xa9a/0x29a0 kernel/exit.c:874
- do_group_exit+0xd4/0x2a0 kernel/exit.c:1024
- __do_sys_exit_group kernel/exit.c:1035 [inline]
- __se_sys_exit_group kernel/exit.c:1033 [inline]
- __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1033
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f309be71a09
-Code: Unable to access opcode bytes at 0x7f309be719df.
-RSP: 002b:00007fff171df518 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 00007f309bef7330 RCX: 00007f309be71a09
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 00007f309bef1e40
-R10: 0000000000010600 R11: 0000000000000246 R12: 00007f309bef7330
-R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:f2fs_evict_inode+0x172d/0x1e00 fs/f2fs/inode.c:869
-Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 6a 06 00 00 8b 75 40 ba 01 00 00 00 4c 89 e7 e8 6d ce 06 00 e9 aa fc ff ff e8 63 22 e2 fd <0f> 0b e8 5c 22 e2 fd 48 c7 c0 a8 3a 18 8d 48 ba 00 00 00 00 00 fc
-RSP: 0018:ffffc90003a6fa00 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-RDX: ffff8880273b8000 RSI: ffffffff83a2bd0d RDI: 0000000000000007
-RBP: ffff888077db91b0 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888029a3c000
-R13: ffff888077db9660 R14: ffff888029a3c0b8 R15: ffff888077db9c50
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1909bb9000 CR3: 00000000276a9000 CR4: 0000000000350ef0
+-> #1 (&fi->i_xattr_sem){.+.+}-{3:3}:
+       down_read+0x9c/0x470 kernel/locking/rwsem.c:1520
+       f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
+       f2fs_getxattr+0xb1e/0x12c0 fs/f2fs/xattr.c:532
+       __f2fs_get_acl+0x5a/0x900 fs/f2fs/acl.c:179
+       f2fs_acl_create fs/f2fs/acl.c:377 [inline]
+       f2fs_init_acl+0x15c/0xb30 fs/f2fs/acl.c:420
+       f2fs_init_inode_metadata+0x159/0x1290 fs/f2fs/dir.c:558
+       f2fs_add_regular_entry+0x79e/0xb90 fs/f2fs/dir.c:740
+       f2fs_add_dentry+0x1de/0x230 fs/f2fs/dir.c:788
+       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
+       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
+       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
+       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
+       do_mkdirat+0x2a9/0x330 fs/namei.c:4140
+       __do_sys_mkdir fs/namei.c:4160 [inline]
+       __se_sys_mkdir fs/namei.c:4158 [inline]
+       __x64_sys_mkdir+0xf2/0x140 fs/namei.c:4158
+       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+       entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+-> #0 (&fi->i_sem){+.+.}-{3:3}:
+       check_prev_add kernel/locking/lockdep.c:3142 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3261 [inline]
+       validate_chain kernel/locking/lockdep.c:3876 [inline]
+       __lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
+       lock_acquire kernel/locking/lockdep.c:5761 [inline]
+       lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
+       down_write+0x93/0x200 kernel/locking/rwsem.c:1573
+       f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
+       f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
+       f2fs_add_dentry+0xa6/0x230 fs/f2fs/dir.c:784
+       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
+       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
+       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
+       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
+       ovl_do_mkdir fs/overlayfs/overlayfs.h:196 [inline]
+       ovl_mkdir_real+0xb5/0x370 fs/overlayfs/dir.c:146
+       ovl_workdir_create+0x3de/0x820 fs/overlayfs/super.c:309
+       ovl_make_workdir fs/overlayfs/super.c:711 [inline]
+       ovl_get_workdir fs/overlayfs/super.c:864 [inline]
+       ovl_fill_super+0xdab/0x6180 fs/overlayfs/super.c:1400
+       vfs_get_super+0xf9/0x290 fs/super.c:1152
+       vfs_get_tree+0x88/0x350 fs/super.c:1519
+       do_new_mount fs/namespace.c:3335 [inline]
+       path_mount+0x1492/0x1ed0 fs/namespace.c:3662
+       do_mount fs/namespace.c:3675 [inline]
+       __do_sys_mount fs/namespace.c:3884 [inline]
+       __se_sys_mount fs/namespace.c:3861 [inline]
+       __x64_sys_mount+0x293/0x310 fs/namespace.c:3861
+       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+       entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  rlock(&fi->i_xattr_sem);
+                               lock(&fi->i_sem);
+                               lock(&fi->i_xattr_sem);
+  lock(&fi->i_sem);
 
 Cc: <stable@vger.kernel.org>
-Reported-and-tested-by: syzbot+e1246909d526a9d470fa@syzkaller.appspotmail.com
+Reported-and-tested-by: syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
+Fixes: 5eda1ad1aaff "f2fs: fix deadlock in i_xattr_sem and inode page lock"
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/f2fs.h   |   24 +++++++++++++++---------
+ fs/f2fs/inline.c |    3 ++-
+ 2 files changed, 17 insertions(+), 10 deletions(-)
 
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -205,6 +205,8 @@ void f2fs_abort_atomic_write(struct inod
- 		f2fs_i_size_write(inode, fi->original_i_size);
- 		fi->original_i_size = 0;
- 	}
-+	/* avoid stale dirty inode during eviction */
-+	sync_inode_metadata(inode, 0);
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -2122,15 +2122,6 @@ static inline int f2fs_down_read_trylock
+ 	return down_read_trylock(&sem->internal_rwsem);
  }
  
- static int __replace_atomic_write_block(struct inode *inode, pgoff_t index,
+-#ifdef CONFIG_DEBUG_LOCK_ALLOC
+-static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
+-{
+-	down_read_nested(&sem->internal_rwsem, subclass);
+-}
+-#else
+-#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
+-#endif
+-
+ static inline void f2fs_up_read(struct f2fs_rwsem *sem)
+ {
+ 	up_read(&sem->internal_rwsem);
+@@ -2141,6 +2132,21 @@ static inline void f2fs_down_write(struc
+ 	down_write(&sem->internal_rwsem);
+ }
+ 
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
++{
++	down_read_nested(&sem->internal_rwsem, subclass);
++}
++
++static inline void f2fs_down_write_nested(struct f2fs_rwsem *sem, int subclass)
++{
++	down_write_nested(&sem->internal_rwsem, subclass);
++}
++#else
++#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
++#define f2fs_down_write_nested(sem, subclass) f2fs_down_write(sem)
++#endif
++
+ static inline int f2fs_down_write_trylock(struct f2fs_rwsem *sem)
+ {
+ 	return down_write_trylock(&sem->internal_rwsem);
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -641,7 +641,8 @@ int f2fs_add_inline_entry(struct inode *
+ 	}
+ 
+ 	if (inode) {
+-		f2fs_down_write(&F2FS_I(inode)->i_sem);
++		f2fs_down_write_nested(&F2FS_I(inode)->i_sem,
++						SINGLE_DEPTH_NESTING);
+ 		page = f2fs_init_inode_metadata(inode, dir, fname, ipage);
+ 		if (IS_ERR(page)) {
+ 			err = PTR_ERR(page);
 
 
