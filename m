@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C34F6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:41:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99241C433C7;
-	Sun, 17 Sep 2023 20:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9DA6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:42:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0722AC433C7;
+	Sun, 17 Sep 2023 20:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983318;
-	bh=N4ITTM1fnk+dmTGXrSVLfkt2ZMf0Rt3z2Vus0of1JiU=;
+	s=korg; t=1694983321;
+	bh=RqOYO62bmjzq9NVlLjXht/OR5ywtbYuZdoRIAMDk7r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJg/yLoY9/Z/UYr5umnhz/0yy2vHvvzDpZS3CBYwWcmLVy5bu6jFrhn8fgLp0e6pL
-	 8+yx7gy/+seXQ5+4orAqsviensQ2shTuquLjVBVm1cjxsfGVfQdI7IzhA5VUP2CCDF
-	 crX1nemgwLkU8yfGxmLVCRWTJK1lWPUJQkZM59tg=
+	b=k7JXvKxBVBRnbqE9Sn/A3RHlasXUhd2+1yjvdCZKBkgXXFI4YZZ8LOB1XJ0fO6cUp
+	 6tBm9ycI4pzJ2yNx4vjDKeKvqZnSTbV3rYOKpfXtCDhVsxBHQxVR9/Ct/b+11PEHoE
+	 7HfYxvX50RyuI10r4QSia8QFlzOWH3j2vKu2JO/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 467/511] jbd2: check jh->b_transaction before removing it from checkpoint
-Date: Sun, 17 Sep 2023 21:14:54 +0200
-Message-ID: <20230917191125.025951843@linuxfoundation.org>
+	Hao Chen <chenhao418@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 458/511] net: hns3: fix debugfs concurrency issue between kfree buffer and read
+Date: Sun, 17 Sep 2023 21:14:45 +0200
+Message-ID: <20230917191124.814442133@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -36,76 +35,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Hao Chen <chenhao418@huawei.com>
 
-commit 590a809ff743e7bd890ba5fb36bc38e20a36de53 upstream.
+[ Upstream commit c295160b1d95e885f1af4586a221cb221d232d10 ]
 
-Following process will corrupt ext4 image:
-Step 1:
-jbd2_journal_commit_transaction
- __jbd2_journal_insert_checkpoint(jh, commit_transaction)
- // Put jh into trans1->t_checkpoint_list
- journal->j_checkpoint_transactions = commit_transaction
- // Put trans1 into journal->j_checkpoint_transactions
+Now in hns3_dbg_uninit(), there may be concurrency between
+kfree buffer and read, it may result in memory error.
 
-Step 2:
-do_get_write_access
- test_clear_buffer_dirty(bh) // clear buffer dirty，set jbd dirty
- __jbd2_journal_file_buffer(jh, transaction) // jh belongs to trans2
+Moving debugfs_remove_recursive() in front of kfree buffer to ensure
+they don't happen at the same time.
 
-Step 3:
-drop_cache
- journal_shrink_one_cp_list
-  jbd2_journal_try_remove_checkpoint
-   if (!trylock_buffer(bh))  // lock bh, true
-   if (buffer_dirty(bh))     // buffer is not dirty
-   __jbd2_journal_remove_checkpoint(jh)
-   // remove jh from trans1->t_checkpoint_list
-
-Step 4:
-jbd2_log_do_checkpoint
- trans1 = journal->j_checkpoint_transactions
- // jh is not in trans1->t_checkpoint_list
- jbd2_cleanup_journal_tail(journal)  // trans1 is done
-
-Step 5: Power cut, trans2 is not committed, jh is lost in next mounting.
-
-Fix it by checking 'jh->b_transaction' before remove it from checkpoint.
-
-Cc: stable@kernel.org
-Fixes: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230714025528.564988-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5e69ea7ee2a6 ("net: hns3: refactor the debugfs process")
+Signed-off-by: Hao Chen <chenhao418@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index 936c6d758a65..f033ac807013 100644
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -639,6 +639,8 @@ int jbd2_journal_try_remove_checkpoint(struct journal_head *jh)
- {
- 	struct buffer_head *bh = jh2bh(jh);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index 3158c08a3aa9c..45f245b1d331c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -1171,9 +1171,9 @@ int hns3_dbg_init(struct hnae3_handle *handle)
+ 	return 0;
  
-+	if (jh->b_transaction)
-+		return -EBUSY;
- 	if (!trylock_buffer(bh))
- 		return -EBUSY;
- 	if (buffer_dirty(bh)) {
+ out:
+-	mutex_destroy(&handle->dbgfs_lock);
+ 	debugfs_remove_recursive(handle->hnae3_dbgfs);
+ 	handle->hnae3_dbgfs = NULL;
++	mutex_destroy(&handle->dbgfs_lock);
+ 	return ret;
+ }
+ 
+@@ -1181,6 +1181,9 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ {
+ 	u32 i;
+ 
++	debugfs_remove_recursive(handle->hnae3_dbgfs);
++	handle->hnae3_dbgfs = NULL;
++
+ 	for (i = 0; i < ARRAY_SIZE(hns3_dbg_cmd); i++)
+ 		if (handle->dbgfs_buf[i]) {
+ 			kvfree(handle->dbgfs_buf[i]);
+@@ -1188,8 +1191,6 @@ void hns3_dbg_uninit(struct hnae3_handle *handle)
+ 		}
+ 
+ 	mutex_destroy(&handle->dbgfs_lock);
+-	debugfs_remove_recursive(handle->hnae3_dbgfs);
+-	handle->hnae3_dbgfs = NULL;
+ }
+ 
+ void hns3_dbg_register_debugfs(const char *debugfs_dir_name)
 -- 
-2.42.0
+2.40.1
 
 
 
