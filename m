@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A167461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBB6C433C8;
-	Sun, 17 Sep 2023 19:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A1A7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:58:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1288C433C8;
+	Sun, 17 Sep 2023 19:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980722;
-	bh=c5rbceCLLUE0Nn9xO+/aSifQYGls09KMNsvy2LvuZtQ=;
+	s=korg; t=1694980725;
+	bh=5DrVpYTssS+E7IAE61X66L5ZIlUXgmiuzZqaQmQhVPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTBrmhK58XQ1ReNb5XzgDVjzBvPjHUtdDuGccEL+DTF/nu+0xKZZHHt0h2fVGOouF
-	 TFwlramrky37hEQP++R+z8OiO3uUwfodT1XNDDE9ysUW9hLSYGLxLzEdDbXriqaDY7
-	 8IhA1JebJ0lSfaO1NsuxS+jzOBCf/4I5PIY4fImo=
+	b=AREbjO0bHm0l+3MTr9gPeBUVzXLMuI4EkzfW4RzbOOP1hU4PVPJLhyTMJ9xfxAwRT
+	 ZGwmfZYMEs1ZMGrsa50AAbWUaSc6Cbx8eGdkAeJZZHTVgL0AegFYCFaQnUu3b9xBRO
+	 RCXwwQIjh+smOV4A+APmJI7ZrU5jEAMNJOesH8V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 275/285] ipv6: fix ip6_sock_set_addr_preferences() typo
-Date: Sun, 17 Sep 2023 21:14:35 +0200
-Message-ID: <20230917191100.676202195@linuxfoundation.org>
+Subject: [PATCH 6.5 276/285] tcp: Factorise sk_family-independent comparison in inet_bind2_bucket_match(_addr_any).
+Date: Sun, 17 Sep 2023 21:14:36 +0200
+Message-ID: <20230917191100.704518449@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,40 +41,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 8cdd9f1aaedf823006449faa4e540026c692ac43 ]
+[ Upstream commit c6d277064b1da7f9015b575a562734de87a7e463 ]
 
-ip6_sock_set_addr_preferences() second argument should be an integer.
+This is a prep patch to make the following patches cleaner that touch
+inet_bind2_bucket_match() and inet_bind2_bucket_match_addr_any().
 
-SUNRPC attempts to set IPV6_PREFER_SRC_PUBLIC were
-translated to IPV6_PREFER_SRC_TMP
+Both functions have duplicated comparison for netns, port, and l3mdev.
+Let's factorise them.
 
-Fixes: 18d5ad623275 ("ipv6: add ip6_sock_set_addr_preferences")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230911154213.713941-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: aa99e5f87bd5 ("tcp: Fix bind() regression for v4-mapped-v6 wildcard address.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/inet_hashtables.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 2acc4c808d45d..b08bd694385aa 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -1356,7 +1356,7 @@ static inline int __ip6_sock_set_addr_preferences(struct sock *sk, int val)
- 	return 0;
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 0819d6001b9ab..1ab81534f8c55 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -795,41 +795,39 @@ static bool inet_bind2_bucket_match(const struct inet_bind2_bucket *tb,
+ 				    const struct net *net, unsigned short port,
+ 				    int l3mdev, const struct sock *sk)
+ {
++	if (!net_eq(ib2_net(tb), net) || tb->port != port ||
++	    tb->l3mdev != l3mdev)
++		return false;
++
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family != tb->family)
+ 		return false;
+ 
+ 	if (sk->sk_family == AF_INET6)
+-		return net_eq(ib2_net(tb), net) && tb->port == port &&
+-			tb->l3mdev == l3mdev &&
+-			ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
+-	else
++		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
+ #endif
+-		return net_eq(ib2_net(tb), net) && tb->port == port &&
+-			tb->l3mdev == l3mdev && tb->rcv_saddr == sk->sk_rcv_saddr;
++	return tb->rcv_saddr == sk->sk_rcv_saddr;
  }
  
--static inline int ip6_sock_set_addr_preferences(struct sock *sk, bool val)
-+static inline int ip6_sock_set_addr_preferences(struct sock *sk, int val)
+ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const struct net *net,
+ 				      unsigned short port, int l3mdev, const struct sock *sk)
  {
- 	int ret;
++	if (!net_eq(ib2_net(tb), net) || tb->port != port ||
++	    tb->l3mdev != l3mdev)
++		return false;
++
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family != tb->family) {
+ 		if (sk->sk_family == AF_INET)
+-			return net_eq(ib2_net(tb), net) && tb->port == port &&
+-				tb->l3mdev == l3mdev &&
+-				ipv6_addr_any(&tb->v6_rcv_saddr);
++			return ipv6_addr_any(&tb->v6_rcv_saddr);
  
+ 		return false;
+ 	}
+ 
+ 	if (sk->sk_family == AF_INET6)
+-		return net_eq(ib2_net(tb), net) && tb->port == port &&
+-			tb->l3mdev == l3mdev &&
+-			ipv6_addr_any(&tb->v6_rcv_saddr);
+-	else
++		return ipv6_addr_any(&tb->v6_rcv_saddr);
+ #endif
+-		return net_eq(ib2_net(tb), net) && tb->port == port &&
+-			tb->l3mdev == l3mdev && tb->rcv_saddr == 0;
++	return tb->rcv_saddr == 0;
+ }
+ 
+ /* The socket's bhash2 hashbucket spinlock must be held when this is called */
 -- 
 2.40.1
 
