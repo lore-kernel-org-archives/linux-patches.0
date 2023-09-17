@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E2E7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03169C433C8;
-	Sun, 17 Sep 2023 19:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CEE7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DF8C433C7;
+	Sun, 17 Sep 2023 19:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980169;
-	bh=4q9LH/frBFqdQv89IGnnvtR2xXPIchQXpCcih4sC4uk=;
+	s=korg; t=1694980173;
+	bh=nsK7tii61whLfVMB+uqVI7VZDQ6YjHjnnLqd3NQj9j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vK63K1xwk/6VSRsqOdmDqcXOj+WSDEmEjpTQyMY4tM/2V3XVarIHIlw8ggjEtDkXz
-	 x+bJ1atFPoNVZTAqoTFa7V05aOiJlKyZEeBEJKbv3L9z0Z+owRRdewGt20fdf3mDfV
-	 NpMH/sNbqVGmhqoRS41gXlHxjUBs3howzDtgaACQ=
+	b=ns+jxkTAHC/GwsxIb4IGgByvmGz1+DfnqD02iXjUB4RKZYpmOJ8tK68numaKYFJYX
+	 E6JWO+945O1ixI323LWxaiNDWuSQn7+PN2e1GTSu0TAajRNVCMZ6c9ZtBf1o/3FDNg
+	 bfsKkp5kFzoL812/8rcS5bVQPzAqxLEWL4CUswGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 114/285] drm/i915/gvt: Verify pfn is "valid" before dereferencing "struct page"
-Date: Sun, 17 Sep 2023 21:11:54 +0200
-Message-ID: <20230917191055.612029210@linuxfoundation.org>
+Subject: [PATCH 6.5 115/285] drm/i915/gvt: Put the page reference obtained by KVMs gfn_to_pfn()
+Date: Sun, 17 Sep 2023 21:11:55 +0200
+Message-ID: <20230917191055.645143312@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -45,41 +45,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f046923af79158361295ed4f0a588c80b9fdcc1d ]
+[ Upstream commit 708e49583d7da863898b25dafe4bcd799c414278 ]
 
-Check that the pfn found by gfn_to_pfn() is actually backed by "struct
-page" memory prior to retrieving and dereferencing the page.  KVM
-supports backing guest memory with VM_PFNMAP, VM_IO, etc., and so
-there is no guarantee the pfn returned by gfn_to_pfn() has an associated
-"struct page".
+Put the struct page reference acquired by gfn_to_pfn(), KVM's API is that
+the caller is ultimately responsible for dropping any reference.
+
+Note, kvm_release_pfn_clean() ensures the pfn is actually a refcounted
+struct page before trying to put any references.
 
 Fixes: b901b252b6cf ("drm/i915/gvt: Add 2M huge gtt support")
 Reviewed-by: Yan Zhao <yan.y.zhao@intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Reviewed-by: Zhi Wang <zhi.a.wang@intel.com>
-Link: https://lore.kernel.org/r/20230729013535.1070024-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20230729013535.1070024-6-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/gtt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/i915/gvt/gtt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/gvt/gtt.c b/drivers/gpu/drm/i915/gvt/gtt.c
-index 4ec85308379a4..58b9b316ae462 100644
+index 58b9b316ae462..8ba6c8668f033 100644
 --- a/drivers/gpu/drm/i915/gvt/gtt.c
 +++ b/drivers/gpu/drm/i915/gvt/gtt.c
-@@ -1183,6 +1183,10 @@ static int is_2MB_gtt_possible(struct intel_vgpu *vgpu,
- 	pfn = gfn_to_pfn(vgpu->vfio_device.kvm, ops->get_pfn(entry));
- 	if (is_error_noslot_pfn(pfn))
+@@ -1174,6 +1174,7 @@ static int is_2MB_gtt_possible(struct intel_vgpu *vgpu,
+ {
+ 	const struct intel_gvt_gtt_pte_ops *ops = vgpu->gvt->gtt.pte_ops;
+ 	kvm_pfn_t pfn;
++	int ret;
+ 
+ 	if (!HAS_PAGE_SIZES(vgpu->gvt->gt->i915, I915_GTT_PAGE_SIZE_2M))
+ 		return 0;
+@@ -1187,7 +1188,9 @@ static int is_2MB_gtt_possible(struct intel_vgpu *vgpu,
+ 	if (!pfn_valid(pfn))
  		return -EINVAL;
-+
-+	if (!pfn_valid(pfn))
-+		return -EINVAL;
-+
- 	return PageTransHuge(pfn_to_page(pfn));
+ 
+-	return PageTransHuge(pfn_to_page(pfn));
++	ret = PageTransHuge(pfn_to_page(pfn));
++	kvm_release_pfn_clean(pfn);
++	return ret;
  }
  
+ static int split_2MB_gtt_entry(struct intel_vgpu *vgpu,
 -- 
 2.40.1
 
