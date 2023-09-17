@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DC46FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB21C433CC;
-	Sun, 17 Sep 2023 20:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1746FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:13:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A2C433C9;
+	Sun, 17 Sep 2023 20:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981612;
-	bh=NwW5YJt/AsDOOsswA+egpPyQJ9GCK/fgm6lir/+md0w=;
+	s=korg; t=1694981616;
+	bh=MEKrscnEFiv1sBKukiE8YPGiWFdaeSu7ukY7ftomAz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBnYgFMSUEUE9UzfbMmEIbtKyHVJrj91y7PCy3qTvsBtLmRye7ZWyWfJBNqOje0J2
-	 i2M/YlMtceqOhOjvC56WPEUgZv1Hw7aEQaVTV8/++Z0LLTGqm/DSWg4/nv+KDzL6y4
-	 pml6fYCyTrefGmVz1uNnWP3dV9CEAtMroEOiYFQI=
+	b=Tqi4LlQV7ZG9qKuh/LB4EyAiITeR0d/NV6Ty8IvN5NDmXS3RfJi9AWPjk16cS7vZf
+	 FTIdLdjPXMIvWKNoUkUE3UtldDkwVPp18Cxx6MC1HeOBI6tYYHjF1k+OMFplRvC92Y
+	 +bZSa6skmImwvAXtS/bfUUQ5/qefk5emDjCBoP10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 147/219] f2fs: avoid false alarm of circular locking
-Date: Sun, 17 Sep 2023 21:14:34 +0200
-Message-ID: <20230917191046.338758803@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexander Lobakin <alobakin@pm.me>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 079/511] bpftool: Use a local bpf_perf_event_value to fix accessing its fields
+Date: Sun, 17 Sep 2023 21:08:26 +0200
+Message-ID: <20230917191115.782455086@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,159 +37,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Alexander Lobakin <alobakin@pm.me>
 
-commit 5c13e2388bf3426fd69a89eb46e50469e9624e56 upstream.
+[ Upstream commit 658ac06801315b739774a15796ff06913ef5cad5 ]
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.5.0-rc5-syzkaller-00353-gae545c3283dc #0 Not tainted
-------------------------------------------------------
-syz-executor273/5027 is trying to acquire lock:
-ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
-ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
+Fix the following error when building bpftool:
 
-but task is already holding lock:
-ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
-ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_add_dentry+0x92/0x230 fs/f2fs/dir.c:783
+  CLANG   profiler.bpf.o
+  CLANG   pid_iter.bpf.o
+skeleton/profiler.bpf.c:18:21: error: invalid application of 'sizeof' to an incomplete type 'struct bpf_perf_event_value'
+        __uint(value_size, sizeof(struct bpf_perf_event_value));
+                           ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:13:39: note: expanded from macro '__uint'
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helper_defs.h:7:8: note: forward declaration of 'struct bpf_perf_event_value'
+struct bpf_perf_event_value;
+       ^
 
-which lock already depends on the new lock.
+struct bpf_perf_event_value is being used in the kernel only when
+CONFIG_BPF_EVENTS is enabled, so it misses a BTF entry then.
+Define struct bpf_perf_event_value___local with the
+`preserve_access_index` attribute inside the pid_iter BPF prog to
+allow compiling on any configs. It is a full mirror of a UAPI
+structure, so is compatible both with and w/o CO-RE.
+bpf_perf_event_read_value() requires a pointer of the original type,
+so a cast is needed.
 
-the existing dependency chain (in reverse order) is:
-
--> #1 (&fi->i_xattr_sem){.+.+}-{3:3}:
-       down_read+0x9c/0x470 kernel/locking/rwsem.c:1520
-       f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
-       f2fs_getxattr+0xb1e/0x12c0 fs/f2fs/xattr.c:532
-       __f2fs_get_acl+0x5a/0x900 fs/f2fs/acl.c:179
-       f2fs_acl_create fs/f2fs/acl.c:377 [inline]
-       f2fs_init_acl+0x15c/0xb30 fs/f2fs/acl.c:420
-       f2fs_init_inode_metadata+0x159/0x1290 fs/f2fs/dir.c:558
-       f2fs_add_regular_entry+0x79e/0xb90 fs/f2fs/dir.c:740
-       f2fs_add_dentry+0x1de/0x230 fs/f2fs/dir.c:788
-       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
-       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
-       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
-       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
-       do_mkdirat+0x2a9/0x330 fs/namei.c:4140
-       __do_sys_mkdir fs/namei.c:4160 [inline]
-       __se_sys_mkdir fs/namei.c:4158 [inline]
-       __x64_sys_mkdir+0xf2/0x140 fs/namei.c:4158
-       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-       entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (&fi->i_sem){+.+.}-{3:3}:
-       check_prev_add kernel/locking/lockdep.c:3142 [inline]
-       check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-       validate_chain kernel/locking/lockdep.c:3876 [inline]
-       __lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-       lock_acquire kernel/locking/lockdep.c:5761 [inline]
-       lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-       down_write+0x93/0x200 kernel/locking/rwsem.c:1573
-       f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
-       f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
-       f2fs_add_dentry+0xa6/0x230 fs/f2fs/dir.c:784
-       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
-       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
-       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
-       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
-       ovl_do_mkdir fs/overlayfs/overlayfs.h:196 [inline]
-       ovl_mkdir_real+0xb5/0x370 fs/overlayfs/dir.c:146
-       ovl_workdir_create+0x3de/0x820 fs/overlayfs/super.c:309
-       ovl_make_workdir fs/overlayfs/super.c:711 [inline]
-       ovl_get_workdir fs/overlayfs/super.c:864 [inline]
-       ovl_fill_super+0xdab/0x6180 fs/overlayfs/super.c:1400
-       vfs_get_super+0xf9/0x290 fs/super.c:1152
-       vfs_get_tree+0x88/0x350 fs/super.c:1519
-       do_new_mount fs/namespace.c:3335 [inline]
-       path_mount+0x1492/0x1ed0 fs/namespace.c:3662
-       do_mount fs/namespace.c:3675 [inline]
-       __do_sys_mount fs/namespace.c:3884 [inline]
-       __se_sys_mount fs/namespace.c:3861 [inline]
-       __x64_sys_mount+0x293/0x310 fs/namespace.c:3861
-       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-       entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  rlock(&fi->i_xattr_sem);
-                               lock(&fi->i_sem);
-                               lock(&fi->i_xattr_sem);
-  lock(&fi->i_sem);
-
-Cc: <stable@vger.kernel.org>
-Reported-and-tested-by: syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
-Fixes: 5eda1ad1aaff "f2fs: fix deadlock in i_xattr_sem and inode page lock"
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230707095425.168126-5-quentin@isovalent.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h   |   24 +++++++++++++++---------
- fs/f2fs/inline.c |    3 ++-
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ tools/bpf/bpftool/skeleton/profiler.bpf.c | 27 ++++++++++++++---------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2160,15 +2160,6 @@ static inline int f2fs_down_read_trylock
- 	return down_read_trylock(&sem->internal_rwsem);
- }
+diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+index ce5b65e07ab10..2f80edc682f11 100644
+--- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
++++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+@@ -4,6 +4,12 @@
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_tracing.h>
  
--#ifdef CONFIG_DEBUG_LOCK_ALLOC
--static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
--{
--	down_read_nested(&sem->internal_rwsem, subclass);
--}
--#else
--#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
--#endif
--
- static inline void f2fs_up_read(struct f2fs_rwsem *sem)
- {
- 	up_read(&sem->internal_rwsem);
-@@ -2179,6 +2170,21 @@ static inline void f2fs_down_write(struc
- 	down_write(&sem->internal_rwsem);
- }
++struct bpf_perf_event_value___local {
++	__u64 counter;
++	__u64 enabled;
++	__u64 running;
++} __attribute__((preserve_access_index));
++
+ /* map of perf event fds, num_cpu * num_metric entries */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+@@ -15,14 +21,14 @@ struct {
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
+ 	__uint(key_size, sizeof(u32));
+-	__uint(value_size, sizeof(struct bpf_perf_event_value));
++	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
+ } fentry_readings SEC(".maps");
  
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
-+{
-+	down_read_nested(&sem->internal_rwsem, subclass);
-+}
-+
-+static inline void f2fs_down_write_nested(struct f2fs_rwsem *sem, int subclass)
-+{
-+	down_write_nested(&sem->internal_rwsem, subclass);
-+}
-+#else
-+#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
-+#define f2fs_down_write_nested(sem, subclass) f2fs_down_write(sem)
-+#endif
-+
- static inline int f2fs_down_write_trylock(struct f2fs_rwsem *sem)
+ /* accumulated readings */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
+ 	__uint(key_size, sizeof(u32));
+-	__uint(value_size, sizeof(struct bpf_perf_event_value));
++	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
+ } accum_readings SEC(".maps");
+ 
+ /* sample counts, one per cpu */
+@@ -39,7 +45,7 @@ const volatile __u32 num_metric = 1;
+ SEC("fentry/XXX")
+ int BPF_PROG(fentry_XXX)
  {
- 	return down_write_trylock(&sem->internal_rwsem);
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -642,7 +642,8 @@ int f2fs_add_inline_entry(struct inode *
+-	struct bpf_perf_event_value *ptrs[MAX_NUM_MATRICS];
++	struct bpf_perf_event_value___local *ptrs[MAX_NUM_MATRICS];
+ 	u32 key = bpf_get_smp_processor_id();
+ 	u32 i;
+ 
+@@ -53,10 +59,10 @@ int BPF_PROG(fentry_XXX)
  	}
  
- 	if (inode) {
--		f2fs_down_write(&F2FS_I(inode)->i_sem);
-+		f2fs_down_write_nested(&F2FS_I(inode)->i_sem,
-+						SINGLE_DEPTH_NESTING);
- 		page = f2fs_init_inode_metadata(inode, dir, fname, ipage);
- 		if (IS_ERR(page)) {
- 			err = PTR_ERR(page);
+ 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
+-		struct bpf_perf_event_value reading;
++		struct bpf_perf_event_value___local reading;
+ 		int err;
+ 
+-		err = bpf_perf_event_read_value(&events, key, &reading,
++		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
+ 						sizeof(reading));
+ 		if (err)
+ 			return 0;
+@@ -68,14 +74,14 @@ int BPF_PROG(fentry_XXX)
+ }
+ 
+ static inline void
+-fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
++fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
+ {
+-	struct bpf_perf_event_value *before, diff;
++	struct bpf_perf_event_value___local *before, diff;
+ 
+ 	before = bpf_map_lookup_elem(&fentry_readings, &id);
+ 	/* only account samples with a valid fentry_reading */
+ 	if (before && before->counter) {
+-		struct bpf_perf_event_value *accum;
++		struct bpf_perf_event_value___local *accum;
+ 
+ 		diff.counter = after->counter - before->counter;
+ 		diff.enabled = after->enabled - before->enabled;
+@@ -93,7 +99,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
+ SEC("fexit/XXX")
+ int BPF_PROG(fexit_XXX)
+ {
+-	struct bpf_perf_event_value readings[MAX_NUM_MATRICS];
++	struct bpf_perf_event_value___local readings[MAX_NUM_MATRICS];
+ 	u32 cpu = bpf_get_smp_processor_id();
+ 	u32 i, zero = 0;
+ 	int err;
+@@ -102,7 +108,8 @@ int BPF_PROG(fexit_XXX)
+ 	/* read all events before updating the maps, to reduce error */
+ 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
+ 		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
+-						readings + i, sizeof(*readings));
++						(void *)(readings + i),
++						sizeof(*readings));
+ 		if (err)
+ 			return 0;
+ 	}
+-- 
+2.40.1
+
 
 
