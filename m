@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D76FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB8DC433C7;
-	Sun, 17 Sep 2023 19:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BEB6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795B8C433C9;
+	Sun, 17 Sep 2023 19:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979482;
-	bh=8FpvBGtGUAo2lTD/jsZo5jKN9wfvuopGdMp3IJDv6bE=;
+	s=korg; t=1694979485;
+	bh=ClUBMDGOBnvDbbsmWPCUPA+nUwBx6fZPjzC7mH9plTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9N1pKnOSFbKBAE+z/dMJOIt4rKR8aQScqCPzcmAsy1T/12809J1M2umbXNX8CQlZ
-	 9SHQvUXDoidAODZG7+X6FmP1vYfoNhjok0h0NyfLOhzaJwqeB90adKl0MUfqgIhHg/
-	 t5a2hTlpFkBNUn1LPsS2NPzGRgYF6KpoAr77lYpo=
+	b=msMnlk6bjZuvLjqFXG2DoUcp6Dnv2C6YbZZfQpxaUl4X86tBzTfN6RH+hKUZ3lLuh
+	 lY7l1Hmr9HSsU38A9e/KueT36LzDZIfr1A55jETAFObhBm3nebeFHHEH7D8PFQw4Zo
+	 vzW+L8Vf5JcC71sYu9wE+XFYeDs9SJ2IVQ0Nl7d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 325/406] parisc: led: Fix LAN receive and transmit LEDs
-Date: Sun, 17 Sep 2023 21:12:59 +0200
-Message-ID: <20230917191109.876467576@linuxfoundation.org>
+Subject: [PATCH 5.10 326/406] parisc: led: Reduce CPU overhead for disk & lan LED computation
+Date: Sun, 17 Sep 2023 21:13:00 +0200
+Message-ID: <20230917191109.901469964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,30 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit 4db89524b084f712a887256391fc19d9f66c8e55 upstream.
+commit 358ad816e52d4253b38c2f312e6b1cbd89e0dbf7 upstream.
 
-Fix the LAN receive and LAN transmit LEDs, which where swapped
-up to now.
+Older PA-RISC machines have LEDs which show the disk- and LAN-activity.
+The computation is done in software and takes quite some time, e.g. on a
+J6500 this may take up to 60% time of one CPU if the machine is loaded
+via network traffic.
+
+Since most people don't care about the LEDs, start with LEDs disabled and
+just show a CPU heartbeat LED. The disk and LAN LEDs can be turned on
+manually via /proc/pdc/led.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/led.h |    4 ++--
+ drivers/parisc/led.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/include/asm/led.h
-+++ b/arch/parisc/include/asm/led.h
-@@ -11,8 +11,8 @@
- #define	LED1		0x02
- #define	LED0		0x01		/* bottom (or furthest left) LED */
- 
--#define	LED_LAN_TX	LED0		/* for LAN transmit activity */
--#define	LED_LAN_RCV	LED1		/* for LAN receive activity */
-+#define	LED_LAN_RCV	LED0		/* for LAN receive activity */
-+#define	LED_LAN_TX	LED1		/* for LAN transmit activity */
- #define	LED_DISK_IO	LED2		/* for disk activity */
- #define	LED_HEARTBEAT	LED3		/* heartbeat */
- 
+--- a/drivers/parisc/led.c
++++ b/drivers/parisc/led.c
+@@ -56,8 +56,8 @@
+ static int led_type __read_mostly = -1;
+ static unsigned char lastleds;	/* LED state from most recent update */
+ static unsigned int led_heartbeat __read_mostly = 1;
+-static unsigned int led_diskio    __read_mostly = 1;
+-static unsigned int led_lanrxtx   __read_mostly = 1;
++static unsigned int led_diskio    __read_mostly;
++static unsigned int led_lanrxtx   __read_mostly;
+ static char lcd_text[32]          __read_mostly;
+ static char lcd_text_default[32]  __read_mostly;
+ static int  lcd_no_led_support    __read_mostly = 0; /* KittyHawk doesn't support LED on its LCD */
 
 
