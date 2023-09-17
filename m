@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50D57461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A63C433C7;
-	Sun, 17 Sep 2023 20:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA197461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600F9C433C8;
+	Sun, 17 Sep 2023 20:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981209;
-	bh=CBj0fMDm8TFafK74/N2USeIxosUOiYYnDc9/cniEeNs=;
+	s=korg; t=1694981212;
+	bh=vM3NlPMb445Y8wmWVtDltNHWj7IX9qKCtfAzYqmAikY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEmjFVSb2PmExflFcQ88t9nYge4vMKmvuDLXfIts0uNG15JzrGul77SlIF4zLcGTy
-	 CAg/AuIR46v0OliAIZrW0hphBdsVkJERWHXxSkJcbY9FgpDUowDvnxFHVFyLKQK1iu
-	 hWWSUpBpVYXig0GpkRVuECnMnHigwanoZ81pltqw=
+	b=sHC0WIXF6TKeyiEjF50p3MF9M3ziHmBtvJ6mAE5bOot5yRxuSPzByQSVofFCIuVWM
+	 QF9bcW224zAtDPFTPcjE/lVrKtNZ693Bw8faujGWpkK+bAoKkEvUNWk5r77XFO+qIp
+	 r7xmue8X4r5ejE3gJ7/o0+6tWLavXq+7P/GsSMr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/219] gfs2: Switch to wait_event in gfs2_logd
-Date: Sun, 17 Sep 2023 21:13:06 +0200
-Message-ID: <20230917191043.147481622@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.1 050/219] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
+Date: Sun, 17 Sep 2023 21:12:57 +0200
+Message-ID: <20230917191042.813413605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -39,57 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 6df373b09b1dcf2f7d579f515f653f89a896d417 ]
+commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
 
-In gfs2_logd(), switch from an open-coded wait loop to
-wait_event_interruptible_timeout().
+It is an almost improbable error case but when page allocating loop in
+nfs4_get_device_info() fails then we should only free the already
+allocated pages, as __free_page() can't deal with NULL arguments.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: b74cd55aa9a9 ("gfs2: low-memory forced flush fixes")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org).
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/log.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/nfs/pnfs_dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 61323deb80bc7..69c3facfcbef4 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -1304,7 +1304,6 @@ int gfs2_logd(void *data)
- {
- 	struct gfs2_sbd *sdp = data;
- 	unsigned long t = 1;
--	DEFINE_WAIT(wait);
+--- a/fs/nfs/pnfs_dev.c
++++ b/fs/nfs/pnfs_dev.c
+@@ -154,7 +154,7 @@ nfs4_get_device_info(struct nfs_server *
+ 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
  
- 	while (!kthread_should_stop()) {
- 
-@@ -1341,17 +1340,11 @@ int gfs2_logd(void *data)
- 
- 		try_to_freeze();
- 
--		do {
--			prepare_to_wait(&sdp->sd_logd_waitq, &wait,
--					TASK_INTERRUPTIBLE);
--			if (!gfs2_ail_flush_reqd(sdp) &&
--			    !gfs2_jrnl_flush_reqd(sdp) &&
--			    !kthread_should_stop())
--				t = schedule_timeout(t);
--		} while(t && !gfs2_ail_flush_reqd(sdp) &&
--			!gfs2_jrnl_flush_reqd(sdp) &&
--			!kthread_should_stop());
--		finish_wait(&sdp->sd_logd_waitq, &wait);
-+		t = wait_event_interruptible_timeout(sdp->sd_logd_waitq,
-+				gfs2_ail_flush_reqd(sdp) ||
-+				gfs2_jrnl_flush_reqd(sdp) ||
-+				kthread_should_stop(),
-+				t);
- 	}
- 
- 	return 0;
--- 
-2.40.1
-
+ out_free_pages:
+-	for (i = 0; i < max_pages; i++)
++	while (--i >= 0)
+ 		__free_page(pages[i]);
+ 	kfree(pages);
+ out_free_pdev:
 
 
