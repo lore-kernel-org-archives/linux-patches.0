@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C737B6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CCEC433C7;
-	Sun, 17 Sep 2023 20:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E776FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E779C433CA;
+	Sun, 17 Sep 2023 20:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983226;
-	bh=JcyYObJsZt/oMTdbKjF6g+xaYPjG+7s2t32q1jQ2TYE=;
+	s=korg; t=1694983230;
+	bh=p4gP1j1iB/R/SVZeiPJAtnm/A8BC8kNRT0dTgHYrhms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAq9E3CeZSJ6PObspRpCv1a/7Ra/UrE9U06kLqCh83YGlqi/dOvyUAP7PiTyaqiMI
-	 m0i21luIDLj3tgwM9GOVuwUFNF5UQez8dYWxQE9cWOXEWMp85BpR+wIod/CZEoQFBA
-	 M1GGMPHPvRyV2rpxAFXiuyfDVqVXD6rfZfBPWYfk=
+	b=l2/mb3ETDaVz1w6vdGVIqEOqo4Dqz3QK3ClMvDsu5IR1IQgyaFl+1iOwaKsnOHPnA
+	 fdM9xDMRnsdpIbsfKnSN9/EUiejPOahkvdxicDhU2gK43IjvWYuANfhqyRVS1rpKsN
+	 1gjL36/uSkcwWZEuwR9tF+YM26H+HLToOm3oc/C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 481/511] MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install regression
-Date: Sun, 17 Sep 2023 21:15:08 +0200
-Message-ID: <20230917191125.355252817@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 482/511] perf hists browser: Fix hierarchy mode header
+Date: Sun, 17 Sep 2023 21:15:09 +0200
+Message-ID: <20230917191125.379322625@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -35,52 +38,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit a79a404e6c2241ebc528b9ebf4c0832457b498c3 upstream.
+commit e2cabf2a44791f01c21f8d5189b946926e34142e upstream.
 
-Remove a build-time check for the presence of the GCC `-msym32' option.
-This option has been there since GCC 4.1.0, which is below the minimum
-required as at commit 805b2e1d427a ("kbuild: include Makefile.compiler
-only when compiler is needed"), when an error message:
+The commit ef9ff6017e3c4593 ("perf ui browser: Move the extra title
+lines from the hists browser") introduced ui_browser__gotorc_title() to
+help moving non-title lines easily.  But it missed to update the title
+for the hierarchy mode so it won't print the header line on TUI at all.
 
-arch/mips/Makefile:306: *** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
+  $ perf report --hierarchy
 
-started to trigger for the `modules_install' target with configurations
-such as `decstation_64_defconfig' that set CONFIG_CPU_DADDI_WORKAROUNDS,
-because said commit has made `cc-option-yn' an undefined function for
-non-build targets.
-
-Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 805b2e1d427a ("kbuild: include Makefile.compiler only when compiler is needed")
-Cc: stable@vger.kernel.org # v5.13+
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: ef9ff6017e3c4593 ("perf ui browser: Move the extra title lines from the hists browser")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230731094934.1616495-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/ui/browsers/hists.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -279,8 +279,8 @@ ifdef CONFIG_64BIT
-     endif
-   endif
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -1779,7 +1779,7 @@ static void hists_browser__hierarchy_hea
+ 	hists_browser__scnprintf_hierarchy_headers(browser, headers,
+ 						   sizeof(headers));
  
--  ifeq ($(KBUILD_SYM32)$(call cc-option-yn,-msym32), yy)
--    cflags-y += -msym32 -DKBUILD_64BIT_SYM32
-+  ifeq ($(KBUILD_SYM32), y)
-+    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
-   else
-     ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
-       $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
+-	ui_browser__gotorc(&browser->b, 0, 0);
++	ui_browser__gotorc_title(&browser->b, 0, 0);
+ 	ui_browser__set_color(&browser->b, HE_COLORSET_ROOT);
+ 	ui_browser__write_nstring(&browser->b, headers, browser->b.width + 1);
+ }
 
 
