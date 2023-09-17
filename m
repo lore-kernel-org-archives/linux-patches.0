@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1BA6ABA
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D536C433CB;
-	Sun, 17 Sep 2023 19:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333716ABA
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9154AC433C8;
+	Sun, 17 Sep 2023 19:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980258;
-	bh=tUeDs9cb/KIJ8kTxA+67nXlKhf6NEjDmhzvmeeN968Q=;
+	s=korg; t=1694980262;
+	bh=iYUpe5kZJ3oMdcAlZqXhxT7WBguxLoQHREQ8zNrwZeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gh183kxN6Ot9aTDUpLQUUjwySnZoTS97/0vm394UxbLr4jrdAXyMJU7QW8oIkdQTw
-	 VXv+1t2nfzng8vIeNebkeWkZreRF25C1L0hdharxwcNJFECRCNa0HfiwfRc5f5qIhL
-	 nBGcCoqwIdOCDyxl+V2BEc3zqIQF357rIiE4IwUQ=
+	b=n/xSioqL1dxrIkf73Se78+ZniB2YlZ5Sp+gktQpIklaZ64piUU5m3aw9zr6WUWPrG
+	 fFvDDvMYgkifGeCLjuvBAHE5Fnj2+6X/qa9Rct2bHiX8opfVgYAkkdTKPcD6xu1bYx
+	 MyWr2qFzy+Wssc/KMfD3KO0CIXlAoKRFJkjr16t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xu Kuohai <xukuohai@huawei.com>,
+	Olga Zaborska <olga.zaborska@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 132/285] bpf, sockmap: Fix skb refcnt race after locking changes
-Date: Sun, 17 Sep 2023 21:12:12 +0200
-Message-ID: <20230917191056.230761383@linuxfoundation.org>
+Subject: [PATCH 6.5 141/285] igc: Change IGC_MIN to allow set rx/tx value between 64 and 80
+Date: Sun, 17 Sep 2023 21:12:21 +0200
+Message-ID: <20230917191056.554690673@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,122 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Olga Zaborska <olga.zaborska@intel.com>
 
-[ Upstream commit a454d84ee20baf7bd7be90721b9821f73c7d23d9 ]
+[ Upstream commit 5aa48279712e1f134aac908acde4df798955a955 ]
 
-There is a race where skb's from the sk_psock_backlog can be referenced
-after userspace side has already skb_consumed() the sk_buff and its refcnt
-dropped to zer0 causing use after free.
+Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
+value between 64 and 80. All igc devices can use as low as 64 descriptors.
+This change will unify igc with other drivers.
+Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
 
-The flow is the following:
-
-  while ((skb = skb_peek(&psock->ingress_skb))
-    sk_psock_handle_Skb(psock, skb, ..., ingress)
-    if (!ingress) ...
-    sk_psock_skb_ingress
-       sk_psock_skb_ingress_enqueue(skb)
-          msg->skb = skb
-          sk_psock_queue_msg(psock, msg)
-    skb_dequeue(&psock->ingress_skb)
-
-The sk_psock_queue_msg() puts the msg on the ingress_msg queue. This is
-what the application reads when recvmsg() is called. An application can
-read this anytime after the msg is placed on the queue. The recvmsg hook
-will also read msg->skb and then after user space reads the msg will call
-consume_skb(skb) on it effectively free'ing it.
-
-But, the race is in above where backlog queue still has a reference to
-the skb and calls skb_dequeue(). If the skb_dequeue happens after the
-user reads and free's the skb we have a use after free.
-
-The !ingress case does not suffer from this problem because it uses
-sendmsg_*(sk, msg) which does not pass the sk_buff further down the
-stack.
-
-The following splat was observed with 'test_progs -t sockmap_listen':
-
-  [ 1022.710250][ T2556] general protection fault, ...
-  [...]
-  [ 1022.712830][ T2556] Workqueue: events sk_psock_backlog
-  [ 1022.713262][ T2556] RIP: 0010:skb_dequeue+0x4c/0x80
-  [ 1022.713653][ T2556] Code: ...
-  [...]
-  [ 1022.720699][ T2556] Call Trace:
-  [ 1022.720984][ T2556]  <TASK>
-  [ 1022.721254][ T2556]  ? die_addr+0x32/0x80^M
-  [ 1022.721589][ T2556]  ? exc_general_protection+0x25a/0x4b0
-  [ 1022.722026][ T2556]  ? asm_exc_general_protection+0x22/0x30
-  [ 1022.722489][ T2556]  ? skb_dequeue+0x4c/0x80
-  [ 1022.722854][ T2556]  sk_psock_backlog+0x27a/0x300
-  [ 1022.723243][ T2556]  process_one_work+0x2a7/0x5b0
-  [ 1022.723633][ T2556]  worker_thread+0x4f/0x3a0
-  [ 1022.723998][ T2556]  ? __pfx_worker_thread+0x10/0x10
-  [ 1022.724386][ T2556]  kthread+0xfd/0x130
-  [ 1022.724709][ T2556]  ? __pfx_kthread+0x10/0x10
-  [ 1022.725066][ T2556]  ret_from_fork+0x2d/0x50
-  [ 1022.725409][ T2556]  ? __pfx_kthread+0x10/0x10
-  [ 1022.725799][ T2556]  ret_from_fork_asm+0x1b/0x30
-  [ 1022.726201][ T2556]  </TASK>
-
-To fix we add an skb_get() before passing the skb to be enqueued in the
-engress queue. This bumps the skb->users refcnt so that consume_skb()
-and kfree_skb will not immediately free the sk_buff. With this we can
-be sure the skb is still around when we do the dequeue. Then we just
-need to decrement the refcnt or free the skb in the backlog case which
-we do by calling kfree_skb() on the ingress case as well as the sendmsg
-case.
-
-Before locking change from fixes tag we had the sock locked so we
-couldn't race with user and there was no issue here.
-
-Fixes: 799aa7f98d53e ("skmsg: Avoid lock_sock() in sk_psock_backlog()")
-Reported-by: Jiri Olsa  <jolsa@kernel.org>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Xu Kuohai <xukuohai@huawei.com>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20230901202137.214666-1-john.fastabend@gmail.com
+Fixes: 0507ef8a0372 ("igc: Add transmit and receive fastpath and interrupt handlers")
+Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igc/igc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index ef1a2eb6520bf..a746dbc2f8877 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -612,12 +612,18 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
- static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
- 			       u32 off, u32 len, bool ingress)
- {
-+	int err = 0;
-+
- 	if (!ingress) {
- 		if (!sock_writeable(psock->sk))
- 			return -EAGAIN;
- 		return skb_send_sock(psock->sk, skb, off, len);
- 	}
--	return sk_psock_skb_ingress(psock, skb, off, len);
-+	skb_get(skb);
-+	err = sk_psock_skb_ingress(psock, skb, off, len);
-+	if (err < 0)
-+		kfree_skb(skb);
-+	return err;
- }
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index 38901d2a46807..b4077c3f62ed1 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -368,11 +368,11 @@ static inline u32 igc_rss_type(const union igc_adv_rx_desc *rx_desc)
+ /* TX/RX descriptor defines */
+ #define IGC_DEFAULT_TXD		256
+ #define IGC_DEFAULT_TX_WORK	128
+-#define IGC_MIN_TXD		80
++#define IGC_MIN_TXD		64
+ #define IGC_MAX_TXD		4096
  
- static void sk_psock_skb_state(struct sk_psock *psock,
-@@ -685,9 +691,7 @@ static void sk_psock_backlog(struct work_struct *work)
- 		} while (len);
+ #define IGC_DEFAULT_RXD		256
+-#define IGC_MIN_RXD		80
++#define IGC_MIN_RXD		64
+ #define IGC_MAX_RXD		4096
  
- 		skb = skb_dequeue(&psock->ingress_skb);
--		if (!ingress) {
--			kfree_skb(skb);
--		}
-+		kfree_skb(skb);
- 	}
- end:
- 	mutex_unlock(&psock->work_mutex);
+ /* Supported Rx Buffer Sizes */
 -- 
 2.40.1
 
