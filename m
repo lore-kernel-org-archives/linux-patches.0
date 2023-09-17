@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4176FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBA0C433CD;
-	Sun, 17 Sep 2023 20:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E786FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:31:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C657C433CD;
+	Sun, 17 Sep 2023 20:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982687;
-	bh=KAVKGJixNp6XijGaHTH4LjTLJ3gVVcNBShOGcYAVGuE=;
+	s=korg; t=1694982690;
+	bh=p0ZewTQoaaLjtbAlbhx/Izk4prT5Dxm9vyRoqQFEmCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrxhWPJN5UbbM6YwiC6qlZ905oBtSUGonOtV9L+3iUWoPVPGuckgBc8BRuPboe2tm
-	 onDndTIVy8utwRHThfBLeR+TcGEYOPiVR0pJgD7nVClM9YOrlrGFWAyhtR2ROyfjSn
-	 RM8xJj13eA+tdU65CcK4+yj9Oj1mkxmkxl2cBdmQ=
+	b=cb1ePaz9x5knOoUS00tcgoS6DVXzuPAAL+JEYWXipJFf0IqTagfCG+reDpUgcdP74
+	 nVOHDMRaOaHCkYNkI/K8h1S/0n/AnzYEhQStGZPn0y/heMnyv0vQ6Kvi33MFA1WhN+
+	 7gPeBF6rIKPkdCkpkk9nCQ4y3ABx9hUwzSENNimw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Zhen Lei <thunder.leizhen@huaweicloud.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 324/511] rcu: dump vmalloc memory info safely
-Date: Sun, 17 Sep 2023 21:12:31 +0200
-Message-ID: <20230917191121.641499605@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 307/511] leds: multicolor: Use rounded division when calculating color components
+Date: Sun, 17 Sep 2023 21:12:14 +0200
+Message-ID: <20230917191121.241419653@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -38,101 +34,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Marek Behún <kabel@kernel.org>
 
-commit c83ad36a18c02c0f51280b50272327807916987f upstream.
+[ Upstream commit 065d099f1be58187e6629273c50b948a02b7e1bf ]
 
-Currently, for double invoke call_rcu(), will dump rcu_head objects memory
-info, if the objects is not allocated from the slab allocator, the
-vmalloc_dump_obj() will be invoke and the vmap_area_lock spinlock need to
-be held, since the call_rcu() can be invoked in interrupt context,
-therefore, there is a possibility of spinlock deadlock scenarios.
+Given channel intensity, LED brightness and max LED brightness, the
+multicolor LED framework helper led_mc_calc_color_components() computes
+the color channel brightness as
 
-And in Preempt-RT kernel, the rcutorture test also trigger the following
-lockdep warning:
+    chan_brightness = brightness * chan_intensity / max_brightness
 
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 1, name: swapper/0
-preempt_count: 1, expected: 0
-RCU nest depth: 1, expected: 1
-3 locks held by swapper/0/1:
- #0: ffffffffb534ee80 (fullstop_mutex){+.+.}-{4:4}, at: torture_init_begin+0x24/0xa0
- #1: ffffffffb5307940 (rcu_read_lock){....}-{1:3}, at: rcu_torture_init+0x1ec7/0x2370
- #2: ffffffffb536af40 (vmap_area_lock){+.+.}-{3:3}, at: find_vmap_area+0x1f/0x70
-irq event stamp: 565512
-hardirqs last  enabled at (565511): [<ffffffffb379b138>] __call_rcu_common+0x218/0x940
-hardirqs last disabled at (565512): [<ffffffffb5804262>] rcu_torture_init+0x20b2/0x2370
-softirqs last  enabled at (399112): [<ffffffffb36b2586>] __local_bh_enable_ip+0x126/0x170
-softirqs last disabled at (399106): [<ffffffffb43fef59>] inet_register_protosw+0x9/0x1d0
-Preemption disabled at:
-[<ffffffffb58040c3>] rcu_torture_init+0x1f13/0x2370
-CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.5.0-rc4-rt2-yocto-preempt-rt+ #15
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x68/0xb0
- dump_stack+0x14/0x20
- __might_resched+0x1aa/0x280
- ? __pfx_rcu_torture_err_cb+0x10/0x10
- rt_spin_lock+0x53/0x130
- ? find_vmap_area+0x1f/0x70
- find_vmap_area+0x1f/0x70
- vmalloc_dump_obj+0x20/0x60
- mem_dump_obj+0x22/0x90
- __call_rcu_common+0x5bf/0x940
- ? debug_smp_processor_id+0x1b/0x30
- call_rcu_hurry+0x14/0x20
- rcu_torture_init+0x1f82/0x2370
- ? __pfx_rcu_torture_leak_cb+0x10/0x10
- ? __pfx_rcu_torture_leak_cb+0x10/0x10
- ? __pfx_rcu_torture_init+0x10/0x10
- do_one_initcall+0x6c/0x300
- ? debug_smp_processor_id+0x1b/0x30
- kernel_init_freeable+0x2b9/0x540
- ? __pfx_kernel_init+0x10/0x10
- kernel_init+0x1f/0x150
- ret_from_fork+0x40/0x50
- ? __pfx_kernel_init+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
+Consider the situation when (brightness, intensity, max_brightness) is
+for example (16, 15, 255), then chan_brightness is computed to 0
+although the fractional divison would give 0.94, which should be rounded
+to 1.
 
-The previous patch fixes this by using the deadlock-safe best-effort
-version of find_vm_area.  However, in case of failure print the fact that
-the pointer was a vmalloc pointer so that we print at least something.
+Use DIV_ROUND_CLOSEST here for the division to give more realistic
+component computation:
 
-Link: https://lkml.kernel.org/r/20230904180806.1002832-2-joel@joelfernandes.org
-Fixes: 98f180837a89 ("mm: Make mem_dump_obj() handle vmalloc() memory")
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Reported-by: Zhen Lei <thunder.leizhen@huaweicloud.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    chan_brightness = DIV_ROUND_CLOSEST(brightness * chan_intensity,
+                                        max_brightness)
+
+Fixes: 55d5d3b46b08 ("leds: multicolor: Introduce a multicolor class definition")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://lore.kernel.org/r/20230801124931.8661-1-kabel@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/util.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/leds/led-class-multicolor.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/mm/util.c
-+++ b/mm/util.c
-@@ -1110,7 +1110,9 @@ void mem_dump_obj(void *object)
- 	if (vmalloc_dump_obj(object))
- 		return;
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index e317408583df9..ec62a48116135 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -6,6 +6,7 @@
+ #include <linux/device.h>
+ #include <linux/init.h>
+ #include <linux/led-class-multicolor.h>
++#include <linux/math.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+@@ -19,9 +20,10 @@ int led_mc_calc_color_components(struct led_classdev_mc *mcled_cdev,
+ 	int i;
  
--	if (virt_addr_valid(object))
-+	if (is_vmalloc_addr(object))
-+		type = "vmalloc memory";
-+	else if (virt_addr_valid(object))
- 		type = "non-slab/vmalloc memory";
- 	else if (object == NULL)
- 		type = "NULL pointer";
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+-		mcled_cdev->subled_info[i].brightness = brightness *
+-					mcled_cdev->subled_info[i].intensity /
+-					led_cdev->max_brightness;
++		mcled_cdev->subled_info[i].brightness =
++			DIV_ROUND_CLOSEST(brightness *
++					  mcled_cdev->subled_info[i].intensity,
++					  led_cdev->max_brightness);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
