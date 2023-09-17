@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE626FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D711C433CD;
-	Sun, 17 Sep 2023 19:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69216FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5029BC433C7;
+	Sun, 17 Sep 2023 19:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980337;
-	bh=pU0p9780dtn6CnZNE+9uIF67WFRb4UcUtb72quRvovk=;
+	s=korg; t=1694980340;
+	bh=b1XpzCuzpMdNsnfkophq/r5FYrwAYhWDU/csypi/02E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRMMYlQKR2pDGdUFbiSqraEq0yKQzxx8KEjCp/9ZEtQtBuMEyrzbsqqtHCr+qf5LT
-	 OnaBwg106+9z7++oQ1UjJKzjCUd6Zo4wjpu/VJNiGh/eTNGcKqXjOU7Wp1B6ORLQoI
-	 TFEMBTaePSozTknR9XfO3vqAZTKRhLcPB7L50go8=
+	b=u/iX4kUisv6U8ssHICdGBAUfIErjA1kdi1RKiqLJW1tX+Ar1fyWxAIyQ+xyrl94fL
+	 TC72+hRZKkMi4X4gHJR/uGIgyDGLhDE/z1kiTazIfcwM+N9lWdvo1cLdCB6B/pkLzP
+	 /is0l+soidpso6xIWRcSnbBMnseoUEpDY1jyYMFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 161/285] bpf: bpf_sk_storage: Fix the missing uncharge in sk_omem_alloc
-Date: Sun, 17 Sep 2023 21:12:41 +0200
-Message-ID: <20230917191057.241079311@linuxfoundation.org>
+Subject: [PATCH 6.5 135/285] af_unix: Fix data-race around unix_tot_inflight.
+Date: Sun, 17 Sep 2023 21:12:15 +0200
+Message-ID: <20230917191056.334548836@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,48 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 55d49f750b1cb1f177fb1b00ae02cba4613bcfb7 ]
+[ Upstream commit ade32bd8a738d7497ffe9743c46728db26740f78 ]
 
-The commit c83597fa5dc6 ("bpf: Refactor some inode/task/sk storage functions
-for reuse"), refactored the bpf_{sk,task,inode}_storage_free() into
-bpf_local_storage_unlink_nolock() which then later renamed to
-bpf_local_storage_destroy(). The commit accidentally passed the
-"bool uncharge_mem = false" argument to bpf_selem_unlink_storage_nolock()
-which then stopped the uncharge from happening to the sk->sk_omem_alloc.
+unix_tot_inflight is changed under spin_lock(unix_gc_lock), but
+unix_release_sock() reads it locklessly.
 
-This missing uncharge only happens when the sk is going away (during
-__sk_destruct).
+Let's use READ_ONCE() for unix_tot_inflight.
 
-This patch fixes it by always passing "uncharge_mem = true". It is a
-noop to the task/inode/cgroup storage because they do not have the
-map_local_storage_(un)charge enabled in the map_ops. A followup patch
-will be done in bpf-next to remove the uncharge_mem argument.
+Note that the writer side was marked by commit 9d6d7f1cb67c ("af_unix:
+annote lockless accesses to unix_tot_inflight & gc_in_progress")
 
-A selftest is added in the next patch.
+BUG: KCSAN: data-race in unix_inflight / unix_release_sock
 
-Fixes: c83597fa5dc6 ("bpf: Refactor some inode/task/sk storage functions for reuse")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230901231129.578493-3-martin.lau@linux.dev
+write (marked) to 0xffffffff871852b8 of 4 bytes by task 123 on cpu 1:
+ unix_inflight+0x130/0x180 net/unix/scm.c:64
+ unix_attach_fds+0x137/0x1b0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1832 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1955
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:747
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2493
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2547
+ __sys_sendmsg+0x94/0x140 net/socket.c:2576
+ __do_sys_sendmsg net/socket.c:2585 [inline]
+ __se_sys_sendmsg net/socket.c:2583 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2583
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+read to 0xffffffff871852b8 of 4 bytes by task 4891 on cpu 0:
+ unix_release_sock+0x608/0x910 net/unix/af_unix.c:671
+ unix_release+0x59/0x80 net/unix/af_unix.c:1058
+ __sock_release+0x7d/0x170 net/socket.c:653
+ sock_close+0x19/0x30 net/socket.c:1385
+ __fput+0x179/0x5e0 fs/file_table.c:321
+ ____fput+0x15/0x20 fs/file_table.c:349
+ task_work_run+0x116/0x1a0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+ syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
+ do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0x00000000 -> 0x00000001
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 4891 Comm: systemd-coredum Not tainted 6.4.0-rc5-01219-gfa0e21fa4443 #5
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 9305cfa4443d ("[AF_UNIX]: Make unix_tot_inflight counter non-atomic")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 2 +-
+ net/unix/af_unix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 37ad47d52dc55..146824cc96893 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -760,7 +760,7 @@ void bpf_local_storage_destroy(struct bpf_local_storage *local_storage)
- 		 * of the loop will set the free_cgroup_storage to true.
- 		 */
- 		free_storage = bpf_selem_unlink_storage_nolock(
--			local_storage, selem, false, true);
-+			local_storage, selem, true, true);
- 	}
- 	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 86930a8ed012b..3e8a04a136688 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -680,7 +680,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
+ 	 *	  What the above comment does talk about? --ANK(980817)
+ 	 */
+ 
+-	if (unix_tot_inflight)
++	if (READ_ONCE(unix_tot_inflight))
+ 		unix_gc();		/* Garbage collect fds */
+ }
  
 -- 
 2.40.1
