@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D0F746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20045C433C7;
-	Sun, 17 Sep 2023 20:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8B6E54A
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA2CC433C7;
+	Sun, 17 Sep 2023 20:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982598;
-	bh=7Bx8NGc+cIMfr+fS6cxZGKfaPaJh4hyKiddH/jFSh28=;
+	s=korg; t=1694982602;
+	bh=gPfDgk4wakGINVBhiZ9JVJpxJjzTlNz50naTagVAO1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJyBCcSJe9bvEggAAxHVp7mVuu+pvRhIPHkPJQP643FNvGrM4r+f6vjaEBcq1Vspj
-	 /JNtX+bast1+SwSWG8kzmGcwh0qzdoqbg7rz/+nHEObZHeM0nCwnqDICd1MWJwR7sO
-	 9tf1WlkAdU7FYOHycnR0IYb+PkXvbgPomhbiwpyg=
+	b=tuVmWfHWVaZZrrkrVEcB8TScGEGObJN37bwJGf+3UdGMHvLANBhkWnPbehRyJ4poM
+	 O5jdQuS5JFNvSjE/E6EgR5C3lykXldhMAsIsapTlnaKCGeaMvUf9g8lXgZMbJwhS12
+	 /V54hnnIIQtWPR7JREiY/wHhi0xGN9nwQOufdkKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Michael Zhivich <mzhivich@akamai.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/511] HID: multitouch: Correct devm device reference for hidinput input_dev name
-Date: Sun, 17 Sep 2023 21:12:04 +0200
-Message-ID: <20230917191121.007366833@linuxfoundation.org>
+Subject: [PATCH 5.15 298/511] x86/speculation: Mark all Skylake CPUs as vulnerable to GDS
+Date: Sun, 17 Sep 2023 21:12:05 +0200
+Message-ID: <20230917191121.030425052@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,64 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ Upstream commit 4794394635293a3e74591351fff469cea7ad15a2 ]
+[ Upstream commit c9f4c45c8ec3f07f4f083f9750032a1ec3eab6b2 ]
 
-Reference the HID device rather than the input device for the devm
-allocation of the input_dev name. Referencing the input_dev would lead to a
-use-after-free when the input_dev was unregistered and subsequently fires a
-uevent that depends on the name. At the point of firing the uevent, the
-name would be freed by devres management.
+The Gather Data Sampling (GDS) vulnerability is common to all Skylake
+processors.  However, the "client" Skylakes* are now in this list:
 
-Use devm_kasprintf to simplify the logic for allocating memory and
-formatting the input_dev name string.
+	https://www.intel.com/content/www/us/en/support/articles/000022396/processors.html
 
-Reported-by: Maxime Ripard <mripard@kernel.org>
-Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
-Fixes: c08d46aa805b ("HID: multitouch: devm conversion")
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230824061308.222021-3-sergeantsagara@protonmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+which means they are no longer included for new vulnerabilities here:
+
+	https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
+
+or in other GDS documentation.  Thus, they were not included in the
+original GDS mitigation patches.
+
+Mark SKYLAKE and SKYLAKE_L as vulnerable to GDS to match all the
+other Skylake CPUs (which include Kaby Lake).  Also group the CPUs
+so that the ones that share the exact same vulnerabilities are next
+to each other.
+
+Last, move SRBDS to the end of each line.  This makes it clear at a
+glance that SKYLAKE_X is unique.  Of the five Skylakes, it is the
+only "server" CPU and has a different implementation from the
+clients of the "special register" hardware, making it immune to SRBDS.
+
+This makes the diff much harder to read, but the resulting table is
+worth it.
+
+I very much appreciate the report from Michael Zhivich about this
+issue.  Despite what level of support a hardware vendor is providing,
+the kernel very much needs an accurate and up-to-date list of
+vulnerable CPUs.  More reports like this are very welcome.
+
+* Client Skylakes are CPUID 406E3/506E3 which is family 6, models
+  0x4E and 0x5E, aka INTEL_FAM6_SKYLAKE and INTEL_FAM6_SKYLAKE_L.
+
+Reported-by: Michael Zhivich <mzhivich@akamai.com>
+Fixes: 8974eb588283 ("x86/speculation: Add Gather Data Sampling mitigation")
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/common.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 592ffdd546fb4..a5bc11750bdc1 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1594,7 +1594,6 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app)
- static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- {
- 	struct mt_device *td = hid_get_drvdata(hdev);
--	char *name;
- 	const char *suffix = NULL;
- 	struct mt_report_data *rdata;
- 	struct mt_application *mt_application = NULL;
-@@ -1648,15 +1647,9 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 		break;
- 	}
- 
--	if (suffix) {
--		name = devm_kzalloc(&hi->input->dev,
--				    strlen(hdev->name) + strlen(suffix) + 2,
--				    GFP_KERNEL);
--		if (name) {
--			sprintf(name, "%s %s", hdev->name, suffix);
--			hi->input->name = name;
--		}
--	}
-+	if (suffix)
-+		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
-+						 "%s %s", hdev->name, suffix);
- 
- 	return 0;
- }
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 54a0b3833ffea..3151c08bb54a5 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1149,11 +1149,11 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_G,	X86_STEPPING_ANY,		SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
+ 	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(CANNONLAKE_L,	X86_STEPPING_ANY,		RETBLEED),
+ 	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
+ 	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS),
 -- 
 2.40.1
 
