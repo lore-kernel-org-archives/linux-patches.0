@@ -1,28 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9836A7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3E1C433C8;
-	Sun, 17 Sep 2023 19:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8847461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:50:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC58C433C8;
+	Sun, 17 Sep 2023 19:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980198;
-	bh=Zc1E5USIoYv3YIV5vITGlbGWv+ShvLavgiurbjplLSU=;
+	s=korg; t=1694980201;
+	bh=1K5l+iUdpDE5FibWCYRa7RaE245etzykjg8QezRLfkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZMT2kmqnW1Zp0MFeQwyeKOAtKu6kywDVadQ86NYw0NQibYP8/AKvmqkKhPc0dSUP
-	 y/+EvM/9+dJ9tFvwKTr8z/uHMhW4TooN2w5JAZD86ddG7zpsMvdfm9AbuLTSncgKMZ
-	 +f3gFxn91D0202Zi2HDc+sYtyVTHB9Hbo5o9cSS8=
+	b=j3dCaAgNnBVXCwy3Gw9UlqEEoQ7D6ZWK3VEdEFaLjeR88LRhWRZkzXMv0mX7mGWzu
+	 JI9r24bOy7c3n8PF7F76x9S/ezsAyy6kCG9deyGTbmlVU6+plVLb8SmDiCI2zYOwSB
+	 4j/hrAKPziX3ADE9Vxwgg8QDr6uZRg7oOGKktDgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wei Li <liwei391@huawei.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Ming Wang <wangming01@loongson.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Suzuki Poulouse <suzuki.poulose@arm.com>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 121/285] mptcp: annotate data-races around msk->rmem_fwd_alloc
-Date: Sun, 17 Sep 2023 21:12:01 +0200
-Message-ID: <20230917191055.855885466@linuxfoundation.org>
+Subject: [PATCH 6.5 095/285] perf header: Fix missing PMU caps
+Date: Sun, 17 Sep 2023 21:11:35 +0200
+Message-ID: <20230917191054.983893952@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,91 +63,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 9531e4a83febc3fb47ac77e24cfb5ea97e50034d ]
+[ Upstream commit 9897009eecae821efc684ecdd1d04584f5501509 ]
 
-msk->rmem_fwd_alloc can be read locklessly.
+PMU caps are written as HEADER_PMU_CAPS or for the special case of the
+PMU "cpu" as HEADER_CPU_PMU_CAPS. As the PMU "cpu" is special, and not
+any "core" PMU, the logic had become broken and core PMUs not called
+"cpu" were not having their caps written.
 
-Add mptcp_rmem_fwd_alloc_add(), similar to sk_forward_alloc_add(),
-and appropriate READ_ONCE()/WRITE_ONCE() annotations.
+This affects ARM and s390 non-hybrid PMUs.
 
-Fixes: 6511882cdd82 ("mptcp: allocate fwd memory separately on the rx and tx path")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Simplify the PMU caps writing logic to scan one fewer time and to be
+more explicit in its behavior.
+
+Fixes: 178ddf3bad981380 ("perf header: Avoid hybrid PMU list in write_pmu_caps")
+Reported-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Link: https://lore.kernel.org/r/20230825024002.801955-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ tools/perf/util/header.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 996e031dff78a..40258d9f8c799 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -136,9 +136,15 @@ static void mptcp_drop(struct sock *sk, struct sk_buff *skb)
- 	__kfree_skb(skb);
- }
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 52fbf526fe74a..13c71d28e0eb3 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1605,8 +1605,15 @@ static int write_pmu_caps(struct feat_fd *ff,
+ 	int ret;
  
-+static void mptcp_rmem_fwd_alloc_add(struct sock *sk, int size)
-+{
-+	WRITE_ONCE(mptcp_sk(sk)->rmem_fwd_alloc,
-+		   mptcp_sk(sk)->rmem_fwd_alloc + size);
-+}
-+
- static void mptcp_rmem_charge(struct sock *sk, int size)
- {
--	mptcp_sk(sk)->rmem_fwd_alloc -= size;
-+	mptcp_rmem_fwd_alloc_add(sk, -size);
- }
+ 	while ((pmu = perf_pmus__scan(pmu))) {
+-		if (!pmu->name || !strcmp(pmu->name, "cpu") ||
+-		    perf_pmu__caps_parse(pmu) <= 0)
++		if (!strcmp(pmu->name, "cpu")) {
++			/*
++			 * The "cpu" PMU is special and covered by
++			 * HEADER_CPU_PMU_CAPS. Note, core PMUs are
++			 * counted/written here for ARM, s390 and Intel hybrid.
++			 */
++			continue;
++		}
++		if (perf_pmu__caps_parse(pmu) <= 0)
+ 			continue;
+ 		nr_pmu++;
+ 	}
+@@ -1619,23 +1626,17 @@ static int write_pmu_caps(struct feat_fd *ff,
+ 		return 0;
  
- static bool mptcp_try_coalesce(struct sock *sk, struct sk_buff *to,
-@@ -179,7 +185,7 @@ static bool mptcp_ooo_try_coalesce(struct mptcp_sock *msk, struct sk_buff *to,
- static void __mptcp_rmem_reclaim(struct sock *sk, int amount)
- {
- 	amount >>= PAGE_SHIFT;
--	mptcp_sk(sk)->rmem_fwd_alloc -= amount << PAGE_SHIFT;
-+	mptcp_rmem_charge(sk, amount << PAGE_SHIFT);
- 	__sk_mem_reduce_allocated(sk, amount);
- }
- 
-@@ -188,7 +194,7 @@ static void mptcp_rmem_uncharge(struct sock *sk, int size)
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	int reclaimable;
- 
--	msk->rmem_fwd_alloc += size;
-+	mptcp_rmem_fwd_alloc_add(sk, size);
- 	reclaimable = msk->rmem_fwd_alloc - sk_unused_reserved_mem(sk);
- 
- 	/* see sk_mem_uncharge() for the rationale behind the following schema */
-@@ -343,7 +349,7 @@ static bool mptcp_rmem_schedule(struct sock *sk, struct sock *ssk, int size)
- 	if (!__sk_mem_raise_allocated(sk, size, amt, SK_MEM_RECV))
- 		return false;
- 
--	msk->rmem_fwd_alloc += amount;
-+	mptcp_rmem_fwd_alloc_add(sk, amount);
- 	return true;
- }
- 
-@@ -3243,7 +3249,7 @@ void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags)
- 	 * inet_sock_destruct() will dispose it
+ 	/*
+-	 * Write hybrid pmu caps first to maintain compatibility with
+-	 * older perf tool.
++	 * Note older perf tools assume core PMUs come first, this is a property
++	 * of perf_pmus__scan.
  	 */
- 	sk_forward_alloc_add(sk, msk->rmem_fwd_alloc);
--	msk->rmem_fwd_alloc = 0;
-+	WRITE_ONCE(msk->rmem_fwd_alloc, 0);
- 	mptcp_token_destroy(msk);
- 	mptcp_pm_free_anno_list(msk);
- 	mptcp_free_local_addr_list(msk);
-@@ -3513,7 +3519,8 @@ static void mptcp_shutdown(struct sock *sk, int how)
- 
- static int mptcp_forward_alloc_get(const struct sock *sk)
- {
--	return READ_ONCE(sk->sk_forward_alloc) + mptcp_sk(sk)->rmem_fwd_alloc;
-+	return READ_ONCE(sk->sk_forward_alloc) +
-+	       READ_ONCE(mptcp_sk(sk)->rmem_fwd_alloc);
- }
- 
- static int mptcp_ioctl_outq(const struct mptcp_sock *msk, u64 v)
+-	if (perf_pmus__num_core_pmus() > 1) {
+-		pmu = NULL;
+-		while ((pmu = perf_pmus__scan_core(pmu))) {
+-			ret = __write_pmu_caps(ff, pmu, true);
+-			if (ret < 0)
+-				return ret;
+-		}
+-	}
+-
+ 	pmu = NULL;
+ 	while ((pmu = perf_pmus__scan(pmu))) {
+-		if (pmu->is_core || !pmu->nr_caps)
++		if (!strcmp(pmu->name, "cpu")) {
++			/* Skip as above. */
++			continue;
++		}
++		if (perf_pmu__caps_parse(pmu) <= 0)
+ 			continue;
+-
+ 		ret = __write_pmu_caps(ff, pmu, true);
+ 		if (ret < 0)
+ 			return ret;
 -- 
 2.40.1
 
