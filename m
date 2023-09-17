@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74316746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D309FC433C8;
-	Sun, 17 Sep 2023 20:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E3E746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B3AC433C8;
+	Sun, 17 Sep 2023 20:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983079;
-	bh=Ae3+TLlr799thsg+fXj7tR8NUZg6lwgQWbMtWMZIhGI=;
+	s=korg; t=1694983082;
+	bh=cLy9VubPBBXdBCFcD1ePGEOzREkH6/DfSdjssN61FAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKGgWon5qiQEM/MrZgdYNOk45K+ToGLFkBMp66+I46if5ExCwEgQGniICegMzO2Eg
-	 JGgjrJgXHeexGPCue4Zc7Sxl+Oc9iB6tay1ECaJ7M6rXRjZcrQTE+LKyooJymz5I/W
-	 Vj7OXj/pdtzAiXA9dH3nvKIQANyOai6Qbs2W/wbo=
+	b=exZh4hU2xgnSITncdzKgnLB4En8KMcTAisquelKLEncvX/SQIk4RpODZOcr6qGYT+
+	 I+E0uLIUL9T/6mGqDtFIhITiukeOx7sRq6oD5xC7oVCT8kjr0F7m7ZgQ4b5l6vGWll
+	 annyoSnbbp8/tD0SX/ujT6IOcaryKWurVsjCXdGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 438/511] net: phy: micrel: Correct bit assignments for phy_device flags
-Date: Sun, 17 Sep 2023 21:14:25 +0200
-Message-ID: <20230917191124.334752248@linuxfoundation.org>
+Subject: [PATCH 5.15 439/511] af_unix: Fix data-races around user->unix_inflight.
+Date: Sun, 17 Sep 2023 21:14:26 +0200
+Message-ID: <20230917191124.359115069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,52 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 719c5e37e99d2fd588d1c994284d17650a66354c ]
+[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
 
-Previously, the defines for phy_device flags in the Micrel driver were
-ambiguous in their representation. They were intended to be bit masks
-but were mistakenly defined as bit positions. This led to the following
-issues:
+user->unix_inflight is changed under spin_lock(unix_gc_lock),
+but too_many_unix_fds() reads it locklessly.
 
-- MICREL_KSZ8_P1_ERRATA, designated for KSZ88xx switches, overlapped
-  with MICREL_PHY_FXEN and MICREL_PHY_50MHZ_CLK.
-- Due to this overlap, the code path for MICREL_PHY_FXEN, tailored for
-  the KSZ8041 PHY, was not executed for KSZ88xx PHYs.
-- Similarly, the code associated with MICREL_PHY_50MHZ_CLK wasn't
-  triggered for KSZ88xx.
+Let's annotate the write/read accesses to user->unix_inflight.
 
-To rectify this, all three flags have now been explicitly converted to
-use the `BIT()` macro, ensuring they are defined as bit masks and
-preventing potential overlaps in the future.
+BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
 
-Fixes: 49011e0c1555 ("net: phy: micrel: ksz886x/ksz8081: add cabletest support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
+ unix_inflight+0x157/0x180 net/unix/scm.c:66
+ unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
+ too_many_unix_fds net/unix/scm.c:101 [inline]
+ unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
+ unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
+ unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
+ unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
+ unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
+ sock_sendmsg_nosec net/socket.c:725 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:748
+ ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
+ __sys_sendmsg+0x94/0x140 net/socket.c:2577
+ __do_sys_sendmsg net/socket.c:2586 [inline]
+ __se_sys_sendmsg net/socket.c:2584 [inline]
+ __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+value changed: 0x000000000000000c -> 0x000000000000000d
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/micrel_phy.h | 6 +++---
+ net/unix/scm.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/micrel_phy.h b/include/linux/micrel_phy.h
-index 3d43c60b49fa8..2d0f75ffa3233 100644
---- a/include/linux/micrel_phy.h
-+++ b/include/linux/micrel_phy.h
-@@ -37,9 +37,9 @@
- #define	PHY_ID_KSZ9477		0x00221631
+diff --git a/net/unix/scm.c b/net/unix/scm.c
+index aa27a02478dc1..e8e2a00bb0f58 100644
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
+ 	}
+-	user->unix_inflight++;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
  
- /* struct phy_device dev_flags definitions */
--#define MICREL_PHY_50MHZ_CLK	0x00000001
--#define MICREL_PHY_FXEN		0x00000002
--#define MICREL_KSZ8_P1_ERRATA	0x00000003
-+#define MICREL_PHY_50MHZ_CLK	BIT(0)
-+#define MICREL_PHY_FXEN		BIT(1)
-+#define MICREL_KSZ8_P1_ERRATA	BIT(2)
+@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+ 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
+ 	}
+-	user->unix_inflight--;
++	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
+ 	spin_unlock(&unix_gc_lock);
+ }
  
- #define MICREL_KSZ9021_EXTREG_CTRL	0xB
- #define MICREL_KSZ9021_EXTREG_DATA_WRITE	0xC
+@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
+ {
+ 	struct user_struct *user = current_user();
+ 
+-	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
++	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
+ 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
+ 	return false;
+ }
 -- 
 2.40.1
 
