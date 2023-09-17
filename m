@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776116FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8ABC433C8;
-	Sun, 17 Sep 2023 20:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D064A6FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8DEC433C7;
+	Sun, 17 Sep 2023 20:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982841;
-	bh=tCa2tggzjawlqeBFcS6vMyeVPciMv9S5LQq3fFOblqg=;
+	s=korg; t=1694982844;
+	bh=nG1sf7xy5VLJwTCf7wsfU4P7NjafTI83FTKZgOEgOW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2fN5aFWdijBpBo0nLiL5OdBsoEdcRsPtK0gDyu8Ng9/WKRTDZEQIG6ttFrQeV8zj
-	 zgK/L5NNkWJdMlts+bxjCDrYY4ins8LA5YPFthuM43n4mr709XE7Rkw8IrqzM12zDO
-	 lnNl77uuKxLTyD+RcS+DCZv+NEakmBQSSBDMuya4=
+	b=jTrjVHPYp8mKY9hsCEOB+JysQVOdwO7G7PbHRAWr32IEuVzRVR3oyw/jmIJqgCmAP
+	 EiexK+P5JlnBe2315qfGPz3qgYg/cSQAuI5sFCLSn1tjTpEWCrPZ4oDIskWbMEaAVr
+	 2b1Y8SZaA0T20F0hCNOP4540pa5VUF5AGIbl3NUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Yunying Sun <yunying.sun@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 5.15 367/511] perf/x86/uncore: Correct the number of CHAs on EMR
-Date: Sun, 17 Sep 2023 21:13:14 +0200
-Message-ID: <20230917191122.670320767@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Brian Foster <bfoster@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 368/511] tracing: Zero the pipe cpumask on alloc to avoid spurious -EBUSY
+Date: Sun, 17 Sep 2023 21:13:15 +0200
+Message-ID: <20230917191122.695827324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,61 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 6f7f984fa85b305799076a1bcec941b9377587de upstream.
+commit 3d07fa1dd19035eb0b13ae6697efd5caa9033e74 upstream.
 
-Starting from SPR, the basic uncore PMON information is retrieved from
-the discovery table (resides in an MMIO space populated by BIOS). It is
-called the discovery method. The existing value of the type->num_boxes
-is from the discovery table.
+The pipe cpumask used to serialize opens between the main and percpu
+trace pipes is not zeroed or initialized. This can result in
+spurious -EBUSY returns if underlying memory is not fully zeroed.
+This has been observed by immediate failure to read the main
+trace_pipe file on an otherwise newly booted and idle system:
 
-On some SPR variants, there is a firmware bug that makes the value from the
-discovery table incorrect. We use the value from the
-SPR_MSR_UNC_CBO_CONFIG MSR to replace the one from the discovery table:
+ # cat /sys/kernel/debug/tracing/trace_pipe
+ cat: /sys/kernel/debug/tracing/trace_pipe: Device or resource busy
 
-   38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
+Zero the allocation of pipe_cpumask to avoid the problem.
 
-Unfortunately, the SPR_MSR_UNC_CBO_CONFIG isn't available for the EMR
-XCC (Always returns 0), but the above firmware bug doesn't impact the
-EMR XCC.
+Link: https://lore.kernel.org/linux-trace-kernel/20230831125500.986862-1-bfoster@redhat.com
 
-Don't let the value from the MSR replace the existing value from the
-discovery table.
-
-Fixes: 38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
-Reported-by: Stephane Eranian <eranian@google.com>
-Reported-by: Yunying Sun <yunying.sun@intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Yunying Sun <yunying.sun@intel.com>
-Link: https://lore.kernel.org/r/20230905134248.496114-1-kan.liang@linux.intel.com
+Cc: stable@vger.kernel.org
+Fixes: c2489bb7e6be ("tracing: Introduce pipe_cpumask to avoid race on trace_pipes")
+Reviewed-by: Zheng Yejian <zhengyejian1@huawei.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -6078,8 +6078,18 @@ void spr_uncore_cpu_init(void)
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9350,7 +9350,7 @@ static struct trace_array *trace_array_c
+ 	if (!alloc_cpumask_var(&tr->tracing_cpumask, GFP_KERNEL))
+ 		goto out_free_tr;
  
- 	type = uncore_find_type_by_id(uncore_msr_uncores, UNCORE_SPR_CHA);
- 	if (type) {
-+		/*
-+		 * The value from the discovery table (stored in the type->num_boxes
-+		 * of UNCORE_SPR_CHA) is incorrect on some SPR variants because of a
-+		 * firmware bug. Using the value from SPR_MSR_UNC_CBO_CONFIG to replace it.
-+		 */
- 		rdmsrl(SPR_MSR_UNC_CBO_CONFIG, num_cbo);
--		type->num_boxes = num_cbo;
-+		/*
-+		 * The MSR doesn't work on the EMR XCC, but the firmware bug doesn't impact
-+		 * the EMR XCC. Don't let the value from the MSR replace the existing value.
-+		 */
-+		if (num_cbo)
-+			type->num_boxes = num_cbo;
- 	}
- 	spr_uncore_iio_free_running.num_boxes = uncore_type_max_boxes(uncore_msr_uncores, UNCORE_SPR_IIO);
- }
+-	if (!alloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
+ 		goto out_free_tr;
+ 
+ 	tr->trace_flags = global_trace.trace_flags & ~ZEROED_TRACE_FLAGS;
+@@ -10208,7 +10208,7 @@ __init static int tracer_alloc_buffers(v
+ 	if (trace_create_savedcmd() < 0)
+ 		goto out_free_temp_buffer;
+ 
+-	if (!alloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
+ 		goto out_free_savedcmd;
+ 
+ 	/* TODO: make the number of buffers hot pluggable with CPUS */
 
 
