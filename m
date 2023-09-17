@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A890D4A3F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5E4C433C7;
-	Sun, 17 Sep 2023 19:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DDE6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2552C433C8;
+	Sun, 17 Sep 2023 19:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979633;
-	bh=dGHJLE3bpqt+c8rACEf5EmgCGIRN9rCVhhZdzG/XVvI=;
+	s=korg; t=1694979637;
+	bh=rx+Uo4jOiT/UfwQrvjO7SUXejUpqVB9634IUYPvzJvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwwe2wRq5uACvd4+AMOYysLgYMpOPDONXuNzAyrCcJJngz7M03XUYEg3St6cmJfPs
-	 YVYoJ9B9hcHpeFS0dKbk3diPBHGw/GnpV62RYysXDlhv5S/yvF2SlIfOI61oUvvMFr
-	 fRrH1W6puZ4gU+xDFt85oPY6bHdmCiTRKT0pbV4Q=
+	b=WW8c2SlF/9tDHHtnTEwY4JW/DaVPj+VTUkBkFL98F64F2JG3qS1IBJ7w+r/Sawb6V
+	 xOiiaI4BddWCbyu6/ccusLCenmAoTGpcJ5cRn3VM0snaR8xpli099KculStjVNlGKv
+	 6HDilSrTOAQqontnCRlN7Oy51cr+SUEZrGx4oh3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.10 370/406] ata: pata_ftide010: Add missing MODULE_DESCRIPTION
-Date: Sun, 17 Sep 2023 21:13:44 +0200
-Message-ID: <20230917191111.037215920@linuxfoundation.org>
+	ruanmeisi <ruan.meisi@zte.com.cn>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 5.10 371/406] fuse: nlookup missing decrement in fuse_direntplus_link
+Date: Sun, 17 Sep 2023 21:13:45 +0200
+Message-ID: <20230917191111.063973050@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,34 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: ruanmeisi <ruan.meisi@zte.com.cn>
 
-commit 7274eef5729037300f29d14edeb334a47a098f65 upstream.
+commit b8bd342d50cbf606666488488f9fea374aceb2d5 upstream.
 
-Add the missing MODULE_DESCRIPTION() to avoid warnings such as:
+During our debugging of glusterfs, we found an Assertion failed error:
+inode_lookup >= nlookup, which was caused by the nlookup value in the
+kernel being greater than that in the FUSE file system.
 
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ata/pata_ftide010.o
+The issue was introduced by fuse_direntplus_link, where in the function,
+fuse_iget increments nlookup, and if d_splice_alias returns failure,
+fuse_direntplus_link returns failure without decrementing nlookup
+https://github.com/gluster/glusterfs/pull/4081
 
-when compiling with W=1.
-
-Fixes: be4e456ed3a5 ("ata: Add driver for Faraday Technology FTIDE010")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: ruanmeisi <ruan.meisi@zte.com.cn>
+Fixes: 0b05b18381ee ("fuse: implement NFS-like readdirplus support")
+Cc: <stable@vger.kernel.org> # v3.9
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_ftide010.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/readdir.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/pata_ftide010.c
-+++ b/drivers/ata/pata_ftide010.c
-@@ -570,6 +570,7 @@ static struct platform_driver pata_ftide
- };
- module_platform_driver(pata_ftide010_driver);
- 
-+MODULE_DESCRIPTION("low level driver for Faraday Technology FTIDE010");
- MODULE_AUTHOR("Linus Walleij <linus.walleij@linaro.org>");
- MODULE_LICENSE("GPL");
- MODULE_ALIAS("platform:" DRV_NAME);
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -243,8 +243,16 @@ retry:
+ 			dput(dentry);
+ 			dentry = alias;
+ 		}
+-		if (IS_ERR(dentry))
++		if (IS_ERR(dentry)) {
++			if (!IS_ERR(inode)) {
++				struct fuse_inode *fi = get_fuse_inode(inode);
++
++				spin_lock(&fi->lock);
++				fi->nlookup--;
++				spin_unlock(&fi->lock);
++			}
+ 			return PTR_ERR(dentry);
++		}
+ 	}
+ 	if (fc->readdirplus_auto)
+ 		set_bit(FUSE_I_INIT_RDPLUS, &get_fuse_inode(inode)->state);
 
 
