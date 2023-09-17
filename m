@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D59A6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4EC5C433C8;
-	Sun, 17 Sep 2023 19:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8396FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F7FC433C8;
+	Sun, 17 Sep 2023 19:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980471;
-	bh=eMU/3LcVhhxwInwKvnXkJgPRdQhFEbdxbotZhvNno8s=;
+	s=korg; t=1694980474;
+	bh=M6HnVhQ+K8KwcCW2g/3P+xK/mwiOI0D006RdA7EYVmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJkKNhxPMUSIfBddVG7vi43pE45yv9VB90RQv3+lnOPnAH4Cm3fvQM09obXqMZDZ1
-	 XoMPVEllzaimLZehocsZMEUUsxzmliKrUuq+iCaRGr4cO+NalMBFfZjJ9YLjo93w9L
-	 icdyY3iFggX9vBEfaZ/I02ZQ4SZGtHsoocPTyZmI=
+	b=2ihyNa4IkQmcBoK9u2hvBtVJZ0NxJDoRt+3F05PQt+qRZRYiDd6YwlJrXUAyc0fpY
+	 6lZVI7OKIXI777dmaq5+FmXi6nyRRH/W2EjtB+ke3V4QNhAX+u1xmPZnWOYRn0sUtZ
+	 bP8D3xW/XsSq/T2KRl2tS5eoIATSz5Janc6VfGXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 171/285] net: hns3: fix the port information display when sfp is absent
-Date: Sun, 17 Sep 2023 21:12:51 +0200
-Message-ID: <20230917191057.557075673@linuxfoundation.org>
+Subject: [PATCH 6.5 162/285] netfilter: nftables: exthdr: fix 4-byte stack OOB write
+Date: Sun, 17 Sep 2023 21:12:42 +0200
+Message-ID: <20230917191057.272613544@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,37 +39,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yisen Zhuang <yisen.zhuang@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 674d9591a32d01df75d6b5fffed4ef942a294376 ]
+[ Upstream commit fd94d9dadee58e09b49075240fe83423eb1dcd36 ]
 
-When sfp is absent or unidentified, the port type should be
-displayed as PORT_OTHERS, rather than PORT_FIBRE.
+If priv->len is a multiple of 4, then dst[len / 4] can write past
+the destination array which leads to stack corruption.
 
-Fixes: 88d10bd6f730 ("net: hns3: add support for multiple media type")
-Signed-off-by: Yisen Zhuang <yisen.zhuang@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This construct is necessary to clean the remainder of the register
+in case ->len is NOT a multiple of the register size, so make it
+conditional just like nft_payload.c does.
+
+The bug was added in 4.1 cycle and then copied/inherited when
+tcp/sctp and ip option support was added.
+
+Bug reported by Zero Day Initiative project (ZDI-CAN-21950,
+ZDI-CAN-21951, ZDI-CAN-21961).
+
+Fixes: 49499c3e6e18 ("netfilter: nf_tables: switch registers to 32 bit addressing")
+Fixes: 935b7f643018 ("netfilter: nft_exthdr: add TCP option matching")
+Fixes: 133dc203d77d ("netfilter: nft_exthdr: Support SCTP chunks")
+Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nft_exthdr.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-index 407d30ee55d2e..64858b3114ac9 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-@@ -773,7 +773,9 @@ static int hns3_get_link_ksettings(struct net_device *netdev,
- 		hns3_get_ksettings(h, cmd);
- 		break;
- 	case HNAE3_MEDIA_TYPE_FIBER:
--		if (module_type == HNAE3_MODULE_TYPE_CR)
-+		if (module_type == HNAE3_MODULE_TYPE_UNKNOWN)
-+			cmd->base.port = PORT_OTHER;
-+		else if (module_type == HNAE3_MODULE_TYPE_CR)
- 			cmd->base.port = PORT_DA;
- 		else
- 			cmd->base.port = PORT_FIBRE;
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index a9844eefedebc..3fbaa7bf41f9c 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -35,6 +35,14 @@ static unsigned int optlen(const u8 *opt, unsigned int offset)
+ 		return opt[offset + 1];
+ }
+ 
++static int nft_skb_copy_to_reg(const struct sk_buff *skb, int offset, u32 *dest, unsigned int len)
++{
++	if (len % NFT_REG32_SIZE)
++		dest[len / NFT_REG32_SIZE] = 0;
++
++	return skb_copy_bits(skb, offset, dest, len);
++}
++
+ static void nft_exthdr_ipv6_eval(const struct nft_expr *expr,
+ 				 struct nft_regs *regs,
+ 				 const struct nft_pktinfo *pkt)
+@@ -56,8 +64,7 @@ static void nft_exthdr_ipv6_eval(const struct nft_expr *expr,
+ 	}
+ 	offset += priv->offset;
+ 
+-	dest[priv->len / NFT_REG32_SIZE] = 0;
+-	if (skb_copy_bits(pkt->skb, offset, dest, priv->len) < 0)
++	if (nft_skb_copy_to_reg(pkt->skb, offset, dest, priv->len) < 0)
+ 		goto err;
+ 	return;
+ err:
+@@ -153,8 +160,7 @@ static void nft_exthdr_ipv4_eval(const struct nft_expr *expr,
+ 	}
+ 	offset += priv->offset;
+ 
+-	dest[priv->len / NFT_REG32_SIZE] = 0;
+-	if (skb_copy_bits(pkt->skb, offset, dest, priv->len) < 0)
++	if (nft_skb_copy_to_reg(pkt->skb, offset, dest, priv->len) < 0)
+ 		goto err;
+ 	return;
+ err:
+@@ -210,7 +216,8 @@ static void nft_exthdr_tcp_eval(const struct nft_expr *expr,
+ 		if (priv->flags & NFT_EXTHDR_F_PRESENT) {
+ 			*dest = 1;
+ 		} else {
+-			dest[priv->len / NFT_REG32_SIZE] = 0;
++			if (priv->len % NFT_REG32_SIZE)
++				dest[priv->len / NFT_REG32_SIZE] = 0;
+ 			memcpy(dest, opt + offset, priv->len);
+ 		}
+ 
+@@ -388,9 +395,8 @@ static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
+ 			    offset + ntohs(sch->length) > pkt->skb->len)
+ 				break;
+ 
+-			dest[priv->len / NFT_REG32_SIZE] = 0;
+-			if (skb_copy_bits(pkt->skb, offset + priv->offset,
+-					  dest, priv->len) < 0)
++			if (nft_skb_copy_to_reg(pkt->skb, offset + priv->offset,
++						dest, priv->len) < 0)
+ 				break;
+ 			return;
+ 		}
 -- 
 2.40.1
 
