@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0097E7469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9A7C433C7;
-	Sun, 17 Sep 2023 20:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B967469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:25:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8EBC433C8;
+	Sun, 17 Sep 2023 20:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982321;
-	bh=FKBJ5R9iTA+fU2YExrqrdS2SgT84/RggpNbMH4/H5no=;
+	s=korg; t=1694982325;
+	bh=+A6Z4vbACVKzaFuj2JSoNd0H31aL1M3/2TwgW+IWf+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6p3RnXkF9u9BehTyn2ntaQbtAhkwE5IsxDKadGKWfGPrKSOE+6LrFH0VeLx0M4ZI
-	 S0Q1umAYYSmTeOQEGeVl7eJ+EPMGiAtwKGP0qKOFIUZBlG6kqLANuK9jQJ2nACycyp
-	 /RX1gt4IRF7oW5K2du6pLZ4uJRGur27o36eri/Xw=
+	b=bsTsCT8x2E/sTxOv+AOLKY4b4CA7X1y0ri7yt4b2GMnOEq17su4tofGHDqzWNxS+Q
+	 zQNP3Ykp6cjKQED77a9QbjP+Jj8kAx5NuMoLpWo0TmPuV4sX7APpwg1WXfNNalNjNf
+	 PzZQIrTDJUZGTKnGQPIIAhpNaMm5mUH09nbNP/sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/511] of: overlay: Call of_changeset_init() early
-Date: Sun, 17 Sep 2023 21:10:17 +0200
-Message-ID: <20230917191118.411846416@linuxfoundation.org>
+Subject: [PATCH 5.15 191/511] of: unittest: Fix overlay type in apply/revert check
+Date: Sun, 17 Sep 2023 21:10:18 +0200
+Message-ID: <20230917191118.435297312@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,52 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit a9515ff4fb142b690a0d2b58782b15903b990dba ]
+[ Upstream commit 6becf8f845ae1f0b1cfed395bbeccbd23654162d ]
 
-When of_overlay_fdt_apply() fails, the changeset may be partially
-applied, and the caller is still expected to call of_overlay_remove() to
-clean up this partial state.
+The removal check in of_unittest_apply_revert_overlay_check()
+always uses the platform device overlay type, while it should use the
+actual overlay type, as passed as a parameter to the function.
 
-However, of_overlay_apply() calls of_resolve_phandles() before
-init_overlay_changeset().  Hence if the overlay fails to apply due to an
-unresolved symbol, the overlay_changeset.cset.entries list is still
-uninitialized, and cleanup will crash with a NULL-pointer dereference in
-overlay_removal_is_ok().
+This has no impact on any current test, as all tests calling
+of_unittest_apply_revert_overlay_check() use the platform device overlay
+type.
 
-Fix this by moving the call to of_changeset_init() from
-init_overlay_changeset() to of_overlay_fdt_apply(), where all other
-early initialization is done.
-
-Fixes: f948d6d8b792bb90 ("of: overlay: avoid race condition between applying multiple overlays")
+Fixes: d5e75500ca401d31 ("of: unitest: Add I2C overlay unit tests.")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/4f1d6d74b61cba2599026adb6d1948ae559ce91f.1690533838.git.geert+renesas@glider.be
+Link: https://lore.kernel.org/r/ba0234c41ba808f10112094f88792beeb6dbaedf.1690533838.git.geert+renesas@glider.be
 Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/overlay.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/of/unittest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
-index 8f2ddba3947e5..ee7f3659b353c 100644
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -752,8 +752,6 @@ static int init_overlay_changeset(struct overlay_changeset *ovcs)
- 	if (!of_node_is_root(ovcs->overlay_root))
- 		pr_debug("%s() ovcs->overlay_root is not root\n", __func__);
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 19d3b136aed79..073a3f44c4049 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -2073,7 +2073,7 @@ static int __init of_unittest_apply_revert_overlay_check(int overlay_nr,
+ 	of_unittest_untrack_overlay(save_id);
  
--	of_changeset_init(&ovcs->cset);
--
- 	cnt = 0;
- 
- 	/* fragment nodes */
-@@ -995,6 +993,7 @@ int of_overlay_fdt_apply(const void *overlay_fdt, u32 overlay_fdt_size,
- 
- 	INIT_LIST_HEAD(&ovcs->ovcs_list);
- 	list_add_tail(&ovcs->ovcs_list, &ovcs_list);
-+	of_changeset_init(&ovcs->cset);
- 
- 	/*
- 	 * Must create permanent copy of FDT because of_fdt_unflatten_tree()
+ 	/* unittest device must be again in before state */
+-	if (of_unittest_device_exists(unittest_nr, PDEV_OVERLAY) != before) {
++	if (of_unittest_device_exists(unittest_nr, ovtype) != before) {
+ 		unittest(0, "%s with device @\"%s\" %s\n",
+ 				overlay_name_from_nr(overlay_nr),
+ 				unittest_path(unittest_nr, ovtype),
 -- 
 2.40.1
 
