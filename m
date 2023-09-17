@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9046FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7400EC433C7;
-	Sun, 17 Sep 2023 19:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F006FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C779FC433C8;
+	Sun, 17 Sep 2023 19:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980408;
-	bh=DYhFi3ULxSsHIl2GTL38lXPR4iX8Sf7rcrI40x6SljM=;
+	s=korg; t=1694980412;
+	bh=81tucJsHQUWAJJjQim7Pa7p0SISWH/NKmScDJ11eVvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJh147OUKhWE7SgFYVg2t+flBnERRxkKvNVYyFMfwaKgPDRS3jHRE730Toj2ijF/D
-	 /4GTnour/O8dFnRYRe52/yPJ9sr+yBcD9X6T7/cR6HpcHhhMR6YuGlMsk/v3EVhiYq
-	 9Srf3oMnjy9jq3mSP4rKCznOa+qfGgc0w680LHrA=
+	b=EilY9kr3WI0H0B6sRmniamN9LcGlLQ4d82bB5HT5HmXlXU0FwiFh1e8bjJbxEnnya
+	 psOg6PZvFU2sSFr08YWBOHzHSSdi+OqUlyWby3fOdORZf/io74NJpdningBbBCa6D+
+	 YbC/2EhgRDFGr+BQj93NAe6GWC7B7yTwuvPnaVkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.5 183/285] misc: fastrpc: Fix incorrect DMA mapping unmap request
-Date: Sun, 17 Sep 2023 21:13:03 +0200
-Message-ID: <20230917191057.955381128@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.5 184/285] jbd2: fix checkpoint cleanup performance regression
+Date: Sun, 17 Sep 2023 21:13:04 +0200
+Message-ID: <20230917191057.986118226@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,54 +41,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit a2cb9cd6a3949a3804ad9fd7da234892ce6719ec upstream.
+commit 373ac521799d9e97061515aca6ec6621789036bb upstream.
 
-Scatterlist table is obtained during map create request and the same
-table is used for DMA mapping unmap. In case there is any failure
-while getting the sg_table, ERR_PTR is returned instead of sg_table.
+journal_clean_one_cp_list() has been merged into
+journal_shrink_one_cp_list(), but do chekpoint buffer cleanup from the
+committing process is just a best effort, it should stop scan once it
+meet a busy buffer, or else it will cause a lot of invalid buffer scan
+and checks. We catch a performance regression when doing fs_mark tests
+below.
 
-When the map is getting freed, there is only a non-NULL check of
-sg_table which will also be true in case failure was returned instead
-of sg_table. This would result in improper unmap request. Add proper
-check before setting map table to avoid bad unmap request.
+Test cmd:
+ ./fs_mark  -d  scratch  -s  1024  -n  10000  -t  1  -D  100  -N  100
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230811115643.38578-3-srinivas.kandagatla@linaro.org
+Before merging checkpoint buffer cleanup:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       8304.9            49033
+
+After merging checkpoint buffer cleanup:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       7649.0            50012
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       2107.1            50871
+
+After merging checkpoint buffer cleanup, the total loop count in
+journal_shrink_one_cp_list() could be up to 6,261,600+ (50,000+ ~
+100,000+ in general), most of them are invalid. This patch fix it
+through passing 'shrink_type' into journal_shrink_one_cp_list() and add
+a new 'SHRINK_BUSY_STOP' to indicate it should stop once meet a busy
+buffer. After fix, the loop count descending back to 10,000+.
+
+After this fix:
+ FSUse%        Count         Size    Files/sec     App Overhead
+     95        10000         1024       8558.4            49109
+
+Cc: stable@kernel.org
+Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230714025528.564988-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/jbd2/checkpoint.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -756,6 +756,7 @@ static int fastrpc_map_create(struct fas
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -349,6 +349,8 @@ int jbd2_cleanup_journal_tail(journal_t
+ 
+ /* Checkpoint list management */
+ 
++enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
++
+ /*
+  * journal_shrink_one_cp_list
+  *
+@@ -360,7 +362,8 @@ int jbd2_cleanup_journal_tail(journal_t
+  * Called with j_list_lock held.
+  */
+ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+-						bool destroy, bool *released)
++						enum shrink_type type,
++						bool *released)
  {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-+	struct sg_table *table;
- 	int err = 0;
+ 	struct journal_head *last_jh;
+ 	struct journal_head *next_jh = jh;
+@@ -376,12 +379,15 @@ static unsigned long journal_shrink_one_
+ 		jh = next_jh;
+ 		next_jh = jh->b_cpnext;
  
- 	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
-@@ -783,11 +784,12 @@ static int fastrpc_map_create(struct fas
- 		goto attach_err;
- 	}
+-		if (destroy) {
++		if (type == SHRINK_DESTROY) {
+ 			ret = __jbd2_journal_remove_checkpoint(jh);
+ 		} else {
+ 			ret = jbd2_journal_try_remove_checkpoint(jh);
+-			if (ret < 0)
+-				continue;
++			if (ret < 0) {
++				if (type == SHRINK_BUSY_SKIP)
++					continue;
++				break;
++			}
+ 		}
  
--	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
--	if (IS_ERR(map->table)) {
--		err = PTR_ERR(map->table);
-+	table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
-+	if (IS_ERR(table)) {
-+		err = PTR_ERR(table);
- 		goto map_err;
- 	}
-+	map->table = table;
+ 		nr_freed++;
+@@ -445,7 +451,7 @@ again:
+ 		tid = transaction->t_tid;
  
- 	if (attr & FASTRPC_ATTR_SECUREMAP) {
- 		map->phys = sg_phys(map->table->sgl);
+ 		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
+-						   false, &released);
++						   SHRINK_BUSY_SKIP, &released);
+ 		nr_freed += freed;
+ 		(*nr_to_scan) -= min(*nr_to_scan, freed);
+ 		if (*nr_to_scan == 0)
+@@ -485,19 +491,21 @@ out:
+ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ {
+ 	transaction_t *transaction, *last_transaction, *next_transaction;
++	enum shrink_type type;
+ 	bool released;
+ 
+ 	transaction = journal->j_checkpoint_transactions;
+ 	if (!transaction)
+ 		return;
+ 
++	type = destroy ? SHRINK_DESTROY : SHRINK_BUSY_STOP;
+ 	last_transaction = transaction->t_cpprev;
+ 	next_transaction = transaction;
+ 	do {
+ 		transaction = next_transaction;
+ 		next_transaction = transaction->t_cpnext;
+ 		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
+-					   destroy, &released);
++					   type, &released);
+ 		/*
+ 		 * This function only frees up some memory if possible so we
+ 		 * dont have an obligation to finish processing. Bail out if
 
 
