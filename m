@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08CF6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E100C433C7;
-	Sun, 17 Sep 2023 19:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BEC6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59741C433C7;
+	Sun, 17 Sep 2023 19:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980381;
-	bh=P7KSkxiJEieAuKXF7YOnaZf+BLfzSCX5pcwJ9vEOWNs=;
+	s=korg; t=1694980384;
+	bh=8dcxKrxmmbiPZX6GyIouZLs3qeGhYNu0Dw5B0hQX2B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niznFh0h4jbO5/MTjBfNyg1VVwa7xY7ExGW6/Vs0GoCOFEh2TQMQSiiEFsqHtSPcT
-	 FqNJRe2kps7+FT14Xw1CM1bMrtAeh1sq/LDujwxfZn6iO4Ym6YLlOelrPVfYGsfd8Z
-	 an+qpBOemXvKYqM6Ut5OmqzxILfrgxK3pxmiZir8=
+	b=lUNU7XbjGYe6mh/8LHwoNP0WXlQ1sRQCj1wuTSio2fi+dh8srtaP2G0wrUfc3VeNN
+	 XdhBbAAGqNn/oQZmccNoupC73U7t8pHsl7jwzpz7QHkkPp2f5OGkQ0em6xMS1XZ9FF
+	 vGtvDqh0AP+NAlnwp8ViVg6Zajy0tGLcxzLP/I7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.5 176/285] linux/export: fix reference to exported functions for parisc64
-Date: Sun, 17 Sep 2023 21:12:56 +0200
-Message-ID: <20230917191057.723296348@linuxfoundation.org>
+	Florent CARLI <fcarli@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Yoann Congal <yoann.congal@smile.fr>
+Subject: [PATCH 6.5 177/285] watchdog: advantech_ec_wdt: fix Kconfig dependencies
+Date: Sun, 17 Sep 2023 21:12:57 +0200
+Message-ID: <20230917191057.754704578@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,61 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Florent CARLI <fcarli@gmail.com>
 
-commit 08700ec705043eb0cee01b35cf5b9d63f0230d12 upstream.
+commit 6eb28a38f6478a650c7e76b2d6910669615d8a62 upstream.
 
-John David Anglin reported parisc has been broken since commit
-ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost").
+This driver uses the WATCHDOG_CORE framework and ISA_BUS_API.
+This commit has these dependencies correctly selected.
 
-Like ia64, parisc64 uses a function descriptor. The function
-references must be prefixed with P%.
-
-Also, symbols prefixed $$ from the library have the symbol type
-STT_LOPROC instead of STT_FUNC. They should be handled as functions
-too.
-
-Fixes: ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost")
-Reported-by: John David Anglin <dave.anglin@bell.net>
-Tested-by: John David Anglin <dave.anglin@bell.net>
-Tested-by: Helge Deller <deller@gmx.de>
-Closes: https://lore.kernel.org/linux-parisc/1901598a-e11d-f7dd-a5d9-9a69d06e6b6e@bell.net/T/#u
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Florent CARLI <fcarli@gmail.com>
+Co-authored-by: Yoann Congal <yoann.congal@smile.fr>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230721081347.52069-1-fcarli@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Yoann Congal <yoann.congal@smile.fr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/export-internal.h |    2 ++
- scripts/mod/modpost.c           |    9 +++++++++
- 2 files changed, 11 insertions(+)
+ drivers/watchdog/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/export-internal.h
-+++ b/include/linux/export-internal.h
-@@ -52,6 +52,8 @@
- 
- #ifdef CONFIG_IA64
- #define KSYM_FUNC(name)		@fptr(name)
-+#elif defined(CONFIG_PARISC) && defined(CONFIG_64BIT)
-+#define KSYM_FUNC(name)		P%name
- #else
- #define KSYM_FUNC(name)		name
- #endif
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1226,6 +1226,15 @@ static void check_export_symbol(struct m
- 	 */
- 	s->is_func = (ELF_ST_TYPE(sym->st_info) == STT_FUNC);
- 
-+	/*
-+	 * For parisc64, symbols prefixed $$ from the library have the symbol type
-+	 * STT_LOPROC. They should be handled as functions too.
-+	 */
-+	if (elf->hdr->e_ident[EI_CLASS] == ELFCLASS64 &&
-+	    elf->hdr->e_machine == EM_PARISC &&
-+	    ELF_ST_TYPE(sym->st_info) == STT_LOPROC)
-+		s->is_func = true;
-+
- 	if (match(secname, PATTERNS(INIT_SECTIONS)))
- 		warn("%s: %s: EXPORT_SYMBOL used for init symbol. Remove __init or EXPORT_SYMBOL.\n",
- 		     mod->name, name);
+--- a/drivers/watchdog/Kconfig
++++ b/drivers/watchdog/Kconfig
+@@ -1075,6 +1075,8 @@ config ADVANTECH_WDT
+ config ADVANTECH_EC_WDT
+ 	tristate "Advantech Embedded Controller Watchdog Timer"
+ 	depends on X86
++	select ISA_BUS_API
++	select WATCHDOG_CORE
+ 	help
+ 		This driver supports Advantech products with ITE based Embedded Controller.
+ 		It does not support Advantech products with other ECs or without EC.
 
 
