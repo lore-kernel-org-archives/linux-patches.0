@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D206FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128BFC433C7;
-	Sun, 17 Sep 2023 20:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0CA6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:15:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB33C433CB;
+	Sun, 17 Sep 2023 20:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981729;
-	bh=R6YIIQ6uXG3LZkVoXrYu0yNDi4GnT4EYC34PaRmc3kM=;
+	s=korg; t=1694981733;
+	bh=inj6zQfiA4WsvehUeCJlxcOe/eLxass38Mn4tyjtfwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYZULdgiy141TJ2BM/3SYgfmuqjMqzIOhcPB0Q+BnhT96CBT6RwJNZdp8PdF+RHtw
-	 GdSPpjn2GRQREXLyhAur2dqdRXzSrM+syi8mEMJFcHnF3DZhCAfI5iu9yomGaBAKjb
-	 JNXRD2nXyTkTmJDiikh1dG/HvZHrj1ptK5JzGobI=
+	b=Ixp8HUwpXWSsdlGgv95qpR4gz6Ez8s1AePMKpEpcIldyYXT89R3VSkdKx9x67Lcym
+	 p4vBMs0OkLDWAVwJ4LD2dMp5MB+Q5uLl7xcsuRAaHfj9EmGwWGoLjGMh80b8ayTKcb
+	 0XfVmWA7M/1lvQB+QlhwfOqdA2E3BuDVBTeSRrfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 164/219] mtd: rawnand: brcmnand: Fix potential out-of-bounds access in oob write
-Date: Sun, 17 Sep 2023 21:14:51 +0200
-Message-ID: <20230917191046.965851512@linuxfoundation.org>
+	Menglong Dong <imagedong@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 099/511] net: tcp: fix unexcepted socket die when snd_wnd is 0
+Date: Sun, 17 Sep 2023 21:08:46 +0200
+Message-ID: <20230917191116.256636363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,68 +37,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Menglong Dong <imagedong@tencent.com>
 
-commit 5d53244186c9ac58cb88d76a0958ca55b83a15cd upstream.
+[ Upstream commit e89688e3e97868451a5d05b38a9d2633d6785cd4 ]
 
-When the oob buffer length is not in multiple of words, the oob write
-function does out-of-bounds read on the oob source buffer at the last
-iteration. Fix that by always checking length limit on the oob buffer
-read and fill with 0xff when reaching the end of the buffer to the oob
-registers.
+In tcp_retransmit_timer(), a window shrunk connection will be regarded
+as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
+right all the time.
 
-Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-5-william.zhang@broadcom.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The retransmits will become zero-window probes in tcp_retransmit_timer()
+if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
+TCP_RTO_MAX sooner or later.
+
+However, the timer can be delayed and be triggered after 122877ms, not
+TCP_RTO_MAX, as I tested.
+
+Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
+once the RTO come up to TCP_RTO_MAX, and the socket will die.
+
+Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
+which is exact the timestamp of the timeout.
+
+However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
+could already be a long time (minutes or hours) in the past even on the
+first RTO. So we double check the timeout with the duration of the
+retransmission.
+
+Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
+dying too soon.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_timer.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -1461,19 +1461,33 @@ static int write_oob_to_regs(struct brcm
- 			     const u8 *oob, int sas, int sector_1k)
- {
- 	int tbytes = sas << sector_1k;
--	int j;
-+	int j, k = 0;
-+	u32 last = 0xffffffff;
-+	u8 *plast = (u8 *)&last;
- 
- 	/* Adjust OOB values for 1K sector size */
- 	if (sector_1k && (i & 0x01))
- 		tbytes = max(0, tbytes - (int)ctrl->max_oob);
- 	tbytes = min_t(int, tbytes, ctrl->max_oob);
- 
--	for (j = 0; j < tbytes; j += 4)
-+	/*
-+	 * tbytes may not be multiple of words. Make sure we don't read out of
-+	 * the boundary and stop at last word.
-+	 */
-+	for (j = 0; (j + 3) < tbytes; j += 4)
- 		oob_reg_write(ctrl, j,
- 				(oob[j + 0] << 24) |
- 				(oob[j + 1] << 16) |
- 				(oob[j + 2] <<  8) |
- 				(oob[j + 3] <<  0));
-+
-+	/* handle the remaing bytes */
-+	while (j < tbytes)
-+		plast[k++] = oob[j++];
-+
-+	if (tbytes & 0x3)
-+		oob_reg_write(ctrl, (tbytes & ~0x3), (__force u32)cpu_to_be32(last));
-+
- 	return tbytes;
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index a8592c187b321..40a354dcfec5a 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -437,6 +437,22 @@ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
+ 			  TCP_TIMEOUT_INIT << req->num_timeout, TCP_RTO_MAX);
  }
  
++static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
++				     const struct sk_buff *skb)
++{
++	const struct tcp_sock *tp = tcp_sk(sk);
++	const int timeout = TCP_RTO_MAX * 2;
++	u32 rcv_delta, rtx_delta;
++
++	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
++	if (rcv_delta <= timeout)
++		return false;
++
++	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
++			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
++
++	return rtx_delta > timeout;
++}
+ 
+ /**
+  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
+@@ -502,7 +518,7 @@ void tcp_retransmit_timer(struct sock *sk)
+ 					    tp->snd_una, tp->snd_nxt);
+ 		}
+ #endif
+-		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
++		if (tcp_rtx_probe0_timed_out(sk, skb)) {
+ 			tcp_write_err(sk);
+ 			goto out;
+ 		}
+-- 
+2.40.1
+
 
 
