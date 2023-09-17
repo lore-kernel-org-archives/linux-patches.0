@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049996FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BFCC433CC;
-	Sun, 17 Sep 2023 19:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2E46FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:22:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58BAC433C8;
+	Sun, 17 Sep 2023 19:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978562;
-	bh=S4H5XDjPzZOnTQWh++bzDZvrrIS2CotBLe4yxfDUBws=;
+	s=korg; t=1694978566;
+	bh=fyvBnvOtzaXpfOgrQ8PoWWw2Ocp/pmX2Uj4hRrKUOXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMko4KqwsJSShVxMK9JNIbiONGDZWTjXsZ/r3/0vWwXfWjmcNxcnXRCrf4FQr017E
-	 tGPZNdfNZ6GeM4y6L4rbVtQTc+hLPisiSLJj2EAUmUvgxeWoXLHdlYxPZJMhYgsSJR
-	 oAy+fm5UWE5oHUdT+9i49BZenhGSNYNB0GmpqvS0=
+	b=z+gkejZkilfw3vPJezp6FovZeMHb1Z61kG+junocxsloaW+2sKqRUVLfvy0QbHP0P
+	 nCTF1cYe/A4Of6HoED7xdF5pfXY8KzkjuwoAqT7u1uP9Eu/iGC72t2hJgBXrpDWjjW
+	 4A/bxUaElqrnqPKVxkLGUl3Erh5fFuYGbEbGPZtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/406] crypto: stm32 - Properly handle pm_runtime_get failing
-Date: Sun, 17 Sep 2023 21:09:09 +0200
-Message-ID: <20230917191103.638489100@linuxfoundation.org>
+Subject: [PATCH 5.10 078/406] s390/pkey: fix/harmonize internal keyblob headers
+Date: Sun, 17 Sep 2023 21:08:52 +0200
+Message-ID: <20230917191103.191834329@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -34,63 +35,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit aec48805163338f8413118796c1dd035661b9140 ]
+[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
 
-If pm_runtime_get() (disguised as pm_runtime_resume_and_get()) fails, this
-means the clk wasn't prepared and enabled. Returning early in this case
-however is wrong as then the following resource frees are skipped and this
-is never catched up. So do all the cleanups but clk_disable_unprepare().
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
+PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
+which is opaque to the userspace. The header structures for
+PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
+is no reason, why different structures are used. In preparation to fix
+the keyversion handling in the broken PKEY IOCTLs, the same header
+structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
+reduces the number of different code paths and increases the
+readability.
 
-Also don't emit a warning, as stm32_hash_runtime_resume() already emitted
-one.
-
-Note that the return value of stm32_hash_remove() is mostly ignored by
-the device core. The only effect of returning zero instead of an error
-value is to suppress another warning in platform_remove(). So return 0
-even if pm_runtime_resume_and_get() failed.
-
-Fixes: 8b4d566de6a5 ("crypto: stm32/hash - Add power management support")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/stm32/stm32-hash.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/s390/crypto/pkey_api.c        | 2 +-
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
+ drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/crypto/stm32/stm32-hash.c b/drivers/crypto/stm32/stm32-hash.c
-index 16bb52836b28d..2f2a426a6cd5c 100644
---- a/drivers/crypto/stm32/stm32-hash.c
-+++ b/drivers/crypto/stm32/stm32-hash.c
-@@ -1565,9 +1565,7 @@ static int stm32_hash_remove(struct platform_device *pdev)
- 	if (!hdev)
- 		return -ENODEV;
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 870e00effe439..69882ff4db107 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -735,7 +735,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		if (ktype)
+ 			*ktype = PKEY_TYPE_EP11;
+ 		if (ksize)
+-			*ksize = kb->head.keybitlen;
++			*ksize = kb->head.bitlen;
  
--	ret = pm_runtime_resume_and_get(hdev->dev);
--	if (ret < 0)
--		return ret;
-+	ret = pm_runtime_get_sync(hdev->dev);
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+ 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 9ce5a71da69b8..3daf259ba10e7 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -788,7 +788,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
- 	stm32_hash_unregister_algs(hdev);
+ out:
+ 	kfree(req);
+@@ -1056,7 +1056,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
-@@ -1583,7 +1581,8 @@ static int stm32_hash_remove(struct platform_device *pdev)
- 	pm_runtime_disable(hdev->dev);
- 	pm_runtime_put_noidle(hdev->dev);
- 
--	clk_disable_unprepare(hdev->clk);
-+	if (ret >= 0)
-+		clk_disable_unprepare(hdev->clk);
- 
- 	return 0;
- }
+ out:
+ 	kfree(req);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index 1e02b197c0035..d424fa901f1b0 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -29,14 +29,7 @@ struct ep11keyblob {
+ 	union {
+ 		u8 session[32];
+ 		/* only used for PKEY_TYPE_EP11: */
+-		struct {
+-			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
+-			u8  res0;      /* unused */
+-			u16 len;       /* total length in bytes of this blob */
+-			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
+-			u8  res1;      /* unused */
+-			u16 keybitlen; /* clear key bit len, 0 for unknown */
+-		} head;
++		struct ep11kblob_header head;
+ 	};
+ 	u8  wkvp[16];  /* wrapping key verification pattern */
+ 	u64 attr;      /* boolean key attributes */
 -- 
 2.40.1
 
