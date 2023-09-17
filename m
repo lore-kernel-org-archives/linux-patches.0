@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B836FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE03C433C8;
-	Sun, 17 Sep 2023 19:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A756FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB7CC433C8;
+	Sun, 17 Sep 2023 19:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978252;
-	bh=vqdUBCM7OXHv0o//8dY3sWiCbOJ61f4u2VGrCgcBHas=;
+	s=korg; t=1694978255;
+	bh=EohJLrEoOvb8ggYwESR+ZD1ATwzUgZUwQ57p3Mnt8GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EojVvMOivLU2Sz4P3184Ns5UFO+5cF8ph9EAWwCFEDvA4py2sxUcdLbCaSSrpySSu
-	 v/Danr+TGK8gvzU6gM5bimoiNKw5/GO24tFkaqPmv2h6rJN56d9oEbtrv/9/GQbw62
-	 0Hm314xBB4em3X+vJW5eKasa7uITXLPbxi1TMR5k=
+	b=GlAEaT9fkX/wg4YtyVtgsIrsQZs1203PVx42uKR8WOIIxyNIn2j80c3VeMQGhP6gn
+	 o2j/lCygMvpL2YTyjh9bVHUAxY+OPR9gBn7+4mVeGLYiV8sYYURw0Lxnoq7tGwboca
+	 NkwppLDmhEptggDd06VsyQ/iT+cGGwz/ddKHGTxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 008/406] USB: serial: option: add FOXCONN T99W368/T99W373 product
-Date: Sun, 17 Sep 2023 21:07:42 +0200
-Message-ID: <20230917191101.318103904@linuxfoundation.org>
+	Luke Lu <luke.lu@libre.computer>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.10 009/406] usb: dwc3: meson-g12a: do post init to fix broken usb after resumption
+Date: Sun, 17 Sep 2023 21:07:43 +0200
+Message-ID: <20230917191101.348819122@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,66 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Luke Lu <luke.lu@libre.computer>
 
-commit 4d9488b294e1f8353bbcadc4c7172a7f7490199b upstream.
+commit 1fa206bb764f37d2ab4bf671e483153ef0659b34 upstream.
 
-The difference of T99W368 and T99W373 is the chip solution.
-T99W368 is designed based on Qualcomm SDX65 and T99W373 is SDX62.
+Device connected to usb otg port of GXL-based boards can not be
+recognised after resumption, doesn't recover even if disconnect and
+reconnect the device. dmesg shows it disconnects during resumption.
 
-Test evidence as below:
-T:  Bus=01 Lev=02 Prnt=05 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0f0 Rev=05.04
-S:  Manufacturer=FII
-S:  Product=OLYMPIC USB WWAN Adapter
-S:  SerialNumber=78ada8c4
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+[   41.492911] usb 1-2: USB disconnect, device number 3
+[   41.499346] usb 1-2: unregistering device
+[   41.511939] usb 1-2: unregistering interface 1-2:1.0
 
-T:  Bus=01 Lev=02 Prnt=05 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0ee Rev=05.04
-S:  Manufacturer=FII
-S:  Product=OLYMPIC USB WWAN Adapter
-S:  SerialNumber=78ada8d5
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+Calling usb_post_init() will fix this issue, and it's tested and
+verified on libretech's aml-s905x-cc board.
 
-Both of them share the same port configuration:
-0&1: MBIM, 2: Modem, 3:GNSS, 4:NMEA, 5:Diag
-GNSS port don't use serial driver.
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable@vger.kernel.org # v5.8+
+Fixes: c99993376f72 ("usb: dwc3: Add Amlogic G12A DWC3 glue")
+Signed-off-by: Luke Lu <luke.lu@libre.computer>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230809212911.18903-1-luke.lu@libre.computer
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/dwc3/dwc3-meson-g12a.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2235,6 +2235,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
-+	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
-+	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
- 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+--- a/drivers/usb/dwc3/dwc3-meson-g12a.c
++++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
+@@ -931,6 +931,12 @@ static int __maybe_unused dwc3_meson_g12
+ 			return ret;
+ 	}
+ 
++	if (priv->drvdata->usb_post_init) {
++		ret = priv->drvdata->usb_post_init(priv);
++		if (ret)
++			return ret;
++	}
++
+ 	return 0;
+ }
+ 
 
 
