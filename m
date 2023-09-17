@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F86FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF453C433CA;
-	Sun, 17 Sep 2023 19:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4C36FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8CAC433C8;
+	Sun, 17 Sep 2023 19:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980515;
-	bh=lzsh/iWyxPdIxUZ4801aGLJJEoa2VsjQWVD9sfVhbmQ=;
+	s=korg; t=1694980518;
+	bh=JuwaC0bt8lw4tt7OuaGqacrosBa6t8JSDlwOIqhNccU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fo4ksa1lMe1GVCpsdcQZcN9DEXrkTsyqth8GiQh4I81fNKZfYpZPLKWAx0GNjlznO
-	 5kE/zW+M9d/qaj5/EkkQ32RqiOkZJO2LCSpGW/coUix7EMr8bdRDm+tSfnN2NfD92b
-	 heUJdfdOfIM09OnMH+SXNQZd78AQawJ/dFs5AsMs=
+	b=Yz3RJQgMGYPLTE/bRjvM5qPNH5m1XXRHxj3cH2+jxg1qyhClt15Mg+PW4pkCUsyy7
+	 3r2VrMg/ZQRYXKaPSqDwkme9oMQDMWizL7yhSNgEreOcXBrVv8WSBmBwCcdh6rjx/j
+	 ayeNpWsYdyQFG2OFXVkArXLSqB9L8BA714kBVE7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Fischer <devlists@wefi.net>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.5 197/285] ata: ahci: Add Elkhart Lake AHCI controller
-Date: Sun, 17 Sep 2023 21:13:17 +0200
-Message-ID: <20230917191058.405406596@linuxfoundation.org>
+	Michael Walle <michael@walle.cc>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 6.5 215/285] mtd: spi-nor: Correct flags for Winbond w25q128
+Date: Sun, 17 Sep 2023 21:13:35 +0200
+Message-ID: <20230917191058.985421467@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -33,65 +34,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Werner Fischer <devlists@wefi.net>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 2a2df98ec592667927b5c1351afa6493ea125c9f upstream.
+commit 83e824a4a595132f9bd7ac4f5afff857bfc5991e upstream.
 
-Elkhart Lake is the successor of Apollo Lake and Gemini Lake. These
-CPUs and their PCHs are used in mobile and embedded environments.
+The Winbond "w25q128" (actual vendor name W25Q128JV) has
+exactly the same flags as the sibling device "w25q128jv".
+The devices both require unlocking to enable write access.
 
-With this patch I suggest that Elkhart Lake SATA controllers [1] should
-use the default LPM policy for mobile chipsets.
-The disadvantage of missing hot-plug support with this setting should
-not be an issue, as those CPUs are used in embedded environments and
-not in servers with hot-plug backplanes.
+The actual product naming between devices vs the Linux
+strings in winbond.c:
 
-We discovered that the Elkhart Lake SATA controllers have been missing
-in ahci.c after a customer reported the throttling of his SATA SSD
-after a short period of higher I/O. We determined the high temperature
-of the SSD controller in idle mode as the root cause for that.
+0xef4018: "w25q128"   W25Q128JV-IN/IQ/JQ
+0xef7018: "w25q128jv" W25Q128JV-IM/JM
 
-Depending on the used SSD, we have seen up to 1.8 Watt lower system
-idle power usage and up to 30°C lower SSD controller temperatures in
-our tests, when we set med_power_with_dipm manually. I have provided a
-table showing seven different SATA SSDs from ATP, Intel/Solidigm and
-Samsung [2].
+The latter device, "w25q128jv" supports features named DTQ
+and QPI, otherwise it is the same.
 
-Intel lists a total of 3 SATA controller IDs (4B60, 4B62, 4B63) in [1]
-for those mobile PCHs.
-This commit just adds 0x4b63 as I do not have test systems with 0x4b60
-and 0x4b62 SATA controllers.
-I have tested this patch with a system which uses 0x4b63 as SATA
-controller.
+Not having the right flags has the annoying side effect
+that write access does not work.
 
-[1] https://sata-io.org/product/8803
-[2] https://www.thomas-krenn.com/en/wiki/SATA_Link_Power_Management#Example_LES_v4
+After this patch I can write to the flash on the Inteno
+XG6846 router.
 
-Signed-off-by: Werner Fischer <devlists@wefi.net>
+The flash memory also supports dual and quad SPI modes.
+This does not currently manifest, but by turning on SFDP
+parsing, the right SPI modes are emitted in
+/sys/kernel/debug/spi-nor/spi1.0/capabilities
+for this chip, so we also turn on this.
+
+Since we now have determined that SFDP parsing works on
+the device, we also detect the geometry using SFDP.
+
+After this dmesg and sysfs says:
+[    1.062401] spi-nor spi1.0: w25q128 (16384 Kbytes)
+cat erasesize
+65536
+(16384*1024)/65536 = 256 sectors
+
+spi-nor sysfs:
+cat jedec_id
+ef4018
+cat manufacturer
+winbond
+cat partname
+w25q128
+hexdump -v -C sfdp
+00000000  53 46 44 50 05 01 00 ff  00 05 01 10 80 00 00 ff
+00000010  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000020  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000030  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000040  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000050  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000060  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000070  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
+00000080  e5 20 f9 ff ff ff ff 07  44 eb 08 6b 08 3b 42 bb
+00000090  fe ff ff ff ff ff 00 00  ff ff 40 eb 0c 20 0f 52
+000000a0  10 d8 00 00 36 02 a6 00  82 ea 14 c9 e9 63 76 33
+000000b0  7a 75 7a 75 f7 a2 d5 5c  19 f7 4d ff e9 30 f8 80
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Suggested-by: Michael Walle <michael@walle.cc>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230718-spi-nor-winbond-w25q128-v5-1-a73653ee46c3@linaro.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/spi-nor/winbond.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -421,6 +421,8 @@ static const struct pci_device_id ahci_p
- 	{ PCI_VDEVICE(INTEL, 0x34d3), board_ahci_low_power }, /* Ice Lake LP AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d3), board_ahci_low_power }, /* Comet Lake PCH-U AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_low_power }, /* Comet Lake PCH RAID */
-+	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
-+	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_low_power }, /* Elkhart Lake AHCI */
- 
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -120,8 +120,9 @@ static const struct flash_info winbond_n
+ 		NO_SFDP_FLAGS(SECT_4K) },
+ 	{ "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16)
+ 		NO_SFDP_FLAGS(SECT_4K) },
+-	{ "w25q128", INFO(0xef4018, 0, 64 * 1024, 256)
+-		NO_SFDP_FLAGS(SECT_4K) },
++	{ "w25q128", INFO(0xef4018, 0, 0, 0)
++		PARSE_SFDP
++		FLAGS(SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB) },
+ 	{ "w25q256", INFO(0xef4019, 0, 64 * 1024, 512)
+ 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
+ 		.fixups = &w25q256_fixups },
 
 
