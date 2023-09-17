@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4206FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F793C433C8;
-	Sun, 17 Sep 2023 20:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0429C6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACE8C433CA;
+	Sun, 17 Sep 2023 20:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981479;
-	bh=HuyEDg5WBsIgH/o1JFh0Av0vSunVXXlWWmaHnzu/ZPc=;
+	s=korg; t=1694981482;
+	bh=PwNTik405e8jOYuDZkL3pyUFc7DKweAJrbF/vAv67KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1LPOrMD1ljgM1IGJV/vLdjAdCUB3JE5t5VLv5ms7l6d7vIDOm6KTX+Y3DwePvhSW
-	 86CywIOdRKS5DtjBLj6aNGgV1d+OyVbvyuzx1vBmd8KIYsjwxtkNOLKTYumfr3gEmy
-	 5+XRUFGVmatyZ6wjiyhgCCxGQ4a4XMXW2XrvcDp0=
+	b=pZ6FHCd7KcVlmNDdGHDZAahGVZhHbigCXPm8ySucMcBgN66KZnXoMRY5b/iretqLI
+	 4ZRhpzScuOko6VVWlJiXKk/F7xCRYeHFYuFDgpYfveQVfThITYeXjs+l8qRht0Clde
+	 DPM4jxslvFMqKyuADrB34y0l0gFG03yOsjYkGY5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Arnd Bergmann <arnd@kernel.org>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
+	Yanan Yang <yanan.yang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/511] ARM: ptrace: Restore syscall restart tracing
-Date: Sun, 17 Sep 2023 21:08:08 +0200
-Message-ID: <20230917191115.359890321@linuxfoundation.org>
+Subject: [PATCH 6.1 121/219] net: dsa: sja1105: fix bandwidth discrepancy between tc-cbs software and offload
+Date: Sun, 17 Sep 2023 21:14:08 +0200
+Message-ID: <20230917191045.351766948@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,47 +37,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit cf007647475b5090819c5fe8da771073145c7334 ]
+[ Upstream commit 954ad9bf13c4f95a4958b5f8433301f2ab99e1f5 ]
 
-Since commit 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store
-thread_info->abi_syscall"), the seccomp selftests "syscall_restart" has
-been broken. This was caused by the restart syscall not being stored to
-"abi_syscall" during restart setup before branching to the "local_restart"
-label. Tracers would see the wrong syscall, and scno would get overwritten
-while returning from the TIF_WORK path. Add the missing store.
+More careful measurement of the tc-cbs bandwidth shows that the stream
+bandwidth (effectively idleslope) increases, there is a larger and
+larger discrepancy between the rate limit obtained by the software
+Qdisc, and the rate limit obtained by its offloaded counterpart.
 
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Arnd Bergmann <arnd@kernel.org>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Fixes: 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store thread_info->abi_syscall")
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230810195422.2304827-1-keescook@chromium.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+The discrepancy becomes so large, that e.g. at an idleslope of 40000
+(40Mbps), the offloaded cbs does not actually rate limit anything, and
+traffic will pass at line rate through a 100 Mbps port.
+
+The reason for the discrepancy is that the hardware documentation I've
+been following is incorrect. UM11040.pdf (for SJA1105P/Q/R/S) states
+about IDLE_SLOPE that it is "the rate (in unit of bytes/sec) at which
+the credit counter is increased".
+
+Cross-checking with UM10944.pdf (for SJA1105E/T) and UM11107.pdf
+(for SJA1110), the wording is different: "This field specifies the
+value, in bytes per second times link speed, by which the credit counter
+is increased".
+
+So there's an extra scaling for link speed that the driver is currently
+not accounting for, and apparently (empirically), that link speed is
+expressed in Kbps.
+
+I've pondered whether to pollute the sja1105_mac_link_up()
+implementation with CBS shaper reprogramming, but I don't think it is
+worth it. IMO, the UAPI exposed by tc-cbs requires user space to
+recalculate the sendslope anyway, since the formula for that depends on
+port_transmit_rate (see man tc-cbs), which is not an invariant from tc's
+perspective.
+
+So we use the offload->sendslope and offload->idleslope to deduce the
+original port_transmit_rate from the CBS formula, and use that value to
+scale the offload->sendslope and offload->idleslope to values that the
+hardware understands.
+
+Some numerical data points:
+
+ 40Mbps stream, max interfering frame size 1500, port speed 100M
+ ---------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -60000 locredit -900 hicredit 600
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    600                600
+ credit_lo    900                900
+ send_slope   7500000            75
+ idle_slope   5000000            50
+
+ 40Mbps stream, max interfering frame size 1500, port speed 1G
+ -------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -960000 locredit -1440 hicredit 60
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    60                 60
+ credit_lo    1440               1440
+ send_slope   120000000          120
+ idle_slope   5000000            5
+
+ 5.12Mbps stream, max interfering frame size 1522, port speed 100M
+ -----------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 5120 sendslope -94880 locredit -1444 hicredit 77
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    77                 77
+ credit_lo    1444               1444
+ send_slope   11860000           118
+ idle_slope   640000             6
+
+Tested on SJA1105T, SJA1105S and SJA1110A, at 1Gbps and 100Mbps.
+
+Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
+Reported-by: Yanan Yang <yanan.yang@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/entry-common.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/sja1105/sja1105_main.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/kernel/entry-common.S b/arch/arm/kernel/entry-common.S
-index fde7ac271b147..e7bfdd10bbcd3 100644
---- a/arch/arm/kernel/entry-common.S
-+++ b/arch/arm/kernel/entry-common.S
-@@ -101,6 +101,7 @@ slow_work_pending:
- 	cmp	r0, #0
- 	beq	no_work_pending
- 	movlt	scno, #(__NR_restart_syscall - __NR_SYSCALL_BASE)
-+	str	scno, [tsk, #TI_ABI_SYSCALL]	@ make sure tracers see update
- 	ldmia	sp, {r0 - r6}			@ have to reload r0 - r6
- 	b	local_restart			@ ... and off we go
- ENDPROC(ret_fast_syscall)
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 947e8f7c09880..377f177502003 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2157,6 +2157,7 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ {
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct sja1105_cbs_entry *cbs;
++	s64 port_transmit_rate_kbps;
+ 	int index;
+ 
+ 	if (!offload->enable)
+@@ -2174,9 +2175,17 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ 	 */
+ 	cbs->credit_hi = offload->hicredit;
+ 	cbs->credit_lo = abs(offload->locredit);
+-	/* User space is in kbits/sec, hardware in bytes/sec */
+-	cbs->idle_slope = offload->idleslope * BYTES_PER_KBIT;
+-	cbs->send_slope = abs(offload->sendslope * BYTES_PER_KBIT);
++	/* User space is in kbits/sec, while the hardware in bytes/sec times
++	 * link speed. Since the given offload->sendslope is good only for the
++	 * current link speed anyway, and user space is likely to reprogram it
++	 * when that changes, don't even bother to track the port's link speed,
++	 * but deduce the port transmit rate from idleslope - sendslope.
++	 */
++	port_transmit_rate_kbps = offload->idleslope - offload->sendslope;
++	cbs->idle_slope = div_s64(offload->idleslope * BYTES_PER_KBIT,
++				  port_transmit_rate_kbps);
++	cbs->send_slope = div_s64(abs(offload->sendslope * BYTES_PER_KBIT),
++				  port_transmit_rate_kbps);
+ 	/* Convert the negative values from 64-bit 2's complement
+ 	 * to 32-bit 2's complement (for the case of 0x80000000 whose
+ 	 * negative is still negative).
 -- 
 2.40.1
 
