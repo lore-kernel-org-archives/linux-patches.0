@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD546FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D5DC433C7;
-	Sun, 17 Sep 2023 19:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015AF63B3
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25567C433C7;
+	Sun, 17 Sep 2023 19:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978332;
-	bh=fyVld1xhDCdhh8+feF6iRAhnZImBu8cyYRxQEZPXfpo=;
+	s=korg; t=1694978399;
+	bh=tJexeGi2D1GkDw7yWjWw3Amm+74IbY8D0oEx82ZINyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPjkmmWgVybpgSVklb1A2byUKmNPxxWCn9tLY5Quxx2PnPXqMb8LPuUs42X2bsjXX
-	 U+MxnKmFSnZDoQIbxyVoJOsWGtVtVOtqlr+RqbIawribuNv1yRdtJbMjcTFeqv6YOb
-	 lC4F/HZgK4xMANrGt94rL7hxtwdTHlcZCDrCae8o=
+	b=vCpFKfLbmFa4VeQthSeNRUo8aXdayWtdGjr4nSrqNINR2GEgQ8aGZnLDwp3laT/2y
+	 LCRqGk7A73kx5tsRMjxGOkU7bmObwVKB+xxyYS9z+EHECMv02omswb3kWOBB9OA5NW
+	 e2pzuaYgC8xJ8XQm5+FdNChXbyP5XvXSKfUVlPak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minjie Du <duminjie@vivo.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/406] ata: pata_arasan_cf: Use dev_err_probe() instead dev_err() in data_xfer()
-Date: Sun, 17 Sep 2023 21:08:20 +0200
-Message-ID: <20230917191102.362847945@linuxfoundation.org>
+	Bard Liao <bard.liao@intel.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Subject: [PATCH 5.10 023/406] ASoC: rt5682: Fix a problem with error handling in the io init function of the soundwire
+Date: Sun, 17 Sep 2023 21:07:57 +0200
+Message-ID: <20230917191101.767915786@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -42,39 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minjie Du <duminjie@vivo.com>
+From: Oder Chiou <oder_chiou@realtek.com>
 
-[ Upstream commit 4139f992c49356391fb086c0c8ce51f66c26d623 ]
+commit 9266d95405ae0c078f188ec8bca3a004631be429 upstream.
 
-It is possible for dma_request_chan() to return EPROBE_DEFER, which
-means acdev->host->dev is not ready yet. At this point dev_err() will
-have no output. Use dev_err_probe() instead.
+The device checking error should be a jump to pm_runtime_put_autosuspend()
+as done before returning value.
 
-Signed-off-by: Minjie Du <duminjie@vivo.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 867f8d18df4f ('ASoC: rt5682: fix getting the wrong device id when the suspend_stress_test')
+Reviewed-by: Bard Liao <bard.liao@intel.com>
+Signed-off-by: Oder Chiou <oder_chiou@realtek.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20210607222239.582139-13-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_arasan_cf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt5682-sdw.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/pata_arasan_cf.c b/drivers/ata/pata_arasan_cf.c
-index 63f39440a9b42..4ba02f082f962 100644
---- a/drivers/ata/pata_arasan_cf.c
-+++ b/drivers/ata/pata_arasan_cf.c
-@@ -528,7 +528,8 @@ static void data_xfer(struct work_struct *work)
- 	/* dma_request_channel may sleep, so calling from process context */
- 	acdev->dma_chan = dma_request_chan(acdev->host->dev, "data");
- 	if (IS_ERR(acdev->dma_chan)) {
--		dev_err(acdev->host->dev, "Unable to get dma_chan\n");
-+		dev_err_probe(acdev->host->dev, PTR_ERR(acdev->dma_chan),
-+			      "Unable to get dma_chan\n");
- 		acdev->dma_chan = NULL;
- 		goto chan_request_fail;
+--- a/sound/soc/codecs/rt5682-sdw.c
++++ b/sound/soc/codecs/rt5682-sdw.c
+@@ -413,9 +413,11 @@ static int rt5682_io_init(struct device
+ 		usleep_range(30000, 30005);
+ 		loop--;
  	}
--- 
-2.40.1
-
++
+ 	if (val != DEVICE_ID) {
+ 		dev_err(dev, "Device with ID register %x is not rt5682\n", val);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_nodev;
+ 	}
+ 
+ 	rt5682_calibrate(rt5682);
+@@ -486,10 +488,11 @@ reinit:
+ 	rt5682->hw_init = true;
+ 	rt5682->first_hw_init = true;
+ 
++err_nodev:
+ 	pm_runtime_mark_last_busy(&slave->dev);
+ 	pm_runtime_put_autosuspend(&slave->dev);
+ 
+-	dev_dbg(&slave->dev, "%s hw_init complete\n", __func__);
++	dev_dbg(&slave->dev, "%s hw_init complete: %d\n", __func__, ret);
+ 
+ 	return ret;
+ }
 
 
