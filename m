@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4FA6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25960C433C8;
-	Sun, 17 Sep 2023 20:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3FD6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978EAC433C7;
+	Sun, 17 Sep 2023 20:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981681;
-	bh=woZeRbhD2ErIMQ85pRRe83sRaxWDG3PfhTNE35iXPcM=;
+	s=korg; t=1694981685;
+	bh=LCOHYlmBzmhUUJaSheZhXw5RCPWPXIQwLDiprNFPEqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0lo8afNareJ1oj6StO1oFR+5JvrVEVDeuc5wCmFXwBzHBuYWAraN+q5LAjY2rsMb
-	 g6fHsPu2JRruAWFtktWuP9+781K1l1l1NLAdBuUTOE2KsHKMl9rASMW0tRZJ7+SRxz
-	 JzP/vJy4fGAbK3jTo7KEqyPHreoyCj4NrXSvE2IU=
+	b=CFYZ94tKBdGbIqXJFaM2Lej6HyRAaCvVr3ERcQlAhgunhcJNBJvfCKPo0jsN6G5NJ
+	 azWlWMHU39AMQIjkK0xjIgTm28YS3SeNnVQ2LEltkGTW/ZKdfvjnVG3NETChfXqxk1
+	 XT/+RbV4T+Z5Ai/au6kYWGGm1cjo+H/SJaiVquMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Matthew Wang <matthewmwang@chromium.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/511] wifi: mwifiex: Fix OOB and integer underflow when rx packets
-Date: Sun, 17 Sep 2023 21:08:39 +0200
-Message-ID: <20230917191116.091489898@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 158/219] btrfs: dont start transaction when joining with TRANS_JOIN_NOSTART
+Date: Sun, 17 Sep 2023 21:14:45 +0200
+Message-ID: <20230917191046.763255480@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,131 +35,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 11958528161731c58e105b501ed60b83a91ea941 ]
+commit 4490e803e1fe9fab8db5025e44e23b55df54078b upstream.
 
-Make sure mwifiex_process_mgmt_packet,
-mwifiex_process_sta_rx_packet and mwifiex_process_uap_rx_packet,
-mwifiex_uap_queue_bridged_pkt and mwifiex_process_rx_packet
-not out-of-bounds access the skb->data buffer.
+When joining a transaction with TRANS_JOIN_NOSTART, if we don't find a
+running transaction we end up creating one. This goes against the purpose
+of TRANS_JOIN_NOSTART which is to join a running transaction if its state
+is at or below the state TRANS_STATE_COMMIT_START, otherwise return an
+-ENOENT error and don't start a new transaction. So fix this to not create
+a new transaction if there's no running transaction at or below that
+state.
 
-Fixes: 2dbaf751b1de ("mwifiex: report received management frames to cfg80211")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230723070741.1544662-1-pinkperfect2021@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 4.14+
+Fixes: a6d155d2e363 ("Btrfs: fix deadlock between fiemap and transaction commits")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c | 11 ++++++++++-
- .../net/wireless/marvell/mwifiex/uap_txrx.c   | 19 +++++++++++++++++++
- drivers/net/wireless/marvell/mwifiex/util.c   | 10 +++++++---
- 3 files changed, 36 insertions(+), 4 deletions(-)
+ fs/btrfs/transaction.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 0d2adf8879005..685a5b6697046 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -98,6 +98,14 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -279,10 +279,11 @@ loop:
+ 	spin_unlock(&fs_info->trans_lock);
  
-+	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
-+		mwifiex_dbg(priv->adapter, ERROR,
-+			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
-+			    skb->len, rx_pkt_off);
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+	}
-+
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -206,7 +214,8 @@ int mwifiex_process_sta_rx_packet(struct mwifiex_private *priv,
+ 	/*
+-	 * If we are ATTACH, we just want to catch the current transaction,
+-	 * and commit it. If there is no transaction, just return ENOENT.
++	 * If we are ATTACH or TRANS_JOIN_NOSTART, we just want to catch the
++	 * current transaction, and commit it. If there is no transaction, just
++	 * return ENOENT.
+ 	 */
+-	if (type == TRANS_ATTACH)
++	if (type == TRANS_ATTACH || type == TRANS_JOIN_NOSTART)
+ 		return -ENOENT;
  
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_offset;
- 
--	if ((rx_pkt_offset + rx_pkt_length) > (u16) skb->len) {
-+	if ((rx_pkt_offset + rx_pkt_length) > skb->len ||
-+	    sizeof(rx_pkt_hdr->eth803_hdr) + rx_pkt_offset > skb->len) {
- 		mwifiex_dbg(adapter, ERROR,
- 			    "wrong rx packet: len=%d, rx_pkt_offset=%d, rx_pkt_length=%d\n",
- 			    skb->len, rx_pkt_offset, rx_pkt_length);
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index 245ff644f81e3..b3915bfd38693 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -115,6 +115,15 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 		return;
- 	}
- 
-+	if (sizeof(*rx_pkt_hdr) +
-+	    le16_to_cpu(uap_rx_pd->rx_pkt_offset) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet offset: len=%d,rx_pkt_offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+	}
-+
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -379,6 +388,16 @@ int mwifiex_process_uap_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_type = le16_to_cpu(uap_rx_pd->rx_pkt_type);
- 	rx_pkt_hdr = (void *)uap_rx_pd + le16_to_cpu(uap_rx_pd->rx_pkt_offset);
- 
-+	if (le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-+	    sizeof(rx_pkt_hdr->eth803_hdr) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet for struct ethhdr: len=%d, offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+		return 0;
-+	}
-+
- 	ether_addr_copy(ta, rx_pkt_hdr->eth803_hdr.h_source);
- 
- 	if ((le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-diff --git a/drivers/net/wireless/marvell/mwifiex/util.c b/drivers/net/wireless/marvell/mwifiex/util.c
-index d583fa600a296..1f5a6dab9ce55 100644
---- a/drivers/net/wireless/marvell/mwifiex/util.c
-+++ b/drivers/net/wireless/marvell/mwifiex/util.c
-@@ -405,11 +405,15 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
- 	}
- 
- 	rx_pd = (struct rxpd *)skb->data;
-+	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	if (pkt_len < sizeof(struct ieee80211_hdr) + sizeof(pkt_len)) {
-+		mwifiex_dbg(priv->adapter, ERROR, "invalid rx_pkt_length");
-+		return -1;
-+	}
- 
- 	skb_pull(skb, le16_to_cpu(rx_pd->rx_pkt_offset));
- 	skb_pull(skb, sizeof(pkt_len));
--
--	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	pkt_len -= sizeof(pkt_len);
- 
- 	ieee_hdr = (void *)skb->data;
- 	if (ieee80211_is_mgmt(ieee_hdr->frame_control)) {
-@@ -422,7 +426,7 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
- 		skb->data + sizeof(struct ieee80211_hdr),
- 		pkt_len - sizeof(struct ieee80211_hdr));
- 
--	pkt_len -= ETH_ALEN + sizeof(pkt_len);
-+	pkt_len -= ETH_ALEN;
- 	rx_pd->rx_pkt_length = cpu_to_le16(pkt_len);
- 
- 	cfg80211_rx_mgmt(&priv->wdev, priv->roc_cfg.chan.center_freq,
--- 
-2.40.1
-
+ 	/*
 
 
