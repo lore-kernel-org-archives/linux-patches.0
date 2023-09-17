@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01D86FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E276C433C7;
-	Sun, 17 Sep 2023 19:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4A96FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA15C433C8;
+	Sun, 17 Sep 2023 19:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979526;
-	bh=NCktdAvptq8QEQ1CCYoHSb1xKU3ImX2Gc56Fchvjyho=;
+	s=korg; t=1694979530;
+	bh=46ZZA8owG7T1odFulht/ISNEjQsfMa7qCGjLNTVqitI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afOyPFyOTaTu1/n6MKZ1bx8wH8toSYfXVQHnniKvCsU52ypqjMk7xx8JIq5tZsH/2
-	 N/J4qvN+8BwQXfNFzqR5NlXtjO2WeNbkVrvJj8m2LYSz8Ka1L67Q1zqsGsTTgxMLvK
-	 17/VfGoCN7Y/cThoWGPvaOnqxCpstyXnHZ3RTahc=
+	b=dtkvHuicy3Q/sxq2v8gCbvVBUIXAbYEx9WjKtvjjeClat0VfZ0Ej+WbVIYi+mhhJi
+	 yAnvMjxLe1eoeFqtIPp4/t/+i6UmAmhECp3MX7YMn+U19jNhgZTdly7H9ypTGwXtJi
+	 nUiYFgAOv+ksikq0MXwzdfBQFqVWhJ1Je868EDwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Ekman <uablrek@gmail.com>,
-	Quan Tian <qtian@vmware.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 313/406] net/ipv6: SKB symmetric hash should incorporate transport ports
-Date: Sun, 17 Sep 2023 21:12:47 +0200
-Message-ID: <20230917191109.565873918@linuxfoundation.org>
+	Dylan Yudaken <dylany@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Pavel Begunkov <asml.silence@gmail.com>
+Subject: [PATCH 5.10 314/406] io_uring: always lock in io_apoll_task_func
+Date: Sun, 17 Sep 2023 21:12:48 +0200
+Message-ID: <20230917191109.591186715@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,51 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Tian <qtian@vmware.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit a5e2151ff9d5852d0ababbbcaeebd9646af9c8d9 upstream.
+From: Dylan Yudaken <dylany@meta.com>
 
-__skb_get_hash_symmetric() was added to compute a symmetric hash over
-the protocol, addresses and transport ports, by commit eb70db875671
-("packet: Use symmetric hash for PACKET_FANOUT_HASH."). It uses
-flow_keys_dissector_symmetric_keys as the flow_dissector to incorporate
-IPv4 addresses, IPv6 addresses and ports. However, it should not specify
-the flag as FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL, which stops further
-dissection when an IPv6 flow label is encountered, making transport
-ports not being incorporated in such case.
+[ upstream commit c06c6c5d276707e04cedbcc55625e984922118aa ]
 
-As a consequence, the symmetric hash is based on 5-tuple for IPv4 but
-3-tuple for IPv6 when flow label is present. It caused a few problems,
-e.g. when nft symhash and openvswitch l4_sym rely on the symmetric hash
-to perform load balancing as different L4 flows between two given IPv6
-addresses would always get the same symmetric hash, leading to uneven
-traffic distribution.
+This is required for the failure case (io_req_complete_failed) and is
+missing.
 
-Removing the use of FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL makes sure the
-symmetric hash is based on 5-tuple for both IPv4 and IPv6 consistently.
+The alternative would be to only lock in the failure path, however all of
+the non-error paths in io_poll_check_events that do not do not return
+IOU_POLL_NO_ACTION end up locking anyway. The only extraneous lock would
+be for the multishot poll overflowing the CQE ring, however multishot poll
+would probably benefit from being locked as it will allow completions to
+be batched.
 
-Fixes: eb70db875671 ("packet: Use symmetric hash for PACKET_FANOUT_HASH.")
-Reported-by: Lars Ekman <uablrek@gmail.com>
-Closes: https://github.com/antrea-io/antrea/issues/5457
-Signed-off-by: Quan Tian <qtian@vmware.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+So it seems reasonable to lock always.
+
+Signed-off-by: Dylan Yudaken <dylany@meta.com>
+Link: https://lore.kernel.org/r/20221124093559.3780686-3-dylany@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/flow_dissector.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ io_uring/io_uring.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1589,8 +1589,7 @@ u32 __skb_get_hash_symmetric(const struc
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5571,6 +5571,7 @@ static void io_apoll_task_func(struct io
+ 	if (ret > 0)
+ 		return;
  
- 	memset(&keys, 0, sizeof(keys));
- 	__skb_flow_dissect(NULL, skb, &flow_keys_dissector_symmetric,
--			   &keys, NULL, 0, 0, 0,
--			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
-+			   &keys, NULL, 0, 0, 0, 0);
- 
- 	return __flow_hash_from_keys(&keys, &hashrnd);
- }
++	io_tw_lock(req->ctx, locked);
+ 	io_poll_remove_entries(req);
+ 	spin_lock(&ctx->completion_lock);
+ 	hash_del(&req->hash_node);
 
 
