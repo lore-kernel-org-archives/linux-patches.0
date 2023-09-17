@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9BC6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:39:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D567C433C8;
-	Sun, 17 Sep 2023 19:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A956FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0654C433C7;
+	Sun, 17 Sep 2023 19:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979598;
-	bh=htgHOyql5qoQ6s1BSc0EOtxstF/5bYAz0N284ZJHjGM=;
+	s=korg; t=1694979602;
+	bh=xxFXu5Y19QQiQ4svDy2pyrY7v3Yg4nKCrJVfr2LuYCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rKym0uektYua/BByLRMcwoi7Lx21k/3hFbKfWJXNF/ReLIlLQAno2Nyr2BkGBDfDD
-	 O+Miw+66ePCyMWBAk4nF91Tzhgqcd0FKS3WJB9NyXi+e4OwAPEs6pTkU5KH90qAMjE
-	 Wuz/nc2M2zQFjdlN8RHVVSrnsfs1scmewDydby6o=
+	b=mBFotWa6xs85Yg9X2lIzYQC6HvFOCWiOlkzScLbSd/wUw4WiyqyOKKoL4LqKxpnAn
+	 zOl5q1qBH0wOZ4YKn4NLM47hz1WNlMc4TBg+CJ+QyCSxVDM1EHZnLlruucFlVADfqD
+	 DPRmDqubg6BXYxa16dymjq+HthZgCfVfxeoKQdBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Zaborska <olga.zaborska@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.10 359/406] igb: Change IGB_MIN to allow set rx/tx value between 64 and 80
-Date: Sun, 17 Sep 2023 21:13:33 +0200
-Message-ID: <20230917191110.754870188@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mohamed Mahmoud <mmahmoud@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Dave Tucker <datucker@redhat.com>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Song Liu <songliubraving@fb.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 336/406] perf annotate bpf: Dont enclose non-debug code with an assert()
+Date: Sun, 17 Sep 2023 21:13:10 +0200
+Message-ID: <20230917191110.155187409@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -35,48 +41,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Zaborska <olga.zaborska@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6319685bdc8ad5310890add907b7c42f89302886 ]
+[ Upstream commit 979e9c9fc9c2a761303585e07fe2699bdd88182f ]
 
-Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
-value between 64 and 80. All igb devices can use as low as 64 descriptors.
-This change will unify igb with other drivers.
-Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
+In 616b14b47a86d880 ("perf build: Conditionally define NDEBUG") we
+started using NDEBUG=1 when DEBUG=1 isn't present, so code that is
+enclosed with assert() is not called.
 
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+In dd317df072071903 ("perf build: Make binutil libraries opt in") we
+stopped linking against binutils-devel, for licensing reasons.
+
+Recently people asked me why annotation of BPF programs wasn't working,
+i.e. this:
+
+  $ perf annotate bpf_prog_5280546344e3f45c_kfree_skb
+
+was returning:
+
+  case SYMBOL_ANNOTATE_ERRNO__NO_LIBOPCODES_FOR_BPF:
+     scnprintf(buf, buflen, "Please link with binutils's libopcode to enable BPF annotation");
+
+This was on a fedora rpm, so its new enough that I had to try to test by
+rebuilding using BUILD_NONDISTRO=1, only to get it segfaulting on me.
+
+This combination made this libopcode function not to be called:
+
+        assert(bfd_check_format(bfdf, bfd_object));
+
+Changing it to:
+
+	if (!bfd_check_format(bfdf, bfd_object))
+		abort();
+
+Made it work, looking at this "check" function made me realize it
+changes the 'bfdf' internal state, i.e. we better call it.
+
+So stop using assert() on it, just call it and abort if it fails.
+
+Probably it is better to propagate the error, etc, but it seems it is
+unlikely to fail from the usage done so far and we really need to stop
+using libopcodes, so do the quick fix above and move on.
+
+With it we have BPF annotation back working when built with
+BUILD_NONDISTRO=1:
+
+  ⬢[acme@toolbox perf-tools-next]$ perf annotate --stdio2 bpf_prog_5280546344e3f45c_kfree_skb   | head
+  No kallsyms or vmlinux with build-id 939bc71a1a51cdc434e60af93c7e734f7d5c0e7e was found
+  Samples: 12  of event 'cpu-clock:ppp', 4000 Hz, Event count (approx.): 3000000, [percent: local period]
+  bpf_prog_5280546344e3f45c_kfree_skb() bpf_prog_5280546344e3f45c_kfree_skb
+  Percent      int kfree_skb(struct trace_event_raw_kfree_skb *args) {
+                 nop
+   33.33         xchg   %ax,%ax
+                 push   %rbp
+                 mov    %rsp,%rbp
+                 sub    $0x180,%rsp
+                 push   %rbx
+                 push   %r13
+  ⬢[acme@toolbox perf-tools-next]$
+
+Fixes: 6987561c9e86eace ("perf annotate: Enable annotation of BPF programs")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mohamed Mahmoud <mmahmoud@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Dave Tucker <datucker@redhat.com>
+Cc: Derek Barbosa <debarbos@redhat.com>
+Cc: Song Liu <songliubraving@fb.com>
+Link: https://lore.kernel.org/lkml/ZMrMzoQBe0yqMek1@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/annotate.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb.h b/drivers/net/ethernet/intel/igb/igb.h
-index e6d2800a8abc5..da0e3897e6831 100644
---- a/drivers/net/ethernet/intel/igb/igb.h
-+++ b/drivers/net/ethernet/intel/igb/igb.h
-@@ -34,11 +34,11 @@ struct igb_adapter;
- /* TX/RX descriptor defines */
- #define IGB_DEFAULT_TXD		256
- #define IGB_DEFAULT_TX_WORK	128
--#define IGB_MIN_TXD		80
-+#define IGB_MIN_TXD		64
- #define IGB_MAX_TXD		4096
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index 3081894547883..c9078cee6be01 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -1718,8 +1718,11 @@ static int symbol__disassemble_bpf(struct symbol *sym,
+ 	perf_exe(tpath, sizeof(tpath));
  
- #define IGB_DEFAULT_RXD		256
--#define IGB_MIN_RXD		80
-+#define IGB_MIN_RXD		64
- #define IGB_MAX_RXD		4096
+ 	bfdf = bfd_openr(tpath, NULL);
+-	assert(bfdf);
+-	assert(bfd_check_format(bfdf, bfd_object));
++	if (bfdf == NULL)
++		abort();
++
++	if (!bfd_check_format(bfdf, bfd_object))
++		abort();
  
- #define IGB_DEFAULT_ITR		3 /* dynamic */
+ 	s = open_memstream(&buf, &buf_size);
+ 	if (!s) {
+@@ -1767,7 +1770,8 @@ static int symbol__disassemble_bpf(struct symbol *sym,
+ #else
+ 	disassemble = disassembler(bfdf);
+ #endif
+-	assert(disassemble);
++	if (disassemble == NULL)
++		abort();
+ 
+ 	fflush(s);
+ 	do {
 -- 
 2.40.1
 
