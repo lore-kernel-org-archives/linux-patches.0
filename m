@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0EC6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDFCC433CB;
-	Sun, 17 Sep 2023 20:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C966FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA366C433C8;
+	Sun, 17 Sep 2023 20:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982816;
-	bh=0fHx6HSgZ9EirNu3VcRjMpdGlejSPHIKj+yy9iC5ab4=;
+	s=korg; t=1694982820;
+	bh=dIeRbroWeJgtO7RrSCjTwnYzEqHr3LfwuRQj/D8MshE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGPcEJG3kH4cZmNDm2Ov+HMD6gdzkIy//f85LUdyj29BEh+S6BGoIwrWs+uq0kueO
-	 ZCgYDI6K/ZEwwZJa6cAlRqMObmpDng5rACJdAfOAXhGifjCYYar0R5C+jgeaZ+i1t5
-	 Lm3sfZnZfsEtJ0zLKPQvKQKhQq/GJZuVTYo5Jy5U=
+	b=gUuDj6+An9ODRDB/+zqB+5ucwAMZkkTL11ksTBOJDeoV8OgDqXR7KHCFdp48fqRDx
+	 1Opbt0ZxJokJjvGdUsBJwytZKuidHpIbb8ySG5adrcecvoB6l3jZqUZfl7bjFrXDfT
+	 qjEfMw5r4doZ4xnVfAUJipDeiOAFbhAJ6g/4T7tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 361/511] usb: typec: bus: verify partner exists in typec_altmode_attention
-Date: Sun, 17 Sep 2023 21:13:08 +0200
-Message-ID: <20230917191122.514195124@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 362/511] USB: core: Unite old scheme and new scheme descriptor reads
+Date: Sun, 17 Sep 2023 21:13:09 +0200
+Message-ID: <20230917191122.537729661@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,83 +39,328 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit f23643306430f86e2f413ee2b986e0773e79da31 upstream.
+commit 85d07c55621676d47d873d2749b88f783cd4d5a1 upstream.
 
-Some usb hubs will negotiate DisplayPort Alt mode with the device
-but will then negotiate a data role swap after entering the alt
-mode. The data role swap causes the device to unregister all alt
-modes, however the usb hub will still send Attention messages
-even after failing to reregister the Alt Mode. type_altmode_attention
-currently does not verify whether or not a device's altmode partner
-exists, which results in a NULL pointer error when dereferencing
-the typec_altmode and typec_altmode_ops belonging to the altmode
-partner.
+In preparation for reworking the usb_get_device_descriptor() routine,
+it is desirable to unite the two different code paths responsible for
+initially determining endpoint 0's maximum packet size in a newly
+discovered USB device.  Making this determination presents a
+chicken-and-egg sort of problem, in that the only way to learn the
+maxpacket value is to get it from the device descriptor retrieved from
+the device, but communicating with the device to retrieve a descriptor
+requires us to know beforehand the ep0 maxpacket size.
 
-Verify the presence of a device's altmode partner before sending
-the Attention message to the Alt Mode driver.
+In practice this problem is solved in two different ways, referred to
+in hub.c as the "old scheme" and the "new scheme".  The old scheme
+(which is the approach recommended by the USB-2 spec) involves asking
+the device to send just the first eight bytes of its device
+descriptor.  Such a transfer uses packets containing no more than
+eight bytes each, and every USB device must have an ep0 maxpacket size
+>= 8, so this should succeed.  Since the bMaxPacketSize0 field of the
+device descriptor lies within the first eight bytes, this is all we
+need.
 
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230814180559.923475-1-rdbabiera@google.com
+The new scheme is an imitation of the technique used in an early
+Windows USB implementation, giving it the happy advantage of working
+with a wide variety of devices (some of them at the time would not
+work with the old scheme, although that's probably less true now).  It
+involves making an initial guess of the ep0 maxpacket size, asking the
+device to send up to 64 bytes worth of its device descriptor (which is
+only 18 bytes long), and then resetting the device to clear any error
+condition that might have resulted from the guess being wrong.  The
+initial guess is determined by the connection speed; it should be
+correct in all cases other than full speed, for which the allowed
+values are 8, 16, 32, and 64 (in this case the initial guess is 64).
+
+The reason for this patch is that the old- and new-scheme parts of
+hub_port_init() use different code paths, one involving
+usb_get_device_descriptor() and one not, for their initial reads of
+the device descriptor.  Since these reads have essentially the same
+purpose and are made under essentially the same circumstances, this is
+illogical.  It makes more sense to have both of them use a common
+subroutine.
+
+This subroutine does basically what the new scheme's code did, because
+that approach is more general than the one used by the old scheme.  It
+only needs to know how many bytes to transfer and whether or not it is
+being called for the first iteration of a retry loop (in case of
+certain time-out errors).  There are two main differences from the
+former code:
+
+	We initialize the bDescriptorType field of the transfer buffer
+	to 0 before performing the transfer, to avoid possibly
+	accessing an uninitialized value afterward.
+
+	We read the device descriptor into a temporary buffer rather
+	than storing it directly into udev->descriptor, which the old
+	scheme implementation used to do.
+
+Since the whole point of this first read of the device descriptor is
+to determine the bMaxPacketSize0 value, that is what the new routine
+returns (or an error code).  The value is stored in a local variable
+rather than in udev->descriptor.  As a side effect, this necessitates
+moving a section of code that checks the bcdUSB field for SuperSpeed
+devices until after the full device descriptor has been retrieved.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/495cb5d4-f956-4f4a-a875-1e67e9489510@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/bus.c           |   12 ++++++++++--
- drivers/usb/typec/tcpm/tcpm.c     |    3 ++-
- include/linux/usb/typec_altmode.h |    2 +-
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/core/hub.c |  173 ++++++++++++++++++++++++++-----------------------
+ 1 file changed, 94 insertions(+), 79 deletions(-)
 
---- a/drivers/usb/typec/bus.c
-+++ b/drivers/usb/typec/bus.c
-@@ -154,12 +154,20 @@ EXPORT_SYMBOL_GPL(typec_altmode_exit);
-  *
-  * Notifies the partner of @adev about Attention command.
-  */
--void typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
-+int typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
- {
--	struct typec_altmode *pdev = &to_altmode(adev)->partner->adev;
-+	struct altmode *partner = to_altmode(adev)->partner;
-+	struct typec_altmode *pdev;
-+
-+	if (!partner)
-+		return -ENODEV;
-+
-+	pdev = &partner->adev;
- 
- 	if (pdev->ops && pdev->ops->attention)
- 		pdev->ops->attention(pdev, vdo);
-+
-+	return 0;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -4666,6 +4666,67 @@ static int hub_enable_device(struct usb_
+ 	return hcd->driver->enable_device(hcd, udev);
  }
- EXPORT_SYMBOL_GPL(typec_altmode_attention);
  
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1863,7 +1863,8 @@ static void tcpm_handle_vdm_request(stru
++/*
++ * Get the bMaxPacketSize0 value during initialization by reading the
++ * device's device descriptor.  Since we don't already know this value,
++ * the transfer is unsafe and it ignores I/O errors, only testing for
++ * reasonable received values.
++ *
++ * For "old scheme" initialization, size will be 8 so we read just the
++ * start of the device descriptor, which should work okay regardless of
++ * the actual bMaxPacketSize0 value.  For "new scheme" initialization,
++ * size will be 64 (and buf will point to a sufficiently large buffer),
++ * which might not be kosher according to the USB spec but it's what
++ * Windows does and what many devices expect.
++ *
++ * Returns: bMaxPacketSize0 or a negative error code.
++ */
++static int get_bMaxPacketSize0(struct usb_device *udev,
++		struct usb_device_descriptor *buf, int size, bool first_time)
++{
++	int i, rc;
++
++	/*
++	 * Retry on all errors; some devices are flakey.
++	 * 255 is for WUSB devices, we actually need to use
++	 * 512 (WUSB1.0[4.8.1]).
++	 */
++	for (i = 0; i < GET_MAXPACKET0_TRIES; ++i) {
++		/* Start with invalid values in case the transfer fails */
++		buf->bDescriptorType = buf->bMaxPacketSize0 = 0;
++		rc = usb_control_msg(udev, usb_rcvaddr0pipe(),
++				USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
++				USB_DT_DEVICE << 8, 0,
++				buf, size,
++				initial_descriptor_timeout);
++		switch (buf->bMaxPacketSize0) {
++		case 8: case 16: case 32: case 64: case 255:
++			if (buf->bDescriptorType == USB_DT_DEVICE) {
++				rc = buf->bMaxPacketSize0;
++				break;
++			}
++			fallthrough;
++		default:
++			if (rc >= 0)
++				rc = -EPROTO;
++			break;
++		}
++
++		/*
++		 * Some devices time out if they are powered on
++		 * when already connected. They need a second
++		 * reset, so return early. But only on the first
++		 * attempt, lest we get into a time-out/reset loop.
++		 */
++		if (rc > 0 || (rc == -ETIMEDOUT && first_time &&
++				udev->speed > USB_SPEED_FULL))
++			break;
++	}
++	return rc;
++}
++
++#define GET_DESCRIPTOR_BUFSIZE	64
++
+ /* Reset device, (re)assign address, get device descriptor.
+  * Device connection must be stable, no more debouncing needed.
+  * Returns device in USB_STATE_ADDRESS, except on error.
+@@ -4690,6 +4751,12 @@ hub_port_init(struct usb_hub *hub, struc
+ 	int			devnum = udev->devnum;
+ 	const char		*driver_name;
+ 	bool			do_new_scheme;
++	int			maxp0;
++	struct usb_device_descriptor	*buf;
++
++	buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
++	if (!buf)
++		return -ENOMEM;
+ 
+ 	/* root hub ports have a slightly longer reset period
+ 	 * (from USB 2.0 spec, section 7.1.7.5)
+@@ -4804,9 +4871,6 @@ hub_port_init(struct usb_hub *hub, struc
+ 
+ 	for (retries = 0; retries < GET_DESCRIPTOR_TRIES; (++retries, msleep(100))) {
+ 		if (do_new_scheme) {
+-			struct usb_device_descriptor *buf;
+-			int r = 0;
+-
+ 			retval = hub_enable_device(udev);
+ 			if (retval < 0) {
+ 				dev_err(&udev->dev,
+@@ -4815,52 +4879,8 @@ hub_port_init(struct usb_hub *hub, struc
+ 				goto fail;
  			}
- 			break;
- 		case ADEV_ATTENTION:
--			typec_altmode_attention(adev, p[1]);
-+			if (typec_altmode_attention(adev, p[1]))
-+				tcpm_log(port, "typec_altmode_attention no port partner altmode");
- 			break;
- 		}
- 	}
---- a/include/linux/usb/typec_altmode.h
-+++ b/include/linux/usb/typec_altmode.h
-@@ -67,7 +67,7 @@ struct typec_altmode_ops {
  
- int typec_altmode_enter(struct typec_altmode *altmode, u32 *vdo);
- int typec_altmode_exit(struct typec_altmode *altmode);
--void typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
-+int typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
- int typec_altmode_vdm(struct typec_altmode *altmode,
- 		      const u32 header, const u32 *vdo, int count);
- int typec_altmode_notify(struct typec_altmode *altmode, unsigned long conf,
+-#define GET_DESCRIPTOR_BUFSIZE	64
+-			buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
+-			if (!buf) {
+-				retval = -ENOMEM;
+-				continue;
+-			}
+-
+-			/* Retry on all errors; some devices are flakey.
+-			 * 255 is for WUSB devices, we actually need to use
+-			 * 512 (WUSB1.0[4.8.1]).
+-			 */
+-			for (operations = 0; operations < GET_MAXPACKET0_TRIES;
+-					++operations) {
+-				buf->bMaxPacketSize0 = 0;
+-				r = usb_control_msg(udev, usb_rcvaddr0pipe(),
+-					USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
+-					USB_DT_DEVICE << 8, 0,
+-					buf, GET_DESCRIPTOR_BUFSIZE,
+-					initial_descriptor_timeout);
+-				switch (buf->bMaxPacketSize0) {
+-				case 8: case 16: case 32: case 64: case 255:
+-					if (buf->bDescriptorType ==
+-							USB_DT_DEVICE) {
+-						r = 0;
+-						break;
+-					}
+-					fallthrough;
+-				default:
+-					if (r == 0)
+-						r = -EPROTO;
+-					break;
+-				}
+-				/*
+-				 * Some devices time out if they are powered on
+-				 * when already connected. They need a second
+-				 * reset. But only on the first attempt,
+-				 * lest we get into a time out/reset loop
+-				 */
+-				if (r == 0 || (r == -ETIMEDOUT &&
+-						retries == 0 &&
+-						udev->speed > USB_SPEED_FULL))
+-					break;
+-			}
+-			udev->descriptor.bMaxPacketSize0 =
+-					buf->bMaxPacketSize0;
+-			kfree(buf);
++			maxp0 = get_bMaxPacketSize0(udev, buf,
++					GET_DESCRIPTOR_BUFSIZE, retries == 0);
+ 
+ 			retval = hub_port_reset(hub, port1, udev, delay, false);
+ 			if (retval < 0)		/* error or disconnect */
+@@ -4871,14 +4891,13 @@ hub_port_init(struct usb_hub *hub, struc
+ 				retval = -ENODEV;
+ 				goto fail;
+ 			}
+-			if (r) {
+-				if (r != -ENODEV)
++			if (maxp0 < 0) {
++				if (maxp0 != -ENODEV)
+ 					dev_err(&udev->dev, "device descriptor read/64, error %d\n",
+-							r);
+-				retval = -EMSGSIZE;
++							maxp0);
++				retval = maxp0;
+ 				continue;
+ 			}
+-#undef GET_DESCRIPTOR_BUFSIZE
+ 		}
+ 
+ 		/*
+@@ -4924,19 +4943,17 @@ hub_port_init(struct usb_hub *hub, struc
+ 				break;
+ 		}
+ 
+-		retval = usb_get_device_descriptor(udev, 8);
+-		if (retval < 8) {
++		/* !do_new_scheme || wusb */
++		maxp0 = get_bMaxPacketSize0(udev, buf, 8, retries == 0);
++		if (maxp0 < 0) {
++			retval = maxp0;
+ 			if (retval != -ENODEV)
+ 				dev_err(&udev->dev,
+ 					"device descriptor read/8, error %d\n",
+ 					retval);
+-			if (retval >= 0)
+-				retval = -EMSGSIZE;
+ 		} else {
+ 			u32 delay;
+ 
+-			retval = 0;
+-
+ 			delay = udev->parent->hub_delay;
+ 			udev->hub_delay = min_t(u32, delay,
+ 						USB_TP_TRANSMISSION_DELAY_MAX);
+@@ -4953,27 +4970,10 @@ hub_port_init(struct usb_hub *hub, struc
+ 	if (retval)
+ 		goto fail;
+ 
+-	/*
+-	 * Some superspeed devices have finished the link training process
+-	 * and attached to a superspeed hub port, but the device descriptor
+-	 * got from those devices show they aren't superspeed devices. Warm
+-	 * reset the port attached by the devices can fix them.
+-	 */
+-	if ((udev->speed >= USB_SPEED_SUPER) &&
+-			(le16_to_cpu(udev->descriptor.bcdUSB) < 0x0300)) {
+-		dev_err(&udev->dev, "got a wrong device descriptor, "
+-				"warm reset device\n");
+-		hub_port_reset(hub, port1, udev,
+-				HUB_BH_RESET_TIME, true);
+-		retval = -EINVAL;
+-		goto fail;
+-	}
+-
+-	if (udev->descriptor.bMaxPacketSize0 == 0xff ||
+-			udev->speed >= USB_SPEED_SUPER)
++	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
+ 		i = 512;
+ 	else
+-		i = udev->descriptor.bMaxPacketSize0;
++		i = maxp0;
+ 	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
+ 		if (udev->speed == USB_SPEED_LOW ||
+ 				!(i == 8 || i == 16 || i == 32 || i == 64)) {
+@@ -4999,6 +4999,20 @@ hub_port_init(struct usb_hub *hub, struc
+ 		goto fail;
+ 	}
+ 
++	/*
++	 * Some superspeed devices have finished the link training process
++	 * and attached to a superspeed hub port, but the device descriptor
++	 * got from those devices show they aren't superspeed devices. Warm
++	 * reset the port attached by the devices can fix them.
++	 */
++	if ((udev->speed >= USB_SPEED_SUPER) &&
++			(le16_to_cpu(udev->descriptor.bcdUSB) < 0x0300)) {
++		dev_err(&udev->dev, "got a wrong device descriptor, warm reset device\n");
++		hub_port_reset(hub, port1, udev, HUB_BH_RESET_TIME, true);
++		retval = -EINVAL;
++		goto fail;
++	}
++
+ 	usb_detect_quirks(udev);
+ 
+ 	if (udev->wusb == 0 && le16_to_cpu(udev->descriptor.bcdUSB) >= 0x0201) {
+@@ -5019,6 +5033,7 @@ fail:
+ 		hub_port_disable(hub, port1, 0);
+ 		update_devnum(udev, devnum);	/* for disconnect processing */
+ 	}
++	kfree(buf);
+ 	return retval;
+ }
+ 
 
 
