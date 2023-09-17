@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE6353B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:31:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD851C433CA;
-	Sun, 17 Sep 2023 19:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6FC53B9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6B4C433C7;
+	Sun, 17 Sep 2023 19:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979109;
-	bh=vjGAaPlODyblqKv7O6BAoBVTNOFavrad1Urj/sZDz7A=;
+	s=korg; t=1694979112;
+	bh=OQ+FeUF2Saa8sHnhrclbPx3vin+ANXEnoKCzWpC5XEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB2I6ZpNdREaQZawosT2F/yzgMbV+1EGLFp0I7E10AhRp/xqn4/2OFH81u5xTDpkV
-	 E4XsKrWx+dS12MRU/mAyp/Qbj2kHjNmGQxZKjiY1e03pXL1UTXKgRux5xC+PMtm2Ch
-	 os0yIMzV42IEJjJ1P1W/jRcbOrR20qfe9JUJETiY=
+	b=busEgfPZbbbORikPauZGfrN4b/RkwuqfiAcXCCuqG/Q6MLYTOZMBrSksmpQMAyRBH
+	 6lpyh1H6s9p2OfjZj7gN1ac2YvsSvX6dgvUoGaP48+9j615ETTMIk7AldANW+Z2Rii
+	 Adxm9Ho8/N8FBY1s5c4gAv3GlRo5IQ/8+vZXbSC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 216/406] usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()
-Date: Sun, 17 Sep 2023 21:11:10 +0200
-Message-ID: <20230917191106.888334981@linuxfoundation.org>
+Subject: [PATCH 5.10 217/406] scsi: RDMA/srp: Fix residual handling
+Date: Sun, 17 Sep 2023 21:11:11 +0200
+Message-ID: <20230917191106.913950979@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,48 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5eda42aebb7668b4dcff025cd3ccb0d3d7c53da6 ]
+[ Upstream commit 89e637c19b2441aabc8dbf22a8745b932fd6996e ]
 
-The function mxs_phy_is_otg_host() will return true if OTG_ID_VALUE is
-0 at USBPHY_CTRL register. However, OTG_ID_VALUE will not reflect the real
-state if the ID pin is float, such as Host-only or Type-C cases. The value
-of OTG_ID_VALUE is always 1 which means device mode.
-This patch will fix the issue by judging the current mode based on
-last_event. The controller will update last_event in time.
+Although the code for residual handling in the SRP initiator follows the
+SCSI documentation, that documentation has never been correct. Because
+scsi_finish_command() starts from the data buffer length and subtracts the
+residual, scsi_set_resid() must not be called if a residual overflow
+occurs. Hence remove the scsi_set_resid() calls from the SRP initiator if a
+residual overflow occurrs.
 
-Fixes: 7b09e67639d6 ("usb: phy: mxs: refine mxs_phy_disconnect_line")
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20230627110353.1879477-2-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9237f04e12cc ("scsi: core: Fix scsi_get/set_resid() interface")
+Fixes: e714531a349f ("IB/srp: Fix residual handling")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230724200843.3376570-3-bvanassche@acm.org
+Acked-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-mxs-usb.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/usb/phy/phy-mxs-usb.c b/drivers/usb/phy/phy-mxs-usb.c
-index 67b39dc62b373..70e23334b27f9 100644
---- a/drivers/usb/phy/phy-mxs-usb.c
-+++ b/drivers/usb/phy/phy-mxs-usb.c
-@@ -388,14 +388,8 @@ static void __mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool disconnect)
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index adbd56af379ff..9b9b9557ae746 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -1990,12 +1990,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
  
- static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
- {
--	void __iomem *base = mxs_phy->phy.io_priv;
--	u32 phyctrl = readl(base + HW_USBPHY_CTRL);
--
--	if (IS_ENABLED(CONFIG_USB_OTG) &&
--			!(phyctrl & BM_USBPHY_CTRL_OTG_ID_VALUE))
--		return true;
--
--	return false;
-+	return IS_ENABLED(CONFIG_USB_OTG) &&
-+		mxs_phy->phy.last_event == USB_EVENT_ID;
- }
+ 		if (unlikely(rsp->flags & SRP_RSP_FLAG_DIUNDER))
+ 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_in_res_cnt));
+-		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DIOVER))
+-			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_in_res_cnt));
+ 		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOUNDER))
+ 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_out_res_cnt));
+-		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOOVER))
+-			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_out_res_cnt));
  
- static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
+ 		srp_free_req(ch, req, scmnd,
+ 			     be32_to_cpu(rsp->req_lim_delta));
 -- 
 2.40.1
 
