@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3816FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2438C433C8;
-	Sun, 17 Sep 2023 19:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5B6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1A3C433C7;
+	Sun, 17 Sep 2023 19:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979984;
-	bh=88b68nkyixpAw23If3mTEfs30JLyJSM9vPYISB9riXM=;
+	s=korg; t=1694979987;
+	bh=2b8h522Iq/j8vlRMIZ1+/knXYBytK5wCLci1C44bsF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/IUJPuAroxPbyz0XCrw90b99/DcxHk58tEjcGarBC6vM0Cp4Ab2XArdB4M+3XcWd
-	 O9mmP7kjxFz0ge1DyTXnlFTBLM+dxT9Ys9V+dEzmMy7v4wksJKKvlxpqt9nB+W+Gtf
-	 h/TgkwDhpGPVjNc36wDlPwPvkOIqSE/upa7opq98=
+	b=sK57dlKPqEhvypnr9ZB4RkqMEdLVhpZyY4N+73+uy8Lz8naHh5XayH6UkIcs13GZB
+	 EhYlNnlmmz+oTbMCQq5BNZNFfnKnI7euCo5Qe11Q/zyHHZQwrRgMqlG+ghPAOlQIsx
+	 3wMA5vi6OgtWPJfSSRQ2NetUUzqN8Il9YAtYK+24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 062/285] mailbox: qcom-ipcc: fix incorrect num_chans counting
-Date: Sun, 17 Sep 2023 21:11:02 +0200
-Message-ID: <20230917191053.850913867@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 036/285] mm: hugetlb_vmemmap: fix a race between vmemmap pmd split
+Date: Sun, 17 Sep 2023 21:10:36 +0200
+Message-ID: <20230917191052.917825850@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,39 +40,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit a493208079e299aefdc15169dc80e3da3ebb718a ]
+commit 3ce2c24cb68f228590a053d6058a5901cd31af61 upstream.
 
-Breaking out early when a match is found leads to an incorrect num_chans
-value when more than one ipcc mailbox channel is used by the same device.
+The local variable @page in __split_vmemmap_huge_pmd() to obtain a pmd
+page without holding page_table_lock may possiblely get the page table
+page instead of a huge pmd page.
 
-Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The effect may be in set_pte_at() since we may pass an invalid page
+struct, if set_pte_at() wants to access the page struct (e.g.
+CONFIG_PAGE_TABLE_CHECK is enabled), it may crash the kernel.
+
+So fix it.  And inline __split_vmemmap_huge_pmd() since it only has one
+user.
+
+Link: https://lkml.kernel.org/r/20230707033859.16148-1-songmuchun@bytedance.com
+Fixes: d8d55f5616cf ("mm: sparsemem: use page table lock to protect kernel pmd operations")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/hugetlb_vmemmap.c |   34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 7e27acf6c0cca..f597a1bd56847 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -227,10 +227,8 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
- 			ret = of_parse_phandle_with_args(client_dn, "mboxes",
- 						"#mbox-cells", j, &curr_ph);
- 			of_node_put(curr_ph.np);
--			if (!ret && curr_ph.np == controller_dn) {
-+			if (!ret && curr_ph.np == controller_dn)
- 				ipcc->num_chans++;
--				break;
--			}
- 		}
- 	}
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -36,14 +36,22 @@ struct vmemmap_remap_walk {
+ 	struct list_head	*vmemmap_pages;
+ };
  
--- 
-2.40.1
-
+-static int __split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
++static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
+ {
+ 	pmd_t __pmd;
+ 	int i;
+ 	unsigned long addr = start;
+-	struct page *page = pmd_page(*pmd);
+-	pte_t *pgtable = pte_alloc_one_kernel(&init_mm);
++	struct page *head;
++	pte_t *pgtable;
++
++	spin_lock(&init_mm.page_table_lock);
++	head = pmd_leaf(*pmd) ? pmd_page(*pmd) : NULL;
++	spin_unlock(&init_mm.page_table_lock);
+ 
++	if (!head)
++		return 0;
++
++	pgtable = pte_alloc_one_kernel(&init_mm);
+ 	if (!pgtable)
+ 		return -ENOMEM;
+ 
+@@ -53,7 +61,7 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 		pte_t entry, *pte;
+ 		pgprot_t pgprot = PAGE_KERNEL;
+ 
+-		entry = mk_pte(page + i, pgprot);
++		entry = mk_pte(head + i, pgprot);
+ 		pte = pte_offset_kernel(&__pmd, addr);
+ 		set_pte_at(&init_mm, addr, pte, entry);
+ 	}
+@@ -65,8 +73,8 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 		 * be treated as indepdenent small pages (as they can be freed
+ 		 * individually).
+ 		 */
+-		if (!PageReserved(page))
+-			split_page(page, get_order(PMD_SIZE));
++		if (!PageReserved(head))
++			split_page(head, get_order(PMD_SIZE));
+ 
+ 		/* Make pte visible before pmd. See comment in pmd_install(). */
+ 		smp_wmb();
+@@ -80,20 +88,6 @@ static int __split_vmemmap_huge_pmd(pmd_
+ 	return 0;
+ }
+ 
+-static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
+-{
+-	int leaf;
+-
+-	spin_lock(&init_mm.page_table_lock);
+-	leaf = pmd_leaf(*pmd);
+-	spin_unlock(&init_mm.page_table_lock);
+-
+-	if (!leaf)
+-		return 0;
+-
+-	return __split_vmemmap_huge_pmd(pmd, start);
+-}
+-
+ static void vmemmap_pte_range(pmd_t *pmd, unsigned long addr,
+ 			      unsigned long end,
+ 			      struct vmemmap_remap_walk *walk)
 
 
