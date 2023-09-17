@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED970746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EC0C433CA;
-	Sun, 17 Sep 2023 20:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732B4746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE67C433C9;
+	Sun, 17 Sep 2023 20:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983133;
-	bh=moRk88YUu6uK9aPCDL9/S4gDJr9F8E2HPP8Zm2wGP1E=;
+	s=korg; t=1694983137;
+	bh=HLuNdYq3Aq63MoFe2+hUVbV4mDH+DzJbxPC22DS3b4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcPKcKgZDZzKe4KXP3F9NsjSl7G9vQMT4p6MCdnufXbCvUo18zdnDhE/T0RpWmBpR
-	 no3wpjYR3MaLmxfu26Nr1kbpe+Ho7pKcmYZKEyfMidzaJZPpgi2nJTIufdZ8iqz3TM
-	 ki5MN+WrXcMQLwNDFLu3mK/yU35f4OSDHEQB4IlI=
+	b=rnmzYK7hsIorHJAMGpHzkx2SlAimOEqZDXj+iwqMl4tbMYGHrJ8Rm9VGFEM7lCO+n
+	 BJuysCBccMGfkM3+FufgFLmpT6yZXCcAo9Zp7QYR2SD+ilbl/5jcwDV93bHYdItitq
+	 1i9Nj3/1kAom9eOby5oI6GR3qtSXnErX2WQWvp1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 453/511] net: dsa: sja1105: fix -ENOSPC when replacing the same tc-cbs too many times
-Date: Sun, 17 Sep 2023 21:14:40 +0200
-Message-ID: <20230917191124.698259110@linuxfoundation.org>
+Subject: [PATCH 5.15 454/511] net: dsa: sja1105: complete tc-cbs offload support on SJA1110
+Date: Sun, 17 Sep 2023 21:14:41 +0200
+Message-ID: <20230917191124.721530724@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,76 +42,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 894cafc5c62ccced758077bd4e970dc714c42637 ]
+[ Upstream commit 180a7419fe4adc8d9c8e0ef0fd17bcdd0cf78acd ]
 
-After running command [2] too many times in a row:
+The blamed commit left this delta behind:
 
-[1] $ tc qdisc add dev sw2p0 root handle 1: mqprio num_tc 8 \
-	map 0 1 2 3 4 5 6 7 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
-[2] $ tc qdisc replace dev sw2p0 parent 1:1 cbs offload 1 \
-	idleslope 120000 sendslope -880000 locredit -1320 hicredit 180
+  struct sja1105_cbs_entry {
+ -	u64 port;
+ -	u64 prio;
+ +	u64 port; /* Not used for SJA1110 */
+ +	u64 prio; /* Not used for SJA1110 */
+  	u64 credit_hi;
+  	u64 credit_lo;
+  	u64 send_slope;
+  	u64 idle_slope;
+  };
 
-(aka more than priv->info->num_cbs_shapers times)
+but did not actually implement tc-cbs offload fully for the new switch.
+The offload is accepted, but it doesn't work.
 
-we start seeing the following error message:
+The difference compared to earlier switch generations is that now, the
+table of CBS shapers is sparse, because there are many more shapers, so
+the mapping between a {port, prio} and a table index is static, rather
+than requiring us to store the port and prio into the sja1105_cbs_entry.
 
-Error: Specified device failed to setup cbs hardware offload.
+So, the problem is that the code programs the CBS shaper parameters at a
+dynamic table index which is incorrect.
 
-This comes from the fact that ndo_setup_tc(TC_SETUP_QDISC_CBS) presents
-the same API for the qdisc create and replace cases, and the sja1105
-driver fails to distinguish between the 2. Thus, it always thinks that
-it must allocate the same shaper for a {port, queue} pair, when it may
-instead have to replace an existing one.
+All that needs to be done for SJA1110 CBS shapers to work is to bypass
+the logic which allocates shapers in a dense manner, as for SJA1105, and
+use the fixed mapping instead.
 
-Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
+Fixes: 3e77e59bf8cf ("net: dsa: sja1105: add support for the SJA1110 switch family")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/net/dsa/sja1105/sja1105.h      |  2 ++
+ drivers/net/dsa/sja1105/sja1105_main.c | 13 +++++++++++++
+ drivers/net/dsa/sja1105/sja1105_spi.c  |  4 ++++
+ 3 files changed, 19 insertions(+)
 
+diff --git a/drivers/net/dsa/sja1105/sja1105.h b/drivers/net/dsa/sja1105/sja1105.h
+index 5e5d24e7c02b2..548d585256fbb 100644
+--- a/drivers/net/dsa/sja1105/sja1105.h
++++ b/drivers/net/dsa/sja1105/sja1105.h
+@@ -111,6 +111,8 @@ struct sja1105_info {
+ 	int max_frame_mem;
+ 	int num_ports;
+ 	bool multiple_cascade_ports;
++	/* Every {port, TXQ} has its own CBS shaper */
++	bool fixed_cbs_mapping;
+ 	enum dsa_tag_protocol tag_proto;
+ 	const struct sja1105_dynamic_table_ops *dyn_ops;
+ 	const struct sja1105_table_ops *static_ops;
 diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 5f70773fa8201..9176bd78b3d61 100644
+index 9176bd78b3d61..d5600d0d6ef10 100644
 --- a/drivers/net/dsa/sja1105/sja1105_main.c
 +++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2015,6 +2015,18 @@ static void sja1105_bridge_leave(struct dsa_switch *ds, int port,
+@@ -2014,12 +2014,22 @@ static void sja1105_bridge_leave(struct dsa_switch *ds, int port,
+ }
  
  #define BYTES_PER_KBIT (1000LL / 8)
++/* Port 0 (the uC port) does not have CBS shapers */
++#define SJA1110_FIXED_CBS(port, prio) ((((port) - 1) * SJA1105_NUM_TC) + (prio))
  
-+static int sja1105_find_cbs_shaper(struct sja1105_private *priv,
-+				   int port, int prio)
-+{
-+	int i;
-+
-+	for (i = 0; i < priv->info->num_cbs_shapers; i++)
-+		if (priv->cbs[i].port == port && priv->cbs[i].prio == prio)
-+			return i;
-+
-+	return -1;
-+}
-+
- static int sja1105_find_unused_cbs_shaper(struct sja1105_private *priv)
+ static int sja1105_find_cbs_shaper(struct sja1105_private *priv,
+ 				   int port, int prio)
  {
  	int i;
-@@ -2055,9 +2067,14 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- 	if (!offload->enable)
- 		return sja1105_delete_cbs_shaper(priv, port, offload->queue);
  
--	index = sja1105_find_unused_cbs_shaper(priv);
--	if (index < 0)
--		return -ENOSPC;
-+	/* The user may be replacing an existing shaper */
-+	index = sja1105_find_cbs_shaper(priv, port, offload->queue);
-+	if (index < 0) {
-+		/* That isn't the case - see if we can allocate a new one */
-+		index = sja1105_find_unused_cbs_shaper(priv);
-+		if (index < 0)
-+			return -ENOSPC;
++	if (priv->info->fixed_cbs_mapping) {
++		i = SJA1110_FIXED_CBS(port, prio);
++		if (i >= 0 && i < priv->info->num_cbs_shapers)
++			return i;
++
++		return -1;
 +	}
++
+ 	for (i = 0; i < priv->info->num_cbs_shapers; i++)
+ 		if (priv->cbs[i].port == port && priv->cbs[i].prio == prio)
+ 			return i;
+@@ -2031,6 +2041,9 @@ static int sja1105_find_unused_cbs_shaper(struct sja1105_private *priv)
+ {
+ 	int i;
  
- 	cbs = &priv->cbs[index];
- 	cbs->port = port;
++	if (priv->info->fixed_cbs_mapping)
++		return -1;
++
+ 	for (i = 0; i < priv->info->num_cbs_shapers; i++)
+ 		if (!priv->cbs[i].idle_slope && !priv->cbs[i].send_slope)
+ 			return i;
+diff --git a/drivers/net/dsa/sja1105/sja1105_spi.c b/drivers/net/dsa/sja1105/sja1105_spi.c
+index d3c9ad6d39d46..e6b61aef4127c 100644
+--- a/drivers/net/dsa/sja1105/sja1105_spi.c
++++ b/drivers/net/dsa/sja1105/sja1105_spi.c
+@@ -781,6 +781,7 @@ const struct sja1105_info sja1110a_info = {
+ 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
+ 	.can_limit_mcast_flood	= true,
+ 	.multiple_cascade_ports	= true,
++	.fixed_cbs_mapping	= true,
+ 	.ptp_ts_bits		= 32,
+ 	.ptpegr_ts_bytes	= 8,
+ 	.max_frame_mem		= SJA1110_MAX_FRAME_MEMORY,
+@@ -831,6 +832,7 @@ const struct sja1105_info sja1110b_info = {
+ 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
+ 	.can_limit_mcast_flood	= true,
+ 	.multiple_cascade_ports	= true,
++	.fixed_cbs_mapping	= true,
+ 	.ptp_ts_bits		= 32,
+ 	.ptpegr_ts_bytes	= 8,
+ 	.max_frame_mem		= SJA1110_MAX_FRAME_MEMORY,
+@@ -881,6 +883,7 @@ const struct sja1105_info sja1110c_info = {
+ 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
+ 	.can_limit_mcast_flood	= true,
+ 	.multiple_cascade_ports	= true,
++	.fixed_cbs_mapping	= true,
+ 	.ptp_ts_bits		= 32,
+ 	.ptpegr_ts_bytes	= 8,
+ 	.max_frame_mem		= SJA1110_MAX_FRAME_MEMORY,
+@@ -931,6 +934,7 @@ const struct sja1105_info sja1110d_info = {
+ 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
+ 	.can_limit_mcast_flood	= true,
+ 	.multiple_cascade_ports	= true,
++	.fixed_cbs_mapping	= true,
+ 	.ptp_ts_bits		= 32,
+ 	.ptpegr_ts_bytes	= 8,
+ 	.max_frame_mem		= SJA1110_MAX_FRAME_MEMORY,
 -- 
 2.40.1
 
