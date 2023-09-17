@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68427461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377CCC433C9;
-	Sun, 17 Sep 2023 20:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B00D7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D92BC433C8;
+	Sun, 17 Sep 2023 20:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980811;
-	bh=dnMjCxVoApzZht27rE1+E2r/nbjiXWMkONT2clMG2Uw=;
+	s=korg; t=1694980814;
+	bh=yRo4v57t/KoTVuvefG0/CYzYGYq5DDdyUKDC+QSH6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUc/n5qb3YPinB117pPSEqL7l7zmIHbwTGiDHosWoMffORf/58nmEhFzo1Dl194My
-	 1qKrtIOkOtN1Vsy9EdV5pGouFBe38rfCg2tqxVWJoBBY4eRTHKhZq3u3WIoZAdH7aW
-	 z9H0Fm9wADEocpU4Huc0e0vid/Gd112x5E42f6g4=
+	b=F84/wMjgfoofjc52w4lrNBOH4Sba7qiAsl7XBlClahEp7lJswMeFkNYm4aCjP1hQa
+	 /rzTwZOhJaxyWvBxdhnRRMFJI91tBPh7JSr7JIWVoB9nHdP8Xic7hMWzPlpp/CTpA+
+	 s4W2afItYylHBafwuOzGmPmpHHH4Ti/YM6OIyMos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 015/219] scsi: qla2xxx: Fix command flush during TMF
-Date: Sun, 17 Sep 2023 21:12:22 +0200
-Message-ID: <20230917191041.538062998@linuxfoundation.org>
+Subject: [PATCH 6.1 016/219] scsi: qla2xxx: Fix erroneous link up failure
+Date: Sun, 17 Sep 2023 21:12:23 +0200
+Message-ID: <20230917191041.571446795@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -43,190 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Quinn Tran <qutran@marvell.com>
 
-commit da7c21b72aa86e990af5f73bce6590b8d8d148d0 upstream.
+commit 5b51f35d127e7bef55fa869d2465e2bca4636454 upstream.
 
-For each TMF request, driver iterates through each qpair and flushes
-commands associated to the TMF. At the end of the qpair flush, a Marker is
-used to complete the flush transaction. This process was repeated for each
-qpair. The multiple flush and marker for this TMF request seems to cause
-confusion for FW.
+Link up failure occurred where driver failed to see certain events from FW
+indicating link up (AEN 8011) and fabric login completion (AEN 8014).
+Without these 2 events, driver would not proceed forward to scan the
+fabric. The cause of this is due to delay in the receive of interrupt for
+Mailbox 60 that causes qla to set the fw_started flag late.  The late
+setting of this flag causes other interrupts to be dropped.  These dropped
+interrupts happen to be the link up (AEN 8011) and fabric login completion
+(AEN 8014).
 
-Instead, 1 flush is sent to FW. Driver would wait for FW to go through all
-the I/Os on each qpair to be read then return. Driver then closes out the
-transaction with a Marker.
+Set fw_started flag early to prevent interrupts being dropped.
 
 Cc: stable@vger.kernel.org
-Fixes: d90171dd0da5 ("scsi: qla2xxx: Multi-que support for TMF")
 Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-5-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230714070104.40052-6-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |   74 +++++++++++++++++++++-------------------
- drivers/scsi/qla2xxx/qla_iocb.c |    1 
- drivers/scsi/qla2xxx/qla_os.c   |    9 ++--
- 3 files changed, 45 insertions(+), 39 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |    3 ++-
+ drivers/scsi/qla2xxx/qla_isr.c  |    6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
 --- a/drivers/scsi/qla2xxx/qla_init.c
 +++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2003,12 +2003,11 @@ qla2x00_tmf_iocb_timeout(void *data)
- 	int rc, h;
- 	unsigned long flags;
+@@ -4816,15 +4816,16 @@ qla2x00_init_rings(scsi_qla_host_t *vha)
+ 	if (ha->flags.edif_enabled)
+ 		mid_init_cb->init_cb.frame_payload_size = cpu_to_le16(ELS_MAX_PAYLOAD);
  
--	if (sp->type == SRB_MARKER) {
--		complete(&tmf->u.tmf.comp);
--		return;
--	}
-+	if (sp->type == SRB_MARKER)
-+		rc = QLA_FUNCTION_FAILED;
-+	else
-+		rc = qla24xx_async_abort_cmd(sp, false);
- 
--	rc = qla24xx_async_abort_cmd(sp, false);
- 	if (rc) {
- 		spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
- 		for (h = 1; h < sp->qpair->req->num_outstanding_cmds; h++) {
-@@ -2130,6 +2129,17 @@ static void qla2x00_tmf_sp_done(srb_t *s
- 	complete(&tmf->u.tmf.comp);
- }
- 
-+static int qla_tmf_wait(struct tmf_arg *arg)
-+{
-+	/* there are only 2 types of error handling that reaches here, lun or target reset */
-+	if (arg->flags & (TCF_LUN_RESET | TCF_ABORT_TASK_SET | TCF_CLEAR_TASK_SET))
-+		return qla2x00_eh_wait_for_pending_commands(arg->vha,
-+		    arg->fcport->d_id.b24, arg->lun, WAIT_LUN);
-+	else
-+		return qla2x00_eh_wait_for_pending_commands(arg->vha,
-+		    arg->fcport->d_id.b24, arg->lun, WAIT_TARGET);
-+}
-+
- static int
- __qla2x00_async_tm_cmd(struct tmf_arg *arg)
- {
-@@ -2137,8 +2147,9 @@ __qla2x00_async_tm_cmd(struct tmf_arg *a
- 	struct srb_iocb *tm_iocb;
- 	srb_t *sp;
- 	int rval = QLA_FUNCTION_FAILED;
--
- 	fc_port_t *fcport = arg->fcport;
-+	u32 chip_gen, login_gen;
-+	u64 jif;
- 
- 	if (TMF_NOT_READY(arg->fcport)) {
- 		ql_dbg(ql_dbg_taskm, vha, 0x8032,
-@@ -2183,8 +2194,27 @@ __qla2x00_async_tm_cmd(struct tmf_arg *a
- 		    "TM IOCB failed (%x).\n", rval);
++	QLA_FW_STARTED(ha);
+ 	rval = qla2x00_init_firmware(vha, ha->init_cb_size);
+ next_check:
+ 	if (rval) {
++		QLA_FW_STOPPED(ha);
+ 		ql_log(ql_log_fatal, vha, 0x00d2,
+ 		    "Init Firmware **** FAILED ****.\n");
+ 	} else {
+ 		ql_dbg(ql_dbg_init, vha, 0x00d3,
+ 		    "Init Firmware -- success.\n");
+-		QLA_FW_STARTED(ha);
+ 		vha->u_ql2xexchoffld = vha->u_ql2xiniexchg = 0;
  	}
  
--	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw))
--		rval = qla26xx_marker(arg);
-+	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw)) {
-+		chip_gen = vha->hw->chip_reset;
-+		login_gen = fcport->login_gen;
-+
-+		jif = jiffies;
-+		if (qla_tmf_wait(arg)) {
-+			ql_log(ql_log_info, vha, 0x803e,
-+			       "Waited %u ms Nexus=%ld:%06x:%llu.\n",
-+			       jiffies_to_msecs(jiffies - jif), vha->host_no,
-+			       fcport->d_id.b24, arg->lun);
-+		}
-+
-+		if (chip_gen == vha->hw->chip_reset && login_gen == fcport->login_gen) {
-+			rval = qla26xx_marker(arg);
-+		} else {
-+			ql_log(ql_log_info, vha, 0x803e,
-+			       "Skip Marker due to disruption. Nexus=%ld:%06x:%llu.\n",
-+			       vha->host_no, fcport->d_id.b24, arg->lun);
-+			rval = QLA_FUNCTION_FAILED;
-+		}
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -1121,8 +1121,12 @@ qla2x00_async_event(scsi_qla_host_t *vha
+ 	unsigned long	flags;
+ 	fc_port_t	*fcport = NULL;
+ 
+-	if (!vha->hw->flags.fw_started)
++	if (!vha->hw->flags.fw_started) {
++		ql_log(ql_log_warn, vha, 0x50ff,
++		    "Dropping AEN - %04x %04x %04x %04x.\n",
++		    mb[0], mb[1], mb[2], mb[3]);
+ 		return;
 +	}
  
- done_free_sp:
- 	/* ref: INIT */
-@@ -2262,9 +2292,8 @@ qla2x00_async_tm_cmd(fc_port_t *fcport,
- 		     uint32_t tag)
- {
- 	struct scsi_qla_host *vha = fcport->vha;
--	struct qla_qpair *qpair;
- 	struct tmf_arg a;
--	int i, rval = QLA_SUCCESS;
-+	int rval = QLA_SUCCESS;
- 
- 	if (TMF_NOT_READY(fcport))
- 		return QLA_SUSPENDED;
-@@ -2284,34 +2313,9 @@ qla2x00_async_tm_cmd(fc_port_t *fcport,
- 	if (qla_get_tmf(&a))
- 		return QLA_FUNCTION_FAILED;
- 
--	if (vha->hw->mqenable) {
--		for (i = 0; i < vha->hw->num_qpairs; i++) {
--			qpair = vha->hw->queue_pair_map[i];
--			if (!qpair)
--				continue;
--
--			if (TMF_NOT_READY(fcport)) {
--				ql_log(ql_log_warn, vha, 0x8026,
--				    "Unable to send TM due to disruption.\n");
--				rval = QLA_SUSPENDED;
--				break;
--			}
--
--			a.qpair = qpair;
--			a.flags = flags|TCF_NOTMCMD_TO_TARGET;
--			rval = __qla2x00_async_tm_cmd(&a);
--			if (rval)
--				break;
--		}
--	}
--
--	if (rval)
--		goto bailout;
--
- 	a.qpair = vha->hw->base_qpair;
- 	rval = __qla2x00_async_tm_cmd(&a);
- 
--bailout:
- 	qla_put_tmf(&a);
- 	return rval;
- }
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -3887,6 +3887,7 @@ qla_marker_iocb(srb_t *sp, struct mrk_en
- {
- 	mrk->entry_type = MARKER_TYPE;
- 	mrk->modifier = sp->u.iocb_cmd.u.tmf.modifier;
-+	mrk->handle = make_handle(sp->qpair->req->id, sp->handle);
- 	if (sp->u.iocb_cmd.u.tmf.modifier != MK_SYNC_ALL) {
- 		mrk->nport_handle = cpu_to_le16(sp->u.iocb_cmd.u.tmf.loop_id);
- 		int_to_scsilun(sp->u.iocb_cmd.u.tmf.lun, (struct scsi_lun *)&mrk->lun);
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1478,8 +1478,9 @@ qla2xxx_eh_device_reset(struct scsi_cmnd
- 		goto eh_reset_failed;
- 	}
- 	err = 3;
--	if (qla2x00_eh_wait_for_pending_commands(vha, sdev->id,
--	    sdev->lun, WAIT_LUN) != QLA_SUCCESS) {
-+	if (qla2x00_eh_wait_for_pending_commands(vha, fcport->d_id.b24,
-+						 cmd->device->lun,
-+						 WAIT_LUN) != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x800d,
- 		    "wait for pending cmds failed for cmd=%p.\n", cmd);
- 		goto eh_reset_failed;
-@@ -1545,8 +1546,8 @@ qla2xxx_eh_target_reset(struct scsi_cmnd
- 		goto eh_reset_failed;
- 	}
- 	err = 3;
--	if (qla2x00_eh_wait_for_pending_commands(vha, sdev->id,
--	    0, WAIT_TARGET) != QLA_SUCCESS) {
-+	if (qla2x00_eh_wait_for_pending_commands(vha, fcport->d_id.b24, 0,
-+						 WAIT_TARGET) != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x800d,
- 		    "wait for pending cmds failed for cmd=%p.\n", cmd);
- 		goto eh_reset_failed;
+ 	/* Setup to process RIO completion. */
+ 	handle_cnt = 0;
 
 
