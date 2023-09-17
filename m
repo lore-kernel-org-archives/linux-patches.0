@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713D96FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D402AC433CA;
-	Sun, 17 Sep 2023 20:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21E86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF52C433C9;
+	Sun, 17 Sep 2023 20:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981144;
-	bh=B44M0VUcHrMLPGY1VYwUyVSx7fF02tMAysebvgbnZTo=;
+	s=korg; t=1694981147;
+	bh=K0iLyIxIV6VeFnS7XYHAMJym+dRvVQYbtW/4zXPihnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/fDVRwSXA9Q5s5o8Ly1z7Uj800WrkZBJuCnvCe2LQXpFXLrfWyTqscI/LBNQgwVH
-	 97yk/n6j9+0CHyFCP41z1uTeamGg7CfRncJm3nweYr0ZMubBawd0bG3KbJkTHWibyt
-	 I1nMlZCgoTnHwwSE0RZQjPhtjMpegmHXaT7OzCpI=
+	b=RdtLSHJdD7B4v+HMRGQ2U5Rx1Nn+T4Vv95Yrp6Qmjz5HFMIdJKjddLzkU+QCKx0nt
+	 fomXCzeztOcvYrc/k1nB0ayYoLC/uPUJ76yh3pYAuQiGcbvExyLlYnLUctFccAXdyT
+	 Mf3BCB6SmPWPWpm9Ll5zJQKxPFNzA7xpY1UFIvYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Maluka <dmy@semihalf.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/511] ASoC: da7219: Flush pending AAD IRQ when suspending
-Date: Sun, 17 Sep 2023 21:07:18 +0200
-Message-ID: <20230917191114.106740164@linuxfoundation.org>
+Subject: [PATCH 6.1 079/219] pwm: lpc32xx: Remove handling of PWM channels
+Date: Sun, 17 Sep 2023 21:13:26 +0200
+Message-ID: <20230917191043.835547885@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -34,81 +36,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmytro Maluka <dmy@semihalf.com>
+From: Vladimir Zapolskiy <vz@mleia.com>
 
-[ Upstream commit 91e292917dad64ab8d1d5ca2ab3069ad9dac6f72 ]
+[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
 
-da7219_aad_suspend() disables jack detection, which should prevent
-generating new interrupts by DA7219 while suspended. However, there is a
-theoretical possibility that there is a pending interrupt generated just
-before suspending DA7219 and not handled yet, so the IRQ handler may
-still run after DA7219 is suspended. To prevent that, wait until the
-pending IRQ handling is done.
+Because LPC32xx PWM controllers have only a single output which is
+registered as the only PWM device/channel per controller, it is known in
+advance that pwm->hwpwm value is always 0. On basis of this fact
+simplify the code by removing operations with pwm->hwpwm, there is no
+controls which require channel number as input.
 
-This patch arose as an attempt to fix the following I2C failure
-occurring sometimes during system suspend or resume:
+Even though I wasn't aware at the time when I forward ported that patch,
+this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
+before devm_pwmchip_add() is called.
 
-[  355.876211] i2c_designware i2c_designware.3: Transfer while suspended
-[  355.876245] WARNING: CPU: 2 PID: 3576 at drivers/i2c/busses/i2c-designware-master.c:570 i2c_dw_xfer+0x411/0x440
-...
-[  355.876462] Call Trace:
-[  355.876468]  <TASK>
-[  355.876475]  ? update_load_avg+0x1b3/0x615
-[  355.876484]  __i2c_transfer+0x101/0x1d8
-[  355.876494]  i2c_transfer+0x74/0x10d
-[  355.876504]  regmap_i2c_read+0x6a/0x9c
-[  355.876513]  _regmap_raw_read+0x179/0x223
-[  355.876521]  regmap_raw_read+0x1e1/0x28e
-[  355.876527]  regmap_bulk_read+0x17d/0x1ba
-[  355.876532]  ? __wake_up+0xed/0x1bb
-[  355.876542]  da7219_aad_irq_thread+0x54/0x2c9 [snd_soc_da7219 5fb8ebb2179cf2fea29af090f3145d68ed8e2184]
-[  355.876556]  irq_thread+0x13c/0x231
-[  355.876563]  ? irq_forced_thread_fn+0x5f/0x5f
-[  355.876570]  ? irq_thread_fn+0x4d/0x4d
-[  355.876576]  kthread+0x13a/0x152
-[  355.876581]  ? synchronize_irq+0xc3/0xc3
-[  355.876587]  ? kthread_blkcg+0x31/0x31
-[  355.876592]  ret_from_fork+0x1f/0x30
-[  355.876601]  </TASK>
-
-which indicates that the AAD IRQ handler is unexpectedly running when
-DA7219 is suspended, and as a result, is trying to read data from DA7219
-over I2C and is hitting the I2C driver "Transfer while suspended"
-failure.
-
-However, with this patch the above failure is still reproducible. So
-this patch does not fix any real observed issue so far, but at least is
-useful for confirming that the above issue is not caused by a pending
-IRQ but rather looks like a DA7219 hardware issue with an IRQ
-unexpectedly generated after jack detection is already disabled.
-
-Signed-off-by: Dmytro Maluka <dmy@semihalf.com>
-Link: https://lore.kernel.org/r/20230717193737.161784-2-dmy@semihalf.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index 7998fdd3b378e..6b368ab945be5 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -854,6 +854,8 @@ void da7219_aad_suspend(struct snd_soc_component *component)
- 			}
- 		}
- 	}
-+
-+	synchronize_irq(da7219_aad->irq);
- }
+diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
+index 86a0ea0f6955c..806f0bb3ad6d8 100644
+--- a/drivers/pwm/pwm-lpc32xx.c
++++ b/drivers/pwm/pwm-lpc32xx.c
+@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	if (duty_cycles > 255)
+ 		duty_cycles = 255;
  
- void da7219_aad_resume(struct snd_soc_component *component)
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~0xFFFF;
+ 	val |= (period_cycles << 8) | duty_cycles;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	return 0;
+ }
+@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	if (ret)
+ 		return ret;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val |= PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	return 0;
+ }
+@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
+ 	u32 val;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	clk_disable_unprepare(lpc32xx->clk);
+ }
+@@ -141,9 +141,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
+ 	lpc32xx->chip.npwm = 1;
+ 
+ 	/* If PWM is disabled, configure the output to the default value */
+-	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_PIN_LEVEL;
+-	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	ret = devm_pwmchip_add(&pdev->dev, &lpc32xx->chip);
+ 	if (ret < 0) {
 -- 
 2.40.1
 
