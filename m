@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A63746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70F8C433C8;
-	Sun, 17 Sep 2023 20:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31045746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30271C433C8;
+	Sun, 17 Sep 2023 20:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983151;
-	bh=ioaW6UywnqBUDQ8gYelRgkdnGAleZi1nrag+zz21NOc=;
+	s=korg; t=1694983154;
+	bh=AhJvoylanVcXow1DPU/zIzJDM8Oyo7YE7XTE4dEFLXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hsd5Oax3lcFwLPs0erZPxPiYttWXP/Wv5Yy/5YdCzKUG+sRMsGFRBOZMuOYXx4ITV
-	 407rN+fyVIFVH/C3hg+Yn9khW6KLp5nl9leHJCA41VAOkOHdC9yzuKSXk8AmJ2Sdiw
-	 c5QkPwjATcoaS1m90G8CF3HnCHsHb45zoK6iRhTA=
+	b=Rl5CWczbhwvfwwkjpwJGlYNkmWOTEXBvDKKaWPya838ymHYCjj42oWFwLiuQOl5YR
+	 MbBUfSaT6yfnopHyysQvIMOKs7zfrAi25al2ZyY7GD7d6jpoAKKz/S6/uAhYrOatLY
+	 /PXwbUsXLVe6FpqlH3+trb0UwBwDRANsxYvmFpeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chen <chenhao418@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 457/511] net: hns3: fix byte order conversion issue in hclge_dbg_fd_tcam_read()
-Date: Sun, 17 Sep 2023 21:14:44 +0200
-Message-ID: <20230917191124.791289697@linuxfoundation.org>
+Subject: [PATCH 5.15 420/511] x86/virt: Drop unnecessary check on extended CPUID level in cpu_has_svm()
+Date: Sun, 17 Sep 2023 21:14:07 +0200
+Message-ID: <20230917191123.918725168@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,67 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Chen <chenhao418@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit efccf655e99b6907ca07a466924e91805892e7d3 ]
+[ Upstream commit 5df8ecfe3632d5879d1f154f7aa8de441b5d1c89 ]
 
-req1->tcam_data is defined as "u8 tcam_data[8]", and we convert it as
-(u32 *) without considerring byte order conversion,
-it may result in printing wrong data for tcam_data.
+Drop the explicit check on the extended CPUID level in cpu_has_svm(), the
+kernel's cached CPUID info will leave the entire SVM leaf unset if said
+leaf is not supported by hardware.  Prior to using cached information,
+the check was needed to avoid false positives due to Intel's rather crazy
+CPUID behavior of returning the values of the maximum supported leaf if
+the specified leaf is unsupported.
 
-Convert tcam_data to (__le32 *) first to fix it.
-
-Fixes: b5a0b70d77b9 ("net: hns3: refactor dump fd tcam of debugfs")
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 682a8108872f ("x86/kvm/svm: Simplify cpu_has_svm()")
+Link: https://lore.kernel.org/r/20230721201859.2307736-13-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/virtext.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-index dd8b73aebe6a5..63665e8a7c718 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-@@ -1450,7 +1450,7 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
- 	struct hclge_desc desc[3];
- 	int pos = 0;
- 	int ret, i;
--	u32 *req;
-+	__le32 *req;
+diff --git a/arch/x86/include/asm/virtext.h b/arch/x86/include/asm/virtext.h
+index 3b12e6b994123..6c2e3ff3cb28f 100644
+--- a/arch/x86/include/asm/virtext.h
++++ b/arch/x86/include/asm/virtext.h
+@@ -101,12 +101,6 @@ static inline int cpu_has_svm(const char **msg)
+ 		return 0;
+ 	}
  
- 	hclge_cmd_setup_basic_desc(&desc[0], HCLGE_OPC_FD_TCAM_OP, true);
- 	desc[0].flag |= cpu_to_le16(HCLGE_CMD_FLAG_NEXT);
-@@ -1475,22 +1475,22 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
- 			 tcam_msg.loc);
- 
- 	/* tcam_data0 ~ tcam_data1 */
--	req = (u32 *)req1->tcam_data;
-+	req = (__le32 *)req1->tcam_data;
- 	for (i = 0; i < 2; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
- 	/* tcam_data2 ~ tcam_data7 */
--	req = (u32 *)req2->tcam_data;
-+	req = (__le32 *)req2->tcam_data;
- 	for (i = 0; i < 6; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
- 	/* tcam_data8 ~ tcam_data12 */
--	req = (u32 *)req3->tcam_data;
-+	req = (__le32 *)req3->tcam_data;
- 	for (i = 0; i < 5; i++)
- 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
--				 "%08x\n", *req++);
-+				 "%08x\n", le32_to_cpu(*req++));
- 
- 	return ret;
- }
+-	if (boot_cpu_data.extended_cpuid_level < SVM_CPUID_FUNC) {
+-		if (msg)
+-			*msg = "can't execute cpuid_8000000a";
+-		return 0;
+-	}
+-
+ 	if (!boot_cpu_has(X86_FEATURE_SVM)) {
+ 		if (msg)
+ 			*msg = "svm not available";
 -- 
 2.40.1
 
