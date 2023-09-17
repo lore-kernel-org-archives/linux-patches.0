@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB0D7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492FFC433C9;
-	Sun, 17 Sep 2023 20:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2633F7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89639C433C7;
+	Sun, 17 Sep 2023 20:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981374;
-	bh=/Vlghm6b8HJHjqmUyWFkWYGVgY7uw5KV40mV4/xK7JU=;
+	s=korg; t=1694981378;
+	bh=Q1Qr5Xtb2K90VsTq9xHcFUAnYzeafguNzVn087kUQl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpWHwICY6FOrMqPxJDKpas9kRrA8phCNJOKOGX4IiEumirweb0P0FIz6nsgPoVZSM
-	 VtAugD1ZBsrM97DZ5kJhBENoj5s6wL2ufb43EEuODPKTYMOSPLLe/egx4CtB7VLdOk
-	 QOoL2oPPDPZqkBc5gPf8lpr3y3f3pBtg561lwrZ0=
+	b=WmM8R74WK2xuc2JpY1Ma1Wcfr0o7/zCDpi/XUfUHVGQvJZHaZCw/ZYg2WSnh/8yRs
+	 m/Us7B5MqtMEzVhU01VK/Sz1EocsPwQu2YUj0XR9t8ms/+YS2LllDFsQVBXl923Vsh
+	 HESfmQsYGJaeZD339gxv6VeFe3Pmh2EnGFtRxBkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Justin Tee <justin.tee@broadcom.com>,
+	kernel test robot <lkp@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/219] af_unix: Fix data race around sk->sk_err.
-Date: Sun, 17 Sep 2023 21:13:58 +0200
-Message-ID: <20230917191044.998050275@linuxfoundation.org>
+Subject: [PATCH 5.15 045/511] scsi: lpfc: Fix incorrect big endian type assignment in bsg loopback path
+Date: Sun, 17 Sep 2023 21:07:52 +0200
+Message-ID: <20230917191114.955714317@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,44 +37,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Justin Tee <justintee8345@gmail.com>
 
-[ Upstream commit b192812905e4b134f7b7994b079eb647e9d2d37e ]
+[ Upstream commit 9cefd6e7e0a77b0fbca5c793f6fb6821b0962775 ]
 
-As with sk->sk_shutdown shown in the previous patch, sk->sk_err can be
-read locklessly by unix_dgram_sendmsg().
+The kernel test robot reported sparse warnings regarding incorrect type
+assignment for __be16 variables in bsg loopback path.
 
-Let's use READ_ONCE() for sk_err as well.
+Change the flagged lines to use the be16_to_cpu() and cpu_to_be16() macros
+appropriately.
 
-Note that the writer side is marked by commit cc04410af7de ("af_unix:
-annotate lockless accesses to sk->sk_err").
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20230614175944.3577-1-justintee8345@gmail.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306110819.sDIKiGgg-lkp@intel.com/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_bsg.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 71990525d37e2..e5858fa5d6d57 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2692,7 +2692,7 @@ static long sock_wait_for_wmem(struct sock *sk, long timeo)
- 			break;
- 		if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
- 			break;
--		if (sk->sk_err)
-+		if (READ_ONCE(sk->sk_err))
- 			break;
- 		timeo = schedule_timeout(timeo);
- 	}
+diff --git a/drivers/scsi/lpfc/lpfc_bsg.c b/drivers/scsi/lpfc/lpfc_bsg.c
+index fdf08cb572071..ed827f198cb68 100644
+--- a/drivers/scsi/lpfc/lpfc_bsg.c
++++ b/drivers/scsi/lpfc/lpfc_bsg.c
+@@ -911,7 +911,7 @@ lpfc_bsg_ct_unsol_event(struct lpfc_hba *phba, struct lpfc_sli_ring *pring,
+ 			struct lpfc_iocbq *piocbq)
+ {
+ 	uint32_t evt_req_id = 0;
+-	uint32_t cmd;
++	u16 cmd;
+ 	struct lpfc_dmabuf *dmabuf = NULL;
+ 	struct lpfc_bsg_event *evt;
+ 	struct event_data *evt_dat = NULL;
+@@ -936,7 +936,7 @@ lpfc_bsg_ct_unsol_event(struct lpfc_hba *phba, struct lpfc_sli_ring *pring,
+ 
+ 	ct_req = (struct lpfc_sli_ct_request *)bdeBuf1->virt;
+ 	evt_req_id = ct_req->FsType;
+-	cmd = ct_req->CommandResponse.bits.CmdRsp;
++	cmd = be16_to_cpu(ct_req->CommandResponse.bits.CmdRsp);
+ 
+ 	spin_lock_irqsave(&phba->ct_ev_lock, flags);
+ 	list_for_each_entry(evt, &phba->ct_ev_waiters, node) {
+@@ -3243,8 +3243,8 @@ lpfc_bsg_diag_loopback_run(struct bsg_job *job)
+ 			ctreq->RevisionId.bits.InId = 0;
+ 			ctreq->FsType = SLI_CT_ELX_LOOPBACK;
+ 			ctreq->FsSubType = 0;
+-			ctreq->CommandResponse.bits.CmdRsp = ELX_LOOPBACK_DATA;
+-			ctreq->CommandResponse.bits.Size   = size;
++			ctreq->CommandResponse.bits.CmdRsp = cpu_to_be16(ELX_LOOPBACK_DATA);
++			ctreq->CommandResponse.bits.Size   = cpu_to_be16(size);
+ 			segment_offset = ELX_LOOPBACK_HEADER_SZ;
+ 		} else
+ 			segment_offset = 0;
 -- 
 2.40.1
 
