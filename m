@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DA06AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2796EC433C8;
-	Sun, 17 Sep 2023 20:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6486ABB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF0C433CA;
+	Sun, 17 Sep 2023 20:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982095;
-	bh=Lfl5yv2lqXwKyy48iIvyXTsd09P0ejVdwAwfo6Bdxek=;
+	s=korg; t=1694982098;
+	bh=LEsXtiL5sswqQmBzNdtFv9c6TDnHIaSGH30QXSKO6cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXYpBsEy5YhezY7nsIx8o8OSGNVjtfRtWJycpGnmtL/RCX6ApYitA0xaI7MYYfxe/
-	 qXgPxb3fKTIidNqLGvd38HwwJnrbS/05N5rZPQj/diKow8AUkaERf7LSym8MH64Ytv
-	 xVnsgvmpt2ZEU0R2sVGiT+zwJeX7TgVI0lyuY+nw=
+	b=tZA6J4FUQ2ks118Q+2AgHV8qDYQNkjMHVM4sX7zgSr3vNntCxYpEnZw08GWIWx9C6
+	 dU1YRsAia6H5h7O64d8x6PclFTktrBE8RIL8g7esX4wBYaruCXkrADpWU9LJaY/q4I
+	 zoUEQ+m07iGXZs+tzJ+iXvtZ+mjEw2mXFI6KCY4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.1 216/219] ixgbe: fix timestamp configuration code
-Date: Sun, 17 Sep 2023 21:15:43 +0200
-Message-ID: <20230917191048.746065977@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 150/511] drm/etnaviv: fix dumping of active MMU context
+Date: Sun, 17 Sep 2023 21:09:37 +0200
+Message-ID: <20230917191117.475786215@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,151 +36,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 3c44191dd76cf9c0cc49adaf34384cbd42ef8ad2 ]
+[ Upstream commit 20faf2005ec85fa1a6acc9a74ff27de667f90576 ]
 
-The commit in fixes introduced flags to control the status of hardware
-configuration while processing packets. At the same time another structure
-is used to provide configuration of timestamper to user-space applications.
-The way it was coded makes this structures go out of sync easily. The
-repro is easy for 82599 chips:
+gpu->mmu_context is the MMU context of the last job in the HW queue, which
+isn't necessarily the same as the context from the bad job. Dump the MMU
+context from the scheduler determined bad submit to make it work as intended.
 
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 12 -t 1
-current settings:
-tx_type 0
-rx_filter 0
-new settings:
-tx_type 1
-rx_filter 12
-
-The eth0 device is properly configured to timestamp any PTPv2 events.
-
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 1 -t 1
-current settings:
-tx_type 1
-rx_filter 12
-SIOCSHWTSTAMP failed: Numerical result out of range
-The requested time stamping mode is not supported by the hardware.
-
-The error is properly returned because HW doesn't support all packets
-timestamping. But the adapter->flags is cleared of timestamp flags
-even though no HW configuration was done. From that point no RX timestamps
-are received by user-space application. But configuration shows good
-values:
-
-[root@hostname ~]# hwstamp_ctl -i eth0
-current settings:
-tx_type 1
-rx_filter 12
-
-Fix the issue by applying new flags only when the HW was actually
-configured.
-
-Fixes: a9763f3cb54c ("ixgbe: Update PTP to support X550EM_x devices")
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 17e4660ae3d7 ("drm/etnaviv: implement per-process address spaces on MMUv2")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c | 28 +++++++++++---------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_dump.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-index f8605f57bd067..75e1383263c1e 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-@@ -995,6 +995,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	u32 tsync_tx_ctl = IXGBE_TSYNCTXCTL_ENABLED;
- 	u32 tsync_rx_ctl = IXGBE_TSYNCRXCTL_ENABLED;
- 	u32 tsync_rx_mtrl = PTP_EV_PORT << 16;
-+	u32 aflags = adapter->flags;
- 	bool is_l2 = false;
- 	u32 regval;
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_dump.c b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+index f418e0b75772e..0edcf8ceb4a78 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_dump.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_dump.c
+@@ -125,9 +125,9 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 		return;
+ 	etnaviv_dump_core = false;
  
-@@ -1012,20 +1013,20 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	case HWTSTAMP_FILTER_NONE:
- 		tsync_rx_ctl = 0;
- 		tsync_rx_mtrl = 0;
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_SYNC:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_SYNC_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_DELAY_REQ_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V2_EVENT:
- 	case HWTSTAMP_FILTER_PTP_V2_L2_EVENT:
-@@ -1039,8 +1040,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_EVENT_V2;
- 		is_l2 = true;
- 		config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_EVENT:
- 	case HWTSTAMP_FILTER_NTP_ALL:
-@@ -1051,7 +1052,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		if (hw->mac.type >= ixgbe_mac_X550) {
- 			tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_ALL;
- 			config->rx_filter = HWTSTAMP_FILTER_ALL;
--			adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+			aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
- 			break;
- 		}
- 		fallthrough;
-@@ -1062,8 +1063,6 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		 * Delay_Req messages and hardware does not support
- 		 * timestamping all packets => return error
- 		 */
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		config->rx_filter = HWTSTAMP_FILTER_NONE;
- 		return -ERANGE;
+-	mutex_lock(&gpu->mmu_context->lock);
++	mutex_lock(&submit->mmu_context->lock);
+ 
+-	mmu_size = etnaviv_iommu_dump_size(gpu->mmu_context);
++	mmu_size = etnaviv_iommu_dump_size(submit->mmu_context);
+ 
+ 	/* We always dump registers, mmu, ring, hanging cmdbuf and end marker */
+ 	n_obj = 5;
+@@ -157,7 +157,7 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 	iter.start = __vmalloc(file_size, GFP_KERNEL | __GFP_NOWARN |
+ 			__GFP_NORETRY);
+ 	if (!iter.start) {
+-		mutex_unlock(&gpu->mmu_context->lock);
++		mutex_unlock(&submit->mmu_context->lock);
+ 		dev_warn(gpu->dev, "failed to allocate devcoredump file\n");
+ 		return;
  	}
-@@ -1095,8 +1094,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 			       IXGBE_TSYNCRXCTL_TYPE_ALL |
- 			       IXGBE_TSYNCRXCTL_TSIP_UT_EN;
- 		config->rx_filter = HWTSTAMP_FILTER_ALL;
--		adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
--		adapter->flags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
-+		aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+		aflags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
- 		is_l2 = true;
- 		break;
- 	default:
-@@ -1129,6 +1128,9 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
+@@ -169,18 +169,18 @@ void etnaviv_core_dump(struct etnaviv_gem_submit *submit)
+ 	memset(iter.hdr, 0, iter.data - iter.start);
  
- 	IXGBE_WRITE_FLUSH(hw);
+ 	etnaviv_core_dump_registers(&iter, gpu);
+-	etnaviv_core_dump_mmu(&iter, gpu->mmu_context, mmu_size);
++	etnaviv_core_dump_mmu(&iter, submit->mmu_context, mmu_size);
+ 	etnaviv_core_dump_mem(&iter, ETDUMP_BUF_RING, gpu->buffer.vaddr,
+ 			      gpu->buffer.size,
+ 			      etnaviv_cmdbuf_get_va(&gpu->buffer,
+-					&gpu->mmu_context->cmdbuf_mapping));
++					&submit->mmu_context->cmdbuf_mapping));
  
-+	/* configure adapter flags only when HW is actually configured */
-+	adapter->flags = aflags;
-+
- 	/* clear TX/RX time stamp registers, just to be sure */
- 	ixgbe_ptp_clear_tx_timestamp(adapter);
- 	IXGBE_READ_REG(hw, IXGBE_RXSTMPH);
+ 	etnaviv_core_dump_mem(&iter, ETDUMP_BUF_CMD,
+ 			      submit->cmdbuf.vaddr, submit->cmdbuf.size,
+ 			      etnaviv_cmdbuf_get_va(&submit->cmdbuf,
+-					&gpu->mmu_context->cmdbuf_mapping));
++					&submit->mmu_context->cmdbuf_mapping));
+ 
+-	mutex_unlock(&gpu->mmu_context->lock);
++	mutex_unlock(&submit->mmu_context->lock);
+ 
+ 	/* Reserve space for the bomap */
+ 	if (n_bomap_pages) {
 -- 
 2.40.1
 
