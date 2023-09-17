@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BE56FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D185CC433C8;
-	Sun, 17 Sep 2023 20:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A26FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11306C433CA;
+	Sun, 17 Sep 2023 20:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981154;
-	bh=vJO+IaWQI0CldO0cyArEdhlr+hmUVX7GF9H/ewK4G4o=;
+	s=korg; t=1694981157;
+	bh=AcUDdRyH7qYeCFpzWUgeeRK7h+hUf9upgMa7Ss0V+XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCs2jt6UgyuolgIZU1aepFVzqo2HtGm7jOHzzsSxLMqJ75uR3uuMOCQmvNI9PlKmC
-	 yQ3iMcpK1Pszihfq0X6W80pu/mjUehxvZ2GMPTB4D8XoZ6TlZYxwBBiPwZVjGhbXfH
-	 CwfZXFh6mJqLVqM1zG1iRMXqKZbQlLN2PX8b3Zjo=
+	b=VMoFO+O82FEk+MmW9FYv3h0Snra3ykzPhJdE2oLmMOibKPwAJvTg4M0b0ThF7I5YV
+	 iK0Q+Iyvv2O85R1mArP25O0oPWOSaVOlBtgsPKGkONq5VgpU4Cus4LfRNle1ssmkeC
+	 2mCnRKUfG5Bn1a8L2ulNam/JNmP4zyjlHmEqDDVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/511] ethernet: atheros: fix return value check in atl1c_tso_csum()
-Date: Sun, 17 Sep 2023 21:07:20 +0200
-Message-ID: <20230917191114.153693412@linuxfoundation.org>
+Subject: [PATCH 6.1 080/219] perf test stat_bpf_counters_cgrp: Fix shellcheck issue about logical operators
+Date: Sun, 17 Sep 2023 21:13:27 +0200
+Message-ID: <20230917191043.869526841@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,44 +43,122 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
+[ Upstream commit 0dd1f815545d7210150642741c364521cc5cf116 ]
 
-in atl1c_tso_csum, it should check the return value of pskb_trim(),
-and return an error code if an unexpected value is returned
-by pskb_trim().
+Running shellcheck on lock_contention.sh generates below warning:
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+In stat_bpf_counters_cgrp.sh line 28:
+	if [ -d /sys/fs/cgroup/system.slice -a -d /sys/fs/cgroup/user.slice ]; then
+                                            ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.
+
+In stat_bpf_counters_cgrp.sh line 34:
+	local self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
+        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
+              ^-------^ SC2155 (warning): Declare and assign separately to avoid masking return values.
+                        ^-- SC2046 (warning): Quote this to prevent word splitting.
+
+In stat_bpf_counters_cgrp.sh line 51:
+	local output
+        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
+
+In stat_bpf_counters_cgrp.sh line 65:
+	local output
+        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
+
+Fixed above warnings by:
+- Changing the expression [p -a q] to [p] && [q].
+- Fixing shellcheck warnings for local usage, by prefixing
+  function name to the variable.
+
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://lore.kernel.org/r/20230709182800.53002-6-atrajeev@linux.vnet.ibm.com
+Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: a84260e31402 ("perf test stat_bpf_counters_cgrp: Enhance perf stat cgroup BPF counter test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../tests/shell/stat_bpf_counters_cgrp.sh     | 28 ++++++++-----------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index 5cbd815c737e7..dad21b4fbc0bc 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -2104,8 +2104,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
- 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
- 					+ ntohs(ip_hdr(skb)->tot_len));
+diff --git a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+index d724855d097c2..a74440a00b6b6 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+@@ -25,22 +25,22 @@ check_bpf_counter()
+ find_cgroups()
+ {
+ 	# try usual systemd slices first
+-	if [ -d /sys/fs/cgroup/system.slice -a -d /sys/fs/cgroup/user.slice ]; then
++	if [ -d /sys/fs/cgroup/system.slice ] && [ -d /sys/fs/cgroup/user.slice ]; then
+ 		test_cgroups="system.slice,user.slice"
+ 		return
+ 	fi
  
--			if (real_len < skb->len)
--				pskb_trim(skb, real_len);
-+			if (real_len < skb->len) {
-+				err = pskb_trim(skb, real_len);
-+				if (err)
-+					return err;
-+			}
+ 	# try root and self cgroups
+-	local self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
+-	if [ -z ${self_cgrp} ]; then
++	find_cgroups_self_cgrp=$(grep perf_event /proc/self/cgroup | cut -d: -f3)
++	if [ -z ${find_cgroups_self_cgrp} ]; then
+ 		# cgroup v2 doesn't specify perf_event
+-		self_cgrp=$(grep ^0: /proc/self/cgroup | cut -d: -f3)
++		find_cgroups_self_cgrp=$(grep ^0: /proc/self/cgroup | cut -d: -f3)
+ 	fi
  
- 			hdr_len = (skb_transport_offset(skb) + tcp_hdrlen(skb));
- 			if (unlikely(skb->len == hdr_len)) {
+-	if [ -z ${self_cgrp} ]; then
++	if [ -z ${find_cgroups_self_cgrp} ]; then
+ 		test_cgroups="/"
+ 	else
+-		test_cgroups="/,${self_cgrp}"
++		test_cgroups="/,${find_cgroups_self_cgrp}"
+ 	fi
+ }
+ 
+@@ -48,13 +48,11 @@ find_cgroups()
+ # Just check if it runs without failure and has non-zero results.
+ check_system_wide_counted()
+ {
+-	local output
+-
+-	output=$(perf stat -a --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, sleep 1  2>&1)
+-	if echo ${output} | grep -q -F "<not "; then
++	check_system_wide_counted_output=$(perf stat -a --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, sleep 1  2>&1)
++	if echo ${check_system_wide_counted_output} | grep -q -F "<not "; then
+ 		echo "Some system-wide events are not counted"
+ 		if [ "${verbose}" = "1" ]; then
+-			echo ${output}
++			echo ${check_system_wide_counted_output}
+ 		fi
+ 		exit 1
+ 	fi
+@@ -62,13 +60,11 @@ check_system_wide_counted()
+ 
+ check_cpu_list_counted()
+ {
+-	local output
+-
+-	output=$(perf stat -C 1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
+-	if echo ${output} | grep -q -F "<not "; then
++	check_cpu_list_counted_output=$(perf stat -C 1 --bpf-counters --for-each-cgroup ${test_cgroups} -e cpu-clock -x, taskset -c 1 sleep 1  2>&1)
++	if echo ${check_cpu_list_counted_output} | grep -q -F "<not "; then
+ 		echo "Some CPU events are not counted"
+ 		if [ "${verbose}" = "1" ]; then
+-			echo ${output}
++			echo ${check_cpu_list_counted_output}
+ 		fi
+ 		exit 1
+ 	fi
 -- 
 2.40.1
 
