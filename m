@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB5E6FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD9CC433CB;
-	Sun, 17 Sep 2023 19:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD386FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:46:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA81C433CD;
+	Sun, 17 Sep 2023 19:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979966;
-	bh=jq9VlbIdiTbrxluHWxkWsgBj8lnL+6K8v9C6oZz0OTI=;
+	s=korg; t=1694979970;
+	bh=vHpKZ6ygbD1ryBMjCDdZK3wqDeejLqkGC3/uRtj2/+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgW89mDRQwbNquMkgFevam8aBARuVSDR0FSEnY7tLZt7rBoFgUI9M0VdizL76TyoI
-	 rTD5SLbzSpYvGu9Ia4cKN1YMaetcehydfqaUMUcH/cyfX5bDSfLnuaOXfgAu+zWeqS
-	 3fDe6BPZEtujrIoqogifMRKHz50DgAnRpr0Z06Fg=
+	b=rRY3LVwiXbRoCtjK7G5bD59PSV+ehW2wfTV1YW5hHnbrfSyhVUIe/Tg0tmVJ7f7Xq
+	 A2sGiq95Z+D4J3jjeVtd8VmgWPYqBVQ8u4dekpfHHv63Sp9BmbaO+TmDGmRJCx83Po
+	 iCiCTfP7HT33PQ2w0O7S353XLME4Q6Kp/2UqVNtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jslaby@suse.cz>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Matthew Garrett <mgarrett@aurora.tech>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 058/285] kbuild: dummy-tools: make MPROFILE_KERNEL checks work on BE
-Date: Sun, 17 Sep 2023 21:10:58 +0200
-Message-ID: <20230917191053.702170726@linuxfoundation.org>
+Subject: [PATCH 6.5 059/285] tpm_crb: Fix an error handling path in crb_acpi_add()
+Date: Sun, 17 Sep 2023 21:10:59 +0200
+Message-ID: <20230917191053.738148784@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -40,42 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bfb41e46d0b040ae83c1c4a50292298208b10f73 ]
+[ Upstream commit 9c377852ddfdc557b1370f196b0cfdf28d233460 ]
 
-Commit 2eab791f940b ("kbuild: dummy-tools: support MPROFILE_KERNEL
-checks for ppc") added support for ppc64le's checks for
--mprofile-kernel.
+Some error paths don't call acpi_put_table() before returning.
+Branch to the correct place instead of doing some direct return.
 
-Now, commit aec0ba7472a7 ("powerpc/64: Use -mprofile-kernel for big
-endian ELFv2 kernels") added support for -mprofile-kernel even on
-big-endian ppc.
-
-So lift the check in gcc-check-mprofile-kernel.sh to support big-endian too.
-
-Fixes: aec0ba7472a7 ("powerpc/64: Use -mprofile-kernel for big endian ELFv2 kernels")
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 4d2732882703 ("tpm_crb: Add support for CRB devices based on Pluton")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Matthew Garrett <mgarrett@aurora.tech>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/dummy-tools/gcc | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/char/tpm/tpm_crb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/dummy-tools/gcc b/scripts/dummy-tools/gcc
-index 1db1889f6d81e..07f6dc4c5cf69 100755
---- a/scripts/dummy-tools/gcc
-+++ b/scripts/dummy-tools/gcc
-@@ -85,8 +85,7 @@ if arg_contain -S "$@"; then
- 	fi
+diff --git a/drivers/char/tpm/tpm_crb.c b/drivers/char/tpm/tpm_crb.c
+index a5dbebb1acfcf..ea085b14ab7c9 100644
+--- a/drivers/char/tpm/tpm_crb.c
++++ b/drivers/char/tpm/tpm_crb.c
+@@ -775,12 +775,13 @@ static int crb_acpi_add(struct acpi_device *device)
+ 				FW_BUG "TPM2 ACPI table has wrong size %u for start method type %d\n",
+ 				buf->header.length,
+ 				ACPI_TPM2_COMMAND_BUFFER_WITH_PLUTON);
+-			return -EINVAL;
++			rc = -EINVAL;
++			goto out;
+ 		}
+ 		crb_pluton = ACPI_ADD_PTR(struct tpm2_crb_pluton, buf, sizeof(*buf));
+ 		rc = crb_map_pluton(dev, priv, buf, crb_pluton);
+ 		if (rc)
+-			return rc;
++			goto out;
+ 	}
  
- 	# For arch/powerpc/tools/gcc-check-mprofile-kernel.sh
--	if arg_contain -m64 "$@" && arg_contain -mlittle-endian "$@" &&
--		arg_contain -mprofile-kernel "$@"; then
-+	if arg_contain -m64 "$@" && arg_contain -mprofile-kernel "$@"; then
- 		if ! test -t 0 && ! grep -q notrace; then
- 			echo "_mcount"
- 		fi
+ 	priv->sm = sm;
 -- 
 2.40.1
 
