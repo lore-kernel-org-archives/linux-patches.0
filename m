@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C1D7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8BAC433C8;
-	Sun, 17 Sep 2023 20:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB87461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0BAC433C9;
+	Sun, 17 Sep 2023 20:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981892;
-	bh=o/ZVIrgLUUr7lIW8utgRGf3xcye5To6rGi2uHe/P8Z4=;
+	s=korg; t=1694981896;
+	bh=xk8Dazp0OCeAomHR3iD9B1QO/poysOD23zVoaW4DD4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXaSXCj645Hl0QK3Qie1Fft1bwRX/V/zttOFBDYbYtSaDJ1tTUQkEzmtm/UYMrMbZ
-	 owCWt7HZ/bWICpSRHZjfTKKBdnvD4iI8KsTzGIFln8+8jeFyYHzOkw6X55fZr7VFe0
-	 HXhahd40lcELvTDoEoBX5m2mi9Sdk9SFxNq90SgY=
+	b=1PUWnevkYM87be5d+BVr1kuF9qw4ZVmqqvrmfPGVHWQEwjumh0Q6sCG9bZfKvAnOb
+	 CVAwHwzVlyqbGuzBiNaqmeqtVsofKR9ZLHnXJvYpOdzSjrAayMj2WPQ32epHY0pPZH
+	 WKypO3/6JqsxlzVgVipFowi5MqevxbFouwf04p4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Monroe <chad.monroe@smartrg.com>,
-	Allen Ye <allen.ye@mediatek.com>,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/511] wifi: mt76: mt7915: fix power-limits while chan_switch
-Date: Sun, 17 Sep 2023 21:08:38 +0200
-Message-ID: <20230917191116.068011249@linuxfoundation.org>
+Subject: [PATCH 5.15 085/511] udp: re-score reuseport groups when connected sockets are present
+Date: Sun, 17 Sep 2023 21:08:32 +0200
+Message-ID: <20230917191115.924614172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,43 +41,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit 6c0570bc21ec2073890aa252c8420ca7bec402e4 ]
+[ Upstream commit f0ea27e7bfe1c34e1f451a63eb68faa1d4c3a86d ]
 
-If user changes the channel without completely disabling the interface the
-txpower_sku values reported track the old channel the device was operating on.
-If user bounces the interface the correct power tables are applied.
+Contrary to TCP, UDP reuseport groups can contain TCP_ESTABLISHED
+sockets. To support these properly we remember whether a group has
+a connected socket and skip the fast reuseport early-return. In
+effect we continue scoring all reuseport sockets and then choose the
+one with the highest score.
 
-mt7915_sku_group_len array gets updated before the channel switch happens so it
-uses data from the old channel.
+The current code fails to re-calculate the score for the result of
+lookup_reuseport. According to Kuniyuki Iwashima:
 
-Fixes: ecb187a74e18 ("mt76: mt7915: rework the flow of txpower setting")
-Fixes: f1d962369d56 ("mt76: mt7915: implement HE per-rate tx power support")
-Reported-By: Chad Monroe <chad.monroe@smartrg.com>
-Tested-by: Chad Monroe <chad.monroe@smartrg.com>
-Signed-off-by: Allen Ye <allen.ye@mediatek.com>
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+    1) SO_INCOMING_CPU is set
+       -> selected sk might have +1 score
+
+    2) BPF prog returns ESTABLISHED and/or SO_INCOMING_CPU sk
+       -> selected sk will have more than 8
+
+  Using the old score could trigger more lookups depending on the
+  order that sockets are created.
+
+    sk -> sk (SO_INCOMING_CPU) -> sk (ESTABLISHED)
+    |     |
+    `-> select the next SO_INCOMING_CPU sk
+          |
+          `-> select itself (We should save this lookup)
+
+Fixes: efc6b6f6c311 ("udp: Improve load balancing for SO_REUSEPORT.")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-1-7021b683cdae@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/udp.c | 20 +++++++++++++++-----
+ net/ipv6/udp.c | 19 ++++++++++++++-----
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 7a4f277a16223..09ea97a81fb4f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -441,7 +441,8 @@ static int mt7915_config(struct ieee80211_hw *hw, u32 changed)
- 		ieee80211_wake_queues(hw);
- 	}
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 73bf63d719f84..198d8e07413d3 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -443,14 +443,24 @@ static struct sock *udp4_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
--	if (changed & IEEE80211_CONF_CHANGE_POWER) {
-+	if (changed & (IEEE80211_CONF_CHANGE_POWER |
-+		       IEEE80211_CONF_CHANGE_CHANNEL)) {
- 		ret = mt7915_mcu_set_txpower_sku(phy);
- 		if (ret)
- 			return ret;
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(result, net, saddr, sport,
++						daddr, hnum, dif, sdif);
++
+ 		}
+ 	}
+ 	return result;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index a746abbe81b5f..2dab9aab551c3 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -190,14 +190,23 @@ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
+ 
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(sk, net, saddr, sport,
++						daddr, hnum, dif, sdif);
+ 		}
+ 	}
+ 	return result;
 -- 
 2.40.1
 
