@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815CA7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C6BC433C8;
-	Sun, 17 Sep 2023 20:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E727461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFC8C433C7;
+	Sun, 17 Sep 2023 20:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981930;
-	bh=71GMPI/Lb5pmDb+MvCRHT0kSU2dShKoJOBhNjKjwBNM=;
+	s=korg; t=1694981933;
+	bh=IrCIMyGJqENalE/KJWq0Vs66S84g+l7xgRrOMJBD3N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1kpcME7Zz5Yn+S/tyWY9PcVVd46XTpkC4kdjEvqmjH+9qdzHqLGfeCzUOyBfsKBN
-	 bDq+WA5ZrequNKbQCVJSJ+udOHQvG68bgx6aqDtIOFALz3G/jgugrBf/FbGyq3gzDq
-	 Dly/0OVIOLwbhmrastZiBhkFsUotVbXeOA3aN8SQ=
+	b=CvuCKRUEJyOPnK3o7x36n7/CCK68vBHTt/IIYXoV34dw/BQ+8ACiIiGWTOYGJ1m/d
+	 3oOTnjWDfKlzj5u4GmFqlEApV/NSV7qHMTFoU6SGYOjZkig17CTu40p7pz8eBQMoS9
+	 VbICByOnHyxjgSNR3ePyh6n8LRTu4PlxwVugYSvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	alsa-devel@alsa-project.org,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/511] ASoC: stac9766: fix build errors with REGMAP_AC97
-Date: Sun, 17 Sep 2023 21:09:15 +0200
-Message-ID: <20230917191116.958580291@linuxfoundation.org>
+Subject: [PATCH 6.1 195/219] net:ethernet:adi:adin1110: Fix forwarding offload
+Date: Sun, 17 Sep 2023 21:15:22 +0200
+Message-ID: <20230917191047.989785592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,44 +37,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Ciprian Regus <ciprian.regus@analog.com>
 
-[ Upstream commit c70064b96f509daa78f57992aeabcf274fb2fed4 ]
+[ Upstream commit 32530dba1bd48da4437d18d9a8dbc9d2826938a6 ]
 
-Select REGMAP_AC97 to fix these build errors:
+Currently, when a new fdb entry is added (with both ports of the
+ADIN2111 bridged), the driver configures the MAC filters for the wrong
+port, which results in the forwarding being done by the host, and not
+actually hardware offloaded.
 
-ERROR: modpost: "regmap_ac97_default_volatile" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
-ERROR: modpost: "__regmap_init_ac97" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
+The ADIN2111 offloads the forwarding by setting filters on the
+destination MAC address of incoming frames. Based on these, they may be
+routed to the other port. Thus, if a frame has to be forwarded from port
+1 to port 2, the required configuration for the ADDR_FILT_UPRn register
+should set the APPLY2PORT1 bit (instead of APPLY2PORT2, as it's
+currently the case).
 
-Fixes: 6bbf787bb70c ("ASoC: stac9766: Convert to regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20230701044836.18789-1-rdunlap@infradead.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/adi/adin1110.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index c3deb82c5da3a..1750cc888bbe8 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -1383,6 +1383,7 @@ config SND_SOC_STA529
- config SND_SOC_STAC9766
- 	tristate
- 	depends on SND_SOC_AC97_BUS
-+	select REGMAP_AC97
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index cc026780ee0e8..ed2863ed6a5bb 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -1365,7 +1365,7 @@ static int adin1110_fdb_add(struct adin1110_port_priv *port_priv,
+ 		return -ENOMEM;
  
- config SND_SOC_STI_SAS
- 	tristate "codec Audio support for STI SAS codec"
+ 	other_port = priv->ports[!port_priv->nr];
+-	port_rules = adin1110_port_rules(port_priv, false, true);
++	port_rules = adin1110_port_rules(other_port, false, true);
+ 	eth_broadcast_addr(mask);
+ 
+ 	return adin1110_write_mac_address(other_port, mac_nr, (u8 *)fdb->addr,
 -- 
 2.40.1
 
