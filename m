@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B54B7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB0CC433C8;
-	Sun, 17 Sep 2023 19:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8FF7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:47:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63040C433C8;
+	Sun, 17 Sep 2023 19:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980046;
-	bh=Ne/EzIWFpHLNADhRJYGkpd7boKkCOM9PZTajo9xGbWE=;
+	s=korg; t=1694980050;
+	bh=Q3DCeK2kvcPxCwd6LumxgU9PslARSOG8lJL7N4HG5iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0DsAse77nCRuiC5hIpkIw0dHVxvwsedHaFEPkJtE87RWWeSvrzpyLY9mF7tDj8tB
-	 C7SZyn3vER+uHYLmOseaz4d42yluXxEVx5kcnLO+wRphovl5gMPmPu92pT952ZufSR
-	 X3RkHUy64ZOAVxwcaMOEizcb8nX/2UqHrWA1HVgo=
+	b=y71aR8/Nf/2zBGVu2EcySnqR5WduG9VcL5M+Vp0Q4yGTzg5VljwQNYdiKv5jGJNH2
+	 gcNuxEPttg0KH3nPR4R5ainSgk8WqMxfQO74hFdCRdeddPe8uxqZuJDkGa+fxVFUX9
+	 bQExWGA+Uez9OouiUeooCXaLVxE2hGTaYUH++JDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jeff LaBundy <jeff@labundy.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 082/285] perf dlfilter: Initialize addr_location before passing it to thread__find_symbol_fb()
-Date: Sun, 17 Sep 2023 21:11:22 +0200
-Message-ID: <20230917191054.545412622@linuxfoundation.org>
+Subject: [PATCH 6.5 065/285] Input: iqs7222 - configure power mode before triggering ATI
+Date: Sun, 17 Sep 2023 21:11:05 +0200
+Message-ID: <20230917191053.962355317@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -48,46 +40,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit 42c6dd9d23019ff339d0aca80a444eb71087050e ]
+[ Upstream commit 2e00b8bf5624767f6be7427b6eb532524793463e ]
 
-As thread__find_symbol_fb() will end up calling thread__find_map() and
-it in turn will call these on uninitialized memory:
+If the device drops into ultra-low-power mode before being placed
+into normal-power mode as part of ATI being triggered, the device
+does not assert any interrupts until the ATI routine is restarted
+two seconds later.
 
-        maps__zput(al->maps);
-        map__zput(al->map);
-        thread__zput(al->thread);
+Solve this problem by adopting the vendor's recommendation, which
+calls for the device to be placed into normal-power mode prior to
+being configured and ATI being triggered.
 
-Fixes: 0dd5041c9a0eaf8c ("perf addr_location: Add init/exit/copy functions")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230731091857.10681-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The original implementation followed this sequence, but the order
+was inadvertently changed as part of the resolution of a separate
+erratum.
+
+Fixes: 1e4189d8af27 ("Input: iqs7222 - protect volatile registers")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Link: https://lore.kernel.org/r/ZKrpHc2Ji9qR25r2@nixie71
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dlfilter.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/misc/iqs7222.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/dlfilter.c b/tools/perf/util/dlfilter.c
-index 46f74b2344dbb..798a53d7e6c9d 100644
---- a/tools/perf/util/dlfilter.c
-+++ b/tools/perf/util/dlfilter.c
-@@ -166,6 +166,7 @@ static __s32 dlfilter__resolve_address(void *ctx, __u64 address, struct perf_dlf
- 	if (!thread)
- 		return -1;
+diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
+index 096b0925f41ba..acb95048e8230 100644
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -1381,9 +1381,6 @@ static int iqs7222_ati_trigger(struct iqs7222_private *iqs7222)
+ 	if (error)
+ 		return error;
  
-+	addr_location__init(&al);
- 	thread__find_symbol_fb(thread, d->sample->cpumode, address, &al);
+-	sys_setup &= ~IQS7222_SYS_SETUP_INTF_MODE_MASK;
+-	sys_setup &= ~IQS7222_SYS_SETUP_PWR_MODE_MASK;
+-
+ 	for (i = 0; i < IQS7222_NUM_RETRIES; i++) {
+ 		/*
+ 		 * Trigger ATI from streaming and normal-power modes so that
+@@ -1561,8 +1558,11 @@ static int iqs7222_dev_init(struct iqs7222_private *iqs7222, int dir)
+ 			return error;
+ 	}
  
- 	al_to_d_al(&al, &d_al);
+-	if (dir == READ)
++	if (dir == READ) {
++		iqs7222->sys_setup[0] &= ~IQS7222_SYS_SETUP_INTF_MODE_MASK;
++		iqs7222->sys_setup[0] &= ~IQS7222_SYS_SETUP_PWR_MODE_MASK;
+ 		return 0;
++	}
+ 
+ 	return iqs7222_ati_trigger(iqs7222);
+ }
 -- 
 2.40.1
 
