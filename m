@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C079C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D3C433C7;
-	Sun, 17 Sep 2023 20:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1B3746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF338C433C8;
+	Sun, 17 Sep 2023 20:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982428;
-	bh=/gMtv0zdYWDSWA4rZgL0gPJveZZP3KrsC4hO8kKHadU=;
+	s=korg; t=1694982432;
+	bh=stQ/PGyJ1qBGugCCCtyhmljYviCZFLITMz7xqzvFWVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QwVwte29ZuZFZKTU4CXH7GDJfaW2ndOVefA6XGyO/c3xEGfVJ0aayhRwL/MRXDiar
-	 BBZdR2I62MpbPnZLThARZX/4Juh/om8TPiC8k7nazaDy9eTO6iuoLZrBz7EKK1SAAs
-	 gF0JEPpA3b9LqJxTshfab3Q1yWQXeqMWmX0Pqz0M=
+	b=PtxqFFZkKkxtouqR7PAiy3evlAZo0AQqZD+waejqzw8H+OUZT3A1UHd+cVZmCT2EX
+	 29ZBz8qsm4sXZCNBgUk27krVnTOb7zroBsI2lMw4TmCWjJsUQY3pPF11JYa+7e9ftO
+	 UtHPcwWXWPDOs7sclely47rjQr3hWrhnJY1BTZYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Xiaowei Bao <xiaowei.bao@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Rob Herring <robh@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 220/511] PCI: dwc: Add start_link/stop_link inlines
-Date: Sun, 17 Sep 2023 21:10:47 +0200
-Message-ID: <20230917191119.124688401@linuxfoundation.org>
+Subject: [PATCH 5.15 221/511] PCI: layerscape: Add the endpoint linkup notifier support
+Date: Sun, 17 Sep 2023 21:10:48 +0200
+Message-ID: <20230917191119.148026316@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -42,197 +43,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit a37beefbde8802a4eab2545fee1b1780a03f2aa0 ]
+[ Upstream commit 061cbfab09fb35898f2907d42f936cf9ae271d93 ]
 
-Factor out this pattern:
+Layerscape has PME interrupt, which can be used as linkup notifier.  Set
+CFG_READY bit of PEX_PF0_CONFIG to enable accesses from root complex when
+linkup detected.
 
-  if (!pci->ops || !pci->ops->start_link)
-    return -EINVAL;
-
-  return pci->ops->start_link(pci);
-
-into a new dw_pcie_start_link() wrapper and do the same for the stop_link()
-method.
-
-Note that dw_pcie_ep_start() previously returned -EINVAL if there was no
-platform start_link() method, which didn't make much sense since that is
-not an error.  It will now return 0 in that case.
-
-As a side-effect, drop the empty start_link() and dummy dw_pcie_ops
-instances from the generic DW PCIe and Layerscape EP platform drivers.
-
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20220624143428.8334-14-Sergey.Semin@baikalelectronics.ru
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Link: https://lore.kernel.org/r/20230515151049.2797105-1-Frank.Li@nxp.com
+Signed-off-by: Xiaowei Bao <xiaowei.bao@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Stable-dep-of: 17cf8661ee0f ("PCI: layerscape: Add workaround for lost link capabilities during reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-layerscape-ep.c    | 12 ------------
- drivers/pci/controller/dwc/pcie-designware-ep.c   |  8 ++------
- drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++------
- drivers/pci/controller/dwc/pcie-designware-plat.c | 10 ----------
- drivers/pci/controller/dwc/pcie-designware.h      | 14 ++++++++++++++
- 5 files changed, 20 insertions(+), 34 deletions(-)
+ .../pci/controller/dwc/pci-layerscape-ep.c    | 100 +++++++++++++++++-
+ 1 file changed, 99 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-index 39f4664bd84c7..ad99707b3b994 100644
+index ad99707b3b994..5b27554e071a1 100644
 --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
 +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-@@ -32,15 +32,6 @@ struct ls_pcie_ep {
+@@ -18,6 +18,20 @@
+ 
+ #include "pcie-designware.h"
+ 
++#define PEX_PF0_CONFIG			0xC0014
++#define PEX_PF0_CFG_READY		BIT(0)
++
++/* PEX PFa PCIE PME and message interrupt registers*/
++#define PEX_PF0_PME_MES_DR		0xC0020
++#define PEX_PF0_PME_MES_DR_LUD		BIT(7)
++#define PEX_PF0_PME_MES_DR_LDD		BIT(9)
++#define PEX_PF0_PME_MES_DR_HRD		BIT(10)
++
++#define PEX_PF0_PME_MES_IER		0xC0028
++#define PEX_PF0_PME_MES_IER_LUDIE	BIT(7)
++#define PEX_PF0_PME_MES_IER_LDDIE	BIT(9)
++#define PEX_PF0_PME_MES_IER_HRDIE	BIT(10)
++
+ #define to_ls_pcie_ep(x)	dev_get_drvdata((x)->dev)
+ 
+ struct ls_pcie_ep_drvdata {
+@@ -30,8 +44,84 @@ struct ls_pcie_ep {
+ 	struct dw_pcie			*pci;
+ 	struct pci_epc_features		*ls_epc;
  	const struct ls_pcie_ep_drvdata *drvdata;
++	int				irq;
++	bool				big_endian;
  };
  
--static int ls_pcie_establish_link(struct dw_pcie *pci)
--{
--	return 0;
--}
--
--static const struct dw_pcie_ops dw_ls_pcie_ep_ops = {
--	.start_link = ls_pcie_establish_link,
--};
--
- static const struct pci_epc_features*
- ls_pcie_ep_get_features(struct dw_pcie_ep *ep)
- {
-@@ -106,19 +97,16 @@ static const struct dw_pcie_ep_ops ls_pcie_ep_ops = {
- 
- static const struct ls_pcie_ep_drvdata ls1_ep_drvdata = {
- 	.ops = &ls_pcie_ep_ops,
--	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
- };
- 
- static const struct ls_pcie_ep_drvdata ls2_ep_drvdata = {
- 	.func_offset = 0x20000,
- 	.ops = &ls_pcie_ep_ops,
--	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
- };
- 
- static const struct ls_pcie_ep_drvdata lx2_ep_drvdata = {
- 	.func_offset = 0x8000,
- 	.ops = &ls_pcie_ep_ops,
--	.dw_pcie_ops = &dw_ls_pcie_ep_ops,
- };
- 
- static const struct of_device_id ls_pcie_ep_of_match[] = {
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 2af4ed90e12b3..5023b7f704d2f 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -434,8 +434,7 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 
--	if (pci->ops && pci->ops->stop_link)
--		pci->ops->stop_link(pci);
-+	dw_pcie_stop_link(pci);
- }
- 
- static int dw_pcie_ep_start(struct pci_epc *epc)
-@@ -443,10 +442,7 @@ static int dw_pcie_ep_start(struct pci_epc *epc)
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 
--	if (!pci->ops || !pci->ops->start_link)
--		return -EINVAL;
--
--	return pci->ops->start_link(pci);
-+	return dw_pcie_start_link(pci);
- }
- 
- static const struct pci_epc_features*
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 7cd4593ad12fa..f561e87cd5f6e 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -402,8 +402,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
- 
- 	dw_pcie_setup_rc(pp);
- 
--	if (!dw_pcie_link_up(pci) && pci->ops && pci->ops->start_link) {
--		ret = pci->ops->start_link(pci);
-+	if (!dw_pcie_link_up(pci)) {
-+		ret = dw_pcie_start_link(pci);
- 		if (ret)
- 			goto err_free_msi;
- 	}
-@@ -420,8 +420,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
- 	return 0;
- 
- err_stop_link:
--	if (pci->ops && pci->ops->stop_link)
--		pci->ops->stop_link(pci);
-+	dw_pcie_stop_link(pci);
- 
- err_free_msi:
- 	if (pp->has_msi_ctrl)
-@@ -437,8 +436,7 @@ void dw_pcie_host_deinit(struct pcie_port *pp)
- 	pci_stop_root_bus(pp->bridge->bus);
- 	pci_remove_root_bus(pp->bridge->bus);
- 
--	if (pci->ops && pci->ops->stop_link)
--		pci->ops->stop_link(pci);
-+	dw_pcie_stop_link(pci);
- 
- 	if (pp->has_msi_ctrl)
- 		dw_pcie_free_msi(pp);
-diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
-index 8851eb161a0eb..107318ad22817 100644
---- a/drivers/pci/controller/dwc/pcie-designware-plat.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
-@@ -36,15 +36,6 @@ static const struct of_device_id dw_plat_pcie_of_match[];
- static const struct dw_pcie_host_ops dw_plat_pcie_host_ops = {
- };
- 
--static int dw_plat_pcie_establish_link(struct dw_pcie *pci)
--{
--	return 0;
--}
--
--static const struct dw_pcie_ops dw_pcie_ops = {
--	.start_link = dw_plat_pcie_establish_link,
--};
--
- static void dw_plat_pcie_ep_init(struct dw_pcie_ep *ep)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -142,7 +133,6 @@ static int dw_plat_pcie_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	pci->dev = dev;
--	pci->ops = &dw_pcie_ops;
- 
- 	dw_plat_pcie->pci = pci;
- 	dw_plat_pcie->mode = mode;
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 7d6e9b7576be5..8ba2392926346 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -365,6 +365,20 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
- 	dw_pcie_writel_dbi(pci, reg, val);
- }
- 
-+static inline int dw_pcie_start_link(struct dw_pcie *pci)
++static u32 ls_lut_readl(struct ls_pcie_ep *pcie, u32 offset)
 +{
-+	if (pci->ops && pci->ops->start_link)
-+		return pci->ops->start_link(pci);
++	struct dw_pcie *pci = pcie->pci;
++
++	if (pcie->big_endian)
++		return ioread32be(pci->dbi_base + offset);
++	else
++		return ioread32(pci->dbi_base + offset);
++}
++
++static void ls_lut_writel(struct ls_pcie_ep *pcie, u32 offset, u32 value)
++{
++	struct dw_pcie *pci = pcie->pci;
++
++	if (pcie->big_endian)
++		iowrite32be(value, pci->dbi_base + offset);
++	else
++		iowrite32(value, pci->dbi_base + offset);
++}
++
++static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
++{
++	struct ls_pcie_ep *pcie = dev_id;
++	struct dw_pcie *pci = pcie->pci;
++	u32 val, cfg;
++
++	val = ls_lut_readl(pcie, PEX_PF0_PME_MES_DR);
++	ls_lut_writel(pcie, PEX_PF0_PME_MES_DR, val);
++
++	if (!val)
++		return IRQ_NONE;
++
++	if (val & PEX_PF0_PME_MES_DR_LUD) {
++		cfg = ls_lut_readl(pcie, PEX_PF0_CONFIG);
++		cfg |= PEX_PF0_CFG_READY;
++		ls_lut_writel(pcie, PEX_PF0_CONFIG, cfg);
++		dw_pcie_ep_linkup(&pci->ep);
++
++		dev_dbg(pci->dev, "Link up\n");
++	} else if (val & PEX_PF0_PME_MES_DR_LDD) {
++		dev_dbg(pci->dev, "Link down\n");
++	} else if (val & PEX_PF0_PME_MES_DR_HRD) {
++		dev_dbg(pci->dev, "Hot reset\n");
++	}
++
++	return IRQ_HANDLED;
++}
++
++static int ls_pcie_ep_interrupt_init(struct ls_pcie_ep *pcie,
++				     struct platform_device *pdev)
++{
++	u32 val;
++	int ret;
++
++	pcie->irq = platform_get_irq_byname(pdev, "pme");
++	if (pcie->irq < 0)
++		return pcie->irq;
++
++	ret = devm_request_irq(&pdev->dev, pcie->irq, ls_pcie_ep_event_handler,
++			       IRQF_SHARED, pdev->name, pcie);
++	if (ret) {
++		dev_err(&pdev->dev, "Can't register PCIe IRQ\n");
++		return ret;
++	}
++
++	/* Enable interrupts */
++	val = ls_lut_readl(pcie, PEX_PF0_PME_MES_IER);
++	val |=  PEX_PF0_PME_MES_IER_LDDIE | PEX_PF0_PME_MES_IER_HRDIE |
++		PEX_PF0_PME_MES_IER_LUDIE;
++	ls_lut_writel(pcie, PEX_PF0_PME_MES_IER, val);
 +
 +	return 0;
 +}
 +
-+static inline void dw_pcie_stop_link(struct dw_pcie *pci)
-+{
-+	if (pci->ops && pci->ops->stop_link)
-+		pci->ops->stop_link(pci);
-+}
+ static const struct pci_epc_features*
+ ls_pcie_ep_get_features(struct dw_pcie_ep *ep)
+ {
+@@ -124,6 +214,7 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+ 	struct ls_pcie_ep *pcie;
+ 	struct pci_epc_features *ls_epc;
+ 	struct resource *dbi_base;
++	int ret;
+ 
+ 	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+ 	if (!pcie)
+@@ -143,6 +234,7 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+ 	pci->ops = pcie->drvdata->dw_pcie_ops;
+ 
+ 	ls_epc->bar_fixed_64bit = (1 << BAR_2) | (1 << BAR_4);
++	ls_epc->linkup_notifier = true;
+ 
+ 	pcie->pci = pci;
+ 	pcie->ls_epc = ls_epc;
+@@ -154,9 +246,15 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+ 
+ 	pci->ep.ops = &ls_pcie_ep_ops;
+ 
++	pcie->big_endian = of_property_read_bool(dev->of_node, "big-endian");
 +
- #ifdef CONFIG_PCIE_DW_HOST
- irqreturn_t dw_handle_msi_irq(struct pcie_port *pp);
- void dw_pcie_setup_rc(struct pcie_port *pp);
+ 	platform_set_drvdata(pdev, pcie);
+ 
+-	return dw_pcie_ep_init(&pci->ep);
++	ret = dw_pcie_ep_init(&pci->ep);
++	if (ret)
++		return ret;
++
++	return ls_pcie_ep_interrupt_init(pcie, pdev);
+ }
+ 
+ static struct platform_driver ls_pcie_ep_driver = {
 -- 
 2.40.1
 
