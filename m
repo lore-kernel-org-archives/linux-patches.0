@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EE8746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3252C433C7;
-	Sun, 17 Sep 2023 20:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6900746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:37:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5149AC433C8;
+	Sun, 17 Sep 2023 20:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983034;
-	bh=eUTq/9XG7npsuponzLARsESNkddbhxwUmDGeMbrO/lQ=;
+	s=korg; t=1694983037;
+	bh=tPFPmkhdXp3hKvGYoJmU+IiC1649AO3Yg3DEvkT5bRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngkdybrxXehcPo6TDJ8VPb+PYhMIxZ7iTBL5JPxhkalx5BZD4AUfeSefFzY0YvkCZ
-	 /sPcT/ZyUAbGG8lNEEK5yhpH/9gr0xdOBf71GFCMdscTbkY3mdFGp5crl7oh7+sKwf
-	 3kfoITJOyggU3EC792u9m35pGmyibIazff8OQbkk=
+	b=Lw5+08sEfGgI0fsTqKdyTDz3sRnHs0BRW48GTVe4MOow9u3oPntVqhhZi2XyPKUOo
+	 onEPGg9kTcZZI/rkjUG+dE9S7LisFSiy698AFBXp8XBGbfFG8+i/By/mt18MFgGh8n
+	 13AiNijOmKDJQX8O1ydeMlGLxjJ/qZ0jSptbr7Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 426/511] net/sched: fq_pie: avoid stalls in fq_pie_timer()
-Date: Sun, 17 Sep 2023 21:14:13 +0200
-Message-ID: <20230917191124.058568518@linuxfoundation.org>
+Subject: [PATCH 5.15 427/511] sctp: annotate data-races around sk->sk_wmem_queued
+Date: Sun, 17 Sep 2023 21:14:14 +0200
+Message-ID: <20230917191124.081921753@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -45,111 +45,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8c21ab1bae945686c602c5bfa4e3f3352c2452c5 ]
+[ Upstream commit dc9511dd6f37fe803f6b15b61b030728d7057417 ]
 
-When setting a high number of flows (limit being 65536),
-fq_pie_timer() is currently using too much time as syzbot reported.
+sk->sk_wmem_queued can be read locklessly from sctp_poll()
 
-Add logic to yield the cpu every 2048 flows (less than 150 usec
-on debug kernels).
-It should also help by not blocking qdisc fast paths for too long.
-Worst case (65536 flows) would need 31 jiffies for a complete scan.
+Use sk_wmem_queued_add() when the field is changed,
+and add READ_ONCE() annotations in sctp_writeable()
+and sctp_assocs_seq_show()
 
-Relevant extract from syzbot report:
+syzbot reported:
 
-rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 0-.... } 2663 jiffies s: 873 root: 0x1/.
-rcu: blocking rcu_node structures (internal RCU debug):
-Sending NMI from CPU 1 to CPUs 0:
-NMI backtrace for cpu 0
-CPU: 0 PID: 5177 Comm: syz-executor273 Not tainted 6.5.0-syzkaller-00453-g727dbda16b83 #0
+BUG: KCSAN: data-race in sctp_poll / sctp_wfree
+
+read-write to 0xffff888149d77810 of 4 bytes by interrupt on cpu 0:
+sctp_wfree+0x170/0x4a0 net/sctp/socket.c:9147
+skb_release_head_state+0xb7/0x1a0 net/core/skbuff.c:988
+skb_release_all net/core/skbuff.c:1000 [inline]
+__kfree_skb+0x16/0x140 net/core/skbuff.c:1016
+consume_skb+0x57/0x180 net/core/skbuff.c:1232
+sctp_chunk_destroy net/sctp/sm_make_chunk.c:1503 [inline]
+sctp_chunk_put+0xcd/0x130 net/sctp/sm_make_chunk.c:1530
+sctp_datamsg_put+0x29a/0x300 net/sctp/chunk.c:128
+sctp_chunk_free+0x34/0x50 net/sctp/sm_make_chunk.c:1515
+sctp_outq_sack+0xafa/0xd70 net/sctp/outqueue.c:1381
+sctp_cmd_process_sack net/sctp/sm_sideeffect.c:834 [inline]
+sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1366 [inline]
+sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+sctp_do_sm+0x12c7/0x31b0 net/sctp/sm_sideeffect.c:1169
+sctp_assoc_bh_rcv+0x2b2/0x430 net/sctp/associola.c:1051
+sctp_inq_push+0x108/0x120 net/sctp/inqueue.c:80
+sctp_rcv+0x116e/0x1340 net/sctp/input.c:243
+sctp6_rcv+0x25/0x40 net/sctp/ipv6.c:1120
+ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
+ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
+__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
+process_backlog+0x21f/0x380 net/core/dev.c:5894
+__napi_poll+0x60/0x3b0 net/core/dev.c:6460
+napi_poll net/core/dev.c:6527 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6660
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:389
+ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+read to 0xffff888149d77810 of 4 bytes by task 17828 on cpu 1:
+sctp_writeable net/sctp/socket.c:9304 [inline]
+sctp_poll+0x265/0x410 net/sctp/socket.c:8671
+sock_poll+0x253/0x270 net/socket.c:1374
+vfs_poll include/linux/poll.h:88 [inline]
+do_pollfd fs/select.c:873 [inline]
+do_poll fs/select.c:921 [inline]
+do_sys_poll+0x636/0xc00 fs/select.c:1015
+__do_sys_ppoll fs/select.c:1121 [inline]
+__se_sys_ppoll+0x1af/0x1f0 fs/select.c:1101
+__x64_sys_ppoll+0x67/0x80 fs/select.c:1101
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00019e80 -> 0x0000cc80
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 17828 Comm: syz-executor.1 Not tainted 6.5.0-rc7-syzkaller-00185-g28f20a19294d #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
-RIP: 0010:write_comp_data+0x21/0x90 kernel/kcov.c:236
-Code: 2e 0f 1f 84 00 00 00 00 00 65 8b 05 01 b2 7d 7e 49 89 f1 89 c6 49 89 d2 81 e6 00 01 00 00 49 89 f8 65 48 8b 14 25 80 b9 03 00 <a9> 00 01 ff 00 74 0e 85 f6 74 59 8b 82 04 16 00 00 85 c0 74 4f 8b
-RSP: 0018:ffffc90000007bb8 EFLAGS: 00000206
-RAX: 0000000000000101 RBX: ffffc9000dc0d140 RCX: ffffffff885893b0
-RDX: ffff88807c075940 RSI: 0000000000000100 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffc9000dc0d178
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  0000555555d54380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f6b442f6130 CR3: 000000006fe1c000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <NMI>
- </NMI>
- <IRQ>
- pie_calculate_probability+0x480/0x850 net/sched/sch_pie.c:415
- fq_pie_timer+0x1da/0x4f0 net/sched/sch_fq_pie.c:387
- call_timer_fn+0x1a0/0x580 kernel/time/timer.c:1700
 
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Link: https://lore.kernel.org/lkml/00000000000017ad3f06040bf394@google.com/
-Reported-by: syzbot+e46fbd5289363464bc13@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20230829123541.3745013-1-edumazet@google.com
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230830094519.950007-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ net/sctp/proc.c   |  2 +-
+ net/sctp/socket.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index ce7833f95214f..1fb68c973f451 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -61,6 +61,7 @@ struct fq_pie_sched_data {
- 	struct pie_params p_params;
- 	u32 ecn_prob;
- 	u32 flows_cnt;
-+	u32 flows_cursor;
- 	u32 quantum;
- 	u32 memory_limit;
- 	u32 new_flow_count;
-@@ -378,21 +379,31 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- static void fq_pie_timer(struct timer_list *t)
- {
- 	struct fq_pie_sched_data *q = from_timer(q, t, adapt_timer);
-+	unsigned long next, tupdate;
- 	struct Qdisc *sch = q->sch;
- 	spinlock_t *root_lock; /* to lock qdisc for probability calculations */
--	u32 idx;
-+	int max_cnt, i;
+diff --git a/net/sctp/proc.c b/net/sctp/proc.c
+index 982a87b3e11f8..963b94517ec20 100644
+--- a/net/sctp/proc.c
++++ b/net/sctp/proc.c
+@@ -284,7 +284,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
+ 		assoc->init_retries, assoc->shutdown_retries,
+ 		assoc->rtx_data_chunks,
+ 		refcount_read(&sk->sk_wmem_alloc),
+-		sk->sk_wmem_queued,
++		READ_ONCE(sk->sk_wmem_queued),
+ 		sk->sk_sndbuf,
+ 		sk->sk_rcvbuf);
+ 	seq_printf(seq, "\n");
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 717e2f60370b3..36a37fef27719 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -68,7 +68,7 @@
+ #include <net/sctp/stream_sched.h>
  
- 	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
+ /* Forward declarations for internal helper functions. */
+-static bool sctp_writeable(struct sock *sk);
++static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+ 				size_t msg_len);
+@@ -138,7 +138,7 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
--	for (idx = 0; idx < q->flows_cnt; idx++)
--		pie_calculate_probability(&q->p_params, &q->flows[idx].vars,
--					  q->flows[idx].backlog);
--
--	/* reset the timer to fire after 'tupdate' jiffies. */
--	if (q->p_params.tupdate)
--		mod_timer(&q->adapt_timer, jiffies + q->p_params.tupdate);
-+	/* Limit this expensive loop to 2048 flows per round. */
-+	max_cnt = min_t(int, q->flows_cnt - q->flows_cursor, 2048);
-+	for (i = 0; i < max_cnt; i++) {
-+		pie_calculate_probability(&q->p_params,
-+					  &q->flows[q->flows_cursor].vars,
-+					  q->flows[q->flows_cursor].backlog);
-+		q->flows_cursor++;
-+	}
- 
-+	tupdate = q->p_params.tupdate;
-+	next = 0;
-+	if (q->flows_cursor >= q->flows_cnt) {
-+		q->flows_cursor = 0;
-+		next = tupdate;
-+	}
-+	if (tupdate)
-+		mod_timer(&q->adapt_timer, jiffies + next);
- 	spin_unlock(root_lock);
+ 	refcount_add(sizeof(struct sctp_chunk), &sk->sk_wmem_alloc);
+ 	asoc->sndbuf_used += chunk->skb->truesize + sizeof(struct sctp_chunk);
+-	sk->sk_wmem_queued += chunk->skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, chunk->skb->truesize + sizeof(struct sctp_chunk));
+ 	sk_mem_charge(sk, chunk->skb->truesize);
  }
  
+@@ -9148,7 +9148,7 @@ static void sctp_wfree(struct sk_buff *skb)
+ 	struct sock *sk = asoc->base.sk;
+ 
+ 	sk_mem_uncharge(sk, skb->truesize);
+-	sk->sk_wmem_queued -= skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, -(skb->truesize + sizeof(struct sctp_chunk)));
+ 	asoc->sndbuf_used -= skb->truesize + sizeof(struct sctp_chunk);
+ 	WARN_ON(refcount_sub_and_test(sizeof(struct sctp_chunk),
+ 				      &sk->sk_wmem_alloc));
+@@ -9303,9 +9303,9 @@ void sctp_write_space(struct sock *sk)
+  * UDP-style sockets or TCP-style sockets, this code should work.
+  *  - Daisy
+  */
+-static bool sctp_writeable(struct sock *sk)
++static bool sctp_writeable(const struct sock *sk)
+ {
+-	return sk->sk_sndbuf > sk->sk_wmem_queued;
++	return READ_ONCE(sk->sk_sndbuf) > READ_ONCE(sk->sk_wmem_queued);
+ }
+ 
+ /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
 -- 
 2.40.1
 
