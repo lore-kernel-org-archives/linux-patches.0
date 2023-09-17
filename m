@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8654A6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED72FC433CA;
-	Sun, 17 Sep 2023 19:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6D26FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DB9C433CB;
+	Sun, 17 Sep 2023 19:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980447;
-	bh=a1IvbntcG5urIGhTQvW+AgA5to3Qq9gM00HgATG9TrQ=;
+	s=korg; t=1694980451;
+	bh=TxYAOnsZAPc0Wj+wN1x6u4+LJciXT++KaEx7oZxPnyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGI47izXS4XI6kSkQTJMs8OjLrQyTZz38n467Lc133fa7fCUOEPUChxWJR1x5XpXL
-	 Flmz4Lvq5yiS0raPOf8tHamiFmL0VQ72eMlfu9GysY1ph8Be80wTfplK8+0ka2M/Kg
-	 XpMEYOC8iXUR3uiTDEq3w9TEqZ9XVDDWHpVC8bWc=
+	b=IEbL6A7IBXCphNBJAdrinrWLKAmWEaosg8rtHlEhF9/BnoHK3kXlxoCt5asixwZKg
+	 BV4KlMAZh+FE1NXuoKPqwEBqK3urdkQbhq5nbO6lynsh663RPTlfjmLkP4Y/grKug0
+	 TIAat05IoelykwTPOU2YH6uQeqSS0L6M4r0ugaBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 193/285] f2fs: avoid false alarm of circular locking
-Date: Sun, 17 Sep 2023 21:13:13 +0200
-Message-ID: <20230917191058.277186854@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Petr Mladek <pmladek@suse.com>
+Subject: [PATCH 6.5 194/285] lib: test_scanf: Add explicit type cast to result initialization in test_number_prefix()
+Date: Sun, 17 Sep 2023 21:13:14 +0200
+Message-ID: <20230917191058.309752463@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,155 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 5c13e2388bf3426fd69a89eb46e50469e9624e56 upstream.
+commit 92382d744176f230101d54f5c017bccd62770f01 upstream.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.5.0-rc5-syzkaller-00353-gae545c3283dc #0 Not tainted
-------------------------------------------------------
-syz-executor273/5027 is trying to acquire lock:
-ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
-ffff888077fe1fb0 (&fi->i_sem){+.+.}-{3:3}, at: f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
+A recent change in clang allows it to consider more expressions as
+compile time constants, which causes it to point out an implicit
+conversion in the scanf tests:
 
-but task is already holding lock:
-ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
-ffff888077fe07c8 (&fi->i_xattr_sem){.+.+}-{3:3}, at: f2fs_add_dentry+0x92/0x230 fs/f2fs/dir.c:783
+  lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
+    661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
+    609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
+        |                       ~            ^~~~~~~~~~
+  1 warning generated.
 
-which lock already depends on the new lock.
+The result of the bitwise negation is the type of the operand after
+going through the integer promotion rules, so this truncation is
+expected but harmless, as the initial values in the result array get
+overwritten by _test() anyways. Add an explicit cast to the expected
+type in test_number_prefix() to silence the warning. There is no
+functional change, as all the tests still pass with GCC 13.1.0 and clang
+18.0.0.
 
-the existing dependency chain (in reverse order) is:
-
--> #1 (&fi->i_xattr_sem){.+.+}-{3:3}:
-       down_read+0x9c/0x470 kernel/locking/rwsem.c:1520
-       f2fs_down_read fs/f2fs/f2fs.h:2108 [inline]
-       f2fs_getxattr+0xb1e/0x12c0 fs/f2fs/xattr.c:532
-       __f2fs_get_acl+0x5a/0x900 fs/f2fs/acl.c:179
-       f2fs_acl_create fs/f2fs/acl.c:377 [inline]
-       f2fs_init_acl+0x15c/0xb30 fs/f2fs/acl.c:420
-       f2fs_init_inode_metadata+0x159/0x1290 fs/f2fs/dir.c:558
-       f2fs_add_regular_entry+0x79e/0xb90 fs/f2fs/dir.c:740
-       f2fs_add_dentry+0x1de/0x230 fs/f2fs/dir.c:788
-       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
-       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
-       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
-       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
-       do_mkdirat+0x2a9/0x330 fs/namei.c:4140
-       __do_sys_mkdir fs/namei.c:4160 [inline]
-       __se_sys_mkdir fs/namei.c:4158 [inline]
-       __x64_sys_mkdir+0xf2/0x140 fs/namei.c:4158
-       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-       entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (&fi->i_sem){+.+.}-{3:3}:
-       check_prev_add kernel/locking/lockdep.c:3142 [inline]
-       check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-       validate_chain kernel/locking/lockdep.c:3876 [inline]
-       __lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-       lock_acquire kernel/locking/lockdep.c:5761 [inline]
-       lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-       down_write+0x93/0x200 kernel/locking/rwsem.c:1573
-       f2fs_down_write fs/f2fs/f2fs.h:2133 [inline]
-       f2fs_add_inline_entry+0x300/0x6f0 fs/f2fs/inline.c:644
-       f2fs_add_dentry+0xa6/0x230 fs/f2fs/dir.c:784
-       f2fs_do_add_link+0x190/0x280 fs/f2fs/dir.c:827
-       f2fs_add_link fs/f2fs/f2fs.h:3554 [inline]
-       f2fs_mkdir+0x377/0x620 fs/f2fs/namei.c:781
-       vfs_mkdir+0x532/0x7e0 fs/namei.c:4117
-       ovl_do_mkdir fs/overlayfs/overlayfs.h:196 [inline]
-       ovl_mkdir_real+0xb5/0x370 fs/overlayfs/dir.c:146
-       ovl_workdir_create+0x3de/0x820 fs/overlayfs/super.c:309
-       ovl_make_workdir fs/overlayfs/super.c:711 [inline]
-       ovl_get_workdir fs/overlayfs/super.c:864 [inline]
-       ovl_fill_super+0xdab/0x6180 fs/overlayfs/super.c:1400
-       vfs_get_super+0xf9/0x290 fs/super.c:1152
-       vfs_get_tree+0x88/0x350 fs/super.c:1519
-       do_new_mount fs/namespace.c:3335 [inline]
-       path_mount+0x1492/0x1ed0 fs/namespace.c:3662
-       do_mount fs/namespace.c:3675 [inline]
-       __do_sys_mount fs/namespace.c:3884 [inline]
-       __se_sys_mount fs/namespace.c:3861 [inline]
-       __x64_sys_mount+0x293/0x310 fs/namespace.c:3861
-       do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-       do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-       entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  rlock(&fi->i_xattr_sem);
-                               lock(&fi->i_sem);
-                               lock(&fi->i_xattr_sem);
-  lock(&fi->i_sem);
-
-Cc: <stable@vger.kernel.org>
-Reported-and-tested-by: syzbot+e5600587fa9cbf8e3826@syzkaller.appspotmail.com
-Fixes: 5eda1ad1aaff "f2fs: fix deadlock in i_xattr_sem and inode page lock"
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linuxq/issues/1899
+Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h   |   24 +++++++++++++++---------
- fs/f2fs/inline.c |    3 ++-
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ lib/test_scanf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2122,15 +2122,6 @@ static inline int f2fs_down_read_trylock
- 	return down_read_trylock(&sem->internal_rwsem);
- }
- 
--#ifdef CONFIG_DEBUG_LOCK_ALLOC
--static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
--{
--	down_read_nested(&sem->internal_rwsem, subclass);
--}
--#else
--#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
--#endif
--
- static inline void f2fs_up_read(struct f2fs_rwsem *sem)
- {
- 	up_read(&sem->internal_rwsem);
-@@ -2141,6 +2132,21 @@ static inline void f2fs_down_write(struc
- 	down_write(&sem->internal_rwsem);
- }
- 
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+static inline void f2fs_down_read_nested(struct f2fs_rwsem *sem, int subclass)
-+{
-+	down_read_nested(&sem->internal_rwsem, subclass);
-+}
-+
-+static inline void f2fs_down_write_nested(struct f2fs_rwsem *sem, int subclass)
-+{
-+	down_write_nested(&sem->internal_rwsem, subclass);
-+}
-+#else
-+#define f2fs_down_read_nested(sem, subclass) f2fs_down_read(sem)
-+#define f2fs_down_write_nested(sem, subclass) f2fs_down_write(sem)
-+#endif
-+
- static inline int f2fs_down_write_trylock(struct f2fs_rwsem *sem)
- {
- 	return down_write_trylock(&sem->internal_rwsem);
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -641,7 +641,8 @@ int f2fs_add_inline_entry(struct inode *
- 	}
- 
- 	if (inode) {
--		f2fs_down_write(&F2FS_I(inode)->i_sem);
-+		f2fs_down_write_nested(&F2FS_I(inode)->i_sem,
-+						SINGLE_DEPTH_NESTING);
- 		page = f2fs_init_inode_metadata(inode, dir, fname, ipage);
- 		if (IS_ERR(page)) {
- 			err = PTR_ERR(page);
+--- a/lib/test_scanf.c
++++ b/lib/test_scanf.c
+@@ -606,7 +606,7 @@ static void __init numbers_slice(void)
+ #define test_number_prefix(T, str, scan_fmt, expect0, expect1, n_args, fn)	\
+ do {										\
+ 	const T expect[2] = { expect0, expect1 };				\
+-	T result[2] = {~expect[0], ~expect[1]};					\
++	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
+ 										\
+ 	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
+ } while (0)
 
 
