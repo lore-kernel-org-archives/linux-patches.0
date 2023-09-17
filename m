@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F136FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:36:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9D0C433C8;
-	Sun, 17 Sep 2023 19:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFDA6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:36:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67A5C433C8;
+	Sun, 17 Sep 2023 19:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979410;
-	bh=VO4WN7iS17w7MTqfu5J3rI432xG5e16RW9/vai78OkE=;
+	s=korg; t=1694979414;
+	bh=O6tsR94IAwRZsOz1KYNjE2XqYAeJFjSjPGq8W45bFNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCC3IOtSwY6fWAMH4GLRBOPLkvMAkg71DbBjvl/LuemvkEmyYY6aE2mha5E6bw8cY
-	 3O++JyEEc0j9vswCP4o4lfLAkBvIYX1xRc+LhFzSHNZiwsF0ncGG3gyKCiaFuW55mJ
-	 ZKfAR+Z/YyA1C3QoEGxXunDMhZ8Mx0EuMdGlGAww=
+	b=vWA2nCtQvZ6tcPINR7rFHXigU+w1g+9DJhhOodLaHIZjqHeEYLPTpkinSWevvTUsW
+	 NHFPbD6GETp5guoBh59cLgoQkLIy/Wr0KxEFKRrRTGXbuZce9k83FeTnNgE2SeONrE
+	 1khc/VxMMBh5ax8Bmvkq/zrT242nmgR+D6LS2s/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 304/406] usb: typec: bus: verify partner exists in typec_altmode_attention
-Date: Sun, 17 Sep 2023 21:12:38 +0200
-Message-ID: <20230917191109.335142835@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 5.10 279/406] ARM: OMAP2+: Fix -Warray-bounds warning in _pwrdm_state_switch()
+Date: Sun, 17 Sep 2023 21:12:13 +0200
+Message-ID: <20230917191108.657215114@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,83 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit f23643306430f86e2f413ee2b986e0773e79da31 upstream.
+commit 847fb80cc01a54bc827b02547bb8743bdb59ddab upstream.
 
-Some usb hubs will negotiate DisplayPort Alt mode with the device
-but will then negotiate a data role swap after entering the alt
-mode. The data role swap causes the device to unregister all alt
-modes, however the usb hub will still send Attention messages
-even after failing to reregister the Alt Mode. type_altmode_attention
-currently does not verify whether or not a device's altmode partner
-exists, which results in a NULL pointer error when dereferencing
-the typec_altmode and typec_altmode_ops belonging to the altmode
-partner.
+If function pwrdm_read_prev_pwrst() returns -EINVAL, we will end
+up accessing array pwrdm->state_counter through negative index
+-22. This is wrong and the compiler is legitimately warning us
+about this potential problem.
 
-Verify the presence of a device's altmode partner before sending
-the Attention message to the Alt Mode driver.
+Fix this by sanity checking the value stored in variable _prev_
+before accessing array pwrdm->state_counter.
 
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Address the following -Warray-bounds warning:
+arch/arm/mach-omap2/powerdomain.c:178:45: warning: array subscript -22 is below array bounds of 'unsigned int[4]' [-Warray-bounds]
+
+Link: https://github.com/KSPP/linux/issues/307
+Fixes: ba20bb126940 ("OMAP: PM counter infrastructure.")
 Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230814180559.923475-1-rdbabiera@google.com
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/20230607050639.LzbPn%25lkp@intel.com/
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Message-ID: <ZIFVGwImU3kpaGeH@work>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/bus.c           |   12 ++++++++++--
- drivers/usb/typec/tcpm/tcpm.c     |    3 ++-
- include/linux/usb/typec_altmode.h |    2 +-
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ arch/arm/mach-omap2/powerdomain.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/bus.c
-+++ b/drivers/usb/typec/bus.c
-@@ -152,12 +152,20 @@ EXPORT_SYMBOL_GPL(typec_altmode_exit);
-  *
-  * Notifies the partner of @adev about Attention command.
-  */
--void typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
-+int typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
- {
--	struct typec_altmode *pdev = &to_altmode(adev)->partner->adev;
-+	struct altmode *partner = to_altmode(adev)->partner;
-+	struct typec_altmode *pdev;
-+
-+	if (!partner)
-+		return -ENODEV;
-+
-+	pdev = &partner->adev;
- 
- 	if (pdev->ops && pdev->ops->attention)
- 		pdev->ops->attention(pdev, vdo);
-+
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(typec_altmode_attention);
- 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1395,7 +1395,8 @@ static void tcpm_handle_vdm_request(stru
- 			}
- 			break;
- 		case ADEV_ATTENTION:
--			typec_altmode_attention(adev, p[1]);
-+			if (typec_altmode_attention(adev, p[1]))
-+				tcpm_log(port, "typec_altmode_attention no port partner altmode");
- 			break;
- 		}
- 	}
---- a/include/linux/usb/typec_altmode.h
-+++ b/include/linux/usb/typec_altmode.h
-@@ -67,7 +67,7 @@ struct typec_altmode_ops {
- 
- int typec_altmode_enter(struct typec_altmode *altmode, u32 *vdo);
- int typec_altmode_exit(struct typec_altmode *altmode);
--void typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
-+int typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
- int typec_altmode_vdm(struct typec_altmode *altmode,
- 		      const u32 header, const u32 *vdo, int count);
- int typec_altmode_notify(struct typec_altmode *altmode, unsigned long conf,
+--- a/arch/arm/mach-omap2/powerdomain.c
++++ b/arch/arm/mach-omap2/powerdomain.c
+@@ -174,7 +174,7 @@ static int _pwrdm_state_switch(struct po
+ 		break;
+ 	case PWRDM_STATE_PREV:
+ 		prev = pwrdm_read_prev_pwrst(pwrdm);
+-		if (pwrdm->state != prev)
++		if (prev >= 0 && pwrdm->state != prev)
+ 			pwrdm->state_counter[prev]++;
+ 		if (prev == PWRDM_POWER_RET)
+ 			_update_logic_membank_counters(pwrdm);
 
 
