@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432EF6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2E0C433C7;
-	Sun, 17 Sep 2023 19:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B26FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4DBC433C8;
+	Sun, 17 Sep 2023 19:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978600;
-	bh=IwYywb+YsOvvOPbp4rruM5V03x7hl9CFtn71M4eQYdg=;
+	s=korg; t=1694978603;
+	bh=Mj0MdEFh8/6JtpIkZSFpS48jVyD0msraU27pIKb7hX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bY/oaL6sOvbtsu8aem9655dY+QRmlBIrGnQ2yLYRXIcCFeJaOZE9t5pNdxGsMUpX3
-	 RwZz4b6tN0OZotU5/tbiOLF11JZFxOuTCZJyCbYPfca719H8OpIZMdb1TTwzwRz7dU
-	 Bz+/AoCrWZ7+38RJ8CeXEnJtkDnkOr3slRFpDkvg=
+	b=K3zFs6Vt8Vdn5yg5Lt1AogARuLGDKRAjnxU5OqpAEfPFB9/aNd4Ax+zPJx1atXg6t
+	 6Pjl5Lo8gG+GCKJzBXtlGCIx/WRr/SDhy13N3FEYJSEmrq6mnMxD2iyqAyiJqHvGiO
+	 I9Pt1z2eTgqVwmxHYQX5oEgir9280ePsP0GZ3Sdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Griege <jgriege@cloudflare.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Stanislav Fomichev <sdf@google.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/406] lwt: Fix return values of BPF xmit ops
-Date: Sun, 17 Sep 2023 21:09:19 +0200
-Message-ID: <20230917191103.900962421@linuxfoundation.org>
+Subject: [PATCH 5.10 079/406] s390/paes: fix PKEY_TYPE_EP11_AES handling for secure keyblobs
+Date: Sun, 17 Sep 2023 21:08:53 +0200
+Message-ID: <20230917191103.218091505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -43,61 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 29b22badb7a84b783e3a4fffca16f7768fb31205 ]
+[ Upstream commit cba33db3fc4dbf2e54294b0e499d2335a3a00d78 ]
 
-BPF encap ops can return different types of positive values, such like
-NET_RX_DROP, NET_XMIT_CN, NETDEV_TX_BUSY, and so on, from function
-skb_do_redirect and bpf_lwt_xmit_reroute. At the xmit hook, such return
-values would be treated implicitly as LWTUNNEL_XMIT_CONTINUE in
-ip(6)_finish_output2. When this happens, skbs that have been freed would
-continue to the neighbor subsystem, causing use-after-free bug and
-kernel crashes.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES securekey blobs as a
+supplement to the PKEY_TYPE_EP11 (which won't work in environments
+with session-bound keys). This new keyblobs has a different maximum
+size, so fix paes crypto module to accept also these larger keyblobs.
 
-To fix the incorrect behavior, skb_do_redirect return values can be
-simply discarded, the same as tc-egress behavior. On the other hand,
-bpf_lwt_xmit_reroute returns useful errors to local senders, e.g. PMTU
-information. Thus convert its return values to avoid the conflict with
-LWTUNNEL_XMIT_CONTINUE.
-
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Reported-by: Jordan Griege <jgriege@cloudflare.com>
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Suggested-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/0d2b878186cfe215fec6b45769c1cd0591d3628d.1692326837.git.yan@cloudflare.com
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/s390/crypto/paes_s390.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 3fd207fe1284a..f6c327c7badb4 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -59,9 +59,8 @@ static int run_lwt_bpf(struct sk_buff *skb, struct bpf_lwt_prog *lwt,
- 			ret = BPF_OK;
- 		} else {
- 			skb_reset_mac_header(skb);
--			ret = skb_do_redirect(skb);
--			if (ret == 0)
--				ret = BPF_REDIRECT;
-+			skb_do_redirect(skb);
-+			ret = BPF_REDIRECT;
- 		}
- 		break;
+diff --git a/arch/s390/crypto/paes_s390.c b/arch/s390/crypto/paes_s390.c
+index f3caeb17c85b9..a6727ad58d65a 100644
+--- a/arch/s390/crypto/paes_s390.c
++++ b/arch/s390/crypto/paes_s390.c
+@@ -34,7 +34,7 @@
+  * and padding is also possible, the limits need to be generous.
+  */
+ #define PAES_MIN_KEYSIZE 16
+-#define PAES_MAX_KEYSIZE 320
++#define PAES_MAX_KEYSIZE MAXEP11AESKEYBLOBSIZE
  
-@@ -254,7 +253,7 @@ static int bpf_lwt_xmit_reroute(struct sk_buff *skb)
- 
- 	err = dst_output(dev_net(skb_dst(skb)->dev), skb->sk, skb);
- 	if (unlikely(err))
--		return err;
-+		return net_xmit_errno(err);
- 
- 	/* ip[6]_finish_output2 understand LWTUNNEL_XMIT_DONE */
- 	return LWTUNNEL_XMIT_DONE;
+ static u8 *ctrblk;
+ static DEFINE_MUTEX(ctrblk_lock);
 -- 
 2.40.1
 
