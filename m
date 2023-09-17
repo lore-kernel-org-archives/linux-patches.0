@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BCC746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CF5C433C9;
-	Sun, 17 Sep 2023 20:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A63746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70F8C433C8;
+	Sun, 17 Sep 2023 20:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983147;
-	bh=XUKeue+CE6XpjMmfx+afqABy9bKT0545n0bmr2QC4BY=;
+	s=korg; t=1694983151;
+	bh=ioaW6UywnqBUDQ8gYelRgkdnGAleZi1nrag+zz21NOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWFo1XzCQHtrAjWER57PIWfuhvCQt0ZV7zoVaaBBiJF5W/BH2+lfjZN34uJla6jZt
-	 F/FvQz6owlLyntjuC6vOn74tr5uVha4wclUJrhznTpeV4GJ9QLYzFTTCMTQuZQ/uWQ
-	 T3Iexb/JQrmpkFzTZC2FB1Km3OWIL5gfLnKNSdo4=
+	b=Hsd5Oax3lcFwLPs0erZPxPiYttWXP/Wv5Yy/5YdCzKUG+sRMsGFRBOZMuOYXx4ITV
+	 407rN+fyVIFVH/C3hg+Yn9khW6KLp5nl9leHJCA41VAOkOHdC9yzuKSXk8AmJ2Sdiw
+	 c5QkPwjATcoaS1m90G8CF3HnCHsHb45zoK6iRhTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Leong <wmliang@infosec.exchange>,
-	Wander Lairson Costa <wander@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Hao Chen <chenhao418@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 456/511] netfilter: nfnetlink_osf: avoid OOB read
-Date: Sun, 17 Sep 2023 21:14:43 +0200
-Message-ID: <20230917191124.767865456@linuxfoundation.org>
+Subject: [PATCH 5.15 457/511] net: hns3: fix byte order conversion issue in hclge_dbg_fd_tcam_read()
+Date: Sun, 17 Sep 2023 21:14:44 +0200
+Message-ID: <20230917191124.791289697@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,57 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Hao Chen <chenhao418@huawei.com>
 
-[ Upstream commit f4f8a7803119005e87b716874bec07c751efafec ]
+[ Upstream commit efccf655e99b6907ca07a466924e91805892e7d3 ]
 
-The opt_num field is controlled by user mode and is not currently
-validated inside the kernel. An attacker can take advantage of this to
-trigger an OOB read and potentially leak information.
+req1->tcam_data is defined as "u8 tcam_data[8]", and we convert it as
+(u32 *) without considerring byte order conversion,
+it may result in printing wrong data for tcam_data.
 
-BUG: KASAN: slab-out-of-bounds in nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
-Read of size 2 at addr ffff88804bc64272 by task poc/6431
+Convert tcam_data to (__le32 *) first to fix it.
 
-CPU: 1 PID: 6431 Comm: poc Not tainted 6.0.0-rc4 #1
-Call Trace:
- nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
- nf_osf_find+0x186/0x2f0 net/netfilter/nfnetlink_osf.c:281
- nft_osf_eval+0x37f/0x590 net/netfilter/nft_osf.c:47
- expr_call_ops_eval net/netfilter/nf_tables_core.c:214
- nft_do_chain+0x2b0/0x1490 net/netfilter/nf_tables_core.c:264
- nft_do_chain_ipv4+0x17c/0x1f0 net/netfilter/nft_chain_filter.c:23
- [..]
-
-Also add validation to genre, subtype and version fields.
-
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Reported-by: Lucas Leong <wmliang@infosec.exchange>
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: b5a0b70d77b9 ("net: hns3: refactor dump fd tcam of debugfs")
+Signed-off-by: Hao Chen <chenhao418@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index 8f1bfa6ccc2d9..50723ba082890 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -315,6 +315,14 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+index dd8b73aebe6a5..63665e8a7c718 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+@@ -1450,7 +1450,7 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 	struct hclge_desc desc[3];
+ 	int pos = 0;
+ 	int ret, i;
+-	u32 *req;
++	__le32 *req;
  
- 	f = nla_data(osf_attrs[OSF_ATTR_FINGER]);
+ 	hclge_cmd_setup_basic_desc(&desc[0], HCLGE_OPC_FD_TCAM_OP, true);
+ 	desc[0].flag |= cpu_to_le16(HCLGE_CMD_FLAG_NEXT);
+@@ -1475,22 +1475,22 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 			 tcam_msg.loc);
  
-+	if (f->opt_num > ARRAY_SIZE(f->opt))
-+		return -EINVAL;
-+
-+	if (!memchr(f->genre, 0, MAXGENRELEN) ||
-+	    !memchr(f->subtype, 0, MAXGENRELEN) ||
-+	    !memchr(f->version, 0, MAXGENRELEN))
-+		return -EINVAL;
-+
- 	kf = kmalloc(sizeof(struct nf_osf_finger), GFP_KERNEL);
- 	if (!kf)
- 		return -ENOMEM;
+ 	/* tcam_data0 ~ tcam_data1 */
+-	req = (u32 *)req1->tcam_data;
++	req = (__le32 *)req1->tcam_data;
+ 	for (i = 0; i < 2; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	/* tcam_data2 ~ tcam_data7 */
+-	req = (u32 *)req2->tcam_data;
++	req = (__le32 *)req2->tcam_data;
+ 	for (i = 0; i < 6; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	/* tcam_data8 ~ tcam_data12 */
+-	req = (u32 *)req3->tcam_data;
++	req = (__le32 *)req3->tcam_data;
+ 	for (i = 0; i < 5; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	return ret;
+ }
 -- 
 2.40.1
 
