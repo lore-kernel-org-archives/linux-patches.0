@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D5A6FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B5AC433C8;
-	Sun, 17 Sep 2023 19:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAD06FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:55:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15651C433C7;
+	Sun, 17 Sep 2023 19:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980522;
-	bh=fG4qLPbWdWHO6+Dv6SxX7bQ+Xqm6zAXNG6Z/P3speSM=;
+	s=korg; t=1694980525;
+	bh=kvUoWf5FwusLr7nVtNeAQFNs10GuytQJ1c3SOUpYEFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEKmqwl6Nc1MLo4vqfMFDNNmk6O5vS3lnIF6JpvBJVTFrfFb90bCip+oJS8Tftp2H
-	 2444O51uAYzSD1F87N1wfbOu7X4HbbXNGealE2rV7S/wpn2HwxPGw6+2lCzXvUq7/J
-	 aXm9cXPzRLzxUXoM3YMUbWjVjy21lFulrQgY4hUA=
+	b=CjcpCcq0KqEfbxfRaO8BhKA7tFaMGQ21SSeGLEC8tUzVwwjH2mG9TDpkFKPilQX/q
+	 SVZPIIY5Trkl1K2Vkk6k6f1YAWa9h3xuGqnvBRQkwJhLTfdluSvlc3k6+WIN7ZMI2c
+	 kSZu9yIXn8/lH3LBAyA59lBzYGDwpx8ct9RSwOzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	William Zhang <william.zhang@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.5 216/285] mtd: rawnand: brcmnand: Fix potential false time out warning
-Date: Sun, 17 Sep 2023 21:13:36 +0200
-Message-ID: <20230917191059.012822176@linuxfoundation.org>
+Subject: [PATCH 6.5 217/285] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
+Date: Sun, 17 Sep 2023 21:13:37 +0200
+Message-ID: <20230917191059.041342259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,40 +42,153 @@ Content-Transfer-Encoding: 8bit
 
 From: William Zhang <william.zhang@broadcom.com>
 
-commit 9cc0a598b944816f2968baf2631757f22721b996 upstream.
+commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b upstream.
 
-If system is busy during the command status polling function, the driver
-may not get the chance to poll the status register till the end of time
-out and return the premature status.  Do a final check after time out
-happens to ensure reading the correct status.
+v7.2 controller has different ECC level field size and shift in the acc
+control register than its predecessor and successor controller. It needs
+to be set specifically.
 
-Fixes: 9d2ee0a60b8b ("mtd: nand: brcmnand: Check flash #WP pin status before nand erase/program")
+Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
 Signed-off-by: William Zhang <william.zhang@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-3-william.zhang@broadcom.com
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   74 +++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 33 deletions(-)
 
 --- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
 +++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -1072,6 +1072,14 @@ static int bcmnand_ctrl_poll_status(stru
- 		cpu_relax();
- 	} while (time_after(limit, jiffies));
+@@ -272,6 +272,7 @@ struct brcmnand_controller {
+ 	const unsigned int	*page_sizes;
+ 	unsigned int		page_size_shift;
+ 	unsigned int		max_oob;
++	u32			ecc_level_shift;
+ 	u32			features;
  
-+	/*
-+	 * do a final check after time out in case the CPU was busy and the driver
-+	 * did not get enough time to perform the polling to avoid false alarms
-+	 */
-+	val = brcmnand_read_reg(ctrl, BRCMNAND_INTFC_STATUS);
-+	if ((val & mask) == expected_val)
-+		return 0;
+ 	/* for low-power standby/resume only */
+@@ -596,6 +597,34 @@ enum {
+ 	INTFC_CTLR_READY		= BIT(31),
+ };
+ 
++/***********************************************************************
++ * NAND ACC CONTROL bitfield
++ *
++ * Some bits have remained constant throughout hardware revision, while
++ * others have shifted around.
++ ***********************************************************************/
 +
- 	dev_warn(ctrl->dev, "timeout on status poll (expected %x got %x)\n",
- 		 expected_val, val & mask);
++/* Constant for all versions (where supported) */
++enum {
++	/* See BRCMNAND_HAS_CACHE_MODE */
++	ACC_CONTROL_CACHE_MODE				= BIT(22),
++
++	/* See BRCMNAND_HAS_PREFETCH */
++	ACC_CONTROL_PREFETCH				= BIT(23),
++
++	ACC_CONTROL_PAGE_HIT				= BIT(24),
++	ACC_CONTROL_WR_PREEMPT				= BIT(25),
++	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
++	ACC_CONTROL_RD_ERASED				= BIT(27),
++	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
++	ACC_CONTROL_WR_ECC				= BIT(30),
++	ACC_CONTROL_RD_ECC				= BIT(31),
++};
++
++#define	ACC_CONTROL_ECC_SHIFT			16
++/* Only for v7.2 */
++#define	ACC_CONTROL_ECC_EXT_SHIFT		13
++
+ static inline bool brcmnand_non_mmio_ops(struct brcmnand_controller *ctrl)
+ {
+ #if IS_ENABLED(CONFIG_MTD_NAND_BRCMNAND_BCMA)
+@@ -737,6 +766,12 @@ static int brcmnand_revision_init(struct
+ 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
+ 		ctrl->features |= BRCMNAND_HAS_WP;
  
++	/* v7.2 has different ecc level shift in the acc register */
++	if (ctrl->nand_version == 0x0702)
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
++	else
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
++
+ 	return 0;
+ }
+ 
+@@ -931,30 +966,6 @@ static inline int brcmnand_cmd_shift(str
+ 	return 0;
+ }
+ 
+-/***********************************************************************
+- * NAND ACC CONTROL bitfield
+- *
+- * Some bits have remained constant throughout hardware revision, while
+- * others have shifted around.
+- ***********************************************************************/
+-
+-/* Constant for all versions (where supported) */
+-enum {
+-	/* See BRCMNAND_HAS_CACHE_MODE */
+-	ACC_CONTROL_CACHE_MODE				= BIT(22),
+-
+-	/* See BRCMNAND_HAS_PREFETCH */
+-	ACC_CONTROL_PREFETCH				= BIT(23),
+-
+-	ACC_CONTROL_PAGE_HIT				= BIT(24),
+-	ACC_CONTROL_WR_PREEMPT				= BIT(25),
+-	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
+-	ACC_CONTROL_RD_ERASED				= BIT(27),
+-	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
+-	ACC_CONTROL_WR_ECC				= BIT(30),
+-	ACC_CONTROL_RD_ECC				= BIT(31),
+-};
+-
+ static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
+ {
+ 	if (ctrl->nand_version == 0x0702)
+@@ -967,18 +978,15 @@ static inline u32 brcmnand_spare_area_ma
+ 		return GENMASK(4, 0);
+ }
+ 
+-#define NAND_ACC_CONTROL_ECC_SHIFT	16
+-#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
+-
+ static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
+ {
+ 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
+ 
+-	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
++	mask <<= ACC_CONTROL_ECC_SHIFT;
+ 
+ 	/* v7.2 includes additional ECC levels */
+-	if (ctrl->nand_version >= 0x0702)
+-		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
++	if (ctrl->nand_version == 0x0702)
++		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
+ 
+ 	return mask;
+ }
+@@ -992,8 +1000,8 @@ static void brcmnand_set_ecc_enabled(str
+ 
+ 	if (en) {
+ 		acc_control |= ecc_flags; /* enable RD/WR ECC */
+-		acc_control |= host->hwcfg.ecc_level
+-			       << NAND_ACC_CONTROL_ECC_SHIFT;
++		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
++		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
+ 	} else {
+ 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
+ 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
+@@ -2593,7 +2601,7 @@ static int brcmnand_set_cfg(struct brcmn
+ 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
+ 	tmp &= ~brcmnand_spare_area_mask(ctrl);
+ 	if (ctrl->nand_version >= 0x0302) {
+-		tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
++		tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
+ 		tmp |= cfg->spare_area_size;
+ 	}
+ 	nand_writereg(ctrl, acc_control_offs, tmp);
 
 
