@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4CD6FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B4CC433CC;
-	Sun, 17 Sep 2023 20:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AC56FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:30:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8E6C433CC;
+	Sun, 17 Sep 2023 20:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982656;
-	bh=jchJFp7Kz2UbgD5MBJg5a2HngbaQKUO+2sWJJz/+cNE=;
+	s=korg; t=1694982659;
+	bh=xnh0D6Hhbb2JZsUZ4n0bR27RmPh/cfavY8nf8nvYH1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4+vurvFPLUz5pr1LgVS6uPwalK7dtdl2QgNEqwn2gSxeZFFEO97qaalRPL/5YbMR
-	 1W0tjFl5BCw4W+cbVRl2firifE3uP3Dgfx4ehp5sM+kHcLodx7XXEV4ccNteSr7JkS
-	 W9ELHVdRzRmaYIIX3qzm+GsgRjqiAhICzb94YsUo=
+	b=BeVmj2UHCdSC7kZQ0MHzHPG9Dve5CS9kfO3DBL6dNajrUdNXFVbu1VnmcG9IX3kij
+	 UFY8UBmPHXQRDx/dLpUGPx8dusyObBfoveCRM51HPyuwpvYo2A6seuioSahwAGXja0
+	 sw4cURpGX3+LQ8+ZoNSzxr0i90prhigQY73Agzu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Yao <yuanyaogoog@chromium.org>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 315/511] virtio_ring: fix avail_wrap_counter in virtqueue_add_packed
-Date: Sun, 17 Sep 2023 21:12:22 +0200
-Message-ID: <20230917191121.428634704@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 316/511] igmp: limit igmpv3_newpack() packet size to IP_MAX_MTU
+Date: Sun, 17 Sep 2023 21:12:23 +0200
+Message-ID: <20230917191121.452536183@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -35,84 +36,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Yao <yuanyaogoog@chromium.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1acfe2c1225899eab5ab724c91b7e1eb2881b9ab ]
+commit c3b704d4a4a265660e665df51b129e8425216ed1 upstream.
 
-In current packed virtqueue implementation, the avail_wrap_counter won't
-flip, in the case when the driver supplies a descriptor chain with a
-length equals to the queue size; total_sg == vq->packed.vring.num.
+This is a follow up of commit 915d975b2ffa ("net: deal with integer
+overflows in kmalloc_reserve()") based on David Laight feedback.
 
-Let’s assume the following situation:
-vq->packed.vring.num=4
-vq->packed.next_avail_idx: 1
-vq->packed.avail_wrap_counter: 0
+Back in 2010, I failed to realize malicious users could set dev->mtu
+to arbitrary values. This mtu has been since limited to 0x7fffffff but
+regardless of how big dev->mtu is, it makes no sense for igmpv3_newpack()
+to allocate more than IP_MAX_MTU and risk various skb fields overflows.
 
-Then the driver adds a descriptor chain containing 4 descriptors.
-
-We expect the following result with avail_wrap_counter flipped:
-vq->packed.next_avail_idx: 1
-vq->packed.avail_wrap_counter: 1
-
-But, the current implementation gives the following result:
-vq->packed.next_avail_idx: 1
-vq->packed.avail_wrap_counter: 0
-
-To reproduce the bug, you can set a packed queue size as small as
-possible, so that the driver is more likely to provide a descriptor
-chain with a length equal to the packed queue size. For example, in
-qemu run following commands:
-sudo qemu-system-x86_64 \
--enable-kvm \
--nographic \
--kernel "path/to/kernel_image" \
--m 1G \
--drive file="path/to/rootfs",if=none,id=disk \
--device virtio-blk,drive=disk \
--drive file="path/to/disk_image",if=none,id=rwdisk \
--device virtio-blk,drive=rwdisk,packed=on,queue-size=4,\
-indirect_desc=off \
--append "console=ttyS0 root=/dev/vda rw init=/bin/bash"
-
-Inside the VM, create a directory and mount the rwdisk device on it. The
-rwdisk will hang and mount operation will not complete.
-
-This commit fixes the wrap counter error by flipping the
-packed.avail_wrap_counter, when start of descriptor chain equals to the
-end of descriptor chain (head == i).
-
-Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
-Signed-off-by: Yuan Yao <yuanyaogoog@chromium.org>
-Message-Id: <20230808051110.3492693-1-yuanyaogoog@chromium.org>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 57e1ab6eaddc ("igmp: refine skb allocations")
+Link: https://lore.kernel.org/netdev/d273628df80f45428e739274ab9ecb72@AcuMS.aculab.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: David Laight <David.Laight@ACULAB.COM>
+Cc: Kyle Zeng <zengyhkyle@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_ring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/igmp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 800df63c58692..067b68168f93e 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -1271,7 +1271,7 @@ static inline int virtqueue_add_packed(struct virtqueue *_vq,
- 		}
- 	}
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -353,8 +353,9 @@ static struct sk_buff *igmpv3_newpack(st
+ 	struct flowi4 fl4;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
+-	unsigned int size = mtu;
++	unsigned int size;
  
--	if (i < head)
-+	if (i <= head)
- 		vq->packed.avail_wrap_counter ^= 1;
- 
- 	/* We're using some buffers from the free list. */
--- 
-2.40.1
-
++	size = min(mtu, IP_MAX_MTU);
+ 	while (1) {
+ 		skb = alloc_skb(size + hlen + tlen,
+ 				GFP_ATOMIC | __GFP_NOWARN);
 
 
