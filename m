@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78066FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4954AC433CB;
-	Sun, 17 Sep 2023 19:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3628B6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:57:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1E5C433C8;
+	Sun, 17 Sep 2023 19:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980642;
-	bh=AeRU7ACPx2273fB8d3gX06sYlurApcW17HMfUVDpviY=;
+	s=korg; t=1694980646;
+	bh=gsRmCtZzBkkF+BVBc/EkuaSU+nBqxu1KsZ+wJHYi8/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01QH/XyXN4tUMvEdBusJF9tSJlw9ZRERFo1UIfqKOKyagyt1KF2flLohuOqRtmjER
-	 /uRmlIL5N+B9Ls7szhKtl5p0dK9MxJTuAtZuwGg3U+rFrHgAmrsgTqT7D+tqhCjr3p
-	 YFpZnqMSaucTNj9/4hw6qi8W+zo/OnXjp0WRn9yk=
+	b=MvzQBTC+Pa0xQ0oue1iinqCVvbyTBQMl8ol4wxW6IQxvyz1eMHzTwf6gsfbjlDkfi
+	 CtIqX4/go7Cbo0xXn7G8rK/s9xi1WD13w9tX6peiea4VMgBeS0PaZVzaJCt4J6aKk/
+	 cW25YkK8TmSOKL7dNNUhbKigc+JrHd21i1z+xZ5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 251/285] net: microchip: vcap api: Fix possible memory leak for vcap_dup_rule()
-Date: Sun, 17 Sep 2023 21:14:11 +0200
-Message-ID: <20230917191059.993455359@linuxfoundation.org>
+Subject: [PATCH 6.5 252/285] octeontx2-pf: Fix page pool cache index corruption.
+Date: Sun, 17 Sep 2023 21:14:12 +0200
+Message-ID: <20230917191100.022023815@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,80 +41,283 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 281f65d29d6da1a9b6907fb0b145aaf34f4e4822 ]
+[ Upstream commit 88e69af061f2e061a68751ef9cad47a674527a1b ]
 
-Inject fault When select CONFIG_VCAP_KUNIT_TEST, the below memory leak
-occurs. If kzalloc() for duprule succeeds, but the following
-kmemdup() fails, the duprule, ckf and caf memory will be leaked. So kfree
-them in the error path.
+The access to page pool `cache' array and the `count' variable
+is not locked. Page pool cache access is fine as long as there
+is only one consumer per pool.
 
-unreferenced object 0xffff122744c50600 (size 192):
-  comm "kunit_try_catch", pid 346, jiffies 4294896122 (age 911.812s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
-    00 00 00 00 00 00 00 00 18 06 c5 44 27 12 ff ff  ...........D'...
-  backtrace:
-    [<00000000394b0db8>] __kmem_cache_alloc_node+0x274/0x2f8
-    [<0000000001bedc67>] kmalloc_trace+0x38/0x88
-    [<00000000b0612f98>] vcap_dup_rule+0x50/0x460
-    [<000000005d2d3aca>] vcap_add_rule+0x8cc/0x1038
-    [<00000000eef9d0f8>] test_vcap_xn_rule_creator.constprop.0.isra.0+0x238/0x494
-    [<00000000cbda607b>] vcap_api_rule_remove_in_front_test+0x1ac/0x698
-    [<00000000c8766299>] kunit_try_run_case+0xe0/0x20c
-    [<00000000c4fe9186>] kunit_generic_run_threadfn_adapter+0x50/0x94
-    [<00000000f6864acf>] kthread+0x2e8/0x374
-    [<0000000022e639b3>] ret_from_fork+0x10/0x20
+octeontx2 driver fills in rx buffers from page pool in NAPI context.
+If system is stressed and could not allocate buffers, refiiling work
+will be delegated to a delayed workqueue. This means that there are
+two cosumers to the page pool cache.
 
-Fixes: 814e7693207f ("net: microchip: vcap api: Add a storage state to a VCAP rule")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Either workqueue or IRQ/NAPI can be run on other CPU. This will lead
+to lock less access, hence corruption of cache pool indexes.
+
+To fix this issue, NAPI is rescheduled from workqueue context to refill
+rx buffers.
+
+Fixes: b2e3406a38f0 ("octeontx2-pf: Add support for page pool")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/vcap/vcap_api.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/cn10k.c    |  6 ++-
+ .../ethernet/marvell/octeontx2/nic/cn10k.h    |  2 +-
+ .../marvell/octeontx2/nic/otx2_common.c       | 43 +++----------------
+ .../marvell/octeontx2/nic/otx2_common.h       |  3 +-
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  |  7 +--
+ .../marvell/octeontx2/nic/otx2_txrx.c         | 30 ++++++++++---
+ .../marvell/octeontx2/nic/otx2_txrx.h         |  4 +-
+ 7 files changed, 44 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api.c b/drivers/net/ethernet/microchip/vcap/vcap_api.c
-index a418ad8e8770a..15a3a31b15d45 100644
---- a/drivers/net/ethernet/microchip/vcap/vcap_api.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api.c
-@@ -1021,18 +1021,32 @@ static struct vcap_rule_internal *vcap_dup_rule(struct vcap_rule_internal *ri,
- 	list_for_each_entry(ckf, &ri->data.keyfields, ctrl.list) {
- 		newckf = kmemdup(ckf, sizeof(*newckf), GFP_KERNEL);
- 		if (!newckf)
--			return ERR_PTR(-ENOMEM);
-+			goto err;
- 		list_add_tail(&newckf->ctrl.list, &duprule->data.keyfields);
- 	}
- 
- 	list_for_each_entry(caf, &ri->data.actionfields, ctrl.list) {
- 		newcaf = kmemdup(caf, sizeof(*newcaf), GFP_KERNEL);
- 		if (!newcaf)
--			return ERR_PTR(-ENOMEM);
-+			goto err;
- 		list_add_tail(&newcaf->ctrl.list, &duprule->data.actionfields);
- 	}
- 
- 	return duprule;
-+
-+err:
-+	list_for_each_entry_safe(ckf, newckf, &duprule->data.keyfields, ctrl.list) {
-+		list_del(&ckf->ctrl.list);
-+		kfree(ckf);
-+	}
-+
-+	list_for_each_entry_safe(caf, newcaf, &duprule->data.actionfields, ctrl.list) {
-+		list_del(&caf->ctrl.list);
-+		kfree(caf);
-+	}
-+
-+	kfree(duprule);
-+	return ERR_PTR(-ENOMEM);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+index 826f691de2595..a4a258da8dd59 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+@@ -107,12 +107,13 @@ int cn10k_sq_aq_init(void *dev, u16 qidx, u16 sqb_aura)
  }
  
- static void vcap_apply_width(u8 *dst, int width, int bytes)
+ #define NPA_MAX_BURST 16
+-void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
++int cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
+ {
+ 	struct otx2_nic *pfvf = dev;
++	int cnt = cq->pool_ptrs;
+ 	u64 ptrs[NPA_MAX_BURST];
+-	int num_ptrs = 1;
+ 	dma_addr_t bufptr;
++	int num_ptrs = 1;
+ 
+ 	/* Refill pool with new buffers */
+ 	while (cq->pool_ptrs) {
+@@ -131,6 +132,7 @@ void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
+ 			num_ptrs = 1;
+ 		}
+ 	}
++	return cnt - cq->pool_ptrs;
+ }
+ 
+ void cn10k_sqe_flush(void *dev, struct otx2_snd_queue *sq, int size, int qidx)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.h b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.h
+index 8ae96815865e6..c1861f7de2545 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.h
+@@ -24,7 +24,7 @@ static inline int mtu_to_dwrr_weight(struct otx2_nic *pfvf, int mtu)
+ 	return weight;
+ }
+ 
+-void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
++int cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
+ void cn10k_sqe_flush(void *dev, struct otx2_snd_queue *sq, int size, int qidx);
+ int cn10k_sq_aq_init(void *dev, u16 qidx, u16 sqb_aura);
+ int cn10k_lmtst_init(struct otx2_nic *pfvf);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index b9712040a0bc2..20ecc90d203e0 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -573,20 +573,8 @@ int otx2_alloc_rbuf(struct otx2_nic *pfvf, struct otx2_pool *pool,
+ int otx2_alloc_buffer(struct otx2_nic *pfvf, struct otx2_cq_queue *cq,
+ 		      dma_addr_t *dma)
+ {
+-	if (unlikely(__otx2_alloc_rbuf(pfvf, cq->rbpool, dma))) {
+-		struct refill_work *work;
+-		struct delayed_work *dwork;
+-
+-		work = &pfvf->refill_wrk[cq->cq_idx];
+-		dwork = &work->pool_refill_work;
+-		/* Schedule a task if no other task is running */
+-		if (!cq->refill_task_sched) {
+-			cq->refill_task_sched = true;
+-			schedule_delayed_work(dwork,
+-					      msecs_to_jiffies(100));
+-		}
++	if (unlikely(__otx2_alloc_rbuf(pfvf, cq->rbpool, dma)))
+ 		return -ENOMEM;
+-	}
+ 	return 0;
+ }
+ 
+@@ -1080,39 +1068,20 @@ static int otx2_cq_init(struct otx2_nic *pfvf, u16 qidx)
+ static void otx2_pool_refill_task(struct work_struct *work)
+ {
+ 	struct otx2_cq_queue *cq;
+-	struct otx2_pool *rbpool;
+ 	struct refill_work *wrk;
+-	int qidx, free_ptrs = 0;
+ 	struct otx2_nic *pfvf;
+-	dma_addr_t bufptr;
++	int qidx;
+ 
+ 	wrk = container_of(work, struct refill_work, pool_refill_work.work);
+ 	pfvf = wrk->pf;
+ 	qidx = wrk - pfvf->refill_wrk;
+ 	cq = &pfvf->qset.cq[qidx];
+-	rbpool = cq->rbpool;
+-	free_ptrs = cq->pool_ptrs;
+ 
+-	while (cq->pool_ptrs) {
+-		if (otx2_alloc_rbuf(pfvf, rbpool, &bufptr)) {
+-			/* Schedule a WQ if we fails to free atleast half of the
+-			 * pointers else enable napi for this RQ.
+-			 */
+-			if (!((free_ptrs - cq->pool_ptrs) > free_ptrs / 2)) {
+-				struct delayed_work *dwork;
+-
+-				dwork = &wrk->pool_refill_work;
+-				schedule_delayed_work(dwork,
+-						      msecs_to_jiffies(100));
+-			} else {
+-				cq->refill_task_sched = false;
+-			}
+-			return;
+-		}
+-		pfvf->hw_ops->aura_freeptr(pfvf, qidx, bufptr + OTX2_HEAD_ROOM);
+-		cq->pool_ptrs--;
+-	}
+ 	cq->refill_task_sched = false;
++
++	local_bh_disable();
++	napi_schedule(wrk->napi);
++	local_bh_enable();
+ }
+ 
+ int otx2_config_nix_queues(struct otx2_nic *pfvf)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+index ba8091131ec08..0e81849db3538 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+@@ -301,6 +301,7 @@ struct flr_work {
+ struct refill_work {
+ 	struct delayed_work pool_refill_work;
+ 	struct otx2_nic *pf;
++	struct napi_struct *napi;
+ };
+ 
+ /* PTPv2 originTimestamp structure */
+@@ -373,7 +374,7 @@ struct dev_hw_ops {
+ 	int	(*sq_aq_init)(void *dev, u16 qidx, u16 sqb_aura);
+ 	void	(*sqe_flush)(void *dev, struct otx2_snd_queue *sq,
+ 			     int size, int qidx);
+-	void	(*refill_pool_ptrs)(void *dev, struct otx2_cq_queue *cq);
++	int	(*refill_pool_ptrs)(void *dev, struct otx2_cq_queue *cq);
+ 	void	(*aura_freeptr)(void *dev, int aura, u64 buf);
+ };
+ 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 9551b422622a4..9ded98bb1c890 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1942,6 +1942,10 @@ int otx2_stop(struct net_device *netdev)
+ 
+ 	netif_tx_disable(netdev);
+ 
++	for (wrk = 0; wrk < pf->qset.cq_cnt; wrk++)
++		cancel_delayed_work_sync(&pf->refill_wrk[wrk].pool_refill_work);
++	devm_kfree(pf->dev, pf->refill_wrk);
++
+ 	otx2_free_hw_resources(pf);
+ 	otx2_free_cints(pf, pf->hw.cint_cnt);
+ 	otx2_disable_napi(pf);
+@@ -1949,9 +1953,6 @@ int otx2_stop(struct net_device *netdev)
+ 	for (qidx = 0; qidx < netdev->num_tx_queues; qidx++)
+ 		netdev_tx_reset_queue(netdev_get_tx_queue(netdev, qidx));
+ 
+-	for (wrk = 0; wrk < pf->qset.cq_cnt; wrk++)
+-		cancel_delayed_work_sync(&pf->refill_wrk[wrk].pool_refill_work);
+-	devm_kfree(pf->dev, pf->refill_wrk);
+ 
+ 	kfree(qset->sq);
+ 	kfree(qset->cq);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+index e369baf115301..e77d438489557 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+@@ -424,9 +424,10 @@ static int otx2_rx_napi_handler(struct otx2_nic *pfvf,
+ 	return processed_cqe;
+ }
+ 
+-void otx2_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
++int otx2_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
+ {
+ 	struct otx2_nic *pfvf = dev;
++	int cnt = cq->pool_ptrs;
+ 	dma_addr_t bufptr;
+ 
+ 	while (cq->pool_ptrs) {
+@@ -435,6 +436,8 @@ void otx2_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
+ 		otx2_aura_freeptr(pfvf, cq->cq_idx, bufptr + OTX2_HEAD_ROOM);
+ 		cq->pool_ptrs--;
+ 	}
++
++	return cnt - cq->pool_ptrs;
+ }
+ 
+ static int otx2_tx_napi_handler(struct otx2_nic *pfvf,
+@@ -521,6 +524,7 @@ int otx2_napi_handler(struct napi_struct *napi, int budget)
+ 	struct otx2_cq_queue *cq;
+ 	struct otx2_qset *qset;
+ 	struct otx2_nic *pfvf;
++	int filled_cnt = -1;
+ 
+ 	cq_poll = container_of(napi, struct otx2_cq_poll, napi);
+ 	pfvf = (struct otx2_nic *)cq_poll->dev;
+@@ -541,7 +545,7 @@ int otx2_napi_handler(struct napi_struct *napi, int budget)
+ 	}
+ 
+ 	if (rx_cq && rx_cq->pool_ptrs)
+-		pfvf->hw_ops->refill_pool_ptrs(pfvf, rx_cq);
++		filled_cnt = pfvf->hw_ops->refill_pool_ptrs(pfvf, rx_cq);
+ 	/* Clear the IRQ */
+ 	otx2_write64(pfvf, NIX_LF_CINTX_INT(cq_poll->cint_idx), BIT_ULL(0));
+ 
+@@ -561,9 +565,25 @@ int otx2_napi_handler(struct napi_struct *napi, int budget)
+ 				otx2_config_irq_coalescing(pfvf, i);
+ 		}
+ 
+-		/* Re-enable interrupts */
+-		otx2_write64(pfvf, NIX_LF_CINTX_ENA_W1S(cq_poll->cint_idx),
+-			     BIT_ULL(0));
++		if (unlikely(!filled_cnt)) {
++			struct refill_work *work;
++			struct delayed_work *dwork;
++
++			work = &pfvf->refill_wrk[cq->cq_idx];
++			dwork = &work->pool_refill_work;
++			/* Schedule a task if no other task is running */
++			if (!cq->refill_task_sched) {
++				work->napi = napi;
++				cq->refill_task_sched = true;
++				schedule_delayed_work(dwork,
++						      msecs_to_jiffies(100));
++			}
++		} else {
++			/* Re-enable interrupts */
++			otx2_write64(pfvf,
++				     NIX_LF_CINTX_ENA_W1S(cq_poll->cint_idx),
++				     BIT_ULL(0));
++		}
+ 	}
+ 	return workdone;
+ }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
+index 9e3bfbe5c4809..a82ffca8ce1b1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
+@@ -170,6 +170,6 @@ void cn10k_sqe_flush(void *dev, struct otx2_snd_queue *sq,
+ 		     int size, int qidx);
+ void otx2_sqe_flush(void *dev, struct otx2_snd_queue *sq,
+ 		    int size, int qidx);
+-void otx2_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
+-void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
++int otx2_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
++int cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq);
+ #endif /* OTX2_TXRX_H */
 -- 
 2.40.1
 
