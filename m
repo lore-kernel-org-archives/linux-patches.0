@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE07B6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61FE0C433C7;
-	Sun, 17 Sep 2023 20:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCE56FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDECC433CC;
+	Sun, 17 Sep 2023 20:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981691;
-	bh=I8afsS/pROh/H5mCsYYnSTpOg1pn90Q3A5sq6f4rXF0=;
+	s=korg; t=1694981695;
+	bh=pRxcH3St86ls7slgJwZMWG9wO1n5InhqvB1I81vAeUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2JasBnnIUWRaJ2+BvY6m2K26KE3IqfXwioa1i73rkPX3eaaKadAVKHIKOYZD1Jbs
-	 /fkOrXGu+3sanqQ7T/z6cM9M6gPIqhKh3blTx+eIAVn1Wu33/2mbGrDFhvgh23p9Yg
-	 e0WOVU35DWX9a/OCVzxRl1vMa8Kh4h2gA8XqyWpU=
+	b=uM3CbAkKGzuSZzYfzwTPLN7udqEMW2MRogYIifceXid3xaNlLpHsYgeyUTtLoJyUC
+	 9dEL3GR/TgWOtpNTeUCg0QYU4HHiSXBoNYGQhLCuOBC/Cke1TysngAhATuAgkdzWGA
+	 kMJPc0fQSlQfZKRB4Ye/li5svx8hRH+mqYQ/sZ1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 159/219] btrfs: set page extent mapped after read_folio in relocate_one_page
-Date: Sun, 17 Sep 2023 21:14:46 +0200
-Message-ID: <20230917191046.798232302@linuxfoundation.org>
+	Colm Harrington <colm.harrington@oracle.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 094/511] selftests/bpf: fix static assert compilation issue for test_cls_*.c
+Date: Sun, 17 Sep 2023 21:08:41 +0200
+Message-ID: <20230917191116.137864047@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,104 +39,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-commit e7f1326cc24e22b38afc3acd328480a1183f9e79 upstream.
+[ Upstream commit 416c6d01244ecbf0abfdb898fd091b50ef951b48 ]
 
-One of the CI runs triggered the following panic
+commit bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
 
-  assertion failed: PagePrivate(page) && page->private, in fs/btrfs/subpage.c:229
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/subpage.c:229!
-  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-  CPU: 0 PID: 923660 Comm: btrfs Not tainted 6.5.0-rc3+ #1
-  pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : btrfs_subpage_assert+0xbc/0xf0
-  lr : btrfs_subpage_assert+0xbc/0xf0
-  sp : ffff800093213720
-  x29: ffff800093213720 x28: ffff8000932138b4 x27: 000000000c280000
-  x26: 00000001b5d00000 x25: 000000000c281000 x24: 000000000c281fff
-  x23: 0000000000001000 x22: 0000000000000000 x21: ffffff42b95bf880
-  x20: ffff42b9528e0000 x19: 0000000000001000 x18: ffffffffffffffff
-  x17: 667274622f736620 x16: 6e69202c65746176 x15: 0000000000000028
-  x14: 0000000000000003 x13: 00000000002672d7 x12: 0000000000000000
-  x11: ffffcd3f0ccd9204 x10: ffffcd3f0554ae50 x9 : ffffcd3f0379528c
-  x8 : ffff800093213428 x7 : 0000000000000000 x6 : ffffcd3f091771e8
-  x5 : ffff42b97f333948 x4 : 0000000000000000 x3 : 0000000000000000
-  x2 : 0000000000000000 x1 : ffff42b9556cde80 x0 : 000000000000004f
-  Call trace:
-   btrfs_subpage_assert+0xbc/0xf0
-   btrfs_subpage_set_dirty+0x38/0xa0
-   btrfs_page_set_dirty+0x58/0x88
-   relocate_one_page+0x204/0x5f0
-   relocate_file_extent_cluster+0x11c/0x180
-   relocate_data_extent+0xd0/0xf8
-   relocate_block_group+0x3d0/0x4e8
-   btrfs_relocate_block_group+0x2d8/0x490
-   btrfs_relocate_chunk+0x54/0x1a8
-   btrfs_balance+0x7f4/0x1150
-   btrfs_ioctl+0x10f0/0x20b8
-   __arm64_sys_ioctl+0x120/0x11d8
-   invoke_syscall.constprop.0+0x80/0xd8
-   do_el0_svc+0x6c/0x158
-   el0_svc+0x50/0x1b0
-   el0t_64_sync_handler+0x120/0x130
-   el0t_64_sync+0x194/0x198
-  Code: 91098021 b0007fa0 91346000 97e9c6d2 (d4210000)
+...was backported to stable trees such as 5.15. The problem is that with older
+LLVM/clang (14/15) - which is often used for older kernels - we see compilation
+failures in BPF selftests now:
 
-This is the same problem outlined in 17b17fcd6d44 ("btrfs:
-set_page_extent_mapped after read_folio in btrfs_cont_expand") , and the
-fix is the same.  I originally looked for the same pattern elsewhere in
-our code, but mistakenly skipped over this code because I saw the page
-cache readahead before we set_page_extent_mapped, not realizing that
-this was only in the !page case, that we can still end up with a
-!uptodate page and then do the btrfs_read_folio further down.
+In file included from progs/test_cls_redirect_subprogs.c:2:
+progs/test_cls_redirect.c:90:2: error: static assertion expression is not an integral constant expression
+        sizeof(flow_ports_t) !=
+        ^~~~~~~~~~~~~~~~~~~~~~~
+progs/test_cls_redirect.c:91:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
+                offsetofend(struct bpf_sock_tuple, ipv4.dport) -
+                ^
+progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
+        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
+         ^
+tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
+                                 ^
+In file included from progs/test_cls_redirect_subprogs.c:2:
+progs/test_cls_redirect.c:95:2: error: static assertion expression is not an integral constant expression
+        sizeof(flow_ports_t) !=
+        ^~~~~~~~~~~~~~~~~~~~~~~
+progs/test_cls_redirect.c:96:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
+                offsetofend(struct bpf_sock_tuple, ipv6.dport) -
+                ^
+progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
+        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
+         ^
+tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
+                                 ^
+2 errors generated.
+make: *** [Makefile:594: tools/testing/selftests/bpf/test_cls_redirect_subprogs.bpf.o] Error 1
 
-The fix here is the same as the above mentioned patch, move the
-set_page_extent_mapped call to after the btrfs_read_folio() block to
-make sure that we have the subpage blocksize stuff setup properly before
-using the page.
+The problem is the new offsetof() does not play nice with static asserts.
+Given that the context is a static assert (and CO-RE relocation is not
+needed at compile time), offsetof() usage can be replaced by restoring
+the original offsetof() definition as __builtin_offsetof().
 
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
+Reported-by: Colm Harrington <colm.harrington@oracle.com>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Tested-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20230802073906.3197480-1-alan.maguire@oracle.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/progs/test_cls_redirect.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -2985,9 +2985,6 @@ static int relocate_one_page(struct inod
- 		if (!page)
- 			return -ENOMEM;
- 	}
--	ret = set_page_extent_mapped(page);
--	if (ret < 0)
--		goto release_page;
+diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.h b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
+index 76eab0aacba0c..233b089d1fbac 100644
+--- a/tools/testing/selftests/bpf/progs/test_cls_redirect.h
++++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
+@@ -12,6 +12,15 @@
+ #include <linux/ipv6.h>
+ #include <linux/udp.h>
  
- 	if (PageReadahead(page))
- 		page_cache_async_readahead(inode->i_mapping, ra, NULL,
-@@ -3003,6 +3000,15 @@ static int relocate_one_page(struct inod
- 		}
- 	}
- 
-+	/*
-+	 * We could have lost page private when we dropped the lock to read the
-+	 * page above, make sure we set_page_extent_mapped here so we have any
-+	 * of the subpage blocksize stuff we need in place.
-+	 */
-+	ret = set_page_extent_mapped(page);
-+	if (ret < 0)
-+		goto release_page;
++/* offsetof() is used in static asserts, and the libbpf-redefined CO-RE
++ * friendly version breaks compilation for older clang versions <= 15
++ * when invoked in a static assert.  Restore original here.
++ */
++#ifdef offsetof
++#undef offsetof
++#define offsetof(type, member) __builtin_offsetof(type, member)
++#endif
 +
- 	page_start = page_offset(page);
- 	page_end = page_start + PAGE_SIZE - 1;
- 
+ struct gre_base_hdr {
+ 	uint16_t flags;
+ 	uint16_t protocol;
+-- 
+2.40.1
+
 
 
