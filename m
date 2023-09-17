@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC8F6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBF3C433CD;
-	Sun, 17 Sep 2023 20:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABB66FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA40C433CB;
+	Sun, 17 Sep 2023 20:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981548;
-	bh=Ha3xfXUkmZXCZUoMls+K4BscGLWHzQF1ubdO89c5q/U=;
+	s=korg; t=1694981551;
+	bh=e82gT6krPl713O8fus37hEhMMOCqBTSr1OJ3lna3s/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BdYHM8RBeC1kBsP0Yivj+2tQuWi7gswov/NnvzZKvO5aLzh8g1F3R17Et+gD0p6ty
-	 X9Bmqhtb1rplubZyFEXppyx/ozq9JwD+TQpacdKvHSf9XJYjme/AFBATO1GjDzGCH+
-	 o6CqM+fkcUV7xmAqY8yZKNFTMUCkUChzCIHMNvzk=
+	b=ch0uCy4T7WkG+5o+rPTLZle6U5ZfC6QwYNrQuEhCY/2Q1olBKhLJ58SFErEWR6kjF
+	 yZ2pA1l10SHwcG+EzO1Oam+1pid5W9oFaVXvf9Ydk0penSNNawblEoFTjFJYC2eVRD
+	 CIYjEmb2M8wNdQK/sP/PYllM/JooAD/oco082mVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/511] x86/decompressor: Dont rely on upper 32 bits of GPRs being preserved
-Date: Sun, 17 Sep 2023 21:08:17 +0200
-Message-ID: <20230917191115.571153085@linuxfoundation.org>
+	Walter Chang <walter.chang@mediatek.com>,
+	Marc Zyngier <maz@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.1 139/219] clocksource/drivers/arm_arch_timer: Disable timer before programming CVAL
+Date: Sun, 17 Sep 2023 21:14:26 +0200
+Message-ID: <20230917191046.023689490@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -34,117 +35,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Walter Chang <walter.chang@mediatek.com>
 
-[ Upstream commit 264b82fdb4989cf6a44a2bcd0c6ea05e8026b2ac ]
+commit e7d65e40ab5a5940785c5922f317602d0268caaf upstream.
 
-The 4-to-5 level mode switch trampoline disables long mode and paging in
-order to be able to flick the LA57 bit. According to section 3.4.1.1 of
-the x86 architecture manual [0], 64-bit GPRs might not retain the upper
-32 bits of their contents across such a mode switch.
+Due to the fact that the use of `writeq_relaxed()` to program CVAL is
+not guaranteed to be atomic, it is necessary to disable the timer before
+programming CVAL.
 
-Given that RBP, RBX and RSI are live at this point, preserve them on the
-stack, along with the return address that might be above 4G as well.
+However, if the MMIO timer is already enabled and has not yet expired,
+there is a possibility of unexpected behavior occurring: when the CPU
+enters the idle state during this period, and if the CPU's local event
+is earlier than the broadcast event, the following process occurs:
 
-[0] Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1: Basic Architecture
+tick_broadcast_enter()
+  tick_broadcast_oneshot_control(TICK_BROADCAST_ENTER)
+    __tick_broadcast_oneshot_control()
+      ___tick_broadcast_oneshot_control()
+        tick_broadcast_set_event()
+          clockevents_program_event()
+            set_next_event_mem()
 
-  "Because the upper 32 bits of 64-bit general-purpose registers are
-   undefined in 32-bit modes, the upper 32 bits of any general-purpose
-   register are not preserved when switching from 64-bit mode to a 32-bit
-   mode (to protected mode or compatibility mode). Software must not
-   depend on these bits to maintain a value after a 64-bit to 32-bit
-   mode switch."
+During this process, the MMIO timer remains enabled while programming
+CVAL. To prevent such behavior, disable timer explicitly prior to
+programming CVAL.
 
-Fixes: 194a9749c73d650c ("x86/boot/compressed/64: Handle 5-level paging boot if kernel is above 4G")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230807162720.545787-2-ardb@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8b82c4f883a7 ("clocksource/drivers/arm_arch_timer: Move MMIO timer programming over to CVAL")
+Cc: stable@vger.kernel.org
+Signed-off-by: Walter Chang <walter.chang@mediatek.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20230717090735.19370-1-walter.chang@mediatek.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/head_64.S | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/clocksource/arm_arch_timer.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
-index fd9441f404570..c3d427c817c73 100644
---- a/arch/x86/boot/compressed/head_64.S
-+++ b/arch/x86/boot/compressed/head_64.S
-@@ -468,11 +468,25 @@ SYM_CODE_START(startup_64)
- 	/* Save the trampoline address in RCX */
- 	movq	%rax, %rcx
+--- a/drivers/clocksource/arm_arch_timer.c
++++ b/drivers/clocksource/arm_arch_timer.c
+@@ -773,6 +773,13 @@ static __always_inline void set_next_eve
+ 	u64 cnt;
  
-+	/* Set up 32-bit addressable stack */
-+	leaq	TRAMPOLINE_32BIT_STACK_END(%rcx), %rsp
+ 	ctrl = arch_timer_reg_read(access, ARCH_TIMER_REG_CTRL, clk);
 +
-+	/*
-+	 * Preserve live 64-bit registers on the stack: this is necessary
-+	 * because the architecture does not guarantee that GPRs will retain
-+	 * their full 64-bit values across a 32-bit mode switch.
-+	 */
-+	pushq	%rbp
-+	pushq	%rbx
-+	pushq	%rsi
++	/* Timer must be disabled before programming CVAL */
++	if (ctrl & ARCH_TIMER_CTRL_ENABLE) {
++		ctrl &= ~ARCH_TIMER_CTRL_ENABLE;
++		arch_timer_reg_write(access, ARCH_TIMER_REG_CTRL, ctrl, clk);
++	}
 +
- 	/*
--	 * Load the address of trampoline_return() into RDI.
--	 * It will be used by the trampoline to return to the main code.
-+	 * Push the 64-bit address of trampoline_return() onto the new stack.
-+	 * It will be used by the trampoline to return to the main code. Due to
-+	 * the 32-bit mode switch, it cannot be kept it in a register either.
- 	 */
- 	leaq	trampoline_return(%rip), %rdi
-+	pushq	%rdi
+ 	ctrl |= ARCH_TIMER_CTRL_ENABLE;
+ 	ctrl &= ~ARCH_TIMER_CTRL_IT_MASK;
  
- 	/* Switch to compatibility mode (CS.L = 0 CS.D = 1) via far return */
- 	pushq	$__KERNEL32_CS
-@@ -480,6 +494,11 @@ SYM_CODE_START(startup_64)
- 	pushq	%rax
- 	lretq
- trampoline_return:
-+	/* Restore live 64-bit registers */
-+	popq	%rsi
-+	popq	%rbx
-+	popq	%rbp
-+
- 	/* Restore the stack, the 32-bit trampoline uses its own stack */
- 	leaq	rva(boot_stack_end)(%rbx), %rsp
- 
-@@ -600,7 +619,7 @@ SYM_FUNC_END(.Lrelocated)
- /*
-  * This is the 32-bit trampoline that will be copied over to low memory.
-  *
-- * RDI contains the return address (might be above 4G).
-+ * Return address is at the top of the stack (might be above 4G).
-  * ECX contains the base address of the trampoline memory.
-  * Non zero RDX means trampoline needs to enable 5-level paging.
-  */
-@@ -610,9 +629,6 @@ SYM_CODE_START(trampoline_32bit_src)
- 	movl	%eax, %ds
- 	movl	%eax, %ss
- 
--	/* Set up new stack */
--	leal	TRAMPOLINE_32BIT_STACK_END(%ecx), %esp
--
- 	/* Disable paging */
- 	movl	%cr0, %eax
- 	btrl	$X86_CR0_PG_BIT, %eax
-@@ -672,7 +688,7 @@ SYM_CODE_END(trampoline_32bit_src)
- 	.code64
- SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
- 	/* Return from the trampoline */
--	jmp	*%rdi
-+	retq
- SYM_FUNC_END(.Lpaging_enabled)
- 
- 	/*
--- 
-2.40.1
-
 
 
