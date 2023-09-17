@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3586FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE688C43391;
-	Sun, 17 Sep 2023 20:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3C86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C811C433C8;
+	Sun, 17 Sep 2023 20:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981568;
-	bh=7Fle1oQoPk1vKpVCsXj5+JQXaLi6cQ0RBghpAKCdjgU=;
+	s=korg; t=1694981572;
+	bh=D4+gsig1XC7BRhz04pxBjhImMT320bcZBnqegC2y268=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWl9koxJjthfYluDiD8+P53y7Bsk6fvpYs+TT5AvS0Guuv3Bki+lCP+EcgnWjnm/v
-	 AGsAhwQCtI3XjHp9dlnp1e/39unIKcj8nzs7rwAzLgAHu2Xkzbtc4gZnypF9IhSXbL
-	 +SUQKGo4plehe3NE+UF1w2od+z8PRuAwJdyKnJQA=
+	b=XGaCzZnZ1R1HRqYk3DGm4Ye1NbgT0Sb7M5xZ427TiznE6eV0XRd3T6U6z4Kgt1nFF
+	 iklX0ijaAahPPV/oFIOrIODlYJLXh8Kyh2uVC/iuZUHqacThEMcznQlQ63OfIspZe8
+	 4UNDfZyHlIs7cwjPaHLLYwR7vxeug+tcpzDmq6ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 141/219] jbd2: fix checkpoint cleanup performance regression
-Date: Sun, 17 Sep 2023 21:14:28 +0200
-Message-ID: <20230917191046.099480823@linuxfoundation.org>
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 073/511] s390/pkey: fix/harmonize internal keyblob headers
+Date: Sun, 17 Sep 2023 21:08:20 +0200
+Message-ID: <20230917191115.641758939@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,127 +37,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 373ac521799d9e97061515aca6ec6621789036bb upstream.
+[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
 
-journal_clean_one_cp_list() has been merged into
-journal_shrink_one_cp_list(), but do chekpoint buffer cleanup from the
-committing process is just a best effort, it should stop scan once it
-meet a busy buffer, or else it will cause a lot of invalid buffer scan
-and checks. We catch a performance regression when doing fs_mark tests
-below.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
+PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
+which is opaque to the userspace. The header structures for
+PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
+is no reason, why different structures are used. In preparation to fix
+the keyversion handling in the broken PKEY IOCTLs, the same header
+structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
+reduces the number of different code paths and increases the
+readability.
 
-Test cmd:
- ./fs_mark  -d  scratch  -s  1024  -n  10000  -t  1  -D  100  -N  100
-
-Before merging checkpoint buffer cleanup:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       8304.9            49033
-
-After merging checkpoint buffer cleanup:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       7649.0            50012
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       2107.1            50871
-
-After merging checkpoint buffer cleanup, the total loop count in
-journal_shrink_one_cp_list() could be up to 6,261,600+ (50,000+ ~
-100,000+ in general), most of them are invalid. This patch fix it
-through passing 'shrink_type' into journal_shrink_one_cp_list() and add
-a new 'SHRINK_BUSY_STOP' to indicate it should stop once meet a busy
-buffer. After fix, the loop count descending back to 10,000+.
-
-After this fix:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       8558.4            49109
-
-Cc: stable@kernel.org
-Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230714025528.564988-2-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/s390/crypto/pkey_api.c        | 2 +-
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
+ drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -349,6 +349,8 @@ int jbd2_cleanup_journal_tail(journal_t
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 83b335f962c89..34e1d1b339c12 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -744,7 +744,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		if (ktype)
+ 			*ktype = PKEY_TYPE_EP11;
+ 		if (ksize)
+-			*ksize = kb->head.keybitlen;
++			*ksize = kb->head.bitlen;
  
- /* Checkpoint list management */
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+ 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 9ce5a71da69b8..3daf259ba10e7 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -788,7 +788,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
-+enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
-+
- /*
-  * journal_shrink_one_cp_list
-  *
-@@ -360,7 +362,8 @@ int jbd2_cleanup_journal_tail(journal_t
-  * Called with j_list_lock held.
-  */
- static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
--						bool destroy, bool *released)
-+						enum shrink_type type,
-+						bool *released)
- {
- 	struct journal_head *last_jh;
- 	struct journal_head *next_jh = jh;
-@@ -376,12 +379,15 @@ static unsigned long journal_shrink_one_
- 		jh = next_jh;
- 		next_jh = jh->b_cpnext;
+ out:
+ 	kfree(req);
+@@ -1056,7 +1056,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
--		if (destroy) {
-+		if (type == SHRINK_DESTROY) {
- 			ret = __jbd2_journal_remove_checkpoint(jh);
- 		} else {
- 			ret = jbd2_journal_try_remove_checkpoint(jh);
--			if (ret < 0)
--				continue;
-+			if (ret < 0) {
-+				if (type == SHRINK_BUSY_SKIP)
-+					continue;
-+				break;
-+			}
- 		}
- 
- 		nr_freed++;
-@@ -445,7 +451,7 @@ again:
- 		tid = transaction->t_tid;
- 
- 		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--						   false, &released);
-+						   SHRINK_BUSY_SKIP, &released);
- 		nr_freed += freed;
- 		(*nr_to_scan) -= min(*nr_to_scan, freed);
- 		if (*nr_to_scan == 0)
-@@ -485,19 +491,21 @@ out:
- void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
- {
- 	transaction_t *transaction, *last_transaction, *next_transaction;
-+	enum shrink_type type;
- 	bool released;
- 
- 	transaction = journal->j_checkpoint_transactions;
- 	if (!transaction)
- 		return;
- 
-+	type = destroy ? SHRINK_DESTROY : SHRINK_BUSY_STOP;
- 	last_transaction = transaction->t_cpprev;
- 	next_transaction = transaction;
- 	do {
- 		transaction = next_transaction;
- 		next_transaction = transaction->t_cpnext;
- 		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--					   destroy, &released);
-+					   type, &released);
- 		/*
- 		 * This function only frees up some memory if possible so we
- 		 * dont have an obligation to finish processing. Bail out if
+ out:
+ 	kfree(req);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index 1e02b197c0035..d424fa901f1b0 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -29,14 +29,7 @@ struct ep11keyblob {
+ 	union {
+ 		u8 session[32];
+ 		/* only used for PKEY_TYPE_EP11: */
+-		struct {
+-			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
+-			u8  res0;      /* unused */
+-			u16 len;       /* total length in bytes of this blob */
+-			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
+-			u8  res1;      /* unused */
+-			u16 keybitlen; /* clear key bit len, 0 for unknown */
+-		} head;
++		struct ep11kblob_header head;
+ 	};
+ 	u8  wkvp[16];  /* wrapping key verification pattern */
+ 	u64 attr;      /* boolean key attributes */
+-- 
+2.40.1
+
 
 
