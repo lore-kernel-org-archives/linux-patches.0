@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80E76FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ED3C433C8;
-	Sun, 17 Sep 2023 19:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A94C6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A57C433C8;
+	Sun, 17 Sep 2023 19:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979506;
-	bh=DTE8hbGo8lVGpZFLMABrW1XMghoGEGZfZszH1Ju3Ses=;
+	s=korg; t=1694979510;
+	bh=mITIfvHFFy+vmceEMRebARytbL8AURZoqlgZnDXFkPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXRutyIDgDzsIcVDGXDzC77xW0OjYhozhb/6rlV8Mi9F3jy4csNRdbssC0RwCz+fR
-	 gVC/WR85aRloHhLKF+pRDuLbGMLRfFzNAAb2je+bPWiGJFgdMAYW+qlHgRKAFI4eNh
-	 Kf3O3KuUyz6YxEsucqIKQSN4JJQma2SBTMlktD84=
+	b=HB9UrcZQfr1memsM15GD0WVIq8Et396YzdiYz9VvOd7TLXEnQjVf97qjV9ZedDGuN
+	 aB3Yl95oztIlUm0bdDMLKAhPKnVDbEE6Q9ame9X5Vvh1UNkCIVWpYwaZAG3VhVzcKU
+	 lWzHQA84x/hRUXWM1T8reTmYawEF++tocCJZzHU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.10 332/406] NFS: Fix a potential data corruption
-Date: Sun, 17 Sep 2023 21:13:06 +0200
-Message-ID: <20230917191110.053386483@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 308/406] USB: core: Fix oversight in SuperSpeed initialization
+Date: Sun, 17 Sep 2023 21:12:42 +0200
+Message-ID: <20230917191109.438542342@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -39,60 +39,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 88975a55969e11f26fe3846bf4fbf8e7dc8cbbd4 upstream.
+commit 59cf445754566984fd55af19ba7146c76e6627bc upstream.
 
-We must ensure that the subrequests are joined back into the head before
-we can retransmit a request. If the head was not on the commit lists,
-because the server wrote it synchronously, we still need to add it back
-to the retransmission list.
-Add a call that mirrors the effect of nfs_cancel_remove_inode() for
-O_DIRECT.
+Commit 85d07c556216 ("USB: core: Unite old scheme and new scheme
+descriptor reads") altered the way USB devices are enumerated
+following detection, and in the process it messed up the
+initialization of SuperSpeed (or faster) devices:
 
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+[   31.650759] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 2 using xhci_hcd
+[   31.663107] usb 2-1: device descriptor read/8, error -71
+[   31.952697] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 3 using xhci_hcd
+[   31.965122] usb 2-1: device descriptor read/8, error -71
+[   32.080991] usb usb2-port1: attempt power cycle
+...
+
+The problem was caused by the commit forgetting that in SuperSpeed or
+faster devices, the device descriptor uses a logarithmic encoding of
+the bMaxPacketSize0 value.  (For some reason I thought the 255 case in
+the switch statement was meant for these devices, but it isn't -- it
+was meant for Wireless USB and is no longer needed.)
+
+We can fix the oversight by testing for buf->bMaxPacketSize0 = 9
+(meaning 512, the actual maxpacket size for ep0 on all SuperSpeed
+devices) and straightening out the logic that checks and adjusts our
+initial guesses of the maxpacket value.
+
+Reported-and-tested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Closes: https://lore.kernel.org/linux-usb/20230810002257.nadxmfmrobkaxgnz@synopsys.com/
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
+Link: https://lore.kernel.org/r/8809e6c5-59d5-4d2d-ac8f-6d106658ad73@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/direct.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/usb/core/hub.c |   36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -509,13 +509,31 @@ out:
- 	return result;
- }
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -4633,7 +4633,7 @@ static int get_bMaxPacketSize0(struct us
+ 				buf, size,
+ 				initial_descriptor_timeout);
+ 		switch (buf->bMaxPacketSize0) {
+-		case 8: case 16: case 32: case 64: case 255:
++		case 8: case 16: case 32: case 64: case 9:
+ 			if (buf->bDescriptorType == USB_DT_DEVICE) {
+ 				rc = buf->bMaxPacketSize0;
+ 				break;
+@@ -4923,23 +4923,35 @@ hub_port_init(struct usb_hub *hub, struc
+ 	if (retval)
+ 		goto fail;
  
-+static void nfs_direct_add_page_head(struct list_head *list,
-+				     struct nfs_page *req)
-+{
-+	struct nfs_page *head = req->wb_head;
-+
-+	if (!list_empty(&head->wb_list) || !nfs_lock_request(head))
-+		return;
-+	if (!list_empty(&head->wb_list)) {
-+		nfs_unlock_request(head);
-+		return;
+-	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
+-		i = 512;
+-	else
+-		i = maxp0;
+-	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
+-		if (udev->speed == USB_SPEED_LOW ||
+-				!(i == 8 || i == 16 || i == 32 || i == 64)) {
+-			dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", i);
+-			retval = -EMSGSIZE;
+-			goto fail;
+-		}
++	/*
++	 * Check the ep0 maxpacket guess and correct it if necessary.
++	 * maxp0 is the value stored in the device descriptor;
++	 * i is the value it encodes (logarithmic for SuperSpeed or greater).
++	 */
++	i = maxp0;
++	if (udev->speed >= USB_SPEED_SUPER) {
++		if (maxp0 <= 16)
++			i = 1 << maxp0;
++		else
++			i = 0;		/* Invalid */
 +	}
-+	list_add(&head->wb_list, list);
-+	kref_get(&head->wb_kref);
-+	kref_get(&head->wb_kref);
-+}
-+
- static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- {
- 	struct nfs_page *req, *subreq;
++	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
++		;	/* Initial ep0 maxpacket guess is right */
++	} else if ((udev->speed == USB_SPEED_FULL ||
++				udev->speed == USB_SPEED_HIGH) &&
++			(i == 8 || i == 16 || i == 32 || i == 64)) {
++		/* Initial guess is wrong; use the descriptor's value */
+ 		if (udev->speed == USB_SPEED_FULL)
+ 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
+ 		else
+ 			dev_warn(&udev->dev, "Using ep0 maxpacket: %d\n", i);
+ 		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(i);
+ 		usb_ep0_reinit(udev);
++	} else {
++		/* Initial guess is wrong and descriptor's value is invalid */
++		dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", maxp0);
++		retval = -EMSGSIZE;
++		goto fail;
+ 	}
  
- 	list_for_each_entry(req, list, wb_list) {
--		if (req->wb_head != req)
-+		if (req->wb_head != req) {
-+			nfs_direct_add_page_head(&req->wb_list, req);
- 			continue;
-+		}
- 		subreq = req->wb_this_page;
- 		if (subreq == req)
- 			continue;
+ 	descr = usb_get_device_descriptor(udev);
 
 
