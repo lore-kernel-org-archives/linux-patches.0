@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1721C53AB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B1DC433C7;
-	Sun, 17 Sep 2023 20:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C960263B8
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A43C433C8;
+	Sun, 17 Sep 2023 20:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983188;
-	bh=wIjkKyJ6nE/NvaW8teVy9ofiEpkzR4vcXVQWAGklau4=;
+	s=korg; t=1694983192;
+	bh=lzFvtkv/uc3oc0akaFE2Ro2ekVwfMpmlzlXwiSCcvME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOjyz7M8jSFEna3xTt972qIDVSQQVKKNvdut/sFr7TJRXJhS57tfCNioGo1thHsgn
-	 HmwqUkWVRIjoKuoy7fDC6Bbir9TpYnXa+cb9NY6XDPpKCDQ2Ovb685p0ucUPFxcwru
-	 AqK2wPUhxwLqkhYhHNRx2Mk9SiAWpiH+WQMF7qKY=
+	b=WPgD0DhDdovIMCsYIvccOFnUjFowuNQASosuk6uWsRJlYi0B/p0MvHY2ZCo01ZC8u
+	 LwV3G0gRSUloCAmM9uZf72lIUGAxabCEcSKo7N6tSlHrfuJubbw52Wgd7KgX8PUTio
+	 ck3d8O7tK9LSDiwrdaIH8E+w8mWhfRAQtldB+PxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 471/511] ata: sata_gemini: Add missing MODULE_DESCRIPTION
-Date: Sun, 17 Sep 2023 21:14:58 +0200
-Message-ID: <20230917191125.119604403@linuxfoundation.org>
+Subject: [PATCH 5.15 472/511] ata: pata_ftide010: Add missing MODULE_DESCRIPTION
+Date: Sun, 17 Sep 2023 21:14:59 +0200
+Message-ID: <20230917191125.142799171@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,11 +41,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 8566572bf3b4d6e416a4bf2110dbb4817d11ba59 upstream.
+commit 7274eef5729037300f29d14edeb334a47a098f65 upstream.
 
 Add the missing MODULE_DESCRIPTION() to avoid warnings such as:
 
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ata/sata_gemini.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ata/pata_ftide010.o
 
 when compiling with W=1.
 
@@ -55,16 +55,16 @@ Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/sata_gemini.c |    1 +
+ drivers/ata/pata_ftide010.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/ata/sata_gemini.c
-+++ b/drivers/ata/sata_gemini.c
-@@ -435,6 +435,7 @@ static struct platform_driver gemini_sat
+--- a/drivers/ata/pata_ftide010.c
++++ b/drivers/ata/pata_ftide010.c
+@@ -570,6 +570,7 @@ static struct platform_driver pata_ftide
  };
- module_platform_driver(gemini_sata_driver);
+ module_platform_driver(pata_ftide010_driver);
  
-+MODULE_DESCRIPTION("low level driver for Cortina Systems Gemini SATA bridge");
++MODULE_DESCRIPTION("low level driver for Faraday Technology FTIDE010");
  MODULE_AUTHOR("Linus Walleij <linus.walleij@linaro.org>");
  MODULE_LICENSE("GPL");
  MODULE_ALIAS("platform:" DRV_NAME);
