@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E276746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1C4C433CD;
-	Sun, 17 Sep 2023 20:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6BB746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1095DC433C8;
+	Sun, 17 Sep 2023 20:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982472;
-	bh=GRy9kUqjXUS0nN33BgiuzWQkSM1me98uUmQje/eS0S8=;
+	s=korg; t=1694982475;
+	bh=p+G1lujfxuum7uyqg8A+aseDJkGMfCUJEWhgn93F5gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtvCtTQ7ItuNHev2JJh+fXPQT2Dy9mO6YnIzzmMSDIioG5oYdVu7LvZEOmKW19nNW
-	 CV3fbWZwmpSOIPB5rc9k1Sydq/uPW/cB567h6+WCDHfaH6rA+f4LyK1Y+D/fBOIRt1
-	 vqEdj0aQW7jCnVDDYZsg/FZEqnW3VmLFVoIhZBT0=
+	b=SRYXitwh3839GiI+5MnmVuZn1uuxYv4Ig0Pg+JUynYgv62kKHxp+7RtF3Y5A+2VlD
+	 xSDAz0G1UcqAstT6VV9YGBb1tQtHSOiGG1dHxK8wtf4nbgdDRoI3BL7nyfk2aqaiSq
+	 5pKQyFKRT98KnqbbF//OhvBbsFyRwGLc3wzHyl/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Rob Evers <revers@redhat.com>,
-	Johannes Thumshirn <Johannes.Thumshirn@wdc.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Jozef Bacik <jobacik@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Qi Liu <liuqi115@huawei.com>,
+	John Garry <john.garry@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	GR-QLogic-Storage-Upstream@marvell.com,
-	linux-scsi@vger.kernel.org,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Oleksandr Natalenko <oleksandr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/511] scsi: qedf: Do not touch __user pointer in qedf_dbg_debug_cmd_read() directly
-Date: Sun, 17 Sep 2023 21:11:28 +0200
-Message-ID: <20230917191120.138650155@linuxfoundation.org>
+Subject: [PATCH 5.15 244/511] scsi: hisi_sas: Modify v3 HW SSP underflow error processing
+Date: Sun, 17 Sep 2023 21:11:11 +0200
+Message-ID: <20230917191119.709551067@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -50,64 +42,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Natalenko <oleksandr@redhat.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 31b5991a9a91ba97237ac9da509d78eec453ff72 ]
+[ Upstream commit 62413199cd6d2906c121c2dfa3d7b82fd05f08db ]
 
-The qedf_dbg_debug_cmd_read() function invokes sprintf() directly on a
-__user pointer, which may crash the kernel.
+In case of SSP underflow allow the response frame IU to be examined for
+setting the response stat value rather than always setting
+SAS_DATA_UNDERRUN.
 
-Avoid doing that by using a small on-stack buffer for scnprintf() and then
-calling simple_read_from_buffer() which does a proper copy_to_user() call.
+This will mean that we call sas_ssp_task_response() in those scenarios and
+may send sense data to upper layer.
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Link: https://lore.kernel.org/lkml/20230724120241.40495-1-oleksandr@redhat.com/
-Link: https://lore.kernel.org/linux-scsi/20230726101236.11922-1-skashyap@marvell.com/
-Cc: Saurav Kashyap <skashyap@marvell.com>
-Cc: Rob Evers <revers@redhat.com>
-Cc: Johannes Thumshirn <Johannes.Thumshirn@wdc.com>
-Cc: David Laight <David.Laight@ACULAB.COM>
-Cc: Jozef Bacik <jobacik@redhat.com>
-Cc: Laurence Oberman <loberman@redhat.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: GR-QLogic-Storage-Upstream@marvell.com
-Cc: linux-scsi@vger.kernel.org
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Laurence Oberman <loberman@redhat.com>
-Acked-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
-Link: https://lore.kernel.org/r/20230731084034.37021-3-oleksandr@redhat.com
+Such a condition would be for bad blocks were we just reporting an
+underflow error to upper layer, but now the sense data will tell
+immediately that the media is faulty.
+
+Link: https://lore.kernel.org/r/1645703489-87194-7-git-send-email-john.garry@huawei.com
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Qi Liu <liuqi115@huawei.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: f5393a5602ca ("scsi: hisi_sas: Fix normally completed I/O analysed as failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_debugfs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 39 +++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_debugfs.c b/drivers/scsi/qedf/qedf_debugfs.c
-index 3eb4334ac6a32..1c5716540e465 100644
---- a/drivers/scsi/qedf/qedf_debugfs.c
-+++ b/drivers/scsi/qedf/qedf_debugfs.c
-@@ -138,15 +138,14 @@ qedf_dbg_debug_cmd_read(struct file *filp, char __user *buffer, size_t count,
- 			loff_t *ppos)
- {
- 	int cnt;
-+	char cbuf[32];
- 	struct qedf_dbg_ctx *qedf_dbg =
- 				(struct qedf_dbg_ctx *)filp->private_data;
- 
- 	QEDF_INFO(qedf_dbg, QEDF_LOG_DEBUGFS, "debug mask=0x%x\n", qedf_debug);
--	cnt = sprintf(buffer, "debug mask = 0x%x\n", qedf_debug);
-+	cnt = scnprintf(cbuf, sizeof(cbuf), "debug mask = 0x%x\n", qedf_debug);
- 
--	cnt = min_t(int, count, cnt - *ppos);
--	*ppos += cnt;
--	return cnt;
-+	return simple_read_from_buffer(buffer, count, ppos, cbuf, cnt);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 9515ab66a7789..00f0847e1487a 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -405,6 +405,8 @@
+ #define CMPLT_HDR_ERROR_PHASE_MSK   (0xff << CMPLT_HDR_ERROR_PHASE_OFF)
+ #define CMPLT_HDR_RSPNS_XFRD_OFF	10
+ #define CMPLT_HDR_RSPNS_XFRD_MSK	(0x1 << CMPLT_HDR_RSPNS_XFRD_OFF)
++#define CMPLT_HDR_RSPNS_GOOD_OFF	11
++#define CMPLT_HDR_RSPNS_GOOD_MSK	(0x1 << CMPLT_HDR_RSPNS_GOOD_OFF)
+ #define CMPLT_HDR_ERX_OFF		12
+ #define CMPLT_HDR_ERX_MSK		(0x1 << CMPLT_HDR_ERX_OFF)
+ #define CMPLT_HDR_ABORT_STAT_OFF	13
+@@ -2136,7 +2138,7 @@ static irqreturn_t fatal_axi_int_v3_hw(int irq_no, void *p)
+ 	return IRQ_HANDLED;
  }
  
- static ssize_t
+-static void
++static bool
+ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	       struct hisi_sas_slot *slot)
+ {
+@@ -2154,6 +2156,15 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	switch (task->task_proto) {
+ 	case SAS_PROTOCOL_SSP:
+ 		if (dma_rx_err_type & RX_DATA_LEN_UNDERFLOW_MSK) {
++			/*
++			 * If returned response frame is incorrect because of data underflow,
++			 * but I/O information has been written to the host memory, we examine
++			 * response IU.
++			 */
++			if (!(complete_hdr->dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
++				(complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
++				return false;
++
+ 			ts->residual = trans_tx_fail_type;
+ 			ts->stat = SAS_DATA_UNDERRUN;
+ 		} else if (dw3 & CMPLT_HDR_IO_IN_TARGET_MSK) {
+@@ -2185,6 +2196,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	default:
+ 		break;
+ 	}
++	return true;
+ }
+ 
+ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+@@ -2259,19 +2271,20 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+ 	if ((dw0 & CMPLT_HDR_CMPLT_MSK) == 0x3) {
+ 		u32 *error_info = hisi_sas_status_buf_addr_mem(slot);
+ 
+-		slot_err_v3_hw(hisi_hba, task, slot);
+-		if (ts->stat != SAS_DATA_UNDERRUN)
+-			dev_info(dev, "erroneous completion iptt=%d task=%pK dev id=%d addr=%016llx CQ hdr: 0x%x 0x%x 0x%x 0x%x Error info: 0x%x 0x%x 0x%x 0x%x\n",
+-				 slot->idx, task, sas_dev->device_id,
+-				 SAS_ADDR(device->sas_addr),
+-				 dw0, dw1, complete_hdr->act, dw3,
+-				 error_info[0], error_info[1],
+-				 error_info[2], error_info[3]);
+-		if (unlikely(slot->abort)) {
+-			sas_task_abort(task);
+-			return;
++		if (slot_err_v3_hw(hisi_hba, task, slot)) {
++			if (ts->stat != SAS_DATA_UNDERRUN)
++				dev_info(dev, "erroneous completion iptt=%d task=%pK dev id=%d addr=%016llx CQ hdr: 0x%x 0x%x 0x%x 0x%x Error info: 0x%x 0x%x 0x%x 0x%x\n",
++					slot->idx, task, sas_dev->device_id,
++					SAS_ADDR(device->sas_addr),
++					dw0, dw1, complete_hdr->act, dw3,
++					error_info[0], error_info[1],
++					error_info[2], error_info[3]);
++			if (unlikely(slot->abort)) {
++				sas_task_abort(task);
++				return;
++			}
++			goto out;
+ 		}
+-		goto out;
+ 	}
+ 
+ 	switch (task->task_proto) {
 -- 
 2.40.1
 
