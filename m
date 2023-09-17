@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191453B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5F1C433C9;
-	Sun, 17 Sep 2023 19:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80F853B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:35:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4826DC433C7;
+	Sun, 17 Sep 2023 19:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979332;
-	bh=iQQKVdXqtENnTGRTMj5DSOcxacoKTtv481bpNwks8z8=;
+	s=korg; t=1694979335;
+	bh=a/aoqHj3YFT//S6D+wjP2gzE/CY+uTpaYvrkrHXzKO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEH1gOchSvu1smFJNs81WdTiaO8htLaWkHuzQzYe3LSDoGFqR3mFzS0r4RCeCJyoK
-	 7fY7VuyfVIJKXeBWxPAJ9JyB3DiYhbiV3pCEyRVs3DDsjrZlHGJ7Y/VTrW1O5AjJBM
-	 MWoWhqbajfr0gLM1N4ukWCjLPT2ulsvE1Bu0KK+0=
+	b=KyqA5fUrbVNlZaT1Te1ruGj8Mu/b/QaTFN9iV+Na8gUI7waSr/ugr4TapI6uchc4D
+	 hnAHHovSjCT5Ur3dEH+OkDt4GUH2YgEXT3HGd+GhtwPBrt8kw7NScIj/+BJpTapEYo
+	 2CV6gAPMzn6/KruGrqF0oiIoaRwM203GKjZrjqg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	William Zhang <william.zhang@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/406] tracing: Fix race issue between cpu buffer write and swap
-Date: Sun, 17 Sep 2023 21:11:49 +0200
-Message-ID: <20230917191107.911945682@linuxfoundation.org>
+Subject: [PATCH 5.10 256/406] mtd: rawnand: brcmnand: Fix mtd oobsize
+Date: Sun, 17 Sep 2023 21:11:50 +0200
+Message-ID: <20230917191107.941576619@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,139 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 3163f635b20e9e1fb4659e74f47918c9dddfe64e ]
+[ Upstream commit 60177390fa061c62d156f4a546e3efd90df3c183 ]
 
-Warning happened in rb_end_commit() at code:
-	if (RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing)))
+brcmnand controller can only access the flash spare area up to certain
+bytes based on the ECC level. It can be less than the actual flash spare
+area size. For example, for many NAND chip supporting ECC BCH-8, it has
+226 bytes spare area. But controller can only uses 218 bytes. So brcmand
+driver overrides the mtd oobsize with the controller's accessible spare
+area size. When the nand base driver utilizes the nand_device object, it
+resets the oobsize back to the actual flash spare aprea size from
+nand_memory_organization structure and controller may not able to access
+all the oob area as mtd advises.
 
-  WARNING: CPU: 0 PID: 139 at kernel/trace/ring_buffer.c:3142
-	rb_commit+0x402/0x4a0
-  Call Trace:
-   ring_buffer_unlock_commit+0x42/0x250
-   trace_buffer_unlock_commit_regs+0x3b/0x250
-   trace_event_buffer_commit+0xe5/0x440
-   trace_event_buffer_reserve+0x11c/0x150
-   trace_event_raw_event_sched_switch+0x23c/0x2c0
-   __traceiter_sched_switch+0x59/0x80
-   __schedule+0x72b/0x1580
-   schedule+0x92/0x120
-   worker_thread+0xa0/0x6f0
+This change fixes the issue by overriding the oobsize in the
+nand_memory_organization structure to the controller's accessible spare
+area size.
 
-It is because the race between writing event into cpu buffer and swapping
-cpu buffer through file per_cpu/cpu0/snapshot:
-
-  Write on CPU 0             Swap buffer by per_cpu/cpu0/snapshot on CPU 1
-  --------                   --------
-                             tracing_snapshot_write()
-                               [...]
-
-  ring_buffer_lock_reserve()
-    cpu_buffer = buffer->buffers[cpu]; // 1. Suppose find 'cpu_buffer_a';
-    [...]
-    rb_reserve_next_event()
-      [...]
-
-                               ring_buffer_swap_cpu()
-                                 if (local_read(&cpu_buffer_a->committing))
-                                     goto out_dec;
-                                 if (local_read(&cpu_buffer_b->committing))
-                                     goto out_dec;
-                                 buffer_a->buffers[cpu] = cpu_buffer_b;
-                                 buffer_b->buffers[cpu] = cpu_buffer_a;
-                                 // 2. cpu_buffer has swapped here.
-
-      rb_start_commit(cpu_buffer);
-      if (unlikely(READ_ONCE(cpu_buffer->buffer)
-          != buffer)) { // 3. This check passed due to 'cpu_buffer->buffer'
-        [...]           //    has not changed here.
-        return NULL;
-      }
-                                 cpu_buffer_b->buffer = buffer_a;
-                                 cpu_buffer_a->buffer = buffer_b;
-                                 [...]
-
-      // 4. Reserve event from 'cpu_buffer_a'.
-
-  ring_buffer_unlock_commit()
-    [...]
-    cpu_buffer = buffer->buffers[cpu]; // 5. Now find 'cpu_buffer_b' !!!
-    rb_commit(cpu_buffer)
-      rb_end_commit()  // 6. WARN for the wrong 'committing' state !!!
-
-Based on above analysis, we can easily reproduce by following testcase:
-  ``` bash
-  #!/bin/bash
-
-  dmesg -n 7
-  sysctl -w kernel.panic_on_warn=1
-  TR=/sys/kernel/tracing
-  echo 7 > ${TR}/buffer_size_kb
-  echo "sched:sched_switch" > ${TR}/set_event
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  ```
-
-To fix it, IIUC, we can use smp_call_function_single() to do the swap on
-the target cpu where the buffer is located, so that above race would be
-avoided.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230831132739.4070878-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Fixes: f1affcaaa861 ("tracing: Add snapshot in the per_cpu trace directories")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: a7ab085d7c16 ("mtd: rawnand: Initialize the nand_device object")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-6-william.zhang@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 2ded5012543bf..fbe13cfdb85b0 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7164,6 +7164,11 @@ static int tracing_snapshot_open(struct inode *inode, struct file *file)
- 	return ret;
- }
+diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+index 580b91cbd18de..64c8c177d0082 100644
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -2534,6 +2534,8 @@ static int brcmnand_setup_dev(struct brcmnand_host *host)
+ 	struct nand_chip *chip = &host->chip;
+ 	const struct nand_ecc_props *requirements =
+ 		nanddev_get_ecc_requirements(&chip->base);
++	struct nand_memory_organization *memorg =
++		nanddev_get_memorg(&chip->base);
+ 	struct brcmnand_controller *ctrl = host->ctrl;
+ 	struct brcmnand_cfg *cfg = &host->hwcfg;
+ 	char msg[128];
+@@ -2555,10 +2557,11 @@ static int brcmnand_setup_dev(struct brcmnand_host *host)
+ 	if (cfg->spare_area_size > ctrl->max_oob)
+ 		cfg->spare_area_size = ctrl->max_oob;
+ 	/*
+-	 * Set oobsize to be consistent with controller's spare_area_size, as
+-	 * the rest is inaccessible.
++	 * Set mtd and memorg oobsize to be consistent with controller's
++	 * spare_area_size, as the rest is inaccessible.
+ 	 */
+ 	mtd->oobsize = cfg->spare_area_size * (mtd->writesize >> FC_SHIFT);
++	memorg->oobsize = mtd->oobsize;
  
-+static void tracing_swap_cpu_buffer(void *tr)
-+{
-+	update_max_tr_single((struct trace_array *)tr, current, smp_processor_id());
-+}
-+
- static ssize_t
- tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 		       loff_t *ppos)
-@@ -7222,13 +7227,15 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 			ret = tracing_alloc_snapshot_instance(tr);
- 		if (ret < 0)
- 			break;
--		local_irq_disable();
- 		/* Now, we're going to swap */
--		if (iter->cpu_file == RING_BUFFER_ALL_CPUS)
-+		if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
-+			local_irq_disable();
- 			update_max_tr(tr, current, smp_processor_id(), NULL);
--		else
--			update_max_tr_single(tr, current, iter->cpu_file);
--		local_irq_enable();
-+			local_irq_enable();
-+		} else {
-+			smp_call_function_single(iter->cpu_file, tracing_swap_cpu_buffer,
-+						 (void *)tr, 1);
-+		}
- 		break;
- 	default:
- 		if (tr->allocated_snapshot) {
+ 	cfg->device_size = mtd->size;
+ 	cfg->block_size = mtd->erasesize;
 -- 
 2.40.1
 
