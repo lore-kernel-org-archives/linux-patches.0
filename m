@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D17461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E77C433C9;
-	Sun, 17 Sep 2023 20:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7086ABA
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0345C433C8;
+	Sun, 17 Sep 2023 20:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982006;
-	bh=0rcik/4Vv7I/6RpILEDRp0A+/z0KpqI85adwQEDcwPk=;
+	s=korg; t=1694982009;
+	bh=jgTWJXU9rtF9UA/dQu1G9LY6FX4NAywPEWl1V9CuZlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf+EhwOR9rZmnOg0618wjPFtcnz7zaogd7pTLlNjeffDSXZPpIdXZPHvjeU3tAYwi
-	 i3nRh1J7/fbMmCMoFBRmDS4Cf+pedHEB5xU57FSjBK0WtFDlUXif5dOk4PEqeui6yh
-	 PMKPpwhXbSBkrTgplpGADIgzLHKq1+a3SHeJq37E=
+	b=Sud7/4XIvKxtWlSTfwU9y1oynSQxtQXZ0m0bNBr+2rJrh3BfcTi94K0AwctjwibF7
+	 rNINzo6AZRlvIYuUfme0d4NMgKN5YzMJyuQNHzgGRXU58Lj54MQn8dLLKyeWeg5ZMz
+	 1AbzQCrnlhrAMmVIHWA+meok7QjLIAVxcrpq7SjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/511] arm64: dts: qcom: pmk8350: fix ADC-TM compatible string
-Date: Sun, 17 Sep 2023 21:09:25 +0200
-Message-ID: <20230917191117.194987716@linuxfoundation.org>
+Subject: [PATCH 6.1 205/219] platform/mellanox: mlxbf-pmc: Fix potential buffer overflows
+Date: Sun, 17 Sep 2023 21:15:32 +0200
+Message-ID: <20230917191048.348283006@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,43 +38,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit 435a73d7377ceb29c1a22d2711dd85c831b40c45 ]
+[ Upstream commit 80ccd40568bcd3655b0fd0be1e9b3379fd6e1056 ]
 
-The commit b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for
-pmk8350") for the ADC TM (thermal monitoring device) have used the
-compatible string from the vendor kernel ("qcom,adc-tm7"). Use the
-proper compatible string that is defined in the upstream kernel
-("qcom,spmi-adc-tm5-gen2").
+Replace sprintf with sysfs_emit where possible.
+Size check in mlxbf_pmc_event_list_show should account for "\0".
 
-Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230707123027.1510723-6-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/bef39ef32319a31b32f999065911f61b0d3b17c3.1693917738.git.shravankr@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index fc38f77d12a36..9e99fcf269dfd 100644
---- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -45,7 +45,7 @@ pmk8350_vadc: adc@3100 {
- 		};
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index be967d797c28e..95afcae7b9fa9 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -1008,7 +1008,7 @@ static ssize_t mlxbf_pmc_counter_show(struct device *dev,
+ 	} else
+ 		return -EINVAL;
  
- 		pmk8350_adc_tm: adc-tm@3400 {
--			compatible = "qcom,adc-tm7";
-+			compatible = "qcom,spmi-adc-tm5-gen2";
- 			reg = <0x3400>;
- 			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "threshold";
+-	return sprintf(buf, "0x%llx\n", value);
++	return sysfs_emit(buf, "0x%llx\n", value);
+ }
+ 
+ /* Store function for "counter" sysfs files */
+@@ -1078,13 +1078,13 @@ static ssize_t mlxbf_pmc_event_show(struct device *dev,
+ 
+ 	err = mlxbf_pmc_read_event(blk_num, cnt_num, is_l3, &evt_num);
+ 	if (err)
+-		return sprintf(buf, "No event being monitored\n");
++		return sysfs_emit(buf, "No event being monitored\n");
+ 
+ 	evt_name = mlxbf_pmc_get_event_name(pmc->block_name[blk_num], evt_num);
+ 	if (!evt_name)
+ 		return -EINVAL;
+ 
+-	return sprintf(buf, "0x%llx: %s\n", evt_num, evt_name);
++	return sysfs_emit(buf, "0x%llx: %s\n", evt_num, evt_name);
+ }
+ 
+ /* Store function for "event" sysfs files */
+@@ -1139,9 +1139,9 @@ static ssize_t mlxbf_pmc_event_list_show(struct device *dev,
+ 		return -EINVAL;
+ 
+ 	for (i = 0, buf[0] = '\0'; i < size; ++i) {
+-		len += sprintf(e_info, "0x%x: %s\n", events[i].evt_num,
+-			       events[i].evt_name);
+-		if (len > PAGE_SIZE)
++		len += snprintf(e_info, sizeof(e_info), "0x%x: %s\n",
++				events[i].evt_num, events[i].evt_name);
++		if (len >= PAGE_SIZE)
+ 			break;
+ 		strcat(buf, e_info);
+ 		ret = len;
+@@ -1168,7 +1168,7 @@ static ssize_t mlxbf_pmc_enable_show(struct device *dev,
+ 
+ 	value = FIELD_GET(MLXBF_PMC_L3C_PERF_CNT_CFG_EN, perfcnt_cfg);
+ 
+-	return sprintf(buf, "%d\n", value);
++	return sysfs_emit(buf, "%d\n", value);
+ }
+ 
+ /* Store function for "enable" sysfs files - only for l3cache */
 -- 
 2.40.1
 
