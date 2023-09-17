@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD316FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DFAC433C8;
-	Sun, 17 Sep 2023 19:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EC26FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FB7C433C7;
+	Sun, 17 Sep 2023 19:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980398;
-	bh=hTSWi3AxUUk85WviqmtlCT/65DuhQdzwCf/05swxAnY=;
+	s=korg; t=1694980401;
+	bh=TDTadUzuQRitMOZFKaYg50zEo2lOJChy+YIKEgB/RHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5NJ0qyw+vMsisu8O1EnGd5bGktE2qGROEirBuNSZ8P7st5kMgytj42NKU3Fg9ecM
-	 G6DyUi/Te69QhdrWvWDM3T4heSCEk1aOql/98pz8N/YXbXtFwKMTQDmZnaRof4A7Fr
-	 f1tmyhxtX1UIgKgOAD1OA2CJ9DUZgzTQk/T9kXZg=
+	b=1ax8oTEyHDS1ehNjYaZ1X8jFWt4+9aZysMiMjrL48UzI3+94I1ISU/NBwOT0IRabt
+	 MEzsiMS8F+VHma1lUU3teZlkkJNZNDsBvrHU+j8H+EjqVNM5T5lPt+z8VI43L3kkca
+	 rIUN8Ju1ccd0Z7pU4NCARkbMCsy0h05lJS2l4Bys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.5 181/285] dmaengine: sh: rz-dmac: Fix destination and source data size setting
-Date: Sun, 17 Sep 2023 21:13:01 +0200
-Message-ID: <20230917191057.893555579@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 164/285] netfilter: nft_set_rbtree: skip sync GC for new elements in this transaction
+Date: Sun, 17 Sep 2023 21:12:44 +0200
+Message-ID: <20230917191057.334514055@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,64 +40,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hien Huynh <hien.huynh.px@renesas.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit c6ec8c83a29fb3aec3efa6fabbf5344498f57c7f upstream.
+[ Upstream commit 2ee52ae94baabf7ee09cf2a8d854b990dac5d0e4 ]
 
-Before setting DDS and SDS values, we need to clear its value first
-otherwise, we get incorrect results when we change/update the DMA bus
-width several times due to the 'OR' expression.
+New elements in this transaction might expired before such transaction
+ends. Skip sync GC for such elements otherwise commit path might walk
+over an already released object. Once transaction is finished, async GC
+will collect such expired element.
 
-Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
-Cc: stable@kernel.org
-Signed-off-by: Hien Huynh <hien.huynh.px@renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230706112150.198941-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sh/rz-dmac.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -9,6 +9,7 @@
-  * Copyright 2012 Javier Martin, Vista Silicon <javier.martin@vista-silicon.com>
-  */
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index c6435e7092319..f250b5399344a 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -312,6 +312,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
+ 	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
++	u8 cur_genmask = nft_genmask_cur(net);
+ 	u8 genmask = nft_genmask_next(net);
+ 	int d, err;
  
-+#include <linux/bitfield.h>
- #include <linux/dma-mapping.h>
- #include <linux/dmaengine.h>
- #include <linux/interrupt.h>
-@@ -145,8 +146,8 @@ struct rz_dmac {
- #define CHCFG_REQD			BIT(3)
- #define CHCFG_SEL(bits)			((bits) & 0x07)
- #define CHCFG_MEM_COPY			(0x80400008)
--#define CHCFG_FILL_DDS(a)		(((a) << 16) & GENMASK(19, 16))
--#define CHCFG_FILL_SDS(a)		(((a) << 12) & GENMASK(15, 12))
-+#define CHCFG_FILL_DDS_MASK		GENMASK(19, 16)
-+#define CHCFG_FILL_SDS_MASK		GENMASK(15, 12)
- #define CHCFG_FILL_TM(a)		(((a) & BIT(5)) << 22)
- #define CHCFG_FILL_AM(a)		(((a) & GENMASK(4, 2)) << 6)
- #define CHCFG_FILL_LVL(a)		(((a) & BIT(1)) << 5)
-@@ -607,13 +608,15 @@ static int rz_dmac_config(struct dma_cha
- 	if (val == CHCFG_DS_INVALID)
- 		return -EINVAL;
+@@ -357,8 +358,11 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		if (!nft_set_elem_active(&rbe->ext, genmask))
+ 			continue;
  
--	channel->chcfg |= CHCFG_FILL_DDS(val);
-+	channel->chcfg &= ~CHCFG_FILL_DDS_MASK;
-+	channel->chcfg |= FIELD_PREP(CHCFG_FILL_DDS_MASK, val);
- 
- 	val = rz_dmac_ds_to_val_mapping(config->src_addr_width);
- 	if (val == CHCFG_DS_INVALID)
- 		return -EINVAL;
- 
--	channel->chcfg |= CHCFG_FILL_SDS(val);
-+	channel->chcfg &= ~CHCFG_FILL_SDS_MASK;
-+	channel->chcfg |= FIELD_PREP(CHCFG_FILL_SDS_MASK, val);
- 
- 	return 0;
- }
+-		/* perform garbage collection to avoid bogus overlap reports. */
+-		if (nft_set_elem_expired(&rbe->ext)) {
++		/* perform garbage collection to avoid bogus overlap reports
++		 * but skip new elements in this transaction.
++		 */
++		if (nft_set_elem_expired(&rbe->ext) &&
++		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
+ 			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
+ 			if (err < 0)
+ 				return err;
+-- 
+2.40.1
+
 
 
