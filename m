@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6688A7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDBAC433CC;
-	Sun, 17 Sep 2023 20:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A047461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316FAC433C8;
+	Sun, 17 Sep 2023 20:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980828;
-	bh=UXQWC612usyKwqkTcUFixSpA781GQ+Kga2CuGi+N5pU=;
+	s=korg; t=1694980831;
+	bh=KkNcjq1dxyEckrVtKdsBJGRfEbywks8JtlWhA8n4NOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ON02YKa+6/78TLPOyJpoRe8FpfmSGc5s6O8Bsnjq34gVwQ5DS+r8IqAVhJHcrdS/k
-	 jpqVEUqlgoKqP+3j2o2/ag9EgQ0cwtZfTnOBseUlZ8VHWiSGe++CU7ic6z8SOteBU6
-	 LRfycxNo/99W+fU916lo04k5O4dg32cXKNOhUgqg=
+	b=O+0+p4rpqQz6cac2mHvNA86sUXSueq40dJGCzkJzBb6lqxj23r69buPT1QZIHPku8
+	 c6vw4RMyyUKp/59jC+Mhv0Mw+k0FF7qYd1AMZwY+lagFGATnMZ2C50KL/ydArLxgaV
+	 HAm4MyQbuTXevNxp5YtIIzjCGTjdXsWcbRHEv5fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dylan Yudaken <dylany@meta.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Pavel Begunkov <asml.silence@gmail.com>
-Subject: [PATCH 6.1 004/219] io_uring: always lock in io_apoll_task_func
-Date: Sun, 17 Sep 2023 21:12:11 +0200
-Message-ID: <20230917191041.121272755@linuxfoundation.org>
+Subject: [PATCH 6.1 005/219] io_uring: revert "io_uring fix multishot accept ordering"
+Date: Sun, 17 Sep 2023 21:12:12 +0200
+Message-ID: <20230917191041.158454836@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -44,44 +44,41 @@ From: Pavel Begunkov <asml.silence@gmail.com>
 
 From: Dylan Yudaken <dylany@meta.com>
 
-[ upstream commit c06c6c5d276707e04cedbcc55625e984922118aa ]
+[ upstream commit 515e26961295bee9da5e26916c27739dca6c10e1 ]
 
-This is required for the failure case (io_req_complete_failed) and is
-missing.
+This is no longer needed after commit aa1df3a360a0 ("io_uring: fix CQE
+reordering"), since all reordering is now taken care of.
 
-The alternative would be to only lock in the failure path, however all of
-the non-error paths in io_poll_check_events that do not do not return
-IOU_POLL_NO_ACTION end up locking anyway. The only extraneous lock would
-be for the multishot poll overflowing the CQE ring, however multishot poll
-would probably benefit from being locked as it will allow completions to
-be batched.
-
-So it seems reasonable to lock always.
+This reverts commit cbd25748545c ("io_uring: fix multishot accept
+ordering").
 
 Signed-off-by: Dylan Yudaken <dylany@meta.com>
-Link: https://lore.kernel.org/r/20221124093559.3780686-3-dylany@meta.com
+Link: https://lore.kernel.org/r/20221107125236.260132-2-dylany@meta.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/net.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -360,11 +360,12 @@ static void io_apoll_task_func(struct io
- 	if (ret == IOU_POLL_NO_ACTION)
- 		return;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1337,12 +1337,12 @@ retry:
+ 		return IOU_OK;
+ 	}
  
-+	io_tw_lock(req->ctx, locked);
- 	io_poll_remove_entries(req);
- 	io_poll_tw_hash_eject(req, locked);
+-	if (ret >= 0 &&
+-	    io_post_aux_cqe(ctx, req->cqe.user_data, ret, IORING_CQE_F_MORE, false))
++	if (ret < 0)
++		return ret;
++	if (io_post_aux_cqe(ctx, req->cqe.user_data, ret, IORING_CQE_F_MORE, true))
+ 		goto retry;
  
- 	if (ret == IOU_POLL_REMOVE_POLL_USE_RES)
--		io_req_complete_post(req);
-+		io_req_task_complete(req, locked);
- 	else if (ret == IOU_POLL_DONE || ret == IOU_POLL_REISSUE)
- 		io_req_task_submit(req, locked);
- 	else
+-	io_req_set_res(req, ret, 0);
+-	return (issue_flags & IO_URING_F_MULTISHOT) ? IOU_STOP_MULTISHOT : IOU_OK;
++	return -ECANCELED;
+ }
+ 
+ int io_socket_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
 
 
