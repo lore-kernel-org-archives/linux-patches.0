@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB23253B4
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFF6C433CB;
-	Sun, 17 Sep 2023 19:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF5D53B4
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97913C433C9;
+	Sun, 17 Sep 2023 19:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979263;
-	bh=Bhnitx0QGB2byprSZoc86jE/lwSfMTPaayiWrEK7DGE=;
+	s=korg; t=1694979267;
+	bh=sK0uuNmClBaiiF9x1WBK8DJ/q2WXjVrOgM+zT69x/u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQAukjD444nVmnCCnBJ9NA+h31WRowMXQuU34bM/qaGqrCX/LePhf5EoPHw9UWaTb
-	 wplQTdP6L0MTLwuQ1vgXzcGAWPhWiT8x402VlnqV6ZauL0r/0GLk4pGNqOHwB1F5XS
-	 45ly40p0dOYgP64QzB9siwg3uPc/g+7MZq+SV8ag=
+	b=A+bWnhtUCnW2BhdDo75vDfEOgocDTPg3VcSp9EMhVsaFY6982gAI5Hq1a5PG4uxfl
+	 7BFfon5ER1RsXIb/yStS1QFxHovDtEDG85p9PSDAHVGCvMOwCW9V6wfGXeEmMiRoQz
+	 DnDsiGscE6UzYRr1n4KDEO9UpmRsv5nN9UubnWtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Yi Yang <yiyang13@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 262/406] mtd: spi-nor: Check bus width while setting QE bit
-Date: Sun, 17 Sep 2023 21:11:56 +0200
-Message-ID: <20230917191108.126558712@linuxfoundation.org>
+Subject: [PATCH 5.10 263/406] mtd: rawnand: fsmc: handle clk prepare error in fsmc_nand_resume()
+Date: Sun, 17 Sep 2023 21:11:57 +0200
+Message-ID: <20230917191108.157626671@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,61 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Yi Wang <hsinyi@chromium.org>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit f01d8155a92e33cdaa85d20bfbe6c441907b3c1f ]
+[ Upstream commit a5a88125d00612586e941ae13e7fcf36ba8f18a7 ]
 
-spi_nor_write_16bit_sr_and_check() should also check if bus width is
-4 before setting QE bit.
+In fsmc_nand_resume(), the return value of clk_prepare_enable() should be
+checked since it might fail.
 
-Fixes: 39d1e3340c73 ("mtd: spi-nor: Fix clearing of QE bit on lock()/unlock()")
-Suggested-by: Michael Walle <michael@walle.cc>
-Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Reviewed-by: Michael Walle <michael@walle.cc>
-Link: https://lore.kernel.org/r/20230818064524.1229100-2-hsinyi@chromium.org
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: e25da1c07dfb ("mtd: fsmc_nand: Add clk_{un}prepare() support")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230817115839.10192-1-yiyang13@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/mtd/nand/raw/fsmc_nand.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 3422152319321..09e112f376918 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -800,21 +800,22 @@ static int spi_nor_write_16bit_sr_and_check(struct spi_nor *nor, u8 sr1)
- 		ret = spi_nor_read_cr(nor, &sr_cr[1]);
- 		if (ret)
- 			return ret;
--	} else if (nor->params->quad_enable) {
-+	} else if (spi_nor_get_protocol_width(nor->read_proto) == 4 &&
-+		   spi_nor_get_protocol_width(nor->write_proto) == 4 &&
-+		   nor->params->quad_enable) {
- 		/*
- 		 * If the Status Register 2 Read command (35h) is not
- 		 * supported, we should at least be sure we don't
- 		 * change the value of the SR2 Quad Enable bit.
- 		 *
--		 * We can safely assume that when the Quad Enable method is
--		 * set, the value of the QE bit is one, as a consequence of the
--		 * nor->params->quad_enable() call.
-+		 * When the Quad Enable method is set and the buswidth is 4, we
-+		 * can safely assume that the value of the QE bit is one, as a
-+		 * consequence of the nor->params->quad_enable() call.
- 		 *
--		 * We can safely assume that the Quad Enable bit is present in
--		 * the Status Register 2 at BIT(1). According to the JESD216
--		 * revB standard, BFPT DWORDS[15], bits 22:20, the 16-bit
--		 * Write Status (01h) command is available just for the cases
--		 * in which the QE bit is described in SR2 at BIT(1).
-+		 * According to the JESD216 revB standard, BFPT DWORDS[15],
-+		 * bits 22:20, the 16-bit Write Status (01h) command is
-+		 * available just for the cases in which the QE bit is
-+		 * described in SR2 at BIT(1).
- 		 */
- 		sr_cr[1] = SR2_QUAD_EN_BIT1;
- 	} else {
+diff --git a/drivers/mtd/nand/raw/fsmc_nand.c b/drivers/mtd/nand/raw/fsmc_nand.c
+index 663ff5300ad99..3da66e95e5b7e 100644
+--- a/drivers/mtd/nand/raw/fsmc_nand.c
++++ b/drivers/mtd/nand/raw/fsmc_nand.c
+@@ -1190,9 +1190,14 @@ static int fsmc_nand_suspend(struct device *dev)
+ static int fsmc_nand_resume(struct device *dev)
+ {
+ 	struct fsmc_nand_data *host = dev_get_drvdata(dev);
++	int ret;
+ 
+ 	if (host) {
+-		clk_prepare_enable(host->clk);
++		ret = clk_prepare_enable(host->clk);
++		if (ret) {
++			dev_err(dev, "failed to enable clk\n");
++			return ret;
++		}
+ 		if (host->dev_timings)
+ 			fsmc_nand_setup(host, host->dev_timings);
+ 		nand_reset(&host->nand, 0);
 -- 
 2.40.1
 
