@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA136FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18232C433C8;
-	Sun, 17 Sep 2023 20:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644776FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:10:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76381C433C8;
+	Sun, 17 Sep 2023 20:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981431;
-	bh=FPMo3cLjyMHVLhRvEtInB8aSkq2WNaxGodpWNHWWZSY=;
+	s=korg; t=1694981435;
+	bh=taxOP9rnyoEfu/lVGrjXzg/uOM1zHON8EJwedY1pF2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWdigs8rTryv7aUNYny3WC9vNBjAJIQ4Ru1uA2Sfxq3YJOCOhGARcMKeBNr816xv8
-	 4DWSTiQIHVfWpfkaGeMGhma6FW+LiHwidvyOrf7iKu8nVfs2eLeOXdXyRL68QMvcn/
-	 aCO0NM6bAgA1VgRjfjnWjmZtxbc76xOAftEpTSGM=
+	b=HU7mfu1QXi9MrzhSFW1R8giwEYhHEi6qru99MhO6+h//75bNOP+l1WqWmgEGb9scp
+	 G2KAU1k2Ijlv0jDeHSk9vXpMZayB5buLrJvn2XgQ2tXtxUP3wcO7XSzxvsp9m+HAhr
+	 CcTNvw/CXjeRGRZ0XIlLSw52fyP6CicxYjOTUWUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guiting Shen <aarongt.shen@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/219] ipv4: annotate data-races around fi->fib_dead
-Date: Sun, 17 Sep 2023 21:13:36 +0200
-Message-ID: <20230917191044.190028439@linuxfoundation.org>
+Subject: [PATCH 5.15 023/511] ASoC: atmel: Fix the 8K sample parameter in I2SC master
+Date: Sun, 17 Sep 2023 21:07:30 +0200
+Message-ID: <20230917191114.388331354@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,138 +36,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Guiting Shen <aarongt.shen@gmail.com>
 
-[ Upstream commit fce92af1c29d90184dfec638b5738831097d66e9 ]
+[ Upstream commit f85739c0b2b0d98a32f5ca4fcc5501d2b76df4f6 ]
 
-syzbot complained about a data-race in fib_table_lookup() [1]
+The 8K sample parameter of 12.288Mhz main system bus clock doesn't work
+because the I2SC_MR.IMCKDIV must not be 0 according to the sama5d2
+series datasheet(I2SC Mode Register of Register Summary).
 
-Add appropriate annotations to document it.
+So use the 6.144Mhz instead of 12.288Mhz to support 8K sample.
 
-[1]
-BUG: KCSAN: data-race in fib_release_info / fib_table_lookup
-
-write to 0xffff888150f31744 of 1 bytes by task 1189 on cpu 0:
-fib_release_info+0x3a0/0x460 net/ipv4/fib_semantics.c:281
-fib_table_delete+0x8d2/0x900 net/ipv4/fib_trie.c:1777
-fib_magic+0x1c1/0x1f0 net/ipv4/fib_frontend.c:1106
-fib_del_ifaddr+0x8cf/0xa60 net/ipv4/fib_frontend.c:1317
-fib_inetaddr_event+0x77/0x200 net/ipv4/fib_frontend.c:1448
-notifier_call_chain kernel/notifier.c:93 [inline]
-blocking_notifier_call_chain+0x90/0x200 kernel/notifier.c:388
-__inet_del_ifa+0x4df/0x800 net/ipv4/devinet.c:432
-inet_del_ifa net/ipv4/devinet.c:469 [inline]
-inetdev_destroy net/ipv4/devinet.c:322 [inline]
-inetdev_event+0x553/0xaf0 net/ipv4/devinet.c:1606
-notifier_call_chain kernel/notifier.c:93 [inline]
-raw_notifier_call_chain+0x6b/0x1c0 kernel/notifier.c:461
-call_netdevice_notifiers_info net/core/dev.c:1962 [inline]
-call_netdevice_notifiers_mtu+0xd2/0x130 net/core/dev.c:2037
-dev_set_mtu_ext+0x30b/0x3e0 net/core/dev.c:8673
-do_setlink+0x5be/0x2430 net/core/rtnetlink.c:2837
-rtnl_setlink+0x255/0x300 net/core/rtnetlink.c:3177
-rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6445
-netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2549
-rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6463
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1914
-sock_sendmsg_nosec net/socket.c:725 [inline]
-sock_sendmsg net/socket.c:748 [inline]
-sock_write_iter+0x1aa/0x230 net/socket.c:1129
-do_iter_write+0x4b4/0x7b0 fs/read_write.c:860
-vfs_writev+0x1a8/0x320 fs/read_write.c:933
-do_writev+0xf8/0x220 fs/read_write.c:976
-__do_sys_writev fs/read_write.c:1049 [inline]
-__se_sys_writev fs/read_write.c:1046 [inline]
-__x64_sys_writev+0x45/0x50 fs/read_write.c:1046
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff888150f31744 of 1 bytes by task 21839 on cpu 1:
-fib_table_lookup+0x2bf/0xd50 net/ipv4/fib_trie.c:1585
-fib_lookup include/net/ip_fib.h:383 [inline]
-ip_route_output_key_hash_rcu+0x38c/0x12c0 net/ipv4/route.c:2751
-ip_route_output_key_hash net/ipv4/route.c:2641 [inline]
-__ip_route_output_key include/net/route.h:134 [inline]
-ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2869
-send4+0x1e7/0x500 drivers/net/wireguard/socket.c:61
-wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work+0x434/0x860 kernel/workqueue.c:2600
-worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
-kthread+0x1d7/0x210 kernel/kthread.c:389
-ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-value changed: 0x00 -> 0x01
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 21839 Comm: kworker/u4:18 Tainted: G W 6.5.0-syzkaller #0
-
-Fixes: dccd9ecc3744 ("ipv4: Do not use dead fib_info entries.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230830095520.1046984-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Guiting Shen <aarongt.shen@gmail.com>
+Link: https://lore.kernel.org/r/20230715030620.62328-1-aarongt.shen@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c | 5 ++++-
- net/ipv4/fib_trie.c      | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/atmel/atmel-i2s.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 3bb890a40ed73..3b6e6bc80dc1c 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -278,7 +278,8 @@ void fib_release_info(struct fib_info *fi)
- 				hlist_del(&nexthop_nh->nh_hash);
- 			} endfor_nexthops(fi)
- 		}
--		fi->fib_dead = 1;
-+		/* Paired with READ_ONCE() from fib_table_lookup() */
-+		WRITE_ONCE(fi->fib_dead, 1);
- 		fib_info_put(fi);
- 	}
- 	spin_unlock_bh(&fib_info_lock);
-@@ -1581,6 +1582,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
- link_it:
- 	ofi = fib_find_info(fi);
- 	if (ofi) {
-+		/* fib_table_lookup() should not see @fi yet. */
- 		fi->fib_dead = 1;
- 		free_fib_info(fi);
- 		refcount_inc(&ofi->fib_treeref);
-@@ -1619,6 +1621,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
+diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
+index 6b3d9c05eaf27..4cb0605f6daa2 100644
+--- a/sound/soc/atmel/atmel-i2s.c
++++ b/sound/soc/atmel/atmel-i2s.c
+@@ -163,11 +163,14 @@ struct atmel_i2s_gck_param {
  
- failure:
- 	if (fi) {
-+		/* fib_table_lookup() should not see @fi yet. */
- 		fi->fib_dead = 1;
- 		free_fib_info(fi);
- 	}
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 74d403dbd2b4e..d13fb9e76b971 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1582,7 +1582,8 @@ int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
- 		if (fa->fa_dscp &&
- 		    inet_dscp_to_dsfield(fa->fa_dscp) != flp->flowi4_tos)
- 			continue;
--		if (fi->fib_dead)
-+		/* Paired with WRITE_ONCE() in fib_release_info() */
-+		if (READ_ONCE(fi->fib_dead))
- 			continue;
- 		if (fa->fa_info->fib_scope < flp->flowi4_scope)
- 			continue;
+ #define I2S_MCK_12M288		12288000UL
+ #define I2S_MCK_11M2896		11289600UL
++#define I2S_MCK_6M144		6144000UL
+ 
+ /* mck = (32 * (imckfs+1) / (imckdiv+1)) * fs */
+ static const struct atmel_i2s_gck_param gck_params[] = {
++	/* mck = 6.144Mhz */
++	{  8000, I2S_MCK_6M144,  1, 47},	/* mck =  768 fs */
++
+ 	/* mck = 12.288MHz */
+-	{  8000, I2S_MCK_12M288, 0, 47},	/* mck = 1536 fs */
+ 	{ 16000, I2S_MCK_12M288, 1, 47},	/* mck =  768 fs */
+ 	{ 24000, I2S_MCK_12M288, 3, 63},	/* mck =  512 fs */
+ 	{ 32000, I2S_MCK_12M288, 3, 47},	/* mck =  384 fs */
 -- 
 2.40.1
 
