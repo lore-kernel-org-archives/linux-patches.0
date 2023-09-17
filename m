@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC987461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A2DC433C7;
-	Sun, 17 Sep 2023 19:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2E87461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC56C433C8;
+	Sun, 17 Sep 2023 19:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980085;
-	bh=/Mei+FpVfa5HkpUmvPx6McNZFi+vXToykyfgG2hjcjQ=;
+	s=korg; t=1694980088;
+	bh=KLnZVkGuhig8xKST4q1cvGKj+AzzuFI8CVI3IO9p5/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LB1W0L1UL6wGdk8r6RgCAuIs5AU1LixHdjAI0MFjJsmPIn0Ean5BIf7FW5syIsVzn
-	 NUlXbBEdQugiKTO0mRsSy7XGrLLdmXofPpuQxny7qw/FkSTd2CZwNDT+jlC0Yn+pH/
-	 SFC69bJg421PJnU4vY+SxqVa6lBQG9YMh7WCVW0A=
+	b=UJI2RrTFYG/3AR0SNWCchMFOt/1Lg0SsXB9XxYG+O3Kqjt21y3u1lD9VsQxzR2vOR
+	 Y5NLE6F4XbsKCJ+i8xz83pq+FNAGYTtM36CEVVQ/KN/0VUJu09IE8XAHFh/B7iu+cW
+	 C+OR10XE13ENo85OzVl2AdS26/aRjGfNpkH8cq5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Riccardo Mancini <rickyman7@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 066/285] perf trace: Really free the evsel->priv area
-Date: Sun, 17 Sep 2023 21:11:06 +0200
-Message-ID: <20230917191053.998659968@linuxfoundation.org>
+Subject: [PATCH 6.5 067/285] pwm: atmel-tcb: Harmonize resource allocation order
+Date: Sun, 17 Sep 2023 21:11:07 +0200
+Message-ID: <20230917191054.033035687@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -38,104 +34,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 7962ef13651a9163f07b530607392ea123482e8a ]
+[ Upstream commit 0323e8fedd1ef25342cf7abf3a2024f5670362b8 ]
 
-In 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in
-evsel->priv") it only was freeing if strcmp(evsel->tp_format->system,
-"syscalls") returned zero, while the corresponding initialization of
-evsel->priv was being performed if it was _not_ zero, i.e. if the tp
-system wasn't 'syscalls'.
+Allocate driver data as first resource in the probe function. This way it
+can be used during allocation of the other resources (instead of assigning
+these to local variables first and update driver data only when it's
+allocated). Also as driver data is allocated using a devm function this
+should happen first to have the order of freeing resources in the error
+path and the remove function in reverse.
 
-Just stop looking for that and free it if evsel->priv was set, which
-should be equivalent.
-
-Also use the pre-existing evsel_trace__delete() function.
-
-This resolves these leaks, detected with:
-
-  $ make EXTRA_CFLAGS="-fsanitize=address" BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools-next -C tools/perf install-bin
-
-  =================================================================
-  ==481565==ERROR: LeakSanitizer: detected memory leaks
-
-  Direct leak of 40 byte(s) in 1 object(s) allocated from:
-      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
-      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
-      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
-      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
-      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
-      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
-      #6 0x540e8b in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3212
-      #7 0x540e8b in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
-      #8 0x540e8b in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
-      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
-      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
-      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
-      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
-      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
-
-  Direct leak of 40 byte(s) in 1 object(s) allocated from:
-      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
-      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
-      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
-      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
-      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
-      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
-      #6 0x540dd1 in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3205
-      #7 0x540dd1 in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
-      #8 0x540dd1 in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
-      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
-      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
-      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
-      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
-      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
-
-  SUMMARY: AddressSanitizer: 80 byte(s) leaked in 2 allocation(s).
-  [root@quaco ~]#
-
-With this we plug all leaks with "perf trace sleep 1".
-
-Fixes: 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in evsel->priv")
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Riccardo Mancini <rickyman7@gmail.com>
-Link: https://lore.kernel.org/lkml/20230719202951.534582-5-acme@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: c11622324c02 ("pwm: atmel-tcb: Fix resource freeing in error path and remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-atmel-tcb.c | 49 +++++++++++++++----------------------
+ 1 file changed, 20 insertions(+), 29 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 6e73d0e957152..4aba576512a15 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3136,13 +3136,8 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
- 	struct evsel *evsel;
+diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
+index 4a116dc44f6e7..613dd1810fb53 100644
+--- a/drivers/pwm/pwm-atmel-tcb.c
++++ b/drivers/pwm/pwm-atmel-tcb.c
+@@ -422,13 +422,14 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+ 	struct atmel_tcb_pwm_chip *tcbpwm;
+ 	const struct atmel_tcb_config *config;
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct regmap *regmap;
+-	struct clk *clk, *gclk = NULL;
+-	struct clk *slow_clk;
+ 	char clk_name[] = "t0_clk";
+ 	int err;
+ 	int channel;
  
- 	evlist__for_each_entry(evlist, evsel) {
--		struct evsel_trace *et = evsel->priv;
--
--		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
--			continue;
--
--		zfree(&et->fmt);
--		free(et);
-+		evsel_trace__delete(evsel->priv);
-+		evsel->priv = NULL;
++	tcbpwm = devm_kzalloc(&pdev->dev, sizeof(*tcbpwm), GFP_KERNEL);
++	if (tcbpwm == NULL)
++		return -ENOMEM;
++
+ 	err = of_property_read_u32(np, "reg", &channel);
+ 	if (err < 0) {
+ 		dev_err(&pdev->dev,
+@@ -437,47 +438,37 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+ 		return err;
  	}
- }
  
+-	regmap = syscon_node_to_regmap(np->parent);
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
++	tcbpwm->regmap = syscon_node_to_regmap(np->parent);
++	if (IS_ERR(tcbpwm->regmap))
++		return PTR_ERR(tcbpwm->regmap);
+ 
+-	slow_clk = of_clk_get_by_name(np->parent, "slow_clk");
+-	if (IS_ERR(slow_clk))
+-		return PTR_ERR(slow_clk);
++	tcbpwm->slow_clk = of_clk_get_by_name(np->parent, "slow_clk");
++	if (IS_ERR(tcbpwm->slow_clk))
++		return PTR_ERR(tcbpwm->slow_clk);
+ 
+ 	clk_name[1] += channel;
+-	clk = of_clk_get_by_name(np->parent, clk_name);
+-	if (IS_ERR(clk))
+-		clk = of_clk_get_by_name(np->parent, "t0_clk");
+-	if (IS_ERR(clk))
+-		return PTR_ERR(clk);
++	tcbpwm->clk = of_clk_get_by_name(np->parent, clk_name);
++	if (IS_ERR(tcbpwm->clk))
++		tcbpwm->clk = of_clk_get_by_name(np->parent, "t0_clk");
++	if (IS_ERR(tcbpwm->clk))
++		return PTR_ERR(tcbpwm->clk);
+ 
+ 	match = of_match_node(atmel_tcb_of_match, np->parent);
+ 	config = match->data;
+ 
+ 	if (config->has_gclk) {
+-		gclk = of_clk_get_by_name(np->parent, "gclk");
+-		if (IS_ERR(gclk))
+-			return PTR_ERR(gclk);
+-	}
+-
+-	tcbpwm = devm_kzalloc(&pdev->dev, sizeof(*tcbpwm), GFP_KERNEL);
+-	if (tcbpwm == NULL) {
+-		err = -ENOMEM;
+-		goto err_slow_clk;
++		tcbpwm->gclk = of_clk_get_by_name(np->parent, "gclk");
++		if (IS_ERR(tcbpwm->gclk))
++			return PTR_ERR(tcbpwm->gclk);
+ 	}
+ 
+ 	tcbpwm->chip.dev = &pdev->dev;
+ 	tcbpwm->chip.ops = &atmel_tcb_pwm_ops;
+ 	tcbpwm->chip.npwm = NPWM;
+ 	tcbpwm->channel = channel;
+-	tcbpwm->regmap = regmap;
+-	tcbpwm->clk = clk;
+-	tcbpwm->gclk = gclk;
+-	tcbpwm->slow_clk = slow_clk;
+ 	tcbpwm->width = config->counter_width;
+ 
+-	err = clk_prepare_enable(slow_clk);
++	err = clk_prepare_enable(tcbpwm->slow_clk);
+ 	if (err)
+ 		goto err_slow_clk;
+ 
+@@ -495,7 +486,7 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+ 	clk_disable_unprepare(tcbpwm->slow_clk);
+ 
+ err_slow_clk:
+-	clk_put(slow_clk);
++	clk_put(tcbpwm->slow_clk);
+ 
+ 	return err;
+ }
 -- 
 2.40.1
 
