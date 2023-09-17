@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B876FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB77FC433C7;
-	Sun, 17 Sep 2023 20:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3640F6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D217C433C7;
+	Sun, 17 Sep 2023 20:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981102;
-	bh=szUOsgoyGnld9wPzHnMT2Xj9OSq9XJDlCdNQ3KaVsH8=;
+	s=korg; t=1694981106;
+	bh=gSbxUM7Il9VzKi2xUBFiK7ne8jKvQ1ea6Pke4WTLAvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2HGKbLNRi3NQvrq5RT7kL0q/oMu8Y5HS6CtSPp7eH3BclEAG5Bsoml1En4mwldkf
-	 BIINddt1a2AkBn2I/JooF+ib/DxWtaGdJAIsaLqbSFamMDR/pMzu1p9w4ZyoIWblxg
-	 ovAs8MjnZFCSwpdm1G6zVYFWO6WOzPg7SeMmIbmM=
+	b=HUYKDKds9hni6jgnTzzqkgixAKd5WlEeLpZhVeELsdO7MXZ6iLJJwPGNSV2WvZodq
+	 PiXIPV7Th8u6zYi7AxzMyJx33DNL132xwQePR10V/cwN7OP0CRMgxQoILRN1AwVvvj
+	 3oGyBbU0hQhbFaS1ylJCKpmYTm/yBsKuUxLdQmD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Soheil Hassas Yeganeh <soheil@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ajay Kaher <akaher@vmware.com>
-Subject: [PATCH 6.1 053/219] net: remove osize variable in __alloc_skb()
-Date: Sun, 17 Sep 2023 21:13:00 +0200
-Message-ID: <20230917191042.922231265@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 006/511] media: pulse8-cec: handle possible ping error
+Date: Sun, 17 Sep 2023 21:07:13 +0200
+Message-ID: <20230917191113.988000930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,66 +37,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 65998d2bf857b9ae5acc1f3b70892bd1b429ccab upstream.
+[ Upstream commit 92cbf865ea2e0f2997ff97815c6db182eb23df1b ]
 
-This is a cleanup patch, to prepare following change.
+Handle (and warn about) possible error waiting for MSGCODE_PING result.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Ajay: Regenerated the patch for v6.1.y]
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/media/cec/usb/pulse8/pulse8-cec.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -479,7 +479,6 @@ struct sk_buff *__alloc_skb(unsigned int
- {
- 	struct kmem_cache *cache;
- 	struct sk_buff *skb;
--	unsigned int osize;
- 	bool pfmemalloc;
- 	u8 *data;
+diff --git a/drivers/media/cec/usb/pulse8/pulse8-cec.c b/drivers/media/cec/usb/pulse8/pulse8-cec.c
+index 04b13cdc38d2c..ba67587bd43ec 100644
+--- a/drivers/media/cec/usb/pulse8/pulse8-cec.c
++++ b/drivers/media/cec/usb/pulse8/pulse8-cec.c
+@@ -809,8 +809,11 @@ static void pulse8_ping_eeprom_work_handler(struct work_struct *work)
  
-@@ -505,16 +504,15 @@ struct sk_buff *__alloc_skb(unsigned int
- 	 * Both skb->head and skb_shared_info are cache line aligned.
- 	 */
- 	size = SKB_HEAD_ALIGN(size);
--	osize = kmalloc_size_roundup(size);
--	data = kmalloc_reserve(osize, gfp_mask, node, &pfmemalloc);
-+	size = kmalloc_size_roundup(size);
-+	data = kmalloc_reserve(size, gfp_mask, node, &pfmemalloc);
- 	if (unlikely(!data))
- 		goto nodata;
- 	/* kmalloc_size_roundup() might give us more room than requested.
- 	 * Put skb_shared_info exactly at the end of allocated zone,
- 	 * to allow max possible filling before reallocation.
- 	 */
--	size = SKB_WITH_OVERHEAD(osize);
--	prefetchw(data + size);
-+	prefetchw(data + SKB_WITH_OVERHEAD(size));
+ 	mutex_lock(&pulse8->lock);
+ 	cmd = MSGCODE_PING;
+-	pulse8_send_and_wait(pulse8, &cmd, 1,
+-			     MSGCODE_COMMAND_ACCEPTED, 0);
++	if (pulse8_send_and_wait(pulse8, &cmd, 1,
++				 MSGCODE_COMMAND_ACCEPTED, 0)) {
++		dev_warn(pulse8->dev, "failed to ping EEPROM\n");
++		goto unlock;
++	}
  
- 	/*
- 	 * Only clear those fields we need to clear, not those that we will
-@@ -522,7 +520,7 @@ struct sk_buff *__alloc_skb(unsigned int
- 	 * the tail pointer in struct sk_buff!
- 	 */
- 	memset(skb, 0, offsetof(struct sk_buff, tail));
--	__build_skb_around(skb, data, osize);
-+	__build_skb_around(skb, data, size);
- 	skb->pfmemalloc = pfmemalloc;
- 
- 	if (flags & SKB_ALLOC_FCLONE) {
+ 	if (pulse8->vers < 2)
+ 		goto unlock;
+-- 
+2.40.1
+
 
 
