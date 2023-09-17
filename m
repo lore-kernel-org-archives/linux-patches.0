@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1976FAB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11181C433C8;
-	Sun, 17 Sep 2023 19:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67446FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58730C433C7;
+	Sun, 17 Sep 2023 19:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979051;
-	bh=bdeAsP9V2ha+7lz5u0uOAgG4pD4Pxe/7DAnB60OvXlw=;
+	s=korg; t=1694979054;
+	bh=XsK/933eVEIDNq3hTVKYhtKHzAAx969s29pP19n+RNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdFUY9XBUysyeKQLKxWNNt/T49p6d4iqb6SrQlkb/wSZwx66O+RPWuyz2ic6DP619
-	 GtiE47F6F+LGnd4VvaSFMboIeusZTWpSZJUtNK5ciHww8EPvMLDoL7J1XvRhHKAWXQ
-	 mAFrzO8NDICpoHSfSG5Qhn4uSo9B00wtnxrBa31Y=
+	b=PGHmwfMO2AYoIboH4ZlEhZpyuHI58auLLc9PqHNx+0FxEsS6ANhwqvd1qqEYewiHH
+	 NUQ89wFLGv0uUC0UhIIehtOLb2cEVWEMyZxVD4kNjsxqILTkQlMnjx0MSAB2Yurz/1
+	 A29dlVQCqB5CsCASx3PVWrZK0Z2Mqi50TvBY/dgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Ricardo Ribalda Delgado <ribalda@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 200/406] NFSv4.2: fix handling of COPY ERR_OFFLOAD_NO_REQ
-Date: Sun, 17 Sep 2023 21:10:54 +0200
-Message-ID: <20230917191106.472878500@linuxfoundation.org>
+Subject: [PATCH 5.10 201/406] media: ad5820: Drop unsupported ad5823 from i2c_ and of_device_id tables
+Date: Sun, 17 Sep 2023 21:10:55 +0200
+Message-ID: <20230917191106.499130648@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,38 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5690eed941ab7e33c3c3d6b850100cabf740f075 ]
+[ Upstream commit f126ff7e4024f6704e6ec0d4137037568708a3c7 ]
 
-If the client sent a synchronous copy and the server replied with
-ERR_OFFLOAD_NO_REQ indicating that it wants an asynchronous
-copy instead, the client should retry with asynchronous copy.
+The supported ad5820 and ad5821 VCMs both use a single 16 bit register
+which is written by sending 2 bytes with the data directly after sending
+the i2c-client address.
 
-Fixes: 539f57b3e0fd ("NFS handle COPY ERR_OFFLOAD_NO_REQS")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+The ad5823 OTOH has a more typical i2c / smbus device setup with multiple
+8 bit registers where the first byte send after the i2c-client address is
+the register address and the actual data only starts from the second byte
+after the i2c-client address.
+
+The ad5823 i2c_ and of_device_id-s was added at the same time as
+the ad5821 ids with as rationale:
+
+"""
+Some camera modules also refer that AD5823 is a replacement of AD5820:
+https://download.kamami.com/p564094-OV8865_DS.pdf
+"""
+
+The AD5823 may be an electrical and functional replacement of the AD5820,
+but from a software pov it is not compatible at all and it is going to
+need its own driver, drop its id from the ad5820 driver.
+
+Fixes: b8bf73136bae ("media: ad5820: Add support for ad5821 and ad5823")
+Cc: Pavel Machek <pavel@ucw.cz>
+Cc: Ricardo Ribalda Delgado <ribalda@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42proc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ad5820.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index dad32b171e677..dfeea712014b7 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -443,8 +443,9 @@ ssize_t nfs42_proc_copy(struct file *src, loff_t pos_src,
- 				continue;
- 			}
- 			break;
--		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS && !args.sync) {
--			args.sync = true;
-+		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS &&
-+				args.sync != res.synchronous) {
-+			args.sync = res.synchronous;
- 			dst_exception.retry = 1;
- 			continue;
- 		} else if ((err == -ESTALE ||
+diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
+index f55322eebf6d0..d2c69ee27f008 100644
+--- a/drivers/media/i2c/ad5820.c
++++ b/drivers/media/i2c/ad5820.c
+@@ -359,7 +359,6 @@ static int ad5820_remove(struct i2c_client *client)
+ static const struct i2c_device_id ad5820_id_table[] = {
+ 	{ "ad5820", 0 },
+ 	{ "ad5821", 0 },
+-	{ "ad5823", 0 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+@@ -367,7 +366,6 @@ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+ static const struct of_device_id ad5820_of_table[] = {
+ 	{ .compatible = "adi,ad5820" },
+ 	{ .compatible = "adi,ad5821" },
+-	{ .compatible = "adi,ad5823" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ad5820_of_table);
 -- 
 2.40.1
 
