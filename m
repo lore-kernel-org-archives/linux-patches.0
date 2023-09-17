@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723717461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F2EC433C7;
-	Sun, 17 Sep 2023 20:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50D57461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A63C433C7;
+	Sun, 17 Sep 2023 20:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981206;
-	bh=CoDla67E2KTpErJuLyOZc/REx67UTwKy4aJABHsKSN4=;
+	s=korg; t=1694981209;
+	bh=CBj0fMDm8TFafK74/N2USeIxosUOiYYnDc9/cniEeNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uk+COaFAtvCGTTRcu6duxiwEwTDCfeIQU6M9bpX2g5PlNTPpeQe1+dKUaZVzTyA19
-	 tUbUR72A97fxIPCtYl3wj17/+ai41K/9cAZAo+iqC21ahHKUMYfRxn2YhRynCB5LSh
-	 1moTlyXnBkrmlqWndY61bjjHWn8i9RPZxDEQbuXc=
+	b=VEmjFVSb2PmExflFcQ88t9nYge4vMKmvuDLXfIts0uNG15JzrGul77SlIF4zLcGTy
+	 CAg/AuIR46v0OliAIZrW0hphBdsVkJERWHXxSkJcbY9FgpDUowDvnxFHVFyLKQK1iu
+	 hWWSUpBpVYXig0GpkRVuECnMnHigwanoZ81pltqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Matthew Garrett <mgarrett@aurora.tech>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/219] tpm_crb: Fix an error handling path in crb_acpi_add()
-Date: Sun, 17 Sep 2023 21:13:05 +0200
-Message-ID: <20230917191043.115814523@linuxfoundation.org>
+Subject: [PATCH 6.1 059/219] gfs2: Switch to wait_event in gfs2_logd
+Date: Sun, 17 Sep 2023 21:13:06 +0200
+Message-ID: <20230917191043.147481622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,43 +39,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 9c377852ddfdc557b1370f196b0cfdf28d233460 ]
+[ Upstream commit 6df373b09b1dcf2f7d579f515f653f89a896d417 ]
 
-Some error paths don't call acpi_put_table() before returning.
-Branch to the correct place instead of doing some direct return.
+In gfs2_logd(), switch from an open-coded wait loop to
+wait_event_interruptible_timeout().
 
-Fixes: 4d2732882703 ("tpm_crb: Add support for CRB devices based on Pluton")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Matthew Garrett <mgarrett@aurora.tech>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: b74cd55aa9a9 ("gfs2: low-memory forced flush fixes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_crb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/gfs2/log.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_crb.c b/drivers/char/tpm/tpm_crb.c
-index db0b774207d35..f45239e73c4ca 100644
---- a/drivers/char/tpm/tpm_crb.c
-+++ b/drivers/char/tpm/tpm_crb.c
-@@ -775,12 +775,13 @@ static int crb_acpi_add(struct acpi_device *device)
- 				FW_BUG "TPM2 ACPI table has wrong size %u for start method type %d\n",
- 				buf->header.length,
- 				ACPI_TPM2_COMMAND_BUFFER_WITH_PLUTON);
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto out;
- 		}
- 		crb_pluton = ACPI_ADD_PTR(struct tpm2_crb_pluton, buf, sizeof(*buf));
- 		rc = crb_map_pluton(dev, priv, buf, crb_pluton);
- 		if (rc)
--			return rc;
-+			goto out;
+diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
+index 61323deb80bc7..69c3facfcbef4 100644
+--- a/fs/gfs2/log.c
++++ b/fs/gfs2/log.c
+@@ -1304,7 +1304,6 @@ int gfs2_logd(void *data)
+ {
+ 	struct gfs2_sbd *sdp = data;
+ 	unsigned long t = 1;
+-	DEFINE_WAIT(wait);
+ 
+ 	while (!kthread_should_stop()) {
+ 
+@@ -1341,17 +1340,11 @@ int gfs2_logd(void *data)
+ 
+ 		try_to_freeze();
+ 
+-		do {
+-			prepare_to_wait(&sdp->sd_logd_waitq, &wait,
+-					TASK_INTERRUPTIBLE);
+-			if (!gfs2_ail_flush_reqd(sdp) &&
+-			    !gfs2_jrnl_flush_reqd(sdp) &&
+-			    !kthread_should_stop())
+-				t = schedule_timeout(t);
+-		} while(t && !gfs2_ail_flush_reqd(sdp) &&
+-			!gfs2_jrnl_flush_reqd(sdp) &&
+-			!kthread_should_stop());
+-		finish_wait(&sdp->sd_logd_waitq, &wait);
++		t = wait_event_interruptible_timeout(sdp->sd_logd_waitq,
++				gfs2_ail_flush_reqd(sdp) ||
++				gfs2_jrnl_flush_reqd(sdp) ||
++				kthread_should_stop(),
++				t);
  	}
  
- 	priv->sm = sm;
+ 	return 0;
 -- 
 2.40.1
 
