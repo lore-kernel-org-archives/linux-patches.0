@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB276FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6286C433C8;
-	Sun, 17 Sep 2023 19:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF696FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:51:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C311C433C7;
+	Sun, 17 Sep 2023 19:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980299;
-	bh=j6biYPykILApp0VsCJYHbm0sVvGkBZ7WUZmBN+FfqzI=;
+	s=korg; t=1694980302;
+	bh=ayTrQ1NoHQKL+3H+hDVVhkkUrJvtqbPoT9lLQjBL1vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3S89ApB5Cd0WPtSxqDvtCAsaeIK7kWNP5zbZGR5T3qeDXABTHSs+hnvGa569r8YY
-	 5/zpzb8YxNK7e6lvJaqimlXX6nJl02knem45HIy2yvRasaaToVIxVIMrG5hZrTKzfQ
-	 nAqdv23Trx+0DmTe0PILZZoz9lFRydkuGzJ+ibtU=
+	b=hGctXBGxUieMD0fVI+qa6WH8GZUTpUGjOAqRZzYuTagI12xiDU8gIPMJHFxDg+KAq
+	 K0aLrfgdW/p5ousOg4K+acNDsTycUOACGuAx4R2ohd60uFBIcdSVJsWdoyL6lwiVKC
+	 7YYHJcqVfDLcPn+nolZ+r9KJIa/2gm7NRy1NBOJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
+	Bodong Wang <bodong@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 151/285] net/mlx5: Push devlink port PF/VF init/cleanup calls out of devlink_port_register/unregister()
-Date: Sun, 17 Sep 2023 21:12:31 +0200
-Message-ID: <20230917191056.913593177@linuxfoundation.org>
+Subject: [PATCH 6.5 152/285] mlx5/core: E-Switch, Create ACL FT for eswitch manager in switchdev mode
+Date: Sun, 17 Sep 2023 21:12:32 +0200
+Message-ID: <20230917191056.945483055@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,255 +42,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Bodong Wang <bodong@nvidia.com>
 
-[ Upstream commit d9833bcfe840fff5d368b1c7c68e05c95be8d19c ]
+[ Upstream commit 344134609a564f28b3cc81ca6650319ccd5d8961 ]
 
-In order to prepare for
-mlx5_esw_offloads_devlink_port_register/unregister() to be used
-for SFs as well, push out the PF/VF specific init/cleanup calls outside.
-Introduce mlx5_eswitch_load/unload_pf_vf_vport() and call them from
-there. Use these new helpers of PF/VF loading and make
-mlx5_eswitch_local/unload_vport() reusable for SFs.
+ACL flow table is required in switchdev mode when metadata is enabled,
+driver creates such table when loading each vport. However, not every
+vport is loaded in switchdev mode. Such as ECPF if it's the eswitch manager.
+In this case, ACL flow table is still needed.
 
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Shay Drory <shayd@nvidia.com>
+To make it modularized, create ACL flow table for eswitch manager as
+default and skip such operations when loading manager vport.
+
+Also, there is no need to load the eswitch manager vport in switchdev mode.
+This means there is no need to load it on regular connect-x HCAs where
+the PF is the eswitch manager. This will avoid creating duplicate ACL
+flow table for host PF vport.
+
+Fixes: 29bcb6e4fe70 ("net/mlx5e: E-Switch, Use metadata for vport matching in send-to-vport rules")
+Fixes: eb8e9fae0a22 ("mlx5/core: E-Switch, Allocate ECPF vport if it's an eswitch manager")
+Fixes: 5019833d661f ("net/mlx5: E-switch, Introduce helper function to enable/disable vports")
+Signed-off-by: Bodong Wang <bodong@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: 344134609a56 ("mlx5/core: E-Switch, Create ACL FT for eswitch manager in switchdev mode")
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/esw/devlink_port.c     | 13 ++----
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 45 ++++++++++++++-----
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  4 ++
- .../mellanox/mlx5/core/eswitch_offloads.c     | 16 +++++++
- 4 files changed, 58 insertions(+), 20 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c | 21 ++++++--
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 49 +++++++++++++------
+ 2 files changed, 51 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-index 463bde802e45e..2170539461fa2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-@@ -62,7 +62,7 @@ static void mlx5_esw_offloads_pf_vf_devlink_port_attrs_set(struct mlx5_eswitch *
- 	}
- }
- 
--static int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num)
-+int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num)
- {
- 	struct devlink_port *dl_port;
- 	struct mlx5_vport *vport;
-@@ -84,7 +84,7 @@ static int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u
- 	return 0;
- }
- 
--static void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num)
-+void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num)
- {
- 	struct mlx5_vport *vport;
- 
-@@ -118,10 +118,6 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
- 	if (IS_ERR(vport))
- 		return PTR_ERR(vport);
- 
--	err = mlx5_esw_offloads_pf_vf_devlink_port_init(esw, vport_num);
--	if (err)
--		return err;
--
- 	dl_port = vport->dl_port;
- 	if (!dl_port)
- 		return 0;
-@@ -131,7 +127,7 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
- 	err = devl_port_register_with_ops(devlink, dl_port, dl_port_index,
- 					  &mlx5_esw_dl_port_ops);
- 	if (err)
--		goto reg_err;
-+		return err;
- 
- 	err = devl_rate_leaf_create(dl_port, vport, NULL);
- 	if (err)
-@@ -141,8 +137,6 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
- 
- rate_err:
- 	devl_port_unregister(dl_port);
--reg_err:
--	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
- 	return err;
- }
- 
-@@ -160,7 +154,6 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, u16 vpo
- 	}
- 
- 	devl_port_unregister(vport->dl_port);
--	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
- }
- 
- struct devlink_port *mlx5_esw_offloads_devlink_port(struct mlx5_eswitch *esw, u16 vport_num)
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index 85ddf6f7e37df..591184d892af6 100644
+index 591184d892af6..6e9b1b183190d 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1095,6 +1095,31 @@ void mlx5_eswitch_unload_vport(struct mlx5_eswitch *esw, u16 vport_num)
- 	mlx5_esw_vport_disable(esw, vport_num);
- }
- 
-+static int mlx5_eswitch_load_pf_vf_vport(struct mlx5_eswitch *esw, u16 vport_num,
-+					 enum mlx5_eswitch_vport_event enabled_events)
-+{
-+	int err;
-+
-+	err = mlx5_esw_offloads_init_pf_vf_rep(esw, vport_num);
-+	if (err)
-+		return err;
-+
-+	err = mlx5_eswitch_load_vport(esw, vport_num, enabled_events);
-+	if (err)
-+		goto err_load;
-+	return 0;
-+
-+err_load:
-+	mlx5_esw_offloads_cleanup_pf_vf_rep(esw, vport_num);
-+	return err;
-+}
-+
-+static void mlx5_eswitch_unload_pf_vf_vport(struct mlx5_eswitch *esw, u16 vport_num)
-+{
-+	mlx5_eswitch_unload_vport(esw, vport_num);
-+	mlx5_esw_offloads_cleanup_pf_vf_rep(esw, vport_num);
-+}
-+
- void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs)
+@@ -1212,12 +1212,19 @@ int
+ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
+ 				 enum mlx5_eswitch_vport_event enabled_events)
  {
- 	struct mlx5_vport *vport;
-@@ -1103,7 +1128,7 @@ void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs)
- 	mlx5_esw_for_each_vf_vport(esw, i, vport, num_vfs) {
- 		if (!vport->enabled)
- 			continue;
--		mlx5_eswitch_unload_vport(esw, vport->vport);
-+		mlx5_eswitch_unload_pf_vf_vport(esw, vport->vport);
- 	}
- }
- 
-@@ -1116,7 +1141,7 @@ static void mlx5_eswitch_unload_ec_vf_vports(struct mlx5_eswitch *esw,
- 	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, num_ec_vfs) {
- 		if (!vport->enabled)
- 			continue;
--		mlx5_eswitch_unload_vport(esw, vport->vport);
-+		mlx5_eswitch_unload_pf_vf_vport(esw, vport->vport);
- 	}
- }
- 
-@@ -1128,7 +1153,7 @@ int mlx5_eswitch_load_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs,
- 	int err;
- 
- 	mlx5_esw_for_each_vf_vport(esw, i, vport, num_vfs) {
--		err = mlx5_eswitch_load_vport(esw, vport->vport, enabled_events);
-+		err = mlx5_eswitch_load_pf_vf_vport(esw, vport->vport, enabled_events);
- 		if (err)
- 			goto vf_err;
- 	}
-@@ -1148,7 +1173,7 @@ static int mlx5_eswitch_load_ec_vf_vports(struct mlx5_eswitch *esw, u16 num_ec_v
- 	int err;
- 
- 	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, num_ec_vfs) {
--		err = mlx5_eswitch_load_vport(esw, vport->vport, enabled_events);
-+		err = mlx5_eswitch_load_pf_vf_vport(esw, vport->vport, enabled_events);
- 		if (err)
- 			goto vf_err;
- 	}
-@@ -1190,7 +1215,7 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
++	bool pf_needed;
  	int ret;
  
++	pf_needed = mlx5_core_is_ecpf_esw_manager(esw->dev) ||
++		    esw->mode == MLX5_ESWITCH_LEGACY;
++
  	/* Enable PF vport */
--	ret = mlx5_eswitch_load_vport(esw, MLX5_VPORT_PF, enabled_events);
-+	ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF, enabled_events);
- 	if (ret)
- 		return ret;
+-	ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF, enabled_events);
+-	if (ret)
+-		return ret;
++	if (pf_needed) {
++		ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_PF,
++						    enabled_events);
++		if (ret)
++			return ret;
++	}
  
-@@ -1201,7 +1226,7 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
- 
- 	/* Enable ECPF vport */
- 	if (mlx5_ecpf_vport_exists(esw->dev)) {
--		ret = mlx5_eswitch_load_vport(esw, MLX5_VPORT_ECPF, enabled_events);
-+		ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_ECPF, enabled_events);
- 		if (ret)
- 			goto ecpf_err;
- 		if (mlx5_core_ec_sriov_enabled(esw->dev)) {
-@@ -1224,11 +1249,11 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
- 		mlx5_eswitch_unload_ec_vf_vports(esw, esw->esw_funcs.num_ec_vfs);
- ec_vf_err:
- 	if (mlx5_ecpf_vport_exists(esw->dev))
--		mlx5_eswitch_unload_vport(esw, MLX5_VPORT_ECPF);
-+		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_ECPF);
+ 	/* Enable external host PF HCA */
+ 	ret = host_pf_enable_hca(esw->dev);
+@@ -1253,7 +1260,8 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
  ecpf_err:
  	host_pf_disable_hca(esw->dev);
  pf_hca_err:
--	mlx5_eswitch_unload_vport(esw, MLX5_VPORT_PF);
-+	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
+-	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
++	if (pf_needed)
++		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
  	return ret;
  }
  
-@@ -1242,11 +1267,11 @@ void mlx5_eswitch_disable_pf_vf_vports(struct mlx5_eswitch *esw)
- 	if (mlx5_ecpf_vport_exists(esw->dev)) {
- 		if (mlx5_core_ec_sriov_enabled(esw->dev))
- 			mlx5_eswitch_unload_ec_vf_vports(esw, esw->esw_funcs.num_vfs);
--		mlx5_eswitch_unload_vport(esw, MLX5_VPORT_ECPF);
-+		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_ECPF);
+@@ -1271,7 +1279,10 @@ void mlx5_eswitch_disable_pf_vf_vports(struct mlx5_eswitch *esw)
  	}
  
  	host_pf_disable_hca(esw->dev);
--	mlx5_eswitch_unload_vport(esw, MLX5_VPORT_PF);
-+	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
+-	mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
++
++	if (mlx5_core_is_ecpf_esw_manager(esw->dev) ||
++	    esw->mode == MLX5_ESWITCH_LEGACY)
++		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_PF);
  }
  
  static void mlx5_eswitch_get_devlink_param(struct mlx5_eswitch *esw)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 040ed6d79258f..56d9a261a5c80 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -725,6 +725,8 @@ void mlx5_esw_set_spec_source_port(struct mlx5_eswitch *esw,
- 				   u16 vport,
- 				   struct mlx5_flow_spec *spec);
- 
-+int mlx5_esw_offloads_init_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num);
-+void mlx5_esw_offloads_cleanup_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num);
- int mlx5_esw_offloads_load_rep(struct mlx5_eswitch *esw, u16 vport_num);
- void mlx5_esw_offloads_unload_rep(struct mlx5_eswitch *esw, u16 vport_num);
- 
-@@ -739,6 +741,8 @@ int mlx5_eswitch_load_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs,
- 				enum mlx5_eswitch_vport_event enabled_events);
- void mlx5_eswitch_unload_vf_vports(struct mlx5_eswitch *esw, u16 num_vfs);
- 
-+int mlx5_esw_offloads_pf_vf_devlink_port_init(struct mlx5_eswitch *esw, u16 vport_num);
-+void mlx5_esw_offloads_pf_vf_devlink_port_cleanup(struct mlx5_eswitch *esw, u16 vport_num);
- int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_num);
- void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, u16 vport_num);
- struct devlink_port *mlx5_esw_offloads_devlink_port(struct mlx5_eswitch *esw, u16 vport_num);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 1eb49784c0e11..2f8bab73643e2 100644
+index 2f8bab73643e2..1ad5a72dcc3fd 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -2424,6 +2424,22 @@ void mlx5_esw_offloads_rep_unload(struct mlx5_eswitch *esw, u16 vport_num)
- 		__esw_offloads_unload_rep(esw, rep, rep_type);
+@@ -3092,26 +3092,47 @@ esw_vport_destroy_offloads_acl_tables(struct mlx5_eswitch *esw,
+ 	esw_acl_ingress_ofld_cleanup(esw, vport);
  }
  
-+int mlx5_esw_offloads_init_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num)
-+{
-+	if (esw->mode != MLX5_ESWITCH_OFFLOADS)
-+		return 0;
-+
-+	return mlx5_esw_offloads_pf_vf_devlink_port_init(esw, vport_num);
-+}
-+
-+void mlx5_esw_offloads_cleanup_pf_vf_rep(struct mlx5_eswitch *esw, u16 vport_num)
-+{
-+	if (esw->mode != MLX5_ESWITCH_OFFLOADS)
-+		return;
-+
-+	mlx5_esw_offloads_pf_vf_devlink_port_cleanup(esw, vport_num);
-+}
-+
- int mlx5_esw_offloads_load_rep(struct mlx5_eswitch *esw, u16 vport_num)
+-static int esw_create_uplink_offloads_acl_tables(struct mlx5_eswitch *esw)
++static int esw_create_offloads_acl_tables(struct mlx5_eswitch *esw)
  {
- 	int err;
+-	struct mlx5_vport *vport;
++	struct mlx5_vport *uplink, *manager;
++	int ret;
+ 
+-	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
+-	if (IS_ERR(vport))
+-		return PTR_ERR(vport);
++	uplink = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
++	if (IS_ERR(uplink))
++		return PTR_ERR(uplink);
++
++	ret = esw_vport_create_offloads_acl_tables(esw, uplink);
++	if (ret)
++		return ret;
++
++	manager = mlx5_eswitch_get_vport(esw, esw->manager_vport);
++	if (IS_ERR(manager)) {
++		ret = PTR_ERR(manager);
++		goto err_manager;
++	}
+ 
+-	return esw_vport_create_offloads_acl_tables(esw, vport);
++	ret = esw_vport_create_offloads_acl_tables(esw, manager);
++	if (ret)
++		goto err_manager;
++
++	return 0;
++
++err_manager:
++	esw_vport_destroy_offloads_acl_tables(esw, uplink);
++	return ret;
+ }
+ 
+-static void esw_destroy_uplink_offloads_acl_tables(struct mlx5_eswitch *esw)
++static void esw_destroy_offloads_acl_tables(struct mlx5_eswitch *esw)
+ {
+ 	struct mlx5_vport *vport;
+ 
+-	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
+-	if (IS_ERR(vport))
+-		return;
++	vport = mlx5_eswitch_get_vport(esw, esw->manager_vport);
++	if (!IS_ERR(vport))
++		esw_vport_destroy_offloads_acl_tables(esw, vport);
+ 
+-	esw_vport_destroy_offloads_acl_tables(esw, vport);
++	vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_UPLINK);
++	if (!IS_ERR(vport))
++		esw_vport_destroy_offloads_acl_tables(esw, vport);
+ }
+ 
+ int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
+@@ -3156,7 +3177,7 @@ static int esw_offloads_steering_init(struct mlx5_eswitch *esw)
+ 	}
+ 	esw->fdb_table.offloads.indir = indir;
+ 
+-	err = esw_create_uplink_offloads_acl_tables(esw);
++	err = esw_create_offloads_acl_tables(esw);
+ 	if (err)
+ 		goto create_acl_err;
+ 
+@@ -3197,7 +3218,7 @@ static int esw_offloads_steering_init(struct mlx5_eswitch *esw)
+ create_restore_err:
+ 	esw_destroy_offloads_table(esw);
+ create_offloads_err:
+-	esw_destroy_uplink_offloads_acl_tables(esw);
++	esw_destroy_offloads_acl_tables(esw);
+ create_acl_err:
+ 	mlx5_esw_indir_table_destroy(esw->fdb_table.offloads.indir);
+ create_indir_err:
+@@ -3213,7 +3234,7 @@ static void esw_offloads_steering_cleanup(struct mlx5_eswitch *esw)
+ 	esw_destroy_offloads_fdb_tables(esw);
+ 	esw_destroy_restore_table(esw);
+ 	esw_destroy_offloads_table(esw);
+-	esw_destroy_uplink_offloads_acl_tables(esw);
++	esw_destroy_offloads_acl_tables(esw);
+ 	mlx5_esw_indir_table_destroy(esw->fdb_table.offloads.indir);
+ 	mutex_destroy(&esw->fdb_table.offloads.vports.lock);
+ }
 -- 
 2.40.1
 
