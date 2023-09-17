@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC947469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1820DC433C9;
-	Sun, 17 Sep 2023 20:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684DC7469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:26:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6210C433C7;
+	Sun, 17 Sep 2023 20:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982366;
-	bh=fDmdX3r/5kDUN05IYSn46I7GKAZOALrT2+qj8oC7PPI=;
+	s=korg; t=1694982370;
+	bh=h2eLt1D/zzuoFf+J9tdvCnuisT87RWks9kESjzWNxGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6SisdvQhJyGTRAXETedHJe8y+HAWiwukJrmJjWfBhGWXIdztG8Lg46hkUtgiqlG9
-	 ONfxTstPa6U9rD0mP0+r+P3papESt7jEzzAQWhSM37kzEwSt3GtmCWlLH0lcs9PyF0
-	 mUumHKpfVYdKuKFEbPLZg5gHVPt+S9svfogFfyOE=
+	b=ylxz+DH9XN/sXJqlyGbRbSn0cN063mk0XEeUDo+BZGBlQmHdQSkDrJINh3jLn0l6a
+	 P/pt6h+DKh0VDB4JXRVwZC4hDnFQsCyBAayRSJrEe7vYK77wOx3yFXu7QBf/8ek/VY
+	 cbEiO9K8GJdeQaH5GSSyKcKu3WEHaJzvG732PWII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Tom Haynes <loghyr@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/511] NFSD: da_addr_body field missing in some GETDEVICEINFO replies
-Date: Sun, 17 Sep 2023 21:10:57 +0200
-Message-ID: <20230917191119.362697562@linuxfoundation.org>
+Subject: [PATCH 5.15 231/511] NFS: Guard against READDIR loop when entry names exceed MAXNAMELEN
+Date: Sun, 17 Sep 2023 21:10:58 +0200
+Message-ID: <20230917191119.387182425@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,137 +40,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 6372e2ee629894433fe6107d7048536a3280a284 ]
+[ Upstream commit f67b55b6588bcf9316a1e6e8d529100a5aa3ebe6 ]
 
-The XDR specification in RFC 8881 looks like this:
+Commit 64cfca85bacd asserts the only valid return values for
+nfs2/3_decode_dirent should not include -ENAMETOOLONG, but for a server
+that sends a filename3 which exceeds MAXNAMELEN in a READDIR response the
+client's behavior will be to endlessly retry the operation.
 
-struct device_addr4 {
-	layouttype4	da_layout_type;
-	opaque		da_addr_body<>;
-};
+We could map -ENAMETOOLONG into -EBADCOOKIE, but that would produce
+truncated listings without any error.  The client should return an error
+for this case to clearly assert that the server implementation must be
+corrected.
 
-struct GETDEVICEINFO4resok {
-	device_addr4	gdir_device_addr;
-	bitmap4		gdir_notification;
-};
-
-union GETDEVICEINFO4res switch (nfsstat4 gdir_status) {
-case NFS4_OK:
-	GETDEVICEINFO4resok gdir_resok4;
-case NFS4ERR_TOOSMALL:
-	count4		gdir_mincount;
-default:
-	void;
-};
-
-Looking at nfsd4_encode_getdeviceinfo() ....
-
-When the client provides a zero gd_maxcount, then the Linux NFS
-server implementation encodes the da_layout_type field and then
-skips the da_addr_body field completely, proceeding directly to
-encode gdir_notification field.
-
-There does not appear to be an option in the specification to skip
-encoding da_addr_body. Moreover, Section 18.40.3 says:
-
-> If the client wants to just update or turn off notifications, it
-> MAY send a GETDEVICEINFO operation with gdia_maxcount set to zero.
-> In that event, if the device ID is valid, the reply's da_addr_body
-> field of the gdir_device_addr field will be of zero length.
-
-Since the layout drivers are responsible for encoding the
-da_addr_body field, put this fix inside the ->encode_getdeviceinfo
-methods.
-
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Tom Haynes <loghyr@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 64cfca85bacd ("NFS: Return valid errors from nfs2/3_decode_dirent()")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/blocklayoutxdr.c    |  9 +++++++++
- fs/nfsd/flexfilelayoutxdr.c |  9 +++++++++
- fs/nfsd/nfs4xdr.c           | 25 +++++++++++--------------
- 3 files changed, 29 insertions(+), 14 deletions(-)
+ fs/nfs/nfs2xdr.c | 2 +-
+ fs/nfs/nfs3xdr.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/blocklayoutxdr.c b/fs/nfsd/blocklayoutxdr.c
-index 442543304930b..2455dc8be18a8 100644
---- a/fs/nfsd/blocklayoutxdr.c
-+++ b/fs/nfsd/blocklayoutxdr.c
-@@ -82,6 +82,15 @@ nfsd4_block_encode_getdeviceinfo(struct xdr_stream *xdr,
- 	int len = sizeof(__be32), ret, i;
- 	__be32 *p;
+diff --git a/fs/nfs/nfs2xdr.c b/fs/nfs/nfs2xdr.c
+index 3d5ba43f44bb6..266a4badf1dfc 100644
+--- a/fs/nfs/nfs2xdr.c
++++ b/fs/nfs/nfs2xdr.c
+@@ -949,7 +949,7 @@ int nfs2_decode_dirent(struct xdr_stream *xdr, struct nfs_entry *entry,
  
-+	/*
-+	 * See paragraph 5 of RFC 8881 S18.40.3.
-+	 */
-+	if (!gdp->gd_maxcount) {
-+		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
-+			return nfserr_resource;
-+		return nfs_ok;
-+	}
-+
- 	p = xdr_reserve_space(xdr, len + sizeof(__be32));
- 	if (!p)
- 		return nfserr_resource;
-diff --git a/fs/nfsd/flexfilelayoutxdr.c b/fs/nfsd/flexfilelayoutxdr.c
-index e81d2a5cf381e..bb205328e043d 100644
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -85,6 +85,15 @@ nfsd4_ff_encode_getdeviceinfo(struct xdr_stream *xdr,
- 	int addr_len;
- 	__be32 *p;
+ 	error = decode_filename_inline(xdr, &entry->name, &entry->len);
+ 	if (unlikely(error))
+-		return -EAGAIN;
++		return error == -ENAMETOOLONG ? -ENAMETOOLONG : -EAGAIN;
  
-+	/*
-+	 * See paragraph 5 of RFC 8881 S18.40.3.
-+	 */
-+	if (!gdp->gd_maxcount) {
-+		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
-+			return nfserr_resource;
-+		return nfs_ok;
-+	}
-+
- 	/* len + padding for two strings */
- 	addr_len = 16 + da->netaddr.netid_len + da->netaddr.addr_len;
- 	ver_len = 20;
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index e8132a17eeb3f..d28b75909de89 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -4533,20 +4533,17 @@ nfsd4_encode_getdeviceinfo(struct nfsd4_compoundres *resp, __be32 nfserr,
+ 	/*
+ 	 * The type (size and byte order) of nfscookie isn't defined in
+diff --git a/fs/nfs/nfs3xdr.c b/fs/nfs/nfs3xdr.c
+index 7ab60ad98776f..d48db2f6f4f02 100644
+--- a/fs/nfs/nfs3xdr.c
++++ b/fs/nfs/nfs3xdr.c
+@@ -1990,7 +1990,7 @@ int nfs3_decode_dirent(struct xdr_stream *xdr, struct nfs_entry *entry,
  
- 	*p++ = cpu_to_be32(gdev->gd_layout_type);
+ 	error = decode_inline_filename3(xdr, &entry->name, &entry->len);
+ 	if (unlikely(error))
+-		return -EAGAIN;
++		return error == -ENAMETOOLONG ? -ENAMETOOLONG : -EAGAIN;
  
--	/* If maxcount is 0 then just update notifications */
--	if (gdev->gd_maxcount != 0) {
--		ops = nfsd4_layout_ops[gdev->gd_layout_type];
--		nfserr = ops->encode_getdeviceinfo(xdr, gdev);
--		if (nfserr) {
--			/*
--			 * We don't bother to burden the layout drivers with
--			 * enforcing gd_maxcount, just tell the client to
--			 * come back with a bigger buffer if it's not enough.
--			 */
--			if (xdr->buf->len + 4 > gdev->gd_maxcount)
--				goto toosmall;
--			return nfserr;
--		}
-+	ops = nfsd4_layout_ops[gdev->gd_layout_type];
-+	nfserr = ops->encode_getdeviceinfo(xdr, gdev);
-+	if (nfserr) {
-+		/*
-+		 * We don't bother to burden the layout drivers with
-+		 * enforcing gd_maxcount, just tell the client to
-+		 * come back with a bigger buffer if it's not enough.
-+		 */
-+		if (xdr->buf->len + 4 > gdev->gd_maxcount)
-+			goto toosmall;
-+		return nfserr;
- 	}
- 
- 	if (gdev->gd_notify_types) {
+ 	error = decode_cookie3(xdr, &new_cookie);
+ 	if (unlikely(error))
 -- 
 2.40.1
 
