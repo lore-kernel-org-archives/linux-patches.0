@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98BB6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142F5C433CB;
-	Sun, 17 Sep 2023 19:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267C56FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863C9C433C8;
+	Sun, 17 Sep 2023 19:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979041;
-	bh=qPCocCKrrVu8LeshYLBcOLdeVVvx9jPa3aQ2JrAAQSc=;
+	s=korg; t=1694979045;
+	bh=/3K/eB+z01JODC12Du3gbF+BuSOFfbuqBhT5scWt1OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBuQhL5e4fx4n5daqjkf5/2WhMQOSt7QOZ22zs4OQieRvruKyw7b1eZVTUBj3VTTo
-	 b1Xsk0EfEzwqa0Sf3qaoZqRorV5ywZZ6K/Nt481pdm5NAB1gwQLPal9mtvlPOSYl9W
-	 rIDBsqRdQM5AXd2aq5kp/6FlNWe1FVBqKNGQA5iY=
+	b=YHTCXyRHDeEA0ldy6/9NiyJRldf3ryMQPR1RPdxaFJ0zpmrzHNcG0N/FSSzzmhFV3
+	 Y7JtV6gqwzqgkhWYCC1nXmqHZzSiczd7VKIt8JR9kG5aOYw5i2yecDQ54pcQvVBClM
+	 SDD8Zm9hVAna4zeFMRep122o1bXvzZYKRe/hAcPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Jianhua <chris.zjh@huawei.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 172/406] clk: sunxi-ng: Modify mismatched function name
-Date: Sun, 17 Sep 2023 21:10:26 +0200
-Message-ID: <20230917191105.727811728@linuxfoundation.org>
+Subject: [PATCH 5.10 163/406] audit: fix possible soft lockup in __audit_inode_child()
+Date: Sun, 17 Sep 2023 21:10:17 +0200
+Message-ID: <20230917191105.483967414@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,37 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Jianhua <chris.zjh@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 075d9ca5b4e17f84fd1c744a405e69ec743be7f0 ]
+[ Upstream commit b59bc6e37237e37eadf50cd5de369e913f524463 ]
 
-No functional modification involved.
+Tracefs or debugfs maybe cause hundreds to thousands of PATH records,
+too many PATH records maybe cause soft lockup.
 
-drivers/clk/sunxi-ng/ccu_mmc_timing.c:54: warning: expecting prototype for sunxi_ccu_set_mmc_timing_mode(). Prototype was for sunxi_ccu_get_mmc_timing_mode() instead
+For example:
+  1. CONFIG_KASAN=y && CONFIG_PREEMPTION=n
+  2. auditctl -a exit,always -S open -k key
+  3. sysctl -w kernel.watchdog_thresh=5
+  4. mkdir /sys/kernel/debug/tracing/instances/test
 
-Fixes: f6f64ed868d3 ("clk: sunxi-ng: Add interface to query or configure MMC timing modes.")
-Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230722153107.2078179-1-chris.zjh@huawei.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+There may be a soft lockup as follows:
+  watchdog: BUG: soft lockup - CPU#45 stuck for 7s! [mkdir:15498]
+  Kernel panic - not syncing: softlockup: hung tasks
+  Call trace:
+   dump_backtrace+0x0/0x30c
+   show_stack+0x20/0x30
+   dump_stack+0x11c/0x174
+   panic+0x27c/0x494
+   watchdog_timer_fn+0x2bc/0x390
+   __run_hrtimer+0x148/0x4fc
+   __hrtimer_run_queues+0x154/0x210
+   hrtimer_interrupt+0x2c4/0x760
+   arch_timer_handler_phys+0x48/0x60
+   handle_percpu_devid_irq+0xe0/0x340
+   __handle_domain_irq+0xbc/0x130
+   gic_handle_irq+0x78/0x460
+   el1_irq+0xb8/0x140
+   __audit_inode_child+0x240/0x7bc
+   tracefs_create_file+0x1b8/0x2a0
+   trace_create_file+0x18/0x50
+   event_create_dir+0x204/0x30c
+   __trace_add_new_event+0xac/0x100
+   event_trace_add_tracer+0xa0/0x130
+   trace_array_create_dir+0x60/0x140
+   trace_array_create+0x1e0/0x370
+   instance_mkdir+0x90/0xd0
+   tracefs_syscall_mkdir+0x68/0xa0
+   vfs_mkdir+0x21c/0x34c
+   do_mkdirat+0x1b4/0x1d4
+   __arm64_sys_mkdirat+0x4c/0x60
+   el0_svc_common.constprop.0+0xa8/0x240
+   do_el0_svc+0x8c/0xc0
+   el0_svc+0x20/0x30
+   el0_sync_handler+0xb0/0xb4
+   el0_sync+0x160/0x180
+
+Therefore, we add cond_resched() to __audit_inode_child() to fix it.
+
+Fixes: 5195d8e217a7 ("audit: dynamically allocate audit_names when not enough space is in the names array")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_mmc_timing.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/auditsc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_mmc_timing.c b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-index de33414fc5c28..c6a6ce98ca03a 100644
---- a/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-+++ b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-@@ -43,7 +43,7 @@ int sunxi_ccu_set_mmc_timing_mode(struct clk *clk, bool new_mode)
- EXPORT_SYMBOL_GPL(sunxi_ccu_set_mmc_timing_mode);
+diff --git a/kernel/auditsc.c b/kernel/auditsc.c
+index 07e2788bbbf12..57b982b44732e 100644
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -2203,6 +2203,8 @@ void __audit_inode_child(struct inode *parent,
+ 		}
+ 	}
  
- /**
-- * sunxi_ccu_set_mmc_timing_mode: Get the current MMC clock timing mode
-+ * sunxi_ccu_get_mmc_timing_mode: Get the current MMC clock timing mode
-  * @clk: clock to query
-  *
-  * Returns 0 if the clock is in old timing mode, > 0 if it is in
++	cond_resched();
++
+ 	/* is there a matching child entry? */
+ 	list_for_each_entry(n, &context->names_list, list) {
+ 		/* can only match entries that have a name */
 -- 
 2.40.1
 
