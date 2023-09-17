@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EF16FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6ADBC433C7;
-	Sun, 17 Sep 2023 19:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48AB6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4575EC433C7;
+	Sun, 17 Sep 2023 19:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978215;
-	bh=3N6CPRqJLNDG5YfgfAdhq/nuURKiCO1kxHMh5SjEoU8=;
+	s=korg; t=1694978218;
+	bh=w5YFzcqwzoI+ulm4NAzgLmp9XQTYsk57d9lm11g6W5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzZY1cpbwJsqCZypqx2RF+m3+XA5KLyhxLFhyS31CXSln25btCb+Vm96vzUb5itVJ
-	 p89QTUtpsxU3qvTDMgutMnHe1TPEJU+bhu/jo1QY4WaFwShIOolQ4rdBYNgM9q6fCT
-	 mEk6PmFaVU5yfB02zvi8KaE4JAJYNFjGEP/TRxGQ=
+	b=XkFl909FtVcVmH02t67rJX94cqDE0k3cCYEDQCNVBXEIYqrE+knDs1Nb7VgKkjcZv
+	 7oCxuda5W5slhzjIaL/UpK5SXhuUdky58sv6cniUP4CvV58YJVS+OQlLe9GuYkuaMN
+	 WgCSykUEkh1sqQS4m+VChQ/ILTcCH5QvXKUj5g34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 5.10 015/406] serial: qcom-geni: fix opp vote on shutdown
-Date: Sun, 17 Sep 2023 21:07:49 +0200
-Message-ID: <20230917191101.541205896@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>
+Subject: [PATCH 5.10 016/406] serial: sc16is7xx: fix broken port 0 uart init
+Date: Sun, 17 Sep 2023 21:07:50 +0200
+Message-ID: <20230917191101.571134674@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -35,64 +34,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 8ece7b754bc34ffd7fcc8269ccb9128e72ca76d8 upstream.
+commit 2861ed4d6e6d1a2c9de9bf5b0abd996c2dc673d0 upstream.
 
-The operating-performance-point vote needs to be dropped when shutting
-down the port to avoid wasting power by keeping resources like power
-domains in an unnecessarily high performance state (e.g. when a UART
-connected Bluetooth controller is not in use).
+The sc16is7xx_config_rs485() function is called only for the second
+port (index 1, channel B), causing initialization problems for the
+first port.
 
-Fixes: a5819b548af0 ("tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state")
-Cc: stable@vger.kernel.org      # 5.9
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230714130214.14552-2-johan+linaro@kernel.org
+For the sc16is7xx driver, port->membase and port->mapbase are not set,
+and their default values are 0. And we set port->iobase to the device
+index. This means that when the first device is registered using the
+uart_add_one_port() function, the following values will be in the port
+structure:
+    port->membase = 0
+    port->mapbase = 0
+    port->iobase  = 0
+
+Therefore, the function uart_configure_port() in serial_core.c will
+exit early because of the following check:
+	/*
+	 * If there isn't a port here, don't do anything further.
+	 */
+	if (!port->iobase && !port->mapbase && !port->membase)
+		return;
+
+Typically, I2C and SPI drivers do not set port->membase and
+port->mapbase.
+
+The max310x driver sets port->membase to ~0 (all ones). By
+implementing the same change in this driver, uart_configure_port() is
+now correctly executed for all ports.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
+Link: https://lore.kernel.org/r/20230807214556.540627-2-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -125,6 +125,7 @@ struct qcom_geni_serial_port {
- 	u32 tx_fifo_width;
- 	u32 rx_fifo_depth;
- 	bool setup;
-+	unsigned long clk_rate;
- 	int (*handle_rx)(struct uart_port *uport, u32 bytes, bool drop);
- 	unsigned int baud;
- 	void *rx_fifo;
-@@ -1022,6 +1023,7 @@ static void qcom_geni_serial_set_termios
- 		goto out_restart_rx;
- 
- 	uport->uartclk = clk_rate;
-+	port->clk_rate = clk_rate;
- 	dev_pm_opp_set_rate(uport->dev, clk_rate);
- 	ser_clk_cfg = SER_CLK_EN;
- 	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
-@@ -1305,10 +1307,13 @@ static void qcom_geni_serial_pm(struct u
- 
- 	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
- 		geni_icc_enable(&port->se);
-+		if (port->clk_rate)
-+			dev_pm_opp_set_rate(uport->dev, port->clk_rate);
- 		geni_se_resources_on(&port->se);
- 	} else if (new_state == UART_PM_STATE_OFF &&
- 			old_state == UART_PM_STATE_ON) {
- 		geni_se_resources_off(&port->se);
-+		dev_pm_opp_set_rate(uport->dev, 0);
- 		geni_icc_disable(&port->se);
- 	}
- }
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1256,6 +1256,12 @@ static int sc16is7xx_probe(struct device
+ 		s->p[i].port.fifosize	= SC16IS7XX_FIFO_SIZE;
+ 		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY;
+ 		s->p[i].port.iobase	= i;
++		/*
++		 * Use all ones as membase to make sure uart_configure_port() in
++		 * serial_core.c does not abort for SPI/I2C devices where the
++		 * membase address is not applicable.
++		 */
++		s->p[i].port.membase	= (void __iomem *)~0;
+ 		s->p[i].port.iotype	= UPIO_PORT;
+ 		s->p[i].port.uartclk	= freq;
+ 		s->p[i].port.rs485_config = sc16is7xx_config_rs485;
 
 
