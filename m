@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2056FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB8AC433C8;
-	Sun, 17 Sep 2023 20:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CDC6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D4AC433C9;
+	Sun, 17 Sep 2023 20:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980958;
-	bh=pDHgO5lrPCh7mPnYE6Vytf7kHtKK+s65hAipoN30L2g=;
+	s=korg; t=1694980961;
+	bh=K/J3zECpqS71XWC/LQcQKS7LENUY8faj+JS0yuJkZeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdBWjpqKsO7t7zuhxc4+Z7tAcYGqDaPedCCrnqcdIKOIZ00df8rC5tK8FiaqZQIzM
-	 azywFdhhjgTvdYQt8AJ+yLjn7C7Vr2f9nVB9h+EiZqd2sYLmxjvtxDDvxXoTzcMDm3
-	 L0VJikVBHoVdIOMO7lmmUBrFeaVa0T1AeCDvEClE=
+	b=XrBGSpU6evVlLSB/GG1hNPJPzCZxFeTc20RgN5nQstVpvUiWJlXKA5G7kWG8/5R+t
+	 BstXTZ+Ux0m3hrWpqx/DlvhUueS067OeElDzfo1UI3V8bcscGiGgippyYksAd+THcV
+	 t0S1c2Xej59X2wma7rWb3E5X8/bINbiDWCwYJ1GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 018/219] scsi: qla2xxx: Fix session hang in gnl
-Date: Sun, 17 Sep 2023 21:12:25 +0200
-Message-ID: <20230917191041.653723421@linuxfoundation.org>
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.1 051/219] bus: mhi: host: Skip MHI reset if device is in RDDM
+Date: Sun, 17 Sep 2023 21:12:58 +0200
+Message-ID: <20230917191042.848472437@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,48 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Qiang Yu <quic_qianyu@quicinc.com>
 
-commit 39d22740712c7563a2e18c08f033deeacdaf66e7 upstream.
+commit cabce92dd805945a090dc6fc73b001bb35ed083a upstream.
 
-Connection does not resume after a host reset / chip reset. The cause of
-the blockage is due to the FCF_ASYNC_ACTIVE left on. The gnl command was
-interrupted by the chip reset. On exiting the command, this flag should be
-turn off to allow relogin to reoccur. Clear this flag to prevent blockage.
+In RDDM EE, device can not process MHI reset issued by host. In case of MHI
+power off, host is issuing MHI reset and polls for it to get cleared until
+it times out. Since this timeout can not be avoided in case of RDDM, skip
+the MHI reset in this scenarios.
 
-Cc: stable@vger.kernel.org
-Fixes: 17e64648aa47 ("scsi: qla2xxx: Correct fcport flags handling")
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: <stable@vger.kernel.org>
+Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/host/pm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -1135,7 +1135,7 @@ int qla24xx_async_gnl(struct scsi_qla_ho
- 	u16 *mb;
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(st
  
- 	if (!vha->flags.online || (fcport->flags & FCF_ASYNC_SENT))
--		return rval;
-+		goto done;
+ 	/* Trigger MHI RESET so that the device will not access host memory */
+ 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
++		/* Skip MHI RESET if in RDDM state */
++		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
++			goto skip_mhi_reset;
++
+ 		dev_dbg(dev, "Triggering MHI Reset in device\n");
+ 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
  
- 	ql_dbg(ql_dbg_disc, vha, 0x20d9,
- 	    "Async-gnlist WWPN %8phC \n", fcport->port_name);
-@@ -1189,8 +1189,9 @@ int qla24xx_async_gnl(struct scsi_qla_ho
- done_free_sp:
- 	/* ref: INIT */
- 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
-+	fcport->flags &= ~(FCF_ASYNC_SENT);
- done:
--	fcport->flags &= ~(FCF_ASYNC_ACTIVE | FCF_ASYNC_SENT);
-+	fcport->flags &= ~(FCF_ASYNC_ACTIVE);
- 	return rval;
- }
+@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(st
+ 		}
+ 	}
  
++skip_mhi_reset:
+ 	dev_dbg(dev,
+ 		 "Waiting for all pending event ring processing to complete\n");
+ 	mhi_event = mhi_cntrl->mhi_event;
 
 
