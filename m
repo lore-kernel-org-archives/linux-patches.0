@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D756FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339FBC433C8;
-	Sun, 17 Sep 2023 19:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2665F6FC9
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:38:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5BAC433C7;
+	Sun, 17 Sep 2023 19:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979516;
-	bh=LuXKwXSbLwWdOI8ZrzyXLYo1tMCI4+avI3yNJJfzFaA=;
+	s=korg; t=1694979520;
+	bh=eNOA853EauaSXqhqyPJEdLUlPyO+ugjrBNpJK0zFGcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJ0MKHEHlAZMRIO/rgVKXLy1NcCBOapH5LA+eDTRJtl1FrK4k595eH7RLzkT6+Rc5
-	 juR0uQBPhdH4jhzw+GuquhWLhA+Xu7hKapEtxP8tS/JIO63tn6YWSfdUTDGT7qhckF
-	 n/NKeEnSgB57Ly2F/sbWV36gkBkjsmFm41pXeuxY=
+	b=mMGIuxNQufZp2BuTjLr8zY3kaC3CIBlcxjkFvRIue3cz9EuYAOmh/s6/zmBDcV9rp
+	 H3dTalQJsLNUtCjQ/V0jHKJP62Z87sggFEsB8ZuGDd9M0z3aoJ9Xz7ZLqNdErkBKxy
+	 t/Eebfk211FKtluz9j/jrFyCT1lpp30t4P7eW56U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 310/406] tracing: Zero the pipe cpumask on alloc to avoid spurious -EBUSY
-Date: Sun, 17 Sep 2023 21:12:44 +0200
-Message-ID: <20230917191109.489562899@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 5.10 311/406] md/md-bitmap: remove unnecessary local variable in backlog_store()
+Date: Sun, 17 Sep 2023 21:12:45 +0200
+Message-ID: <20230917191109.514922325@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,53 +39,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 3d07fa1dd19035eb0b13ae6697efd5caa9033e74 upstream.
+commit b4d129640f194ffc4cc64c3e97f98ae944c072e8 upstream.
 
-The pipe cpumask used to serialize opens between the main and percpu
-trace pipes is not zeroed or initialized. This can result in
-spurious -EBUSY returns if underlying memory is not fully zeroed.
-This has been observed by immediate failure to read the main
-trace_pipe file on an otherwise newly booted and idle system:
+Local variable is definied first in the beginning of backlog_store(),
+there is no need to define it again.
 
- # cat /sys/kernel/debug/tracing/trace_pipe
- cat: /sys/kernel/debug/tracing/trace_pipe: Device or resource busy
-
-Zero the allocation of pipe_cpumask to avoid the problem.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230831125500.986862-1-bfoster@redhat.com
-
-Cc: stable@vger.kernel.org
-Fixes: c2489bb7e6be ("tracing: Introduce pipe_cpumask to avoid race on trace_pipes")
-Reviewed-by: Zheng Yejian <zhengyejian1@huawei.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8c13ab115b57 ("md/bitmap: don't set max_write_behind if there is no write mostly device")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230706083727.608914-2-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md-bitmap.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8890,7 +8890,7 @@ static struct trace_array *trace_array_c
- 	if (!alloc_cpumask_var(&tr->tracing_cpumask, GFP_KERNEL))
- 		goto out_free_tr;
- 
--	if (!alloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
- 		goto out_free_tr;
- 
- 	tr->trace_flags = global_trace.trace_flags & ~ZEROED_TRACE_FLAGS;
-@@ -9736,7 +9736,7 @@ __init static int tracer_alloc_buffers(v
- 	if (trace_create_savedcmd() < 0)
- 		goto out_free_temp_buffer;
- 
--	if (!alloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
- 		goto out_free_savedcmd;
- 
- 	/* TODO: make the number of buffers hot pluggable with CPUS */
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2512,8 +2512,6 @@ backlog_store(struct mddev *mddev, const
+ 			mddev_destroy_serial_pool(mddev, NULL, false);
+ 	} else if (backlog && !mddev->serial_info_pool) {
+ 		/* serial_info_pool is needed since backlog is not zero */
+-		struct md_rdev *rdev;
+-
+ 		rdev_for_each(rdev, mddev)
+ 			mddev_create_serial_pool(mddev, rdev, false);
+ 	}
 
 
