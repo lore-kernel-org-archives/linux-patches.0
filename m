@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F006FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C779FC433C8;
-	Sun, 17 Sep 2023 19:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611596FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E231C433CA;
+	Sun, 17 Sep 2023 19:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980412;
-	bh=81tucJsHQUWAJJjQim7Pa7p0SISWH/NKmScDJ11eVvo=;
+	s=korg; t=1694980416;
+	bh=8iEAd/V1lZ+jR4ER1aNolpBBT1QuaTi6V+94sXYJ3lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EilY9kr3WI0H0B6sRmniamN9LcGlLQ4d82bB5HT5HmXlXU0FwiFh1e8bjJbxEnnya
-	 psOg6PZvFU2sSFr08YWBOHzHSSdi+OqUlyWby3fOdORZf/io74NJpdningBbBCa6D+
-	 YbC/2EhgRDFGr+BQj93NAe6GWC7B7yTwuvPnaVkw=
+	b=KxtHQ2VhHdD5xZGpGjviMCWw4mlLG4mm2pLJyXSBX9Rnuy5LaGgsbNMKGAhumdgCV
+	 0n6q1lWTkS/Z0i9tkO8yJdcf6tTXwxxAAeifkEESOjAv/Jbu1k9BqMIpa4NbN6jkVH
+	 1MLMP1b6YXd8FwihCKoHvvRMGXcPIu+vzBac0t3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.5 184/285] jbd2: fix checkpoint cleanup performance regression
-Date: Sun, 17 Sep 2023 21:13:04 +0200
-Message-ID: <20230917191057.986118226@linuxfoundation.org>
+Subject: [PATCH 6.5 185/285] jbd2: check jh->b_transaction before removing it from checkpoint
+Date: Sun, 17 Sep 2023 21:13:05 +0200
+Message-ID: <20230917191058.017005856@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -35,129 +36,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 373ac521799d9e97061515aca6ec6621789036bb upstream.
+commit 590a809ff743e7bd890ba5fb36bc38e20a36de53 upstream.
 
-journal_clean_one_cp_list() has been merged into
-journal_shrink_one_cp_list(), but do chekpoint buffer cleanup from the
-committing process is just a best effort, it should stop scan once it
-meet a busy buffer, or else it will cause a lot of invalid buffer scan
-and checks. We catch a performance regression when doing fs_mark tests
-below.
+Following process will corrupt ext4 image:
+Step 1:
+jbd2_journal_commit_transaction
+ __jbd2_journal_insert_checkpoint(jh, commit_transaction)
+ // Put jh into trans1->t_checkpoint_list
+ journal->j_checkpoint_transactions = commit_transaction
+ // Put trans1 into journal->j_checkpoint_transactions
 
-Test cmd:
- ./fs_mark  -d  scratch  -s  1024  -n  10000  -t  1  -D  100  -N  100
+Step 2:
+do_get_write_access
+ test_clear_buffer_dirty(bh) // clear buffer dirty，set jbd dirty
+ __jbd2_journal_file_buffer(jh, transaction) // jh belongs to trans2
 
-Before merging checkpoint buffer cleanup:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       8304.9            49033
+Step 3:
+drop_cache
+ journal_shrink_one_cp_list
+  jbd2_journal_try_remove_checkpoint
+   if (!trylock_buffer(bh))  // lock bh, true
+   if (buffer_dirty(bh))     // buffer is not dirty
+   __jbd2_journal_remove_checkpoint(jh)
+   // remove jh from trans1->t_checkpoint_list
 
-After merging checkpoint buffer cleanup:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       7649.0            50012
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       2107.1            50871
+Step 4:
+jbd2_log_do_checkpoint
+ trans1 = journal->j_checkpoint_transactions
+ // jh is not in trans1->t_checkpoint_list
+ jbd2_cleanup_journal_tail(journal)  // trans1 is done
 
-After merging checkpoint buffer cleanup, the total loop count in
-journal_shrink_one_cp_list() could be up to 6,261,600+ (50,000+ ~
-100,000+ in general), most of them are invalid. This patch fix it
-through passing 'shrink_type' into journal_shrink_one_cp_list() and add
-a new 'SHRINK_BUSY_STOP' to indicate it should stop once meet a busy
-buffer. After fix, the loop count descending back to 10,000+.
+Step 5: Power cut, trans2 is not committed, jh is lost in next mounting.
 
-After this fix:
- FSUse%        Count         Size    Files/sec     App Overhead
-     95        10000         1024       8558.4            49109
+Fix it by checking 'jh->b_transaction' before remove it from checkpoint.
 
 Cc: stable@kernel.org
-Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Fixes: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230714025528.564988-2-yi.zhang@huaweicloud.com
+Link: https://lore.kernel.org/r/20230714025528.564988-3-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ fs/jbd2/checkpoint.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/jbd2/checkpoint.c
 +++ b/fs/jbd2/checkpoint.c
-@@ -349,6 +349,8 @@ int jbd2_cleanup_journal_tail(journal_t
- 
- /* Checkpoint list management */
- 
-+enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
-+
- /*
-  * journal_shrink_one_cp_list
-  *
-@@ -360,7 +362,8 @@ int jbd2_cleanup_journal_tail(journal_t
-  * Called with j_list_lock held.
-  */
- static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
--						bool destroy, bool *released)
-+						enum shrink_type type,
-+						bool *released)
+@@ -639,6 +639,8 @@ int jbd2_journal_try_remove_checkpoint(s
  {
- 	struct journal_head *last_jh;
- 	struct journal_head *next_jh = jh;
-@@ -376,12 +379,15 @@ static unsigned long journal_shrink_one_
- 		jh = next_jh;
- 		next_jh = jh->b_cpnext;
+ 	struct buffer_head *bh = jh2bh(jh);
  
--		if (destroy) {
-+		if (type == SHRINK_DESTROY) {
- 			ret = __jbd2_journal_remove_checkpoint(jh);
- 		} else {
- 			ret = jbd2_journal_try_remove_checkpoint(jh);
--			if (ret < 0)
--				continue;
-+			if (ret < 0) {
-+				if (type == SHRINK_BUSY_SKIP)
-+					continue;
-+				break;
-+			}
- 		}
- 
- 		nr_freed++;
-@@ -445,7 +451,7 @@ again:
- 		tid = transaction->t_tid;
- 
- 		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--						   false, &released);
-+						   SHRINK_BUSY_SKIP, &released);
- 		nr_freed += freed;
- 		(*nr_to_scan) -= min(*nr_to_scan, freed);
- 		if (*nr_to_scan == 0)
-@@ -485,19 +491,21 @@ out:
- void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
- {
- 	transaction_t *transaction, *last_transaction, *next_transaction;
-+	enum shrink_type type;
- 	bool released;
- 
- 	transaction = journal->j_checkpoint_transactions;
- 	if (!transaction)
- 		return;
- 
-+	type = destroy ? SHRINK_DESTROY : SHRINK_BUSY_STOP;
- 	last_transaction = transaction->t_cpprev;
- 	next_transaction = transaction;
- 	do {
- 		transaction = next_transaction;
- 		next_transaction = transaction->t_cpnext;
- 		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--					   destroy, &released);
-+					   type, &released);
- 		/*
- 		 * This function only frees up some memory if possible so we
- 		 * dont have an obligation to finish processing. Bail out if
++	if (jh->b_transaction)
++		return -EBUSY;
+ 	if (!trylock_buffer(bh))
+ 		return -EBUSY;
+ 	if (buffer_dirty(bh)) {
 
 
