@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB946FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2132AC433CA;
-	Sun, 17 Sep 2023 20:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E456FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:34:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CECCC433C7;
+	Sun, 17 Sep 2023 20:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982851;
-	bh=b6OVyUOzp6LINKKHdGbB8GFONID7IIWUipGw0YqbU0I=;
+	s=korg; t=1694982854;
+	bh=QMUIdC3tb+Q5Omz5+KlaG6f9BRGSDVU2vZwTtomO9ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHPQtY1GWqlktnLEh9JraPwv2EyT/WcIJK9NGBa77hzBF1Htk9EyEa+eJXOVVx1H6
-	 8AL8xz1HS1rAsfFCrgarZW2Md0HcUbq0JdSTWgNSUVRA4sL4c4CzmsQSDwX8kSAkL2
-	 SeE2RrhB5UGqTDv9PFBF6lcPEYLsqvZaLY45YlQ8=
+	b=oi2MXmp0BAt9zU8QpygmBPTG7K6k3DssdQkEcXXnKsB/eVnyI1f5F40IVsb/8E82j
+	 d0jREB7O3PcGIvW3xzgvtb3aKv1+2SHn4ehSk+5PWjyWn+1BT+daiDJ8Iqh02sykgz
+	 9Eib+szRCNCD5VaVspJ/YJlmYTlT4p+yIcPgfmIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Jennings <bryjen423@gmail.com>,
-	Alexander Deucher <Alexander.Deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lang Yu <Lang.Yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 370/511] Revert "drm/amdgpu: install stub fence into potential unused fence pointers"
-Date: Sun, 17 Sep 2023 21:13:17 +0200
-Message-ID: <20230917191122.741628538@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.15 339/511] media: venus: hfi_venus: Write to VIDC_CTRL_INIT after unmasking interrupts
+Date: Sun, 17 Sep 2023 21:12:46 +0200
+Message-ID: <20230917191121.998320347@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -37,62 +34,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-This reverts commit 4921792e04f2125b5eadef9dbe9417a8354c7eff which is
-commit 187916e6ed9d0c3b3abc27429f7a5f8c936bd1f0 upstream.
+commit d74e481609808330b4625b3691cf01e1f56e255e upstream.
 
-It is reported to cause a lot of log spam, so should be reverted.
+The startup procedure shouldn't be started with interrupts masked, as that
+may entail silent failures.
 
-Link: https://lore.kernel.org/r/d32d6919-47cf-4ddc-955a-0759088220ae@gmail.com
-Link: https://lore.kernel.org/r/BL1PR12MB5144A0E84378A2666A26AE18F7F2A@BL1PR12MB5144.namprd12.prod.outlook.com
-Reported-by: Bryan Jennings <bryjen423@gmail.com>
-Reported-by: Alexander Deucher <Alexander.Deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Lang Yu <Lang.Yu@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Kick off initialization only after the interrupts are unmasked.
+
+Cc: stable@vger.kernel.org # v4.12+
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2260,7 +2260,6 @@ struct amdgpu_bo_va *amdgpu_vm_bo_add(st
- 	amdgpu_vm_bo_base_init(&bo_va->base, vm, bo);
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -453,7 +453,6 @@ static int venus_boot_core(struct venus_
+ 	void __iomem *wrapper_base = hdev->core->wrapper_base;
+ 	int ret = 0;
  
- 	bo_va->ref_count = 1;
--	bo_va->last_pt_update = dma_fence_get_stub();
- 	INIT_LIST_HEAD(&bo_va->valids);
- 	INIT_LIST_HEAD(&bo_va->invalids);
+-	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
+ 	if (IS_V6(hdev->core)) {
+ 		mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
+ 		mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
+@@ -464,6 +463,7 @@ static int venus_boot_core(struct venus_
+ 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
+ 	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
  
-@@ -2975,8 +2974,7 @@ int amdgpu_vm_init(struct amdgpu_device
- 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
- 	else
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
--
--	vm->last_update = dma_fence_get_stub();
-+	vm->last_update = NULL;
- 	vm->last_unlocked = dma_fence_get_stub();
- 
- 	mutex_init(&vm->eviction_lock);
-@@ -3119,7 +3117,7 @@ int amdgpu_vm_make_compute(struct amdgpu
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
- 	}
- 	dma_fence_put(vm->last_update);
--	vm->last_update = dma_fence_get_stub();
-+	vm->last_update = NULL;
- 	vm->is_compute_context = true;
- 
- 	/* Free the shadow bo for compute VM */
++	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
+ 	while (!ctrl_status && count < max_tries) {
+ 		ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
+ 		if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
 
 
