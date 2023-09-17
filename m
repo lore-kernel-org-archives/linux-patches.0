@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CB76FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DADC433C8;
-	Sun, 17 Sep 2023 20:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B0B6FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:14:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BD2C433C7;
+	Sun, 17 Sep 2023 20:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981644;
-	bh=xfS1fajin8YFvcTHNkJ7WYSUR96wHn9RFpzySxRIVE8=;
+	s=korg; t=1694981647;
+	bh=aauDOwrWEy3JawhNqfyHPYY2witrGt1TMf/YjCUA9LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7ymCdAzqUD7hy31wnd/yQ09cR2nkan0jiXK0rbhjHKMvAkEIjS2oVdA9XR+dy/oD
-	 XMD549djeFPYE012dl57E5xp3O6zkIdnGSe6jtoyfNfHTPgn7LwqImusxkVCx+FG99
-	 5wx5JFPWHe4wcCwtAbWqVIFHvD83NZFrOYfA1pvA=
+	b=PIUKYuXq8Of3JzxAR3FHibO3VeH74WCJaLYczqNzdPsdutjkSARhFwl/6hNCVbNug
+	 4pqGKZxI1YGdutB/GctS+Cho7dKNw1s4CYiO8u7YYmJdhQ8t1qgdJhCC2QNQMLYc+d
+	 5RAjCHgXkGTmYGzvtzJ8vGBTfVz5AQcax4wl1BOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William R Sowerbutts <will@sowerbutts.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.1 151/219] ata: pata_falcon: fix IO base selection for Q40
-Date: Sun, 17 Sep 2023 21:14:38 +0200
-Message-ID: <20230917191046.474722539@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 083/511] hwrng: pic32 - use devm_clk_get_enabled
+Date: Sun, 17 Sep 2023 21:08:30 +0200
+Message-ID: <20230917191115.875110483@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,127 +36,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 8a1f00b753ecfdb117dc1a07e68c46d80e7923ea upstream.
+[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
 
-With commit 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver
-with pata_falcon and falconide"), the Q40 IDE driver was
-replaced by pata_falcon.c.
+Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
+enabled as long as the driver is registered with the hwrng core.
 
-Both IO and memory resources were defined for the Q40 IDE
-platform device, but definition of the IDE register addresses
-was modeled after the Falcon case, both in use of the memory
-resources and in including register shift and byte vs. word
-offset in the address.
-
-This was correct for the Falcon case, which does not apply
-any address translation to the register addresses. In the
-Q40 case, all of device base address, byte access offset
-and register shift is included in the platform specific
-ISA access translation (in asm/mm_io.h).
-
-As a consequence, such address translation gets applied
-twice, and register addresses are mangled.
-
-Use the device base address from the platform IO resource
-for Q40 (the IO address translation will then add the correct
-ISA window base address and byte access offset), with register
-shift 1. Use MMIO base address and register shift 2 as before
-for Falcon.
-
-Encode PIO_OFFSET into IO port addresses for all registers
-for Q40 except the data transfer register. Encode the MMIO
-offset there (pata_falcon_data_xfer() directly uses raw IO
-with no address translation).
-
-Reported-by: William R Sowerbutts <will@sowerbutts.com>
-Closes: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
-Link: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
-Fixes: 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver with pata_falcon and falconide")
-Cc: stable@vger.kernel.org
-Cc: Finn Thain <fthain@linux-m68k.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: William R Sowerbutts <will@sowerbutts.com>
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_falcon.c |   50 ++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
---- a/drivers/ata/pata_falcon.c
-+++ b/drivers/ata/pata_falcon.c
-@@ -123,8 +123,8 @@ static int __init pata_falcon_init_one(s
- 	struct resource *base_res, *ctl_res, *irq_res;
- 	struct ata_host *host;
- 	struct ata_port *ap;
--	void __iomem *base;
--	int irq = 0;
-+	void __iomem *base, *ctl_base;
-+	int irq = 0, io_offset = 1, reg_shift = 2; /* Falcon defaults */
+diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
+index 99c8bd0859a14..e04a054e89307 100644
+--- a/drivers/char/hw_random/pic32-rng.c
++++ b/drivers/char/hw_random/pic32-rng.c
+@@ -36,7 +36,6 @@
+ struct pic32_rng {
+ 	void __iomem	*base;
+ 	struct hwrng	rng;
+-	struct clk	*clk;
+ };
  
- 	dev_info(&pdev->dev, "Atari Falcon and Q40/Q60 PATA controller\n");
+ /*
+@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
+ static int pic32_rng_probe(struct platform_device *pdev)
+ {
+ 	struct pic32_rng *priv;
++	struct clk *clk;
+ 	u32 v;
+ 	int ret;
  
-@@ -165,26 +165,34 @@ static int __init pata_falcon_init_one(s
- 	ap->pio_mask = ATA_PIO4;
- 	ap->flags |= ATA_FLAG_SLAVE_POSS | ATA_FLAG_NO_IORDY;
+@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->base))
+ 		return PTR_ERR(priv->base);
  
--	base = (void __iomem *)base_mem_res->start;
- 	/* N.B. this assumes data_addr will be used for word-sized I/O only */
--	ap->ioaddr.data_addr		= base + 0 + 0 * 4;
--	ap->ioaddr.error_addr		= base + 1 + 1 * 4;
--	ap->ioaddr.feature_addr		= base + 1 + 1 * 4;
--	ap->ioaddr.nsect_addr		= base + 1 + 2 * 4;
--	ap->ioaddr.lbal_addr		= base + 1 + 3 * 4;
--	ap->ioaddr.lbam_addr		= base + 1 + 4 * 4;
--	ap->ioaddr.lbah_addr		= base + 1 + 5 * 4;
--	ap->ioaddr.device_addr		= base + 1 + 6 * 4;
--	ap->ioaddr.status_addr		= base + 1 + 7 * 4;
--	ap->ioaddr.command_addr		= base + 1 + 7 * 4;
+-	priv->clk = devm_clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(priv->clk))
+-		return PTR_ERR(priv->clk);
 -
--	base = (void __iomem *)ctl_mem_res->start;
--	ap->ioaddr.altstatus_addr	= base + 1;
--	ap->ioaddr.ctl_addr		= base + 1;
--
--	ata_port_desc(ap, "cmd 0x%lx ctl 0x%lx",
--		      (unsigned long)base_mem_res->start,
--		      (unsigned long)ctl_mem_res->start);
-+	ap->ioaddr.data_addr = (void __iomem *)base_mem_res->start;
-+
-+	if (base_res) {		/* only Q40 has IO resources */
-+		io_offset = 0x10000;
-+		reg_shift = 0;
-+		base = (void __iomem *)base_res->start;
-+		ctl_base = (void __iomem *)ctl_res->start;
-+	} else {
-+		base = (void __iomem *)base_mem_res->start;
-+		ctl_base = (void __iomem *)ctl_mem_res->start;
-+	}
-+
-+	ap->ioaddr.error_addr	= base + io_offset + (1 << reg_shift);
-+	ap->ioaddr.feature_addr	= base + io_offset + (1 << reg_shift);
-+	ap->ioaddr.nsect_addr	= base + io_offset + (2 << reg_shift);
-+	ap->ioaddr.lbal_addr	= base + io_offset + (3 << reg_shift);
-+	ap->ioaddr.lbam_addr	= base + io_offset + (4 << reg_shift);
-+	ap->ioaddr.lbah_addr	= base + io_offset + (5 << reg_shift);
-+	ap->ioaddr.device_addr	= base + io_offset + (6 << reg_shift);
-+	ap->ioaddr.status_addr	= base + io_offset + (7 << reg_shift);
-+	ap->ioaddr.command_addr	= base + io_offset + (7 << reg_shift);
-+
-+	ap->ioaddr.altstatus_addr	= ctl_base + io_offset;
-+	ap->ioaddr.ctl_addr		= ctl_base + io_offset;
-+
-+	ata_port_desc(ap, "cmd %px ctl %px data %px",
-+		      base, ctl_base, ap->ioaddr.data_addr);
+-	ret = clk_prepare_enable(priv->clk);
+-	if (ret)
+-		return ret;
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
  
- 	irq_res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
- 	if (irq_res && irq_res->start > 0) {
+ 	/* enable TRNG in enhanced mode */
+ 	v = TRNGEN | TRNGMOD;
+@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
+ 	if (ret)
+-		goto err_register;
++		return ret;
+ 
+ 	platform_set_drvdata(pdev, priv);
+ 
+ 	return 0;
+-
+-err_register:
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
+ }
+ 
+ static int pic32_rng_remove(struct platform_device *pdev)
+@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
+ 	struct pic32_rng *rng = platform_get_drvdata(pdev);
+ 
+ 	writel(0, rng->base + RNGCON);
+-	clk_disable_unprepare(rng->clk);
+ 	return 0;
+ }
+ 
+-- 
+2.40.1
+
 
 
