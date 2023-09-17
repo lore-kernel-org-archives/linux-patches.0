@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319C76FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927F9C433C8;
-	Sun, 17 Sep 2023 20:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAE56FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:32:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A13EC433C7;
+	Sun, 17 Sep 2023 20:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982755;
-	bh=K44H1wk9Vd1L+9n9AGRa04th3NlKgC/dsyVzKUcNggc=;
+	s=korg; t=1694982758;
+	bh=LfukXCDcg9v6Js7PEiO2xJeCYyKIxGjhSvhEw3WLftU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nq0art5z2GJeq5b51/iTiZu3FCLUdhHhtLttAwOcb9dHAV54wJsLkwooSlKbCSaz2
-	 YQu3TLKSh52kLutN2UGTpugFBanFmG6oTs0j02qFi2CVKydtcMx53W9+YqDVqcppOV
-	 z8U4NRSzqiV5G3MMXids8oGVvlD8zDoV4ASYh9eM=
+	b=jl7FVGiQvYZOQ7CQV5eZprZQ2acSn5zH6ZFMkexlyyq47F6QHtMZI+sdDlVLuitiI
+	 Uv5vBDM2AEQ+X69+siBX2a2OZlHfABUwsR3Bv4Rbea67a0vRnrKE81uWTlfGT0LPxo
+	 1l4FPK+dG8Vv/5/HLmb98pnQJg46LVui3bNZuFPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 336/511] i3c: master: svc: fix probe failure when no i3c device exist
-Date: Sun, 17 Sep 2023 21:12:43 +0200
-Message-ID: <20230917191121.927792757@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 345/511] Revert "PCI: Mark NVIDIA T4 GPUs to avoid bus reset"
+Date: Sun, 17 Sep 2023 21:12:52 +0200
+Message-ID: <20230917191122.138616666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,66 +38,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 6e13d6528be2f7e801af63c8153b87293f25d736 upstream.
+commit 5260bd6d36c83c5b269c33baaaf8c78e520908b0 upstream.
 
-I3C masters are expected to support hot-join. This means at initialization
-time we might not yet discover any device and this should not be treated
-as a fatal error.
+This reverts commit d5af729dc2071273f14cbb94abbc60608142fd83.
 
-During the DAA procedure which happens at probe time, if no device has
-joined, all CCC will be NACKed (from a bus perspective). This leads to an
-early return with an error code which fails the probe of the master.
+d5af729dc207 ("PCI: Mark NVIDIA T4 GPUs to avoid bus reset") avoided
+Secondary Bus Reset on the T4 because the reset seemed to not work when the
+T4 was directly attached to a Root Port.
 
-Let's avoid this by just telling the core through an I3C_ERROR_M2
-return command code that no device was discovered, which is a valid
-situation. This way the master will no longer bail out and fail to probe
-for a wrong reason.
+But NVIDIA thinks the issue is probably related to some issue with the Root
+Port, not with the T4.  The T4 provides neither PM nor FLR reset, so
+masking bus reset compromises this device for assignment scenarios.
 
-Cc: stable@vger.kernel.org
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20230831141324.2841525-1-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Revert d5af729dc207 as requested by Wu Zongyong.  This will leave SBR
+broken in the specific configuration Wu tested, as it was in v6.5, so Wu
+will debug that further.
+
+Link: https://lore.kernel.org/r/ZPqMCDWvITlOLHgJ@wuzongyong-alibaba
+Link: https://lore.kernel.org/r/20230908201104.GA305023@bhelgaas
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/pci/quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -723,6 +723,10 @@ static int svc_i3c_master_do_daa_locked(
- 				 */
- 				break;
- 			} else if (SVC_I3C_MSTATUS_NACKED(reg)) {
-+				/* No I3C devices attached */
-+				if (dev_nb == 0)
-+					break;
-+
- 				/*
- 				 * A slave device nacked the address, this is
- 				 * allowed only once, DAA will be stopped and
-@@ -1152,11 +1156,17 @@ static int svc_i3c_master_send_ccc_cmd(s
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3606,7 +3606,7 @@ static void quirk_no_bus_reset(struct pc
+  */
+ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
  {
- 	struct svc_i3c_master *master = to_svc_i3c_master(m);
- 	bool broadcast = cmd->id < 0x80;
-+	int ret;
- 
- 	if (broadcast)
--		return svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
-+		ret = svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
- 	else
--		return svc_i3c_master_send_direct_ccc_cmd(master, cmd);
-+		ret = svc_i3c_master_send_direct_ccc_cmd(master, cmd);
-+
-+	if (ret)
-+		cmd->err = I3C_ERROR_M2;
-+
-+	return ret;
+-	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
++	if ((dev->device & 0xffc0) == 0x2340)
+ 		quirk_no_bus_reset(dev);
  }
- 
- static int svc_i3c_master_priv_xfers(struct i3c_dev_desc *dev,
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
 
 
