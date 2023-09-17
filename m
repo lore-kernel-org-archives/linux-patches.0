@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901346FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4E4C433C8;
-	Sun, 17 Sep 2023 20:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D26FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:35:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC49C433C9;
+	Sun, 17 Sep 2023 20:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982902;
-	bh=IXjzQzFtf5es8UlIDrOficJaFeNEn54V/ymfNSl5JQI=;
+	s=korg; t=1694982905;
+	bh=F7eKVdOZt5Tnl1rqzd7kPl8RMr6LNtJCyt3pTx8eexc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5K1QBEUot7uCCJKTSphsipwxnN+/AkuGiqc0RTlTEmeF6BsPjjQvzjSBkBOjs1H0
-	 TpfLXviGIM6u4h9Nto5x3/1gRkL0U9w6bprkrSbaOjlhsAq6pLDrTIUZKVyrzbnqbp
-	 sbduPNkJ6/z2Jqj+6Oz2lthxg+CBuKqMxi5PAxD0=
+	b=X91lofZL/S2lnv4JQaidyJUhRv46WqvkKwaHcJSoCk218QNKZxk/8IyTDSXQRmYfJ
+	 h42JVqbnaixrM65sJmQvRFr657LqZ0ecPLqpOPKmdafib8wF9bqSb7ZN9ZjnRO8cxd
+	 K2bnInRr3hDtz/Q2mTq7MGDg1LHADXmZntt8jk5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Quinn Tran <qutran@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 387/511] scsi: qla2xxx: Fix smatch warn for qla_init_iocb_limit()
-Date: Sun, 17 Sep 2023 21:13:34 +0200
-Message-ID: <20230917191123.141329805@linuxfoundation.org>
+Subject: [PATCH 5.15 388/511] scsi: qla2xxx: Error code did not return to upper layer
+Date: Sun, 17 Sep 2023 21:13:35 +0200
+Message-ID: <20230917191123.164314553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,34 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit b496953dd0444001b12f425ea07d78c1f47e3193 upstream.
+commit 0ba0b018f94525a6b32f5930f980ce9b62b72e6f upstream.
 
-Fix indentation for warning reported by smatch:
+TMF was returned with an error code. The error code was not preserved to be
+returned to upper layer. Instead, the error code from the Marker was
+returned.
 
-drivers/scsi/qla2xxx/qla_init.c:4199 qla_init_iocb_limit() warn: inconsistent indenting
+Preserve error code from TMF and return it to upper layer.
 
-Fixes: efa74a62aaa2 ("scsi: qla2xxx: Adjust IOCB resource on qpair create")
+Cc: stable@vger.kernel.org
+Fixes: da7c21b72aa8 ("scsi: qla2xxx: Fix command flush during TMF")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230821130045.34850-8-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230821130045.34850-6-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/scsi/qla2xxx/qla_init.c
 +++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -4205,7 +4205,7 @@ void qla_init_iocb_limit(scsi_qla_host_t
- 	u8 i;
- 	struct qla_hw_data *ha = vha->hw;
+@@ -2225,6 +2225,8 @@ __qla2x00_async_tm_cmd(struct tmf_arg *a
+ 			rval = QLA_FUNCTION_FAILED;
+ 		}
+ 	}
++	if (tm_iocb->u.tmf.data)
++		rval = tm_iocb->u.tmf.data;
  
--	 __qla_adjust_iocb_limit(ha->base_qpair);
-+	__qla_adjust_iocb_limit(ha->base_qpair);
- 	ha->base_qpair->fwres.iocbs_used = 0;
- 	ha->base_qpair->fwres.exch_used  = 0;
- 
+ done_free_sp:
+ 	/* ref: INIT */
 
 
