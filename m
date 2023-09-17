@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88E86FC9
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296D4C433C9;
-	Sun, 17 Sep 2023 19:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADE94A3F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986E2C433C7;
+	Sun, 17 Sep 2023 19:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694979626;
-	bh=u1Qd/tXq41RIRhrkEl//ZYbRz6jrrAOuZr4CLzP4wjs=;
+	s=korg; t=1694979630;
+	bh=4WNUlBiYvV9MvXKchhYxmqnf7vClpOYmHhaOkqqvWdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDxLZC+ix2mCe+dXcX7FUoofoKAZs4uIrIkH62BmrO8Gy8j8MGJU5sS+LaZz5np6H
-	 0M5ACJjmfhLWgi/COpzTmxLcxBBLIDRBB7NdkMgwvxYgQ/IJoRyBEMhY2eYiuTQgPd
-	 +1/25gIEySrTw6E+c3wvsolO52B16sUHnmqL1Y6g=
+	b=w9TAZwvRQ+GlcJ92L85T/6eAaIVyHstsN4GbxT6VRMsXGPh0vhQmR6i0GSm53Edmk
+	 IFo7B4d/sH0by5uG4p84bNL8Ob4eOB1ftdpcs1CEcL7PMF9Mi50jNRfrdtaD+LdpDK
+	 oyVy5VSgf1x83q/tnOYV1EVsic/Rq8w+Mp65mtsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.10 333/406] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
-Date: Sun, 17 Sep 2023 21:13:07 +0200
-Message-ID: <20230917191110.078860307@linuxfoundation.org>
+	Ariel Marcovitch <arielmarcovitch@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 361/406] idr: fix param name in idr_alloc_cyclic() doc
+Date: Sun, 17 Sep 2023 21:13:35 +0200
+Message-ID: <20230917191110.806232110@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -40,35 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ariel Marcovitch <arielmarcovitch@gmail.com>
 
-commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
+[ Upstream commit 2a15de80dd0f7e04a823291aa9eb49c5294f56af ]
 
-It is an almost improbable error case but when page allocating loop in
-nfs4_get_device_info() fails then we should only free the already
-allocated pages, as __free_page() can't deal with NULL arguments.
+The relevant parameter is 'start' and not 'nextid'
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 460488c58ca8 ("idr: Remove idr_alloc_ext")
+Signed-off-by: Ariel Marcovitch <arielmarcovitch@gmail.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs_dev.c |    2 +-
+ lib/idr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/pnfs_dev.c
-+++ b/fs/nfs/pnfs_dev.c
-@@ -152,7 +152,7 @@ nfs4_get_device_info(struct nfs_server *
- 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
- 
- out_free_pages:
--	for (i = 0; i < max_pages; i++)
-+	while (--i >= 0)
- 		__free_page(pages[i]);
- 	kfree(pages);
- out_free_pdev:
+diff --git a/lib/idr.c b/lib/idr.c
+index 7ecdfdb5309e7..13f2758c23773 100644
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -100,7 +100,7 @@ EXPORT_SYMBOL_GPL(idr_alloc);
+  * @end: The maximum ID (exclusive).
+  * @gfp: Memory allocation flags.
+  *
+- * Allocates an unused ID in the range specified by @nextid and @end.  If
++ * Allocates an unused ID in the range specified by @start and @end.  If
+  * @end is <= 0, it is treated as one larger than %INT_MAX.  This allows
+  * callers to use @start + N as @end as long as N is within integer range.
+  * The search for an unused ID will start at the last ID allocated and will
+-- 
+2.40.1
+
 
 
