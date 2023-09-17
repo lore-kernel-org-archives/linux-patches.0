@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3886FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:52:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9186DC433C7;
-	Sun, 17 Sep 2023 19:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08CF6FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E100C433C7;
+	Sun, 17 Sep 2023 19:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980378;
-	bh=VhaUDfkEwSMloKhp8Rp2ZIuk8+GkIjfPp2aWUzAEGmE=;
+	s=korg; t=1694980381;
+	bh=P7KSkxiJEieAuKXF7YOnaZf+BLfzSCX5pcwJ9vEOWNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwwl4g9593QzSQUZCIvcKPQqPRTWJ7RCAfpvRugbJdSsF+igYNwU8pLhMj7r3ViqO
-	 kIrxJAyW8E4QWvkfOj6SVum0wCyFTwA3bnbFttMRoXtOd1+TCopsLl8V3Dm0JOwJbd
-	 n/TvA3LTc2gnZPSs+hyvsqfGrEeMIwU321HHznyk=
+	b=niznFh0h4jbO5/MTjBfNyg1VVwa7xY7ExGW6/Vs0GoCOFEh2TQMQSiiEFsqHtSPcT
+	 FqNJRe2kps7+FT14Xw1CM1bMrtAeh1sq/LDujwxfZn6iO4Ym6YLlOelrPVfYGsfd8Z
+	 an+qpBOemXvKYqM6Ut5OmqzxILfrgxK3pxmiZir8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 175/285] sh: push-switch: Reorder cleanup operations to avoid use-after-free bug
-Date: Sun, 17 Sep 2023 21:12:55 +0200
-Message-ID: <20230917191057.691406198@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.5 176/285] linux/export: fix reference to exported functions for parisc64
+Date: Sun, 17 Sep 2023 21:12:56 +0200
+Message-ID: <20230917191057.723296348@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,56 +40,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 246f80a0b17f8f582b2c0996db02998239057c65 ]
+commit 08700ec705043eb0cee01b35cf5b9d63f0230d12 upstream.
 
-The original code puts flush_work() before timer_shutdown_sync()
-in switch_drv_remove(). Although we use flush_work() to stop
-the worker, it could be rescheduled in switch_timer(). As a result,
-a use-after-free bug can occur. The details are shown below:
+John David Anglin reported parisc has been broken since commit
+ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost").
 
-      (cpu 0)                    |      (cpu 1)
-switch_drv_remove()              |
- flush_work()                    |
-  ...                            |  switch_timer // timer
-                                 |   schedule_work(&psw->work)
- timer_shutdown_sync()           |
- ...                             |  switch_work_handler // worker
- kfree(psw) // free              |
-                                 |   psw->state = 0 // use
+Like ia64, parisc64 uses a function descriptor. The function
+references must be prefixed with P%.
 
-This patch puts timer_shutdown_sync() before flush_work() to
-mitigate the bugs. As a result, the worker and timer will be
-stopped safely before the deallocate operations.
+Also, symbols prefixed $$ from the library have the symbol type
+STT_LOPROC instead of STT_FUNC. They should be handled as functions
+too.
 
-Fixes: 9f5e8eee5cfe ("sh: generic push-switch framework.")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230802033737.9738-1-duoming@zju.edu.cn
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost")
+Reported-by: John David Anglin <dave.anglin@bell.net>
+Tested-by: John David Anglin <dave.anglin@bell.net>
+Tested-by: Helge Deller <deller@gmx.de>
+Closes: https://lore.kernel.org/linux-parisc/1901598a-e11d-f7dd-a5d9-9a69d06e6b6e@bell.net/T/#u
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/drivers/push-switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/export-internal.h |    2 ++
+ scripts/mod/modpost.c           |    9 +++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/arch/sh/drivers/push-switch.c b/arch/sh/drivers/push-switch.c
-index c95f48ff3f6fb..6ecba5f521eb6 100644
---- a/arch/sh/drivers/push-switch.c
-+++ b/arch/sh/drivers/push-switch.c
-@@ -101,8 +101,8 @@ static int switch_drv_remove(struct platform_device *pdev)
- 		device_remove_file(&pdev->dev, &dev_attr_switch);
+--- a/include/linux/export-internal.h
++++ b/include/linux/export-internal.h
+@@ -52,6 +52,8 @@
  
- 	platform_set_drvdata(pdev, NULL);
--	flush_work(&psw->work);
- 	timer_shutdown_sync(&psw->debounce);
-+	flush_work(&psw->work);
- 	free_irq(irq, pdev);
+ #ifdef CONFIG_IA64
+ #define KSYM_FUNC(name)		@fptr(name)
++#elif defined(CONFIG_PARISC) && defined(CONFIG_64BIT)
++#define KSYM_FUNC(name)		P%name
+ #else
+ #define KSYM_FUNC(name)		name
+ #endif
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1226,6 +1226,15 @@ static void check_export_symbol(struct m
+ 	 */
+ 	s->is_func = (ELF_ST_TYPE(sym->st_info) == STT_FUNC);
  
- 	kfree(psw);
--- 
-2.40.1
-
++	/*
++	 * For parisc64, symbols prefixed $$ from the library have the symbol type
++	 * STT_LOPROC. They should be handled as functions too.
++	 */
++	if (elf->hdr->e_ident[EI_CLASS] == ELFCLASS64 &&
++	    elf->hdr->e_machine == EM_PARISC &&
++	    ELF_ST_TYPE(sym->st_info) == STT_LOPROC)
++		s->is_func = true;
++
+ 	if (match(secname, PATTERNS(INIT_SECTIONS)))
+ 		warn("%s: %s: EXPORT_SYMBOL used for init symbol. Remove __init or EXPORT_SYMBOL.\n",
+ 		     mod->name, name);
 
 
