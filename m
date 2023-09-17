@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2FE7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DCBC433CA;
-	Sun, 17 Sep 2023 20:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E997461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBE2C433C8;
+	Sun, 17 Sep 2023 20:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981351;
-	bh=WTgwR3rNVRfS8eiig1YkDVDiY3+72CqaGCymbxshAJs=;
+	s=korg; t=1694981354;
+	bh=ay5vsD8GvCtGfclQ7xDBVWJF0N3TrITOeO5uaPvsvfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uum7depqfYbCjtOoI2SEW6WfSMKgJFwuZoGaKRvxm1qZ9Zt1jBfoeIFtgL7qgEnng
-	 x/l5rE5Fs8MGoRC8eDRmeKc3fJgUJXBtGUb6XFeKiZIPV+oOOSPe8JshLRJ5Y0vo1D
-	 Vjc36VycN1PfkNMrR1fMDQ202tw10N4Jqbq4ifNo=
+	b=0yAQ064Agt//SnVN0+D8poyrveGtEg+Rrb67tFLC754hrXLBucRxxxA/H1SwguaEN
+	 oqLGnEkNDZekcJwd8hTA54CAPrKqiS4S5uhUcBrrheiGr8WdNMfcyavNbFOhThfHcE
+	 fDwRJqxq2hNQLgqWrKDEUGoyZ8cdC3qluzEkn8j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Eric Dumazet <edumazet@google.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/219] af_unix: Fix data-races around user->unix_inflight.
-Date: Sun, 17 Sep 2023 21:13:55 +0200
-Message-ID: <20230917191044.895133562@linuxfoundation.org>
+Subject: [PATCH 5.15 042/511] bnx2x: fix page fault following EEH recovery
+Date: Sun, 17 Sep 2023 21:07:49 +0200
+Message-ID: <20230917191114.877187948@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,107 +37,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: David Christensen <drc@linux.vnet.ibm.com>
 
-[ Upstream commit 0bc36c0650b21df36fbec8136add83936eaf0607 ]
+[ Upstream commit 7ebe4eda4265642859507d1b3ca330d8c196cfe5 ]
 
-user->unix_inflight is changed under spin_lock(unix_gc_lock),
-but too_many_unix_fds() reads it locklessly.
+In the last step of the EEH recovery process, the EEH driver calls into
+bnx2x_io_resume() to re-initialize the NIC hardware via the function
+bnx2x_nic_load().  If an error occurs during bnx2x_nic_load(), OS and
+hardware resources are released and an error code is returned to the
+caller.  When called from bnx2x_io_resume(), the return code is ignored
+and the network interface is brought up unconditionally.  Later attempts
+to send a packet via this interface result in a page fault due to a null
+pointer reference.
 
-Let's annotate the write/read accesses to user->unix_inflight.
+This patch checks the return code of bnx2x_nic_load(), prints an error
+message if necessary, and does not enable the interface.
 
-BUG: KCSAN: data-race in unix_attach_fds / unix_inflight
-
-write to 0xffffffff8546f2d0 of 8 bytes by task 44798 on cpu 1:
- unix_inflight+0x157/0x180 net/unix/scm.c:66
- unix_attach_fds+0x147/0x1e0 net/unix/scm.c:123
- unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
- unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
- unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
- unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
- sock_sendmsg_nosec net/socket.c:725 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:748
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
- __sys_sendmsg+0x94/0x140 net/socket.c:2577
- __do_sys_sendmsg net/socket.c:2586 [inline]
- __se_sys_sendmsg net/socket.c:2584 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-read to 0xffffffff8546f2d0 of 8 bytes by task 44814 on cpu 0:
- too_many_unix_fds net/unix/scm.c:101 [inline]
- unix_attach_fds+0x54/0x1e0 net/unix/scm.c:110
- unix_scm_to_skb net/unix/af_unix.c:1827 [inline]
- unix_dgram_sendmsg+0x46a/0x14f0 net/unix/af_unix.c:1950
- unix_seqpacket_sendmsg net/unix/af_unix.c:2308 [inline]
- unix_seqpacket_sendmsg+0xba/0x130 net/unix/af_unix.c:2292
- sock_sendmsg_nosec net/socket.c:725 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:748
- ____sys_sendmsg+0x4e4/0x610 net/socket.c:2494
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2548
- __sys_sendmsg+0x94/0x140 net/socket.c:2577
- __do_sys_sendmsg net/socket.c:2586 [inline]
- __se_sys_sendmsg net/socket.c:2584 [inline]
- __x64_sys_sendmsg+0x45/0x50 net/socket.c:2584
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-value changed: 0x000000000000000c -> 0x000000000000000d
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 44814 Comm: systemd-coredum Not tainted 6.4.0-11989-g6843306689af #6
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 712f4aad406b ("unix: properly account for FDs passed over unix sockets")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/scm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/unix/scm.c b/net/unix/scm.c
-index aa27a02478dc1..e8e2a00bb0f58 100644
---- a/net/unix/scm.c
-+++ b/net/unix/scm.c
-@@ -63,7 +63,7 @@ void unix_inflight(struct user_struct *user, struct file *fp)
- 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
- 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
- 	}
--	user->unix_inflight++;
-+	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
- 	spin_unlock(&unix_gc_lock);
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+index 553f3de939574..9c26c46771f5e 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+@@ -14317,11 +14317,16 @@ static void bnx2x_io_resume(struct pci_dev *pdev)
+ 	bp->fw_seq = SHMEM_RD(bp, func_mb[BP_FW_MB_IDX(bp)].drv_mb_header) &
+ 							DRV_MSG_SEQ_NUMBER_MASK;
+ 
+-	if (netif_running(dev))
+-		bnx2x_nic_load(bp, LOAD_NORMAL);
++	if (netif_running(dev)) {
++		if (bnx2x_nic_load(bp, LOAD_NORMAL)) {
++			netdev_err(bp->dev, "Error during driver initialization, try unloading/reloading the driver\n");
++			goto done;
++		}
++	}
+ 
+ 	netif_device_attach(dev);
+ 
++done:
+ 	rtnl_unlock();
  }
  
-@@ -84,7 +84,7 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
- 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
- 		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
- 	}
--	user->unix_inflight--;
-+	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
- 	spin_unlock(&unix_gc_lock);
- }
- 
-@@ -98,7 +98,7 @@ static inline bool too_many_unix_fds(struct task_struct *p)
- {
- 	struct user_struct *user = current_user();
- 
--	if (unlikely(user->unix_inflight > task_rlimit(p, RLIMIT_NOFILE)))
-+	if (unlikely(READ_ONCE(user->unix_inflight) > task_rlimit(p, RLIMIT_NOFILE)))
- 		return !capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN);
- 	return false;
- }
 -- 
 2.40.1
 
