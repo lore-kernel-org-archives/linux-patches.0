@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783086FCC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C67C433C9;
-	Sun, 17 Sep 2023 19:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC56FCC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:54:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718E6C433C7;
+	Sun, 17 Sep 2023 19:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980440;
-	bh=xBOZL6tbBn3rSWi/6q9N6co5cPhiZdSLJgkYsfpoYto=;
+	s=korg; t=1694980444;
+	bh=oJprzHnLoRnf1LaL1ddoPS8s1NhzPIexuxyRZg3OAFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PC9WMlE3OvXDs6fJFTubaQtsoLeUspD5OySHQageW4V4wCXjx8w6Fd/yqLowuRzsV
-	 me95pETD0BBicmJVOyvgqeO8z/Jk1KAxUgzAoKPCiNuqfAdTXFLQ+9LWnCS0dBmpJj
-	 zyvJjl+HP1IujMObXqHaa0pAukdFDqymUTYMu5Dc=
+	b=ISmDo0avOt43NgBZ6Q3D1BuMP5VYUD1fiqQGVzSVOkefsfYrtg5Pf+wV7zksh0/tn
+	 2/AAv7hDmYvFdlAPaWETwDkY5SjHS1ZGaIWkQtFwXPSqw+O/Hbn38grxkpIF6JqaPU
+	 coBJPUYK6OMS+tkgjwpvnOQyDkgcSnaivy7J1E/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 165/285] netfilter: nf_tables: Unbreak audit log reset
-Date: Sun, 17 Sep 2023 21:12:45 +0200
-Message-ID: <20230917191057.366019679@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+e1246909d526a9d470fa@syzkaller.appspotmail.com
+Subject: [PATCH 6.5 192/285] f2fs: flush inode if atomic file is aborted
+Date: Sun, 17 Sep 2023 21:13:12 +0200
+Message-ID: <20230917191058.246686095@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -41,109 +40,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 9b5ba5c9c5109bf89dc64a3f4734bd125d1ce52e ]
+commit a3ab55746612247ce3dcaac6de66f5ffc055b9df upstream.
 
-Deliver audit log from __nf_tables_dump_rules(), table dereference at
-the end of the table list loop might point to the list head, leading to
-this crash.
+Let's flush the inode being aborted atomic operation to avoid stale dirty
+inode during eviction in this call stack:
 
-[ 4137.407349] BUG: unable to handle page fault for address: 00000000001f3c50
-[ 4137.407357] #PF: supervisor read access in kernel mode
-[ 4137.407359] #PF: error_code(0x0000) - not-present page
-[ 4137.407360] PGD 0 P4D 0
-[ 4137.407363] Oops: 0000 [#1] PREEMPT SMP PTI
-[ 4137.407365] CPU: 4 PID: 500177 Comm: nft Not tainted 6.5.0+ #277
-[ 4137.407369] RIP: 0010:string+0x49/0xd0
-[ 4137.407374] Code: ff 77 36 45 89 d1 31 f6 49 01 f9 66 45 85 d2 75 19 eb 1e 49 39 f8 76 02 88 07 48 83 c7 01 83 c6 01 48 83 c2 01 4c 39 cf 74 07 <0f> b6 02 84 c0 75 e2 4c 89 c2 e9 58 e5 ff ff 48 c7 c0 0e b2 ff 81
-[ 4137.407377] RSP: 0018:ffff8881179737f0 EFLAGS: 00010286
-[ 4137.407379] RAX: 00000000001f2c50 RBX: ffff888117973848 RCX: ffff0a00ffffff04
-[ 4137.407380] RDX: 00000000001f3c50 RSI: 0000000000000000 RDI: 0000000000000000
-[ 4137.407381] RBP: 0000000000000000 R08: 0000000000000000 R09: 00000000ffffffff
-[ 4137.407383] R10: ffffffffffffffff R11: ffff88813584d200 R12: 0000000000000000
-[ 4137.407384] R13: ffffffffa15cf709 R14: 0000000000000000 R15: ffffffffa15cf709
-[ 4137.407385] FS:  00007fcfc18bb580(0000) GS:ffff88840e700000(0000) knlGS:0000000000000000
-[ 4137.407387] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 4137.407388] CR2: 00000000001f3c50 CR3: 00000001055b2001 CR4: 00000000001706e0
-[ 4137.407390] Call Trace:
-[ 4137.407392]  <TASK>
-[ 4137.407393]  ? __die+0x1b/0x60
-[ 4137.407397]  ? page_fault_oops+0x6b/0xa0
-[ 4137.407399]  ? exc_page_fault+0x60/0x120
-[ 4137.407403]  ? asm_exc_page_fault+0x22/0x30
-[ 4137.407408]  ? string+0x49/0xd0
-[ 4137.407410]  vsnprintf+0x257/0x4f0
-[ 4137.407414]  kvasprintf+0x3e/0xb0
-[ 4137.407417]  kasprintf+0x3e/0x50
-[ 4137.407419]  nf_tables_dump_rules+0x1c0/0x360 [nf_tables]
-[ 4137.407439]  ? __alloc_skb+0xc3/0x170
-[ 4137.407442]  netlink_dump+0x170/0x330
-[ 4137.407447]  __netlink_dump_start+0x227/0x300
-[ 4137.407449]  nf_tables_getrule+0x205/0x390 [nf_tables]
+  f2fs_mark_inode_dirty_sync+0x22/0x40 [f2fs]
+  f2fs_abort_atomic_write+0xc4/0xf0 [f2fs]
+  f2fs_evict_inode+0x3f/0x690 [f2fs]
+  ? sugov_start+0x140/0x140
+  evict+0xc3/0x1c0
+  evict_inodes+0x17b/0x210
+  generic_shutdown_super+0x32/0x120
+  kill_block_super+0x21/0x50
+  deactivate_locked_super+0x31/0x90
+  cleanup_mnt+0x100/0x160
+  task_work_run+0x59/0x90
+  do_exit+0x33b/0xa50
+  do_group_exit+0x2d/0x80
+  __x64_sys_exit_group+0x14/0x20
+  do_syscall_64+0x3b/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Deliver audit log only once at the end of the rule dump+reset for
-consistency with the set dump+reset.
+This triggers f2fs_bug_on() in f2fs_evict_inode:
+ f2fs_bug_on(sbi, is_inode_flag_set(inode, FI_DIRTY_INODE));
 
-Ensure audit reset access to table under rcu read side lock. The table
-list iteration holds rcu read lock side, but recent audit code
-dereferences table object out of the rcu read lock side.
+This fixes the syzbot report:
 
-Fixes: ea078ae9108e ("netfilter: nf_tables: Audit log rule reset")
-Fixes: 7e9be1124dbe ("netfilter: nf_tables: Audit log setelem reset")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Acked-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+loop0: detected capacity change from 0 to 131072
+F2FS-fs (loop0): invalid crc value
+F2FS-fs (loop0): Found nat_bits in checkpoint
+F2FS-fs (loop0): Mounted with checkpoint version = 48b305e4
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/inode.c:869!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 0 PID: 5014 Comm: syz-executor220 Not tainted 6.4.0-syzkaller-11479-g6cd06ab12d1a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+RIP: 0010:f2fs_evict_inode+0x172d/0x1e00 fs/f2fs/inode.c:869
+Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 6a 06 00 00 8b 75 40 ba 01 00 00 00 4c 89 e7 e8 6d ce 06 00 e9 aa fc ff ff e8 63 22 e2 fd <0f> 0b e8 5c 22 e2 fd 48 c7 c0 a8 3a 18 8d 48 ba 00 00 00 00 00 fc
+RSP: 0018:ffffc90003a6fa00 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
+RDX: ffff8880273b8000 RSI: ffffffff83a2bd0d RDI: 0000000000000007
+RBP: ffff888077db91b0 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000001 R12: ffff888029a3c000
+R13: ffff888077db9660 R14: ffff888029a3c0b8 R15: ffff888077db9c50
+FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1909bb9000 CR3: 00000000276a9000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ evict+0x2ed/0x6b0 fs/inode.c:665
+ dispose_list+0x117/0x1e0 fs/inode.c:698
+ evict_inodes+0x345/0x440 fs/inode.c:748
+ generic_shutdown_super+0xaf/0x480 fs/super.c:478
+ kill_block_super+0x64/0xb0 fs/super.c:1417
+ kill_f2fs_super+0x2af/0x3c0 fs/f2fs/super.c:4704
+ deactivate_locked_super+0x98/0x160 fs/super.c:330
+ deactivate_super+0xb1/0xd0 fs/super.c:361
+ cleanup_mnt+0x2ae/0x3d0 fs/namespace.c:1254
+ task_work_run+0x16f/0x270 kernel/task_work.c:179
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0xa9a/0x29a0 kernel/exit.c:874
+ do_group_exit+0xd4/0x2a0 kernel/exit.c:1024
+ __do_sys_exit_group kernel/exit.c:1035 [inline]
+ __se_sys_exit_group kernel/exit.c:1033 [inline]
+ __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1033
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f309be71a09
+Code: Unable to access opcode bytes at 0x7f309be719df.
+RSP: 002b:00007fff171df518 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00007f309bef7330 RCX: 00007f309be71a09
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
+RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 00007f309bef1e40
+R10: 0000000000010600 R11: 0000000000000246 R12: 00007f309bef7330
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:f2fs_evict_inode+0x172d/0x1e00 fs/f2fs/inode.c:869
+Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 6a 06 00 00 8b 75 40 ba 01 00 00 00 4c 89 e7 e8 6d ce 06 00 e9 aa fc ff ff e8 63 22 e2 fd <0f> 0b e8 5c 22 e2 fd 48 c7 c0 a8 3a 18 8d 48 ba 00 00 00 00 00 fc
+RSP: 0018:ffffc90003a6fa00 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
+RDX: ffff8880273b8000 RSI: ffffffff83a2bd0d RDI: 0000000000000007
+RBP: ffff888077db91b0 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000001 R12: ffff888029a3c000
+R13: ffff888077db9660 R14: ffff888029a3c0b8 R15: ffff888077db9c50
+FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1909bb9000 CR3: 00000000276a9000 CR4: 0000000000350ef0
+
+Cc: <stable@vger.kernel.org>
+Reported-and-tested-by: syzbot+e1246909d526a9d470fa@syzkaller.appspotmail.com
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/f2fs/segment.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index cc70482b94907..a72934f00804e 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3480,6 +3480,10 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
- cont_skip:
- 		(*idx)++;
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -205,6 +205,8 @@ void f2fs_abort_atomic_write(struct inod
+ 		f2fs_i_size_write(inode, fi->original_i_size);
+ 		fi->original_i_size = 0;
  	}
-+
-+	if (reset && *idx)
-+		audit_log_rule_reset(table, cb->seq, *idx);
-+
- 	return 0;
++	/* avoid stale dirty inode during eviction */
++	sync_inode_metadata(inode, 0);
  }
  
-@@ -3540,9 +3544,6 @@ static int nf_tables_dump_rules(struct sk_buff *skb,
- done:
- 	rcu_read_unlock();
- 
--	if (reset && idx > cb->args[0])
--		audit_log_rule_reset(table, cb->seq, idx - cb->args[0]);
--
- 	cb->args[0] = idx;
- 	return skb->len;
- }
-@@ -5757,8 +5758,6 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (!args.iter.err && args.iter.count == cb->args[0])
- 		args.iter.err = nft_set_catchall_dump(net, skb, set,
- 						      reset, cb->seq);
--	rcu_read_unlock();
--
- 	nla_nest_end(skb, nest);
- 	nlmsg_end(skb, nlh);
- 
-@@ -5766,6 +5765,8 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
- 		audit_log_nft_set_reset(table, cb->seq,
- 					args.iter.count - args.iter.skip);
- 
-+	rcu_read_unlock();
-+
- 	if (args.iter.err && args.iter.err != -EMSGSIZE)
- 		return args.iter.err;
- 	if (args.iter.count == cb->args[0])
--- 
-2.40.1
-
+ static int __replace_atomic_write_block(struct inode *inode, pgoff_t index,
 
 
