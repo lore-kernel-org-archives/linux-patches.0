@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DD56AAC
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC48C433C7;
-	Sun, 17 Sep 2023 20:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D946AAC
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:21:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D31C433C8;
+	Sun, 17 Sep 2023 20:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982075;
-	bh=xpKGV79LMQjIvPdw+UVYlas2kTLW9qMnILBDGHD4vlY=;
+	s=korg; t=1694982078;
+	bh=YhvnIGHBHbDHRaCiztgqk5g+bS6pMUpGLHKRKiYmATk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJWGdWGHO/1HuheLn5So+3iwzPNzeg4QABa981w5ZS4Us0og73XUKGTE17Euv2qeR
-	 QfKxzqNjCHQfI1yt5g8cejzaX7AsKPcWk+QvWOWuK+NVKKd1SBFuwSTYntaLSEejx+
-	 SPAOB2ODvif8382lwVhE18rlXFjbDEiBjBwEc9C4=
+	b=hBzU+hpoBPJsRi8MnNTzLY+p4pj8tQgx4CaQXUYjW+X4raEq24uwAFhUJaGDRMhH2
+	 ctIOx9mxd5jw0scrwBdWIZ7GYb1ogifDehl9qLLIZhRvFg7R3nX0wbGXw3rPPKYE2R
+	 czFNQSZFSXn05hRr4fpxXX4bku9OSz098Y3lk2hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Andrei Vagin <avagin@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/511] arm64: dts: qcom: pmi8994: Remove hardcoded linear WLED enabled-strings
-Date: Sun, 17 Sep 2023 21:09:34 +0200
-Message-ID: <20230917191117.405001279@linuxfoundation.org>
+Subject: [PATCH 6.1 214/219] tcp: Fix bind() regression for v4-mapped-v6 wildcard address.
+Date: Sun, 17 Sep 2023 21:15:41 +0200
+Message-ID: <20230917191048.673445649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,46 +38,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 9b729b0932d0e6097d9f103e9dd149ef10881f43 ]
+[ Upstream commit aa99e5f87bd54db55dd37cb130bd5eb55933027f ]
 
-The driver now sets an appropriate default for WLED4 (and WLED5) just
-like WLED3 making this linear array from 0-3 redundant.  In addition the
-driver is now able to parse arrays of variable length solving the "all
-four strings *have to* be defined" comment.
+Andrei Vagin reported bind() regression with strace logs.
 
-Besides the driver will now warn when both properties are specified to
-prevent ambiguity: the length of the array is enough to imply a set
-number of strings.
+If we bind() a TCPv6 socket to ::FFFF:0.0.0.0 and then bind() a TCPv4
+socket to 127.0.0.1, the 2nd bind() should fail but now succeeds.
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20211007213400.258371-12-marijn.suijten@somainline.org
-Stable-dep-of: 8db944326903 ("arm64: dts: qcom: pmi8994: Add missing OVP interrupt")
+  from socket import *
+
+  s1 = socket(AF_INET6, SOCK_STREAM)
+  s1.bind(('::ffff:0.0.0.0', 0))
+
+  s2 = socket(AF_INET, SOCK_STREAM)
+  s2.bind(('127.0.0.1', s1.getsockname()[1]))
+
+During the 2nd bind(), if tb->family is AF_INET6 and sk->sk_family is
+AF_INET in inet_bind2_bucket_match_addr_any(), we still need to check
+if tb has the v4-mapped-v6 wildcard address.
+
+The example above does not work after commit 5456262d2baa ("net: Fix
+incorrect address comparison when searching for a bind2 bucket"), but
+the blamed change is not the commit.
+
+Before the commit, the leading zeros of ::FFFF:0.0.0.0 were treated
+as 0.0.0.0, and the sequence above worked by chance.  Technically, this
+case has been broken since bhash2 was introduced.
+
+Note that if we bind() two sockets to 127.0.0.1 and then ::FFFF:0.0.0.0,
+the 2nd bind() fails properly because we fall back to using bhash to
+detect conflicts for the v4-mapped-v6 address.
+
+Fixes: 28044fc1d495 ("net: Add a bhash2 table hashed by port and address")
+Reported-by: Andrei Vagin <avagin@google.com>
+Closes: https://lore.kernel.org/netdev/ZPuYBOFC8zsK6r9T@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmi8994.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ include/net/ipv6.h         | 5 +++++
+ net/ipv4/inet_hashtables.c | 3 ++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-index 7b41c1ed464ac..166467b637527 100644
---- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-@@ -39,8 +39,6 @@ pmi8994_wled: wled@d800 {
- 			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "short";
- 			qcom,num-strings = <3>;
--			/* Yes, all four strings *have to* be defined or things won't work. */
--			qcom,enabled-strings = <0 1 2 3>;
- 			qcom,cabc;
- 			qcom,external-pfet;
- 			status = "disabled";
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 8ced112167599..517bdae78614b 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -750,6 +750,11 @@ static inline bool ipv6_addr_v4mapped(const struct in6_addr *a)
+ 					cpu_to_be32(0x0000ffff))) == 0UL;
+ }
+ 
++static inline bool ipv6_addr_v4mapped_any(const struct in6_addr *a)
++{
++	return ipv6_addr_v4mapped(a) && ipv4_is_zeronet(a->s6_addr32[3]);
++}
++
+ static inline bool ipv6_addr_v4mapped_loopback(const struct in6_addr *a)
+ {
+ 	return ipv6_addr_v4mapped(a) && ipv4_is_loopback(a->s6_addr32[3]);
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 71d77b3b6536f..eb522c0374d59 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -819,7 +819,8 @@ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family != tb->family) {
+ 		if (sk->sk_family == AF_INET)
+-			return ipv6_addr_any(&tb->v6_rcv_saddr);
++			return ipv6_addr_any(&tb->v6_rcv_saddr) ||
++				ipv6_addr_v4mapped_any(&tb->v6_rcv_saddr);
+ 
+ 		return false;
+ 	}
 -- 
 2.40.1
 
