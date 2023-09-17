@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7D17461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D023C433C7;
-	Sun, 17 Sep 2023 20:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E157461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:19:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7DFC433C8;
+	Sun, 17 Sep 2023 20:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981947;
-	bh=Yd/9mABRRi6aor79S350vDsRzYOwm16MoUIrPWPng64=;
+	s=korg; t=1694981950;
+	bh=I8qwLVSvqwlIKTOAkZ/7p/v9QfiokpzvX9miXBbY2M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxWEBtzhMVPeaAIkHBz9ydaU2LWMCsRbA17FrKAuwBoTO79zshZr5fxOR6dll8vDq
-	 yx6YCZaNWUT179mmtpN5rW8Hj3TyvpXyT51qdIUfIRU+js4S4FO1bYayIYxf5UjY49
-	 r8PtvoK+ndHsAfPCHlUcAnbiOlR8cwzkJEOilqCg=
+	b=WPJE8ruYZUnYso1cBdrJ1ULEDn6QrF2V3owgjr5S916YVULjsVckeChwerkMZgxxR
+	 7pIP47a0lKjA9q/jN8obK2FV/yRMpCCis3IkmN15TXlqZceLZj5IJoKdFEDN+EsudE
+	 VgPIEx0bjLQGFIztB0cHjxGbd795QhSPs5iOh3oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/511] soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros
-Date: Sun, 17 Sep 2023 21:09:17 +0200
-Message-ID: <20230917191117.005048587@linuxfoundation.org>
+Subject: [PATCH 6.1 197/219] net: dsa: sja1105: propagate exact error code from sja1105_dynamic_config_poll_valid()
+Date: Sun, 17 Sep 2023 21:15:24 +0200
+Message-ID: <20230917191048.064928591@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,52 +36,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a7b484b1c9332a1ee12e8799d62a11ee3f8e0801 ]
+[ Upstream commit c956798062b5a308db96e75157747291197f0378 ]
 
-Since we're using these two macros to read a value from a register, we
-need to use the FIELD_GET instead of the FIELD_PREP macro, otherwise
-we're getting wrong values.
+Currently, sja1105_dynamic_config_wait_complete() returns either 0 or
+-ETIMEDOUT, because it just looks at the read_poll_timeout() return code.
 
-So instead of:
+There will be future changes which move some more checks to
+sja1105_dynamic_config_poll_valid(). It is important that we propagate
+their exact return code (-ENOENT, -EINVAL), because callers of
+sja1105_dynamic_config_read() depend on them.
 
-  [    3.111779] ocmem fdd00000.sram: 2 ports, 1 regions, 512 macros, not interleaved
-
-we now get the correct value of:
-
-  [    3.129672] ocmem fdd00000.sram: 2 ports, 1 regions, 2 macros, not interleaved
-
-Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20230506-msm8226-ocmem-v3-1-79da95a2581f@z3ntu.xyz
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7cef293b9a63 ("net: dsa: sja1105: fix multicast forwarding working only for last added mdb entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ocmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_dynamic_config.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-index ae023bef81b6f..8b80c8e94c77a 100644
---- a/drivers/soc/qcom/ocmem.c
-+++ b/drivers/soc/qcom/ocmem.c
-@@ -80,8 +80,8 @@ struct ocmem {
- #define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
- #define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
+diff --git a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
+index 7729d3f8b7f50..93d47dab8d3e9 100644
+--- a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
++++ b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
+@@ -1211,13 +1211,14 @@ sja1105_dynamic_config_wait_complete(struct sja1105_private *priv,
+ 				     struct sja1105_dyn_cmd *cmd,
+ 				     const struct sja1105_dynamic_table_ops *ops)
+ {
+-	int rc;
+-
+-	return read_poll_timeout(sja1105_dynamic_config_poll_valid,
+-				 rc, rc != -EAGAIN,
+-				 SJA1105_DYNAMIC_CONFIG_SLEEP_US,
+-				 SJA1105_DYNAMIC_CONFIG_TIMEOUT_US,
+-				 false, priv, cmd, ops);
++	int err, rc;
++
++	err = read_poll_timeout(sja1105_dynamic_config_poll_valid,
++				rc, rc != -EAGAIN,
++				SJA1105_DYNAMIC_CONFIG_SLEEP_US,
++				SJA1105_DYNAMIC_CONFIG_TIMEOUT_US,
++				false, priv, cmd, ops);
++	return err < 0 ? err : rc;
+ }
  
--#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_PREP(0x0000000f, (val))
--#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_PREP(0x00003f00, (val))
-+#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
-+#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
- 
- #define OCMEM_HW_PROFILE_LAST_REGN_HALFSIZE	0x00010000
- #define OCMEM_HW_PROFILE_INTERLEAVING		0x00020000
+ /* Provides read access to the settings through the dynamic interface
 -- 
 2.40.1
 
