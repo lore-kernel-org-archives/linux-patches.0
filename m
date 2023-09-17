@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092726FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6045AC433C7;
-	Sun, 17 Sep 2023 19:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DF86FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01161C433C8;
+	Sun, 17 Sep 2023 19:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694978999;
-	bh=qzjCHUHP7mmqGGT5OEXAHOpyJrPKDDlHx9tHSn/0Yy4=;
+	s=korg; t=1694979003;
+	bh=GBzO65H3/a0+f3pC1lnDgHdgLJ/bzBkVB410DVwMHhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kl+4WziRKi5sySHlj17tAIDp+T/qUWCuJWQgAASxNAgNtpZ2hrYZawc15q3s6j0sq
-	 oKYkuz6FAnU4CB+zHQwnxrBS5MewvUx/kSH4sEkzMuO/S0FErYSiIAmvA0uWqDa+W7
-	 xCvteXL+KcQ4bAyVO1sN5sNIdKJnlu86tlulK++E=
+	b=y40Btk9Xrrp0zYGkPLLrCSUNN+rCDOzXwCe5uk70VNkCin3+qRSXW5v9DRPALYymt
+	 A4G5Wn7XehjQSr54R5y3yWXGQCeP7LAEhJidDesjQNoIaDPhjESoW0KgbH9GWM6vwQ
+	 A8EWWHWcrnB9+X29QN+WuDxanJF5ppQReFNi1USk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/406] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
-Date: Sun, 17 Sep 2023 21:10:38 +0200
-Message-ID: <20230917191106.063373021@linuxfoundation.org>
+Subject: [PATCH 5.10 185/406] vfio/type1: fix cap_migration information leak
+Date: Sun, 17 Sep 2023 21:10:39 +0200
+Message-ID: <20230917191106.090234428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 References: <20230917191101.035638219@linuxfoundation.org>
@@ -41,75 +41,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
+[ Upstream commit cd24e2a60af633f157d7e59c0a6dba64f131c0b1 ]
 
-Reconfiguring the clock divider to the exact same value is observed
-on an i.MX8MN to often cause a longer than usual clock pause, probably
-because the divider restarts counting whenever the register is rewritten.
+Fix an information leak where an uninitialized hole in struct
+vfio_iommu_type1_info_cap_migration on the stack is exposed to userspace.
 
-This issue doesn't show up normally, because the clock framework will
-take care to not call set_rate when the clock rate is the same.
-However, when we reconfigure an upstream clock, the common code will
-call set_rate with the newly calculated rate on all children, e.g.:
+The definition of struct vfio_iommu_type1_info_cap_migration contains a hole as
+shown in this pahole(1) output:
 
-  - sai5 is running normally and divides Audio PLL out by 16.
-  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
-  - rates for children are recalculated and rates are set recursively
-  - imx8m_clk_composite_divider_set_rate(sai5) is called with
-    32/16 = 2Hz more
-  - imx8m_clk_composite_divider_set_rate computes same divider as before
-  - divider register is written, so it restarts counting from zero and
-    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
+  struct vfio_iommu_type1_info_cap_migration {
+          struct vfio_info_cap_header header;              /*     0     8 */
+          __u32                      flags;                /*     8     4 */
 
-Some external clock consumers can be upset by such unexpected clock pauses,
-so let's make sure we only rewrite the divider value when the value to be
-written is actually different.
+          /* XXX 4 bytes hole, try to pack */
 
-Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+          __u64                      pgsize_bitmap;        /*    16     8 */
+          __u64                      max_dirty_bitmap_size; /*    24     8 */
+
+          /* size: 32, cachelines: 1, members: 4 */
+          /* sum members: 28, holes: 1, sum holes: 4 */
+          /* last cacheline: 32 bytes */
+  };
+
+The cap_mig variable is filled in without initializing the hole:
+
+  static int vfio_iommu_migration_build_caps(struct vfio_iommu *iommu,
+                         struct vfio_info_cap *caps)
+  {
+      struct vfio_iommu_type1_info_cap_migration cap_mig;
+
+      cap_mig.header.id = VFIO_IOMMU_TYPE1_INFO_CAP_MIGRATION;
+      cap_mig.header.version = 1;
+
+      cap_mig.flags = 0;
+      /* support minimum pgsize */
+      cap_mig.pgsize_bitmap = (size_t)1 << __ffs(iommu->pgsize_bitmap);
+      cap_mig.max_dirty_bitmap_size = DIRTY_BITMAP_SIZE_MAX;
+
+      return vfio_info_add_capability(caps, &cap_mig.header, sizeof(cap_mig));
+  }
+
+The structure is then copied to a temporary location on the heap. At this point
+it's already too late and ioctl(VFIO_IOMMU_GET_INFO) copies it to userspace
+later:
+
+  int vfio_info_add_capability(struct vfio_info_cap *caps,
+                   struct vfio_info_cap_header *cap, size_t size)
+  {
+      struct vfio_info_cap_header *header;
+
+      header = vfio_info_cap_add(caps, size, cap->id, cap->version);
+      if (IS_ERR(header))
+          return PTR_ERR(header);
+
+      memcpy(header + 1, cap + 1, size - sizeof(*header));
+
+      return 0;
+  }
+
+This issue was found by code inspection.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Fixes: ad721705d09c ("vfio iommu: Add migration capability to report supported features")
+Link: https://lore.kernel.org/r/20230801155352.1391945-1-stefanha@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index 04e728538cefe..75e05582cb24f 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -97,7 +97,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 	int prediv_value;
- 	int div_value;
- 	int ret;
--	u32 val;
-+	u32 orig, val;
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index ec1428dbdf9d9..9b01f88ae4762 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -2659,7 +2659,7 @@ static int vfio_iommu_iova_build_caps(struct vfio_iommu *iommu,
+ static int vfio_iommu_migration_build_caps(struct vfio_iommu *iommu,
+ 					   struct vfio_info_cap *caps)
+ {
+-	struct vfio_iommu_type1_info_cap_migration cap_mig;
++	struct vfio_iommu_type1_info_cap_migration cap_mig = {};
  
- 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
- 						&prediv_value, &div_value);
-@@ -106,13 +106,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 
- 	spin_lock_irqsave(divider->lock, flags);
- 
--	val = readl(divider->reg);
--	val &= ~((clk_div_mask(divider->width) << divider->shift) |
--			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
-+	orig = readl(divider->reg);
-+	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
-+		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
- 
- 	val |= (u32)(prediv_value  - 1) << divider->shift;
- 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
--	writel(val, divider->reg);
-+
-+	if (val != orig)
-+		writel(val, divider->reg);
- 
- 	spin_unlock_irqrestore(divider->lock, flags);
- 
+ 	cap_mig.header.id = VFIO_IOMMU_TYPE1_INFO_CAP_MIGRATION;
+ 	cap_mig.header.version = 1;
 -- 
 2.40.1
 
