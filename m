@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA07461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FFEC433C8;
-	Sun, 17 Sep 2023 19:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C697461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:59:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39562C433C7;
+	Sun, 17 Sep 2023 19:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980760;
-	bh=/krOP+GGNsEKjKDGbzC+iqCYnrhrjQGqXpyKCIDDEhQ=;
+	s=korg; t=1694980763;
+	bh=Y/TkFpoUER/7l7r59y15FdXJlS49RVh62VhpLpRX+rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9HQ66k3j4q/NSEYQIQnyikvCN49Se0PDZGpkZDl3Uatt0iwXmFeUp1v2TaHMkRg9
-	 K7htJnItowq0ndYYfq/ZZ+feGia87OUJOSYcPt+NbUR45yDT8Qswx2kiF5Fpau1J1A
-	 fGurX0KsqmtSGK3UqI9gJPeDi64UtALMCG7835Vk=
+	b=LUPwvSMBKWuFpLCT0k/+Z3Hvp0v3hwmHzxs9gSyfkSQNLZcBuhIpanQwjzivbvXUG
+	 QDA8GgbcWatcZL7hY1pS/QwOGiaQz9aLEygTD3Zp0WeUm4OG5rXVWqxskMwyCoZlux
+	 0pEMObU5uJXMzj3Ck31wmvQli3xXwpVNTSNMkwe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wesley Chalmers <wesley.chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.5 285/285] drm/amd/display: Fix a bug when searching for insert_above_mpcc
-Date: Sun, 17 Sep 2023 21:14:45 +0200
-Message-ID: <20230917191100.996862643@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 261/285] net: dsa: sja1105: propagate exact error code from sja1105_dynamic_config_poll_valid()
+Date: Sun, 17 Sep 2023 21:14:21 +0200
+Message-ID: <20230917191100.278184777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -43,43 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Chalmers <wesley.chalmers@amd.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
+[ Upstream commit c956798062b5a308db96e75157747291197f0378 ]
 
-[WHY]
-Currently, when insert_plane is called with insert_above_mpcc
-parameter that is equal to tree->opp_list, the function returns NULL.
+Currently, sja1105_dynamic_config_wait_complete() returns either 0 or
+-ETIMEDOUT, because it just looks at the read_poll_timeout() return code.
 
-[HOW]
-Instead, the function should insert the plane at the top of the tree.
+There will be future changes which move some more checks to
+sja1105_dynamic_config_poll_valid(). It is important that we propagate
+their exact return code (-ENOENT, -EINVAL), because callers of
+sja1105_dynamic_config_read() depend on them.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7cef293b9a63 ("net: dsa: sja1105: fix multicast forwarding working only for last added mdb entry")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_dynamic_config.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-@@ -212,8 +212,9 @@ struct mpcc *mpc1_insert_plane(
- 		/* check insert_above_mpcc exist in tree->opp_list */
- 		struct mpcc *temp_mpcc = tree->opp_list;
+diff --git a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
+index 7729d3f8b7f50..93d47dab8d3e9 100644
+--- a/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
++++ b/drivers/net/dsa/sja1105/sja1105_dynamic_config.c
+@@ -1211,13 +1211,14 @@ sja1105_dynamic_config_wait_complete(struct sja1105_private *priv,
+ 				     struct sja1105_dyn_cmd *cmd,
+ 				     const struct sja1105_dynamic_table_ops *ops)
+ {
+-	int rc;
+-
+-	return read_poll_timeout(sja1105_dynamic_config_poll_valid,
+-				 rc, rc != -EAGAIN,
+-				 SJA1105_DYNAMIC_CONFIG_SLEEP_US,
+-				 SJA1105_DYNAMIC_CONFIG_TIMEOUT_US,
+-				 false, priv, cmd, ops);
++	int err, rc;
++
++	err = read_poll_timeout(sja1105_dynamic_config_poll_valid,
++				rc, rc != -EAGAIN,
++				SJA1105_DYNAMIC_CONFIG_SLEEP_US,
++				SJA1105_DYNAMIC_CONFIG_TIMEOUT_US,
++				false, priv, cmd, ops);
++	return err < 0 ? err : rc;
+ }
  
--		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
--			temp_mpcc = temp_mpcc->mpcc_bot;
-+		if (temp_mpcc != insert_above_mpcc)
-+			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
-+				temp_mpcc = temp_mpcc->mpcc_bot;
- 		if (temp_mpcc == NULL)
- 			return NULL;
- 	}
+ /* Provides read access to the settings through the dynamic interface
+-- 
+2.40.1
+
 
 
