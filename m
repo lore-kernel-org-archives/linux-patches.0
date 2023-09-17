@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C966FB5
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA366C433C8;
-	Sun, 17 Sep 2023 20:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9A36FB5
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:33:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3000AC433C7;
+	Sun, 17 Sep 2023 20:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982820;
-	bh=dIeRbroWeJgtO7RrSCjTwnYzEqHr3LfwuRQj/D8MshE=;
+	s=korg; t=1694982823;
+	bh=4yGqUFZK1LF07LA2GYmDrgJR3HzqoUL1j/ET4prGxa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUuDj6+An9ODRDB/+zqB+5ucwAMZkkTL11ksTBOJDeoV8OgDqXR7KHCFdp48fqRDx
-	 1Opbt0ZxJokJjvGdUsBJwytZKuidHpIbb8ySG5adrcecvoB6l3jZqUZfl7bjFrXDfT
-	 qjEfMw5r4doZ4xnVfAUJipDeiOAFbhAJ6g/4T7tU=
+	b=v1kYBHWa4cfZiBxg5kU2uURhJ1SnyUvu0/imvDtV+bys+PSMP+65UN2W4AWNUk9zU
+	 Tlnn4terHd95yXUlWNbOnPtY8rm9I+NFPQgpqAyFrifTfIOJXcR5vRL0pof0yJdQAo
+	 0SpOJf5hBsnLN7ChCWNBuGy/MlaBoV615jKhGqPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.15 362/511] USB: core: Unite old scheme and new scheme descriptor reads
-Date: Sun, 17 Sep 2023 21:13:09 +0200
-Message-ID: <20230917191122.537729661@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 363/511] USB: core: Change usb_get_device_descriptor() API
+Date: Sun, 17 Sep 2023 21:13:10 +0200
+Message-ID: <20230917191122.561346459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,326 +40,240 @@ Content-Transfer-Encoding: 8bit
 
 From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 85d07c55621676d47d873d2749b88f783cd4d5a1 upstream.
+commit de28e469da75359a2bb8cd8778b78aa64b1be1f4 upstream.
 
-In preparation for reworking the usb_get_device_descriptor() routine,
-it is desirable to unite the two different code paths responsible for
-initially determining endpoint 0's maximum packet size in a newly
-discovered USB device.  Making this determination presents a
-chicken-and-egg sort of problem, in that the only way to learn the
-maxpacket value is to get it from the device descriptor retrieved from
-the device, but communicating with the device to retrieve a descriptor
-requires us to know beforehand the ep0 maxpacket size.
+The usb_get_device_descriptor() routine reads the device descriptor
+from the udev device and stores it directly in udev->descriptor.  This
+interface is error prone, because the USB subsystem expects in-memory
+copies of a device's descriptors to be immutable once the device has
+been initialized.
 
-In practice this problem is solved in two different ways, referred to
-in hub.c as the "old scheme" and the "new scheme".  The old scheme
-(which is the approach recommended by the USB-2 spec) involves asking
-the device to send just the first eight bytes of its device
-descriptor.  Such a transfer uses packets containing no more than
-eight bytes each, and every USB device must have an ep0 maxpacket size
->= 8, so this should succeed.  Since the bMaxPacketSize0 field of the
-device descriptor lies within the first eight bytes, this is all we
-need.
-
-The new scheme is an imitation of the technique used in an early
-Windows USB implementation, giving it the happy advantage of working
-with a wide variety of devices (some of them at the time would not
-work with the old scheme, although that's probably less true now).  It
-involves making an initial guess of the ep0 maxpacket size, asking the
-device to send up to 64 bytes worth of its device descriptor (which is
-only 18 bytes long), and then resetting the device to clear any error
-condition that might have resulted from the guess being wrong.  The
-initial guess is determined by the connection speed; it should be
-correct in all cases other than full speed, for which the allowed
-values are 8, 16, 32, and 64 (in this case the initial guess is 64).
-
-The reason for this patch is that the old- and new-scheme parts of
-hub_port_init() use different code paths, one involving
-usb_get_device_descriptor() and one not, for their initial reads of
-the device descriptor.  Since these reads have essentially the same
-purpose and are made under essentially the same circumstances, this is
-illogical.  It makes more sense to have both of them use a common
-subroutine.
-
-This subroutine does basically what the new scheme's code did, because
-that approach is more general than the one used by the old scheme.  It
-only needs to know how many bytes to transfer and whether or not it is
-being called for the first iteration of a retry loop (in case of
-certain time-out errors).  There are two main differences from the
-former code:
-
-	We initialize the bDescriptorType field of the transfer buffer
-	to 0 before performing the transfer, to avoid possibly
-	accessing an uninitialized value afterward.
-
-	We read the device descriptor into a temporary buffer rather
-	than storing it directly into udev->descriptor, which the old
-	scheme implementation used to do.
-
-Since the whole point of this first read of the device descriptor is
-to determine the bMaxPacketSize0 value, that is what the new routine
-returns (or an error code).  The value is stored in a local variable
-rather than in udev->descriptor.  As a side effect, this necessitates
-moving a section of code that checks the bcdUSB field for SuperSpeed
-devices until after the full device descriptor has been retrieved.
+The interface is changed so that the device descriptor is left in a
+kmalloc-ed buffer, not copied into the usb_device structure.  A
+pointer to the buffer is returned to the caller, who is then
+responsible for kfree-ing it.  The corresponding changes needed in the
+various callers are fairly small.
 
 Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/495cb5d4-f956-4f4a-a875-1e67e9489510@rowland.harvard.edu
+Link: https://lore.kernel.org/r/d0111bb6-56c1-4f90-adf2-6cfe152f6561@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |  173 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 94 insertions(+), 79 deletions(-)
+ drivers/usb/core/hcd.c     |   10 +++++++---
+ drivers/usb/core/hub.c     |   44 +++++++++++++++++++++++---------------------
+ drivers/usb/core/message.c |   29 ++++++++++++-----------------
+ drivers/usb/core/usb.h     |    4 ++--
+ 4 files changed, 44 insertions(+), 43 deletions(-)
 
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -983,6 +983,7 @@ static int register_root_hub(struct usb_
+ {
+ 	struct device *parent_dev = hcd->self.controller;
+ 	struct usb_device *usb_dev = hcd->self.root_hub;
++	struct usb_device_descriptor *descr;
+ 	const int devnum = 1;
+ 	int retval;
+ 
+@@ -994,13 +995,16 @@ static int register_root_hub(struct usb_
+ 	mutex_lock(&usb_bus_idr_lock);
+ 
+ 	usb_dev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
+-	retval = usb_get_device_descriptor(usb_dev, USB_DT_DEVICE_SIZE);
+-	if (retval != sizeof usb_dev->descriptor) {
++	descr = usb_get_device_descriptor(usb_dev);
++	if (IS_ERR(descr)) {
++		retval = PTR_ERR(descr);
+ 		mutex_unlock(&usb_bus_idr_lock);
+ 		dev_dbg (parent_dev, "can't read %s device descriptor %d\n",
+ 				dev_name(&usb_dev->dev), retval);
+-		return (retval < 0) ? retval : -EMSGSIZE;
++		return retval;
+ 	}
++	usb_dev->descriptor = *descr;
++	kfree(descr);
+ 
+ 	if (le16_to_cpu(usb_dev->descriptor.bcdUSB) >= 0x0201) {
+ 		retval = usb_get_bos_descriptor(usb_dev);
 --- a/drivers/usb/core/hub.c
 +++ b/drivers/usb/core/hub.c
-@@ -4666,6 +4666,67 @@ static int hub_enable_device(struct usb_
- 	return hcd->driver->enable_device(hcd, udev);
- }
+@@ -2649,12 +2649,17 @@ int usb_authorize_device(struct usb_devi
+ 	}
  
-+/*
-+ * Get the bMaxPacketSize0 value during initialization by reading the
-+ * device's device descriptor.  Since we don't already know this value,
-+ * the transfer is unsafe and it ignores I/O errors, only testing for
-+ * reasonable received values.
-+ *
-+ * For "old scheme" initialization, size will be 8 so we read just the
-+ * start of the device descriptor, which should work okay regardless of
-+ * the actual bMaxPacketSize0 value.  For "new scheme" initialization,
-+ * size will be 64 (and buf will point to a sufficiently large buffer),
-+ * which might not be kosher according to the USB spec but it's what
-+ * Windows does and what many devices expect.
-+ *
-+ * Returns: bMaxPacketSize0 or a negative error code.
-+ */
-+static int get_bMaxPacketSize0(struct usb_device *udev,
-+		struct usb_device_descriptor *buf, int size, bool first_time)
-+{
-+	int i, rc;
+ 	if (usb_dev->wusb) {
+-		result = usb_get_device_descriptor(usb_dev, sizeof(usb_dev->descriptor));
+-		if (result < 0) {
++		struct usb_device_descriptor *descr;
 +
-+	/*
-+	 * Retry on all errors; some devices are flakey.
-+	 * 255 is for WUSB devices, we actually need to use
-+	 * 512 (WUSB1.0[4.8.1]).
-+	 */
-+	for (i = 0; i < GET_MAXPACKET0_TRIES; ++i) {
-+		/* Start with invalid values in case the transfer fails */
-+		buf->bDescriptorType = buf->bMaxPacketSize0 = 0;
-+		rc = usb_control_msg(udev, usb_rcvaddr0pipe(),
-+				USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
-+				USB_DT_DEVICE << 8, 0,
-+				buf, size,
-+				initial_descriptor_timeout);
-+		switch (buf->bMaxPacketSize0) {
-+		case 8: case 16: case 32: case 64: case 255:
-+			if (buf->bDescriptorType == USB_DT_DEVICE) {
-+				rc = buf->bMaxPacketSize0;
-+				break;
-+			}
-+			fallthrough;
-+		default:
-+			if (rc >= 0)
-+				rc = -EPROTO;
-+			break;
-+		}
-+
-+		/*
-+		 * Some devices time out if they are powered on
-+		 * when already connected. They need a second
-+		 * reset, so return early. But only on the first
-+		 * attempt, lest we get into a time-out/reset loop.
-+		 */
-+		if (rc > 0 || (rc == -ETIMEDOUT && first_time &&
-+				udev->speed > USB_SPEED_FULL))
-+			break;
-+	}
-+	return rc;
-+}
-+
-+#define GET_DESCRIPTOR_BUFSIZE	64
-+
- /* Reset device, (re)assign address, get device descriptor.
-  * Device connection must be stable, no more debouncing needed.
-  * Returns device in USB_STATE_ADDRESS, except on error.
-@@ -4690,6 +4751,12 @@ hub_port_init(struct usb_hub *hub, struc
- 	int			devnum = udev->devnum;
++		descr = usb_get_device_descriptor(usb_dev);
++		if (IS_ERR(descr)) {
++			result = PTR_ERR(descr);
+ 			dev_err(&usb_dev->dev, "can't re-read device descriptor for "
+ 				"authorization: %d\n", result);
+ 			goto error_device_descriptor;
+ 		}
++		usb_dev->descriptor = *descr;
++		kfree(descr);
+ 	}
+ 
+ 	usb_dev->authorized = 1;
+@@ -4752,7 +4757,7 @@ hub_port_init(struct usb_hub *hub, struc
  	const char		*driver_name;
  	bool			do_new_scheme;
-+	int			maxp0;
-+	struct usb_device_descriptor	*buf;
-+
-+	buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
-+	if (!buf)
-+		return -ENOMEM;
+ 	int			maxp0;
+-	struct usb_device_descriptor	*buf;
++	struct usb_device_descriptor	*buf, *descr;
  
- 	/* root hub ports have a slightly longer reset period
- 	 * (from USB 2.0 spec, section 7.1.7.5)
-@@ -4804,9 +4871,6 @@ hub_port_init(struct usb_hub *hub, struc
+ 	buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
+ 	if (!buf)
+@@ -4989,15 +4994,16 @@ hub_port_init(struct usb_hub *hub, struc
+ 		usb_ep0_reinit(udev);
+ 	}
  
- 	for (retries = 0; retries < GET_DESCRIPTOR_TRIES; (++retries, msleep(100))) {
- 		if (do_new_scheme) {
--			struct usb_device_descriptor *buf;
--			int r = 0;
--
- 			retval = hub_enable_device(udev);
- 			if (retval < 0) {
- 				dev_err(&udev->dev,
-@@ -4815,52 +4879,8 @@ hub_port_init(struct usb_hub *hub, struc
- 				goto fail;
- 			}
- 
--#define GET_DESCRIPTOR_BUFSIZE	64
--			buf = kmalloc(GET_DESCRIPTOR_BUFSIZE, GFP_NOIO);
--			if (!buf) {
--				retval = -ENOMEM;
--				continue;
--			}
--
--			/* Retry on all errors; some devices are flakey.
--			 * 255 is for WUSB devices, we actually need to use
--			 * 512 (WUSB1.0[4.8.1]).
--			 */
--			for (operations = 0; operations < GET_MAXPACKET0_TRIES;
--					++operations) {
--				buf->bMaxPacketSize0 = 0;
--				r = usb_control_msg(udev, usb_rcvaddr0pipe(),
--					USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
--					USB_DT_DEVICE << 8, 0,
--					buf, GET_DESCRIPTOR_BUFSIZE,
--					initial_descriptor_timeout);
--				switch (buf->bMaxPacketSize0) {
--				case 8: case 16: case 32: case 64: case 255:
--					if (buf->bDescriptorType ==
--							USB_DT_DEVICE) {
--						r = 0;
--						break;
--					}
--					fallthrough;
--				default:
--					if (r == 0)
--						r = -EPROTO;
--					break;
--				}
--				/*
--				 * Some devices time out if they are powered on
--				 * when already connected. They need a second
--				 * reset. But only on the first attempt,
--				 * lest we get into a time out/reset loop
--				 */
--				if (r == 0 || (r == -ETIMEDOUT &&
--						retries == 0 &&
--						udev->speed > USB_SPEED_FULL))
--					break;
--			}
--			udev->descriptor.bMaxPacketSize0 =
--					buf->bMaxPacketSize0;
--			kfree(buf);
-+			maxp0 = get_bMaxPacketSize0(udev, buf,
-+					GET_DESCRIPTOR_BUFSIZE, retries == 0);
- 
- 			retval = hub_port_reset(hub, port1, udev, delay, false);
- 			if (retval < 0)		/* error or disconnect */
-@@ -4871,14 +4891,13 @@ hub_port_init(struct usb_hub *hub, struc
- 				retval = -ENODEV;
- 				goto fail;
- 			}
--			if (r) {
--				if (r != -ENODEV)
-+			if (maxp0 < 0) {
-+				if (maxp0 != -ENODEV)
- 					dev_err(&udev->dev, "device descriptor read/64, error %d\n",
--							r);
--				retval = -EMSGSIZE;
-+							maxp0);
-+				retval = maxp0;
- 				continue;
- 			}
--#undef GET_DESCRIPTOR_BUFSIZE
- 		}
- 
- 		/*
-@@ -4924,19 +4943,17 @@ hub_port_init(struct usb_hub *hub, struc
- 				break;
- 		}
- 
--		retval = usb_get_device_descriptor(udev, 8);
--		if (retval < 8) {
-+		/* !do_new_scheme || wusb */
-+		maxp0 = get_bMaxPacketSize0(udev, buf, 8, retries == 0);
-+		if (maxp0 < 0) {
-+			retval = maxp0;
- 			if (retval != -ENODEV)
- 				dev_err(&udev->dev,
- 					"device descriptor read/8, error %d\n",
+-	retval = usb_get_device_descriptor(udev, USB_DT_DEVICE_SIZE);
+-	if (retval < (signed)sizeof(udev->descriptor)) {
++	descr = usb_get_device_descriptor(udev);
++	if (IS_ERR(descr)) {
++		retval = PTR_ERR(descr);
+ 		if (retval != -ENODEV)
+ 			dev_err(&udev->dev, "device descriptor read/all, error %d\n",
  					retval);
--			if (retval >= 0)
--				retval = -EMSGSIZE;
- 		} else {
- 			u32 delay;
- 
--			retval = 0;
--
- 			delay = udev->parent->hub_delay;
- 			udev->hub_delay = min_t(u32, delay,
- 						USB_TP_TRANSMISSION_DELAY_MAX);
-@@ -4953,27 +4970,10 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (retval)
- 		goto fail;
- 
--	/*
--	 * Some superspeed devices have finished the link training process
--	 * and attached to a superspeed hub port, but the device descriptor
--	 * got from those devices show they aren't superspeed devices. Warm
--	 * reset the port attached by the devices can fix them.
--	 */
--	if ((udev->speed >= USB_SPEED_SUPER) &&
--			(le16_to_cpu(udev->descriptor.bcdUSB) < 0x0300)) {
--		dev_err(&udev->dev, "got a wrong device descriptor, "
--				"warm reset device\n");
--		hub_port_reset(hub, port1, udev,
--				HUB_BH_RESET_TIME, true);
--		retval = -EINVAL;
--		goto fail;
--	}
--
--	if (udev->descriptor.bMaxPacketSize0 == 0xff ||
--			udev->speed >= USB_SPEED_SUPER)
-+	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
- 		i = 512;
- 	else
--		i = udev->descriptor.bMaxPacketSize0;
-+		i = maxp0;
- 	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
- 		if (udev->speed == USB_SPEED_LOW ||
- 				!(i == 8 || i == 16 || i == 32 || i == 64)) {
-@@ -4999,6 +4999,20 @@ hub_port_init(struct usb_hub *hub, struc
+-		if (retval >= 0)
+-			retval = -ENOMSG;
  		goto fail;
  	}
++	udev->descriptor = *descr;
++	kfree(descr);
  
-+	/*
-+	 * Some superspeed devices have finished the link training process
-+	 * and attached to a superspeed hub port, but the device descriptor
-+	 * got from those devices show they aren't superspeed devices. Warm
-+	 * reset the port attached by the devices can fix them.
-+	 */
-+	if ((udev->speed >= USB_SPEED_SUPER) &&
-+			(le16_to_cpu(udev->descriptor.bcdUSB) < 0x0300)) {
-+		dev_err(&udev->dev, "got a wrong device descriptor, warm reset device\n");
-+		hub_port_reset(hub, port1, udev, HUB_BH_RESET_TIME, true);
-+		retval = -EINVAL;
-+		goto fail;
-+	}
-+
- 	usb_detect_quirks(udev);
+ 	/*
+ 	 * Some superspeed devices have finished the link training process
+@@ -5114,7 +5120,7 @@ hub_power_remaining(struct usb_hub *hub)
  
- 	if (udev->wusb == 0 && le16_to_cpu(udev->descriptor.bcdUSB) >= 0x0201) {
-@@ -5019,6 +5033,7 @@ fail:
- 		hub_port_disable(hub, port1, 0);
- 		update_devnum(udev, devnum);	/* for disconnect processing */
- 	}
-+	kfree(buf);
- 	return retval;
+ 
+ static int descriptors_changed(struct usb_device *udev,
+-		struct usb_device_descriptor *old_device_descriptor,
++		struct usb_device_descriptor *new_device_descriptor,
+ 		struct usb_host_bos *old_bos)
+ {
+ 	int		changed = 0;
+@@ -5125,8 +5131,8 @@ static int descriptors_changed(struct us
+ 	int		length;
+ 	char		*buf;
+ 
+-	if (memcmp(&udev->descriptor, old_device_descriptor,
+-			sizeof(*old_device_descriptor)) != 0)
++	if (memcmp(&udev->descriptor, new_device_descriptor,
++			sizeof(*new_device_descriptor)) != 0)
+ 		return 1;
+ 
+ 	if ((old_bos && !udev->bos) || (!old_bos && udev->bos))
+@@ -5446,9 +5452,8 @@ static void hub_port_connect_change(stru
+ {
+ 	struct usb_port *port_dev = hub->ports[port1 - 1];
+ 	struct usb_device *udev = port_dev->child;
+-	struct usb_device_descriptor descriptor;
++	struct usb_device_descriptor *descr;
+ 	int status = -ENODEV;
+-	int retval;
+ 
+ 	dev_dbg(&port_dev->dev, "status %04x, change %04x, %s\n", portstatus,
+ 			portchange, portspeed(hub, portstatus));
+@@ -5475,23 +5480,20 @@ static void hub_port_connect_change(stru
+ 			 * changed device descriptors before resuscitating the
+ 			 * device.
+ 			 */
+-			descriptor = udev->descriptor;
+-			retval = usb_get_device_descriptor(udev,
+-					sizeof(udev->descriptor));
+-			if (retval < 0) {
++			descr = usb_get_device_descriptor(udev);
++			if (IS_ERR(descr)) {
+ 				dev_dbg(&udev->dev,
+-						"can't read device descriptor %d\n",
+-						retval);
++						"can't read device descriptor %ld\n",
++						PTR_ERR(descr));
+ 			} else {
+-				if (descriptors_changed(udev, &descriptor,
++				if (descriptors_changed(udev, descr,
+ 						udev->bos)) {
+ 					dev_dbg(&udev->dev,
+ 							"device descriptor has changed\n");
+-					/* for disconnect() calls */
+-					udev->descriptor = descriptor;
+ 				} else {
+ 					status = 0; /* Nothing to do */
+ 				}
++				kfree(descr);
+ 			}
+ #ifdef CONFIG_PM
+ 		} else if (udev->state == USB_STATE_SUSPENDED &&
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -1039,40 +1039,35 @@ char *usb_cache_string(struct usb_device
  }
  
+ /*
+- * usb_get_device_descriptor - (re)reads the device descriptor (usbcore)
+- * @dev: the device whose device descriptor is being updated
+- * @size: how much of the descriptor to read
++ * usb_get_device_descriptor - read the device descriptor
++ * @udev: the device whose device descriptor should be read
+  *
+  * Context: task context, might sleep.
+  *
+- * Updates the copy of the device descriptor stored in the device structure,
+- * which dedicates space for this purpose.
+- *
+  * Not exported, only for use by the core.  If drivers really want to read
+  * the device descriptor directly, they can call usb_get_descriptor() with
+  * type = USB_DT_DEVICE and index = 0.
+  *
+- * This call is synchronous, and may not be used in an interrupt context.
+- *
+- * Return: The number of bytes received on success, or else the status code
+- * returned by the underlying usb_control_msg() call.
++ * Returns: a pointer to a dynamically allocated usb_device_descriptor
++ * structure (which the caller must deallocate), or an ERR_PTR value.
+  */
+-int usb_get_device_descriptor(struct usb_device *dev, unsigned int size)
++struct usb_device_descriptor *usb_get_device_descriptor(struct usb_device *udev)
+ {
+ 	struct usb_device_descriptor *desc;
+ 	int ret;
+ 
+-	if (size > sizeof(*desc))
+-		return -EINVAL;
+ 	desc = kmalloc(sizeof(*desc), GFP_NOIO);
+ 	if (!desc)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
++
++	ret = usb_get_descriptor(udev, USB_DT_DEVICE, 0, desc, sizeof(*desc));
++	if (ret == sizeof(*desc))
++		return desc;
+ 
+-	ret = usb_get_descriptor(dev, USB_DT_DEVICE, 0, desc, size);
+ 	if (ret >= 0)
+-		memcpy(&dev->descriptor, desc, size);
++		ret = -EMSGSIZE;
+ 	kfree(desc);
+-	return ret;
++	return ERR_PTR(ret);
+ }
+ 
+ /*
+--- a/drivers/usb/core/usb.h
++++ b/drivers/usb/core/usb.h
+@@ -42,8 +42,8 @@ extern bool usb_endpoint_is_ignored(stru
+ 		struct usb_endpoint_descriptor *epd);
+ extern int usb_remove_device(struct usb_device *udev);
+ 
+-extern int usb_get_device_descriptor(struct usb_device *dev,
+-		unsigned int size);
++extern struct usb_device_descriptor *usb_get_device_descriptor(
++		struct usb_device *udev);
+ extern int usb_set_isoch_delay(struct usb_device *dev);
+ extern int usb_get_bos_descriptor(struct usb_device *dev);
+ extern void usb_release_bos_descriptor(struct usb_device *dev);
 
 
