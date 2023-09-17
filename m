@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2EE7461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C610C433C7;
-	Sun, 17 Sep 2023 20:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DFC7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:06:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6B1C433C7;
+	Sun, 17 Sep 2023 20:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981185;
-	bh=8jK7EhDNA1KsBEyvwM3dBFG9a8pV44wR2iDzrkR8gvA=;
+	s=korg; t=1694981189;
+	bh=hgchqwMhRLXTa9gfy3mGsceHiNzAZzYxFMxE2Vcrp9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnIk6eiXeuMx2bR4k1UCSUOLO2L27uHmi1xiDiBGcSxVVW32u1MZPNHJVMe72QS3U
-	 hl0LR2d7bs0Mc4YkX/lEcq4ADMc2UKM1sfKyfFWdTWCWT96QEdD7lKIK0re+MMUlG2
-	 QbTh3Boph9QjWTPv4hcDatxEU1UmMgylHVPupPNc=
+	b=KbBnMhfZ2PyrbvjixQ9mGCE+eivixauzF30dlwINIrEI34Ikj8m1KDpAKwAjY6Xup
+	 tX0RBZhlekYChXYnVisz3xettBqO4+1QFJXpiDEL3x8d1iJAKG2K+wyuJEqd7N913s
+	 C3CDZSbNwFpjisZkQJKar4wX2c4znbI+I9YO7MX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	zhuxiaohui <zhuxiaohui.400@bytedance.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/511] s390/dasd: fix hanging device after request requeue
-Date: Sun, 17 Sep 2023 21:07:24 +0200
-Message-ID: <20230917191114.248125383@linuxfoundation.org>
+Subject: [PATCH 6.1 084/219] blk-throttle: consider carryover_ios/bytes in throtl_trim_slice()
+Date: Sun, 17 Sep 2023 21:13:31 +0200
+Message-ID: <20230917191044.014858635@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,224 +38,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 8a2278ce9c25048d999fe1a3561def75d963f471 ]
+[ Upstream commit eead0056648cef49d7b15c07ae612fa217083165 ]
 
-The DASD device driver has a function to requeue requests to the
-blocklayer.
-This function is used in various cases when basic settings for the device
-have to be changed like High Performance Ficon related parameters or copy
-pair settings.
+Currently, 'carryover_ios/bytes' is not handled in throtl_trim_slice(),
+for consequence, 'carryover_ios/bytes' will be used to throttle bio
+multiple times, for example:
 
-The functions iterates over the device->ccw_queue and also removes the
-requests from the block->ccw_queue.
-In case the device is started on an alias device instead of the base
-device it might be removed from the block->ccw_queue without having it
-canceled properly before. This might lead to a hanging device since the
-request is no longer on a queue and can not be handled properly.
+1) set iops limit to 100, and slice start is 0, slice end is 100ms;
+2) current time is 0, and 10 ios are dispatched, those io won't be
+   throttled and io_disp is 10;
+3) still at current time 0, update iops limit to 1000, carryover_ios is
+   updated to (0 - 10) = -10;
+4) in this slice(0 - 100ms), io_allowed = 100 + (-10) = 90, which means
+   only 90 ios can be dispatched without waiting;
+5) assume that io is throttled in slice(0 - 100ms), and
+   throtl_trim_slice() update silce to (100ms - 200ms). In this case,
+   'carryover_ios/bytes' is not cleared and still only 90 ios can be
+   dispatched between 100ms - 200ms.
 
-Fix by iterating over the block->ccw_queue instead of the
-device->ccw_queue. This will take care of all blocklayer related requests
-and handle them on all associated DASD devices.
+Fix this problem by updating 'carryover_ios/bytes' in
+throtl_trim_slice().
 
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-4-sth@linux.ibm.com
+Fixes: a880ae93e5b5 ("blk-throttle: fix io hung due to configuration updates")
+Reported-by: zhuxiaohui <zhuxiaohui.400@bytedance.com>
+Link: https://lore.kernel.org/all/20230812072116.42321-1-zhuxiaohui.400@bytedance.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230816012708.1193747-5-yukuai1@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd.c | 125 +++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 77 deletions(-)
+ block/blk-throttle.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index ed897dc499ff6..0c6ab288201e5 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2948,41 +2948,32 @@ static void _dasd_wake_block_flush_cb(struct dasd_ccw_req *cqr, void *data)
-  * Requeue a request back to the block request queue
-  * only works for block requests
-  */
--static int _dasd_requeue_request(struct dasd_ccw_req *cqr)
-+static void _dasd_requeue_request(struct dasd_ccw_req *cqr)
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 931795da4d65d..1007f80278579 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -729,8 +729,9 @@ static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
+ /* Trim the used slices and adjust slice start accordingly */
+ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
  {
--	struct dasd_block *block = cqr->block;
- 	struct request *req;
+-	unsigned long time_elapsed, io_trim;
+-	u64 bytes_trim;
++	unsigned long time_elapsed;
++	long long bytes_trim;
++	int io_trim;
  
--	if (!block)
--		return -EINVAL;
- 	/*
- 	 * If the request is an ERP request there is nothing to requeue.
- 	 * This will be done with the remaining original request.
- 	 */
- 	if (cqr->refers)
--		return 0;
-+		return;
- 	spin_lock_irq(&cqr->dq->lock);
- 	req = (struct request *) cqr->callback_data;
- 	blk_mq_requeue_request(req, true);
- 	spin_unlock_irq(&cqr->dq->lock);
+ 	BUG_ON(time_before(tg->slice_end[rw], tg->slice_start[rw]));
  
--	return 0;
-+	return;
- }
+@@ -758,17 +759,21 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 		return;
  
--/*
-- * Go through all request on the dasd_block request queue, cancel them
-- * on the respective dasd_device, and return them to the generic
-- * block layer.
-- */
--static int dasd_flush_block_queue(struct dasd_block *block)
-+static int _dasd_requests_to_flushqueue(struct dasd_block *block,
-+					struct list_head *flush_queue)
- {
- 	struct dasd_ccw_req *cqr, *n;
--	int rc, i;
--	struct list_head flush_queue;
- 	unsigned long flags;
-+	int rc, i;
+ 	bytes_trim = calculate_bytes_allowed(tg_bps_limit(tg, rw),
+-					     time_elapsed);
+-	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed);
+-	if (!bytes_trim && !io_trim)
++					     time_elapsed) +
++		     tg->carryover_bytes[rw];
++	io_trim = calculate_io_allowed(tg_iops_limit(tg, rw), time_elapsed) +
++		  tg->carryover_ios[rw];
++	if (bytes_trim <= 0 && io_trim <= 0)
+ 		return;
  
--	INIT_LIST_HEAD(&flush_queue);
--	spin_lock_bh(&block->queue_lock);
-+	spin_lock_irqsave(&block->queue_lock, flags);
- 	rc = 0;
- restart:
- 	list_for_each_entry_safe(cqr, n, &block->ccw_queue, blocklist) {
-@@ -2997,13 +2988,32 @@ static int dasd_flush_block_queue(struct dasd_block *block)
- 		 * is returned from the dasd_device layer.
- 		 */
- 		cqr->callback = _dasd_wake_block_flush_cb;
--		for (i = 0; cqr != NULL; cqr = cqr->refers, i++)
--			list_move_tail(&cqr->blocklist, &flush_queue);
-+		for (i = 0; cqr; cqr = cqr->refers, i++)
-+			list_move_tail(&cqr->blocklist, flush_queue);
- 		if (i > 1)
- 			/* moved more than one request - need to restart */
- 			goto restart;
- 	}
--	spin_unlock_bh(&block->queue_lock);
-+	spin_unlock_irqrestore(&block->queue_lock, flags);
-+
-+	return rc;
-+}
-+
-+/*
-+ * Go through all request on the dasd_block request queue, cancel them
-+ * on the respective dasd_device, and return them to the generic
-+ * block layer.
-+ */
-+static int dasd_flush_block_queue(struct dasd_block *block)
-+{
-+	struct dasd_ccw_req *cqr, *n;
-+	struct list_head flush_queue;
-+	unsigned long flags;
-+	int rc;
-+
-+	INIT_LIST_HEAD(&flush_queue);
-+	rc = _dasd_requests_to_flushqueue(block, &flush_queue);
-+
- 	/* Now call the callback function of flushed requests */
- restart_cb:
- 	list_for_each_entry_safe(cqr, n, &flush_queue, blocklist) {
-@@ -3926,75 +3936,36 @@ EXPORT_SYMBOL_GPL(dasd_generic_space_avail);
-  */
- static int dasd_generic_requeue_all_requests(struct dasd_device *device)
- {
-+	struct dasd_block *block = device->block;
- 	struct list_head requeue_queue;
- 	struct dasd_ccw_req *cqr, *n;
--	struct dasd_ccw_req *refers;
- 	int rc;
+-	if (tg->bytes_disp[rw] >= bytes_trim)
++	tg->carryover_bytes[rw] = 0;
++	if ((long long)tg->bytes_disp[rw] >= bytes_trim)
+ 		tg->bytes_disp[rw] -= bytes_trim;
+ 	else
+ 		tg->bytes_disp[rw] = 0;
  
--	INIT_LIST_HEAD(&requeue_queue);
--	spin_lock_irq(get_ccwdev_lock(device->cdev));
--	rc = 0;
--	list_for_each_entry_safe(cqr, n, &device->ccw_queue, devlist) {
--		/* Check status and move request to flush_queue */
--		if (cqr->status == DASD_CQR_IN_IO) {
--			rc = device->discipline->term_IO(cqr);
--			if (rc) {
--				/* unable to terminate requeust */
--				dev_err(&device->cdev->dev,
--					"Unable to terminate request %p "
--					"on suspend\n", cqr);
--				spin_unlock_irq(get_ccwdev_lock(device->cdev));
--				dasd_put_device(device);
--				return rc;
--			}
--		}
--		list_move_tail(&cqr->devlist, &requeue_queue);
--	}
--	spin_unlock_irq(get_ccwdev_lock(device->cdev));
--
--	list_for_each_entry_safe(cqr, n, &requeue_queue, devlist) {
--		wait_event(dasd_flush_wq,
--			   (cqr->status != DASD_CQR_CLEAR_PENDING));
-+	if (!block)
-+		return 0;
+-	if (tg->io_disp[rw] >= io_trim)
++	tg->carryover_ios[rw] = 0;
++	if ((int)tg->io_disp[rw] >= io_trim)
+ 		tg->io_disp[rw] -= io_trim;
+ 	else
+ 		tg->io_disp[rw] = 0;
+@@ -776,7 +781,7 @@ static inline void throtl_trim_slice(struct throtl_grp *tg, bool rw)
+ 	tg->slice_start[rw] += time_elapsed;
  
--		/*
--		 * requeue requests to blocklayer will only work
--		 * for block device requests
--		 */
--		if (_dasd_requeue_request(cqr))
--			continue;
-+	INIT_LIST_HEAD(&requeue_queue);
-+	rc = _dasd_requests_to_flushqueue(block, &requeue_queue);
- 
--		/* remove requests from device and block queue */
--		list_del_init(&cqr->devlist);
--		while (cqr->refers != NULL) {
--			refers = cqr->refers;
--			/* remove the request from the block queue */
--			list_del(&cqr->blocklist);
--			/* free the finished erp request */
--			dasd_free_erp_request(cqr, cqr->memdev);
--			cqr = refers;
-+	/* Now call the callback function of flushed requests */
-+restart_cb:
-+	list_for_each_entry_safe(cqr, n, &requeue_queue, blocklist) {
-+		wait_event(dasd_flush_wq, (cqr->status < DASD_CQR_QUEUED));
-+		/* Process finished ERP request. */
-+		if (cqr->refers) {
-+			spin_lock_bh(&block->queue_lock);
-+			__dasd_process_erp(block->base, cqr);
-+			spin_unlock_bh(&block->queue_lock);
-+			/* restart list_for_xx loop since dasd_process_erp
-+			 * might remove multiple elements
-+			 */
-+			goto restart_cb;
- 		}
--
--		/*
--		 * _dasd_requeue_request already checked for a valid
--		 * blockdevice, no need to check again
--		 * all erp requests (cqr->refers) have a cqr->block
--		 * pointer copy from the original cqr
--		 */
-+		_dasd_requeue_request(cqr);
- 		list_del_init(&cqr->blocklist);
- 		cqr->block->base->discipline->free_cp(
- 			cqr, (struct request *) cqr->callback_data);
- 	}
--
--	/*
--	 * if requests remain then they are internal request
--	 * and go back to the device queue
--	 */
--	if (!list_empty(&requeue_queue)) {
--		/* move freeze_queue to start of the ccw_queue */
--		spin_lock_irq(get_ccwdev_lock(device->cdev));
--		list_splice_tail(&requeue_queue, &device->ccw_queue);
--		spin_unlock_irq(get_ccwdev_lock(device->cdev));
--	}
- 	dasd_schedule_device_bh(device);
- 	return rc;
- }
+ 	throtl_log(&tg->service_queue,
+-		   "[%c] trim slice nr=%lu bytes=%llu io=%lu start=%lu end=%lu jiffies=%lu",
++		   "[%c] trim slice nr=%lu bytes=%lld io=%d start=%lu end=%lu jiffies=%lu",
+ 		   rw == READ ? 'R' : 'W', time_elapsed / tg->td->throtl_slice,
+ 		   bytes_trim, io_trim, tg->slice_start[rw], tg->slice_end[rw],
+ 		   jiffies);
 -- 
 2.40.1
 
