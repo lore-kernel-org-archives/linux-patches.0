@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A373D746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13719C433C7;
-	Sun, 17 Sep 2023 20:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1948746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53433C433C8;
+	Sun, 17 Sep 2023 20:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982581;
-	bh=3/7SNU99+q6Xv7kU7AxqmlFKT9p1AD0Y+/qK9A6EHrU=;
+	s=korg; t=1694982584;
+	bh=KiF0vdXcKyKAGlhm7J3ssHcG4xzpvbeQ/7J5d2RfNf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/0kUS3S4yTId72aQ7Emfa5xRkND5mivdSYK705eLKdbw5UbFuyu6PjLvbM4UpJJ5
-	 FL/UbAGFWxJHNTt4i4HH6An435qQsW2XGxu7iyrqEWO7kbD1hCfuT7TJLi5ynvZ7lT
-	 D3i/A79nl+fdWmUcuFoEY3fg74HX8r92cDhqqDm4=
+	b=TkZmc6qoZ8DNalmDdRYJGwlparO8Cjg7ktV+y9uo6W7fhZC11+U2nDvaFjj+NkGl7
+	 vqB7w0seeHr8DEpGhvv8ydxfAB9uddewRAW5u6/ubeVNY9ZQXU7IxtQcZrAA+NalgV
+	 GJWL3Nw/1B/Si+bYmF3+3je0aX6NblnlD/Rq1e0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yi Yang <yiyang13@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 292/511] scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock
-Date: Sun, 17 Sep 2023 21:11:59 +0200
-Message-ID: <20230917191120.891421208@linuxfoundation.org>
+Subject: [PATCH 5.15 293/511] serial: tegra: handle clk prepare error in tegra_uart_hw_init()
+Date: Sun, 17 Sep 2023 21:12:00 +0200
+Message-ID: <20230917191120.914704626@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,154 +39,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 1a1975551943f681772720f639ff42fbaa746212 ]
+[ Upstream commit 5abd01145d0cc6cd1b7c2fe6ee0b9ea0fa13671e ]
 
-There is a long call chain that &fip->ctlr_lock is acquired by isr
-fnic_isr_msix_wq_copy() under hard IRQ context. Thus other process context
-code acquiring the lock should disable IRQ, otherwise deadlock could happen
-if the IRQ preempts the execution while the lock is held in process context
-on the same CPU.
+In tegra_uart_hw_init(), the return value of clk_prepare_enable() should
+be checked since it might fail.
 
-[ISR]
-fnic_isr_msix_wq_copy()
- -> fnic_wq_copy_cmpl_handler()
- -> fnic_fcpio_cmpl_handler()
- -> fnic_fcpio_flogi_reg_cmpl_handler()
- -> fnic_flush_tx()
- -> fnic_send_frame()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-[Process Context]
-1. fcoe_ctlr_timer_work()
- -> fcoe_ctlr_flogi_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-2. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_announce()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-3. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_flogi_retry()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-4. -> fcoe_xmit()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-spin_lock_bh() is not enough since fnic_isr_msix_wq_copy() is a
-hardirq.
-
-These flaws were found by an experimental static analysis tool I am
-developing for irq-related deadlock.
-
-The patch fix the potential deadlocks by spin_lock_irqsave() to disable
-hard irq.
-
-Fixes: 794d98e77f59 ("[SCSI] libfcoe: retry rejected FLOGI to another FCF if possible")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230817074708.7509-1-dg573847474@gmail.com
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Link: https://lore.kernel.org/r/20230817105406.228674-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/tty/serial/serial-tegra.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
-index 558f3f4e18593..303ecbd86b68a 100644
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -319,16 +319,17 @@ static void fcoe_ctlr_announce(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *sel;
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
+diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
+index 25f34f86a0852..52d5c72227e79 100644
+--- a/drivers/tty/serial/serial-tegra.c
++++ b/drivers/tty/serial/serial-tegra.c
+@@ -999,7 +999,11 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
+ 	tup->ier_shadow = 0;
+ 	tup->current_baud = 0;
  
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
+-	clk_prepare_enable(tup->uart_clk);
++	ret = clk_prepare_enable(tup->uart_clk);
++	if (ret) {
++		dev_err(tup->uport.dev, "could not enable clk\n");
++		return ret;
++	}
  
- 	kfree_skb(fip->flogi_req);
- 	fip->flogi_req = NULL;
- 	list_for_each_entry(fcf, &fip->fcfs, list)
- 		fcf->flogi_sent = 0;
- 
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	sel = fip->sel_fcf;
- 
- 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
-@@ -699,6 +700,7 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- {
- 	struct fc_frame *fp;
- 	struct fc_frame_header *fh;
-+	unsigned long flags;
- 	u16 old_xid;
- 	u8 op;
- 	u8 mac[ETH_ALEN];
-@@ -732,11 +734,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- 		op = FIP_DT_FLOGI;
- 		if (fip->mode == FIP_MODE_VN2VN)
- 			break;
--		spin_lock_bh(&fip->ctlr_lock);
-+		spin_lock_irqsave(&fip->ctlr_lock, flags);
- 		kfree_skb(fip->flogi_req);
- 		fip->flogi_req = skb;
- 		fip->flogi_req_send = 1;
--		spin_unlock_bh(&fip->ctlr_lock);
-+		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 		schedule_work(&fip->timer_work);
- 		return -EINPROGRESS;
- 	case ELS_FDISC:
-@@ -1713,10 +1715,11 @@ static int fcoe_ctlr_flogi_send_locked(struct fcoe_ctlr *fip)
- static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 	int error;
- 
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
- 	fcf = fcoe_ctlr_select(fip);
- 	if (!fcf || fcf->flogi_sent) {
-@@ -1727,7 +1730,7 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- 		fcoe_ctlr_solicit(fip, NULL);
- 		error = fcoe_ctlr_flogi_send_locked(fip);
- 	}
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	mutex_unlock(&fip->ctlr_mutex);
- 	return error;
- }
-@@ -1744,8 +1747,9 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	fcf = fip->sel_fcf;
- 	if (!fcf || !fip->flogi_req_send)
- 		goto unlock;
-@@ -1772,7 +1776,7 @@ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- 	} else /* XXX */
- 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
- unlock:
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- }
- 
- /**
+ 	/* Reset the UART controller to clear all previous status.*/
+ 	reset_control_assert(tup->rst);
 -- 
 2.40.1
 
