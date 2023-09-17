@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DD6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7831AC433C8;
-	Sun, 17 Sep 2023 20:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11026FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:05:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8BFC433C8;
+	Sun, 17 Sep 2023 20:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981119;
-	bh=XHNl85AJNAPkPv/j7SdXYmUJAIL1nKGsymDoaj2m0lY=;
+	s=korg; t=1694981123;
+	bh=0K3ETDvIpwxJ4t5USA8VHYGCrOE6KfAYQpW2wy0CmXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHFzlkW2gAL4TCGv5rmffS1lWgPca8xOb7VRhDw3QfpbuMQ0J6zIJwIdLpOy5pYd5
-	 4JA3ddYtFIenQpziBlw4iTf0wZaOEGl7iRepJaHz91MWg+sLi6xuX2ZG5obMC46/Qi
-	 e7G4EWBQ/Z3FgtxmEbYXJVY6WMhwVew2aJQNgA5o=
+	b=c+UChdxhMTRUJV6/hAXug3kZk5v8snblxBvn6kyPy4XmlGHasMPhUOeqbxTFVJbz8
+	 Xh2xFACjcJobqpJ7/sDv2ckGKlGoDtjOW0+83MPMgbPNHKdcCbMYmCcAdyZAEBF2Ac
+	 n2OOiK2t455yAMY25EHPOJ9jVR27zXbbxbiZNwxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/511] 9p: virtio: make sure offs is initialized in zc_request
-Date: Sun, 17 Sep 2023 21:07:15 +0200
-Message-ID: <20230917191114.034698294@linuxfoundation.org>
+Subject: [PATCH 6.1 076/219] perf vendor events: Drop STORES_PER_INST metric event for power10 platform
+Date: Sun, 17 Sep 2023 21:13:23 +0200
+Message-ID: <20230917191043.728390910@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
-References: <20230917191113.831992765@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+References: <20230917191040.964416434@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,45 +42,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
+[ Upstream commit 4836b9a85ef148c7c9779b66fab3f7279e488d90 ]
 
-Similarly to the previous patch: offs can be used in handle_rerrors
-without initializing on small payloads; in this case handle_rerrors will
-not use it because of the size check, but it doesn't hurt to make sure
-it is zero to please scan-build.
+Drop STORES_PER_INST metric event for the power10 platform, as the
+metric expression of STORES_PER_INST metric event using dropped event
+PM_ST_FIN.
 
-This fixes the following warning:
-net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
-                handle_rerror(req, in_hdr_len, offs, in_pages);
-                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: 3ca3af7d1f230d1f ("perf vendor events power10: Add metric events JSON file for power10 platform")
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Disha Goel <disgoel@linux.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://lore.kernel.org/r/20230814112803.1508296-3-kjain@linux.ibm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/pmu-events/arch/powerpc/power10/metrics.json | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index d110df3cb4e1d..96eecc2dcaa36 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -399,7 +399,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
- 	struct page **in_pages = NULL, **out_pages = NULL;
- 	struct virtio_chan *chan = client->trans;
- 	struct scatterlist *sgs[4];
--	size_t offs;
-+	size_t offs = 0;
- 	int need_drop = 0;
- 	int kicked = 0;
- 
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
+index b57526fa44f2d..6e76f65c314ce 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/metrics.json
+@@ -453,12 +453,6 @@
+         "MetricGroup": "General",
+         "MetricName": "LOADS_PER_INST"
+     },
+-    {
+-        "BriefDescription": "Average number of finished stores per completed instruction",
+-        "MetricExpr": "PM_ST_FIN / PM_RUN_INST_CMPL",
+-        "MetricGroup": "General",
+-        "MetricName": "STORES_PER_INST"
+-    },
+     {
+         "BriefDescription": "Percentage of demand loads that reloaded from beyond the L2 per completed instruction",
+         "MetricExpr": "PM_DATA_FROM_L2MISS / PM_RUN_INST_CMPL * 100",
 -- 
 2.40.1
 
