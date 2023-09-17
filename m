@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0429C6FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACE8C433CA;
-	Sun, 17 Sep 2023 20:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A986FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A717EC433CC;
+	Sun, 17 Sep 2023 20:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981482;
-	bh=PwNTik405e8jOYuDZkL3pyUFc7DKweAJrbF/vAv67KE=;
+	s=korg; t=1694981486;
+	bh=UJaJ0aGznNlLBRJo8ioZ7VqZsFb3HUwILfXeXgG+0os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZ6FHCd7KcVlmNDdGHDZAahGVZhHbigCXPm8ySucMcBgN66KZnXoMRY5b/iretqLI
-	 4ZRhpzScuOko6VVWlJiXKk/F7xCRYeHFYuFDgpYfveQVfThITYeXjs+l8qRht0Clde
-	 DPM4jxslvFMqKyuADrB34y0l0gFG03yOsjYkGY5A=
+	b=l3QMcWrRw5laaAHxXI1OfsXzRIPuwigJkQDXVWLlB73PlZUDwfJqN44oH7q0J6jjT
+	 WUuOthH5UE04iPMVgpPRKkQgjv5Q26atuhVZyKPMCX2AkwTcE0/PbNy5of4rdgAb+6
+	 gHCJ/UJJ9EcyAh8vlxCsTZ74N2L0k7JAp7jFq3lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanan Yang <yanan.yang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hao Chen <chenhao418@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/219] net: dsa: sja1105: fix bandwidth discrepancy between tc-cbs software and offload
-Date: Sun, 17 Sep 2023 21:14:08 +0200
-Message-ID: <20230917191045.351766948@linuxfoundation.org>
+Subject: [PATCH 6.1 130/219] net: hns3: fix byte order conversion issue in hclge_dbg_fd_tcam_read()
+Date: Sun, 17 Sep 2023 21:14:17 +0200
+Message-ID: <20230917191045.686774320@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,133 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hao Chen <chenhao418@huawei.com>
 
-[ Upstream commit 954ad9bf13c4f95a4958b5f8433301f2ab99e1f5 ]
+[ Upstream commit efccf655e99b6907ca07a466924e91805892e7d3 ]
 
-More careful measurement of the tc-cbs bandwidth shows that the stream
-bandwidth (effectively idleslope) increases, there is a larger and
-larger discrepancy between the rate limit obtained by the software
-Qdisc, and the rate limit obtained by its offloaded counterpart.
+req1->tcam_data is defined as "u8 tcam_data[8]", and we convert it as
+(u32 *) without considerring byte order conversion,
+it may result in printing wrong data for tcam_data.
 
-The discrepancy becomes so large, that e.g. at an idleslope of 40000
-(40Mbps), the offloaded cbs does not actually rate limit anything, and
-traffic will pass at line rate through a 100 Mbps port.
+Convert tcam_data to (__le32 *) first to fix it.
 
-The reason for the discrepancy is that the hardware documentation I've
-been following is incorrect. UM11040.pdf (for SJA1105P/Q/R/S) states
-about IDLE_SLOPE that it is "the rate (in unit of bytes/sec) at which
-the credit counter is increased".
-
-Cross-checking with UM10944.pdf (for SJA1105E/T) and UM11107.pdf
-(for SJA1110), the wording is different: "This field specifies the
-value, in bytes per second times link speed, by which the credit counter
-is increased".
-
-So there's an extra scaling for link speed that the driver is currently
-not accounting for, and apparently (empirically), that link speed is
-expressed in Kbps.
-
-I've pondered whether to pollute the sja1105_mac_link_up()
-implementation with CBS shaper reprogramming, but I don't think it is
-worth it. IMO, the UAPI exposed by tc-cbs requires user space to
-recalculate the sendslope anyway, since the formula for that depends on
-port_transmit_rate (see man tc-cbs), which is not an invariant from tc's
-perspective.
-
-So we use the offload->sendslope and offload->idleslope to deduce the
-original port_transmit_rate from the CBS formula, and use that value to
-scale the offload->sendslope and offload->idleslope to values that the
-hardware understands.
-
-Some numerical data points:
-
- 40Mbps stream, max interfering frame size 1500, port speed 100M
- ---------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 40000 sendslope -60000 locredit -900 hicredit 600
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    600                600
- credit_lo    900                900
- send_slope   7500000            75
- idle_slope   5000000            50
-
- 40Mbps stream, max interfering frame size 1500, port speed 1G
- -------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 40000 sendslope -960000 locredit -1440 hicredit 60
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    60                 60
- credit_lo    1440               1440
- send_slope   120000000          120
- idle_slope   5000000            5
-
- 5.12Mbps stream, max interfering frame size 1522, port speed 100M
- -----------------------------------------------------------------
-
- tc-cbs parameters:
- idleslope 5120 sendslope -94880 locredit -1444 hicredit 77
-
- which result in hardware values:
-
- Before (doesn't work)           After (works)
- credit_hi    77                 77
- credit_lo    1444               1444
- send_slope   11860000           118
- idle_slope   640000             6
-
-Tested on SJA1105T, SJA1105S and SJA1110A, at 1Gbps and 100Mbps.
-
-Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
-Reported-by: Yanan Yang <yanan.yang@nxp.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b5a0b70d77b9 ("net: hns3: refactor dump fd tcam of debugfs")
+Signed-off-by: Hao Chen <chenhao418@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 947e8f7c09880..377f177502003 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2157,6 +2157,7 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- {
- 	struct sja1105_private *priv = ds->priv;
- 	struct sja1105_cbs_entry *cbs;
-+	s64 port_transmit_rate_kbps;
- 	int index;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+index 5cb8f1818e51c..a1c59f4aae988 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+@@ -1517,7 +1517,7 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 	struct hclge_desc desc[3];
+ 	int pos = 0;
+ 	int ret, i;
+-	u32 *req;
++	__le32 *req;
  
- 	if (!offload->enable)
-@@ -2174,9 +2175,17 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
- 	 */
- 	cbs->credit_hi = offload->hicredit;
- 	cbs->credit_lo = abs(offload->locredit);
--	/* User space is in kbits/sec, hardware in bytes/sec */
--	cbs->idle_slope = offload->idleslope * BYTES_PER_KBIT;
--	cbs->send_slope = abs(offload->sendslope * BYTES_PER_KBIT);
-+	/* User space is in kbits/sec, while the hardware in bytes/sec times
-+	 * link speed. Since the given offload->sendslope is good only for the
-+	 * current link speed anyway, and user space is likely to reprogram it
-+	 * when that changes, don't even bother to track the port's link speed,
-+	 * but deduce the port transmit rate from idleslope - sendslope.
-+	 */
-+	port_transmit_rate_kbps = offload->idleslope - offload->sendslope;
-+	cbs->idle_slope = div_s64(offload->idleslope * BYTES_PER_KBIT,
-+				  port_transmit_rate_kbps);
-+	cbs->send_slope = div_s64(abs(offload->sendslope * BYTES_PER_KBIT),
-+				  port_transmit_rate_kbps);
- 	/* Convert the negative values from 64-bit 2's complement
- 	 * to 32-bit 2's complement (for the case of 0x80000000 whose
- 	 * negative is still negative).
+ 	hclge_cmd_setup_basic_desc(&desc[0], HCLGE_OPC_FD_TCAM_OP, true);
+ 	desc[0].flag |= cpu_to_le16(HCLGE_COMM_CMD_FLAG_NEXT);
+@@ -1542,22 +1542,22 @@ static int hclge_dbg_fd_tcam_read(struct hclge_dev *hdev, bool sel_x,
+ 			 tcam_msg.loc);
+ 
+ 	/* tcam_data0 ~ tcam_data1 */
+-	req = (u32 *)req1->tcam_data;
++	req = (__le32 *)req1->tcam_data;
+ 	for (i = 0; i < 2; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	/* tcam_data2 ~ tcam_data7 */
+-	req = (u32 *)req2->tcam_data;
++	req = (__le32 *)req2->tcam_data;
+ 	for (i = 0; i < 6; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	/* tcam_data8 ~ tcam_data12 */
+-	req = (u32 *)req3->tcam_data;
++	req = (__le32 *)req3->tcam_data;
+ 	for (i = 0; i < 5; i++)
+ 		pos += scnprintf(tcam_buf + pos, HCLGE_DBG_TCAM_BUF_SIZE - pos,
+-				 "%08x\n", *req++);
++				 "%08x\n", le32_to_cpu(*req++));
+ 
+ 	return ret;
+ }
 -- 
 2.40.1
 
