@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F9C746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23912C433C9;
-	Sun, 17 Sep 2023 20:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7568B746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:38:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E23C433C7;
+	Sun, 17 Sep 2023 20:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983126;
-	bh=A9m1xlijCZ/Xny+q9fnDhLkyF3v7MbcTBGY78WIAraQ=;
+	s=korg; t=1694983130;
+	bh=4qceMZuBcjhBqr64+cxnyBocfSBChFTDpnjMAeOd8qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hj8JKCQM/GGZOAMj1AOoIC1fASqkoNmsgVP1Yi9K9ayWOrhyWpcqyGVHPwptTzDVl
-	 UfzihBAIqNe4ogWmuNYuYqM/9Y/yq1KedIj2T0m5GONvyijXDucWniR908EbKF0rQM
-	 Nb/2BmDFJfj3B811YQaxd5rOfQIj+oVu/xnzSdOI=
+	b=A324NgcvfbIEKD3OpqqGUdaJwKKTyY8nfuDojq/h9lYJgOwDf63E3QAJePVcBXiYv
+	 Xij5XqETWc/KlVFYRdpjminVdfYa3asPVt8if/lxrJbUj8WdNjSArXUsda2IX03WaJ
+	 qxlzMLsV8yuBb0YdWTqmD4gP+GOubVy7B7rnEeNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Yanan Yang <yanan.yang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 451/511] ip_tunnels: use DEV_STATS_INC()
-Date: Sun, 17 Sep 2023 21:14:38 +0200
-Message-ID: <20230917191124.650340370@linuxfoundation.org>
+Subject: [PATCH 5.15 452/511] net: dsa: sja1105: fix bandwidth discrepancy between tc-cbs software and offload
+Date: Sun, 17 Sep 2023 21:14:39 +0200
+Message-ID: <20230917191124.674508225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,126 +41,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 9b271ebaf9a2c5c566a54bc6cd915962e8241130 ]
+[ Upstream commit 954ad9bf13c4f95a4958b5f8433301f2ab99e1f5 ]
 
-syzbot/KCSAN reported data-races in iptunnel_xmit_stats() [1]
+More careful measurement of the tc-cbs bandwidth shows that the stream
+bandwidth (effectively idleslope) increases, there is a larger and
+larger discrepancy between the rate limit obtained by the software
+Qdisc, and the rate limit obtained by its offloaded counterpart.
 
-This can run from multiple cpus without mutual exclusion.
+The discrepancy becomes so large, that e.g. at an idleslope of 40000
+(40Mbps), the offloaded cbs does not actually rate limit anything, and
+traffic will pass at line rate through a 100 Mbps port.
 
-Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
+The reason for the discrepancy is that the hardware documentation I've
+been following is incorrect. UM11040.pdf (for SJA1105P/Q/R/S) states
+about IDLE_SLOPE that it is "the rate (in unit of bytes/sec) at which
+the credit counter is increased".
 
-[1]
-BUG: KCSAN: data-race in iptunnel_xmit / iptunnel_xmit
+Cross-checking with UM10944.pdf (for SJA1105E/T) and UM11107.pdf
+(for SJA1110), the wording is different: "This field specifies the
+value, in bytes per second times link speed, by which the credit counter
+is increased".
 
-read-write to 0xffff8881353df170 of 8 bytes by task 30263 on cpu 1:
-iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
-iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
-ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-__bpf_tx_skb net/core/filter.c:2129 [inline]
-__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
-__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
-____bpf_clone_redirect net/core/filter.c:2453 [inline]
-bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
-___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
-__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
-bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
-__bpf_prog_run include/linux/filter.h:609 [inline]
-bpf_prog_run include/linux/filter.h:616 [inline]
-bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
-bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
-bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
-__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
-__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+So there's an extra scaling for link speed that the driver is currently
+not accounting for, and apparently (empirically), that link speed is
+expressed in Kbps.
 
-read-write to 0xffff8881353df170 of 8 bytes by task 30249 on cpu 0:
-iptunnel_xmit_stats include/net/ip_tunnels.h:493 [inline]
-iptunnel_xmit+0x432/0x4a0 net/ipv4/ip_tunnel_core.c:87
-ip_tunnel_xmit+0x1477/0x1750 net/ipv4/ip_tunnel.c:831
-__gre_xmit net/ipv4/ip_gre.c:469 [inline]
-ipgre_xmit+0x516/0x570 net/ipv4/ip_gre.c:662
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-__bpf_tx_skb net/core/filter.c:2129 [inline]
-__bpf_redirect_no_mac net/core/filter.c:2159 [inline]
-__bpf_redirect+0x723/0x9c0 net/core/filter.c:2182
-____bpf_clone_redirect net/core/filter.c:2453 [inline]
-bpf_clone_redirect+0x16c/0x1d0 net/core/filter.c:2425
-___bpf_prog_run+0xd7d/0x41e0 kernel/bpf/core.c:1954
-__bpf_prog_run512+0x74/0xa0 kernel/bpf/core.c:2195
-bpf_dispatcher_nop_func include/linux/bpf.h:1181 [inline]
-__bpf_prog_run include/linux/filter.h:609 [inline]
-bpf_prog_run include/linux/filter.h:616 [inline]
-bpf_test_run+0x15d/0x3d0 net/bpf/test_run.c:423
-bpf_prog_test_run_skb+0x77b/0xa00 net/bpf/test_run.c:1045
-bpf_prog_test_run+0x265/0x3d0 kernel/bpf/syscall.c:3996
-__sys_bpf+0x3af/0x780 kernel/bpf/syscall.c:5353
-__do_sys_bpf kernel/bpf/syscall.c:5439 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5437 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5437
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+I've pondered whether to pollute the sja1105_mac_link_up()
+implementation with CBS shaper reprogramming, but I don't think it is
+worth it. IMO, the UAPI exposed by tc-cbs requires user space to
+recalculate the sendslope anyway, since the formula for that depends on
+port_transmit_rate (see man tc-cbs), which is not an invariant from tc's
+perspective.
 
-value changed: 0x0000000000018830 -> 0x0000000000018831
+So we use the offload->sendslope and offload->idleslope to deduce the
+original port_transmit_rate from the CBS formula, and use that value to
+scale the offload->sendslope and offload->idleslope to values that the
+hardware understands.
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 30249 Comm: syz-executor.4 Not tainted 6.5.0-syzkaller-11704-g3f86ed6ec0b3 #0
+Some numerical data points:
 
-Fixes: 039f50629b7f ("ip_tunnel: Move stats update to iptunnel_xmit()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+ 40Mbps stream, max interfering frame size 1500, port speed 100M
+ ---------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -60000 locredit -900 hicredit 600
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    600                600
+ credit_lo    900                900
+ send_slope   7500000            75
+ idle_slope   5000000            50
+
+ 40Mbps stream, max interfering frame size 1500, port speed 1G
+ -------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 40000 sendslope -960000 locredit -1440 hicredit 60
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    60                 60
+ credit_lo    1440               1440
+ send_slope   120000000          120
+ idle_slope   5000000            5
+
+ 5.12Mbps stream, max interfering frame size 1522, port speed 100M
+ -----------------------------------------------------------------
+
+ tc-cbs parameters:
+ idleslope 5120 sendslope -94880 locredit -1444 hicredit 77
+
+ which result in hardware values:
+
+ Before (doesn't work)           After (works)
+ credit_hi    77                 77
+ credit_lo    1444               1444
+ send_slope   11860000           118
+ idle_slope   640000             6
+
+Tested on SJA1105T, SJA1105S and SJA1110A, at 1Gbps and 100Mbps.
+
+Fixes: 4d7525085a9b ("net: dsa: sja1105: offload the Credit-Based Shaper qdisc")
+Reported-by: Yanan Yang <yanan.yang@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_tunnels.h | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 4eb0edc6640d9..17ec652e8f124 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -454,15 +454,14 @@ static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
- 		tstats->tx_packets++;
- 		u64_stats_update_end(&tstats->syncp);
- 		put_cpu_ptr(tstats);
-+		return;
-+	}
-+
-+	if (pkt_len < 0) {
-+		DEV_STATS_INC(dev, tx_errors);
-+		DEV_STATS_INC(dev, tx_aborted_errors);
- 	} else {
--		struct net_device_stats *err_stats = &dev->stats;
--
--		if (pkt_len < 0) {
--			err_stats->tx_errors++;
--			err_stats->tx_aborted_errors++;
--		} else {
--			err_stats->tx_dropped++;
--		}
-+		DEV_STATS_INC(dev, tx_dropped);
- 	}
- }
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index ef4d8d6c2bd7a..5f70773fa8201 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2049,6 +2049,7 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ {
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct sja1105_cbs_entry *cbs;
++	s64 port_transmit_rate_kbps;
+ 	int index;
  
+ 	if (!offload->enable)
+@@ -2066,9 +2067,17 @@ static int sja1105_setup_tc_cbs(struct dsa_switch *ds, int port,
+ 	 */
+ 	cbs->credit_hi = offload->hicredit;
+ 	cbs->credit_lo = abs(offload->locredit);
+-	/* User space is in kbits/sec, hardware in bytes/sec */
+-	cbs->idle_slope = offload->idleslope * BYTES_PER_KBIT;
+-	cbs->send_slope = abs(offload->sendslope * BYTES_PER_KBIT);
++	/* User space is in kbits/sec, while the hardware in bytes/sec times
++	 * link speed. Since the given offload->sendslope is good only for the
++	 * current link speed anyway, and user space is likely to reprogram it
++	 * when that changes, don't even bother to track the port's link speed,
++	 * but deduce the port transmit rate from idleslope - sendslope.
++	 */
++	port_transmit_rate_kbps = offload->idleslope - offload->sendslope;
++	cbs->idle_slope = div_s64(offload->idleslope * BYTES_PER_KBIT,
++				  port_transmit_rate_kbps);
++	cbs->send_slope = div_s64(abs(offload->sendslope * BYTES_PER_KBIT),
++				  port_transmit_rate_kbps);
+ 	/* Convert the negative values from 64-bit 2's complement
+ 	 * to 32-bit 2's complement (for the case of 0x80000000 whose
+ 	 * negative is still negative).
 -- 
 2.40.1
 
