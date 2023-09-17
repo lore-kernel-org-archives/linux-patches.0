@@ -1,62 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1D11107
-	for <patches@lists.linux.dev>; Sat, 16 Sep 2023 11:35:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66287C433C8;
-	Sat, 16 Sep 2023 11:35:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694864147;
-	bh=65lUWC0xOqZC+2fzoKnYWNPyNeDMVox/eXWFhjQ2iog=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rjtpzDO6g8WHgYxxfCNfVKg5+4o1eA9c3nU14or+oMWw76oSddpFFRb7LXdPtBMbP
-	 MKtrOEzdL/ZpclWEWP05XxOoumBgxeKqM6CfuTQl/dJWZ7Sr+7++R6a2LBGe+rlqNw
-	 4wQ4LQT1Co5LpYROYjZHKy7ZTxBvv3RoWqmtci6Q=
-Date: Sat, 16 Sep 2023 13:35:43 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: gerhorst@cs.fau.de
-Cc: alexei.starovoitov@gmail.com, ast@kernel.org, eddyz87@gmail.com,
-	laoar.shao@gmail.com, patches@lists.linux.dev,
-	stable@vger.kernel.org, yonghong.song@linux.dev, hagarhem@amazon.de,
-	puranjay12@gmail.com, daniel@iogearbox.net,
-	Luis Gerhorst <gerhorst@amazon.de>
-Subject: Re: [PATCH 6.1 562/600] bpf: Fix issue in verifying allow_ptr_leaks
-Message-ID: <2023091653-peso-sprint-889d@gregkh>
-References: <20230911134650.200439213@linuxfoundation.org>
- <20230914085131.40974-1-gerhorst@amazon.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900412594
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 11:50:49 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id AD46A1F88C;
+	Sun, 17 Sep 2023 11:50:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1694951447; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=loxy3PBfksAESFkI1XAMKVCrdymCRMcZU0rlFvXm9wo=;
+	b=VrRFMWYN7WZf9NEILYObPxsQfRf+Nrw0gAYnf8drrbpLNg9QTmVbyETIISqBaae5muZod0
+	W92ZWtOA9hJz5Ujak5p4T9D0icchXCxcji5s5t/G/U7FdKVtkA1IcRjpSegMn6dvXszQgG
+	tCJohYYvaYF4079js8Ooykg5pgIMuDg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1694951447;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=loxy3PBfksAESFkI1XAMKVCrdymCRMcZU0rlFvXm9wo=;
+	b=c946s20XW6AXt0yX0ux/PcEEvdw0vz3mJhHQJAxihMn1iCLmIquwG/RjInho2BHPhakhKW
+	C3BucqY19c0OoxAQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6C839134F3;
+	Sun, 17 Sep 2023 11:50:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 0i76GBboBmV7MwAAMHmgww
+	(envelope-from <hare@suse.de>); Sun, 17 Sep 2023 11:50:46 +0000
+Message-ID: <5e5eb1f0-d197-4a25-b8bb-5734b9c57c1c@suse.de>
+Date: Sun, 17 Sep 2023 13:50:45 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230914085131.40974-1-gerhorst@amazon.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
+ buffer-heads
+Content-Language: en-US
+To: Matthew Wilcox <willy@infradead.org>, Luis Chamberlain <mcgrof@kernel.org>
+Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
+ kbusch@kernel.org, sagi@grimberg.me, axboe@fb.com, brauner@kernel.org,
+ ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz, ziy@nvidia.com,
+ ryan.roberts@arm.com, patches@lists.linux.dev, linux-xfs@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+ p.raghav@samsung.com, da.gomez@samsung.com, dan.helmick@samsung.com
+References: <20230915213254.2724586-1-mcgrof@kernel.org>
+ <ZQTR0NorkxJlcNBW@casper.infradead.org>
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <ZQTR0NorkxJlcNBW@casper.infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 14, 2023 at 08:51:32AM +0000, Luis Gerhorst wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> > 
-> > From: Yafang Shao <laoar.shao@gmail.com>
-> > 
-> > commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
+On 9/15/23 23:51, Matthew Wilcox wrote:
+> On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
+>> However, an issue is that disabling CONFIG_BUFFER_HEAD in practice is not viable
+>> for many Linux distributions since it also means disabling support for most
+>> filesystems other than btrfs and XFS. So we either support larger order folios
+>> on buffer-heads, or we draw up a solution to enable co-existence. Since at LSFMM
+>> 2023 it was decided we would not support larger order folios on buffer-heads,
 > 
-> I unfortunately have objections, they are pending discussion at [1].
+> Um, I didn't agree to that.  If block size is equal to folio size, there
+> are no problems supporting one buffer head per folio.  In fact, we could
+> probably go up to 8 buffer heads per folio without any trouble (but I'm
+> not signing up to do that work).
 > 
-> Same applies to the 6.4-stable review patch [2] and all other backports.
-> 
-> [1] https://lore.kernel.org/bpf/20230913122827.91591-1-gerhorst@amazon.de/
-> [2] https://lore.kernel.org/stable/20230911134709.834278248@linuxfoundation.org/
+Entirely correct.
+I have a patchset ready for doing just that (ie having one buffer head 
+per folio); hope I'll find some time next week to get it cleaned up and 
+posted.
 
-As this is in the tree already, and in Linus's tree, I'll wait to see
-if any changes are merged into Linus's tree for this before removing it
-from the stable trees.
+Cheers,
 
-Let us know if there's a commit that resolves this and we will be glad
-to queue that up.
+Hannes
+-- 
+Dr. Hannes Reinecke                Kernel Storage Architect
+hare@suse.de                              +49 911 74053 688
+SUSE Software Solutions GmbH, Maxfeldstr. 5, 90409 Nürnberg
+HRB 36809 (AG Nürnberg), Geschäftsführer: Ivo Totev, Andrew
+Myers, Andrew McDonald, Martje Boudien Moerman
 
-thanks,
-
-greg k-h
