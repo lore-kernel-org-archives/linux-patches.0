@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314117461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905BFC433CA;
-	Sun, 17 Sep 2023 20:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7EF7461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:09:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FA7C433C8;
+	Sun, 17 Sep 2023 20:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694981344;
-	bh=Z4rAYBhErl/55ysdholWsiDYl1cOT33ndSa/SGvIy3E=;
+	s=korg; t=1694981347;
+	bh=jCCFbc5X4LWQKiUYchSWz5Nq4ZVypHv7OJB9JJscEFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GdTLfvKfO2n55oYKRcS8mtPUAVUBHdbgSVbJza8OXlx61FKSu0qSieUuwG6y0Nwm
-	 6gQse0CShyHk4NFjUJs2KTWbbnxIHj6AqOtXpK4ZqspXHnAlPbwWx8y7gsg2H24ply
-	 XOy4vqRaVzYv7QXtDIP32WWMRtahgizHWsS4vwro=
+	b=h0m18qrrSAct9LeDieLOmfh9+y3PgJpiskI7bt0v8PcHVGNXI+7SnY5Ju+NsEnatA
+	 06wE6stgnRXWLOm0for3IcZpUSD0C/Vpx7ITj7lsJKhmzrkCkFvZ9RyqbpjQXzjRQy
+	 24vqIT6Joj0+zZmrK5U0E5e6Nr9zLiIV7gcIGWlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xu Kuohai <xukuohai@huawei.com>,
+	Dmitry Mastykin <dmastykin@astralinux.ru>,
+	Paul Moore <paul@paul-moore.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/219] bpf, sockmap: Fix skb refcnt race after locking changes
-Date: Sun, 17 Sep 2023 21:13:54 +0200
-Message-ID: <20230917191044.861055247@linuxfoundation.org>
+Subject: [PATCH 5.15 041/511] netlabel: fix shift wrapping bug in netlbl_catmap_setlong()
+Date: Sun, 17 Sep 2023 21:07:48 +0200
+Message-ID: <20230917191114.850680983@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
-References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,126 +37,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Dmitry Mastykin <dmastykin@astralinux.ru>
 
-[ Upstream commit a454d84ee20baf7bd7be90721b9821f73c7d23d9 ]
+[ Upstream commit b403643d154d15176b060b82f7fc605210033edd ]
 
-There is a race where skb's from the sk_psock_backlog can be referenced
-after userspace side has already skb_consumed() the sk_buff and its refcnt
-dropped to zer0 causing use after free.
+There is a shift wrapping bug in this code on 32-bit architectures.
+NETLBL_CATMAP_MAPTYPE is u64, bitmap is unsigned long.
+Every second 32-bit word of catmap becomes corrupted.
 
-The flow is the following:
-
-  while ((skb = skb_peek(&psock->ingress_skb))
-    sk_psock_handle_Skb(psock, skb, ..., ingress)
-    if (!ingress) ...
-    sk_psock_skb_ingress
-       sk_psock_skb_ingress_enqueue(skb)
-          msg->skb = skb
-          sk_psock_queue_msg(psock, msg)
-    skb_dequeue(&psock->ingress_skb)
-
-The sk_psock_queue_msg() puts the msg on the ingress_msg queue. This is
-what the application reads when recvmsg() is called. An application can
-read this anytime after the msg is placed on the queue. The recvmsg hook
-will also read msg->skb and then after user space reads the msg will call
-consume_skb(skb) on it effectively free'ing it.
-
-But, the race is in above where backlog queue still has a reference to
-the skb and calls skb_dequeue(). If the skb_dequeue happens after the
-user reads and free's the skb we have a use after free.
-
-The !ingress case does not suffer from this problem because it uses
-sendmsg_*(sk, msg) which does not pass the sk_buff further down the
-stack.
-
-The following splat was observed with 'test_progs -t sockmap_listen':
-
-  [ 1022.710250][ T2556] general protection fault, ...
-  [...]
-  [ 1022.712830][ T2556] Workqueue: events sk_psock_backlog
-  [ 1022.713262][ T2556] RIP: 0010:skb_dequeue+0x4c/0x80
-  [ 1022.713653][ T2556] Code: ...
-  [...]
-  [ 1022.720699][ T2556] Call Trace:
-  [ 1022.720984][ T2556]  <TASK>
-  [ 1022.721254][ T2556]  ? die_addr+0x32/0x80^M
-  [ 1022.721589][ T2556]  ? exc_general_protection+0x25a/0x4b0
-  [ 1022.722026][ T2556]  ? asm_exc_general_protection+0x22/0x30
-  [ 1022.722489][ T2556]  ? skb_dequeue+0x4c/0x80
-  [ 1022.722854][ T2556]  sk_psock_backlog+0x27a/0x300
-  [ 1022.723243][ T2556]  process_one_work+0x2a7/0x5b0
-  [ 1022.723633][ T2556]  worker_thread+0x4f/0x3a0
-  [ 1022.723998][ T2556]  ? __pfx_worker_thread+0x10/0x10
-  [ 1022.724386][ T2556]  kthread+0xfd/0x130
-  [ 1022.724709][ T2556]  ? __pfx_kthread+0x10/0x10
-  [ 1022.725066][ T2556]  ret_from_fork+0x2d/0x50
-  [ 1022.725409][ T2556]  ? __pfx_kthread+0x10/0x10
-  [ 1022.725799][ T2556]  ret_from_fork_asm+0x1b/0x30
-  [ 1022.726201][ T2556]  </TASK>
-
-To fix we add an skb_get() before passing the skb to be enqueued in the
-engress queue. This bumps the skb->users refcnt so that consume_skb()
-and kfree_skb will not immediately free the sk_buff. With this we can
-be sure the skb is still around when we do the dequeue. Then we just
-need to decrement the refcnt or free the skb in the backlog case which
-we do by calling kfree_skb() on the ingress case as well as the sendmsg
-case.
-
-Before locking change from fixes tag we had the sock locked so we
-couldn't race with user and there was no issue here.
-
-Fixes: 799aa7f98d53e ("skmsg: Avoid lock_sock() in sk_psock_backlog()")
-Reported-by: Jiri Olsa  <jolsa@kernel.org>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Xu Kuohai <xukuohai@huawei.com>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20230901202137.214666-1-john.fastabend@gmail.com
+Signed-off-by: Dmitry Mastykin <dmastykin@astralinux.ru>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/netlabel/netlabel_kapi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 296e45b6c3c0d..a5c1f67dc96ec 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -611,12 +611,18 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
- static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
- 			       u32 off, u32 len, bool ingress)
- {
-+	int err = 0;
-+
- 	if (!ingress) {
- 		if (!sock_writeable(psock->sk))
- 			return -EAGAIN;
- 		return skb_send_sock(psock->sk, skb, off, len);
- 	}
--	return sk_psock_skb_ingress(psock, skb, off, len);
-+	skb_get(skb);
-+	err = sk_psock_skb_ingress(psock, skb, off, len);
-+	if (err < 0)
-+		kfree_skb(skb);
-+	return err;
+diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
+index 54c0830039470..27511c90a26f4 100644
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -857,7 +857,8 @@ int netlbl_catmap_setlong(struct netlbl_lsm_catmap **catmap,
+ 
+ 	offset -= iter->startbit;
+ 	idx = offset / NETLBL_CATMAP_MAPSIZE;
+-	iter->bitmap[idx] |= bitmap << (offset % NETLBL_CATMAP_MAPSIZE);
++	iter->bitmap[idx] |= (NETLBL_CATMAP_MAPTYPE)bitmap
++			     << (offset % NETLBL_CATMAP_MAPSIZE);
+ 
+ 	return 0;
  }
- 
- static void sk_psock_skb_state(struct sk_psock *psock,
-@@ -684,9 +690,7 @@ static void sk_psock_backlog(struct work_struct *work)
- 		} while (len);
- 
- 		skb = skb_dequeue(&psock->ingress_skb);
--		if (!ingress) {
--			kfree_skb(skb);
--		}
-+		kfree_skb(skb);
- 	}
- end:
- 	mutex_unlock(&psock->work_mutex);
 -- 
 2.40.1
 
