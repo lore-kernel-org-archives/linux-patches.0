@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D637469
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96016C433C8;
-	Sun, 17 Sep 2023 20:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEA87469
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C017DC433C8;
+	Sun, 17 Sep 2023 20:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982257;
-	bh=0V5M3F2UCj6b5tOYvq5LziCvlpD8wZ/MAm+1KKt4/A4=;
+	s=korg; t=1694982260;
+	bh=KLRX8xQaPF/0sbRAcrym/TwnsI6qrl2snAZtA9vWL00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKEyzTSZFMqb66YjQOzL/sLDOjrzZdbfugwCFU6Q2X7iZeXb12DbEhh3xOhSElC46
-	 O9maOUFb8CnCnLiMmjwtgXM6iMohqR2cvtBjK57ovnVvfPHMaVe/YjCcKatH4f3W0Z
-	 ilvg8DjK4NigRoG/XTX4yszJZ2stQnCeX6oOfU6A=
+	b=pZdpkx8EICyXUtkjAJIKVzh1bjF9cpV3tgQxZHU21XI84ZMl2eK7Ns2CIyT3V9wCs
+	 r83t+oIqKyl8cPeUQHkOsSxKlI/IG7KSerbGHY75L/1/lomMUa0ipuaDCicEwcr+A2
+	 82E9bsT7kf/v5PTaHnLuzQWTOqx3jX5dDE8GjpA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ee Wey Lim <ee.wey.lim@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 198/511] EDAC/igen6: Fix the issue of no error events
-Date: Sun, 17 Sep 2023 21:10:25 +0200
-Message-ID: <20230917191118.598254130@linuxfoundation.org>
+Subject: [PATCH 5.15 199/511] ext4: correct grp validation in ext4_mb_good_group
+Date: Sun, 17 Sep 2023 21:10:26 +0200
+Message-ID: <20230917191118.627000508@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,63 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit ce53ad81ed36c24aff075f94474adecfabfcf239 ]
+[ Upstream commit a9ce5993a0f5c0887c8a1b4ffa3b8046fbcfdc93 ]
 
-Current igen6_edac checks for pending errors before the registration
-of the error handler. However, there is a possibility that the error
-occurs during the registration process, leading to unhandled pending
-errors and no future error events. This issue can be reproduced by
-repeatedly injecting errors during the loading of the igen6_edac.
+Group corruption check will access memory of grp and will trigger kernel
+crash if grp is NULL. So do NULL check before corruption check.
 
-Fix this issue by moving the pending error handler after the registration
-of the error handler, ensuring that no pending errors are left unhandled.
-
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Reported-by: Ee Wey Lim <ee.wey.lim@intel.com>
-Tested-by: Ee Wey Lim <ee.wey.lim@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20230725080427.23883-1-qiuxu.zhuo@intel.com
+Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230801143204.2284343-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index a07bbfd075d06..8ec70da8d84fe 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -27,7 +27,7 @@
- #include "edac_mc.h"
- #include "edac_module.h"
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 47c28e3582fd8..c52833d07602c 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -2445,7 +2445,7 @@ static bool ext4_mb_good_group(struct ext4_allocation_context *ac,
  
--#define IGEN6_REVISION	"v2.5"
-+#define IGEN6_REVISION	"v2.5.1"
+ 	BUG_ON(cr < 0 || cr >= 4);
  
- #define EDAC_MOD_STR	"igen6_edac"
- #define IGEN6_NMI_NAME	"igen6_ibecc"
-@@ -1216,9 +1216,6 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	INIT_WORK(&ecclog_work, ecclog_work_cb);
- 	init_irq_work(&ecclog_irq_work, ecclog_irq_work_cb);
+-	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(grp) || !grp))
++	if (unlikely(!grp || EXT4_MB_GRP_BBITMAP_CORRUPT(grp)))
+ 		return false;
  
--	/* Check if any pending errors before registering the NMI handler */
--	ecclog_handler();
--
- 	rc = register_err_handler();
- 	if (rc)
- 		goto fail3;
-@@ -1230,6 +1227,9 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto fail4;
- 	}
- 
-+	/* Check if any pending errors before/during the registration of the error handler */
-+	ecclog_handler();
-+
- 	igen6_debug_setup();
- 	return 0;
- fail4:
+ 	free = grp->bb_free;
 -- 
 2.40.1
 
