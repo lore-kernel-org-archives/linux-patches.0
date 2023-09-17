@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E7B53AB
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991F9C433C8;
-	Sun, 17 Sep 2023 20:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C89053AB
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:39:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029B6C433C8;
+	Sun, 17 Sep 2023 20:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694983182;
-	bh=5EcuEnpxAkPlg5WfpzUy3n76KKPE0LtRHRKPW358mTg=;
+	s=korg; t=1694983185;
+	bh=XaEI+TgndUjlZQZhtsb7D5kWjtpse4TqUNbcTblMWUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaOGz67i2HXHMn84LpazhRUyCyuUFbCSXZXEet/j7QiZbtAYrY5HLKaBo41yBS98P
-	 Pvf8lW7XjcZgT4iThue6Un4PIHdiVvzHaB5Q2DKcreZwQoYbHBXiluZpwKLcz85MWu
-	 R28BqpbcDpe7wzmSPZNMnn5aVlDGbUo9f0lmgnLg=
+	b=BieFet3kAsmFDz32CM7wCkjw56/R2Wz9PDpLD/k9ppsc5fGhKxNTrUaJ/FZOLSIgm
+	 YISPvhVe2v7TOYvjE+vea51PwzcLWtycKY3wo7BmlOLy9TmZNr6Zkfy+5eYToAvfzs
+	 8cWgg3ggoqCEsGBm8HutcdllVBs2cymbNk1cVKuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 5.15 469/511] lib: test_scanf: Add explicit type cast to result initialization in test_number_prefix()
-Date: Sun, 17 Sep 2023 21:14:56 +0200
-Message-ID: <20230917191125.071908894@linuxfoundation.org>
+	William R Sowerbutts <will@sowerbutts.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 5.15 470/511] ata: pata_falcon: fix IO base selection for Q40
+Date: Sun, 17 Sep 2023 21:14:57 +0200
+Message-ID: <20230917191125.095785679@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -40,53 +43,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-commit 92382d744176f230101d54f5c017bccd62770f01 upstream.
+commit 8a1f00b753ecfdb117dc1a07e68c46d80e7923ea upstream.
 
-A recent change in clang allows it to consider more expressions as
-compile time constants, which causes it to point out an implicit
-conversion in the scanf tests:
+With commit 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver
+with pata_falcon and falconide"), the Q40 IDE driver was
+replaced by pata_falcon.c.
 
-  lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
-    661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
-    609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
-        |                       ~            ^~~~~~~~~~
-  1 warning generated.
+Both IO and memory resources were defined for the Q40 IDE
+platform device, but definition of the IDE register addresses
+was modeled after the Falcon case, both in use of the memory
+resources and in including register shift and byte vs. word
+offset in the address.
 
-The result of the bitwise negation is the type of the operand after
-going through the integer promotion rules, so this truncation is
-expected but harmless, as the initial values in the result array get
-overwritten by _test() anyways. Add an explicit cast to the expected
-type in test_number_prefix() to silence the warning. There is no
-functional change, as all the tests still pass with GCC 13.1.0 and clang
-18.0.0.
+This was correct for the Falcon case, which does not apply
+any address translation to the register addresses. In the
+Q40 case, all of device base address, byte access offset
+and register shift is included in the platform specific
+ISA access translation (in asm/mm_io.h).
 
+As a consequence, such address translation gets applied
+twice, and register addresses are mangled.
+
+Use the device base address from the platform IO resource
+for Q40 (the IO address translation will then add the correct
+ISA window base address and byte access offset), with register
+shift 1. Use MMIO base address and register shift 2 as before
+for Falcon.
+
+Encode PIO_OFFSET into IO port addresses for all registers
+for Q40 except the data transfer register. Encode the MMIO
+offset there (pata_falcon_data_xfer() directly uses raw IO
+with no address translation).
+
+Reported-by: William R Sowerbutts <will@sowerbutts.com>
+Closes: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
+Link: https://lore.kernel.org/r/CAMuHMdUU62jjunJh9cqSqHT87B0H0A4udOOPs=WN7WZKpcagVA@mail.gmail.com
+Fixes: 44b1fbc0f5f3 ("m68k/q40: Replace q40ide driver with pata_falcon and falconide")
 Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linuxq/issues/1899
-Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org
+Cc: Finn Thain <fthain@linux-m68k.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: William R Sowerbutts <will@sowerbutts.com>
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_scanf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/pata_falcon.c |   50 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
---- a/lib/test_scanf.c
-+++ b/lib/test_scanf.c
-@@ -606,7 +606,7 @@ static void __init numbers_slice(void)
- #define test_number_prefix(T, str, scan_fmt, expect0, expect1, n_args, fn)	\
- do {										\
- 	const T expect[2] = { expect0, expect1 };				\
--	T result[2] = {~expect[0], ~expect[1]};					\
-+	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
- 										\
- 	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
- } while (0)
+--- a/drivers/ata/pata_falcon.c
++++ b/drivers/ata/pata_falcon.c
+@@ -123,8 +123,8 @@ static int __init pata_falcon_init_one(s
+ 	struct resource *base_res, *ctl_res, *irq_res;
+ 	struct ata_host *host;
+ 	struct ata_port *ap;
+-	void __iomem *base;
+-	int irq = 0;
++	void __iomem *base, *ctl_base;
++	int irq = 0, io_offset = 1, reg_shift = 2; /* Falcon defaults */
+ 
+ 	dev_info(&pdev->dev, "Atari Falcon and Q40/Q60 PATA controller\n");
+ 
+@@ -165,26 +165,34 @@ static int __init pata_falcon_init_one(s
+ 	ap->pio_mask = ATA_PIO4;
+ 	ap->flags |= ATA_FLAG_SLAVE_POSS | ATA_FLAG_NO_IORDY;
+ 
+-	base = (void __iomem *)base_mem_res->start;
+ 	/* N.B. this assumes data_addr will be used for word-sized I/O only */
+-	ap->ioaddr.data_addr		= base + 0 + 0 * 4;
+-	ap->ioaddr.error_addr		= base + 1 + 1 * 4;
+-	ap->ioaddr.feature_addr		= base + 1 + 1 * 4;
+-	ap->ioaddr.nsect_addr		= base + 1 + 2 * 4;
+-	ap->ioaddr.lbal_addr		= base + 1 + 3 * 4;
+-	ap->ioaddr.lbam_addr		= base + 1 + 4 * 4;
+-	ap->ioaddr.lbah_addr		= base + 1 + 5 * 4;
+-	ap->ioaddr.device_addr		= base + 1 + 6 * 4;
+-	ap->ioaddr.status_addr		= base + 1 + 7 * 4;
+-	ap->ioaddr.command_addr		= base + 1 + 7 * 4;
+-
+-	base = (void __iomem *)ctl_mem_res->start;
+-	ap->ioaddr.altstatus_addr	= base + 1;
+-	ap->ioaddr.ctl_addr		= base + 1;
+-
+-	ata_port_desc(ap, "cmd 0x%lx ctl 0x%lx",
+-		      (unsigned long)base_mem_res->start,
+-		      (unsigned long)ctl_mem_res->start);
++	ap->ioaddr.data_addr = (void __iomem *)base_mem_res->start;
++
++	if (base_res) {		/* only Q40 has IO resources */
++		io_offset = 0x10000;
++		reg_shift = 0;
++		base = (void __iomem *)base_res->start;
++		ctl_base = (void __iomem *)ctl_res->start;
++	} else {
++		base = (void __iomem *)base_mem_res->start;
++		ctl_base = (void __iomem *)ctl_mem_res->start;
++	}
++
++	ap->ioaddr.error_addr	= base + io_offset + (1 << reg_shift);
++	ap->ioaddr.feature_addr	= base + io_offset + (1 << reg_shift);
++	ap->ioaddr.nsect_addr	= base + io_offset + (2 << reg_shift);
++	ap->ioaddr.lbal_addr	= base + io_offset + (3 << reg_shift);
++	ap->ioaddr.lbam_addr	= base + io_offset + (4 << reg_shift);
++	ap->ioaddr.lbah_addr	= base + io_offset + (5 << reg_shift);
++	ap->ioaddr.device_addr	= base + io_offset + (6 << reg_shift);
++	ap->ioaddr.status_addr	= base + io_offset + (7 << reg_shift);
++	ap->ioaddr.command_addr	= base + io_offset + (7 << reg_shift);
++
++	ap->ioaddr.altstatus_addr	= ctl_base + io_offset;
++	ap->ioaddr.ctl_addr		= ctl_base + io_offset;
++
++	ata_port_desc(ap, "cmd %px ctl %px data %px",
++		      base, ctl_base, ap->ioaddr.data_addr);
+ 
+ 	irq_res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
+ 	if (irq_res && irq_res->start > 0) {
 
 
