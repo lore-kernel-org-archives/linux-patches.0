@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B47461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FEEC433C7;
-	Sun, 17 Sep 2023 19:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC987461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A2DC433C7;
+	Sun, 17 Sep 2023 19:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980081;
-	bh=axfVNPmtgG2YZqv1hDxWmwZbYNRayAl1kQ9xLDFo64A=;
+	s=korg; t=1694980085;
+	bh=/Mei+FpVfa5HkpUmvPx6McNZFi+vXToykyfgG2hjcjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtK02qBjVF8HnuGELfVV+3VeitzfnKQ46IoZi392NmhX6q44AoleWzi/nSeNNrP/D
-	 sSRoxe1pGw5MjYYxPjYSOOf254lOmbeULCGdj9LjsXtiERLfJJQd1QnobVG0Ie/vAF
-	 U72XqzSamw3W/At0NfgISJlEJIARP5C1hHmznNf4=
+	b=LB1W0L1UL6wGdk8r6RgCAuIs5AU1LixHdjAI0MFjJsmPIn0Ean5BIf7FW5syIsVzn
+	 NUlXbBEdQugiKTO0mRsSy7XGrLLdmXofPpuQxny7qw/FkSTd2CZwNDT+jlC0Yn+pH/
+	 SFC69bJg421PJnU4vY+SxqVa6lBQG9YMh7WCVW0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Riccardo Mancini <rickyman7@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 091/285] watchdog: intel-mid_wdt: add MODULE_ALIAS() to allow auto-load
-Date: Sun, 17 Sep 2023 21:11:31 +0200
-Message-ID: <20230917191054.849525434@linuxfoundation.org>
+Subject: [PATCH 6.5 066/285] perf trace: Really free the evsel->priv area
+Date: Sun, 17 Sep 2023 21:11:06 +0200
+Message-ID: <20230917191053.998659968@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -42,38 +44,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit cf38e7691c85f1b09973b22a0b89bf1e1228d2f9 ]
+[ Upstream commit 7962ef13651a9163f07b530607392ea123482e8a ]
 
-When built with CONFIG_INTEL_MID_WATCHDOG=m, currently the driver
-needs to be loaded manually, for the lack of module alias.
-This causes unintended resets in cases where watchdog timer is
-set-up by bootloader and the driver is not explicitly loaded.
-Add MODULE_ALIAS() to load the driver automatically at boot and
-avoid this issue.
+In 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in
+evsel->priv") it only was freeing if strcmp(evsel->tp_format->system,
+"syscalls") returned zero, while the corresponding initialization of
+evsel->priv was being performed if it was _not_ zero, i.e. if the tp
+system wasn't 'syscalls'.
 
-Fixes: 87a1ef8058d9 ("watchdog: add Intel MID watchdog driver support")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230811120220.31578-1-raag.jadav@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Just stop looking for that and free it if evsel->priv was set, which
+should be equivalent.
+
+Also use the pre-existing evsel_trace__delete() function.
+
+This resolves these leaks, detected with:
+
+  $ make EXTRA_CFLAGS="-fsanitize=address" BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools-next -C tools/perf install-bin
+
+  =================================================================
+  ==481565==ERROR: LeakSanitizer: detected memory leaks
+
+  Direct leak of 40 byte(s) in 1 object(s) allocated from:
+      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
+      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
+      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
+      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
+      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
+      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
+      #6 0x540e8b in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3212
+      #7 0x540e8b in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
+      #8 0x540e8b in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
+      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
+      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
+      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
+      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
+      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
+
+  Direct leak of 40 byte(s) in 1 object(s) allocated from:
+      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
+      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
+      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
+      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
+      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
+      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
+      #6 0x540dd1 in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3205
+      #7 0x540dd1 in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
+      #8 0x540dd1 in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
+      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
+      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
+      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
+      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
+      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
+
+  SUMMARY: AddressSanitizer: 80 byte(s) leaked in 2 allocation(s).
+  [root@quaco ~]#
+
+With this we plug all leaks with "perf trace sleep 1".
+
+Fixes: 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in evsel->priv")
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Riccardo Mancini <rickyman7@gmail.com>
+Link: https://lore.kernel.org/lkml/20230719202951.534582-5-acme@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/intel-mid_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-trace.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/watchdog/intel-mid_wdt.c b/drivers/watchdog/intel-mid_wdt.c
-index 9b2173f765c8c..fb7fae750181b 100644
---- a/drivers/watchdog/intel-mid_wdt.c
-+++ b/drivers/watchdog/intel-mid_wdt.c
-@@ -203,3 +203,4 @@ module_platform_driver(mid_wdt_driver);
- MODULE_AUTHOR("David Cohen <david.a.cohen@linux.intel.com>");
- MODULE_DESCRIPTION("Watchdog Driver for Intel MID platform");
- MODULE_LICENSE("GPL");
-+MODULE_ALIAS("platform:intel_mid_wdt");
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 6e73d0e957152..4aba576512a15 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -3136,13 +3136,8 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
+ 	struct evsel *evsel;
+ 
+ 	evlist__for_each_entry(evlist, evsel) {
+-		struct evsel_trace *et = evsel->priv;
+-
+-		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
+-			continue;
+-
+-		zfree(&et->fmt);
+-		free(et);
++		evsel_trace__delete(evsel->priv);
++		evsel->priv = NULL;
+ 	}
+ }
+ 
 -- 
 2.40.1
 
