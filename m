@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC487461
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A5DC433C8;
-	Sun, 17 Sep 2023 19:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8157461
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 19:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDFAC433C9;
+	Sun, 17 Sep 2023 19:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980188;
-	bh=9lrfTbkBx26M8D/VKaSXa7Wz15s1OK3G1TcfOaqbTRk=;
+	s=korg; t=1694980191;
+	bh=shRh3Cmz6dTdOewVY6H4IoI+xnIT/YgQ0jOOxru/oHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TojAR1oPd8VU1E+cuYo8SXQuC6paE6qqC6NmKXulAL1NF7KRjI9oMZeNvUzxF/xNs
-	 ktwTygEi7AsvMOE2IxLkBOYntl9v5bvXh/q5jAihPLMzWzd/rur+aA7UDJ0f0LcmiT
-	 Q8N+eCNlK6ab/euersLHOGNX1oQSMj11WBKjPWwo=
+	b=Vc3W2g+Gh4ygVYMB/MhsEKkZCa+qcReMXeH9AZucSU9/W/y1JkjZ0pm3sc28cGzfw
+	 vpbXLVxUOYb8chxMB0qugsUM1FQUzzx6gfKgPVMOkivSX4mZkFP6XDitn+xxncMCWN
+	 U3XQ/dWY+dFQahHMAphAq3FbkFdzxGW5yEGRHtAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 118/285] net/handshake: fix null-ptr-deref in handshake_nl_done_doit()
-Date: Sun, 17 Sep 2023 21:11:58 +0200
-Message-ID: <20230917191055.752485064@linuxfoundation.org>
+Subject: [PATCH 6.5 119/285] net: use sk_forward_alloc_get() in sk_get_meminfo()
+Date: Sun, 17 Sep 2023 21:11:59 +0200
+Message-ID: <20230917191055.786505128@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
 References: <20230917191051.639202302@linuxfoundation.org>
@@ -45,132 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 82ba0ff7bf0483d962e592017bef659ae022d754 ]
+[ Upstream commit 66d58f046c9d3a8f996b7138d02e965fd0617de0 ]
 
-We should not call trace_handshake_cmd_done_err() if socket lookup has failed.
+inet_sk_diag_fill() has been changed to use sk_forward_alloc_get(),
+but sk_get_meminfo() was forgotten.
 
-Also we should call trace_handshake_cmd_done_err() before releasing the file,
-otherwise dereferencing sock->sk can return garbage.
-
-This also reverts 7afc6d0a107f ("net/handshake: Fix uninitialized local variable")
-
-Unable to handle kernel paging request at virtual address dfff800000000003
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-Mem abort info:
-ESR = 0x0000000096000005
-EC = 0x25: DABT (current EL), IL = 32 bits
-SET = 0, FnV = 0
-EA = 0, S1PTW = 0
-FSC = 0x05: level 1 translation fault
-Data abort info:
-ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[dfff800000000003] address between user and kernel address ranges
-Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 1 PID: 5986 Comm: syz-executor292 Not tainted 6.5.0-rc7-syzkaller-gfe4469582053 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : handshake_nl_done_doit+0x198/0x9c8 net/handshake/netlink.c:193
-lr : handshake_nl_done_doit+0x180/0x9c8
-sp : ffff800096e37180
-x29: ffff800096e37200 x28: 1ffff00012dc6e34 x27: dfff800000000000
-x26: ffff800096e373d0 x25: 0000000000000000 x24: 00000000ffffffa8
-x23: ffff800096e373f0 x22: 1ffff00012dc6e38 x21: 0000000000000000
-x20: ffff800096e371c0 x19: 0000000000000018 x18: 0000000000000000
-x17: 0000000000000000 x16: ffff800080516cc4 x15: 0000000000000001
-x14: 1fffe0001b14aa3b x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000003
-x8 : 0000000000000003 x7 : ffff800080afe47c x6 : 0000000000000000
-x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffff800080a88078
-x2 : 0000000000000001 x1 : 00000000ffffffa8 x0 : 0000000000000000
-Call trace:
-handshake_nl_done_doit+0x198/0x9c8 net/handshake/netlink.c:193
-genl_family_rcv_msg_doit net/netlink/genetlink.c:970 [inline]
-genl_family_rcv_msg net/netlink/genetlink.c:1050 [inline]
-genl_rcv_msg+0x96c/0xc50 net/netlink/genetlink.c:1067
-netlink_rcv_skb+0x214/0x3c4 net/netlink/af_netlink.c:2549
-genl_rcv+0x38/0x50 net/netlink/genetlink.c:1078
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x660/0x8d4 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x834/0xb18 net/netlink/af_netlink.c:1914
-sock_sendmsg_nosec net/socket.c:725 [inline]
-sock_sendmsg net/socket.c:748 [inline]
-____sys_sendmsg+0x56c/0x840 net/socket.c:2494
-___sys_sendmsg net/socket.c:2548 [inline]
-__sys_sendmsg+0x26c/0x33c net/socket.c:2577
-__do_sys_sendmsg net/socket.c:2586 [inline]
-__se_sys_sendmsg net/socket.c:2584 [inline]
-__arm64_sys_sendmsg+0x80/0x94 net/socket.c:2584
-__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
-invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
-el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
-do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
-el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
-el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-Code: 12800108 b90043e8 910062b3 d343fe68 (387b6908)
-
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 292e6077b040 ("net: introduce sk_forward_alloc_get()")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/netlink.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ net/core/sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index 1086653e1fada..d0bc1dd8e65a8 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -157,26 +157,24 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info)
- {
- 	struct net *net = sock_net(skb->sk);
--	struct handshake_req *req = NULL;
--	struct socket *sock = NULL;
-+	struct handshake_req *req;
-+	struct socket *sock;
- 	int fd, status, err;
- 
- 	if (GENL_REQ_ATTR_CHECK(info, HANDSHAKE_A_DONE_SOCKFD))
- 		return -EINVAL;
- 	fd = nla_get_u32(info->attrs[HANDSHAKE_A_DONE_SOCKFD]);
- 
--	err = 0;
- 	sock = sockfd_lookup(fd, &err);
--	if (err) {
--		err = -EBADF;
--		goto out_status;
--	}
-+	if (!sock)
-+		return err;
- 
- 	req = handshake_req_hash_lookup(sock->sk);
- 	if (!req) {
- 		err = -EBUSY;
-+		trace_handshake_cmd_done_err(net, req, sock->sk, err);
- 		fput(sock->file);
--		goto out_status;
-+		return err;
- 	}
- 
- 	trace_handshake_cmd_done(net, req, sock->sk, fd);
-@@ -188,10 +186,6 @@ int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info)
- 	handshake_complete(req, status, info);
- 	fput(sock->file);
- 	return 0;
--
--out_status:
--	trace_handshake_cmd_done_err(net, req, sock->sk, err);
--	return err;
- }
- 
- static unsigned int handshake_net_id;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 4ae68aa07e9fe..3109eb0cd512e 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3742,7 +3742,7 @@ void sk_get_meminfo(const struct sock *sk, u32 *mem)
+ 	mem[SK_MEMINFO_RCVBUF] = READ_ONCE(sk->sk_rcvbuf);
+ 	mem[SK_MEMINFO_WMEM_ALLOC] = sk_wmem_alloc_get(sk);
+ 	mem[SK_MEMINFO_SNDBUF] = READ_ONCE(sk->sk_sndbuf);
+-	mem[SK_MEMINFO_FWD_ALLOC] = sk->sk_forward_alloc;
++	mem[SK_MEMINFO_FWD_ALLOC] = sk_forward_alloc_get(sk);
+ 	mem[SK_MEMINFO_WMEM_QUEUED] = READ_ONCE(sk->sk_wmem_queued);
+ 	mem[SK_MEMINFO_OPTMEM] = atomic_read(&sk->sk_omem_alloc);
+ 	mem[SK_MEMINFO_BACKLOG] = READ_ONCE(sk->sk_backlog.len);
 -- 
 2.40.1
 
