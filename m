@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309B96FA7
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:02:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B1CC433D9;
-	Sun, 17 Sep 2023 20:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C346FA7
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:03:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E22BC433C7;
+	Sun, 17 Sep 2023 20:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694980978;
-	bh=sqnRGiiEFGhGG6ugw0LqK9GGqS8gdF2KOYCRPytx0Hc=;
+	s=korg; t=1694980981;
+	bh=P0sjx+iniFkqZEYOmsetBCnmkwwlHphkPzoVxeFZrps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0ZQFFAzVMMRLM4e86opf47hA9B0rj/rw4fv3whnOXRmPHey8G5RPVJXsLQE0bnH7
-	 jQNNCNIBI3ci6DpRwLNGQanxa4llPDgX3z2RP9CoE14IjU2QwkQtVJ9GD8HNIo8fq+
-	 RRnTRnSe0U9cNOhwKo6sl3YBJQ0D7LlE8JicBDTs=
+	b=xMDK0qEOicd2W0lu+lyVSz0h1YSDWsiImmh9Q5vBPWtsWWW9KlJHV81Gr8/30RrKM
+	 expo0PpnwEFTeVooDq8KlrwwSSL7FvSxgNMGNEjn5asImb4oV0C8O4PBWOLPMWWbsA
+	 +6UtDGoA3WeomMES0kyA5I12kizyLAGjnIYp3JqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Riccardo Mancini <rickyman7@gmail.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/219] perf trace: Use zfree() to reduce chances of use after free
-Date: Sun, 17 Sep 2023 21:13:11 +0200
-Message-ID: <20230917191043.315076488@linuxfoundation.org>
+Subject: [PATCH 6.1 065/219] perf trace: Really free the evsel->priv area
+Date: Sun, 17 Sep 2023 21:13:12 +0200
+Message-ID: <20230917191043.350400134@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
 References: <20230917191040.964416434@linuxfoundation.org>
@@ -41,55 +46,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9997d5dd177c52017fa0541bf236a4232c8148e6 ]
+[ Upstream commit 7962ef13651a9163f07b530607392ea123482e8a ]
 
-Do defensive programming by using zfree() to initialize freed pointers
-to NULL, so that eventual use after free result in a NULL pointer deref
-instead of more subtle behaviour.
+In 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in
+evsel->priv") it only was freeing if strcmp(evsel->tp_format->system,
+"syscalls") returned zero, while the corresponding initialization of
+evsel->priv was being performed if it was _not_ zero, i.e. if the tp
+system wasn't 'syscalls'.
 
+Just stop looking for that and free it if evsel->priv was set, which
+should be equivalent.
+
+Also use the pre-existing evsel_trace__delete() function.
+
+This resolves these leaks, detected with:
+
+  $ make EXTRA_CFLAGS="-fsanitize=address" BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools-next -C tools/perf install-bin
+
+  =================================================================
+  ==481565==ERROR: LeakSanitizer: detected memory leaks
+
+  Direct leak of 40 byte(s) in 1 object(s) allocated from:
+      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
+      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
+      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
+      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
+      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
+      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
+      #6 0x540e8b in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3212
+      #7 0x540e8b in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
+      #8 0x540e8b in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
+      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
+      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
+      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
+      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
+      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
+
+  Direct leak of 40 byte(s) in 1 object(s) allocated from:
+      #0 0x7f7343cba097 in calloc (/lib64/libasan.so.8+0xba097)
+      #1 0x987966 in zalloc (/home/acme/bin/perf+0x987966)
+      #2 0x52f9b9 in evsel_trace__new /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:307
+      #3 0x52f9b9 in evsel__syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:333
+      #4 0x52f9b9 in evsel__init_raw_syscall_tp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:458
+      #5 0x52f9b9 in perf_evsel__raw_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:480
+      #6 0x540dd1 in trace__add_syscall_newtp /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3205
+      #7 0x540dd1 in trace__run /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:3891
+      #8 0x540dd1 in cmd_trace /home/acme/git/perf-tools-next/tools/perf/builtin-trace.c:5156
+      #9 0x5ef262 in run_builtin /home/acme/git/perf-tools-next/tools/perf/perf.c:323
+      #10 0x4196da in handle_internal_command /home/acme/git/perf-tools-next/tools/perf/perf.c:377
+      #11 0x4196da in run_argv /home/acme/git/perf-tools-next/tools/perf/perf.c:421
+      #12 0x4196da in main /home/acme/git/perf-tools-next/tools/perf/perf.c:537
+      #13 0x7f7342c4a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
+
+  SUMMARY: AddressSanitizer: 80 byte(s) leaked in 2 allocation(s).
+  [root@quaco ~]#
+
+With this we plug all leaks with "perf trace sleep 1".
+
+Fixes: 3cb4d5e00e037c70 ("perf trace: Free syscall tp fields in evsel->priv")
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Riccardo Mancini <rickyman7@gmail.com>
+Link: https://lore.kernel.org/lkml/20230719202951.534582-5-acme@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 7962ef13651a ("perf trace: Really free the evsel->priv area")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/builtin-trace.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
 diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 97b17f8941dc0..6392fcf2610c4 100644
+index 6392fcf2610c4..93dab6423a048 100644
 --- a/tools/perf/builtin-trace.c
 +++ b/tools/perf/builtin-trace.c
-@@ -2293,7 +2293,7 @@ static void syscall__exit(struct syscall *sc)
- 	if (!sc)
- 		return;
+@@ -3124,13 +3124,8 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
+ 	struct evsel *evsel;
  
--	free(sc->arg_fmt);
-+	zfree(&sc->arg_fmt);
- }
- 
- static int trace__sys_enter(struct trace *trace, struct evsel *evsel,
-@@ -3129,7 +3129,7 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
- 		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
- 			continue;
- 
--		free(et->fmt);
-+		zfree(&et->fmt);
- 		free(et);
+ 	evlist__for_each_entry(evlist, evsel) {
+-		struct evsel_trace *et = evsel->priv;
+-
+-		if (!et || !evsel->tp_format || strcmp(evsel->tp_format->system, "syscalls"))
+-			continue;
+-
+-		zfree(&et->fmt);
+-		free(et);
++		evsel_trace__delete(evsel->priv);
++		evsel->priv = NULL;
  	}
  }
-@@ -4765,11 +4765,11 @@ static void trace__exit(struct trace *trace)
- 	int i;
  
- 	strlist__delete(trace->ev_qualifier);
--	free(trace->ev_qualifier_ids.entries);
-+	zfree(&trace->ev_qualifier_ids.entries);
- 	if (trace->syscalls.table) {
- 		for (i = 0; i <= trace->sctbl->syscalls.max_id; i++)
- 			syscall__exit(&trace->syscalls.table[i]);
--		free(trace->syscalls.table);
-+		zfree(&trace->syscalls.table);
- 	}
- 	syscalltbl__delete(trace->sctbl);
- 	zfree(&trace->perfconfig_events);
 -- 
 2.40.1
 
