@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FC3746F
-	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA236C433C8;
-	Sun, 17 Sep 2023 20:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A373D746F
+	for <patches@lists.linux.dev>; Sun, 17 Sep 2023 20:29:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13719C433C7;
+	Sun, 17 Sep 2023 20:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694982578;
-	bh=yGXWSIxvLGoUipriWYiqlBjohYqmmF1ADQ/VIPkZ/M4=;
+	s=korg; t=1694982581;
+	bh=3/7SNU99+q6Xv7kU7AxqmlFKT9p1AD0Y+/qK9A6EHrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEZalphbE7o0/f10Cqa5vk5wfkvRQEbzefMvxEBSsX9e8tJ+rxnqMGF/IkldMzJBp
-	 V+mh0fFli63+PQH22BoRxzsUkC9oCdJL2J39IwwZvIXrk5l6NOnvD8DN6vkDb55QTc
-	 B17yxvuNI3XT7qW4Tc7VaGurChipmiWpdE7GeNcM=
+	b=o/0kUS3S4yTId72aQ7Emfa5xRkND5mivdSYK705eLKdbw5UbFuyu6PjLvbM4UpJJ5
+	 FL/UbAGFWxJHNTt4i4HH6An435qQsW2XGxu7iyrqEWO7kbD1hCfuT7TJLi5ynvZ7lT
+	 D3i/A79nl+fdWmUcuFoEY3fg74HX8r92cDhqqDm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Yanfei Xu <yanfei.xu@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/511] iommu/vt-d: Fix to flush cache of PASID directory table
-Date: Sun, 17 Sep 2023 21:11:41 +0200
-Message-ID: <20230917191120.455571693@linuxfoundation.org>
+Subject: [PATCH 5.15 292/511] scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock
+Date: Sun, 17 Sep 2023 21:11:59 +0200
+Message-ID: <20230917191120.891421208@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 References: <20230917191113.831992765@linuxfoundation.org>
@@ -41,42 +41,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yanfei Xu <yanfei.xu@intel.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 8a3b8e63f8371c1247b7aa24ff9c5312f1a6948b ]
+[ Upstream commit 1a1975551943f681772720f639ff42fbaa746212 ]
 
-Even the PCI devices don't support pasid capability, PASID table is
-mandatory for a PCI device in scalable mode. However flushing cache
-of pasid directory table for these devices are not taken after pasid
-table is allocated as the "size" of table is zero. Fix it by
-calculating the size by page order.
+There is a long call chain that &fip->ctlr_lock is acquired by isr
+fnic_isr_msix_wq_copy() under hard IRQ context. Thus other process context
+code acquiring the lock should disable IRQ, otherwise deadlock could happen
+if the IRQ preempts the execution while the lock is held in process context
+on the same CPU.
 
-Found this when reading the code, no real problem encountered for now.
+[ISR]
+fnic_isr_msix_wq_copy()
+ -> fnic_wq_copy_cmpl_handler()
+ -> fnic_fcpio_cmpl_handler()
+ -> fnic_fcpio_flogi_reg_cmpl_handler()
+ -> fnic_flush_tx()
+ -> fnic_send_frame()
+ -> fcoe_ctlr_els_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
 
-Fixes: 194b3348bdbb ("iommu/vt-d: Fix PASID directory pointer coherency")
-Suggested-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Yanfei Xu <yanfei.xu@intel.com>
-Link: https://lore.kernel.org/r/20230616081045.721873-1-yanfei.xu@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+[Process Context]
+1. fcoe_ctlr_timer_work()
+ -> fcoe_ctlr_flogi_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+2. fcoe_ctlr_recv_work()
+ -> fcoe_ctlr_recv_handler()
+ -> fcoe_ctlr_recv_els()
+ -> fcoe_ctlr_announce()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+3. fcoe_ctlr_recv_work()
+ -> fcoe_ctlr_recv_handler()
+ -> fcoe_ctlr_recv_els()
+ -> fcoe_ctlr_flogi_retry()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+4. -> fcoe_xmit()
+ -> fcoe_ctlr_els_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+spin_lock_bh() is not enough since fnic_isr_msix_wq_copy() is a
+hardirq.
+
+These flaws were found by an experimental static analysis tool I am
+developing for irq-related deadlock.
+
+The patch fix the potential deadlocks by spin_lock_irqsave() to disable
+hard irq.
+
+Fixes: 794d98e77f59 ("[SCSI] libfcoe: retry rejected FLOGI to another FCF if possible")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230817074708.7509-1-dg573847474@gmail.com
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/fcoe/fcoe_ctlr.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 6dbc43b414ca3..dc9d665d7365c 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -187,7 +187,7 @@ int intel_pasid_alloc_table(struct device *dev)
- 	device_attach_pasid_table(info, pasid_table);
+diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
+index 558f3f4e18593..303ecbd86b68a 100644
+--- a/drivers/scsi/fcoe/fcoe_ctlr.c
++++ b/drivers/scsi/fcoe/fcoe_ctlr.c
+@@ -319,16 +319,17 @@ static void fcoe_ctlr_announce(struct fcoe_ctlr *fip)
+ {
+ 	struct fcoe_fcf *sel;
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
  
- 	if (!ecap_coherent(info->iommu->ecap))
--		clflush_cache_range(pasid_table->table, size);
-+		clflush_cache_range(pasid_table->table, (1 << order) * PAGE_SIZE);
+ 	mutex_lock(&fip->ctlr_mutex);
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
  
- 	return 0;
+ 	kfree_skb(fip->flogi_req);
+ 	fip->flogi_req = NULL;
+ 	list_for_each_entry(fcf, &fip->fcfs, list)
+ 		fcf->flogi_sent = 0;
+ 
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 	sel = fip->sel_fcf;
+ 
+ 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
+@@ -699,6 +700,7 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
+ {
+ 	struct fc_frame *fp;
+ 	struct fc_frame_header *fh;
++	unsigned long flags;
+ 	u16 old_xid;
+ 	u8 op;
+ 	u8 mac[ETH_ALEN];
+@@ -732,11 +734,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
+ 		op = FIP_DT_FLOGI;
+ 		if (fip->mode == FIP_MODE_VN2VN)
+ 			break;
+-		spin_lock_bh(&fip->ctlr_lock);
++		spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 		kfree_skb(fip->flogi_req);
+ 		fip->flogi_req = skb;
+ 		fip->flogi_req_send = 1;
+-		spin_unlock_bh(&fip->ctlr_lock);
++		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 		schedule_work(&fip->timer_work);
+ 		return -EINPROGRESS;
+ 	case ELS_FDISC:
+@@ -1713,10 +1715,11 @@ static int fcoe_ctlr_flogi_send_locked(struct fcoe_ctlr *fip)
+ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ {
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
+ 	int error;
+ 
+ 	mutex_lock(&fip->ctlr_mutex);
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
+ 	fcf = fcoe_ctlr_select(fip);
+ 	if (!fcf || fcf->flogi_sent) {
+@@ -1727,7 +1730,7 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ 		fcoe_ctlr_solicit(fip, NULL);
+ 		error = fcoe_ctlr_flogi_send_locked(fip);
+ 	}
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 	mutex_unlock(&fip->ctlr_mutex);
+ 	return error;
  }
+@@ -1744,8 +1747,9 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
+ {
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
+ 
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 	fcf = fip->sel_fcf;
+ 	if (!fcf || !fip->flogi_req_send)
+ 		goto unlock;
+@@ -1772,7 +1776,7 @@ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
+ 	} else /* XXX */
+ 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
+ unlock:
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ }
+ 
+ /**
 -- 
 2.40.1
 
