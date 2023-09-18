@@ -1,132 +1,100 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E446FB8
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 13:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695043607; x=1726579607;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=9mdSjBgak3X7CxWik+JVulIYQIwZzjIpi9uzcf4feQE=;
-  b=X+eYQaCj5PIPHzU7DvruHMAj7dm8BMIqMHdNWDWRUAKyQqUkDLL+ZEQj
-   ePOiODD+BaDPK78lodH25WKUApmTAAvLQ+H7su5i56CfUp84M0k5pj0vt
-   jIdR44EWZ5Rk3bpSuboDAMX+YKmuCep/JBW4lURoo0OGHnn7ikvYz1h3S
-   ibli9dxNCeNGe6lvjFUSsuW0tfY/okQTJdTbSIBEKzbAP5aP2ZjJxCXeU
-   ERPqbZkTgPeKef/jEE1orrMzWqGLhcHyBIiLA3h1YaJt2BjLMojk3T31p
-   Q5m9YfQfeJV4OrpMKr5RJ7P77EAJXBSnPvGFAV7isbKXUA1sO1ces5h6I
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="466000302"
-X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
-   d="scan'208";a="466000302"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 06:26:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="861064597"
-X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
-   d="scan'208";a="861064597"
-Received: from nprotaso-mobl1.ccr.corp.intel.com ([10.252.49.156])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 06:26:43 -0700
-Date: Mon, 18 Sep 2023 16:26:41 +0300 (EEST)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: Hans de Goede <hdegoede@redhat.com>
-cc: Stephen Boyd <swboyd@chromium.org>, 
-    Mika Westerberg <mika.westerberg@linux.intel.com>, 
-    Mark Gross <markgross@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-    patches@lists.linux.dev, platform-driver-x86@vger.kernel.org, 
-    Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-    Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-    Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v4 2/4] platform/x86: intel_scu_ipc: Check status upon
- timeout in ipc_wait_for_interrupt()
-In-Reply-To: <a0573057-8b93-f6f8-59eb-e8d30ac7035f@redhat.com>
-Message-ID: <f3d06f3d-1dee-54c2-88b9-f33cfb86366@linux.intel.com>
-References: <20230913212723.3055315-1-swboyd@chromium.org> <20230913212723.3055315-3-swboyd@chromium.org> <2bd9b7e2-a558-305b-bfd9-e64c28b6303d@linux.intel.com> <a0573057-8b93-f6f8-59eb-e8d30ac7035f@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69E96FB8
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 14:00:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F393BC116B3;
+	Mon, 18 Sep 2023 14:00:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695045610;
+	bh=Mp0t6xBRp7GW/lv/lW+8V80MZSvPRsEKKvnE+N19w7I=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=sIV/8fDG3ItQTJzMKfYLydwi9r+iO8MJkUcbMl0nsxmdRgKOx3o7DSF1s/ZD1Byp0
+	 Nio/lwQNQt5oJ3mu3Hhjc/jxjwcIglmA+ufQa7F+5/Gd2K+LX6ESMGXUW50hdGdvbe
+	 cN0ABIX7+RyAD/HJYwzFcdoOmiFpedOCgCrmz79MXzftr+Ja27Hcfw7PlFtpJLB++o
+	 WN5HieRLMs+e70V7kch1q3eObCFcX6mhQzQGSiRkaI+W0OFQq+Tkz3GOws7jMWxMiG
+	 iMjhcnp4of6xUItvajD8Jo+bwzuDGMocHvzAIWHBJ3D2dA3FBgCQrWowt8m2jzG9tU
+	 XYYoy9cSv4O3g==
+Date: Mon, 18 Sep 2023 16:00:04 +0200
+From: Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Lee Jones
+ <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 261/406] leds: Fix BUG_ON check for
+ LED_COLOR_ID_MULTI that is always false
+Message-ID: <20230918160004.3511ae2e@dellmb>
+In-Reply-To: <20230917191108.094879104@linuxfoundation.org>
+References: <20230917191101.035638219@linuxfoundation.org>
+	<20230917191108.094879104@linuxfoundation.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-543075989-1695043025=:1832"
-Content-ID: <87977fa8-8a4f-18c8-6c6-1c2f8fd622cb@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Greg, please drop this patch from both 5.10 and 5.15.
 
---8323329-543075989-1695043025=:1832
-Content-Type: text/plain; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <d1a9ce37-d373-c568-271f-5872936c1b0@linux.intel.com>
+Reference:=20
+  https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/
 
-On Mon, 18 Sep 2023, Hans de Goede wrote:
-> On 9/15/23 15:49, Ilpo Järvinen wrote:
-> > On Wed, 13 Sep 2023, Stephen Boyd wrote:
-> > 
-> >> It's possible for the completion in ipc_wait_for_interrupt() to timeout,
-> >> simply because the interrupt was delayed in being processed. A timeout
-> >> in itself is not an error. This driver should check the status register
-> >> upon a timeout to ensure that scheduling or interrupt processing delays
-> >> don't affect the outcome of the IPC return value.
-> >>
-> >>  CPU0                                                   SCU
-> >>  ----                                                   ---
-> >>  ipc_wait_for_interrupt()
-> >>   wait_for_completion_timeout(&scu->cmd_complete)
-> >>   [TIMEOUT]                                             status[IPC_STATUS_BUSY]=0
-> >>
-> >> Fix this problem by reading the status bit in all cases, regardless of
-> >> the timeout. If the completion times out, we'll assume the problem was
-> >> that the IPC_STATUS_BUSY bit was still set, but if the status bit is
-> >> cleared in the meantime we know that we hit some scheduling delay and we
-> >> should just check the error bit.
-> > 
-> > Hi,
-> > 
-> > I don't understand the intent here. What prevents IPC_STATUS_BUSY from 
-> > changing right after you've read it in ipc_read_status(scu)? Doesn't that 
-> > end you exactly into the same situation where the returned value is stale 
-> > so I cannot see how this fixes anything, at best it just plays around the 
-> > race window that seems to still be there after this fix?
-> 
-> As I understand it the problem before was that the function would
-> return -ETIMEDOUT; purely based on wait_for_completion_timeout()
-> without ever actually checking the BUSY bit:
-> 
-> Old code:
-> 
-> 	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
-> 		return -ETIMEDOUT;
-> 
-> This allows for a scenario where when the IRQ processing got delayed
-> (on say another core) causing the timeout to trigger,
-> ipc_wait_for_interrupt() would return -ETIMEDOUT even though
-> the BUSY flag was already cleared by the SCU.
-> 
-> This patch adds an explicit check for the BUSY flag after
-> the wait_for_completion(), rather then relying on the
-> wait_for_completion() return value which implies things
-> are still busy.
+I am going to send a fix to drop the check altogether.
 
-Oh, I see, it's because the code is waiting for the completion rather than
-the actual condition.
+Marek
 
-> As for "What prevents IPC_STATUS_BUSY from 
-> changing right after you've read it in ipc_read_status(scu)?"
-> 
-> AFAICT in this code path the bit is only ever supposed to go
-> from being set (busy) to unset (not busy), not the other
-> way around since no new commands can be submitted until
-> this function has completed. So that scenario cannot happen.
+On Sun, 17 Sep 2023 21:11:55 +0200
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-This is not what I meant.
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Marek Beh=C3=BAn <kabel@kernel.org>
+>=20
+> [ Upstream commit c3f853184bed04105682383c2971798c572226b5 ]
+>=20
+> At the time we call
+>     BUG_ON(props.color =3D=3D LED_COLOR_ID_MULTI);
+> the props variable is still initialized to zero.
+>=20
+> Call the BUG_ON only after we parse fwnode into props.
+>=20
+> Fixes: 77dce3a22e89 ("leds: disallow /sys/class/leds/*:multi:* for now")
+> Signed-off-by: Marek Beh=C3=BAn <kabel@kernel.org>
+> Link: https://lore.kernel.org/r/20230801151623.30387-1-kabel@kernel.org
+> Signed-off-by: Lee Jones <lee@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/leds/led-core.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
+> index c4e780bdb3852..2cf5897339ac1 100644
+> --- a/drivers/leds/led-core.c
+> +++ b/drivers/leds/led-core.c
+> @@ -425,15 +425,15 @@ int led_compose_name(struct device *dev, struct led=
+_init_data *init_data,
+>  	struct fwnode_handle *fwnode =3D init_data->fwnode;
+>  	const char *devicename =3D init_data->devicename;
+> =20
+> -	/* We want to label LEDs that can produce full range of colors
+> -	 * as RGB, not multicolor */
+> -	BUG_ON(props.color =3D=3D LED_COLOR_ID_MULTI);
+> -
+>  	if (!led_classdev_name)
+>  		return -EINVAL;
+> =20
+>  	led_parse_fwnode_props(dev, fwnode, &props);
+> =20
+> +	/* We want to label LEDs that can produce full range of colors
+> +	 * as RGB, not multicolor */
+> +	BUG_ON(props.color =3D=3D LED_COLOR_ID_MULTI);
+> +
+>  	if (props.label) {
+>  		/*
+>  		 * If init_data.devicename is NULL, then it indicates that
 
-I meant that if the code has decided to return -ETIMEDOUT, the status bit 
-still change at that point which makes the return value to not match. This 
-race is still there and given the changelog was a bit sparse on what race 
-it was fixing I ended up noticing this detail.
-
-
--- 
- i.
---8323329-543075989-1695043025=:1832--
