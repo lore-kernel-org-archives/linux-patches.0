@@ -1,68 +1,151 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463716FD0
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 07:57:17 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 87C511C0004; Mon, 18 Sep 2023 09:57:08 +0200 (CEST)
-Date: Mon, 18 Sep 2023 09:57:08 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 5.10 000/406] 5.10.195-rc1 review
-Message-ID: <ZQgC1IlLVFb3cxKV@duo.ucw.cz>
-References: <20230917191101.035638219@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC8014017
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 08:04:20 +0000 (UTC)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-1d69b2ffa1fso1397276fac.2
+        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 01:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695024259; x=1695629059; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KPP0JSvglHXB5a6MB2wK6irdRvbJ0js+qbHXjwIeNOU=;
+        b=SSLrgsHG8vxlh1mp2HxXVX9k/7mC2O8rUVtlHhetEnp4ZwlL3LZ59ukd9Hqz+hTLQT
+         2XtiQU3NfnvPmeYpAkJo8Ho4a3lR0hhH0UD8zsLCRIIZ1vl3+9gqonLuhiReUHfNo4pX
+         /wNDRRDeBZCklXFxWtp/g/nKuHM4NIL9rqTuUPAnWCMnLkPXI36bvImTHkux6L6bevCa
+         L0c/HcUGvgKw97lzbox+k25rMourY0zg27TbfLFpASf5np9MuOHOu3dZOggya4l5K28Y
+         80Ly7TPR1RDKo4R+DejhK3goCUv7A9cMekmx4SfeS2fQxCprtZgpaGRH5IO2WnmRbolJ
+         EjoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695024259; x=1695629059;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KPP0JSvglHXB5a6MB2wK6irdRvbJ0js+qbHXjwIeNOU=;
+        b=l7WXw+Qt1cL3TCXr/ptL76JztGKTZRS5xD9ft2OuncJPcKcD70YWSF6iMnKnADXidF
+         lmmXN1Vsly1JAbQJFazBLMXTUsORxKx79uEAZCBSb9LW/oomk2BXDtuoXdeGEp/D+osN
+         pjTdmckrwWHEl1P5pZulxOK1/B8OGFNeZPRe7LLe9VmzoJLA5DrfWQwf+0dlWR1aiwyo
+         W3L5EXb7uohnHiYFhauwQkEeo4p0hqMow2/efg/RBS4yspv2qsnwAC7gl8r9E+1NsQGU
+         bO7f23xDl2ZD3AWIROclN/cPDU11lk9mJPsqftXZwwT0ZmJ1AM6assFHzgwQ6q6xME6n
+         w6ig==
+X-Gm-Message-State: AOJu0Yww5fd72F8xrwnYghhNZABnaeQpenlob6Nfalj4BjpgNkxfmGzG
+	a1QnkOyrSZ7l4j4VD0GHnV+h/pFX9NOWNVb+Pho=
+X-Google-Smtp-Source: AGHT+IHQpVuGvrGSLu2qPivoM1jgXWzjRIFWvsbeUKzZ0adYjeJzemaCk5yAN5b3j88OAoAl67U+GmR3m0xaBmycl1w=
+X-Received: by 2002:a05:6870:8991:b0:1c0:3110:12cc with SMTP id
+ f17-20020a056870899100b001c0311012ccmr11379120oaq.55.1695024259470; Mon, 18
+ Sep 2023 01:04:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IFcS+jduJveKM0vL"
-Content-Disposition: inline
-In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
-
-
---IFcS+jduJveKM0vL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230917191051.639202302@linuxfoundation.org> <20230917191055.579497834@linuxfoundation.org>
+In-Reply-To: <20230917191055.579497834@linuxfoundation.org>
+From: Ilya Dryomov <idryomov@gmail.com>
+Date: Mon, 18 Sep 2023 10:04:07 +0200
+Message-ID: <CAOi1vP9Mh02NB4-n5Wy3Zs1Y8M33qJsZzd12Y6k991jubQVzwQ@mail.gmail.com>
+Subject: Re: [PATCH 6.5 113/285] ceph: make members in struct
+ ceph_mds_request_args_ext a union
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Xiubo Li <xiubli@redhat.com>, Milind Changire <mchangir@redhat.com>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Sun, Sep 17, 2023 at 9:49=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.5-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
+> ------------------
+>
+> From: Xiubo Li <xiubli@redhat.com>
+>
+> [ Upstream commit 3af5ae22030cb59fab4fba35f5a2b62f47e14df9 ]
+>
+> In ceph mainline it will allow to set the btime in the setattr request
+> and just add a 'btime' member in the union 'ceph_mds_request_args' and
+> then bump up the header version to 4. That means the total size of union
+> 'ceph_mds_request_args' will increase sizeof(struct ceph_timespec) bytes,
+> but in kclient it will increase the sizeof(setattr_ext) bytes for each
+> request.
+>
+> Since the MDS will always depend on the header's vesion and front_len
+> members to decode the 'ceph_mds_request_head' struct, at the same time
+> kclient hasn't supported the 'btime' feature yet in setattr request,
+> so it's safe to do this change here.
+>
+> This will save 48 bytes memories for each request.
+>
+> Fixes: 4f1ddb1ea874 ("ceph: implement updated ceph_mds_request_head struc=
+ture")
+> Signed-off-by: Xiubo Li <xiubli@redhat.com>
+> Reviewed-by: Milind Changire <mchangir@redhat.com>
+> Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  include/linux/ceph/ceph_fs.h | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+>
+> diff --git a/include/linux/ceph/ceph_fs.h b/include/linux/ceph/ceph_fs.h
+> index 49586ff261520..b4fa2a25b7d95 100644
+> --- a/include/linux/ceph/ceph_fs.h
+> +++ b/include/linux/ceph/ceph_fs.h
+> @@ -462,17 +462,19 @@ union ceph_mds_request_args {
+>  } __attribute__ ((packed));
+>
+>  union ceph_mds_request_args_ext {
+> -       union ceph_mds_request_args old;
+> -       struct {
+> -               __le32 mode;
+> -               __le32 uid;
+> -               __le32 gid;
+> -               struct ceph_timespec mtime;
+> -               struct ceph_timespec atime;
+> -               __le64 size, old_size;       /* old_size needed by trunca=
+te */
+> -               __le32 mask;                 /* CEPH_SETATTR_* */
+> -               struct ceph_timespec btime;
+> -       } __attribute__ ((packed)) setattr_ext;
+> +       union {
+> +               union ceph_mds_request_args old;
+> +               struct {
+> +                       __le32 mode;
+> +                       __le32 uid;
+> +                       __le32 gid;
+> +                       struct ceph_timespec mtime;
+> +                       struct ceph_timespec atime;
+> +                       __le64 size, old_size;       /* old_size needed b=
+y truncate */
+> +                       __le32 mask;                 /* CEPH_SETATTR_* */
+> +                       struct ceph_timespec btime;
+> +               } __attribute__ ((packed)) setattr_ext;
+> +       };
 
-> This is the start of the stable review cycle for the 5.10.195 release.
-> There are 406 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Xiubo,
 
-CIP testing did not find any problems here:
+I was going to ask whether it makes sense to backport this change, but,
+after looking at it, the change seems bogus to me even in mainline.  You
+added a union inside siting memory use but ceph_mds_request_args_ext was
+already a union before:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.10.y
+    union ceph_mds_request_args_ext {
+        union ceph_mds_request_args old;
+        struct { ... } __attribute__ ((packed)) setattr_ext;
+    }
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+What is being achieved here?
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+    union ceph_mds_request_args_ext {
+        union {
+            union ceph_mds_request_args old;
+            struct { ... } __attribute__ ((packed)) setattr_ext;
+        };
+    }
 
---IFcS+jduJveKM0vL
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZQgC1AAKCRAw5/Bqldv6
-8iFxAKCjLMFBXZnz1xUFq2RBHChFef/NugCgpaBFIVYcnvH8FdrnC0da1zOogGQ=
-=MztH
------END PGP SIGNATURE-----
-
---IFcS+jduJveKM0vL--
+                Ilya
