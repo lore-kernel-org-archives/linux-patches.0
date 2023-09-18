@@ -1,70 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86D423748
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 16:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0C0C433CB;
-	Mon, 18 Sep 2023 16:17:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695053852;
-	bh=DQQ6e5dUAGAEmHLUF+dLJ6eP+3jZnMJLKtK6MB24T8A=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=as5A4WtXZ8nNG6ESDvjGEal20NONI6D/wFrUdtWOSW0wM7nw76n9M2Nbv4ettHLSn
-	 fM+hHfKJGN5QRIQvDlWvxNxFLjBseestJr4hva2awD+zIPWqORaTZiCfqck5ojaF6x
-	 oeZ9+3OlNBrTv/rVkfcBxPy7mwpWcQYRy8NKo9LrK+x9d3gMGwjxPJ3tMBETONw5JL
-	 YWquEwNNB5VLS7l1+PnSWHCJnhgUCf9qg8GTxvTWJgUPNZkFPPwah1foDZqTIUvp45
-	 syRNHdHTC0eOVeogx0X6pDsYtoK6XmU/V0f7teDBKOIpnffzQiYGcO1Ihbg3UG8P9H
-	 wMpIkFCkP9/0A==
-Date: Mon, 18 Sep 2023 18:17:27 +0200
-From: Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Lee Jones
- <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 261/406] leds: Fix BUG_ON check for
- LED_COLOR_ID_MULTI that is always false
-Message-ID: <20230918181727.74a28f4a@dellmb>
-In-Reply-To: <2023091836-papaya-jackknife-2867@gregkh>
-References: <20230917191101.035638219@linuxfoundation.org>
-	<20230917191108.094879104@linuxfoundation.org>
-	<20230918160004.3511ae2e@dellmb>
-	<2023091836-papaya-jackknife-2867@gregkh>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB59F33E2
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 16:29:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695054577; x=1726590577;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=mUsyv642lSfHpOACGU5mHLtbltxVExA86+s11mm3p3o=;
+  b=gIFbJ5VFhy+/rNqm5hU3RxtTt5l7AKlTUPHc/7/sxcKDaq7RwBX3deuF
+   FUDF0cVsAPGCf1nrhSwERcH5EdhGjoQpa4aviGNw/tpzHp8sweEJcBUXS
+   kL5K9t98X4gXNPku282/DSOYiwAA2fwSV1KcXR6G/QGg7vn46R3l970S8
+   eXsBcPtd0ZGGBuMf54tly0EtL3xPyGRTUGR8w5xeflyBdapaV6Wu6KMWg
+   UC/Yl/5Keo+umXuFkxQwoggY1Sh8J1ELK0++1sJkGZsSGEI6pRCXtova6
+   E+sLVNkKfeTCu8QBSPGqXtXBy96QWYVWKIqOXTy3AbIPrGl7FZ7D1en0/
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="443784047"
+X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
+   d="scan'208";a="443784047"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 09:29:37 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="861132842"
+X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
+   d="scan'208";a="861132842"
+Received: from nprotaso-mobl1.ccr.corp.intel.com ([10.252.49.156])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 09:29:33 -0700
+Date: Mon, 18 Sep 2023 19:29:31 +0300 (EEST)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: "Luck, Tony" <tony.luck@intel.com>
+cc: "Joseph, Jithu" <jithu.joseph@intel.com>, 
+    Hans de Goede <hdegoede@redhat.com>, 
+    "markgross@kernel.org" <markgross@kernel.org>, 
+    "tglx@linutronix.de" <tglx@linutronix.de>, 
+    "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>, 
+    "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, 
+    "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, 
+    "rostedt@goodmis.org" <rostedt@goodmis.org>, 
+    "Raj, Ashok" <ashok.raj@intel.com>, LKML <linux-kernel@vger.kernel.org>, 
+    "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>, 
+    "patches@lists.linux.dev" <patches@lists.linux.dev>, 
+    "Shankar, Ravi V" <ravi.v.shankar@intel.com>, 
+    "Xu, Pengfei" <pengfei.xu@intel.com>
+Subject: RE: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
+ generations
+In-Reply-To: <SJ1PR11MB608304A84A2B662C78FDB677FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Message-ID: <a02d2957-3ec4-f89c-ebe-474c3987b237@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-4-jithu.joseph@intel.com> <ba753b39-1819-35ff-1248-6ce2c2824ae9@linux.intel.com> <e084652a-91a0-0c16-7acb-d51a3d2f7ed5@intel.com> <10fe57c-c926-9de4-be84-21a0f8abab6d@linux.intel.com>
+ <SJ1PR11MB6083A4237D928F180B6DB1E1FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com> <56b486ce-2a6e-c4c7-8bc5-ceeb7119ba1@linux.intel.com> <SJ1PR11MB608304A84A2B662C78FDB677FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
 
-On Mon, 18 Sep 2023 17:22:59 +0200
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 18 Sep 2023, Luck, Tony wrote:
 
-> On Mon, Sep 18, 2023 at 04:00:04PM +0200, Marek Beh=C3=BAn wrote:
-> > Greg, please drop this patch from both 5.10 and 5.15.
-> >=20
-> > Reference:=20
-> >   https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/ =20
->=20
-> But this is already in released kernels:
-> 	6.1.53 6.4.16 6.5.3 6.6-rc1
->=20
-> > I am going to send a fix to drop the check altogether. =20
->=20
-> We will be glad to queue up the fix as well when it hits Linus's tree,
-> please be sure to tag it for stable backporting so we can get it in all
-> locations.
->=20
-> But for now, being bug-compatible makes more sense, right?  Or is this
-> really critical and should not be in these kernels now?
+> > Since you replied, would you happen to have a pointer something that tells 
+> > (in writing) how the bitfields in C are allocated in case of x86_64? I 
+> > spent a bit of time trying to find something but came up nothing.
+> 
+> Search engines don't seem to be as good as they used to be (or I'm not as
+> good at finding the right query). 
+> 
+> There's a bit on page 14 of:
+> 
+> https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf
+> 
+> that says bit fields are allocated right to left (which is a good
+> start). But I thought there was a doc somewhere that gave
+> more detail about alignment of bitfields.
 
-According to that e-mail, the patch breaks booting for some systems, so
-if it would be possible to avoid it...
+Thanks, appreciated.
 
-I've sent a fixup patch which removes the BUG_ON altogether, and
-referenced the patch that broke booting in the Fixes tag. But I don't
-know how long it will take to hit Linus' tree, it may take several
-weeks.
+In this case it is not just about the bitfield itself nor the bit 
+allocation order but sharing the storage unit with another member, and to 
+further complicate things, members have different alignment requirement 
+too (32-bit aligned u8 followed by u32 bitfield).
 
-Marek
+The document states: "Bit-fields obey the same size and alignment rules as 
+other structure and union members." which seems to contradict my test 
+that found that the u32 bitfield won't be 32-bit aligned but gets combined 
+with the 32-bit aligned u8. Perhaps it's because the total number of bits 
+still fits to 32 bits so the bitfield doesn't cross the 32-bit boundary 
+even when combined with the preceeding u8.
+
+
+-- 
+ i.
+
