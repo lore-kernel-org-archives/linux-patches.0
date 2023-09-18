@@ -1,112 +1,91 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6981F5E9
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 16:58:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695056299; x=1726592299;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ziHw/sy984NIKoppaIYXIKlbyWVZyfzywUzaodCwEt4=;
-  b=IwW60tA6ccmRYbumrF8fifrQSla0PyJ69esOeIwztAU4c5fFt8sdODN9
-   cMvbrLGFotAx6O0B55rotjE2M9oMfBiljf9e5p2btGUfa5IOavci6UGcL
-   ToifvYkAukjDsrjy4LdCIli/ykEorsK94hsJUx0Chv0meG57Y/FtUIgc3
-   LQMKDeR/Dqw35EMofMpw3BwfGXhYy+Wy01Lp8JH4oijkarNXLfZSuOFYm
-   o8QBLL22zXYYB9hD+PXoZapwfg96HVSE8in5d1qwnOSnUWUE9rQPaAyAH
-   6FDgIY0c/8DW6CVH0OiVqdYGVfokV82WyRAz0YjOAFwuE5m7IJIASYXZE
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="383537648"
-X-IronPort-AV: E=Sophos;i="6.02,157,1688454000"; 
-   d="scan'208";a="383537648"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 09:58:05 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="992799245"
-X-IronPort-AV: E=Sophos;i="6.02,157,1688454000"; 
-   d="scan'208";a="992799245"
-Received: from ecochran-mobl1.amr.corp.intel.com (HELO [10.212.244.237]) ([10.212.244.237])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 09:58:03 -0700
-Message-ID: <789bc8e6-882a-3dfb-7381-fd9b5aca3c77@intel.com>
-Date: Mon, 18 Sep 2023 09:58:02 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217ED38FB7
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 17:03:27 +0000 (UTC)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-7928ba24936so162045039f.0
+        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 10:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695056607; x=1695661407; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LAN6eFd4fB8Jue9t+rReqiCy+eBs2TmxKe/oinfuoLE=;
+        b=PdvaG0mZLOPb3+x3qzfct2UfQAOy7SWVeTwm4lfPbBkiww6nhAOTHBGXcEAbtZwRLA
+         ZnxLYCSGAedrwxhnUe0VZ6mRwwo9ersTsj1zpOIladsjlPNMVm1Ja7+TwmfujPW5r7m/
+         MjFyEKos2xbnl/L0FFWFZzzsh5QdS12gaoT+QUig/PVEjkp0+gB/LTVOUTrUGDDcK+Zw
+         lZSpp/yKbbPWDsxVEj0UlcaJvrnEqRlyaduwckqN9FzWk2jQo9Ag/Zh7/0EqPPMkFYML
+         WPnS/LmJQQ7/HGE0VjNGw44Lcsgt7eiWUAOXfH/tvNKzeZKue+1XT5FxQGkCtjbvqdIY
+         OZAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695056607; x=1695661407;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LAN6eFd4fB8Jue9t+rReqiCy+eBs2TmxKe/oinfuoLE=;
+        b=aRqPPYjdCVNZ6Q4Nz8LGxhEMqT2N3MCuSCR8sLFo4Mz4wKCKtpa347Zj98Ueu7aNPL
+         826ChXbWVf6srGhYpRKnNVXdGosOEmNu/2C+a1cltKyx11hZEjploWOWadpAOuqmwuUI
+         wInHe7IEkpdZCUbefFzLxnQCsAn73M48VRa5ga3xutbM3MQRlHYlGhpKBTY39BXaFQBC
+         CKDK0SyP2kabzJJQn74UTS2vJ23VegKXHB64i8KFyM2/E7mzdEvwdhFoyN5qIiExiw69
+         fSVB+e1aRbbICtd6k3eE0pLdaSawWuBcsCXACQ1MzWSA/IVTbVnz+EpYo3LeaUriOWAp
+         LlBA==
+X-Gm-Message-State: AOJu0YwRI9pi4PNCH1t7qR+ykRWzEppeyk/rpWfHMNl5xpjJX3npox6P
+	lwjiY7oup2g4VD5l0v4DZG0=
+X-Google-Smtp-Source: AGHT+IGK7meVu2qpFrRpwKHUVrO55cSDbF7VstRtUdvHnRD8iWEdQS7od9KpvMDyXqsrVafFxATjhA==
+X-Received: by 2002:a6b:5c18:0:b0:795:16b8:85fc with SMTP id z24-20020a6b5c18000000b0079516b885fcmr10619896ioh.0.1695056606987;
+        Mon, 18 Sep 2023 10:03:26 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id gw23-20020a0566381ef700b00439e20a2c59sm672740jab.144.2023.09.18.10.03.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Sep 2023 10:03:26 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 18 Sep 2023 10:03:24 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 000/511] 5.15.132-rc1 review
+Message-ID: <79a88da2-70cc-4d4d-b322-c44135365969@roeck-us.net>
+References: <20230917191113.831992765@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
- generations
-Content-Language: en-US
-To: "Joseph, Jithu" <jithu.joseph@intel.com>,
- =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "Luck, Tony" <tony.luck@intel.com>
-Cc: Hans de Goede <hdegoede@redhat.com>,
- "markgross@kernel.org" <markgross@kernel.org>,
- "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
- "rostedt@goodmis.org" <rostedt@goodmis.org>, "Raj, Ashok"
- <ashok.raj@intel.com>, LKML <linux-kernel@vger.kernel.org>,
- "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
- "Xu, Pengfei" <pengfei.xu@intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com>
- <20230913183348.1349409-4-jithu.joseph@intel.com>
- <ba753b39-1819-35ff-1248-6ce2c2824ae9@linux.intel.com>
- <e084652a-91a0-0c16-7acb-d51a3d2f7ed5@intel.com>
- <10fe57c-c926-9de4-be84-21a0f8abab6d@linux.intel.com>
- <SJ1PR11MB6083A4237D928F180B6DB1E1FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <56b486ce-2a6e-c4c7-8bc5-ceeb7119ba1@linux.intel.com>
- <SJ1PR11MB608304A84A2B662C78FDB677FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <a02d2957-3ec4-f89c-ebe-474c3987b237@linux.intel.com>
- <826a2b32-bd6a-900a-19fa-e169fcf0d29d@intel.com>
-From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <826a2b32-bd6a-900a-19fa-e169fcf0d29d@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
 
-On 9/18/23 09:51, Joseph, Jithu wrote:
+On Sun, Sep 17, 2023 at 09:07:07PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.132 release.
+> There are 511 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On 9/18/2023 9:29 AM, Ilpo Järvinen wrote:
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
 > 
->> In this case it is not just about the bitfield itself nor the bit 
->> allocation order but sharing the storage unit with another member, and to 
->> further complicate things, members have different alignment requirement 
->> too (32-bit aligned u8 followed by u32 bitfield).
->>
-> I too verified that the size of the whole structure matches that of MSR  64 bits (8 bytes). 
+
+ChromeOS build tests complain:
+
+fs/ksmbd/smb2pdu.c:6256:6: error: variable 'fp' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+        if (work->next_smb2_rcv_hdr_off) {
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+fs/ksmbd/smb2pdu.c:6367:21: note: uninitialized use occurs here
+        ksmbd_fd_put(work, fp);
+
+That is caused by
+
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: no response from compound read
 > 
-> Initially when IFS scan was added the  all MSR structure members were  bit-fields, later there was a suggestion to
-> use basic C types if applicable during subsequent Array BIST patch series. I followed this approach with the  current patch series . 
-> 
-> I will change the current series to use all bit-field MSR structures in v2, given mixing basic types and bitfields is a a source of confusion
 
-That's the wrong direction. :)
+The compiler suggests to initialize fp with NULL. That _might_ be
+a feasible solution.
 
-What is more obviously correct.  This:
-
-	struct {
-		u16	valid_chunks;
-		u16	total_chunks;
-		u8	error_code;
-		u8	rsvd1;
-		u8	rsvd2;
-		u8	rsvd3;
-	};
-
-or this:
-
-	struct {
-		u16	valid_chunks;
-		u16	total_chunks;
-		u8	error_code;
-		u32	error_code	:8;
-		u32	rsvd		:24;
-	};
-
-?
+Guenter
