@@ -1,73 +1,100 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7411108
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 01:51:27 +0000 (UTC)
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-403012f27e3so45581405e9.3
-        for <patches@lists.linux.dev>; Sun, 17 Sep 2023 18:51:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695001886; x=1695606686; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mdhYeWFUupd8CumwOXd56eCg8LNwmhFEfrbDHqjtz+U=;
-        b=HCpvWeaHl3M8UqG/xIi7ewaUrQVH8RRvE3Fcsx81rEnKFg3LcG1k5x398K5hYKHh66
-         L6mhN3cyomkz2RHuuENSmbvshwlD9kXXc/jgz7z4MqZtAGxhXplx4Ou5HtZhuYldaROE
-         5AKPGAhjYW30kprLdw6H/KNqYplQ66n64cqKCgUMhxGijnE6YOV6ljwTp+RtjTUVIBVa
-         Cjt3NULyQpL4v4pw9h3pfQ0xGvGreDyS106/sVrXyzHY5//nKSE1bm0l4rXZMc+iKlGj
-         CYKbDXRpk9joK+NIzUIGQ3mnNTDF21t3hu68PrZCmL8QxF2wyuShY2cIRHDdOkradmIL
-         k22Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695001886; x=1695606686;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mdhYeWFUupd8CumwOXd56eCg8LNwmhFEfrbDHqjtz+U=;
-        b=IJ7gbZYuEXedUEFEMdsWM5M8iEOqnh2pUlk+x6avf0r1C9ozL05iv6cakn+o5/lMu5
-         zJV2d3FFNWSEbixiVrdPM7093KaARHlNqkHOURMixbv/4HxadzQREF+r1tPH1q/wKVjG
-         YR4ANpGnS30B5O74H3LWm9PrjR5Egh7tYxoLlN33qqsLHLNTJRLlwExsYp/rRiO8mkyw
-         UCmypTd+LeQkeXJmG2EQ6Oth7EJkRg7+kJO96hY2yzKQHnzUcVjuEvhD9sCM57A6w2+V
-         0qURuEf4XaYkMEjwI93KjLxgoYMigMVkOiZ2zqkb70sZ73SE4Qs0SYK4kwgCtkcdJifY
-         F4lg==
-X-Gm-Message-State: AOJu0YxA8heBmgv/VNZySnrm624HsZIsIE2TXZkGnUQ6kOsORb2WW8VP
-	7McxhQferNLNmuURiIfXsmMTWWSV+9MgBZFnF8I=
-X-Google-Smtp-Source: AGHT+IFsN4CSXAya55dgE/LFOVwBdT2N/njIrBCW1aKeXbivsdFRaHER1bQCTOosW08QEABG5AAoe7g6AVganKqPiuo=
-X-Received: by 2002:adf:ef8a:0:b0:317:5f13:5c2f with SMTP id
- d10-20020adfef8a000000b003175f135c2fmr8236049wro.0.1695001885774; Sun, 17 Sep
- 2023 18:51:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F814636
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 02:53:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA78DC433C7;
+	Mon, 18 Sep 2023 02:53:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695005600;
+	bh=GJjOhUP4OKDfkDNhn3pYK9zC2cKS3WVCHaHu8CtXp2w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eYXQOChEKhGUCuReprgPoeSS9k2OlXKjRVPcKueJJMmFRqhnxdCalw2wowD6ApjLC
+	 qzof5cpD21OmyUDih5Vs3dEnrk0EhitbOftxbULF0ad4FaiJWOib/0rvQwNwNk/7OK
+	 sA7CdeDvDxOKe0f8eS3L+08a3zfAxul7fDVeHAousNvgXm6T6Qo0YMB+PsB4uW4M0j
+	 fHPNzbYhTIB346x/IoZV+cYdano9Tsw7DNzn575Bu06ZlAqmq+AOYpLm9V97hmrajm
+	 3o+i8AD4YNdPDlKTje/LIO0PLawT0cFqQzFoOxMkIcTclQiJoOWAO2Q4ZhI+6gMFC+
+	 KsSBpjddvdyZQ==
+Date: Sun, 17 Sep 2023 19:53:18 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 096/406] crypto: blake2b - sync with blake2s
+ implementation
+Message-ID: <20230918025318.GA5356@sol.localdomain>
+References: <20230917191101.035638219@linuxfoundation.org>
+ <20230917191103.663752909@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230917191101.035638219@linuxfoundation.org> <20230917191109.075455780@linuxfoundation.org>
- <276965bc5bb339bc02bbd653072ceb50a7103400.camel@gmail.com>
-In-Reply-To: <276965bc5bb339bc02bbd653072ceb50a7103400.camel@gmail.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Sun, 17 Sep 2023 18:51:14 -0700
-Message-ID: <CAADnVQ+OwQzzGC7tP_qbLYi=k6T4dPKrod57iXt2-_JFCdqF4g@mail.gmail.com>
-Subject: Re: [PATCH 5.10 294/406] bpf: Fix issue in verifying allow_ptr_leaks
-To: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable <stable@vger.kernel.org>, 
-	patches@lists.linux.dev, Yonghong Song <yonghong.song@linux.dev>, 
-	Yafang Shao <laoar.shao@gmail.com>, Alexei Starovoitov <ast@kernel.org>, gerhorst@amazon.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230917191103.663752909@linuxfoundation.org>
 
-On Sun, Sep 17, 2023 at 1:21=E2=80=AFPM Eduard Zingerman <eddyz87@gmail.com=
-> wrote:
->
-> On Sun, 2023-09-17 at 21:12 +0200, Greg Kroah-Hartman wrote:
-> > 5.10-stable review patch.  If anyone has any objections, please let me =
-know.
->
-> I believe Luis Gerhorst posted an objection to this patch for 6.1 in [1],
-> for reasons described in [2]. The objection is relevant for 5.10 as well
-> (does not depend on kernel version, actually).
+On Sun, Sep 17, 2023 at 09:09:10PM +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Eric Biggers <ebiggers@google.com>
+> 
+> [ Upstream commit 28dcca4cc0c01e2467549a36b1b0eacfdb01236c ]
+> 
+> Sync the BLAKE2b code with the BLAKE2s code as much as possible:
+> 
+> - Move a lot of code into new headers <crypto/blake2b.h> and
+>   <crypto/internal/blake2b.h>, and adjust it to be like the
+>   corresponding BLAKE2s code, i.e. like <crypto/blake2s.h> and
+>   <crypto/internal/blake2s.h>.
+> 
+> - Rename constants, e.g. BLAKE2B_*_DIGEST_SIZE => BLAKE2B_*_HASH_SIZE.
+> 
+> - Use a macro BLAKE2B_ALG() to define the shash_alg structs.
+> 
+> - Export blake2b_compress_generic() for use as a fallback.
+> 
+> This makes it much easier to add optimized implementations of BLAKE2b,
+> as optimized implementations can use the helper functions
+> crypto_blake2b_{setkey,init,update,final}() and
+> blake2b_compress_generic().  The ARM implementation will use these.
+> 
+> But this change is also helpful because it eliminates unnecessary
+> differences between the BLAKE2b and BLAKE2s code, so that the same
+> improvements can easily be made to both.  (The two algorithms are
+> basically identical, except for the word size and constants.)  It also
+> makes it straightforward to add a library API for BLAKE2b in the future
+> if/when it's needed.
+> 
+> This change does make the BLAKE2b code slightly more complicated than it
+> needs to be, as it doesn't actually provide a library API yet.  For
+> example, __blake2b_update() doesn't really need to exist yet; it could
+> just be inlined into crypto_blake2b_update().  But I believe this is
+> outweighed by the benefits of keeping the code in sync.
+> 
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
+> Acked-by: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+> Stable-dep-of: 9ae4577bc077 ("crypto: api - Use work queue in crypto_destroy_instance")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Yes. Let's delay the backport of this patch until that thread is resolved.
+1.) This isn't a Stable-dep-of 9ae4577bc077.   I don't see why this is being
+backported.
 
-> [1] https://lore.kernel.org/all/2023091653-peso-sprint-889d@gregkh/
-> [2] https://lore.kernel.org/bpf/20230913122827.91591-1-gerhorst@amazon.de=
-/
+2.) On lore.kernel.org, there is no record of this patch being queued to 5.10.
+See https://lore.kernel.org/all/?q=%22sync+with+blake2s+implementation%22.  The
+first mention of 5.10 and this patch is this thread, which is already the -rc1
+review.  I guess the only list that the initial "patch was queued" email was
+sent to is stable-commits, and stable-commits is not archived on
+lore.kernel.org.  That is surprising and makes it harder for people to give
+feedback on patches going into stable.  stable-commits should be archived on
+lore.kernel.lorg, and patches should generally be sent to more lists as well.
+(I'm probably shouting into a void here as I've given this same feedback on
+other patches before and nothing changed, but here it is again...)
+
+- Eric
