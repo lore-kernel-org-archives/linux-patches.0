@@ -1,84 +1,104 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787F01CFBF
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 15:25:52 +0000 (UTC)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6c0b3cea424so2959273a34.2
-        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 08:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1695050751; x=1695655551; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YVKIu2PP2j4ok3fw5mLN5mcVXh2mH1/J+kvJoPupo4Y=;
-        b=XMPt6xKG2nSAji4vnfItRiTbFu166BL8NvPTAcEaM/EpBKR+UsLmqgv4k8hpfJ3Q6h
-         uCPHMtj7HrP9MAZfsiXf2bDhKYGCifzPQlLDlDFziwynxU9GYiVB3Zovcxb7UT4n6wuu
-         xWX4VVjShw3TxYztYyWmjyPikn86aJj+v8Bzw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695050751; x=1695655551;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YVKIu2PP2j4ok3fw5mLN5mcVXh2mH1/J+kvJoPupo4Y=;
-        b=tjI4WTSqRr4ie6Wa0HcgLY2Uf75YZAVvSXBB+9+W7XjwTUaqVMDRKU4cR7rnb+bNAi
-         TlcbpRDMTnIYOFnEC+Y6K6uSknb51IdVa2kTW8OgsieLaHN39gKmBQOvVg7C8SuLz3LL
-         /5BRWMMtvmwd7WzzyFxkOuwro8iXxVIUW5tyUE/L5I81OA0cv3VX/uBjNuLBdIIvpO5Y
-         IqWgTOO7YJ8D5GuFIrx1Oc9zVLrTeLYkhAjfqwrmTCJ756uojZiMEHRpUXWepi0a/tAW
-         VKff/Px0yi5HtqJUS+rmtjaOqrPBhb8ikb+Im+YIpK8VSQvmvzPEIJN0m2sMMu3Tpnux
-         vs5Q==
-X-Gm-Message-State: AOJu0Yz8mTh3S1dErdEf/5kzj7JUSMoiPzHDGjoydTaTk+77qe25jXAz
-	ri+5PzzJnTyOSaGptbVKGs1IXg==
-X-Google-Smtp-Source: AGHT+IGe9SqnHwSEgpsYlD4JGoZ7FIJxs+MdYsxgK7B+OtUSYfkXctreGRJaR9bm+s8ZbO3v7rj0GQ==
-X-Received: by 2002:a05:6830:2014:b0:6b7:1d93:72e0 with SMTP id e20-20020a056830201400b006b71d9372e0mr9169561otp.32.1695050751405;
-        Mon, 18 Sep 2023 08:25:51 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id e14-20020a4aaace000000b0054f85f67f31sm4217899oon.46.2023.09.18.08.25.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Sep 2023 08:25:50 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 18 Sep 2023 10:25:49 -0500
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.5 000/285] 6.5.4-rc1 review
-Message-ID: <ZQhr/TN/taOKqYIm@fedora64.linuxtx.org>
-References: <20230917191051.639202302@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761EF171BF
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 15:46:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695051974; x=1726587974;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=1fHCLdwNFc+9WgKlHtruvN6B6ijVRNVQjqIxvdsKyPI=;
+  b=TtYhuyRYpiNG86bJ/8PVG8TsPk7//oO9KXbJbGo89t9dD/HwwH/Ya/or
+   zU5hzjd/xMnd3TmsMzY5HvzQnIgKr1C+37xfaBqfRfvvWpGWU2b0+/MzZ
+   c0STutmwgjrrKjjWk92Vn7Qa9KhiR1eQ4EMJ27AzVa0RwpIjiET5L210w
+   OE01y7n1Lw5fKM3GZ6paqMRKLUZM1t4S10K5lWnS2WGhXA4OLwW+5bMqg
+   WzGrMDrQ9YZsv2DKUacHh93wD37CgdNa74/+187U9DC0S11CqIcNxdw9v
+   VAY+k02yUC3pgFkNDKpyXrmsnV45k+GZ2MdoTKhb0K8XF67Yjor+CGjrb
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="370011043"
+X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
+   d="scan'208";a="370011043"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 08:46:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="869597607"
+X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
+   d="scan'208";a="869597607"
+Received: from nprotaso-mobl1.ccr.corp.intel.com ([10.252.49.156])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 08:46:09 -0700
+Date: Mon, 18 Sep 2023 18:46:06 +0300 (EEST)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: "Luck, Tony" <tony.luck@intel.com>
+cc: "Joseph, Jithu" <jithu.joseph@intel.com>, 
+    Hans de Goede <hdegoede@redhat.com>, 
+    "markgross@kernel.org" <markgross@kernel.org>, 
+    "tglx@linutronix.de" <tglx@linutronix.de>, 
+    "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>, 
+    "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, 
+    "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, 
+    "rostedt@goodmis.org" <rostedt@goodmis.org>, 
+    "Raj, Ashok" <ashok.raj@intel.com>, LKML <linux-kernel@vger.kernel.org>, 
+    "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>, 
+    "patches@lists.linux.dev" <patches@lists.linux.dev>, 
+    "Shankar, Ravi V" <ravi.v.shankar@intel.com>, 
+    "Xu, Pengfei" <pengfei.xu@intel.com>
+Subject: RE: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
+ generations
+In-Reply-To: <SJ1PR11MB6083A4237D928F180B6DB1E1FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Message-ID: <56b486ce-2a6e-c4c7-8bc5-ceeb7119ba1@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-4-jithu.joseph@intel.com> <ba753b39-1819-35ff-1248-6ce2c2824ae9@linux.intel.com> <e084652a-91a0-0c16-7acb-d51a3d2f7ed5@intel.com> <10fe57c-c926-9de4-be84-21a0f8abab6d@linux.intel.com>
+ <SJ1PR11MB6083A4237D928F180B6DB1E1FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
+Content-Type: text/plain; charset=US-ASCII
 
-On Sun, Sep 17, 2023 at 09:10:00PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.4 release.
-> There are 285 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Mon, 18 Sep 2023, Luck, Tony wrote:
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+> > I think Tony's "proof" is pretty invalid. He doesn't differentiate
+> > HW interface related bitfields from those which are not HW interface 
+> > related (to the extent that in fact most of those bitfields likely are not 
+> > HW interface related).
+> 
+> When I made that comment it was about a patch series that used
+> bitfields to decode the subfields in Intel model specific MSRs.  I
+> think that's true of use in this series too.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+But your grep in [1] was not limited to such cases nor to HW interface 
+related ones in general.
+
+What I meant with your proof being invalid is that the argument against
+bitfields have been related to using them with HW interfaces, not just 
+generic use of the bitfields (even if there have been some performance 
+issues in that area as well). Simply grepping through include/ directly is 
+not going to tell anything if the bitfield in question is related to HW 
+interfaces or not.
+
+> I think most of these are for MSR decode. The one mentioned in
+> this thread: "union ifs_scan_hashes_status_gen2 {" definitely is.
+> 
+> Are there any that are not for MSRs? I'd also claim "Intel
+> specific" if there are some decoding parts of the Intel scan
+> file format.
+
+First of all, I already checked myself that the alignment is not 
+incorrect so I don't find it as problematic as I thought it was (I did 
+not even flag all bitfield addition in the patches, just the cases were u8 
+was followed by u32 bitfield which I thought is not going to work because 
+of something I read about this topic some time ago claimed if the type 
+changes the bitfield does not carry over).
+
+Since you replied, would you happen to have a pointer something that tells 
+(in writing) how the bitfields in C are allocated in case of x86_64? I 
+spent a bit of time trying to find something but came up nothing.
+
+
+[1] https://lore.kernel.org/lkml/SJ1PR11MB6083EBD2D2826E0A247AF242FCD19@SJ1PR11MB6083.namprd11.prod.outlook.com/
+
+-- 
+ i.
+
