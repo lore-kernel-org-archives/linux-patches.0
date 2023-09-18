@@ -1,37 +1,56 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F31B1F5E9
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 18:15:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=bJs8GAFpWgBUplH+H7BOE7c4QYwKvsPnLGmmT4zwnIE=; b=Vr34XwU7ZL4fQoEk9kow9Lq+5x
-	cRKNFtvrvhOEQ3CNMowCtrLeWe6RdRDsn8q+wXZkHUKQ+EC2Ay4FbU3uI0QYkAhlMk1GYKSEbBOC7
-	35nnx6LP33x6UkTwxvuFE8VAbkOgb5PRVCaKsJaiclQW6PGoKPdqdyVYBLkAo85YMwKZbFdqXI7MX
-	wCp7xK9d5Qrio0pLxEJmtEYuHIuIKmCjPj2FrU2lamMPmBQST+NLbNecBFcBZ2AvY/pJfVTaadbZ7
-	mA9EUmzWV4aNZ2CDu69HYwwY4Eji+odGQ4RHg7C5fWGNM+WD9rsw9weOD9uwo/zuLY4+CBABHVUPC
-	vedOj9hg==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1qiImS-00CU5P-Dl; Mon, 18 Sep 2023 18:15:32 +0000
-Date: Mon, 18 Sep 2023 19:15:32 +0100
-From: Matthew Wilcox <willy@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
-	kbusch@kernel.org, sagi@grimberg.me, axboe@fb.com,
-	brauner@kernel.org, hare@suse.de, ritesh.list@gmail.com,
-	rgoldwyn@suse.com, jack@suse.cz, ziy@nvidia.com,
-	ryan.roberts@arm.com, patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org, p.raghav@samsung.com,
-	da.gomez@samsung.com, dan.helmick@samsung.com
-Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
- buffer-heads
-Message-ID: <ZQiTxGxpzPBETLTw@casper.infradead.org>
-References: <20230915213254.2724586-1-mcgrof@kernel.org>
- <ZQTR0NorkxJlcNBW@casper.infradead.org>
- <ZQiE5HHTLdJOsVPq@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF391CAB9
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 18:33:34 +0000 (UTC)
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-34deefc2016so16743145ab.2
+        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 11:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695062014; x=1695666814; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JTA1VVN3J1MjDZguKA7jeRxj5alEQOs99WsJuGyCrjY=;
+        b=HvqNOZI7owsnkYQX8P1ep0HkAbCss/dab8AyvfyN4BdXQdAatX7SOl/Dj2yUnCq2De
+         LTytNXs90UYDkhIOiVQ1szJVOceGpUvPORZU+zwfnA99Eck9eojdxGSwPFOsEv1lWIeP
+         MUKA7vvJqPsDv9HLxXly6AG76wzUFRVyaTrmH3zpJhwHpVjK8izafcqJwN+wcP22YGZ6
+         4ArbCDhrl6gmppjDv50DV5yn9y9ymJS4REg9Yk3DDTCh1z8tI5OUYFLwNTN6vp5XgDUN
+         cZMnXdYuJU676MDet3cG4b9XpgLJpPJy3ZZxMm9q5d5Xpy2AriPZQBr538FZgV6FF/mm
+         96gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695062014; x=1695666814;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JTA1VVN3J1MjDZguKA7jeRxj5alEQOs99WsJuGyCrjY=;
+        b=iR/lHJgBEQ5mParP6l6FQOJEdpofmqC4H4W5xzrbeYr5/Sj4RSijcwTFtpmjDX0b42
+         u1YtcYerZquPVvh03H7tqVM1+g8GA1MkOLSgs4mXgHWEYco+6dpoJyQjz2tr2zn+w7A0
+         ZbnbJsYk2IAvhPd/2+I4KmmcxfWtv/vAz0GX5dgMBA29hrQqme1WixPc2KFblZ2f4HBx
+         Vxu/BFR1rnz+FBbNzXo4amxKlSXGcil1Pn4OsjxSVk+iJqDrySGz8CCOWMg0y8vhWD/a
+         0Op82h0e4/oJWao+KPEU1IIFLA/zLZr3LbNsHcM33aB6fsY/HHqZNGyN9cBZMldqyLIo
+         CZ9g==
+X-Gm-Message-State: AOJu0YwJQ9ECAep9nQJjAlVzsC+5xwIwHV+jgYRO20NBfG2fgayzKc2t
+	qgeJLTrEK9qM3UdMMECFe3w=
+X-Google-Smtp-Source: AGHT+IG+I26s4WOtf06vG+cUHmLc7QxIV17q4Uw/P9uvCip5VKX/U1XMB4ehHMXJaS4+IFeGa50bwA==
+X-Received: by 2002:a05:6e02:1d8c:b0:34f:75cb:7f0 with SMTP id h12-20020a056e021d8c00b0034f75cb07f0mr14265147ila.12.1695062014195;
+        Mon, 18 Sep 2023 11:33:34 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id x59-20020a0294c1000000b0042bae96eba7sm267655jah.7.2023.09.18.11.33.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Sep 2023 11:33:33 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 18 Sep 2023 11:33:32 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.10 000/406] 5.10.195-rc1 review
+Message-ID: <562e05d9-8559-430d-95d6-8873bed61223@roeck-us.net>
+References: <20230917191101.035638219@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,28 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZQiE5HHTLdJOsVPq@bombadil.infradead.org>
+In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
 
-On Mon, Sep 18, 2023 at 10:12:04AM -0700, Luis Chamberlain wrote:
-> On Fri, Sep 15, 2023 at 10:51:12PM +0100, Matthew Wilcox wrote:
-> > On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
-> > > However, an issue is that disabling CONFIG_BUFFER_HEAD in practice is not viable
-> > > for many Linux distributions since it also means disabling support for most
-> > > filesystems other than btrfs and XFS. So we either support larger order folios
-> > > on buffer-heads, or we draw up a solution to enable co-existence. Since at LSFMM
-> > > 2023 it was decided we would not support larger order folios on buffer-heads,
-> > 
-> > Um, I didn't agree to that.
+On Sun, Sep 17, 2023 at 09:07:34PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.195 release.
+> There are 406 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Coverage on sunsetting buffer-heads talk by LWN:
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
 > 
-> https://lwn.net/Articles/931809/
-> 
-> "the apparent conclusion from the session: the buffer-head layer will be
-> converted to use folios internally while minimizing changes visible to
-> the filesystems using it. Only single-page folios will be used within
-> this new buffer-head layer. Any other desires, he said, can be addressed
-> later after this problem has been solved."
 
-Other people said that.  Not me.  I said it was fine for single
-buffer_head per folio.
+Build results:
+	total: 159 pass: 159 fail: 0
+Qemu test results:
+	total: 495 pass: 495 fail: 0
+
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+
+Guenter
