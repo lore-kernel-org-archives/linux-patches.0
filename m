@@ -1,168 +1,70 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA731F605
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 16:14:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695053674; x=1726589674;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=M3/lLxYwoAicSBbLD/2nG33rTRBl3WGI936BWwQz0ck=;
-  b=Us9L3VRdjsOwLc8abxN16ulfYmgkUUISxHp2XYE0x7H5Ct0LHZMQu8yT
-   IQC+OwrJNRTYFc6zV9fFDST8rXDLS5h+hZoU3PkbSC/nqFgG48T/vjcPI
-   QSfvbZXIgRjn2q7nuCK1g4Yka2sZ2J1e6hCVlznc0nDRONOROY/U7IeA4
-   uNo+28LfisLVCtdNy1MC+9K4XHl2E+6z0GT5pPH/lomZsf1zqC4osE5oF
-   e43I2bhO0FsXzKCyMMzhWgEOYJlEI/526AZXlwVL5QNxWtDYvQWsxCXk0
-   odGthO6VV69/YOu06xQYvEphO/QFT/hzrdjNsvgg0CLc9b6NN5mN8rhja
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="466049802"
-X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
-   d="scan'208";a="466049802"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 09:09:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="992786671"
-X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
-   d="scan'208";a="992786671"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmsmga006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 18 Sep 2023 09:09:09 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Mon, 18 Sep 2023 09:09:09 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Mon, 18 Sep 2023 09:09:09 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.171)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Mon, 18 Sep 2023 09:09:08 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YZxT/WgnFSKrW4lcyKIwliiuiDr6sCsfdPzg5mtKu/x8MEAp+taq42KuJAiVbqj7ddmwpWK+Wk8I/hNgy2Ex+r8szqKvca6feavvauTb7CJvWBPH0ihqy3nbxxSO76s6NOVfuahWKg1NxOQHMnK6P0xEgnN55M4iVnPIu81iWqm/teyxw4yAHU2MuBiLe4GnfR03ZXf2PPbFFjE70v9Fn9ltMeOWxsKBP6JxmHxPJ1BbYoP78feJHTBUHrcvtbEIixhF1NbLDsVQJwMXGUsWze8qjI/j5rgGbU+o9cSF2sxWv3Ggn8/TlXtpKqdHz/sfiJHvdkeAbp4LVAIJXRwTyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M3/lLxYwoAicSBbLD/2nG33rTRBl3WGI936BWwQz0ck=;
- b=ekAR5P/BzcNzNZiPzX1Y3EF5602YNs0V3/fIk1gVu/uZ9ZsM5jt/RSpf/f01qqOciBsENHlfNE19bcQz2DN6wgjmaME2SiiSuippIlQjE5l6HH93yUA1w6bXPaQZkYGW0I4iKtSWwJTCo+R+6rkARt2oSef25ENtpLd6PToMcTTWXTgR6F0u74ErLTDJXHQllidQBwUYt7gkppoPy4qNlwrCkLjGgQpKnX0MzCVOoGSqTlU2tVwSe9GACg/aP6oBcsMOAbkVOiGHYuPCB/ejJW6HclUXVzvPwAAI+nIQvpuMszZjyx60ZAz3Irs7qb4ONFam3lMOiQwD73UE/s3lrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by PH8PR11MB6779.namprd11.prod.outlook.com (2603:10b6:510:1ca::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.26; Mon, 18 Sep
- 2023 16:09:06 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4%7]) with mapi id 15.20.6792.026; Mon, 18 Sep 2023
- 16:09:06 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: =?iso-8859-1?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-CC: "Joseph, Jithu" <jithu.joseph@intel.com>, Hans de Goede
-	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com"
-	<mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
-	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "rostedt@goodmis.org"
-	<rostedt@goodmis.org>, "Raj, Ashok" <ashok.raj@intel.com>, LKML
-	<linux-kernel@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
-	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>, "Xu,
- Pengfei" <pengfei.xu@intel.com>
-Subject: RE: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
- generations
-Thread-Topic: [PATCH 03/10] platform/x86/intel/ifs: Image loading for new
- generations
-Thread-Index: AQHZ5nFu/bHCYcc4VU+8hY4jAeuNNLAcG4EAgAAJkACABCgaAIAAbJrQgAAH0ACAAASWAA==
-Date: Mon, 18 Sep 2023 16:09:06 +0000
-Message-ID: <SJ1PR11MB608304A84A2B662C78FDB677FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com>
- <20230913183348.1349409-4-jithu.joseph@intel.com>
- <ba753b39-1819-35ff-1248-6ce2c2824ae9@linux.intel.com>
- <e084652a-91a0-0c16-7acb-d51a3d2f7ed5@intel.com>
- <10fe57c-c926-9de4-be84-21a0f8abab6d@linux.intel.com>
- <SJ1PR11MB6083A4237D928F180B6DB1E1FCFBA@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <56b486ce-2a6e-c4c7-8bc5-ceeb7119ba1@linux.intel.com>
-In-Reply-To: <56b486ce-2a6e-c4c7-8bc5-ceeb7119ba1@linux.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|PH8PR11MB6779:EE_
-x-ms-office365-filtering-correlation-id: 4e840e0d-aa7e-4715-1be1-08dbb861958f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: NZdQDnVR4k5b0hIbbqU2GjfK2c2cQZt9jjyblkuXY6u8dc3cEVmUjJhQadcsDwZSCOcbg47CQuSpA//tuSEYw9nrOVGeV87xcXWYNhNdvs/50+FZliFhHw5IBMXFv8zguY9+RLrr2pfG2xjATcg2HTT6VBtSpjWQC8dwNS/c8GbrUvQbENUmoE3+T9i6eN1P4uS4z4grO1ioqcDbGsjD/UAs2Xphn1bdokkD0z9Y2tJpemP1giM/DtUjMAcAEhcwyj9QACPZnTeF/tacJjRibP6LW57Vqd1bubwuXDzZlsnEVKYWYu+KBvtCY2G/GilXssNBukdM1h6FxvRqnctMzTJI6Pv5IpZtn1GMubt1ZAxa1cOGZsnaqUJ8i1rDVIp8+1Wt5gRoz6OgrgFVW2UW4qjDIfxhjjF4FLNPQ/A1LdwyV2KhfqKfZvOEqx+c9Zh2EBfIOnWxmc1y4I39h09gH0cs5hiOt2EKy9g+0zxWIWuNOiY4vUZ36GnVTCMC3VYpO/Dtf1ODMNUzhpWvHZQO+Kze4GlhOPtKXE+LASUX0+FEKgsjspPzqwwfQNj+l3LhvxjiIJsv7gmdHoeTCBcIVA5dmi/XHc65Tfgw7wQdOcY=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(396003)(376002)(39860400002)(346002)(186009)(1800799009)(451199024)(26005)(52536014)(82960400001)(8936002)(8676002)(4326008)(122000001)(7416002)(33656002)(2906002)(4744005)(55016003)(5660300002)(86362001)(7696005)(6506007)(966005)(478600001)(71200400001)(6916009)(316002)(54906003)(9686003)(76116006)(66946007)(66446008)(64756008)(38100700002)(38070700005)(66476007)(41300700001)(66556008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mrEqAHUZrOuxCb2dADTV2JR5z5GhHuqm7RK5eaA5d5/l5ypalWlSXpNGRw?=
- =?iso-8859-1?Q?X6sJkDgtqnlucAZm1GuNH4Yi/dB0J7fSLkSZyTsM6ffVp5pDHdkYfB/IeC?=
- =?iso-8859-1?Q?w1+TNPD0vQxwPIKYek6O8VFwtZEWeY71iaiL3GPrX/9Fryw90hgPpaulEx?=
- =?iso-8859-1?Q?2pi9ccuCD1lqk3qHkEMezJoDKNZ4nKl5FqBpxdi3s+ujbjK1+CqpFFRnES?=
- =?iso-8859-1?Q?jm3zpCwrRuLNLBDWjrTRc6LKiP1oP6Kk08/odp+DpluIpwQmuWh+OsI4UK?=
- =?iso-8859-1?Q?0J5Bnnlxz1PX8aDozQTWv5uNTTBB05YJKQSwLWPFV5sc5lzZSTx0B87Rq8?=
- =?iso-8859-1?Q?VwjRTOrhP0lfrjmoXkhhQB0klwEetad6LpmjHzS1tDbuy2QAFs5yPUIQUB?=
- =?iso-8859-1?Q?kLfuUbyB9erFg3voy4QiZ857at37ugdf80SFCZvQqgWBsCG9MAmKyLBnFL?=
- =?iso-8859-1?Q?XmnlEX1GazqN4ebraNPzVHa7GEN78wy4uumx6xzyhVkWcqVp+rV84HUTqA?=
- =?iso-8859-1?Q?0mmXHAIgQjz2a8ydkJ8rwgN0TtsO8ASht888jy8pC2K+BnarThef9dXe3K?=
- =?iso-8859-1?Q?XU0L0hq1XVw3jQsr3c3N5tJj3pWJYe4c0OjXvczgpqHAeafSIuopXGIGw4?=
- =?iso-8859-1?Q?Owh4DwWlwTS85DY1i4tGADmCUgekomvZZlYnn2xsNgEL/gV+Hgnvr3Yvvn?=
- =?iso-8859-1?Q?6+XxH1bzto2Dh74pK9akE0g02JVypw0xgsH6Y5H0JfU6/Ms7c7tJ9FINWP?=
- =?iso-8859-1?Q?soBjTVl7Klp50G9A+RHzbz0Bx4UCDuZ+iiX0Cp0Z1vmE66F2Q4P5TLgiXF?=
- =?iso-8859-1?Q?DG0p8ATqqpSylsT+ETvcbX1X15nDGeig5nqd5n8DeFNbFUM+4xvJPRXe9e?=
- =?iso-8859-1?Q?+QvUXp1V15yhafSySCtT88sVa+fwk7K0Hap78weef57gdTfzdbWrDhX/9F?=
- =?iso-8859-1?Q?sJTTy4g/e4g/NJW6GYwTqYkjgZc/nk1izju43sKEEzj7rwpo1DaQnMCMUZ?=
- =?iso-8859-1?Q?wkgc/rwmFcc0M3S4FbqNeudgtYrHkjet5ALbGdTF+ilRPu/cTd1qmp6Ta6?=
- =?iso-8859-1?Q?X3Mv+g1uOevetLUFvB+kbo19MtEQ3g54ZHeJyLwyKVNUEeVR1NhzfhP91G?=
- =?iso-8859-1?Q?sL9bLS2WGnWDTbDsJ3u/Z1b6ymXRlaIAJlur9wFZzWiDgn52wjDij4PeKg?=
- =?iso-8859-1?Q?owFtYEir0vaBXgGPbRwL8uI3nwsEFPgWtxYPB0wn585YTQQaweZf5sHCdt?=
- =?iso-8859-1?Q?U+l7yZlmMAxK+4fRH4FOmLkKJQQI2BFqMvwGV5b056wAW6x1HZgxmb0H0J?=
- =?iso-8859-1?Q?d/CZZkizNZLJoDMM91yrUA9vcmilGQ2vthyyO1W24udDOc8Td1q+NRdh0M?=
- =?iso-8859-1?Q?WtCtSyNyfEGiwCiWgZJXfLD9LM0sJtnfBAE2S+9Ko4i1ruO/dyAxEPbBgz?=
- =?iso-8859-1?Q?8OOKn0n+2D6TEBKzDszYRPmI5IFG/un/0BF5VYmoigb07azHOQaVI6fDMr?=
- =?iso-8859-1?Q?Sc9MStk6irWztjLV3/qIzRWg/eugsK/rX8CtU1Blkheq81wxt0f4YsyP9V?=
- =?iso-8859-1?Q?YDBFGfaLR/w6wgsFjZFpzEPTfwh3D5MrcEnKtARsiky8B0w0lFRMNBcrwW?=
- =?iso-8859-1?Q?PIqvVrqlqRsd3aVLrJT1FUuWJBZUy65018?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86D423748
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 16:17:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0C0C433CB;
+	Mon, 18 Sep 2023 16:17:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695053852;
+	bh=DQQ6e5dUAGAEmHLUF+dLJ6eP+3jZnMJLKtK6MB24T8A=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=as5A4WtXZ8nNG6ESDvjGEal20NONI6D/wFrUdtWOSW0wM7nw76n9M2Nbv4ettHLSn
+	 fM+hHfKJGN5QRIQvDlWvxNxFLjBseestJr4hva2awD+zIPWqORaTZiCfqck5ojaF6x
+	 oeZ9+3OlNBrTv/rVkfcBxPy7mwpWcQYRy8NKo9LrK+x9d3gMGwjxPJ3tMBETONw5JL
+	 YWquEwNNB5VLS7l1+PnSWHCJnhgUCf9qg8GTxvTWJgUPNZkFPPwah1foDZqTIUvp45
+	 syRNHdHTC0eOVeogx0X6pDsYtoK6XmU/V0f7teDBKOIpnffzQiYGcO1Ihbg3UG8P9H
+	 wMpIkFCkP9/0A==
+Date: Mon, 18 Sep 2023 18:17:27 +0200
+From: Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Lee Jones
+ <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 261/406] leds: Fix BUG_ON check for
+ LED_COLOR_ID_MULTI that is always false
+Message-ID: <20230918181727.74a28f4a@dellmb>
+In-Reply-To: <2023091836-papaya-jackknife-2867@gregkh>
+References: <20230917191101.035638219@linuxfoundation.org>
+	<20230917191108.094879104@linuxfoundation.org>
+	<20230918160004.3511ae2e@dellmb>
+	<2023091836-papaya-jackknife-2867@gregkh>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4e840e0d-aa7e-4715-1be1-08dbb861958f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Sep 2023 16:09:06.3191
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qcSottwczjoxN2u+VKo7g56a9OUe6GYTRcDYdOcBO89gjGtTYrUEtRpwfCY5CyjGskH74/UXN0s2OsvENU1tdQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6779
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Since you replied, would you happen to have a pointer something that tell=
-s=20
-> (in writing) how the bitfields in C are allocated in case of x86_64? I=20
-> spent a bit of time trying to find something but came up nothing.
+On Mon, 18 Sep 2023 17:22:59 +0200
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Search engines don't seem to be as good as they used to be (or I'm not as
-good at finding the right query).=20
+> On Mon, Sep 18, 2023 at 04:00:04PM +0200, Marek Beh=C3=BAn wrote:
+> > Greg, please drop this patch from both 5.10 and 5.15.
+> >=20
+> > Reference:=20
+> >   https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/ =20
+>=20
+> But this is already in released kernels:
+> 	6.1.53 6.4.16 6.5.3 6.6-rc1
+>=20
+> > I am going to send a fix to drop the check altogether. =20
+>=20
+> We will be glad to queue up the fix as well when it hits Linus's tree,
+> please be sure to tag it for stable backporting so we can get it in all
+> locations.
+>=20
+> But for now, being bug-compatible makes more sense, right?  Or is this
+> really critical and should not be in these kernels now?
 
-There's a bit on page 14 of:
+According to that e-mail, the patch breaks booting for some systems, so
+if it would be possible to avoid it...
 
-https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf
+I've sent a fixup patch which removes the BUG_ON altogether, and
+referenced the patch that broke booting in the Fixes tag. But I don't
+know how long it will take to hit Linus' tree, it may take several
+weeks.
 
-that says bit fields are allocated right to left (which is a good
-start). But I thought there was a doc somewhere that gave
-more detail about alignment of bitfields.
-
--Tony
+Marek
