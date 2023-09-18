@@ -1,85 +1,124 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B45738FA2
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 11:25:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1695036336; x=1726572336;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AWntqZbkSbmn/MP084Ke+21jIISRxqv10eVOLcv87Cg=;
-  b=BiSIlkjgVNDgNur5Zchf6Rr+dFRuZG94BS6t5tXjEpqNPRmPyKH4InR7
-   pCFPLarQobc0vqBB5lMuhhAawFr0kKZn/vBdHlOSa7nZ6n+cQdo9Poi/J
-   M4abi68lC9FGTOFCxSp7YbrN6bM62ZhS/QDd8CS2K4Qu/SOh4kCmF0SFQ
-   R9K0loPm/6u3hzriiEIZ7bUXgX6/tVA0O+7sskcJgzT7n3ZDkRzth/HqL
-   qR1FbtXIZHQXEuS++TjJA6njMg9Zkv705rQau2ZnYRxdzK76arOMCMocG
-   O6MB1MK+d2i0mPvtz2+lJPglzU38mMzaT4w4gYWgsPPonzHt+od/xut0z
-   Q==;
-X-CSE-ConnectionGUID: pIJvHuS8Qpmn2ZqRa9Ey8Q==
-X-CSE-MsgGUID: czKlEAplTfmnmjX5f1zEGw==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=Sophos;i="6.02,156,1688454000"; 
-   d="asc'?scan'208";a="235738003"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 18 Sep 2023 04:25:28 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 18 Sep 2023 04:24:45 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex03.mchp-main.com (10.10.85.151)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Mon, 18 Sep 2023 04:24:40 -0700
-Date: Mon, 18 Sep 2023 12:24:23 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
-Subject: Re: [PATCH 6.1 000/219] 6.1.54-rc1 review
-Message-ID: <20230918-animal-reword-a5ec304ea2fa@wendy>
-References: <20230917191040.964416434@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43C338F8A
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 11:34:47 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 4409021B04;
+	Mon, 18 Sep 2023 11:34:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1695036886; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lsDDklBjIFoM7Jl8EU+BYlHZ0g3Sye7Xs6k5RDaXpUQ=;
+	b=1Ma+WufOY6MNQBSldMuieR9ZpirsJTdWcZsxqGoF3hzkrSmWYdUzna299yvRM5B3QCSSra
+	/JRoQvQMcnCpDBDCZwK+FqMy4pbuDhN+IQjN3aUGfjBWq10TYlBDowLFK/iFg0p58MO8WZ
+	PNgDtYb8GfwbFTLuknhCQayMBKCbPMk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1695036886;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lsDDklBjIFoM7Jl8EU+BYlHZ0g3Sye7Xs6k5RDaXpUQ=;
+	b=lWxYWMG8V1e8y9ZvkPybRmpUpLTWqw/jpn9kAQofvAoPUVWxscsPv0GWi4rsXS3NH9Nk2b
+	06wsECm6iRw7PZCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DDBA913480;
+	Mon, 18 Sep 2023 11:34:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 33muM9M1CGXIWgAAMHmgww
+	(envelope-from <hare@suse.de>); Mon, 18 Sep 2023 11:34:43 +0000
+Message-ID: <7dbf0a76-d811-4cb0-a38e-8375334710b2@suse.de>
+Date: Mon, 18 Sep 2023 13:34:37 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="L1qguHOKtswDYfDE"
-Content-Disposition: inline
-In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
+ buffer-heads
+Content-Language: en-US
+To: Matthew Wilcox <willy@infradead.org>, Dave Chinner <david@fromorbit.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, hch@infradead.org,
+ djwong@kernel.org, dchinner@redhat.com, kbusch@kernel.org, sagi@grimberg.me,
+ axboe@fb.com, brauner@kernel.org, ritesh.list@gmail.com, rgoldwyn@suse.com,
+ jack@suse.cz, ziy@nvidia.com, ryan.roberts@arm.com, patches@lists.linux.dev,
+ linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-block@vger.kernel.org, p.raghav@samsung.com, da.gomez@samsung.com,
+ dan.helmick@samsung.com
+References: <20230915213254.2724586-1-mcgrof@kernel.org>
+ <ZQd/7RYfDZgvR0n2@dread.disaster.area>
+ <ZQeIaN2WC+whc/OP@casper.infradead.org>
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <ZQeIaN2WC+whc/OP@casper.infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---L1qguHOKtswDYfDE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 9/18/23 01:14, Matthew Wilcox wrote:
+> On Mon, Sep 18, 2023 at 08:38:37AM +1000, Dave Chinner wrote:
+>> On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
+>>> LBS devices. This in turn allows filesystems which support bs > 4k to be
+>>> enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
+>>> device then to take advantage of the recenlty posted work today to enable
+>>> LBS support for filesystems [0].
+>>
+>> Why do we need LBS devices to support bs > ps in XFS?
+> 
+> It's the other way round -- we need the support in the page cache to
+> reject sub-block-size folios (which is in the other patches) before we
+> can sensibly talk about enabling any filesystems on top of LBS devices.
+> Even XFS, or for that matter ext2 which support 16k block sizes on
+> CONFIG_PAGE_SIZE_16K (or 64K) kernels need that support first.
+> 
+> [snipping the parts I agree with; this should not be the first you're
+> hearing about a format change to XFS]
+> 
+>>> There might be a better way to do this than do deal with the switching
+>>> of the aops dynamically, ideas welcomed!
+>>
+>> Is it even safe to switch aops dynamically? We know there are
+>> inherent race conditions in doing this w.r.t. mmap and page faults,
+>> as the write fault part of the processing is directly dependent
+>> on the page being correctly initialised during the initial
+>> population of the page data (the "read fault" side of the write
+>> fault).
+>>
+>> Hence it's not generally considered safe to change aops from one
+>> mechanism to another dynamically. Block devices can be mmap()d, but
+>> I don't see anything in this patch set that ensures there are no
+>> other users of the block device when the swaps are done. What am I
+>> missing?
+> 
+> We need to evict all pages from the page cache before switching aops to
+> prevent misinterpretation of folio->private.  If switching aops is even
+> the right thing to do.  I don't see the problem with allowing buffer heads
+> on block devices, but I haven't been involved with the discussion here.
 
-On Sun, Sep 17, 2023 at 09:12:07PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.54 release.
-> There are 219 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Did we even have that conversation?
+That's one of the first things I've stumbled across when doing my 
+patchset, and found the implications too horrible to consider.
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Not a big fan, plus I don't think we need that.
+Cf my patchset :-)
 
-Thanks,
-Conor.
+Cheers,
 
---L1qguHOKtswDYfDE
-Content-Type: application/pgp-signature; name="signature.asc"
+Hannes
+-- 
+Dr. Hannes Reinecke                Kernel Storage Architect
+hare@suse.de                              +49 911 74053 688
+SUSE Software Solutions GmbH, Maxfeldstr. 5, 90409 Nürnberg
+HRB 36809 (AG Nürnberg), Geschäftsführer: Ivo Totev, Andrew
+Myers, Andrew McDonald, Martje Boudien Moerman
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZQgzZwAKCRB4tDGHoIJi
-0n9rAQDyO31hBrEBGohyj30+1d1XuQqiDNG/YXHlnmVow396PAEA+fI0RYn3NHCA
-oPrx6vr3yfObwpH43oN6c5ToK2iUtAI=
-=42Pv
------END PGP SIGNATURE-----
-
---L1qguHOKtswDYfDE--
