@@ -1,135 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06973111A1
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 09:23:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A280C433C8;
-	Mon, 18 Sep 2023 09:23:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695029039;
-	bh=llZZQL/PdWEgNFjxTV9qwEIAzivsRdBxp4Q040xeUrw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=duFVSpsv4dn4noctJQvV+jtXcpWNBq/lCSucxpLOUMZ/daHY/V6lKQowvjPLf/4pI
-	 QTypfxPKZNWRpvwCuj8/30p0qhieHbVF1fJM/YdqjQwU6hmPNE+Cvr4YYxS86U7G8N
-	 /DN/M4eTwMstYy96rxCPfsvi5DbVT4reUJ54hDfY=
-Date: Mon, 18 Sep 2023 11:23:56 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ilya Dryomov <idryomov@gmail.com>
-Cc: Xiubo Li <xiubli@redhat.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Milind Changire <mchangir@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.5 113/285] ceph: make members in struct
- ceph_mds_request_args_ext a union
-Message-ID: <2023091848-spiritual-foyer-7ce6@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D866AA4
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 11:20:14 +0000 (UTC)
+Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
+	by cmsmtp with ESMTP
+	id hzQJqrPYAbK1ViCISqyFD5; Mon, 18 Sep 2023 11:20:08 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id iCIRq3mGbXyW8iCIRqhNoM; Mon, 18 Sep 2023 11:20:08 +0000
+X-Authority-Analysis: v=2.4 cv=IfeU5Ema c=1 sm=1 tr=0 ts=65083268
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=A8hhA0xKOrAuU+Gm1IuefMwmNPbEdpwZ1JE6l7dMRg8=; b=DFBY+heH+LMU75a+xmj9w6Sejb
+	QwTxWXQOcFqiFoKG166jcSsvjsUjr3GDiSsyx6WbbtyNazzSHdeZWpQammM3UnuFzmxLnwia4WzXn
+	2psGeYpvsDrOo/OnIat5DKyIXlhkJy6ipi5tzDeWUvvzolQHZsEeouK1778dRGx+eb4L69a76osH4
+	Uq3mkNOEfy7yHP/fi9T27KIPaKrLeIGfKhqTcwtb/Ff55vBVVly5vq/XwfTPnaWF2G69GuAcs34n0
+	Yfe33nZlulaITZ8haM+22IMp2jfZ6rJ98mxYd0yAnwiJbbWceePkXuPyaNTuPMBR6SOvWx29o2X2X
+	FbIRSZbg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:40824 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qiCIP-000Oa0-0c;
+	Mon, 18 Sep 2023 05:20:05 -0600
+Subject: Re: [PATCH 6.5 000/285] 6.5.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
 References: <20230917191051.639202302@linuxfoundation.org>
- <20230917191055.579497834@linuxfoundation.org>
- <CAOi1vP9Mh02NB4-n5Wy3Zs1Y8M33qJsZzd12Y6k991jubQVzwQ@mail.gmail.com>
- <90c74084-d3dc-e1cf-0d9a-a244529f7779@redhat.com>
- <CAOi1vP9UU+GHn+rygfNgCdFMBCdgbB4h6FkzBOA56j9CesHBXA@mail.gmail.com>
+In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <01385204-3046-cc93-7e49-6d9c0fe4ad1b@w6rz.net>
+Date: Mon, 18 Sep 2023 04:20:03 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOi1vP9UU+GHn+rygfNgCdFMBCdgbB4h6FkzBOA56j9CesHBXA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qiCIP-000Oa0-0c
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:40824
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfAho8VweZIOVJYeQSHppRobHi13myX+YUGSY9YYPhlVPhczBsNlpGVHCS1I7jVT/N04CLqF2FowPTZMINyWH0vReuodoZApdSYYJGYvMRLqDzP4KWRo1
+ m2V4KZfs514rlarwhgjYy3FKMCjwOGzFaLeT0Qq+c8TqPLACfOtUnxTXkW2Teu1FwLTlJid5ukbFxw==
 
-On Mon, Sep 18, 2023 at 10:43:08AM +0200, Ilya Dryomov wrote:
-> On Mon, Sep 18, 2023 at 10:20 AM Xiubo Li <xiubli@redhat.com> wrote:
-> >
-> >
-> > On 9/18/23 16:04, Ilya Dryomov wrote:
-> > > On Sun, Sep 17, 2023 at 9:49 PM Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > >> 6.5-stable review patch.  If anyone has any objections, please let me know.
-> > >>
-> > >> ------------------
-> > >>
-> > >> From: Xiubo Li <xiubli@redhat.com>
-> > >>
-> > >> [ Upstream commit 3af5ae22030cb59fab4fba35f5a2b62f47e14df9 ]
-> > >>
-> > >> In ceph mainline it will allow to set the btime in the setattr request
-> > >> and just add a 'btime' member in the union 'ceph_mds_request_args' and
-> > >> then bump up the header version to 4. That means the total size of union
-> > >> 'ceph_mds_request_args' will increase sizeof(struct ceph_timespec) bytes,
-> > >> but in kclient it will increase the sizeof(setattr_ext) bytes for each
-> > >> request.
-> > >>
-> > >> Since the MDS will always depend on the header's vesion and front_len
-> > >> members to decode the 'ceph_mds_request_head' struct, at the same time
-> > >> kclient hasn't supported the 'btime' feature yet in setattr request,
-> > >> so it's safe to do this change here.
-> > >>
-> > >> This will save 48 bytes memories for each request.
-> > >>
-> > >> Fixes: 4f1ddb1ea874 ("ceph: implement updated ceph_mds_request_head structure")
-> > >> Signed-off-by: Xiubo Li <xiubli@redhat.com>
-> > >> Reviewed-by: Milind Changire <mchangir@redhat.com>
-> > >> Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-> > >> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > >> ---
-> > >>   include/linux/ceph/ceph_fs.h | 24 +++++++++++++-----------
-> > >>   1 file changed, 13 insertions(+), 11 deletions(-)
-> > >>
-> > >> diff --git a/include/linux/ceph/ceph_fs.h b/include/linux/ceph/ceph_fs.h
-> > >> index 49586ff261520..b4fa2a25b7d95 100644
-> > >> --- a/include/linux/ceph/ceph_fs.h
-> > >> +++ b/include/linux/ceph/ceph_fs.h
-> > >> @@ -462,17 +462,19 @@ union ceph_mds_request_args {
-> > >>   } __attribute__ ((packed));
-> > >>
-> > >>   union ceph_mds_request_args_ext {
-> > >> -       union ceph_mds_request_args old;
-> > >> -       struct {
-> > >> -               __le32 mode;
-> > >> -               __le32 uid;
-> > >> -               __le32 gid;
-> > >> -               struct ceph_timespec mtime;
-> > >> -               struct ceph_timespec atime;
-> > >> -               __le64 size, old_size;       /* old_size needed by truncate */
-> > >> -               __le32 mask;                 /* CEPH_SETATTR_* */
-> > >> -               struct ceph_timespec btime;
-> > >> -       } __attribute__ ((packed)) setattr_ext;
-> > >> +       union {
-> > >> +               union ceph_mds_request_args old;
-> > >> +               struct {
-> > >> +                       __le32 mode;
-> > >> +                       __le32 uid;
-> > >> +                       __le32 gid;
-> > >> +                       struct ceph_timespec mtime;
-> > >> +                       struct ceph_timespec atime;
-> > >> +                       __le64 size, old_size;       /* old_size needed by truncate */
-> > >> +                       __le32 mask;                 /* CEPH_SETATTR_* */
-> > >> +                       struct ceph_timespec btime;
-> > >> +               } __attribute__ ((packed)) setattr_ext;
-> > >> +       };
-> > > Hi Xiubo,
-> > >
-> > > I was going to ask whether it makes sense to backport this change, but,
-> > > after looking at it, the change seems bogus to me even in mainline.  You
-> > > added a union inside siting memory use but ceph_mds_request_args_ext was
-> > > already a union before:
-> > >
-> > >      union ceph_mds_request_args_ext {
-> > >          union ceph_mds_request_args old;
-> > >          struct { ... } __attribute__ ((packed)) setattr_ext;
-> > >      }
-> > >
-> > > What is being achieved here?
-> >
-> > As I remembered there has other changes in this union in the beginning.
-> > And that patch seems being abandoned and missing this one.
-> >
-> > Let's skip backporting this one and in the upstream just revert it.
-> 
-> OK, I will send a revert to ceph-devel list.
-> 
-> Greg, please drop this one from all stable branches.
+On 9/17/23 12:10 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.4 release.
+> There are 285 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Now dropped, thanks.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-greg k-h
+Tested-by: Ron Economos <re@w6rz.net>
+
