@@ -1,124 +1,103 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43C338F8A
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 11:34:47 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4409021B04;
-	Mon, 18 Sep 2023 11:34:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1695036886; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lsDDklBjIFoM7Jl8EU+BYlHZ0g3Sye7Xs6k5RDaXpUQ=;
-	b=1Ma+WufOY6MNQBSldMuieR9ZpirsJTdWcZsxqGoF3hzkrSmWYdUzna299yvRM5B3QCSSra
-	/JRoQvQMcnCpDBDCZwK+FqMy4pbuDhN+IQjN3aUGfjBWq10TYlBDowLFK/iFg0p58MO8WZ
-	PNgDtYb8GfwbFTLuknhCQayMBKCbPMk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1695036886;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lsDDklBjIFoM7Jl8EU+BYlHZ0g3Sye7Xs6k5RDaXpUQ=;
-	b=lWxYWMG8V1e8y9ZvkPybRmpUpLTWqw/jpn9kAQofvAoPUVWxscsPv0GWi4rsXS3NH9Nk2b
-	06wsECm6iRw7PZCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DDBA913480;
-	Mon, 18 Sep 2023 11:34:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 33muM9M1CGXIWgAAMHmgww
-	(envelope-from <hare@suse.de>); Mon, 18 Sep 2023 11:34:43 +0000
-Message-ID: <7dbf0a76-d811-4cb0-a38e-8375334710b2@suse.de>
-Date: Mon, 18 Sep 2023 13:34:37 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C44C38F93
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 12:09:09 +0000 (UTC)
+Received: from eig-obgw-5008a.ext.cloudfilter.net ([10.0.29.246])
+	by cmsmtp with ESMTP
+	id iCdCqja8vyYOwiD3mqEDO6; Mon, 18 Sep 2023 12:09:02 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id iD3lqgLBqIV2qiD3mqdCrc; Mon, 18 Sep 2023 12:09:02 +0000
+X-Authority-Analysis: v=2.4 cv=N746qkxB c=1 sm=1 tr=0 ts=65083dde
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=nCsS+8kDeErjzm9UgwJIdFzQmv07gfYFiEWxFt+ijPs=; b=zm2/GLJAw2W5pz52xvH4w9ydA0
+	Ix00RVPFLou4p6gRW7cDGZ96f8P/jlG5eomM1flKTgkglMtJKgQFCq+wmTuUOOZuoUTVR4zv8/6Tq
+	XvnHVFW1vI0Z4TdFqwCTUq5E6x1cgQ+8VzWwgiDeWgWzuuNMfhCaQg0oEiFwR+Qu1N+PPNjkobKsh
+	Ontd11oWGkADrl3zUq0Et3O2SDTB1J2wn5U7weUhyxV8QgxjQmzRYwyvfEdiI0d/+UCoeFXzrN2Hq
+	UDxf6XfWgxXBOutABgoQRKwHKsYbk6ND9Ej1TY8jqcyQvSfZw8Y4YZDJnxLnPD59xPtcsyGmX1WwH
+	QqnJRvAA==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:40840 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qiD3j-000hLX-0s;
+	Mon, 18 Sep 2023 06:08:59 -0600
+Subject: Re: [PATCH 6.1 000/219] 6.1.54-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230917191040.964416434@linuxfoundation.org>
+In-Reply-To: <20230917191040.964416434@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <6c63ed7b-237e-4a90-a15b-cf6e3f60d5a5@w6rz.net>
+Date: Mon, 18 Sep 2023 05:08:57 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
- buffer-heads
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-To: Matthew Wilcox <willy@infradead.org>, Dave Chinner <david@fromorbit.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, hch@infradead.org,
- djwong@kernel.org, dchinner@redhat.com, kbusch@kernel.org, sagi@grimberg.me,
- axboe@fb.com, brauner@kernel.org, ritesh.list@gmail.com, rgoldwyn@suse.com,
- jack@suse.cz, ziy@nvidia.com, ryan.roberts@arm.com, patches@lists.linux.dev,
- linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-block@vger.kernel.org, p.raghav@samsung.com, da.gomez@samsung.com,
- dan.helmick@samsung.com
-References: <20230915213254.2724586-1-mcgrof@kernel.org>
- <ZQd/7RYfDZgvR0n2@dread.disaster.area>
- <ZQeIaN2WC+whc/OP@casper.infradead.org>
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <ZQeIaN2WC+whc/OP@casper.infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qiD3j-000hLX-0s
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:40840
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfMcbILYTU9mMop13X+HAX6WNISYDD8CziLpsPYMmAsVgduTdRd3XBsSoaLXcPp6o+a282HkEXIUI2Lmt+ejzbyKbHrMezXr5ufjzeEhqtZAh6boEP23s
+ e+NG4y4GvGBLwSmQ6/uGnyo0GMfEUyB873UosTgQT7jNAWt24/B/wKh1oI70HEYaI3IENIXDkPOvZA==
 
-On 9/18/23 01:14, Matthew Wilcox wrote:
-> On Mon, Sep 18, 2023 at 08:38:37AM +1000, Dave Chinner wrote:
->> On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
->>> LBS devices. This in turn allows filesystems which support bs > 4k to be
->>> enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
->>> device then to take advantage of the recenlty posted work today to enable
->>> LBS support for filesystems [0].
->>
->> Why do we need LBS devices to support bs > ps in XFS?
-> 
-> It's the other way round -- we need the support in the page cache to
-> reject sub-block-size folios (which is in the other patches) before we
-> can sensibly talk about enabling any filesystems on top of LBS devices.
-> Even XFS, or for that matter ext2 which support 16k block sizes on
-> CONFIG_PAGE_SIZE_16K (or 64K) kernels need that support first.
-> 
-> [snipping the parts I agree with; this should not be the first you're
-> hearing about a format change to XFS]
-> 
->>> There might be a better way to do this than do deal with the switching
->>> of the aops dynamically, ideas welcomed!
->>
->> Is it even safe to switch aops dynamically? We know there are
->> inherent race conditions in doing this w.r.t. mmap and page faults,
->> as the write fault part of the processing is directly dependent
->> on the page being correctly initialised during the initial
->> population of the page data (the "read fault" side of the write
->> fault).
->>
->> Hence it's not generally considered safe to change aops from one
->> mechanism to another dynamically. Block devices can be mmap()d, but
->> I don't see anything in this patch set that ensures there are no
->> other users of the block device when the swaps are done. What am I
->> missing?
-> 
-> We need to evict all pages from the page cache before switching aops to
-> prevent misinterpretation of folio->private.  If switching aops is even
-> the right thing to do.  I don't see the problem with allowing buffer heads
-> on block devices, but I haven't been involved with the discussion here.
+On 9/17/23 12:12 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.54 release.
+> There are 219 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.54-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Did we even have that conversation?
-That's one of the first things I've stumbled across when doing my 
-patchset, and found the implications too horrible to consider.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Not a big fan, plus I don't think we need that.
-Cf my patchset :-)
-
-Cheers,
-
-Hannes
--- 
-Dr. Hannes Reinecke                Kernel Storage Architect
-hare@suse.de                              +49 911 74053 688
-SUSE Software Solutions GmbH, Maxfeldstr. 5, 90409 Nürnberg
-HRB 36809 (AG Nürnberg), Geschäftsführer: Ivo Totev, Andrew
-Myers, Andrew McDonald, Martje Boudien Moerman
+Tested-by: Ron Economos <re@w6rz.net>
 
