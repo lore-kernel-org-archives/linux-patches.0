@@ -1,197 +1,231 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D191D6B0
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 17:51:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=AtWXTK9sBM3qyLBsA+qIGYXo3vkpfD3c/us98GiG588=; b=depldozsVNKZnEGYPeAz7DGFRW
-	+kdoZkj/bKBt9WiQm4mVFQs5PxJYfgJXW2d993KWSTLtLZAxpb76dZiun83S2JjREqwpTaYQF0s8w
-	5fEzbMruEmv6NeA8T+Q1h0a23k88aCF9kaR7S+e6e1EMqRXVGxnI2tnLV/KbZ1WXs5Sz2j9I+CtbK
-	7E7kDIXVXWtgO37vRfLGWXIlhQI/NQ8ndoRSnvnxouzqkxCYnsdCRNHGT2Azie3J1Gx6KSJ4iJerT
-	dEZLZQ/bBpGXucdQdNirB2I4e9OOnpn/FlEd+UTc0XLZVTRbkq4VpUn/oWlSZ6AFzZvZLmdcQx48k
-	txFJ9yIg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qiIP2-00G0xi-0m;
-	Mon, 18 Sep 2023 17:51:20 +0000
-Date: Mon, 18 Sep 2023 10:51:20 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Dave Chinner <david@fromorbit.com>
-Cc: Matthew Wilcox <willy@infradead.org>, hch@infradead.org,
-	djwong@kernel.org, dchinner@redhat.com, kbusch@kernel.org,
-	sagi@grimberg.me, axboe@fb.com, brauner@kernel.org, hare@suse.de,
-	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
-	ziy@nvidia.com, ryan.roberts@arm.com, patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org, p.raghav@samsung.com,
-	da.gomez@samsung.com, dan.helmick@samsung.com
-Subject: Re: [RFC v2 00/10] bdev: LBS devices support to coexist with
- buffer-heads
-Message-ID: <ZQiOGA18+fpFd6ly@bombadil.infradead.org>
-References: <20230915213254.2724586-1-mcgrof@kernel.org>
- <ZQd/7RYfDZgvR0n2@dread.disaster.area>
- <ZQeIaN2WC+whc/OP@casper.infradead.org>
- <ZQeg2+0X6yzGL1Mx@dread.disaster.area>
- <ZQekRLRXpoGu7VQ+@bombadil.infradead.org>
- <ZQe6wBxRFE7yY3eQ@dread.disaster.area>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B7E266C7
+	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 17:57:32 +0000 (UTC)
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4525dd7f9d0so498006137.3
+        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 10:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695059852; x=1695664652; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GAt5sHbrWgx4zzl6Pu9fZMLoH+lVEoE9WFINBvxYQ70=;
+        b=T9tXuIyYzGmmBtMwak43S/oMkT8xlArjQbqYmyfIcKOJuc0PshbFL2WXm+Yb7RD+YV
+         krQMQio/URiAa+vH3u4z5jXVjSmAVKbpH5d1O6P2LQV+d6ASl5/SCcgLmEwel5sqL1sc
+         HUI9muQATuIMCs3PTkrDkJm5sNw3UuzPMTO/ClcMg+1aNZ/v/SMmwsmtVg3hGktGx4BO
+         A9RIxQHyh1hFRoYo2WCAeKhRo9XTP/UjbG9GRuaD65D4EI5nrN3FIDqONjx5uJRjBUmx
+         WudBZQU3rfaAfbCVINZ+24MK4iO4ZC+n9/IjTjqmzPSgVmLghHQn6E+VIQQgVFBZni15
+         gwnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695059852; x=1695664652;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GAt5sHbrWgx4zzl6Pu9fZMLoH+lVEoE9WFINBvxYQ70=;
+        b=WVF8Vb6isim5CbNV+4HW/HvII/TN3HCG9Q/9NU128hw+HAcixheOnuuJnn0IS3s0ij
+         Qoc0kAiNHjNkbVYRSTny7Hzv53I0DZZHxAwSg0IUwep6NWTSvbt0O+TKbSmS+h8Z4d7f
+         dt0Sf7/1HAM6lU6fyF8E1GFMn3WsKGSuAdjRl2sJ2W6DnbiswyUi35KMv27Bn+P9uEne
+         7YOpToAirNpJS4ImRMqlOpw9wbmORwwDeFf4fUkYwSbpjsMLUpBBWTDnA3N6GJU9y1z6
+         HFBSF0AwBneppGRti7Ktus1uVhgj+tKkUoyn6UUOUrgIM5w1aw6NlSHKs/BrlNGyfyPH
+         R6Lg==
+X-Gm-Message-State: AOJu0YyZ27hrZQIaR18vSe08qkwJNPYt1FwTjHJ9C7Q4X0YmuNtRdeZ/
+	kQ/m/1Rqei5Y9C6PAiY/e/h7wYtW9O+uzvvX8SONJw==
+X-Google-Smtp-Source: AGHT+IGE4a/5sYIMQ54j0tdNQXS5tUfdTizYlTAdElnrf8kFc1XkBAJ5OcfLDItMUFQbfeIbPBGDN4KUDHSK7miLsYg=
+X-Received: by 2002:a05:6102:f94:b0:452:81b3:4b07 with SMTP id
+ e20-20020a0561020f9400b0045281b34b07mr1345973vsv.17.1695059851588; Mon, 18
+ Sep 2023 10:57:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZQe6wBxRFE7yY3eQ@dread.disaster.area>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <20230917191051.639202302@linuxfoundation.org>
+In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 18 Sep 2023 23:27:20 +0530
+Message-ID: <CA+G9fYv-YTGcnGEGpB9Pd5ZjhzuyFfPZPrwk7zax8ovovyQhjQ@mail.gmail.com>
+Subject: Re: [PATCH 6.5 000/285] 6.5.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 18, 2023 at 12:49:36PM +1000, Dave Chinner wrote:
-> On Sun, Sep 17, 2023 at 06:13:40PM -0700, Luis Chamberlain wrote:
-> > On Mon, Sep 18, 2023 at 10:59:07AM +1000, Dave Chinner wrote:
-> > > On Mon, Sep 18, 2023 at 12:14:48AM +0100, Matthew Wilcox wrote:
-> > > > On Mon, Sep 18, 2023 at 08:38:37AM +1000, Dave Chinner wrote:
-> > > > > On Fri, Sep 15, 2023 at 02:32:44PM -0700, Luis Chamberlain wrote:
-> > > > > > LBS devices. This in turn allows filesystems which support bs > 4k to be
-> > > > > > enabled on a 4k PAGE_SIZE world on LBS block devices. This alows LBS
-> > > > > > device then to take advantage of the recenlty posted work today to enable
-> > > > > > LBS support for filesystems [0].
-> > > > > 
-> > > > > Why do we need LBS devices to support bs > ps in XFS?
-> > > > 
-> > > > It's the other way round -- we need the support in the page cache to
-> > > > reject sub-block-size folios (which is in the other patches) before we
-> > > > can sensibly talk about enabling any filesystems on top of LBS devices.
-> > > >
-> > > > Even XFS, or for that matter ext2 which support 16k block sizes on
-> > > > CONFIG_PAGE_SIZE_16K (or 64K) kernels need that support first.
-> > > 
-> > > Well, yes, I know that. But the statement above implies that we
-> > > can't use bs > ps filesytems without LBS support on 4kB PAGE_SIZE
-> > > systems. If it's meant to mean the exact opposite, then it is
-> > > extremely poorly worded....
-> > 
-> > Let's ignore the above statement of a second just to clarify the goal here.
-> > The patches posted by Pankaj enable bs > ps even on 4k sector drives.
-> 
-> Yes. They also enable XFS to support bs > ps on devices up to 32kB
-> sector sizes, too. All the sector size does is define the minimum
-> filesystem block size that can be supported by the filesystem on
-> that device and apart from that we just don't care what the sector
-> size on the underlying device is.
+On Mon, 18 Sept 2023 at 01:13, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.5.4 release.
+> There are 285 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.5.4-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.5.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Ah yes, but on a system with 4k page size, my point is that you still
-can't use a 32k sector size drive.
 
-> > This patch series by definition is suggesting that an LBS device is one
-> > where the minimum sector size is > ps, in practice I'm talking about
-> > devices where the logical block size is > 4k, or where the physical
-> > block size can be > 4k.
-> 
-> Which XFS with bs > ps just doesn't care about. As long as the
-> logical sector size is a power of 2 between 512 bytes and 32kB, it
-> will just work.
-> 
-> > There are two situations in the NVMe world where
-> > this can happen. One is where the LBA format used is > 4k, the other is
-> > where the npwg & awupf | nawupf is > 4k. The first makes the logical
-> 
-> FWIW, I have no idea what these acronyms actually mean....
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Sorry, I've described them them, here now:
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-https://kernelnewbies.org/KernelProjects/large-block-size#LBS_NVMe_support
+## Build
+* kernel: 6.5.4-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.5.y
+* git commit: e5d077fb1eae958bde2a55b3065972193e501b78
+* git describe: v6.5.2-1016-ge5d077fb1eae
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.5.y/build/v6.5.2=
+-1016-ge5d077fb1eae
 
-What matters though is in practice it is a combination of two values
-which today also allows the nvme driver to have a higher than 4k
-physical block size.
+## Test Regressions (compared to v6.5.2-740-g7bfd1316ceae)
 
-> > block size > 4k, the later allows the physical block size to be > 4k.
-> > The first *needs* an aops which groks > ps on the block device cache.
-> > The second let's you remain backward compatible with 4k sector size, but
-> > if you want to use a larger sector size you can too, but that also
-> > requires a block device cache which groks > ps. When using > ps for
-> > logical block size of physical block size is what I am suggesting we
-> > should call LBS devices.
-> 
-> Sure. LBS means sector size > page size for the block device. That
-> much has always been clear.
-> 
-> But telling me that again doesn't explain what LBS support has to do
-> with the filesystem implementation. mkfs.xfs doesn't require LBS
-> support to make a new XFS filesystem with a 32kB sector size and
-> 64kB filessytem block size.  For the mounted filesystem that
-> supports bs > ps, it also doesn't care about the device sector size
-> is smaller than what mkfs told it to us. e.g. this is how run 4kB
-> sector size filesystem testing on 512 byte sector devices today....
-> 
-> What I'm asking is why LBS support even mentions filesystems?
+## Metric Regressions (compared to v6.5.2-740-g7bfd1316ceae)
 
-It's just that without this patchset you can mkfs an filesystem with
-larger bs > ps, but will only be able to mount them if the sector size
-matches the page size. This patchset allows them to be mounted and used
-where sector size > ps. The main issue there is just the block device
-cache aops and the current size limitaiton on set_blocksize().
+## Test Fixes (compared to v6.5.2-740-g7bfd1316ceae)
 
-> It's
-> not necessary for filesystems to support bs > ps for LBS to be
-> implemented, and it's not necessary for LBS to be supported for
-> filesytsems to implement bs > ps. Conflating them seems a recipe
-> for confusion....
+## Metric Fixes (compared to v6.5.2-740-g7bfd1316ceae)
 
-I see, so we should just limit the scope to enabling LBS devices on
-the block device cache?
+## Test result summary
+total: 245581, pass: 211062, fail: 3143, skip: 31023, xfail: 353
 
-> > > iomap supports bufferheads as a transitional thing (e.g. for gfs2).
-> > 
-> > But not for the block device cache.
-> 
-> That's why I'm suggesting that you implement support for bufferheads
-> through the existing iomap infrastructure instead of trying to
-> dynamically switch aops structures....
-> 
-> > > Hence I suspect that a better solution is to always use iomap and
-> > > the same aops, but just switch from iomap page state to buffer heads
-> > > in the bdev mapping 
-> > 
-> > Not sure this means, any chance I can trouble you to clarify a bit more?
-> 
-> bdev_use_buggerheads()
-> {
-> 	/*
-> 	 * set the bufferhead bit atomically with invalidation emptying the
-> 	 * page cache to prevent repopulation races. 
-> 	 */
-> 	filemap_invalidate_lock()
-> 	invalidate_bdev()
-> 	if (turn_on_bufferheads)
-> 		set_bit(bdev->state, BDEV_USE_BUFFERHEADS);
-> 	else
-> 		clear_bit(bdev->state, BDEV_USE_BUFFERHEADS);
-> 	filemap_invalidate_unlock()
-> }
-> 
-> bdev_iomap_begin()
-> {
-> 	.....
-> 	if (test_bit(bdev->state, BDEV_USE_BUFFERHEADS))
-> 		iomap->flags |= IOMAP_F_BUFFER_HEAD;
-> }
-> 
-> /*
->  * If an indexing switch happened while processing the iomap, make
->  * sure to get the iomap marked stale to force a new mapping to be
->  * looked up.
->  */
-> bdev_iomap_valid()
-> {
-> 	bool need_bhs = iomap->flags & IOMAP_F_BUFFER_HEAD;
-> 	bool use_bhs = test_bit(bdev->state, BDEV_USE_BUGGERHEADS);
-> 
-> 	return need_bhs == use_bhs;
-> }
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 278 total, 276 passed, 2 failed
+* arm64: 94 total, 90 passed, 4 failed
+* i386: 69 total, 69 passed, 0 failed
+* mips: 59 total, 55 passed, 4 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 75 total, 71 passed, 4 failed
+* riscv: 52 total, 48 passed, 4 failed
+* s390: 32 total, 26 passed, 6 failed
+* sh: 28 total, 24 passed, 4 failed
+* sparc: 16 total, 16 passed, 0 failed
+* x86_64: 81 total, 76 passed, 5 failed
 
-Will give this a shot, thanks!
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
 
-  Luis
+--
+Linaro LKFT
+https://lkft.linaro.org
