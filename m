@@ -1,96 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8BD358AC
-	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 07:55:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCD3C433C7;
-	Tue, 19 Sep 2023 07:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20B679CF
+	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 07:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B0FC433C8;
+	Tue, 19 Sep 2023 07:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695110110;
-	bh=NxpJYkRRMKcYH1DrE4WcpNHNOZjOskdv/B3fMk90j1A=;
+	s=korg; t=1695110256;
+	bh=fLeSnVOwCSP/qTkJ10w9VhO6v1axFiLn6qQ2n1WA6z4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IwU709TYd4H43Xymnx2gXSUYOblXr/N/AwcpXTe8GbUUCobTdZFmu1SLxSiEUlmd6
-	 GCoy3mLEIlPFja1uYTOdbTqTYEkfjQr+PgClyaxHdEnfgcciKAOEz/qbFQdQg9IvRi
-	 qgZY1RMG4snDcJEoHRGhS6T4kEYMNogqzJ5IbbFA=
-Date: Tue, 19 Sep 2023 09:55:06 +0200
+	b=PZEuIVToE7yJGyBKwrS2QRed5jbLqeMRpY+H5udWwEbb2UAJZ96zMpn2Ayem5b6n0
+	 2XskIGygIR11xgP843UcpyHw0qNzIAjilbwjaOyHMZmaW6WDqSN1dauM9gPWj68D5c
+	 2jF6BOtjqlDNarJYV5JjgPdwKgunNmUryNJJHrgc=
+Date: Tue, 19 Sep 2023 09:57:32 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Jon Hunter <jonathanh@nvidia.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, Sameer Pujar <spujar@nvidia.com>,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.5 000/285] 6.5.4-rc1 review
-Message-ID: <2023091956-harmonica-stingy-21f8@gregkh>
-References: <20230917191051.639202302@linuxfoundation.org>
- <dfe78c1a-8322-413b-f1b7-3a6a307a831c@nvidia.com>
- <2023091846-cabbage-imagines-3fde@gregkh>
- <bae1a61f-ab9d-2560-9c70-e09092363467@roeck-us.net>
+To: Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Lee Jones <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 261/406] leds: Fix BUG_ON check for
+ LED_COLOR_ID_MULTI that is always false
+Message-ID: <2023091901-vessel-giggling-55ee@gregkh>
+References: <20230917191101.035638219@linuxfoundation.org>
+ <20230917191108.094879104@linuxfoundation.org>
+ <20230918160004.3511ae2e@dellmb>
+ <2023091836-papaya-jackknife-2867@gregkh>
+ <20230918181727.74a28f4a@dellmb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <bae1a61f-ab9d-2560-9c70-e09092363467@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230918181727.74a28f4a@dellmb>
 
-On Mon, Sep 18, 2023 at 08:17:43AM -0700, Guenter Roeck wrote:
-> On 9/18/23 05:56, Greg Kroah-Hartman wrote:
-> > On Mon, Sep 18, 2023 at 01:52:10PM +0100, Jon Hunter wrote:
-> > > Hi Greg,
-> > > 
-> > > On 17/09/2023 20:10, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.5.4 release.
-> > > > There are 285 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.4-rc1.gz
-> > > > or in the git tree and branch at:
-> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> > > > and the diffstat can be found below.
-> > > > 
-> > > > thanks,
-> > > > 
-> > > > greg k-h
-> > > > 
-> > > > -------------
-> > > > Pseudo-Shortlog of commits:
-> > > 
-> > > ...
-> > > 
-> > > > Sameer Pujar <spujar@nvidia.com>
-> > > >       arm64: tegra: Update AHUB clock parent and rate
-> > > 
-> > > 
-> > > Unfortunately, the above change is causing a regression in one of our audio
-> > > tests and we are looking into why this is.
-> > > 
-> > > Can we drop this from stable for now?
-> > 
-> > Is it also a problem in Linus's tree?  Keeping bug-compatible is always
-> > good :)
-> > 
+On Mon, Sep 18, 2023 at 06:17:27PM +0200, Marek Behún wrote:
+> On Mon, 18 Sep 2023 17:22:59 +0200
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 > 
-> Sorry, no, it isn't, especially in the context of at the same time suggesting
-> that everyone should start using the most recent stable release immediately
-> (instead of, say, selectively picking security patches).
+> > On Mon, Sep 18, 2023 at 04:00:04PM +0200, Marek Behún wrote:
+> > > Greg, please drop this patch from both 5.10 and 5.15.
+> > > 
+> > > Reference: 
+> > >   https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/  
+> > 
+> > But this is already in released kernels:
+> > 	6.1.53 6.4.16 6.5.3 6.6-rc1
+> > 
+> > > I am going to send a fix to drop the check altogether.  
+> > 
+> > We will be glad to queue up the fix as well when it hits Linus's tree,
+> > please be sure to tag it for stable backporting so we can get it in all
+> > locations.
+> > 
+> > But for now, being bug-compatible makes more sense, right?  Or is this
+> > really critical and should not be in these kernels now?
 > 
-> I don't think Tegra users would be happy if their audio stopped working,
-> and it seems unlikely that they would accept the argument that they should
-> be happy to be bug-compatible with the latest upstream kernel - even more so
-> if that latest upstream kernel is a release candidate and the problem was
-> introduced in the commit window.
+> According to that e-mail, the patch breaks booting for some systems, so
+> if it would be possible to avoid it...
+> 
+> I've sent a fixup patch which removes the BUG_ON altogether, and
+> referenced the patch that broke booting in the Fixes tag. But I don't
+> know how long it will take to hit Linus' tree, it may take several
+> weeks.
 
-Very good point, I've now dropped it.
+Ok, thanks, now dropped from these trees.  Please pester the maintainers
+to get this merged into Linus's tree soon so that the other stable trees
+can be fixed up as well.
 
 greg k-h
