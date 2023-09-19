@@ -1,202 +1,135 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F16D8471
-	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 06:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39DFA3B
+	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 07:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695106248; x=1726642248;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=manKITcYWwCB6LpTBHEbqmgFeC4oFXN3BBPxyxfYT0Q=;
-  b=JLLMyeP/Jox3OWDmDUYIDoRfwo+iUlf4YkkNP8eeCWjsjxGB81oUkta/
-   z5A4HE9fUkcIDBtKhxhe+wabr6iYCl5OiuXLquN3azFxZLVL5NCAMXDvG
-   rxV5rzjd8tuhFCmCmE549YNMAfDLLsHanyJ6deisJnb6n0kRJ66xiITal
-   8iLT7AMPRIgeAZZGLzzdDo8cCPTiFDTuRiZ8SOmrm+k9PirG435oXFB9V
-   75LdbOyBJQh3nD3RbyeCyk1yWP7FSLUDLLVzsfIbtMbZfH0LQTUW7mnsx
-   pJXyb+fNax5odI2QmJfsoCuMjYufbr0p/1m/GW/YAxn8Erh8/1HRUGKkK
+  t=1695109473; x=1726645473;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=DueEHAS4pNn6cHKKxtYpc8Y6eCVUjoxCLg1+H69gZ5U=;
+  b=D5g6Mb5hqm+Ni8czkJ0Jawl3cbAgdYI5a+TSJJNnml1r+qp7CcZIQRPH
+   aF4GP093vzcA4AJ3HAhZgcu7FDGZPR/DPE+Bkxc4sxHGx6uKyrHnZThfg
+   rPtvlivKanANTtgKHv7ITazHsJ+HUHiggMGsQGS8FgBlexkwxA6gWc47H
+   ZipsuC+zgRVXoCj6k0Zg7NE7paMjL82ki/HqbUVna6Anq5LOqoRkWOfKt
+   vXifFu1jYvgt8bZJqpgByDu4Ubt0REcizO/VMtdHj4veI1EVOM5if3YEa
+   5bI4jkHDE3HxuR/6wS3GYlRn2kfz1PKkNlyHkI3HqLW4lkGfuSL0H42kJ
    w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="359268012"
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="378774245"
 X-IronPort-AV: E=Sophos;i="6.02,158,1688454000"; 
-   d="scan'208";a="359268012"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2023 23:50:46 -0700
+   d="scan'208";a="378774245"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 00:44:27 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="919757365"
+X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="722762868"
 X-IronPort-AV: E=Sophos;i="6.02,158,1688454000"; 
-   d="scan'208";a="919757365"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orsmga005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 18 Sep 2023 23:50:45 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Mon, 18 Sep 2023 23:50:43 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Mon, 18 Sep 2023 23:50:43 -0700
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.42) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Mon, 18 Sep 2023 23:50:43 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UgmaE7Rkt0G/DBvDOOQT7yn7YcOWjN/XEYJ9oq9i0b9gyWamsybwdcwBdczRLLtFK9OPSz7upPWs1JRsJem0OYyVB8imJDJ5q8zKCZ4MPsRqKk0HpodpxVga8SaTMUJcHJFnP1qO/5qBwokE7hEfyDskllFj1gJRJPdP9305s/dYbocSvtUfK19//oG4ldwcsppTZFkv15sntKduAPWO0S382bAxPCTNNQCbjHnD2ktyjiCJbSB6AhjtOR4uDRUbpoXzxHZTfkJoqza+xcoGqCRu1IuwHQAIQgixDkk7E/t4yDaXkcwO/eY+VBLxs9bY1QeF+C1WXTXKJCseVStiSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sPF9o5ct8Xi8UQ8m94+zVIFS0vxKPf2mItmUAGrCzMM=;
- b=hPQ9QPo4I1QPxTDbwVow8DBT97c2annxJ/QYs6swBv6+eVPpNE2+cO7fJyvOnKYtS307Hu19eoPurIDButKXOb1ge8MCKGIvDo0cgmV7QwW3C9TOhtvmEikoFk6mQHTp6uYgujesGNdNSeX8NV1EjI+bSSfvvQrPDQMU2JAh1hD9SoifSCKj3KS4onV5VarWYJiZzn2Y3+WpGmyisiI8bz3UB0IygHzw5fBG1zPoEHp4cPMmjejNkbHNaggrVtEegJx9ckKuaQGhJ7i9I1Cqn3kX3vyKohuijm5kmrNXA+eKtMTP1izlVgdWJ6A530Lxf4J6/jDx8xFavK5yJtTeWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from MN0PR11MB6231.namprd11.prod.outlook.com (2603:10b6:208:3c4::15)
- by CH3PR11MB7842.namprd11.prod.outlook.com (2603:10b6:610:128::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.38; Tue, 19 Sep
- 2023 06:50:42 +0000
-Received: from MN0PR11MB6231.namprd11.prod.outlook.com
- ([fe80::6ecb:9e9a:87e5:f342]) by MN0PR11MB6231.namprd11.prod.outlook.com
- ([fe80::6ecb:9e9a:87e5:f342%4]) with mapi id 15.20.6792.026; Tue, 19 Sep 2023
- 06:50:41 +0000
-Date: Tue, 19 Sep 2023 08:50:33 +0200
-From: Maciej =?utf-8?Q?Wiecz=C3=B3r-Retman?= <maciej.wieczor-retman@intel.com>
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, "Yu, Fenghua"
-	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>,
-	"Peter Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>,
-	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu
- Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v5 8/8] selftests/resctrl: Adjust effective L3 cache size
- when SNC enabled
-Message-ID: <7gbxb6kxwa6anvcc4dquyuu7yronww6ztelazn2xllplorhbp5@i7o4fum5tjuf>
-References: <20230722190740.326190-1-tony.luck@intel.com>
- <20230829234426.64421-1-tony.luck@intel.com>
- <20230829234426.64421-9-tony.luck@intel.com>
- <TYAPR01MB633033C489AAC0E514CBC6688BEEA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
- <SJ1PR11MB60839EB5CC3D172D864DF7A7FCEEA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <SJ1PR11MB60839EB5CC3D172D864DF7A7FCEEA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-X-ClientProxiedBy: BE1P281CA0029.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:15::19) To MN0PR11MB6231.namprd11.prod.outlook.com
- (2603:10b6:208:3c4::15)
+   d="scan'208";a="722762868"
+Received: from laichele-mobl1.ger.corp.intel.com ([10.252.38.7])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 00:44:21 -0700
+Date: Tue, 19 Sep 2023 10:44:14 +0300 (EEST)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: "Joseph, Jithu" <jithu.joseph@intel.com>
+cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
+    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
+    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
+    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
+    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
+Subject: Re: [PATCH 04/10] platform/x86/intel/ifs: Scan test for new
+ generations
+In-Reply-To: <5a66a02d-3504-ab5f-5373-789c8789557f@intel.com>
+Message-ID: <d94e516f-6331-2f20-468-bb8c6cf899c4@linux.intel.com>
+References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-5-jithu.joseph@intel.com> <74882e91-f41e-7672-3835-d74f1364bbdd@linux.intel.com> <5a66a02d-3504-ab5f-5373-789c8789557f@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN0PR11MB6231:EE_|CH3PR11MB7842:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67402029-5f4c-4666-4a14-08dbb8dcbd30
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 4wdAIPgNwohS2d5lsOON5dsujC9Z/8cWGx4zDapiLFUqlXABSTt9kAY2gzGdaQf2sJHoke8dRgqi2QbYzzhu+SzE9C+DYr2kJU4ZnA02+kyFdEYMGbwcfcapw5CxllwMR1xH18EiaMnDVYhm2h2ZeT8XYmxlTtAqOHIavgC7le4A8Bp3JaVq5CqLhZBhfRvyjjPNyNo4pZyqp8A9vob43uSEkVXep8RTO7ClouyMgileXMBJbYdSrLPWjzhdBUNJ/hqs9t5k4SPF+6qPjVTJdAnEFDQAb4oYxgrTdLqOx4gz+IBcPsV7Mh6pybVr+d/dwo84UC+81lIw8WSux7hDbdMTAlhXSOrmQ4VoKQta+xKyT3hPjE+uCmGIbK3cXlFJGgS2J/llmculfkVrEvUFXm1JbbhfUb9b/fy37irpYjBgoQhuSib9EpR3W5vNu58QBD8ppKQ31SEVvXHdRUHKWQfOlIRdqeb595cStCdx3k9xrXMTi2lI5iFNZML5vsWz9Q++J2/aQgxO94tIeUx4hjhDieUaV6bZJv7tHxyKbtkeMw2QW4YOlZQj661qlyha
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR11MB6231.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7916004)(396003)(136003)(346002)(376002)(366004)(39860400002)(1800799009)(451199024)(186009)(4326008)(8936002)(8676002)(6862004)(6636002)(316002)(38100700002)(66574015)(7416002)(26005)(5660300002)(2906002)(478600001)(41300700001)(6666004)(6486002)(82960400001)(9686003)(6506007)(33716001)(66476007)(66556008)(53546011)(86362001)(66946007)(6512007)(83380400001)(54906003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?elg5NFRpMXNVZEhpYU1icWVqcVN4TTh0TWh1V2x5V1VMWmdKa3NaTEFKUnR5?=
- =?utf-8?B?cVVoTVp6ZXh2a3RRdE5seStKck1PeTFyMnpTcnlpQW1PTHZ6UkhDUnYwZGRX?=
- =?utf-8?B?OFhTc3N3VXFYcmc4VmtPM21xTTdzeWkvbDd1OThuUGFUM2cybWhFK0s2ZUJn?=
- =?utf-8?B?UTQvQy8vcFR1TUFCdnEzUVJYU214VUpIdHFlOHdzLzJaTExDYkpNc2NRM2RL?=
- =?utf-8?B?R2lseW5jMGYwMnFGTjlaeTREYnF2K1dWbWJaVkE3RjVFUGlsMTBndlJrQ012?=
- =?utf-8?B?YnJ2c3U4YnhQcTFRelErTmdRWFYyYzhJYUVIZzBUb1lMaW5UUzg1MlFXdytE?=
- =?utf-8?B?Vy85QVNRU1ZycnUwR1VNeUI5OTdFMU53NG1aVituNEsrMWFxd1grS25MU21p?=
- =?utf-8?B?bGl5aWZJY00vbmRoZ0JLMVoxR2xhV2M5NWJ5ZjZ0YmtJVmNLUkJFakQ4RDBX?=
- =?utf-8?B?K1dlOGR0M0Izd2VpeGlNR2ZOeDBVUzBZaEF3ZDE5QUw2U3A1bXBYMENtaisz?=
- =?utf-8?B?Q29Vc1Q0Yjk5ZVFCdUtNbkhvVUthUC90UmFjbTZFV0MxK3lRSE80L1dCRU45?=
- =?utf-8?B?NE45NUJoWnBGd1pWWkE2aXdCSjRZaWJ4UjcrcEZEL0ZFb2FCLzB4ZGZ1cUtE?=
- =?utf-8?B?dzZyOHJwVWdZMGhyRy9td2g2YStRajB0Um45d0xYQTJVNFRSVkZVSENEMHZT?=
- =?utf-8?B?Z1pmSFZaNlluUkFWWDIzZlY3VUNaWUduMVluZnNMY25TU20wampLOGVGUlZp?=
- =?utf-8?B?a2Z5cGcwUWpTRFNhSzMrV0VmMXdySG9mL1VPQXNkbWR0ZlpVbHVieE11NHJu?=
- =?utf-8?B?SkRSdVJwWjM3NEtQUTJQWDNqaTloOG1uUHhSVTR5azdQWjJYSWZVYThTK2ZC?=
- =?utf-8?B?bjlLbU1NN3NWL0UvUFRwOWJyWmtjZVZKVGwxWHNrMGVtT3ZzQ1piZHJzdVN6?=
- =?utf-8?B?MlRwSU1hejZxZEpRMVd4MTlCV3ZMUUJJTTNpTGQxblVaM2hvNnJIRDV5eTlE?=
- =?utf-8?B?cW1EeDJXMjNTQndmUDNCUGxiNzFxek0yVmNla3RzT3pQMzd2bkRZalVOd050?=
- =?utf-8?B?RkE3QW9CdEJpbWJta2tpdi9PREc3VlY5TUN3Zmp4eVQ2TVhZWm4wTGxxc2lC?=
- =?utf-8?B?aEFMeG13MmFTdTRKcWhtRGxNMTN3UzMyeGhoS01Wb0hDV1FFTHNRaFM4VEI0?=
- =?utf-8?B?RDlITi9mYkhRVVhwUEVxRjBzek1sMjdOUXVxM2QzNUpoaTNlVkpnRHRHMmlT?=
- =?utf-8?B?S1VnUzFoL210enZFbjlDNUZhdkIrWGlTOWF2QXlKNnUrdzNBYlRWRDY3NHhn?=
- =?utf-8?B?WW5kNzNxaHhudkl4OWtNdjFGb1cwaFlLRTdOV0h0RUZzajN0Rjc0Z3EvV1F3?=
- =?utf-8?B?OGVobDVyRlUxaE1MbG4rTHd2UTU3c0oyT1B1enB4TmR2TGVWSldDZ3NMSkhB?=
- =?utf-8?B?SW5YckVRa0N3MWdCalNQdkxqcEw1T2lhbDlGL0JVYU94OXJmVFJuNnBON0o5?=
- =?utf-8?B?bmIxWUNNNkFnZWxBZi9pbmRrMXV1RnY0RzBBS2J4STJxMUxRWDBVbUgxTEZo?=
- =?utf-8?B?KzRFWVNvakV0SE4zNjcydXpyQmM0akRtMWx6L3JkeFNidmJPWWtvQjMzRUZK?=
- =?utf-8?B?cHlDRW1NVUhuNWN5L3BiNEh1aDRZUlJKY3lqYVcwc3pJR2xnWDcxcDZuRTFR?=
- =?utf-8?B?MXluQWJHR2ROTDF0Vk5pWlpFSy8yVEdnOWpOZUFlc0FtOXpFdFRkZ2hFNytv?=
- =?utf-8?B?K1d4Y01xdUcyd2RvVGZKK2RRWEZWeHlXNTYxaTJ2Z2J2d3BLTG0xRFpURXM5?=
- =?utf-8?B?Nm43czdUN21JSHh4ZGhzaFJXSWxJVU5KaFV2dnlWTTBVVnlmWkpaeFV2ZXd0?=
- =?utf-8?B?Q2tOdThlNEl5MWRLZEhCQjVTUHNzb3ZYK2gwQXZKZFRPRGprQXRLNlFyalM4?=
- =?utf-8?B?cGp1b0ZRUmRPQ21jOUNTUm80NXQ3WXJudThkVWcveXhtQTg3Mkh1L05tSU9F?=
- =?utf-8?B?M0dpNkxUMmJJamFUSUlEMnJHeGlWbTJqWHNuUFBXZmVNeXFVN1NuRFIxR3Jm?=
- =?utf-8?B?M2xsTXo2ZG94ZmRGbXFyQTNIMllmai9xS040WTZsUzI2RWIxMlZFYi80ZkdF?=
- =?utf-8?B?KzhJNVZKUkhYWHFJa1ZQTkNnQzRXS1JXUGc3cDlyc0ZnTEFSUUdINkFFS0Nl?=
- =?utf-8?Q?leuwu9/euC1+jz3gkZQBM0A=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67402029-5f4c-4666-4a14-08dbb8dcbd30
-X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB6231.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2023 06:50:41.1969
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: znWrT1CPvtsxverZtRw4jWUy+eI5a6ci52PJvUqLrMZ9+x/Y3hkPtrkP4Hy0BWAC4gT6Fw4KaQw341KOEsSPvgs3U4mhkWYZTJS2c17hFbk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB7842
-X-OriginatorOrg: intel.com
+Content-Type: multipart/mixed; boundary="8323329-534009368-1695109467=:1920"
 
-On 2023-09-07 at 16:19:37 +0000, Luck, Tony wrote:
->> > +   if (4 * node_cpus >= cache_cpus)
->> > +           return 4;
->> > +   else if (2 * node_cpus >= cache_cpus)
->> > +           return 2;
->>
->>
->> If "4 * node_cpus >= cache_cpus " is not true，
->> "2 * node_cpus >= cache_cpus" will never be true.
->> Is it the following code?
->>
->> +     if (2 * node_cpus >= cache_cpus)
->> +             return 2;
->> +     else if (4 * node_cpus >= cache_cpus)
->> +             return 4;
->
->
->Shaopeng TAN,
->
->Good catch. Your solution is the correct one.
->
->Will fix in next post.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I played around with this code a little and I think the logical
-expressions are returning wrong values.
+--8323329-534009368-1695109467=:1920
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-On a system that has SNC disabled the function reports both "node_cpus"
-and "cache_cpus" equal to 56. In this case snc_ways() returns "2". It is
-the same on a system with SNC enabled that reports the previously mentioned
-variables to be different by a factor of two (36 and 72).
+On Fri, 15 Sep 2023, Joseph, Jithu wrote:
+> On 9/15/2023 9:51 AM, Ilpo Järvinen wrote:
+> > On Wed, 13 Sep 2023, Jithu Joseph wrote:
+> > 
+> >> Make changes to scan test flow such that MSRs are populated
+> >> appropriately based on the generation supported by hardware.
+> >>
+> >> Width of chunk related bitfields is ACTIVATE_SCAN and SCAN_STATUS MSRs
+> >> are different in newer IFS generation compared to gen0.
+> >>
+> >> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> >> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> >> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+> >> ---
+> >>  drivers/platform/x86/intel/ifs/ifs.h     | 14 ++++++++++++++
+> >>  drivers/platform/x86/intel/ifs/runtest.c | 23 ++++++++++++++++++-----
+> >>  2 files changed, 32 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+> >> index 886dc74de57d..3265a6d8a6f3 100644
+> >> --- a/drivers/platform/x86/intel/ifs/ifs.h
+> >> +++ b/drivers/platform/x86/intel/ifs/ifs.h
+> >> @@ -205,6 +205,12 @@ union ifs_scan {
+> >>  		u32	delay	:31;
+> >>  		u32	sigmce	:1;
+> >>  	};
+> >> +	struct {
+> >> +		u16	start;
+> >> +		u16	stop;
+> >> +		u32	delay	:31;
+> >> +		u32	sigmce	:1;
+> >> +	} gen2;
+> > 
+> > I don't like the way old struct is left without genx naming. It makes the 
+> > code below more confusing as is.
+> > 
+> 
+> Given that less than half the fields (2/4 in ifs_scan and 2/5 in ifs_status ) are changing across
+> generations(and rest are common) , I felt the code would be more readable if the common fields are
+> accessed without generation as is done now. 
+> 
+> That said I don’t mind changing if you feel strongly about this
 
-Is it possible for node_cpus and cache_cpus to not be multiples of each
-other? (as in for example cache_cpus being 10 and node_cpus being 21?).
-If not I'd suggest using "==" instead of ">=".
+I would certainly prefer the generation dependent fields to marked as 
+such. However, it does not say you couldn't have the other fields remain 
+w/o gen.
 
-If yes then I guess something like this could work? :
+How about this definition (it comes with the added benefit that you 
+cannot accidently use start/stop without specifying gen which guards 
+against one type of bugs):
 
-+     if (node_cpus >= cache_cpus)
-+             return 1;
-+     else if (2 * node_cpus >= cache_cpus)
-+             return 2;
-+     else if (4 * node_cpus >= cache_cpus)
-+             return 4;
+union ifs_scan {
+        u64     data;
+        struct {
+		union {
+			struct {
+	        	        u8      start;
+        	        	u8      stop;
+	        	        u16     rsvd;
+			} gen0;
+		        struct {
+                		u16     start;
+		                u16     stop;
+			} gen2;
+		};
+                u32     delay   :31;
+                u32     sigmce  :1;
+        };
+};
 
-PS. I did my tests on two Intel Ice Lakes.
+Note that I used start and stop in gen0 without the bitfield that
+seems unnecessary.
 
 -- 
-Kind regards
-Maciej Wieczór-Retman
+ i.
+
+--8323329-534009368-1695109467=:1920--
