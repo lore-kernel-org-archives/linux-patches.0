@@ -1,135 +1,82 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39DFA3B
-	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 07:44:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695109473; x=1726645473;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=DueEHAS4pNn6cHKKxtYpc8Y6eCVUjoxCLg1+H69gZ5U=;
-  b=D5g6Mb5hqm+Ni8czkJ0Jawl3cbAgdYI5a+TSJJNnml1r+qp7CcZIQRPH
-   aF4GP093vzcA4AJ3HAhZgcu7FDGZPR/DPE+Bkxc4sxHGx6uKyrHnZThfg
-   rPtvlivKanANTtgKHv7ITazHsJ+HUHiggMGsQGS8FgBlexkwxA6gWc47H
-   ZipsuC+zgRVXoCj6k0Zg7NE7paMjL82ki/HqbUVna6Anq5LOqoRkWOfKt
-   vXifFu1jYvgt8bZJqpgByDu4Ubt0REcizO/VMtdHj4veI1EVOM5if3YEa
-   5bI4jkHDE3HxuR/6wS3GYlRn2kfz1PKkNlyHkI3HqLW4lkGfuSL0H42kJ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="378774245"
-X-IronPort-AV: E=Sophos;i="6.02,158,1688454000"; 
-   d="scan'208";a="378774245"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 00:44:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10837"; a="722762868"
-X-IronPort-AV: E=Sophos;i="6.02,158,1688454000"; 
-   d="scan'208";a="722762868"
-Received: from laichele-mobl1.ger.corp.intel.com ([10.252.38.7])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 00:44:21 -0700
-Date: Tue, 19 Sep 2023 10:44:14 +0300 (EEST)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: "Joseph, Jithu" <jithu.joseph@intel.com>
-cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
-    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
-    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
-    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH 04/10] platform/x86/intel/ifs: Scan test for new
- generations
-In-Reply-To: <5a66a02d-3504-ab5f-5373-789c8789557f@intel.com>
-Message-ID: <d94e516f-6331-2f20-468-bb8c6cf899c4@linux.intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230913183348.1349409-5-jithu.joseph@intel.com> <74882e91-f41e-7672-3835-d74f1364bbdd@linux.intel.com> <5a66a02d-3504-ab5f-5373-789c8789557f@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9398238BD3
+	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 07:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978D1C433C8;
+	Tue, 19 Sep 2023 07:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1695109946;
+	bh=njHjTnd9YJvAgThnzsTTDZkzqNUJIPmiGtcggS0SZnU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NkuASuenxh/TMElcg5CGQDucAGBtOl+j+LBR1qqyiTbun4RCf5z0R8G5mE8ggLB9x
+	 h66Eoo1VMZiNQGxBUlkcLoxI/kQQ3yA6ESHNK5khjw/sJqWgszYlWgXJeaNZe94WSE
+	 NderuRDBRQFT1cvmcltgQl9Ijy0drvHoDxLNmz9k=
+Date: Tue, 19 Sep 2023 09:52:20 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 000/511] 5.15.132-rc1 review
+Message-ID: <2023091958-aware-whomever-059c@gregkh>
+References: <20230917191113.831992765@linuxfoundation.org>
+ <d51e5236-54b5-40fd-86b8-c19a16f56904@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-534009368-1695109467=:1920"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d51e5236-54b5-40fd-86b8-c19a16f56904@roeck-us.net>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-534009368-1695109467=:1920
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 15 Sep 2023, Joseph, Jithu wrote:
-> On 9/15/2023 9:51 AM, Ilpo Järvinen wrote:
-> > On Wed, 13 Sep 2023, Jithu Joseph wrote:
+On Mon, Sep 18, 2023 at 11:40:36AM -0700, Guenter Roeck wrote:
+> On Sun, Sep 17, 2023 at 09:07:07PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.132 release.
+> > There are 511 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> >> Make changes to scan test flow such that MSRs are populated
-> >> appropriately based on the generation supported by hardware.
-> >>
-> >> Width of chunk related bitfields is ACTIVATE_SCAN and SCAN_STATUS MSRs
-> >> are different in newer IFS generation compared to gen0.
-> >>
-> >> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> >> Reviewed-by: Tony Luck <tony.luck@intel.com>
-> >> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
-> >> ---
-> >>  drivers/platform/x86/intel/ifs/ifs.h     | 14 ++++++++++++++
-> >>  drivers/platform/x86/intel/ifs/runtest.c | 23 ++++++++++++++++++-----
-> >>  2 files changed, 32 insertions(+), 5 deletions(-)
-> >>
-> >> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> >> index 886dc74de57d..3265a6d8a6f3 100644
-> >> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> >> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> >> @@ -205,6 +205,12 @@ union ifs_scan {
-> >>  		u32	delay	:31;
-> >>  		u32	sigmce	:1;
-> >>  	};
-> >> +	struct {
-> >> +		u16	start;
-> >> +		u16	stop;
-> >> +		u32	delay	:31;
-> >> +		u32	sigmce	:1;
-> >> +	} gen2;
-> > 
-> > I don't like the way old struct is left without genx naming. It makes the 
-> > code below more confusing as is.
+> > Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
+> > Anything received after that time might be too late.
 > > 
 > 
-> Given that less than half the fields (2/4 in ifs_scan and 2/5 in ifs_status ) are changing across
-> generations(and rest are common) , I felt the code would be more readable if the common fields are
-> accessed without generation as is done now. 
+> My tests say
 > 
-> That said I don’t mind changing if you feel strongly about this
+> Build results:
+> 	total: 155 pass: 155 fail: 0
+> Qemu test results:
+> 	total: 509 pass: 509 fail: 0
+> 
+> However, trying to build with clang (as done by ChromeOS) does report
+> 
+> fs/ksmbd/smb2pdu.c:6256:6: error: variable 'fp' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+>         if (work->next_smb2_rcv_hdr_off) {
+>             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+> fs/ksmbd/smb2pdu.c:6367:21: note: uninitialized use occurs here
+>         ksmbd_fd_put(work, fp);
+>                            ^~
+> fs/ksmbd/smb2pdu.c:6256:2: note: remove the 'if' if its condition is always false
+>         if (work->next_smb2_rcv_hdr_off) {
+>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> fs/ksmbd/smb2pdu.c:6248:23: note: initialize the variable 'fp' to silence this warning
+>         struct ksmbd_file *fp;
+>                              ^
+>                               = NULL
+> 
+> I guess I should try to add clang build tests.
+> 
+> Anyway, smb2_write() already initializes fp with NULL, presumably to handle a
+> similar problem, so maybe doing the same for the read function would be the
+> easiest solution. Note that the initialization was added upstream with commit
+> 2fd5dcb1c8ef9 ("ksmbd: smbd: fix missing client's memory region invalidation").
 
-I would certainly prefer the generation dependent fields to marked as 
-such. However, it does not say you couldn't have the other fields remain 
-w/o gen.
+Thanks for the report, I'll go fix this up in the commit that causes the
+build warning.
 
-How about this definition (it comes with the added benefit that you 
-cannot accidently use start/stop without specifying gen which guards 
-against one type of bugs):
-
-union ifs_scan {
-        u64     data;
-        struct {
-		union {
-			struct {
-	        	        u8      start;
-        	        	u8      stop;
-	        	        u16     rsvd;
-			} gen0;
-		        struct {
-                		u16     start;
-		                u16     stop;
-			} gen2;
-		};
-                u32     delay   :31;
-                u32     sigmce  :1;
-        };
-};
-
-Note that I used start and stop in gen0 without the bitfield that
-seems unnecessary.
-
--- 
- i.
-
---8323329-534009368-1695109467=:1920--
+greg k-h
