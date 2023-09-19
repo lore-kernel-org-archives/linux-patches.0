@@ -1,52 +1,52 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331CA30F96
-	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 09:02:42 +0000 (UTC)
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-44d5c49af07so2244420137.2
-        for <patches@lists.linux.dev>; Tue, 19 Sep 2023 02:02:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C1379CD
+	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 09:04:55 +0000 (UTC)
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-49032a0ff13so2301060e0c.0
+        for <patches@lists.linux.dev>; Tue, 19 Sep 2023 02:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695114162; x=1695718962; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1695114294; x=1695719094; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b8BNF8SyaoWs65BmwfDbTPimCmJcSZM1Pv8M7mtxSrU=;
-        b=3BfoIO0xfjEuTA680c3y1K57scn+j80PkL4wZfnlbWbM0zqfSrADaMLVHpUawW19KJ
-         YIj/6nuTqM3Mw6WTgBN1M/1MwwsMs8WXhtBK93omx7Y/9FEzGipINDFsrGLn37Go2kL1
-         fwEL5nbH7MLJixv0AQbRA5EE8K69cr1+KjRVD8pxGiHiLNlUkFSYJkE+HnTthww264LQ
-         PQRsFW1y9AhuUASba4hXZYTUSRMgSI6OSp76I9ZtJBeUpVBu+oPuUrIaZtMgT+AxvhXR
-         WZtJV2VExMKlDLBhZv5ouSYo7oUQ8nCppBwQmA4fwdiqrkXKm+zDiTeaZeUf9rLGP6Lx
-         eUhg==
+        bh=7ofKdvgR0Mp7BMJehnfbK34RyoaC5p+eN21rHFUIhas=;
+        b=Y6xv2WsGuDEZZ5JKwhSk2NSrQ6ZPWsBphVoWPDQ0vFQZAt1pCGUVGCoBrQdXOrXEOu
+         k1j1llSar7+0R4nksaH5+MK/JUcCf3JrBtDoSAZuDpWqGMM3axQW24iAL+S/ew+t5H7Q
+         lHt88XCcEneaXP1OArtg1dLyVeO+cw0YUGrHwecDBQo32o+NjCbeUU562xNCziFgm5zN
+         QcjLAI6A84i1RxvCKRl0Q7ituXuOeHdty8uVpnDC92pkh+no+SWxfnReZScpeauIXVd8
+         hMnwGCGPxyf9XNrsX/YVxWUw2/iQHg4lJBUvza6A2njuMIUZg7dBVY2vmxSwt+LooLNb
+         mVvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695114162; x=1695718962;
+        d=1e100.net; s=20230601; t=1695114294; x=1695719094;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=b8BNF8SyaoWs65BmwfDbTPimCmJcSZM1Pv8M7mtxSrU=;
-        b=l6wmEhF2q4EDw9YkSL5aGc62ljUFxJtSKvEE1AqYIH8y5H+ig2p7/bvZbNF1fmdSjU
-         jIZVQrcIOgQ9sh4gFr0v8rRPGnp2EJFVJfpBWTEW1GgBDUmmQ0mnaLgetT23GXKV4OZ3
-         OLJy/wc3f4qKXLI6X7wDRa7HbPVvyg1G8HpMIxVJiNo44T8VQi08Jz4NNxC/3Hr7LSmW
-         EoR2rosumSlYEopeshksJiBHIs8cJVIBV+55hfFSW34WiXaNcc+cL5aJ+cD13LNu/I8B
-         qa1SNiCkK+L8j9RZIswZBFPbKhBtAKcfIm4ooZ3vZS3f7yELLadqBi3+BpOwFGnOv1Rj
-         CPFQ==
-X-Gm-Message-State: AOJu0YxJxph16bU8yfNZmfaEbixJFyqhRpfVbjz5Z7nX05EMGKwu/Dbr
-	ixR+YvC88FqTt0JUrZACeEj/Tso/cDNC4VFW1YVy7g==
-X-Google-Smtp-Source: AGHT+IFqyvdBFTnep8FohepGzwyRCUws0u1wdBbPd8761vCQv7yNF+VJALMthM9VmOr0rU2e53MBbCN5siFvMPl8k3U=
-X-Received: by 2002:a05:6102:3c93:b0:452:8999:fb76 with SMTP id
- c19-20020a0561023c9300b004528999fb76mr1501179vsv.21.1695114161968; Tue, 19
- Sep 2023 02:02:41 -0700 (PDT)
+        bh=7ofKdvgR0Mp7BMJehnfbK34RyoaC5p+eN21rHFUIhas=;
+        b=OwngKcOgiW2QvHy65RNNVgFVvrGnFRIJ6t7LX7xkxFe34xV3YAr8nUbto+xZvfR+hb
+         o3WbVL349+EsiKbD+YbQOB2E7jdqwQALK2CqFNGpdQwcbOgY0ik4E2xRc8APcCjnf8T7
+         wt7Zm5RW4oXSYSYVNxjgCfhPz0beQdbNZFqzD1zZltCRafzXUeO/+bmxGJS59K+bMPVA
+         M+oszaS1MVhqchWhLbIM8oVP5lG/Myoh8zJEb4T1p6TJ1HSS6qFvDXInWeiOxx9bZD2u
+         dVbWGrIV9mR/S9BH1GUcNmZtrVRD45oc6G3Dq6H5Rb36YSFl1GD1pxFeAbnrv7q105sV
+         QV/g==
+X-Gm-Message-State: AOJu0YzDEKtNUeKmjTKW7X9fUycnXMdkFfUzUEEaggH9ny4BR2EWSiaH
+	14zfz0SEOtRQJKkPuJrOcZCLIZ280UBX2fI0Frq7Bg==
+X-Google-Smtp-Source: AGHT+IF9wWLmsx1f7jpe7ADkq/lXgpDNO86t3lHVkZ79WCeZacV4Y43fgL+YNhZyVI7fqNj6fQdT/fVBkwek9KloEqU=
+X-Received: by 2002:a05:6122:4699:b0:496:ca46:f0c8 with SMTP id
+ di25-20020a056122469900b00496ca46f0c8mr3925766vkb.16.1695114294084; Tue, 19
+ Sep 2023 02:04:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230830165949.127475-1-ojeda@kernel.org>
-In-Reply-To: <20230830165949.127475-1-ojeda@kernel.org>
+References: <20230830165949.127475-1-ojeda@kernel.org> <20230830165949.127475-2-ojeda@kernel.org>
+In-Reply-To: <20230830165949.127475-2-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 19 Sep 2023 11:02:30 +0200
-Message-ID: <CAH5fLghh5vxv=HnXRFpbZEtr-Rx+rr434N8ORGWz1caam0wpsg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] MAINTAINERS: update Rust webpage
+Date: Tue, 19 Sep 2023 11:04:43 +0200
+Message-ID: <CAH5fLgh5=cDu1BZBn82dGeboLinTV=rzU3=rn=eD29jKq8tH1g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] MAINTAINERS: add Maintainer Entry Profile field for Rust
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -60,20 +60,19 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Aug 30, 2023 at 7:00=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> A few months ago we started a webpage for the Rust subsystem and
-> the overall Rust for Linux project [1].
+> The `P:` field allows a URI, and we have been adding information
+> on how to contribute to the Rust subsystem to our webpage for a
+> while now (and other relevant topics, e.g. branches, third-party
+> crates, Rust unstable features...).
 >
-> The current `W:` field of the Rust entry points to the GitHub
-> repository, since originally we kept information in a `README.md`
-> file that got rendered by GitHub when visiting that URL.
+> The webpage/document does not currently follow the headings of
+> the Maintainer Entry Profile, but it does nevertheless answer
+> some of the questions we have got so far from contributors and
+> it covers partially some of the topics there.
 >
-> That information was moved into the webpage and got expanded.
-> The webpage is also nowadays the entry point to the project,
-> and we pointed the "Website" GitHub metadata field to it.
+> Thus link to our "Contributing" document [1].
 >
-> Thus update the `W:` field to point to the actual webpage.
->
-> Link: https://rust-for-linux.com [1]
+> Link: https://rust-for-linux.com/contributing [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
