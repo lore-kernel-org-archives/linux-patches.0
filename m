@@ -1,88 +1,86 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5623F28DD6
-	for <patches@lists.linux.dev>; Mon, 18 Sep 2023 22:27:14 +0000 (UTC)
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-760dff4b701so64292939f.0
-        for <patches@lists.linux.dev>; Mon, 18 Sep 2023 15:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1695076033; x=1695680833; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3rqIWrOLYqD06it1VsQqnd3u9qXxj+oJZ3vgSdaTqjM=;
-        b=MLE/2igA8cJqFfFuzBP8WLpMsPYUOcAKY99YhnkMqQ2700gdSL9g7+nmQuN8IYhsec
-         gx3MYWpehCO6V9VU6KTne+Gd8gaSn6eOQkj6OOapW4bx38HJOi0SkluaHp818VoHatID
-         8Ts1dPy2fsmJ/giYY5T/q/y7STM/BA2LeVUYM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695076033; x=1695680833;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3rqIWrOLYqD06it1VsQqnd3u9qXxj+oJZ3vgSdaTqjM=;
-        b=SVy6liQKnpqt3CbXlF0j2y0OiFcru3LfIfVy9aRlBadFaEIiMY5nz4Igpg5u/uXNQ4
-         HIM5460UTXoWPxnjlCnTidQvW7jH54nl8QdubQsV/V0/90BcnGhVnUxxdNRxQZNXmS1q
-         cwn/QhVOhEd3uoo1J/5teECJGxXAoHqGoDz0t3WqZ3iOjS/TkEG740uLfE3YqlJtKA1S
-         m6Hjlei+A8xHxzj7N/IzZ+EN8h6qrkxp+iTCs94rAWHJDyHRFU2qHiZ64JPEWq8MMbTr
-         2p3u0AE35cWDHz4XOoZSxw05Isb3D6KXvO7Yv3B2HCOGu3N6MgicF5E98ZVskE66IrsZ
-         QUEw==
-X-Gm-Message-State: AOJu0YyogIznzjA27QSm5gadksvmJckwjP7Zrw6hCg2COOR0B6thwEov
-	v0Ax+q+3+ehbnPWxgzj88Eiw6w==
-X-Google-Smtp-Source: AGHT+IHDpo6xjPia1Y9rnAdAv6S0PeTNKEuHYXTuoeaPDZGV2nE4B6rRETLt6m8zSLY+XF35iwe/gw==
-X-Received: by 2002:a6b:3bce:0:b0:790:958e:a667 with SMTP id i197-20020a6b3bce000000b00790958ea667mr11843320ioa.2.1695076033510;
-        Mon, 18 Sep 2023 15:27:13 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id h6-20020a02c726000000b0042b3a328ee0sm3089190jao.166.2023.09.18.15.27.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Sep 2023 15:27:13 -0700 (PDT)
-Message-ID: <0b0a02b9-3693-bec6-d200-ec1ccb7b9ccb@linuxfoundation.org>
-Date: Mon, 18 Sep 2023 16:27:12 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B597C8471
+	for <patches@lists.linux.dev>; Tue, 19 Sep 2023 06:50:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=BCMWKUwenmSGfoWqKlw1rkFMGJz45d8jKoWrJi9VHg8=; b=UPYu75ZYtWoHQ4eexBy2gI17Ku
+	aQKu9+TBEfoeSGLWsrMPcvRFiyz3ahew6IuQRy2MwSN8ci93riXJ1QETCsmrylFdJZGzO3UAh+Ey6
+	WFz92SogHRAYxU/saUC6k8GfC8JM9TLs8s2dAD4BsuecZ0QPLJcJdTL77nGWLmBNIcXdFfXNCXNoZ
+	/WDwE+WVRDzBvtoUWZi+Lsa3QfbqQAuqs9ZlxFZjvnIxjNqAfv9Q/brD99KBIEyrQULdf3FDZk1Vm
+	KUl2MZz3R6PzusgVAJDueeHCpNE323EaqnQETaBif9Yg/EIczaQvMAkswp02zKpM6geozsIysJBGD
+	cxCZFPtw==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1qiUBp-000ARY-C0; Tue, 19 Sep 2023 08:26:29 +0200
+Received: from [85.1.206.226] (helo=linux-3.home)
+	by sslproxy05.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1qiUBo-000AHq-S0; Tue, 19 Sep 2023 08:26:28 +0200
+Subject: Re: [PATCH 6.1 562/600] bpf: Fix issue in verifying allow_ptr_leaks
+To: Greg KH <gregkh@linuxfoundation.org>, gerhorst@cs.fau.de
+Cc: alexei.starovoitov@gmail.com, ast@kernel.org, eddyz87@gmail.com,
+ laoar.shao@gmail.com, patches@lists.linux.dev, stable@vger.kernel.org,
+ yonghong.song@linux.dev, hagarhem@amazon.de, puranjay12@gmail.com,
+ Luis Gerhorst <gerhorst@amazon.de>
+References: <20230911134650.200439213@linuxfoundation.org>
+ <20230914085131.40974-1-gerhorst@amazon.de>
+ <2023091653-peso-sprint-889d@gregkh>
+From: Daniel Borkmann <daniel@iogearbox.net>
+Message-ID: <b927046b-d1e7-8adf-ebc0-37b92d8d4390@iogearbox.net>
+Date: Tue, 19 Sep 2023 08:26:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 5.10 000/406] 5.10.195-rc1 review
+In-Reply-To: <2023091653-peso-sprint-889d@gregkh>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230917191101.035638219@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Authenticated-Sender: daniel@iogearbox.net
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27035/Mon Sep 18 09:40:43 2023)
 
-On 9/17/23 13:07, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.195 release.
-> There are 406 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 9/16/23 1:35 PM, Greg KH wrote:
+> On Thu, Sep 14, 2023 at 08:51:32AM +0000, Luis Gerhorst wrote:
+>>> 6.1-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> From: Yafang Shao <laoar.shao@gmail.com>
+>>>
+>>> commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
+>>
+>> I unfortunately have objections, they are pending discussion at [1].
+>>
+>> Same applies to the 6.4-stable review patch [2] and all other backports.
+>>
+>> [1] https://lore.kernel.org/bpf/20230913122827.91591-1-gerhorst@amazon.de/
+>> [2] https://lore.kernel.org/stable/20230911134709.834278248@linuxfoundation.org/
 > 
-> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
-> Anything received after that time might be too late.
+> As this is in the tree already, and in Linus's tree, I'll wait to see
+> if any changes are merged into Linus's tree for this before removing it
+> from the stable trees.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.195-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+> Let us know if there's a commit that resolves this and we will be glad
+> to queue that up.
 
-Compiled and booted on my test system. No dmesg regressions.
+Commit d75e30dddf73 ("bpf: Fix issue in verifying allow_ptr_leaks") is not
+stable material. It's not really a "fix", but it will simply make direct
+packet access available to applications without CAP_PERFMON - the latter
+was required so far given Spectre v1. However, there is ongoing discussion [1]
+that potentially not much useful information can be leaked out and therefore
+lifting it may or may not be ok. If we queue this to stable and later figure
+we need to revert the whole thing again because someone managed to come up
+with a PoC in the meantime, then there's higher risk of breakage.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
+Thanks,
+Daniel
