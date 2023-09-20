@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5D4328AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4E3C433AB;
-	Wed, 20 Sep 2023 12:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D02347DC
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A33CC433CA;
+	Wed, 20 Sep 2023 12:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211350;
-	bh=YvVlW4pv4jTmCmLEt9VfwHIWZiXtoVwefRjEP9mZDlA=;
+	s=korg; t=1695211352;
+	bh=8c7cQBLOs9VG00Br/vStrEspSGk7aHkdU0CYYTmWoHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGRucrQp/u7bCFRHNH3yx6JaW7DM9xVMdupjBNL5Rf69rYfzcbJbyWmhy+nIP+vzr
-	 6uC4mfa0M5oIeQFj9ydJt1OxGi4Nd+GDvxAKbhiH3aHkcZYvGm7nhNCALfGYOjkoH2
-	 clf0JCnAtFsXEvZ0i5O33iUjumM2V8OiWoLYq9zs=
+	b=ORqFYZ8zhrYg7+jnOfGUxCajjjoPWR144fREHaRzcA1XNkzf2NkKlb2qrmR9pMUlk
+	 vq1vPGS/y4G61gcyZEH/MzlWIriwa6KUxkFUUAKSgcumTRPXnkJoaDGnADF44+Qk6H
+	 0kEhlMU0LHwXx9xmLdlEPNGfUWwZglaO94+jrK7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Su Hui <suhui@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 061/186] audit: fix possible soft lockup in __audit_inode_child()
-Date: Wed, 20 Sep 2023 13:29:24 +0200
-Message-ID: <20230920112839.096492326@linuxfoundation.org>
+Subject: [PATCH 4.14 062/186] ALSA: ac97: Fix possible error value of *rac97
+Date: Wed, 20 Sep 2023 13:29:25 +0200
+Message-ID: <20230920112839.132075281@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,78 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit b59bc6e37237e37eadf50cd5de369e913f524463 ]
+[ Upstream commit 67de40c9df94037769967ba28c7d951afb45b7fb ]
 
-Tracefs or debugfs maybe cause hundreds to thousands of PATH records,
-too many PATH records maybe cause soft lockup.
+Before committing 79597c8bf64c, *rac97 always be NULL if there is
+an error. When error happens, make sure *rac97 is NULL is safer.
 
-For example:
-  1. CONFIG_KASAN=y && CONFIG_PREEMPTION=n
-  2. auditctl -a exit,always -S open -k key
-  3. sysctl -w kernel.watchdog_thresh=5
-  4. mkdir /sys/kernel/debug/tracing/instances/test
+For examble, in snd_vortex_mixer():
+	err = snd_ac97_mixer(pbus, &ac97, &vortex->codec);
+	vortex->isquad = ((vortex->codec == NULL) ?
+		0 : (vortex->codec->ext_id&0x80));
+If error happened but vortex->codec isn't NULL, this may cause some
+problems.
 
-There may be a soft lockup as follows:
-  watchdog: BUG: soft lockup - CPU#45 stuck for 7s! [mkdir:15498]
-  Kernel panic - not syncing: softlockup: hung tasks
-  Call trace:
-   dump_backtrace+0x0/0x30c
-   show_stack+0x20/0x30
-   dump_stack+0x11c/0x174
-   panic+0x27c/0x494
-   watchdog_timer_fn+0x2bc/0x390
-   __run_hrtimer+0x148/0x4fc
-   __hrtimer_run_queues+0x154/0x210
-   hrtimer_interrupt+0x2c4/0x760
-   arch_timer_handler_phys+0x48/0x60
-   handle_percpu_devid_irq+0xe0/0x340
-   __handle_domain_irq+0xbc/0x130
-   gic_handle_irq+0x78/0x460
-   el1_irq+0xb8/0x140
-   __audit_inode_child+0x240/0x7bc
-   tracefs_create_file+0x1b8/0x2a0
-   trace_create_file+0x18/0x50
-   event_create_dir+0x204/0x30c
-   __trace_add_new_event+0xac/0x100
-   event_trace_add_tracer+0xa0/0x130
-   trace_array_create_dir+0x60/0x140
-   trace_array_create+0x1e0/0x370
-   instance_mkdir+0x90/0xd0
-   tracefs_syscall_mkdir+0x68/0xa0
-   vfs_mkdir+0x21c/0x34c
-   do_mkdirat+0x1b4/0x1d4
-   __arm64_sys_mkdirat+0x4c/0x60
-   el0_svc_common.constprop.0+0xa8/0x240
-   do_el0_svc+0x8c/0xc0
-   el0_svc+0x20/0x30
-   el0_sync_handler+0xb0/0xb4
-   el0_sync+0x160/0x180
+Move the judgement order to be clearer and better.
 
-Therefore, we add cond_resched() to __audit_inode_child() to fix it.
-
-Fixes: 5195d8e217a7 ("audit: dynamically allocate audit_names when not enough space is in the names array")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 79597c8bf64c ("ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer")
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20230823025212.1000961-1-suhui@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/auditsc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/ac97/ac97_codec.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/auditsc.c b/kernel/auditsc.c
-index ffa8d64f6fef4..fb474e36c971b 100644
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -1899,6 +1899,8 @@ void __audit_inode_child(struct inode *parent,
- 		}
- 	}
+diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
+index e37eab3ddc734..5095048d5cea6 100644
+--- a/sound/pci/ac97/ac97_codec.c
++++ b/sound/pci/ac97/ac97_codec.c
+@@ -2026,10 +2026,9 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
+ 		.dev_disconnect =	snd_ac97_dev_disconnect,
+ 	};
  
-+	cond_resched();
-+
- 	/* is there a matching child entry? */
- 	list_for_each_entry(n, &context->names_list, list) {
- 		/* can only match entries that have a name */
+-	if (!rac97)
+-		return -EINVAL;
+-	if (snd_BUG_ON(!bus || !template))
++	if (snd_BUG_ON(!bus || !template || !rac97))
+ 		return -EINVAL;
++	*rac97 = NULL;
+ 	if (snd_BUG_ON(template->num >= 4))
+ 		return -EINVAL;
+ 	if (bus->codec[template->num])
 -- 
 2.40.1
 
