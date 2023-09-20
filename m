@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094BE18657
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D30C433C7;
-	Wed, 20 Sep 2023 11:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6928465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF23C433C8;
+	Wed, 20 Sep 2023 11:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210379;
-	bh=xzWKQ4OHDm9zJaSwKzL0GlQ2pbfhf7p3J2xy4I8VYs4=;
+	s=korg; t=1695210382;
+	bh=B4AC2ELiPaRYetnR5ojjRRrEjewz81DmUmcdyrIzxKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzWApEFUvJgziAv3Cv84v31ZbKzPQPYeAX9QYDAN/f1x1cfu6OeFIe8jjG6yfMUIr
-	 u/5NCIVCFPBHtomIYrwS1dgos6RyGueb73PM9ZHTw2gwPvCdhrlgLgOUCcVEbY4SPu
-	 IiDVyJBy/up2fQVLys9l8JN+bbZx2pO9izkhWha0=
+	b=sorR9QOQqWSYH2fVunc+bdZXKNVhipzfQllpqoe88EAFuW6JcrctJ7t8EIlMzGNXS
+	 GIhCwY2aU2JTNEhO9Ar+niaKQlTW3l7gbhZax1zgjXNrzEt9FjQLplfGqCLG/oWWLm
+	 v61VY2am53CUXfT+FxLb71Gc3p6qsNO7gNiqAHpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+999fac712d84878a7379@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 055/211] wifi: mac80211: check for station first in client probe
-Date: Wed, 20 Sep 2023 13:28:19 +0200
-Message-ID: <20230920112847.483396079@linuxfoundation.org>
+Subject: [PATCH 6.5 029/211] wifi: rtw88: delete timer and free skb queue when unloading
+Date: Wed, 20 Sep 2023 13:27:53 +0200
+Message-ID: <20230920112846.702138923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,57 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 67dfa589aa8806c7959cbca2f4613b8d41c75a06 ]
+[ Upstream commit 634fcbcaa4062db39aeb5ac6ed1bc1feb8dd5216 ]
 
-When probing a client, first check if we have it, and then
-check for the channel context, otherwise you can trigger
-the warning there easily by probing when the AP isn't even
-started yet. Since a client existing means the AP is also
-operating, we can then keep the warning.
+Fix possible crash and memory leak on driver unload by deleting
+TX purge timer and freeing C2H queue in 'rtw_core_deinit()',
+shrink critical section in the latter by freeing COEX queue
+out of TX report lock scope.
 
-Also simplify the moved code a bit.
-
-Reported-by: syzbot+999fac712d84878a7379@syzkaller.appspotmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230628072327.167196-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index d354b32a20f8f..45e7a5d9c7d94 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -4133,19 +4133,20 @@ static int ieee80211_probe_client(struct wiphy *wiphy, struct net_device *dev,
- 	mutex_lock(&local->mtx);
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index c853e2f2d448f..c2ddb4d382af5 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -2183,10 +2183,12 @@ void rtw_core_deinit(struct rtw_dev *rtwdev)
+ 		release_firmware(wow_fw->firmware);
  
- 	rcu_read_lock();
-+	sta = sta_info_get_bss(sdata, peer);
-+	if (!sta) {
-+		ret = -ENOLINK;
-+		goto unlock;
-+	}
-+
-+	qos = sta->sta.wme;
-+
- 	chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
- 	if (WARN_ON(!chanctx_conf)) {
- 		ret = -EINVAL;
- 		goto unlock;
- 	}
- 	band = chanctx_conf->def.chan->band;
--	sta = sta_info_get_bss(sdata, peer);
--	if (sta) {
--		qos = sta->sta.wme;
--	} else {
--		ret = -ENOLINK;
--		goto unlock;
--	}
+ 	destroy_workqueue(rtwdev->tx_wq);
++	timer_delete_sync(&rtwdev->tx_report.purge_timer);
+ 	spin_lock_irqsave(&rtwdev->tx_report.q_lock, flags);
+ 	skb_queue_purge(&rtwdev->tx_report.queue);
+-	skb_queue_purge(&rtwdev->coex.queue);
+ 	spin_unlock_irqrestore(&rtwdev->tx_report.q_lock, flags);
++	skb_queue_purge(&rtwdev->coex.queue);
++	skb_queue_purge(&rtwdev->c2h_queue);
  
- 	if (qos) {
- 		fc = cpu_to_le16(IEEE80211_FTYPE_DATA |
+ 	list_for_each_entry_safe(rsvd_pkt, tmp, &rtwdev->rsvd_page_list,
+ 				 build_list) {
 -- 
 2.40.1
 
