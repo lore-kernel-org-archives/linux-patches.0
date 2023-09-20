@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656072AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0265C433C9;
-	Wed, 20 Sep 2023 11:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116842AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D931C433C7;
+	Wed, 20 Sep 2023 11:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211190;
-	bh=eHbr9RVtUiNk8n9V4ouMnWyhYmZELE4hX5rU9TTwOEM=;
+	s=korg; t=1695211192;
+	bh=sVJOjGWxGh/RPHd2B/1v9nuHNLh9PAE0403d48EPFhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFhXDPiWYjAcbOGXXDq5ZEGb7e3/iG8hQOoW1eUO2yk221DZBQPm7SBmxOIew2wZH
-	 q+94vfhWfek3PCMuI+3H/dPxv/yfRz34FBG8Tfqtxv7/COotw6ZutB5ehhXmTxaTYD
-	 d7j3u00Gedvzbyxfncc1gGA59kHEFEBzI/MAA76k=
+	b=wcp3KJNZ8bd4gxEI8VTDlGzTBXbYHJFB8bHopI05yJtwR+Abmr90qUqGgh7SN8JEy
+	 NZTnhJL1Ow9gIG+XQ5lW/1f75Mtc5d7SM3hhLAWRU0UWzmovszLV4wuHSxc0JJRcIy
+	 k3FrEKU89kBeXzx35cf86nnSVzJIeYhuoW/V9OnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/139] x86/purgatory: Remove LTO flags
-Date: Wed, 20 Sep 2023 13:30:40 +0200
-Message-ID: <20230920112839.516349920@linuxfoundation.org>
+	stable@kernel.org,
+	Andreas Dilger <adilger@dilger.ca>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 135/139] ext4: fix rec_len verify error
+Date: Wed, 20 Sep 2023 13:31:09 +0200
+Message-ID: <20230920112840.669486016@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,63 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-[ Upstream commit 75b2f7e4c9e0fd750a5a27ca9736d1daa7a3762a ]
+commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
 
--flto* implies -ffunction-sections. With LTO enabled, ld.lld generates
-multiple .text sections for purgatory.ro:
+With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
+a problem occurred when more than 13 million files were directly created
+under a directory:
 
-  $ readelf -S purgatory.ro  | grep " .text"
-    [ 1] .text             PROGBITS         0000000000000000  00000040
-    [ 7] .text.purgatory   PROGBITS         0000000000000000  000020e0
-    [ 9] .text.warn        PROGBITS         0000000000000000  000021c0
-    [13] .text.sha256_upda PROGBITS         0000000000000000  000022f0
-    [15] .text.sha224_upda PROGBITS         0000000000000000  00002be0
-    [17] .text.sha256_fina PROGBITS         0000000000000000  00002bf0
-    [19] .text.sha224_fina PROGBITS         0000000000000000  00002cc0
+EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
 
-This causes WARNING from kexec_purgatory_setup_sechdrs():
+When enough files are created, the fake_dirent->reclen will be 0xffff.
+it doesn't equal to the blocksize 65536, i.e. 0x10000.
 
-  WARNING: CPU: 26 PID: 110894 at kernel/kexec_file.c:919
-  kexec_load_purgatory+0x37f/0x390
+But it is not the same condition when blocksize equals to 4k.
+when enough files are created, the fake_dirent->reclen will be 0x1000.
+it equals to the blocksize 4k, i.e. 0x1000.
 
-Fix this by disabling LTO for purgatory.
+The problem seems to be related to the limitation of the 16-bit field
+when the blocksize is set to 64k.
+To address this, helpers like ext4_rec_len_{from,to}_disk has already
+been introduced to complete the conversion between the encoded and the
+plain form of rec_len.
 
-[ AFAICT, x86 is the only arch that supports LTO and purgatory. ]
+So fix this one by using the helper, and all the other in this file too.
 
-We could also fix this with an explicit linker script to rejoin .text.*
-sections back into .text. However, given the benefit of LTOing purgatory
-is small, simply disable the production of more .text.* sections for now.
-
-Fixes: b33fff07e3e3 ("x86, build: allow LTO to be selected")
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://lore.kernel.org/r/20230914170138.995606-1-song@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/purgatory/Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ext4/namei.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
-index 42abd6af11984..d28e0987aa85b 100644
---- a/arch/x86/purgatory/Makefile
-+++ b/arch/x86/purgatory/Makefile
-@@ -19,6 +19,10 @@ CFLAGS_sha256.o := -D__DISABLE_EXPORTS
- # optimization flags.
- KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -343,17 +343,17 @@ static struct ext4_dir_entry_tail *get_d
+ 						   struct buffer_head *bh)
+ {
+ 	struct ext4_dir_entry_tail *t;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
  
-+# When LTO is enabled, llvm emits many text sections, which is not supported
-+# by kexec. Remove -flto=* flags.
-+KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO),$(KBUILD_CFLAGS))
-+
- # When linking purgatory.ro with -r unresolved symbols are not checked,
- # also link a purgatory.chk binary without -r to check for unresolved symbols.
- PURGATORY_LDFLAGS := -e purgatory_start -z nodefaultlib
--- 
-2.40.1
-
+ #ifdef PARANOID
+ 	struct ext4_dir_entry *d, *top;
+ 
+ 	d = (struct ext4_dir_entry *)bh->b_data;
+ 	top = (struct ext4_dir_entry *)(bh->b_data +
+-		(EXT4_BLOCK_SIZE(inode->i_sb) -
+-		 sizeof(struct ext4_dir_entry_tail)));
+-	while (d < top && d->rec_len)
++		(blocksize - sizeof(struct ext4_dir_entry_tail)));
++	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
+ 		d = (struct ext4_dir_entry *)(((void *)d) +
+-		    le16_to_cpu(d->rec_len));
++		    ext4_rec_len_from_disk(d->rec_len, blocksize));
+ 
+ 	if (d != top)
+ 		return NULL;
+@@ -364,7 +364,8 @@ static struct ext4_dir_entry_tail *get_d
+ #endif
+ 
+ 	if (t->det_reserved_zero1 ||
+-	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
++	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
++	     sizeof(struct ext4_dir_entry_tail)) ||
+ 	    t->det_reserved_zero2 ||
+ 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
+ 		return NULL;
+@@ -445,13 +446,14 @@ static struct dx_countlimit *get_dx_coun
+ 	struct ext4_dir_entry *dp;
+ 	struct dx_root_info *root;
+ 	int count_offset;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
++	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
+ 
+-	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
++	if (rlen == blocksize)
+ 		count_offset = 8;
+-	else if (le16_to_cpu(dirent->rec_len) == 12) {
++	else if (rlen == 12) {
+ 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
+-		if (le16_to_cpu(dp->rec_len) !=
+-		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
++		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
+ 			return NULL;
+ 		root = (struct dx_root_info *)(((void *)dp + 12));
+ 		if (root->reserved_zero ||
+@@ -1315,6 +1317,7 @@ static int dx_make_map(struct inode *dir
+ 	unsigned int buflen = bh->b_size;
+ 	char *base = bh->b_data;
+ 	struct dx_hash_info h = *hinfo;
++	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
+ 
+ 	if (ext4_has_metadata_csum(dir->i_sb))
+ 		buflen -= sizeof(struct ext4_dir_entry_tail);
+@@ -1335,11 +1338,12 @@ static int dx_make_map(struct inode *dir
+ 			map_tail--;
+ 			map_tail->hash = h.hash;
+ 			map_tail->offs = ((char *) de - base)>>2;
+-			map_tail->size = le16_to_cpu(de->rec_len);
++			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
++								blocksize);
+ 			count++;
+ 			cond_resched();
+ 		}
+-		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
++		de = ext4_next_entry(de, blocksize);
+ 	}
+ 	return count;
+ }
 
 
