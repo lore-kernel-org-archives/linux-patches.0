@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4145430FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD624C433C7;
-	Wed, 20 Sep 2023 12:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9CA30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862C4C433C8;
+	Wed, 20 Sep 2023 12:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212945;
-	bh=G3b2wGdFkgGKI0oayS/Qaz+kVDhMzG1W8wqevEfcplM=;
+	s=korg; t=1695212947;
+	bh=Y+n7Xa5W4r0uBIJdsB2JU4tZlFV6mcusqBjc8JATFpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWywWYRjABBnDoH2WcXJL130G6pUUpvP2hGbRIjqoK2pPLNcbrhRG+EwCw9eNM90a
-	 xo23e+KsyNDNtLst7xjjI2cqvknNLsxANNSIHNB/DHp+yoCGv7AUu9O1+LPFt1bWrK
-	 Ujd+7IiZaovy4R/B4IBS7fwwavgub5vsVtOIONv4=
+	b=kFCBI/6fgibS0VboSZUPHwvMbYtMW6bRgA7eXtmovjOmOP77040ljSnZtWRPvM5x2
+	 /aW+b4PbwCGsorIk9v5nh9m9Dmo2BRWmZjZluZBz07OxJrcsFqVv9Q8wwxA0DI/Q1m
+	 TOCD4hSsZ68/6UMVf9m+hYUzjVKkskf96gNzO564=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/367] ARM: dts: s5pv210: correct ethernet unit address in SMDKV210
-Date: Wed, 20 Sep 2023 13:28:01 +0200
-Message-ID: <20230920112901.270754244@linuxfoundation.org>
+Subject: [PATCH 5.4 105/367] ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
+Date: Wed, 20 Sep 2023 13:28:02 +0200
+Message-ID: <20230920112901.300448423@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -39,34 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 28ab4caccd17d7b84fd8aa36b13af5e735870bad ]
+[ Upstream commit b77904ba177a9c67b6dbc3637fdf1faa22df6e5c ]
 
-The SROM bank 5 is at address 0xa8000000, just like the one put in "reg"
-property of ethernet node.  Fix the unit address of ethernet node.
+Backlight is supplied by DC5V regulator.  The DTS has no PMIC node, so
+just add a regulator-fixed to solve it and fix dtbs_check warning:
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20200907183313.29234-2-krzk@kernel.org
+  s5pv210-smdkv210.dtb: backlight: 'power-supply' is a required property
+
+Link: https://lore.kernel.org/r/20230421095721.31857-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s5pv210-smdkv210.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/s5pv210-smdkv210.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-index 1e1570d66d890..7459e41e8ef13 100644
+index 7459e41e8ef13..ec5e18c59d3cf 100644
 --- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
 +++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-@@ -39,7 +39,7 @@ pmic_ap_clk: clock-0 {
- 		clock-frequency = <32768>;
+@@ -55,6 +55,14 @@ backlight {
+ 		default-brightness-level = <6>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pwm3_out>;
++		power-supply = <&dc5v_reg>;
++	};
++
++	dc5v_reg: regulator-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "DC5V";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
  	};
+ };
  
--	ethernet@18000000 {
-+	ethernet@a8000000 {
- 		compatible = "davicom,dm9000";
- 		reg = <0xA8000000 0x2 0xA8000002 0x2>;
- 		interrupt-parent = <&gph1>;
 -- 
 2.40.1
 
