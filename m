@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D2830F8E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FDDC433B6;
-	Wed, 20 Sep 2023 12:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D5830F8E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8237CC433C8;
+	Wed, 20 Sep 2023 12:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212188;
-	bh=/0eGUFvhZlgzcqyGR3uO+0rf5VH2ijssEVXagZKnZcs=;
+	s=korg; t=1695212190;
+	bh=3LIbFf8ccKLg8xyKohpayURBXKSyKAKyCUL6XPvF5SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xl0kLlJ2txChoOwUkmd/kMa49912kbI/forEfb3P5IvndVMqjY/61daywTNO3UM47
-	 qsuhpW2D5DcRNUfeHZKXlAzjB9NosZ+6C43N5MjQnvL+ml9DHgOS8wI62DT9+oD7Sg
-	 nJpdzLcz5efbjaAVqdAjhMcjLmQr8LRrEKGswBSE=
+	b=DTsn13hgJ5Cw6afafG0WgmqQD2aOHd7GX4INxdxfrHAgIIsrS748TdgLNjDBL7aQh
+	 m1xbVS8w/LShSH4M258CxW7eTrEoKRd8SgqyNQkPVDTGhrsDil2cVisSxUzGuhg+vN
+	 LkSLKK6CRUYH4Z8sOjP4+4sdtuR6PDQSP/Q6TIF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 4.19 183/273] procfs: block chmod on /proc/thread-self/comm
-Date: Wed, 20 Sep 2023 13:30:23 +0200
-Message-ID: <20230920112852.168453672@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.19 184/273] parisc: Fix /proc/cpuinfo output for lscpu
+Date: Wed, 20 Sep 2023 13:30:24 +0200
+Message-ID: <20230920112852.198827434@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,42 +38,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Helge Deller <deller@gmx.de>
 
-commit ccf61486fe1e1a48e18c638d1813cda77b3c0737 upstream.
+commit 9f5ba4b3e1b3c123eeca5d2d09161e8720048b5c upstream.
 
-Due to an oversight in commit 1b3044e39a89 ("procfs: fix pthread
-cross-thread naming if !PR_DUMPABLE") in switching from REG to NOD,
-chmod operations on /proc/thread-self/comm were no longer blocked as
-they are on almost all other procfs files.
+The lscpu command is broken since commit cab56b51ec0e ("parisc: Fix
+device names in /proc/iomem") added the PA pathname to all PA
+devices, includig the CPUs.
 
-A very similar situation with /proc/self/environ was used to as a root
-exploit a long time ago, but procfs has SB_I_NOEXEC so this is simply a
-correctness issue.
+lscpu parses /proc/cpuinfo and now believes it found different CPU
+types since every CPU is listed with an unique identifier (PA
+pathname).
 
-Ref: https://lwn.net/Articles/191954/
-Ref: 6d76fa58b050 ("Don't allow chmod() on the /proc/<pid>/ files")
-Fixes: 1b3044e39a89 ("procfs: fix pthread cross-thread naming if !PR_DUMPABLE")
-Cc: stable@vger.kernel.org # v4.7+
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Message-Id: <20230713141001.27046-1-cyphar@cyphar.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fix this problem by simply dropping the PA pathname when listing the
+CPUs in /proc/cpuinfo. There is no need to show the pathname in this
+procfs file.
+
+Fixes: cab56b51ec0e ("parisc: Fix device names in /proc/iomem")
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v4.9+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/base.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/parisc/kernel/processor.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -3338,7 +3338,8 @@ static int proc_tid_comm_permission(stru
- }
+--- a/arch/parisc/kernel/processor.c
++++ b/arch/parisc/kernel/processor.c
+@@ -377,10 +377,18 @@ int
+ show_cpuinfo (struct seq_file *m, void *v)
+ {
+ 	unsigned long cpu;
++	char cpu_name[60], *p;
++
++	/* strip PA path from CPU name to not confuse lscpu */
++	strlcpy(cpu_name, per_cpu(cpu_data, 0).dev->name, sizeof(cpu_name));
++	p = strrchr(cpu_name, '[');
++	if (p)
++		*(--p) = 0;
  
- static const struct inode_operations proc_tid_comm_inode_operations = {
--		.permission = proc_tid_comm_permission,
-+		.setattr	= proc_setattr,
-+		.permission	= proc_tid_comm_permission,
- };
+ 	for_each_online_cpu(cpu) {
+-		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
+ #ifdef CONFIG_SMP
++		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
++
+ 		if (0 == cpuinfo->hpa)
+ 			continue;
+ #endif
+@@ -425,8 +433,7 @@ show_cpuinfo (struct seq_file *m, void *
  
- /*
+ 		seq_printf(m, "model\t\t: %s - %s\n",
+ 				 boot_cpu_data.pdc.sys_model_name,
+-				 cpuinfo->dev ?
+-				 cpuinfo->dev->name : "Unknown");
++				 cpu_name);
+ 
+ 		seq_printf(m, "hversion\t: 0x%08x\n"
+ 			        "sversion\t: 0x%08x\n",
 
 
