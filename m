@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABD9154AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1A6C433C9;
-	Wed, 20 Sep 2023 11:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D8A154AF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F12C433C8;
+	Wed, 20 Sep 2023 11:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210360;
-	bh=6U+27eDJOEPJo9p8yBOunSZtynb7lsItqkaPkDaNuCs=;
+	s=korg; t=1695210363;
+	bh=9IZ3/Nr5tYd9VV35L0TDLykVvoINU7h7/59Ueg1yX0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKLhFWiSOqo04OxWqGj9FXjOcYFSrzB70ycVB3qLMeBkwxyh4sk3LSdC90okONSVy
-	 SMSUfqPAf7/chf3dD8BbAp1gM6uC784Bl+NWBTyMkluZKEw77LkH+2dur5y3ZAJwSH
-	 dewDwgpGA1fCuhrnE8OO4++Z0KmcrkmYYM+Kjbdg=
+	b=eZvcFzy5A3oDmtkjbw8Kc8ejwgxdN9ZIUTctoVkdpR5sNgqb2v3lt0/zdWi2pvptt
+	 YnqtPEKeDdx9+Y++hmnIf2oeB44i+EmIQeiwSv1YLH9RwQW3brhcbWf6EQJymrNNDO
+	 C6rJBs6B9mFBix2QzU9CeiN74rcjc+YFoZIQXP0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Reinhart <jimr@tekvox.com>,
-	James Autry <jautry@tekvox.com>,
-	Matthew Maron <matthewm@tekvox.com>,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 048/211] mmc: sdhci-esdhc-imx: improve ESDHC_FLAG_ERR010450
-Date: Wed, 20 Sep 2023 13:28:12 +0200
-Message-ID: <20230920112847.276741705@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	GONG
+Subject: [PATCH 6.5 049/211] alx: fix OOB-read compiler warning
+Date: Wed, 20 Sep 2023 13:28:13 +0200
+Message-ID: <20230920112847.306521062@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,58 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit 5ae4b0d8875caa44946e579420c7fd5740d58653 ]
+[ Upstream commit 3a198c95c95da10ad844cbeade2fe40bdf14c411 ]
 
-Errata ERR010450 only shows up if voltage is 1.8V, but if the device is
-supplied by 3v3 the errata can be ignored. So let's check for if quirk
-SDHCI_QUIRK2_NO_1_8_V is defined or not before limiting the frequency.
+The following message shows up when compiling with W=1:
 
-Cc: Jim Reinhart <jimr@tekvox.com>
-Cc: James Autry <jautry@tekvox.com>
-Cc: Matthew Maron <matthewm@tekvox.com>
-Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Acked-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230811214853.8623-1-giulio.benetti@benettiengineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘alx_get_ethtool_stats’ at drivers/net/ethernet/atheros/alx/ethtool.c:297:2:
+./include/linux/fortify-string.h:592:4: error: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Werror=attribute-warning]
+  592 |    __read_overflow2_field(q_size_field, size);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to get alx stats altogether, alx_get_ethtool_stats() reads
+beyond hw->stats.rx_ok. Fix this warning by directly copying hw->stats,
+and refactor the unnecessarily complicated BUILD_BUG_ON btw.
+
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821013218.1614265-1-gongruiqi@huaweicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/atheros/alx/ethtool.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index eebf94604a7fd..cddecc1e1ac2f 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -171,8 +171,8 @@
- #define ESDHC_FLAG_HS400		BIT(9)
- /*
-  * The IP has errata ERR010450
-- * uSDHC: Due to the I/O timing limit, for SDR mode, SD card clock can't
-- * exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
-+ * uSDHC: At 1.8V due to the I/O timing limit, for SDR mode, SD card
-+ * clock can't exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
-  */
- #define ESDHC_FLAG_ERR010450		BIT(10)
- /* The IP supports HS400ES mode */
-@@ -961,7 +961,8 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
- 		| ESDHC_CLOCK_MASK);
- 	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
+diff --git a/drivers/net/ethernet/atheros/alx/ethtool.c b/drivers/net/ethernet/atheros/alx/ethtool.c
+index b716adacd8159..7f6b69a523676 100644
+--- a/drivers/net/ethernet/atheros/alx/ethtool.c
++++ b/drivers/net/ethernet/atheros/alx/ethtool.c
+@@ -292,9 +292,8 @@ static void alx_get_ethtool_stats(struct net_device *netdev,
+ 	spin_lock(&alx->stats_lock);
  
--	if (imx_data->socdata->flags & ESDHC_FLAG_ERR010450) {
-+	if ((imx_data->socdata->flags & ESDHC_FLAG_ERR010450) &&
-+	    (!(host->quirks2 & SDHCI_QUIRK2_NO_1_8_V))) {
- 		unsigned int max_clock;
+ 	alx_update_hw_stats(hw);
+-	BUILD_BUG_ON(sizeof(hw->stats) - offsetof(struct alx_hw_stats, rx_ok) <
+-		     ALX_NUM_STATS * sizeof(u64));
+-	memcpy(data, &hw->stats.rx_ok, ALX_NUM_STATS * sizeof(u64));
++	BUILD_BUG_ON(sizeof(hw->stats) != ALX_NUM_STATS * sizeof(u64));
++	memcpy(data, &hw->stats, sizeof(hw->stats));
  
- 		max_clock = imx_data->is_ddr ? 45000000 : 150000000;
+ 	spin_unlock(&alx->stats_lock);
+ }
 -- 
 2.40.1
 
