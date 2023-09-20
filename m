@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ECB23752
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751E5C433CB;
-	Wed, 20 Sep 2023 12:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E04027EFE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EAEC433C8;
+	Wed, 20 Sep 2023 12:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211455;
-	bh=DirDhhw4KM1wshtRNiI27qhVRv2iWhp7HrMV5eWOo+k=;
+	s=korg; t=1695211458;
+	bh=tRT5xyIxvoPEkBmiXy7cg+/DuHIcshIzGSxmv05+SKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPeiB+U599/bXhx18pUHXi8cIVRH7YRgdjYU5xDd7pM9QDmyqdXxDk+OGLY8NbF3s
-	 QN/FvFrgkAas/8FQl+uKmX2FuHvmFsGnmEtmSE1iJqclFRydXw7TGHRhHJ+e3nClcA
-	 Gr6X6LEO79zWqFGj+uOMQYGOLMMwZ1dwk3R6INHc=
+	b=V/SonQlh9Tb4VTV784gJtbSevhy6HAgzRvsC6eYuNZHM9izzp3Q8Ju8OuUsGmCpDw
+	 6+HlFiXaaLVYtBUatvySevOZNTrNr0f//TqE++nqO4x1LOhIo8gc8xsc2lBnV06Iyw
+	 IyAIsXh0/698Ca3JpA7lzuO0oxXGevSpJzgZhpII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.14 099/186] netfilter: xt_u32: validate user space input
-Date: Wed, 20 Sep 2023 13:30:02 +0200
-Message-ID: <20230920112840.547681132@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 075/186] media: dvb-usb: m920x: Fix a potential memory leak in m920x_i2c_xfer()
+Date: Wed, 20 Sep 2023 13:29:38 +0200
+Message-ID: <20230920112839.578654219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -39,61 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
+[ Upstream commit ea9ef6c2e001c5dc94bee35ebd1c8a98621cf7b8 ]
 
-The xt_u32 module doesn't validate the fields in the xt_u32 structure.
-An attacker may take advantage of this to trigger an OOB read by setting
-the size fields with a value beyond the arrays boundaries.
+'read' is freed when it is known to be NULL, but not when a read error
+occurs.
 
-Add a checkentry function to validate the structure.
+Revert the logic to avoid a small leak, should a m920x_read() call fail.
 
-This was originally reported by the ZDI project (ZDI-CAN-18408).
-
-Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a2ab06d7c4d6 ("media: m920x: don't use stack on USB reads")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/media/usb/dvb-usb/m920x.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/xt_u32.c
-+++ b/net/netfilter/xt_u32.c
-@@ -95,11 +95,32 @@ static bool u32_mt(const struct sk_buff
- 	return ret ^ data->invert;
- }
+diff --git a/drivers/media/usb/dvb-usb/m920x.c b/drivers/media/usb/dvb-usb/m920x.c
+index 8a43e2415686a..2a421bd9912bc 100644
+--- a/drivers/media/usb/dvb-usb/m920x.c
++++ b/drivers/media/usb/dvb-usb/m920x.c
+@@ -283,7 +283,6 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+ 			char *read = kmalloc(1, GFP_KERNEL);
+ 			if (!read) {
+ 				ret = -ENOMEM;
+-				kfree(read);
+ 				goto unlock;
+ 			}
  
-+static int u32_mt_checkentry(const struct xt_mtchk_param *par)
-+{
-+	const struct xt_u32 *data = par->matchinfo;
-+	const struct xt_u32_test *ct;
-+	unsigned int i;
-+
-+	if (data->ntests > ARRAY_SIZE(data->tests))
-+		return -EINVAL;
-+
-+	for (i = 0; i < data->ntests; ++i) {
-+		ct = &data->tests[i];
-+
-+		if (ct->nnums > ARRAY_SIZE(ct->location) ||
-+		    ct->nvalues > ARRAY_SIZE(ct->value))
-+			return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static struct xt_match xt_u32_mt_reg __read_mostly = {
- 	.name       = "u32",
- 	.revision   = 0,
- 	.family     = NFPROTO_UNSPEC,
- 	.match      = u32_mt,
-+	.checkentry = u32_mt_checkentry,
- 	.matchsize  = sizeof(struct xt_u32),
- 	.me         = THIS_MODULE,
- };
+@@ -294,8 +293,10 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+ 
+ 				if ((ret = m920x_read(d->udev, M9206_I2C, 0x0,
+ 						      0x20 | stop,
+-						      read, 1)) != 0)
++						      read, 1)) != 0) {
++					kfree(read);
+ 					goto unlock;
++				}
+ 				msg[i].buf[j] = read[0];
+ 			}
+ 
+-- 
+2.40.1
+
 
 
