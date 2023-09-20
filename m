@@ -1,163 +1,75 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1022F3D39B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 16:09:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695226195; x=1726762195;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=CGyFN2MspIZcsVuxBOrbKUofERRXGOJLwnAZFBBtuPI=;
-  b=kuA/vTiP13TkkLvUvCI3YXdnYDq+8JN/MELrHilUYijSGyn0JIrBohlN
-   slALSKrpZEAQPzdbqwanLOej1MJ9bhwCofaTz4NDAQf1MZ5+O5u0heFlh
-   w0ZEkjPA55i7hKa3aIuQE1KKYzdbYUei0atSUy0iDcC8DiVi4LppFU4oR
-   t1n9DvEjLSuupy4PhhQfOLCmr+rMIewJItAfacy85zdZRN/nloS2l/lEd
-   GOjrGH5lIJfczYjNQ0zzaxeQuhyMKTt+orllCZKRarjLdgt5BvMYxZZOd
-   dpLz2zbYJo6szXbxCGNKvSY5nqu2QGgHZvgDVpXIWzz9dC7zfEuCCYcEH
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="380184310"
-X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="380184310"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 09:09:30 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="696356689"
-X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="696356689"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orsmga003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Sep 2023 09:09:29 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Wed, 20 Sep 2023 09:09:28 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Wed, 20 Sep 2023 09:09:28 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Wed, 20 Sep 2023 09:09:28 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.104)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Wed, 20 Sep 2023 09:09:28 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cPKYJAHzoVT5PWtjkoDDNnIBIbMefDxoAcxm6cNfxzI4aLmPj2Kiu9fBCRoN7dNerdH3+NrvXqIQhcDuGJcNOAmRdv54Path3i3WWnyewThB+Qg9GO1dCb4rmyL9LBUwHSPDTzxq+ecjNrFIQ7i2aulfFc6QM6gqkkkt9hF6o7gQ88uaDxlCFVg4iZgzO/MYIl5ivn5gLOIdMIsvBS7W3A8gln0RJlg/HnrRFjUuKeqBEF1QKlhFDR9DFnyfpzt/MMc7oqjfNXUk9YSa8s45+ToVtGz9QbV0dCGaKK4YOiQi/0P55piEQ6iSD/kCAwa3t9ZiSr6HA9SySoLBi8OCsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CGyFN2MspIZcsVuxBOrbKUofERRXGOJLwnAZFBBtuPI=;
- b=WaClkhAOz3qdW63OdFaFayNMwWAy+OkK0taQLOntvd89lw2Sn3Vl8EUvlAI7TKgBjdV5nAaw8u/Tp5zXAbYSy6Bv4QFQpeIwKpy8iTu8BeNbTC3AT3nw+GxVyFzsctA5889avmVbPRVvzxmj7LMbVKyMcizjyM0pM/TGgoNljN9mAI7Y5MIOXxlK7BGdtcC5WH35SwOEUFpZjeTaS1fYBX7yD4aaQxQovfPtwj2TXkDf4lLiaP2usbbRaxCFxtS8XiuzUE4M/5MfQJx4uDrH1ZwtomnzezUgTXm8ppI6+dg1M96c4qNRyfls4MUhIIpxsTvlzcEL6m6lXJO70IFsDg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by CH3PR11MB8383.namprd11.prod.outlook.com (2603:10b6:610:171::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.27; Wed, 20 Sep
- 2023 16:09:25 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4%7]) with mapi id 15.20.6792.026; Wed, 20 Sep 2023
- 16:09:24 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Yazen Ghannam <yazen.ghannam@amd.com>, Borislav Petkov <bp@alien8.de>
-CC: "Smita.KoralahalliChannabasappa@amd.com"
-	<Smita.KoralahalliChannabasappa@amd.com>, "dave.hansen@linux.intel.com"
-	<dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH v7 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Thread-Topic: [PATCH v7 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Thread-Index: AQHZubwYXa21JitQ9Eid+1nkCfmDVrAkQoeAgAAChYA=
-Date: Wed, 20 Sep 2023 16:09:24 +0000
-Message-ID: <SJ1PR11MB6083FC3839693001C229E78FFCF9A@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20230616182744.17632-1-tony.luck@intel.com>
- <20230718210813.291190-1-tony.luck@intel.com>
- <20230718210813.291190-3-tony.luck@intel.com>
- <02e6de51-45e3-4370-95a2-df835b3bda46@amd.com>
-In-Reply-To: <02e6de51-45e3-4370-95a2-df835b3bda46@amd.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|CH3PR11MB8383:EE_
-x-ms-office365-filtering-correlation-id: 496fce0f-64b4-483e-ffb1-08dbb9f3f548
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: MKFFPc4M6VAn+TZgJLdvvzrAnjwmhOpe5PgnkRfiBuc8rgCXRmcGKYQCP4vZA3LKJHnGINMbLxexHIgA5QAL7ku0IkngAKr1C4f01Q9WmPAdxcYUPhiE/XS2tYL8wtAJjibfisFX+zt58T7CvxBJ92QTGN5OG9I339VrB/ePlj0S+uEGwErS75pci6teX7s2LJ89wZSikhYfJQmzG0mGM6LX8Jhzl1VRNiowrYscsORL+dpi6pnKjHlenlfkWHoVJNJQjoyTRejbEBL9Dap0nWlc6CkvJszkL6g2U4AFZHRve9TfaexXlvozJFHa+bssiSMqIM4/5G+gR8gcGPeQTQIQqVDyfv7RImJn66SyNmFpo4dAj/NPTOOrH+yrQC6VPcL/CuB61LpOQmReJDwZs0hdGjud9sa+pk6F7JpF62nbpXifANBqsWCOq25yptZ0dnrE+4F7KftBm23UFP4W64T9wYCSc75iu3yIQ0OApeZgS+dvRV6jyaGJOx2o+pZ1AXECuKSYZKhNbajk90pHECNVG+vUPjhpTMsYUyXd/cbD1koaLSz8KdbY4uvajAHpyeeWledex0wLV07hE5dZCWqLhQHrQ/6qUPvHh/42l1TybZmEMcDmTo1MTvj/nEut
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(39860400002)(366004)(396003)(346002)(1800799009)(186009)(451199024)(9686003)(71200400001)(7696005)(6506007)(83380400001)(38070700005)(122000001)(38100700002)(86362001)(82960400001)(5660300002)(55016003)(26005)(33656002)(54906003)(2906002)(8676002)(41300700001)(8936002)(66556008)(66476007)(76116006)(4326008)(66446008)(110136005)(64756008)(66946007)(4744005)(316002)(52536014)(478600001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZHV2Tm5UY0xwYWkxd1FRQmd0Tlp5N04wT1lTak9zUXBlb1ozTVZyU2xIN2dB?=
- =?utf-8?B?ZGJiN0VaRDZlRlRMTFU5SklBR1VwVXZ2bEJkVWNNd3EyNndmd1Btem5hdmZV?=
- =?utf-8?B?bytqV25UaTY4QTFFMUdjRy9UUHRidWFMcHhPaVZkZ1hjYXRzWWtIaFo1SDhy?=
- =?utf-8?B?eXpoWWI2RE1jQ2RGWVZhNWlyVUFRNjhRM3pRQ0V1THpBTGwrUlk2am81Vkli?=
- =?utf-8?B?WCsyb1NjTFRzeUFwZk9LaThhTWhrY0VwckxrY3FPL1ZqZ3NVQnJpQmRlWUlZ?=
- =?utf-8?B?d0REMllhVlB6OE5FOFh0UDdEazVYc3hFcnNiRkFoQ2hRNXFVRHF5RzVrcGhs?=
- =?utf-8?B?WGVxaGpWNUp0TTVvN1FqR1praEI2N1doMTVsempFSUw0TnEzVHdDeFJBYjcy?=
- =?utf-8?B?L0xKYUVNeUtiNHRQVlgxNkpSb2IzVkswdFI4bzBrT1J4dlpBcnNrN3FDYmh0?=
- =?utf-8?B?QkNEUjIrYnFSRkdoblhid3lWdEh4aFNxWC9ZaEI0WTlQbXh6dC80bXBFN0Rj?=
- =?utf-8?B?N0hhRFVSZG5EbEVIODFoTnc3aURZQVFVRGVheHhhY2NvU0NhM3MwNDE3bFp4?=
- =?utf-8?B?TzZyVXhBSnFodHNEajZWNUxidEx0RlNsb1ZKa1p4Y2RQUDIrZ2J2ZHZLcTJa?=
- =?utf-8?B?RlV6WmdNUHhORVArUmpuTVZxLzFocnlmOGxGOG9xclYwa1Zqd1RnMjJDb2dj?=
- =?utf-8?B?T0dBRUwvYzF5ZEMrMkpYaFFiTHlsUEFGS0t4UThkNjFNeDRHbFVxZkRtaWJG?=
- =?utf-8?B?L1pmMVdINk1ac0pMSENuN3JBM0YrOXdiYnNIY01rQkh4aFB1N3ozcGtOM0xu?=
- =?utf-8?B?dnVLN3dTa1k2N1hLaGZXUHlldE5UUlB4L2h1dWZXdlptMk1QMi9RUzhhR1FQ?=
- =?utf-8?B?MlVLRmFUZ3dlV1lGSDVWbWw5WE5NRlBwN2xwbm5qUUNVZEJldnJXRThvYURw?=
- =?utf-8?B?Ynh0UW9wZndidDlKNUV3RHFtYm9qMUZEa21LUnQvY0lXVUlaWGFjWHRpV0Q3?=
- =?utf-8?B?amNmUU9kTlprM3NVNUUrM1BOWHVaQ3FicG44ZGV2WjBoNDdkZGFXK3NpVnMy?=
- =?utf-8?B?amh1RVZvOXdVaEJ5Mi90OHExN0pxQnJyWTZuVURWS04xQWVMK2hKVU1JbE1N?=
- =?utf-8?B?WWJsb2dJSUYyck1VVVpVeFIrUEFoYWNVdzAzWHVOYUtOVGw2UThSM09OQStS?=
- =?utf-8?B?ZkdRTHd1TEFKZ1Bqc2s2c3lRbmYxbmNpeUhCYndBVWhRVkZXa2JVTnMyNXJQ?=
- =?utf-8?B?bjF0TnNRQW1IVENUVk8zNTNZdCtEUUk4QkR6Z2ZXSFpvNkViRUJXUXNUeW9q?=
- =?utf-8?B?ME5wYzlOVk5kTjBXN080elpOY2wvd3dRVXpIVWsydEJQZjdMbkZZbXBrKzlk?=
- =?utf-8?B?ZDh5bUFYQ2QzUEZRczdPRWNPZm9iYlVRVndYNkp1M1I3SVBHK0FRaFFlTDNp?=
- =?utf-8?B?MFJobEk0aCtLNWxhaGtwcElkQWhzSkdLNCtSL3FCVy80UG1PZnZUL2MzcDVW?=
- =?utf-8?B?WFRGQmVCMVpUaElocXczeFlFZFgrbUYyOWk2dkFIQnNCMUp4UjhPbmdWeEIw?=
- =?utf-8?B?QytHa3RNbFBaa0kvVlVmbmlvUTUrWVN5b01hSTRySDZzVkdNQldwNlloMEpK?=
- =?utf-8?B?dTdQb2ZCZm05ME9OYmJVNHlQajNzV0JJbWFpSXhXWUVuZUd1ZzBEMEVQT2Iy?=
- =?utf-8?B?bXFyQ01kZ0JMUkJySlU3cG9WRk00YkVhSUlVR3BTaXByQ3JRRjhERENvejh3?=
- =?utf-8?B?cjdqRmpEL3c5aU0xa0F1ci9IWGkzSFE2bTJKdm5mUCtiZXlMakpxTW9XMk9Z?=
- =?utf-8?B?enNFTXBUQkxkdXloZVFZVy9NSFpHZ2JKb0szeDJGQ1d5bHRPRDd6cFlwaHZr?=
- =?utf-8?B?ZGVMbDhuaTd0V1FQUlBtbHQrclVRc3REZTVZSjBPbW50Vm1PaDdYVVg5TUNm?=
- =?utf-8?B?ODUrUTQ5V3l5ZWVpT3lxR3lZb21LUHdIR0R0WC9zeEQraXBMRFNhSGg4cHll?=
- =?utf-8?B?bEN2S0dqOHdaYWVFKzFjV0pNVFRVLzNsdDdIK0l6M2F0L2pMbXRBT2NpRjdK?=
- =?utf-8?B?RWpIWGN0U3dkREUxWGJ0RXU3blltWEVFOWx3TWNVQjYvb1RQb2x2L2I5ZUw1?=
- =?utf-8?Q?Oi1JMfN0k80bps14kl96Jr3nN?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0185C3B2BE;
+	Wed, 20 Sep 2023 16:55:56 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 209A121E17;
+	Wed, 20 Sep 2023 16:55:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1695228953; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YRuJsY73C8doQ4cNf1LjL+UhEmqmPUGsnMHO5Imx8so=;
+	b=dKI2cRhasOtnaSBCgHjLyUopF0KNuF+cPl+ufz4nGgCod/Sl8Ub2LjKkQ0FAvxJdjnvDmg
+	loN3fdV7iY3W0HfKtQ7/3pa0ZqYapkZuE1Akp8EzbDWK39Heez0rwJ3Xg9iHYJwzuTCz4H
+	64/c3qT/xH5HCj7WJ3OK6gSwbOE1Hek=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E8EDA1333E;
+	Wed, 20 Sep 2023 16:55:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id KbyzNBgkC2V7dQAAMHmgww
+	(envelope-from <mhocko@suse.com>); Wed, 20 Sep 2023 16:55:52 +0000
+Date: Wed, 20 Sep 2023 18:55:52 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Shakeel Butt <shakeelb@google.com>
+Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
+	mathieu.tortuyaux@gmail.com
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Message-ID: <ZQskGGAwlsr1YxAp@dhcp22.suse.cz>
+References: <20230917191040.964416434@linuxfoundation.org>
+ <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+ <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+ <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+ <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
+ <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
+ <CALvZod7E_Jm9y+40OKtLs5EFA0ptKGjoe2BU58SY29pUiPc93g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 496fce0f-64b4-483e-ffb1-08dbb9f3f548
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Sep 2023 16:09:24.6465
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qzuImdFASx/kvmRXEEYiX6wJlQjpUaT6YCRhJroRHUs3f70jRKG0rd9IDd54EV/wByEEXhSrYLAwbj853cmhVw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8383
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALvZod7E_Jm9y+40OKtLs5EFA0ptKGjoe2BU58SY29pUiPc93g@mail.gmail.com>
 
-PiBJIHdhcyBqdXN0IHRoaW5raW5nLCBjb3VsZCB3ZSBwdXQgYWxsIHRoaXMgY29kZSBpbiB0aHJl
-c2hvbGQuYz8gVGhhdCBpcw0KPiB0aGUgcGxhY2UgZm9yIGNvbW1vbiB0aHJlc2hvbGRpbmcgc3Vw
-cG9ydC4gQW5kIHRoZSBDTUNJIHN0b3JtIGhhbmRsaW5nDQo+IHNlZW1zIGxpa2UgaXQnZCBiZSBw
-YXJ0IG9mIHRoYXQuDQoNCllhemVuLA0KDQpJJ2xsIHRha2UgYSBsb29rIGF0IGRvaW5nIHRoYXQu
-IEl0IG1pZ2h0IG5lZWQgdG8gZHJvcCBhIGhhbmRmdWwgb2YgInN0YXRpYyINCmRlY2xhcmF0aW9u
-cyBvZiB0aGluZ3MgaW4gY29yZS5jIHRvIGFsbG93IGFjY2VzcyBmcm9tIGFub3RoZXIgZmlsZS4g
-QnV0DQppdCBzaG91bGQganVzdCBiZSBhIGZldy4gVGhpcyBjb2RlIG9ubHkgaG9va3MgaW50byBh
-IGZldyBzcG90cy4NCg0KLVRvbnkNCg0KUC5TLiBUaGFua3MgYWxzbyBmb3IgdGhlIGRldGFpbGVk
-IHJldmlld3MgeW91IHBvc3RlZCB5ZXN0ZXJkYXkuIEknbQ0Kc3RpbGwgZGlnZXN0aW5nIHRob3Nl
-Lg0K
+On Wed 20-09-23 08:32:42, Shakeel Butt wrote:
+> Also I don't think reverting 58056f77502f would give any benefit.
+
+Not reverting 58056f77502f would re-introduce the regression in some
+non-patched versions of Docker runtimes which cannot handle ENOTSUPP.
+So I think we need to revert both or none of them. I would prefer the
+later (option 1) as the fix is trivial but I do understand headache
+of chasing all those outdated deployments or vendor code forks.
+-- 
+Michal Hocko
+SUSE Labs
