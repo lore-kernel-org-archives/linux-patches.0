@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF2B30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E46C433C8;
-	Wed, 20 Sep 2023 12:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0A830FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4582DC433C7;
+	Wed, 20 Sep 2023 12:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212560;
-	bh=n58u8OgrVTwzqTNIHs7yfvLREQ/gNRlhTfTw8k9dF+g=;
+	s=korg; t=1695212562;
+	bh=T6bF6A0E9Vp8ZvxVHVkae8XE3KNopROyLfp897SboTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aeKcaTt+Kx4FyTQMolDPD3HN/yR+Pu8nbFJ7PsysWEyteWBUbTBRf83MXsthTm82Y
-	 QMCQMWsmuRUBxzwJgdTwJGE3zmP8pwyt/RDfGgdHQM3y7PULqnS9E54hF6uDwknVHy
-	 FS8WBvs4+TTwOcPVGLr4qTyGm1BlFS2nfZpy0Hsc=
+	b=mBNqJb/mtl2Mtrkm4ki3rEJ+EQvnikmxWfaO3yw9JOQIkRu+b96bsVnPhaMqKjGDc
+	 Z8LGHvZ8FrpB632pmXR9/5c873CGV3Y/IpdGIeRo7r1ClWlCu3oOo55cYY1ltNauFo
+	 824H+7z0ZsU2G6ApG2XVr2yUjAavjKTRLB6n5gik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/83] serial: cpm_uart: Avoid suspicious locking
-Date: Wed, 20 Sep 2023 13:31:36 +0200
-Message-ID: <20230920112828.493103194@linuxfoundation.org>
+Subject: [PATCH 5.10 47/83] media: pci: ipu3-cio2: Initialise timing struct to avoid a compiler warning
+Date: Wed, 20 Sep 2023 13:31:37 +0200
+Message-ID: <20230920112828.532233373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -39,78 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 36ef11d311f405e55ad8e848c19b212ff71ef536 ]
+[ Upstream commit 9d7531be3085a8f013cf173ccc4e72e3cf493538 ]
 
-  CHECK   drivers/tty/serial/cpm_uart/cpm_uart_core.c
-drivers/tty/serial/cpm_uart/cpm_uart_core.c:1271:39: warning: context imbalance in 'cpm_uart_console_write' - unexpected unlock
+Initialise timing struct in cio2_hw_init() to zero in order to avoid a
+compiler warning. The warning was a false positive.
 
-Allthough 'nolock' is not expected to change, sparse find the following
-form suspicious:
-
-	if (unlikely(nolock)) {
-		local_irq_save(flags);
-	} else {
-		spin_lock_irqsave(&pinfo->port.lock, flags);
-	}
-
-	cpm_uart_early_write(pinfo, s, count, true);
-
-	if (unlikely(nolock)) {
-		local_irq_restore(flags);
-	} else {
-		spin_unlock_irqrestore(&pinfo->port.lock, flags);
-	}
-
-Rewrite it a more obvious form:
-
-	if (unlikely(oops_in_progress)) {
-		local_irq_save(flags);
-		cpm_uart_early_write(pinfo, s, count, true);
-		local_irq_restore(flags);
-	} else {
-		spin_lock_irqsave(&pinfo->port.lock, flags);
-		cpm_uart_early_write(pinfo, s, count, true);
-		spin_unlock_irqrestore(&pinfo->port.lock, flags);
-	}
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/f7da5cdc9287960185829cfef681a7d8614efa1f.1691068700.git.christophe.leroy@csgroup.eu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/cpm_uart/cpm_uart_core.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/media/pci/intel/ipu3/ipu3-cio2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/cpm_uart/cpm_uart_core.c b/drivers/tty/serial/cpm_uart/cpm_uart_core.c
-index 4df47d02b34b4..f727222469b60 100644
---- a/drivers/tty/serial/cpm_uart/cpm_uart_core.c
-+++ b/drivers/tty/serial/cpm_uart/cpm_uart_core.c
-@@ -1263,19 +1263,14 @@ static void cpm_uart_console_write(struct console *co, const char *s,
- {
- 	struct uart_cpm_port *pinfo = &cpm_uart_ports[co->index];
- 	unsigned long flags;
--	int nolock = oops_in_progress;
+diff --git a/drivers/media/pci/intel/ipu3/ipu3-cio2.c b/drivers/media/pci/intel/ipu3/ipu3-cio2.c
+index d6838c8ebd7e8..f8dca47904766 100644
+--- a/drivers/media/pci/intel/ipu3/ipu3-cio2.c
++++ b/drivers/media/pci/intel/ipu3/ipu3-cio2.c
+@@ -355,7 +355,7 @@ static int cio2_hw_init(struct cio2_device *cio2, struct cio2_queue *q)
+ 	void __iomem *const base = cio2->base;
+ 	u8 lanes, csi2bus = q->csi2.port;
+ 	u8 sensor_vc = SENSOR_VIR_CH_DFLT;
+-	struct cio2_csi2_timing timing;
++	struct cio2_csi2_timing timing = { 0 };
+ 	int i, r;
  
--	if (unlikely(nolock)) {
-+	if (unlikely(oops_in_progress)) {
- 		local_irq_save(flags);
--	} else {
--		spin_lock_irqsave(&pinfo->port.lock, flags);
--	}
--
--	cpm_uart_early_write(pinfo, s, count, true);
--
--	if (unlikely(nolock)) {
-+		cpm_uart_early_write(pinfo, s, count, true);
- 		local_irq_restore(flags);
- 	} else {
-+		spin_lock_irqsave(&pinfo->port.lock, flags);
-+		cpm_uart_early_write(pinfo, s, count, true);
- 		spin_unlock_irqrestore(&pinfo->port.lock, flags);
- 	}
- }
+ 	fmt = cio2_find_format(NULL, &q->subdev_fmt.code);
 -- 
 2.40.1
 
