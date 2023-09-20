@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1E630F8E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D72C433C9;
-	Wed, 20 Sep 2023 12:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD20C11723
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56525C433C8;
+	Wed, 20 Sep 2023 12:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213951;
-	bh=fCNenHqlXaWMIPj7Z7UG2zwaS+U01nnHg8mOm2+lfVY=;
+	s=korg; t=1695213953;
+	bh=Rxd8IVtq6++4dGH3/DnY3IttoVrGtIT4fc5IStCd4c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MVHNzN6BmUdVClr9CJRhLH9NSAq1BSU7aIUw39Cw0LnY84IipOTWPSOs4P+uq9Kz
-	 UyW7lng3pEfrAJDM9PQkc3nIpXr+F7hyNFWEoCQr4CE42UQJwtWnXepV+7L5x6EB6V
-	 CHhmO5mbQ0iUOvsF8QJ15cjh5H04fhBuGbH00gDA=
+	b=MCHhR2cwtzEGl2a0yPHF30t5jwe8mCxAxkKNUs8HTa1Vu6PDigts0Q/GJ6gnN6APs
+	 MzKu6mRfDjGxt4kPROopUH72vYGuYEPo3F+YmCZ5W95NfoR3amaw6s57I+j/O2qnCW
+	 IbEtA5ip13nTPXABchTYomuVkdQUbSjHMB+iNA7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Leo Chen <sancchen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/110] ALSA: hda: intel-dsp-cfg: add LunarLake support
-Date: Wed, 20 Sep 2023 13:31:30 +0200
-Message-ID: <20230920112831.574978974@linuxfoundation.org>
+Subject: [PATCH 5.15 033/110] drm/amd/display: Blocking invalid 420 modes on HDMI TMDS for DCN31
+Date: Wed, 20 Sep 2023 13:31:31 +0200
+Message-ID: <20230920112831.607095319@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -42,41 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Leo Chen <sancchen@amd.com>
 
-[ Upstream commit d2852b8c045ebd31d753b06f2810df5be30ed56a ]
+[ Upstream commit 026a71babf48efb6b9884a3a66fa31aec9e1ea54 ]
 
-One more PCI ID for the road.
+[Why & How]
+HDMI TMDS does not have ODM support. Filtering 420 modes that
+exceed the 4096 FMT limitation on DCN31 will resolve
+intermittent corruptions issues.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230802150105.24604-5-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-dsp-config.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c    | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
-index 513eadcc38d90..c69d069b3f2b6 100644
---- a/sound/hda/intel-dsp-config.c
-+++ b/sound/hda/intel-dsp-config.c
-@@ -385,6 +385,14 @@ static const struct config_entry config_table[] = {
- 	},
- #endif
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
+index aa0507e017926..c5e0de4f77b31 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
+@@ -4162,7 +4162,9 @@ void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				}
+ 				if (v->OutputFormat[k] == dm_420 && v->HActive[k] > DCN31_MAX_FMT_420_BUFFER_WIDTH
+ 						&& v->ODMCombineEnablePerState[i][k] != dm_odm_combine_mode_4to1) {
+-					if (v->HActive[k] / 2 > DCN31_MAX_FMT_420_BUFFER_WIDTH) {
++					if (v->Output[k] == dm_hdmi) {
++						FMTBufferExceeded = true;
++					} else if (v->HActive[k] / 2 > DCN31_MAX_FMT_420_BUFFER_WIDTH) {
+ 						v->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_4to1;
+ 						v->PlaneRequiredDISPCLK = v->PlaneRequiredDISPCLKWithODMCombine4To1;
  
-+/* Lunar Lake */
-+#if IS_ENABLED(CONFIG_SND_SOC_SOF_LUNARLAKE)
-+	/* Lunarlake-P */
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = PCI_DEVICE_ID_INTEL_HDA_LNL_P,
-+	},
-+#endif
- };
- 
- static const struct config_entry *snd_intel_dsp_find_config
 -- 
 2.40.1
 
