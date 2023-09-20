@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78F52AB4E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C072C433CB;
-	Wed, 20 Sep 2023 12:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5186B2AB5E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C915BC433C7;
+	Wed, 20 Sep 2023 12:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211742;
-	bh=2RDW7jhRT2zZ8WL5d2MF6Zs2HcnWhLTeaKzJ/2gkS5c=;
+	s=korg; t=1695211745;
+	bh=vuIJd8jM7VoHCq3NZdevcBqUpSuqZWfARkU71Q4uGWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pscQp4TDNoQuRnFhgQc8Fbtvus8QZBfsAHnK0YnHvMvOkhaAds26zavdTMMAyjGOK
-	 E/Nir5HxmwHNTW/rMZWUfBhvXvZKrkwhC8kg0Dv4p5QvIX5T0jd0OzzlRskWYkxM/P
-	 2ulCo4oqCipJXfYVRfYsMVae8HkP8lJyd4W1ll8I=
+	b=qNFsmPZ6xsyVcniQ0IhgG9pQeZC8733QxLJEaNyzyrcHYMIAXsKByFGxEJx5YcjuM
+	 zvf+9KWXdWH3e3nEom4/piG8inNBaxoN4HPieyBAuIo34j0ppn3MQUEfMmvJyaGR5Q
+	 5uzJms8Mwm86EA9/19su1pPWaMMo95gHWAhXKZyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Benc <jbenc@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ben Hutchings <benh@debian.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/273] vxlan: generalize vxlan_parse_gpe_hdr and remove unused args
-Date: Wed, 20 Sep 2023 13:27:39 +0200
-Message-ID: <20230920112847.027000765@linuxfoundation.org>
+Subject: [PATCH 4.19 020/273] m68k: Fix invalid .section syntax
+Date: Wed, 20 Sep 2023 13:27:40 +0200
+Message-ID: <20230920112847.056461157@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,111 +41,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Benc <jbenc@redhat.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 17a0a64448b568442a101de09575f81ffdc45d15 ]
+[ Upstream commit 922a9bd138101e3e5718f0f4d40dba68ef89bb43 ]
 
-The vxlan_parse_gpe_hdr function extracts the next protocol value from
-the GPE header and marks GPE bits as parsed.
+gas supports several different forms for .section for ELF targets,
+including:
+    .section NAME [, "FLAGS"[, @TYPE[,FLAG_SPECIFIC_ARGUMENTS]]]
+and:
+    .section "NAME"[, #FLAGS...]
 
-In order to be used in the next patch, split the function into protocol
-extraction and bit marking. The bit marking is meaningful only in
-vxlan_rcv; move it directly there.
+In several places we use a mix of these two forms:
+    .section NAME, #FLAGS...
 
-Rename the function to vxlan_parse_gpe_proto to reflect what it now
-does. Remove unused arguments skb and vxflags. Move the function earlier
-in the file to allow it to be called from more places in the next patch.
+A current development snapshot of binutils (2.40.50.20230611) treats
+this mixed syntax as an error.
 
-Signed-off-by: Jiri Benc <jbenc@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Change to consistently use:
+    .section NAME, "FLAGS"
+as is used elsewhere in the kernel.
+
+Link: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=m68k&ver=6.4%7Erc6-1%7Eexp1&stamp=1686907300&raw=1
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Tested-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Link: https://lore.kernel.org/r/ZIyBaueWT9jnTwRC@decadent.org.uk
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan.c | 58 ++++++++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 30 deletions(-)
+ arch/m68k/fpsp040/skeleton.S       | 4 ++--
+ arch/m68k/ifpsp060/os.S            | 4 ++--
+ arch/m68k/kernel/relocate_kernel.S | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/vxlan.c b/drivers/net/vxlan.c
-index 1b98a888a168e..d5c8d0d54b33d 100644
---- a/drivers/net/vxlan.c
-+++ b/drivers/net/vxlan.c
-@@ -542,6 +542,32 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	return 1;
- }
+diff --git a/arch/m68k/fpsp040/skeleton.S b/arch/m68k/fpsp040/skeleton.S
+index a8f41615d94a7..31a9c634c81ed 100644
+--- a/arch/m68k/fpsp040/skeleton.S
++++ b/arch/m68k/fpsp040/skeleton.S
+@@ -499,12 +499,12 @@ in_ea:
+ 	dbf	%d0,morein
+ 	rts
  
-+static bool vxlan_parse_gpe_proto(struct vxlanhdr *hdr, __be16 *protocol)
-+{
-+	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)hdr;
-+
-+	/* Need to have Next Protocol set for interfaces in GPE mode. */
-+	if (!gpe->np_applied)
-+		return false;
-+	/* "The initial version is 0. If a receiver does not support the
-+	 * version indicated it MUST drop the packet.
-+	 */
-+	if (gpe->version != 0)
-+		return false;
-+	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
-+	 * processing MUST occur." However, we don't implement OAM
-+	 * processing, thus drop the packet.
-+	 */
-+	if (gpe->oam_flag)
-+		return false;
-+
-+	*protocol = tun_p_to_eth_p(gpe->next_protocol);
-+	if (!*protocol)
-+		return false;
-+
-+	return true;
-+}
-+
- static struct vxlanhdr *vxlan_gro_remcsum(struct sk_buff *skb,
- 					  unsigned int off,
- 					  struct vxlanhdr *vh, size_t hdrlen,
-@@ -1279,35 +1305,6 @@ static void vxlan_parse_gbp_hdr(struct vxlanhdr *unparsed,
- 	unparsed->vx_flags &= ~VXLAN_GBP_USED_BITS;
- }
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:
+ 	jbra	fpsp040_die
  
--static bool vxlan_parse_gpe_hdr(struct vxlanhdr *unparsed,
--				__be16 *protocol,
--				struct sk_buff *skb, u32 vxflags)
--{
--	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)unparsed;
--
--	/* Need to have Next Protocol set for interfaces in GPE mode. */
--	if (!gpe->np_applied)
--		return false;
--	/* "The initial version is 0. If a receiver does not support the
--	 * version indicated it MUST drop the packet.
--	 */
--	if (gpe->version != 0)
--		return false;
--	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
--	 * processing MUST occur." However, we don't implement OAM
--	 * processing, thus drop the packet.
--	 */
--	if (gpe->oam_flag)
--		return false;
--
--	*protocol = tun_p_to_eth_p(gpe->next_protocol);
--	if (!*protocol)
--		return false;
--
--	unparsed->vx_flags &= ~VXLAN_GPE_USED_BITS;
--	return true;
--}
--
- static bool vxlan_set_mac(struct vxlan_dev *vxlan,
- 			  struct vxlan_sock *vs,
- 			  struct sk_buff *skb, __be32 vni)
-@@ -1409,8 +1406,9 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
- 	 * used by VXLAN extensions if explicitly requested.
- 	 */
- 	if (vs->flags & VXLAN_F_GPE) {
--		if (!vxlan_parse_gpe_hdr(&unparsed, &protocol, skb, vs->flags))
-+		if (!vxlan_parse_gpe_proto(&unparsed, &protocol))
- 			goto drop;
-+		unparsed.vx_flags &= ~VXLAN_GPE_USED_BITS;
- 		raw_proto = true;
- 	}
+-	.section __ex_table,#alloc
++	.section __ex_table,"a"
+ 	.align	4
+ 
+ 	.long	in_ea,1b
+diff --git a/arch/m68k/ifpsp060/os.S b/arch/m68k/ifpsp060/os.S
+index 7a0d6e4280665..89e2ec224ab6c 100644
+--- a/arch/m68k/ifpsp060/os.S
++++ b/arch/m68k/ifpsp060/os.S
+@@ -379,11 +379,11 @@ _060_real_access:
+ 
+ 
+ | Execption handling for movs access to illegal memory
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:	moveq		#-1,%d1
+ 	rts
+-.section __ex_table,#alloc
++.section __ex_table,"a"
+ 	.align 4
+ 	.long	dmrbuae,1b
+ 	.long	dmrwuae,1b
+diff --git a/arch/m68k/kernel/relocate_kernel.S b/arch/m68k/kernel/relocate_kernel.S
+index ab0f1e7d46535..f7667079e08e9 100644
+--- a/arch/m68k/kernel/relocate_kernel.S
++++ b/arch/m68k/kernel/relocate_kernel.S
+@@ -26,7 +26,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcopy),%a4
+ 2:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 2b+2
+ 	.previous
+ 
+@@ -49,7 +49,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcont040),%a4
+ 5:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 5b+2
+ 	.previous
  
 -- 
 2.40.1
