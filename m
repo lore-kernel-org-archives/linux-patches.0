@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772FB2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E400C433C7;
-	Wed, 20 Sep 2023 12:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AFB2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5D7C433C8;
+	Wed, 20 Sep 2023 12:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211287;
-	bh=Dm1eGUUAve3mNelHVo1yprPTsC8PAmNcBa0jJGTIEnE=;
+	s=korg; t=1695211290;
+	bh=89pGBB3QrgwjERkYak2yXg3tRBCv9OFUYhwIUByvz2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opLXS/CqbOoACvW+qCYG18JFTLwTzXQ0FJ1DUn6rP41OzvDf229Fnb9uyvFSrbb1r
-	 MTrLWrafV83zcZrL8I1R2yD2ozip8z2rUk+72k14VkhlzaZI2d7/lu0pOZDyd3/vI6
-	 2E6k++Z3wbWIYJPGuojsowv1Wp57QXOtEA4VO7RA=
+	b=mgzgetBT5YZyP2gWl7ApbM8kjVs+fv4f4cXMBA7zvZc27BWd8r0O5dVcOmsXlYqDk
+	 0KTyo+Fx2VJx0NZGYXImP/UE6TS1ntAqQbhoxPTSeJ0iMwZq1Udr7xpXXRgybhc4A6
+	 KBcx7Q1JoAcWGeSHCF8+ebUHh1Latsk7FvaUlCwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 037/186] cpufreq: powernow-k8: Use related_cpus instead of cpus in driver.exit()
-Date: Wed, 20 Sep 2023 13:29:00 +0200
-Message-ID: <20230920112838.296449666@linuxfoundation.org>
+Subject: [PATCH 4.14 038/186] regmap: rbtree: Use alloc_flags for memory allocations
+Date: Wed, 20 Sep 2023 13:29:01 +0200
+Message-ID: <20230920112838.331691452@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,36 +41,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 03997da042dac73c69e60d91942c727c76828b65 ]
+[ Upstream commit 0c8b0bf42c8cef56f7cd9cd876fbb7ece9217064 ]
 
-Since the 'cpus' field of policy structure will become empty in the
-cpufreq core API, it is better to use 'related_cpus' in the exit()
-callback of driver.
+The kunit tests discovered a sleeping in atomic bug.  The allocations
+in the regcache-rbtree code should use the map->alloc_flags instead of
+GFP_KERNEL.
 
-Fixes: c3274763bfc3 ("cpufreq: powernow-k8: Initialize per-cpu data-structures properly")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+[    5.005510] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
+[    5.005960] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 117, name: kunit_try_catch
+[    5.006219] preempt_count: 1, expected: 0
+[    5.006414] 1 lock held by kunit_try_catch/117:
+[    5.006590]  #0: 833b9010 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
+[    5.007493] irq event stamp: 162
+[    5.007627] hardirqs last  enabled at (161): [<80786738>] crng_make_state+0x1a0/0x294
+[    5.007871] hardirqs last disabled at (162): [<80c531ec>] _raw_spin_lock_irqsave+0x7c/0x80
+[    5.008119] softirqs last  enabled at (0): [<801110ac>] copy_process+0x810/0x2138
+[    5.008356] softirqs last disabled at (0): [<00000000>] 0x0
+[    5.008688] CPU: 0 PID: 117 Comm: kunit_try_catch Tainted: G                 N 6.4.4-rc3-g0e8d2fdfb188 #1
+[    5.009011] Hardware name: Generic DT based system
+[    5.009277]  unwind_backtrace from show_stack+0x18/0x1c
+[    5.009497]  show_stack from dump_stack_lvl+0x38/0x5c
+[    5.009676]  dump_stack_lvl from __might_resched+0x188/0x2d0
+[    5.009860]  __might_resched from __kmem_cache_alloc_node+0x1dc/0x25c
+[    5.010061]  __kmem_cache_alloc_node from kmalloc_trace+0x30/0xc8
+[    5.010254]  kmalloc_trace from regcache_rbtree_write+0x26c/0x468
+[    5.010446]  regcache_rbtree_write from _regmap_write+0x88/0x140
+[    5.010634]  _regmap_write from regmap_write+0x44/0x68
+[    5.010803]  regmap_write from basic_read_write+0x8c/0x270
+[    5.010980]  basic_read_write from kunit_try_run_case+0x48/0xa0
+
+Fixes: 28644c809f44 ("regmap: Add the rbtree cache support")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/ee59d128-413c-48ad-a3aa-d9d350c80042@roeck-us.net/
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/58f12a07-5f4b-4a8f-ab84-0a42d1908cb9@moroto.mountain
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/powernow-k8.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/base/regmap/regcache-rbtree.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
-index 32bb00a6fe099..3b9aa473ae8ff 100644
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1120,7 +1120,8 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
+diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
+index e9b7ce8c272c6..7353c55270874 100644
+--- a/drivers/base/regmap/regcache-rbtree.c
++++ b/drivers/base/regmap/regcache-rbtree.c
+@@ -291,7 +291,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
  
- 	kfree(data->powernow_table);
- 	kfree(data);
--	for_each_cpu(cpu, pol->cpus)
-+	/* pol->cpus will be empty here, use related_cpus instead. */
-+	for_each_cpu(cpu, pol->related_cpus)
- 		per_cpu(powernow_data, cpu) = NULL;
+ 	blk = krealloc(rbnode->block,
+ 		       blklen * map->cache_word_size,
+-		       GFP_KERNEL);
++		       map->alloc_flags);
+ 	if (!blk)
+ 		return -ENOMEM;
  
- 	return 0;
+@@ -300,7 +300,7 @@ static int regcache_rbtree_insert_to_block(struct regmap *map,
+ 	if (BITS_TO_LONGS(blklen) > BITS_TO_LONGS(rbnode->blklen)) {
+ 		present = krealloc(rbnode->cache_present,
+ 				   BITS_TO_LONGS(blklen) * sizeof(*present),
+-				   GFP_KERNEL);
++				   map->alloc_flags);
+ 		if (!present)
+ 			return -ENOMEM;
+ 
+@@ -334,7 +334,7 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	const struct regmap_range *range;
+ 	int i;
+ 
+-	rbnode = kzalloc(sizeof(*rbnode), GFP_KERNEL);
++	rbnode = kzalloc(sizeof(*rbnode), map->alloc_flags);
+ 	if (!rbnode)
+ 		return NULL;
+ 
+@@ -360,13 +360,13 @@ regcache_rbtree_node_alloc(struct regmap *map, unsigned int reg)
+ 	}
+ 
+ 	rbnode->block = kmalloc_array(rbnode->blklen, map->cache_word_size,
+-				      GFP_KERNEL);
++				      map->alloc_flags);
+ 	if (!rbnode->block)
+ 		goto err_free;
+ 
+ 	rbnode->cache_present = kcalloc(BITS_TO_LONGS(rbnode->blklen),
+ 					sizeof(*rbnode->cache_present),
+-					GFP_KERNEL);
++					map->alloc_flags);
+ 	if (!rbnode->cache_present)
+ 		goto err_free_block;
+ 
 -- 
 2.40.1
 
