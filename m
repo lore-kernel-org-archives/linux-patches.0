@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DE130FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28B8C433C7;
-	Wed, 20 Sep 2023 12:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E3D30FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CEEC433C8;
+	Wed, 20 Sep 2023 12:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212315;
-	bh=6dfFOhSV9ldl+J/BQaEVKvyX7PO2yGxBfn5G042Q9os=;
+	s=korg; t=1695212317;
+	bh=36qHRyHyPyA5GaI6rgOr/7q7kaoqLCnykXSZxNKTRD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hw/CIGHoj7rSdOfXCii7+KeIKlzqT0rY6nwHnulzcjyISy8qRARZqf8aRk/VYul/E
-	 +PwPbGboUaOwLJhG2wX5vfBYqxLuzDwuE5psGVM4YHLe6xsIQRUSIXdSud+UvA4+fe
-	 /VuJnLypCRKo+6MWTFqJ1YnQQgmJbcYzrP60gqDU=
+	b=KcLmpD7fDtcurABq1lSCUrIn6Hd1HHNxuCSrRtZiMUh4v4G108iDlwr7LGC+RYhLD
+	 rdA5IBF95KuYsFBwlZg3EreyGKMvDhB0AqB69lHIDd1r61E6rFE2Qp1PWicA27yZqH
+	 kQY4PnD0rOzTnxroZ508DWxpw7EUNMUEy24kxdjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 4.19 230/273] perf hists browser: Fix hierarchy mode header
-Date: Wed, 20 Sep 2023 13:31:10 +0200
-Message-ID: <20230920112853.493856480@linuxfoundation.org>
+	Hangyu Hua <hbh25y@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 231/273] net: ethernet: mtk_eth_soc: fix possible NULL pointer dereference in mtk_hwlro_get_fdir_all()
+Date: Wed, 20 Sep 2023 13:31:11 +0200
+Message-ID: <20230920112853.519764627@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -44,43 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-commit e2cabf2a44791f01c21f8d5189b946926e34142e upstream.
+[ Upstream commit e4c79810755f66c9a933ca810da2724133b1165a ]
 
-The commit ef9ff6017e3c4593 ("perf ui browser: Move the extra title
-lines from the hists browser") introduced ui_browser__gotorc_title() to
-help moving non-title lines easily.  But it missed to update the title
-for the hierarchy mode so it won't print the header line on TUI at all.
+rule_locs is allocated in ethtool_get_rxnfc and the size is determined by
+rule_cnt from user space. So rule_cnt needs to be check before using
+rule_locs to avoid NULL pointer dereference.
 
-  $ perf report --hierarchy
-
-Fixes: ef9ff6017e3c4593 ("perf ui browser: Move the extra title lines from the hists browser")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230731094934.1616495-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7aab747e5563 ("net: ethernet: mediatek: add ethtool functions to configure RX flows of HW LRO")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -1704,7 +1704,7 @@ static void hists_browser__hierarchy_hea
- 	hists_browser__scnprintf_hierarchy_headers(browser, headers,
- 						   sizeof(headers));
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 53cff913abf0b..1a4f96894cd70 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -1621,6 +1621,9 @@ static int mtk_hwlro_get_fdir_all(struct net_device *dev,
+ 	int i;
  
--	ui_browser__gotorc(&browser->b, 0, 0);
-+	ui_browser__gotorc_title(&browser->b, 0, 0);
- 	ui_browser__set_color(&browser->b, HE_COLORSET_ROOT);
- 	ui_browser__write_nstring(&browser->b, headers, browser->b.width + 1);
- }
+ 	for (i = 0; i < MTK_MAX_LRO_IP_CNT; i++) {
++		if (cnt == cmd->rule_cnt)
++			return -EMSGSIZE;
++
+ 		if (mac->hwlro_ip[i]) {
+ 			rule_locs[cnt] = i;
+ 			cnt++;
+-- 
+2.40.1
+
 
 
