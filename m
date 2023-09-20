@@ -1,34 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F3C328A2
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:46:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F80C433C7;
-	Wed, 20 Sep 2023 12:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B050F328A2;
+	Wed, 20 Sep 2023 12:46:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B74C433C9;
+	Wed, 20 Sep 2023 12:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213983;
-	bh=kIiKeF+E5fD4yJigkmLFPkBLRoEyawjehTIZ6JBYwSg=;
+	s=korg; t=1695213986;
+	bh=yYUJGr1ekFJdAXZtWX62M+Gi8IxzUdobO7q5GulGG/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yx2WDIFqCjz7egRCz2YJckn3aQ6TRtLu+ieeINoOf1D0iNEbscp9zp9Ri+1zlEx8z
-	 r27jRnwXlao8Gw7y2eltU2Ivq7v/vOUqn/2QJCd8R4SMvw1zeW1Bzv6Jtmv94Xiy4k
-	 K27wYDIBidp42nY7WLOKZBG3nk/hcZsRybTcfYCk=
+	b=uo485Gx5mf+c3zsZMnQo+V8QvO2AvpeWF/UtvuAP8xnTJc93e+GJT0HcN1PefhnsM
+	 s3KwnnbFAPePXiNbiwbqfUNfytSeDPR7jzkVbqRzCKcra5eEGWjTpXLKqPg1klgzB1
+	 Qz5eB6lbArS6x+/aIiCYqbAp8Ex5MvBJXKpWB3Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anup Sharma <anupnewsmail@gmail.com>,
+	James Clark <james.clark@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Jiri Olsa <jolsa@redhat.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Martin KaFai Lau <kafai@fb.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Song Liu <songliubraving@fb.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Yonghong Song <yhs@fb.com>,
+	bpf@vger.kernel.org,
+	netdev@vger.kernel.org,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/110] perf build: Update build rule for generated files
-Date: Wed, 20 Sep 2023 13:32:08 +0200
-Message-ID: <20230920112833.047888960@linuxfoundation.org>
+Subject: [PATCH 5.15 071/110] perf test: Remove bash construct from stat_bpf_counters.sh test
+Date: Wed, 20 Sep 2023 13:32:09 +0200
+Message-ID: <20230920112833.087148087@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -47,85 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit 7822a8913f4c51c7d1aff793b525d60c3384fb5b ]
+[ Upstream commit c8b947642d2339ce74c6a1ce56726089539f48d9 ]
 
-The bison and flex generate C files from the source (.y and .l)
-files.  When O= option is used, they are saved in a separate directory
-but the default build rule assumes the .C files are in the source
-directory.  So it might read invalid file if there are generated files
-from an old version.  The same is true for the pmu-events files.
+Currently the test skips with an error because == only works in bash:
 
-For example, the following command would cause a build failure:
+  $ ./perf test 91 -v
+  Couldn't bump rlimit(MEMLOCK), failures may take place when creating BPF maps, etc
+  91: perf stat --bpf-counters test                                   :
+  --- start ---
+  test child forked, pid 44586
+  ./tests/shell/stat_bpf_counters.sh: 26: [: -v: unexpected operator
+  test child finished with -2
+  ---- end ----
+  perf stat --bpf-counters test: Skip
 
-  $ git checkout v6.3
-  $ make -C tools/perf  # build in the same directory
+Changing == to = does the same thing, but doesn't result in an error:
 
-  $ git checkout v6.5-rc2
-  $ mkdir build  # create a build directory
-  $ make -C tools/perf O=build  # build in a different directory but it
-                                # refers files in the source directory
+  ./perf test 91 -v
+  Couldn't bump rlimit(MEMLOCK), failures may take place when creating BPF maps, etc
+  91: perf stat --bpf-counters test                                   :
+  --- start ---
+  test child forked, pid 45833
+  Skipping: --bpf-counters not supported
+    Error: unknown option `bpf-counters'
+  [...]
+  test child finished with -2
+  ---- end ----
+  perf stat --bpf-counters test: Skip
 
-Let's update the build rule to specify those cases explicitly to depend
-on the files in the output directory.
-
-Note that it's not a complete fix and it needs the next patch for the
-include path too.
-
-Fixes: 80eeb67fe577aa76 ("perf jevents: Program to convert JSON file")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anup Sharma <anupnewsmail@gmail.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230728022447.1323563-1-namhyung@kernel.org
+Cc: Jiri Olsa <jolsa@redhat.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Martin KaFai Lau <kafai@fb.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: bpf@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Link: https://lore.kernel.org/r/20211028134828.65774-2-james.clark@arm.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 68ca249c964f ("perf test shell stat_bpf_counters: Fix test on Intel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.build  | 10 ++++++++++
- tools/perf/pmu-events/Build |  6 ++++++
- 2 files changed, 16 insertions(+)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
-index 715092fc6a239..0f0aba16bdee7 100644
---- a/tools/build/Makefile.build
-+++ b/tools/build/Makefile.build
-@@ -116,6 +116,16 @@ $(OUTPUT)%.s: %.c FORCE
- 	$(call rule_mkdir)
- 	$(call if_changed_dep,cc_s_c)
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index 2aed20dc22625..13473aeba489c 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -23,7 +23,7 @@ compare_number()
  
-+# bison and flex files are generated in the OUTPUT directory
-+# so it needs a separate rule to depend on them properly
-+$(OUTPUT)%-bison.o: $(OUTPUT)%-bison.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
-+
-+$(OUTPUT)%-flex.o: $(OUTPUT)%-flex.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
-+
- # Gather build data:
- #   obj-y        - list of build objects
- #   subdir-y     - list of directories to nest
-diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
-index 5ec5ce8c31bab..ea8c41f9c7398 100644
---- a/tools/perf/pmu-events/Build
-+++ b/tools/perf/pmu-events/Build
-@@ -25,3 +25,9 @@ $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
- 	$(call rule_mkdir)
- 	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(SRCARCH) pmu-events/arch $@
- endif
-+
-+# pmu-events.c file is generated in the OUTPUT directory so it needs a
-+# separate rule to depend on it properly
-+$(OUTPUT)pmu-events/pmu-events.o: $(PMU_EVENTS_C)
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,cc_o_c)
+ # skip if --bpf-counters is not supported
+ if ! perf stat --bpf-counters true > /dev/null 2>&1; then
+-	if [ "$1" == "-v" ]; then
++	if [ "$1" = "-v" ]; then
+ 		echo "Skipping: --bpf-counters not supported"
+ 		perf --no-pager stat --bpf-counters true || true
+ 	fi
 -- 
 2.40.1
 
