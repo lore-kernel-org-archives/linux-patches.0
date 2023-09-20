@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8FC2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B63C433C7;
-	Wed, 20 Sep 2023 11:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6122AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3EDFC433C7;
+	Wed, 20 Sep 2023 11:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211171;
-	bh=FqO0h45bP9Pux5Clm9m+KCTNIuh2+h9K5dXf0WUl4Yg=;
+	s=korg; t=1695211174;
+	bh=3zXO0dS/gXzXebp6IFQWYkdsjSy4PatyppVGdpsP0mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKh9r9pTmKn5HLN0JnWnwI4FOjP80ysiUbX9K2wM+V78tP08rY3Scz5dLTaW25QeX
-	 /CfbWS+ojBjY2pKm9rez7HV/h6PTmxfpmiVseGFgw1pcx+W7xzq6UCpUW/Ww4hKYR4
-	 0Zn3AtOoRFYgntehDNaC5MbQNspu+GVsWMib0fBE=
+	b=xIG4hJ0sAwqZLw3IKgtG/LGwZqRf3Jlqc5JCBiWonTV3QJB4/YbThMpqQ48LlNqBR
+	 LNvS2u1KKtsvP66e6olJFjmsy5PuyryosMxiuGRFSeCkWnFZxYbCwwBDFGiqgSFfUx
+	 TUhPRebXXZ4sq0/VJ1WuJM8rzcHyEthiYD1sLiYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Cattelan <cattelan@thebarn.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.1 109/139] Revert "SUNRPC: Fail faster on bad verifier"
-Date: Wed, 20 Sep 2023 13:30:43 +0200
-Message-ID: <20230920112839.625439834@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Florian Weimer <fweimer@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 110/139] attr: block mode changes of symlinks
+Date: Wed, 20 Sep 2023 13:30:44 +0200
+Message-ID: <20230920112839.661844120@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -40,48 +41,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit e86fcf0820d914389b46658a5a7e8969c3af2d53 upstream.
+commit 5d1f903f75a80daa4dfb3d84e114ec8ecbf29956 upstream.
 
-This reverts commit 0701214cd6e66585a999b132eb72ae0489beb724.
+Changing the mode of symlinks is meaningless as the vfs doesn't take the
+mode of a symlink into account during path lookup permission checking.
 
-The premise of this commit was incorrect. There are exactly 2 cases
-where rpcauth_checkverf() will return an error:
+However, the vfs doesn't block mode changes on symlinks. This however,
+has lead to an untenable mess roughly classifiable into the following
+two categories:
 
-1) If there was an XDR decode problem (i.e. garbage data).
-2) If gss_validate() had a problem verifying the RPCSEC_GSS MIC.
+(1) Filesystems that don't implement a i_op->setattr() for symlinks.
 
-In the second case, there are again 2 subcases:
+    Such filesystems may or may not know that without i_op->setattr()
+    defined, notify_change() falls back to simple_setattr() causing the
+    inode's mode in the inode cache to be changed.
 
-a) The GSS context expires, in which case gss_validate() will force a
-   new context negotiation on retry by invalidating the cred.
-b) The sequence number check failed because an RPC call timed out, and
-   the client retransmitted the request using a new sequence number,
-   as required by RFC2203.
+    That's a generic issue as this will affect all non-size changing
+    inode attributes including ownership changes.
 
-In neither subcase is this a fatal error.
+    Example: afs
 
-Reported-by: Russell Cattelan <cattelan@thebarn.com>
-Fixes: 0701214cd6e6 ("SUNRPC: Fail faster on bad verifier")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+(2) Filesystems that fail with EOPNOTSUPP but change the mode of the
+    symlink nonetheless.
+
+    Some filesystems will happily update the mode of a symlink but still
+    return EOPNOTSUPP. This is the biggest source of confusion for
+    userspace.
+
+    The EOPNOTSUPP in this case comes from POSIX ACLs. Specifically it
+    comes from filesystems that call posix_acl_chmod(), e.g., btrfs via
+
+        if (!err && attr->ia_valid & ATTR_MODE)
+                err = posix_acl_chmod(idmap, dentry, inode->i_mode);
+
+    Filesystems including btrfs don't implement i_op->set_acl() so
+    posix_acl_chmod() will report EOPNOTSUPP.
+
+    When posix_acl_chmod() is called, most filesystems will have
+    finished updating the inode.
+
+    Perversely, this has the consequences that this behavior may depend
+    on two kconfig options and mount options:
+
+    * CONFIG_POSIX_ACL={y,n}
+    * CONFIG_${FSTYPE}_POSIX_ACL={y,n}
+    * Opt_acl, Opt_noacl
+
+    Example: btrfs, ext4, xfs
+
+The only way to change the mode on a symlink currently involves abusing
+an O_PATH file descriptor in the following manner:
+
+        fd = openat(-1, "/path/to/link", O_CLOEXEC | O_PATH | O_NOFOLLOW);
+
+        char path[PATH_MAX];
+        snprintf(path, sizeof(path), "/proc/self/fd/%d", fd);
+        chmod(path, 0000);
+
+But for most major filesystems with POSIX ACL support such as btrfs,
+ext4, ceph, tmpfs, xfs and others this will fail with EOPNOTSUPP with
+the mode still updated due to the aforementioned posix_acl_chmod()
+nonsense.
+
+So, given that for all major filesystems this would fail with EOPNOTSUPP
+and that both glibc (cf. [1]) and musl (cf. [2]) outright block mode
+changes on symlinks we should just try and block mode changes on
+symlinks directly in the vfs and have a clean break with this nonsense.
+
+If this causes any regressions, we do the next best thing and fix up all
+filesystems that do return EOPNOTSUPP with the mode updated to not call
+posix_acl_chmod() on symlinks.
+
+But as usual, let's try the clean cut solution first. It's a simple
+patch that can be easily reverted. Not marking this for backport as I'll
+do that manually if we're reasonably sure that this works and there are
+no strong objections.
+
+We could block this in chmod_common() but it's more appropriate to do it
+notify_change() as it will also mean that we catch filesystems that
+change symlink permissions explicitly or accidently.
+
+Similar proposals were floated in the past as in [3] and [4] and again
+recently in [5]. There's also a couple of bugs about this inconsistency
+as in [6] and [7].
+
+Link: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/fchmodat.c;h=99527a3727e44cb8661ee1f743068f108ec93979;hb=HEAD [1]
+Link: https://git.musl-libc.org/cgit/musl/tree/src/stat/fchmodat.c [2]
+Link: https://lore.kernel.org/all/20200911065733.GA31579@infradead.org [3]
+Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00518.html [4]
+Link: https://lore.kernel.org/lkml/87lefmbppo.fsf@oldenburg.str.redhat.com [5]
+Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00467.html [6]
+Link: https://sourceware.org/bugzilla/show_bug.cgi?id=14578#c17 [7]
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: stable@vger.kernel.org # please backport to all LTSes but not before v6.6-rc2 is tagged
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Florian Weimer <fweimer@redhat.com>
+Message-Id: <20230712-vfs-chmod-symlinks-v2-1-08cfb92b61dd@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/attr.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2710,7 +2710,7 @@ out_unparsable:
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -394,9 +394,25 @@ int notify_change(struct user_namespace
+ 		return error;
  
- out_verifier:
- 	trace_rpc_bad_verifier(task);
--	goto out_err;
-+	goto out_garbage;
+ 	if ((ia_valid & ATTR_MODE)) {
+-		umode_t amode = attr->ia_mode;
++		/*
++		 * Don't allow changing the mode of symlinks:
++		 *
++		 * (1) The vfs doesn't take the mode of symlinks into account
++		 *     during permission checking.
++		 * (2) This has never worked correctly. Most major filesystems
++		 *     did return EOPNOTSUPP due to interactions with POSIX ACLs
++		 *     but did still updated the mode of the symlink.
++		 *     This inconsistency led system call wrapper providers such
++		 *     as libc to block changing the mode of symlinks with
++		 *     EOPNOTSUPP already.
++		 * (3) To even do this in the first place one would have to use
++		 *     specific file descriptors and quite some effort.
++		 */
++		if (S_ISLNK(inode->i_mode))
++			return -EOPNOTSUPP;
++
+ 		/* Flag setting protected by i_mutex */
+-		if (is_sxid(amode))
++		if (is_sxid(attr->ia_mode))
+ 			inode->i_flags &= ~S_NOSEC;
+ 	}
  
- out_msg_denied:
- 	error = -EACCES;
 
 
