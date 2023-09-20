@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757E715AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F62C43397;
-	Wed, 20 Sep 2023 12:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D2215AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3584C433AD;
+	Wed, 20 Sep 2023 12:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212215;
-	bh=/Vzj87T8/s8q8JKOBJ81PZHk7bGhuWrOZwov+im03kY=;
+	s=korg; t=1695212218;
+	bh=jvpHrKor9TLWx2ouDUZaIDrG6Bks4UQ/z3UUhDuCWNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvX00CveTWsdJYwLgCfZmuHXxaQuhNyW68vboaA92EuanCKeGopSlPw02RTQWm8Kj
-	 wjTfK2m6KZ7GSMFBeKxplYebVU/fKok0SJJiBgwRd1kYL0xsJY0HZvRlLzxbP0bhiT
-	 zlTct92A2HGpUbk4lVZqfYtzdj+owml9s1V+7l6U=
+	b=uFFlTucM0yGUe33NrGy0SdplTguXm6Mn7Z894nj/3T+HC0HZ+0AEvHTmSF4iioZcB
+	 4ZwcabUU3s3t3sK2OM/7CKTrtUvDjuh1yGRR/2/YqW8Kf2032/uCrLZbZZNBo4GT2y
+	 nlOIXWtupOt+KdF6Zks8PVzhMztaKUOUXt72KowE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 4.19 192/273] PCI/ATS: Add inline to pci_prg_resp_pasid_required()
-Date: Wed, 20 Sep 2023 13:30:32 +0200
-Message-ID: <20230920112852.440135003@linuxfoundation.org>
+	Daniel Mack <daniel@zonque.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 193/273] sc16is7xx: Set iobase to device index
+Date: Wed, 20 Sep 2023 13:30:33 +0200
+Message-ID: <20230920112852.469435811@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,31 +39,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Daniel Mack <daniel@zonque.org>
 
-commit fff42928ade591969836ff49888d063b829ac888 upstream.
+[ Upstream commit 5da6b1c079e6804a81e63ab8337224cbd2148c91 ]
 
-Fix unused function warning when compiled with CONFIG_PCI_PASID
-disabled.
+Some derivates of sc16is7xx devices expose more than one tty device to
+userspace. If multiple such devices exist in a system, userspace
+currently has no clean way to infer which tty maps to which physical
+line.
 
-Fixes: e5567f5f6762 ("PCI/ATS: Add pci_prg_resp_pasid_required() interface.")
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Set the .iobase value to the relative index within the device to allow
+infering the order through sysfs.
+
+Signed-off-by: Daniel Mack <daniel@zonque.org>
+Link: https://lore.kernel.org/r/20200901120329.4176302-1-daniel@zonque.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 2861ed4d6e6d ("serial: sc16is7xx: fix broken port 0 uart init")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci-ats.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/pci-ats.h
-+++ b/include/linux/pci-ats.h
-@@ -67,7 +67,7 @@ static inline int pci_max_pasids(struct
- 	return -EINVAL;
- }
- 
--static int pci_prg_resp_pasid_required(struct pci_dev *pdev)
-+static inline int pci_prg_resp_pasid_required(struct pci_dev *pdev)
- {
- 	return 0;
- }
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index 453cdcc9f3223..1ff48f827b2c3 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1264,6 +1264,7 @@ static int sc16is7xx_probe(struct device *dev,
+ 		s->p[i].port.type	= PORT_SC16IS7XX;
+ 		s->p[i].port.fifosize	= SC16IS7XX_FIFO_SIZE;
+ 		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY;
++		s->p[i].port.iobase	= i;
+ 		s->p[i].port.iotype	= UPIO_PORT;
+ 		s->p[i].port.uartclk	= freq;
+ 		s->p[i].port.rs485_config = sc16is7xx_config_rs485;
+-- 
+2.40.1
+
 
 
