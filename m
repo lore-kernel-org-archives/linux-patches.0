@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32BC154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272B0C433C7;
-	Wed, 20 Sep 2023 12:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511B5154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2E2C433CA;
+	Wed, 20 Sep 2023 12:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211401;
-	bh=Ti6+EH9JGeFXX696tUhdb5s952IKLAwe1yNVV0xQYlI=;
+	s=korg; t=1695211404;
+	bh=qDAqrhYA9YnE9+z6M4KE9i6idbTkBTLKFfziP46sxBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=az6WLJOCm3Ew5RdZXB5bKwEkRtr3R2fZhOm5EzZzxPdq0t5js8U8bbiYleJh6n4dW
-	 11+68vYVDcZkLUq8H+6l0/lsAeYqPvHd2DzwfPBPd41h1BPk+rEVmOzglXWTiYGeDV
-	 7LOWGIooK2XGGNhxJ3XMnV5O5zX5sgciQIqPB+8Y=
+	b=W62sIUbc/FPZA81qnnDGx8fQVkhPWn0guetVt/CoG/Ht8adgGsRUftkNV+/U8UFoy
+	 IY9g2xvpiePM3bStRSuBdcR819dayL/LbvAQZSgYl+6KCs0NvhVwBQsq89GW3VWmPq
+	 8YLT9jjFdF9MGtfieXlHol3SU/pkJxDgIZB2OsaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <imagedong@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 043/186] net: tcp: fix unexcepted socket die when snd_wnd is 0
-Date: Wed, 20 Sep 2023 13:29:06 +0200
-Message-ID: <20230920112838.497421545@linuxfoundation.org>
+Subject: [PATCH 4.14 073/186] drivers: usb: smsusb: fix error handling code in smsusb_init_device
+Date: Wed, 20 Sep 2023 13:29:36 +0200
+Message-ID: <20230920112839.507302871@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,81 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <imagedong@tencent.com>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit e89688e3e97868451a5d05b38a9d2633d6785cd4 ]
+[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
 
-In tcp_retransmit_timer(), a window shrunk connection will be regarded
-as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
-right all the time.
+The previous commit 4b208f8b561f ("[media] siano: register media controller
+earlier")moves siano_media_device_register before smscore_register_device,
+and adds corresponding error handling code if smscore_register_device
+fails. However, it misses the following error handling code of
+smsusb_init_device.
 
-The retransmits will become zero-window probes in tcp_retransmit_timer()
-if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
-TCP_RTO_MAX sooner or later.
+Fix this by moving error handling code at the end of smsusb_init_device
+and adding a goto statement in the following error handling parts.
 
-However, the timer can be delayed and be triggered after 122877ms, not
-TCP_RTO_MAX, as I tested.
-
-Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
-once the RTO come up to TCP_RTO_MAX, and the socket will die.
-
-Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
-which is exact the timestamp of the timeout.
-
-However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
-could already be a long time (minutes or hours) in the past even on the
-first RTO. So we double check the timeout with the duration of the
-retransmission.
-
-Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
-dying too soon.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
-Signed-off-by: Menglong Dong <imagedong@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index d708094952056..3d51a7edb3117 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -396,6 +396,22 @@ static void tcp_fastopen_synack_timer(struct sock *sk)
- 			  TCP_TIMEOUT_INIT << req->num_timeout, TCP_RTO_MAX);
+diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
+index 92a6192f9ab2b..1d67b4c1a020c 100644
+--- a/drivers/media/usb/siano/smsusb.c
++++ b/drivers/media/usb/siano/smsusb.c
+@@ -467,12 +467,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_register_device(&params, &dev->coredev, mdev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
+-		smsusb_term_device(intf);
+-#ifdef CONFIG_MEDIA_CONTROLLER_DVB
+-		media_device_unregister(mdev);
+-#endif
+-		kfree(mdev);
+-		return rc;
++		goto err_unregister_device;
+ 	}
+ 
+ 	smscore_set_board_id(dev->coredev, board_id);
+@@ -489,8 +484,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smsusb_start_streaming(dev);
+ 	if (rc < 0) {
+ 		pr_err("smsusb_start_streaming(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
+ 
+ 	dev->state = SMSUSB_ACTIVE;
+@@ -498,13 +492,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_start_device(dev->coredev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_start_device(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
+ 
+ 	pr_debug("device 0x%p created\n", dev);
+ 
+ 	return rc;
++
++err_unregister_device:
++	smsusb_term_device(intf);
++#ifdef CONFIG_MEDIA_CONTROLLER_DVB
++	media_device_unregister(mdev);
++#endif
++	kfree(mdev);
++	return rc;
  }
  
-+static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
-+				     const struct sk_buff *skb)
-+{
-+	const struct tcp_sock *tp = tcp_sk(sk);
-+	const int timeout = TCP_RTO_MAX * 2;
-+	u32 rcv_delta, rtx_delta;
-+
-+	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	if (rcv_delta <= timeout)
-+		return false;
-+
-+	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
-+			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
-+
-+	return rtx_delta > timeout;
-+}
- 
- /**
-  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
-@@ -458,7 +474,7 @@ void tcp_retransmit_timer(struct sock *sk)
- 					    tp->snd_una, tp->snd_nxt);
- 		}
- #endif
--		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
-+		if (tcp_rtx_probe0_timed_out(sk, skb)) {
- 			tcp_write_err(sk);
- 			goto out;
- 		}
+ static int smsusb_probe(struct usb_interface *intf,
 -- 
 2.40.1
 
