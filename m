@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B37723752
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AF8C433C8;
-	Wed, 20 Sep 2023 12:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84262AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA9FC433CB;
+	Wed, 20 Sep 2023 12:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211561;
-	bh=aJ2AW15UlcfTlkob27RfHqGjGCXVNYcQ4ycT4C+syH8=;
+	s=korg; t=1695211563;
+	bh=K5AlHeKwRINGPj40oAxb/6Vl3b32tQeZgz6AjBkDnfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCnXhnF7CzsjfLkBoR1hYslHgFpapEFM9N3fXDhDpJw0EmQz4GVCOBOuUrq7NQjzA
-	 Pu434f+Bpk68sv9hxxK9IQtR55uWPcBBUSRFih4FQ12gpx2jYyekdDfuVfOADJz4Y9
-	 gjgCWe76GTtCtAoMcJiqwF2f/0+DS8eY9sSaqxps=
+	b=jMktnLR5Gpy7L+F2vQOOlCJIkhraNbRIWjOU2DT1tX0Z3HmXdnvtZhMnH5l2jb6Ri
+	 pRICJ/zcq05+naCCIaDb256e+VaiwlnjvhRQCWtAJu+ywadjGTCh5MR1UZkf3lS9cP
+	 IlihO1bSL22PzwL9tr6w3VIk/Iz4xLMIKWaKfuFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Olga Zaborska <olga.zaborska@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 139/186] kcm: Destroy mutex in kcm_exit_net()
-Date: Wed, 20 Sep 2023 13:30:42 +0200
-Message-ID: <20230920112842.013032158@linuxfoundation.org>
+Subject: [PATCH 4.14 140/186] igbvf: Change IGBVF_MIN to allow set rx/tx value between 64 and 80
+Date: Wed, 20 Sep 2023 13:30:43 +0200
+Message-ID: <20230920112842.047980691@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,35 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Olga Zaborska <olga.zaborska@intel.com>
 
-[ Upstream commit 6ad40b36cd3b04209e2d6c89d252c873d8082a59 ]
+[ Upstream commit 8360717524a24a421c36ef8eb512406dbd42160a ]
 
-kcm_exit_net() should call mutex_destroy() on knet->mutex. This is especially
-needed if CONFIG_DEBUG_MUTEXES is enabled.
+Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
+value between 64 and 80. All igbvf devices can use as low as 64 descriptors.
+This change will unify igbvf with other drivers.
+Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20230902170708.1727999-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d4e0fe01a38a ("igbvf: add new driver to support 82576 virtual functions")
+Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igbvf/igbvf.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index fdce053f1099d..0589b6b560eca 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1988,6 +1988,8 @@ static __net_exit void kcm_exit_net(struct net *net)
- 	 * that all multiplexors and psocks have been destroyed.
- 	 */
- 	WARN_ON(!list_empty(&knet->mux_list));
-+
-+	mutex_destroy(&knet->mutex);
- }
+diff --git a/drivers/net/ethernet/intel/igbvf/igbvf.h b/drivers/net/ethernet/intel/igbvf/igbvf.h
+index bf69f01f84677..f69a7787a590d 100644
+--- a/drivers/net/ethernet/intel/igbvf/igbvf.h
++++ b/drivers/net/ethernet/intel/igbvf/igbvf.h
+@@ -62,11 +62,11 @@ enum latency_range {
+ /* Tx/Rx descriptor defines */
+ #define IGBVF_DEFAULT_TXD	256
+ #define IGBVF_MAX_TXD		4096
+-#define IGBVF_MIN_TXD		80
++#define IGBVF_MIN_TXD		64
  
- static struct pernet_operations kcm_net_ops = {
+ #define IGBVF_DEFAULT_RXD	256
+ #define IGBVF_MAX_RXD		4096
+-#define IGBVF_MIN_RXD		80
++#define IGBVF_MIN_RXD		64
+ 
+ #define IGBVF_MIN_ITR_USECS	10 /* 100000 irq/sec */
+ #define IGBVF_MAX_ITR_USECS	10000 /* 100    irq/sec */
 -- 
 2.40.1
 
