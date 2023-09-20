@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68A82E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:13:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDE3C433C7;
-	Wed, 20 Sep 2023 12:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E87B2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:13:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CF7C433C8;
+	Wed, 20 Sep 2023 12:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211990;
-	bh=B38tqsWjTXpsEmN0ZeLcFQCBkaOEH9azjRny+bBYmBA=;
+	s=korg; t=1695211993;
+	bh=qYEtc3nH/dlyeE1UH5eIxPGPEzKy+md/xR/RdM24CvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvyoRVDnl2B+iBJ3zsGH2sDgzb9Eh4svdgimsrGQjJ5sckEVGtX5fEAH7XGhgB21V
-	 kjsQf8yv3ar3LaxePPxh6adJZyyTMsNk/QwH/493q6utBE0ENRN9oM9couBVRaYdXX
-	 dCUpNDI5TTyao63pQEOxXIaoSh/cP9x6/ng8adjw=
+	b=t5V5V/cjtVclbKOG3MuZF+NI4LrwZscz5wNmQWPx1Ke2h19+NRZe0orNtxEG/Tg2Q
+	 gke3CrXfx5MZdHmDVy5YpOHEsp3lhfEtpWgWVzkWi9ROeBXE/91EkiEFFMo+5mqH9J
+	 XxYwlEDxiVJqpLm0FSisnsJU3eMZMCWtgtkTkP0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Keith Busch <keith.busch@intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 110/273] PCI/ASPM: Use RMW accessors for changing LNKCTL
-Date: Wed, 20 Sep 2023 13:29:10 +0200
-Message-ID: <20230920112849.880506137@linuxfoundation.org>
+Subject: [PATCH 4.19 111/273] PCI/ATS: Add pci_prg_resp_pasid_required() interface.
+Date: Wed, 20 Sep 2023 13:29:11 +0200
+Message-ID: <20230920112849.911782604@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -36,107 +38,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
+[ Upstream commit e5567f5f67621877726f99be040af9fbedda37dc ]
 
-Don't assume that the device is fully under the control of ASPM and use RMW
-capability accessors which do proper locking to avoid losing concurrent
-updates to the register values.
+Return the PRG Response PASID Required bit in the Page Request
+Status Register.
 
-If configuration fails in pcie_aspm_configure_common_clock(), the
-function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
-only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
-than the content of the whole LNKCTL registers. It aligns better with
-how pcie_lnkctl_clear_and_set() expects its parameter and makes the
-code more obvious to understand.
+As per PCIe spec r4.0, sec 10.5.2.3, if this bit is Set, the device
+expects a PASID TLP Prefix on PRG Response Messages when the
+corresponding Page Requests had a PASID TLP Prefix. If Clear, the device
+does not expect PASID TLP Prefixes on any PRG Response Message, and the
+device behavior is undefined if the device receives a PRG Response Message
+with a PASID TLP Prefix. Also the device behavior is undefined if this
+bit is Set and the device receives a PRG Response Message with no PASID TLP
+Prefix when the corresponding Page Requests had a PASID TLP Prefix.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+This function will be used by drivers like IOMMU, if it is required to
+check the status of the PRG Response PASID Required bit before enabling
+the PASID support of the device.
+
+Cc: Ashok Raj <ashok.raj@intel.com>
+Cc: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Cc: Keith Busch <keith.busch@intel.com>
+Suggested-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: ce7d88110b9e ("drm/amdgpu: Use RMW accessors for changing LNKCTL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/pci/ats.c             | 30 ++++++++++++++++++++++++++++++
+ include/linux/pci-ats.h       |  5 +++++
+ include/uapi/linux/pci_regs.h |  1 +
+ 3 files changed, 36 insertions(+)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index eec62f7377f48..118c91586798d 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -260,7 +260,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- {
- 	int same_clock = 1;
--	u16 reg16, parent_reg, child_reg[8];
-+	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
- 	struct pci_dev *child, *parent = link->pdev;
- 	struct pci_bus *linkbus = parent->subordinate;
- 	/*
-@@ -282,6 +282,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index 5b78f3b1b918a..420cd0a578d07 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -368,6 +368,36 @@ int pci_pasid_features(struct pci_dev *pdev)
+ }
+ EXPORT_SYMBOL_GPL(pci_pasid_features);
  
- 	/* Port might be already in common clock mode */
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-+	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
- 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
- 		bool consistent = true;
++/**
++ * pci_prg_resp_pasid_required - Return PRG Response PASID Required bit
++ *				 status.
++ * @pdev: PCI device structure
++ *
++ * Returns 1 if PASID is required in PRG Response Message, 0 otherwise.
++ *
++ * Even though the PRG response PASID status is read from PRI Status
++ * Register, since this API will mainly be used by PASID users, this
++ * function is defined within #ifdef CONFIG_PCI_PASID instead of
++ * CONFIG_PCI_PRI.
++ */
++int pci_prg_resp_pasid_required(struct pci_dev *pdev)
++{
++	u16 status;
++	int pos;
++
++	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_PRI);
++	if (!pos)
++		return 0;
++
++	pci_read_config_word(pdev, pos + PCI_PRI_STATUS, &status);
++
++	if (status & PCI_PRI_STATUS_PASID)
++		return 1;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(pci_prg_resp_pasid_required);
++
+ #define PASID_NUMBER_SHIFT	8
+ #define PASID_NUMBER_MASK	(0x1f << PASID_NUMBER_SHIFT)
+ /**
+diff --git a/include/linux/pci-ats.h b/include/linux/pci-ats.h
+index 7c4b8e27268c7..facfd6a18fe18 100644
+--- a/include/linux/pci-ats.h
++++ b/include/linux/pci-ats.h
+@@ -40,6 +40,7 @@ void pci_disable_pasid(struct pci_dev *pdev);
+ void pci_restore_pasid_state(struct pci_dev *pdev);
+ int pci_pasid_features(struct pci_dev *pdev);
+ int pci_max_pasids(struct pci_dev *pdev);
++int pci_prg_resp_pasid_required(struct pci_dev *pdev);
  
-@@ -298,34 +299,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- 		pci_warn(parent, "ASPM: current common clock configuration is broken, reconfiguring\n");
- 	}
+ #else  /* CONFIG_PCI_PASID */
  
-+	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
- 	/* Configure downstream component, all functions */
- 	list_for_each_entry(child, &linkbus->devices, bus_list) {
- 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
--		child_reg[PCI_FUNC(child->devfn)] = reg16;
--		if (same_clock)
--			reg16 |= PCI_EXP_LNKCTL_CCC;
--		else
--			reg16 &= ~PCI_EXP_LNKCTL_CCC;
--		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
-+		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
-+		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, ccc);
- 	}
- 
- 	/* Configure upstream component */
--	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
--	parent_reg = reg16;
--	if (same_clock)
--		reg16 |= PCI_EXP_LNKCTL_CCC;
--	else
--		reg16 &= ~PCI_EXP_LNKCTL_CCC;
--	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
-+	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CCC, ccc);
- 
- 	if (pcie_retrain_link(link)) {
- 
- 		/* Training failed. Restore common clock configurations */
- 		pci_err(parent, "ASPM: Could not configure common clock\n");
- 		list_for_each_entry(child, &linkbus->devices, bus_list)
--			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
--					   child_reg[PCI_FUNC(child->devfn)]);
--		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
-+			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+							   PCI_EXP_LNKCTL_CCC,
-+							   child_old_ccc[PCI_FUNC(child->devfn)]);
-+		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
- 	}
+@@ -66,6 +67,10 @@ static inline int pci_max_pasids(struct pci_dev *pdev)
+ 	return -EINVAL;
  }
  
++static int pci_prg_resp_pasid_required(struct pci_dev *pdev)
++{
++	return 0;
++}
+ #endif /* CONFIG_PCI_PASID */
+ 
+ 
+diff --git a/include/uapi/linux/pci_regs.h b/include/uapi/linux/pci_regs.h
+index 8d2767140798b..4c7aa15b0e2ee 100644
+--- a/include/uapi/linux/pci_regs.h
++++ b/include/uapi/linux/pci_regs.h
+@@ -885,6 +885,7 @@
+ #define  PCI_PRI_STATUS_RF	0x001	/* Response Failure */
+ #define  PCI_PRI_STATUS_UPRGI	0x002	/* Unexpected PRG index */
+ #define  PCI_PRI_STATUS_STOPPED	0x100	/* PRI Stopped */
++#define  PCI_PRI_STATUS_PASID	0x8000	/* PRG Response PASID Required */
+ #define PCI_PRI_MAX_REQ		0x08	/* PRI max reqs supported */
+ #define PCI_PRI_ALLOC_REQ	0x0c	/* PRI max reqs allowed */
+ #define PCI_EXT_CAP_PRI_SIZEOF	16
 -- 
 2.40.1
 
