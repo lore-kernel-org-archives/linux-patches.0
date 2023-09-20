@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F2827EFE
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD61C433C8;
-	Wed, 20 Sep 2023 12:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B8527EFE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C100C433C8;
+	Wed, 20 Sep 2023 12:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211506;
-	bh=NjjKgjUA0h9crwP5IctxN+MFe7UZlDQzsOQS2DkmWoU=;
+	s=korg; t=1695211509;
+	bh=1aqix609JjeEd9v2+mqmPyCkh5zHPL7XFtjl6N2jXe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XulMW2t7M4bUTr4a801U6aiBB6xdICaq9q7tXL488vhrEHRIw34oThvBVndSn2jRg
-	 uCgdjcJ3TGgAtNAbCUEKF18xD1I/zK7T+2Xa1cUmeRpla33cdt0sMrF8GXdkb7OBNl
-	 2UJMxeoNodFOIKxnNlL9oSiJBU/25lk/o1swAE+g=
+	b=g45b+ciBB8we2QM0PkeXkDC5LstT1EUw7gUwvz9a8kvBvtlmyh9gxXBWP3dMe6CVL
+	 vzVYiBvbmb9XvkaE7VAzeBXcEm1TCenHV2avnWobw70PbxB/76NgZeeY35f3iJxNIC
+	 sw3c+51v5WWXhAzoIVNtuOeil31Jt5vgJF2vmuSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.14 119/186] crypto: stm32 - fix loop iterating through scatterlist for DMA
-Date: Wed, 20 Sep 2023 13:30:22 +0200
-Message-ID: <20230920112841.336533499@linuxfoundation.org>
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 4.14 102/186] PM / devfreq: Fix leak in devfreq_dev_release()
+Date: Wed, 20 Sep 2023 13:30:05 +0200
+Message-ID: <20230920112840.670546233@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -39,37 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
+commit 5693d077595de721f9ddbf9d37f40e5409707dfe upstream.
 
-We were reading the length of the scatterlist sg after copying value of
-tsg inside.
-So we are using the size of the previous scatterlist and for the first
-one we are using an unitialised value.
-Fix this by copying tsg in sg[0] before reading the size.
+srcu_init_notifier_head() allocates resources that need to be released
+with a srcu_cleanup_notifier_head() call.
 
-Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported by kmemleak.
+
+Fixes: 0fe3a66410a3 ("PM / devfreq: Add new DEVFREQ_TRANSITION_NOTIFIER notifier")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/stm32/stm32-hash.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/devfreq/devfreq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/stm32/stm32-hash.c
-+++ b/drivers/crypto/stm32/stm32-hash.c
-@@ -574,9 +574,9 @@ static int stm32_hash_dma_send(struct st
- 	}
+--- a/drivers/devfreq/devfreq.c
++++ b/drivers/devfreq/devfreq.c
+@@ -495,6 +495,7 @@ static void devfreq_dev_release(struct d
+ 		devfreq->profile->exit(devfreq->dev.parent);
  
- 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
-+		sg[0] = *tsg;
- 		len = sg->length;
+ 	mutex_destroy(&devfreq->lock);
++	srcu_cleanup_notifier_head(&devfreq->transition_notifier_list);
+ 	kfree(devfreq);
+ }
  
--		sg[0] = *tsg;
- 		if (sg_is_last(sg)) {
- 			if (hdev->dma_mode == 1) {
- 				len = (ALIGN(sg->length, 16) - 16);
 
 
