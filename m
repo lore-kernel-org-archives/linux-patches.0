@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8239030FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08608C433C8;
-	Wed, 20 Sep 2023 12:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A2830FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA89EC433CA;
+	Wed, 20 Sep 2023 12:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212544;
-	bh=jTMRxE+0E2+jEjH4ZXqJtHXugTrEjiXvNCYUW78+DoY=;
+	s=korg; t=1695212547;
+	bh=rmfnu5G+fPHt4FTGfnez/PDL6X8k/MMLkL8krrPcP8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mULlTRN8P7MtktSzMnZnOs04B0TXzcgZwVv4FCPRnH9FHRMbkfdkQww/l9xdClqH/
-	 oEkvi9lLZjUMSaAZeFtKinjqoigKRHeslrggh0rDl2Na+ymm1y3QVirn6vuW0BI0Jj
-	 drcXwzZ1n5afDsnWTlz7FBCicgOPAkHfpuuZ87Eo=
+	b=k/GDukfNIP5T+cTJN73rUj3ngcIGHMBNSy8EiBa7SI4XI78gE/Si/jBz3qwM0eRhX
+	 h3QmERENzhQzXHm6TqK8E32ujIFBmnmqAxOCHpXznopqLA/tx6VvbGfEovRwWBaRG5
+	 BxvSxVzjnfBBz4GVv3Vy+mHC2UaQk58h1e+VNaeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b2645b5bf1512b81fa22@syzkaller.appspotmail.com,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/83] wifi: mac80211_hwsim: drop short frames
-Date: Wed, 20 Sep 2023 13:31:13 +0200
-Message-ID: <20230920112827.579791127@linuxfoundation.org>
+Subject: [PATCH 5.10 41/83] media: dvb-usb-v2: gl861: Fix null-ptr-deref in gl861_i2c_master_xfer
+Date: Wed, 20 Sep 2023 13:31:31 +0200
+Message-ID: <20230920112828.293880854@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -41,47 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit fba360a047d5eeeb9d4b7c3a9b1c8308980ce9a6 ]
+[ Upstream commit b97719a66970601cd3151a3e2020f4454a1c4ff6 ]
 
-While technically some control frames like ACK are shorter and
-end after Address 1, such frames shouldn't be forwarded through
-wmediumd or similar userspace, so require the full 3-address
-header to avoid accessing invalid memory if shorter frames are
-passed in.
+In gl861_i2c_master_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach gl861_i2c_master_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
-Reported-by: syzbot+b2645b5bf1512b81fa22@syzkaller.appspotmail.com
-Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Similar commit:
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mac80211_hwsim.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/usb/dvb-usb-v2/gl861.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index 255286b2324e2..0d41f172a1dc2 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -3619,14 +3619,15 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 	frame_data_len = nla_len(info->attrs[HWSIM_ATTR_FRAME]);
- 	frame_data = (void *)nla_data(info->attrs[HWSIM_ATTR_FRAME]);
- 
-+	if (frame_data_len < sizeof(struct ieee80211_hdr_3addr) ||
-+	    frame_data_len > IEEE80211_MAX_DATA_LEN)
-+		goto err;
-+
- 	/* Allocate new skb here */
- 	skb = alloc_skb(frame_data_len, GFP_KERNEL);
- 	if (skb == NULL)
- 		goto err;
- 
--	if (frame_data_len > IEEE80211_MAX_DATA_LEN)
--		goto err;
--
- 	/* Copy the data */
- 	skb_put_data(skb, frame_data, frame_data_len);
- 
+diff --git a/drivers/media/usb/dvb-usb-v2/gl861.c b/drivers/media/usb/dvb-usb-v2/gl861.c
+index 0c434259c36f1..c71e7b93476de 100644
+--- a/drivers/media/usb/dvb-usb-v2/gl861.c
++++ b/drivers/media/usb/dvb-usb-v2/gl861.c
+@@ -120,7 +120,7 @@ static int gl861_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 	} else if (num == 2 && !(msg[0].flags & I2C_M_RD) &&
+ 		   (msg[1].flags & I2C_M_RD)) {
+ 		/* I2C write + read */
+-		if (msg[0].len > 1 || msg[1].len > sizeof(ctx->buf)) {
++		if (msg[0].len != 1 || msg[1].len > sizeof(ctx->buf)) {
+ 			ret = -EOPNOTSUPP;
+ 			goto err;
+ 		}
 -- 
 2.40.1
 
