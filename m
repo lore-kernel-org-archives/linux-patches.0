@@ -1,611 +1,1376 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503E168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398CBC433C7;
-	Wed, 20 Sep 2023 12:48:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214117;
-	bh=3PB4RWm2D/ljJVKIy8WIpiubAM0uoZrpbsjqpWkRkvE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoI4euFf7r9alIGrF2FlznOIVsVpFLNJTF2ONpsXY9osO0Q+/OqWIyKl5RHpR9Ieg
-	 iu4nnhWYOcsQ55Pd/TF4R1+vjctC5xJlrAhZrAYqUj5/hF/E2CvXMMeN6jqKJQGuAB
-	 BsZCaMZQYKj/LZiiq4/hD7yxKvZni8uCDaDSZ5RU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/110] netfilter: nf_tables: GC transaction API to avoid race with control plane
-Date: Wed, 20 Sep 2023 13:32:21 +0200
-Message-ID: <20230920112833.527435166@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
-References: <20230920112830.377666128@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B4168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:53:40 +0000 (UTC)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1qiwi2-0007Lm-TQ; Wed, 20 Sep 2023 14:53:39 +0200
+Message-ID: <c54b9b67-96c7-cdbc-5910-61b1d267fbd2@leemhuis.info>
+Date: Wed, 20 Sep 2023 14:53:38 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.5 025/211] net: stmmac: use per-queue 64 bit statistics
+ where necessary
+Content-Language: en-US, de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Jisheng Zhang <jszhang@kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20230920112845.859868994@linuxfoundation.org>
+ <20230920112846.582111163@linuxfoundation.org>
+From: Thorsten Leemhuis <regressions@leemhuis.info>
+In-Reply-To: <20230920112846.582111163@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1695214421;b2087c0f;
+X-HE-SMSGID: 1qiwi2-0007Lm-TQ
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+On 20.09.23 13:27, Greg Kroah-Hartman wrote:
+> 6.5-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jisheng Zhang <jszhang@kernel.org>
+> 
+> [ Upstream commit 133466c3bbe171f826294161db203f7670bb30c8 ]
 
-------------------
+This patch causes a regression in mainline:
+https://lore.kernel.org/all/20230911171102.cwieugrpthm7ywbm@pengutronix.de/
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+A fix is heading towards mainline now:
+https://lore.kernel.org/all/20230917165328.3403-1-jszhang@kernel.org/
 
-[ Upstream commit 5f68718b34a531a556f2f50300ead2862278da26 ]
+Jisheng Zhang already mentioned this and also mentioned that the change
+depends on another commit not yet backported:
+https://lore.kernel.org/all/ZQHKiU6SNtq7t1Fi@xhacker/
 
-The set types rhashtable and rbtree use a GC worker to reclaim memory.
->From system work queue, in periodic intervals, a scan of the table is
-done.
+Something feels wrong here; not sure if it is or if I'm missing something.
 
-The major caveat here is that the nft transaction mutex is not held.
-This causes a race between control plane and GC when they attempt to
-delete the same element.
+Ciao, Thorsten (who only noticed this by chance)
 
-We cannot grab the netlink mutex from the work queue, because the
-control plane has to wait for the GC work queue in case the set is to be
-removed, so we get following deadlock:
-
-   cpu 1                                cpu2
-     GC work                            transaction comes in , lock nft mutex
-       `acquire nft mutex // BLOCKS
-                                        transaction asks to remove the set
-                                        set destruction calls cancel_work_sync()
-
-cancel_work_sync will now block forever, because it is waiting for the
-mutex the caller already owns.
-
-This patch adds a new API that deals with garbage collection in two
-steps:
-
-1) Lockless GC of expired elements sets on the NFT_SET_ELEM_DEAD_BIT
-   so they are not visible via lookup. Annotate current GC sequence in
-   the GC transaction. Enqueue GC transaction work as soon as it is
-   full. If ruleset is updated, then GC transaction is aborted and
-   retried later.
-
-2) GC work grabs the mutex. If GC sequence has changed then this GC
-   transaction lost race with control plane, abort it as it contains
-   stale references to objects and let GC try again later. If the
-   ruleset is intact, then this GC transaction deactivates and removes
-   the elements and it uses call_rcu() to destroy elements.
-
-Note that no elements are removed from GC lockless path, the _DEAD bit
-is set and pointers are collected. GC catchall does not remove the
-elements anymore too. There is a new set->dead flag that is set on to
-abort the GC transaction to deal with set->ops->destroy() path which
-removes the remaining elements in the set from commit_release, where no
-mutex is held.
-
-To deal with GC when mutex is held, which allows safe deactivate and
-removal, add sync GC API which releases the set element object via
-call_rcu(). This is used by rbtree and pipapo backends which also
-perform garbage collection from control plane path.
-
-Since element removal from sets can happen from control plane and
-element garbage collection/timeout, it is necessary to keep the set
-structure alive until all elements have been deactivated and destroyed.
-
-We cannot do a cancel_work_sync or flush_work in nft_set_destroy because
-its called with the transaction mutex held, but the aforementioned async
-work queue might be blocked on the very mutex that nft_set_destroy()
-callchain is sitting on.
-
-This gives us the choice of ABBA deadlock or UaF.
-
-To avoid both, add set->refs refcount_t member. The GC API can then
-increment the set refcount and release it once the elements have been
-free'd.
-
-Set backends are adapted to use the GC transaction API in a follow up
-patch entitled:
-
-  ("netfilter: nf_tables: use gc transaction API in set backends")
-
-This is joint work with Florian Westphal.
-
-Fixes: cfed7e1b1f8e ("netfilter: nf_tables: add set garbage collection helpers")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/net/netfilter/nf_tables.h |  64 +++++++-
- net/netfilter/nf_tables_api.c     | 248 ++++++++++++++++++++++++++++--
- 2 files changed, 300 insertions(+), 12 deletions(-)
-
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index b8d967e0eb1e2..a6bf58316a5d8 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -477,6 +477,7 @@ struct nft_set_elem_expr {
-  *
-  *	@list: table set list node
-  *	@bindings: list of set bindings
-+ *	@refs: internal refcounting for async set destruction
-  *	@table: table this set belongs to
-  *	@net: netnamespace this set belongs to
-  * 	@name: name of the set
-@@ -506,6 +507,7 @@ struct nft_set_elem_expr {
- struct nft_set {
- 	struct list_head		list;
- 	struct list_head		bindings;
-+	refcount_t			refs;
- 	struct nft_table		*table;
- 	possible_net_t			net;
- 	char				*name;
-@@ -527,7 +529,8 @@ struct nft_set {
- 	struct list_head		pending_update;
- 	/* runtime data below here */
- 	const struct nft_set_ops	*ops ____cacheline_aligned;
--	u16				flags:14,
-+	u16				flags:13,
-+					dead:1,
- 					genmask:2;
- 	u8				klen;
- 	u8				dlen;
-@@ -1527,6 +1530,32 @@ static inline void nft_set_elem_clear_busy(struct nft_set_ext *ext)
- 	clear_bit(NFT_SET_ELEM_BUSY_BIT, word);
- }
- 
-+#define NFT_SET_ELEM_DEAD_MASK	(1 << 3)
-+
-+#if defined(__LITTLE_ENDIAN_BITFIELD)
-+#define NFT_SET_ELEM_DEAD_BIT	3
-+#elif defined(__BIG_ENDIAN_BITFIELD)
-+#define NFT_SET_ELEM_DEAD_BIT	(BITS_PER_LONG - BITS_PER_BYTE + 3)
-+#else
-+#error
-+#endif
-+
-+static inline void nft_set_elem_dead(struct nft_set_ext *ext)
-+{
-+	unsigned long *word = (unsigned long *)ext;
-+
-+	BUILD_BUG_ON(offsetof(struct nft_set_ext, genmask) != 0);
-+	set_bit(NFT_SET_ELEM_DEAD_BIT, word);
-+}
-+
-+static inline int nft_set_elem_is_dead(const struct nft_set_ext *ext)
-+{
-+	unsigned long *word = (unsigned long *)ext;
-+
-+	BUILD_BUG_ON(offsetof(struct nft_set_ext, genmask) != 0);
-+	return test_bit(NFT_SET_ELEM_DEAD_BIT, word);
-+}
-+
- /**
-  *	struct nft_trans - nf_tables object update in transaction
-  *
-@@ -1658,6 +1687,38 @@ struct nft_trans_flowtable {
- #define nft_trans_flowtable_flags(trans)	\
- 	(((struct nft_trans_flowtable *)trans->data)->flags)
- 
-+#define NFT_TRANS_GC_BATCHCOUNT	256
-+
-+struct nft_trans_gc {
-+	struct list_head	list;
-+	struct net		*net;
-+	struct nft_set		*set;
-+	u32			seq;
-+	u8			count;
-+	void			*priv[NFT_TRANS_GC_BATCHCOUNT];
-+	struct rcu_head		rcu;
-+};
-+
-+struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
-+					unsigned int gc_seq, gfp_t gfp);
-+void nft_trans_gc_destroy(struct nft_trans_gc *trans);
-+
-+struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
-+					      unsigned int gc_seq, gfp_t gfp);
-+void nft_trans_gc_queue_async_done(struct nft_trans_gc *gc);
-+
-+struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp);
-+void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans);
-+
-+void nft_trans_gc_elem_add(struct nft_trans_gc *gc, void *priv);
-+
-+struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
-+					   unsigned int gc_seq);
-+
-+void nft_setelem_data_deactivate(const struct net *net,
-+				 const struct nft_set *set,
-+				 struct nft_set_elem *elem);
-+
- int __init nft_chain_filter_init(void);
- void nft_chain_filter_fini(void);
- 
-@@ -1684,6 +1745,7 @@ struct nftables_pernet {
- 	struct mutex		commit_mutex;
- 	u64			table_handle;
- 	unsigned int		base_seq;
-+	unsigned int		gc_seq;
- };
- 
- extern unsigned int nf_tables_net_id;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index dde19be41610d..2333f5da1eb97 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -31,7 +31,9 @@ static LIST_HEAD(nf_tables_expressions);
- static LIST_HEAD(nf_tables_objects);
- static LIST_HEAD(nf_tables_flowtables);
- static LIST_HEAD(nf_tables_destroy_list);
-+static LIST_HEAD(nf_tables_gc_list);
- static DEFINE_SPINLOCK(nf_tables_destroy_list_lock);
-+static DEFINE_SPINLOCK(nf_tables_gc_list_lock);
- 
- enum {
- 	NFT_VALIDATE_SKIP	= 0,
-@@ -120,6 +122,9 @@ static void nft_validate_state_update(struct nft_table *table, u8 new_validate_s
- static void nf_tables_trans_destroy_work(struct work_struct *w);
- static DECLARE_WORK(trans_destroy_work, nf_tables_trans_destroy_work);
- 
-+static void nft_trans_gc_work(struct work_struct *work);
-+static DECLARE_WORK(trans_gc_work, nft_trans_gc_work);
-+
- static void nft_ctx_init(struct nft_ctx *ctx,
- 			 struct net *net,
- 			 const struct sk_buff *skb,
-@@ -581,10 +586,6 @@ static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
- 	return __nft_trans_set_add(ctx, msg_type, set, NULL);
- }
- 
--static void nft_setelem_data_deactivate(const struct net *net,
--					const struct nft_set *set,
--					struct nft_set_elem *elem);
--
- static int nft_mapelem_deactivate(const struct nft_ctx *ctx,
- 				  struct nft_set *set,
- 				  const struct nft_set_iter *iter,
-@@ -4756,6 +4757,7 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	INIT_LIST_HEAD(&set->bindings);
- 	INIT_LIST_HEAD(&set->catchall_list);
-+	refcount_set(&set->refs, 1);
- 	set->table = table;
- 	write_pnet(&set->net, net);
- 	set->ops = ops;
-@@ -4823,6 +4825,14 @@ static void nft_set_catchall_destroy(const struct nft_ctx *ctx,
- 	}
- }
- 
-+static void nft_set_put(struct nft_set *set)
-+{
-+	if (refcount_dec_and_test(&set->refs)) {
-+		kfree(set->name);
-+		kvfree(set);
-+	}
-+}
-+
- static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
- {
- 	int i;
-@@ -4835,8 +4845,7 @@ static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
- 
- 	set->ops->destroy(ctx, set);
- 	nft_set_catchall_destroy(ctx, set);
--	kfree(set->name);
--	kvfree(set);
-+	nft_set_put(set);
- }
- 
- static int nf_tables_delset(struct sk_buff *skb, const struct nfnl_info *info,
-@@ -5901,7 +5910,8 @@ struct nft_set_ext *nft_set_catchall_lookup(const struct net *net,
- 	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
- 		if (nft_set_elem_active(ext, genmask) &&
--		    !nft_set_elem_expired(ext))
-+		    !nft_set_elem_expired(ext) &&
-+		    !nft_set_elem_is_dead(ext))
- 			return ext;
- 	}
- 
-@@ -6545,9 +6555,9 @@ static void nft_setelem_data_activate(const struct net *net,
- 		nft_use_inc_restore(&(*nft_set_ext_obj(ext))->use);
- }
- 
--static void nft_setelem_data_deactivate(const struct net *net,
--					const struct nft_set *set,
--					struct nft_set_elem *elem)
-+void nft_setelem_data_deactivate(const struct net *net,
-+				 const struct nft_set *set,
-+				 struct nft_set_elem *elem)
- {
- 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
- 
-@@ -8882,6 +8892,207 @@ void nft_chain_del(struct nft_chain *chain)
- 	list_del_rcu(&chain->list);
- }
- 
-+static void nft_trans_gc_setelem_remove(struct nft_ctx *ctx,
-+					struct nft_trans_gc *trans)
-+{
-+	void **priv = trans->priv;
-+	unsigned int i;
-+
-+	for (i = 0; i < trans->count; i++) {
-+		struct nft_set_elem elem = {
-+			.priv = priv[i],
-+		};
-+
-+		nft_setelem_data_deactivate(ctx->net, trans->set, &elem);
-+		nft_setelem_remove(ctx->net, trans->set, &elem);
-+	}
-+}
-+
-+void nft_trans_gc_destroy(struct nft_trans_gc *trans)
-+{
-+	nft_set_put(trans->set);
-+	put_net(trans->net);
-+	kfree(trans);
-+}
-+
-+static void nft_trans_gc_trans_free(struct rcu_head *rcu)
-+{
-+	struct nft_set_elem elem = {};
-+	struct nft_trans_gc *trans;
-+	struct nft_ctx ctx = {};
-+	unsigned int i;
-+
-+	trans = container_of(rcu, struct nft_trans_gc, rcu);
-+	ctx.net	= read_pnet(&trans->set->net);
-+
-+	for (i = 0; i < trans->count; i++) {
-+		elem.priv = trans->priv[i];
-+		if (!nft_setelem_is_catchall(trans->set, &elem))
-+			atomic_dec(&trans->set->nelems);
-+
-+		nf_tables_set_elem_destroy(&ctx, trans->set, elem.priv);
-+	}
-+
-+	nft_trans_gc_destroy(trans);
-+}
-+
-+static bool nft_trans_gc_work_done(struct nft_trans_gc *trans)
-+{
-+	struct nftables_pernet *nft_net;
-+	struct nft_ctx ctx = {};
-+
-+	nft_net = nft_pernet(trans->net);
-+
-+	mutex_lock(&nft_net->commit_mutex);
-+
-+	/* Check for race with transaction, otherwise this batch refers to
-+	 * stale objects that might not be there anymore. Skip transaction if
-+	 * set has been destroyed from control plane transaction in case gc
-+	 * worker loses race.
-+	 */
-+	if (READ_ONCE(nft_net->gc_seq) != trans->seq || trans->set->dead) {
-+		mutex_unlock(&nft_net->commit_mutex);
-+		return false;
-+	}
-+
-+	ctx.net = trans->net;
-+	ctx.table = trans->set->table;
-+
-+	nft_trans_gc_setelem_remove(&ctx, trans);
-+	mutex_unlock(&nft_net->commit_mutex);
-+
-+	return true;
-+}
-+
-+static void nft_trans_gc_work(struct work_struct *work)
-+{
-+	struct nft_trans_gc *trans, *next;
-+	LIST_HEAD(trans_gc_list);
-+
-+	spin_lock(&nf_tables_destroy_list_lock);
-+	list_splice_init(&nf_tables_gc_list, &trans_gc_list);
-+	spin_unlock(&nf_tables_destroy_list_lock);
-+
-+	list_for_each_entry_safe(trans, next, &trans_gc_list, list) {
-+		list_del(&trans->list);
-+		if (!nft_trans_gc_work_done(trans)) {
-+			nft_trans_gc_destroy(trans);
-+			continue;
-+		}
-+		call_rcu(&trans->rcu, nft_trans_gc_trans_free);
-+	}
-+}
-+
-+struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
-+					unsigned int gc_seq, gfp_t gfp)
-+{
-+	struct net *net = read_pnet(&set->net);
-+	struct nft_trans_gc *trans;
-+
-+	trans = kzalloc(sizeof(*trans), gfp);
-+	if (!trans)
-+		return NULL;
-+
-+	refcount_inc(&set->refs);
-+	trans->set = set;
-+	trans->net = get_net(net);
-+	trans->seq = gc_seq;
-+
-+	return trans;
-+}
-+
-+void nft_trans_gc_elem_add(struct nft_trans_gc *trans, void *priv)
-+{
-+	trans->priv[trans->count++] = priv;
-+}
-+
-+static void nft_trans_gc_queue_work(struct nft_trans_gc *trans)
-+{
-+	spin_lock(&nf_tables_gc_list_lock);
-+	list_add_tail(&trans->list, &nf_tables_gc_list);
-+	spin_unlock(&nf_tables_gc_list_lock);
-+
-+	schedule_work(&trans_gc_work);
-+}
-+
-+static int nft_trans_gc_space(struct nft_trans_gc *trans)
-+{
-+	return NFT_TRANS_GC_BATCHCOUNT - trans->count;
-+}
-+
-+struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
-+					      unsigned int gc_seq, gfp_t gfp)
-+{
-+	if (nft_trans_gc_space(gc))
-+		return gc;
-+
-+	nft_trans_gc_queue_work(gc);
-+
-+	return nft_trans_gc_alloc(gc->set, gc_seq, gfp);
-+}
-+
-+void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
-+{
-+	if (trans->count == 0) {
-+		nft_trans_gc_destroy(trans);
-+		return;
-+	}
-+
-+	nft_trans_gc_queue_work(trans);
-+}
-+
-+struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp)
-+{
-+	if (WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net)))
-+		return NULL;
-+
-+	if (nft_trans_gc_space(gc))
-+		return gc;
-+
-+	call_rcu(&gc->rcu, nft_trans_gc_trans_free);
-+
-+	return nft_trans_gc_alloc(gc->set, 0, gfp);
-+}
-+
-+void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
-+{
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(trans->net));
-+
-+	if (trans->count == 0) {
-+		nft_trans_gc_destroy(trans);
-+		return;
-+	}
-+
-+	call_rcu(&trans->rcu, nft_trans_gc_trans_free);
-+}
-+
-+struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
-+					   unsigned int gc_seq)
-+{
-+	struct nft_set_elem_catchall *catchall;
-+	const struct nft_set *set = gc->set;
-+	struct nft_set_ext *ext;
-+
-+	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
-+		ext = nft_set_elem_ext(set, catchall->elem);
-+
-+		if (!nft_set_elem_expired(ext))
-+			continue;
-+		if (nft_set_elem_is_dead(ext))
-+			goto dead_elem;
-+
-+		nft_set_elem_dead(ext);
-+dead_elem:
-+		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		if (!gc)
-+			return NULL;
-+
-+		nft_trans_gc_elem_add(gc, catchall->elem);
-+	}
-+
-+	return gc;
-+}
-+
- static void nf_tables_module_autoload_cleanup(struct net *net)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
-@@ -9044,11 +9255,11 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct nft_trans *trans, *next;
-+	unsigned int base_seq, gc_seq;
- 	LIST_HEAD(set_update_list);
- 	struct nft_trans_elem *te;
- 	struct nft_chain *chain;
- 	struct nft_table *table;
--	unsigned int base_seq;
- 	LIST_HEAD(adl);
- 	int err;
- 
-@@ -9125,6 +9336,10 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 
- 	WRITE_ONCE(nft_net->base_seq, base_seq);
- 
-+	/* Bump gc counter, it becomes odd, this is the busy mark. */
-+	gc_seq = READ_ONCE(nft_net->gc_seq);
-+	WRITE_ONCE(nft_net->gc_seq, ++gc_seq);
-+
- 	/* step 3. Start new generation, rules_gen_X now in use. */
- 	net->nft.gencursor = nft_gencursor_next(net);
- 
-@@ -9213,6 +9428,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 			nft_trans_destroy(trans);
- 			break;
- 		case NFT_MSG_DELSET:
-+			nft_trans_set(trans)->dead = 1;
- 			list_del_rcu(&nft_trans_set(trans)->list);
- 			nf_tables_set_notify(&trans->ctx, nft_trans_set(trans),
- 					     NFT_MSG_DELSET, GFP_KERNEL);
-@@ -9312,6 +9528,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 	nft_commit_notify(net, NETLINK_CB(skb).portid);
- 	nf_tables_gen_notify(net, skb, NFT_MSG_NEWGEN);
- 	nf_tables_commit_audit_log(&adl, nft_net->base_seq);
-+
-+	WRITE_ONCE(nft_net->gc_seq, ++gc_seq);
- 	nf_tables_commit_release(net);
- 
- 	return 0;
-@@ -10343,6 +10561,7 @@ static int __net_init nf_tables_init_net(struct net *net)
- 	INIT_LIST_HEAD(&nft_net->notify_list);
- 	mutex_init(&nft_net->commit_mutex);
- 	nft_net->base_seq = 1;
-+	nft_net->gc_seq = 0;
- 
- 	return 0;
- }
-@@ -10371,10 +10590,16 @@ static void __net_exit nf_tables_exit_net(struct net *net)
- 	WARN_ON_ONCE(!list_empty(&nft_net->notify_list));
- }
- 
-+static void nf_tables_exit_batch(struct list_head *net_exit_list)
-+{
-+	flush_work(&trans_gc_work);
-+}
-+
- static struct pernet_operations nf_tables_net_ops = {
- 	.init		= nf_tables_init_net,
- 	.pre_exit	= nf_tables_pre_exit_net,
- 	.exit		= nf_tables_exit_net,
-+	.exit_batch	= nf_tables_exit_batch,
- 	.id		= &nf_tables_net_id,
- 	.size		= sizeof(struct nftables_pernet),
- };
-@@ -10446,6 +10671,7 @@ static void __exit nf_tables_module_exit(void)
- 	nft_chain_filter_fini();
- 	nft_chain_route_fini();
- 	unregister_pernet_subsys(&nf_tables_net_ops);
-+	cancel_work_sync(&trans_gc_work);
- 	cancel_work_sync(&trans_destroy_work);
- 	rcu_barrier();
- 	rhltable_destroy(&nft_objname_ht);
--- 
-2.40.1
-
-
-
+> Currently, there are two major issues with stmmac driver statistics
+> First of all, statistics in stmmac_extra_stats, stmmac_rxq_stats
+> and stmmac_txq_stats are 32 bit variables on 32 bit platforms. This
+> can cause some stats to overflow after several minutes of
+> high traffic, for example rx_pkt_n, tx_pkt_n and so on.
+> 
+> Secondly, if HW supports multiqueues, there are frequent cacheline
+> ping pongs on some driver statistic vars, for example, normal_irq_n,
+> tx_pkt_n and so on. What's more, frequent cacheline ping pongs on
+> normal_irq_n happens in ISR, this makes the situation worse.
+> 
+> To improve the driver, we convert those statistics to 64 bit, implement
+> ndo_get_stats64 and update .get_ethtool_stats implementation
+> accordingly. We also use per-queue statistics where necessary to remove
+> the cacheline ping pongs as much as possible to make multiqueue
+> operations faster. Those statistics which are not possible to overflow
+> and not frequently updated are kept as is.
+> 
+> Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+> Link: https://lore.kernel.org/r/20230717160630.1892-3-jszhang@kernel.org
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/common.h  |  39 ++--
+>  .../net/ethernet/stmicro/stmmac/dwmac-sun8i.c |  12 +-
+>  .../ethernet/stmicro/stmmac/dwmac100_dma.c    |   7 +-
+>  .../ethernet/stmicro/stmmac/dwmac4_descs.c    |  16 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac4_lib.c  |  15 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac_lib.c   |  12 +-
+>  .../ethernet/stmicro/stmmac/dwxgmac2_descs.c  |   6 +-
+>  .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    |  14 +-
+>  .../net/ethernet/stmicro/stmmac/enh_desc.c    |  20 +-
+>  drivers/net/ethernet/stmicro/stmmac/hwif.h    |  12 +-
+>  .../net/ethernet/stmicro/stmmac/norm_desc.c   |  15 +-
+>  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   2 +
+>  .../ethernet/stmicro/stmmac/stmmac_ethtool.c  | 123 ++++++++---
+>  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 200 ++++++++++++++----
+>  14 files changed, 335 insertions(+), 158 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+> index 16e67c18b6f71..57f2137bbe9d9 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/common.h
+> +++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+> @@ -59,13 +59,25 @@
+>  /* #define FRAME_FILTER_DEBUG */
+>  
+>  struct stmmac_txq_stats {
+> -	unsigned long tx_pkt_n;
+> -	unsigned long tx_normal_irq_n;
+> +	u64 tx_bytes;
+> +	u64 tx_packets;
+> +	u64 tx_pkt_n;
+> +	u64 tx_normal_irq_n;
+> +	u64 napi_poll;
+> +	u64 tx_clean;
+> +	u64 tx_set_ic_bit;
+> +	u64 tx_tso_frames;
+> +	u64 tx_tso_nfrags;
+> +	struct u64_stats_sync syncp;
+>  };
+>  
+>  struct stmmac_rxq_stats {
+> -	unsigned long rx_pkt_n;
+> -	unsigned long rx_normal_irq_n;
+> +	u64 rx_bytes;
+> +	u64 rx_packets;
+> +	u64 rx_pkt_n;
+> +	u64 rx_normal_irq_n;
+> +	u64 napi_poll;
+> +	struct u64_stats_sync syncp;
+>  };
+>  
+>  /* Extra statistic and debug information exposed by ethtool */
+> @@ -81,6 +93,7 @@ struct stmmac_extra_stats {
+>  	unsigned long tx_frame_flushed;
+>  	unsigned long tx_payload_error;
+>  	unsigned long tx_ip_header_error;
+> +	unsigned long tx_collision;
+>  	/* Receive errors */
+>  	unsigned long rx_desc;
+>  	unsigned long sa_filter_fail;
+> @@ -113,14 +126,6 @@ struct stmmac_extra_stats {
+>  	/* Tx/Rx IRQ Events */
+>  	unsigned long rx_early_irq;
+>  	unsigned long threshold;
+> -	unsigned long tx_pkt_n;
+> -	unsigned long rx_pkt_n;
+> -	unsigned long normal_irq_n;
+> -	unsigned long rx_normal_irq_n;
+> -	unsigned long napi_poll;
+> -	unsigned long tx_normal_irq_n;
+> -	unsigned long tx_clean;
+> -	unsigned long tx_set_ic_bit;
+>  	unsigned long irq_receive_pmt_irq_n;
+>  	/* MMC info */
+>  	unsigned long mmc_tx_irq_n;
+> @@ -190,18 +195,16 @@ struct stmmac_extra_stats {
+>  	unsigned long mtl_rx_fifo_ctrl_active;
+>  	unsigned long mac_rx_frame_ctrl_fifo;
+>  	unsigned long mac_gmii_rx_proto_engine;
+> -	/* TSO */
+> -	unsigned long tx_tso_frames;
+> -	unsigned long tx_tso_nfrags;
+>  	/* EST */
+>  	unsigned long mtl_est_cgce;
+>  	unsigned long mtl_est_hlbs;
+>  	unsigned long mtl_est_hlbf;
+>  	unsigned long mtl_est_btre;
+>  	unsigned long mtl_est_btrlm;
+> -	/* per queue statistics */
+> -	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
+> -	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
+> +	unsigned long rx_dropped;
+> +	unsigned long rx_errors;
+> +	unsigned long tx_dropped;
+> +	unsigned long tx_errors;
+>  };
+>  
+>  /* Safety Feature statistics exposed by ethtool */
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> index 1e714380d1250..b20f8ba34efd9 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> @@ -440,8 +440,10 @@ static int sun8i_dwmac_dma_interrupt(struct stmmac_priv *priv,
+>  				     struct stmmac_extra_stats *x, u32 chan,
+>  				     u32 dir)
+>  {
+> -	u32 v;
+> +	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+> +	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+>  	int ret = 0;
+> +	u32 v;
+>  
+>  	v = readl(ioaddr + EMAC_INT_STA);
+>  
+> @@ -452,7 +454,9 @@ static int sun8i_dwmac_dma_interrupt(struct stmmac_priv *priv,
+>  
+>  	if (v & EMAC_TX_INT) {
+>  		ret |= handle_tx;
+> -		x->tx_normal_irq_n++;
+> +		u64_stats_update_begin(&tx_q->txq_stats.syncp);
+> +		tx_q->txq_stats.tx_normal_irq_n++;
+> +		u64_stats_update_end(&tx_q->txq_stats.syncp);
+>  	}
+>  
+>  	if (v & EMAC_TX_DMA_STOP_INT)
+> @@ -474,7 +478,9 @@ static int sun8i_dwmac_dma_interrupt(struct stmmac_priv *priv,
+>  
+>  	if (v & EMAC_RX_INT) {
+>  		ret |= handle_rx;
+> -		x->rx_normal_irq_n++;
+> +		u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+> +		rx_q->rxq_stats.rx_normal_irq_n++;
+> +		u64_stats_update_end(&rx_q->rxq_stats.syncp);
+>  	}
+>  
+>  	if (v & EMAC_RX_BUF_UA_INT)
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
+> index 1c32b1788f02e..dea270f60cc3e 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
+> @@ -82,29 +82,24 @@ static void dwmac100_dump_dma_regs(struct stmmac_priv *priv,
+>  }
+>  
+>  /* DMA controller has two counters to track the number of the missed frames. */
+> -static void dwmac100_dma_diagnostic_fr(struct net_device_stats *stats,
+> -				       struct stmmac_extra_stats *x,
+> +static void dwmac100_dma_diagnostic_fr(struct stmmac_extra_stats *x,
+>  				       void __iomem *ioaddr)
+>  {
+>  	u32 csr8 = readl(ioaddr + DMA_MISSED_FRAME_CTR);
+>  
+>  	if (unlikely(csr8)) {
+>  		if (csr8 & DMA_MISSED_FRAME_OVE) {
+> -			stats->rx_over_errors += 0x800;
+>  			x->rx_overflow_cntr += 0x800;
+>  		} else {
+>  			unsigned int ove_cntr;
+>  			ove_cntr = ((csr8 & DMA_MISSED_FRAME_OVE_CNTR) >> 17);
+> -			stats->rx_over_errors += ove_cntr;
+>  			x->rx_overflow_cntr += ove_cntr;
+>  		}
+>  
+>  		if (csr8 & DMA_MISSED_FRAME_OVE_M) {
+> -			stats->rx_missed_errors += 0xffff;
+>  			x->rx_missed_cntr += 0xffff;
+>  		} else {
+>  			unsigned int miss_f = (csr8 & DMA_MISSED_FRAME_M_CNTR);
+> -			stats->rx_missed_errors += miss_f;
+>  			x->rx_missed_cntr += miss_f;
+>  		}
+>  	}
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+> index 6a011d8633e8e..89a14084c6117 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+> @@ -13,8 +13,7 @@
+>  #include "dwmac4.h"
+>  #include "dwmac4_descs.h"
+>  
+> -static int dwmac4_wrback_get_tx_status(struct net_device_stats *stats,
+> -				       struct stmmac_extra_stats *x,
+> +static int dwmac4_wrback_get_tx_status(struct stmmac_extra_stats *x,
+>  				       struct dma_desc *p,
+>  				       void __iomem *ioaddr)
+>  {
+> @@ -40,15 +39,13 @@ static int dwmac4_wrback_get_tx_status(struct net_device_stats *stats,
+>  			x->tx_frame_flushed++;
+>  		if (unlikely(tdes3 & TDES3_LOSS_CARRIER)) {
+>  			x->tx_losscarrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely(tdes3 & TDES3_NO_CARRIER)) {
+>  			x->tx_carrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely((tdes3 & TDES3_LATE_COLLISION) ||
+>  			     (tdes3 & TDES3_EXCESSIVE_COLLISION)))
+> -			stats->collisions +=
+> +			x->tx_collision +=
+>  			    (tdes3 & TDES3_COLLISION_COUNT_MASK)
+>  			    >> TDES3_COLLISION_COUNT_SHIFT;
+>  
+> @@ -73,8 +70,7 @@ static int dwmac4_wrback_get_tx_status(struct net_device_stats *stats,
+>  	return ret;
+>  }
+>  
+> -static int dwmac4_wrback_get_rx_status(struct net_device_stats *stats,
+> -				       struct stmmac_extra_stats *x,
+> +static int dwmac4_wrback_get_rx_status(struct stmmac_extra_stats *x,
+>  				       struct dma_desc *p)
+>  {
+>  	unsigned int rdes1 = le32_to_cpu(p->des1);
+> @@ -93,7 +89,7 @@ static int dwmac4_wrback_get_rx_status(struct net_device_stats *stats,
+>  
+>  	if (unlikely(rdes3 & RDES3_ERROR_SUMMARY)) {
+>  		if (unlikely(rdes3 & RDES3_GIANT_PACKET))
+> -			stats->rx_length_errors++;
+> +			x->rx_length++;
+>  		if (unlikely(rdes3 & RDES3_OVERFLOW_ERROR))
+>  			x->rx_gmac_overflow++;
+>  
+> @@ -103,10 +99,8 @@ static int dwmac4_wrback_get_rx_status(struct net_device_stats *stats,
+>  		if (unlikely(rdes3 & RDES3_RECEIVE_ERROR))
+>  			x->rx_mii++;
+>  
+> -		if (unlikely(rdes3 & RDES3_CRC_ERROR)) {
+> +		if (unlikely(rdes3 & RDES3_CRC_ERROR))
+>  			x->rx_crc_errors++;
+> -			stats->rx_crc_errors++;
+> -		}
+>  
+>  		if (unlikely(rdes3 & RDES3_DRIBBLE_ERROR))
+>  			x->dribbling_bit++;
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+> index 03ceb6a940732..980e5f8a37ec5 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+> @@ -171,6 +171,8 @@ int dwmac4_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+>  	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
+>  	u32 intr_status = readl(ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, chan));
+>  	u32 intr_en = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
+> +	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+> +	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+>  	int ret = 0;
+>  
+>  	if (dir == DMA_DIR_RX)
+> @@ -198,18 +200,19 @@ int dwmac4_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+>  		}
+>  	}
+>  	/* TX/RX NORMAL interrupts */
+> -	if (likely(intr_status & DMA_CHAN_STATUS_NIS))
+> -		x->normal_irq_n++;
+>  	if (likely(intr_status & DMA_CHAN_STATUS_RI)) {
+> -		x->rx_normal_irq_n++;
+> -		x->rxq_stats[chan].rx_normal_irq_n++;
+> +		u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+> +		rx_q->rxq_stats.rx_normal_irq_n++;
+> +		u64_stats_update_end(&rx_q->rxq_stats.syncp);
+>  		ret |= handle_rx;
+>  	}
+>  	if (likely(intr_status & DMA_CHAN_STATUS_TI)) {
+> -		x->tx_normal_irq_n++;
+> -		x->txq_stats[chan].tx_normal_irq_n++;
+> +		u64_stats_update_begin(&tx_q->txq_stats.syncp);
+> +		tx_q->txq_stats.tx_normal_irq_n++;
+> +		u64_stats_update_end(&tx_q->txq_stats.syncp);
+>  		ret |= handle_tx;
+>  	}
+> +
+>  	if (unlikely(intr_status & DMA_CHAN_STATUS_TBU))
+>  		ret |= handle_tx;
+>  	if (unlikely(intr_status & DMA_CHAN_STATUS_ERI))
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c b/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
+> index 0b6f999a83052..aaa09b16b016f 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
+> @@ -10,6 +10,7 @@
+>  #include <linux/iopoll.h>
+>  #include "common.h"
+>  #include "dwmac_dma.h"
+> +#include "stmmac.h"
+>  
+>  #define GMAC_HI_REG_AE		0x80000000
+>  
+> @@ -161,6 +162,8 @@ static void show_rx_process_state(unsigned int status)
+>  int dwmac_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+>  			struct stmmac_extra_stats *x, u32 chan, u32 dir)
+>  {
+> +	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+> +	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+>  	int ret = 0;
+>  	/* read the status register (CSR5) */
+>  	u32 intr_status = readl(ioaddr + DMA_STATUS);
+> @@ -208,17 +211,20 @@ int dwmac_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+>  	}
+>  	/* TX/RX NORMAL interrupts */
+>  	if (likely(intr_status & DMA_STATUS_NIS)) {
+> -		x->normal_irq_n++;
+>  		if (likely(intr_status & DMA_STATUS_RI)) {
+>  			u32 value = readl(ioaddr + DMA_INTR_ENA);
+>  			/* to schedule NAPI on real RIE event. */
+>  			if (likely(value & DMA_INTR_ENA_RIE)) {
+> -				x->rx_normal_irq_n++;
+> +				u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+> +				rx_q->rxq_stats.rx_normal_irq_n++;
+> +				u64_stats_update_end(&rx_q->rxq_stats.syncp);
+>  				ret |= handle_rx;
+>  			}
+>  		}
+>  		if (likely(intr_status & DMA_STATUS_TI)) {
+> -			x->tx_normal_irq_n++;
+> +			u64_stats_update_begin(&tx_q->txq_stats.syncp);
+> +			tx_q->txq_stats.tx_normal_irq_n++;
+> +			u64_stats_update_end(&tx_q->txq_stats.syncp);
+>  			ret |= handle_tx;
+>  		}
+>  		if (unlikely(intr_status & DMA_STATUS_ERI))
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
+> index 13c347ee8be9c..fc82862a612c7 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
+> @@ -8,8 +8,7 @@
+>  #include "common.h"
+>  #include "dwxgmac2.h"
+>  
+> -static int dwxgmac2_get_tx_status(struct net_device_stats *stats,
+> -				  struct stmmac_extra_stats *x,
+> +static int dwxgmac2_get_tx_status(struct stmmac_extra_stats *x,
+>  				  struct dma_desc *p, void __iomem *ioaddr)
+>  {
+>  	unsigned int tdes3 = le32_to_cpu(p->des3);
+> @@ -23,8 +22,7 @@ static int dwxgmac2_get_tx_status(struct net_device_stats *stats,
+>  	return ret;
+>  }
+>  
+> -static int dwxgmac2_get_rx_status(struct net_device_stats *stats,
+> -				  struct stmmac_extra_stats *x,
+> +static int dwxgmac2_get_rx_status(struct stmmac_extra_stats *x,
+>  				  struct dma_desc *p)
+>  {
+>  	unsigned int rdes3 = le32_to_cpu(p->des3);
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+> index 070bd912580b7..3b5f8c595219b 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+> @@ -337,6 +337,8 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
+>  				  struct stmmac_extra_stats *x, u32 chan,
+>  				  u32 dir)
+>  {
+> +	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+> +	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+>  	u32 intr_status = readl(ioaddr + XGMAC_DMA_CH_STATUS(chan));
+>  	u32 intr_en = readl(ioaddr + XGMAC_DMA_CH_INT_EN(chan));
+>  	int ret = 0;
+> @@ -364,16 +366,16 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
+>  
+>  	/* TX/RX NORMAL interrupts */
+>  	if (likely(intr_status & XGMAC_NIS)) {
+> -		x->normal_irq_n++;
+> -
+>  		if (likely(intr_status & XGMAC_RI)) {
+> -			x->rx_normal_irq_n++;
+> -			x->rxq_stats[chan].rx_normal_irq_n++;
+> +			u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+> +			rx_q->rxq_stats.rx_normal_irq_n++;
+> +			u64_stats_update_end(&rx_q->rxq_stats.syncp);
+>  			ret |= handle_rx;
+>  		}
+>  		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
+> -			x->tx_normal_irq_n++;
+> -			x->txq_stats[chan].tx_normal_irq_n++;
+> +			u64_stats_update_begin(&tx_q->txq_stats.syncp);
+> +			tx_q->txq_stats.tx_normal_irq_n++;
+> +			u64_stats_update_end(&tx_q->txq_stats.syncp);
+>  			ret |= handle_tx;
+>  		}
+>  	}
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+> index a91d8f13a931d..937b7a0466fca 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+> @@ -12,8 +12,7 @@
+>  #include "common.h"
+>  #include "descs_com.h"
+>  
+> -static int enh_desc_get_tx_status(struct net_device_stats *stats,
+> -				  struct stmmac_extra_stats *x,
+> +static int enh_desc_get_tx_status(struct stmmac_extra_stats *x,
+>  				  struct dma_desc *p, void __iomem *ioaddr)
+>  {
+>  	unsigned int tdes0 = le32_to_cpu(p->des0);
+> @@ -38,15 +37,13 @@ static int enh_desc_get_tx_status(struct net_device_stats *stats,
+>  
+>  		if (unlikely(tdes0 & ETDES0_LOSS_CARRIER)) {
+>  			x->tx_losscarrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely(tdes0 & ETDES0_NO_CARRIER)) {
+>  			x->tx_carrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely((tdes0 & ETDES0_LATE_COLLISION) ||
+>  			     (tdes0 & ETDES0_EXCESSIVE_COLLISIONS)))
+> -			stats->collisions +=
+> +			x->tx_collision +=
+>  				(tdes0 & ETDES0_COLLISION_COUNT_MASK) >> 3;
+>  
+>  		if (unlikely(tdes0 & ETDES0_EXCESSIVE_DEFERRAL))
+> @@ -117,8 +114,7 @@ static int enh_desc_coe_rdes0(int ipc_err, int type, int payload_err)
+>  	return ret;
+>  }
+>  
+> -static void enh_desc_get_ext_status(struct net_device_stats *stats,
+> -				    struct stmmac_extra_stats *x,
+> +static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
+>  				    struct dma_extended_desc *p)
+>  {
+>  	unsigned int rdes0 = le32_to_cpu(p->basic.des0);
+> @@ -182,8 +178,7 @@ static void enh_desc_get_ext_status(struct net_device_stats *stats,
+>  	}
+>  }
+>  
+> -static int enh_desc_get_rx_status(struct net_device_stats *stats,
+> -				  struct stmmac_extra_stats *x,
+> +static int enh_desc_get_rx_status(struct stmmac_extra_stats *x,
+>  				  struct dma_desc *p)
+>  {
+>  	unsigned int rdes0 = le32_to_cpu(p->des0);
+> @@ -193,14 +188,14 @@ static int enh_desc_get_rx_status(struct net_device_stats *stats,
+>  		return dma_own;
+>  
+>  	if (unlikely(!(rdes0 & RDES0_LAST_DESCRIPTOR))) {
+> -		stats->rx_length_errors++;
+> +		x->rx_length++;
+>  		return discard_frame;
+>  	}
+>  
+>  	if (unlikely(rdes0 & RDES0_ERROR_SUMMARY)) {
+>  		if (unlikely(rdes0 & RDES0_DESCRIPTOR_ERROR)) {
+>  			x->rx_desc++;
+> -			stats->rx_length_errors++;
+> +			x->rx_length++;
+>  		}
+>  		if (unlikely(rdes0 & RDES0_OVERFLOW_ERROR))
+>  			x->rx_gmac_overflow++;
+> @@ -209,7 +204,7 @@ static int enh_desc_get_rx_status(struct net_device_stats *stats,
+>  			pr_err("\tIPC Csum Error/Giant frame\n");
+>  
+>  		if (unlikely(rdes0 & RDES0_COLLISION))
+> -			stats->collisions++;
+> +			x->rx_collision++;
+>  		if (unlikely(rdes0 & RDES0_RECEIVE_WATCHDOG))
+>  			x->rx_watchdog++;
+>  
+> @@ -218,7 +213,6 @@ static int enh_desc_get_rx_status(struct net_device_stats *stats,
+>  
+>  		if (unlikely(rdes0 & RDES0_CRC_ERROR)) {
+>  			x->rx_crc_errors++;
+> -			stats->rx_crc_errors++;
+>  		}
+>  		ret = discard_frame;
+>  	}
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+> index 6ee7cf07cfd76..652af8f6e75ff 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
+> +++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+> @@ -57,8 +57,7 @@ struct stmmac_desc_ops {
+>  	/* Last tx segment reports the transmit status */
+>  	int (*get_tx_ls)(struct dma_desc *p);
+>  	/* Return the transmit status looking at the TDES1 */
+> -	int (*tx_status)(struct net_device_stats *stats,
+> -			 struct stmmac_extra_stats *x,
+> +	int (*tx_status)(struct stmmac_extra_stats *x,
+>  			 struct dma_desc *p, void __iomem *ioaddr);
+>  	/* Get the buffer size from the descriptor */
+>  	int (*get_tx_len)(struct dma_desc *p);
+> @@ -67,11 +66,9 @@ struct stmmac_desc_ops {
+>  	/* Get the receive frame size */
+>  	int (*get_rx_frame_len)(struct dma_desc *p, int rx_coe_type);
+>  	/* Return the reception status looking at the RDES1 */
+> -	int (*rx_status)(struct net_device_stats *stats,
+> -			 struct stmmac_extra_stats *x,
+> +	int (*rx_status)(struct stmmac_extra_stats *x,
+>  			 struct dma_desc *p);
+> -	void (*rx_extended_status)(struct net_device_stats *stats,
+> -				   struct stmmac_extra_stats *x,
+> +	void (*rx_extended_status)(struct stmmac_extra_stats *x,
+>  				   struct dma_extended_desc *p);
+>  	/* Set tx timestamp enable bit */
+>  	void (*enable_tx_timestamp) (struct dma_desc *p);
+> @@ -191,8 +188,7 @@ struct stmmac_dma_ops {
+>  	void (*dma_tx_mode)(struct stmmac_priv *priv, void __iomem *ioaddr,
+>  			    int mode, u32 channel, int fifosz, u8 qmode);
+>  	/* To track extra statistic (if supported) */
+> -	void (*dma_diagnostic_fr)(struct net_device_stats *stats,
+> -				  struct stmmac_extra_stats *x,
+> +	void (*dma_diagnostic_fr)(struct stmmac_extra_stats *x,
+>  				  void __iomem *ioaddr);
+>  	void (*enable_dma_transmission) (void __iomem *ioaddr);
+>  	void (*enable_dma_irq)(struct stmmac_priv *priv, void __iomem *ioaddr,
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
+> index 350e6670a5766..68a7cfcb1d8f3 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
+> @@ -12,8 +12,7 @@
+>  #include "common.h"
+>  #include "descs_com.h"
+>  
+> -static int ndesc_get_tx_status(struct net_device_stats *stats,
+> -			       struct stmmac_extra_stats *x,
+> +static int ndesc_get_tx_status(struct stmmac_extra_stats *x,
+>  			       struct dma_desc *p, void __iomem *ioaddr)
+>  {
+>  	unsigned int tdes0 = le32_to_cpu(p->des0);
+> @@ -31,15 +30,12 @@ static int ndesc_get_tx_status(struct net_device_stats *stats,
+>  	if (unlikely(tdes0 & TDES0_ERROR_SUMMARY)) {
+>  		if (unlikely(tdes0 & TDES0_UNDERFLOW_ERROR)) {
+>  			x->tx_underflow++;
+> -			stats->tx_fifo_errors++;
+>  		}
+>  		if (unlikely(tdes0 & TDES0_NO_CARRIER)) {
+>  			x->tx_carrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely(tdes0 & TDES0_LOSS_CARRIER)) {
+>  			x->tx_losscarrier++;
+> -			stats->tx_carrier_errors++;
+>  		}
+>  		if (unlikely((tdes0 & TDES0_EXCESSIVE_DEFERRAL) ||
+>  			     (tdes0 & TDES0_EXCESSIVE_COLLISIONS) ||
+> @@ -47,7 +43,7 @@ static int ndesc_get_tx_status(struct net_device_stats *stats,
+>  			unsigned int collisions;
+>  
+>  			collisions = (tdes0 & TDES0_COLLISION_COUNT_MASK) >> 3;
+> -			stats->collisions += collisions;
+> +			x->tx_collision += collisions;
+>  		}
+>  		ret = tx_err;
+>  	}
+> @@ -70,8 +66,7 @@ static int ndesc_get_tx_len(struct dma_desc *p)
+>   * and, if required, updates the multicast statistics.
+>   * In case of success, it returns good_frame because the GMAC device
+>   * is supposed to be able to compute the csum in HW. */
+> -static int ndesc_get_rx_status(struct net_device_stats *stats,
+> -			       struct stmmac_extra_stats *x,
+> +static int ndesc_get_rx_status(struct stmmac_extra_stats *x,
+>  			       struct dma_desc *p)
+>  {
+>  	int ret = good_frame;
+> @@ -81,7 +76,7 @@ static int ndesc_get_rx_status(struct net_device_stats *stats,
+>  		return dma_own;
+>  
+>  	if (unlikely(!(rdes0 & RDES0_LAST_DESCRIPTOR))) {
+> -		stats->rx_length_errors++;
+> +		x->rx_length++;
+>  		return discard_frame;
+>  	}
+>  
+> @@ -96,11 +91,9 @@ static int ndesc_get_rx_status(struct net_device_stats *stats,
+>  			x->ipc_csum_error++;
+>  		if (unlikely(rdes0 & RDES0_COLLISION)) {
+>  			x->rx_collision++;
+> -			stats->collisions++;
+>  		}
+>  		if (unlikely(rdes0 & RDES0_CRC_ERROR)) {
+>  			x->rx_crc_errors++;
+> -			stats->rx_crc_errors++;
+>  		}
+>  		ret = discard_frame;
+>  	}
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> index 07ea5ab0a60ba..4ce5eaaae5135 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> @@ -77,6 +77,7 @@ struct stmmac_tx_queue {
+>  	dma_addr_t dma_tx_phy;
+>  	dma_addr_t tx_tail_addr;
+>  	u32 mss;
+> +	struct stmmac_txq_stats txq_stats;
+>  };
+>  
+>  struct stmmac_rx_buffer {
+> @@ -121,6 +122,7 @@ struct stmmac_rx_queue {
+>  		unsigned int len;
+>  		unsigned int error;
+>  	} state;
+> +	struct stmmac_rxq_stats rxq_stats;
+>  };
+>  
+>  struct stmmac_channel {
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> index 2ae73ab842d45..b7ac7abecdd35 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> @@ -89,14 +89,6 @@ static const struct stmmac_stats stmmac_gstrings_stats[] = {
+>  	/* Tx/Rx IRQ Events */
+>  	STMMAC_STAT(rx_early_irq),
+>  	STMMAC_STAT(threshold),
+> -	STMMAC_STAT(tx_pkt_n),
+> -	STMMAC_STAT(rx_pkt_n),
+> -	STMMAC_STAT(normal_irq_n),
+> -	STMMAC_STAT(rx_normal_irq_n),
+> -	STMMAC_STAT(napi_poll),
+> -	STMMAC_STAT(tx_normal_irq_n),
+> -	STMMAC_STAT(tx_clean),
+> -	STMMAC_STAT(tx_set_ic_bit),
+>  	STMMAC_STAT(irq_receive_pmt_irq_n),
+>  	/* MMC info */
+>  	STMMAC_STAT(mmc_tx_irq_n),
+> @@ -163,9 +155,6 @@ static const struct stmmac_stats stmmac_gstrings_stats[] = {
+>  	STMMAC_STAT(mtl_rx_fifo_ctrl_active),
+>  	STMMAC_STAT(mac_rx_frame_ctrl_fifo),
+>  	STMMAC_STAT(mac_gmii_rx_proto_engine),
+> -	/* TSO */
+> -	STMMAC_STAT(tx_tso_frames),
+> -	STMMAC_STAT(tx_tso_nfrags),
+>  	/* EST */
+>  	STMMAC_STAT(mtl_est_cgce),
+>  	STMMAC_STAT(mtl_est_hlbs),
+> @@ -175,6 +164,23 @@ static const struct stmmac_stats stmmac_gstrings_stats[] = {
+>  };
+>  #define STMMAC_STATS_LEN ARRAY_SIZE(stmmac_gstrings_stats)
+>  
+> +/* statistics collected in queue which will be summed up for all TX or RX
+> + * queues, or summed up for both TX and RX queues(napi_poll, normal_irq_n).
+> + */
+> +static const char stmmac_qstats_string[][ETH_GSTRING_LEN] = {
+> +	"rx_pkt_n",
+> +	"rx_normal_irq_n",
+> +	"tx_pkt_n",
+> +	"tx_normal_irq_n",
+> +	"tx_clean",
+> +	"tx_set_ic_bit",
+> +	"tx_tso_frames",
+> +	"tx_tso_nfrags",
+> +	"normal_irq_n",
+> +	"napi_poll",
+> +};
+> +#define STMMAC_QSTATS ARRAY_SIZE(stmmac_qstats_string)
+> +
+>  /* HW MAC Management counters (if supported) */
+>  #define STMMAC_MMC_STAT(m)	\
+>  	{ #m, sizeof_field(struct stmmac_counters, m),	\
+> @@ -535,23 +541,44 @@ static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
+>  {
+>  	u32 tx_cnt = priv->plat->tx_queues_to_use;
+>  	u32 rx_cnt = priv->plat->rx_queues_to_use;
+> +	unsigned int start;
+>  	int q, stat;
+> +	u64 *pos;
+>  	char *p;
+>  
+> +	pos = data;
+>  	for (q = 0; q < tx_cnt; q++) {
+> -		p = (char *)priv + offsetof(struct stmmac_priv,
+> -					    xstats.txq_stats[q].tx_pkt_n);
+> +		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[q];
+> +		struct stmmac_txq_stats snapshot;
+> +
+> +		data = pos;
+> +		do {
+> +			start = u64_stats_fetch_begin(&tx_q->txq_stats.syncp);
+> +			snapshot = tx_q->txq_stats;
+> +		} while (u64_stats_fetch_retry(&tx_q->txq_stats.syncp, start));
+> +
+> +		p = (char *)&snapshot + offsetof(struct stmmac_txq_stats, tx_pkt_n);
+>  		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
+> -			*data++ = (*(unsigned long *)p);
+> -			p += sizeof(unsigned long);
+> +			*data++ += (*(u64 *)p);
+> +			p += sizeof(u64);
+>  		}
+>  	}
+> +
+> +	pos = data;
+>  	for (q = 0; q < rx_cnt; q++) {
+> -		p = (char *)priv + offsetof(struct stmmac_priv,
+> -					    xstats.rxq_stats[q].rx_pkt_n);
+> +		struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[q];
+> +		struct stmmac_rxq_stats snapshot;
+> +
+> +		data = pos;
+> +		do {
+> +			start = u64_stats_fetch_begin(&rx_q->rxq_stats.syncp);
+> +			snapshot = rx_q->rxq_stats;
+> +		} while (u64_stats_fetch_retry(&rx_q->rxq_stats.syncp, start));
+> +
+> +		p = (char *)&snapshot + offsetof(struct stmmac_rxq_stats, rx_pkt_n);
+>  		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
+> -			*data++ = (*(unsigned long *)p);
+> -			p += sizeof(unsigned long);
+> +			*data++ += (*(u64 *)p);
+> +			p += sizeof(u64);
+>  		}
+>  	}
+>  }
+> @@ -562,8 +589,10 @@ static void stmmac_get_ethtool_stats(struct net_device *dev,
+>  	struct stmmac_priv *priv = netdev_priv(dev);
+>  	u32 rx_queues_count = priv->plat->rx_queues_to_use;
+>  	u32 tx_queues_count = priv->plat->tx_queues_to_use;
+> +	u64 napi_poll = 0, normal_irq_n = 0;
+> +	int i, j = 0, pos, ret;
+>  	unsigned long count;
+> -	int i, j = 0, ret;
+> +	unsigned int start;
+>  
+>  	if (priv->dma_cap.asp) {
+>  		for (i = 0; i < STMMAC_SAFETY_FEAT_SIZE; i++) {
+> @@ -574,8 +603,7 @@ static void stmmac_get_ethtool_stats(struct net_device *dev,
+>  	}
+>  
+>  	/* Update the DMA HW counters for dwmac10/100 */
+> -	ret = stmmac_dma_diagnostic_fr(priv, &dev->stats, (void *) &priv->xstats,
+> -			priv->ioaddr);
+> +	ret = stmmac_dma_diagnostic_fr(priv, &priv->xstats, priv->ioaddr);
+>  	if (ret) {
+>  		/* If supported, for new GMAC chips expose the MMC counters */
+>  		if (priv->dma_cap.rmon) {
+> @@ -606,6 +634,48 @@ static void stmmac_get_ethtool_stats(struct net_device *dev,
+>  		data[j++] = (stmmac_gstrings_stats[i].sizeof_stat ==
+>  			     sizeof(u64)) ? (*(u64 *)p) : (*(u32 *)p);
+>  	}
+> +
+> +	pos = j;
+> +	for (i = 0; i < rx_queues_count; i++) {
+> +		struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[i];
+> +		struct stmmac_rxq_stats snapshot;
+> +
+> +		j = pos;
+> +		do {
+> +			start = u64_stats_fetch_begin(&rx_q->rxq_stats.syncp);
+> +			snapshot = rx_q->rxq_stats;
+> +		} while (u64_stats_fetch_retry(&rx_q->rxq_stats.syncp, start));
+> +
+> +		data[j++] += snapshot.rx_pkt_n;
+> +		data[j++] += snapshot.rx_normal_irq_n;
+> +		normal_irq_n += snapshot.rx_normal_irq_n;
+> +		napi_poll += snapshot.napi_poll;
+> +	}
+> +
+> +	pos = j;
+> +	for (i = 0; i < tx_queues_count; i++) {
+> +		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[i];
+> +		struct stmmac_txq_stats snapshot;
+> +
+> +		j = pos;
+> +		do {
+> +			start = u64_stats_fetch_begin(&tx_q->txq_stats.syncp);
+> +			snapshot = tx_q->txq_stats;
+> +		} while (u64_stats_fetch_retry(&tx_q->txq_stats.syncp, start));
+> +
+> +		data[j++] += snapshot.tx_pkt_n;
+> +		data[j++] += snapshot.tx_normal_irq_n;
+> +		normal_irq_n += snapshot.tx_normal_irq_n;
+> +		data[j++] += snapshot.tx_clean;
+> +		data[j++] += snapshot.tx_set_ic_bit;
+> +		data[j++] += snapshot.tx_tso_frames;
+> +		data[j++] += snapshot.tx_tso_nfrags;
+> +		napi_poll += snapshot.napi_poll;
+> +	}
+> +	normal_irq_n += priv->xstats.rx_early_irq;
+> +	data[j++] = normal_irq_n;
+> +	data[j++] = napi_poll;
+> +
+>  	stmmac_get_per_qstats(priv, &data[j]);
+>  }
+>  
+> @@ -618,7 +688,7 @@ static int stmmac_get_sset_count(struct net_device *netdev, int sset)
+>  
+>  	switch (sset) {
+>  	case ETH_SS_STATS:
+> -		len = STMMAC_STATS_LEN +
+> +		len = STMMAC_STATS_LEN + STMMAC_QSTATS +
+>  		      STMMAC_TXQ_STATS * tx_cnt +
+>  		      STMMAC_RXQ_STATS * rx_cnt;
+>  
+> @@ -691,8 +761,11 @@ static void stmmac_get_strings(struct net_device *dev, u32 stringset, u8 *data)
+>  				p += ETH_GSTRING_LEN;
+>  			}
+>  		for (i = 0; i < STMMAC_STATS_LEN; i++) {
+> -			memcpy(p, stmmac_gstrings_stats[i].stat_string,
+> -				ETH_GSTRING_LEN);
+> +			memcpy(p, stmmac_gstrings_stats[i].stat_string, ETH_GSTRING_LEN);
+> +			p += ETH_GSTRING_LEN;
+> +		}
+> +		for (i = 0; i < STMMAC_QSTATS; i++) {
+> +			memcpy(p, stmmac_qstats_string[i], ETH_GSTRING_LEN);
+>  			p += ETH_GSTRING_LEN;
+>  		}
+>  		stmmac_get_qstats_string(priv, p);
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> index 6931973028aef..def490a1e2120 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> @@ -2432,6 +2432,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+>  	struct dma_desc *tx_desc = NULL;
+>  	struct xdp_desc xdp_desc;
+>  	bool work_done = true;
+> +	u32 tx_set_ic_bit = 0;
+> +	unsigned long flags;
+>  
+>  	/* Avoids TX time-out as we are sharing with slow path */
+>  	txq_trans_cond_update(nq);
+> @@ -2492,7 +2494,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+>  		if (set_ic) {
+>  			tx_q->tx_count_frames = 0;
+>  			stmmac_set_tx_ic(priv, tx_desc);
+> -			priv->xstats.tx_set_ic_bit++;
+> +			tx_set_ic_bit++;
+>  		}
+>  
+>  		stmmac_prepare_tx_desc(priv, tx_desc, 1, xdp_desc.len,
+> @@ -2504,6 +2506,9 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+>  		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+>  		entry = tx_q->cur_tx;
+>  	}
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.tx_set_ic_bit += tx_set_ic_bit;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  
+>  	if (tx_desc) {
+>  		stmmac_flush_tx_descriptors(priv, queue);
+> @@ -2545,11 +2550,11 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+>  	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
+>  	unsigned int bytes_compl = 0, pkts_compl = 0;
+>  	unsigned int entry, xmits = 0, count = 0;
+> +	u32 tx_packets = 0, tx_errors = 0;
+> +	unsigned long flags;
+>  
+>  	__netif_tx_lock_bh(netdev_get_tx_queue(priv->dev, queue));
+>  
+> -	priv->xstats.tx_clean++;
+> -
+>  	tx_q->xsk_frames_done = 0;
+>  
+>  	entry = tx_q->dirty_tx;
+> @@ -2580,8 +2585,7 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+>  		else
+>  			p = tx_q->dma_tx + entry;
+>  
+> -		status = stmmac_tx_status(priv, &priv->dev->stats,
+> -				&priv->xstats, p, priv->ioaddr);
+> +		status = stmmac_tx_status(priv,	&priv->xstats, p, priv->ioaddr);
+>  		/* Check if the descriptor is owned by the DMA */
+>  		if (unlikely(status & tx_dma_own))
+>  			break;
+> @@ -2597,13 +2601,11 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+>  		if (likely(!(status & tx_not_ls))) {
+>  			/* ... verify the status error condition */
+>  			if (unlikely(status & tx_err)) {
+> -				priv->dev->stats.tx_errors++;
+> +				tx_errors++;
+>  				if (unlikely(status & tx_err_bump_tc))
+>  					stmmac_bump_dma_threshold(priv, queue);
+>  			} else {
+> -				priv->dev->stats.tx_packets++;
+> -				priv->xstats.tx_pkt_n++;
+> -				priv->xstats.txq_stats[queue].tx_pkt_n++;
+> +				tx_packets++;
+>  			}
+>  			if (skb)
+>  				stmmac_get_tx_hwtstamp(priv, p, skb);
+> @@ -2705,6 +2707,14 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+>  	if (tx_q->dirty_tx != tx_q->cur_tx)
+>  		stmmac_tx_timer_arm(priv, queue);
+>  
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.tx_packets += tx_packets;
+> +	tx_q->txq_stats.tx_pkt_n += tx_packets;
+> +	tx_q->txq_stats.tx_clean++;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+> +
+> +	priv->xstats.tx_errors += tx_errors;
+> +
+>  	__netif_tx_unlock_bh(netdev_get_tx_queue(priv->dev, queue));
+>  
+>  	/* Combine decisions from TX clean and XSK TX */
+> @@ -2732,7 +2742,7 @@ static void stmmac_tx_err(struct stmmac_priv *priv, u32 chan)
+>  			    tx_q->dma_tx_phy, chan);
+>  	stmmac_start_tx_dma(priv, chan);
+>  
+> -	priv->dev->stats.tx_errors++;
+> +	priv->xstats.tx_errors++;
+>  	netif_tx_wake_queue(netdev_get_tx_queue(priv->dev, chan));
+>  }
+>  
+> @@ -4112,6 +4122,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+>  	struct stmmac_tx_queue *tx_q;
+>  	bool has_vlan, set_ic;
+>  	u8 proto_hdr_len, hdr;
+> +	unsigned long flags;
+>  	u32 pay_len, mss;
+>  	dma_addr_t des;
+>  	int i;
+> @@ -4260,7 +4271,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+>  
+>  		tx_q->tx_count_frames = 0;
+>  		stmmac_set_tx_ic(priv, desc);
+> -		priv->xstats.tx_set_ic_bit++;
+>  	}
+>  
+>  	/* We've used all descriptors we need for this skb, however,
+> @@ -4276,9 +4286,13 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+>  		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
+>  	}
+>  
+> -	dev->stats.tx_bytes += skb->len;
+> -	priv->xstats.tx_tso_frames++;
+> -	priv->xstats.tx_tso_nfrags += nfrags;
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.tx_bytes += skb->len;
+> +	tx_q->txq_stats.tx_tso_frames++;
+> +	tx_q->txq_stats.tx_tso_nfrags += nfrags;
+> +	if (set_ic)
+> +		tx_q->txq_stats.tx_set_ic_bit++;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  
+>  	if (priv->sarc_type)
+>  		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+> @@ -4328,7 +4342,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+>  dma_map_err:
+>  	dev_err(priv->device, "Tx dma map failed\n");
+>  	dev_kfree_skb(skb);
+> -	priv->dev->stats.tx_dropped++;
+> +	priv->xstats.tx_dropped++;
+>  	return NETDEV_TX_OK;
+>  }
+>  
+> @@ -4354,6 +4368,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+>  	struct stmmac_tx_queue *tx_q;
+>  	bool has_vlan, set_ic;
+>  	int entry, first_tx;
+> +	unsigned long flags;
+>  	dma_addr_t des;
+>  
+>  	tx_q = &priv->dma_conf.tx_queue[queue];
+> @@ -4482,7 +4497,6 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+>  
+>  		tx_q->tx_count_frames = 0;
+>  		stmmac_set_tx_ic(priv, desc);
+> -		priv->xstats.tx_set_ic_bit++;
+>  	}
+>  
+>  	/* We've used all descriptors we need for this skb, however,
+> @@ -4509,7 +4523,11 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+>  		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
+>  	}
+>  
+> -	dev->stats.tx_bytes += skb->len;
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.tx_bytes += skb->len;
+> +	if (set_ic)
+> +		tx_q->txq_stats.tx_set_ic_bit++;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  
+>  	if (priv->sarc_type)
+>  		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+> @@ -4571,7 +4589,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+>  dma_map_err:
+>  	netdev_err(priv->dev, "Tx DMA map failed\n");
+>  	dev_kfree_skb(skb);
+> -	priv->dev->stats.tx_dropped++;
+> +	priv->xstats.tx_dropped++;
+>  	return NETDEV_TX_OK;
+>  }
+>  
+> @@ -4772,9 +4790,12 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+>  		set_ic = false;
+>  
+>  	if (set_ic) {
+> +		unsigned long flags;
+>  		tx_q->tx_count_frames = 0;
+>  		stmmac_set_tx_ic(priv, tx_desc);
+> -		priv->xstats.tx_set_ic_bit++;
+> +		flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +		tx_q->txq_stats.tx_set_ic_bit++;
+> +		u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  	}
+>  
+>  	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+> @@ -4919,16 +4940,18 @@ static void stmmac_dispatch_skb_zc(struct stmmac_priv *priv, u32 queue,
+>  				   struct dma_desc *p, struct dma_desc *np,
+>  				   struct xdp_buff *xdp)
+>  {
+> +	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+>  	struct stmmac_channel *ch = &priv->channel[queue];
+>  	unsigned int len = xdp->data_end - xdp->data;
+>  	enum pkt_hash_types hash_type;
+>  	int coe = priv->hw->rx_csum;
+> +	unsigned long flags;
+>  	struct sk_buff *skb;
+>  	u32 hash;
+>  
+>  	skb = stmmac_construct_skb_zc(ch, xdp);
+>  	if (!skb) {
+> -		priv->dev->stats.rx_dropped++;
+> +		priv->xstats.rx_dropped++;
+>  		return;
+>  	}
+>  
+> @@ -4947,8 +4970,10 @@ static void stmmac_dispatch_skb_zc(struct stmmac_priv *priv, u32 queue,
+>  	skb_record_rx_queue(skb, queue);
+>  	napi_gro_receive(&ch->rxtx_napi, skb);
+>  
+> -	priv->dev->stats.rx_packets++;
+> -	priv->dev->stats.rx_bytes += len;
+> +	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+> +	rx_q->rxq_stats.rx_pkt_n++;
+> +	rx_q->rxq_stats.rx_bytes += len;
+> +	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+>  }
+>  
+>  static bool stmmac_rx_refill_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+> @@ -5025,9 +5050,11 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  	unsigned int count = 0, error = 0, len = 0;
+>  	int dirty = stmmac_rx_dirty(priv, queue);
+>  	unsigned int next_entry = rx_q->cur_rx;
+> +	u32 rx_errors = 0, rx_dropped = 0;
+>  	unsigned int desc_size;
+>  	struct bpf_prog *prog;
+>  	bool failure = false;
+> +	unsigned long flags;
+>  	int xdp_status = 0;
+>  	int status = 0;
+>  
+> @@ -5083,8 +5110,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  			p = rx_q->dma_rx + entry;
+>  
+>  		/* read the status of the incoming frame */
+> -		status = stmmac_rx_status(priv, &priv->dev->stats,
+> -					  &priv->xstats, p);
+> +		status = stmmac_rx_status(priv, &priv->xstats, p);
+>  		/* check if managed by the DMA otherwise go ahead */
+>  		if (unlikely(status & dma_own))
+>  			break;
+> @@ -5106,8 +5132,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  			break;
+>  
+>  		if (priv->extend_desc)
+> -			stmmac_rx_extended_status(priv, &priv->dev->stats,
+> -						  &priv->xstats,
+> +			stmmac_rx_extended_status(priv, &priv->xstats,
+>  						  rx_q->dma_erx + entry);
+>  		if (unlikely(status == discard_frame)) {
+>  			xsk_buff_free(buf->xdp);
+> @@ -5115,7 +5140,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  			dirty++;
+>  			error = 1;
+>  			if (!priv->hwts_rx_en)
+> -				priv->dev->stats.rx_errors++;
+> +				rx_errors++;
+>  		}
+>  
+>  		if (unlikely(error && (status & rx_not_ls)))
+> @@ -5163,7 +5188,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  			break;
+>  		case STMMAC_XDP_CONSUMED:
+>  			xsk_buff_free(buf->xdp);
+> -			priv->dev->stats.rx_dropped++;
+> +			rx_dropped++;
+>  			break;
+>  		case STMMAC_XDP_TX:
+>  		case STMMAC_XDP_REDIRECT:
+> @@ -5184,8 +5209,12 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>  
+>  	stmmac_finalize_xdp_rx(priv, xdp_status);
+>  
+> -	priv->xstats.rx_pkt_n += count;
+> -	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
+> +	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+> +	rx_q->rxq_stats.rx_pkt_n += count;
+> +	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+> +
+> +	priv->xstats.rx_dropped += rx_dropped;
+> +	priv->xstats.rx_errors += rx_errors;
+>  
+>  	if (xsk_uses_need_wakeup(rx_q->xsk_pool)) {
+>  		if (failure || stmmac_rx_dirty(priv, queue) > 0)
+> @@ -5209,6 +5238,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+>   */
+>  static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  {
+> +	u32 rx_errors = 0, rx_dropped = 0, rx_bytes = 0, rx_packets = 0;
+>  	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+>  	struct stmmac_channel *ch = &priv->channel[queue];
+>  	unsigned int count = 0, error = 0, len = 0;
+> @@ -5218,6 +5248,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  	unsigned int desc_size;
+>  	struct sk_buff *skb = NULL;
+>  	struct stmmac_xdp_buff ctx;
+> +	unsigned long flags;
+>  	int xdp_status = 0;
+>  	int buf_sz;
+>  
+> @@ -5273,8 +5304,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  			p = rx_q->dma_rx + entry;
+>  
+>  		/* read the status of the incoming frame */
+> -		status = stmmac_rx_status(priv, &priv->dev->stats,
+> -				&priv->xstats, p);
+> +		status = stmmac_rx_status(priv, &priv->xstats, p);
+>  		/* check if managed by the DMA otherwise go ahead */
+>  		if (unlikely(status & dma_own))
+>  			break;
+> @@ -5291,14 +5321,13 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  		prefetch(np);
+>  
+>  		if (priv->extend_desc)
+> -			stmmac_rx_extended_status(priv, &priv->dev->stats,
+> -					&priv->xstats, rx_q->dma_erx + entry);
+> +			stmmac_rx_extended_status(priv, &priv->xstats, rx_q->dma_erx + entry);
+>  		if (unlikely(status == discard_frame)) {
+>  			page_pool_recycle_direct(rx_q->page_pool, buf->page);
+>  			buf->page = NULL;
+>  			error = 1;
+>  			if (!priv->hwts_rx_en)
+> -				priv->dev->stats.rx_errors++;
+> +				rx_errors++;
+>  		}
+>  
+>  		if (unlikely(error && (status & rx_not_ls)))
+> @@ -5366,7 +5395,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  							   virt_to_head_page(ctx.xdp.data),
+>  							   sync_len, true);
+>  					buf->page = NULL;
+> -					priv->dev->stats.rx_dropped++;
+> +					rx_dropped++;
+>  
+>  					/* Clear skb as it was set as
+>  					 * status by XDP program.
+> @@ -5395,7 +5424,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  
+>  			skb = napi_alloc_skb(&ch->rx_napi, buf1_len);
+>  			if (!skb) {
+> -				priv->dev->stats.rx_dropped++;
+> +				rx_dropped++;
+>  				count++;
+>  				goto drain_data;
+>  			}
+> @@ -5455,8 +5484,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  		napi_gro_receive(&ch->rx_napi, skb);
+>  		skb = NULL;
+>  
+> -		priv->dev->stats.rx_packets++;
+> -		priv->dev->stats.rx_bytes += len;
+> +		rx_packets++;
+> +		rx_bytes += len;
+>  		count++;
+>  	}
+>  
+> @@ -5471,8 +5500,14 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+>  
+>  	stmmac_rx_refill(priv, queue);
+>  
+> -	priv->xstats.rx_pkt_n += count;
+> -	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
+> +	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+> +	rx_q->rxq_stats.rx_packets += rx_packets;
+> +	rx_q->rxq_stats.rx_bytes += rx_bytes;
+> +	rx_q->rxq_stats.rx_pkt_n += count;
+> +	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+> +
+> +	priv->xstats.rx_dropped += rx_dropped;
+> +	priv->xstats.rx_errors += rx_errors;
+>  
+>  	return count;
+>  }
+> @@ -5482,10 +5517,15 @@ static int stmmac_napi_poll_rx(struct napi_struct *napi, int budget)
+>  	struct stmmac_channel *ch =
+>  		container_of(napi, struct stmmac_channel, rx_napi);
+>  	struct stmmac_priv *priv = ch->priv_data;
+> +	struct stmmac_rx_queue *rx_q;
+>  	u32 chan = ch->index;
+> +	unsigned long flags;
+>  	int work_done;
+>  
+> -	priv->xstats.napi_poll++;
+> +	rx_q = &priv->dma_conf.rx_queue[chan];
+> +	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+> +	rx_q->rxq_stats.napi_poll++;
+> +	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+>  
+>  	work_done = stmmac_rx(priv, budget, chan);
+>  	if (work_done < budget && napi_complete_done(napi, work_done)) {
+> @@ -5504,10 +5544,15 @@ static int stmmac_napi_poll_tx(struct napi_struct *napi, int budget)
+>  	struct stmmac_channel *ch =
+>  		container_of(napi, struct stmmac_channel, tx_napi);
+>  	struct stmmac_priv *priv = ch->priv_data;
+> +	struct stmmac_tx_queue *tx_q;
+>  	u32 chan = ch->index;
+> +	unsigned long flags;
+>  	int work_done;
+>  
+> -	priv->xstats.napi_poll++;
+> +	tx_q = &priv->dma_conf.tx_queue[chan];
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.napi_poll++;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  
+>  	work_done = stmmac_tx_clean(priv, budget, chan);
+>  	work_done = min(work_done, budget);
+> @@ -5529,9 +5574,20 @@ static int stmmac_napi_poll_rxtx(struct napi_struct *napi, int budget)
+>  		container_of(napi, struct stmmac_channel, rxtx_napi);
+>  	struct stmmac_priv *priv = ch->priv_data;
+>  	int rx_done, tx_done, rxtx_done;
+> +	struct stmmac_rx_queue *rx_q;
+> +	struct stmmac_tx_queue *tx_q;
+>  	u32 chan = ch->index;
+> +	unsigned long flags;
+> +
+> +	rx_q = &priv->dma_conf.rx_queue[chan];
+> +	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+> +	rx_q->rxq_stats.napi_poll++;
+> +	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+>  
+> -	priv->xstats.napi_poll++;
+> +	tx_q = &priv->dma_conf.tx_queue[chan];
+> +	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+> +	tx_q->txq_stats.napi_poll++;
+> +	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
+>  
+>  	tx_done = stmmac_tx_clean(priv, budget, chan);
+>  	tx_done = min(tx_done, budget);
+> @@ -6790,6 +6846,56 @@ int stmmac_xsk_wakeup(struct net_device *dev, u32 queue, u32 flags)
+>  	return 0;
+>  }
+>  
+> +static void stmmac_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
+> +{
+> +	struct stmmac_priv *priv = netdev_priv(dev);
+> +	u32 tx_cnt = priv->plat->tx_queues_to_use;
+> +	u32 rx_cnt = priv->plat->rx_queues_to_use;
+> +	unsigned int start;
+> +	int q;
+> +
+> +	for (q = 0; q < tx_cnt; q++) {
+> +		struct stmmac_txq_stats *txq_stats = &priv->dma_conf.tx_queue[q].txq_stats;
+> +		u64 tx_packets;
+> +		u64 tx_bytes;
+> +
+> +		do {
+> +			start = u64_stats_fetch_begin(&txq_stats->syncp);
+> +			tx_packets = txq_stats->tx_packets;
+> +			tx_bytes   = txq_stats->tx_bytes;
+> +		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
+> +
+> +		stats->tx_packets += tx_packets;
+> +		stats->tx_bytes += tx_bytes;
+> +	}
+> +
+> +	for (q = 0; q < rx_cnt; q++) {
+> +		struct stmmac_rxq_stats *rxq_stats = &priv->dma_conf.rx_queue[q].rxq_stats;
+> +		u64 rx_packets;
+> +		u64 rx_bytes;
+> +
+> +		do {
+> +			start = u64_stats_fetch_begin(&rxq_stats->syncp);
+> +			rx_packets = rxq_stats->rx_packets;
+> +			rx_bytes   = rxq_stats->rx_bytes;
+> +		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
+> +
+> +		stats->rx_packets += rx_packets;
+> +		stats->rx_bytes += rx_bytes;
+> +	}
+> +
+> +	stats->rx_dropped = priv->xstats.rx_dropped;
+> +	stats->rx_errors = priv->xstats.rx_errors;
+> +	stats->tx_dropped = priv->xstats.tx_dropped;
+> +	stats->tx_errors = priv->xstats.tx_errors;
+> +	stats->tx_carrier_errors = priv->xstats.tx_losscarrier + priv->xstats.tx_carrier;
+> +	stats->collisions = priv->xstats.tx_collision + priv->xstats.rx_collision;
+> +	stats->rx_length_errors = priv->xstats.rx_length;
+> +	stats->rx_crc_errors = priv->xstats.rx_crc_errors;
+> +	stats->rx_over_errors = priv->xstats.rx_overflow_cntr;
+> +	stats->rx_missed_errors = priv->xstats.rx_missed_cntr;
+> +}
+> +
+>  static const struct net_device_ops stmmac_netdev_ops = {
+>  	.ndo_open = stmmac_open,
+>  	.ndo_start_xmit = stmmac_xmit,
+> @@ -6800,6 +6906,7 @@ static const struct net_device_ops stmmac_netdev_ops = {
+>  	.ndo_set_rx_mode = stmmac_set_rx_mode,
+>  	.ndo_tx_timeout = stmmac_tx_timeout,
+>  	.ndo_eth_ioctl = stmmac_ioctl,
+> +	.ndo_get_stats64 = stmmac_get_stats64,
+>  	.ndo_setup_tc = stmmac_setup_tc,
+>  	.ndo_select_queue = stmmac_select_queue,
+>  #ifdef CONFIG_NET_POLL_CONTROLLER
+> @@ -7162,6 +7269,11 @@ int stmmac_dvr_probe(struct device *device,
+>  	priv->device = device;
+>  	priv->dev = ndev;
+>  
+> +	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
+> +		u64_stats_init(&priv->dma_conf.rx_queue[i].rxq_stats.syncp);
+> +	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
+> +		u64_stats_init(&priv->dma_conf.tx_queue[i].txq_stats.syncp);
+> +
+>  	stmmac_set_ethtool_ops(ndev);
+>  	priv->pause = pause;
+>  	priv->plat = plat_dat;
