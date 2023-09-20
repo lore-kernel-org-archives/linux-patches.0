@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA31D18654
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E24EC433C7;
-	Wed, 20 Sep 2023 11:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9297B18654
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147FEC433C8;
+	Wed, 20 Sep 2023 11:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210420;
-	bh=s/7QblmEwT58L1lCPHWJi8JPGGpo9vvkjPNEcibvfY8=;
+	s=korg; t=1695210423;
+	bh=3kgMgkD/NLJKN2RF7RmwbEy91di9XgrXjuSbUBKqNtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCUkqZwpeoDK7rDi2sYHaaANsj6uTWXMam4e+CNIYYnK8lmKawiEv+3+8o9vfhMVP
-	 8aEi7BHUNyCTCevwtimEe4IkuGl/gbXc3UYIhbqpcMowpgceiCiS56ZvfRqhdbrvkY
-	 20ze+3LZgo7i2SCM9M5Zd99XKKPWwknMvX6VDvtU=
+	b=cnuua/dHA5P4nAhWU4zk6sf4kyIQL3Qxy/AgcL5wGQXDsYZ6tveEanqID97oG1XIN
+	 CANlMS1vBr/TvadKchZONAB3TVwLpurq1HfTsXAG23vKwXvBugW5s4miUl0mBpt6SM
+	 +GdnbBT5unMl3+ihlQHzuGZgyCnJxYR06hoY5sEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Marchevsky <davemarchevsky@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 063/211] bpf: Consider non-owning refs to refcounted nodes RCU protected
-Date: Wed, 20 Sep 2023 13:28:27 +0200
-Message-ID: <20230920112847.731823039@linuxfoundation.org>
+Subject: [PATCH 6.5 072/211] drm/amdgpu: Increase soft IH ring size
+Date: Wed, 20 Sep 2023 13:28:36 +0200
+Message-ID: <20230920112848.022410916@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,98 +41,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Marchevsky <davemarchevsky@fb.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 0816b8c6bf7fc87cec4273dc199e8f0764b9e7b1 ]
+[ Upstream commit bf80d34b6c58ad1c4f76067ecd460a148eab9d39 ]
 
-An earlier patch in the series ensures that the underlying memory of
-nodes with bpf_refcount - which can have multiple owners - is not reused
-until RCU grace period has elapsed. This prevents
-use-after-free with non-owning references that may point to
-recently-freed memory. While RCU read lock is held, it's safe to
-dereference such a non-owning ref, as by definition RCU GP couldn't have
-elapsed and therefore underlying memory couldn't have been reused.
+Retry faults are delegated to soft IH ring and then processed by
+deferred worker. Current soft IH ring size PAGE_SIZE can store 128
+entries, which may overflow and drop retry faults, causes HW stucks
+because the retry fault is not recovered.
 
->From the perspective of verifier "trustedness" non-owning refs to
-refcounted nodes are now trusted only in RCU CS and therefore should no
-longer pass is_trusted_reg, but rather is_rcu_reg. Let's mark them
-MEM_RCU in order to reflect this new state.
+Increase soft IH ring size to 8KB, enough to store 256 CAM entries
+because we clear the CAM entry after handling the retry fault from soft
+ring.
 
-Signed-off-by: Dave Marchevsky <davemarchevsky@fb.com>
-Link: https://lore.kernel.org/r/20230821193311.3290257-6-davemarchevsky@fb.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Define macro IH_RING_SIZE and IH_SW_RING_SIZE to remove duplicate
+constant.
+
+Show warning message if soft IH ring overflows with CAM enabled because
+this should not happen.
+
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h   |  3 ++-
- kernel/bpf/verifier.c | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c  | 8 ++++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h  | 7 +++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/ih_v6_0.c    | 4 ++--
+ drivers/gpu/drm/amd/amdgpu/navi10_ih.c  | 4 ++--
+ drivers/gpu/drm/amd/amdgpu/vega10_ih.c  | 4 ++--
+ drivers/gpu/drm/amd/amdgpu/vega20_ih.c  | 4 ++--
+ 7 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index f316affcd2e13..28e2e0ce2ed07 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -640,7 +640,8 @@ enum bpf_type_flag {
- 	MEM_RCU			= BIT(13 + BPF_BASE_TYPE_BITS),
- 
- 	/* Used to tag PTR_TO_BTF_ID | MEM_ALLOC references which are non-owning.
--	 * Currently only valid for linked-list and rbtree nodes.
-+	 * Currently only valid for linked-list and rbtree nodes. If the nodes
-+	 * have a bpf_refcount_field, they must be tagged MEM_RCU as well.
- 	 */
- 	NON_OWN_REF		= BIT(14 + BPF_BASE_TYPE_BITS),
- 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 76845dd22cd26..9cdba4ce23d2b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7841,6 +7841,7 @@ int check_func_arg_reg_off(struct bpf_verifier_env *env,
- 	case PTR_TO_BTF_ID | PTR_TRUSTED:
- 	case PTR_TO_BTF_ID | MEM_RCU:
- 	case PTR_TO_BTF_ID | MEM_ALLOC | NON_OWN_REF:
-+	case PTR_TO_BTF_ID | MEM_ALLOC | NON_OWN_REF | MEM_RCU:
- 		/* When referenced PTR_TO_BTF_ID is passed to release function,
- 		 * its fixed offset must be 0. In the other cases, fixed offset
- 		 * can be non-zero. This was already checked above. So pass
-@@ -10302,6 +10303,7 @@ static int process_kf_arg_ptr_to_btf_id(struct bpf_verifier_env *env,
- static int ref_set_non_owning(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
+index fceb3b384955a..f3b0aaf3ebc69 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
+@@ -138,6 +138,7 @@ void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih)
+ /**
+  * amdgpu_ih_ring_write - write IV to the ring buffer
+  *
++ * @adev: amdgpu_device pointer
+  * @ih: ih ring to write to
+  * @iv: the iv to write
+  * @num_dw: size of the iv in dw
+@@ -145,8 +146,8 @@ void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih)
+  * Writes an IV to the ring buffer using the CPU and increment the wptr.
+  * Used for testing and delegating IVs to a software ring.
+  */
+-void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
+-			  unsigned int num_dw)
++void amdgpu_ih_ring_write(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
++			  const uint32_t *iv, unsigned int num_dw)
  {
- 	struct bpf_verifier_state *state = env->cur_state;
-+	struct btf_record *rec = reg_btf_record(reg);
- 
- 	if (!state->active_lock.ptr) {
- 		verbose(env, "verifier internal error: ref_set_non_owning w/o active lock\n");
-@@ -10314,6 +10316,9 @@ static int ref_set_non_owning(struct bpf_verifier_env *env, struct bpf_reg_state
+ 	uint32_t wptr = le32_to_cpu(*ih->wptr_cpu) >> 2;
+ 	unsigned int i;
+@@ -161,6 +162,9 @@ void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
+ 	if (wptr != READ_ONCE(ih->rptr)) {
+ 		wmb();
+ 		WRITE_ONCE(*ih->wptr_cpu, cpu_to_le32(wptr));
++	} else if (adev->irq.retry_cam_enabled) {
++		dev_warn_once(adev->dev, "IH soft ring buffer overflow 0x%X, 0x%X\n",
++			      wptr, ih->rptr);
  	}
- 
- 	reg->type |= NON_OWN_REF;
-+	if (rec->refcount_off >= 0)
-+		reg->type |= MEM_RCU;
-+
- 	return 0;
  }
  
-@@ -11154,6 +11159,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		struct bpf_func_state *state;
- 		struct bpf_reg_state *reg;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
+index dd1c2eded6b9d..6c6184f0dbc17 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
+@@ -27,6 +27,9 @@
+ /* Maximum number of IVs processed at once */
+ #define AMDGPU_IH_MAX_NUM_IVS	32
  
-+		if (in_rbtree_lock_required_cb(env) && (rcu_lock || rcu_unlock)) {
-+			verbose(env, "Calling bpf_rcu_read_{lock,unlock} in unnecessary rbtree callback\n");
-+			return -EACCES;
-+		}
++#define IH_RING_SIZE	(256 * 1024)
++#define IH_SW_RING_SIZE	(8 * 1024)	/* enough for 256 CAM entries */
 +
- 		if (rcu_lock) {
- 			verbose(env, "nested rcu read lock (kernel function %s)\n", func_name);
- 			return -EINVAL;
-@@ -16453,7 +16463,8 @@ static int do_check(struct bpf_verifier_env *env)
- 					return -EINVAL;
- 				}
+ struct amdgpu_device;
+ struct amdgpu_iv_entry;
  
--				if (env->cur_state->active_rcu_lock) {
-+				if (env->cur_state->active_rcu_lock &&
-+				    !in_rbtree_lock_required_cb(env)) {
- 					verbose(env, "bpf_rcu_read_unlock is missing\n");
- 					return -EINVAL;
- 				}
+@@ -97,8 +100,8 @@ struct amdgpu_ih_funcs {
+ int amdgpu_ih_ring_init(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
+ 			unsigned ring_size, bool use_bus_addr);
+ void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih);
+-void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
+-			  unsigned int num_dw);
++void amdgpu_ih_ring_write(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
++			  const uint32_t *iv, unsigned int num_dw);
+ int amdgpu_ih_wait_on_checkpoint_process_ts(struct amdgpu_device *adev,
+ 					    struct amdgpu_ih_ring *ih);
+ int amdgpu_ih_process(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+index 5273decc5753b..fa6d0adcec206 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+@@ -493,7 +493,7 @@ void amdgpu_irq_delegate(struct amdgpu_device *adev,
+ 			 struct amdgpu_iv_entry *entry,
+ 			 unsigned int num_dw)
+ {
+-	amdgpu_ih_ring_write(&adev->irq.ih_soft, entry->iv_entry, num_dw);
++	amdgpu_ih_ring_write(adev, &adev->irq.ih_soft, entry->iv_entry, num_dw);
+ 	schedule_work(&adev->irq.ih_soft_work);
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
+index b02e1cef78a76..980b241200803 100644
+--- a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
+@@ -535,7 +535,7 @@ static int ih_v6_0_sw_init(void *handle)
+ 	 * use bus address for ih ring by psp bl */
+ 	use_bus_addr =
+ 		(adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) ? false : true;
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
+ 	if (r)
+ 		return r;
+ 
+@@ -548,7 +548,7 @@ static int ih_v6_0_sw_init(void *handle)
+ 	/* initialize ih control register offset */
+ 	ih_v6_0_init_register_offset(adev);
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
+ 	if (r)
+ 		return r;
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
+index eec13cb5bf758..b6a8478dabf43 100644
+--- a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
+@@ -565,7 +565,7 @@ static int navi10_ih_sw_init(void *handle)
+ 		use_bus_addr = false;
+ 	else
+ 		use_bus_addr = true;
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
+ 	if (r)
+ 		return r;
+ 
+@@ -578,7 +578,7 @@ static int navi10_ih_sw_init(void *handle)
+ 	/* initialize ih control registers offset */
+ 	navi10_ih_init_register_offset(adev);
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
+ 	if (r)
+ 		return r;
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/vega10_ih.c b/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
+index 1e83db0c5438d..d364c6dd152c3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
+@@ -485,7 +485,7 @@ static int vega10_ih_sw_init(void *handle)
+ 	if (r)
+ 		return r;
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, true);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, true);
+ 	if (r)
+ 		return r;
+ 
+@@ -510,7 +510,7 @@ static int vega10_ih_sw_init(void *handle)
+ 	/* initialize ih control registers offset */
+ 	vega10_ih_init_register_offset(adev);
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
+ 	if (r)
+ 		return r;
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
+index 4d719df376a72..544ee55a22da6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
+@@ -539,7 +539,7 @@ static int vega20_ih_sw_init(void *handle)
+ 	    (adev->ip_versions[OSSSYS_HWIP][0] == IP_VERSION(4, 4, 2)))
+ 		use_bus_addr = false;
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
+ 	if (r)
+ 		return r;
+ 
+@@ -565,7 +565,7 @@ static int vega20_ih_sw_init(void *handle)
+ 	/* initialize ih control registers offset */
+ 	vega20_ih_init_register_offset(adev);
+ 
+-	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, use_bus_addr);
++	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, use_bus_addr);
+ 	if (r)
+ 		return r;
+ 
 -- 
 2.40.1
 
