@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA24328E23
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3F8C433C9;
-	Wed, 20 Sep 2023 12:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F58911723
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35833C433C9;
+	Wed, 20 Sep 2023 12:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213926;
-	bh=IU80j2MXYuLwQ67zI/gluE8ojaYKv1r0NbeXlmJlrNM=;
+	s=korg; t=1695213929;
+	bh=pve3Fy9PTbPXJOxPgaRlewQ+sE0f6eUCiQRSbdzf+M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUcSlYU8Z8pJwbIYrUloY5ZGH3w1IfN0e6DXw6X6pd+aic0LvUMtyWbKJfeqYlRAI
-	 I5xSYuAuZtOO9paqc+bzFSFPf/QZ0FFOjRi+vr0ckLwMvm4wLRsc5T93E7DTEmgcD6
-	 Uv16lHLyEObsNBjpzChA8XvjU1sZLwfHLwCzi4+A=
+	b=uBm/EW8o7wtdFCu36+NsWZjW36jByeK1pbnAJqZGaY/WOR6/9r2bWd+5AJNrQyHj3
+	 kc7KuIAYFsulcfvk9pj/C6C4dRotqLkkh/1+ep/PqVodYeJK7WuGHFF8rVm8zV/HP6
+	 8ljB32yArQPMK0DXBHeyd9ODV31jR35uZsBPbSCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/110] media: dvb-usb-v2: gl861: Fix null-ptr-deref in gl861_i2c_master_xfer
-Date: Wed, 20 Sep 2023 13:31:46 +0200
-Message-ID: <20230920112832.174672176@linuxfoundation.org>
+Subject: [PATCH 5.15 049/110] media: tuners: qt1010: replace BUG_ON with a regular error
+Date: Wed, 20 Sep 2023 13:31:47 +0200
+Message-ID: <20230920112832.211378237@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,39 +39,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit b97719a66970601cd3151a3e2020f4454a1c4ff6 ]
+[ Upstream commit ee630b29ea44d1851bb6c903f400956604834463 ]
 
-In gl861_i2c_master_xfer, msg is controlled by user. When msg[i].buf
-is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach gl861_i2c_master_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen.
-We add check on msg[i].len to prevent crash.
+BUG_ON is unnecessary here, and in addition it confuses smatch.
+Replacing this with an error return help resolve this smatch
+warning:
 
-Similar commit:
-commit 0ed554fd769a
-("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+drivers/media/tuners/qt1010.c:350 qt1010_init() error: buffer overflow 'i2c_data' 34 <= 34
 
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/gl861.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/tuners/qt1010.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/gl861.c b/drivers/media/usb/dvb-usb-v2/gl861.c
-index 0c434259c36f1..c71e7b93476de 100644
---- a/drivers/media/usb/dvb-usb-v2/gl861.c
-+++ b/drivers/media/usb/dvb-usb-v2/gl861.c
-@@ -120,7 +120,7 @@ static int gl861_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 	} else if (num == 2 && !(msg[0].flags & I2C_M_RD) &&
- 		   (msg[1].flags & I2C_M_RD)) {
- 		/* I2C write + read */
--		if (msg[0].len > 1 || msg[1].len > sizeof(ctx->buf)) {
-+		if (msg[0].len != 1 || msg[1].len > sizeof(ctx->buf)) {
- 			ret = -EOPNOTSUPP;
- 			goto err;
+diff --git a/drivers/media/tuners/qt1010.c b/drivers/media/tuners/qt1010.c
+index 60931367b82ca..48fc79cd40273 100644
+--- a/drivers/media/tuners/qt1010.c
++++ b/drivers/media/tuners/qt1010.c
+@@ -345,11 +345,12 @@ static int qt1010_init(struct dvb_frontend *fe)
+ 			else
+ 				valptr = &tmpval;
+ 
+-			BUG_ON(i >= ARRAY_SIZE(i2c_data) - 1);
+-
+-			err = qt1010_init_meas1(priv, i2c_data[i+1].reg,
+-						i2c_data[i].reg,
+-						i2c_data[i].val, valptr);
++			if (i >= ARRAY_SIZE(i2c_data) - 1)
++				err = -EIO;
++			else
++				err = qt1010_init_meas1(priv, i2c_data[i + 1].reg,
++							i2c_data[i].reg,
++							i2c_data[i].val, valptr);
+ 			i++;
+ 			break;
  		}
 -- 
 2.40.1
