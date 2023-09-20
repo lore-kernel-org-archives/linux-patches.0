@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4530FB3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F6EC433C7;
-	Wed, 20 Sep 2023 12:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9F628E23
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0338FC433C7;
+	Wed, 20 Sep 2023 12:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213907;
-	bh=BsYAV/1TmzRVvPx5qZd6SLIwE7LEU6TEGDu/2g1MO34=;
+	s=korg; t=1695213910;
+	bh=FydcAKgbDt64EG9HAuU/OHrCJcAJJXwJB/hPcVbutKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEXrwnpGFu+n8T4aP8oc/1fY+3bDIpRaoFjoFCO0jBjuUenN/I0s4yoE3fH18gBK7
-	 j6Ud42IiiZEN3ZA6oaYvfsvm+9U2/XOGuVhH/j+LV3JlbR+qSGAfM3WI8x44Lu3cf9
-	 A90ZHZWeSkGJ7niE5b3tI43HRUGPhPW8h3EyuEjg=
+	b=yIXLWXWJWaSxeaZ7fU89zE2xjwOx0lPgPrExgBeEliRmo3wFnnhVAQBvUeRq9y9mI
+	 TjuUu5+PHgx4UiJ+oRgYJZZW+q3Ai4DTRp7P9nnBlurcjK1d6f4zDSccHLhHlokUJj
+	 YOiYKgTCyHls+S6Rl7norqfYuY2dCmebbgz1hGX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/110] PCI: fu740: Set the number of MSI vectors
-Date: Wed, 20 Sep 2023 13:31:40 +0200
-Message-ID: <20230920112831.937015136@linuxfoundation.org>
+Subject: [PATCH 5.15 043/110] media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer
+Date: Wed, 20 Sep 2023 13:31:41 +0200
+Message-ID: <20230920112831.979340204@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,43 +40,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 551a60e1225e71fff8efd9390204c505b0870e0f ]
+[ Upstream commit 7bf744f2de0a848fb1d717f5831b03db96feae89 ]
 
-The iMSI-RX module of the DW PCIe controller provides multiple sets of
-MSI_CTRL_INT_i_* registers, and each set is capable of handling 32 MSI
-interrupts. However, the fu740 PCIe controller driver only enabled one set
-of MSI_CTRL_INT_i_* registers, as the total number of supported interrupts
-was not specified.
+In af9035_i2c_master_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach af9035_i2c_master_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
-Set the supported number of MSI vectors to enable all the MSI_CTRL_INT_i_*
-registers on the fu740 PCIe core, allowing the system to fully utilize the
-available MSI interrupts.
+Similar commit:
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-Link: https://lore.kernel.org/r/20230807055621.2431-1-yongxuan.wang@sifive.com
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ moved variable declaration to fix build issues in older kernels - gregkh ]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-fu740.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/dvb-usb-v2/af9035.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-fu740.c b/drivers/pci/controller/dwc/pcie-fu740.c
-index 78d002be4f821..f6c71c1b657b6 100644
---- a/drivers/pci/controller/dwc/pcie-fu740.c
-+++ b/drivers/pci/controller/dwc/pcie-fu740.c
-@@ -301,6 +301,7 @@ static int fu740_pcie_probe(struct platform_device *pdev)
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
- 	pci->pp.ops = &fu740_pcie_host_ops;
-+	pci->pp.num_vectors = MAX_MSI_IRQS;
+--- a/drivers/media/usb/dvb-usb-v2/af9035.c
++++ b/drivers/media/usb/dvb-usb-v2/af9035.c
+@@ -270,6 +270,7 @@ static int af9035_i2c_master_xfer(struct
+ 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
+ 	struct state *state = d_to_priv(d);
+ 	int ret;
++	u32 reg;
  
- 	/* SiFive specific region: mgmt */
- 	afp->mgmt_base = devm_platform_ioremap_resource_byname(pdev, "mgmt");
--- 
-2.40.1
-
+ 	if (mutex_lock_interruptible(&d->i2c_mutex) < 0)
+ 		return -EAGAIN;
+@@ -322,8 +323,10 @@ static int af9035_i2c_master_xfer(struct
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
++			if (msg[0].len < 3 || msg[1].len < 1)
++				return -EOPNOTSUPP;
+ 			/* demod access via firmware interface */
+-			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
++			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+ 
+ 			if (msg[0].addr == state->af9033_i2c_addr[1])
+@@ -381,17 +384,16 @@ static int af9035_i2c_master_xfer(struct
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
++			if (msg[0].len < 3)
++				return -EOPNOTSUPP;
+ 			/* demod access via firmware interface */
+-			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
++			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+ 
+ 			if (msg[0].addr == state->af9033_i2c_addr[1])
+ 				reg |= 0x100000;
+ 
+-			ret = (msg[0].len >= 3) ? af9035_wr_regs(d, reg,
+-							         &msg[0].buf[3],
+-							         msg[0].len - 3)
+-					        : -EOPNOTSUPP;
++			ret = af9035_wr_regs(d, reg, &msg[0].buf[3], msg[0].len - 3);
+ 		} else {
+ 			/* I2C write */
+ 			u8 buf[MAX_XFER_SIZE];
 
 
