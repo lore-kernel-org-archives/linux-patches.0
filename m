@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926DA15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE3AC433C8;
-	Wed, 20 Sep 2023 12:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C19168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC68C433C8;
+	Wed, 20 Sep 2023 12:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213471;
-	bh=IyRwz7j+OHzakOyTw7UiD2AYV+nxif7QJM8/Nhgz7Kk=;
+	s=korg; t=1695213474;
+	bh=FwqdeRgHPAjFXInKwcrnlj5729dPqStP4kK0GWghxBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxrsespnatZL2QuXtMaHhNqQwTr5psb1u6de6GLPHF2AnLjPcPaXx1AIMX2RIDof7
-	 e74x57mfiA1JEJHvHuOfiFOSzZuA5MQEebWkLLZBBi08D6O48YokLZTaO9zLaoPo7h
-	 2O/w8ZGfpuLHW4QZcWkzb+kRB1pItJWNgvXMsSNg=
+	b=j1hnubG1n9wQGlvIEwN5P9QF/6pB+CeCM7/A5tTueKhiLUUqu/ffJaK0EjkRqrSG/
+	 5Lu4DvrHwAKbcFWOiijwCiOisC18eVFSTIFqdCoGMtxVof8pGuMp8g/EiZ0OJV9wKc
+	 mWzUrcbz3EoO3lX89wHrb8wqnTwKlle3rValD9yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <quic_clew@quicinc.com>,
-	Praveenkumar I <quic_ipkumar@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.4 250/367] soc: qcom: qmi_encdec: Restrict string length in decode
-Date: Wed, 20 Sep 2023 13:30:27 +0200
-Message-ID: <20230920112905.029172659@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.4 251/367] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
+Date: Wed, 20 Sep 2023 13:30:28 +0200
+Message-ID: <20230920112905.053999118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,38 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lew <quic_clew@quicinc.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 8d207400fd6b79c92aeb2f33bb79f62dff904ea2 upstream.
+commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
 
-The QMI TLV value for strings in a lot of qmi element info structures
-account for null terminated strings with MAX_LEN + 1. If a string is
-actually MAX_LEN + 1 length, this will cause an out of bounds access
-when the NULL character is appended in decoding.
+It is an almost improbable error case but when page allocating loop in
+nfs4_get_device_info() fails then we should only free the already
+allocated pages, as __free_page() can't deal with NULL arguments.
 
-Fixes: 9b8a11e82615 ("soc: qcom: Introduce QMI encoder/decoder")
+Found by Linux Verification Center (linuxtesting.org).
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Link: https://lore.kernel.org/r/20230801064712.3590128-1-quic_ipkumar@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/qmi_encdec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/pnfs_dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/qmi_encdec.c
-+++ b/drivers/soc/qcom/qmi_encdec.c
-@@ -534,8 +534,8 @@ static int qmi_decode_string_elem(struct
- 		decoded_bytes += rc;
- 	}
+--- a/fs/nfs/pnfs_dev.c
++++ b/fs/nfs/pnfs_dev.c
+@@ -152,7 +152,7 @@ nfs4_get_device_info(struct nfs_server *
+ 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
  
--	if (string_len > temp_ei->elem_len) {
--		pr_err("%s: String len %d > Max Len %d\n",
-+	if (string_len >= temp_ei->elem_len) {
-+		pr_err("%s: String len %d >= Max Len %d\n",
- 		       __func__, string_len, temp_ei->elem_len);
- 		return -ETOOSMALL;
- 	} else if (string_len > tlv_len) {
+ out_free_pages:
+-	for (i = 0; i < max_pages; i++)
++	while (--i >= 0)
+ 		__free_page(pages[i]);
+ 	kfree(pages);
+ out_free_pdev:
 
 
