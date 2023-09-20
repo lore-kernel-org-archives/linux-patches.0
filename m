@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9B130FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176F8C433C8;
-	Wed, 20 Sep 2023 12:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE5830FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8770C433CA;
+	Wed, 20 Sep 2023 12:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212788;
-	bh=tUuCgVN9BvauVGIP0N5AXmwN+yOhZLGsOKFWdyh4pZI=;
+	s=korg; t=1695212791;
+	bh=ku+cafHXgove4miEnEASlwsvRAGsDFeQkynSU/6n/tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCFM+1wwROnS7vwig9wCAFbHFYD5AhOvW1/fYnomkXYHGT30V1PeArluWqg4nA3Hy
-	 FUnIa9k0yGr91aIRp+1X1ioSzfJk2LFvSf2jRPFvmdG0sEjwSno9wGRqxhTKnkhz/6
-	 2c6py7vDcr+oPBYsgTeX+fCRq0Rus4TaPGK+gMeI=
+	b=Hr4swA0Iho2ukAxraYMe5jXuUnkLxR/u6utMKyakaykbl8g4rAefYjk54/XDPY3qz
+	 ATN3/x9EFBrXsTwJ7GVFtIg/deNcdj+xwv6e2SPiO70iRRQEphydqBOMdRuQLUx+le
+	 IS8pOEmExe6w0CQ9yyBGL2mu36KO3quqs3zixGwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.4 046/367] udf: Handle error when adding extent to a file
-Date: Wed, 20 Sep 2023 13:27:03 +0200
-Message-ID: <20230920112859.683200078@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 047/367] Revert "net: macsec: preserve ingress frame ordering"
+Date: Wed, 20 Sep 2023 13:27:04 +0200
+Message-ID: <20230920112859.706977830@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -38,124 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
+commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
 
-When adding extent to a file fails, so far we've silently squelshed the
-error. Make sure to propagate it up properly.
+This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+It was trying to work around an issue at the crypto layer by excluding
+ASYNC implementations of gcm(aes), because a bug in the AESNI version
+caused reordering when some requests bypassed the cryptd queue while
+older requests were still pending on the queue.
+
+This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
+reordering problem on gcm"), which pre-dates ab046a5d4be4.
+
+Herbert Xu confirmed that all ASYNC implementations are expected to
+maintain the ordering of completions wrt requests, so we can use them
+in MACsec.
+
+On my test machine, this restores the performance of a single netperf
+instance, from 1.4Gbps to 4.4Gbps.
+
+Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
+Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
+Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
+Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ drivers/net/macsec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -57,15 +57,15 @@ static int udf_update_inode(struct inode
- static int udf_sync_inode(struct inode *inode);
- static int udf_alloc_i_data(struct inode *inode, size_t size);
- static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
--static int8_t udf_insert_aext(struct inode *, struct extent_position,
--			      struct kernel_lb_addr, uint32_t);
-+static int udf_insert_aext(struct inode *, struct extent_position,
-+			   struct kernel_lb_addr, uint32_t);
- static void udf_split_extents(struct inode *, int *, int, udf_pblk_t,
- 			      struct kernel_long_ad *, int *);
- static void udf_prealloc_extents(struct inode *, int, int,
- 				 struct kernel_long_ad *, int *);
- static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
--static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
--			       int, struct extent_position *);
-+static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
-+			      int, struct extent_position *);
- static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1350,8 +1350,7 @@ static struct crypto_aead *macsec_alloc_
+ 	struct crypto_aead *tfm;
+ 	int ret;
  
- static void __udf_clear_extent_cache(struct inode *inode)
-@@ -890,7 +890,9 @@ static sector_t inode_getblk(struct inod
- 	/* write back the new extents, inserting new extents if the new number
- 	 * of extents is greater than the old number, and deleting extents if
- 	 * the new number of extents is less than the old number */
--	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	if (*err < 0)
-+		goto out_free;
+-	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
+-	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
++	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
  
- 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
- 				iinfo->i_location.partitionReferenceNum, 0);
-@@ -1158,21 +1160,30 @@ static void udf_merge_extents(struct ino
- 	}
- }
- 
--static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
--			       int startnum, int endnum,
--			       struct extent_position *epos)
-+static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
-+			      int startnum, int endnum,
-+			      struct extent_position *epos)
- {
- 	int start = 0, i;
- 	struct kernel_lb_addr tmploc;
- 	uint32_t tmplen;
-+	int err;
- 
- 	if (startnum > endnum) {
- 		for (i = 0; i < (startnum - endnum); i++)
- 			udf_delete_aext(inode, *epos);
- 	} else if (startnum < endnum) {
- 		for (i = 0; i < (endnum - startnum); i++) {
--			udf_insert_aext(inode, *epos, laarr[i].extLocation,
--					laarr[i].extLength);
-+			err = udf_insert_aext(inode, *epos,
-+					      laarr[i].extLocation,
-+					      laarr[i].extLength);
-+			/*
-+			 * If we fail here, we are likely corrupting the extent
-+			 * list and leaking blocks. At least stop early to
-+			 * limit the damage.
-+			 */
-+			if (err < 0)
-+				return err;
- 			udf_next_aext(inode, epos, &laarr[i].extLocation,
- 				      &laarr[i].extLength, 1);
- 			start++;
-@@ -1184,6 +1195,7 @@ static void udf_update_extents(struct in
- 		udf_write_aext(inode, epos, &laarr[i].extLocation,
- 			       laarr[i].extLength, 1);
- 	}
-+	return 0;
- }
- 
- struct buffer_head *udf_bread(struct inode *inode, udf_pblk_t block,
-@@ -2218,12 +2230,13 @@ int8_t udf_current_aext(struct inode *in
- 	return etype;
- }
- 
--static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
--			      struct kernel_lb_addr neloc, uint32_t nelen)
-+static int udf_insert_aext(struct inode *inode, struct extent_position epos,
-+			   struct kernel_lb_addr neloc, uint32_t nelen)
- {
- 	struct kernel_lb_addr oeloc;
- 	uint32_t oelen;
- 	int8_t etype;
-+	int err;
- 
- 	if (epos.bh)
- 		get_bh(epos.bh);
-@@ -2233,10 +2246,10 @@ static int8_t udf_insert_aext(struct ino
- 		neloc = oeloc;
- 		nelen = (etype << 30) | oelen;
- 	}
--	udf_add_aext(inode, &epos, &neloc, nelen, 1);
-+	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
- 	brelse(epos.bh);
- 
--	return (nelen >> 30);
-+	return err;
- }
- 
- int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
+ 	if (IS_ERR(tfm))
+ 		return tfm;
 
 
