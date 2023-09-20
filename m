@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66FB2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59652C433C8;
-	Wed, 20 Sep 2023 12:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B532AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35810C433C7;
+	Wed, 20 Sep 2023 12:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211676;
-	bh=92n9t0pvXYsdGbcI5rIbougYnQfvtB7DX2OzvzuHwGg=;
+	s=korg; t=1695211679;
+	bh=twmAP4MaXXmijYoc+foXrnd/sVzCyfnF/sekKi+EnPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgbuGwi2/TNHU+Z6Q7GhBrym3TLyo1xOAj3I3wGCIAOwebdz+CsnahQNMBlVKCtHr
-	 084FBtofHy/4iITZbrun+m2o9Wd0qO/qqqtMscGhSBpgk/KfVIcU8l25wownhScTt/
-	 mYDxbQfWRVcY82+hYPVSg6v7xVZHzJ/mfTqwMpss=
+	b=ZS3zKNhDEEINZb5eXLIIOznC6k+zm7So7tlsv9hJV/g8NFu5twBpsjHA0AysTr8Yd
+	 nwDi1ZtE7CtIO+I9GHpVvoXlQy9lWKmVZPV8SALYxKwfsZTATA8pIx/ETiCIc0V62U
+	 FCeD7LQ/NulmCS+ihiT7jyi31GpYY2tQ93956puk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	William Zhang <william.zhang@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.14 181/186] mtd: rawnand: brcmnand: Fix crash during the panic_write
-Date: Wed, 20 Sep 2023 13:31:24 +0200
-Message-ID: <20230920112843.428027657@linuxfoundation.org>
+Subject: [PATCH 4.14 182/186] mtd: rawnand: brcmnand: Fix potential false time out warning
+Date: Wed, 20 Sep 2023 13:31:25 +0200
+Message-ID: <20230920112843.460923568@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -44,45 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 From: William Zhang <william.zhang@broadcom.com>
 
-commit e66dd317194daae0475fe9e5577c80aa97f16cb9 upstream.
+commit 9cc0a598b944816f2968baf2631757f22721b996 upstream.
 
-When executing a NAND command within the panic write path, wait for any
-pending command instead of calling BUG_ON to avoid crashing while
-already crashing.
+If system is busy during the command status polling function, the driver
+may not get the chance to poll the status register till the end of time
+out and return the premature status.  Do a final check after time out
+happens to ensure reading the correct status.
 
-Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
+Fixes: 9d2ee0a60b8b ("mtd: nand: brcmnand: Check flash #WP pin status before nand erase/program")
 Signed-off-by: William Zhang <william.zhang@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-4-william.zhang@broadcom.com
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-3-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/brcmnand/brcmnand.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/brcmnand/brcmnand.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/mtd/nand/brcmnand/brcmnand.c
 +++ b/drivers/mtd/nand/brcmnand/brcmnand.c
-@@ -1271,7 +1271,17 @@ static void brcmnand_send_cmd(struct brc
+@@ -836,6 +836,14 @@ static int bcmnand_ctrl_poll_status(stru
+ 		cpu_relax();
+ 	} while (time_after(limit, jiffies));
  
- 	dev_dbg(ctrl->dev, "send native cmd %d addr 0x%llx\n", cmd, cmd_addr);
- 
--	BUG_ON(ctrl->cmd_pending != 0);
 +	/*
-+	 * If we came here through _panic_write and there is a pending
-+	 * command, try to wait for it. If it times out, rather than
-+	 * hitting BUG_ON, just return so we don't crash while crashing.
++	 * do a final check after time out in case the CPU was busy and the driver
++	 * did not get enough time to perform the polling to avoid false alarms
 +	 */
-+	if (oops_in_progress) {
-+		if (ctrl->cmd_pending &&
-+			bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0))
-+			return;
-+	} else
-+		BUG_ON(ctrl->cmd_pending != 0);
- 	ctrl->cmd_pending = cmd;
++	val = brcmnand_read_reg(ctrl, BRCMNAND_INTFC_STATUS);
++	if ((val & mask) == expected_val)
++		return 0;
++
+ 	dev_warn(ctrl->dev, "timeout on status poll (expected %x got %x)\n",
+ 		 expected_val, val & mask);
  
- 	ret = bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0);
 
 
