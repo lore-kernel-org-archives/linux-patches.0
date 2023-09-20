@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D8815AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8E3C433CD;
-	Wed, 20 Sep 2023 12:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B1E15AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93ADDC433C7;
+	Wed, 20 Sep 2023 12:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212139;
-	bh=i30ecCH9uwef4PNiPn7d7AIX+MwjhrS2xmKuQQb7xt0=;
+	s=korg; t=1695212141;
+	bh=AaAZzxKu4/PXFcQUwBmX8BOIR9vMcglNQ5vYW9uFslI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxSHDrnfP8/Jbdy0zi3U8Mvba24wypjAntnFRSY89HAlBlWzWrTnkuDLurcDbesvG
-	 GB3i+z9bTnTPYckLotEE0vSLBN13GFZJyq0cX/0qOyZuCuuJVV4uuzso5IQ4CS2XKr
-	 Rh9StgDJyzT6N5NtzzGmLAJr5V7Ihs9CpH2LvNHE=
+	b=DbDQUhaVFnMVwNwLuASjQyv5MmEJihdRd/su1bjBXz9TWiLOK475VzWXoFWVYOd/q
+	 xKdfXrrxpVKLYCPio8dpMZKj7/lHad/C5phOcQIoDDKIe9JvKbkkH8Npv95e4r01SK
+	 A7JPti//r6k38Ev22yx2U1NM/cCKTJyleb0UJCLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederick Lawler <fred@fredlawl.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 121/273] drm/radeon: Prefer pcie_capability_read_word()
-Date: Wed, 20 Sep 2023 13:29:21 +0200
-Message-ID: <20230920112850.234081003@linuxfoundation.org>
+Subject: [PATCH 4.19 159/273] Revert "IB/isert: Fix incorrect release of isert connection"
+Date: Wed, 20 Sep 2023 13:29:59 +0200
+Message-ID: <20230920112851.442028121@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,337 +40,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederick Lawler <fred@fredlawl.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 3d581b11e34a92350983e5d3ecf469b5c677e295 ]
+[ Upstream commit dfe261107c080709459c32695847eec96238852b ]
 
-Commit 8c0d3a02c130 ("PCI: Add accessors for PCI Express Capability")
-added accessors for the PCI Express Capability so that drivers didn't
-need to be aware of differences between v1 and v2 of the PCI
-Express Capability.
+Commit: 699826f4e30a ("IB/isert: Fix incorrect release of isert connection") is
+causing problems on OPA when DEVICE_REMOVAL is happening.
 
-Replace pci_read_config_word() and pci_write_config_word() calls with
-pcie_capability_read_word() and pcie_capability_write_word().
+ ------------[ cut here ]------------
+ WARNING: CPU: 52 PID: 2117247 at drivers/infiniband/core/cq.c:359
+ib_cq_pool_cleanup+0xac/0xb0 [ib_core]
+ Modules linked in: nfsd nfs_acl target_core_user uio tcm_fc libfc
+scsi_transport_fc tcm_loop target_core_pscsi target_core_iblock target_core_file
+rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs
+rfkill rpcrdma rdma_ucm ib_srpt sunrpc ib_isert iscsi_target_mod target_core_mod
+opa_vnic ib_iser libiscsi ib_umad scsi_transport_iscsi rdma_cm ib_ipoib iw_cm
+ib_cm hfi1(-) rdmavt ib_uverbs intel_rapl_msr intel_rapl_common sb_edac ib_core
+x86_pkg_temp_thermal intel_powerclamp coretemp i2c_i801 mxm_wmi rapl iTCO_wdt
+ipmi_si iTCO_vendor_support mei_me ipmi_devintf mei intel_cstate ioatdma
+intel_uncore i2c_smbus joydev pcspkr lpc_ich ipmi_msghandler acpi_power_meter
+acpi_pad xfs libcrc32c sr_mod sd_mod cdrom t10_pi sg crct10dif_pclmul
+crc32_pclmul crc32c_intel drm_kms_helper drm_shmem_helper ahci libahci
+ghash_clmulni_intel igb drm libata dca i2c_algo_bit wmi fuse
+ CPU: 52 PID: 2117247 Comm: modprobe Not tainted 6.5.0-rc1+ #1
+ Hardware name: Intel Corporation S2600CWR/S2600CW, BIOS
+SE5C610.86B.01.01.0014.121820151719 12/18/2015
+ RIP: 0010:ib_cq_pool_cleanup+0xac/0xb0 [ib_core]
+ Code: ff 48 8b 43 40 48 8d 7b 40 48 83 e8 40 4c 39 e7 75 b3 49 83
+c4 10 4d 39 fc 75 94 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc <0f> 0b eb a1
+90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f
+ RSP: 0018:ffffc10bea13fc80 EFLAGS: 00010206
+ RAX: 000000000000010c RBX: ffff9bf5c7e66c00 RCX: 000000008020001d
+ RDX: 000000008020001e RSI: fffff175221f9900 RDI: ffff9bf5c7e67640
+ RBP: ffff9bf5c7e67600 R08: ffff9bf5c7e64400 R09: 000000008020001d
+ R10: 0000000040000000 R11: 0000000000000000 R12: ffff9bee4b1e8a18
+ R13: dead000000000122 R14: dead000000000100 R15: ffff9bee4b1e8a38
+ FS:  00007ff1e6d38740(0000) GS:ffff9bfd9fb00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005652044ecc68 CR3: 0000000889b5c005 CR4: 00000000001706e0
+ Call Trace:
+  <TASK>
+  ? __warn+0x80/0x130
+  ? ib_cq_pool_cleanup+0xac/0xb0 [ib_core]
+  ? report_bug+0x195/0x1a0
+  ? handle_bug+0x3c/0x70
+  ? exc_invalid_op+0x14/0x70
+  ? asm_exc_invalid_op+0x16/0x20
+  ? ib_cq_pool_cleanup+0xac/0xb0 [ib_core]
+  disable_device+0x9d/0x160 [ib_core]
+  __ib_unregister_device+0x42/0xb0 [ib_core]
+  ib_unregister_device+0x22/0x30 [ib_core]
+  rvt_unregister_device+0x20/0x90 [rdmavt]
+  hfi1_unregister_ib_device+0x16/0xf0 [hfi1]
+  remove_one+0x55/0x1a0 [hfi1]
+  pci_device_remove+0x36/0xa0
+  device_release_driver_internal+0x193/0x200
+  driver_detach+0x44/0x90
+  bus_remove_driver+0x69/0xf0
+  pci_unregister_driver+0x2a/0xb0
+  hfi1_mod_cleanup+0xc/0x3c [hfi1]
+  __do_sys_delete_module.constprop.0+0x17a/0x2f0
+  ? exit_to_user_mode_prepare+0xc4/0xd0
+  ? syscall_trace_enter.constprop.0+0x126/0x1a0
+  do_syscall_64+0x5c/0x90
+  ? syscall_exit_to_user_mode+0x12/0x30
+  ? do_syscall_64+0x69/0x90
+  ? syscall_exit_work+0x103/0x130
+  ? syscall_exit_to_user_mode+0x12/0x30
+  ? do_syscall_64+0x69/0x90
+  ? exc_page_fault+0x65/0x150
+  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+ RIP: 0033:0x7ff1e643f5ab
+ Code: 73 01 c3 48 8b 0d 75 a8 1b 00 f7 d8 64 89 01 48 83 c8 ff c3
+66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 b0 00 00 00 0f 05 <48> 3d 01 f0
+ff ff 73 01 c3 48 8b 0d 45 a8 1b 00 f7 d8 64 89 01 48
+ RSP: 002b:00007ffec9103cc8 EFLAGS: 00000206 ORIG_RAX: 00000000000000b0
+ RAX: ffffffffffffffda RBX: 00005615267fdc50 RCX: 00007ff1e643f5ab
+ RDX: 0000000000000000 RSI: 0000000000000800 RDI: 00005615267fdcb8
+ RBP: 00005615267fdc50 R08: 0000000000000000 R09: 0000000000000000
+ R10: 00007ff1e659eac0 R11: 0000000000000206 R12: 00005615267fdcb8
+ R13: 0000000000000000 R14: 00005615267fdcb8 R15: 00007ffec9105ff8
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
 
-Link: https://lore.kernel.org/r/20191118003513.10852-1-fred@fredlawl.com
-Signed-off-by: Frederick Lawler <fred@fredlawl.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 7189576e8a82 ("drm/radeon: Use RMW accessors for changing LNKCTL")
+And...
+
+ restrack: ------------[ cut here ]------------
+ infiniband hfi1_0: BUG: RESTRACK detected leak of resources
+ restrack: Kernel PD object allocated by ib_isert is not freed
+ restrack: Kernel CQ object allocated by ib_core is not freed
+ restrack: Kernel QP object allocated by rdma_cm is not freed
+ restrack: ------------[ cut here ]------------
+
+Fixes: 699826f4e30a ("IB/isert: Fix incorrect release of isert connection")
+Reported-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Closes: https://lore.kernel.org/all/921cd1d9-2879-f455-1f50-0053fe6a6655@cornelisnetworks.com
+Link: https://lore.kernel.org/r/a27982d3235005c58f6d321f3fad5eb6e1beaf9e.1692604607.git.leonro@nvidia.com
+Tested-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/cik.c | 70 +++++++++++++++++++++-------------
- drivers/gpu/drm/radeon/si.c  | 73 +++++++++++++++++++++++-------------
- 2 files changed, 90 insertions(+), 53 deletions(-)
+ drivers/infiniband/ulp/isert/ib_isert.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/cik.c b/drivers/gpu/drm/radeon/cik.c
-index 47e5c29a9c2f7..728d4306a8725 100644
---- a/drivers/gpu/drm/radeon/cik.c
-+++ b/drivers/gpu/drm/radeon/cik.c
-@@ -9500,7 +9500,6 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- {
- 	struct pci_dev *root = rdev->pdev->bus->self;
- 	enum pci_bus_speed speed_cap;
--	int bridge_pos, gpu_pos;
- 	u32 speed_cntl, current_data_rate;
- 	int i;
- 	u16 tmp16;
-@@ -9542,12 +9541,7 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 		DRM_INFO("enabling PCIE gen 2 link speeds, disable with radeon.pcie_gen2=0\n");
- 	}
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index de6fc8887c4a4..60594dad55455 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -2654,6 +2654,8 @@ static void isert_wait_conn(struct iscsi_conn *conn)
+ 	isert_put_unsol_pending_cmds(conn);
+ 	isert_wait4cmds(conn);
+ 	isert_wait4logout(isert_conn);
++
++	queue_work(isert_release_wq, &isert_conn->release_work);
+ }
  
--	bridge_pos = pci_pcie_cap(root);
--	if (!bridge_pos)
--		return;
--
--	gpu_pos = pci_pcie_cap(rdev->pdev);
--	if (!gpu_pos)
-+	if (!pci_is_pcie(root) || !pci_is_pcie(rdev->pdev))
- 		return;
- 
- 	if (speed_cap == PCIE_SPEED_8_0GT) {
-@@ -9557,14 +9551,17 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 			u16 bridge_cfg2, gpu_cfg2;
- 			u32 max_lw, current_lw, tmp;
- 
--			pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &bridge_cfg);
--			pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &gpu_cfg);
-+			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+						  &bridge_cfg);
-+			pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL,
-+						  &gpu_cfg);
- 
- 			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
--			pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL, tmp16);
-+			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
- 
- 			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
--			pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, tmp16);
-+			pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL,
-+						   tmp16);
- 
- 			tmp = RREG32_PCIE_PORT(PCIE_LC_STATUS1);
- 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
-@@ -9582,15 +9579,23 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 
- 			for (i = 0; i < 10; i++) {
- 				/* check status */
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_DEVSTA, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_DEVSTA,
-+							  &tmp16);
- 				if (tmp16 & PCI_EXP_DEVSTA_TRPND)
- 					break;
- 
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &bridge_cfg);
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &gpu_cfg);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+							  &bridge_cfg);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL,
-+							  &gpu_cfg);
- 
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &bridge_cfg2);
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &gpu_cfg2);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
-+							  &bridge_cfg2);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL2,
-+							  &gpu_cfg2);
- 
- 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
- 				tmp |= LC_SET_QUIESCE;
-@@ -9603,32 +9608,45 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 				mdelay(100);
- 
- 				/* linkctl */
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &tmp16);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+							  &tmp16);
- 				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
- 				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
--				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL, tmp16);
-+				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
-+							   tmp16);
- 
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL,
-+							  &tmp16);
- 				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
- 				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
--				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, tmp16);
-+				pcie_capability_write_word(rdev->pdev,
-+							   PCI_EXP_LNKCTL,
-+							   tmp16);
- 
- 				/* linkctl2 */
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
-+							  &tmp16);
- 				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN);
- 				tmp16 |= (bridge_cfg2 &
- 					  (PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN));
--				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
-+				pcie_capability_write_word(root,
-+							   PCI_EXP_LNKCTL2,
-+							   tmp16);
- 
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL2,
-+							  &tmp16);
- 				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN);
- 				tmp16 |= (gpu_cfg2 &
- 					  (PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN));
--				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
-+				pcie_capability_write_word(rdev->pdev,
-+							   PCI_EXP_LNKCTL2,
-+							   tmp16);
- 
- 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
- 				tmp &= ~LC_SET_QUIESCE;
-@@ -9642,7 +9660,7 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 	speed_cntl &= ~LC_FORCE_DIS_SW_SPEED_CHANGE;
- 	WREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL, speed_cntl);
- 
--	pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
-+	pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL2, &tmp16);
- 	tmp16 &= ~PCI_EXP_LNKCTL2_TLS;
- 	if (speed_cap == PCIE_SPEED_8_0GT)
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_8_0GT; /* gen3 */
-@@ -9650,7 +9668,7 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_5_0GT; /* gen2 */
- 	else
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_2_5GT; /* gen1 */
--	pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
-+	pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL2, tmp16);
- 
- 	speed_cntl = RREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL);
- 	speed_cntl |= LC_INITIATE_LINK_SPEED_CHANGE;
-diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
-index 53ef1bff057e9..1bf1fffbaa946 100644
---- a/drivers/gpu/drm/radeon/si.c
-+++ b/drivers/gpu/drm/radeon/si.c
-@@ -3253,7 +3253,7 @@ static void si_gpu_init(struct radeon_device *rdev)
- 		/* XXX what about 12? */
- 		rdev->config.si.tile_config |= (3 << 0);
- 		break;
--	}	
-+	}
- 	switch ((mc_arb_ramcfg & NOOFBANK_MASK) >> NOOFBANK_SHIFT) {
- 	case 0: /* four banks */
- 		rdev->config.si.tile_config |= 0 << 4;
-@@ -7083,7 +7083,6 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- {
- 	struct pci_dev *root = rdev->pdev->bus->self;
- 	enum pci_bus_speed speed_cap;
--	int bridge_pos, gpu_pos;
- 	u32 speed_cntl, current_data_rate;
- 	int i;
- 	u16 tmp16;
-@@ -7125,12 +7124,7 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 		DRM_INFO("enabling PCIE gen 2 link speeds, disable with radeon.pcie_gen2=0\n");
- 	}
- 
--	bridge_pos = pci_pcie_cap(root);
--	if (!bridge_pos)
--		return;
--
--	gpu_pos = pci_pcie_cap(rdev->pdev);
--	if (!gpu_pos)
-+	if (!pci_is_pcie(root) || !pci_is_pcie(rdev->pdev))
- 		return;
- 
- 	if (speed_cap == PCIE_SPEED_8_0GT) {
-@@ -7140,14 +7134,17 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 			u16 bridge_cfg2, gpu_cfg2;
- 			u32 max_lw, current_lw, tmp;
- 
--			pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &bridge_cfg);
--			pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &gpu_cfg);
-+			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+						  &bridge_cfg);
-+			pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL,
-+						  &gpu_cfg);
- 
- 			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
--			pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL, tmp16);
-+			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
- 
- 			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
--			pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, tmp16);
-+			pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL,
-+						   tmp16);
- 
- 			tmp = RREG32_PCIE(PCIE_LC_STATUS1);
- 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
-@@ -7165,15 +7162,23 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 
- 			for (i = 0; i < 10; i++) {
- 				/* check status */
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_DEVSTA, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_DEVSTA,
-+							  &tmp16);
- 				if (tmp16 & PCI_EXP_DEVSTA_TRPND)
- 					break;
- 
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &bridge_cfg);
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &gpu_cfg);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+							  &bridge_cfg);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL,
-+							  &gpu_cfg);
- 
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &bridge_cfg2);
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &gpu_cfg2);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
-+							  &bridge_cfg2);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL2,
-+							  &gpu_cfg2);
- 
- 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
- 				tmp |= LC_SET_QUIESCE;
-@@ -7186,32 +7191,46 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 				mdelay(100);
- 
- 				/* linkctl */
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL, &tmp16);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
-+							  &tmp16);
- 				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
- 				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
--				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL, tmp16);
-+				pcie_capability_write_word(root,
-+							   PCI_EXP_LNKCTL,
-+							   tmp16);
- 
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL,
-+							  &tmp16);
- 				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
- 				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
--				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL, tmp16);
-+				pcie_capability_write_word(rdev->pdev,
-+							   PCI_EXP_LNKCTL,
-+							   tmp16);
- 
- 				/* linkctl2 */
--				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
-+				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
-+							  &tmp16);
- 				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN);
- 				tmp16 |= (bridge_cfg2 &
- 					  (PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN));
--				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
-+				pcie_capability_write_word(root,
-+							   PCI_EXP_LNKCTL2,
-+							   tmp16);
- 
--				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
-+				pcie_capability_read_word(rdev->pdev,
-+							  PCI_EXP_LNKCTL2,
-+							  &tmp16);
- 				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN);
- 				tmp16 |= (gpu_cfg2 &
- 					  (PCI_EXP_LNKCTL2_ENTER_COMP |
- 					   PCI_EXP_LNKCTL2_TX_MARGIN));
--				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
-+				pcie_capability_write_word(rdev->pdev,
-+							   PCI_EXP_LNKCTL2,
-+							   tmp16);
- 
- 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
- 				tmp &= ~LC_SET_QUIESCE;
-@@ -7225,7 +7244,7 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 	speed_cntl &= ~LC_FORCE_DIS_SW_SPEED_CHANGE;
- 	WREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL, speed_cntl);
- 
--	pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
-+	pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL2, &tmp16);
- 	tmp16 &= ~PCI_EXP_LNKCTL2_TLS;
- 	if (speed_cap == PCIE_SPEED_8_0GT)
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_8_0GT; /* gen3 */
-@@ -7233,7 +7252,7 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_5_0GT; /* gen2 */
- 	else
- 		tmp16 |= PCI_EXP_LNKCTL2_TLS_2_5GT; /* gen1 */
--	pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
-+	pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL2, tmp16);
- 
- 	speed_cntl = RREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL);
- 	speed_cntl |= LC_INITIATE_LINK_SPEED_CHANGE;
+ static void isert_free_conn(struct iscsi_conn *conn)
 -- 
 2.40.1
 
