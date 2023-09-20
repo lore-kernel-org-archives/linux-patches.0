@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0CB168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C98C433C8;
-	Wed, 20 Sep 2023 12:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCCE168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8436FC433C7;
+	Wed, 20 Sep 2023 12:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214027;
-	bh=nONT19MhjOuz2UtWGGnQRt6gK1wGqWYSwZ5hY65q2ts=;
+	s=korg; t=1695214029;
+	bh=/yO9jlM9ZZzqvj3BQ0ZDWulLKzgW372gerAMG9CQG88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQxZ9iUkzehioKD8a6Pm/UlQfC/BFep0InIjly8BMcUlim1FYWU9NAprB5svhabyk
-	 JNzN47/H2E4FPyA6KAxJSjwsegCLQ8WT4RfD6naxhG7byagtKQfosXaxUTULbiek4l
-	 eEhNBlZSB1cPmPT1dm/t4nEZ8rfb5maoXHXVzJRI=
+	b=FCv3M1YcFKUiPuRRWQHUTDFOc0usGtJXgu6n4afSwdUpu3Kp67QLJd1vMLKbGw1zA
+	 WOctD6LvKHQSFaZBbnOiW8ddzrbEmaKXU5bLjKdy/X9k6Y0KtNrztFpB3ur8dD0JvU
+	 3ZRMJ8xIgS6GBtaqIA0FyqvXHAiiGDxM1/63wcbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/110] interconnect: Fix locking for runpm vs reclaim
-Date: Wed, 20 Sep 2023 13:31:57 +0200
-Message-ID: <20230920112832.613194620@linuxfoundation.org>
+Subject: [PATCH 5.15 060/110] printk: Consolidate console deferred printing
+Date: Wed, 20 Sep 2023 13:31:58 +0200
+Message-ID: <20230920112832.656468075@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,247 +41,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit af42269c3523492d71ebbe11fefae2653e9cdc78 ]
+[ Upstream commit 696ffaf50e1f8dbc66223ff614473f945f5fb8d8 ]
 
-For cases where icc_bw_set() can be called in callbaths that could
-deadlock against shrinker/reclaim, such as runpm resume, we need to
-decouple the icc locking.  Introduce a new icc_bw_lock for cases where
-we need to serialize bw aggregation and update to decouple that from
-paths that require memory allocation such as node/link creation/
-destruction.
+Printing to consoles can be deferred for several reasons:
 
-Fixes this lockdep splat:
+- explicitly with printk_deferred()
+- printk() in NMI context
+- recursive printk() calls
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   6.2.0-rc8-debug+ #554 Not tainted
-   ------------------------------------------------------
-   ring0/132 is trying to acquire lock:
-   ffffff80871916d0 (&gmu->lock){+.+.}-{3:3}, at: a6xx_pm_resume+0xf0/0x234
+The current implementation is not consistent. For printk_deferred(),
+irq work is scheduled twice. For NMI und recursive, panic CPU
+suppression and caller delays are not properly enforced.
 
-   but task is already holding lock:
-   ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
+Correct these inconsistencies by consolidating the deferred printing
+code so that vprintk_deferred() is the top-level function for
+deferred printing and vprintk_emit() will perform whichever irq_work
+queueing is appropriate.
 
-   which lock already depends on the new lock.
+Also add kerneldoc for wake_up_klogd() and defer_console_output() to
+clarify their differences and appropriate usage.
 
-   the existing dependency chain (in reverse order) is:
-
-   -> #4 (dma_fence_map){++++}-{0:0}:
-          __dma_fence_might_wait+0x74/0xc0
-          dma_resv_lockdep+0x1f4/0x2f4
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #3 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-          fs_reclaim_acquire+0x80/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          topology_parse_cpu_capacity+0x8c/0x178
-          get_cpu_for_node+0x88/0xc4
-          parse_cluster+0x1b0/0x28c
-          parse_cluster+0x8c/0x28c
-          init_cpu_topology+0x168/0x188
-          smp_prepare_cpus+0x24/0xf8
-          kernel_init_freeable+0x18c/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #2 (fs_reclaim){+.+.}-{0:0}:
-          __fs_reclaim_acquire+0x3c/0x48
-          fs_reclaim_acquire+0x54/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          kzalloc.constprop.0+0x14/0x20
-          icc_node_create_nolock+0x4c/0xc4
-          icc_node_create+0x38/0x58
-          qcom_icc_rpmh_probe+0x1b8/0x248
-          platform_probe+0x70/0xc4
-          really_probe+0x158/0x290
-          __driver_probe_device+0xc8/0xe0
-          driver_probe_device+0x44/0x100
-          __driver_attach+0xf8/0x108
-          bus_for_each_dev+0x78/0xc4
-          driver_attach+0x2c/0x38
-          bus_add_driver+0xd0/0x1d8
-          driver_register+0xbc/0xf8
-          __platform_driver_register+0x30/0x3c
-          qnoc_driver_init+0x24/0x30
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #1 (icc_lock){+.+.}-{3:3}:
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          icc_set_bw+0x88/0x2b4
-          _set_opp_bw+0x8c/0xd8
-          _set_opp+0x19c/0x300
-          dev_pm_opp_set_opp+0x84/0x94
-          a6xx_gmu_resume+0x18c/0x804
-          a6xx_pm_resume+0xf8/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          adreno_load_gpu+0xc4/0x17c
-          msm_open+0x50/0x120
-          drm_file_alloc+0x17c/0x228
-          drm_open_helper+0x74/0x118
-          drm_open+0xa0/0x144
-          drm_stub_open+0xd4/0xe4
-          chrdev_open+0x1b8/0x1e4
-          do_dentry_open+0x2f8/0x38c
-          vfs_open+0x34/0x40
-          path_openat+0x64c/0x7b4
-          do_filp_open+0x54/0xc4
-          do_sys_openat2+0x9c/0x100
-          do_sys_open+0x50/0x7c
-          __arm64_sys_openat+0x28/0x34
-          invoke_syscall+0x8c/0x128
-          el0_svc_common.constprop.0+0xa0/0x11c
-          do_el0_svc+0xac/0xbc
-          el0_svc+0x48/0xa0
-          el0t_64_sync_handler+0xac/0x13c
-          el0t_64_sync+0x190/0x194
-
-   -> #0 (&gmu->lock){+.+.}-{3:3}:
-          __lock_acquire+0xe00/0x1060
-          lock_acquire+0x1e0/0x2f8
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          a6xx_pm_resume+0xf0/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          pm_runtime_get_sync.isra.0+0x14/0x20
-          msm_gpu_submit+0x58/0x178
-          msm_job_run+0x78/0x150
-          drm_sched_main+0x290/0x370
-          kthread+0xf0/0x100
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-
-   Chain exists of:
-     &gmu->lock --> mmu_notifier_invalidate_range_start --> dma_fence_map
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(dma_fence_map);
-                                  lock(mmu_notifier_invalidate_range_start);
-                                  lock(dma_fence_map);
-     lock(&gmu->lock);
-
-    *** DEADLOCK ***
-
-   2 locks held by ring0/132:
-    #0: ffffff8087191170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64/0x150
-    #1: ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
-
-   stack backtrace:
-   CPU: 7 PID: 132 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #554
-   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-   Call trace:
-    dump_backtrace.part.0+0xb4/0xf8
-    show_stack+0x20/0x38
-    dump_stack_lvl+0x9c/0xd0
-    dump_stack+0x18/0x34
-    print_circular_bug+0x1b4/0x1f0
-    check_noncircular+0x78/0xac
-    __lock_acquire+0xe00/0x1060
-    lock_acquire+0x1e0/0x2f8
-    __mutex_lock+0xcc/0x3c8
-    mutex_lock_nested+0x30/0x44
-    a6xx_pm_resume+0xf0/0x234
-    adreno_runtime_resume+0x2c/0x38
-    pm_generic_runtime_resume+0x30/0x44
-    __rpm_callback+0x15c/0x174
-    rpm_callback+0x78/0x7c
-    rpm_resume+0x318/0x524
-    __pm_runtime_resume+0x78/0xbc
-    pm_runtime_get_sync.isra.0+0x14/0x20
-    msm_gpu_submit+0x58/0x178
-    msm_job_run+0x78/0x150
-    drm_sched_main+0x290/0x370
-    kthread+0xf0/0x100
-    ret_from_fork+0x10/0x20
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20230807171148.210181-7-robdclark@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230717194607.145135-6-john.ogness@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/printk/printk.c      | 35 ++++++++++++++++++++++++++++-------
+ kernel/printk/printk_safe.c |  9 ++-------
+ 2 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 14d785e5629e6..df88d9e9fb551 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -29,6 +29,7 @@ static LIST_HEAD(icc_providers);
- static int providers_count;
- static bool synced_state;
- static DEFINE_MUTEX(icc_lock);
-+static DEFINE_MUTEX(icc_bw_lock);
- static struct dentry *icc_debugfs_dir;
- 
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
-@@ -632,7 +633,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
- 		return -EINVAL;
- 
--	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 
- 	old_avg = path->reqs[0].avg_bw;
- 	old_peak = path->reqs[0].peak_bw;
-@@ -664,7 +665,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 		apply_constraints(path);
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 8d856b7c2e5af..8b110b245d92c 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -2269,7 +2269,11 @@ asmlinkage int vprintk_emit(int facility, int level,
+ 		preempt_enable();
  	}
  
--	mutex_unlock(&icc_lock);
-+	mutex_unlock(&icc_bw_lock);
- 
- 	trace_icc_set_bw_end(path, ret);
- 
-@@ -967,6 +968,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 		return;
- 
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 
- 	node->provider = provider;
- 	list_add_tail(&node->node_list, &provider->nodes);
-@@ -992,6 +994,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 	node->avg_bw = 0;
- 	node->peak_bw = 0;
- 
-+	mutex_unlock(&icc_bw_lock);
- 	mutex_unlock(&icc_lock);
+-	wake_up_klogd();
++	if (in_sched)
++		defer_console_output();
++	else
++		wake_up_klogd();
++
+ 	return printed_len;
  }
- EXPORT_SYMBOL_GPL(icc_node_add);
-@@ -1119,6 +1122,7 @@ void icc_sync_state(struct device *dev)
- 		return;
+ EXPORT_SYMBOL(vprintk_emit);
+@@ -3277,11 +3281,33 @@ static void __wake_up_klogd(int val)
+ 	preempt_enable();
+ }
  
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 	synced_state = true;
- 	list_for_each_entry(p, &icc_providers, provider_list) {
- 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
++/**
++ * wake_up_klogd - Wake kernel logging daemon
++ *
++ * Use this function when new records have been added to the ringbuffer
++ * and the console printing of those records has already occurred or is
++ * known to be handled by some other context. This function will only
++ * wake the logging daemon.
++ *
++ * Context: Any context.
++ */
+ void wake_up_klogd(void)
+ {
+ 	__wake_up_klogd(PRINTK_PENDING_WAKEUP);
+ }
+ 
++/**
++ * defer_console_output - Wake kernel logging daemon and trigger
++ *	console printing in a deferred context
++ *
++ * Use this function when new records have been added to the ringbuffer,
++ * this context is responsible for console printing those records, but
++ * the current context is not allowed to perform the console printing.
++ * Trigger an irq_work context to perform the console printing. This
++ * function also wakes the logging daemon.
++ *
++ * Context: Any context.
++ */
+ void defer_console_output(void)
+ {
+ 	/*
+@@ -3298,12 +3324,7 @@ void printk_trigger_flush(void)
+ 
+ int vprintk_deferred(const char *fmt, va_list args)
+ {
+-	int r;
+-
+-	r = vprintk_emit(0, LOGLEVEL_SCHED, NULL, fmt, args);
+-	defer_console_output();
+-
+-	return r;
++	return vprintk_emit(0, LOGLEVEL_SCHED, NULL, fmt, args);
+ }
+ 
+ int _printk_deferred(const char *fmt, ...)
+diff --git a/kernel/printk/printk_safe.c b/kernel/printk/printk_safe.c
+index ef0f9a2044da1..6d10927a07d83 100644
+--- a/kernel/printk/printk_safe.c
++++ b/kernel/printk/printk_safe.c
+@@ -38,13 +38,8 @@ asmlinkage int vprintk(const char *fmt, va_list args)
+ 	 * Use the main logbuf even in NMI. But avoid calling console
+ 	 * drivers that might have their own locks.
+ 	 */
+-	if (this_cpu_read(printk_context) || in_nmi()) {
+-		int len;
+-
+-		len = vprintk_store(0, LOGLEVEL_DEFAULT, NULL, fmt, args);
+-		defer_console_output();
+-		return len;
+-	}
++	if (this_cpu_read(printk_context) || in_nmi())
++		return vprintk_deferred(fmt, args);
+ 
+ 	/* No obstacles. */
+ 	return vprintk_default(fmt, args);
 -- 
 2.40.1
 
