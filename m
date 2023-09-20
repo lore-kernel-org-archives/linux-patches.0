@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C739B30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496E5C433C9;
-	Wed, 20 Sep 2023 12:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEBB30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A6AC433C8;
+	Wed, 20 Sep 2023 12:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212646;
-	bh=734VCBFM4HpvIdCmZUiqDD7SFU+kyw3D9G6WkxS9he4=;
+	s=korg; t=1695212649;
+	bh=chuCTRH3AFQUxqH3oMh04k3wF36dPejNc//nPuIFoN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOOKEwVD87RM3/Nke4hK67reozx7AFHQX4JvId0WASs0MhegZW1YNuE9hMD4wPjOW
-	 cM3SKF2gW+0O0ARzPnCIgJ9uqU5bA4qmIXr3ZhZabkhxZyXtbVu8k/S5RX6dGeDE/A
-	 IPtOX3R9rPfRT+0RlBTKE6H6LOVlwH8lbNxULnrY=
+	b=tKOjST0a+126t/e4/4K/1T0cY1nEFn4T5mCSCOYhbKr4b0XKXF1hc3QGPVxbZr/iu
+	 zyWGusSBTimjpMDIwXIR4jQaznubYI2kQu/WnqMncVPAEf6gnmfBMsVuOcJWBadhGS
+	 s6rkr449UCIFl1bODeWODMYMc6DeT8mHOgR89N+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@redhat.com>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ajay Kaher <akaher@vmware.com>,
-	Ching-lin Yu <chinglinyu@google.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 78/83] tracefs: Add missing lockdown check to tracefs_create_dir()
-Date: Wed, 20 Sep 2023 13:32:08 +0200
-Message-ID: <20230920112829.744884898@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	tony garnock-jones <tonyg@leastfixedpoint.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 53/83] perf tools: Add an option to build without libbfd
+Date: Wed, 20 Sep 2023 13:31:43 +0200
+Message-ID: <20230920112828.753732764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -44,43 +46,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ian Rogers <irogers@google.com>
 
-commit 51aab5ffceb43e05119eb059048fd75765d2bc21 upstream.
+[ Upstream commit 0d1c50ac488ebdaeeaea8ed5069f8d435fd485ed ]
 
-The function tracefs_create_dir() was missing a lockdown check and was
-called by the RV code. This gave an inconsistent behavior of this function
-returning success while other tracefs functions failed. This caused the
-inode being freed by the wrong kmem_cache.
+Some distributions, like debian, don't link perf with libbfd. Add a
+build flag to make this configuration buildable and testable.
 
-Link: https://lkml.kernel.org/r/20230905182711.692687042@goodmis.org
-Link: https://lore.kernel.org/all/202309050916.58201dc6-oliver.sang@intel.com/
+This was inspired by:
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
+  https://lore.kernel.org/linux-perf-users/20210910102307.2055484-1-tonyg@leastfixedpoint.com/T/#u
+
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@redhat.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Ajay Kaher <akaher@vmware.com>
-Cc: Ching-lin Yu <chinglinyu@google.com>
-Fixes: bf8e602186ec4 ("tracing: Do not create tracefs files if tracefs lockdown is in effect")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: tony garnock-jones <tonyg@leastfixedpoint.com>
+Link: http://lore.kernel.org/lkml/20210910225756.729087-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 7822a8913f4c ("perf build: Update build rule for generated files")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/inode.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/Makefile.config | 47 ++++++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 22 deletions(-)
 
---- a/fs/tracefs/inode.c
-+++ b/fs/tracefs/inode.c
-@@ -554,6 +554,9 @@ static struct dentry *__create_dir(const
-  */
- struct dentry *tracefs_create_dir(const char *name, struct dentry *parent)
- {
-+	if (security_locked_down(LOCKDOWN_TRACEFS))
-+		return NULL;
-+
- 	return __create_dir(name, parent, &simple_dir_inode_operations);
- }
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 3e7706c251e9e..89905b4e93091 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -824,33 +824,36 @@ else
+   endif
+ endif
  
+-ifeq ($(feature-libbfd), 1)
+-  EXTLIBS += -lbfd -lopcodes
+-else
+-  # we are on a system that requires -liberty and (maybe) -lz
+-  # to link against -lbfd; test each case individually here
+-
+-  # call all detections now so we get correct
+-  # status in VF output
+-  $(call feature_check,libbfd-liberty)
+-  $(call feature_check,libbfd-liberty-z)
+ 
+-  ifeq ($(feature-libbfd-liberty), 1)
+-    EXTLIBS += -lbfd -lopcodes -liberty
+-    FEATURE_CHECK_LDFLAGS-disassembler-four-args += -liberty -ldl
++ifndef NO_LIBBFD
++  ifeq ($(feature-libbfd), 1)
++    EXTLIBS += -lbfd -lopcodes
+   else
+-    ifeq ($(feature-libbfd-liberty-z), 1)
+-      EXTLIBS += -lbfd -lopcodes -liberty -lz
+-      FEATURE_CHECK_LDFLAGS-disassembler-four-args += -liberty -lz -ldl
++    # we are on a system that requires -liberty and (maybe) -lz
++    # to link against -lbfd; test each case individually here
++
++    # call all detections now so we get correct
++    # status in VF output
++    $(call feature_check,libbfd-liberty)
++    $(call feature_check,libbfd-liberty-z)
++
++    ifeq ($(feature-libbfd-liberty), 1)
++      EXTLIBS += -lbfd -lopcodes -liberty
++      FEATURE_CHECK_LDFLAGS-disassembler-four-args += -liberty -ldl
++    else
++      ifeq ($(feature-libbfd-liberty-z), 1)
++        EXTLIBS += -lbfd -lopcodes -liberty -lz
++        FEATURE_CHECK_LDFLAGS-disassembler-four-args += -liberty -lz -ldl
++      endif
+     endif
++    $(call feature_check,disassembler-four-args)
+   endif
+-  $(call feature_check,disassembler-four-args)
+-endif
+ 
+-ifeq ($(feature-libbfd-buildid), 1)
+-  CFLAGS += -DHAVE_LIBBFD_BUILDID_SUPPORT
+-else
+-  msg := $(warning Old version of libbfd/binutils things like PE executable profiling will not be available);
++  ifeq ($(feature-libbfd-buildid), 1)
++    CFLAGS += -DHAVE_LIBBFD_BUILDID_SUPPORT
++  else
++    msg := $(warning Old version of libbfd/binutils things like PE executable profiling will not be available);
++  endif
+ endif
+ 
+ ifdef NO_DEMANGLE
+-- 
+2.40.1
+
 
 
