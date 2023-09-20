@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041A315AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7F3C433CC;
-	Wed, 20 Sep 2023 12:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B786A15AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E6AC43395;
+	Wed, 20 Sep 2023 12:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212260;
-	bh=vGq9VUDh+ZNEI3E2Kf+GluPdV9R55acVDrY6t3AE/L4=;
+	s=korg; t=1695212263;
+	bh=v+DspCEOn3/xtlJIMq48jJAhh0klkx4wQB1BLdp+USA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAZ6tZr/YDVIiIHoudeocgHgJKaS26QnViif3YwSddFT8r0zJeG3SPw+ltmjzOqj+
-	 A3Isvo0NRVEXqyxjYjdIE1dLiDfvvPCbwrClfRzrjDEJDstsLiDTnKA67Cjwl6QLED
-	 kthk9UOT2PPNYoZmFCFCDPIf4+NdQSvaA8hI+mA4=
+	b=QAxOpvD4iYK3E9ZRK7wTRwBzSijpz6aIylmf6pnrzAmauBj5ABihiPSm7KjJDlWwX
+	 DjBW3EKO8Olv8ulDrbtavIn3OU8il0HUxy8IER+gbhXSI+o0ld/cjoFrvRCKNyfFDs
+	 RlZv59Nhp4KNayh8tVcYhow4bMQvoB6N8ZfZqOIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 4.19 203/273] clk: qcom: gcc-mdm9615: use proper parent for pll0_vote clock
-Date: Wed, 20 Sep 2023 13:30:43 +0200
-Message-ID: <20230920112852.766884554@linuxfoundation.org>
+	Liang Chen <liangchen.linux@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 212/273] veth: Fixing transmit return status for dropped packets
+Date: Wed, 20 Sep 2023 13:30:52 +0200
+Message-ID: <20230920112853.016576849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -42,35 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Liang Chen <liangchen.linux@gmail.com>
 
-commit 1583694bb4eaf186f17131dbc1b83d6057d2749b upstream.
+[ Upstream commit 151e887d8ff97e2e42110ffa1fb1e6a2128fb364 ]
 
-The pll0_vote clock definitely should have pll0 as a parent (instead of
-pll8).
+The veth_xmit function returns NETDEV_TX_OK even when packets are dropped.
+This behavior leads to incorrect calculations of statistics counts, as
+well as things like txq->trans_start updates.
 
-Fixes: 7792a8d6713c ("clk: mdm9615: Add support for MDM9615 Clock Controllers")
-Cc: stable@kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230512211727.3445575-7-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e314dbdc1c0d ("[NET]: Virtual ethernet device driver.")
+Signed-off-by: Liang Chen <liangchen.linux@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-mdm9615.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/veth.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/gcc-mdm9615.c
-+++ b/drivers/clk/qcom/gcc-mdm9615.c
-@@ -66,7 +66,7 @@ static struct clk_regmap pll0_vote = {
- 	.enable_mask = BIT(0),
- 	.hw.init = &(struct clk_init_data){
- 		.name = "pll0_vote",
--		.parent_names = (const char *[]){ "pll8" },
-+		.parent_names = (const char *[]){ "pll0" },
- 		.num_parents = 1,
- 		.ops = &clk_pll_vote_ops,
- 	},
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index ea999a6639330..8006a7716168f 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -181,6 +181,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct veth_priv *rcv_priv, *priv = netdev_priv(dev);
+ 	struct veth_rq *rq = NULL;
++	int ret = NETDEV_TX_OK;
+ 	struct net_device *rcv;
+ 	int length = skb->len;
+ 	bool rcv_xdp = false;
+@@ -210,6 +211,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	} else {
+ drop:
+ 		atomic64_inc(&priv->dropped);
++		ret = NET_XMIT_DROP;
+ 	}
+ 
+ 	if (rcv_xdp)
+@@ -217,7 +219,7 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	rcu_read_unlock();
+ 
+-	return NETDEV_TX_OK;
++	return ret;
+ }
+ 
+ static u64 veth_stats_one(struct pcpu_vstats *result, struct net_device *dev)
+-- 
+2.40.1
+
 
 
