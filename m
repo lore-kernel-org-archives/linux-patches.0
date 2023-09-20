@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9297B18654
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147FEC433C8;
-	Wed, 20 Sep 2023 11:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC7818654
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ADBC433C8;
+	Wed, 20 Sep 2023 11:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210423;
-	bh=3kgMgkD/NLJKN2RF7RmwbEy91di9XgrXjuSbUBKqNtc=;
+	s=korg; t=1695210426;
+	bh=Y1hugOxe+URL1bQJ2KgkrS29YN+0WTpMus2hTbyB2bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cnuua/dHA5P4nAhWU4zk6sf4kyIQL3Qxy/AgcL5wGQXDsYZ6tveEanqID97oG1XIN
-	 CANlMS1vBr/TvadKchZONAB3TVwLpurq1HfTsXAG23vKwXvBugW5s4miUl0mBpt6SM
-	 +GdnbBT5unMl3+ihlQHzuGZgyCnJxYR06hoY5sEM=
+	b=NA+B+Bd9xcRE4fsyUIxpZIGW2F8XKLREFF5FNBa3pKpTOPrh2ZMZNDTF5oMIOZ52q
+	 89c81ukQr5DOUgqq2Fqpkeg6Vwsz5l3ka5CrZRD9wJXos34rboAgtWEch0d+kEOuew
+	 j+doVd+uzJj49cAWXo9OqqMJPsOA4TF/J+XQTyG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rong Tao <rongtao@cestc.cn>,
+	Petr Mladek <pmladek@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 072/211] drm/amdgpu: Increase soft IH ring size
-Date: Wed, 20 Sep 2023 13:28:36 +0200
-Message-ID: <20230920112848.022410916@linuxfoundation.org>
+Subject: [PATCH 6.5 073/211] samples/hw_breakpoint: Fix kernel BUG invalid opcode: 0000
+Date: Wed, 20 Sep 2023 13:28:37 +0200
+Message-ID: <20230920112848.061030710@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,197 +41,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Rong Tao <rongtao@cestc.cn>
 
-[ Upstream commit bf80d34b6c58ad1c4f76067ecd460a148eab9d39 ]
+[ Upstream commit 910e230d5f1bb72c54532e94fbb1705095c7bab6 ]
 
-Retry faults are delegated to soft IH ring and then processed by
-deferred worker. Current soft IH ring size PAGE_SIZE can store 128
-entries, which may overflow and drop retry faults, causes HW stucks
-because the retry fault is not recovered.
+Macro symbol_put() is defined as __symbol_put(__stringify(x))
 
-Increase soft IH ring size to 8KB, enough to store 256 CAM entries
-because we clear the CAM entry after handling the retry fault from soft
-ring.
+    ksym_name = "jiffies"
+    symbol_put(ksym_name)
 
-Define macro IH_RING_SIZE and IH_SW_RING_SIZE to remove duplicate
-constant.
+will be resolved as
 
-Show warning message if soft IH ring overflows with CAM enabled because
-this should not happen.
+    __symbol_put("ksym_name")
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+which is clearly wrong. So symbol_put must be replaced with __symbol_put.
+
+When we uninstall hw_breakpoint.ko (rmmod), a kernel bug occurs with the
+following error:
+
+[11381.854152] kernel BUG at kernel/module/main.c:779!
+[11381.854159] invalid opcode: 0000 [#2] PREEMPT SMP PTI
+[11381.854163] CPU: 8 PID: 59623 Comm: rmmod Tainted: G      D    OE      6.2.9-200.fc37.x86_64 #1
+[11381.854167] Hardware name: To Be Filled By O.E.M. To Be Filled By O.E.M./B360M-HDV, BIOS P3.20 10/23/2018
+[11381.854169] RIP: 0010:__symbol_put+0xa2/0xb0
+[11381.854175] Code: 00 e8 92 d2 f7 ff 65 8b 05 c3 2f e6 78 85 c0 74 1b 48 8b 44 24 30 65 48 2b 04 25 28 00 00 00 75 12 48 83 c4 38 c3 cc cc cc cc <0f> 0b 0f 1f 44 00 00 eb de e8 c0 df d8 00 90 90 90 90 90 90 90 90
+[11381.854178] RSP: 0018:ffffad8ec6ae7dd0 EFLAGS: 00010246
+[11381.854181] RAX: 0000000000000000 RBX: ffffffffc1fd1240 RCX: 000000000000000c
+[11381.854184] RDX: 000000000000006b RSI: ffffffffc02bf7c7 RDI: ffffffffc1fd001c
+[11381.854186] RBP: 000055a38b76e7c8 R08: ffffffff871ccfe0 R09: 0000000000000000
+[11381.854188] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+[11381.854190] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[11381.854192] FS:  00007fbf7c62c740(0000) GS:ffff8c5badc00000(0000) knlGS:0000000000000000
+[11381.854195] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[11381.854197] CR2: 000055a38b7793f8 CR3: 0000000363e1e001 CR4: 00000000003726e0
+[11381.854200] DR0: ffffffffb3407980 DR1: 0000000000000000 DR2: 0000000000000000
+[11381.854202] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+[11381.854204] Call Trace:
+[11381.854207]  <TASK>
+[11381.854212]  s_module_exit+0xc/0xff0 [symbol_getput]
+[11381.854219]  __do_sys_delete_module.constprop.0+0x198/0x2f0
+[11381.854225]  do_syscall_64+0x58/0x80
+[11381.854231]  ? exit_to_user_mode_prepare+0x180/0x1f0
+[11381.854237]  ? syscall_exit_to_user_mode+0x17/0x40
+[11381.854241]  ? do_syscall_64+0x67/0x80
+[11381.854245]  ? syscall_exit_to_user_mode+0x17/0x40
+[11381.854248]  ? do_syscall_64+0x67/0x80
+[11381.854252]  ? exc_page_fault+0x70/0x170
+[11381.854256]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Signed-off-by: Rong Tao <rongtao@cestc.cn>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c  | 8 ++++++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h  | 7 +++++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/ih_v6_0.c    | 4 ++--
- drivers/gpu/drm/amd/amdgpu/navi10_ih.c  | 4 ++--
- drivers/gpu/drm/amd/amdgpu/vega10_ih.c  | 4 ++--
- drivers/gpu/drm/amd/amdgpu/vega20_ih.c  | 4 ++--
- 7 files changed, 20 insertions(+), 13 deletions(-)
+ samples/hw_breakpoint/data_breakpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
-index fceb3b384955a..f3b0aaf3ebc69 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.c
-@@ -138,6 +138,7 @@ void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih)
- /**
-  * amdgpu_ih_ring_write - write IV to the ring buffer
-  *
-+ * @adev: amdgpu_device pointer
-  * @ih: ih ring to write to
-  * @iv: the iv to write
-  * @num_dw: size of the iv in dw
-@@ -145,8 +146,8 @@ void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih)
-  * Writes an IV to the ring buffer using the CPU and increment the wptr.
-  * Used for testing and delegating IVs to a software ring.
-  */
--void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
--			  unsigned int num_dw)
-+void amdgpu_ih_ring_write(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
-+			  const uint32_t *iv, unsigned int num_dw)
+diff --git a/samples/hw_breakpoint/data_breakpoint.c b/samples/hw_breakpoint/data_breakpoint.c
+index 418c46fe5ffc3..9debd128b2ab8 100644
+--- a/samples/hw_breakpoint/data_breakpoint.c
++++ b/samples/hw_breakpoint/data_breakpoint.c
+@@ -70,7 +70,7 @@ static int __init hw_break_module_init(void)
+ static void __exit hw_break_module_exit(void)
  {
- 	uint32_t wptr = le32_to_cpu(*ih->wptr_cpu) >> 2;
- 	unsigned int i;
-@@ -161,6 +162,9 @@ void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
- 	if (wptr != READ_ONCE(ih->rptr)) {
- 		wmb();
- 		WRITE_ONCE(*ih->wptr_cpu, cpu_to_le32(wptr));
-+	} else if (adev->irq.retry_cam_enabled) {
-+		dev_warn_once(adev->dev, "IH soft ring buffer overflow 0x%X, 0x%X\n",
-+			      wptr, ih->rptr);
- 	}
+ 	unregister_wide_hw_breakpoint(sample_hbp);
+-	symbol_put(ksym_name);
++	__symbol_put(ksym_name);
+ 	printk(KERN_INFO "HW Breakpoint for %s write uninstalled\n", ksym_name);
  }
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-index dd1c2eded6b9d..6c6184f0dbc17 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-@@ -27,6 +27,9 @@
- /* Maximum number of IVs processed at once */
- #define AMDGPU_IH_MAX_NUM_IVS	32
- 
-+#define IH_RING_SIZE	(256 * 1024)
-+#define IH_SW_RING_SIZE	(8 * 1024)	/* enough for 256 CAM entries */
-+
- struct amdgpu_device;
- struct amdgpu_iv_entry;
- 
-@@ -97,8 +100,8 @@ struct amdgpu_ih_funcs {
- int amdgpu_ih_ring_init(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
- 			unsigned ring_size, bool use_bus_addr);
- void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih);
--void amdgpu_ih_ring_write(struct amdgpu_ih_ring *ih, const uint32_t *iv,
--			  unsigned int num_dw);
-+void amdgpu_ih_ring_write(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
-+			  const uint32_t *iv, unsigned int num_dw);
- int amdgpu_ih_wait_on_checkpoint_process_ts(struct amdgpu_device *adev,
- 					    struct amdgpu_ih_ring *ih);
- int amdgpu_ih_process(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
-index 5273decc5753b..fa6d0adcec206 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
-@@ -493,7 +493,7 @@ void amdgpu_irq_delegate(struct amdgpu_device *adev,
- 			 struct amdgpu_iv_entry *entry,
- 			 unsigned int num_dw)
- {
--	amdgpu_ih_ring_write(&adev->irq.ih_soft, entry->iv_entry, num_dw);
-+	amdgpu_ih_ring_write(adev, &adev->irq.ih_soft, entry->iv_entry, num_dw);
- 	schedule_work(&adev->irq.ih_soft_work);
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-index b02e1cef78a76..980b241200803 100644
---- a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-@@ -535,7 +535,7 @@ static int ih_v6_0_sw_init(void *handle)
- 	 * use bus address for ih ring by psp bl */
- 	use_bus_addr =
- 		(adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) ? false : true;
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
- 	if (r)
- 		return r;
- 
-@@ -548,7 +548,7 @@ static int ih_v6_0_sw_init(void *handle)
- 	/* initialize ih control register offset */
- 	ih_v6_0_init_register_offset(adev);
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
- 	if (r)
- 		return r;
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-index eec13cb5bf758..b6a8478dabf43 100644
---- a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-@@ -565,7 +565,7 @@ static int navi10_ih_sw_init(void *handle)
- 		use_bus_addr = false;
- 	else
- 		use_bus_addr = true;
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
- 	if (r)
- 		return r;
- 
-@@ -578,7 +578,7 @@ static int navi10_ih_sw_init(void *handle)
- 	/* initialize ih control registers offset */
- 	navi10_ih_init_register_offset(adev);
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
- 	if (r)
- 		return r;
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vega10_ih.c b/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
-index 1e83db0c5438d..d364c6dd152c3 100644
---- a/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vega10_ih.c
-@@ -485,7 +485,7 @@ static int vega10_ih_sw_init(void *handle)
- 	if (r)
- 		return r;
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, true);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, true);
- 	if (r)
- 		return r;
- 
-@@ -510,7 +510,7 @@ static int vega10_ih_sw_init(void *handle)
- 	/* initialize ih control registers offset */
- 	vega10_ih_init_register_offset(adev);
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, true);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, true);
- 	if (r)
- 		return r;
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-index 4d719df376a72..544ee55a22da6 100644
---- a/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vega20_ih.c
-@@ -539,7 +539,7 @@ static int vega20_ih_sw_init(void *handle)
- 	    (adev->ip_versions[OSSSYS_HWIP][0] == IP_VERSION(4, 4, 2)))
- 		use_bus_addr = false;
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, 256 * 1024, use_bus_addr);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih, IH_RING_SIZE, use_bus_addr);
- 	if (r)
- 		return r;
- 
-@@ -565,7 +565,7 @@ static int vega20_ih_sw_init(void *handle)
- 	/* initialize ih control registers offset */
- 	vega20_ih_init_register_offset(adev);
- 
--	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, PAGE_SIZE, use_bus_addr);
-+	r = amdgpu_ih_ring_init(adev, &adev->irq.ih_soft, IH_SW_RING_SIZE, use_bus_addr);
- 	if (r)
- 		return r;
  
 -- 
 2.40.1
