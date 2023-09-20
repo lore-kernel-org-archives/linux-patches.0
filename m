@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A090F2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26829C433C7;
-	Wed, 20 Sep 2023 12:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CC72E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62E9C433C8;
+	Wed, 20 Sep 2023 12:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211796;
-	bh=GA9KFyg4pkGGWG+DwriO9GfrY0vexedNNj2zigLncYw=;
+	s=korg; t=1695211799;
+	bh=8SMdFcn7AjwRzPpdrUmYaLd8KPt8Vhby9vfFX8KhO8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPluJ/lASOvvdD7MtZpP6a38MKxjXhzUbiRZN+2LKwmWJ13HbDNP1ipNWd4KBziSQ
-	 uJVxYgRcmrbcbTaUx+qK91EwAKtTd0+/fAadphAiaKVUV2gZ0oqT3nuSY2nKQTNzFL
-	 xsrtibufRkhdeKUj09QMDaHlxKdQ9LPkr+ZofY6o=
+	b=q5OiUipvyA+kLWQXFiOv9jTIOqFnMmftiMdEnov+7AJZnz9a/HbpzoF0D7w/WUcAn
+	 jcQc52+QJpqIMu2/ZqTIH6WPxsIm5BZKKgkwDFGi2LBXWwu+KelgYSRmmt2ub5nngS
+	 MK27Q0esM90f4Di8wrvwl/s2XVcstSryyUzmwLvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 4.19 002/273] ARM: pxa: remove use of symbol_get()
-Date: Wed, 20 Sep 2023 13:27:22 +0200
-Message-ID: <20230920112846.515019074@linuxfoundation.org>
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 032/273] bnx2x: fix page fault following EEH recovery
+Date: Wed, 20 Sep 2023 13:27:52 +0200
+Message-ID: <20230920112847.415160592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,73 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: David Christensen <drc@linux.vnet.ibm.com>
 
-commit 0faa29c4207e6e29cfc81b427df60e326c37083a upstream.
+[ Upstream commit 7ebe4eda4265642859507d1b3ca330d8c196cfe5 ]
 
-The spitz board file uses the obscure symbol_get() function
-to optionally call a function from sharpsl_pm.c if that is
-built. However, the two files are always built together
-these days, and have been for a long time, so this can
-be changed to a normal function call.
+In the last step of the EEH recovery process, the EEH driver calls into
+bnx2x_io_resume() to re-initialize the NIC hardware via the function
+bnx2x_nic_load().  If an error occurs during bnx2x_nic_load(), OS and
+hardware resources are released and an error code is returned to the
+caller.  When called from bnx2x_io_resume(), the return code is ignored
+and the network interface is brought up unconditionally.  Later attempts
+to send a packet via this interface result in a page fault due to a null
+pointer reference.
 
-Link: https://lore.kernel.org/lkml/20230731162639.GA9441@lst.de/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch checks the return code of bnx2x_nic_load(), prints an error
+message if necessary, and does not enable the interface.
+
+Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-pxa/sharpsl_pm.c |    2 --
- arch/arm/mach-pxa/spitz.c      |   14 +-------------
- 2 files changed, 1 insertion(+), 15 deletions(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/arch/arm/mach-pxa/sharpsl_pm.c
-+++ b/arch/arm/mach-pxa/sharpsl_pm.c
-@@ -224,8 +224,6 @@ void sharpsl_battery_kick(void)
- {
- 	schedule_delayed_work(&sharpsl_bat, msecs_to_jiffies(125));
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+index 91ddde4d647c6..d21b22ed0b60a 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+@@ -14464,11 +14464,16 @@ static void bnx2x_io_resume(struct pci_dev *pdev)
+ 	bp->fw_seq = SHMEM_RD(bp, func_mb[BP_FW_MB_IDX(bp)].drv_mb_header) &
+ 							DRV_MSG_SEQ_NUMBER_MASK;
+ 
+-	if (netif_running(dev))
+-		bnx2x_nic_load(bp, LOAD_NORMAL);
++	if (netif_running(dev)) {
++		if (bnx2x_nic_load(bp, LOAD_NORMAL)) {
++			netdev_err(bp->dev, "Error during driver initialization, try unloading/reloading the driver\n");
++			goto done;
++		}
++	}
+ 
+ 	netif_device_attach(dev);
+ 
++done:
+ 	rtnl_unlock();
  }
--EXPORT_SYMBOL(sharpsl_battery_kick);
--
  
- static void sharpsl_battery_thread(struct work_struct *private_)
- {
---- a/arch/arm/mach-pxa/spitz.c
-+++ b/arch/arm/mach-pxa/spitz.c
-@@ -13,7 +13,6 @@
-  */
- 
- #include <linux/kernel.h>
--#include <linux/module.h>	/* symbol_get ; symbol_put */
- #include <linux/platform_device.h>
- #include <linux/delay.h>
- #include <linux/gpio_keys.h>
-@@ -517,17 +516,6 @@ static struct pxa2xx_spi_chip spitz_ads7
- 	.gpio_cs		= SPITZ_GPIO_ADS7846_CS,
- };
- 
--static void spitz_bl_kick_battery(void)
--{
--	void (*kick_batt)(void);
--
--	kick_batt = symbol_get(sharpsl_battery_kick);
--	if (kick_batt) {
--		kick_batt();
--		symbol_put(sharpsl_battery_kick);
--	}
--}
--
- static struct corgi_lcd_platform_data spitz_lcdcon_info = {
- 	.init_mode		= CORGI_LCD_MODE_VGA,
- 	.max_intensity		= 0x2f,
-@@ -535,7 +523,7 @@ static struct corgi_lcd_platform_data sp
- 	.limit_mask		= 0x0b,
- 	.gpio_backlight_cont	= SPITZ_GPIO_BACKLIGHT_CONT,
- 	.gpio_backlight_on	= SPITZ_GPIO_BACKLIGHT_ON,
--	.kick_battery		= spitz_bl_kick_battery,
-+	.kick_battery		= sharpsl_battery_kick,
- };
- 
- static struct pxa2xx_spi_chip spitz_lcdcon_chip = {
+-- 
+2.40.1
+
 
 
