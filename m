@@ -1,35 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAE230FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B244EC433C8;
-	Wed, 20 Sep 2023 12:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0736030FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83660C433C9;
+	Wed, 20 Sep 2023 12:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212799;
-	bh=7w3wXte0Q5vscTjKLQyyQ9Qi+pOJACkbgZE+Qx2WhvY=;
+	s=korg; t=1695212801;
+	bh=1jMqS8AwKpuNyP0e3kDuEvC+2GYDVULdcB63Ckms7LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UK6KXZgbHlsUasqx1oAsJ5uphGPR+3k75a65VuYxbTVupA34BWG6lnBWADnMU2B5h
-	 6uuFEl8mtoQOFaVXwsgIrETfqq4tdAkxrhXxr2dB5rGlGqK1m396UyNaueN6J0K6ed
-	 bCj3AcauyiLJ0IS5tu2ucKXGHxU4XlOXHzqjr4ng=
+	b=u4vJZJja+tyl9mzUyBp9FMMZlcJSzI0YVXhr05cznPtEncf5DYebvfbg0OrbQ0ah0
+	 yQ/9eQfY3mIjXdM7dmzwLl39B/4SkQ4MBbcjk9oVnVns1b3QPl1znXx3bNAJyCaCWm
+	 ucGrDo4fYXg0sl0UR44Q+iXgDZ0ynelOHSIP0cDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Yang <wenyang.linux@foxmail.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dylan Yudaken <dylany@fb.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Matthew Wilcox <willy@infradead.org>,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/367] eventfd: prevent underflow for eventfd semaphores
-Date: Wed, 20 Sep 2023 13:27:07 +0200
-Message-ID: <20230920112859.785849886@linuxfoundation.org>
+Subject: [PATCH 5.4 051/367] new helper: lookup_positive_unlocked()
+Date: Wed, 20 Sep 2023 13:27:08 +0200
+Message-ID: <20230920112859.813835591@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -48,76 +39,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Yang <wenyang.linux@foxmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 758b492047816a3158d027e9fca660bc5bcf20bf ]
+[ Upstream commit 6c2d4798a8d16cf4f3a28c3cd4af4f1dcbbb4d04 ]
 
-For eventfd with flag EFD_SEMAPHORE, when its ctx->count is 0, calling
-eventfd_ctx_do_read will cause ctx->count to overflow to ULLONG_MAX.
+Most of the callers of lookup_one_len_unlocked() treat negatives are
+ERR_PTR(-ENOENT).  Provide a helper that would do just that.  Note
+that a pinned positive dentry remains positive - it's ->d_inode is
+stable, etc.; a pinned _negative_ dentry can become positive at any
+point as long as you are not holding its parent at least shared.
+So using lookup_one_len_unlocked() needs to be careful;
+lookup_positive_unlocked() is safer and that's what the callers
+end up open-coding anyway.
 
-An underflow can happen with EFD_SEMAPHORE eventfds in at least the
-following three subsystems:
-
-(1) virt/kvm/eventfd.c
-(2) drivers/vfio/virqfd.c
-(3) drivers/virt/acrn/irqfd.c
-
-where (2) and (3) are just modeled after (1). An eventfd must be
-specified for use with the KVM_IRQFD ioctl(). This can also be an
-EFD_SEMAPHORE eventfd. When the eventfd count is zero or has been
-decremented to zero an underflow can be triggered when the irqfd is shut
-down by raising the KVM_IRQFD_FLAG_DEASSIGN flag in the KVM_IRQFD
-ioctl():
-
-        // ctx->count == 0
-        kvm_vm_ioctl()
-        -> kvm_irqfd()
-           -> kvm_irqfd_deassign()
-              -> irqfd_deactivate()
-                 -> irqfd_shutdown()
-                    -> eventfd_ctx_remove_wait_queue(&cnt)
-                       -> eventfd_ctx_do_read(&cnt)
-
-Userspace polling on the eventfd wouldn't notice the underflow because 1
-is always returned as the value from eventfd_read() while ctx->count
-would've underflowed. It's not a huge deal because this should only be
-happening when the irqfd is shutdown but we should still fix it and
-avoid the spurious wakeup.
-
-Fixes: cb289d6244a3 ("eventfd - allow atomic read and waitqueue remove")
-Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dylan Yudaken <dylany@fb.com>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Message-Id: <tencent_7588DFD1F365950A757310D764517A14B306@qq.com>
-[brauner: rewrite commit message and add explanation how this underflow can happen]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: 0d5a4f8f775f ("fs: Fix error checking for d_hash_and_lookup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventfd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/cifsfs.c      |    7 +------
+ fs/debugfs/inode.c    |    6 +-----
+ fs/kernfs/mount.c     |    2 +-
+ fs/namei.c            |   20 ++++++++++++++++++++
+ fs/nfsd/nfs3xdr.c     |    4 +---
+ fs/nfsd/nfs4xdr.c     |   11 +----------
+ fs/overlayfs/namei.c  |   24 ++++++++----------------
+ fs/quota/dquot.c      |    8 +-------
+ include/linux/namei.h |    1 +
+ 9 files changed, 35 insertions(+), 48 deletions(-)
 
-diff --git a/fs/eventfd.c b/fs/eventfd.c
-index 26b3d821e9168..e144094c831df 100644
---- a/fs/eventfd.c
-+++ b/fs/eventfd.c
-@@ -185,7 +185,7 @@ void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
- {
- 	lockdep_assert_held(&ctx->wqh.lock);
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -738,11 +738,6 @@ cifs_get_root(struct smb_vol *vol, struc
+ 		struct inode *dir = d_inode(dentry);
+ 		struct dentry *child;
  
--	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
-+	*cnt = ((ctx->flags & EFD_SEMAPHORE) && ctx->count) ? 1 : ctx->count;
- 	ctx->count -= *cnt;
+-		if (!dir) {
+-			dput(dentry);
+-			dentry = ERR_PTR(-ENOENT);
+-			break;
+-		}
+ 		if (!S_ISDIR(dir->i_mode)) {
+ 			dput(dentry);
+ 			dentry = ERR_PTR(-ENOTDIR);
+@@ -759,7 +754,7 @@ cifs_get_root(struct smb_vol *vol, struc
+ 		while (*s && *s != sep)
+ 			s++;
+ 
+-		child = lookup_one_len_unlocked(p, dentry, s - p);
++		child = lookup_positive_unlocked(p, dentry, s - p);
+ 		dput(dentry);
+ 		dentry = child;
+ 	} while (!IS_ERR(dentry));
+--- a/fs/debugfs/inode.c
++++ b/fs/debugfs/inode.c
+@@ -299,13 +299,9 @@ struct dentry *debugfs_lookup(const char
+ 	if (!parent)
+ 		parent = debugfs_mount->mnt_root;
+ 
+-	dentry = lookup_one_len_unlocked(name, parent, strlen(name));
++	dentry = lookup_positive_unlocked(name, parent, strlen(name));
+ 	if (IS_ERR(dentry))
+ 		return NULL;
+-	if (!d_really_is_positive(dentry)) {
+-		dput(dentry);
+-		return NULL;
+-	}
+ 	return dentry;
  }
- EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
--- 
-2.40.1
-
+ EXPORT_SYMBOL_GPL(debugfs_lookup);
+--- a/fs/kernfs/mount.c
++++ b/fs/kernfs/mount.c
+@@ -200,7 +200,7 @@ struct dentry *kernfs_node_dentry(struct
+ 			dput(dentry);
+ 			return ERR_PTR(-EINVAL);
+ 		}
+-		dtmp = lookup_one_len_unlocked(kntmp->name, dentry,
++		dtmp = lookup_positive_unlocked(kntmp->name, dentry,
+ 					       strlen(kntmp->name));
+ 		dput(dentry);
+ 		if (IS_ERR(dtmp))
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2565,6 +2565,26 @@ struct dentry *lookup_one_len_unlocked(c
+ }
+ EXPORT_SYMBOL(lookup_one_len_unlocked);
+ 
++/*
++ * Like lookup_one_len_unlocked(), except that it yields ERR_PTR(-ENOENT)
++ * on negatives.  Returns known positive or ERR_PTR(); that's what
++ * most of the users want.  Note that pinned negative with unlocked parent
++ * _can_ become positive at any time, so callers of lookup_one_len_unlocked()
++ * need to be very careful; pinned positives have ->d_inode stable, so
++ * this one avoids such problems.
++ */
++struct dentry *lookup_positive_unlocked(const char *name,
++				       struct dentry *base, int len)
++{
++	struct dentry *ret = lookup_one_len_unlocked(name, base, len);
++	if (!IS_ERR(ret) && d_is_negative(ret)) {
++		dput(ret);
++		ret = ERR_PTR(-ENOENT);
++	}
++	return ret;
++}
++EXPORT_SYMBOL(lookup_positive_unlocked);
++
+ #ifdef CONFIG_UNIX98_PTYS
+ int path_pts(struct path *path)
+ {
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -868,13 +868,11 @@ compose_entry_fh(struct nfsd3_readdirres
+ 		} else
+ 			dchild = dget(dparent);
+ 	} else
+-		dchild = lookup_one_len_unlocked(name, dparent, namlen);
++		dchild = lookup_positive_unlocked(name, dparent, namlen);
+ 	if (IS_ERR(dchild))
+ 		return rv;
+ 	if (d_mountpoint(dchild))
+ 		goto out;
+-	if (d_really_is_negative(dchild))
+-		goto out;
+ 	if (dchild->d_inode->i_ino != ino)
+ 		goto out;
+ 	rv = fh_compose(fhp, exp, dchild, &cd->fh);
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2991,18 +2991,9 @@ nfsd4_encode_dirent_fattr(struct xdr_str
+ 	__be32 nfserr;
+ 	int ignore_crossmnt = 0;
+ 
+-	dentry = lookup_one_len_unlocked(name, cd->rd_fhp->fh_dentry, namlen);
++	dentry = lookup_positive_unlocked(name, cd->rd_fhp->fh_dentry, namlen);
+ 	if (IS_ERR(dentry))
+ 		return nfserrno(PTR_ERR(dentry));
+-	if (d_really_is_negative(dentry)) {
+-		/*
+-		 * we're not holding the i_mutex here, so there's
+-		 * a window where this directory entry could have gone
+-		 * away.
+-		 */
+-		dput(dentry);
+-		return nfserr_noent;
+-	}
+ 
+ 	exp_get(exp);
+ 	/*
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -200,7 +200,7 @@ static int ovl_lookup_single(struct dent
+ 	int err;
+ 	bool last_element = !post[0];
+ 
+-	this = lookup_one_len_unlocked(name, base, namelen);
++	this = lookup_positive_unlocked(name, base, namelen);
+ 	if (IS_ERR(this)) {
+ 		err = PTR_ERR(this);
+ 		this = NULL;
+@@ -208,8 +208,6 @@ static int ovl_lookup_single(struct dent
+ 			goto out;
+ 		goto out_err;
+ 	}
+-	if (!this->d_inode)
+-		goto put_and_out;
+ 
+ 	if (ovl_dentry_weird(this)) {
+ 		/* Don't support traversing automounts and other weirdness */
+@@ -659,7 +657,7 @@ struct dentry *ovl_get_index_fh(struct o
+ 	if (err)
+ 		return ERR_PTR(err);
+ 
+-	index = lookup_one_len_unlocked(name.name, ofs->indexdir, name.len);
++	index = lookup_positive_unlocked(name.name, ofs->indexdir, name.len);
+ 	kfree(name.name);
+ 	if (IS_ERR(index)) {
+ 		if (PTR_ERR(index) == -ENOENT)
+@@ -667,9 +665,7 @@ struct dentry *ovl_get_index_fh(struct o
+ 		return index;
+ 	}
+ 
+-	if (d_is_negative(index))
+-		err = 0;
+-	else if (ovl_is_whiteout(index))
++	if (ovl_is_whiteout(index))
+ 		err = -ESTALE;
+ 	else if (ovl_dentry_weird(index))
+ 		err = -EIO;
+@@ -693,7 +689,7 @@ struct dentry *ovl_lookup_index(struct o
+ 	if (err)
+ 		return ERR_PTR(err);
+ 
+-	index = lookup_one_len_unlocked(name.name, ofs->indexdir, name.len);
++	index = lookup_positive_unlocked(name.name, ofs->indexdir, name.len);
+ 	if (IS_ERR(index)) {
+ 		err = PTR_ERR(index);
+ 		if (err == -ENOENT) {
+@@ -708,9 +704,7 @@ struct dentry *ovl_lookup_index(struct o
+ 	}
+ 
+ 	inode = d_inode(index);
+-	if (d_is_negative(index)) {
+-		goto out_dput;
+-	} else if (ovl_is_whiteout(index) && !verify) {
++	if (ovl_is_whiteout(index) && !verify) {
+ 		/*
+ 		 * When index lookup is called with !verify for decoding an
+ 		 * overlay file handle, a whiteout index implies that decode
+@@ -1139,7 +1133,7 @@ bool ovl_lower_positive(struct dentry *d
+ 		struct dentry *this;
+ 		struct dentry *lowerdir = poe->lowerstack[i].dentry;
+ 
+-		this = lookup_one_len_unlocked(name->name, lowerdir,
++		this = lookup_positive_unlocked(name->name, lowerdir,
+ 					       name->len);
+ 		if (IS_ERR(this)) {
+ 			switch (PTR_ERR(this)) {
+@@ -1156,10 +1150,8 @@ bool ovl_lower_positive(struct dentry *d
+ 				break;
+ 			}
+ 		} else {
+-			if (this->d_inode) {
+-				positive = !ovl_is_whiteout(this);
+-				done = true;
+-			}
++			positive = !ovl_is_whiteout(this);
++			done = true;
+ 			dput(this);
+ 		}
+ 	}
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -2543,21 +2543,15 @@ int dquot_quota_on_mount(struct super_bl
+ 	struct dentry *dentry;
+ 	int error;
+ 
+-	dentry = lookup_one_len_unlocked(qf_name, sb->s_root, strlen(qf_name));
++	dentry = lookup_positive_unlocked(qf_name, sb->s_root, strlen(qf_name));
+ 	if (IS_ERR(dentry))
+ 		return PTR_ERR(dentry);
+ 
+-	if (d_really_is_negative(dentry)) {
+-		error = -ENOENT;
+-		goto out;
+-	}
+-
+ 	error = security_quota_on(dentry);
+ 	if (!error)
+ 		error = vfs_load_quota_inode(d_inode(dentry), type, format_id,
+ 				DQUOT_USAGE_ENABLED | DQUOT_LIMITS_ENABLED);
+ 
+-out:
+ 	dput(dentry);
+ 	return error;
+ }
+--- a/include/linux/namei.h
++++ b/include/linux/namei.h
+@@ -60,6 +60,7 @@ extern int kern_path_mountpoint(int, con
+ extern struct dentry *try_lookup_one_len(const char *, struct dentry *, int);
+ extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
+ extern struct dentry *lookup_one_len_unlocked(const char *, struct dentry *, int);
++extern struct dentry *lookup_positive_unlocked(const char *, struct dentry *, int);
+ 
+ extern int follow_down_one(struct path *);
+ extern int follow_down(struct path *);
 
 
