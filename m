@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0AA2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:12:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06A6C433C7;
-	Wed, 20 Sep 2023 12:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CC2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:13:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF6EC433C8;
+	Wed, 20 Sep 2023 12:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211977;
-	bh=jRKukgJxgOLnsO/oGOvLw6tANPEnWgbXZF+OR2V4G5I=;
+	s=korg; t=1695211980;
+	bh=Z/QGuUCLhTicG5/G+VSn0bemW9PNWy55pK/O479P4mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3jiwh9zAZ5kg0YO3hTWxiD3JjTqYk0qayAr3tReyswtq3ue7ygyGc0L9epr4KDSP
-	 ZqWwk981XiaD2xDbluRQGbyfDJwrlQpkm+r8yX2B349OI3Xw+ZJxMBTpn7YiALMSMK
-	 NuLM4Vxo5hsTRAKv9/grQz/BeeGak3pSGTucmMI0=
+	b=qPcryHDlJbmojK7vj2qPuweyhzxNuBQ0KDycpJrfWNvGVhpp7pOXimDp7szto5yTg
+	 yvPzuTa7lc+PeJTjNhVuujbT9DFnc4fCcR2/Ac7vqX4/hzrA1mO1TR9fc4Xv6XnZ7g
+	 /c04+KX53ZxuBRM3bktUrW+NqGWhScVIXAsdJzv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minjie Du <duminjie@vivo.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Zhang Jianhua <chris.zjh@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 106/273] drivers: clk: keystone: Fix parameter judgment in _of_pll_clk_init()
-Date: Wed, 20 Sep 2023 13:29:06 +0200
-Message-ID: <20230920112849.743521000@linuxfoundation.org>
+Subject: [PATCH 4.19 107/273] clk: sunxi-ng: Modify mismatched function name
+Date: Wed, 20 Sep 2023 13:29:07 +0200
+Message-ID: <20230920112849.780377464@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,36 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minjie Du <duminjie@vivo.com>
+From: Zhang Jianhua <chris.zjh@huawei.com>
 
-[ Upstream commit a995c50db887ef97f3160775aef7d772635a6f6e ]
+[ Upstream commit 075d9ca5b4e17f84fd1c744a405e69ec743be7f0 ]
 
-The function clk_register_pll() may return NULL or an ERR_PTR. Don't
-treat an ERR_PTR as valid.
+No functional modification involved.
 
-Signed-off-by: Minjie Du <duminjie@vivo.com>
-Link: https://lore.kernel.org/r/20230712102246.10348-1-duminjie@vivo.com
-Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
-[sboyd@kernel.org: Reword commit text]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+drivers/clk/sunxi-ng/ccu_mmc_timing.c:54: warning: expecting prototype for sunxi_ccu_set_mmc_timing_mode(). Prototype was for sunxi_ccu_get_mmc_timing_mode() instead
+
+Fixes: f6f64ed868d3 ("clk: sunxi-ng: Add interface to query or configure MMC timing modes.")
+Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230722153107.2078179-1-chris.zjh@huawei.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/keystone/pll.c | 2 +-
+ drivers/clk/sunxi-ng/ccu_mmc_timing.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
-index e7e840fb74eaf..526694c2a6c97 100644
---- a/drivers/clk/keystone/pll.c
-+++ b/drivers/clk/keystone/pll.c
-@@ -213,7 +213,7 @@ static void __init _of_pll_clk_init(struct device_node *node, bool pllctrl)
- 	}
+diff --git a/drivers/clk/sunxi-ng/ccu_mmc_timing.c b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
+index f9869f7353c01..9356dc1571561 100644
+--- a/drivers/clk/sunxi-ng/ccu_mmc_timing.c
++++ b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
+@@ -50,7 +50,7 @@ int sunxi_ccu_set_mmc_timing_mode(struct clk *clk, bool new_mode)
+ EXPORT_SYMBOL_GPL(sunxi_ccu_set_mmc_timing_mode);
  
- 	clk = clk_register_pll(NULL, node->name, parent_name, pll_data);
--	if (clk) {
-+	if (!IS_ERR_OR_NULL(clk)) {
- 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
- 		return;
- 	}
+ /**
+- * sunxi_ccu_set_mmc_timing_mode: Get the current MMC clock timing mode
++ * sunxi_ccu_get_mmc_timing_mode: Get the current MMC clock timing mode
+  * @clk: clock to query
+  *
+  * Returns 0 if the clock is in old timing mode, > 0 if it is in
 -- 
 2.40.1
 
