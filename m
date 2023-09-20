@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99798465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E029C433C7;
-	Wed, 20 Sep 2023 11:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B198465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192C6C433C8;
+	Wed, 20 Sep 2023 11:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210700;
-	bh=3kFXHyKJLtJckE7AYjZclprN6av7GcuL5IgQ3oREVO0=;
+	s=korg; t=1695210703;
+	bh=RlMZ7aHnzXvW3fsafdSqtFQcL2WcpaBfYXbhrjRYXWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YaIVSNUU0Z1HtD2umD9FRr0vZBj9hcvPkTBiAr6e33bzEluM8bD9CsJ0ynGRi2S9W
-	 WZ7/kdQ7o+E3DzGx4jKo3Ujqar5nf38B+gUSfUtUrAvc0x3kZgnNmT9LHZevYiYM5g
-	 NP1I9/k9vpZFvftSosc8yzL/ZNeKYFCxELCDpflc=
+	b=Sfs/xzVHdtiKv4o/rMA8VvuPuvtGKHHIUsBu3Yeis8NKx8RKLolqkGmsbJgh/g0Wn
+	 g7cG+PBKGbMSn2vIcRHTxxv2Ho0jRxQsye4FfQjfYxJ3Xnlk2yaNd/KcKByVur8Irm
+	 RiDUnA1n6yVlFj5K0KiAyVnJdfF4kvK8haqzV0I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	John Ogness <john.ogness@linutronix.de>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.5 173/211] Revert "firewire: core: obsolete usage of GFP_ATOMIC at building node tree"
-Date: Wed, 20 Sep 2023 13:30:17 +0200
-Message-ID: <20230920112851.248239541@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 156/211] scsi: lpfc: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
+Date: Wed, 20 Sep 2023 13:30:00 +0200
+Message-ID: <20230920112850.712761331@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,70 +41,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 3c70de9b580998e5d644f4e80a9944c30aa1197b upstream.
+[ Upstream commit 7dcc683db3639eadd11bf0d59a09088a43de5e22 ]
 
-This reverts commit 06f45435d985d60d7d2fe2424fbb9909d177a63d.
+Since debugfs_create_file() returns ERR_PTR and never NULL, use IS_ERR() to
+check the return value.
 
-John Ogness reports the case that the allocation is in atomic context under
-acquired spin-lock.
-
-[   12.555784] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-[   12.555808] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 70, name: kworker/1:2
-[   12.555814] preempt_count: 1, expected: 0
-[   12.555820] INFO: lockdep is turned off.
-[   12.555824] irq event stamp: 208
-[   12.555828] hardirqs last  enabled at (207): [<c00000000111e414>] ._raw_spin_unlock_irq+0x44/0x80
-[   12.555850] hardirqs last disabled at (208): [<c00000000110ff94>] .__schedule+0x854/0xfe0
-[   12.555859] softirqs last  enabled at (188): [<c000000000f73504>] .addrconf_verify_rtnl+0x2c4/0xb70
-[   12.555872] softirqs last disabled at (182): [<c000000000f732b0>] .addrconf_verify_rtnl+0x70/0xb70
-[   12.555884] CPU: 1 PID: 70 Comm: kworker/1:2 Tainted: G S                 6.6.0-rc1 #1
-[   12.555893] Hardware name: PowerMac7,2 PPC970 0x390202 PowerMac
-[   12.555898] Workqueue: firewire_ohci .bus_reset_work [firewire_ohci]
-[   12.555939] Call Trace:
-[   12.555944] [c000000009677830] [c0000000010d83c0] .dump_stack_lvl+0x8c/0xd0 (unreliable)
-[   12.555963] [c0000000096778b0] [c000000000140270] .__might_resched+0x320/0x340
-[   12.555978] [c000000009677940] [c000000000497600] .__kmem_cache_alloc_node+0x390/0x460
-[   12.555993] [c000000009677a10] [c0000000003fe620] .__kmalloc+0x70/0x310
-[   12.556007] [c000000009677ac0] [c0003d00004e2268] .fw_core_handle_bus_reset+0x2c8/0xba0 [firewire_core]
-[   12.556060] [c000000009677c20] [c0003d0000491190] .bus_reset_work+0x330/0x9b0 [firewire_ohci]
-[   12.556079] [c000000009677d10] [c00000000011d0d0] .process_one_work+0x280/0x6f0
-[   12.556094] [c000000009677e10] [c00000000011d8a0] .worker_thread+0x360/0x500
-[   12.556107] [c000000009677ef0] [c00000000012e3b4] .kthread+0x154/0x160
-[   12.556120] [c000000009677f90] [c00000000000bfa8] .start_kernel_thread+0x10/0x14
-
-Cc: stable@kernel.org
-Reported-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/lkml/87jzsuv1xk.fsf@jogness.linutronix.de/raw
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2fcbc569b9f5 ("scsi: lpfc: Make debugfs ktime stats generic for NVME and SCSI")
+Fixes: 4c47efc140fa ("scsi: lpfc: Move SCSI and NVME Stats to hardware queue structures")
+Fixes: 6a828b0f6192 ("scsi: lpfc: Support non-uniform allocation of MSIX vectors to hardware queues")
+Fixes: 95bfc6d8ad86 ("scsi: lpfc: Make FW logging dynamically configurable")
+Fixes: 9f77870870d8 ("scsi: lpfc: Add debugfs support for cm framework buffers")
+Fixes: c490850a0947 ("scsi: lpfc: Adapt partitioned XRI lists to efficient sharing")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230906030809.2847970-1-ruanjinjie@huawei.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-device.c   |    2 +-
- drivers/firewire/core-topology.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_debugfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/firewire/core-device.c
-+++ b/drivers/firewire/core-device.c
-@@ -1211,7 +1211,7 @@ void fw_node_event(struct fw_card *card,
- 		 * without actually having a link.
- 		 */
-  create:
--		device = kzalloc(sizeof(*device), GFP_KERNEL);
-+		device = kzalloc(sizeof(*device), GFP_ATOMIC);
- 		if (device == NULL)
- 			break;
- 
---- a/drivers/firewire/core-topology.c
-+++ b/drivers/firewire/core-topology.c
-@@ -101,7 +101,7 @@ static struct fw_node *fw_node_create(u3
- {
- 	struct fw_node *node;
- 
--	node = kzalloc(struct_size(node, ports, port_count), GFP_KERNEL);
-+	node = kzalloc(struct_size(node, ports, port_count), GFP_ATOMIC);
- 	if (node == NULL)
- 		return NULL;
- 
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index 7f9b221e7c34a..ea9b42225e629 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -6073,7 +6073,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 					    phba->hba_debugfs_root,
+ 					    phba,
+ 					    &lpfc_debugfs_op_multixripools);
+-		if (!phba->debug_multixri_pools) {
++		if (IS_ERR(phba->debug_multixri_pools)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "0527 Cannot create debugfs multixripools\n");
+ 			goto debug_failed;
+@@ -6085,7 +6085,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, S_IFREG | 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_cgn_buffer_op);
+-		if (!phba->debug_cgn_buffer) {
++		if (IS_ERR(phba->debug_cgn_buffer)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "6527 Cannot create debugfs "
+ 					 "cgn_buffer\n");
+@@ -6098,7 +6098,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, S_IFREG | 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_rx_monitor_op);
+-		if (!phba->debug_rx_monitor) {
++		if (IS_ERR(phba->debug_rx_monitor)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "6528 Cannot create debugfs "
+ 					 "rx_monitor\n");
+@@ -6111,7 +6111,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_debugfs_ras_log);
+-		if (!phba->debug_ras_log) {
++		if (IS_ERR(phba->debug_ras_log)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "6148 Cannot create debugfs"
+ 					 " ras_log\n");
+@@ -6132,7 +6132,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, S_IFREG | 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_debugfs_op_lockstat);
+-		if (!phba->debug_lockstat) {
++		if (IS_ERR(phba->debug_lockstat)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "4610 Can't create debugfs lockstat\n");
+ 			goto debug_failed;
+@@ -6358,7 +6358,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 		debugfs_create_file(name, 0644,
+ 				    vport->vport_debugfs_root,
+ 				    vport, &lpfc_debugfs_op_scsistat);
+-	if (!vport->debug_scsistat) {
++	if (IS_ERR(vport->debug_scsistat)) {
+ 		lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 				 "4611 Cannot create debugfs scsistat\n");
+ 		goto debug_failed;
+@@ -6369,7 +6369,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 		debugfs_create_file(name, 0644,
+ 				    vport->vport_debugfs_root,
+ 				    vport, &lpfc_debugfs_op_ioktime);
+-	if (!vport->debug_ioktime) {
++	if (IS_ERR(vport->debug_ioktime)) {
+ 		lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 				 "0815 Cannot create debugfs ioktime\n");
+ 		goto debug_failed;
+-- 
+2.40.1
+
 
 
