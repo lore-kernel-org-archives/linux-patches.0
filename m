@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C364D30FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D02C433C8;
-	Wed, 20 Sep 2023 12:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB332AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11765C433CB;
+	Wed, 20 Sep 2023 12:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212473;
-	bh=dnBacza4/GGM/zU/hL/cfp4HG8XcPthMn66gPcw+pjk=;
+	s=korg; t=1695212476;
+	bh=hGB5QxGMtPUBIEUT+nxpS70klomHF36DiykImd/2fTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0edc9zQAL+MdXy5nDWTGrcnRPBv8AnihywOhVktF4x3xInrt9X+NBJwvnJjaRvnpe
-	 wR73Gsm3PEaUoYorQr1GTZ3yCD548fKYcgAZOsH65nictoO45ZhcwQReVn8lRR5Bgc
-	 8X/OwNsPwZ7i4bZ94QXMBTMuxUBW5shdHTWWLfZs=
+	b=QsNSnmaOQ9fwAR+j7ZDufyIokcd14hF5XpuQlVe68VytQeGUcjp3pe9wRhtci2yAe
+	 WhGXY1FYN0OWkRwy5pLsiHvoe/La0NwYxU+AMTRaQMI6Qy36F/txJ/G/s540rhErUB
+	 gvywVGvCck89oXYXIck96U1FOBY7WO2tQ2+uo4HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 15/83] wifi: ath9k: fix printk specifier
-Date: Wed, 20 Sep 2023 13:31:05 +0200
-Message-ID: <20230920112827.282173183@linuxfoundation.org>
+Subject: [PATCH 5.10 16/83] wifi: mwifiex: fix fortify warning
+Date: Wed, 20 Sep 2023 13:31:06 +0200
+Message-ID: <20230920112827.321412304@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -42,62 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 061115fbfb2ce5870c9a004d68dc63138c07c782 ]
+[ Upstream commit dcce94b80a954a8968ff29fafcfb066d6197fa9a ]
 
-Smatch reports:
+When compiling with gcc 13.1 and CONFIG_FORTIFY_SOURCE=y,
+I've noticed the following:
 
-ath_pci_probe() warn: argument 4 to %lx specifier is cast from pointer
-ath_ahb_probe() warn: argument 4 to %lx specifier is cast from pointer
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘mwifiex_construct_tdls_action_frame’ at drivers/net/wireless/marvell/mwifiex/tdls.c:765:3,
+    inlined from ‘mwifiex_send_tdls_action_frame’ at drivers/net/wireless/marvell/mwifiex/tdls.c:856:6:
+./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Wattribute-warning]
+  529 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fix it by modifying %lx to %p in the printk format string.
+The compiler actually complains on:
 
-Note that with this change, the pointer address will be printed as a
-hashed value by default. This is appropriate because the kernel
-should not leak kernel pointers to user space in an informational
-message. If someone wants to see the real address for debugging
-purposes, this can be achieved with the no_hash_pointers kernel option.
+memmove(pos + ETH_ALEN, &mgmt->u.action.category,
+	sizeof(mgmt->u.action.u.tdls_discover_resp));
 
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230723040403.296723-1-dzm91@hust.edu.cn
+and it happens because the fortification logic interprets this
+as an attempt to overread 1-byte 'u.action.category' member of
+'struct ieee80211_mgmt'. To silence this warning, it's enough
+to pass an address of 'u.action' itself instead of an address
+of its first member.
+
+This also fixes an improper usage of 'sizeof()'. Since 'skb' is
+extended with 'sizeof(mgmt->u.action.u.tdls_discover_resp) + 1'
+bytes (where 1 is actually 'sizeof(mgmt->u.action.category)'),
+I assume that the same number of bytes should be copied.
+
+Suggested-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230629085115.180499-2-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/ahb.c | 4 ++--
- drivers/net/wireless/ath/ath9k/pci.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/tdls.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/ahb.c b/drivers/net/wireless/ath/ath9k/ahb.c
-index cdefb8e2daf14..05fb76a4e144e 100644
---- a/drivers/net/wireless/ath/ath9k/ahb.c
-+++ b/drivers/net/wireless/ath/ath9k/ahb.c
-@@ -136,8 +136,8 @@ static int ath_ahb_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/marvell/mwifiex/tdls.c b/drivers/net/wireless/marvell/mwifiex/tdls.c
+index 97bb87c3676bb..6c60621b6cccb 100644
+--- a/drivers/net/wireless/marvell/mwifiex/tdls.c
++++ b/drivers/net/wireless/marvell/mwifiex/tdls.c
+@@ -735,6 +735,7 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
+ 	int ret;
+ 	u16 capab;
+ 	struct ieee80211_ht_cap *ht_cap;
++	unsigned int extra;
+ 	u8 radio, *pos;
  
- 	ah = sc->sc_ah;
- 	ath9k_hw_name(ah, hw_name, sizeof(hw_name));
--	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
--		   hw_name, (unsigned long)mem, irq);
-+	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
-+		   hw_name, mem, irq);
+ 	capab = priv->curr_bss_params.bss_descriptor.cap_info_bitmap;
+@@ -753,7 +754,10 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
  
- 	return 0;
- 
-diff --git a/drivers/net/wireless/ath/ath9k/pci.c b/drivers/net/wireless/ath/ath9k/pci.c
-index cff9af3af38d5..4f90c304d1214 100644
---- a/drivers/net/wireless/ath/ath9k/pci.c
-+++ b/drivers/net/wireless/ath/ath9k/pci.c
-@@ -994,8 +994,8 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	sc->sc_ah->msi_reg = 0;
- 
- 	ath9k_hw_name(sc->sc_ah, hw_name, sizeof(hw_name));
--	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
--		   hw_name, (unsigned long)sc->mem, pdev->irq);
-+	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
-+		   hw_name, sc->mem, pdev->irq);
- 
- 	return 0;
+ 	switch (action_code) {
+ 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
+-		skb_put(skb, sizeof(mgmt->u.action.u.tdls_discover_resp) + 1);
++		/* See the layout of 'struct ieee80211_mgmt'. */
++		extra = sizeof(mgmt->u.action.u.tdls_discover_resp) +
++			sizeof(mgmt->u.action.category);
++		skb_put(skb, extra);
+ 		mgmt->u.action.category = WLAN_CATEGORY_PUBLIC;
+ 		mgmt->u.action.u.tdls_discover_resp.action_code =
+ 					      WLAN_PUB_ACTION_TDLS_DISCOVER_RES;
+@@ -762,8 +766,7 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
+ 		mgmt->u.action.u.tdls_discover_resp.capability =
+ 							     cpu_to_le16(capab);
+ 		/* move back for addr4 */
+-		memmove(pos + ETH_ALEN, &mgmt->u.action.category,
+-			sizeof(mgmt->u.action.u.tdls_discover_resp));
++		memmove(pos + ETH_ALEN, &mgmt->u.action, extra);
+ 		/* init address 4 */
+ 		eth_broadcast_addr(pos);
  
 -- 
 2.40.1
