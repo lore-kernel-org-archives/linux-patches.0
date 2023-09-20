@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2459C8465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CE7C433CA;
-	Wed, 20 Sep 2023 11:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99798465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E029C433C7;
+	Wed, 20 Sep 2023 11:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210698;
-	bh=bDdCtmzOORHZKR8hG99NLcIrqTL+fXsUfuKzzv9qIcg=;
+	s=korg; t=1695210700;
+	bh=3kFXHyKJLtJckE7AYjZclprN6av7GcuL5IgQ3oREVO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ew+K04IcRc9fjG6dgNr2ctrPitOgJEBVZO+u/dOllGqJlXGtSMdNKTI1yTnAADIjE
-	 eUsxuy2eiIYOUox948BprYXdGX8jE0XPK5BZppaU0OGMHVMHujW6L20VFh492v7eow
-	 cZuyCFs4gw/3ngR2ZMsyEtWbC3+bu8gQAwOS5+QI=
+	b=YaIVSNUU0Z1HtD2umD9FRr0vZBj9hcvPkTBiAr6e33bzEluM8bD9CsJ0ynGRi2S9W
+	 WZ7/kdQ7o+E3DzGx4jKo3Ujqar5nf38B+gUSfUtUrAvc0x3kZgnNmT9LHZevYiYM5g
+	 NP1I9/k9vpZFvftSosc8yzL/ZNeKYFCxELCDpflc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.5 172/211] x86/platform/uv: Use alternate source for socket to node data
-Date: Wed, 20 Sep 2023 13:30:16 +0200
-Message-ID: <20230920112851.218828397@linuxfoundation.org>
+	stable@kernel.org,
+	John Ogness <john.ogness@linutronix.de>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 6.5 173/211] Revert "firewire: core: obsolete usage of GFP_ATOMIC at building node tree"
+Date: Wed, 20 Sep 2023 13:30:17 +0200
+Message-ID: <20230920112851.248239541@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,69 +40,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 5290e88ba2c742ca77c5f5b690e5af549cfd8591 upstream.
+commit 3c70de9b580998e5d644f4e80a9944c30aa1197b upstream.
 
-The UV code attempts to build a set of tables to allow it to do
-bidirectional socket<=>node lookups.
+This reverts commit 06f45435d985d60d7d2fe2424fbb9909d177a63d.
 
-But when nr_cpus is set to a smaller number than actually present, the
-cpu_to_node() mapping information for unused CPUs is not available to
-build_socket_tables(). This results in skipping some nodes or sockets
-when creating the tables and leaving some -1's for later code to trip.
-over, causing oopses.
+John Ogness reports the case that the allocation is in atomic context under
+acquired spin-lock.
 
-The problem is that the socket<=>node lookups are created by doing a
-loop over all CPUs, then looking up the CPU's APICID and socket. But
-if a CPU is not present, there is no way to start this lookup.
+[   12.555784] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
+[   12.555808] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 70, name: kworker/1:2
+[   12.555814] preempt_count: 1, expected: 0
+[   12.555820] INFO: lockdep is turned off.
+[   12.555824] irq event stamp: 208
+[   12.555828] hardirqs last  enabled at (207): [<c00000000111e414>] ._raw_spin_unlock_irq+0x44/0x80
+[   12.555850] hardirqs last disabled at (208): [<c00000000110ff94>] .__schedule+0x854/0xfe0
+[   12.555859] softirqs last  enabled at (188): [<c000000000f73504>] .addrconf_verify_rtnl+0x2c4/0xb70
+[   12.555872] softirqs last disabled at (182): [<c000000000f732b0>] .addrconf_verify_rtnl+0x70/0xb70
+[   12.555884] CPU: 1 PID: 70 Comm: kworker/1:2 Tainted: G S                 6.6.0-rc1 #1
+[   12.555893] Hardware name: PowerMac7,2 PPC970 0x390202 PowerMac
+[   12.555898] Workqueue: firewire_ohci .bus_reset_work [firewire_ohci]
+[   12.555939] Call Trace:
+[   12.555944] [c000000009677830] [c0000000010d83c0] .dump_stack_lvl+0x8c/0xd0 (unreliable)
+[   12.555963] [c0000000096778b0] [c000000000140270] .__might_resched+0x320/0x340
+[   12.555978] [c000000009677940] [c000000000497600] .__kmem_cache_alloc_node+0x390/0x460
+[   12.555993] [c000000009677a10] [c0000000003fe620] .__kmalloc+0x70/0x310
+[   12.556007] [c000000009677ac0] [c0003d00004e2268] .fw_core_handle_bus_reset+0x2c8/0xba0 [firewire_core]
+[   12.556060] [c000000009677c20] [c0003d0000491190] .bus_reset_work+0x330/0x9b0 [firewire_ohci]
+[   12.556079] [c000000009677d10] [c00000000011d0d0] .process_one_work+0x280/0x6f0
+[   12.556094] [c000000009677e10] [c00000000011d8a0] .worker_thread+0x360/0x500
+[   12.556107] [c000000009677ef0] [c00000000012e3b4] .kthread+0x154/0x160
+[   12.556120] [c000000009677f90] [c00000000000bfa8] .start_kernel_thread+0x10/0x14
 
-Instead of looping over all CPUs, take CPUs out of the equation
-entirely. Loop over all APICIDs which are mapped to a valid NUMA node.
-Then just extract the socket-id from the APICID.
-
-This avoid tripping over disabled CPUs.
-
-Fixes: 8a50c5851927 ("x86/platform/uv: UV support for sub-NUMA clustering")
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230807141730.1117278-1-steve.wahl%40hpe.com
+Cc: stable@kernel.org
+Reported-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/lkml/87jzsuv1xk.fsf@jogness.linutronix.de/raw
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/x2apic_uv_x.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/firewire/core-device.c   |    2 +-
+ drivers/firewire/core-topology.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/apic/x2apic_uv_x.c
-+++ b/arch/x86/kernel/apic/x2apic_uv_x.c
-@@ -1571,7 +1571,7 @@ static void __init build_socket_tables(v
+--- a/drivers/firewire/core-device.c
++++ b/drivers/firewire/core-device.c
+@@ -1211,7 +1211,7 @@ void fw_node_event(struct fw_card *card,
+ 		 * without actually having a link.
+ 		 */
+  create:
+-		device = kzalloc(sizeof(*device), GFP_KERNEL);
++		device = kzalloc(sizeof(*device), GFP_ATOMIC);
+ 		if (device == NULL)
+ 			break;
+ 
+--- a/drivers/firewire/core-topology.c
++++ b/drivers/firewire/core-topology.c
+@@ -101,7 +101,7 @@ static struct fw_node *fw_node_create(u3
  {
- 	struct uv_gam_range_entry *gre = uv_gre_table;
- 	int nums, numn, nump;
--	int cpu, i, lnid;
-+	int i, lnid, apicid;
- 	int minsock = _min_socket;
- 	int maxsock = _max_socket;
- 	int minpnode = _min_pnode;
-@@ -1622,15 +1622,14 @@ static void __init build_socket_tables(v
+ 	struct fw_node *node;
  
- 	/* Set socket -> node values: */
- 	lnid = NUMA_NO_NODE;
--	for_each_possible_cpu(cpu) {
--		int nid = cpu_to_node(cpu);
--		int apicid, sockid;
-+	for (apicid = 0; apicid < ARRAY_SIZE(__apicid_to_node); apicid++) {
-+		int nid = __apicid_to_node[apicid];
-+		int sockid;
+-	node = kzalloc(struct_size(node, ports, port_count), GFP_KERNEL);
++	node = kzalloc(struct_size(node, ports, port_count), GFP_ATOMIC);
+ 	if (node == NULL)
+ 		return NULL;
  
--		if (lnid == nid)
-+		if ((nid == NUMA_NO_NODE) || (lnid == nid))
- 			continue;
- 		lnid = nid;
- 
--		apicid = per_cpu(x86_cpu_to_apicid, cpu);
- 		sockid = apicid >> uv_cpuid.socketid_shift;
- 
- 		if (_socket_to_node[sockid - minsock] == SOCK_EMPTY)
 
 
