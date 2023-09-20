@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0262AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445C1C433C7;
-	Wed, 20 Sep 2023 12:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722652AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC90C433C9;
+	Wed, 20 Sep 2023 12:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211263;
-	bh=f6zGIADNv1liOg1WZXaX8IwUjoCo2MmVxwy8YWzaoOQ=;
+	s=korg; t=1695211266;
+	bh=/b+x/qabaIFIjAedIhqX0+TPcuz7KzxGDNLfXZxmbwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoklqvmWry8PrcUA3m6pC5IpGnQuXFY/t2F1sFQ4lYatx7+CCfbLQClHw4nsTcBTi
-	 xQgJwOxeSDWeenr+mbMbB3iayMOuCL+TiztjnEFRJgYQhkNxVFqDNZbLWoJHbOp3jC
-	 4j+osMDoFvXNaTpHUZ/NnWTLSVksWxO/Uk0HJFGs=
+	b=MAJr0iN5nNjSQO7MZy45llkmdZ2Boy8HyCEm+BjeuuXsQ+mR3Qd7cdC+xX7rhVcO6
+	 nbwSGHARaZOvAB6/NAiYEZzSqkYMN6d0JP/uqDV5jyNRSoPKFTp82SP5O3myChV6Dd
+	 zrqr6QvKxtH9+p9C4UrLT4taLEEQVmUT5NNZulRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gong, Sishuai" <sishuai@purdue.edu>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 029/186] ALSA: seq: oss: Fix racy open/close of MIDI devices
-Date: Wed, 20 Sep 2023 13:28:52 +0200
-Message-ID: <20230920112837.977265825@linuxfoundation.org>
+	Joel Stanley <joel@jms.id.au>,
+	Alan Modra <amodra@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 4.14 030/186] powerpc/32: Include .branch_lt in data section
+Date: Wed, 20 Sep 2023 13:28:53 +0200
+Message-ID: <20230920112838.020094919@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,128 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Joel Stanley <joel@jms.id.au>
 
-[ Upstream commit 297224fc0922e7385573a30c29ffdabb67f27b7d ]
+commit 98ecc6768e8fdba95da1fc1efa0ef2d769e7fe1c upstream.
 
-Although snd_seq_oss_midi_open() and snd_seq_oss_midi_close() can be
-called concurrently from different code paths, we have no proper data
-protection against races.  Introduce open_mutex to each seq_oss_midi
-object for avoiding the races.
+When building a 32 bit powerpc kernel with Binutils 2.31.1 this warning
+is emitted:
 
-Reported-by: "Gong, Sishuai" <sishuai@purdue.edu>
-Closes: https://lore.kernel.org/r/7DC9AF71-F481-4ABA-955F-76C535661E33@purdue.edu
-Link: https://lore.kernel.org/r/20230612125533.27461-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ powerpc-linux-gnu-ld: warning: orphan section `.branch_lt' from
+ `arch/powerpc/kernel/head_44x.o' being placed in section `.branch_lt'
+
+As of binutils commit 2d7ad24e8726 ("Support PLT16 relocs against local
+symbols")[1], 32 bit targets can produce .branch_lt sections in their
+output.
+
+Include these symbols in the .data section as the ppc64 kernel does.
+
+[1] https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commitdiff;h=2d7ad24e8726ba4c45c9e67be08223a146a837ce
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Alan Modra <amodra@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/oss/seq_oss_midi.c | 35 +++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ arch/powerpc/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
-index cc8f06638edca..7226c03f15934 100644
---- a/sound/core/seq/oss/seq_oss_midi.c
-+++ b/sound/core/seq/oss/seq_oss_midi.c
-@@ -50,6 +50,7 @@ struct seq_oss_midi {
- 	struct snd_midi_event *coder;	/* MIDI event coder */
- 	struct seq_oss_devinfo *devinfo;	/* assigned OSSseq device */
- 	snd_use_lock_t use_lock;
-+	struct mutex open_mutex;
- };
- 
- 
-@@ -184,6 +185,7 @@ snd_seq_oss_midi_check_new_port(struct snd_seq_port_info *pinfo)
- 	mdev->flags = pinfo->capability;
- 	mdev->opened = 0;
- 	snd_use_lock_init(&mdev->use_lock);
-+	mutex_init(&mdev->open_mutex);
- 
- 	/* copy and truncate the name of synth device */
- 	strlcpy(mdev->name, pinfo->name, sizeof(mdev->name));
-@@ -332,14 +334,16 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	int perm;
- 	struct seq_oss_midi *mdev;
- 	struct snd_seq_port_subscribe subs;
-+	int err;
- 
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
- 
-+	mutex_lock(&mdev->open_mutex);
- 	/* already used? */
- 	if (mdev->opened && mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -EBUSY;
-+		err = -EBUSY;
-+		goto unlock;
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -322,6 +322,7 @@ SECTIONS
+ 		*(.sdata2)
+ 		*(.got.plt) *(.got)
+ 		*(.plt)
++		*(.branch_lt)
  	}
- 
- 	perm = 0;
-@@ -349,14 +353,14 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 		perm |= PERM_READ;
- 	perm &= mdev->flags;
- 	if (perm == 0) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	/* already opened? */
- 	if ((mdev->opened & perm) == perm) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
-+		err = 0;
-+		goto unlock;
- 	}
- 
- 	perm &= ~mdev->opened;
-@@ -381,13 +385,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	}
- 
- 	if (! mdev->opened) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	mdev->devinfo = dp;
-+	err = 0;
-+
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
--	return 0;
-+	return err;
- }
- 
- /*
-@@ -401,10 +409,9 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- 
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
--	if (! mdev->opened || mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
--	}
-+	mutex_lock(&mdev->open_mutex);
-+	if (!mdev->opened || mdev->devinfo != dp)
-+		goto unlock;
- 
- 	memset(&subs, 0, sizeof(subs));
- 	if (mdev->opened & PERM_WRITE) {
-@@ -423,6 +430,8 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- 	mdev->opened = 0;
- 	mdev->devinfo = NULL;
- 
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
- 	return 0;
- }
--- 
-2.40.1
-
+ #else
+ 	.data : AT(ADDR(.data) - LOAD_OFFSET) {
 
 
