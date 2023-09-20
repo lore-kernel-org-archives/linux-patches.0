@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97629154AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA0C433C9;
-	Wed, 20 Sep 2023 11:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568A1154AF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFE7C433C8;
+	Wed, 20 Sep 2023 11:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210344;
-	bh=COhfOJr386L39e5vti4TxDS2tiU61rbbyzOHPpTKMko=;
+	s=korg; t=1695210347;
+	bh=bT1HbCx0z3kEKtWWN71J2EIgJXeoURAogeJaab+iPCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1FfpYC6Q+ClVTw00E+v32eikOowOVABXRszxh2uCogHjaGSMEX37XQAQeJXJAq0z
-	 X3tte6fvNpBllC1QNQz5RiJ8lzcGJhi0CzINk17PfQpsPRTpM/2qYOUL0eCxaW6RBl
-	 jQT8N9p56vVFfn3ZwZ7Rlea9ZOrE2QIYnuBzVBEY=
+	b=qh76tzH0Y9CfAe19TqJY+5ua/l2m6tblIf3ZyOqdvZ6/+mfqG+xH7s+FYRd/Fl4UQ
+	 CwF6IF/0hTtfe5EsYlM7pB8yIlCDb65OMcVYWYAybA8jpds01qXUtGE6db8GLPcWrK
+	 qmS1XazVHEbipM8LDK6j45bRm/0Wun31nNi7jy/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
+	Ying Hsu <yinghsu@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 043/211] Bluetooth: btusb: Add new VID/PID 04ca/3804 for MT7922
-Date: Wed, 20 Sep 2023 13:28:07 +0200
-Message-ID: <20230920112847.127700109@linuxfoundation.org>
+Subject: [PATCH 6.5 044/211] Bluetooth: Fix hci_suspend_sync crash
+Date: Wed, 20 Sep 2023 13:28:08 +0200
+Message-ID: <20230920112847.156406088@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,76 +40,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 59be4be82bd3639cd9dbfb92df0f6263ab2c2e28 ]
+[ Upstream commit 573ebae162111063eedc6c838a659ba628f66a0f ]
 
-Add VID 04ca & PID 3804 for MediaTek MT7922 USB Bluetooth chip.
+If hci_unregister_dev() frees the hci_dev object but hci_suspend_notifier
+may still be accessing it, it can cause the program to crash.
+Here's the call trace:
+  <4>[102152.653246] Call Trace:
+  <4>[102152.653254]  hci_suspend_sync+0x109/0x301 [bluetooth]
+  <4>[102152.653259]  hci_suspend_dev+0x78/0xcd [bluetooth]
+  <4>[102152.653263]  hci_suspend_notifier+0x42/0x7a [bluetooth]
+  <4>[102152.653268]  notifier_call_chain+0x43/0x6b
+  <4>[102152.653271]  __blocking_notifier_call_chain+0x48/0x69
+  <4>[102152.653273]  __pm_notifier_call_chain+0x22/0x39
+  <4>[102152.653276]  pm_suspend+0x287/0x57c
+  <4>[102152.653278]  state_store+0xae/0xe5
+  <4>[102152.653281]  kernfs_fop_write+0x109/0x173
+  <4>[102152.653284]  __vfs_write+0x16f/0x1a2
+  <4>[102152.653287]  ? selinux_file_permission+0xca/0x16f
+  <4>[102152.653289]  ? security_file_permission+0x36/0x109
+  <4>[102152.653291]  vfs_write+0x114/0x21d
+  <4>[102152.653293]  __x64_sys_write+0x7b/0xdb
+  <4>[102152.653296]  do_syscall_64+0x59/0x194
+  <4>[102152.653299]  entry_SYSCALL_64_after_hwframe+0x5c/0xc1
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+This patch holds the reference count of the hci_dev object while
+processing it in hci_suspend_notifier to avoid potential crash
+caused by the race condition.
 
-T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=04ca ProdID=3804 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 81a58f3e1db42..26203b16ad911 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -637,6 +637,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe102), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 2c845c9a26be0..29ae9b254a34e 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2436,6 +2436,9 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
+ 	if (hci_dev_test_flag(hdev, HCI_USER_CHANNEL))
+ 		return NOTIFY_DONE;
  
- 	/* Additional Realtek 8723AE Bluetooth devices */
- 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
++	/* To avoid a potential race with hci_unregister_dev. */
++	hci_dev_hold(hdev);
++
+ 	if (action == PM_SUSPEND_PREPARE)
+ 		ret = hci_suspend_dev(hdev);
+ 	else if (action == PM_POST_SUSPEND)
+@@ -2445,6 +2448,7 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
+ 		bt_dev_err(hdev, "Suspend notifier action (%lu) failed: %d",
+ 			   action, ret);
+ 
++	hci_dev_put(hdev);
+ 	return NOTIFY_DONE;
+ }
+ 
 -- 
 2.40.1
 
