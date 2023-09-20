@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB3215AF8
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D65C433CA;
-	Wed, 20 Sep 2023 12:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C021815AF8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB6DC433C7;
+	Wed, 20 Sep 2023 12:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213676;
-	bh=/LG8c/lEFeRoeax0ERyYVU7SH+EWnNMH1Ndm8CNAcWQ=;
+	s=korg; t=1695213679;
+	bh=kNyV2a65l9iBCel5nabBD1/Cid9bt7lQYzrqqP/hcaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtYIEt+knKzqMheL544fAgoWOBq67QPoMzY+d2UsiMXq+NY7xWm1nkuReLeVOV9bD
-	 adzEeXJeeDHbb3HC9OR0nt5G488KsSyjysC9FqJZBLxfhB7p2pvnH2l0Z00nEMCYtr
-	 KbKyD6oevqhlqvivGhd/JuXe8LmReyUllUSd/Gmg=
+	b=qhwNlyho8o+Ji98e7UeVqu5d8d31CuLGRLgDeGs3wUw7YrgfgGwvFkIUx03Ru64Sv
+	 FJBYNtI94cPzKDUSWlIhelLeSAZFkNKOHh6sCokpWMev+24MzVvFP32Oj6MI0hmePW
+	 uShqpQC4oKVdyxDMipoVh7TctKStyN9pVRtk/ovg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Hayes Wang <hayeswang@realtek.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 299/367] net: ethernet: mtk_eth_soc: fix possible NULL pointer dereference in mtk_hwlro_get_fdir_all()
-Date: Wed, 20 Sep 2023 13:31:16 +0200
-Message-ID: <20230920112906.283815949@linuxfoundation.org>
+Subject: [PATCH 5.4 300/367] r8152: check budget for r8152_poll()
+Date: Wed, 20 Sep 2023 13:31:17 +0200
+Message-ID: <20230920112906.310186129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,37 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Hayes Wang <hayeswang@realtek.com>
 
-[ Upstream commit e4c79810755f66c9a933ca810da2724133b1165a ]
+[ Upstream commit a7b8d60b37237680009dd0b025fe8c067aba0ee3 ]
 
-rule_locs is allocated in ethtool_get_rxnfc and the size is determined by
-rule_cnt from user space. So rule_cnt needs to be check before using
-rule_locs to avoid NULL pointer dereference.
+According to the document of napi, there is no rx process when the
+budget is 0. Therefore, r8152_poll() has to return 0 directly when the
+budget is equal to 0.
 
-Fixes: 7aab747e5563 ("net: ethernet: mediatek: add ethtool functions to configure RX flows of HW LRO")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: d2187f8e4454 ("r8152: divide the tx and rx bottom functions")
+Signed-off-by: Hayes Wang <hayeswang@realtek.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
+ drivers/net/usb/r8152.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index f9139150a8a26..7b9f5eba78dcc 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2008,6 +2008,9 @@ static int mtk_hwlro_get_fdir_all(struct net_device *dev,
- 	int i;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index b0412d14e8f6c..a19f0431e6f99 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -2253,6 +2253,9 @@ static int r8152_poll(struct napi_struct *napi, int budget)
+ 	struct r8152 *tp = container_of(napi, struct r8152, napi);
+ 	int work_done;
  
- 	for (i = 0; i < MTK_MAX_LRO_IP_CNT; i++) {
-+		if (cnt == cmd->rule_cnt)
-+			return -EMSGSIZE;
++	if (!budget)
++		return 0;
 +
- 		if (mac->hwlro_ip[i]) {
- 			rule_locs[cnt] = i;
- 			cnt++;
+ 	work_done = rx_bottom(tp, budget);
+ 
+ 	if (work_done < budget) {
 -- 
 2.40.1
 
