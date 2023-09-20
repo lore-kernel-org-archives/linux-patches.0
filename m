@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBC730FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C680C433CB;
-	Wed, 20 Sep 2023 12:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D86F30FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CB3C433C8;
+	Wed, 20 Sep 2023 12:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212325;
-	bh=aTWLT6yOdBcdjfjMuhC3+zGTznnzkJHNA1sNRYjnY/c=;
+	s=korg; t=1695212328;
+	bh=gbg6subCqgbM3e7Bg2OXxKVn6eMgEWSgFaEOZMv5STk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARmRDBJPCkpwnpJklZ5CHBfs/ym6j7ZLGNt739taGmC1B7KxUlcR8Hyu3Ny4UwOq7
-	 UsQbrUma15pwL4YsHWCBwyGqe3z/AgwTnStLe0ufW/ejSF5u7NV2CXX79EwS9f9uX4
-	 dSHkPim5PlxjRW0jPo4hknHbJbO3WqifFSl+Q3Fo=
+	b=vQUs6lJVm+pdmXWkSKe5M9tVgpsFy2i5rhmDrcnEozWTEKJQTfTSNnzZTGmN6K8sV
+	 GmXPeEswgNgsB7YmxGGo8dPV3X0qUZeaUgC9sVAyBzejL09nOwmterGzS7mq62zq+Z
+	 sKyVW0BAq9xnN5XAyswN47HCht6/FQnB6AUVoSKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.19 233/273] ixgbe: fix timestamp configuration code
-Date: Wed, 20 Sep 2023 13:31:13 +0200
-Message-ID: <20230920112853.572490234@linuxfoundation.org>
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 4.19 206/273] kconfig: fix possible buffer overflow
+Date: Wed, 20 Sep 2023 13:30:46 +0200
+Message-ID: <20230920112852.850590688@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -43,147 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 3c44191dd76cf9c0cc49adaf34384cbd42ef8ad2 ]
+[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
 
-The commit in fixes introduced flags to control the status of hardware
-configuration while processing packets. At the same time another structure
-is used to provide configuration of timestamper to user-space applications.
-The way it was coded makes this structures go out of sync easily. The
-repro is easy for 82599 chips:
+Buffer 'new_argv' is accessed without bound check after accessing with
+bound check via 'new_argc' index.
 
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 12 -t 1
-current settings:
-tx_type 0
-rx_filter 0
-new settings:
-tx_type 1
-rx_filter 12
-
-The eth0 device is properly configured to timestamp any PTPv2 events.
-
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 1 -t 1
-current settings:
-tx_type 1
-rx_filter 12
-SIOCSHWTSTAMP failed: Numerical result out of range
-The requested time stamping mode is not supported by the hardware.
-
-The error is properly returned because HW doesn't support all packets
-timestamping. But the adapter->flags is cleared of timestamp flags
-even though no HW configuration was done. From that point no RX timestamps
-are received by user-space application. But configuration shows good
-values:
-
-[root@hostname ~]# hwstamp_ctl -i eth0
-current settings:
-tx_type 1
-rx_filter 12
-
-Fix the issue by applying new flags only when the HW was actually
-configured.
-
-Fixes: a9763f3cb54c ("ixgbe: Update PTP to support X550EM_x devices")
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e298f3b49def ("kconfig: add built-in function support")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c | 28 +++++++++++---------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ scripts/kconfig/preprocess.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-index eec68cc9288c8..9c0e0ccbbe3cf 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-@@ -844,6 +844,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	u32 tsync_tx_ctl = IXGBE_TSYNCTXCTL_ENABLED;
- 	u32 tsync_rx_ctl = IXGBE_TSYNCRXCTL_ENABLED;
- 	u32 tsync_rx_mtrl = PTP_EV_PORT << 16;
-+	u32 aflags = adapter->flags;
- 	bool is_l2 = false;
- 	u32 regval;
+diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
+index 8c7e51a6273cc..0b0d6ed3eeb91 100644
+--- a/scripts/kconfig/preprocess.c
++++ b/scripts/kconfig/preprocess.c
+@@ -393,6 +393,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
  
-@@ -864,20 +865,20 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	case HWTSTAMP_FILTER_NONE:
- 		tsync_rx_ctl = 0;
- 		tsync_rx_mtrl = 0;
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_SYNC:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_SYNC_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_DELAY_REQ_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V2_EVENT:
- 	case HWTSTAMP_FILTER_PTP_V2_L2_EVENT:
-@@ -891,8 +892,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_EVENT_V2;
- 		is_l2 = true;
- 		config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_EVENT:
- 	case HWTSTAMP_FILTER_NTP_ALL:
-@@ -903,7 +904,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		if (hw->mac.type >= ixgbe_mac_X550) {
- 			tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_ALL;
- 			config->rx_filter = HWTSTAMP_FILTER_ALL;
--			adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+			aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
- 			break;
- 		}
- 		/* fall through */
-@@ -914,8 +915,6 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		 * Delay_Req messages and hardware does not support
- 		 * timestamping all packets => return error
- 		 */
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		config->rx_filter = HWTSTAMP_FILTER_NONE;
- 		return -ERANGE;
+ 		p++;
  	}
-@@ -947,8 +946,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 			       IXGBE_TSYNCRXCTL_TYPE_ALL |
- 			       IXGBE_TSYNCRXCTL_TSIP_UT_EN;
- 		config->rx_filter = HWTSTAMP_FILTER_ALL;
--		adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
--		adapter->flags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
-+		aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+		aflags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
- 		is_l2 = true;
- 		break;
- 	default:
-@@ -981,6 +980,9 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 
- 	IXGBE_WRITE_FLUSH(hw);
- 
-+	/* configure adapter flags only when HW is actually configured */
-+	adapter->flags = aflags;
 +
- 	/* clear TX/RX time stamp registers, just to be sure */
- 	ixgbe_ptp_clear_tx_timestamp(adapter);
- 	IXGBE_READ_REG(hw, IXGBE_RXSTMPH);
++	if (new_argc >= FUNCTION_MAX_ARGS)
++		pperror("too many function arguments");
+ 	new_argv[new_argc++] = prev;
+ 
+ 	/*
 -- 
 2.40.1
 
