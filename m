@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B546FBD
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD6CC433CB;
-	Wed, 20 Sep 2023 12:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530D6FBD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99644C433CC;
+	Wed, 20 Sep 2023 12:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213173;
-	bh=H/uluswX6VBD8pZmXHtuiL+ciWg4T0ow3QvcP5keeSY=;
+	s=korg; t=1695213176;
+	bh=J8O5Gkpn7ztnmwYFwqFuayJ8UL1X/zwIOzUgeNv3h+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bf/JmPRINkuNFXSia4BBqlxceEwu6GgYP2rYviUS44C/5V8vdCpRcMFoetqAr/CMW
-	 YmnD65ov3z0c5d3UWWa7JAx4Nc6M8M5T/3yrAjQWp+ifzV6ykGPIpArmlitkMJqWMy
-	 nLvSHSwd8Nhx1XMjYFChef3B5IL2icJWKztOCR1E=
+	b=y93728E2lqBGe0MgZCvgxo7MVgWATgkQBANsUQvYhA9hftH2uTDhhsLNnnXT/YXpN
+	 4YzgiWz9ExBOpE4pQV0pHb0wevj62xro7oEvUrPuROI6pEbXfNWieNwUdphW0R5lp5
+	 8CuKmjVyDkAijZnP2Wjzpaq1NmOru7azirknwvDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 151/367] media: v4l2-fwnode: simplify v4l2_fwnode_parse_link
-Date: Wed, 20 Sep 2023 13:28:48 +0200
-Message-ID: <20230920112902.573636741@linuxfoundation.org>
+Subject: [PATCH 5.4 181/367] media: ov2680: Fix ov2680_bayer_order()
+Date: Wed, 20 Sep 2023 13:29:18 +0200
+Message-ID: <20230920112903.320188268@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,69 +43,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 507a0ba93aa1cf2837d2abc4ab0cbad3c29409d3 ]
+[ Upstream commit 50a7bad4e0a37d7018ab6fe843dd84bc6b2ecf72 ]
 
-This helper was introduced before those helpers where awailable. Convert
-it to cleanup the code and improbe readability.
+The index into ov2680_hv_flip_bayer_order[] should be 0-3, but
+ov2680_bayer_order() was using 0 + BIT(2) + (BIT(2) << 1) as
+max index, while the intention was to use: 0 + 1 + 2 as max index.
 
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: d7b13edd4cb4 ("media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()")
+Fix the index calculation in ov2680_bayer_order(), while at it
+also just use the ctrl values rather then reading them back using
+a slow i2c-read transaction.
+
+This also allows making the function void, since there now are
+no more i2c-reads to error check.
+
+Note the check for the ctrls being NULL is there to allow
+adding an ov2680_fill_format() helper later, which will call
+ov2680_set_bayer_order() during probe() before the ctrls are created.
+
+[Sakari Ailus: Change all users of ov2680_set_bayer_order() here]
+
+Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/media/i2c/ov2680.c | 33 ++++++++++++++-------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
-index 217d67cb31af2..56aad92b80fc9 100644
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -560,33 +560,26 @@ int v4l2_fwnode_endpoint_alloc_parse(struct fwnode_handle *fwnode,
+diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
+index f143e2af0b5fc..a4baf440b9505 100644
+--- a/drivers/media/i2c/ov2680.c
++++ b/drivers/media/i2c/ov2680.c
+@@ -315,26 +315,17 @@ static void ov2680_power_down(struct ov2680_dev *sensor)
+ 	usleep_range(5000, 10000);
  }
- EXPORT_SYMBOL_GPL(v4l2_fwnode_endpoint_alloc_parse);
  
--int v4l2_fwnode_parse_link(struct fwnode_handle *__fwnode,
-+int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
- 			   struct v4l2_fwnode_link *link)
+-static int ov2680_bayer_order(struct ov2680_dev *sensor)
++static void ov2680_set_bayer_order(struct ov2680_dev *sensor)
  {
--	const char *port_prop = "reg";
--	struct fwnode_handle *fwnode;
-+	struct fwnode_endpoint fwep;
+-	u32 format1;
+-	u32 format2;
+-	u32 hv_flip;
+-	int ret;
+-
+-	ret = ov2680_read_reg(sensor, OV2680_REG_FORMAT1, &format1);
+-	if (ret < 0)
+-		return ret;
++	int hv_flip = 0;
  
- 	memset(link, 0, sizeof(*link));
+-	ret = ov2680_read_reg(sensor, OV2680_REG_FORMAT2, &format2);
+-	if (ret < 0)
+-		return ret;
++	if (sensor->ctrls.vflip && sensor->ctrls.vflip->val)
++		hv_flip += 1;
  
--	fwnode = fwnode_get_parent(__fwnode);
--	fwnode_property_read_u32(fwnode, port_prop, &link->local_port);
--	fwnode = fwnode_get_next_parent(fwnode);
--	if (is_of_node(fwnode) && of_node_name_eq(to_of_node(fwnode), "ports"))
--		fwnode = fwnode_get_next_parent(fwnode);
--	link->local_node = fwnode;
-+	fwnode_graph_parse_endpoint(fwnode, &fwep);
-+	link->local_port = fwep.port;
-+	link->local_node = fwnode_graph_get_port_parent(fwnode);
+-	hv_flip = (format2 & BIT(2)  << 1) | (format1 & BIT(2));
++	if (sensor->ctrls.hflip && sensor->ctrls.hflip->val)
++		hv_flip += 2;
  
--	fwnode = fwnode_graph_get_remote_endpoint(__fwnode);
-+	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
- 	if (!fwnode) {
- 		fwnode_handle_put(fwnode);
- 		return -ENOLINK;
- 	}
- 
--	fwnode = fwnode_get_parent(fwnode);
--	fwnode_property_read_u32(fwnode, port_prop, &link->remote_port);
--	fwnode = fwnode_get_next_parent(fwnode);
--	if (is_of_node(fwnode) && of_node_name_eq(to_of_node(fwnode), "ports"))
--		fwnode = fwnode_get_next_parent(fwnode);
--	link->remote_node = fwnode;
-+	fwnode_graph_parse_endpoint(fwnode, &fwep);
-+	link->remote_port = fwep.port;
-+	link->remote_node = fwnode_graph_get_port_parent(fwnode);
- 
- 	return 0;
+ 	sensor->fmt.code = ov2680_hv_flip_bayer_order[hv_flip];
+-
+-	return 0;
  }
+ 
+ static int ov2680_vflip_enable(struct ov2680_dev *sensor)
+@@ -345,7 +336,8 @@ static int ov2680_vflip_enable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
+@@ -356,7 +348,8 @@ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_hflip_enable(struct ov2680_dev *sensor)
+@@ -367,7 +360,8 @@ static int ov2680_hflip_enable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_hflip_disable(struct ov2680_dev *sensor)
+@@ -378,7 +372,8 @@ static int ov2680_hflip_disable(struct ov2680_dev *sensor)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ov2680_bayer_order(sensor);
++	ov2680_set_bayer_order(sensor);
++	return 0;
+ }
+ 
+ static int ov2680_test_pattern_set(struct ov2680_dev *sensor, int value)
 -- 
 2.40.1
 
