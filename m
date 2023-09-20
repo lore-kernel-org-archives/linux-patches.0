@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2980F28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2670C433C8;
-	Wed, 20 Sep 2023 11:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE92928E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DBCC433C7;
+	Wed, 20 Sep 2023 11:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210771;
-	bh=0KcKR2nWfva1+fPAqOz8QR3Nb1EGM3rb4b0v1PER10Y=;
+	s=korg; t=1695210773;
+	bh=zNDgn+zAs0GLuIZfs4isBEyE4g/xMc/zESSyoAdqwpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6LigN4DJCGrrA8Vq8O0dA1nkbrpQ+J9MOqpWpphn58NvJAKDxJIakK2QGjQj2NAc
-	 NAY0+MmHwS3WWUKeF/ZSqXw4mlGaRy3AqmoM3CSoL98jpWuaTf0eyepsbjHgL2jNHj
-	 ZCRMn2It7VQ/eAZ+9Gs2bYDfC0kFsPK6PrKbFnPo=
+	b=0p0zOeEjIpkAF1KUGI2ebmlgMaang80H2lMnp+BtCzApprP4bgudPTz+kvugCoZoI
+	 fuOvVvULsX5HmyP/2bfm7+Bcp0z8iaVkdmSnn/O1OuPyUw8jdAZ3Ax6Ind+eSffoEG
+	 Pssxh29MKZ0kzL6GUGMVdrBgAdmmFYLR5YNO7wDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 199/211] scsi: pm8001: Setup IRQs on resume
-Date: Wed, 20 Sep 2023 13:30:43 +0200
-Message-ID: <20230920112852.033838621@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.5 200/211] Revert "comedi: add HAS_IOPORT dependencies"
+Date: Wed, 20 Sep 2023 13:30:44 +0200
+Message-ID: <20230920112852.064627430@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,117 +40,454 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit c91774818b041ed290df29fb1dc0725be9b12e83 upstream.
+commit 98a15816636044f25be4644db2a3e09fad68aaf7 upstream.
 
-The function pm8001_pci_resume() only calls pm8001_request_irq() without
-calling pm8001_setup_irq(). This causes the IRQ allocation to fail, which
-leads all drives being removed from the system.
+This reverts commit b5c75b68b7ded84d4c82118974ce3975a4dcaa74.
 
-Fix this issue by integrating the code for pm8001_setup_irq() directly
-inside pm8001_request_irq() so that MSI-X setup is performed both during
-normal initialization and resume operations.
+The commit makes it impossible to select configuration options that
+depend on COMEDI_8254, COMEDI_DAS08, COMEDI_NI_LABPC, or
+COMEDI_AMPLC_DIO200 options due to changing 'select' directives to
+'depends on' directives and there being no other way to select those
+codependent configuration options.
 
-Fixes: dbf9bfe61571 ("[SCSI] pm8001: add SAS/SATA HBA driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230911232745.325149-2-dlemoal@kernel.org
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: b5c75b68b7de ("comedi: add HAS_IOPORT dependencies")
+Cc: Niklas Schnelle <schnelle@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.5+
+Acked-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20230905090922.3314-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c |   51 ++++++++++++--------------------------
- 1 file changed, 17 insertions(+), 34 deletions(-)
+ drivers/comedi/Kconfig |  103 ++++++++++++++++---------------------------------
+ 1 file changed, 35 insertions(+), 68 deletions(-)
 
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -275,7 +275,6 @@ static irqreturn_t pm8001_interrupt_hand
- 	return ret;
- }
+--- a/drivers/comedi/Kconfig
++++ b/drivers/comedi/Kconfig
+@@ -67,7 +67,6 @@ config COMEDI_TEST
  
--static u32 pm8001_setup_irq(struct pm8001_hba_info *pm8001_ha);
- static u32 pm8001_request_irq(struct pm8001_hba_info *pm8001_ha);
+ config COMEDI_PARPORT
+ 	tristate "Parallel port support"
+-	depends on HAS_IOPORT
+ 	help
+ 	  Enable support for the standard parallel port.
+ 	  A cheap and easy way to get a few more digital I/O lines. Steal
+@@ -80,7 +79,6 @@ config COMEDI_PARPORT
+ config COMEDI_SSV_DNP
+ 	tristate "SSV Embedded Systems DIL/Net-PC support"
+ 	depends on X86_32 || COMPILE_TEST
+-	depends on HAS_IOPORT
+ 	help
+ 	  Enable support for SSV Embedded Systems DIL/Net-PC
  
- /**
-@@ -296,13 +295,6 @@ static int pm8001_alloc(struct pm8001_hb
- 	pm8001_dbg(pm8001_ha, INIT, "pm8001_alloc: PHY:%x\n",
- 		   pm8001_ha->chip->n_phy);
+@@ -91,7 +89,6 @@ endif # COMEDI_MISC_DRIVERS
  
--	/* Setup Interrupt */
--	rc = pm8001_setup_irq(pm8001_ha);
--	if (rc) {
--		pm8001_dbg(pm8001_ha, FAIL,
--			   "pm8001_setup_irq failed [ret: %d]\n", rc);
--		goto err_out;
--	}
- 	/* Request Interrupt */
- 	rc = pm8001_request_irq(pm8001_ha);
- 	if (rc)
-@@ -1034,47 +1026,38 @@ static u32 pm8001_request_msix(struct pm
- }
- #endif
+ menuconfig COMEDI_ISA_DRIVERS
+ 	bool "Comedi ISA and PC/104 drivers"
+-	depends on ISA
+ 	help
+ 	  Enable comedi ISA and PC/104 drivers to be built
  
--static u32 pm8001_setup_irq(struct pm8001_hba_info *pm8001_ha)
--{
--	struct pci_dev *pdev;
--
--	pdev = pm8001_ha->pdev;
--
--#ifdef PM8001_USE_MSIX
--	if (pci_find_capability(pdev, PCI_CAP_ID_MSIX))
--		return pm8001_setup_msix(pm8001_ha);
--	pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
--#endif
--	return 0;
--}
--
- /**
-  * pm8001_request_irq - register interrupt
-  * @pm8001_ha: our ha struct.
-  */
- static u32 pm8001_request_irq(struct pm8001_hba_info *pm8001_ha)
- {
--	struct pci_dev *pdev;
-+	struct pci_dev *pdev = pm8001_ha->pdev;
-+#ifdef PM8001_USE_MSIX
- 	int rc;
+@@ -103,8 +100,7 @@ if COMEDI_ISA_DRIVERS
  
--	pdev = pm8001_ha->pdev;
-+	if (pci_find_capability(pdev, PCI_CAP_ID_MSIX)) {
-+		rc = pm8001_setup_msix(pm8001_ha);
-+		if (rc) {
-+			pm8001_dbg(pm8001_ha, FAIL,
-+				   "pm8001_setup_irq failed [ret: %d]\n", rc);
-+			return rc;
-+		}
+ config COMEDI_PCL711
+ 	tristate "Advantech PCL-711/711b and ADlink ACL-8112 ISA card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Advantech PCL-711 and 711b, ADlink ACL-8112
  
--#ifdef PM8001_USE_MSIX
--	if (pdev->msix_cap && pci_msi_enabled())
--		return pm8001_request_msix(pm8001_ha);
--	else {
--		pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
--		goto intx;
-+		if (pdev->msix_cap && pci_msi_enabled())
-+			return pm8001_request_msix(pm8001_ha);
- 	}
-+
-+	pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
- #endif
+@@ -165,9 +161,8 @@ config COMEDI_PCL730
  
--intx:
- 	/* initialize the INT-X interrupt */
- 	pm8001_ha->irq_vector[0].irq_id = 0;
- 	pm8001_ha->irq_vector[0].drv_inst = pm8001_ha;
--	rc = request_irq(pdev->irq, pm8001_interrupt_handler_intx, IRQF_SHARED,
--		pm8001_ha->name, SHOST_TO_SAS_HA(pm8001_ha->shost));
--	return rc;
-+
-+	return request_irq(pdev->irq, pm8001_interrupt_handler_intx,
-+			   IRQF_SHARED, pm8001_ha->name,
-+			   SHOST_TO_SAS_HA(pm8001_ha->shost));
- }
+ config COMEDI_PCL812
+ 	tristate "Advantech PCL-812/813 and ADlink ACL-8112/8113/8113/8216"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Advantech PCL-812/PG, PCL-813/B, ADLink
+ 	  ACL-8112DG/HG/PG, ACL-8113, ACL-8216, ICP DAS A-821PGH/PGL/PGL-NDA,
+@@ -178,9 +173,8 @@ config COMEDI_PCL812
  
- /**
+ config COMEDI_PCL816
+ 	tristate "Advantech PCL-814 and PCL-816 ISA card support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Advantech PCL-814 and PCL-816 ISA cards
+ 
+@@ -189,9 +183,8 @@ config COMEDI_PCL816
+ 
+ config COMEDI_PCL818
+ 	tristate "Advantech PCL-718 and PCL-818 ISA card support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Advantech PCL-818 ISA cards
+ 	  PCL-818L, PCL-818H, PCL-818HD, PCL-818HG, PCL-818 and PCL-718
+@@ -210,7 +203,7 @@ config COMEDI_PCM3724
+ 
+ config COMEDI_AMPLC_DIO200_ISA
+ 	tristate "Amplicon PC212E/PC214E/PC215E/PC218E/PC272E"
+-	depends on COMEDI_AMPLC_DIO200
++	select COMEDI_AMPLC_DIO200
+ 	help
+ 	  Enable support for Amplicon PC212E, PC214E, PC215E, PC218E and
+ 	  PC272E ISA DIO boards
+@@ -262,8 +255,7 @@ config COMEDI_DAC02
+ 
+ config COMEDI_DAS16M1
+ 	tristate "MeasurementComputing CIO-DAS16/M1DAS-16 ISA card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for Measurement Computing CIO-DAS16/M1 ISA cards.
+@@ -273,7 +265,7 @@ config COMEDI_DAS16M1
+ 
+ config COMEDI_DAS08_ISA
+ 	tristate "DAS-08 compatible ISA and PC/104 card support"
+-	depends on COMEDI_DAS08
++	select COMEDI_DAS08
+ 	help
+ 	  Enable support for Keithley Metrabyte/ComputerBoards DAS08
+ 	  and compatible ISA and PC/104 cards:
+@@ -286,9 +278,8 @@ config COMEDI_DAS08_ISA
+ 
+ config COMEDI_DAS16
+ 	tristate "DAS-16 compatible ISA and PC/104 card support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for Keithley Metrabyte/ComputerBoards DAS16
+@@ -305,8 +296,7 @@ config COMEDI_DAS16
+ 
+ config COMEDI_DAS800
+ 	tristate "DAS800 and compatible ISA card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Keithley Metrabyte DAS800 and compatible ISA cards
+ 	  Keithley Metrabyte DAS-800, DAS-801, DAS-802
+@@ -318,9 +308,8 @@ config COMEDI_DAS800
+ 
+ config COMEDI_DAS1800
+ 	tristate "DAS1800 and compatible ISA card support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for DAS1800 and compatible ISA cards
+ 	  Keithley Metrabyte DAS-1701ST, DAS-1701ST-DA, DAS-1701/AO,
+@@ -334,8 +323,7 @@ config COMEDI_DAS1800
+ 
+ config COMEDI_DAS6402
+ 	tristate "DAS6402 and compatible ISA card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for DAS6402 and compatible ISA cards
+ 	  Computerboards, Keithley Metrabyte DAS6402 and compatibles
+@@ -414,8 +402,7 @@ config COMEDI_FL512
+ 
+ config COMEDI_AIO_AIO12_8
+ 	tristate "I/O Products PC/104 AIO12-8 Analog I/O Board support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for I/O Products PC/104 AIO12-8 Analog I/O Board
+@@ -469,9 +456,8 @@ config COMEDI_ADQ12B
+ 
+ config COMEDI_NI_AT_A2150
+ 	tristate "NI AT-A2150 ISA card support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_ISADMA if ISA_DMA_API
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for National Instruments AT-A2150 cards
+ 
+@@ -480,8 +466,7 @@ config COMEDI_NI_AT_A2150
+ 
+ config COMEDI_NI_AT_AO
+ 	tristate "NI AT-AO-6/10 EISA card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for National Instruments AT-AO-6/10 cards
+ 
+@@ -512,7 +497,7 @@ config COMEDI_NI_ATMIO16D
+ 
+ config COMEDI_NI_LABPC_ISA
+ 	tristate "NI Lab-PC and compatibles ISA support"
+-	depends on COMEDI_NI_LABPC
++	select COMEDI_NI_LABPC
+ 	help
+ 	  Enable support for National Instruments Lab-PC and compatibles
+ 	  Lab-PC-1200, Lab-PC-1200AI, Lab-PC+.
+@@ -576,7 +561,7 @@ endif # COMEDI_ISA_DRIVERS
+ 
+ menuconfig COMEDI_PCI_DRIVERS
+ 	tristate "Comedi PCI drivers"
+-	depends on PCI && HAS_IOPORT
++	depends on PCI
+ 	help
+ 	  Enable support for comedi PCI drivers.
+ 
+@@ -725,8 +710,7 @@ config COMEDI_ADL_PCI8164
+ 
+ config COMEDI_ADL_PCI9111
+ 	tristate "ADLink PCI-9111HR support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for ADlink PCI9111 cards
+ 
+@@ -736,7 +720,7 @@ config COMEDI_ADL_PCI9111
+ config COMEDI_ADL_PCI9118
+ 	tristate "ADLink PCI-9118DG, PCI-9118HG, PCI-9118HR support"
+ 	depends on HAS_DMA
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for ADlink PCI-9118DG, PCI-9118HG, PCI-9118HR cards
+ 
+@@ -745,8 +729,7 @@ config COMEDI_ADL_PCI9118
+ 
+ config COMEDI_ADV_PCI1710
+ 	tristate "Advantech PCI-171x and PCI-1731 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Advantech PCI-1710, PCI-1710HG, PCI-1711,
+ 	  PCI-1713 and PCI-1731
+@@ -790,8 +773,7 @@ config COMEDI_ADV_PCI1760
+ 
+ config COMEDI_ADV_PCI_DIO
+ 	tristate "Advantech PCI DIO card support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for Advantech PCI DIO cards
+@@ -804,7 +786,7 @@ config COMEDI_ADV_PCI_DIO
+ 
+ config COMEDI_AMPLC_DIO200_PCI
+ 	tristate "Amplicon PCI215/PCI272/PCIe215/PCIe236/PCIe296 DIO support"
+-	depends on COMEDI_AMPLC_DIO200
++	select COMEDI_AMPLC_DIO200
+ 	help
+ 	  Enable support for Amplicon PCI215, PCI272, PCIe215, PCIe236
+ 	  and PCIe296 DIO boards.
+@@ -832,8 +814,7 @@ config COMEDI_AMPLC_PC263_PCI
+ 
+ config COMEDI_AMPLC_PCI224
+ 	tristate "Amplicon PCI224 and PCI234 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Amplicon PCI224 and PCI234 AO boards
+ 
+@@ -842,8 +823,7 @@ config COMEDI_AMPLC_PCI224
+ 
+ config COMEDI_AMPLC_PCI230
+ 	tristate "Amplicon PCI230 and PCI260 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for Amplicon PCI230 and PCI260 Multifunction I/O
+@@ -862,7 +842,7 @@ config COMEDI_CONTEC_PCI_DIO
+ 
+ config COMEDI_DAS08_PCI
+ 	tristate "DAS-08 PCI support"
+-	depends on COMEDI_DAS08
++	select COMEDI_DAS08
+ 	help
+ 	  Enable support for PCI DAS-08 cards.
+ 
+@@ -949,8 +929,7 @@ config COMEDI_CB_PCIDAS64
+ 
+ config COMEDI_CB_PCIDAS
+ 	tristate "MeasurementComputing PCI-DAS support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for ComputerBoards/MeasurementComputing PCI-DAS with
+@@ -974,8 +953,7 @@ config COMEDI_CB_PCIDDA
+ 
+ config COMEDI_CB_PCIMDAS
+ 	tristate "MeasurementComputing PCIM-DAS1602/16, PCIe-DAS1602/16 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for ComputerBoards/MeasurementComputing PCI Migration
+@@ -995,8 +973,7 @@ config COMEDI_CB_PCIMDDA
+ 
+ config COMEDI_ME4000
+ 	tristate "Meilhaus ME-4000 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Meilhaus PCI data acquisition cards
+ 	  ME-4650, ME-4670i, ME-4680, ME-4680i and ME-4680is
+@@ -1054,7 +1031,7 @@ config COMEDI_NI_670X
+ 
+ config COMEDI_NI_LABPC_PCI
+ 	tristate "NI Lab-PC PCI-1200 support"
+-	depends on COMEDI_NI_LABPC
++	select COMEDI_NI_LABPC
+ 	help
+ 	  Enable support for National Instruments Lab-PC PCI-1200.
+ 
+@@ -1076,7 +1053,6 @@ config COMEDI_NI_PCIDIO
+ config COMEDI_NI_PCIMIO
+ 	tristate "NI PCI-MIO-E series and M series support"
+ 	depends on HAS_DMA
+-	depends on HAS_IOPORT
+ 	select COMEDI_NI_TIOCMD
+ 	select COMEDI_8255
+ 	help
+@@ -1098,8 +1074,7 @@ config COMEDI_NI_PCIMIO
+ 
+ config COMEDI_RTD520
+ 	tristate "Real Time Devices PCI4520/DM7520 support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for Real Time Devices PCI4520/DM7520
+ 
+@@ -1139,8 +1114,7 @@ if COMEDI_PCMCIA_DRIVERS
+ 
+ config COMEDI_CB_DAS16_CS
+ 	tristate "CB DAS16 series PCMCIA support"
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	help
+ 	  Enable support for the ComputerBoards/MeasurementComputing PCMCIA
+ 	  cards DAS16/16, PCM-DAS16D/12 and PCM-DAS16s/16
+@@ -1150,7 +1124,7 @@ config COMEDI_CB_DAS16_CS
+ 
+ config COMEDI_DAS08_CS
+ 	tristate "CB DAS08 PCMCIA support"
+-	depends on COMEDI_DAS08
++	select COMEDI_DAS08
+ 	help
+ 	  Enable support for the ComputerBoards/MeasurementComputing DAS-08
+ 	  PCMCIA card
+@@ -1160,7 +1134,6 @@ config COMEDI_DAS08_CS
+ 
+ config COMEDI_NI_DAQ_700_CS
+ 	tristate "NI DAQCard-700 PCMCIA support"
+-	depends on HAS_IOPORT
+ 	help
+ 	  Enable support for the National Instruments PCMCIA DAQCard-700 DIO
+ 
+@@ -1169,7 +1142,6 @@ config COMEDI_NI_DAQ_700_CS
+ 
+ config COMEDI_NI_DAQ_DIO24_CS
+ 	tristate "NI DAQ-Card DIO-24 PCMCIA support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for the National Instruments PCMCIA DAQ-Card DIO-24
+@@ -1179,7 +1151,7 @@ config COMEDI_NI_DAQ_DIO24_CS
+ 
+ config COMEDI_NI_LABPC_CS
+ 	tristate "NI DAQCard-1200 PCMCIA support"
+-	depends on COMEDI_NI_LABPC
++	select COMEDI_NI_LABPC
+ 	help
+ 	  Enable support for the National Instruments PCMCIA DAQCard-1200
+ 
+@@ -1188,7 +1160,6 @@ config COMEDI_NI_LABPC_CS
+ 
+ config COMEDI_NI_MIO_CS
+ 	tristate "NI DAQCard E series PCMCIA support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_NI_TIO
+ 	select COMEDI_8255
+ 	help
+@@ -1201,7 +1172,6 @@ config COMEDI_NI_MIO_CS
+ 
+ config COMEDI_QUATECH_DAQP_CS
+ 	tristate "Quatech DAQP PCMCIA data capture card support"
+-	depends on HAS_IOPORT
+ 	help
+ 	  Enable support for the Quatech DAQP PCMCIA data capture cards
+ 	  DAQP-208 and DAQP-308
+@@ -1278,14 +1248,12 @@ endif # COMEDI_USB_DRIVERS
+ 
+ config COMEDI_8254
+ 	tristate
+-	depends on HAS_IOPORT
+ 
+ config COMEDI_8255
+ 	tristate
+ 
+ config COMEDI_8255_SA
+ 	tristate "Standalone 8255 support"
+-	depends on HAS_IOPORT
+ 	select COMEDI_8255
+ 	help
+ 	  Enable support for 8255 digital I/O as a standalone driver.
+@@ -1317,7 +1285,7 @@ config COMEDI_KCOMEDILIB
+ 	  called kcomedilib.
+ 
+ config COMEDI_AMPLC_DIO200
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	tristate
+ 
+ config COMEDI_AMPLC_PC236
+@@ -1326,7 +1294,7 @@ config COMEDI_AMPLC_PC236
+ 
+ config COMEDI_DAS08
+ 	tristate
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 
+ config COMEDI_ISADMA
+@@ -1334,8 +1302,7 @@ config COMEDI_ISADMA
+ 
+ config COMEDI_NI_LABPC
+ 	tristate
+-	depends on HAS_IOPORT
+-	depends on COMEDI_8254
++	select COMEDI_8254
+ 	select COMEDI_8255
+ 
+ config COMEDI_NI_LABPC_ISADMA
 
 
