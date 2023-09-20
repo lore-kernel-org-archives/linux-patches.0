@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA39E156F8
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F13EC433C8;
-	Wed, 20 Sep 2023 11:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C1C156F8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA23C433C8;
+	Wed, 20 Sep 2023 11:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210221;
-	bh=85tzRXfProF2N0lme5vjBlUtB4xCsv+2gqYxNEbjL5g=;
+	s=korg; t=1695210224;
+	bh=6peOJxDrmByexQS8Mg2hEIzWQJmTZQft/12BXvB4au4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFHxF2xCnu8ney6mug/NznhCM6zy7H6DKQK8WkLdpY+62h8tALwdHQPC/g+OrpEQv
-	 csw5kUiGwD566nox/QtumrngxuJ6SJXawFXd5nQjdJoRAIsFuzR6249HwIvUZyjCzb
-	 36vrPDaKiKjjP0lM15vmeK/LKkmw6xDaOAKlYeGo=
+	b=KMtAg9kNwjw08Etq7T/isswiK00NN3AlGFcHmGhCwGZ3qeyyesFoJaOmKbBKJc0XZ
+	 BcGVdP9PihlSzMurYqtaIDjZH3R9oGjL6F6/D6bL0iEESI0MisGRyxLH1tehKlmrAR
+	 /+Wbc+Ny9IwTQgtwAvmminRlCS0LOx0tNGku+5EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Rob Barnes <robbarnes@google.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 010/211] ACPI: video: Add backlight=native DMI quirk for Lenovo Ideapad Z470
-Date: Wed, 20 Sep 2023 13:27:34 +0200
-Message-ID: <20230920112846.155346037@linuxfoundation.org>
+Subject: [PATCH 6.5 011/211] platform/chrome: cros_ec_lpc: Remove EC panic shutdown timeout
+Date: Wed, 20 Sep 2023 13:27:35 +0200
+Message-ID: <20230920112846.182865715@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,45 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Rob Barnes <robbarnes@google.com>
 
-[ Upstream commit 96b709be183c56293933ef45b8b75f8af268c6de ]
+[ Upstream commit f2d4dced9a584612b25adb559c1350243d2bb544 ]
 
-The Lenovo Ideapad Z470 predates Windows 8, so it defaults to using
-acpi_video for backlight control. But this is not functional on this
-model.
+Remove the 1 second timeout applied to hw_protection_shutdown after an
+EC panic. On some platforms this 1 second timeout is insufficient to
+allow the filesystem to fully sync. Independently the EC will force a
+full system reset after a short period. So this backup timeout is
+unnecessary.
 
-Add a DMI quirk to use the native backlight interface which works.
-
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1208724
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Rob Barnes <robbarnes@google.com>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20230802175847.1.Ie9fc53b6a1f4c6661c5376286a50e0cf51b3e961@changeid
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/chrome/cros_ec_lpc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 18cc08c858cf2..0c376edd64fe1 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -445,6 +445,15 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_BOARD_NAME, "Lenovo IdeaPad S405"),
- 		},
- 	},
-+	{
-+	 /* https://bugzilla.suse.com/show_bug.cgi?id=1208724 */
-+	 .callback = video_detect_force_native,
-+	 /* Lenovo Ideapad Z470 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Z470"),
-+		},
-+	},
- 	{
- 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1187004 */
- 	 .callback = video_detect_force_native,
+diff --git a/drivers/platform/chrome/cros_ec_lpc.c b/drivers/platform/chrome/cros_ec_lpc.c
+index 500a61b093e47..356572452898d 100644
+--- a/drivers/platform/chrome/cros_ec_lpc.c
++++ b/drivers/platform/chrome/cros_ec_lpc.c
+@@ -327,8 +327,8 @@ static void cros_ec_lpc_acpi_notify(acpi_handle device, u32 value, void *data)
+ 		dev_emerg(ec_dev->dev, "CrOS EC Panic Reported. Shutdown is imminent!");
+ 		blocking_notifier_call_chain(&ec_dev->panic_notifier, 0, ec_dev);
+ 		kobject_uevent_env(&ec_dev->dev->kobj, KOBJ_CHANGE, (char **)env);
+-		/* Begin orderly shutdown. Force shutdown after 1 second. */
+-		hw_protection_shutdown("CrOS EC Panic", 1000);
++		/* Begin orderly shutdown. EC will force reset after a short period. */
++		hw_protection_shutdown("CrOS EC Panic", -1);
+ 		/* Do not query for other events after a panic is reported */
+ 		return;
+ 	}
 -- 
 2.40.1
 
