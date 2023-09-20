@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9858C2AB36
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17902C433C7;
-	Wed, 20 Sep 2023 12:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FD0E544
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72E1C433C8;
+	Wed, 20 Sep 2023 12:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211528;
-	bh=ntfZm0ZW+58OBQ4A6RTV6ezv6GqAjGDTiQbEB66CZVE=;
+	s=korg; t=1695211531;
+	bh=WVE4e2X0Wag8wTOjm9q29eMQjC6iQ35jBelyTu5Rtkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z638NopWijlN2M/9ro7SHEBI9+9A7MSeWt/FaUgHyY4u/G9wg7Fxghs4JMIZQ7S59
-	 xh6Af1ztr6q3VKUB5NLxT2LeYc3bq7JIJfRLlGziuNm38KJwDBcBc0nQ4ddhI9W0yG
-	 uj4h3grDSvGJ/OMKAsswbsO17E/ae2D87COe8YAw=
+	b=lfbAriwvUq37uDamLduwzjCqH5hw8x1lrub5iogG456m+jsVy3uB7JfqFHpUkiPxJ
+	 V335duj4Uh3bQAMTPB+79o70bt6N6jh8NItawG7XOfxcadgqOLCCpRbH95ySFYbeVH
+	 UVg2bfI51BS6CbPawQCZh53Rh6sUCS/PRTav5Xo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 4.14 126/186] clk: qcom: gcc-mdm9615: use proper parent for pll0_vote clock
-Date: Wed, 20 Sep 2023 13:30:29 +0200
-Message-ID: <20230920112841.581746553@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 4.14 127/186] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
+Date: Wed, 20 Sep 2023 13:30:30 +0200
+Message-ID: <20230920112841.615200335@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -42,35 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 1583694bb4eaf186f17131dbc1b83d6057d2749b upstream.
+commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
 
-The pll0_vote clock definitely should have pll0 as a parent (instead of
-pll8).
+It is an almost improbable error case but when page allocating loop in
+nfs4_get_device_info() fails then we should only free the already
+allocated pages, as __free_page() can't deal with NULL arguments.
 
-Fixes: 7792a8d6713c ("clk: mdm9615: Add support for MDM9615 Clock Controllers")
-Cc: stable@kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230512211727.3445575-7-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Found by Linux Verification Center (linuxtesting.org).
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-mdm9615.c |    2 +-
+ fs/nfs/pnfs_dev.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/gcc-mdm9615.c
-+++ b/drivers/clk/qcom/gcc-mdm9615.c
-@@ -66,7 +66,7 @@ static struct clk_regmap pll0_vote = {
- 	.enable_mask = BIT(0),
- 	.hw.init = &(struct clk_init_data){
- 		.name = "pll0_vote",
--		.parent_names = (const char *[]){ "pll8" },
-+		.parent_names = (const char *[]){ "pll0" },
- 		.num_parents = 1,
- 		.ops = &clk_pll_vote_ops,
- 	},
+--- a/fs/nfs/pnfs_dev.c
++++ b/fs/nfs/pnfs_dev.c
+@@ -153,7 +153,7 @@ nfs4_get_device_info(struct nfs_server *
+ 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
+ 
+ out_free_pages:
+-	for (i = 0; i < max_pages; i++)
++	while (--i >= 0)
+ 		__free_page(pages[i]);
+ 	kfree(pages);
+ out_free_pdev:
 
 
