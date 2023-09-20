@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB842E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9882C433C8;
-	Wed, 20 Sep 2023 12:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058DC2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA9BC433C8;
+	Wed, 20 Sep 2023 12:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211791;
-	bh=7tIBM9wjq/paXlRCv2rgin6RuFVQB3XnMey3i6wwshA=;
+	s=korg; t=1695211793;
+	bh=ln68n/gqB9Oo1fYsZLLmcZmST/N/GTT+qPyB+pBgQTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3KeL3KxidmqwXAMKhDdiKoN8w2SPyf3Z4mYP0jKy+FT9kbwvmJ/Y6BoIAprGUk96
-	 jgpxyK2xTIGZCCadOhoKMk4tzvmvbsVm6oZaLWGUwAlYm4aAHwBJ1klt68hCIn/3t3
-	 4PP3Kpb5D4xwn8tolysMfTV6mYLIwYKHfuI6DVHI=
+	b=ihoEuUuOE5es5htKT1173YcSnriYovaojrSxiAIOEtXnjTEYarVTWEFsWgIZI8J7V
+	 9+C6xfjq8DJDEkGV8snuGVEKCRb/I9p3rvW4cNA8yFV2WknVRCQMOP4N5IfcPRJpbW
+	 5Az4YzpxZlz4WFwDEI7UtGv/BoN+80AOAn4aUG94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>
-Subject: [PATCH 4.19 010/273] serial: sc16is7xx: fix bug when first setting GPIO direction
-Date: Wed, 20 Sep 2023 13:27:30 +0200
-Message-ID: <20230920112846.749680257@linuxfoundation.org>
+	Juerg Haefliger <juerg.haefliger@canonical.com>,
+	Joel Stanley <joel@jms.id.au>
+Subject: [PATCH 4.19 011/273] fsi: master-ast-cf: Add MODULE_FIRMWARE macro
+Date: Wed, 20 Sep 2023 13:27:31 +0200
+Message-ID: <20230920112846.778657187@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,59 +39,29 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Juerg Haefliger <juerg.haefliger@canonical.com>
 
-commit 9baeea723c0fb9c3ba9a336369f758ed9bc6831d upstream.
+commit 3a1d7aff6e65ad6e285e28abe55abbfd484997ee upstream.
 
-When configuring a pin as an output pin with a value of logic 0, we
-end up as having a value of logic 1 on the output pin. Setting a
-logic 0 a second time (or more) after that will correctly output a
-logic 0 on the output pin.
+The module loads firmware so add a MODULE_FIRMWARE macro to provide that
+information via modinfo.
 
-By default, all GPIO pins are configured as inputs. When we enter
-sc16is7xx_gpio_direction_output() for the first time, we first set the
-desired value in IOSTATE, and then we configure the pin as an output.
-The datasheet states that writing to IOSTATE register will trigger a
-transfer of the value to the I/O pin configured as output, so if the
-pin is configured as an input, nothing will be transferred.
-
-Therefore, set the direction first in IODIR, and then set the desired
-value in IOSTATE.
-
-This is what is done in NXP application note AN10587.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Link: https://lore.kernel.org/r/20230807214556.540627-6-hugo@hugovil.com
+Fixes: 6a794a27daca ("fsi: master-ast-cf: Add new FSI master using Aspeed ColdFire")
+Cc: stable@vger.kernel.org # 4.19+
+Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+Link: https://lore.kernel.org/r/20230628095039.26218-1-juerg.haefliger@canonical.com
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/fsi/fsi-master-ast-cf.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1166,9 +1166,18 @@ static int sc16is7xx_gpio_direction_outp
- 		state |= BIT(offset);
- 	else
- 		state &= ~BIT(offset);
--	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
-+
-+	/*
-+	 * If we write IOSTATE first, and then IODIR, the output value is not
-+	 * transferred to the corresponding I/O pin.
-+	 * The datasheet states that each register bit will be transferred to
-+	 * the corresponding I/O pin programmed as output when writing to
-+	 * IOSTATE. Therefore, configure direction first with IODIR, and then
-+	 * set value after with IOSTATE.
-+	 */
- 	sc16is7xx_port_update(port, SC16IS7XX_IODIR_REG, BIT(offset),
- 			      BIT(offset));
-+	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
+--- a/drivers/fsi/fsi-master-ast-cf.c
++++ b/drivers/fsi/fsi-master-ast-cf.c
+@@ -1438,3 +1438,4 @@ static struct platform_driver fsi_master
  
- 	return 0;
- }
+ module_platform_driver(fsi_master_acf);
+ MODULE_LICENSE("GPL");
++MODULE_FIRMWARE(FW_FILE_NAME);
 
 
