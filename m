@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79A018658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597F4C433C9;
-	Wed, 20 Sep 2023 11:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9423218658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1788AC433C7;
+	Wed, 20 Sep 2023 11:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210627;
-	bh=ntZMgMDKKF27ptitnLmbxkYsLp7QScID9alz7zchtmg=;
+	s=korg; t=1695210630;
+	bh=aUq/5WVFouFn+L5zSQ2YTbMGplzl05jxCm+Jw/8nF+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNjA5aeJEIPOWtKKkz+CKoJFjmOU1i5TGIKAnL957bwX7/oeoRzZOdjM3gPOd+GjZ
-	 DRedRJoS6cNxHaKMoR8KG3rT3jE7PQukv2bmBmIfF7jyfJQ2uIsE1jNYWCCJ01/2S+
-	 VsmhVd68SXohKB8BrdGKjVXGBB1kiWfAzJPt+Yrg=
+	b=l+dGZW2wcGIusRbOMfiM8swYhkQ+cGieVJiYfVVzN6woL9Fbhc8ZbMz6/Rgw4ZlrD
+	 SJeUzJs3VGSicK2dtFaJ6IXkLUZtjWvXBjzeCtLpFnhxOXtMO2QIJZH830I+9igxOX
+	 yc/sWj/SJVuY3kksySc3p4fgCKqW61q6NX5LLdnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 145/211] scsi: qla2xxx: Fix NULL vs IS_ERR() bug for debugfs_create_dir()
-Date: Wed, 20 Sep 2023 13:29:49 +0200
-Message-ID: <20230920112850.348692839@linuxfoundation.org>
+Subject: [PATCH 6.5 146/211] md: dont dereference mddev after export_rdev()
+Date: Wed, 20 Sep 2023 13:29:50 +0200
+Message-ID: <20230920112850.380502337@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,52 +40,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit d0b0822e32dbae80bbcb3cc86f34d28539d913df ]
+[ Upstream commit 7deac114be5fb25a4e865212ed0feaf5f85f2a28 ]
 
-Since both debugfs_create_dir() and debugfs_create_file() return ERR_PTR
-and never NULL, use IS_ERR() instead of checking for NULL.
+Except for initial reference, mddev->kobject is referenced by
+rdev->kobject, and if the last rdev is freed, there is no guarantee that
+mddev is still valid. Hence mddev should not be used anymore after
+export_rdev().
 
-Fixes: 1e98fb0f9208 ("scsi: qla2xxx: Setup debugfs entries for remote ports")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230831140930.3166359-1-ruanjinjie@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This problem can be triggered by following test for mdadm at very
+low rate:
+
+New file: mdadm/tests/23rdev-lifetime
+
+devname=${dev0##*/}
+devt=`cat /sys/block/$devname/dev`
+pid=""
+runtime=2
+
+clean_up_test() {
+        pill -9 $pid
+        echo clear > /sys/block/md0/md/array_state
+}
+
+trap 'clean_up_test' EXIT
+
+add_by_sysfs() {
+        while true; do
+                echo $devt > /sys/block/md0/md/new_dev
+        done
+}
+
+remove_by_sysfs(){
+        while true; do
+                echo remove > /sys/block/md0/md/dev-${devname}/state
+        done
+}
+
+echo md0 > /sys/module/md_mod/parameters/new_array || die "create md0 failed"
+
+add_by_sysfs &
+pid="$pid $!"
+
+remove_by_sysfs &
+pid="$pid $!"
+
+sleep $runtime
+exit 0
+
+Test cmd:
+
+./test --save-logs --logdir=/tmp/ --keep-going --dev=loop --tests=23rdev-lifetime
+
+Test result:
+
+general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6bcb: 0000 [#4] PREEMPT SMP
+CPU: 0 PID: 1292 Comm: test Tainted: G      D W          6.5.0-rc2-00121-g01e55c376936 #562
+RIP: 0010:md_wakeup_thread+0x9e/0x320 [md_mod]
+Call Trace:
+ <TASK>
+ mddev_unlock+0x1b6/0x310 [md_mod]
+ rdev_attr_store+0xec/0x190 [md_mod]
+ sysfs_kf_write+0x52/0x70
+ kernfs_fop_write_iter+0x19a/0x2a0
+ vfs_write+0x3b5/0x770
+ ksys_write+0x74/0x150
+ __x64_sys_write+0x22/0x30
+ do_syscall_64+0x40/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fix this problem by don't dereference mddev after export_rdev().
+
+Fixes: 3ce94ce5d05a ("md: fix duplicate filename for rdev")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230825025532.1523008-2-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_dfs.c | 6 +++---
+ drivers/md/md.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
-index f060e593685de..a7a364760b800 100644
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -116,7 +116,7 @@ qla2x00_dfs_create_rport(scsi_qla_host_t *vha, struct fc_port *fp)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 2a4a3d3039fae..fba2809cd384a 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -798,14 +798,14 @@ void mddev_unlock(struct mddev *mddev)
+ 	} else
+ 		mutex_unlock(&mddev->reconfig_mutex);
  
- 	sprintf(wwn, "pn-%016llx", wwn_to_u64(fp->port_name));
- 	fp->dfs_rport_dir = debugfs_create_dir(wwn, vha->dfs_rport_root);
--	if (!fp->dfs_rport_dir)
-+	if (IS_ERR(fp->dfs_rport_dir))
- 		return;
- 	if (NVME_TARGET(vha->hw, fp))
- 		debugfs_create_file("dev_loss_tmo", 0600, fp->dfs_rport_dir,
-@@ -708,14 +708,14 @@ qla2x00_dfs_setup(scsi_qla_host_t *vha)
- 	if (IS_QLA27XX(ha) || IS_QLA83XX(ha) || IS_QLA28XX(ha)) {
- 		ha->tgt.dfs_naqp = debugfs_create_file("naqp",
- 		    0400, ha->dfs_dir, vha, &dfs_naqp_ops);
--		if (!ha->tgt.dfs_naqp) {
-+		if (IS_ERR(ha->tgt.dfs_naqp)) {
- 			ql_log(ql_log_warn, vha, 0xd011,
- 			       "Unable to create debugFS naqp node.\n");
- 			goto out;
- 		}
++	md_wakeup_thread(mddev->thread);
++	wake_up(&mddev->sb_wait);
++
+ 	list_for_each_entry_safe(rdev, tmp, &delete, same_set) {
+ 		list_del_init(&rdev->same_set);
+ 		kobject_del(&rdev->kobj);
+ 		export_rdev(rdev, mddev);
  	}
- 	vha->dfs_rport_root = debugfs_create_dir("rports", ha->dfs_dir);
--	if (!vha->dfs_rport_root) {
-+	if (IS_ERR(vha->dfs_rport_root)) {
- 		ql_log(ql_log_warn, vha, 0xd012,
- 		       "Unable to create debugFS rports node.\n");
- 		goto out;
+-
+-	md_wakeup_thread(mddev->thread);
+-	wake_up(&mddev->sb_wait);
+ }
+ EXPORT_SYMBOL_GPL(mddev_unlock);
+ 
 -- 
 2.40.1
 
