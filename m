@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9676156E5
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:36:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48556C433C7;
-	Wed, 20 Sep 2023 12:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829F6156E5
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033A7C433C7;
+	Wed, 20 Sep 2023 12:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213419;
-	bh=v2MRB6lIuZRk/F9zYpN2gv99kduxAQWXkynPb8zDt/U=;
+	s=korg; t=1695213422;
+	bh=PIPzzZvT1S8P/by49wgV1B76lJCgZ8TcQQ4uUIpQNoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGCW9rIPKPOWm3VUZCP/ODin2IiJHnKTD2lvW7EIRVvHOqAjo9rw0cT7GqXLtFi7W
-	 UaMHjo9RKowGJlavxDAdrQ/xsjXCne5xdU7QtLKPFXHWNG/0pYtIxbfBqrSJeARC71
-	 wfxMZEqanme3jCpVkjXlF5HrLa3bBM+bNeUD79hM=
+	b=xq5gilwl3odDLry+ztPhRPsGmEzoCiDQGr/v96Fwcky5/wjAefxnqhPmoUX28YZ7d
+	 HdK6vCyUEWozm3plFs1um9jJX02u3+yQrx22PrpZE5d3dQp93c/Z269sTYudZ4m4iD
+	 P18HwIj2y+2GVg2e4MMPuhp8PzyAkECN8EoipEio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunlong Xing <yunlong.xing@unisoc.com>,
-	Enlin Mu <enlin.mu@unisoc.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.4 230/367] pstore/ram: Check start of empty przs during init
-Date: Wed, 20 Sep 2023 13:30:07 +0200
-Message-ID: <20230920112904.536229685@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.4 231/367] s390/ipl: add missing secure/has_secure file to ipl type unknown
+Date: Wed, 20 Sep 2023 13:30:08 +0200
+Message-ID: <20230920112904.559735861@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,60 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enlin Mu <enlin.mu@unisoc.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit fe8c3623ab06603eb760444a032d426542212021 upstream.
+commit ea5717cb13468323a7c3dd394748301802991f39 upstream.
 
-After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
-valid"), initialization would assume a prz was valid after seeing that
-the buffer_size is zero (regardless of the buffer start position). This
-unchecked start value means it could be outside the bounds of the buffer,
-leading to future access panics when written to:
+OS installers are relying on /sys/firmware/ipl/has_secure to be
+present on machines supporting secure boot. This file is present
+for all IPL types, but not the unknown type, which prevents a secure
+installation when an LPAR is booted in HMC via FTP(s), because
+this is an unknown IPL type in linux. While at it, also add the secure
+file.
 
- sysdump_panic_event+0x3b4/0x5b8
- atomic_notifier_call_chain+0x54/0x90
- panic+0x1c8/0x42c
- die+0x29c/0x2a8
- die_kernel_fault+0x68/0x78
- __do_kernel_fault+0x1c4/0x1e0
- do_bad_area+0x40/0x100
- do_translation_fault+0x68/0x80
- do_mem_abort+0x68/0xf8
- el1_da+0x1c/0xc0
- __raw_writeb+0x38/0x174
- __memcpy_toio+0x40/0xac
- persistent_ram_update+0x44/0x12c
- persistent_ram_write+0x1a8/0x1b8
- ramoops_pstore_write+0x198/0x1e8
- pstore_console_write+0x94/0xe0
- ...
-
-To avoid this, also check if the prz start is 0 during the initialization
-phase. If not, the next prz sanity check case will discover it (start >
-size) and zap the buffer back to a sane state.
-
-Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
-Cc: Yunlong Xing <yunlong.xing@unisoc.com>
+Fixes: c9896acc7851 ("s390/ipl: Provide has_secure sysfs attribute")
 Cc: stable@vger.kernel.org
-Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
-Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
-[kees: update commit log with backtrace and clarifications]
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pstore/ram_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/ipl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -506,7 +506,7 @@ static int persistent_ram_post_init(stru
- 	sig ^= PERSISTENT_RAM_SIG;
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -429,6 +429,8 @@ static struct attribute_group ipl_ccw_at
  
- 	if (prz->buffer->sig == sig) {
--		if (buffer_size(prz) == 0) {
-+		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
- 			pr_debug("found existing empty buffer\n");
- 			return 0;
- 		}
+ static struct attribute *ipl_unknown_attrs[] = {
+ 	&sys_ipl_type_attr.attr,
++	&sys_ipl_secure_attr.attr,
++	&sys_ipl_has_secure_attr.attr,
+ 	NULL,
+ };
+ 
 
 
