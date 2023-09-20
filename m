@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A450F30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0EBC433C7;
-	Wed, 20 Sep 2023 12:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED7730FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5155C433C7;
+	Wed, 20 Sep 2023 12:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212570;
-	bh=/kMXrJ8P+88eKyoRjYpc5mrLm1GKkaKuAuPOBD9Bgxg=;
+	s=korg; t=1695212573;
+	bh=mAJGAd8BPJHA7uOruyL6Wevcaxb/1hiOQI588uGSaro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6+T6rM1KCz2pnhQGHWhiH/pAXowHXSEwMqL49PSAhhqcyb5zcPQGPElN1lD15zqq
-	 lXoHPCYxqeMGNMeC6tXLlCUgITEuhYmlqBOsxn0gjFP+eaTQDH934i48ZAeszQcAd4
-	 Vc5xnQcT9eFgsHCLxPpIEXq+PHUacVCcAmdrUqOQ=
+	b=Cja8xCjmBR5wCY7eB0thD+QPRbJRJ+FgT4NSSNgeeo+2L6lCjcOn7+HLb9pQIVnlH
+	 bpmncgGEW4WRi/sXN5Qtc4TkEuZ8FRNIGGV57aBTW0spE4PlW5L3j+xmon9b68VIuM
+	 H22l440750u307a2cxBONAVJvO0PIoKP+oHAoRjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Luo <haoluo@google.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/83] libbpf: Free btf_vmlinux when closing bpf_object
-Date: Wed, 20 Sep 2023 13:31:14 +0200
-Message-ID: <20230920112827.625163235@linuxfoundation.org>
+Subject: [PATCH 5.10 25/83] drm/bridge: tc358762: Instruct DSI host to generate HSE packets
+Date: Wed, 20 Sep 2023 13:31:15 +0200
+Message-ID: <20230920112827.670328245@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -40,39 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Luo <haoluo@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 29d67fdebc42af6466d1909c60fdd1ef4f3e5240 ]
+[ Upstream commit 362fa8f6e6a05089872809f4465bab9d011d05b3 ]
 
-I hit a memory leak when testing bpf_program__set_attach_target().
-Basically, set_attach_target() may allocate btf_vmlinux, for example,
-when setting attach target for bpf_iter programs. But btf_vmlinux
-is freed only in bpf_object_load(), which means if we only open
-bpf object but not load it, setting attach target may leak
-btf_vmlinux.
+This bridge seems to need the HSE packet, otherwise the image is
+shifted up and corrupted at the bottom. This makes the bridge
+work with Samsung DSIM on i.MX8MM and i.MX8MP.
 
-So let's free btf_vmlinux in bpf_object__close() anyway.
-
-Signed-off-by: Hao Luo <haoluo@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230822193840.1509809-1-haoluo@google.com
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230615201902.566182-3-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/tc358762.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 015ed8253f739..44646c5286fbe 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -7962,6 +7962,7 @@ void bpf_object__close(struct bpf_object *obj)
- 	bpf_object__elf_finish(obj);
- 	bpf_object__unload(obj);
- 	btf__free(obj->btf);
-+	btf__free(obj->btf_vmlinux);
- 	btf_ext__free(obj->btf_ext);
+diff --git a/drivers/gpu/drm/bridge/tc358762.c b/drivers/gpu/drm/bridge/tc358762.c
+index 1bfdfc6affafe..21c57d3435687 100644
+--- a/drivers/gpu/drm/bridge/tc358762.c
++++ b/drivers/gpu/drm/bridge/tc358762.c
+@@ -224,7 +224,7 @@ static int tc358762_probe(struct mipi_dsi_device *dsi)
+ 	dsi->lanes = 1;
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+-			  MIPI_DSI_MODE_LPM;
++			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_VIDEO_HSE;
  
- 	for (i = 0; i < obj->nr_maps; i++)
+ 	ret = tc358762_parse_dt(ctx);
+ 	if (ret < 0)
 -- 
 2.40.1
 
