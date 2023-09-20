@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDF131A78
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F9AC433C7;
-	Wed, 20 Sep 2023 12:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA931A6E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCB2C433CB;
+	Wed, 20 Sep 2023 12:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214106;
-	bh=PBH2+t77/J6fFOpcLTlJuSBxscv72kNgX6et6mJ8spU=;
+	s=korg; t=1695214109;
+	bh=DO85c9azIUMynU27JJ64MTFepocZAPPZPeW1feFITuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L++DDIOZvPf6WWZdOJx+78z6z/vJsIzUzXTf6CCVbvnE2RORidMmS474RadLb+b2r
-	 xJWGwLSqsCL6s1O+o7XTu4dp4px147ogR5/7RROX605/zvPlEbS4/FSv0zYPNCfLNX
-	 vsGB+0DfjBXnSokJojR6Z/Y51jtLqrk8ZRDncPsE=
+	b=fv68J2+q87uDYmefEoHzqEXYp+zsSqlv8QflEqCK55n4hyGAKCJEVuVtqTBPbwK6G
+	 WP67NrRxcQHSOPugWekD6OgyPIGiM2/ST0M5n4K6Lh/UwVzpMidNJAaBrrdDZFobdo
+	 EHWV2hYLfQzE2i/BV2WKKDvGai5RlrlI0qP6wUvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/110] netfilter: nf_tables: GC transaction race with netns dismantle
-Date: Wed, 20 Sep 2023 13:32:27 +0200
-Message-ID: <20230920112833.748584828@linuxfoundation.org>
+Subject: [PATCH 5.15 090/110] samples/hw_breakpoint: fix building without module unloading
+Date: Wed, 20 Sep 2023 13:32:28 +0200
+Message-ID: <20230920112833.796368328@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,40 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 02c6c24402bf1c1e986899c14ba22a10b510916b ]
+[ Upstream commit b9080468caeddc58a91edd1c3a7d212ea82b0d1d ]
 
-Use maybe_get_net() since GC workqueue might race with netns exit path.
+__symbol_put() is really meant as an internal helper and is not available
+when module unloading is disabled, unlike the previously used symbol_put():
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+samples/hw_breakpoint/data_breakpoint.c: In function 'hw_break_module_exit':
+samples/hw_breakpoint/data_breakpoint.c:73:9: error: implicit declaration of function '__symbol_put'; did you mean '__symbol_get'? [-Werror=implicit-function-declaration]
+
+The hw_break_module_exit() function is not actually used when module
+unloading is disabled, but it still causes the build failure for an
+undefined identifier. Enclose this one call in an appropriate #ifdef to
+clarify what the requirement is. Leaving out the entire exit function
+would also work but feels less clar in this case.
+
+Fixes: 910e230d5f1bb ("samples/hw_breakpoint: Fix kernel BUG 'invalid opcode: 0000'")
+Fixes: d8a84d33a4954 ("samples/hw_breakpoint: drop use of kallsyms_lookup_name()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ samples/hw_breakpoint/data_breakpoint.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3e17d2403d899..33023b42698bb 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8944,9 +8944,14 @@ struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
- 	if (!trans)
- 		return NULL;
+diff --git a/samples/hw_breakpoint/data_breakpoint.c b/samples/hw_breakpoint/data_breakpoint.c
+index 9debd128b2ab8..b99322f188e59 100644
+--- a/samples/hw_breakpoint/data_breakpoint.c
++++ b/samples/hw_breakpoint/data_breakpoint.c
+@@ -70,7 +70,9 @@ static int __init hw_break_module_init(void)
+ static void __exit hw_break_module_exit(void)
+ {
+ 	unregister_wide_hw_breakpoint(sample_hbp);
++#ifdef CONFIG_MODULE_UNLOAD
+ 	__symbol_put(ksym_name);
++#endif
+ 	printk(KERN_INFO "HW Breakpoint for %s write uninstalled\n", ksym_name);
+ }
  
-+	trans->net = maybe_get_net(net);
-+	if (!trans->net) {
-+		kfree(trans);
-+		return NULL;
-+	}
-+
- 	refcount_inc(&set->refs);
- 	trans->set = set;
--	trans->net = get_net(net);
- 	trans->seq = gc_seq;
- 
- 	return trans;
 -- 
 2.40.1
 
