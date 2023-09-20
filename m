@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF822AB5E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D424CC433C9;
-	Wed, 20 Sep 2023 12:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BC32AB5E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCAEC433C8;
+	Wed, 20 Sep 2023 12:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211858;
-	bh=4yHi2933vqK0q5Hn6XxmuZ3oGQWFPtcAksbRD+8MfAY=;
+	s=korg; t=1695211861;
+	bh=WAgPlw7j3JrqMVr4GLnrNdys5drP9S4+DEGf7LUWvTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGbmREHR/uKUStrmaHbDQ0AW1cF8SRdSoCr9cioCq2v1pfJ9QHj8ihsvLaej1dqdz
-	 2YKF1nIH9CBybH4oL8AW8Gist0iMTTxZFOhMezAM96hanQyfCf/+PlxJmIIv6gIvth
-	 iY0Mi8wwfmNF17ANhlWzQKk+8SQiz371IMdutb7A=
+	b=eIYZlR5rb8PxmWjeLselA7h8QizhEyIv4diklExtnf3QWD23Pr/J6fscbQ3WdXdRZ
+	 xKxFb8Tlqz2IfLxYzwt6r/iKNpNXSR1BYMMGrIYyICAAYroLPNGablfj1U5gdzznwJ
+	 SvmeYxJZsXgopVWBIA/ZfRFkwc7gOlzxlidQtzW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 036/273] net: Avoid address overwrite in kernel_connect
-Date: Wed, 20 Sep 2023 13:27:56 +0200
-Message-ID: <20230920112847.535756275@linuxfoundation.org>
+	Joel Stanley <joel@jms.id.au>,
+	Alan Modra <amodra@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 4.19 037/273] powerpc/32: Include .branch_lt in data section
+Date: Wed, 20 Sep 2023 13:27:57 +0200
+Message-ID: <20230920112847.570819791@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,51 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Joel Stanley <joel@jms.id.au>
 
-commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
+commit 98ecc6768e8fdba95da1fc1efa0ef2d769e7fe1c upstream.
 
-BPF programs that run on connect can rewrite the connect address. For
-the connect system call this isn't a problem, because a copy of the address
-is made when it is moved into kernel space. However, kernel_connect
-simply passes through the address it is given, so the caller may observe
-its address value unexpectedly change.
+When building a 32 bit powerpc kernel with Binutils 2.31.1 this warning
+is emitted:
 
-A practical example where this is problematic is where NFS is combined
-with a system such as Cilium which implements BPF-based load balancing.
-A common pattern in software-defined storage systems is to have an NFS
-mount that connects to a persistent virtual IP which in turn maps to an
-ephemeral server IP. This is usually done to achieve high availability:
-if your server goes down you can quickly spin up a replacement and remap
-the virtual IP to that endpoint. With BPF-based load balancing, mounts
-will forget the virtual IP address when the address rewrite occurs
-because a pointer to the only copy of that address is passed down the
-stack. Server failover then breaks, because clients have forgotten the
-virtual IP address. Reconnects fail and mounts remain broken. This patch
-was tested by setting up a scenario like this and ensuring that NFS
-reconnects worked after applying the patch.
+ powerpc-linux-gnu-ld: warning: orphan section `.branch_lt' from
+ `arch/powerpc/kernel/head_44x.o' being placed in section `.branch_lt'
 
-Signed-off-by: Jordan Rife <jrife@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+As of binutils commit 2d7ad24e8726 ("Support PLT16 relocs against local
+symbols")[1], 32 bit targets can produce .branch_lt sections in their
+output.
+
+Include these symbols in the .data section as the ppc64 kernel does.
+
+[1] https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commitdiff;h=2d7ad24e8726ba4c45c9e67be08223a146a837ce
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Alan Modra <amodra@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -3468,7 +3468,11 @@ EXPORT_SYMBOL(kernel_accept);
- int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
- 		   int flags)
- {
--	return sock->ops->connect(sock, addr, addrlen, flags);
-+	struct sockaddr_storage address;
-+
-+	memcpy(&address, addr, addrlen);
-+
-+	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
- }
- EXPORT_SYMBOL(kernel_connect);
- 
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -328,6 +328,7 @@ SECTIONS
+ 		*(.sdata2)
+ 		*(.got.plt) *(.got)
+ 		*(.plt)
++		*(.branch_lt)
+ 	}
+ #else
+ 	.data : AT(ADDR(.data) - LOAD_OFFSET) {
 
 
