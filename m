@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1572AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9D8C433C8;
-	Wed, 20 Sep 2023 11:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F102AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09175C433C8;
+	Wed, 20 Sep 2023 11:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211092;
-	bh=sI4sKj3VTWsXHpKOFeBHh16lQ4ASbjPx1cZCFRVi2TI=;
+	s=korg; t=1695211095;
+	bh=MQUXiiPNgcEg3uvYIuuSMKX9plBvKb/y9cvqNc31IFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08HYxHQZAHYAFnCCCDaNEmqhXf6tSWGNOlKyD/3ZZbdxaybjJEkKPPvRPyHDJ7Uh2
-	 TD7wovv76tXyQ6ERKM+6bo1SPMyxUwji6stj/6K1Lj3S5FwPzbPAiZBnunAPflZq3T
-	 K7VmBss4df41qXSFlrcoISAurSWDPRnt62lChngQ=
+	b=p7aiV6+ptYNON+OrILdEAmXh8Z/qIzU0a2Td0VI0jWaBaM3E2OH4flL8DZUfa9tEG
+	 SCg1HUyYVdJ7hNOsFSZntRGmgWmEoFy0pk5e6Pd5q531pnIT8KHChBwGqAzlpmpfun
+	 9BDpiL0Ohd4zdjfTndpgsT2DTCyJknvEvwQCjeAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
+	Aaron Lu <aaron.lu@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/139] panic: Reenable preemption in WARN slowpath
-Date: Wed, 20 Sep 2023 13:30:38 +0200
-Message-ID: <20230920112839.443577444@linuxfoundation.org>
+Subject: [PATCH 6.1 105/139] x86/boot/compressed: Reserve more memory for page tables
+Date: Wed, 20 Sep 2023 13:30:39 +0200
+Message-ID: <20230920112839.481421024@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -43,57 +41,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit cccd32816506cbac3a4c65d9dff51b3125ef1a03 ]
+[ Upstream commit f530ee95b72e77b09c141c4b1a4b94d1199ffbd9 ]
 
-Commit:
+The decompressor has a hard limit on the number of page tables it can
+allocate. This limit is defined at compile-time and will cause boot
+failure if it is reached.
 
-  5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
+The kernel is very strict and calculates the limit precisely for the
+worst-case scenario based on the current configuration. However, it is
+easy to forget to adjust the limit when a new use-case arises. The
+worst-case scenario is rarely encountered during sanity checks.
 
-amended warn_slowpath_fmt() to disable preemption until the WARN splat
-has been emitted.
+In the case of enabling 5-level paging, a use-case was overlooked. The
+limit needs to be increased by one to accommodate the additional level.
+This oversight went unnoticed until Aaron attempted to run the kernel
+via kexec with 5-level paging and unaccepted memory enabled.
 
-However the commit neglected to reenable preemption in the !fmt codepath,
-i.e. when a WARN splat is emitted without additional format string.
+Update wost-case calculations to include 5-level paging.
 
-One consequence is that users may see more splats than intended.  E.g. a
-WARN splat emitted in a work item results in at least two extra splats:
+To address this issue, let's allocate some extra space for page tables.
+128K should be sufficient for any use-case. The logic can be simplified
+by using a single value for all kernel configurations.
 
-  BUG: workqueue leaked lock or atomic
-  (emitted by process_one_work())
+[ Also add a warning, should this memory run low - by Dave Hansen. ]
 
-  BUG: scheduling while atomic
-  (emitted by worker_thread() -> schedule())
-
-Ironically the point of the commit was to *avoid* extra splats. ;)
-
-Fix it.
-
-Fixes: 5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 34bbb0009f3b ("x86/boot/compressed: Enable 5-level paging during decompression stage")
+Reported-by: Aaron Lu <aaron.lu@intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/3ec48fde01e4ee6505f77908ba351bad200ae3d1.1694763684.git.lukas@wunner.de
+Link: https://lore.kernel.org/r/20230915070221.10266-1-kirill.shutemov@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/boot/compressed/ident_map_64.c |  8 +++++
+ arch/x86/include/asm/boot.h             | 45 +++++++++++++++++--------
+ 2 files changed, 39 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index ca5452afb456d..63e94f3bd8dcd 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -695,6 +695,7 @@ void warn_slowpath_fmt(const char *file, int line, unsigned taint,
- 	if (!fmt) {
- 		__warn(file, line, __builtin_return_address(0), taint,
- 		       NULL, NULL);
-+		warn_rcu_exit(rcu);
- 		return;
+diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
+index 321a5011042d4..b4155273df891 100644
+--- a/arch/x86/boot/compressed/ident_map_64.c
++++ b/arch/x86/boot/compressed/ident_map_64.c
+@@ -67,6 +67,14 @@ static void *alloc_pgt_page(void *context)
+ 		return NULL;
  	}
  
++	/* Consumed more tables than expected? */
++	if (pages->pgt_buf_offset == BOOT_PGT_SIZE_WARN) {
++		debug_putstr("pgt_buf running low in " __FILE__ "\n");
++		debug_putstr("Need to raise BOOT_PGT_SIZE?\n");
++		debug_putaddr(pages->pgt_buf_offset);
++		debug_putaddr(pages->pgt_buf_size);
++	}
++
+ 	entry = pages->pgt_buf + pages->pgt_buf_offset;
+ 	pages->pgt_buf_offset += PAGE_SIZE;
+ 
+diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
+index 9191280d9ea31..215d37f7dde8a 100644
+--- a/arch/x86/include/asm/boot.h
++++ b/arch/x86/include/asm/boot.h
+@@ -40,23 +40,40 @@
+ #ifdef CONFIG_X86_64
+ # define BOOT_STACK_SIZE	0x4000
+ 
++/*
++ * Used by decompressor's startup_32() to allocate page tables for identity
++ * mapping of the 4G of RAM in 4-level paging mode:
++ * - 1 level4 table;
++ * - 1 level3 table;
++ * - 4 level2 table that maps everything with 2M pages;
++ *
++ * The additional level5 table needed for 5-level paging is allocated from
++ * trampoline_32bit memory.
++ */
+ # define BOOT_INIT_PGT_SIZE	(6*4096)
+-# ifdef CONFIG_RANDOMIZE_BASE
++
+ /*
+- * Assuming all cross the 512GB boundary:
+- * 1 page for level4
+- * (2+2)*4 pages for kernel, param, cmd_line, and randomized kernel
+- * 2 pages for first 2M (video RAM: CONFIG_X86_VERBOSE_BOOTUP).
+- * Total is 19 pages.
++ * Total number of page tables kernel_add_identity_map() can allocate,
++ * including page tables consumed by startup_32().
++ *
++ * Worst-case scenario:
++ *  - 5-level paging needs 1 level5 table;
++ *  - KASLR needs to map kernel, boot_params, cmdline and randomized kernel,
++ *    assuming all of them cross 256T boundary:
++ *    + 4*2 level4 table;
++ *    + 4*2 level3 table;
++ *    + 4*2 level2 table;
++ *  - X86_VERBOSE_BOOTUP needs to map the first 2M (video RAM):
++ *    + 1 level4 table;
++ *    + 1 level3 table;
++ *    + 1 level2 table;
++ * Total: 28 tables
++ *
++ * Add 4 spare table in case decompressor touches anything beyond what is
++ * accounted above. Warn if it happens.
+  */
+-#  ifdef CONFIG_X86_VERBOSE_BOOTUP
+-#   define BOOT_PGT_SIZE	(19*4096)
+-#  else /* !CONFIG_X86_VERBOSE_BOOTUP */
+-#   define BOOT_PGT_SIZE	(17*4096)
+-#  endif
+-# else /* !CONFIG_RANDOMIZE_BASE */
+-#  define BOOT_PGT_SIZE		BOOT_INIT_PGT_SIZE
+-# endif
++# define BOOT_PGT_SIZE_WARN	(28*4096)
++# define BOOT_PGT_SIZE		(32*4096)
+ 
+ #else /* !CONFIG_X86_64 */
+ # define BOOT_STACK_SIZE	0x1000
 -- 
 2.40.1
 
