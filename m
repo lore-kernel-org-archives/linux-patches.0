@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688C530FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E463BC433CA;
-	Wed, 20 Sep 2023 12:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AED30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA067C433C7;
+	Wed, 20 Sep 2023 12:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212902;
-	bh=CDZiq5qyaQm8mHyQTnPCBNnzmI5q3TaYiKNybmdSg3E=;
+	s=korg; t=1695212905;
+	bh=rW5AejsTdPskUSd+2xZda7Ra2vh5RtNl7dz5jq2WGJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzYf9a83Hk1tw2m4GMAZNMniJgbP0W+C31mlsHcxHb0maS7Ti93OMootNCzdphWqF
-	 9oQ1Nrnmfggi0jcTNE8jNcdsTeYark2Tm40yHCtvArFUpkmTSeiP2vfkL3h9a+J867
-	 VWuoJiKjz733ndpLAQlOz4NTeWptVl6N23e4WgG0=
+	b=mAZSYcgeOgOSczzB+BWNTakLbgL005f1sLeO/LIk984CCA3yqQxI7gxjZmMDZFIp6
+	 uMKPWx59rqTjIwSfxREZ/Pl0HFfF2n0v+JqRZXu9lfRq9LQ07QJRqo+3fPs1Tf25bK
+	 V+rGLvlYepzFoE0VjmdOsVwq+yt7N3rrsAOxOzhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Robert Foss <rfoss@kernel.org>,
+	Chengguang Xu <cgxu519@zoho.com.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/367] drm/bridge: tc358764: Fix debug print parameter order
-Date: Wed, 20 Sep 2023 13:27:44 +0200
-Message-ID: <20230920112900.798038941@linuxfoundation.org>
+Subject: [PATCH 5.4 088/367] quota: avoid increasing DQST_LOOKUPS when iterating over dirty/inuse list
+Date: Wed, 20 Sep 2023 13:27:45 +0200
+Message-ID: <20230920112900.821417935@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,38 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Chengguang Xu <cgxu519@zoho.com.cn>
 
-[ Upstream commit 7f947be02aab5b154427cb5b0fffe858fc387b02 ]
+[ Upstream commit 05848db2083d4f232e84e385845dcd98d5c511b2 ]
 
-The debug print parameters were swapped in the output and they were
-printed as decimal values, both the hardware address and the value.
-Update the debug print to print the parameters in correct order, and
-use hexadecimal print for both address and value.
+It is meaningless to increase DQST_LOOKUPS number while iterating
+over dirty/inuse list, so just avoid it.
 
-Fixes: f38b7cca6d0e ("drm/bridge: tc358764: Add DSI to LVDS bridge driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230615152817.359420-1-marex@denx.de
+Link: https://lore.kernel.org/r/20190926083408.4269-1-cgxu519@zoho.com.cn
+Signed-off-by: Chengguang Xu <cgxu519@zoho.com.cn>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358764.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/quota/dquot.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358764.c b/drivers/gpu/drm/bridge/tc358764.c
-index 170f162ffa558..121250473761e 100644
---- a/drivers/gpu/drm/bridge/tc358764.c
-+++ b/drivers/gpu/drm/bridge/tc358764.c
-@@ -180,7 +180,7 @@ static void tc358764_read(struct tc358764 *ctx, u16 addr, u32 *val)
- 	if (ret >= 0)
- 		le32_to_cpus(val);
- 
--	dev_dbg(ctx->dev, "read: %d, addr: %d\n", addr, *val);
-+	dev_dbg(ctx->dev, "read: addr=0x%04x data=0x%08x\n", addr, *val);
- }
- 
- static void tc358764_write(struct tc358764 *ctx, u16 addr, u32 val)
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index 5361e6bc397d0..5b887fb1aa71a 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -595,7 +595,6 @@ int dquot_scan_active(struct super_block *sb,
+ 		/* Now we have active dquot so we can just increase use count */
+ 		atomic_inc(&dquot->dq_count);
+ 		spin_unlock(&dq_list_lock);
+-		dqstats_inc(DQST_LOOKUPS);
+ 		dqput(old_dquot);
+ 		old_dquot = dquot;
+ 		/*
+@@ -650,7 +649,6 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
+ 			 * use count */
+ 			dqgrab(dquot);
+ 			spin_unlock(&dq_list_lock);
+-			dqstats_inc(DQST_LOOKUPS);
+ 			err = sb->dq_op->write_dquot(dquot);
+ 			if (err) {
+ 				/*
 -- 
 2.40.1
 
