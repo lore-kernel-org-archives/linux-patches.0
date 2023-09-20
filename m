@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B0C28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:54:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A29C433C7;
-	Wed, 20 Sep 2023 11:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5210228E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:54:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8771C433C8;
+	Wed, 20 Sep 2023 11:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210844;
-	bh=MsXVLTENd7s5wbcYadp+Ag4TcSQ6PQwRktGwJtls/qY=;
+	s=korg; t=1695210847;
+	bh=WL2dnqzY7PlJWFUVqnHH4ximExSUY8TZ71pXc95Zclw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jg9Ksii+UjszbmM/gHjDENrFjWTAZPNVuzIjzxXEYrZk11OnjmAP8G4zGMkLnsCMy
-	 kOj/WC+Q00Jp+8TUbS/0dFVNXMHLkZuP17gePg5WGOSy7sH20EZ8HcCBYSDEy0TYEa
-	 /yUcnTC5kD7RhvK9n3b1NZITXXAX7NZyWFjnlugU=
+	b=2GXspQ03YrXS0UXFHn5R0sUcI/WX1SfZEEksLLenUm347QPbAfkpgBJ7r70ry86sd
+	 tTgGUOsOb6EW7gZjqIIdu0/cYC4g09y7+/pAOQ/dUZ8IHGQw7k8q9IE2iuR1a/xrPE
+	 14Y3AURkSRRqFVdA+xHa7L61u/EbEm1ddGwovzXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Azeem Shaikh <azeemshaikh38@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/139] devlink: remove reload failed checks in params get/set callbacks
-Date: Wed, 20 Sep 2023 13:29:08 +0200
-Message-ID: <20230920112836.139425200@linuxfoundation.org>
+Subject: [PATCH 6.1 015/139] crypto: lrw,xts - Replace strlcpy with strscpy
+Date: Wed, 20 Sep 2023 13:29:09 +0200
+Message-ID: <20230920112836.177400773@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,66 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Azeem Shaikh <azeemshaikh38@gmail.com>
 
-[ Upstream commit 633d76ad01ad0321a1ace3e5cc4fed06753d7ac4 ]
+[ Upstream commit babb80b3ecc6f40c962e13c654ebcd27f25ee327 ]
 
-The checks in question were introduced by:
-commit 6b4db2e528f6 ("devlink: Fix use-after-free after a failed reload").
-That fixed an issue of reload with mlxsw driver.
+strlcpy() reads the entire source buffer first.
+This read may exceed the destination size limit.
+This is both inefficient and can lead to linear read
+overflows if a source string is not NUL-terminated [1].
+In an effort to remove strlcpy() completely [2], replace
+strlcpy() here with strscpy().
 
-Back then, that was a valid fix, because there was a limitation
-in place that prevented drivers from registering/unregistering params
-when devlink instance was registered.
+Direct replacement is safe here since return value of -errno
+is used to check for truncation instead of sizeof(dest).
 
-It was possible to do the fix differently by changing drivers to
-register/unregister params in appropriate places making sure the ops
-operate only on memory which is allocated and initialized. But that,
-as a dependency, would require to remove the limitation mentioned above.
+[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strlcpy
+[2] https://github.com/KSPP/linux/issues/89
 
-Eventually, this limitation was lifted by:
-commit 1d18bb1a4ddd ("devlink: allow registering parameters after the instance")
-
-Also, the alternative fix (which also fixed another issue) was done by:
-commit 74cbc3c03c82 ("mlxsw: spectrum_acl_tcam: Move devlink param to TCAM code").
-
-Therefore, the checks are no longer relevant. Each driver should make
-sure to have the params registered only when the memory the ops
-are working with is allocated and initialized.
-
-So remove the checks.
-
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Azeem Shaikh <azeemshaikh38@gmail.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/leftover.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/lrw.c | 6 +++---
+ crypto/xts.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
-index 63188d6a50fe9..032c7af065cd9 100644
---- a/net/devlink/leftover.c
-+++ b/net/devlink/leftover.c
-@@ -5218,7 +5218,7 @@ static int devlink_param_get(struct devlink *devlink,
- 			     const struct devlink_param *param,
- 			     struct devlink_param_gset_ctx *ctx)
- {
--	if (!param->get || devlink->reload_failed)
-+	if (!param->get)
- 		return -EOPNOTSUPP;
- 	return param->get(devlink, param->id, ctx);
- }
-@@ -5227,7 +5227,7 @@ static int devlink_param_set(struct devlink *devlink,
- 			     const struct devlink_param *param,
- 			     struct devlink_param_gset_ctx *ctx)
- {
--	if (!param->set || devlink->reload_failed)
-+	if (!param->set)
- 		return -EOPNOTSUPP;
- 	return param->set(devlink, param->id, ctx);
- }
+diff --git a/crypto/lrw.c b/crypto/lrw.c
+index 8d59a66b65255..fb8892ed179f5 100644
+--- a/crypto/lrw.c
++++ b/crypto/lrw.c
+@@ -357,10 +357,10 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+ 	 * cipher name.
+ 	 */
+ 	if (!strncmp(cipher_name, "ecb(", 4)) {
+-		unsigned len;
++		int len;
+ 
+-		len = strlcpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
+-		if (len < 2 || len >= sizeof(ecb_name))
++		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
++		if (len < 2)
+ 			goto err_free_inst;
+ 
+ 		if (ecb_name[len - 1] != ')')
+diff --git a/crypto/xts.c b/crypto/xts.c
+index de6cbcf69bbd6..b05020657cdc8 100644
+--- a/crypto/xts.c
++++ b/crypto/xts.c
+@@ -396,10 +396,10 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
+ 	 * cipher name.
+ 	 */
+ 	if (!strncmp(cipher_name, "ecb(", 4)) {
+-		unsigned len;
++		int len;
+ 
+-		len = strlcpy(ctx->name, cipher_name + 4, sizeof(ctx->name));
+-		if (len < 2 || len >= sizeof(ctx->name))
++		len = strscpy(ctx->name, cipher_name + 4, sizeof(ctx->name));
++		if (len < 2)
+ 			goto err_free_inst;
+ 
+ 		if (ctx->name[len - 1] != ')')
 -- 
 2.40.1
 
