@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECF836AEF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA367C433C7;
-	Wed, 20 Sep 2023 12:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9AB37CBF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81517C433C7;
+	Wed, 20 Sep 2023 12:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213038;
-	bh=yR6rQxc/n8nJdjUFWsyaRp3N2LssOGQV3rZJ5ZE7FIM=;
+	s=korg; t=1695213040;
+	bh=HE9qPqNE+/uks63e+o1v6ogyDH4QNLgk7RFaBG5H6Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjSug76iwCaokatfW3UV8nObQF7fO06fj94jVGW4Hw4wau+R7MQ4M0Scl5GOslCs+
-	 4vta+6pQ64H4sKz4GDsM0sXPa7ej+MamVpkkN9V7OdlXCoYjPaOcxUoLdfxXEBPiz8
-	 hK73b2v48kzTKmbN/LbBJh4YhORMpCNlGFzTwolU=
+	b=ZfviKQKLVMr11sRo/NnurHa5G/KUcwI12AV7e9/r0nK0fX7EEFI0cv4WxtSwHC7mP
+	 NYnkXIYBnlvMOl8Fu53ZleGlZGmF0b7y2xmkmSrOpH/wZZLlQf/Kq3w1cvhVznXAOR
+	 ChvvJQmfEjTUmGHU0URLWn7BOhMNGyxlSAjA09bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 138/367] drm/amdgpu: Use RMW accessors for changing LNKCTL
-Date: Wed, 20 Sep 2023 13:28:35 +0200
-Message-ID: <20230920112902.263177641@linuxfoundation.org>
+Subject: [PATCH 5.4 139/367] drm/radeon: Correct Transmit Margin masks
+Date: Wed, 20 Sep 2023 13:28:36 +0200
+Message-ID: <20230920112902.286852418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -36,146 +34,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit ce7d88110b9ed5f33fe79ea6d4ed049fb0e57bce ]
+[ Upstream commit 40bd4be5a652ce56068a8273b68caa38cb0d8f4b ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.  And in
-the case of upstream bridge, the driver does not even own the device it's
-changing the registers for.
+Previously we masked PCIe Link Control 2 register values with "7 << 9",
+which was apparently intended to be the Transmit Margin field, but instead
+was the high order bit of Transmit Margin, the Enter Modified Compliance
+bit, and the Compliance SOS bit.
 
-Use RMW capability accessors which do proper locking to avoid losing
-concurrent updates to the register value.
+Correct the mask to "7 << 7", which is the Transmit Margin field.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
-Fixes: 62a37553414a ("drm/amdgpu: add si implementation v10")
-Link: https://lore.kernel.org/r/20230717120503.15276-6-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20191112173503.176611-3-helgaas@kernel.org
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 7189576e8a82 ("drm/radeon: Use RMW accessors for changing LNKCTL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/cik.c | 36 +++++++++-----------------------
- drivers/gpu/drm/amd/amdgpu/si.c  | 36 +++++++++-----------------------
- 2 files changed, 20 insertions(+), 52 deletions(-)
+ drivers/gpu/drm/radeon/cik.c | 8 ++++----
+ drivers/gpu/drm/radeon/si.c  | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
-index 38b06ae6357a7..ee7e218c7daef 100644
---- a/drivers/gpu/drm/amd/amdgpu/cik.c
-+++ b/drivers/gpu/drm/amd/amdgpu/cik.c
-@@ -1428,17 +1428,8 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
- 			u16 bridge_cfg2, gpu_cfg2;
- 			u32 max_lw, current_lw, tmp;
- 
--			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
--						  &bridge_cfg);
--			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
--						  &gpu_cfg);
--
--			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
--			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
--
--			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
--			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
--						   tmp16);
-+			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
-+			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
- 
- 			tmp = RREG32_PCIE(ixPCIE_LC_STATUS1);
- 			max_lw = (tmp & PCIE_LC_STATUS1__LC_DETECTED_LINK_WIDTH_MASK) >>
-@@ -1491,21 +1482,14 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
- 				msleep(100);
- 
- 				/* linkctl */
--				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
--							  &tmp16);
--				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
--				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
--				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
--							   tmp16);
--
--				pcie_capability_read_word(adev->pdev,
--							  PCI_EXP_LNKCTL,
--							  &tmp16);
--				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
--				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
--				pcie_capability_write_word(adev->pdev,
--							   PCI_EXP_LNKCTL,
--							   tmp16);
-+				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
-+								   PCI_EXP_LNKCTL_HAWD,
-+								   bridge_cfg &
-+								   PCI_EXP_LNKCTL_HAWD);
-+				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
-+								   PCI_EXP_LNKCTL_HAWD,
-+								   gpu_cfg &
-+								   PCI_EXP_LNKCTL_HAWD);
+diff --git a/drivers/gpu/drm/radeon/cik.c b/drivers/gpu/drm/radeon/cik.c
+index 897442754fd03..3ab8dae8aa3c3 100644
+--- a/drivers/gpu/drm/radeon/cik.c
++++ b/drivers/gpu/drm/radeon/cik.c
+@@ -9619,13 +9619,13 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
  
  				/* linkctl2 */
- 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
-diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
-index 9f82be879224a..53f7719d688eb 100644
---- a/drivers/gpu/drm/amd/amdgpu/si.c
-+++ b/drivers/gpu/drm/amd/amdgpu/si.c
-@@ -1676,17 +1676,8 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
- 			u16 bridge_cfg2, gpu_cfg2;
- 			u32 max_lw, current_lw, tmp;
+ 				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
+-				tmp16 &= ~((1 << 4) | (7 << 9));
+-				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 9)));
++				tmp16 &= ~((1 << 4) | (7 << 7));
++				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
+ 				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
  
--			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
--						  &bridge_cfg);
--			pcie_capability_read_word(adev->pdev, PCI_EXP_LNKCTL,
--						  &gpu_cfg);
--
--			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
--			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
--
--			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
--			pcie_capability_write_word(adev->pdev, PCI_EXP_LNKCTL,
--						   tmp16);
-+			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
-+			pcie_capability_set_word(adev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
+ 				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
+-				tmp16 &= ~((1 << 4) | (7 << 9));
+-				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 9)));
++				tmp16 &= ~((1 << 4) | (7 << 7));
++				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
+ 				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
  
- 			tmp = RREG32_PCIE(PCIE_LC_STATUS1);
- 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
-@@ -1731,21 +1722,14 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+ 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
+diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
+index 1d8efb0eefdb4..e28e1486e070c 100644
+--- a/drivers/gpu/drm/radeon/si.c
++++ b/drivers/gpu/drm/radeon/si.c
+@@ -7202,13 +7202,13 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
  
- 				mdelay(100);
+ 				/* linkctl2 */
+ 				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
+-				tmp16 &= ~((1 << 4) | (7 << 9));
+-				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 9)));
++				tmp16 &= ~((1 << 4) | (7 << 7));
++				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
+ 				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
  
--				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
--							  &tmp16);
--				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
--				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
--				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
--							   tmp16);
--
--				pcie_capability_read_word(adev->pdev,
--							  PCI_EXP_LNKCTL,
--							  &tmp16);
--				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
--				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
--				pcie_capability_write_word(adev->pdev,
--							   PCI_EXP_LNKCTL,
--							   tmp16);
-+				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
-+								   PCI_EXP_LNKCTL_HAWD,
-+								   bridge_cfg &
-+								   PCI_EXP_LNKCTL_HAWD);
-+				pcie_capability_clear_and_set_word(adev->pdev, PCI_EXP_LNKCTL,
-+								   PCI_EXP_LNKCTL_HAWD,
-+								   gpu_cfg &
-+								   PCI_EXP_LNKCTL_HAWD);
+ 				pci_read_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
+-				tmp16 &= ~((1 << 4) | (7 << 9));
+-				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 9)));
++				tmp16 &= ~((1 << 4) | (7 << 7));
++				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
+ 				pci_write_config_word(rdev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
  
- 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
- 							  &tmp16);
+ 				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
 -- 
 2.40.1
 
