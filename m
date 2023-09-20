@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C9F18658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719BAC433C8;
-	Wed, 20 Sep 2023 11:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF003208BB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCCFC433CA;
+	Wed, 20 Sep 2023 11:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210556;
-	bh=Is6j2BYQs2Sql7MarYZLysTrXOrCOx9VznlmIkM7zWM=;
+	s=korg; t=1695210559;
+	bh=FJreXha/AJEvOvmVZMdSGuKiNDIUOvm5Kswv+bgab14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJULLY7INCEx1yRWYpr5YCTF1hR5raGmqXZGijPXKoQCIThQjhFGrNoYbXjOH4PrL
-	 +FD90+SyvOB5TuHRk7jcmcBbY+xyBYN3JGE7c2BkWewTYkAOuvFBCyVAOJFEqNiOe0
-	 x6wpJabnv2RwfWv1ggXLGZ3Ojv+zGeecoRgumsJw=
+	b=rBCsH7SwPY/tQmeLSN4VFvnGf74+c/cR/KwJxZ2pzPkzNXcHkCTm9/miMo/JMPIEL
+	 SCQO6gXLAkWZg4DixDrUk5Jp+rHZecnoHyuluAgccTtdesCeUJIMwuIbypCfqe8S5/
+	 jTqm+K7w8K/SCKcPJN3jGYfCo3FKCRETzBgL91xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Derek Kiernan <derek.kiernan@amd.com>,
-	Dragan Cvetic <dragan.cvetic@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Ladislav Michl <ladis@linux-mips.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 120/211] misc: open-dice: make OPEN_DICE depend on HAS_IOMEM
-Date: Wed, 20 Sep 2023 13:29:24 +0200
-Message-ID: <20230920112849.515376914@linuxfoundation.org>
+Subject: [PATCH 6.5 121/211] usb: dwc3: dwc3-octeon: Verify clock divider
+Date: Wed, 20 Sep 2023 13:29:25 +0200
+Message-ID: <20230920112849.546943004@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -43,50 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Ladislav Michl <ladis@linux-mips.org>
 
-[ Upstream commit aefc8b57af7787c80686e49a5841e9289cb11f53 ]
+[ Upstream commit fb57f829beefd4b3746f1b23d51e80ed5d4bb87b ]
 
-On s390 systems (aka mainframes), it has classic channel devices for
-networking and permanent storage that are currently even more common
-than PCI devices. Hence it could have a fully functional s390 kernel
-with CONFIG_PCI=n, then the relevant iomem mapping functions
-[including ioremap(), devm_ioremap(), etc.] are not available.
+Although valid USB clock divider will be calculated for all valid
+Octeon core frequencies, make code formally correct limiting
+divider not to be greater that 7 so it fits into H_CLKDIV_SEL
+field.
 
-Here let OPEN_DICE depend on HAS_IOMEM so that it won't be built
-to cause below compiling error if PCI is unset:
-
-------
-ERROR: modpost: "devm_memremap" [drivers/misc/open-dice.ko] undefined!
-ERROR: modpost: "devm_memunmap" [drivers/misc/open-dice.ko] undefined!
-------
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Cc: Derek Kiernan <derek.kiernan@amd.com>
-Cc: Dragan Cvetic <dragan.cvetic@amd.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20230707135852.24292-4-bhe@redhat.com
+Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20230808/testrun/18882876/suite/build/test/gcc-8-cavium_octeon_defconfig/log
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/ZNIM7tlBNdHFzXZG@lenoch
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/cavium-octeon/octeon-usb.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-index 75e427f124b28..cadd4a820c033 100644
---- a/drivers/misc/Kconfig
-+++ b/drivers/misc/Kconfig
-@@ -496,6 +496,7 @@ config HISI_HIKEY_USB
- config OPEN_DICE
- 	tristate "Open Profile for DICE driver"
- 	depends on OF_RESERVED_MEM
-+	depends on HAS_IOMEM
- 	help
- 	  This driver exposes a DICE reserved memory region to userspace via
- 	  a character device. The memory region contains Compound Device
+diff --git a/arch/mips/cavium-octeon/octeon-usb.c b/arch/mips/cavium-octeon/octeon-usb.c
+index 2add435ad0387..165e032d08647 100644
+--- a/arch/mips/cavium-octeon/octeon-usb.c
++++ b/arch/mips/cavium-octeon/octeon-usb.c
+@@ -243,11 +243,11 @@ static int dwc3_octeon_get_divider(void)
+ 	while (div < ARRAY_SIZE(clk_div)) {
+ 		uint64_t rate = octeon_get_io_clock_rate() / clk_div[div];
+ 		if (rate <= 300000000 && rate >= 150000000)
+-			break;
++			return div;
+ 		div++;
+ 	}
+ 
+-	return div;
++	return -EINVAL;
+ }
+ 
+ static int dwc3_octeon_config_power(struct device *dev, void __iomem *base)
+@@ -374,6 +374,10 @@ static int dwc3_octeon_clocks_start(struct device *dev, void __iomem *base)
+ 
+ 	/* Step 4b: Select controller clock frequency. */
+ 	div = dwc3_octeon_get_divider();
++	if (div < 0) {
++		dev_err(dev, "clock divider invalid\n");
++		return div;
++	}
+ 	val = dwc3_octeon_readq(uctl_ctl_reg);
+ 	val &= ~USBDRD_UCTL_CTL_H_CLKDIV_SEL;
+ 	val |= FIELD_PREP(USBDRD_UCTL_CTL_H_CLKDIV_SEL, div);
 -- 
 2.40.1
 
