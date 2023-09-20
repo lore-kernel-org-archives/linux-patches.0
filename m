@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFE730FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5468EC433CB;
-	Wed, 20 Sep 2023 12:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E42130FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F424C433C8;
+	Wed, 20 Sep 2023 12:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212662;
-	bh=Vg+qD+3JFAvI/C8ntOl697ujw7lHy8zEP12qSzlfMwA=;
+	s=korg; t=1695212665;
+	bh=W9aYsUqC28UuyhNfHa537r4iFDsQF95qgKsswMbWJFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgGiBOxD4LkRkR8cHFOrfGeLUkzNkBFFAwdZza1S3zONFQLU5y/MnuEhyp0AR92EP
-	 fYn3O33n7vj1E+oOWnznQsKk80tgfNDiNyR76MzXeP0tx9iBCHcfO9ojzOX1pqn7ya
-	 cCHJHlJf5m82q+Sn9oocmyRM7pfG9Q4JStdmZNIU=
+	b=2bYe4s1KWGhBgptagTEtc1Jmt1FEg2Mf7vs0kT/cDwTD6OZk0eRQGruCph2sQN6Yz
+	 HvN6UyLnAYxG1jN6FskjoozxJO0ycgyv40FzJpACBfTqvlryNve9mE50L4/nxa6oD6
+	 NgiEOufm8yrFMwdAamnGPerHBr7BefaIDqR6PjBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 58/83] btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
-Date: Wed, 20 Sep 2023 13:31:48 +0200
-Message-ID: <20230920112828.951189500@linuxfoundation.org>
+Subject: [PATCH 5.10 59/83] drm: gm12u320: Fix the timeout usage for usb_bulk_msg()
+Date: Wed, 20 Sep 2023 13:31:49 +0200
+Message-ID: <20230920112828.990111524@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -42,64 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 6bfe3959b0e7a526f5c64747801a8613f002f05a ]
+[ Upstream commit 7583028d359db3cd0072badcc576b4f9455fd27a ]
 
-The function btrfs_validate_super() should verify the metadata_uuid in
-the provided superblock argument. Because, all its callers expect it to
-do that.
+The timeout arg of usb_bulk_msg() is ms already, which has been converted
+to jiffies by msecs_to_jiffies() in usb_start_wait_urb(). So fix the usage
+by removing the redundant msecs_to_jiffies() in the macros.
 
-Such as in the following stacks:
+And as Hans suggested, also remove msecs_to_jiffies() for the IDLE_TIMEOUT
+macro to make it consistent here and so change IDLE_TIMEOUT to
+msecs_to_jiffies(IDLE_TIMEOUT) where it is used.
 
-  write_all_supers()
-   sb = fs_info->super_for_commit;
-   btrfs_validate_write_super(.., sb)
-     btrfs_validate_super(.., sb, ..)
-
-  scrub_one_super()
-	btrfs_validate_super(.., sb, ..)
-
-And
-   check_dev_super()
-	btrfs_validate_super(.., sb, ..)
-
-However, it currently verifies the fs_info::super_copy::metadata_uuid
-instead.  Fix this using the correct metadata_uuid in the superblock
-argument.
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: e4f86e437164 ("drm: Add Grain Media GM12U320 driver v2")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230904021421.1663892-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/tiny/gm12u320.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 1bc6909d4de94..0e25a3f64b2e0 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2503,13 +2503,11 @@ static int validate_super(struct btrfs_fs_info *fs_info,
- 		ret = -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/tiny/gm12u320.c b/drivers/gpu/drm/tiny/gm12u320.c
+index 0f5d1e598d75f..1656f3ee0b193 100644
+--- a/drivers/gpu/drm/tiny/gm12u320.c
++++ b/drivers/gpu/drm/tiny/gm12u320.c
+@@ -67,10 +67,10 @@ MODULE_PARM_DESC(eco_mode, "Turn on Eco mode (less bright, more silent)");
+ #define READ_STATUS_SIZE		13
+ #define MISC_VALUE_SIZE			4
  
--	if (btrfs_fs_incompat(fs_info, METADATA_UUID) &&
--	    memcmp(fs_info->fs_devices->metadata_uuid,
--		   fs_info->super_copy->metadata_uuid, BTRFS_FSID_SIZE)) {
-+	if (memcmp(fs_info->fs_devices->metadata_uuid, btrfs_sb_fsid_ptr(sb),
-+		   BTRFS_FSID_SIZE) != 0) {
- 		btrfs_err(fs_info,
- "superblock metadata_uuid doesn't match metadata uuid of fs_devices: %pU != %pU",
--			fs_info->super_copy->metadata_uuid,
--			fs_info->fs_devices->metadata_uuid);
-+			  btrfs_sb_fsid_ptr(sb), fs_info->fs_devices->metadata_uuid);
- 		ret = -EINVAL;
- 	}
+-#define CMD_TIMEOUT			msecs_to_jiffies(200)
+-#define DATA_TIMEOUT			msecs_to_jiffies(1000)
+-#define IDLE_TIMEOUT			msecs_to_jiffies(2000)
+-#define FIRST_FRAME_TIMEOUT		msecs_to_jiffies(2000)
++#define CMD_TIMEOUT			200
++#define DATA_TIMEOUT			1000
++#define IDLE_TIMEOUT			2000
++#define FIRST_FRAME_TIMEOUT		2000
  
+ #define MISC_REQ_GET_SET_ECO_A		0xff
+ #define MISC_REQ_GET_SET_ECO_B		0x35
+@@ -399,7 +399,7 @@ static void gm12u320_fb_update_work(struct work_struct *work)
+ 	 * switches back to showing its logo.
+ 	 */
+ 	queue_delayed_work(system_long_wq, &gm12u320->fb_update.work,
+-			   IDLE_TIMEOUT);
++			   msecs_to_jiffies(IDLE_TIMEOUT));
+ 
+ 	return;
+ err:
 -- 
 2.40.1
 
