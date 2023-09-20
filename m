@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFDE30F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F25C433CA;
-	Wed, 20 Sep 2023 12:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39B730FA0
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2808BC433C7;
+	Wed, 20 Sep 2023 12:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213841;
-	bh=lm0rIrvoKbF/7VlKe65QLL9oO9/0DuF/ERQmNeUyEwg=;
+	s=korg; t=1695213844;
+	bh=+sEDUwwooZozQ66/zmatUNKEBR5/1gKX8nwQZN4r+YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nL2yoy9SvkTmOAuJ8ezk0hSWY2+yAuZ3h/IscBMY0RfQBZw7er0D+d6n+QUEtq6p+
-	 6yrKrFWw1035mxLz64bDixOVRSc/kTmRJJpNnVpkydw3pTnNPcBrxHoLIT+0sMgvhh
-	 8QfgrFEEUzW1VhAMbqFOJLbblWR1xUvfZDp/imWY=
+	b=EnWqXcjh6pkF7S2MK5GdEjRq2VkjUn4UtzNYMl5eioxSErFjQjON5co4lzfUdYmRY
+	 YZHxvGqntZ17pcod+isHPMKQJ5pMTxFY0/4jc+rkkMmy7y/WCTmfkBjejuz7bskiSW
+	 SBP2wc8yVukOYl1VKPo18+P0aU6RRhIlB1B+Hmjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Mark ODonovan <shiftee@posteo.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/110] wifi: wil6210: fix fortify warnings
-Date: Wed, 20 Sep 2023 13:31:16 +0200
-Message-ID: <20230920112831.074239779@linuxfoundation.org>
+Subject: [PATCH 5.15 019/110] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
+Date: Wed, 20 Sep 2023 13:31:17 +0200
+Message-ID: <20230920112831.112090632@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -34,129 +34,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Mark O'Donovan <shiftee@posteo.net>
 
-[ Upstream commit 1ad8237e971630c66a1a6194491e0837b64d00e0 ]
+[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
 
-When compiling with gcc 13.1 and CONFIG_FORTIFY_SOURCE=y,
-I've noticed the following:
+During NVMeTCP Authentication a controller can trigger a kernel
+oops by specifying the 8192 bit Diffie Hellman group and passing
+a correctly sized, but zeroed Diffie Hellamn value.
+mpi_cmp_ui() was detecting this if the second parameter was 0,
+but 1 is passed from dh_is_pubkey_valid(). This causes the null
+pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
 
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘wil_rx_crypto_check_edma’ at drivers/net/wireless/ath/wil6210/txrx_edma.c:566:2:
-./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  529 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-where the compiler complains on:
-
-const u8 *pn;
-...
-pn = (u8 *)&st->ext.pn_15_0;
-...
-memcpy(cc->pn, pn, IEEE80211_GCMP_PN_LEN);
-
-and:
-
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘wil_rx_crypto_check’ at drivers/net/wireless/ath/wil6210/txrx.c:684:2:
-./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  529 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-where the compiler complains on:
-
-const u8 *pn = (u8 *)&d->mac.pn_15_0;
-...
-memcpy(cc->pn, pn, IEEE80211_GCMP_PN_LEN);
-
-In both cases, the fortification logic interprets 'memcpy()' as 6-byte
-overread of 2-byte field 'pn_15_0' of 'struct wil_rx_status_extension'
-and 'pn_15_0' of 'struct vring_rx_mac', respectively. To silence
-these warnings, last two fields of the aforementioned structures
-are grouped using 'struct_group_attr(pn, __packed' quirk.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230621093711.80118-1-dmantipov@yandex.ru
+Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wil6210/txrx.c      | 2 +-
- drivers/net/wireless/ath/wil6210/txrx.h      | 6 ++++--
- drivers/net/wireless/ath/wil6210/txrx_edma.c | 2 +-
- drivers/net/wireless/ath/wil6210/txrx_edma.h | 6 ++++--
- 4 files changed, 10 insertions(+), 6 deletions(-)
+ lib/mpi/mpi-cmp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wil6210/txrx.c b/drivers/net/wireless/ath/wil6210/txrx.c
-index cc830c795b33c..5b2de4f3fa0bd 100644
---- a/drivers/net/wireless/ath/wil6210/txrx.c
-+++ b/drivers/net/wireless/ath/wil6210/txrx.c
-@@ -666,7 +666,7 @@ static int wil_rx_crypto_check(struct wil6210_priv *wil, struct sk_buff *skb)
- 	struct wil_tid_crypto_rx *c = mc ? &s->group_crypto_rx :
- 				      &s->tid_crypto_rx[tid];
- 	struct wil_tid_crypto_rx_single *cc = &c->key_id[key_id];
--	const u8 *pn = (u8 *)&d->mac.pn_15_0;
-+	const u8 *pn = (u8 *)&d->mac.pn;
+diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
+index c4cfa3ff05818..0835b6213235e 100644
+--- a/lib/mpi/mpi-cmp.c
++++ b/lib/mpi/mpi-cmp.c
+@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
+ 	mpi_limb_t limb = v;
  
- 	if (!cc->key_set) {
- 		wil_err_ratelimited(wil,
-diff --git a/drivers/net/wireless/ath/wil6210/txrx.h b/drivers/net/wireless/ath/wil6210/txrx.h
-index 1f4c8ec75be87..0f6f6b62bfc9a 100644
---- a/drivers/net/wireless/ath/wil6210/txrx.h
-+++ b/drivers/net/wireless/ath/wil6210/txrx.h
-@@ -343,8 +343,10 @@ struct vring_rx_mac {
- 	u32 d0;
- 	u32 d1;
- 	u16 w4;
--	u16 pn_15_0;
--	u32 pn_47_16;
-+	struct_group_attr(pn, __packed,
-+		u16 pn_15_0;
-+		u32 pn_47_16;
-+	);
- } __packed;
- 
- /* Rx descriptor - DMA part
-diff --git a/drivers/net/wireless/ath/wil6210/txrx_edma.c b/drivers/net/wireless/ath/wil6210/txrx_edma.c
-index 201c8c35e0c9e..1ba1f21ebea26 100644
---- a/drivers/net/wireless/ath/wil6210/txrx_edma.c
-+++ b/drivers/net/wireless/ath/wil6210/txrx_edma.c
-@@ -548,7 +548,7 @@ static int wil_rx_crypto_check_edma(struct wil6210_priv *wil,
- 	s = &wil->sta[cid];
- 	c = mc ? &s->group_crypto_rx : &s->tid_crypto_rx[tid];
- 	cc = &c->key_id[key_id];
--	pn = (u8 *)&st->ext.pn_15_0;
-+	pn = (u8 *)&st->ext.pn;
- 
- 	if (!cc->key_set) {
- 		wil_err_ratelimited(wil,
-diff --git a/drivers/net/wireless/ath/wil6210/txrx_edma.h b/drivers/net/wireless/ath/wil6210/txrx_edma.h
-index c736f7413a35f..ee90e225bb050 100644
---- a/drivers/net/wireless/ath/wil6210/txrx_edma.h
-+++ b/drivers/net/wireless/ath/wil6210/txrx_edma.h
-@@ -330,8 +330,10 @@ struct wil_rx_status_extension {
- 	u32 d0;
- 	u32 d1;
- 	__le16 seq_num; /* only lower 12 bits */
--	u16 pn_15_0;
--	u32 pn_47_16;
-+	struct_group_attr(pn, __packed,
-+		u16 pn_15_0;
-+		u32 pn_47_16;
-+	);
- } __packed;
- 
- struct wil_rx_status_extended {
+ 	mpi_normalize(u);
+-	if (!u->nlimbs && !limb)
+-		return 0;
++	if (u->nlimbs == 0) {
++		if (v == 0)
++			return 0;
++		else
++			return -1;
++	}
+ 	if (u->sign)
+ 		return -1;
+ 	if (u->nlimbs > 1)
 -- 
 2.40.1
 
