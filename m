@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116842AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D931C433C7;
-	Wed, 20 Sep 2023 11:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5FC2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDB5C433CA;
+	Wed, 20 Sep 2023 11:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211192;
-	bh=sVJOjGWxGh/RPHd2B/1v9nuHNLh9PAE0403d48EPFhs=;
+	s=korg; t=1695211195;
+	bh=nP+qeHF3aEfXEULShT8RuXYWk7c7w5OaB/I8WRA9TdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcp3KJNZ8bd4gxEI8VTDlGzTBXbYHJFB8bHopI05yJtwR+Abmr90qUqGgh7SN8JEy
-	 NZTnhJL1Ow9gIG+XQ5lW/1f75Mtc5d7SM3hhLAWRU0UWzmovszLV4wuHSxc0JJRcIy
-	 k3FrEKU89kBeXzx35cf86nnSVzJIeYhuoW/V9OnU=
+	b=UG1PNQz7NIGLu9L9UTCx/2sIvAyoK1Uz6SsORPS9LjR06ZiD4LpG2pl/faKhaz4mu
+	 Ln6H6rv/70HyMWoLR4jbQdpBs9Wit6mCimaG5VbcPlwoqR25fI4pkNEYFVTZheFWFq
+	 jpKQVfqrNjf2BgEXnCseClENqDB8I+XWnY1fqr/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Andreas Dilger <adilger@dilger.ca>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Shida Zhang <zhangshida@kylinos.cn>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 135/139] ext4: fix rec_len verify error
-Date: Wed, 20 Sep 2023 13:31:09 +0200
-Message-ID: <20230920112840.669486016@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.1 136/139] drm/amd/display: fix the white screen issue when >= 64GB DRAM
+Date: Wed, 20 Sep 2023 13:31:10 +0200
+Message-ID: <20230920112840.709622015@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,122 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shida Zhang <zhangshida@kylinos.cn>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
+commit ef064187a9709393a981a56cce1e31880fd97107 upstream.
 
-With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
-a problem occurred when more than 13 million files were directly created
-under a directory:
+Dropping bit 31:4 of page table base is wrong, it makes page table
+base points to wrong address if phys addr is beyond 64GB; dropping
+page_table_start/end bit 31:4 is unnecessary since dcn20_vmid_setup
+will do that. Also, while we are at it, cleanup the assignments using
+upper_32_bits()/lower_32_bits() and AMDGPU_GPU_PAGE_SHIFT.
 
-EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
-
-When enough files are created, the fake_dirent->reclen will be 0xffff.
-it doesn't equal to the blocksize 65536, i.e. 0x10000.
-
-But it is not the same condition when blocksize equals to 4k.
-when enough files are created, the fake_dirent->reclen will be 0x1000.
-it equals to the blocksize 4k, i.e. 0x1000.
-
-The problem seems to be related to the limitation of the 16-bit field
-when the blocksize is set to 64k.
-To address this, helpers like ext4_rec_len_{from,to}_disk has already
-been introduced to complete the conversion between the encoded and the
-plain form of rec_len.
-
-So fix this one by using the helper, and all the other in this file too.
-
-Cc: stable@kernel.org
-Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
-Suggested-by: Andreas Dilger <adilger@dilger.ca>
-Suggested-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
+Acked-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Co-developed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -343,17 +343,17 @@ static struct ext4_dir_entry_tail *get_d
- 						   struct buffer_head *bh)
- {
- 	struct ext4_dir_entry_tail *t;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1265,11 +1265,15 @@ static void mmhub_read_system_context(st
  
- #ifdef PARANOID
- 	struct ext4_dir_entry *d, *top;
+ 	pt_base = amdgpu_gmc_pd_addr(adev->gart.bo);
  
- 	d = (struct ext4_dir_entry *)bh->b_data;
- 	top = (struct ext4_dir_entry *)(bh->b_data +
--		(EXT4_BLOCK_SIZE(inode->i_sb) -
--		 sizeof(struct ext4_dir_entry_tail)));
--	while (d < top && d->rec_len)
-+		(blocksize - sizeof(struct ext4_dir_entry_tail)));
-+	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
- 		d = (struct ext4_dir_entry *)(((void *)d) +
--		    le16_to_cpu(d->rec_len));
-+		    ext4_rec_len_from_disk(d->rec_len, blocksize));
+-	page_table_start.high_part = (u32)(adev->gmc.gart_start >> 44) & 0xF;
+-	page_table_start.low_part = (u32)(adev->gmc.gart_start >> 12);
+-	page_table_end.high_part = (u32)(adev->gmc.gart_end >> 44) & 0xF;
+-	page_table_end.low_part = (u32)(adev->gmc.gart_end >> 12);
+-	page_table_base.high_part = upper_32_bits(pt_base) & 0xF;
++	page_table_start.high_part = upper_32_bits(adev->gmc.gart_start >>
++						   AMDGPU_GPU_PAGE_SHIFT);
++	page_table_start.low_part = lower_32_bits(adev->gmc.gart_start >>
++						  AMDGPU_GPU_PAGE_SHIFT);
++	page_table_end.high_part = upper_32_bits(adev->gmc.gart_end >>
++						 AMDGPU_GPU_PAGE_SHIFT);
++	page_table_end.low_part = lower_32_bits(adev->gmc.gart_end >>
++						AMDGPU_GPU_PAGE_SHIFT);
++	page_table_base.high_part = upper_32_bits(pt_base);
+ 	page_table_base.low_part = lower_32_bits(pt_base);
  
- 	if (d != top)
- 		return NULL;
-@@ -364,7 +364,8 @@ static struct ext4_dir_entry_tail *get_d
- #endif
- 
- 	if (t->det_reserved_zero1 ||
--	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
-+	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
-+	     sizeof(struct ext4_dir_entry_tail)) ||
- 	    t->det_reserved_zero2 ||
- 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
- 		return NULL;
-@@ -445,13 +446,14 @@ static struct dx_countlimit *get_dx_coun
- 	struct ext4_dir_entry *dp;
- 	struct dx_root_info *root;
- 	int count_offset;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
-+	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
- 
--	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
-+	if (rlen == blocksize)
- 		count_offset = 8;
--	else if (le16_to_cpu(dirent->rec_len) == 12) {
-+	else if (rlen == 12) {
- 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
--		if (le16_to_cpu(dp->rec_len) !=
--		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
-+		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
- 			return NULL;
- 		root = (struct dx_root_info *)(((void *)dp + 12));
- 		if (root->reserved_zero ||
-@@ -1315,6 +1317,7 @@ static int dx_make_map(struct inode *dir
- 	unsigned int buflen = bh->b_size;
- 	char *base = bh->b_data;
- 	struct dx_hash_info h = *hinfo;
-+	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
- 
- 	if (ext4_has_metadata_csum(dir->i_sb))
- 		buflen -= sizeof(struct ext4_dir_entry_tail);
-@@ -1335,11 +1338,12 @@ static int dx_make_map(struct inode *dir
- 			map_tail--;
- 			map_tail->hash = h.hash;
- 			map_tail->offs = ((char *) de - base)>>2;
--			map_tail->size = le16_to_cpu(de->rec_len);
-+			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
-+								blocksize);
- 			count++;
- 			cond_resched();
- 		}
--		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
-+		de = ext4_next_entry(de, blocksize);
- 	}
- 	return count;
- }
+ 	pa_config->system_aperture.start_addr = (uint64_t)logical_addr_low << 18;
 
 
