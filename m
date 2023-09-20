@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58697154AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914A7C433C9;
-	Wed, 20 Sep 2023 11:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A3E1865D
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360F2C433C7;
+	Wed, 20 Sep 2023 11:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210300;
-	bh=dX7j2oHcV/y7YhfZUWPWzLsdd2ZojACT+YkcETy197A=;
+	s=korg; t=1695210303;
+	bh=Fpy5iDgPvzPFYRqvedHnb8oQihpkSmhuig0viIhUNV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYwmBMDcUYQE+QyFu9nwyc9/2Ll1tDnQ4Sq4AK0wL2vxdrSeITZnjU83zSUirWl2Z
-	 vvZUQGCEYx+pQEw9kghlpND6pps4qOmJlTsJaV4JYpiVaYbFKTeadWeQBtCSLEGP2d
-	 1iPVmO4tDGnuDhiD6wpdlrv/ehqJE3+HGvvWyx9A=
+	b=avT/vWI9RkKo7rGy2q3uJXEqvtiWfb6oZrVl5J5ziUJC7AsbMB+w0n4jQC+BgAqsg
+	 qySzzeXJ6cDnEMnWUtxZ+lE/oWqgkreF+zJsp7Okcf4CWw/MezJSwuj+tHdTVuWh8U
+	 QUZHLZuuKhknxbKaUcg+yNpweo4iwFY3jtBnPM/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 003/211] btrfs: handle errors properly in update_inline_extent_backref()
-Date: Wed, 20 Sep 2023 13:27:27 +0200
-Message-ID: <20230920112845.962263745@linuxfoundation.org>
+Subject: [PATCH 6.5 004/211] btrfs: output extra debug info if we failed to find an inline backref
+Date: Wed, 20 Sep 2023 13:27:28 +0200
+Message-ID: <20230920112845.991360812@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -43,196 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 257614301a5db9f7b0548584ca207ad7785c8b89 ]
+[ Upstream commit 7f72f50547b7af4ddf985b07fc56600a4deba281 ]
 
-[PROBLEM]
-Inside function update_inline_extent_backref(), we have several
-BUG_ON()s along with some ASSERT()s which can be triggered by corrupted
-filesystem.
+[BUG]
+Syzbot reported several warning triggered inside
+lookup_inline_extent_backref().
 
-[ANAYLYSE]
-Most of those BUG_ON()s and ASSERT()s are just a way of handling
-unexpected on-disk data.
+[CAUSE]
+As usual, the reproducer doesn't reliably trigger locally here, but at
+least we know the WARN_ON() is triggered when an inline backref can not
+be found, and it can only be triggered when @insert is true. (I.e.
+inserting a new inline backref, which means the backref should already
+exist)
 
-Although we have tree-checker to rule out obviously incorrect extent
-tree blocks, it's not enough for these ones.  Thus we need proper error
-handling for them.
+[ENHANCEMENT]
+After the WARN_ON(), dump all the parameters and the extent tree
+leaf to help debug.
 
-[FIX]
-Thankfully all the callers of update_inline_extent_backref() would
-eventually handle the errror by aborting the current transaction.
-So this patch would do the proper error handling by:
-
-- Make update_inline_extent_backref() to return int
-  The return value would be either 0 or -EUCLEAN.
-
-- Replace BUG_ON()s and ASSERT()s with proper error handling
-  This includes:
-  * Dump the bad extent tree leaf
-  * Output an error message for the cause
-    This would include the extent bytenr, num_bytes (if needed), the bad
-    values and expected good values.
-  * Return -EUCLEAN
-
-  Note here we remove all the WARN_ON()s, as eventually the transaction
-  would be aborted, thus a backtrace would be triggered anyway.
-
-- Better comments on why we expect refs == 1 and refs_to_mode == -1 for
-  tree blocks
-
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://syzkaller.appspot.com/bug?extid=d6f9ff86c1d804ba2bc6
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 73 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 61 insertions(+), 12 deletions(-)
+ fs/btrfs/extent-tree.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index e5566827da17e..c47fbb99e99d9 100644
+index c47fbb99e99d9..0917c5f39e3d0 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -402,11 +402,11 @@ int btrfs_get_extent_inline_ref_type(const struct extent_buffer *eb,
- 		}
- 	}
- 
-+	WARN_ON(1);
- 	btrfs_print_leaf(eb);
- 	btrfs_err(eb->fs_info,
- 		  "eb %llu iref 0x%lx invalid extent inline ref type %d",
- 		  eb->start, (unsigned long)iref, type);
--	WARN_ON(1);
- 
- 	return BTRFS_REF_TYPE_INVALID;
- }
-@@ -1079,13 +1079,13 @@ static int lookup_extent_backref(struct btrfs_trans_handle *trans,
- /*
-  * helper to update/remove inline back ref
-  */
--static noinline_for_stack
--void update_inline_extent_backref(struct btrfs_path *path,
-+static noinline_for_stack int update_inline_extent_backref(struct btrfs_path *path,
- 				  struct btrfs_extent_inline_ref *iref,
- 				  int refs_to_mod,
- 				  struct btrfs_delayed_extent_op *extent_op)
- {
- 	struct extent_buffer *leaf = path->nodes[0];
-+	struct btrfs_fs_info *fs_info = leaf->fs_info;
- 	struct btrfs_extent_item *ei;
- 	struct btrfs_extent_data_ref *dref = NULL;
- 	struct btrfs_shared_data_ref *sref = NULL;
-@@ -1098,18 +1098,33 @@ void update_inline_extent_backref(struct btrfs_path *path,
- 
- 	ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_extent_item);
- 	refs = btrfs_extent_refs(leaf, ei);
--	WARN_ON(refs_to_mod < 0 && refs + refs_to_mod <= 0);
-+	if (unlikely(refs_to_mod < 0 && refs + refs_to_mod <= 0)) {
-+		struct btrfs_key key;
-+		u32 extent_size;
-+
-+		btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
-+		if (key.type == BTRFS_METADATA_ITEM_KEY)
-+			extent_size = fs_info->nodesize;
-+		else
-+			extent_size = key.offset;
-+		btrfs_print_leaf(leaf);
+@@ -869,6 +869,11 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
+ 		err = -ENOENT;
+ 		goto out;
+ 	} else if (WARN_ON(ret)) {
++		btrfs_print_leaf(path->nodes[0]);
 +		btrfs_err(fs_info,
-+	"invalid refs_to_mod for extent %llu num_bytes %u, has %d expect >= -%llu",
-+			  key.objectid, extent_size, refs_to_mod, refs);
-+		return -EUCLEAN;
-+	}
- 	refs += refs_to_mod;
- 	btrfs_set_extent_refs(leaf, ei, refs);
- 	if (extent_op)
- 		__run_delayed_extent_op(extent_op, leaf, ei);
- 
-+	type = btrfs_get_extent_inline_ref_type(leaf, iref, BTRFS_REF_TYPE_ANY);
- 	/*
--	 * If type is invalid, we should have bailed out after
--	 * lookup_inline_extent_backref().
-+	 * Function btrfs_get_extent_inline_ref_type() has already printed
-+	 * error messages.
- 	 */
--	type = btrfs_get_extent_inline_ref_type(leaf, iref, BTRFS_REF_TYPE_ANY);
--	ASSERT(type != BTRFS_REF_TYPE_INVALID);
-+	if (unlikely(type == BTRFS_REF_TYPE_INVALID))
-+		return -EUCLEAN;
- 
- 	if (type == BTRFS_EXTENT_DATA_REF_KEY) {
- 		dref = (struct btrfs_extent_data_ref *)(&iref->offset);
-@@ -1119,10 +1134,43 @@ void update_inline_extent_backref(struct btrfs_path *path,
- 		refs = btrfs_shared_data_ref_count(leaf, sref);
- 	} else {
- 		refs = 1;
--		BUG_ON(refs_to_mod != -1);
-+		/*
-+		 * For tree blocks we can only drop one ref for it, and tree
-+		 * blocks should not have refs > 1.
-+		 *
-+		 * Furthermore if we're inserting a new inline backref, we
-+		 * won't reach this path either. That would be
-+		 * setup_inline_extent_backref().
-+		 */
-+		if (unlikely(refs_to_mod != -1)) {
-+			struct btrfs_key key;
-+
-+			btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
-+
-+			btrfs_print_leaf(leaf);
-+			btrfs_err(fs_info,
-+			"invalid refs_to_mod for tree block %llu, has %d expect -1",
-+				  key.objectid, refs_to_mod);
-+			return -EUCLEAN;
-+		}
++"extent item not found for insert, bytenr %llu num_bytes %llu parent %llu root_objectid %llu owner %llu offset %llu",
++			  bytenr, num_bytes, parent, root_objectid, owner,
++			  offset);
+ 		err = -EIO;
+ 		goto out;
  	}
- 
--	BUG_ON(refs_to_mod < 0 && refs < -refs_to_mod);
-+	if (unlikely(refs_to_mod < 0 && refs < -refs_to_mod)) {
-+		struct btrfs_key key;
-+		u32 extent_size;
-+
-+		btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
-+		if (key.type == BTRFS_METADATA_ITEM_KEY)
-+			extent_size = fs_info->nodesize;
-+		else
-+			extent_size = key.offset;
-+		btrfs_print_leaf(leaf);
-+		btrfs_err(fs_info,
-+"invalid refs_to_mod for backref entry, iref %lu extent %llu num_bytes %u, has %d expect >= -%llu",
-+			  (unsigned long)iref, key.objectid, extent_size,
-+			  refs_to_mod, refs);
-+		return -EUCLEAN;
-+	}
- 	refs += refs_to_mod;
- 
- 	if (refs > 0) {
-@@ -1142,6 +1190,7 @@ void update_inline_extent_backref(struct btrfs_path *path,
- 		btrfs_truncate_item(path, item_size, 1);
- 	}
- 	btrfs_mark_buffer_dirty(leaf);
-+	return 0;
- }
- 
- static noinline_for_stack
-@@ -1170,7 +1219,7 @@ int insert_inline_extent_backref(struct btrfs_trans_handle *trans,
- 				   bytenr, num_bytes, root_objectid, path->slots[0]);
- 			return -EUCLEAN;
- 		}
--		update_inline_extent_backref(path, iref, refs_to_add, extent_op);
-+		ret = update_inline_extent_backref(path, iref, refs_to_add, extent_op);
- 	} else if (ret == -ENOENT) {
- 		setup_inline_extent_backref(trans->fs_info, path, iref, parent,
- 					    root_objectid, owner, offset,
-@@ -1190,7 +1239,7 @@ static int remove_extent_backref(struct btrfs_trans_handle *trans,
- 
- 	BUG_ON(!is_data && refs_to_drop != 1);
- 	if (iref)
--		update_inline_extent_backref(path, iref, -refs_to_drop, NULL);
-+		ret = update_inline_extent_backref(path, iref, -refs_to_drop, NULL);
- 	else if (is_data)
- 		ret = remove_extent_data_ref(trans, root, path, refs_to_drop);
- 	else
 -- 
 2.40.1
 
