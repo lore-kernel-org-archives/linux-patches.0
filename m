@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB7B2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79D0C433C8;
-	Wed, 20 Sep 2023 12:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E572E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5849DC433C7;
+	Wed, 20 Sep 2023 12:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212088;
-	bh=OaiHVfTnOAAdjme/Dz5qkiqo1Y8rRkSryKeRGm0oRn8=;
+	s=korg; t=1695212090;
+	bh=nKdPoA/yfM5ThMLPb5nb4xIB2+nKJWSmTkJ2EeDuIHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mr5zDK2NTnuTzGtrcyo+TiobwWWYG2w2EFPecTwkl1ybWnPMZfNfnEWo3tAJpWzh9
-	 yNS8d6fVIR/1LRx8DI77Y6QWSCOW+N+A5Za0a1iEsBr1Gpc+C8koUWyuVNH2TgaqAT
-	 xUOgbgh1LxBen2LB16D6KyLFh0kWs05DKwnZwCoU=
+	b=R4WUFoHKpHcORuNd9SV2RArYVo57I1Wwp0H00pmfRlqTNOHlwqLW+IF3sR62nLP+h
+	 hkdktDRKuspnkXs9hFy9ihLfRFdjXVU2+WH6zyioyEmpAgJVG6pFRvDuwz42XoA7w0
+	 GNd7dNilIRw7JZwg1NYG9Wyviwp374LLQAcnIICU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Yang <xiangyang3@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 146/273] IB/uverbs: Fix an potential error pointer dereference
-Date: Wed, 20 Sep 2023 13:29:46 +0200
-Message-ID: <20230920112851.044296894@linuxfoundation.org>
+Subject: [PATCH 4.19 147/273] media: go7007: Remove redundant if statement
+Date: Wed, 20 Sep 2023 13:29:47 +0200
+Message-ID: <20230920112851.074119853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,40 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Yang <xiangyang3@huawei.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 26b7d1a27167e7adf75b150755e05d2bc123ce55 ]
+[ Upstream commit f33cb49081da0ec5af0888f8ecbd566bd326eed1 ]
 
-smatch reports the warning below:
-drivers/infiniband/core/uverbs_std_types_counters.c:110
-ib_uverbs_handler_UVERBS_METHOD_COUNTERS_READ() error: 'uattr'
-dereferencing possible ERR_PTR()
+The if statement that compares msgs[i].len != 3 is always false because
+it is in a code block where msg[i].len is equal to 3. The check is
+redundant and can be removed.
 
-The return value of uattr maybe ERR_PTR(-ENOENT), fix this by checking
-the value of uattr before using it.
+As detected by cppcheck static analysis:
+drivers/media/usb/go7007/go7007-i2c.c:168:20: warning: Opposite inner
+'if' condition leads to a dead code block. [oppositeInnerCondition]
 
-Fixes: ebb6796bd397 ("IB/uverbs: Add read counters support")
-Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
-Link: https://lore.kernel.org/r/20230804022525.1916766-1-xiangyang3@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/linux-media/20230727174007.635572-1-colin.i.king@gmail.com
+
+Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_counters.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/go7007/go7007-i2c.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_counters.c b/drivers/infiniband/core/uverbs_std_types_counters.c
-index a0ffdcf9a51cd..bb3a03cdc9742 100644
---- a/drivers/infiniband/core/uverbs_std_types_counters.c
-+++ b/drivers/infiniband/core/uverbs_std_types_counters.c
-@@ -103,6 +103,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_COUNTERS_READ)(
- 		return ret;
- 
- 	uattr = uverbs_attr_get(attrs, UVERBS_ATTR_READ_COUNTERS_BUFF);
-+	if (IS_ERR(uattr))
-+		return PTR_ERR(uattr);
- 	read_attr.ncounters = uattr->ptr_attr.len / sizeof(u64);
- 	read_attr.counters_buff = uverbs_zalloc(
- 		attrs, array_size(read_attr.ncounters, sizeof(u64)));
+diff --git a/drivers/media/usb/go7007/go7007-i2c.c b/drivers/media/usb/go7007/go7007-i2c.c
+index c084bf794b567..64f25d4e52b20 100644
+--- a/drivers/media/usb/go7007/go7007-i2c.c
++++ b/drivers/media/usb/go7007/go7007-i2c.c
+@@ -173,8 +173,6 @@ static int go7007_i2c_master_xfer(struct i2c_adapter *adapter,
+ 		} else if (msgs[i].len == 3) {
+ 			if (msgs[i].flags & I2C_M_RD)
+ 				return -EIO;
+-			if (msgs[i].len != 3)
+-				return -EIO;
+ 			if (go7007_i2c_xfer(go, msgs[i].addr, 0,
+ 					(msgs[i].buf[0] << 8) | msgs[i].buf[1],
+ 					0x01, &msgs[i].buf[2]) < 0)
 -- 
 2.40.1
 
