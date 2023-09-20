@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0263830F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C37BC433C8;
-	Wed, 20 Sep 2023 12:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A737B30F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAC3C433C7;
+	Wed, 20 Sep 2023 12:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213792;
-	bh=vqvy3iGwvXbxtUXufCuyRgvlGk8A3osXCg67paFsBmo=;
+	s=korg; t=1695213795;
+	bh=x0SDCVU+RgaM4CufiBDuZz0KTutPK9nU5EeHNBG9DX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRsheqGcxH267nPv6rzULpbomE/eP6rqUpYlsWzQkdMlXMv3UrdME/G2e/r9a5jv9
-	 ydWlMg7ss9zul73l5hb6RfKsNTQAtLzzV4xjwtb8w3xK4tWNEyuLjUbJkVPte41xW1
-	 l7ANF1n9ZfGPy49OA9dMWKzs45XH+ob1LcQlfLW4=
+	b=ij4qUL85xybhhLXIHwnFAFYeBQvaCYOey9oBizgUhgG/Ktbb+LNb0M958/3r68M1g
+	 Ttf5o3iM8SWK7KIfHgCGinJ19BmpEKQM8dQuMdvaJaWfCBd5a1b8FgfaTh3RtzNQoX
+	 XD0Hj8Ne8JCBTf/zLdc2sx+9oHgy4CmfvB7yshNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 353/367] btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
-Date: Wed, 20 Sep 2023 13:32:10 +0200
-Message-ID: <20230920112907.625348550@linuxfoundation.org>
+Subject: [PATCH 5.4 354/367] selftests: tracing: Fix to unmount tracefs for recovering environment
+Date: Wed, 20 Sep 2023 13:32:11 +0200
+Message-ID: <20230920112907.651760045@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,64 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 6bfe3959b0e7a526f5c64747801a8613f002f05a ]
+[ Upstream commit 7e021da80f48582171029714f8a487347f29dddb ]
 
-The function btrfs_validate_super() should verify the metadata_uuid in
-the provided superblock argument. Because, all its callers expect it to
-do that.
+Fix to unmount the tracefs if the ftracetest mounted it for recovering
+system environment. If the tracefs is already mounted, this does nothing.
 
-Such as in the following stacks:
-
-  write_all_supers()
-   sb = fs_info->super_for_commit;
-   btrfs_validate_write_super(.., sb)
-     btrfs_validate_super(.., sb, ..)
-
-  scrub_one_super()
-	btrfs_validate_super(.., sb, ..)
-
-And
-   check_dev_super()
-	btrfs_validate_super(.., sb, ..)
-
-However, it currently verifies the fs_info::super_copy::metadata_uuid
-instead.  Fix this using the correct metadata_uuid in the superblock
-argument.
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Suggested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/all/29fce076-746c-4650-8358-b4e0fa215cf7@sirena.org.uk/
+Fixes: cbd965bde74c ("ftrace/selftests: Return the skip code when tracing directory not configured in kernel")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ tools/testing/selftests/ftrace/ftracetest | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index a02fa6c07087c..b4ed11b5f1480 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2487,13 +2487,11 @@ static int validate_super(struct btrfs_fs_info *fs_info,
- 		ret = -EINVAL;
- 	}
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index 19e9236dec5e2..f2e1b2bfcf0b0 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -30,6 +30,9 @@ err_ret=1
+ # kselftest skip code is 4
+ err_skip=4
  
--	if (btrfs_fs_incompat(fs_info, METADATA_UUID) &&
--	    memcmp(fs_info->fs_devices->metadata_uuid,
--		   fs_info->super_copy->metadata_uuid, BTRFS_FSID_SIZE)) {
-+	if (memcmp(fs_info->fs_devices->metadata_uuid, btrfs_sb_fsid_ptr(sb),
-+		   BTRFS_FSID_SIZE) != 0) {
- 		btrfs_err(fs_info,
- "superblock metadata_uuid doesn't match metadata uuid of fs_devices: %pU != %pU",
--			fs_info->super_copy->metadata_uuid,
--			fs_info->fs_devices->metadata_uuid);
-+			  btrfs_sb_fsid_ptr(sb), fs_info->fs_devices->metadata_uuid);
- 		ret = -EINVAL;
- 	}
++# umount required
++UMOUNT_DIR=""
++
+ # cgroup RT scheduling prevents chrt commands from succeeding, which
+ # induces failures in test wakeup tests.  Disable for the duration of
+ # the tests.
+@@ -44,6 +47,9 @@ setup() {
  
+ cleanup() {
+   echo $sched_rt_runtime_orig > $sched_rt_runtime
++  if [ -n "${UMOUNT_DIR}" ]; then
++    umount ${UMOUNT_DIR} ||:
++  fi
+ }
+ 
+ errexit() { # message
+@@ -155,11 +161,13 @@ if [ -z "$TRACING_DIR" ]; then
+ 	    mount -t tracefs nodev /sys/kernel/tracing ||
+ 	      errexit "Failed to mount /sys/kernel/tracing"
+ 	    TRACING_DIR="/sys/kernel/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	# If debugfs exists, then so does /sys/kernel/debug
+ 	elif [ -d "/sys/kernel/debug" ]; then
+ 	    mount -t debugfs nodev /sys/kernel/debug ||
+ 	      errexit "Failed to mount /sys/kernel/debug"
+ 	    TRACING_DIR="/sys/kernel/debug/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	else
+ 	    err_ret=$err_skip
+ 	    errexit "debugfs and tracefs are not configured in this kernel"
 -- 
 2.40.1
 
