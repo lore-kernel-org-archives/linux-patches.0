@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279CF27EFE
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986E6C433C8;
-	Wed, 20 Sep 2023 12:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFF627EFE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:05:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FC1C433C7;
+	Wed, 20 Sep 2023 12:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211515;
-	bh=Y3c5thwjPRVbl8NARwA9He5+Oc3nfWYPCVF0/90sWEQ=;
+	s=korg; t=1695211517;
+	bh=19n01cyGrmy45eIaL4pvoQ0ZSiBWYOkdC9nG1Kd7+vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cze+s7HYorxJKemduIZh2bmsH1Fo6PY096uBX4tkxnW4WRgZCd3HTFN3YtDQVivRx
-	 5TwnMQBQ1INQ+4PNCmqNmPIr9ego2URSJusRh97Qg9PDjzAEkunXkzSk14UHCXyc5D
-	 rtUIlf1I3MRCchzXCAj/LDWsmXjS2shSRQECvCE0=
+	b=EKZHFx8VK7wlkao2Y3oI9NYDh/uUqPMFKxJWIbojZ8zITCHp+poDZbv7Z5E3YQx76
+	 UphlqSEK5RZji7Ll0pE86q0X+QMv80syM1biM6AU5FJlQG3R2IpQTn/0kIbaI0UC+H
+	 gmDgest9/bF0JU2y25H+wc4AhsMBcizUOObciv4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.14 121/186] scsi: qla2xxx: Turn off noisy message log
-Date: Wed, 20 Sep 2023 13:30:24 +0200
-Message-ID: <20230920112841.409697358@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 4.14 122/186] fbdev/ep93xx-fb: Do not assign to struct fb_info.dev
+Date: Wed, 20 Sep 2023 13:30:25 +0200
+Message-ID: <20230920112841.446824437@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,33 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 8ebaa45163a3fedc885c1dc7d43ea987a2f00a06 upstream.
+commit f90a0e5265b60cdd3c77990e8105f79aa2fac994 upstream.
 
-Some consider noisy log as test failure.  Turn off noisy message log.
+Do not assing the Linux device to struct fb_info.dev. The call to
+register_framebuffer() initializes the field to the fbdev device.
+Drivers should not override its value.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-8-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes a bug where the driver incorrectly decreases the hardware
+device's reference counter and leaks the fbdev device.
+
+v2:
+	* add Fixes tag (Dan)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 88017bda96a5 ("ep93xx video driver")
+Cc: <stable@vger.kernel.org> # v2.6.32+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-15-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/ep93xx-fb.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -535,7 +535,7 @@ static int qla_nvme_post_cmd(struct nvme
+--- a/drivers/video/fbdev/ep93xx-fb.c
++++ b/drivers/video/fbdev/ep93xx-fb.c
+@@ -478,7 +478,6 @@ static int ep93xxfb_probe(struct platfor
+ 	if (!info)
+ 		return -ENOMEM;
  
- 	rval = qla2x00_start_nvme_mq(sp);
- 	if (rval != QLA_SUCCESS) {
--		ql_log(ql_log_warn, vha, 0x212d,
-+		ql_dbg(ql_dbg_io + ql_dbg_verbose, vha, 0x212d,
- 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
- 		atomic_dec(&sp->ref_count);
- 		wake_up(&sp->nvme_ls_waitq);
+-	info->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, info);
+ 	fbi = info->par;
+ 	fbi->mach_info = mach_info;
 
 
