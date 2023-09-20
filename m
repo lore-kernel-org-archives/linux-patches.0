@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B513528E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC83C433C8;
-	Wed, 20 Sep 2023 11:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C5F2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3543C433CA;
+	Wed, 20 Sep 2023 11:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211076;
-	bh=Kq6mkC5uV/bsKhgyiwbMLhjpnAcMeTy9VttFh3L+Gbk=;
+	s=korg; t=1695211079;
+	bh=n9zMEk8uOA4N+BZrDZbMtN9ZFGSKpvYuuSrovOYzHI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvlg0aJ8kKh3cjWNtPH7zqRZx2YwLLkdtrCwQ1GDNP3l8sWd+mGpll2SIaHvQcks/
-	 AL22eJbiqkQYI/ihE8Cfz+WxfsF3lzt8p9UwcycSBUx3BMu4TabQBkjpxLn3G6KEoq
-	 NafnAbIFd0VV5TgeaMlhb+MhlmScRC4aHhIcLGGM=
+	b=OJqAiYz+eAs3QQTFELzT13jB12AjEe/yP+blV3syPEDJR6FQ7Q6g5eU5i+EHF8Jcz
+	 6xUChVctjOn20RjllAPH8gy+imt2hWf7QoyhrejjDCu0L84oA8sVFv2H/tG2IwvXVy
+	 +q18Bu66Xi7gfMIo8QsXEGpwaVx5HGfMKf697s+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	David Kaplan <David.Kaplan@amd.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/139] selftests: tracing: Fix to unmount tracefs for recovering environment
-Date: Wed, 20 Sep 2023 13:30:33 +0200
-Message-ID: <20230920112839.269504802@linuxfoundation.org>
+Subject: [PATCH 6.1 100/139] x86/ibt: Suppress spurious ENDBR
+Date: Wed, 20 Sep 2023 13:30:34 +0200
+Message-ID: <20230920112839.302512456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,63 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 7e021da80f48582171029714f8a487347f29dddb ]
+[ Upstream commit 25e73b7e3f72a25aa30cbb2eecb49036e0acf066 ]
 
-Fix to unmount the tracefs if the ftracetest mounted it for recovering
-system environment. If the tracefs is already mounted, this does nothing.
+It was reported that under certain circumstances GCC emits ENDBR
+instructions for _THIS_IP_ usage. Specifically, when it appears at the
+start of a basic block -- but not elsewhere.
 
-Suggested-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/all/29fce076-746c-4650-8358-b4e0fa215cf7@sirena.org.uk/
-Fixes: cbd965bde74c ("ftrace/selftests: Return the skip code when tracing directory not configured in kernel")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Since _THIS_IP_ is never used for control flow, these ENDBR
+instructions are completely superfluous. Override the _THIS_IP_
+definition for x86_64 to avoid this.
+
+Less ENDBR instructions is better.
+
+Fixes: 156ff4a544ae ("x86/ibt: Base IBT bits")
+Reported-by: David Kaplan <David.Kaplan@amd.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230802110323.016197440@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/include/asm/linkage.h      | 8 ++++++++
+ include/linux/instruction_pointer.h | 5 +++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index c3311c8c40890..ef0edb7a71e37 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -30,6 +30,9 @@ err_ret=1
- # kselftest skip code is 4
- err_skip=4
+diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+index f484d656d34ee..3a0282a6a55df 100644
+--- a/arch/x86/include/asm/linkage.h
++++ b/arch/x86/include/asm/linkage.h
+@@ -8,6 +8,14 @@
+ #undef notrace
+ #define notrace __attribute__((no_instrument_function))
  
-+# umount required
-+UMOUNT_DIR=""
++#ifdef CONFIG_64BIT
++/*
++ * The generic version tends to create spurious ENDBR instructions under
++ * certain conditions.
++ */
++#define _THIS_IP_ ({ unsigned long __here; asm ("lea 0(%%rip), %0" : "=r" (__here)); __here; })
++#endif
 +
- # cgroup RT scheduling prevents chrt commands from succeeding, which
- # induces failures in test wakeup tests.  Disable for the duration of
- # the tests.
-@@ -44,6 +47,9 @@ setup() {
+ #ifdef CONFIG_X86_32
+ #define asmlinkage CPP_ASMLINKAGE __attribute__((regparm(0)))
+ #endif /* CONFIG_X86_32 */
+diff --git a/include/linux/instruction_pointer.h b/include/linux/instruction_pointer.h
+index cda1f706eaeb1..aa0b3ffea9353 100644
+--- a/include/linux/instruction_pointer.h
++++ b/include/linux/instruction_pointer.h
+@@ -2,7 +2,12 @@
+ #ifndef _LINUX_INSTRUCTION_POINTER_H
+ #define _LINUX_INSTRUCTION_POINTER_H
  
- cleanup() {
-   echo $sched_rt_runtime_orig > $sched_rt_runtime
-+  if [ -n "${UMOUNT_DIR}" ]; then
-+    umount ${UMOUNT_DIR} ||:
-+  fi
- }
++#include <asm/linkage.h>
++
+ #define _RET_IP_		(unsigned long)__builtin_return_address(0)
++
++#ifndef _THIS_IP_
+ #define _THIS_IP_  ({ __label__ __here; __here: (unsigned long)&&__here; })
++#endif
  
- errexit() { # message
-@@ -155,11 +161,13 @@ if [ -z "$TRACING_DIR" ]; then
- 	    mount -t tracefs nodev /sys/kernel/tracing ||
- 	      errexit "Failed to mount /sys/kernel/tracing"
- 	    TRACING_DIR="/sys/kernel/tracing"
-+	    UMOUNT_DIR=${TRACING_DIR}
- 	# If debugfs exists, then so does /sys/kernel/debug
- 	elif [ -d "/sys/kernel/debug" ]; then
- 	    mount -t debugfs nodev /sys/kernel/debug ||
- 	      errexit "Failed to mount /sys/kernel/debug"
- 	    TRACING_DIR="/sys/kernel/debug/tracing"
-+	    UMOUNT_DIR=${TRACING_DIR}
- 	else
- 	    err_ret=$err_skip
- 	    errexit "debugfs and tracefs are not configured in this kernel"
+ #endif /* _LINUX_INSTRUCTION_POINTER_H */
 -- 
 2.40.1
 
