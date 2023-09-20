@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3219718658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4B6C433C7;
-	Wed, 20 Sep 2023 11:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA29818658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51892C433C8;
+	Wed, 20 Sep 2023 11:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210644;
-	bh=NYnmvtAcI5LqQK8oCvpjduPimbFHidSbl1JmRELVe7g=;
+	s=korg; t=1695210646;
+	bh=gMOYELr0Yw9JtSJmQcY7P4V0uPegjpU1czjBLhVqXB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vPaRzsSJ7+iPVReNcR6B7FVjspmLxQs4iL5mgeKC76x3ExKx6YOiOGK9Nnv7GQQlv
-	 WdQKs6Zs/Wj9XpAsNeW8Yawc3BNrgTpRlzHiuMU9Yn/rlHplbx839llzEcVGZgS2OV
-	 L+UruuuYuBQhz2y8DVIUBSO/1vIsO9LSBVBggD6I=
+	b=H3znkCrJ9fB4XScWQFtf7RoK7wZBSxpmCcRnTvw26tRkz+0aPQE0alfNT0A1EZWNt
+	 ZNNpJGHsulHymfFtx9SqRYSH0nfgtVtrdHaBP7zFVvszXupJh/dF9b7pJ0R5uwRCK+
+	 EQT9zA6/dlxww45+5TA28fTnQdk1PTRy9Gzy+aBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 151/211] x86/ibt: Suppress spurious ENDBR
-Date: Wed, 20 Sep 2023 13:29:55 +0200
-Message-ID: <20230920112850.551707213@linuxfoundation.org>
+Subject: [PATCH 6.5 152/211] x86/ibt: Avoid duplicate ENDBR in __put_user_nocheck*()
+Date: Wed, 20 Sep 2023 13:29:56 +0200
+Message-ID: <20230920112850.584691164@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -44,66 +44,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 25e73b7e3f72a25aa30cbb2eecb49036e0acf066 ]
+[ Upstream commit 7575e5a35267983dcbeb1e0d3a49d21ae3cf0b82 ]
 
-It was reported that under certain circumstances GCC emits ENDBR
-instructions for _THIS_IP_ usage. Specifically, when it appears at the
-start of a basic block -- but not elsewhere.
+Commit cb855971d717 ("x86/putuser: Provide room for padding") changed
+__put_user_nocheck_*() into proper functions but failed to note that
+SYM_FUNC_START() already provides ENDBR, rendering the explicit ENDBR
+superfluous.
 
-Since _THIS_IP_ is never used for control flow, these ENDBR
-instructions are completely superfluous. Override the _THIS_IP_
-definition for x86_64 to avoid this.
-
-Less ENDBR instructions is better.
-
-Fixes: 156ff4a544ae ("x86/ibt: Base IBT bits")
+Fixes: cb855971d717 ("x86/putuser: Provide room for padding")
 Reported-by: David Kaplan <David.Kaplan@amd.com>
 Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230802110323.016197440@infradead.org
+Link: https://lore.kernel.org/r/20230802110323.086971726@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/linkage.h      | 8 ++++++++
- include/linux/instruction_pointer.h | 5 +++++
- 2 files changed, 13 insertions(+)
+ arch/x86/lib/putuser.S | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
-index 97a3de7892d3f..5ff49fd67732e 100644
---- a/arch/x86/include/asm/linkage.h
-+++ b/arch/x86/include/asm/linkage.h
-@@ -8,6 +8,14 @@
- #undef notrace
- #define notrace __attribute__((no_instrument_function))
+diff --git a/arch/x86/lib/putuser.S b/arch/x86/lib/putuser.S
+index 1451e0c4ae22a..235bbda6fc823 100644
+--- a/arch/x86/lib/putuser.S
++++ b/arch/x86/lib/putuser.S
+@@ -56,7 +56,6 @@ SYM_FUNC_END(__put_user_1)
+ EXPORT_SYMBOL(__put_user_1)
  
-+#ifdef CONFIG_64BIT
-+/*
-+ * The generic version tends to create spurious ENDBR instructions under
-+ * certain conditions.
-+ */
-+#define _THIS_IP_ ({ unsigned long __here; asm ("lea 0(%%rip), %0" : "=r" (__here)); __here; })
-+#endif
-+
+ SYM_FUNC_START(__put_user_nocheck_1)
+-	ENDBR
+ 	ASM_STAC
+ 2:	movb %al,(%_ASM_CX)
+ 	xor %ecx,%ecx
+@@ -76,7 +75,6 @@ SYM_FUNC_END(__put_user_2)
+ EXPORT_SYMBOL(__put_user_2)
+ 
+ SYM_FUNC_START(__put_user_nocheck_2)
+-	ENDBR
+ 	ASM_STAC
+ 4:	movw %ax,(%_ASM_CX)
+ 	xor %ecx,%ecx
+@@ -96,7 +94,6 @@ SYM_FUNC_END(__put_user_4)
+ EXPORT_SYMBOL(__put_user_4)
+ 
+ SYM_FUNC_START(__put_user_nocheck_4)
+-	ENDBR
+ 	ASM_STAC
+ 6:	movl %eax,(%_ASM_CX)
+ 	xor %ecx,%ecx
+@@ -119,7 +116,6 @@ SYM_FUNC_END(__put_user_8)
+ EXPORT_SYMBOL(__put_user_8)
+ 
+ SYM_FUNC_START(__put_user_nocheck_8)
+-	ENDBR
+ 	ASM_STAC
+ 9:	mov %_ASM_AX,(%_ASM_CX)
  #ifdef CONFIG_X86_32
- #define asmlinkage CPP_ASMLINKAGE __attribute__((regparm(0)))
- #endif /* CONFIG_X86_32 */
-diff --git a/include/linux/instruction_pointer.h b/include/linux/instruction_pointer.h
-index cda1f706eaeb1..aa0b3ffea9353 100644
---- a/include/linux/instruction_pointer.h
-+++ b/include/linux/instruction_pointer.h
-@@ -2,7 +2,12 @@
- #ifndef _LINUX_INSTRUCTION_POINTER_H
- #define _LINUX_INSTRUCTION_POINTER_H
- 
-+#include <asm/linkage.h>
-+
- #define _RET_IP_		(unsigned long)__builtin_return_address(0)
-+
-+#ifndef _THIS_IP_
- #define _THIS_IP_  ({ __label__ __here; __here: (unsigned long)&&__here; })
-+#endif
- 
- #endif /* _LINUX_INSTRUCTION_POINTER_H */
 -- 
 2.40.1
 
