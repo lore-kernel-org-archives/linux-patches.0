@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59BE30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A5C433C9;
-	Wed, 20 Sep 2023 12:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688C530FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E463BC433CA;
+	Wed, 20 Sep 2023 12:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212899;
-	bh=qJoHPG1HxlJGczO3pD+8hk0owUtyAtBgrPI1hNjODEA=;
+	s=korg; t=1695212902;
+	bh=CDZiq5qyaQm8mHyQTnPCBNnzmI5q3TaYiKNybmdSg3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUJKehjn2dZTGSeQdW9idXGBQZFjgwic+fvLe4YyWbMMqUgpSrfgQW+qq+0eBMpHU
-	 Y+2zzOCBIVx9S9N2o4UxWOZedywc6apOqjnbL6k4yKxtjNBEBMhZzDnJQxehrj/2zm
-	 I1LYsjj+4BQvrOnqRYtCzjYe7q4eO/NtO6VNW6/A=
+	b=hzYf9a83Hk1tw2m4GMAZNMniJgbP0W+C31mlsHcxHb0maS7Ti93OMootNCzdphWqF
+	 9oQ1Nrnmfggi0jcTNE8jNcdsTeYark2Tm40yHCtvArFUpkmTSeiP2vfkL3h9a+J867
+	 VWuoJiKjz733ndpLAQlOz4NTeWptVl6N23e4WgG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+666c97e4686410e79649@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Vasut <marex@denx.de>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 086/367] netrom: Deny concurrent connect().
-Date: Wed, 20 Sep 2023 13:27:43 +0200
-Message-ID: <20230920112900.771999128@linuxfoundation.org>
+Subject: [PATCH 5.4 087/367] drm/bridge: tc358764: Fix debug print parameter order
+Date: Wed, 20 Sep 2023 13:27:44 +0200
+Message-ID: <20230920112900.798038941@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,137 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit c2f8fd7949603efb03908e05abbf7726748c8de3 ]
+[ Upstream commit 7f947be02aab5b154427cb5b0fffe858fc387b02 ]
 
-syzkaller reported null-ptr-deref [0] related to AF_NETROM.
-This is another self-accept issue from the strace log. [1]
+The debug print parameters were swapped in the output and they were
+printed as decimal values, both the hardware address and the value.
+Update the debug print to print the parameters in correct order, and
+use hexadecimal print for both address and value.
 
-syz-executor creates an AF_NETROM socket and calls connect(), which
-is blocked at that time.  Then, sk->sk_state is TCP_SYN_SENT and
-sock->state is SS_CONNECTING.
-
-  [pid  5059] socket(AF_NETROM, SOCK_SEQPACKET, 0) = 4
-  [pid  5059] connect(4, {sa_family=AF_NETROM, sa_data="..." <unfinished ...>
-
-Another thread calls connect() concurrently, which finally fails
-with -EINVAL.  However, the problem here is the socket state is
-reset even while the first connect() is blocked.
-
-  [pid  5060] connect(4, NULL, 0 <unfinished ...>
-  [pid  5060] <... connect resumed>)      = -1 EINVAL (Invalid argument)
-
-As sk->state is TCP_CLOSE and sock->state is SS_UNCONNECTED, the
-following listen() succeeds.  Then, the first connect() looks up
-itself as a listener and puts skb into the queue with skb->sk itself.
-As a result, the next accept() gets another FD of itself as 3, and
-the first connect() finishes.
-
-  [pid  5060] listen(4, 0 <unfinished ...>
-  [pid  5060] <... listen resumed>)       = 0
-  [pid  5060] accept(4, NULL, NULL <unfinished ...>
-  [pid  5060] <... accept resumed>)       = 3
-  [pid  5059] <... connect resumed>)      = 0
-
-Then, accept4() is called but blocked, which causes the general protection
-fault later.
-
-  [pid  5059] accept4(4, NULL, 0x20000400, SOCK_NONBLOCK <unfinished ...>
-
-After that, another self-accept occurs by accept() and writev().
-
-  [pid  5060] accept(4, NULL, NULL <unfinished ...>
-  [pid  5061] writev(3, [{iov_base=...}] <unfinished ...>
-  [pid  5061] <... writev resumed>)       = 99
-  [pid  5060] <... accept resumed>)       = 6
-
-Finally, the leader thread close()s all FDs.  Since the three FDs
-reference the same socket, nr_release() does the cleanup for it
-three times, and the remaining accept4() causes the following fault.
-
-  [pid  5058] close(3)                    = 0
-  [pid  5058] close(4)                    = 0
-  [pid  5058] close(5)                    = -1 EBADF (Bad file descriptor)
-  [pid  5058] close(6)                    = 0
-  [pid  5058] <... exit_group resumed>)   = ?
-  [   83.456055][ T5059] general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
-
-To avoid the issue, we need to return an error for connect() if
-another connect() is in progress, as done in __inet_stream_connect().
-
-[0]:
-general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-CPU: 0 PID: 5059 Comm: syz-executor.0 Not tainted 6.5.0-rc5-syzkaller-00194-gace0ab3a4b54 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:__lock_acquire+0x109/0x5de0 kernel/locking/lockdep.c:5012
-Code: 45 85 c9 0f 84 cc 0e 00 00 44 8b 05 11 6e 23 0b 45 85 c0 0f 84 be 0d 00 00 48 ba 00 00 00 00 00 fc ff df 4c 89 d1 48 c1 e9 03 <80> 3c 11 00 0f 85 e8 40 00 00 49 81 3a a0 69 48 90 0f 84 96 0d 00
-RSP: 0018:ffffc90003d6f9e0 EFLAGS: 00010006
-RAX: ffff8880244c8000 RBX: 1ffff920007adf6c RCX: 0000000000000003
-RDX: dffffc0000000000 RSI: 0000000000000000 RDI: 0000000000000018
-RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000001
-R10: 0000000000000018 R11: 0000000000000000 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007f51d519a6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f51d5158d58 CR3: 000000002943f000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- lock_acquire kernel/locking/lockdep.c:5761 [inline]
- lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0x3a/0x50 kernel/locking/spinlock.c:162
- prepare_to_wait+0x47/0x380 kernel/sched/wait.c:269
- nr_accept+0x20d/0x650 net/netrom/af_netrom.c:798
- do_accept+0x3a6/0x570 net/socket.c:1872
- __sys_accept4_file net/socket.c:1913 [inline]
- __sys_accept4+0x99/0x120 net/socket.c:1943
- __do_sys_accept4 net/socket.c:1954 [inline]
- __se_sys_accept4 net/socket.c:1951 [inline]
- __x64_sys_accept4+0x96/0x100 net/socket.c:1951
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f51d447cae9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f51d519a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000120
-RAX: ffffffffffffffda RBX: 00007f51d459bf80 RCX: 00007f51d447cae9
-RDX: 0000000020000400 RSI: 0000000000000000 RDI: 0000000000000004
-RBP: 00007f51d44c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000800 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007f51d459bf80 R15: 00007ffc25c34e48
- </TASK>
-
-Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=152cdb63a80000 [1]
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+666c97e4686410e79649@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=666c97e4686410e79649
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f38b7cca6d0e ("drm/bridge: tc358764: Add DSI to LVDS bridge driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230615152817.359420-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/af_netrom.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/bridge/tc358764.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index 7da77ddba5f4d..e18a73264c103 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -638,6 +638,11 @@ static int nr_connect(struct socket *sock, struct sockaddr *uaddr,
- 		goto out_release;
- 	}
+diff --git a/drivers/gpu/drm/bridge/tc358764.c b/drivers/gpu/drm/bridge/tc358764.c
+index 170f162ffa558..121250473761e 100644
+--- a/drivers/gpu/drm/bridge/tc358764.c
++++ b/drivers/gpu/drm/bridge/tc358764.c
+@@ -180,7 +180,7 @@ static void tc358764_read(struct tc358764 *ctx, u16 addr, u32 *val)
+ 	if (ret >= 0)
+ 		le32_to_cpus(val);
  
-+	if (sock->state == SS_CONNECTING) {
-+		err = -EALREADY;
-+		goto out_release;
-+	}
-+
- 	sk->sk_state   = TCP_CLOSE;
- 	sock->state = SS_UNCONNECTED;
+-	dev_dbg(ctx->dev, "read: %d, addr: %d\n", addr, *val);
++	dev_dbg(ctx->dev, "read: addr=0x%04x data=0x%08x\n", addr, *val);
+ }
  
+ static void tc358764_write(struct tc358764 *ctx, u16 addr, u32 val)
 -- 
 2.40.1
 
