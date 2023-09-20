@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0346330F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D576C433C8;
-	Wed, 20 Sep 2023 12:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C415E30F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46847C433C7;
+	Wed, 20 Sep 2023 12:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213800;
-	bh=z89QxbHfsT/DrfG0PMPBr+OLbYrLd/c+6kO8f2wVRps=;
+	s=korg; t=1695213803;
+	bh=Xgvg9KxiMXAv1UlGagtP2Bibm0QV4lMai0wXow4hffo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfHI/M45DxRLNkI5Qh7h8Rn9sV5g89x/R0+HOTc30/0KUudKs+n+u1fQtuxEkkh/E
-	 mAv7efzREp1Twv7ar9yRBKZFFfj75+neDgs2Vf/zuG4u0AlxyZNTLM0Yy/BWR3TpZc
-	 lpFHcW42s4ZFbOyhrYqYAS4Qtj3D+EQWc3B6Ueco=
+	b=Nu8h42pNraAkiqcg4iubXg0Q6WUP66OmtkkP2XuUaBGCU+u7+moZr7VZx/Wqg1qDP
+	 jMnsPl5oTcoUNaBFt5OEp2PtdesYq7ID8LWvNjz75NUSpTxambs/tE/UMzyepnQW2g
+	 WVXJIN7cFh4L0e9xE864OpZHrhrOBd29qr2IwORo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Florian Weimer <fweimer@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 356/367] attr: block mode changes of symlinks
-Date: Wed, 20 Sep 2023 13:32:13 +0200
-Message-ID: <20230920112907.702009312@linuxfoundation.org>
+	syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 357/367] btrfs: fix lockdep splat and potential deadlock after failure running delayed items
+Date: Wed, 20 Sep 2023 13:32:14 +0200
+Message-ID: <20230920112907.729106054@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,140 +40,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 5d1f903f75a80daa4dfb3d84e114ec8ecbf29956 upstream.
+commit e110f8911ddb93e6f55da14ccbbe705397b30d0b upstream.
 
-Changing the mode of symlinks is meaningless as the vfs doesn't take the
-mode of a symlink into account during path lookup permission checking.
+When running delayed items we are holding a delayed node's mutex and then
+we will attempt to modify a subvolume btree to insert/update/delete the
+delayed items. However if have an error during the insertions for example,
+btrfs_insert_delayed_items() may return with a path that has locked extent
+buffers (a leaf at the very least), and then we attempt to release the
+delayed node at __btrfs_run_delayed_items(), which requires taking the
+delayed node's mutex, causing an ABBA type of deadlock. This was reported
+by syzbot and the lockdep splat is the following:
 
-However, the vfs doesn't block mode changes on symlinks. This however,
-has lead to an untenable mess roughly classifiable into the following
-two categories:
+  WARNING: possible circular locking dependency detected
+  6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0 Not tainted
+  ------------------------------------------------------
+  syz-executor.2/13257 is trying to acquire lock:
+  ffff88801835c0c0 (&delayed_node->mutex){+.+.}-{3:3}, at: __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
 
-(1) Filesystems that don't implement a i_op->setattr() for symlinks.
+  but task is already holding lock:
+  ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
 
-    Such filesystems may or may not know that without i_op->setattr()
-    defined, notify_change() falls back to simple_setattr() causing the
-    inode's mode in the inode cache to be changed.
+  which lock already depends on the new lock.
 
-    That's a generic issue as this will affect all non-size changing
-    inode attributes including ownership changes.
+  the existing dependency chain (in reverse order) is:
 
-    Example: afs
+  -> #1 (btrfs-tree-00){++++}-{3:3}:
+         __lock_release kernel/locking/lockdep.c:5475 [inline]
+         lock_release+0x36f/0x9d0 kernel/locking/lockdep.c:5781
+         up_write+0x79/0x580 kernel/locking/rwsem.c:1625
+         btrfs_tree_unlock_rw fs/btrfs/locking.h:189 [inline]
+         btrfs_unlock_up_safe+0x179/0x3b0 fs/btrfs/locking.c:239
+         search_leaf fs/btrfs/ctree.c:1986 [inline]
+         btrfs_search_slot+0x2511/0x2f80 fs/btrfs/ctree.c:2230
+         btrfs_insert_empty_items+0x9c/0x180 fs/btrfs/ctree.c:4376
+         btrfs_insert_delayed_item fs/btrfs/delayed-inode.c:746 [inline]
+         btrfs_insert_delayed_items fs/btrfs/delayed-inode.c:824 [inline]
+         __btrfs_commit_inode_delayed_items+0xd24/0x2410 fs/btrfs/delayed-inode.c:1111
+         __btrfs_run_delayed_items+0x1db/0x430 fs/btrfs/delayed-inode.c:1153
+         flush_space+0x269/0xe70 fs/btrfs/space-info.c:723
+         btrfs_async_reclaim_metadata_space+0x106/0x350 fs/btrfs/space-info.c:1078
+         process_one_work+0x92c/0x12c0 kernel/workqueue.c:2600
+         worker_thread+0xa63/0x1210 kernel/workqueue.c:2751
+         kthread+0x2b8/0x350 kernel/kthread.c:389
+         ret_from_fork+0x2e/0x60 arch/x86/kernel/process.c:145
+         ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-(2) Filesystems that fail with EOPNOTSUPP but change the mode of the
-    symlink nonetheless.
+  -> #0 (&delayed_node->mutex){+.+.}-{3:3}:
+         check_prev_add kernel/locking/lockdep.c:3142 [inline]
+         check_prevs_add kernel/locking/lockdep.c:3261 [inline]
+         validate_chain kernel/locking/lockdep.c:3876 [inline]
+         __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
+         lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
+         __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
+         __mutex_lock kernel/locking/mutex.c:747 [inline]
+         mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
+         __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
+         btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
+         __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
+         btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
+         btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
+         vfs_fsync_range fs/sync.c:188 [inline]
+         vfs_fsync fs/sync.c:202 [inline]
+         do_fsync fs/sync.c:212 [inline]
+         __do_sys_fsync fs/sync.c:220 [inline]
+         __se_sys_fsync fs/sync.c:218 [inline]
+         __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+         do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+         do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+         entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-    Some filesystems will happily update the mode of a symlink but still
-    return EOPNOTSUPP. This is the biggest source of confusion for
-    userspace.
+  other info that might help us debug this:
 
-    The EOPNOTSUPP in this case comes from POSIX ACLs. Specifically it
-    comes from filesystems that call posix_acl_chmod(), e.g., btrfs via
+   Possible unsafe locking scenario:
 
-        if (!err && attr->ia_valid & ATTR_MODE)
-                err = posix_acl_chmod(idmap, dentry, inode->i_mode);
+         CPU0                    CPU1
+         ----                    ----
+    lock(btrfs-tree-00);
+                                 lock(&delayed_node->mutex);
+                                 lock(btrfs-tree-00);
+    lock(&delayed_node->mutex);
 
-    Filesystems including btrfs don't implement i_op->set_acl() so
-    posix_acl_chmod() will report EOPNOTSUPP.
+   *** DEADLOCK ***
 
-    When posix_acl_chmod() is called, most filesystems will have
-    finished updating the inode.
+  3 locks held by syz-executor.2/13257:
+   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: spin_unlock include/linux/spinlock.h:391 [inline]
+   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: join_transaction+0xb87/0xe00 fs/btrfs/transaction.c:287
+   #1: ffff88802c1ee398 (btrfs_trans_num_extwriters){++++}-{0:0}, at: join_transaction+0xbb2/0xe00 fs/btrfs/transaction.c:288
+   #2: ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
 
-    Perversely, this has the consequences that this behavior may depend
-    on two kconfig options and mount options:
+  stack backtrace:
+  CPU: 0 PID: 13257 Comm: syz-executor.2 Not tainted 6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+  Call Trace:
+   <TASK>
+   __dump_stack lib/dump_stack.c:88 [inline]
+   dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+   check_noncircular+0x375/0x4a0 kernel/locking/lockdep.c:2195
+   check_prev_add kernel/locking/lockdep.c:3142 [inline]
+   check_prevs_add kernel/locking/lockdep.c:3261 [inline]
+   validate_chain kernel/locking/lockdep.c:3876 [inline]
+   __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
+   lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
+   __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
+   __mutex_lock kernel/locking/mutex.c:747 [inline]
+   mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
+   __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
+   btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
+   __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
+   btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
+   btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
+   vfs_fsync_range fs/sync.c:188 [inline]
+   vfs_fsync fs/sync.c:202 [inline]
+   do_fsync fs/sync.c:212 [inline]
+   __do_sys_fsync fs/sync.c:220 [inline]
+   __se_sys_fsync fs/sync.c:218 [inline]
+   __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+   do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7f3ad047cae9
+  Code: 28 00 00 00 75 (...)
+  RSP: 002b:00007f3ad12510c8 EFLAGS: 00000246 ORIG_RAX: 000000000000004a
+  RAX: ffffffffffffffda RBX: 00007f3ad059bf80 RCX: 00007f3ad047cae9
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f3ad04c847a R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 000000000000000b R14: 00007f3ad059bf80 R15: 00007ffe56af92f8
+   </TASK>
+  ------------[ cut here ]------------
 
-    * CONFIG_POSIX_ACL={y,n}
-    * CONFIG_${FSTYPE}_POSIX_ACL={y,n}
-    * Opt_acl, Opt_noacl
+Fix this by releasing the path before releasing the delayed node in the
+error path at __btrfs_run_delayed_items().
 
-    Example: btrfs, ext4, xfs
-
-The only way to change the mode on a symlink currently involves abusing
-an O_PATH file descriptor in the following manner:
-
-        fd = openat(-1, "/path/to/link", O_CLOEXEC | O_PATH | O_NOFOLLOW);
-
-        char path[PATH_MAX];
-        snprintf(path, sizeof(path), "/proc/self/fd/%d", fd);
-        chmod(path, 0000);
-
-But for most major filesystems with POSIX ACL support such as btrfs,
-ext4, ceph, tmpfs, xfs and others this will fail with EOPNOTSUPP with
-the mode still updated due to the aforementioned posix_acl_chmod()
-nonsense.
-
-So, given that for all major filesystems this would fail with EOPNOTSUPP
-and that both glibc (cf. [1]) and musl (cf. [2]) outright block mode
-changes on symlinks we should just try and block mode changes on
-symlinks directly in the vfs and have a clean break with this nonsense.
-
-If this causes any regressions, we do the next best thing and fix up all
-filesystems that do return EOPNOTSUPP with the mode updated to not call
-posix_acl_chmod() on symlinks.
-
-But as usual, let's try the clean cut solution first. It's a simple
-patch that can be easily reverted. Not marking this for backport as I'll
-do that manually if we're reasonably sure that this works and there are
-no strong objections.
-
-We could block this in chmod_common() but it's more appropriate to do it
-notify_change() as it will also mean that we catch filesystems that
-change symlink permissions explicitly or accidently.
-
-Similar proposals were floated in the past as in [3] and [4] and again
-recently in [5]. There's also a couple of bugs about this inconsistency
-as in [6] and [7].
-
-Link: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/fchmodat.c;h=99527a3727e44cb8661ee1f743068f108ec93979;hb=HEAD [1]
-Link: https://git.musl-libc.org/cgit/musl/tree/src/stat/fchmodat.c [2]
-Link: https://lore.kernel.org/all/20200911065733.GA31579@infradead.org [3]
-Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00518.html [4]
-Link: https://lore.kernel.org/lkml/87lefmbppo.fsf@oldenburg.str.redhat.com [5]
-Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00467.html [6]
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=14578#c17 [7]
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org # please backport to all LTSes but not before v6.6-rc2 is tagged
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Suggested-by: Florian Weimer <fweimer@redhat.com>
-Message-Id: <20230712-vfs-chmod-symlinks-v2-1-08cfb92b61dd@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000abba27060403b5bd@google.com/
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/attr.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/btrfs/delayed-inode.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -253,9 +253,25 @@ int notify_change(struct dentry * dentry
- 	}
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1175,20 +1175,33 @@ static int __btrfs_run_delayed_items(str
+ 		ret = __btrfs_commit_inode_delayed_items(trans, path,
+ 							 curr_node);
+ 		if (ret) {
+-			btrfs_release_delayed_node(curr_node);
+-			curr_node = NULL;
+ 			btrfs_abort_transaction(trans, ret);
+ 			break;
+ 		}
  
- 	if ((ia_valid & ATTR_MODE)) {
--		umode_t amode = attr->ia_mode;
+ 		prev_node = curr_node;
+ 		curr_node = btrfs_next_delayed_node(curr_node);
 +		/*
-+		 * Don't allow changing the mode of symlinks:
-+		 *
-+		 * (1) The vfs doesn't take the mode of symlinks into account
-+		 *     during permission checking.
-+		 * (2) This has never worked correctly. Most major filesystems
-+		 *     did return EOPNOTSUPP due to interactions with POSIX ACLs
-+		 *     but did still updated the mode of the symlink.
-+		 *     This inconsistency led system call wrapper providers such
-+		 *     as libc to block changing the mode of symlinks with
-+		 *     EOPNOTSUPP already.
-+		 * (3) To even do this in the first place one would have to use
-+		 *     specific file descriptors and quite some effort.
++		 * See the comment below about releasing path before releasing
++		 * node. If the commit of delayed items was successful the path
++		 * should always be released, but in case of an error, it may
++		 * point to locked extent buffers (a leaf at the very least).
 +		 */
-+		if (S_ISLNK(inode->i_mode))
-+			return -EOPNOTSUPP;
-+
- 		/* Flag setting protected by i_mutex */
--		if (is_sxid(amode))
-+		if (is_sxid(attr->ia_mode))
- 			inode->i_flags &= ~S_NOSEC;
++		ASSERT(path->nodes[0] == NULL);
+ 		btrfs_release_delayed_node(prev_node);
  	}
  
++	/*
++	 * Release the path to avoid a potential deadlock and lockdep splat when
++	 * releasing the delayed node, as that requires taking the delayed node's
++	 * mutex. If another task starts running delayed items before we take
++	 * the mutex, it will first lock the mutex and then it may try to lock
++	 * the same btree path (leaf).
++	 */
++	btrfs_free_path(path);
++
+ 	if (curr_node)
+ 		btrfs_release_delayed_node(curr_node);
+-	btrfs_free_path(path);
+ 	trans->block_rsv = block_rsv;
+ 
+ 	return ret;
 
 
