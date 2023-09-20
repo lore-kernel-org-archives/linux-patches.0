@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032B30F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80DEC433CA;
-	Wed, 20 Sep 2023 12:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFDE30F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F25C433CA;
+	Wed, 20 Sep 2023 12:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213839;
-	bh=rewg/ZB71Z/rQKlYjDaEJn2yX2E+y+HbGJtMagEla38=;
+	s=korg; t=1695213841;
+	bh=lm0rIrvoKbF/7VlKe65QLL9oO9/0DuF/ERQmNeUyEwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6lCKfZZgTsUrPHV9I8kQIKthCBx0o2IvnfrL04fr175+7LWubokUSt6cvrjCUYTa
-	 WHWW1S9iap3X0HtdDynQjQJUiNXCHPftoUUZduY4bJldIlAe+a29+OyM6UcRGkCNT4
-	 LdL1kJCrLBvC2BTorVlDQE18Wgvm11nb1LgaHfpc=
+	b=nL2yoy9SvkTmOAuJ8ezk0hSWY2+yAuZ3h/IscBMY0RfQBZw7er0D+d6n+QUEtq6p+
+	 6yrKrFWw1035mxLz64bDixOVRSc/kTmRJJpNnVpkydw3pTnNPcBrxHoLIT+0sMgvhh
+	 8QfgrFEEUzW1VhAMbqFOJLbblWR1xUvfZDp/imWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
 	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/110] wifi: mwifiex: fix fortify warning
-Date: Wed, 20 Sep 2023 13:31:15 +0200
-Message-ID: <20230920112831.035917510@linuxfoundation.org>
+Subject: [PATCH 5.15 018/110] wifi: wil6210: fix fortify warnings
+Date: Wed, 20 Sep 2023 13:31:16 +0200
+Message-ID: <20230920112831.074239779@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -44,80 +43,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit dcce94b80a954a8968ff29fafcfb066d6197fa9a ]
+[ Upstream commit 1ad8237e971630c66a1a6194491e0837b64d00e0 ]
 
 When compiling with gcc 13.1 and CONFIG_FORTIFY_SOURCE=y,
 I've noticed the following:
 
 In function ‘fortify_memcpy_chk’,
-    inlined from ‘mwifiex_construct_tdls_action_frame’ at drivers/net/wireless/marvell/mwifiex/tdls.c:765:3,
-    inlined from ‘mwifiex_send_tdls_action_frame’ at drivers/net/wireless/marvell/mwifiex/tdls.c:856:6:
+    inlined from ‘wil_rx_crypto_check_edma’ at drivers/net/wireless/ath/wil6210/txrx_edma.c:566:2:
 ./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
 declared with attribute warning: detected read beyond size of field (2nd parameter);
 maybe use struct_group()? [-Wattribute-warning]
   529 |                         __read_overflow2_field(q_size_field, size);
       |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The compiler actually complains on:
+where the compiler complains on:
 
-memmove(pos + ETH_ALEN, &mgmt->u.action.category,
-	sizeof(mgmt->u.action.u.tdls_discover_resp));
+const u8 *pn;
+...
+pn = (u8 *)&st->ext.pn_15_0;
+...
+memcpy(cc->pn, pn, IEEE80211_GCMP_PN_LEN);
 
-and it happens because the fortification logic interprets this
-as an attempt to overread 1-byte 'u.action.category' member of
-'struct ieee80211_mgmt'. To silence this warning, it's enough
-to pass an address of 'u.action' itself instead of an address
-of its first member.
+and:
 
-This also fixes an improper usage of 'sizeof()'. Since 'skb' is
-extended with 'sizeof(mgmt->u.action.u.tdls_discover_resp) + 1'
-bytes (where 1 is actually 'sizeof(mgmt->u.action.category)'),
-I assume that the same number of bytes should be copied.
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘wil_rx_crypto_check’ at drivers/net/wireless/ath/wil6210/txrx.c:684:2:
+./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Wattribute-warning]
+  529 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suggested-by: Brian Norris <briannorris@chromium.org>
+where the compiler complains on:
+
+const u8 *pn = (u8 *)&d->mac.pn_15_0;
+...
+memcpy(cc->pn, pn, IEEE80211_GCMP_PN_LEN);
+
+In both cases, the fortification logic interprets 'memcpy()' as 6-byte
+overread of 2-byte field 'pn_15_0' of 'struct wil_rx_status_extension'
+and 'pn_15_0' of 'struct vring_rx_mac', respectively. To silence
+these warnings, last two fields of the aforementioned structures
+are grouped using 'struct_group_attr(pn, __packed' quirk.
+
 Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230629085115.180499-2-dmantipov@yandex.ru
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230621093711.80118-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/tdls.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/wil6210/txrx.c      | 2 +-
+ drivers/net/wireless/ath/wil6210/txrx.h      | 6 ++++--
+ drivers/net/wireless/ath/wil6210/txrx_edma.c | 2 +-
+ drivers/net/wireless/ath/wil6210/txrx_edma.h | 6 ++++--
+ 4 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/tdls.c b/drivers/net/wireless/marvell/mwifiex/tdls.c
-index 97bb87c3676bb..6c60621b6cccb 100644
---- a/drivers/net/wireless/marvell/mwifiex/tdls.c
-+++ b/drivers/net/wireless/marvell/mwifiex/tdls.c
-@@ -735,6 +735,7 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
- 	int ret;
- 	u16 capab;
- 	struct ieee80211_ht_cap *ht_cap;
-+	unsigned int extra;
- 	u8 radio, *pos;
+diff --git a/drivers/net/wireless/ath/wil6210/txrx.c b/drivers/net/wireless/ath/wil6210/txrx.c
+index cc830c795b33c..5b2de4f3fa0bd 100644
+--- a/drivers/net/wireless/ath/wil6210/txrx.c
++++ b/drivers/net/wireless/ath/wil6210/txrx.c
+@@ -666,7 +666,7 @@ static int wil_rx_crypto_check(struct wil6210_priv *wil, struct sk_buff *skb)
+ 	struct wil_tid_crypto_rx *c = mc ? &s->group_crypto_rx :
+ 				      &s->tid_crypto_rx[tid];
+ 	struct wil_tid_crypto_rx_single *cc = &c->key_id[key_id];
+-	const u8 *pn = (u8 *)&d->mac.pn_15_0;
++	const u8 *pn = (u8 *)&d->mac.pn;
  
- 	capab = priv->curr_bss_params.bss_descriptor.cap_info_bitmap;
-@@ -753,7 +754,10 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
+ 	if (!cc->key_set) {
+ 		wil_err_ratelimited(wil,
+diff --git a/drivers/net/wireless/ath/wil6210/txrx.h b/drivers/net/wireless/ath/wil6210/txrx.h
+index 1f4c8ec75be87..0f6f6b62bfc9a 100644
+--- a/drivers/net/wireless/ath/wil6210/txrx.h
++++ b/drivers/net/wireless/ath/wil6210/txrx.h
+@@ -343,8 +343,10 @@ struct vring_rx_mac {
+ 	u32 d0;
+ 	u32 d1;
+ 	u16 w4;
+-	u16 pn_15_0;
+-	u32 pn_47_16;
++	struct_group_attr(pn, __packed,
++		u16 pn_15_0;
++		u32 pn_47_16;
++	);
+ } __packed;
  
- 	switch (action_code) {
- 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
--		skb_put(skb, sizeof(mgmt->u.action.u.tdls_discover_resp) + 1);
-+		/* See the layout of 'struct ieee80211_mgmt'. */
-+		extra = sizeof(mgmt->u.action.u.tdls_discover_resp) +
-+			sizeof(mgmt->u.action.category);
-+		skb_put(skb, extra);
- 		mgmt->u.action.category = WLAN_CATEGORY_PUBLIC;
- 		mgmt->u.action.u.tdls_discover_resp.action_code =
- 					      WLAN_PUB_ACTION_TDLS_DISCOVER_RES;
-@@ -762,8 +766,7 @@ mwifiex_construct_tdls_action_frame(struct mwifiex_private *priv,
- 		mgmt->u.action.u.tdls_discover_resp.capability =
- 							     cpu_to_le16(capab);
- 		/* move back for addr4 */
--		memmove(pos + ETH_ALEN, &mgmt->u.action.category,
--			sizeof(mgmt->u.action.u.tdls_discover_resp));
-+		memmove(pos + ETH_ALEN, &mgmt->u.action, extra);
- 		/* init address 4 */
- 		eth_broadcast_addr(pos);
+ /* Rx descriptor - DMA part
+diff --git a/drivers/net/wireless/ath/wil6210/txrx_edma.c b/drivers/net/wireless/ath/wil6210/txrx_edma.c
+index 201c8c35e0c9e..1ba1f21ebea26 100644
+--- a/drivers/net/wireless/ath/wil6210/txrx_edma.c
++++ b/drivers/net/wireless/ath/wil6210/txrx_edma.c
+@@ -548,7 +548,7 @@ static int wil_rx_crypto_check_edma(struct wil6210_priv *wil,
+ 	s = &wil->sta[cid];
+ 	c = mc ? &s->group_crypto_rx : &s->tid_crypto_rx[tid];
+ 	cc = &c->key_id[key_id];
+-	pn = (u8 *)&st->ext.pn_15_0;
++	pn = (u8 *)&st->ext.pn;
  
+ 	if (!cc->key_set) {
+ 		wil_err_ratelimited(wil,
+diff --git a/drivers/net/wireless/ath/wil6210/txrx_edma.h b/drivers/net/wireless/ath/wil6210/txrx_edma.h
+index c736f7413a35f..ee90e225bb050 100644
+--- a/drivers/net/wireless/ath/wil6210/txrx_edma.h
++++ b/drivers/net/wireless/ath/wil6210/txrx_edma.h
+@@ -330,8 +330,10 @@ struct wil_rx_status_extension {
+ 	u32 d0;
+ 	u32 d1;
+ 	__le16 seq_num; /* only lower 12 bits */
+-	u16 pn_15_0;
+-	u32 pn_47_16;
++	struct_group_attr(pn, __packed,
++		u16 pn_15_0;
++		u32 pn_47_16;
++	);
+ } __packed;
+ 
+ struct wil_rx_status_extended {
 -- 
 2.40.1
 
