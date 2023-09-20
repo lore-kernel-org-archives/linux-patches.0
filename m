@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5AB30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16515C433CB;
-	Wed, 20 Sep 2023 12:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E50830FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49C6C433C9;
+	Wed, 20 Sep 2023 12:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212967;
-	bh=ACDLIMlfNmdckQiVDwnCTyD1gMBdX0AMEp2RKsYqc9A=;
+	s=korg; t=1695212970;
+	bh=ryvPawaK43NcFzCSDMGpTsT6eP/ikKqmOsH4iUY7ZNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JU51HnUMWBk8pzbsjGgZjlXxgnnS1JIdTYktM0h9X0ofRsDAJjsHIR7oUGawJ8NTw
-	 C9pBcDIk8/pg8RtZgCQqeBx79/emyUjjXEXxqWmKUuF7dsy59GP3LiNeS3TeD7obbd
-	 gTRT1U2pjKKa1wwonY6elkdc/o63uUjJp3GNiyh8=
+	b=tT9eI8fZFy2zELSvtXSvJ9tRPqTdNzalSAKnv6OPacCFDzVM1LX+aM6xOQY6UCXmM
+	 AVqiHrjkqh9qD7JEZbBTt3wNvEbuvisEFRQZLOGKvG17NSgbuYHldPialePQQSkqeW
+	 p6+IMBZS6zWSwRp2h46SpdOCukM06n+gHpgrWIpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 112/367] md/md-bitmap: hold reconfig_mutex in backlog_store()
-Date: Wed, 20 Sep 2023 13:28:09 +0200
-Message-ID: <20230920112901.507609332@linuxfoundation.org>
+Subject: [PATCH 5.4 095/367] ARM: dts: BCM53573: Add cells sizes to PCIe node
+Date: Wed, 20 Sep 2023 13:27:52 +0200
+Message-ID: <20230920112901.003820286@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -34,66 +34,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 44abfa6a95df425c0660d56043020b67e6d93ab8 ]
+[ Upstream commit 3392ef368d9b04622fe758b1079b512664b6110a ]
 
-Several reasons why 'reconfig_mutex' should be held:
+This fixes:
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: pcie@2000: '#address-cells' is a required property
+        From schema: /lib/python3.10/site-packages/dtschema/schemas/pci/pci-bus.yaml
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: pcie@2000: '#size-cells' is a required property
+        From schema: /lib/python3.10/site-packages/dtschema/schemas/pci/pci-bus.yaml
 
-1) rdev_for_each() is not safe to be called without the lock, because
-   rdev can be removed concurrently.
-2) mddev_destroy_serial_pool() and mddev_create_serial_pool() should not
-   be called concurrently.
-3) mddev_suspend() from mddev_destroy/create_serial_pool() should be
-   protected by the lock.
+Two properties that need to be added later are "device_type" and
+"ranges". Adding "device_type" on its own causes a new warning and the
+value of "ranges" needs to be determined yet.
 
-Fixes: 10c92fca636e ("md-bitmap: create and destroy wb_info_pool with the change of backlog")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230706083727.608914-3-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230707114004.2740-3-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm/boot/dts/bcm53573.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index a549662ff4e51..843139447a964 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2488,6 +2488,10 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (backlog > COUNTER_MAX)
- 		return -EINVAL;
+diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
+index 4af8e3293cff4..34bd72b5c9cda 100644
+--- a/arch/arm/boot/dts/bcm53573.dtsi
++++ b/arch/arm/boot/dts/bcm53573.dtsi
+@@ -127,6 +127,9 @@ uart0: serial@300 {
  
-+	rv = mddev_lock(mddev);
-+	if (rv)
-+		return rv;
+ 		pcie0: pcie@2000 {
+ 			reg = <0x00002000 0x1000>;
 +
- 	/*
- 	 * Without write mostly device, it doesn't make sense to set
- 	 * backlog for max_write_behind.
-@@ -2501,6 +2505,7 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (!has_write_mostly) {
- 		pr_warn_ratelimited("%s: can't set backlog, no write mostly device available\n",
- 				    mdname(mddev));
-+		mddev_unlock(mddev);
- 		return -EINVAL;
- 	}
++			#address-cells = <3>;
++			#size-cells = <2>;
+ 		};
  
-@@ -2518,6 +2523,8 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 	}
- 	if (old_mwb != backlog)
- 		md_bitmap_update_sb(mddev->bitmap);
-+
-+	mddev_unlock(mddev);
- 	return len;
- }
- 
+ 		usb2: usb2@4000 {
 -- 
 2.40.1
 
