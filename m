@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37013C687
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54CDEC433C7;
-	Wed, 20 Sep 2023 12:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912813C688
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10486C433C7;
+	Wed, 20 Sep 2023 12:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213151;
-	bh=ivjqjm4OQPr1jLKkuVKziKrFY5/tC6qDkV7eOSb5dyg=;
+	s=korg; t=1695213154;
+	bh=BGNOEeUkMwqxZgmrCtTbv+FFMxE12tvKH8So2cLZeOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaOeM+DfKtQDA3bVxXYckDgh8nofK8HmNxX0atZsGb9tLW4rypzYk5dJm6rglUy1f
-	 6lEEMg/s1/fj5cK5WsKu+WvEGA8769T1zGlBL2XYE9NNUUbPIqSGUfYotJM1sgREdr
-	 W7VinU4MBdIgnYXYbvdMHw5x4Sv5PyB3b0348gWk=
+	b=0FQ6HLQFAZz0MotcLKlcAKHake9qN0vaZY6XrKXcgbyNDJxY7kDkB9roMMRBIlYfi
+	 TpPUJomgLB7kolVAPOdzQhHwmnVNCFtW+MmQujjFatL01sAg6egsgOSTiO2GmyxupA
+	 8gQj5ysvPWTiCED2/pVr52TLjek+oysd4+igBrws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 179/367] media: i2c: ov2680: Set V4L2_CTRL_FLAG_MODIFY_LAYOUT on flips
-Date: Wed, 20 Sep 2023 13:29:16 +0200
-Message-ID: <20230920112903.269862041@linuxfoundation.org>
+Subject: [PATCH 5.4 154/367] media: dib7000p: Fix potential division by zero
+Date: Wed, 20 Sep 2023 13:28:51 +0200
+Message-ID: <20230920112902.642861543@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,39 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 66274280b2c745d380508dc27b9a4dfd736e5eda ]
+[ Upstream commit a1db7b2c5533fc67e2681eb5efc921a67bc7d5b8 ]
 
-The driver changes the Bayer order based on the flips, but
-does not define the control correctly with the
-V4L2_CTRL_FLAG_MODIFY_LAYOUT flag.
+Variable loopdiv can be assigned 0, then it is used as a denominator,
+without checking it for 0.
 
-Add the V4L2_CTRL_FLAG_MODIFY_LAYOUT flag.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Stable-dep-of: 7b5a42e6ae71 ("media: ov2680: Remove auto-gain and auto-exposure controls")
+Fixes: 713d54a8bd81 ("[media] DiB7090: add support for the dib7090 based")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: (bw != NULL) -> bw]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/dvb-frontends/dib7000p.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index 59cdbc33658ce..cd0c083a4768a 100644
---- a/drivers/media/i2c/ov2680.c
-+++ b/drivers/media/i2c/ov2680.c
-@@ -966,6 +966,8 @@ static int ov2680_v4l2_register(struct ov2680_dev *sensor)
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index 0d22c700016d4..ac34fd8659b52 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -497,7 +497,7 @@ static int dib7000p_update_pll(struct dvb_frontend *fe, struct dibx000_bandwidth
+ 	prediv = reg_1856 & 0x3f;
+ 	loopdiv = (reg_1856 >> 6) & 0x3f;
  
- 	ctrls->gain->flags |= V4L2_CTRL_FLAG_VOLATILE;
- 	ctrls->exposure->flags |= V4L2_CTRL_FLAG_VOLATILE;
-+	ctrls->vflip->flags |= V4L2_CTRL_FLAG_MODIFY_LAYOUT;
-+	ctrls->hflip->flags |= V4L2_CTRL_FLAG_MODIFY_LAYOUT;
- 
- 	v4l2_ctrl_auto_cluster(2, &ctrls->auto_gain, 0, true);
- 	v4l2_ctrl_auto_cluster(2, &ctrls->auto_exp, 1, true);
+-	if ((bw != NULL) && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
++	if (loopdiv && bw && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
+ 		dprintk("Updating pll (prediv: old =  %d new = %d ; loopdiv : old = %d new = %d)\n", prediv, bw->pll_prediv, loopdiv, bw->pll_ratio);
+ 		reg_1856 &= 0xf000;
+ 		reg_1857 = dib7000p_read_word(state, 1857);
 -- 
 2.40.1
 
