@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903512AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3099C433BD;
-	Wed, 20 Sep 2023 12:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488702AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45E4C433C7;
+	Wed, 20 Sep 2023 12:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211209;
-	bh=Wu+sTfeekVRBDrcRyqONa8jBEu7ldeZo8fUP5wW0fhI=;
+	s=korg; t=1695211212;
+	bh=i5CwbQ9hFqvnMq7NRhr9raHAM4+J7JWAsw7+POd0pZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpqcMYuKuLyS5b88yaDtIQwxBzQfhh6B6UKkxs7bmbjDkH2d9tSp5y5pT1L9Rux85
-	 PJgTztkAfsp3aoQP4I8HD2ARL3bSq/kSLJjosYa+6HmTWl8vz4dyzfapkbcFp1qqAO
-	 pZvd+5nOGwCMzAASudWao7o0YxJV8Kmqm2+728Gw=
+	b=Qa1kzFBx+M5yinArzb4o6XfyUc1vcHj+Rd7s6Cbm5ihsw6lWdWqiABu9+ITWtrkFl
+	 xeEyCzXupGuPkpmOcQtTqcneUupvjoG56TN3P6Oaal5B3D8MCzN0IU/ymnIQE6mpyC
+	 ATLubiI1jAxH97mSsG3cqt05nSAjtLBPiba0fkUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 4.14 001/186] ARM: pxa: remove use of symbol_get()
-Date: Wed, 20 Sep 2023 13:28:24 +0200
-Message-ID: <20230920112836.860603500@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 010/186] nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
+Date: Wed, 20 Sep 2023 13:28:33 +0200
+Message-ID: <20230920112837.221545420@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,73 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 0faa29c4207e6e29cfc81b427df60e326c37083a upstream.
+commit f83913f8c5b882a312e72b7669762f8a5c9385e4 upstream.
 
-The spitz board file uses the obscure symbol_get() function
-to optionally call a function from sharpsl_pm.c if that is
-built. However, the two files are always built together
-these days, and have been for a long time, so this can
-be changed to a normal function call.
+A syzbot stress test reported that create_empty_buffers() called from
+nilfs_lookup_dirty_data_buffers() can cause a general protection fault.
 
-Link: https://lore.kernel.org/lkml/20230731162639.GA9441@lst.de/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Analysis using its reproducer revealed that the back reference "mapping"
+from a page/folio has been changed to NULL after dirty page/folio gang
+lookup in nilfs_lookup_dirty_data_buffers().
+
+Fix this issue by excluding pages/folios from being collected if, after
+acquiring a lock on each page/folio, its back reference "mapping" differs
+from the pointer to the address space struct that held the page/folio.
+
+Link: https://lkml.kernel.org/r/20230805132038.6435-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000002930a705fc32b231@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-pxa/sharpsl_pm.c |    2 --
- arch/arm/mach-pxa/spitz.c      |   14 +-------------
- 2 files changed, 1 insertion(+), 15 deletions(-)
+fs/nilfs2/segment.c | 5 +++++
+ fs/nilfs2/segment.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/arm/mach-pxa/sharpsl_pm.c
-+++ b/arch/arm/mach-pxa/sharpsl_pm.c
-@@ -224,8 +224,6 @@ void sharpsl_battery_kick(void)
- {
- 	schedule_delayed_work(&sharpsl_bat, msecs_to_jiffies(125));
- }
--EXPORT_SYMBOL(sharpsl_battery_kick);
--
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -743,6 +743,11 @@ static size_t nilfs_lookup_dirty_data_bu
+ 			break;
  
- static void sharpsl_battery_thread(struct work_struct *private_)
- {
---- a/arch/arm/mach-pxa/spitz.c
-+++ b/arch/arm/mach-pxa/spitz.c
-@@ -13,7 +13,6 @@
-  */
- 
- #include <linux/kernel.h>
--#include <linux/module.h>	/* symbol_get ; symbol_put */
- #include <linux/platform_device.h>
- #include <linux/delay.h>
- #include <linux/gpio_keys.h>
-@@ -517,17 +516,6 @@ static struct pxa2xx_spi_chip spitz_ads7
- 	.gpio_cs		= SPITZ_GPIO_ADS7846_CS,
- };
- 
--static void spitz_bl_kick_battery(void)
--{
--	void (*kick_batt)(void);
--
--	kick_batt = symbol_get(sharpsl_battery_kick);
--	if (kick_batt) {
--		kick_batt();
--		symbol_put(sharpsl_battery_kick);
--	}
--}
--
- static struct corgi_lcd_platform_data spitz_lcdcon_info = {
- 	.init_mode		= CORGI_LCD_MODE_VGA,
- 	.max_intensity		= 0x2f,
-@@ -535,7 +523,7 @@ static struct corgi_lcd_platform_data sp
- 	.limit_mask		= 0x0b,
- 	.gpio_backlight_cont	= SPITZ_GPIO_BACKLIGHT_CONT,
- 	.gpio_backlight_on	= SPITZ_GPIO_BACKLIGHT_ON,
--	.kick_battery		= spitz_bl_kick_battery,
-+	.kick_battery		= sharpsl_battery_kick,
- };
- 
- static struct pxa2xx_spi_chip spitz_lcdcon_chip = {
+ 		lock_page(page);
++		if (unlikely(page->mapping != mapping)) {
++			/* Exclude pages removed from the address space */
++			unlock_page(page);
++			continue;
++		}
+ 		if (!page_has_buffers(page))
+ 			create_empty_buffers(page, i_blocksize(inode), 0);
+ 		unlock_page(page);
 
 
