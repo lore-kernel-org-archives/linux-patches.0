@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC50B8465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C2DC433C9;
-	Wed, 20 Sep 2023 11:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97629154AF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA0C433C9;
+	Wed, 20 Sep 2023 11:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210341;
-	bh=ispZwBgqSPve0ljCjyaWqDeEnFz4CSE/vTGZU2G06Z4=;
+	s=korg; t=1695210344;
+	bh=COhfOJr386L39e5vti4TxDS2tiU61rbbyzOHPpTKMko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCW/hsE0ViijCvmS3KViPj4qOcUroNETO65wjjOE37tebXLeeZCe5qn59D4EuIoQO
-	 RvrgBaVORfk+DWjOWKn0wSrC8eYIshQFZz/qMsP0afpqESaS+yBSlA4aI9DaYEwtYV
-	 MLMy39cNETeFUFdQpvsBbVv0BUnajbomx3HTvxzI=
+	b=s1FfpYC6Q+ClVTw00E+v32eikOowOVABXRszxh2uCogHjaGSMEX37XQAQeJXJAq0z
+	 X3tte6fvNpBllC1QNQz5RiJ8lzcGJhi0CzINk17PfQpsPRTpM/2qYOUL0eCxaW6RBl
+	 jQT8N9p56vVFfn3ZwZ7Rlea9ZOrE2QIYnuBzVBEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 042/211] Bluetooth: btusb: Add new VID/PID 0489/e102 for MT7922
-Date: Wed, 20 Sep 2023 13:28:06 +0200
-Message-ID: <20230920112847.094168226@linuxfoundation.org>
+Subject: [PATCH 6.5 043/211] Bluetooth: btusb: Add new VID/PID 04ca/3804 for MT7922
+Date: Wed, 20 Sep 2023 13:28:07 +0200
+Message-ID: <20230920112847.127700109@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,16 +42,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit bf809efdcc4df4132c8c261fbba7121909dc6211 ]
+[ Upstream commit 59be4be82bd3639cd9dbfb92df0f6263ab2c2e28 ]
 
-Add VID 0489 & PID e102 for MediaTek MT7922 USB Bluetooth chip.
+Add VID 04ca & PID 3804 for MediaTek MT7922 USB Bluetooth chip.
 
 The information in /sys/kernel/debug/usb/devices about the Bluetooth
 device is listed as the below.
 
 T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
 D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e102 Rev= 1.00
+P:  Vendor=04ca ProdID=3804 Rev= 1.00
 S:  Manufacturer=MediaTek Inc.
 S:  Product=Wireless_Device
 S:  SerialNumber=000000000
@@ -97,14 +97,14 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3cdb2dea1f559..81a58f3e1db42 100644
+index 81a58f3e1db42..26203b16ad911 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -634,6 +634,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0f6), .driver_info = BTUSB_MEDIATEK |
+@@ -637,6 +637,9 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x0489, 0xe102), .driver_info = BTUSB_MEDIATEK |
  						     BTUSB_WIDEBAND_SPEECH |
  						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe102), .driver_info = BTUSB_MEDIATEK |
++	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
 +						     BTUSB_WIDEBAND_SPEECH |
 +						     BTUSB_VALID_LE_STATES },
  
