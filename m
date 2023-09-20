@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ADD2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3264C433C7;
-	Wed, 20 Sep 2023 12:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CED2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D26EC433CC;
+	Wed, 20 Sep 2023 12:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211258;
-	bh=bWYkKxnPkyiYIWqrSN13KJAXCbhrIi/sDNLmW/Wrglo=;
+	s=korg; t=1695211260;
+	bh=SlpV3CHcwtw6AXTAgQtICJBhdNsP1gjYleEAerZEaCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tt5dzUOd1eUMAv7WYx2f+YZijz9Itc3cHSJatamCD+EhmIZZhFo5BFRbkglaQNnhG
-	 ubIlQgTCU5sBpb02bjxZtDVcB51ZcOPq3Yhp939sLjYUs/O2V8JjAMzbqpHc4pJZaN
-	 2M2y2I8MmFmReGg7DeG8BnJW3b3tfmnUvjuJ9I8I=
+	b=VYrtwMu/jr97uKsmd0pK3q3yN29gQ1rVmrLOVpMD7LatsqG2pFVJXiPv91TQ91ymS
+	 SSMB0kbCM34/NRZxnNtk3zo5mfEYcyamYeDOg7WFzL9W7hAG2+vWt8POoMmfbl0N/G
+	 SUQXbyzEnP1667uH5t1wMxXZi0LSVLSLMTKhC8Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 027/186] sctp: handle invalid error codes without calling BUG()
-Date: Wed, 20 Sep 2023 13:28:50 +0200
-Message-ID: <20230920112837.898210944@linuxfoundation.org>
+Subject: [PATCH 4.14 028/186] cifs: add a warning when the in-flight count goes negative
+Date: Wed, 20 Sep 2023 13:28:51 +0200
+Message-ID: <20230920112837.935065327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,43 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit a0067dfcd9418fd3b0632bc59210d120d038a9c6 ]
+[ Upstream commit e4645cc2f1e2d6f268bb8dcfac40997c52432aed ]
 
-The sctp_sf_eat_auth() function is supposed to return enum sctp_disposition
-values but if the call to sctp_ulpevent_make_authkey() fails, it returns
--ENOMEM.
+We've seen the in-flight count go into negative with some
+internal stress testing in Microsoft.
 
-This results in calling BUG() inside the sctp_side_effects() function.
-Calling BUG() is an over reaction and not helpful.  Call WARN_ON_ONCE()
-instead.
+Adding a WARN when this happens, in hope of understanding
+why this happens when it happens.
 
-This code predates git.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_sideeffect.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
-index 169819263c0bb..87822421b99db 100644
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -1235,7 +1235,10 @@ static int sctp_side_effects(enum sctp_event event_type,
- 	default:
- 		pr_err("impossible disposition %d in state %d, event_type %d, event_id %d\n",
- 		       status, state, event_type, subtype.chunk);
--		BUG();
-+		error = status;
-+		if (error >= 0)
-+			error = -EINVAL;
-+		WARN_ON_ONCE(1);
- 		break;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index dec306a3b0f41..3287795c648e5 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -78,6 +78,7 @@ smb2_add_credits(struct TCP_Server_Info *server, const unsigned int add,
+ 		*val = 65000; /* Don't get near 64K credits, avoid srv bugs */
+ 		printk_once(KERN_WARNING "server overflowed SMB3 credits\n");
  	}
- 
++	WARN_ON_ONCE(server->in_flight == 0);
+ 	server->in_flight--;
+ 	if (server->in_flight == 0 && (optype & CIFS_OP_MASK) != CIFS_NEG_OP)
+ 		rc = change_conf(server);
 -- 
 2.40.1
 
