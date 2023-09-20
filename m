@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45B330FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A97C433C8;
-	Wed, 20 Sep 2023 12:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED1E30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA60CC433C8;
+	Wed, 20 Sep 2023 12:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212681;
-	bh=wyvhGkxzERvVB+2/KnUqy8RZ/dJuEfrE4MwLnJDD0ro=;
+	s=korg; t=1695212684;
+	bh=H8niUVU/tRrI07EpLSRbDlRq4oriZyDco/bniyIlUL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6dzqMQrAk6yxY3H8q3mOHg8wB6gT3vZeQiwp/8tqbxV2Ou5BH5lw3eeeYf7D6Cy/
-	 hayYmkUKhPyJUD/QmZQXURro2AxwCdO9qYEXX0w0illYOqK1XcL/YWVzaGA8/qjWbV
-	 5tSZGjskFWqWeRTlzRFx3UGX1FsHda/GZlp05Hno=
+	b=JrZIUwqc2/I4bF3qw0DM5dtW5xVeBeEmNHLS1adQ8K1GV4/MvW08AdavX5FlFc23D
+	 KhXVE82Mg2LiJ8Qa+/TlSoo3xKo6+GAHzuNMDf4h02RgPw628ghl00iwi/NulIVB4I
+	 s5h+v/M0aNyU88/xDMRsA51sNYbhh8DsmzMoOJCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommy Huang <tommy_huang@aspeedtech.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 79/83] i2c: aspeed: Reset the i2c controller when timeout occurs
-Date: Wed, 20 Sep 2023 13:32:09 +0200
-Message-ID: <20230920112829.780940639@linuxfoundation.org>
+	keltargw <keltar.gw@gmail.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 5.4 001/367] erofs: ensure that the post-EOF tails are all zeroed
+Date: Wed, 20 Sep 2023 13:26:18 +0200
+Message-ID: <20230920112858.515759295@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
-References: <20230920112826.634178162@linuxfoundation.org>
+In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
+References: <20230920112858.471730572@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,48 +35,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tommy Huang <tommy_huang@aspeedtech.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit fee465150b458351b6d9b9f66084f3cc3022b88b upstream.
+commit e4c1cf523d820730a86cae2c6d55924833b6f7ac upstream.
 
-Reset the i2c controller when an i2c transfer timeout occurs.
-The remaining interrupts and device should be reset to avoid
-unpredictable controller behavior.
+This was accidentally fixed up in commit e4c1cf523d82 but we can't
+take the full change due to other dependancy issues, so here is just
+the actual bugfix that is needed.
 
-Fixes: 2e57b7cebb98 ("i2c: aspeed: Add multi-master use case support")
-Cc: <stable@vger.kernel.org> # v5.1+
-Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+[Background]
+
+keltargw reported an issue [1] that with mmaped I/Os, sometimes the
+tail of the last page (after file ends) is not filled with zeroes.
+
+The root cause is that such tail page could be wrongly selected for
+inplace I/Os so the zeroed part will then be filled with compressed
+data instead of zeroes.
+
+A simple fix is to avoid doing inplace I/Os for such tail parts,
+actually that was already fixed upstream in commit e4c1cf523d82
+("erofs: tidy up z_erofs_do_read_page()") by accident.
+
+[1] https://lore.kernel.org/r/3ad8b469-25db-a297-21f9-75db2d6ad224@linux.alibaba.com
+
+Reported-by: keltargw <keltar.gw@gmail.com>
+Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -693,13 +693,16 @@ static int aspeed_i2c_master_xfer(struct
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -639,6 +639,8 @@ hitted:
+ 	cur = end - min_t(erofs_off_t, offset + end - map->m_la, end);
+ 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
+ 		zero_user_segment(page, cur, end);
++		++spiltted;
++		tight = false;
+ 		goto next_part;
+ 	}
  
- 	if (time_left == 0) {
- 		/*
--		 * If timed out and bus is still busy in a multi master
--		 * environment, attempt recovery at here.
-+		 * In a multi-master setup, if a timeout occurs, attempt
-+		 * recovery. But if the bus is idle, we still need to reset the
-+		 * i2c controller to clear the remaining interrupts.
- 		 */
- 		if (bus->multi_master &&
- 		    (readl(bus->base + ASPEED_I2C_CMD_REG) &
- 		     ASPEED_I2CD_BUS_BUSY_STS))
- 			aspeed_i2c_recover_bus(bus);
-+		else
-+			aspeed_i2c_reset(bus);
- 
- 		/*
- 		 * If timed out and the state is still pending, drop the pending
 
 
