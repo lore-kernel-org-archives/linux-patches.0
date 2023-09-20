@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1154930FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAE4C433C7;
-	Wed, 20 Sep 2023 12:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0B930FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B524C433C8;
+	Wed, 20 Sep 2023 12:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212330;
-	bh=oR2DFKblFbe7BwxXQcZc9qgOKbTIVcch3gTK6JqEKJE=;
+	s=korg; t=1695212333;
+	bh=0Y2qPj2Wnxm83dXxFWFNDMHMV6QPzU7OSWbU/2bEtoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5EREjMwr/hmjQi9N2L9eHdaZdcLu/ZJ3trQcr1mPiFh8JPnhlhxWPazivGrPCc+x
-	 vSh9xepKYjpJAaQuhrnZVGicJOnuJlRbgRfINUj0WnaGHe4Znrxbwv+l8ik9F2S6OT
-	 8rFb4R9oWDs9salDAk1Ng3ieJ6infnnNMvwWfEHA=
+	b=vOfTiF80Vwtcltorx/mCLlSJyWpy06yu0W8i53WDYcxe11J7OLtHG1ibIjmxJorjL
+	 P5lYKiKyVOxiuMl5mSSaAfM0vyQctqSVI2mTaA8msJSSKuZRdTw1FS4SpPJT5a+w1Y
+	 RoztPp1cDmk4m6HPYXkbCKdDzUsC9moOBVB4dsLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 207/273] x86/virt: Drop unnecessary check on extended CPUID level in cpu_has_svm()
-Date: Wed, 20 Sep 2023 13:30:47 +0200
-Message-ID: <20230920112852.878502332@linuxfoundation.org>
+Subject: [PATCH 4.19 208/273] watchdog: intel-mid_wdt: add MODULE_ALIAS() to allow auto-load
+Date: Wed, 20 Sep 2023 13:30:48 +0200
+Message-ID: <20230920112852.906184606@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,42 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 5df8ecfe3632d5879d1f154f7aa8de441b5d1c89 ]
+[ Upstream commit cf38e7691c85f1b09973b22a0b89bf1e1228d2f9 ]
 
-Drop the explicit check on the extended CPUID level in cpu_has_svm(), the
-kernel's cached CPUID info will leave the entire SVM leaf unset if said
-leaf is not supported by hardware.  Prior to using cached information,
-the check was needed to avoid false positives due to Intel's rather crazy
-CPUID behavior of returning the values of the maximum supported leaf if
-the specified leaf is unsupported.
+When built with CONFIG_INTEL_MID_WATCHDOG=m, currently the driver
+needs to be loaded manually, for the lack of module alias.
+This causes unintended resets in cases where watchdog timer is
+set-up by bootloader and the driver is not explicitly loaded.
+Add MODULE_ALIAS() to load the driver automatically at boot and
+avoid this issue.
 
-Fixes: 682a8108872f ("x86/kvm/svm: Simplify cpu_has_svm()")
-Link: https://lore.kernel.org/r/20230721201859.2307736-13-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 87a1ef8058d9 ("watchdog: add Intel MID watchdog driver support")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230811120220.31578-1-raag.jadav@intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/virtext.h | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/watchdog/intel-mid_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/virtext.h b/arch/x86/include/asm/virtext.h
-index 4699acd602af4..62810550024d3 100644
---- a/arch/x86/include/asm/virtext.h
-+++ b/arch/x86/include/asm/virtext.h
-@@ -89,12 +89,6 @@ static inline int cpu_has_svm(const char **msg)
- 		return 0;
- 	}
- 
--	if (boot_cpu_data.extended_cpuid_level < SVM_CPUID_FUNC) {
--		if (msg)
--			*msg = "can't execute cpuid_8000000a";
--		return 0;
--	}
--
- 	if (!boot_cpu_has(X86_FEATURE_SVM)) {
- 		if (msg)
- 			*msg = "svm not available";
+diff --git a/drivers/watchdog/intel-mid_wdt.c b/drivers/watchdog/intel-mid_wdt.c
+index 72c108a12c19d..0dec3fba02b99 100644
+--- a/drivers/watchdog/intel-mid_wdt.c
++++ b/drivers/watchdog/intel-mid_wdt.c
+@@ -186,3 +186,4 @@ module_platform_driver(mid_wdt_driver);
+ MODULE_AUTHOR("David Cohen <david.a.cohen@linux.intel.com>");
+ MODULE_DESCRIPTION("Watchdog Driver for Intel MID platform");
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:intel_mid_wdt");
 -- 
 2.40.1
 
