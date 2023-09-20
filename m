@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20F830F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352A3C433C7;
-	Wed, 20 Sep 2023 12:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5783A30F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2275C433C9;
+	Wed, 20 Sep 2023 12:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213784;
-	bh=qisdGkkbGVkPtVlZ7rU/m37Ht52m7rAZol/7jOrJFIg=;
+	s=korg; t=1695213787;
+	bh=YUkwimKhR5zeJpNVPS6teIWQVdVmqXvn9cfMLp1heDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYZS+kKDxq9Kj4tVBobuzoHj/5/TVz+LGvWcWH72xj0cpuKapaOycXKKz42f12K89
-	 /udFSedg5WUoK2pb51aWCIjCOaQUHccIHuxHcNls/z/9r8cpoia8ZsN3u362ApVgmX
-	 XCaNwWX7ztv0l7wwpBNQmI1wfTWCKV0sLWOvpk1o=
+	b=1vA2rQJMQDgIcbZs6w4dhtbwb/YKHoYRdVx3zT+P4XLGngZuopgIvAWSngEDSnDdm
+	 cnoYfEFDdR7sVh8OHJhCDYjC8y0d53ZVzPR68bRXinhlm/C67LVpLKlsCOFnkD1LpI
+	 nrm14H985wdgoeHNQH+S2kpudK+SEn4qfZ31aVDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 365/367] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
-Date: Wed, 20 Sep 2023 13:32:22 +0200
-Message-ID: <20230920112907.927491601@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 366/367] drm/amdgpu: fix amdgpu_cs_p1_user_fence
+Date: Wed, 20 Sep 2023 13:32:23 +0200
+Message-ID: <20230920112907.950471308@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -34,161 +33,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b upstream.
+commit 35588314e963938dfdcdb792c9170108399377d6 upstream.
 
-v7.2 controller has different ECC level field size and shift in the acc
-control register than its predecessor and successor controller. It needs
-to be set specifically.
+The offset is just 32bits here so this can potentially overflow if
+somebody specifies a large value. Instead reduce the size to calculate
+the last possible offset.
 
-Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+The error handling path incorrectly drops the reference to the user
+fence BO resulting in potential reference count underflow.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |   74 +++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -197,6 +197,7 @@ struct brcmnand_controller {
- 	unsigned int		max_page_size;
- 	const unsigned int	*page_sizes;
- 	unsigned int		max_oob;
-+	u32			ecc_level_shift;
- 	u32			features;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -43,7 +43,6 @@ static int amdgpu_cs_user_fence_chunk(st
+ 	struct drm_gem_object *gobj;
+ 	struct amdgpu_bo *bo;
+ 	unsigned long size;
+-	int r;
  
- 	/* for low-power standby/resume only */
-@@ -487,6 +488,34 @@ enum {
- 	INTFC_CTLR_READY		= BIT(31),
- };
+ 	gobj = drm_gem_object_lookup(p->filp, data->handle);
+ 	if (gobj == NULL)
+@@ -58,23 +57,14 @@ static int amdgpu_cs_user_fence_chunk(st
+ 	drm_gem_object_put_unlocked(gobj);
  
-+/***********************************************************************
-+ * NAND ACC CONTROL bitfield
-+ *
-+ * Some bits have remained constant throughout hardware revision, while
-+ * others have shifted around.
-+ ***********************************************************************/
-+
-+/* Constant for all versions (where supported) */
-+enum {
-+	/* See BRCMNAND_HAS_CACHE_MODE */
-+	ACC_CONTROL_CACHE_MODE				= BIT(22),
-+
-+	/* See BRCMNAND_HAS_PREFETCH */
-+	ACC_CONTROL_PREFETCH				= BIT(23),
-+
-+	ACC_CONTROL_PAGE_HIT				= BIT(24),
-+	ACC_CONTROL_WR_PREEMPT				= BIT(25),
-+	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
-+	ACC_CONTROL_RD_ERASED				= BIT(27),
-+	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
-+	ACC_CONTROL_WR_ECC				= BIT(30),
-+	ACC_CONTROL_RD_ECC				= BIT(31),
-+};
-+
-+#define	ACC_CONTROL_ECC_SHIFT			16
-+/* Only for v7.2 */
-+#define	ACC_CONTROL_ECC_EXT_SHIFT		13
-+
- static inline u32 nand_readreg(struct brcmnand_controller *ctrl, u32 offs)
- {
- 	return brcmnand_readl(ctrl->nand_base + offs);
-@@ -590,6 +619,12 @@ static int brcmnand_revision_init(struct
- 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
- 		ctrl->features |= BRCMNAND_HAS_WP;
+ 	size = amdgpu_bo_size(bo);
+-	if (size != PAGE_SIZE || (data->offset + 8) > size) {
+-		r = -EINVAL;
+-		goto error_unref;
+-	}
+-
+-	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm)) {
+-		r = -EINVAL;
+-		goto error_unref;
+-	}
++	if (size != PAGE_SIZE || data->offset > (size - 8))
++		return -EINVAL;
  
-+	/* v7.2 has different ecc level shift in the acc register */
-+	if (ctrl->nand_version == 0x0702)
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
-+	else
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
-+
+-	*offset = data->offset;
++	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm))
++		return -EINVAL;
+ 
++	*offset = data->offset;
  	return 0;
+-
+-error_unref:
+-	amdgpu_bo_unref(&bo);
+-	return r;
  }
  
-@@ -752,30 +787,6 @@ static inline int brcmnand_cmd_shift(str
- 	return 0;
- }
- 
--/***********************************************************************
-- * NAND ACC CONTROL bitfield
-- *
-- * Some bits have remained constant throughout hardware revision, while
-- * others have shifted around.
-- ***********************************************************************/
--
--/* Constant for all versions (where supported) */
--enum {
--	/* See BRCMNAND_HAS_CACHE_MODE */
--	ACC_CONTROL_CACHE_MODE				= BIT(22),
--
--	/* See BRCMNAND_HAS_PREFETCH */
--	ACC_CONTROL_PREFETCH				= BIT(23),
--
--	ACC_CONTROL_PAGE_HIT				= BIT(24),
--	ACC_CONTROL_WR_PREEMPT				= BIT(25),
--	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
--	ACC_CONTROL_RD_ERASED				= BIT(27),
--	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
--	ACC_CONTROL_WR_ECC				= BIT(30),
--	ACC_CONTROL_RD_ECC				= BIT(31),
--};
--
- static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
- {
- 	if (ctrl->nand_version == 0x0702)
-@@ -786,18 +797,15 @@ static inline u32 brcmnand_spare_area_ma
- 		return GENMASK(5, 0);
- }
- 
--#define NAND_ACC_CONTROL_ECC_SHIFT	16
--#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
--
- static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
- {
- 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
- 
--	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
-+	mask <<= ACC_CONTROL_ECC_SHIFT;
- 
- 	/* v7.2 includes additional ECC levels */
--	if (ctrl->nand_version >= 0x0702)
--		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
-+	if (ctrl->nand_version == 0x0702)
-+		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
- 
- 	return mask;
- }
-@@ -811,8 +819,8 @@ static void brcmnand_set_ecc_enabled(str
- 
- 	if (en) {
- 		acc_control |= ecc_flags; /* enable RD/WR ECC */
--		acc_control |= host->hwcfg.ecc_level
--			       << NAND_ACC_CONTROL_ECC_SHIFT;
-+		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-+		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
- 	} else {
- 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
- 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-@@ -2193,7 +2201,7 @@ static int brcmnand_set_cfg(struct brcmn
- 
- 	tmp = nand_readreg(ctrl, acc_control_offs);
- 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
--	tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
-+	tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
- 	tmp &= ~brcmnand_spare_area_mask(ctrl);
- 	tmp |= cfg->spare_area_size;
- 	nand_writereg(ctrl, acc_control_offs, tmp);
+ static int amdgpu_cs_bo_handles_chunk(struct amdgpu_cs_parser *p,
 
 
