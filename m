@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E82AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4278DC433C8;
-	Wed, 20 Sep 2023 12:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8EA2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10094C433C7;
+	Wed, 20 Sep 2023 12:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211582;
-	bh=mL1M1iziaaFJs5ylDVsg5CDxs+Fs8Hh8f8JbxkIz104=;
+	s=korg; t=1695211585;
+	bh=g2fAzvVIAh9m1tSY26evVlhbFYLl2ySMboAYnuD0wlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYgA1lz0aB0iQKaD7JPFt61c6TZtKvaa5g0oqrAZLDWzefvJsNVatamM7ZquTi7h2
-	 b4w0SH5sHH+XAaDvTfC9TKEoVeUVUjCsEVmu2kDCB0hk994cp0yKZRREMd7bdIZBch
-	 U+mA3ozraeiAmXQ8KEh62AN904t/O1jPolUmsdsw=
+	b=FcPzh9G/TdAznS4qjzKYiIE6bfy9ArVv2s4/iw8/+NIT2F9g81K260NGBRUb7XHBY
+	 RSJT2fWfE7IaPdX0/clXN0ctWXLlj3pGiDer0rMv5W4bW6fcG/ShUalIm0oEAm+BdR
+	 awbh6Cf1OK+I1PaA4uNj3mNpi4y+O4HXrQo22a9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 147/186] kcm: Fix error handling for SOCK_DGRAM in kcm_sendmsg().
-Date: Wed, 20 Sep 2023 13:30:50 +0200
-Message-ID: <20230920112842.279541660@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 4.14 148/186] parisc: Drop loops_per_jiffy from per_cpu struct
+Date: Wed, 20 Sep 2023 13:30:51 +0200
+Message-ID: <20230920112842.315123162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,70 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit a22730b1b4bf437c6bbfdeff5feddf54be4aeada ]
+commit 93346da8ff47cc00f953c7f38a2d6ba11977fc42 upstream.
 
-syzkaller found a memory leak in kcm_sendmsg(), and commit c821a88bd720
-("kcm: Fix memory leak in error path of kcm_sendmsg()") suppressed it by
-updating kcm_tx_msg(head)->last_skb if partial data is copied so that the
-following sendmsg() will resume from the skb.
+There is no need to keep a loops_per_jiffy value per cpu. Drop it.
 
-However, we cannot know how many bytes were copied when we get the error.
-Thus, we could mess up the MSG_MORE queue.
-
-When kcm_sendmsg() fails for SOCK_DGRAM, we should purge the queue as we
-do so for UDP by udp_flush_pending_frames().
-
-Even without this change, when the error occurred, the following sendmsg()
-resumed from a wrong skb and the queue was messed up.  However, we have
-yet to get such a report, and only syzkaller stumbled on it.  So, this
-can be changed safely.
-
-Note this does not change SOCK_SEQPACKET behaviour.
-
-Fixes: c821a88bd720 ("kcm: Fix memory leak in error path of kcm_sendmsg()")
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230912022753.33327-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/parisc/include/asm/processor.h |    1 -
+ arch/parisc/kernel/processor.c      |    5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 96b5fbe919b67..e0fe70b556299 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1065,17 +1065,18 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- out_error:
- 	kcm_push(kcm);
+--- a/arch/parisc/include/asm/processor.h
++++ b/arch/parisc/include/asm/processor.h
+@@ -108,7 +108,6 @@ struct cpuinfo_parisc {
+ 	unsigned long cpu_loc;      /* CPU location from PAT firmware */
+ 	unsigned int state;
+ 	struct parisc_device *dev;
+-	unsigned long loops_per_jiffy;
+ };
  
--	if (copied && sock->type == SOCK_SEQPACKET) {
-+	if (sock->type == SOCK_SEQPACKET) {
- 		/* Wrote some bytes before encountering an
- 		 * error, return partial success.
- 		 */
--		goto partial_message;
--	}
--
--	if (head != kcm->seq_skb)
-+		if (copied)
-+			goto partial_message;
-+		if (head != kcm->seq_skb)
-+			kfree_skb(head);
-+	} else {
- 		kfree_skb(head);
--	else if (copied)
--		kcm_tx_msg(head)->last_skb = skb;
-+		kcm->seq_skb = NULL;
-+	}
+ extern struct system_cpuinfo_parisc boot_cpu_data;
+--- a/arch/parisc/kernel/processor.c
++++ b/arch/parisc/kernel/processor.c
+@@ -177,7 +177,6 @@ static int __init processor_probe(struct
+ 	if (cpuid)
+ 		memset(p, 0, sizeof(struct cpuinfo_parisc));
  
- 	err = sk_stream_error(sk, msg->msg_flags, err);
+-	p->loops_per_jiffy = loops_per_jiffy;
+ 	p->dev = dev;		/* Save IODC data in case we need it */
+ 	p->hpa = dev->hpa.start;	/* save CPU hpa */
+ 	p->cpuid = cpuid;	/* save CPU id */
+@@ -429,8 +428,8 @@ show_cpuinfo (struct seq_file *m, void *
+ 		show_cache_info(m);
  
--- 
-2.40.1
-
+ 		seq_printf(m, "bogomips\t: %lu.%02lu\n",
+-			     cpuinfo->loops_per_jiffy / (500000 / HZ),
+-			     (cpuinfo->loops_per_jiffy / (5000 / HZ)) % 100);
++			     loops_per_jiffy / (500000 / HZ),
++			     loops_per_jiffy / (5000 / HZ) % 100);
+ 
+ 		seq_printf(m, "software id\t: %ld\n\n",
+ 				boot_cpu_data.pdc.model.sw_id);
 
 
