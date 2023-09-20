@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3C72AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5023C433C8;
-	Wed, 20 Sep 2023 12:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0E92AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5221EC433CD;
+	Wed, 20 Sep 2023 12:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211615;
-	bh=sHC2bKibVV0CrooNdyoSa9C9q5B45IZRkjGMAQqu3Zs=;
+	s=korg; t=1695211617;
+	bh=hVo7nXbFCyzkdqmhI7p2LS1Fhh8nYPnJCsIDPmIyV+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flvg9zg6JcHL77KjJHNEHIUPbCQ1EiisqXVyf1QlQ5FLb/+OtvDXkM1LB8WPKf66d
-	 fchlZqGVyIVi+E2DgFj3Y1dvD3KH+IB/mZAAKB/Vb6eOVDu1CqW3NxAFHiv6hENtco
-	 Z+N0IliIiTkXIGgIByBxVFzqZMfIWpj+ujkMhMeo=
+	b=Dy+gI5gQTk0NwwhIUuLg9eqs8psflD+AlVoE4Uiha71DaKto57nsnVG9P0dxY44GG
+	 kptEgkXkPXk782t2dywNbJrQPRn/RCxT/hGq2ro2hQX0s4FSbFK8IUtDNAkyuTU5NR
+	 ESr3Sb4zVk5SR6gMVPkJn9yHSPPIcUOYZLn6EIio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Simon Horman <horms@kernel.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 132/186] igb: disable virtualization features on 82580
-Date: Wed, 20 Sep 2023 13:30:35 +0200
-Message-ID: <20230920112841.779074850@linuxfoundation.org>
+Subject: [PATCH 4.14 133/186] net: ipv6/addrconf: avoid integer underflow in ipv6_create_tempaddr
+Date: Wed, 20 Sep 2023 13:30:36 +0200
+Message-ID: <20230920112841.815328669@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,38 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corinna Vinschen <vinschen@redhat.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit fa09bc40b21a33937872c4c4cf0f266ec9fa4869 ]
+[ Upstream commit f31867d0d9d82af757c1e0178b659438f4c1ea3c ]
 
-Disable virtualization features on 82580 just as on i210/i211.
-This avoids that virt functions are acidentally called on 82850.
+The existing code incorrectly casted a negative value (the result of a
+subtraction) to an unsigned value without checking. For example, if
+/proc/sys/net/ipv6/conf/*/temp_prefered_lft was set to 1, the preferred
+lifetime would jump to 4 billion seconds. On my machine and network the
+shortest lifetime that avoided underflow was 3 seconds.
 
-Fixes: 55cac248caa4 ("igb: Add full support for 82580 devices")
-Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 76506a986dc3 ("IPv6: fix DESYNC_FACTOR")
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 3ea1265a3a443..d679b31c9a138 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -3026,8 +3026,9 @@ static void igb_probe_vfs(struct igb_adapter *adapter)
- 	struct pci_dev *pdev = adapter->pdev;
- 	struct e1000_hw *hw = &adapter->hw;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 893b93cc5221a..288e270bd0176 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1283,7 +1283,7 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, struct inet6_ifaddr *i
+ 	 * idev->desync_factor if it's larger
+ 	 */
+ 	cnf_temp_preferred_lft = READ_ONCE(idev->cnf.temp_prefered_lft);
+-	max_desync_factor = min_t(__u32,
++	max_desync_factor = min_t(long,
+ 				  idev->cnf.max_desync_factor,
+ 				  cnf_temp_preferred_lft - regen_advance);
  
--	/* Virtualization features not supported on i210 family. */
--	if ((hw->mac.type == e1000_i210) || (hw->mac.type == e1000_i211))
-+	/* Virtualization features not supported on i210 and 82580 family. */
-+	if ((hw->mac.type == e1000_i210) || (hw->mac.type == e1000_i211) ||
-+	    (hw->mac.type == e1000_82580))
- 		return;
- 
- 	/* Of the below we really only want the effect of getting
 -- 
 2.40.1
 
