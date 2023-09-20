@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A185E30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A295C433CB;
-	Wed, 20 Sep 2023 12:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAE230FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B244EC433C8;
+	Wed, 20 Sep 2023 12:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212796;
-	bh=CvqUcpb8giHA26I2NFB3MCp+RPntq8WwkYmfLzue86Q=;
+	s=korg; t=1695212799;
+	bh=7w3wXte0Q5vscTjKLQyyQ9Qi+pOJACkbgZE+Qx2WhvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdUP8tViHs5cqCeaqVI/3BFC2V7nNiqe9mnJQtjqTa4GMMmXZLvfobKuI0Dpyn8Jp
-	 ccipALhvcjBPH9B5z9Xf9gaqCdr0ZKhDvtcb0STVzWbYvs3yqo/cy0S47kFJSlMtxn
-	 S956uwQ27/DOU40HtnqIAakPm7GI74a3wuoFSVyk=
+	b=UK6KXZgbHlsUasqx1oAsJ5uphGPR+3k75a65VuYxbTVupA34BWG6lnBWADnMU2B5h
+	 6uuFEl8mtoQOFaVXwsgIrETfqq4tdAkxrhXxr2dB5rGlGqK1m396UyNaueN6J0K6ed
+	 bCj3AcauyiLJ0IS5tu2ucKXGHxU4XlOXHzqjr4ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wen Yang <wenyang.linux@foxmail.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dylan Yudaken <dylany@fb.com>,
 	David Woodhouse <dwmw@amazon.co.uk>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/367] eventfd: Export eventfd_ctx_do_read()
-Date: Wed, 20 Sep 2023 13:27:06 +0200
-Message-ID: <20230920112859.758284842@linuxfoundation.org>
+Subject: [PATCH 5.4 050/367] eventfd: prevent underflow for eventfd semaphores
+Date: Wed, 20 Sep 2023 13:27:07 +0200
+Message-ID: <20230920112859.785849886@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,73 +48,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Wen Yang <wenyang.linux@foxmail.com>
 
-[ Upstream commit 28f1326710555bbe666f64452d08f2d7dd657cae ]
+[ Upstream commit 758b492047816a3158d027e9fca660bc5bcf20bf ]
 
-Where events are consumed in the kernel, for example by KVM's
-irqfd_wakeup() and VFIO's virqfd_wakeup(), they currently lack a
-mechanism to drain the eventfd's counter.
+For eventfd with flag EFD_SEMAPHORE, when its ctx->count is 0, calling
+eventfd_ctx_do_read will cause ctx->count to overflow to ULLONG_MAX.
 
-Since the wait queue is already locked while the wakeup functions are
-invoked, all they really need to do is call eventfd_ctx_do_read().
+An underflow can happen with EFD_SEMAPHORE eventfds in at least the
+following three subsystems:
 
-Add a check for the lock, and export it for them.
+(1) virt/kvm/eventfd.c
+(2) drivers/vfio/virqfd.c
+(3) drivers/virt/acrn/irqfd.c
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Message-Id: <20201027135523.646811-2-dwmw2@infradead.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 758b49204781 ("eventfd: prevent underflow for eventfd semaphores")
+where (2) and (3) are just modeled after (1). An eventfd must be
+specified for use with the KVM_IRQFD ioctl(). This can also be an
+EFD_SEMAPHORE eventfd. When the eventfd count is zero or has been
+decremented to zero an underflow can be triggered when the irqfd is shut
+down by raising the KVM_IRQFD_FLAG_DEASSIGN flag in the KVM_IRQFD
+ioctl():
+
+        // ctx->count == 0
+        kvm_vm_ioctl()
+        -> kvm_irqfd()
+           -> kvm_irqfd_deassign()
+              -> irqfd_deactivate()
+                 -> irqfd_shutdown()
+                    -> eventfd_ctx_remove_wait_queue(&cnt)
+                       -> eventfd_ctx_do_read(&cnt)
+
+Userspace polling on the eventfd wouldn't notice the underflow because 1
+is always returned as the value from eventfd_read() while ctx->count
+would've underflowed. It's not a huge deal because this should only be
+happening when the irqfd is shutdown but we should still fix it and
+avoid the spurious wakeup.
+
+Fixes: cb289d6244a3 ("eventfd - allow atomic read and waitqueue remove")
+Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dylan Yudaken <dylany@fb.com>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: linux-fsdevel@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Message-Id: <tencent_7588DFD1F365950A757310D764517A14B306@qq.com>
+[brauner: rewrite commit message and add explanation how this underflow can happen]
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventfd.c            | 5 ++++-
- include/linux/eventfd.h | 6 ++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ fs/eventfd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/eventfd.c b/fs/eventfd.c
-index 78e41c7c3d05b..26b3d821e9168 100644
+index 26b3d821e9168..e144094c831df 100644
 --- a/fs/eventfd.c
 +++ b/fs/eventfd.c
-@@ -181,11 +181,14 @@ static __poll_t eventfd_poll(struct file *file, poll_table *wait)
- 	return events;
- }
- 
--static void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
-+void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
+@@ -185,7 +185,7 @@ void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
  {
-+	lockdep_assert_held(&ctx->wqh.lock);
-+
- 	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
+ 	lockdep_assert_held(&ctx->wqh.lock);
+ 
+-	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
++	*cnt = ((ctx->flags & EFD_SEMAPHORE) && ctx->count) ? 1 : ctx->count;
  	ctx->count -= *cnt;
  }
-+EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
- 
- /**
-  * eventfd_ctx_remove_wait_queue - Read the current counter and removes wait queue.
-diff --git a/include/linux/eventfd.h b/include/linux/eventfd.h
-index 3482f9365a4db..de0ad39d4281f 100644
---- a/include/linux/eventfd.h
-+++ b/include/linux/eventfd.h
-@@ -41,6 +41,7 @@ struct eventfd_ctx *eventfd_ctx_fileget(struct file *file);
- __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n);
- int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx, wait_queue_entry_t *wait,
- 				  __u64 *cnt);
-+void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt);
- 
- DECLARE_PER_CPU(int, eventfd_wake_count);
- 
-@@ -82,6 +83,11 @@ static inline bool eventfd_signal_count(void)
- 	return false;
- }
- 
-+static inline void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
-+{
-+
-+}
-+
- #endif
- 
- #endif /* _LINUX_EVENTFD_H */
+ EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
 -- 
 2.40.1
 
