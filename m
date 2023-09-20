@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94833154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19043C433C8;
-	Wed, 20 Sep 2023 12:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DE527EFE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F5FC433CC;
+	Wed, 20 Sep 2023 12:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211431;
-	bh=DiVIDBvTQnbNZp1DWcNZhr9Bc69Ul26PEe6mK7x+WgM=;
+	s=korg; t=1695211434;
+	bh=d3i+h6IbP4C7xQqhGL5To0nQutkxg8XJDBLFRA/QaJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVPXYwU0L44eSBJQohLJvEMWremMAnzpQ/IChOSLD5CfqZ1U8gSvUCDVtgaBEqRKx
-	 ilJTH5+AcPVEGRPs8jkmhlfv8uq6HFV47MNgV6g7XN3K4nGmxASHt4Ak32jgzfQ87T
-	 bre/Z4zy1Ngg+kDR4zmbXZbD+MnzyJ67iz44Iifw=
+	b=Sy0c4tLEVnINw2Kmft4tUHAnwUK0JVN7UBZxhFYV6u5NeHq8/zYRR+CjxiuYQ3tMt
+	 8wIWX4sFEhon6ZX2BXMQZz7tQYItlR8Jf0aj+mfpeOERpWSWc1S2iUoffpvdxuJiN6
+	 4nDUqexV7bzNO2OMeQOc08TZPDNo6m6g01pom8sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 091/186] serial: tegra: handle clk prepare error in tegra_uart_hw_init()
-Date: Wed, 20 Sep 2023 13:29:54 +0200
-Message-ID: <20230920112840.207574157@linuxfoundation.org>
+Subject: [PATCH 4.14 074/186] media: dib7000p: Fix potential division by zero
+Date: Wed, 20 Sep 2023 13:29:37 +0200
+Message-ID: <20230920112839.544535246@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -39,39 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 5abd01145d0cc6cd1b7c2fe6ee0b9ea0fa13671e ]
+[ Upstream commit a1db7b2c5533fc67e2681eb5efc921a67bc7d5b8 ]
 
-In tegra_uart_hw_init(), the return value of clk_prepare_enable() should
-be checked since it might fail.
+Variable loopdiv can be assigned 0, then it is used as a denominator,
+without checking it for 0.
 
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://lore.kernel.org/r/20230817105406.228674-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 713d54a8bd81 ("[media] DiB7090: add support for the dib7090 based")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: (bw != NULL) -> bw]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib7000p.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index a13d6d4674bcc..05e522be94669 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -827,7 +827,11 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	tup->ier_shadow = 0;
- 	tup->current_baud = 0;
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index 0fbaabe43682c..d5c1859eba3c5 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -500,7 +500,7 @@ static int dib7000p_update_pll(struct dvb_frontend *fe, struct dibx000_bandwidth
+ 	prediv = reg_1856 & 0x3f;
+ 	loopdiv = (reg_1856 >> 6) & 0x3f;
  
--	clk_prepare_enable(tup->uart_clk);
-+	ret = clk_prepare_enable(tup->uart_clk);
-+	if (ret) {
-+		dev_err(tup->uport.dev, "could not enable clk\n");
-+		return ret;
-+	}
- 
- 	/* Reset the UART controller to clear all previous status.*/
- 	reset_control_assert(tup->rst);
+-	if ((bw != NULL) && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
++	if (loopdiv && bw && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
+ 		dprintk("Updating pll (prediv: old =  %d new = %d ; loopdiv : old = %d new = %d)\n", prediv, bw->pll_prediv, loopdiv, bw->pll_ratio);
+ 		reg_1856 &= 0xf000;
+ 		reg_1857 = dib7000p_read_word(state, 1857);
 -- 
 2.40.1
 
