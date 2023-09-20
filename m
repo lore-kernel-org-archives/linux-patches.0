@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511B5154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2E2C433CA;
-	Wed, 20 Sep 2023 12:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA69154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9180AC433C8;
+	Wed, 20 Sep 2023 12:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211404;
-	bh=qDAqrhYA9YnE9+z6M4KE9i6idbTkBTLKFfziP46sxBg=;
+	s=korg; t=1695211406;
+	bh=/blODE4c1CmNPM4iZF0s1xRZwX6YyrEZc+efzLWFF24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W62sIUbc/FPZA81qnnDGx8fQVkhPWn0guetVt/CoG/Ht8adgGsRUftkNV+/U8UFoy
-	 IY9g2xvpiePM3bStRSuBdcR819dayL/LbvAQZSgYl+6KCs0NvhVwBQsq89GW3VWmPq
-	 8YLT9jjFdF9MGtfieXlHol3SU/pkJxDgIZB2OsaI=
+	b=XTc1KfEpsQv6nWGX2+8RRMJtHERdz1tgW6wpvpjyPlFKkQd28c8SuXTOLlr8G/jTs
+	 qsQsl6IgzZ4WFxZQsatLku/QuIxFbrA5sgb7xfx3BUnD1FGROhAbSguhJgh+xeJape
+	 bZPVjn/ULT9lZS08jS3kOiMA0c72LyGnDzbvtyqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	x86@kernel.org,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 073/186] drivers: usb: smsusb: fix error handling code in smsusb_init_device
-Date: Wed, 20 Sep 2023 13:29:36 +0200
-Message-ID: <20230920112839.507302871@linuxfoundation.org>
+Subject: [PATCH 4.14 082/186] x86/APM: drop the duplicate APM_MINOR_DEV macro
+Date: Wed, 20 Sep 2023 13:29:45 +0200
+Message-ID: <20230920112839.842207964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,78 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
+[ Upstream commit 4ba2909638a29630a346d6c4907a3105409bee7d ]
 
-The previous commit 4b208f8b561f ("[media] siano: register media controller
-earlier")moves siano_media_device_register before smscore_register_device,
-and adds corresponding error handling code if smscore_register_device
-fails. However, it misses the following error handling code of
-smsusb_init_device.
+This source file already includes <linux/miscdevice.h>, which contains
+the same macro. It doesn't need to be defined here again.
 
-Fix this by moving error handling code at the end of smsusb_init_device
-and adding a goto statement in the following error handling parts.
-
-Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 874bcd00f520 ("apm-emulation: move APM_MINOR_DEV to include/linux/miscdevice.h")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: x86@kernel.org
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Link: https://lore.kernel.org/r/20230728011120.759-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ arch/x86/kernel/apm_32.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index 92a6192f9ab2b..1d67b4c1a020c 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -467,12 +467,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_register_device(&params, &dev->coredev, mdev);
- 	if (rc < 0) {
- 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
--		smsusb_term_device(intf);
--#ifdef CONFIG_MEDIA_CONTROLLER_DVB
--		media_device_unregister(mdev);
--#endif
--		kfree(mdev);
--		return rc;
-+		goto err_unregister_device;
- 	}
+diff --git a/arch/x86/kernel/apm_32.c b/arch/x86/kernel/apm_32.c
+index 63d3e6a6b5efc..558ac8bb8c7f5 100644
+--- a/arch/x86/kernel/apm_32.c
++++ b/arch/x86/kernel/apm_32.c
+@@ -246,12 +246,6 @@
+ extern int (*console_blank_hook)(int);
+ #endif
  
- 	smscore_set_board_id(dev->coredev, board_id);
-@@ -489,8 +484,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smsusb_start_streaming(dev);
- 	if (rc < 0) {
- 		pr_err("smsusb_start_streaming(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
- 	}
- 
- 	dev->state = SMSUSB_ACTIVE;
-@@ -498,13 +492,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_start_device(dev->coredev);
- 	if (rc < 0) {
- 		pr_err("smscore_start_device(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
- 	}
- 
- 	pr_debug("device 0x%p created\n", dev);
- 
- 	return rc;
-+
-+err_unregister_device:
-+	smsusb_term_device(intf);
-+#ifdef CONFIG_MEDIA_CONTROLLER_DVB
-+	media_device_unregister(mdev);
-+#endif
-+	kfree(mdev);
-+	return rc;
- }
- 
- static int smsusb_probe(struct usb_interface *intf,
+-/*
+- * The apm_bios device is one of the misc char devices.
+- * This is its minor number.
+- */
+-#define	APM_MINOR_DEV	134
+-
+ /*
+  * Various options can be changed at boot time as follows:
+  * (We allow underscores for compatibility with the modules code)
 -- 
 2.40.1
 
