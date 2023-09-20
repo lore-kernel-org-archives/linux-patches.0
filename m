@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D6023752
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12814C433CC;
-	Wed, 20 Sep 2023 11:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E27223752
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7824C433C9;
+	Wed, 20 Sep 2023 11:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210912;
-	bh=BRXYHnEbDkdEqWI5c7vypyNLzXvB9niRsRgJEFP8Ao4=;
+	s=korg; t=1695210915;
+	bh=Ih4OcJdGsuEfQoTWCbQOkx2XEfadUfPa6SMG54cMLr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3xBhRLw+m6ymO2tRZwKsPo4otuKIP338UqCdfFL9hKygPAJ3MuBMHsW5Wwv77Ihk
-	 iD8w3BP6O8C3NJDiR61fGlNAqoaJ3Izt5/K8gC1l+X6XOKrR+d7k3dVZwgkHsvMQnF
-	 gwbF/JzacvWATVKPK/rrwNDl63UirjgvGF64jNHk=
+	b=vreVI4sMFSCz6jxbheY0uJrWerD2Qba/kDl3w7CTcsWuE4WqCGV/rTE2ZdL7HgSTS
+	 Z0uJpFbqg8WUZnwOAe571bPQ8TK29zNGxuzBIU7RbLnm+wfbA64eBBcg7jfvqmZzT+
+	 K01N1uMVTfu886MssUikJUUiCDe43yIt54hnWL5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b2645b5bf1512b81fa22@syzkaller.appspotmail.com,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Abhishek Mainkar <abmainkar@nvidia.com>,
+	Bob Moore <robert.moore@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/139] wifi: mac80211_hwsim: drop short frames
-Date: Wed, 20 Sep 2023 13:29:31 +0200
-Message-ID: <20230920112837.017013683@linuxfoundation.org>
+Subject: [PATCH 6.1 004/139] ACPICA: Add AML_NO_OPERAND_RESOLVE flag to Timer
+Date: Wed, 20 Sep 2023 13:28:58 +0200
+Message-ID: <20230920112835.731881476@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,46 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Abhishek Mainkar <abmainkar@nvidia.com>
 
-[ Upstream commit fba360a047d5eeeb9d4b7c3a9b1c8308980ce9a6 ]
+[ Upstream commit 3a21ffdbc825e0919db9da0e27ee5ff2cc8a863e ]
 
-While technically some control frames like ACK are shorter and
-end after Address 1, such frames shouldn't be forwarded through
-wmediumd or similar userspace, so require the full 3-address
-header to avoid accessing invalid memory if shorter frames are
-passed in.
+ACPICA commit 90310989a0790032f5a0140741ff09b545af4bc5
 
-Reported-by: syzbot+b2645b5bf1512b81fa22@syzkaller.appspotmail.com
-Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+According to the ACPI specification 19.6.134, no argument is required to be passed for ASL Timer instruction. For taking care of no argument, AML_NO_OPERAND_RESOLVE flag is added to ASL Timer instruction opcode.
+
+When ASL timer instruction interpreted by ACPI interpreter, getting error. After adding AML_NO_OPERAND_RESOLVE flag to ASL Timer instruction opcode, issue is not observed.
+
+=============================================================
+UBSAN: array-index-out-of-bounds in acpica/dswexec.c:401:12 index -1 is out of range for type 'union acpi_operand_object *[9]'
+CPU: 37 PID: 1678 Comm: cat Not tainted
+6.0.0-dev-th500-6.0.y-1+bcf8c46459e407-generic-64k
+HW name: NVIDIA BIOS v1.1.1-d7acbfc-dirty 12/19/2022 Call trace:
+ dump_backtrace+0xe0/0x130
+ show_stack+0x20/0x60
+ dump_stack_lvl+0x68/0x84
+ dump_stack+0x18/0x34
+ ubsan_epilogue+0x10/0x50
+ __ubsan_handle_out_of_bounds+0x80/0x90
+ acpi_ds_exec_end_op+0x1bc/0x6d8
+ acpi_ps_parse_loop+0x57c/0x618
+ acpi_ps_parse_aml+0x1e0/0x4b4
+ acpi_ps_execute_method+0x24c/0x2b8
+ acpi_ns_evaluate+0x3a8/0x4bc
+ acpi_evaluate_object+0x15c/0x37c
+ acpi_evaluate_integer+0x54/0x15c
+ show_power+0x8c/0x12c [acpi_power_meter]
+
+Link: https://github.com/acpica/acpica/commit/90310989
+Signed-off-by: Abhishek Mainkar <abmainkar@nvidia.com>
+Signed-off-by: Bob Moore <robert.moore@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mac80211_hwsim.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/acpi/acpica/psopcode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index da5c355405f68..db70cef854bc4 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -4906,14 +4906,15 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 	frame_data_len = nla_len(info->attrs[HWSIM_ATTR_FRAME]);
- 	frame_data = (void *)nla_data(info->attrs[HWSIM_ATTR_FRAME]);
+diff --git a/drivers/acpi/acpica/psopcode.c b/drivers/acpi/acpica/psopcode.c
+index bef69e87a0a29..8c34c0ffb1d93 100644
+--- a/drivers/acpi/acpica/psopcode.c
++++ b/drivers/acpi/acpica/psopcode.c
+@@ -603,7 +603,7 @@ const struct acpi_opcode_info acpi_gbl_aml_op_info[AML_NUM_OPCODES] = {
  
-+	if (frame_data_len < sizeof(struct ieee80211_hdr_3addr) ||
-+	    frame_data_len > IEEE80211_MAX_DATA_LEN)
-+		goto err;
-+
- 	/* Allocate new skb here */
- 	skb = alloc_skb(frame_data_len, GFP_KERNEL);
- 	if (skb == NULL)
- 		goto err;
+ /* 7E */ ACPI_OP("Timer", ARGP_TIMER_OP, ARGI_TIMER_OP, ACPI_TYPE_ANY,
+ 			 AML_CLASS_EXECUTE, AML_TYPE_EXEC_0A_0T_1R,
+-			 AML_FLAGS_EXEC_0A_0T_1R),
++			 AML_FLAGS_EXEC_0A_0T_1R | AML_NO_OPERAND_RESOLVE),
  
--	if (frame_data_len > IEEE80211_MAX_DATA_LEN)
--		goto err;
--
- 	/* Copy the data */
- 	skb_put_data(skb, frame_data, frame_data_len);
+ /* ACPI 5.0 opcodes */
  
 -- 
 2.40.1
