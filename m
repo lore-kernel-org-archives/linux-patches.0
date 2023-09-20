@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88EA154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436A0C433C9;
-	Wed, 20 Sep 2023 12:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DCD154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D03AC433C7;
+	Wed, 20 Sep 2023 12:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212168;
-	bh=b4MSMyJh/b3Ho3pTP5ItMLMHcbfmY9YpwuBQ4lt0QMA=;
+	s=korg; t=1695212171;
+	bh=bef2PN6BHHOgAbccQa/KXuvVFU1C/nYm57oN9WFjhCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIHFAzQJ9JMTmptbPmRNOH+tdd/r4hVQu6MeZf7rIOwFeqwcqvHP2qZ2z6KbFyu1o
-	 Ucwz3Meux8a+GKfx3USZ+njGa93bXGos6LDID7CShId5Q2ZhD7jYjHYtW82DRWFClO
-	 XCPc0ewRgS9I+CwXFlkPKaUIxTddPfzJEG2So6cw=
+	b=CTOgtaRh12bZA69vTxTZa3azDEoWwRY5b+Pc6OxWA7O5p4vHE01D/mopTzMaL5nZc
+	 ghPgo+cLCt0Nq2+5CEZrxS24bScWnk3c9mN9ZM2v0xNd+511P685GF2SHU6dWRmfV9
+	 icUO05IGzr8jTZlmBJDGetuiKqZ92kf+9l3cPASc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Lee Jones <lee@kernel.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	linux-sh@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 4.19 177/273] backlight/lv5207lp: Compare against struct fb_info.device
-Date: Wed, 20 Sep 2023 13:30:17 +0200
-Message-ID: <20230920112851.986257747@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 160/273] HID: multitouch: Correct devm device reference for hidinput input_dev name
+Date: Wed, 20 Sep 2023 13:30:00 +0200
+Message-ID: <20230920112851.471804980@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -49,52 +42,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-commit 1ca8819320fd84e7d95b04e7668efc5f9fe9fa5c upstream.
+[ Upstream commit 4794394635293a3e74591351fff469cea7ad15a2 ]
 
-Struct lv5207lp_platform_data refers to a platform device within
-the Linux device hierarchy. The test in lv5207lp_backlight_check_fb()
-compares it against the fbdev device in struct fb_info.dev, which
-is different. Fix the test by comparing to struct fb_info.device.
+Reference the HID device rather than the input device for the devm
+allocation of the input_dev name. Referencing the input_dev would lead to a
+use-after-free when the input_dev was unregistered and subsequently fires a
+uevent that depends on the name. At the point of firing the uevent, the
+name would be freed by devres management.
 
-Fixes a bug in the backlight driver and prepares fbdev for making
-struct fb_info.dev optional.
+Use devm_kasprintf to simplify the logic for allocating memory and
+formatting the input_dev name string.
 
-v2:
-	* move renames into separate patch (Javier, Sam, Michael)
-
-Fixes: 82e5c40d88f9 ("backlight: Add Sanyo LV5207LP backlight driver")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-sh@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.12+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-6-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Maxime Ripard <mripard@kernel.org>
+Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
+Fixes: c08d46aa805b ("HID: multitouch: devm conversion")
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20230824061308.222021-3-sergeantsagara@protonmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/lv5207lp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/video/backlight/lv5207lp.c
-+++ b/drivers/video/backlight/lv5207lp.c
-@@ -75,7 +75,7 @@ static int lv5207lp_backlight_check_fb(s
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 4b1c223be9933..6411ee12c7a30 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1540,7 +1540,6 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app)
+ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
  {
- 	struct lv5207lp *lv = bl_get_data(backlight);
+ 	struct mt_device *td = hid_get_drvdata(hdev);
+-	char *name;
+ 	const char *suffix = NULL;
+ 	struct mt_report_data *rdata;
+ 	struct mt_application *mt_application = NULL;
+@@ -1594,15 +1593,9 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
+ 		break;
+ 	}
  
--	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->dev;
-+	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->device;
+-	if (suffix) {
+-		name = devm_kzalloc(&hi->input->dev,
+-				    strlen(hdev->name) + strlen(suffix) + 2,
+-				    GFP_KERNEL);
+-		if (name) {
+-			sprintf(name, "%s %s", hdev->name, suffix);
+-			hi->input->name = name;
+-		}
+-	}
++	if (suffix)
++		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
++						 "%s %s", hdev->name, suffix);
+ 
+ 	return 0;
  }
- 
- static const struct backlight_ops lv5207lp_backlight_ops = {
+-- 
+2.40.1
+
 
 
