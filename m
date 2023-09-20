@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E6918654
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E78C433C8;
-	Wed, 20 Sep 2023 11:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB9318654
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:47:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D89C433C7;
+	Wed, 20 Sep 2023 11:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210442;
-	bh=tv835qELQ2hvSyxjKfy7C3bCqi4hvz0PeA8FPF9X/BY=;
+	s=korg; t=1695210445;
+	bh=eMOcv7+FigV8v7J1M7u5sICV+lrZn8sYYpdYa8MG1Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nK86r6D7uPdO1djWUUgzzF3ajbHQTZWhk7SeNIkmAR2yH/ZdK5W16Ne0uwEv8Iwbv
-	 Koee1i2AyN3TfhYCz4IRThfo5X0FZmUJko2OyDiF3P2IzkZyr/gAtYOScBW+zhXCrE
-	 qjZbo9KTc+HyCEwObcM/QKAxCxQB+SVYPSyaOA/Q=
+	b=mK4i5WLniU/vEjs+lM6IHExZAoVeew1Vmde3RGVtVod/cF5pnn8ZafSpIcA3HCLXQ
+	 hWrr2Ej4526SNYJGdngOgWftZtvNH6lD3O7RG8HC6vB6LSOPxBH7PZGen9hDaWBYXf
+	 DH9lNXr4lNuPR0glnwmA6X1X32dAXneH0Z5hfi5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Austin Zheng <austin.zheng@amd.com>,
+	Leo Chen <sancchen@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 079/211] drm/amd/display: Use DTBCLK as refclk instead of DPREFCLK
-Date: Wed, 20 Sep 2023 13:28:43 +0200
-Message-ID: <20230920112848.253849360@linuxfoundation.org>
+Subject: [PATCH 6.5 080/211] drm/amd/display: Blocking invalid 420 modes on HDMI TMDS for DCN31
+Date: Wed, 20 Sep 2023 13:28:44 +0200
+Message-ID: <20230920112848.286128019@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -43,42 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Austin Zheng <austin.zheng@amd.com>
+From: Leo Chen <sancchen@amd.com>
 
-[ Upstream commit 4a30cc2bd281fa176a68b5305cd3695d636152ad ]
+[ Upstream commit 026a71babf48efb6b9884a3a66fa31aec9e1ea54 ]
 
-[Why]
-Flash of corruption observed when UCLK switching after transitioning
-from DTBCLK to DPREFCLK on subVP(DP) + subVP(HDMI) config
-Scenario where DPREFCLK is required instead of DTBCLK is not expected
+[Why & How]
+HDMI TMDS does not have ODM support. Filtering 420 modes that
+exceed the 4096 FMT limitation on DCN31 will resolve
+intermittent corruptions issues.
 
-[How]
-Always set the DTBCLK source as DTBCLK0
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Austin Zheng <austin.zheng@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c    | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-index 61ceff6bc0b19..921f58c0c729b 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-@@ -281,7 +281,8 @@ static void dccg32_set_dpstreamclk(
- 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
+index 43016c462251f..9d996d5fc3ffa 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_mode_vba_31.c
+@@ -4135,7 +4135,9 @@ void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				}
+ 				if (v->OutputFormat[k] == dm_420 && v->HActive[k] > DCN31_MAX_FMT_420_BUFFER_WIDTH
+ 						&& v->ODMCombineEnablePerState[i][k] != dm_odm_combine_mode_4to1) {
+-					if (v->HActive[k] / 2 > DCN31_MAX_FMT_420_BUFFER_WIDTH) {
++					if (v->Output[k] == dm_hdmi) {
++						FMTBufferExceeded = true;
++					} else if (v->HActive[k] / 2 > DCN31_MAX_FMT_420_BUFFER_WIDTH) {
+ 						v->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_4to1;
+ 						v->PlaneRequiredDISPCLK = v->PlaneRequiredDISPCLKWithODMCombine4To1;
  
- 	/* set the dtbclk_p source */
--	dccg32_set_dtbclk_p_src(dccg, src, otg_inst);
-+	/* always program refclk as DTBCLK. No use-case expected to require DPREFCLK as refclk */
-+	dccg32_set_dtbclk_p_src(dccg, DTBCLK0, otg_inst);
- 
- 	/* enabled to select one of the DTBCLKs for pipe */
- 	switch (dp_hpo_inst) {
 -- 
 2.40.1
 
