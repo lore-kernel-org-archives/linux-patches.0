@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F36E154AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F7BC433C9;
-	Wed, 20 Sep 2023 11:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15368154AF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CD3C433C9;
+	Wed, 20 Sep 2023 11:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210369;
-	bh=ACCrwhR7fJUrTq04osvUuDPa79B5z0eqkC3GCe+MOEY=;
+	s=korg; t=1695210371;
+	bh=e6e8dq/3eW3HKNsz9IvSo8lJc3NpCqZaZPB/sYR473M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hE0bOuhKv/eJDeLIgnEC755QefjjtQdPtzbpAX5QGXrMN8aX/+bWCGQ83c8e7NIgE
-	 m3ZYMLvfs+2E1qaoUDwUdEaq+BO2ZkjzQT9/2ExuhxhIBJk/JN2ry0OidJN1fhGjBs
-	 OZK6R9Z1CwJ8TPZM/Ljjze8oS/7FNnh8dtMbbhic=
+	b=jsXd9PcvtXKMXHGB9mkTwh252/eKOo9e5QehZL7YI+kdKYAjMaJ0c/3OCY+a0Dw8U
+	 eEBsd6IVIKuAcEuuMtl9+hhIfD4iIccHRbRjklN0K7vfHOeZhGq858o4/qTNHKkOEe
+	 CY2qZd4S3VfCX4T2BVLfURZvtMKq4cj/zSKZY+iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+be9c824e6f269d608288@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 051/211] wifi: mac80211: check S1G action frame size
-Date: Wed, 20 Sep 2023 13:28:15 +0200
-Message-ID: <20230920112847.364551552@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>,
+	GONG
+Subject: [PATCH 6.5 052/211] netfilter: ebtables: fix fortify warnings in size_entry_mwt()
+Date: Wed, 20 Sep 2023 13:28:16 +0200
+Message-ID: <20230920112847.395113349@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -34,41 +37,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit 19e4a47ee74718a22e963e8a647c8c3bfe8bb05c ]
+[ Upstream commit a7ed3465daa240bdf01a5420f64336fee879c09d ]
 
-Before checking the action code, check that it even
-exists in the frame.
+When compiling with gcc 13 and CONFIG_FORTIFY_SOURCE=y, the following
+warning appears:
 
-Reported-by: syzbot+be9c824e6f269d608288@syzkaller.appspotmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘size_entry_mwt’ at net/bridge/netfilter/ebtables.c:2118:2:
+./include/linux/fortify-string.h:592:25: error: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Werror=attribute-warning]
+  592 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The compiler is complaining:
+
+memcpy(&offsets[1], &entry->watchers_offset,
+                       sizeof(offsets) - sizeof(offsets[0]));
+
+where memcpy reads beyong &entry->watchers_offset to copy
+{watchers,target,next}_offset altogether into offsets[]. Silence the
+warning by wrapping these three up via struct_group().
+
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/uapi/linux/netfilter_bridge/ebtables.h | 14 ++++++++------
+ net/bridge/netfilter/ebtables.c                |  3 +--
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 0af2599c17e8d..e751cda5eef69 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -3734,6 +3734,10 @@ ieee80211_rx_h_action(struct ieee80211_rx_data *rx)
- 			break;
- 		goto queue;
- 	case WLAN_CATEGORY_S1G:
-+		if (len < offsetofend(typeof(*mgmt),
-+				      u.action.u.s1g.action_code))
-+			break;
-+
- 		switch (mgmt->u.action.u.s1g.action_code) {
- 		case WLAN_S1G_TWT_SETUP:
- 		case WLAN_S1G_TWT_TEARDOWN:
+diff --git a/include/uapi/linux/netfilter_bridge/ebtables.h b/include/uapi/linux/netfilter_bridge/ebtables.h
+index a494cf43a7552..b0caad82b6937 100644
+--- a/include/uapi/linux/netfilter_bridge/ebtables.h
++++ b/include/uapi/linux/netfilter_bridge/ebtables.h
+@@ -182,12 +182,14 @@ struct ebt_entry {
+ 	unsigned char sourcemsk[ETH_ALEN];
+ 	unsigned char destmac[ETH_ALEN];
+ 	unsigned char destmsk[ETH_ALEN];
+-	/* sizeof ebt_entry + matches */
+-	unsigned int watchers_offset;
+-	/* sizeof ebt_entry + matches + watchers */
+-	unsigned int target_offset;
+-	/* sizeof ebt_entry + matches + watchers + target */
+-	unsigned int next_offset;
++	__struct_group(/* no tag */, offsets, /* no attrs */,
++		/* sizeof ebt_entry + matches */
++		unsigned int watchers_offset;
++		/* sizeof ebt_entry + matches + watchers */
++		unsigned int target_offset;
++		/* sizeof ebt_entry + matches + watchers + target */
++		unsigned int next_offset;
++	);
+ 	unsigned char elems[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
+ };
+ 
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index 757ec46fc45a0..aa23479b20b2a 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -2115,8 +2115,7 @@ static int size_entry_mwt(const struct ebt_entry *entry, const unsigned char *ba
+ 		return ret;
+ 
+ 	offsets[0] = sizeof(struct ebt_entry); /* matches come first */
+-	memcpy(&offsets[1], &entry->watchers_offset,
+-			sizeof(offsets) - sizeof(offsets[0]));
++	memcpy(&offsets[1], &entry->offsets, sizeof(entry->offsets));
+ 
+ 	if (state->buf_kern_start) {
+ 		buf_start = state->buf_kern_start + state->buf_kern_offset;
 -- 
 2.40.1
 
