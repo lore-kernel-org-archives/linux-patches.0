@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1C42AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75271C433C8;
-	Wed, 20 Sep 2023 12:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC332AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D387C433C9;
+	Wed, 20 Sep 2023 12:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211271;
-	bh=cHDXbe4LHkdMeRZm0sGA91VbxxuhQf5JFXn+ejGZ9GA=;
+	s=korg; t=1695211274;
+	bh=uJD1ldlG28ZUgpcl3IYc3sOJe/N+CYv7l0khd38Aok8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tdqqcc+49wSKeWP9mbV1CZbmCHsmidCqx85qtDDV6SxvZ5Fp73sWZpTqVVOeS3cOS
-	 ixTwEnyXgJ65+FO9sxc9zHeGq29xScRpN+o9jbshVRbJPt8B2lbZ2NQPb+xB8xpDjB
-	 B7qaCowZKek7nNZ5HMXjZNczr/J8woRhvbLaB52g=
+	b=T8BzFkR8s4rpHwZDcZBoxNynvsbjWV+yr+0+sRKeDuv+W1Ky2A75kuhOYl/19NXHy
+	 l7ENA8IzSq6wY8tta0b11kKeFRK6SPXX9BzIwsG1d//cgNNqlLLgg7FAkuxsmvxGG3
+	 mFWrka3VWBz9nBn7pnIaA2aBImaQzZpGuUpB8lQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.14 032/186] udf: Check consistency of Space Bitmap Descriptor
-Date: Wed, 20 Sep 2023 13:28:55 +0200
-Message-ID: <20230920112838.097341316@linuxfoundation.org>
+Subject: [PATCH 4.14 033/186] udf: Handle error when adding extent to a file
+Date: Wed, 20 Sep 2023 13:28:56 +0200
+Message-ID: <20230920112838.134597082@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -39,86 +38,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Jan Kara <jack@suse.cz>
 
-commit 1e0d4adf17e7ef03281d7b16555e7c1508c8ed2d upstream.
+commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
 
-Bits, which are related to Bitmap Descriptor logical blocks,
-are not reset when buffer headers are allocated for them. As the
-result, these logical blocks can be treated as free and
-be used for other blocks.This can cause usage of one buffer header
-for several types of data. UDF issues WARNING in this situation:
+When adding extent to a file fails, so far we've silently squelshed the
+error. Make sure to propagate it up properly.
 
-WARNING: CPU: 0 PID: 2703 at fs/udf/inode.c:2014
-  __udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
-
-RIP: 0010:__udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
-Call Trace:
- udf_setup_indirect_aext+0x573/0x880 fs/udf/inode.c:1980
- udf_add_aext+0x208/0x2e0 fs/udf/inode.c:2067
- udf_insert_aext fs/udf/inode.c:2233 [inline]
- udf_update_extents fs/udf/inode.c:1181 [inline]
- inode_getblk+0x1981/0x3b70 fs/udf/inode.c:885
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-[JK: Somewhat cleaned up the boundary checks]
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/balloc.c |   31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -36,18 +36,41 @@ static int read_block_bitmap(struct supe
- 			     unsigned long bitmap_nr)
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -50,15 +50,15 @@ static int udf_update_inode(struct inode
+ static int udf_sync_inode(struct inode *inode);
+ static int udf_alloc_i_data(struct inode *inode, size_t size);
+ static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
+-static int8_t udf_insert_aext(struct inode *, struct extent_position,
+-			      struct kernel_lb_addr, uint32_t);
++static int udf_insert_aext(struct inode *, struct extent_position,
++			   struct kernel_lb_addr, uint32_t);
+ static void udf_split_extents(struct inode *, int *, int, int,
+ 			      struct kernel_long_ad *, int *);
+ static void udf_prealloc_extents(struct inode *, int, int,
+ 				 struct kernel_long_ad *, int *);
+ static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
+-static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
+-			       int, struct extent_position *);
++static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
++			      int, struct extent_position *);
+ static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
+ 
+ static void __udf_clear_extent_cache(struct inode *inode)
+@@ -883,7 +883,9 @@ static sector_t inode_getblk(struct inod
+ 	/* write back the new extents, inserting new extents if the new number
+ 	 * of extents is greater than the old number, and deleting extents if
+ 	 * the new number of extents is less than the old number */
+-	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
++	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
++	if (*err < 0)
++		goto out_free;
+ 
+ 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
+ 				iinfo->i_location.partitionReferenceNum, 0);
+@@ -1151,21 +1153,30 @@ static void udf_merge_extents(struct ino
+ 	}
+ }
+ 
+-static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
+-			       int startnum, int endnum,
+-			       struct extent_position *epos)
++static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
++			      int startnum, int endnum,
++			      struct extent_position *epos)
  {
- 	struct buffer_head *bh = NULL;
--	int retval = 0;
-+	int i;
-+	int max_bits, off, count;
- 	struct kernel_lb_addr loc;
+ 	int start = 0, i;
+ 	struct kernel_lb_addr tmploc;
+ 	uint32_t tmplen;
++	int err;
  
- 	loc.logicalBlockNum = bitmap->s_extPosition;
- 	loc.partitionReferenceNum = UDF_SB(sb)->s_partition;
- 
- 	bh = udf_tread(sb, udf_get_lb_pblock(sb, &loc, block));
-+	bitmap->s_block_bitmap[bitmap_nr] = bh;
- 	if (!bh)
--		retval = -EIO;
-+		return -EIO;
- 
--	bitmap->s_block_bitmap[bitmap_nr] = bh;
--	return retval;
-+	/* Check consistency of Space Bitmap buffer. */
-+	max_bits = sb->s_blocksize * 8;
-+	if (!bitmap_nr) {
-+		off = sizeof(struct spaceBitmapDesc) << 3;
-+		count = min(max_bits - off, bitmap->s_nr_groups);
-+	} else {
-+		/*
-+		 * Rough check if bitmap number is too big to have any bitmap
-+		 * blocks reserved.
-+		 */
-+		if (bitmap_nr >
-+		    (bitmap->s_nr_groups >> (sb->s_blocksize_bits + 3)) + 2)
-+			return 0;
-+		off = 0;
-+		count = bitmap->s_nr_groups - bitmap_nr * max_bits +
-+				(sizeof(struct spaceBitmapDesc) << 3);
-+		count = min(count, max_bits);
-+	}
-+
-+	for (i = 0; i < count; i++)
-+		if (udf_test_bit(i + off, bh->b_data))
-+			return -EFSCORRUPTED;
+ 	if (startnum > endnum) {
+ 		for (i = 0; i < (startnum - endnum); i++)
+ 			udf_delete_aext(inode, *epos);
+ 	} else if (startnum < endnum) {
+ 		for (i = 0; i < (endnum - startnum); i++) {
+-			udf_insert_aext(inode, *epos, laarr[i].extLocation,
+-					laarr[i].extLength);
++			err = udf_insert_aext(inode, *epos,
++					      laarr[i].extLocation,
++					      laarr[i].extLength);
++			/*
++			 * If we fail here, we are likely corrupting the extent
++			 * list and leaking blocks. At least stop early to
++			 * limit the damage.
++			 */
++			if (err < 0)
++				return err;
+ 			udf_next_aext(inode, epos, &laarr[i].extLocation,
+ 				      &laarr[i].extLength, 1);
+ 			start++;
+@@ -1177,6 +1188,7 @@ static void udf_update_extents(struct in
+ 		udf_write_aext(inode, epos, &laarr[i].extLocation,
+ 			       laarr[i].extLength, 1);
+ 	}
 +	return 0;
  }
  
- static int __load_block_bitmap(struct super_block *sb,
+ struct buffer_head *udf_bread(struct inode *inode, int block,
+@@ -2172,12 +2184,13 @@ int8_t udf_current_aext(struct inode *in
+ 	return etype;
+ }
+ 
+-static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
+-			      struct kernel_lb_addr neloc, uint32_t nelen)
++static int udf_insert_aext(struct inode *inode, struct extent_position epos,
++			   struct kernel_lb_addr neloc, uint32_t nelen)
+ {
+ 	struct kernel_lb_addr oeloc;
+ 	uint32_t oelen;
+ 	int8_t etype;
++	int err;
+ 
+ 	if (epos.bh)
+ 		get_bh(epos.bh);
+@@ -2187,10 +2200,10 @@ static int8_t udf_insert_aext(struct ino
+ 		neloc = oeloc;
+ 		nelen = (etype << 30) | oelen;
+ 	}
+-	udf_add_aext(inode, &epos, &neloc, nelen, 1);
++	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
+ 	brelse(epos.bh);
+ 
+-	return (nelen >> 30);
++	return err;
+ }
+ 
+ int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
 
 
