@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E7130FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807DAC433C7;
-	Wed, 20 Sep 2023 12:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C364D30FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D02C433C8;
+	Wed, 20 Sep 2023 12:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212470;
-	bh=fqo+nnr+B6VTFziIEgluQh9devR26/3V8GtjcLnGSMA=;
+	s=korg; t=1695212473;
+	bh=dnBacza4/GGM/zU/hL/cfp4HG8XcPthMn66gPcw+pjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pTIKP5KH3HJWYei/vfSUyJ4w/1vsYOpHoz0YeRoe3I6V1Rmi1JIT+rZCCtWisa04U
-	 IKJ4C00sNvyG9b0HgmO15OasKOg+zEasonlAU8aOyQwFln1OLTI88g53K4JI5eTPl3
-	 RK9njwlyoU+A7pmy551t5jVyu05A3TTlvj/k8mf4=
+	b=0edc9zQAL+MdXy5nDWTGrcnRPBv8AnihywOhVktF4x3xInrt9X+NBJwvnJjaRvnpe
+	 wR73Gsm3PEaUoYorQr1GTZ3yCD548fKYcgAZOsH65nictoO45ZhcwQReVn8lRR5Bgc
+	 8X/OwNsPwZ7i4bZ94QXMBTMuxUBW5shdHTWWLfZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/83] wifi: ath9k: fix fortify warnings
-Date: Wed, 20 Sep 2023 13:31:04 +0200
-Message-ID: <20230920112827.240504993@linuxfoundation.org>
+Subject: [PATCH 5.10 15/83] wifi: ath9k: fix printk specifier
+Date: Wed, 20 Sep 2023 13:31:05 +0200
+Message-ID: <20230920112827.282173183@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -43,92 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit 810e41cebb6c6e394f2068f839e1a3fc745a5dcc ]
+[ Upstream commit 061115fbfb2ce5870c9a004d68dc63138c07c782 ]
 
-When compiling with gcc 13.1 and CONFIG_FORTIFY_SOURCE=y,
-I've noticed the following:
+Smatch reports:
 
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘ath_tx_complete_aggr’ at drivers/net/wireless/ath/ath9k/xmit.c:556:4,
-    inlined from ‘ath_tx_process_buffer’ at drivers/net/wireless/ath/ath9k/xmit.c:773:3:
-./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  529 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ath_pci_probe() warn: argument 4 to %lx specifier is cast from pointer
+ath_ahb_probe() warn: argument 4 to %lx specifier is cast from pointer
 
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘ath_tx_count_frames’ at drivers/net/wireless/ath/ath9k/xmit.c:473:3,
-    inlined from ‘ath_tx_complete_aggr’ at drivers/net/wireless/ath/ath9k/xmit.c:572:2,
-    inlined from ‘ath_tx_process_buffer’ at drivers/net/wireless/ath/ath9k/xmit.c:773:3:
-./include/linux/fortify-string.h:529:25: warning: call to ‘__read_overflow2_field’
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  529 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fix it by modifying %lx to %p in the printk format string.
 
-In both cases, the compiler complains on:
+Note that with this change, the pointer address will be printed as a
+hashed value by default. This is appropriate because the kernel
+should not leak kernel pointers to user space in an informational
+message. If someone wants to see the real address for debugging
+purposes, this can be achieved with the no_hash_pointers kernel option.
 
-memcpy(ba, &ts->ba_low, WME_BA_BMP_SIZE >> 3);
-
-which is the legal way to copy both 'ba_low' and following 'ba_high'
-members of 'struct ath_tx_status' at once (that is, issue one 8-byte
-'memcpy()' for two 4-byte fields). Since the fortification logic seems
-interprets this trick as an attempt to overread 4-byte 'ba_low', silence
-relevant warnings by using the convenient 'struct_group()' quirk.
-
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230620080855.396851-2-dmantipov@yandex.ru
+Link: https://lore.kernel.org/r/20230723040403.296723-1-dzm91@hust.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/mac.h  | 6 ++++--
- drivers/net/wireless/ath/ath9k/xmit.c | 4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/ahb.c | 4 ++--
+ drivers/net/wireless/ath/ath9k/pci.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/mac.h b/drivers/net/wireless/ath/ath9k/mac.h
-index fd6aa49adadfe..9b00e77a6fc3c 100644
---- a/drivers/net/wireless/ath/ath9k/mac.h
-+++ b/drivers/net/wireless/ath/ath9k/mac.h
-@@ -113,8 +113,10 @@ struct ath_tx_status {
- 	u8 qid;
- 	u16 desc_id;
- 	u8 tid;
--	u32 ba_low;
--	u32 ba_high;
-+	struct_group(ba,
-+		u32 ba_low;
-+		u32 ba_high;
-+	);
- 	u32 evm0;
- 	u32 evm1;
- 	u32 evm2;
-diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
-index 6555abf02f18b..84c68aefc171a 100644
---- a/drivers/net/wireless/ath/ath9k/xmit.c
-+++ b/drivers/net/wireless/ath/ath9k/xmit.c
-@@ -421,7 +421,7 @@ static void ath_tx_count_frames(struct ath_softc *sc, struct ath_buf *bf,
- 	isaggr = bf_isaggr(bf);
- 	if (isaggr) {
- 		seq_st = ts->ts_seqnum;
--		memcpy(ba, &ts->ba_low, WME_BA_BMP_SIZE >> 3);
-+		memcpy(ba, &ts->ba, WME_BA_BMP_SIZE >> 3);
- 	}
+diff --git a/drivers/net/wireless/ath/ath9k/ahb.c b/drivers/net/wireless/ath/ath9k/ahb.c
+index cdefb8e2daf14..05fb76a4e144e 100644
+--- a/drivers/net/wireless/ath/ath9k/ahb.c
++++ b/drivers/net/wireless/ath/ath9k/ahb.c
+@@ -136,8 +136,8 @@ static int ath_ahb_probe(struct platform_device *pdev)
  
- 	while (bf) {
-@@ -504,7 +504,7 @@ static void ath_tx_complete_aggr(struct ath_softc *sc, struct ath_txq *txq,
- 	if (isaggr && txok) {
- 		if (ts->ts_flags & ATH9K_TX_BA) {
- 			seq_st = ts->ts_seqnum;
--			memcpy(ba, &ts->ba_low, WME_BA_BMP_SIZE >> 3);
-+			memcpy(ba, &ts->ba, WME_BA_BMP_SIZE >> 3);
- 		} else {
- 			/*
- 			 * AR5416 can become deaf/mute when BA
+ 	ah = sc->sc_ah;
+ 	ath9k_hw_name(ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)mem, irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, mem, irq);
+ 
+ 	return 0;
+ 
+diff --git a/drivers/net/wireless/ath/ath9k/pci.c b/drivers/net/wireless/ath/ath9k/pci.c
+index cff9af3af38d5..4f90c304d1214 100644
+--- a/drivers/net/wireless/ath/ath9k/pci.c
++++ b/drivers/net/wireless/ath/ath9k/pci.c
+@@ -994,8 +994,8 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	sc->sc_ah->msi_reg = 0;
+ 
+ 	ath9k_hw_name(sc->sc_ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)sc->mem, pdev->irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, sc->mem, pdev->irq);
+ 
+ 	return 0;
+ 
 -- 
 2.40.1
 
