@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A5C28698
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094C0C433CA;
-	Wed, 20 Sep 2023 12:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41359154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD100C433C9;
+	Wed, 20 Sep 2023 12:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211393;
-	bh=syT6aFtu9wWyQOOCMGDzr2r/jzxUbcvkwl2bkQfXy1M=;
+	s=korg; t=1695211396;
+	bh=/LCfl2yKeHPgBQrdIiIMiKC11anZNDlv9jGP+fSa9R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoNKteIxNByAHEhmgUkHR1p/7oViwgdzL26wMzJ2k0h8/cFxvdJ/LIa6s+ONHh7R2
-	 hYkRib1pm2z7X/nyCZCb8ai9DZXbXihrDMP1czJ4TKXnUhsVrCuWmSbh6KEJ//8NIR
-	 hyLpHlcJU9OxHnK3VU4U8p8KUKUDtES+mVkMOEwQ=
+	b=Plc7wGGGcxMCm/PuK1EZKNee2kAHiqDs8r472+JvSi1GG77xSlKHQfJZN4qckleTh
+	 6hznIIyXAbgT2nvNWx/tlL5r9MrGWNDTvjnFhHrJE//lBSqQaewW4lDMewiD7jUHUW
+	 Og+6FnKV+k1Jn6DpMU8mADPZq6viMzbrq6sTZqTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kalle Valo <kvalo@kernel.org>,
+	Wang Ming <machel@vivo.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 050/186] wifi: mwifiex: avoid possible NULL skb pointer dereference
-Date: Wed, 20 Sep 2023 13:29:13 +0200
-Message-ID: <20230920112838.724936923@linuxfoundation.org>
+Subject: [PATCH 4.14 051/186] wifi: ath9k: use IS_ERR() with debugfs_create_dir()
+Date: Wed, 20 Sep 2023 13:29:14 +0200
+Message-ID: <20230920112838.756265961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -35,54 +35,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit 35a7a1ce7c7d61664ee54f5239a1f120ab95a87e ]
+[ Upstream commit 1e4134610d93271535ecf900a676e1f094e9944c ]
 
-In 'mwifiex_handle_uap_rx_forward()', always check the value
-returned by 'skb_copy()' to avoid potential NULL pointer
-dereference in 'mwifiex_uap_queue_bridged_pkt()', and drop
-original skb in case of copying failure.
+The debugfs_create_dir() function returns error pointers,
+it never returns NULL. Most incorrect error checks were fixed,
+but the one in ath9k_htc_init_debug() was forgotten.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix the remaining error check.
 
-Fixes: 838e4f449297 ("mwifiex: improve uAP RX handling")
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230814095041.16416-1-dmantipov@yandex.ru
+Fixes: e5facc75fa91 ("ath9k_htc: Cleanup HTC debugfs")
+Signed-off-by: Wang Ming <machel@vivo.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230713030358.12379-1-machel@vivo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index 90c07722c25f8..a887d7a9b7c03 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -266,7 +266,15 @@ int mwifiex_handle_uap_rx_forward(struct mwifiex_private *priv,
+diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
+index dc79afd7e151b..b711b2e1ce93e 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
+@@ -491,7 +491,7 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
  
- 	if (is_multicast_ether_addr(ra)) {
- 		skb_uap = skb_copy(skb, GFP_ATOMIC);
--		mwifiex_uap_queue_bridged_pkt(priv, skb_uap);
-+		if (likely(skb_uap)) {
-+			mwifiex_uap_queue_bridged_pkt(priv, skb_uap);
-+		} else {
-+			mwifiex_dbg(adapter, ERROR,
-+				    "failed to copy skb for uAP\n");
-+			priv->stats.rx_dropped++;
-+			dev_kfree_skb_any(skb);
-+			return -1;
-+		}
- 	} else {
- 		if (mwifiex_get_sta_entry(priv, ra)) {
- 			/* Requeue Intra-BSS packet */
+ 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
+ 					     priv->hw->wiphy->debugfsdir);
+-	if (!priv->debug.debugfs_phy)
++	if (IS_ERR(priv->debug.debugfs_phy))
+ 		return -ENOMEM;
+ 
+ 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
 -- 
 2.40.1
 
