@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B4A30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86014C433C8;
-	Wed, 20 Sep 2023 12:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D8330FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2894DC433C8;
+	Wed, 20 Sep 2023 12:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212939;
-	bh=ASef/PW+xQH/Sn+29Pr+4V7uR7W+XHWrLCvQ2seq4vg=;
+	s=korg; t=1695212942;
+	bh=Tei3u3hqLGpNkxROhihwM+04E3xzT1OTBo9gGJsvkXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+ZCzV4WnHQTDBPbckMHkuDKpP+egg7fOpSJv9WGNXRpAN/hTJIS3NJnINY49t6PB
-	 iO4z1n1W2w03CoMX83Y27Nkfkb5Z9jQsqnKeVlOBUwHHMfPVtkduAzojZvwb1LbVuZ
-	 Acplu0QcD7T3JR8IgE/+LLOuNCSzL/qH4VLiWW7w=
+	b=dtwV7VRr3R4+B9PIo8V+QSnD317aIayjG1brABOfuziIl5iiaM1d/1DP9wytN+2Xx
+	 ZZOy57WFzsUlPla2++l9ZaZe5S+WhHips1KKjdHUA5p/3Z8z9l/i2EfazAwsT7bdKX
+	 nbAuEsQ2uljfALKUq812mCvyRbxV0LXg4pPaUAZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/367] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
-Date: Wed, 20 Sep 2023 13:27:51 +0200
-Message-ID: <20230920112900.973556703@linuxfoundation.org>
+Subject: [PATCH 5.4 103/367] ARM: dts: s5pv210: use defines for IRQ flags in SMDKV210
+Date: Wed, 20 Sep 2023 13:28:00 +0200
+Message-ID: <20230920112901.242641586@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -34,70 +33,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
+[ Upstream commit c272f1cc9492d61dac362d2064ec41ca97fcb1e2 ]
 
-There is no such trigger documented or implemented in Linux. It was a
-copy & paste mistake.
+Replace hard-coded flags with defines for readability.  No functional
+change.
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
-        'default-off' does not match '^cpu[0-9]*$'
-        'default-off' does not match '^hci[0-9]+-power$'
-        'default-off' does not match '^mmc[0-9]+$'
-        'default-off' does not match '^phy[0-9]+tx$'
-        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
-
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20200907161141.31034-19-krzk@kernel.org
+Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
- 2 files changed, 3 deletions(-)
+ arch/arm/boot/dts/s5pv210-smdkv210.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 57ca1cfaecd8e..02957850c88a8 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -26,7 +26,6 @@ leds {
- 		wlan {
- 			label = "bcm53xx:blue:wlan";
- 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
--			linux,default-trigger = "default-off";
- 		};
+diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+index 1f20622da7194..1e1570d66d890 100644
+--- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
++++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+@@ -15,6 +15,7 @@
+  */
  
- 		system {
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 2e1a7e382cb7a..d68e9dbebf26b 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -26,7 +26,6 @@ leds {
- 		5ghz {
- 			label = "bcm53xx:blue:5ghz";
- 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
+ /dts-v1/;
++#include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/input/input.h>
+ #include "s5pv210.dtsi"
  
- 		system {
-@@ -42,7 +41,6 @@ pcie0_leds {
- 		2ghz {
- 			label = "bcm53xx:blue:2ghz";
- 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
+@@ -42,7 +43,7 @@ ethernet@18000000 {
+ 		compatible = "davicom,dm9000";
+ 		reg = <0xA8000000 0x2 0xA8000002 0x2>;
+ 		interrupt-parent = <&gph1>;
+-		interrupts = <1 4>;
++		interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
+ 		local-mac-address = [00 00 de ad be ef];
+ 		davicom,no-eeprom;
  	};
- 
 -- 
 2.40.1
 
