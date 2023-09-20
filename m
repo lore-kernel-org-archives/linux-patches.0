@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C19168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC68C433C8;
-	Wed, 20 Sep 2023 12:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C2E15AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D46C433C8;
+	Wed, 20 Sep 2023 12:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213474;
-	bh=FwqdeRgHPAjFXInKwcrnlj5729dPqStP4kK0GWghxBM=;
+	s=korg; t=1695213476;
+	bh=Z/jdZZsworErR6ZoEqqUM9Xrquvk8eQOUz61ldsDV3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1hnubG1n9wQGlvIEwN5P9QF/6pB+CeCM7/A5tTueKhiLUUqu/ffJaK0EjkRqrSG/
-	 5Lu4DvrHwAKbcFWOiijwCiOisC18eVFSTIFqdCoGMtxVof8pGuMp8g/EiZ0OJV9wKc
-	 mWzUrcbz3EoO3lX89wHrb8wqnTwKlle3rValD9yQ=
+	b=ZkZcKfQ6fJ7HMqgNxETrffpVgZvBu8lUUdhBgvuZC/nSiexu+AbTQJpeZGPaDN7Lr
+	 C7dgtnQx0fOFfPgdsqgaYj3/G4hqhq416nYqlmZFXPLnduzCpQtgxxQ4gpiUN6W+vf
+	 1FCJU/oIBH8TAmB6h78zXsv7Uutb1sXf/KxkHfuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.4 251/367] NFSv4/pnfs: minor fix for cleanup path in nfs4_get_device_info
-Date: Wed, 20 Sep 2023 13:30:28 +0200
-Message-ID: <20230920112905.053999118@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.4 252/367] kconfig: fix possible buffer overflow
+Date: Wed, 20 Sep 2023 13:30:29 +0200
+Message-ID: <20230920112905.077676876@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,35 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-commit 96562c45af5c31b89a197af28f79bfa838fb8391 upstream.
+[ Upstream commit a3b7039bb2b22fcd2ad20d59c00ed4e606ce3754 ]
 
-It is an almost improbable error case but when page allocating loop in
-nfs4_get_device_info() fails then we should only free the already
-allocated pages, as __free_page() can't deal with NULL arguments.
+Buffer 'new_argv' is accessed without bound check after accessing with
+bound check via 'new_argc' index.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e298f3b49def ("kconfig: add built-in function support")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/kconfig/preprocess.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nfs/pnfs_dev.c
-+++ b/fs/nfs/pnfs_dev.c
-@@ -152,7 +152,7 @@ nfs4_get_device_info(struct nfs_server *
- 		set_bit(NFS_DEVICEID_NOCACHE, &d->flags);
+diff --git a/scripts/kconfig/preprocess.c b/scripts/kconfig/preprocess.c
+index 748da578b418c..d1f5bcff4b62d 100644
+--- a/scripts/kconfig/preprocess.c
++++ b/scripts/kconfig/preprocess.c
+@@ -396,6 +396,9 @@ static char *eval_clause(const char *str, size_t len, int argc, char *argv[])
  
- out_free_pages:
--	for (i = 0; i < max_pages; i++)
-+	while (--i >= 0)
- 		__free_page(pages[i]);
- 	kfree(pages);
- out_free_pdev:
+ 		p++;
+ 	}
++
++	if (new_argc >= FUNCTION_MAX_ARGS)
++		pperror("too many function arguments");
+ 	new_argv[new_argc++] = prev;
+ 
+ 	/*
+-- 
+2.40.1
+
 
 
