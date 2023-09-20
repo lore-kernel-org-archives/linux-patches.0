@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5AE30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB548C433C9;
-	Wed, 20 Sep 2023 12:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2065C30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:27:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F146C433C7;
+	Wed, 20 Sep 2023 12:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212864;
-	bh=405JFM+RB1RBYEWjwxsbnJmV7oAHnYtTYGD7slnJw8A=;
+	s=korg; t=1695212867;
+	bh=Zi6BEGV7YyeqlKMKDRRYVaCAOTxPti04IHSU/6t5Umo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13akY1w5lgxjd5fyAg5gHl7dcc4xvuxtUNzfIWlXgK240I9p5GJmbYXXfi7ZJxajs
-	 upeOiFHyNFyLENdSTrJ8/Z3s9p9GKDjnLg+Z13py1+TvoBUE/5lyT6hfKVAnNYMgp7
-	 ds571BvE6NzKhTA4txPZEJzuDf5YDFKbQ0k9mLdI=
+	b=B0+7njSpqx+bSzLLcKfB0j768QiaFCBuA5dNR9YTzgY0+Pu4HuquoexeyuDZpjiyb
+	 gHSz9KsEGq0zjngu5jkI+AfbKchjYgdVO0iYwA+jHw6r4YetGZenuv5cBYc2NIIWFg
+	 aNb6V9iQ2t6Kf1ZsTIu+iyECI+bb95yUO+QG6bHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Yan Zhai <yan@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/367] lwt: Check LWTUNNEL_XMIT_CONTINUE strictly
-Date: Wed, 20 Sep 2023 13:27:31 +0200
-Message-ID: <20230920112900.442730402@linuxfoundation.org>
+Subject: [PATCH 5.4 075/367] fs: ocfs2: namei: check return value of ocfs2_add_entry()
+Date: Wed, 20 Sep 2023 13:27:32 +0200
+Message-ID: <20230920112900.473368466@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,76 +48,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit a171fbec88a2c730b108c7147ac5e7b2f5a02b47 ]
+[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
 
-LWTUNNEL_XMIT_CONTINUE is implicitly assumed in ip(6)_finish_output2,
-such that any positive return value from a xmit hook could cause
-unexpected continue behavior, despite that related skb may have been
-freed. This could be error-prone for future xmit hook ops. One of the
-possible errors is to return statuses of dst_output directly.
+Process result of ocfs2_add_entry() in case we have an error
+value.
 
-To make the code safer, redefine LWTUNNEL_XMIT_CONTINUE value to
-distinguish from dst_output statuses and check the continue
-condition explicitly.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/96b939b85eda00e8df4f7c080f770970a4c5f698.1692326837.git.yan@cloudflare.com
+Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/lwtunnel.h | 5 ++++-
- net/ipv4/ip_output.c   | 2 +-
- net/ipv6/ip6_output.c  | 2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ fs/ocfs2/namei.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
-index 5d6c5b1fc6955..ed1cd431e2b3b 100644
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -16,9 +16,12 @@
- #define LWTUNNEL_STATE_INPUT_REDIRECT	BIT(1)
- #define LWTUNNEL_STATE_XMIT_REDIRECT	BIT(2)
- 
-+/* LWTUNNEL_XMIT_CONTINUE should be distinguishable from dst_output return
-+ * values (NET_XMIT_xxx and NETDEV_TX_xxx in linux/netdevice.h) for safety.
-+ */
- enum {
- 	LWTUNNEL_XMIT_DONE,
--	LWTUNNEL_XMIT_CONTINUE,
-+	LWTUNNEL_XMIT_CONTINUE = 0x100,
- };
- 
- 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 08ccb501ff0cc..bf7c2333bc236 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -222,7 +222,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
- 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
- 		int res = lwtunnel_xmit(skb);
- 
--		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
-+		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index fb284bf3aed15..cd6a214398266 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -1524,6 +1524,10 @@ static int ocfs2_rename(struct inode *old_dir,
+ 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
+ 					 OCFS2_I(old_inode)->ip_blkno,
+ 					 new_dir_bh, &target_insert);
++		if (status < 0) {
++			mlog_errno(status);
++			goto bail;
++		}
  	}
  
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 8231a7a3dd035..816275b2135fe 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -130,7 +130,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
- 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
- 		int res = lwtunnel_xmit(skb);
- 
--		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
-+		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
- 	}
- 
+ 	old_inode->i_ctime = current_time(old_inode);
 -- 
 2.40.1
 
