@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBCF18658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A3EC433C7;
-	Wed, 20 Sep 2023 11:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F48518658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180A9C433C8;
+	Wed, 20 Sep 2023 11:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210548;
-	bh=N905809uA/vQ8nVR4hkN2JcTTbVLm6sYM/+q45008lk=;
+	s=korg; t=1695210551;
+	bh=MrYEvo+AAjxAm+4PgmKHTij1iMohby6u7x10dLyNJSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRfthmVfa875CUJ0zIAqLl71ID9BD5BRWasf3g/up3eqw2O2sifgRqZ47hV2vzAkd
-	 X7k/EmqMVqfCzL4jOMVE2bTqT0MHunp4uqwqG27W1gt0+DSkD4WdrYRxQ9m0Z6q7xr
-	 PoYjDJw97Lzl/kt2d+tCmyBbQzD/QZDRriYq3gjk=
+	b=tvTndUGxDiAueuv53pmxIapkDweCZM5FWHnbfnQYuA59XuhUTfGT+Zi/x7yZod9KU
+	 V7u01BSmX1c3GWL1BgMznD0+Um6aKsIYB1/Ieb6JkF2erC7gaAxy1ylE8FKCkfg61Q
+	 h4XVHempuFB2mHqtGC5y6tUe/SaGT13ssserMs6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Konstantin Shelekhin <k.shelekhin@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 117/211] tools: iio: iio_generic_buffer: Fix some integer type and calculation
-Date: Wed, 20 Sep 2023 13:29:21 +0200
-Message-ID: <20230920112849.422339721@linuxfoundation.org>
+Subject: [PATCH 6.5 118/211] scsi: target: iscsi: Fix buffer overflow in lio_target_nacl_info_show()
+Date: Wed, 20 Sep 2023 13:29:22 +0200
+Message-ID: <20230920112849.454133922@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,71 +40,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Mi <michenyuan@huawei.com>
+From: Konstantin Shelekhin <k.shelekhin@yadro.com>
 
-[ Upstream commit 49d736313d0975ddeb156f4f59801da833f78b30 ]
+[ Upstream commit 801f287c93ff95582b0a2d2163f12870a2f076d4 ]
 
-In function size_from_channelarray(), the return value 'bytes' is defined
-as int type. However, the calcution of 'bytes' in this function is designed
-to use the unsigned int type. So it is necessary to change 'bytes' type to
-unsigned int to avoid integer overflow.
+The function lio_target_nacl_info_show() uses sprintf() in a loop to print
+details for every iSCSI connection in a session without checking for the
+buffer length. With enough iSCSI connections it's possible to overflow the
+buffer provided by configfs and corrupt the memory.
 
-The size_from_channelarray() is called in main() function, its return value
-is directly multipled by 'buf_len' and then used as the malloc() parameter.
-The 'buf_len' is completely controllable by user, thus a multiplication
-overflow may occur here. This could allocate an unexpected small area.
+This patch replaces sprintf() with sysfs_emit_at() that checks for buffer
+boundries.
 
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Link: https://lore.kernel.org/r/20230725092407.62545-1-michenyuan@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Konstantin Shelekhin <k.shelekhin@yadro.com>
+Link: https://lore.kernel.org/r/20230722152657.168859-2-k.shelekhin@yadro.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/target/iscsi/iscsi_target_configfs.c | 54 ++++++++++----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index f8deae4e26a15..44bbf80f0cfdd 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -51,9 +51,9 @@ enum autochan {
-  * Has the side effect of filling the channels[i].location values used
-  * in processing the buffer output.
-  **/
--static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
-+static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
- {
--	int bytes = 0;
-+	unsigned int bytes = 0;
- 	int i = 0;
+diff --git a/drivers/target/iscsi/iscsi_target_configfs.c b/drivers/target/iscsi/iscsi_target_configfs.c
+index 5d0f51822414e..c142a67dc7cc2 100644
+--- a/drivers/target/iscsi/iscsi_target_configfs.c
++++ b/drivers/target/iscsi/iscsi_target_configfs.c
+@@ -533,102 +533,102 @@ static ssize_t lio_target_nacl_info_show(struct config_item *item, char *page)
+ 	spin_lock_bh(&se_nacl->nacl_sess_lock);
+ 	se_sess = se_nacl->nacl_sess;
+ 	if (!se_sess) {
+-		rb += sprintf(page+rb, "No active iSCSI Session for Initiator"
++		rb += sysfs_emit_at(page, rb, "No active iSCSI Session for Initiator"
+ 			" Endpoint: %s\n", se_nacl->initiatorname);
+ 	} else {
+ 		sess = se_sess->fabric_sess_ptr;
  
- 	while (i < num_channels) {
-@@ -348,7 +348,7 @@ int main(int argc, char **argv)
- 	ssize_t read_size;
- 	int dev_num = -1, trig_num = -1;
- 	char *buffer_access = NULL;
--	int scan_size;
-+	unsigned int scan_size;
- 	int noevents = 0;
- 	int notrigger = 0;
- 	char *dummy;
-@@ -674,7 +674,16 @@ int main(int argc, char **argv)
- 	}
+-		rb += sprintf(page+rb, "InitiatorName: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorName: %s\n",
+ 			sess->sess_ops->InitiatorName);
+-		rb += sprintf(page+rb, "InitiatorAlias: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorAlias: %s\n",
+ 			sess->sess_ops->InitiatorAlias);
  
- 	scan_size = size_from_channelarray(channels, num_channels);
--	data = malloc(scan_size * buf_len);
-+
-+	size_t total_buf_len = scan_size * buf_len;
-+
-+	if (scan_size > 0 && total_buf_len / scan_size != buf_len) {
-+		ret = -EFAULT;
-+		perror("Integer overflow happened when calculate scan_size * buf_len");
-+		goto error;
-+	}
-+
-+	data = malloc(total_buf_len);
- 	if (!data) {
- 		ret = -ENOMEM;
- 		goto error;
+-		rb += sprintf(page+rb,
++		rb += sysfs_emit_at(page, rb,
+ 			      "LIO Session ID: %u   ISID: 0x%6ph  TSIH: %hu  ",
+ 			      sess->sid, sess->isid, sess->tsih);
+-		rb += sprintf(page+rb, "SessionType: %s\n",
++		rb += sysfs_emit_at(page, rb, "SessionType: %s\n",
+ 				(sess->sess_ops->SessionType) ?
+ 				"Discovery" : "Normal");
+-		rb += sprintf(page+rb, "Session State: ");
++		rb += sysfs_emit_at(page, rb, "Session State: ");
+ 		switch (sess->session_state) {
+ 		case TARG_SESS_STATE_FREE:
+-			rb += sprintf(page+rb, "TARG_SESS_FREE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_FREE\n");
+ 			break;
+ 		case TARG_SESS_STATE_ACTIVE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_ACTIVE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_ACTIVE\n");
+ 			break;
+ 		case TARG_SESS_STATE_LOGGED_IN:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_LOGGED_IN\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_LOGGED_IN\n");
+ 			break;
+ 		case TARG_SESS_STATE_FAILED:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_FAILED\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_FAILED\n");
+ 			break;
+ 		case TARG_SESS_STATE_IN_CONTINUE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_IN_CONTINUE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_IN_CONTINUE\n");
+ 			break;
+ 		default:
+-			rb += sprintf(page+rb, "ERROR: Unknown Session"
++			rb += sysfs_emit_at(page, rb, "ERROR: Unknown Session"
+ 					" State!\n");
+ 			break;
+ 		}
+ 
+-		rb += sprintf(page+rb, "---------------------[iSCSI Session"
++		rb += sysfs_emit_at(page, rb, "---------------------[iSCSI Session"
+ 				" Values]-----------------------\n");
+-		rb += sprintf(page+rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
++		rb += sysfs_emit_at(page, rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
+ 				"  :  MaxCmdSN  :     ITT    :     TTT\n");
+ 		max_cmd_sn = (u32) atomic_read(&sess->max_cmd_sn);
+-		rb += sprintf(page+rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
++		rb += sysfs_emit_at(page, rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
+ 				"   0x%08x   0x%08x\n",
+ 			sess->cmdsn_window,
+ 			(max_cmd_sn - sess->exp_cmd_sn) + 1,
+ 			sess->exp_cmd_sn, max_cmd_sn,
+ 			sess->init_task_tag, sess->targ_xfer_tag);
+-		rb += sprintf(page+rb, "----------------------[iSCSI"
++		rb += sysfs_emit_at(page, rb, "----------------------[iSCSI"
+ 				" Connections]-------------------------\n");
+ 
+ 		spin_lock(&sess->conn_lock);
+ 		list_for_each_entry(conn, &sess->sess_conn_list, conn_list) {
+-			rb += sprintf(page+rb, "CID: %hu  Connection"
++			rb += sysfs_emit_at(page, rb, "CID: %hu  Connection"
+ 					" State: ", conn->cid);
+ 			switch (conn->conn_state) {
+ 			case TARG_CONN_STATE_FREE:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_FREE\n");
+ 				break;
+ 			case TARG_CONN_STATE_XPT_UP:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_XPT_UP\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGIN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGIN\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGGED_IN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGGED_IN\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGOUT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGOUT\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGOUT_REQUESTED:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGOUT_REQUESTED\n");
+ 				break;
+ 			case TARG_CONN_STATE_CLEANUP_WAIT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_CLEANUP_WAIT\n");
+ 				break;
+ 			default:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"ERROR: Unknown Connection State!\n");
+ 				break;
+ 			}
+ 
+-			rb += sprintf(page+rb, "   Address %pISc %s", &conn->login_sockaddr,
++			rb += sysfs_emit_at(page, rb, "   Address %pISc %s", &conn->login_sockaddr,
+ 				(conn->network_transport == ISCSI_TCP) ?
+ 				"TCP" : "SCTP");
+-			rb += sprintf(page+rb, "  StatSN: 0x%08x\n",
++			rb += sysfs_emit_at(page, rb, "  StatSN: 0x%08x\n",
+ 				conn->stat_sn);
+ 		}
+ 		spin_unlock(&sess->conn_lock);
 -- 
 2.40.1
 
