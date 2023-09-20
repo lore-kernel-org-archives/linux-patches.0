@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC48418658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721B4C433C7;
-	Wed, 20 Sep 2023 11:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C92A18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E54AC433CA;
+	Wed, 20 Sep 2023 11:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210602;
-	bh=nhyjApE0O9F4m5n4pLA4NI/jdMn/ByzqC0MhHYUuqjM=;
+	s=korg; t=1695210605;
+	bh=R+hXB3ew0i3AGfarFnQbXWIfwSyKbXLpcJ4FYBPjIlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LP16F//lOhi3uEUI9gxtiieOqt3Nfys65VPZodRqVemZfXtVgncY+fS3pPUrctRLB
-	 5ulwHTaWCsL+pPls6vS8LF3txTys5Jypj5BsV5epNd49/I+sMueTPm7mQxmJ2/0gRU
-	 PiwKe5JFXOz0k29ebhwpY5/iZl5vHjkJRQM7Hksw=
+	b=TzDoKsL90r++4ZN4sG/Afy4XIyxOY8jrL6T73dMR9IJbQ0agCeRr//GbCrkMS+53F
+	 I5BVc7dO4kiYgHaIe7c4GXvGVPWxO3C2mb3kSJoqiNilD8kk1i0hb9tuVIet2iHLAa
+	 /5kODFnqeWmTZKpXmzmhmxcTiJI6gPMCxf8rVHlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 138/211] btrfs: zoned: activate metadata block group on write time
-Date: Wed, 20 Sep 2023 13:29:42 +0200
-Message-ID: <20230920112850.117164831@linuxfoundation.org>
+Subject: [PATCH 6.5 139/211] mtd: spi-nor: spansion: use CLPEF as an alternative to CLSR
+Date: Wed, 20 Sep 2023 13:29:43 +0200
+Message-ID: <20230920112850.149790171@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,183 +40,484 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit 13bb483d32abb6f8ebd40141d87eb68f11cc2dd2 ]
+[ Upstream commit d534fd9787d5925d9637752410e3ea92ca7f4cfa ]
 
-In the current implementation, block groups are activated at reservation
-time to ensure that all reserved bytes can be written to an active metadata
-block group. However, this approach has proven to be less efficient, as it
-activates block groups more frequently than necessary, putting pressure on
-the active zone resource and leading to potential issues such as early
-ENOSPC or hung_task.
+Infineon S28Hx (SEMPER Octal) and S25FS256T (SEMPER Nano) support Clear
+Program and Erase Failure Flags (CLPEF, 82h) instead of CLSR(30h).
+Introduce a new mfr_flag together with the infrastructure to allow
+manufacturer private data in the core. With this we remove the need
+to have if checks in the code at runtime and instead set the correct
+opcodes at probe time. S25Hx (SEMPER QSPI) supports CLSR but it may
+be disabled by CFR3x[2] while CLPEF is always available. Therefore,
+the mfr_flag is also applied to S25Hx for safety.
 
-Another drawback of the current method is that it hampers metadata
-over-commit, and necessitates additional flush operations and block group
-allocations, resulting in decreased overall performance.
-
-To address these issues, this commit introduces a write-time activation of
-metadata and system block group. This involves reserving at least one
-active block group specifically for a metadata and system block group.
-
-Since metadata write-out is always allocated sequentially, when we need to
-write to a non-active block group, we can wait for the ongoing IOs to
-complete, activate a new block group, and then proceed with writing to the
-new block group.
-
-Fixes: b09315139136 ("btrfs: zoned: activate metadata block group on flush_space")
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Link: https://lore.kernel.org/r/20230726075257.12985-2-tudor.ambarus@linaro.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Stable-dep-of: 1e611e104b9a ("mtd: spi-nor: spansion: preserve CFR2V[7] when writing MEMLAT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 11 ++++++
- fs/btrfs/fs.h          |  3 ++
- fs/btrfs/zoned.c       | 81 ++++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 93 insertions(+), 2 deletions(-)
+ drivers/mtd/spi-nor/atmel.c     |  8 +++-
+ drivers/mtd/spi-nor/core.c      | 23 +++++++----
+ drivers/mtd/spi-nor/core.h      |  4 +-
+ drivers/mtd/spi-nor/issi.c      |  4 +-
+ drivers/mtd/spi-nor/macronix.c  |  4 +-
+ drivers/mtd/spi-nor/micron-st.c |  4 +-
+ drivers/mtd/spi-nor/spansion.c  | 72 ++++++++++++++++++++++++++-------
+ drivers/mtd/spi-nor/sst.c       |  8 +++-
+ drivers/mtd/spi-nor/winbond.c   |  4 +-
+ drivers/mtd/spi-nor/xilinx.c    |  4 +-
+ 10 files changed, 103 insertions(+), 32 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 82324c327a502..75385503a35b6 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -4273,6 +4273,17 @@ int btrfs_free_block_groups(struct btrfs_fs_info *info)
- 	struct btrfs_caching_control *caching_ctl;
- 	struct rb_node *n;
+diff --git a/drivers/mtd/spi-nor/atmel.c b/drivers/mtd/spi-nor/atmel.c
+index 656dd80a0be79..58968c1e7d2f8 100644
+--- a/drivers/mtd/spi-nor/atmel.c
++++ b/drivers/mtd/spi-nor/atmel.c
+@@ -48,9 +48,11 @@ static const struct spi_nor_locking_ops at25fs_nor_locking_ops = {
+ 	.is_locked = at25fs_nor_is_locked,
+ };
  
-+	if (btrfs_is_zoned(info)) {
-+		if (info->active_meta_bg) {
-+			btrfs_put_block_group(info->active_meta_bg);
-+			info->active_meta_bg = NULL;
-+		}
-+		if (info->active_system_bg) {
-+			btrfs_put_block_group(info->active_system_bg);
-+			info->active_system_bg = NULL;
-+		}
-+	}
-+
- 	write_lock(&info->block_group_cache_lock);
- 	while (!list_empty(&info->caching_block_groups)) {
- 		caching_ctl = list_entry(info->caching_block_groups.next,
-diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
-index 203d2a2678287..1f2d331121064 100644
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -766,6 +766,9 @@ struct btrfs_fs_info {
- 	u64 data_reloc_bg;
- 	struct mutex zoned_data_reloc_io_lock;
- 
-+	struct btrfs_block_group *active_meta_bg;
-+	struct btrfs_block_group *active_system_bg;
-+
- 	u64 nr_global_roots;
- 
- 	spinlock_t zone_active_bgs_lock;
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index cc117283d0c88..f97e927499d7a 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -65,6 +65,9 @@
- 
- #define SUPER_INFO_SECTORS	((u64)BTRFS_SUPER_INFO_SIZE >> SECTOR_SHIFT)
- 
-+static void wait_eb_writebacks(struct btrfs_block_group *block_group);
-+static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_written);
-+
- static inline bool sb_zone_is_full(const struct blk_zone *zone)
+-static void at25fs_nor_late_init(struct spi_nor *nor)
++static int at25fs_nor_late_init(struct spi_nor *nor)
  {
- 	return (zone->cond == BLK_ZONE_COND_FULL) ||
-@@ -1758,6 +1761,62 @@ void btrfs_finish_ordered_zoned(struct btrfs_ordered_extent *ordered)
- 	}
+ 	nor->params->locking_ops = &at25fs_nor_locking_ops;
++
++	return 0;
  }
  
-+static bool check_bg_is_active(struct btrfs_eb_write_context *ctx,
-+			       struct btrfs_block_group **active_bg)
-+{
-+	const struct writeback_control *wbc = ctx->wbc;
-+	struct btrfs_block_group *block_group = ctx->zoned_bg;
-+	struct btrfs_fs_info *fs_info = block_group->fs_info;
+ static const struct spi_nor_fixups at25fs_nor_fixups = {
+@@ -149,9 +151,11 @@ static const struct spi_nor_locking_ops atmel_nor_global_protection_ops = {
+ 	.is_locked = atmel_nor_is_global_protected,
+ };
+ 
+-static void atmel_nor_global_protection_late_init(struct spi_nor *nor)
++static int atmel_nor_global_protection_late_init(struct spi_nor *nor)
+ {
+ 	nor->params->locking_ops = &atmel_nor_global_protection_ops;
 +
-+	if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags))
-+		return true;
-+
-+	if (fs_info->treelog_bg == block_group->start) {
-+		if (!btrfs_zone_activate(block_group)) {
-+			int ret_fin = btrfs_zone_finish_one_bg(fs_info);
-+
-+			if (ret_fin != 1 || !btrfs_zone_activate(block_group))
-+				return false;
-+		}
-+	} else if (*active_bg != block_group) {
-+		struct btrfs_block_group *tgt = *active_bg;
-+
-+		/* zoned_meta_io_lock protects fs_info->active_{meta,system}_bg. */
-+		lockdep_assert_held(&fs_info->zoned_meta_io_lock);
-+
-+		if (tgt) {
-+			/*
-+			 * If there is an unsent IO left in the allocated area,
-+			 * we cannot wait for them as it may cause a deadlock.
-+			 */
-+			if (tgt->meta_write_pointer < tgt->start + tgt->alloc_offset) {
-+				if (wbc->sync_mode == WB_SYNC_NONE ||
-+				    (wbc->sync_mode == WB_SYNC_ALL && !wbc->for_sync))
-+					return false;
-+			}
-+
-+			/* Pivot active metadata/system block group. */
-+			btrfs_zoned_meta_io_unlock(fs_info);
-+			wait_eb_writebacks(tgt);
-+			do_zone_finish(tgt, true);
-+			btrfs_zoned_meta_io_lock(fs_info);
-+			if (*active_bg == tgt) {
-+				btrfs_put_block_group(tgt);
-+				*active_bg = NULL;
-+			}
-+		}
-+		if (!btrfs_zone_activate(block_group))
-+			return false;
-+		if (*active_bg != block_group) {
-+			ASSERT(*active_bg == NULL);
-+			*active_bg = block_group;
-+			btrfs_get_block_group(block_group);
-+		}
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups atmel_nor_global_protection_fixups = {
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 55f4a902b8be9..72973cfb1d201 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2898,16 +2898,23 @@ static void spi_nor_init_fixup_flags(struct spi_nor *nor)
+  * SFDP standard, or where SFDP tables are not defined at all.
+  * Will replace the spi_nor_manufacturer_init_params() method.
+  */
+-static void spi_nor_late_init_params(struct spi_nor *nor)
++static int spi_nor_late_init_params(struct spi_nor *nor)
+ {
+ 	struct spi_nor_flash_parameter *params = nor->params;
++	int ret;
+ 
+ 	if (nor->manufacturer && nor->manufacturer->fixups &&
+-	    nor->manufacturer->fixups->late_init)
+-		nor->manufacturer->fixups->late_init(nor);
++	    nor->manufacturer->fixups->late_init) {
++		ret = nor->manufacturer->fixups->late_init(nor);
++		if (ret)
++			return ret;
 +	}
+ 
+-	if (nor->info->fixups && nor->info->fixups->late_init)
+-		nor->info->fixups->late_init(nor);
++	if (nor->info->fixups && nor->info->fixups->late_init) {
++		ret = nor->info->fixups->late_init(nor);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/* Default method kept for backward compatibility. */
+ 	if (!params->set_4byte_addr_mode)
+@@ -2925,6 +2932,8 @@ static void spi_nor_late_init_params(struct spi_nor *nor)
+ 
+ 	if (nor->info->n_banks > 1)
+ 		params->bank_size = div64_u64(params->size, nor->info->n_banks);
 +
-+	return true;
-+}
-+
- /*
-  * Check if @ctx->eb is aligned to the write pointer.
-  *
-@@ -1792,8 +1851,26 @@ int btrfs_check_meta_write_pointer(struct btrfs_fs_info *fs_info,
- 		ctx->zoned_bg = block_group;
++	return 0;
+ }
+ 
+ /**
+@@ -3083,9 +3092,7 @@ static int spi_nor_init_params(struct spi_nor *nor)
+ 		spi_nor_init_params_deprecated(nor);
  	}
  
--	if (block_group->meta_write_pointer == eb->start)
--		return 0;
-+	if (block_group->meta_write_pointer == eb->start) {
-+		struct btrfs_block_group **tgt;
+-	spi_nor_late_init_params(nor);
+-
+-	return 0;
++	return spi_nor_late_init_params(nor);
+ }
+ 
+ /** spi_nor_octal_dtr_enable() - enable Octal DTR I/O if needed
+diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
+index 4fb5ff09c63a9..2453bd5743ac9 100644
+--- a/drivers/mtd/spi-nor/core.h
++++ b/drivers/mtd/spi-nor/core.h
+@@ -377,6 +377,7 @@ struct spi_nor_otp {
+  *			than reading the status register to indicate they
+  *			are ready for a new command
+  * @locking_ops:	SPI NOR locking methods.
++ * @priv:		flash's private data.
+  */
+ struct spi_nor_flash_parameter {
+ 	u64				bank_size;
+@@ -405,6 +406,7 @@ struct spi_nor_flash_parameter {
+ 	int (*ready)(struct spi_nor *nor);
+ 
+ 	const struct spi_nor_locking_ops *locking_ops;
++	void *priv;
+ };
+ 
+ /**
+@@ -431,7 +433,7 @@ struct spi_nor_fixups {
+ 			 const struct sfdp_parameter_header *bfpt_header,
+ 			 const struct sfdp_bfpt *bfpt);
+ 	int (*post_sfdp)(struct spi_nor *nor);
+-	void (*late_init)(struct spi_nor *nor);
++	int (*late_init)(struct spi_nor *nor);
+ };
+ 
+ /**
+diff --git a/drivers/mtd/spi-nor/issi.c b/drivers/mtd/spi-nor/issi.c
+index 400e2b42f45af..accdf7aa2bfde 100644
+--- a/drivers/mtd/spi-nor/issi.c
++++ b/drivers/mtd/spi-nor/issi.c
+@@ -29,7 +29,7 @@ static const struct spi_nor_fixups is25lp256_fixups = {
+ 	.post_bfpt = is25lp256_post_bfpt_fixups,
+ };
+ 
+-static void pm25lv_nor_late_init(struct spi_nor *nor)
++static int pm25lv_nor_late_init(struct spi_nor *nor)
+ {
+ 	struct spi_nor_erase_map *map = &nor->params->erase_map;
+ 	int i;
+@@ -38,6 +38,8 @@ static void pm25lv_nor_late_init(struct spi_nor *nor)
+ 	for (i = 0; i < SNOR_ERASE_TYPE_MAX; i++)
+ 		if (map->erase_type[i].size == 4096)
+ 			map->erase_type[i].opcode = SPINOR_OP_BE_4K_PMC;
 +
-+		if (!test_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags))
-+			return 0;
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups pm25lv_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/macronix.c b/drivers/mtd/spi-nor/macronix.c
+index 04888258e8914..eb149e517c1fe 100644
+--- a/drivers/mtd/spi-nor/macronix.c
++++ b/drivers/mtd/spi-nor/macronix.c
+@@ -110,10 +110,12 @@ static void macronix_nor_default_init(struct spi_nor *nor)
+ 	nor->params->quad_enable = spi_nor_sr1_bit6_quad_enable;
+ }
+ 
+-static void macronix_nor_late_init(struct spi_nor *nor)
++static int macronix_nor_late_init(struct spi_nor *nor)
+ {
+ 	if (!nor->params->set_4byte_addr_mode)
+ 		nor->params->set_4byte_addr_mode = spi_nor_set_4byte_addr_mode_en4b_ex4b;
 +
-+		if (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM)
-+			tgt = &fs_info->active_system_bg;
-+		else
-+			tgt = &fs_info->active_meta_bg;
-+		if (check_bg_is_active(ctx, tgt))
-+			return 0;
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups macronix_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/micron-st.c b/drivers/mtd/spi-nor/micron-st.c
+index 4b919756a2055..28c9c14a4b293 100644
+--- a/drivers/mtd/spi-nor/micron-st.c
++++ b/drivers/mtd/spi-nor/micron-st.c
+@@ -429,7 +429,7 @@ static void micron_st_nor_default_init(struct spi_nor *nor)
+ 	nor->params->quad_enable = NULL;
+ }
+ 
+-static void micron_st_nor_late_init(struct spi_nor *nor)
++static int micron_st_nor_late_init(struct spi_nor *nor)
+ {
+ 	struct spi_nor_flash_parameter *params = nor->params;
+ 
+@@ -438,6 +438,8 @@ static void micron_st_nor_late_init(struct spi_nor *nor)
+ 
+ 	if (!params->set_4byte_addr_mode)
+ 		params->set_4byte_addr_mode = spi_nor_set_4byte_addr_mode_wren_en4b_ex4b;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups micron_st_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 15f9a80c10b9b..9edc1b7ac091a 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -4,14 +4,17 @@
+  * Copyright (C) 2014, Freescale Semiconductor, Inc.
+  */
+ 
++#include <linux/device.h>
+ #include <linux/mtd/spi-nor.h>
+ 
+ #include "core.h"
+ 
+ /* flash_info mfr_flag. Used to clear sticky prorietary SR bits. */
+ #define USE_CLSR	BIT(0)
++#define USE_CLPEF	BIT(1)
+ 
+ #define SPINOR_OP_CLSR		0x30	/* Clear status register 1 */
++#define SPINOR_OP_CLPEF		0x82	/* Clear program/erase failure flags */
+ #define SPINOR_OP_RD_ANY_REG			0x65	/* Read any register */
+ #define SPINOR_OP_WR_ANY_REG			0x71	/* Write any register */
+ #define SPINOR_REG_CYPRESS_VREG			0x00800000
+@@ -57,22 +60,32 @@
+ 		   SPI_MEM_OP_DUMMY(ndummy, 0),				\
+ 		   SPI_MEM_OP_DATA_IN(1, buf, 0))
+ 
+-#define SPANSION_CLSR_OP						\
+-	SPI_MEM_OP(SPI_MEM_OP_CMD(SPINOR_OP_CLSR, 0),			\
++#define SPANSION_OP(opcode)						\
++	SPI_MEM_OP(SPI_MEM_OP_CMD(opcode, 0),				\
+ 		   SPI_MEM_OP_NO_ADDR,					\
+ 		   SPI_MEM_OP_NO_DUMMY,					\
+ 		   SPI_MEM_OP_NO_DATA)
+ 
++/**
++ * struct spansion_nor_params - Spansion private parameters.
++ * @clsr:	Clear Status Register or Clear Program and Erase Failure Flag
++ *		opcode.
++ */
++struct spansion_nor_params {
++	u8 clsr;
++};
++
+ /**
+  * spansion_nor_clear_sr() - Clear the Status Register.
+  * @nor:	pointer to 'struct spi_nor'.
+  */
+ static void spansion_nor_clear_sr(struct spi_nor *nor)
+ {
++	const struct spansion_nor_params *priv_params = nor->params->priv;
+ 	int ret;
+ 
+ 	if (nor->spimem) {
+-		struct spi_mem_op op = SPANSION_CLSR_OP;
++		struct spi_mem_op op = SPANSION_OP(priv_params->clsr);
+ 
+ 		spi_nor_spimem_setup_op(nor, &op, nor->reg_proto);
+ 
+@@ -528,9 +541,11 @@ static int s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
+ 	return 0;
+ }
+ 
+-static void s25fs256t_late_init(struct spi_nor *nor)
++static int s25fs256t_late_init(struct spi_nor *nor)
+ {
+ 	cypress_nor_ecc_init(nor);
++
++	return 0;
+ }
+ 
+ static struct spi_nor_fixups s25fs256t_fixups = {
+@@ -586,7 +601,7 @@ static int s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
+ 	return cypress_nor_get_page_size(nor);
+ }
+ 
+-static void s25hx_t_late_init(struct spi_nor *nor)
++static int s25hx_t_late_init(struct spi_nor *nor)
+ {
+ 	struct spi_nor_flash_parameter *params = nor->params;
+ 
+@@ -598,6 +613,8 @@ static void s25hx_t_late_init(struct spi_nor *nor)
+ 	/* Replace ready() with multi die version */
+ 	if (params->n_dice)
+ 		params->ready = cypress_nor_sr_ready_and_clear;
++
++	return 0;
+ }
+ 
+ static struct spi_nor_fixups s25hx_t_fixups = {
+@@ -665,10 +682,12 @@ static int s28hx_t_post_bfpt_fixup(struct spi_nor *nor,
+ 	return 0;
+ }
+ 
+-static void s28hx_t_late_init(struct spi_nor *nor)
++static int s28hx_t_late_init(struct spi_nor *nor)
+ {
+ 	nor->params->octal_dtr_enable = cypress_nor_octal_dtr_enable;
+ 	cypress_nor_ecc_init(nor);
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups s28hx_t_fixups = {
+@@ -792,47 +811,54 @@ static const struct flash_info spansion_nor_parts[] = {
+ 		FIXUP_FLAGS(SPI_NOR_4B_OPCODES) },
+ 	{ "s25fs256t",  INFO6(0x342b19, 0x0f0890, 0, 0)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s25fs256t_fixups },
+ 	{ "s25hl512t",  INFO6(0x342a1a, 0x0f0390, 256 * 1024, 256)
+ 		PARSE_SFDP
+-		MFR_FLAGS(USE_CLSR)
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "s25hl01gt",  INFO6(0x342a1b, 0x0f0390, 256 * 1024, 512)
+ 		PARSE_SFDP
+-		MFR_FLAGS(USE_CLSR)
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "s25hl02gt",  INFO6(0x342a1c, 0x0f0090, 0, 0)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		FLAGS(NO_CHIP_ERASE)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "s25hs512t",  INFO6(0x342b1a, 0x0f0390, 256 * 1024, 256)
+ 		PARSE_SFDP
+-		MFR_FLAGS(USE_CLSR)
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "s25hs01gt",  INFO6(0x342b1b, 0x0f0390, 256 * 1024, 512)
+ 		PARSE_SFDP
+-		MFR_FLAGS(USE_CLSR)
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "s25hs02gt",  INFO6(0x342b1c, 0x0f0090, 0, 0)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		FLAGS(NO_CHIP_ERASE)
+ 		.fixups = &s25hx_t_fixups },
+ 	{ "cy15x104q",  INFO6(0x042cc2, 0x7f7f7f, 512 * 1024, 1)
+ 		FLAGS(SPI_NOR_NO_ERASE) },
+ 	{ "s28hl512t",   INFO(0x345a1a,      0, 256 * 1024, 256)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s28hx_t_fixups,
+ 	},
+ 	{ "s28hl01gt",   INFO(0x345a1b,      0, 256 * 1024, 512)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s28hx_t_fixups,
+ 	},
+ 	{ "s28hs512t",   INFO(0x345b1a,      0, 256 * 1024, 256)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s28hx_t_fixups,
+ 	},
+ 	{ "s28hs01gt",   INFO(0x345b1b,      0, 256 * 1024, 512)
+ 		PARSE_SFDP
++		MFR_FLAGS(USE_CLPEF)
+ 		.fixups = &s28hx_t_fixups,
+ 	},
+ };
+@@ -876,17 +902,35 @@ static int spansion_nor_sr_ready_and_clear(struct spi_nor *nor)
+ 	return !(nor->bouncebuf[0] & SR_WIP);
+ }
+ 
+-static void spansion_nor_late_init(struct spi_nor *nor)
++static int spansion_nor_late_init(struct spi_nor *nor)
+ {
+-	if (nor->params->size > SZ_16M) {
++	struct spi_nor_flash_parameter *params = nor->params;
++	struct spansion_nor_params *priv_params;
++	u8 mfr_flags = nor->info->mfr_flags;
++
++	if (params->size > SZ_16M) {
+ 		nor->flags |= SNOR_F_4B_OPCODES;
+ 		/* No small sector erase for 4-byte command set */
+ 		nor->erase_opcode = SPINOR_OP_SE;
+ 		nor->mtd.erasesize = nor->info->sector_size;
+ 	}
+ 
+-	if (nor->info->mfr_flags & USE_CLSR)
+-		nor->params->ready = spansion_nor_sr_ready_and_clear;
++	if (mfr_flags & (USE_CLSR | USE_CLPEF)) {
++		priv_params = devm_kmalloc(nor->dev, sizeof(*priv_params),
++					   GFP_KERNEL);
++		if (!priv_params)
++			return -ENOMEM;
++
++		if (mfr_flags & USE_CLSR)
++			priv_params->clsr = SPINOR_OP_CLSR;
++		else if (mfr_flags & USE_CLPEF)
++			priv_params->clsr = SPINOR_OP_CLPEF;
++
++		params->priv = priv_params;
++		params->ready = spansion_nor_sr_ready_and_clear;
 +	}
 +
-+	/*
-+	 * Since we may release fs_info->zoned_meta_io_lock, someone can already
-+	 * start writing this eb. In that case, we can just bail out.
-+	 */
-+	if (block_group->meta_write_pointer > eb->start)
-+		return -EBUSY;
++	return 0;
+ }
  
- 	/* If for_sync, this hole will be filled with trasnsaction commit. */
- 	if (wbc->sync_mode == WB_SYNC_ALL && !wbc->for_sync)
+ static const struct spi_nor_fixups spansion_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/sst.c b/drivers/mtd/spi-nor/sst.c
+index 688eb20c763e9..09fdc7023e09a 100644
+--- a/drivers/mtd/spi-nor/sst.c
++++ b/drivers/mtd/spi-nor/sst.c
+@@ -49,9 +49,11 @@ static const struct spi_nor_locking_ops sst26vf_nor_locking_ops = {
+ 	.is_locked = sst26vf_nor_is_locked,
+ };
+ 
+-static void sst26vf_nor_late_init(struct spi_nor *nor)
++static int sst26vf_nor_late_init(struct spi_nor *nor)
+ {
+ 	nor->params->locking_ops = &sst26vf_nor_locking_ops;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups sst26vf_nor_fixups = {
+@@ -203,10 +205,12 @@ static int sst_nor_write(struct mtd_info *mtd, loff_t to, size_t len,
+ 	return ret;
+ }
+ 
+-static void sst_nor_late_init(struct spi_nor *nor)
++static int sst_nor_late_init(struct spi_nor *nor)
+ {
+ 	if (nor->info->mfr_flags & SST_WRITE)
+ 		nor->mtd._write = sst_nor_write;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups sst_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/winbond.c b/drivers/mtd/spi-nor/winbond.c
+index 63ba8e3a96f51..cd99c9a1c5688 100644
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -217,7 +217,7 @@ static const struct spi_nor_otp_ops winbond_nor_otp_ops = {
+ 	.is_locked = spi_nor_otp_is_locked_sr2,
+ };
+ 
+-static void winbond_nor_late_init(struct spi_nor *nor)
++static int winbond_nor_late_init(struct spi_nor *nor)
+ {
+ 	struct spi_nor_flash_parameter *params = nor->params;
+ 
+@@ -233,6 +233,8 @@ static void winbond_nor_late_init(struct spi_nor *nor)
+ 	 * from BFPT, if any.
+ 	 */
+ 	params->set_4byte_addr_mode = winbond_nor_set_4byte_addr_mode;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups winbond_nor_fixups = {
+diff --git a/drivers/mtd/spi-nor/xilinx.c b/drivers/mtd/spi-nor/xilinx.c
+index 7175de8aa336a..00d53eae5ee83 100644
+--- a/drivers/mtd/spi-nor/xilinx.c
++++ b/drivers/mtd/spi-nor/xilinx.c
+@@ -155,10 +155,12 @@ static int xilinx_nor_setup(struct spi_nor *nor,
+ 	return 0;
+ }
+ 
+-static void xilinx_nor_late_init(struct spi_nor *nor)
++static int xilinx_nor_late_init(struct spi_nor *nor)
+ {
+ 	nor->params->setup = xilinx_nor_setup;
+ 	nor->params->ready = xilinx_nor_sr_ready;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups xilinx_nor_fixups = {
 -- 
 2.40.1
 
