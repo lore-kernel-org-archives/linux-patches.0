@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD02228E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F75C433C7;
-	Wed, 20 Sep 2023 11:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D4128E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D3FC433C9;
+	Wed, 20 Sep 2023 11:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210765;
-	bh=sEj4HhhHZfd+wu+X8kAnIA800FJKVQJ7fFVsvKLC3VA=;
+	s=korg; t=1695210768;
+	bh=Bn6JMRljh4XFsPlZRadWdzShW9TJ7yA3xflCynlWgr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRyN25dZuLTHaUIDg7/KdvIByvyqo6KVLyMmGHSaW383v6RLtGyRNFZp0xQNSwmr3
-	 9E0bXMffXUfpmhu5SPc7zOVmPnqnKQICFgPqd+8x33+wMPaX7ffAXgZHcK/8GhdyMX
-	 uWgvITpNB9XWzZ0Iaxt+GWE1FUJd6LQxa4pP5i0A=
+	b=fe9MZZVaq36eEeGLhCM1wJlno6cmPhu1JI0RF8v0ASCHxn4X/CFbCRlCpRiA4Jb0A
+	 FKuqr1nmPEGakNvbUG1mST3Z2ab5RwVdyiPZA9iIlkWgENJgnvWeLi/3qkOLp5um3z
+	 nKTvr3VWAdZX4eZDlJzr6RcSx4wLQGMQ9IDZZYNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 197/211] scsi: megaraid_sas: Fix deadlock on firmware crashdump
-Date: Wed, 20 Sep 2023 13:30:41 +0200
-Message-ID: <20230920112851.973455588@linuxfoundation.org>
+Subject: [PATCH 6.5 198/211] scsi: qla2xxx: Use raw_smp_processor_id() instead of smp_processor_id()
+Date: Wed, 20 Sep 2023 13:30:42 +0200
+Message-ID: <20230920112852.004196698@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,175 +40,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 0b0747d507bffb827e40fc0f9fb5883fffc23477 upstream.
+commit 59f10a05b5c7b675256a66e3161741239889ff80 upstream.
 
-The following processes run into a deadlock. CPU 41 was waiting for CPU 29
-to handle a CSD request while holding spinlock "crashdump_lock", but CPU 29
-was hung by that spinlock with IRQs disabled.
+The following call trace was observed:
 
-  PID: 17360    TASK: ffff95c1090c5c40  CPU: 41  COMMAND: "mrdiagd"
-  !# 0 [ffffb80edbf37b58] __read_once_size at ffffffff9b871a40 include/linux/compiler.h:185:0
-  !# 1 [ffffb80edbf37b58] atomic_read at ffffffff9b871a40 arch/x86/include/asm/atomic.h:27:0
-  !# 2 [ffffb80edbf37b58] dump_stack at ffffffff9b871a40 lib/dump_stack.c:54:0
-   # 3 [ffffb80edbf37b78] csd_lock_wait_toolong at ffffffff9b131ad5 kernel/smp.c:364:0
-   # 4 [ffffb80edbf37b78] __csd_lock_wait at ffffffff9b131ad5 kernel/smp.c:384:0
-   # 5 [ffffb80edbf37bf8] csd_lock_wait at ffffffff9b13267a kernel/smp.c:394:0
-   # 6 [ffffb80edbf37bf8] smp_call_function_many at ffffffff9b13267a kernel/smp.c:843:0
-   # 7 [ffffb80edbf37c50] smp_call_function at ffffffff9b13279d kernel/smp.c:867:0
-   # 8 [ffffb80edbf37c50] on_each_cpu at ffffffff9b13279d kernel/smp.c:976:0
-   # 9 [ffffb80edbf37c78] flush_tlb_kernel_range at ffffffff9b085c4b arch/x86/mm/tlb.c:742:0
-   #10 [ffffb80edbf37cb8] __purge_vmap_area_lazy at ffffffff9b23a1e0 mm/vmalloc.c:701:0
-   #11 [ffffb80edbf37ce0] try_purge_vmap_area_lazy at ffffffff9b23a2cc mm/vmalloc.c:722:0
-   #12 [ffffb80edbf37ce0] free_vmap_area_noflush at ffffffff9b23a2cc mm/vmalloc.c:754:0
-   #13 [ffffb80edbf37cf8] free_unmap_vmap_area at ffffffff9b23bb3b mm/vmalloc.c:764:0
-   #14 [ffffb80edbf37cf8] remove_vm_area at ffffffff9b23bb3b mm/vmalloc.c:1509:0
-   #15 [ffffb80edbf37d18] __vunmap at ffffffff9b23bb8a mm/vmalloc.c:1537:0
-   #16 [ffffb80edbf37d40] vfree at ffffffff9b23bc85 mm/vmalloc.c:1612:0
-   #17 [ffffb80edbf37d58] megasas_free_host_crash_buffer [megaraid_sas] at ffffffffc020b7f2 drivers/scsi/megaraid/megaraid_sas_fusion.c:3932:0
-   #18 [ffffb80edbf37d80] fw_crash_state_store [megaraid_sas] at ffffffffc01f804d drivers/scsi/megaraid/megaraid_sas_base.c:3291:0
-   #19 [ffffb80edbf37dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #20 [ffffb80edbf37dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #21 [ffffb80edbf37de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #22 [ffffb80edbf37e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #23 [ffffb80edbf37ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #24 [ffffb80edbf37ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #25 [ffffb80edbf37ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #26 [ffffb80edbf37f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #27 [ffffb80edbf37f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+localhost kernel: nvme nvme0: NVME-FC{0}: controller connect complete
+localhost kernel: BUG: using smp_processor_id() in preemptible [00000000] code: kworker/u129:4/75092
+localhost kernel: nvme nvme0: NVME-FC{0}: new ctrl: NQN "nqn.1992-08.com.netapp:sn.b42d198afb4d11ecad6d00a098d6abfa:subsystem.PR_Channel2022_RH84_subsystem_291"
+localhost kernel: caller is qla_nvme_post_cmd+0x216/0x1380 [qla2xxx]
+localhost kernel: CPU: 6 PID: 75092 Comm: kworker/u129:4 Kdump: loaded Tainted: G    B   W  OE    --------- ---  5.14.0-70.22.1.el9_0.x86_64+debug #1
+localhost kernel: Hardware name: HPE ProLiant XL420 Gen10/ProLiant XL420 Gen10, BIOS U39 01/13/2022
+localhost kernel: Workqueue: nvme-wq nvme_async_event_work [nvme_core]
+localhost kernel: Call Trace:
+localhost kernel: dump_stack_lvl+0x57/0x7d
+localhost kernel: check_preemption_disabled+0xc8/0xd0
+localhost kernel: qla_nvme_post_cmd+0x216/0x1380 [qla2xxx]
 
-  PID: 17355    TASK: ffff95c1090c3d80  CPU: 29  COMMAND: "mrdiagd"
-  !# 0 [ffffb80f2d3c7d30] __read_once_size at ffffffff9b0f2ab0 include/linux/compiler.h:185:0
-  !# 1 [ffffb80f2d3c7d30] native_queued_spin_lock_slowpath at ffffffff9b0f2ab0 kernel/locking/qspinlock.c:368:0
-   # 2 [ffffb80f2d3c7d58] pv_queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/paravirt.h:674:0
-   # 3 [ffffb80f2d3c7d58] queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/qspinlock.h:53:0
-   # 4 [ffffb80f2d3c7d68] queued_spin_lock at ffffffff9b8961a6 include/asm-generic/qspinlock.h:90:0
-   # 5 [ffffb80f2d3c7d68] do_raw_spin_lock_flags at ffffffff9b8961a6 include/linux/spinlock.h:173:0
-   # 6 [ffffb80f2d3c7d68] __raw_spin_lock_irqsave at ffffffff9b8961a6 include/linux/spinlock_api_smp.h:122:0
-   # 7 [ffffb80f2d3c7d68] _raw_spin_lock_irqsave at ffffffff9b8961a6 kernel/locking/spinlock.c:160:0
-   # 8 [ffffb80f2d3c7d88] fw_crash_buffer_store [megaraid_sas] at ffffffffc01f8129 drivers/scsi/megaraid/megaraid_sas_base.c:3205:0
-   # 9 [ffffb80f2d3c7dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #10 [ffffb80f2d3c7dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #11 [ffffb80f2d3c7de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #12 [ffffb80f2d3c7e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #13 [ffffb80f2d3c7ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #14 [ffffb80f2d3c7ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #15 [ffffb80f2d3c7ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #16 [ffffb80f2d3c7f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #17 [ffffb80f2d3c7f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+Use raw_smp_processor_id() instead of smp_processor_id().
 
-The lock is used to synchronize different sysfs operations, it doesn't
-protect any resource that will be touched by an interrupt. Consequently
-it's not required to disable IRQs. Replace the spinlock with a mutex to fix
-the deadlock.
+Also use queue_work() across the driver instead of queue_work_on() thus
+avoiding usage of smp_processor_id() when CONFIG_DEBUG_PREEMPT is enabled.
 
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Link: https://lore.kernel.org/r/20230828221018.19471-1-junxiao.bi@oracle.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
 Cc: stable@vger.kernel.org
+Suggested-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230831112146.32595-2-njavali@marvell.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h      |    2 +-
- drivers/scsi/megaraid/megaraid_sas_base.c |   21 +++++++++------------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ drivers/scsi/qla2xxx/qla_inline.h  |    2 +-
+ drivers/scsi/qla2xxx/qla_isr.c     |    6 +++---
+ drivers/scsi/qla2xxx/qla_target.c  |    3 +--
+ drivers/scsi/qla2xxx/tcm_qla2xxx.c |    4 ++--
+ 4 files changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas.h
-+++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -2332,7 +2332,7 @@ struct megasas_instance {
- 	u32 support_morethan256jbod; /* FW support for more than 256 PD/JBOD */
- 	bool use_seqnum_jbod_fp;   /* Added for PD sequence */
- 	bool smp_affinity_enable;
--	spinlock_t crashdump_lock;
-+	struct mutex crashdump_lock;
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -577,7 +577,7 @@ fcport_is_bigger(fc_port_t *fcport)
+ static inline struct qla_qpair *
+ qla_mapq_nvme_select_qpair(struct qla_hw_data *ha, struct qla_qpair *qpair)
+ {
+-	int cpuid = smp_processor_id();
++	int cpuid = raw_smp_processor_id();
  
- 	struct megasas_register_set __iomem *reg_set;
- 	u32 __iomem *reply_post_host_index_addr[MR_MAX_MSIX_REG_ARRAY];
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -3271,14 +3271,13 @@ fw_crash_buffer_store(struct device *cde
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
+ 	if (qpair->cpuid != cpuid &&
+ 	    ha->qp_cpu_map[cpuid]) {
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3817,7 +3817,7 @@ void qla24xx_process_response_queue(stru
+ 	if (!ha->flags.fw_started)
+ 		return;
  
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
+-	if (rsp->qpair->cpuid != smp_processor_id() || !rsp->qpair->rcv_intr) {
++	if (rsp->qpair->cpuid != raw_smp_processor_id() || !rsp->qpair->rcv_intr) {
+ 		rsp->qpair->rcv_intr = 1;
  
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	instance->fw_crash_buffer_offset = val;
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 	return strlen(buf);
+ 		if (!rsp->qpair->cpu_mapped)
+@@ -4308,7 +4308,7 @@ qla2xxx_msix_rsp_q(int irq, void *dev_id
+ 	}
+ 	ha = qpair->hw;
+ 
+-	queue_work_on(smp_processor_id(), ha->wq, &qpair->q_work);
++	queue_work(ha->wq, &qpair->q_work);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -4334,7 +4334,7 @@ qla2xxx_msix_rsp_q_hs(int irq, void *dev
+ 	wrt_reg_dword(&reg->hccr, HCCRX_CLR_RISC_INT);
+ 	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+ 
+-	queue_work_on(smp_processor_id(), ha->wq, &qpair->q_work);
++	queue_work(ha->wq, &qpair->q_work);
+ 
+ 	return IRQ_HANDLED;
+ }
+--- a/drivers/scsi/qla2xxx/qla_target.c
++++ b/drivers/scsi/qla2xxx/qla_target.c
+@@ -4425,8 +4425,7 @@ static int qlt_handle_cmd_for_atio(struc
+ 		queue_work_on(cmd->se_cmd.cpuid, qla_tgt_wq, &cmd->work);
+ 	} else if (ha->msix_count) {
+ 		if (cmd->atio.u.isp24.fcp_cmnd.rddata)
+-			queue_work_on(smp_processor_id(), qla_tgt_wq,
+-			    &cmd->work);
++			queue_work(qla_tgt_wq, &cmd->work);
+ 		else
+ 			queue_work_on(cmd->se_cmd.cpuid, qla_tgt_wq,
+ 			    &cmd->work);
+--- a/drivers/scsi/qla2xxx/tcm_qla2xxx.c
++++ b/drivers/scsi/qla2xxx/tcm_qla2xxx.c
+@@ -310,7 +310,7 @@ static void tcm_qla2xxx_free_cmd(struct
+ 	cmd->trc_flags |= TRC_CMD_DONE;
+ 
+ 	INIT_WORK(&cmd->work, tcm_qla2xxx_complete_free);
+-	queue_work_on(smp_processor_id(), tcm_qla2xxx_free_wq, &cmd->work);
++	queue_work(tcm_qla2xxx_free_wq, &cmd->work);
  }
  
-@@ -3293,24 +3292,23 @@ fw_crash_buffer_show(struct device *cdev
- 	unsigned long dmachunk = CRASH_DMA_BUF_SIZE;
- 	unsigned long chunk_left_bytes;
- 	unsigned long src_addr;
--	unsigned long flags;
- 	u32 buff_offset;
- 
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	buff_offset = instance->fw_crash_buffer_offset;
- 	if (!instance->crash_dump_buf ||
- 		!((instance->fw_crash_state == AVAILABLE) ||
- 		(instance->fw_crash_state == COPYING))) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump is not available\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return -EINVAL;
- 	}
- 
- 	if (buff_offset > (instance->fw_crash_buffer_size * dmachunk)) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump offset is out of range\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return 0;
- 	}
- 
-@@ -3322,7 +3320,7 @@ fw_crash_buffer_show(struct device *cdev
- 	src_addr = (unsigned long)instance->crash_buf[buff_offset / dmachunk] +
- 		(buff_offset % dmachunk);
- 	memcpy(buf, (void *)src_addr, size);
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 
- 	return size;
+ /*
+@@ -547,7 +547,7 @@ static void tcm_qla2xxx_handle_data(stru
+ 	cmd->trc_flags |= TRC_DATA_IN;
+ 	cmd->cmd_in_wq = 1;
+ 	INIT_WORK(&cmd->work, tcm_qla2xxx_handle_data_work);
+-	queue_work_on(smp_processor_id(), tcm_qla2xxx_free_wq, &cmd->work);
++	queue_work(tcm_qla2xxx_free_wq, &cmd->work);
  }
-@@ -3347,7 +3345,6 @@ fw_crash_state_store(struct device *cdev
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
  
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
-@@ -3361,9 +3358,9 @@ fw_crash_state_store(struct device *cdev
- 	instance->fw_crash_state = val;
- 
- 	if ((val == COPIED) || (val == COPY_ERROR)) {
--		spin_lock_irqsave(&instance->crashdump_lock, flags);
-+		mutex_lock(&instance->crashdump_lock);
- 		megasas_free_host_crash_buffer(instance);
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		if (val == COPY_ERROR)
- 			dev_info(&instance->pdev->dev, "application failed to "
- 				"copy Firmware crash dump\n");
-@@ -7422,7 +7419,7 @@ static inline void megasas_init_ctrl_par
- 	init_waitqueue_head(&instance->int_cmd_wait_q);
- 	init_waitqueue_head(&instance->abort_cmd_wait_q);
- 
--	spin_lock_init(&instance->crashdump_lock);
-+	mutex_init(&instance->crashdump_lock);
- 	spin_lock_init(&instance->mfi_pool_lock);
- 	spin_lock_init(&instance->hba_lock);
- 	spin_lock_init(&instance->stream_lock);
+ static int tcm_qla2xxx_chk_dif_tags(uint32_t tag)
 
 
