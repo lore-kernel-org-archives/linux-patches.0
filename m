@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7718658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D57C433C8;
-	Wed, 20 Sep 2023 11:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C284418658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44063C433C8;
+	Wed, 20 Sep 2023 11:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210591;
-	bh=GznQ2VhqQhh3+/nxj2Y3C/4Q47mpsPFZbbyXJZSyeg4=;
+	s=korg; t=1695210594;
+	bh=ziEw72CBP9e4nt/AiasBsmS3wdwP1rEfGfbvtCKAuzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7HsH7ZhmkOQSXczrW9cy2ipbCx2S7RfVbF3za1ZjVpdGnuasAQoWZJ1wVqHSG4Uu
-	 APzEi6MIBHpRULTtY7nsU6VWzMW32NftVdVat3LeQXt1SOQf5UWz6fytF29yGomrXb
-	 NDQvIGqt0SnUCy2mRF6DtwpJbAT1IKk+dNaeZsDw=
+	b=qLuVnS1U9O0BskBS11TWv1fHR7lh30xKWCQZ9UeR+6v3v7Czlxv6E9knDLyBr9xPt
+	 SU+K605b+1v/tZ3jHacmheHfC31c0UKN/eCxcdi7LJdW6ItzIz88JtuwQZMH2vjrNK
+	 zU4hyRyeZXwxsJzitkpIXxomigMYuWi+rmap5DYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 126/211] interconnect: Fix locking for runpm vs reclaim
-Date: Wed, 20 Sep 2023 13:29:30 +0200
-Message-ID: <20230920112849.715847856@linuxfoundation.org>
+Subject: [PATCH 6.5 135/211] btrfs: zoned: introduce block group context to btrfs_eb_write_context
+Date: Wed, 20 Sep 2023 13:29:39 +0200
+Message-ID: <20230920112850.017585634@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,247 +42,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit af42269c3523492d71ebbe11fefae2653e9cdc78 ]
+[ Upstream commit 7db94301a980c9da4168ac7ce61e7bde297306ba ]
 
-For cases where icc_bw_set() can be called in callbaths that could
-deadlock against shrinker/reclaim, such as runpm resume, we need to
-decouple the icc locking.  Introduce a new icc_bw_lock for cases where
-we need to serialize bw aggregation and update to decouple that from
-paths that require memory allocation such as node/link creation/
-destruction.
+For metadata write out on the zoned mode, we call
+btrfs_check_meta_write_pointer() to check if an extent buffer to be written
+is aligned to the write pointer.
 
-Fixes this lockdep splat:
+We look up a block group containing the extent buffer for every extent
+buffer, which takes unnecessary effort as the writing extent buffers are
+mostly contiguous.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   6.2.0-rc8-debug+ #554 Not tainted
-   ------------------------------------------------------
-   ring0/132 is trying to acquire lock:
-   ffffff80871916d0 (&gmu->lock){+.+.}-{3:3}, at: a6xx_pm_resume+0xf0/0x234
+Introduce "zoned_bg" to cache the block group working on.  Also, while
+at it, rename "cache" to "block_group".
 
-   but task is already holding lock:
-   ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
-
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #4 (dma_fence_map){++++}-{0:0}:
-          __dma_fence_might_wait+0x74/0xc0
-          dma_resv_lockdep+0x1f4/0x2f4
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #3 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-          fs_reclaim_acquire+0x80/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          topology_parse_cpu_capacity+0x8c/0x178
-          get_cpu_for_node+0x88/0xc4
-          parse_cluster+0x1b0/0x28c
-          parse_cluster+0x8c/0x28c
-          init_cpu_topology+0x168/0x188
-          smp_prepare_cpus+0x24/0xf8
-          kernel_init_freeable+0x18c/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #2 (fs_reclaim){+.+.}-{0:0}:
-          __fs_reclaim_acquire+0x3c/0x48
-          fs_reclaim_acquire+0x54/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          kzalloc.constprop.0+0x14/0x20
-          icc_node_create_nolock+0x4c/0xc4
-          icc_node_create+0x38/0x58
-          qcom_icc_rpmh_probe+0x1b8/0x248
-          platform_probe+0x70/0xc4
-          really_probe+0x158/0x290
-          __driver_probe_device+0xc8/0xe0
-          driver_probe_device+0x44/0x100
-          __driver_attach+0xf8/0x108
-          bus_for_each_dev+0x78/0xc4
-          driver_attach+0x2c/0x38
-          bus_add_driver+0xd0/0x1d8
-          driver_register+0xbc/0xf8
-          __platform_driver_register+0x30/0x3c
-          qnoc_driver_init+0x24/0x30
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #1 (icc_lock){+.+.}-{3:3}:
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          icc_set_bw+0x88/0x2b4
-          _set_opp_bw+0x8c/0xd8
-          _set_opp+0x19c/0x300
-          dev_pm_opp_set_opp+0x84/0x94
-          a6xx_gmu_resume+0x18c/0x804
-          a6xx_pm_resume+0xf8/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          adreno_load_gpu+0xc4/0x17c
-          msm_open+0x50/0x120
-          drm_file_alloc+0x17c/0x228
-          drm_open_helper+0x74/0x118
-          drm_open+0xa0/0x144
-          drm_stub_open+0xd4/0xe4
-          chrdev_open+0x1b8/0x1e4
-          do_dentry_open+0x2f8/0x38c
-          vfs_open+0x34/0x40
-          path_openat+0x64c/0x7b4
-          do_filp_open+0x54/0xc4
-          do_sys_openat2+0x9c/0x100
-          do_sys_open+0x50/0x7c
-          __arm64_sys_openat+0x28/0x34
-          invoke_syscall+0x8c/0x128
-          el0_svc_common.constprop.0+0xa0/0x11c
-          do_el0_svc+0xac/0xbc
-          el0_svc+0x48/0xa0
-          el0t_64_sync_handler+0xac/0x13c
-          el0t_64_sync+0x190/0x194
-
-   -> #0 (&gmu->lock){+.+.}-{3:3}:
-          __lock_acquire+0xe00/0x1060
-          lock_acquire+0x1e0/0x2f8
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          a6xx_pm_resume+0xf0/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          pm_runtime_get_sync.isra.0+0x14/0x20
-          msm_gpu_submit+0x58/0x178
-          msm_job_run+0x78/0x150
-          drm_sched_main+0x290/0x370
-          kthread+0xf0/0x100
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-
-   Chain exists of:
-     &gmu->lock --> mmu_notifier_invalidate_range_start --> dma_fence_map
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(dma_fence_map);
-                                  lock(mmu_notifier_invalidate_range_start);
-                                  lock(dma_fence_map);
-     lock(&gmu->lock);
-
-    *** DEADLOCK ***
-
-   2 locks held by ring0/132:
-    #0: ffffff8087191170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64/0x150
-    #1: ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
-
-   stack backtrace:
-   CPU: 7 PID: 132 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #554
-   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-   Call trace:
-    dump_backtrace.part.0+0xb4/0xf8
-    show_stack+0x20/0x38
-    dump_stack_lvl+0x9c/0xd0
-    dump_stack+0x18/0x34
-    print_circular_bug+0x1b4/0x1f0
-    check_noncircular+0x78/0xac
-    __lock_acquire+0xe00/0x1060
-    lock_acquire+0x1e0/0x2f8
-    __mutex_lock+0xcc/0x3c8
-    mutex_lock_nested+0x30/0x44
-    a6xx_pm_resume+0xf0/0x234
-    adreno_runtime_resume+0x2c/0x38
-    pm_generic_runtime_resume+0x30/0x44
-    __rpm_callback+0x15c/0x174
-    rpm_callback+0x78/0x7c
-    rpm_resume+0x318/0x524
-    __pm_runtime_resume+0x78/0xbc
-    pm_runtime_get_sync.isra.0+0x14/0x20
-    msm_gpu_submit+0x58/0x178
-    msm_job_run+0x78/0x150
-    drm_sched_main+0x290/0x370
-    kthread+0xf0/0x100
-    ret_from_fork+0x10/0x20
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20230807171148.210181-7-robdclark@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 13bb483d32ab ("btrfs: zoned: activate metadata block group on write time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/btrfs/extent_io.c | 15 +++++++--------
+ fs/btrfs/extent_io.h |  2 ++
+ fs/btrfs/zoned.c     | 35 ++++++++++++++++++++---------------
+ fs/btrfs/zoned.h     |  6 ++----
+ 4 files changed, 31 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 5fac448c28fda..e15a92a79df1a 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -28,6 +28,7 @@ static LIST_HEAD(icc_providers);
- static int providers_count;
- static bool synced_state;
- static DEFINE_MUTEX(icc_lock);
-+static DEFINE_MUTEX(icc_bw_lock);
- static struct dentry *icc_debugfs_dir;
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index b3bf2e2704888..c2be1561a52cb 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1881,7 +1881,6 @@ static int submit_eb_page(struct page *page, struct btrfs_eb_write_context *ctx)
+ {
+ 	struct writeback_control *wbc = ctx->wbc;
+ 	struct address_space *mapping = page->mapping;
+-	struct btrfs_block_group *cache = NULL;
+ 	struct extent_buffer *eb;
+ 	int ret;
  
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
-@@ -631,7 +632,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
- 		return -EINVAL;
+@@ -1919,7 +1918,7 @@ static int submit_eb_page(struct page *page, struct btrfs_eb_write_context *ctx)
  
--	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
+ 	ctx->eb = eb;
  
- 	old_avg = path->reqs[0].avg_bw;
- 	old_peak = path->reqs[0].peak_bw;
-@@ -663,7 +664,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 		apply_constraints(path);
+-	if (!btrfs_check_meta_write_pointer(eb->fs_info, eb, &cache)) {
++	if (!btrfs_check_meta_write_pointer(eb->fs_info, ctx)) {
+ 		/*
+ 		 * If for_sync, this hole will be filled with
+ 		 * trasnsaction commit.
+@@ -1933,18 +1932,15 @@ static int submit_eb_page(struct page *page, struct btrfs_eb_write_context *ctx)
  	}
  
--	mutex_unlock(&icc_lock);
-+	mutex_unlock(&icc_bw_lock);
- 
- 	trace_icc_set_bw_end(path, ret);
- 
-@@ -872,6 +873,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 		return;
- 
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 
- 	node->provider = provider;
- 	list_add_tail(&node->node_list, &provider->nodes);
-@@ -900,6 +902,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 	node->avg_bw = 0;
- 	node->peak_bw = 0;
- 
-+	mutex_unlock(&icc_bw_lock);
- 	mutex_unlock(&icc_lock);
+ 	if (!lock_extent_buffer_for_io(eb, wbc)) {
+-		btrfs_revert_meta_write_pointer(cache, eb);
+-		if (cache)
+-			btrfs_put_block_group(cache);
++		btrfs_revert_meta_write_pointer(ctx->zoned_bg, eb);
+ 		free_extent_buffer(eb);
+ 		return 0;
+ 	}
+-	if (cache) {
++	if (ctx->zoned_bg) {
+ 		/*
+ 		 * Implies write in zoned mode. Mark the last eb in a block group.
+ 		 */
+-		btrfs_schedule_zone_finish_bg(cache, eb);
+-		btrfs_put_block_group(cache);
++		btrfs_schedule_zone_finish_bg(ctx->zoned_bg, eb);
+ 	}
+ 	write_one_eb(eb, wbc);
+ 	free_extent_buffer(eb);
+@@ -2057,6 +2053,9 @@ int btree_write_cache_pages(struct address_space *mapping,
+ 		ret = 0;
+ 	if (!ret && BTRFS_FS_ERROR(fs_info))
+ 		ret = -EROFS;
++
++	if (ctx.zoned_bg)
++		btrfs_put_block_group(ctx.zoned_bg);
+ 	btrfs_zoned_meta_io_unlock(fs_info);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(icc_node_add);
-@@ -1025,6 +1028,7 @@ void icc_sync_state(struct device *dev)
- 		return;
+diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
+index ecc1660007c11..f61b7896320a1 100644
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -97,6 +97,8 @@ struct extent_buffer {
+ struct btrfs_eb_write_context {
+ 	struct writeback_control *wbc;
+ 	struct extent_buffer *eb;
++	/* Block group @eb resides in. Only used for zoned mode. */
++	struct btrfs_block_group *zoned_bg;
+ };
  
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 	synced_state = true;
- 	list_for_each_entry(p, &icc_providers, provider_list) {
- 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
+ /*
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index d9e6df2da272c..92f11176216b5 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1759,30 +1759,35 @@ void btrfs_finish_ordered_zoned(struct btrfs_ordered_extent *ordered)
+ }
+ 
+ bool btrfs_check_meta_write_pointer(struct btrfs_fs_info *fs_info,
+-				    struct extent_buffer *eb,
+-				    struct btrfs_block_group **cache_ret)
++				    struct btrfs_eb_write_context *ctx)
+ {
+-	struct btrfs_block_group *cache;
+-	bool ret = true;
++	const struct extent_buffer *eb = ctx->eb;
++	struct btrfs_block_group *block_group = ctx->zoned_bg;
+ 
+ 	if (!btrfs_is_zoned(fs_info))
+ 		return true;
+ 
+-	cache = btrfs_lookup_block_group(fs_info, eb->start);
+-	if (!cache)
+-		return true;
++	if (block_group) {
++		if (block_group->start > eb->start ||
++		    block_group->start + block_group->length <= eb->start) {
++			btrfs_put_block_group(block_group);
++			block_group = NULL;
++			ctx->zoned_bg = NULL;
++		}
++	}
+ 
+-	if (cache->meta_write_pointer != eb->start) {
+-		btrfs_put_block_group(cache);
+-		cache = NULL;
+-		ret = false;
+-	} else {
+-		cache->meta_write_pointer = eb->start + eb->len;
++	if (!block_group) {
++		block_group = btrfs_lookup_block_group(fs_info, eb->start);
++		if (!block_group)
++			return true;
++		ctx->zoned_bg = block_group;
+ 	}
+ 
+-	*cache_ret = cache;
++	if (block_group->meta_write_pointer != eb->start)
++		return false;
++	block_group->meta_write_pointer = eb->start + eb->len;
+ 
+-	return ret;
++	return true;
+ }
+ 
+ void btrfs_revert_meta_write_pointer(struct btrfs_block_group *cache,
+diff --git a/fs/btrfs/zoned.h b/fs/btrfs/zoned.h
+index 27322b926038c..49d5bd87245c5 100644
+--- a/fs/btrfs/zoned.h
++++ b/fs/btrfs/zoned.h
+@@ -59,8 +59,7 @@ void btrfs_redirty_list_add(struct btrfs_transaction *trans,
+ bool btrfs_use_zone_append(struct btrfs_bio *bbio);
+ void btrfs_record_physical_zoned(struct btrfs_bio *bbio);
+ bool btrfs_check_meta_write_pointer(struct btrfs_fs_info *fs_info,
+-				    struct extent_buffer *eb,
+-				    struct btrfs_block_group **cache_ret);
++				    struct btrfs_eb_write_context *ctx);
+ void btrfs_revert_meta_write_pointer(struct btrfs_block_group *cache,
+ 				     struct extent_buffer *eb);
+ int btrfs_zoned_issue_zeroout(struct btrfs_device *device, u64 physical, u64 length);
+@@ -190,8 +189,7 @@ static inline void btrfs_record_physical_zoned(struct btrfs_bio *bbio)
+ }
+ 
+ static inline bool btrfs_check_meta_write_pointer(struct btrfs_fs_info *fs_info,
+-			       struct extent_buffer *eb,
+-			       struct btrfs_block_group **cache_ret)
++						  struct btrfs_eb_write_context *ctx)
+ {
+ 	return true;
+ }
 -- 
 2.40.1
 
