@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0012E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F365C433C8;
-	Wed, 20 Sep 2023 12:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB782E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EC1C433C9;
+	Wed, 20 Sep 2023 12:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211782;
-	bh=oNO3kLr1VHFYbsyjgswHaXDsj5kgPmyf2S4K9JnvXsA=;
+	s=korg; t=1695211785;
+	bh=SlRzDM9tr9cJFQfxuyPO3RGfrFbHwaw3DMHgeKWNvc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNnu8txSW9FcuMv2jJMyYmVmr4STWKMY2h7yxHY25SC9enh3/9UoCHY3gVH/wBB5Y
-	 IBw/rjLhKdRn3RhPrOgZM05xk0Ry9d/CGg6E2Eb47zVnWMObm/boBDNuD9dfQiZB8O
-	 4zj9OjTuj9iP5N4K/Ec2warelm3mu+HPU8v1+SNk=
+	b=F0ij6K9H97o3yGTpJsd9DDbHMu9USRuxODWmE2TGiwYZ+dcsPYAg9m8N6KNJS3OM1
+	 0jEpDakiLcWWkikgbk2NWe3pelmUfx7bR5KorxNOm/Z2vyb6mxPVxvGHi+iaoYS0um
+	 10ZKD0zn4Z5ZUU6R8EpXpqeLa3UC7+LfOhQmbkVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 007/273] USB: serial: option: add FOXCONN T99W368/T99W373 product
-Date: Wed, 20 Sep 2023 13:27:27 +0200
-Message-ID: <20230920112846.662056862@linuxfoundation.org>
+	Aaron Skomra <skomra@gmail.com>,
+	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 4.19 008/273] HID: wacom: remove the battery when the EKR is off
+Date: Wed, 20 Sep 2023 13:27:28 +0200
+Message-ID: <20230920112846.690909769@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,66 +41,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
 
-commit 4d9488b294e1f8353bbcadc4c7172a7f7490199b upstream.
+commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
 
-The difference of T99W368 and T99W373 is the chip solution.
-T99W368 is designed based on Qualcomm SDX65 and T99W373 is SDX62.
+Currently the EKR battery remains even after we stop getting information
+from the device. This can lead to a stale battery persisting indefinitely
+in userspace.
 
-Test evidence as below:
-T:  Bus=01 Lev=02 Prnt=05 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0f0 Rev=05.04
-S:  Manufacturer=FII
-S:  Product=OLYMPIC USB WWAN Adapter
-S:  SerialNumber=78ada8c4
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+The remote sends a heartbeat every 10 seconds. Delete the battery if we
+miss two heartbeats (after 21 seconds). Restore the battery once we see
+a heartbeat again.
 
-T:  Bus=01 Lev=02 Prnt=05 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0ee Rev=05.04
-S:  Manufacturer=FII
-S:  Product=OLYMPIC USB WWAN Adapter
-S:  SerialNumber=78ada8d5
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-
-Both of them share the same port configuration:
-0&1: MBIM, 2: Modem, 3:GNSS, 4:NMEA, 5:Diag
-GNSS port don't use serial driver.
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Aaron Skomra <skomra@gmail.com>
+Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
+CC: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/wacom.h     |    1 +
+ drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
+ drivers/hid/wacom_wac.c |    1 +
+ drivers/hid/wacom_wac.h |    1 +
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2235,6 +2235,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
-+	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
-+	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
- 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+--- a/drivers/hid/wacom.h
++++ b/drivers/hid/wacom.h
+@@ -156,6 +156,7 @@ struct wacom_remote {
+ 		struct input_dev *input;
+ 		bool registered;
+ 		struct wacom_battery battery;
++		ktime_t active_time;
+ 	} remotes[WACOM_MAX_REMOTES];
+ };
+ 
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2500,6 +2500,18 @@ fail:
+ 	return;
+ }
+ 
++static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
++{
++	struct wacom_remote *remote = wacom->remote;
++
++	if (remote->remotes[index].battery.battery) {
++		devres_release_group(&wacom->hdev->dev,
++				     &remote->remotes[index].battery.bat_desc);
++		remote->remotes[index].battery.battery = NULL;
++		remote->remotes[index].active_time = 0;
++	}
++}
++
+ static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
+ {
+ 	struct wacom_remote *remote = wacom->remote;
+@@ -2514,9 +2526,7 @@ static void wacom_remote_destroy_one(str
+ 			remote->remotes[i].registered = false;
+ 			spin_unlock_irqrestore(&remote->remote_lock, flags);
+ 
+-			if (remote->remotes[i].battery.battery)
+-				devres_release_group(&wacom->hdev->dev,
+-						     &remote->remotes[i].battery.bat_desc);
++			wacom_remote_destroy_battery(wacom, i);
+ 
+ 			if (remote->remotes[i].group.name)
+ 				devres_release_group(&wacom->hdev->dev,
+@@ -2524,7 +2534,6 @@ static void wacom_remote_destroy_one(str
+ 
+ 			remote->remotes[i].serial = 0;
+ 			remote->remotes[i].group.name = NULL;
+-			remote->remotes[i].battery.battery = NULL;
+ 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
+ 		}
+ 	}
+@@ -2609,6 +2618,9 @@ static int wacom_remote_attach_battery(s
+ 	if (remote->remotes[index].battery.battery)
+ 		return 0;
+ 
++	if (!remote->remotes[index].active_time)
++		return 0;
++
+ 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
+ 		return 0;
+ 
+@@ -2624,6 +2636,7 @@ static void wacom_remote_work(struct wor
+ {
+ 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
+ 	struct wacom_remote *remote = wacom->remote;
++	ktime_t kt = ktime_get();
+ 	struct wacom_remote_data data;
+ 	unsigned long flags;
+ 	unsigned int count;
+@@ -2650,6 +2663,10 @@ static void wacom_remote_work(struct wor
+ 		serial = data.remote[i].serial;
+ 		if (data.remote[i].connected) {
+ 
++			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
++			    && remote->remotes[i].active_time != 0)
++				wacom_remote_destroy_battery(wacom, i);
++
+ 			if (remote->remotes[i].serial == serial) {
+ 				wacom_remote_attach_battery(wacom, i);
+ 				continue;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1077,6 +1077,7 @@ static int wacom_remote_irq(struct wacom
+ 	if (index < 0 || !remote->remotes[index].registered)
+ 		goto out;
+ 
++	remote->remotes[i].active_time = ktime_get();
+ 	input = remote->remotes[index].input;
+ 
+ 	input_report_key(input, BTN_0, (data[9] & 0x01));
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -19,6 +19,7 @@
+ #define WACOM_NAME_MAX		64
+ #define WACOM_MAX_REMOTES	5
+ #define WACOM_STATUS_UNKNOWN	255
++#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
+ 
+ /* packet length for individual models */
+ #define WACOM_PKGLEN_BBFUN	 9
 
 
