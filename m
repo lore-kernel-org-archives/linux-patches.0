@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CC72E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62E9C433C8;
-	Wed, 20 Sep 2023 12:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634A2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D898C433C8;
+	Wed, 20 Sep 2023 12:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211799;
-	bh=8SMdFcn7AjwRzPpdrUmYaLd8KPt8Vhby9vfFX8KhO8Q=;
+	s=korg; t=1695211801;
+	bh=/wqa7FwaYV25dU3kQ2YI/8pH/P+1gQ7UxBTvFZHlMbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5OiUipvyA+kLWQXFiOv9jTIOqFnMmftiMdEnov+7AJZnz9a/HbpzoF0D7w/WUcAn
-	 jcQc52+QJpqIMu2/ZqTIH6WPxsIm5BZKKgkwDFGi2LBXWwu+KelgYSRmmt2ub5nngS
-	 MK27Q0esM90f4Di8wrvwl/s2XVcstSryyUzmwLvk=
+	b=QW7Qj0H4OnnGA2eIW8w1nc6JQZSfBmOaJ10K3BtESXc8Sh9J+qyvgOZUzFUmvA82U
+	 WFL2q8UpCLwitlJG1dJ6s5Z8k3Asi1uEI9sk4IkT6b3yyv8sI4I0LUinDSN5XwiVth
+	 +0O5xNLRUBz4qsrk3hzIlCLwNhS+YE8xBcYafHjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Christensen <drc@linux.vnet.ibm.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 032/273] bnx2x: fix page fault following EEH recovery
-Date: Wed, 20 Sep 2023 13:27:52 +0200
-Message-ID: <20230920112847.415160592@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 041/273] Revert "net: macsec: preserve ingress frame ordering"
+Date: Wed, 20 Sep 2023 13:28:01 +0200
+Message-ID: <20230920112847.690892221@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,55 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Christensen <drc@linux.vnet.ibm.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 7ebe4eda4265642859507d1b3ca330d8c196cfe5 ]
+commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
 
-In the last step of the EEH recovery process, the EEH driver calls into
-bnx2x_io_resume() to re-initialize the NIC hardware via the function
-bnx2x_nic_load().  If an error occurs during bnx2x_nic_load(), OS and
-hardware resources are released and an error code is returned to the
-caller.  When called from bnx2x_io_resume(), the return code is ignored
-and the network interface is brought up unconditionally.  Later attempts
-to send a packet via this interface result in a page fault due to a null
-pointer reference.
+This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
 
-This patch checks the return code of bnx2x_nic_load(), prints an error
-message if necessary, and does not enable the interface.
+It was trying to work around an issue at the crypto layer by excluding
+ASYNC implementations of gcm(aes), because a bug in the AESNI version
+caused reordering when some requests bypassed the cryptd queue while
+older requests were still pending on the queue.
 
-Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
+reordering problem on gcm"), which pre-dates ab046a5d4be4.
+
+Herbert Xu confirmed that all ASYNC implementations are expected to
+maintain the ordering of completions wrt requests, so we can use them
+in MACsec.
+
+On my test machine, this restores the performance of a single netperf
+instance, from 1.4Gbps to 4.4Gbps.
+
+Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
+Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
+Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
+Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-index 91ddde4d647c6..d21b22ed0b60a 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -14464,11 +14464,16 @@ static void bnx2x_io_resume(struct pci_dev *pdev)
- 	bp->fw_seq = SHMEM_RD(bp, func_mb[BP_FW_MB_IDX(bp)].drv_mb_header) &
- 							DRV_MSG_SEQ_NUMBER_MASK;
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1315,8 +1315,7 @@ static struct crypto_aead *macsec_alloc_
+ 	struct crypto_aead *tfm;
+ 	int ret;
  
--	if (netif_running(dev))
--		bnx2x_nic_load(bp, LOAD_NORMAL);
-+	if (netif_running(dev)) {
-+		if (bnx2x_nic_load(bp, LOAD_NORMAL)) {
-+			netdev_err(bp->dev, "Error during driver initialization, try unloading/reloading the driver\n");
-+			goto done;
-+		}
-+	}
+-	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
+-	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
++	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
  
- 	netif_device_attach(dev);
- 
-+done:
- 	rtnl_unlock();
- }
- 
--- 
-2.40.1
-
+ 	if (IS_ERR(tfm))
+ 		return tfm;
 
 
