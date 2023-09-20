@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C4C15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B36C43391;
-	Wed, 20 Sep 2023 12:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0553315AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB2EC433CC;
+	Wed, 20 Sep 2023 12:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213556;
-	bh=MWn8rNWEXCBI3dmlx4PY9Qp5TCptfbIg5BHviAx/sP8=;
+	s=korg; t=1695213558;
+	bh=4lPzXCtNT94OWHky/5+DeZDyLX6NcB1TB4MGZ74IQ9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVz7RlOvmReIGOvwmQpEEVW7AWlx4bToFAyYUNZN36ZjbdzSE8VQdhA+9jMA5Inia
-	 Ve9H9RatUxqt9lIgR3vp7iV1OUPBjBzHWynOBPNdrkd5KQSmdkdjElqe3O7ad7m9O4
-	 vsVQBe/aNCbBSCj7XyCmLotYzT2URX+eWwV8KPXc=
+	b=hfkvrGPFe+9C2Bsp1SqBM7OdG5yaJiwtbao75WYNu+hhKFOqhsokImOcMPI9Hrfu9
+	 H5QDn4JGeE/p/jGv2bniMnI7bc36u/N+XAV951r7uI/EB5SYjVrFsPCBHYWQPBoEyL
+	 8i4MNGD/GDbDnDdNJ0ZXu/2BswqdKpkrGLVaBnwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanmeisi <ruan.meisi@zte.com.cn>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 5.4 281/367] fuse: nlookup missing decrement in fuse_direntplus_link
-Date: Wed, 20 Sep 2023 13:30:58 +0200
-Message-ID: <20230920112905.837442296@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 282/367] btrfs: dont start transaction when joining with TRANS_JOIN_NOSTART
+Date: Wed, 20 Sep 2023 13:30:59 +0200
+Message-ID: <20230920112905.864100438@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -39,47 +39,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ruanmeisi <ruan.meisi@zte.com.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit b8bd342d50cbf606666488488f9fea374aceb2d5 upstream.
+commit 4490e803e1fe9fab8db5025e44e23b55df54078b upstream.
 
-During our debugging of glusterfs, we found an Assertion failed error:
-inode_lookup >= nlookup, which was caused by the nlookup value in the
-kernel being greater than that in the FUSE file system.
+When joining a transaction with TRANS_JOIN_NOSTART, if we don't find a
+running transaction we end up creating one. This goes against the purpose
+of TRANS_JOIN_NOSTART which is to join a running transaction if its state
+is at or below the state TRANS_STATE_COMMIT_START, otherwise return an
+-ENOENT error and don't start a new transaction. So fix this to not create
+a new transaction if there's no running transaction at or below that
+state.
 
-The issue was introduced by fuse_direntplus_link, where in the function,
-fuse_iget increments nlookup, and if d_splice_alias returns failure,
-fuse_direntplus_link returns failure without decrementing nlookup
-https://github.com/gluster/glusterfs/pull/4081
-
-Signed-off-by: ruanmeisi <ruan.meisi@zte.com.cn>
-Fixes: 0b05b18381ee ("fuse: implement NFS-like readdirplus support")
-Cc: <stable@vger.kernel.org> # v3.9
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+CC: stable@vger.kernel.org # 4.14+
+Fixes: a6d155d2e363 ("Btrfs: fix deadlock between fiemap and transaction commits")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/readdir.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/btrfs/transaction.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -238,8 +238,16 @@ retry:
- 			dput(dentry);
- 			dentry = alias;
- 		}
--		if (IS_ERR(dentry))
-+		if (IS_ERR(dentry)) {
-+			if (!IS_ERR(inode)) {
-+				struct fuse_inode *fi = get_fuse_inode(inode);
-+
-+				spin_lock(&fi->lock);
-+				fi->nlookup--;
-+				spin_unlock(&fi->lock);
-+			}
- 			return PTR_ERR(dentry);
-+		}
- 	}
- 	if (fc->readdirplus_auto)
- 		set_bit(FUSE_I_INIT_RDPLUS, &get_fuse_inode(inode)->state);
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -190,10 +190,11 @@ loop:
+ 	spin_unlock(&fs_info->trans_lock);
+ 
+ 	/*
+-	 * If we are ATTACH, we just want to catch the current transaction,
+-	 * and commit it. If there is no transaction, just return ENOENT.
++	 * If we are ATTACH or TRANS_JOIN_NOSTART, we just want to catch the
++	 * current transaction, and commit it. If there is no transaction, just
++	 * return ENOENT.
+ 	 */
+-	if (type == TRANS_ATTACH)
++	if (type == TRANS_ATTACH || type == TRANS_JOIN_NOSTART)
+ 		return -ENOENT;
+ 
+ 	/*
 
 
