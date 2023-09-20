@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200F11643E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E5EC433C9;
-	Wed, 20 Sep 2023 12:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B5E1643E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC63C433C8;
+	Wed, 20 Sep 2023 12:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213866;
-	bh=+LrDnkG1e0nMGnGc3/lss6z/cUgr/3c5vzz1l9iWqag=;
+	s=korg; t=1695213868;
+	bh=3EM78+EkQ0Jf+QvOmiCvBpDE22eTVW3s6FwEpNvYIRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI4n82bQBD1CywLIG/fR5q97JwqosR0QybOp25oJIyupUGNTXzBzFVJQwvBZZQVrW
-	 hZa/u3CNk1zHxUmYAns7euvf1MtAHi+2B60v7Y6X5FrA3d9hjHYNTKKpik9bMEJPPk
-	 E0KJ1zEKgpw25rJslD+XInM4u8cP8u57luExkBiI=
+	b=X7mp/tbn0TmCpXc9f2anbv9+ce0pgo0pBkV2mimgUwp+NcLi+VOZfbLaAkxLBpFhb
+	 U7jLWCFsgvFmBoA3F7O52amN2ycRFk+4WQTx3Z79OyBHGEZtqd+C4EcVt7iu68rSuB
+	 JkhMoC3pgZc4k5Hrympq4k1JULE0uXZOO8zl4F84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Shiu <Will.Shiu@mediatek.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Abhishek Mainkar <abmainkar@nvidia.com>,
+	Bob Moore <robert.moore@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/110] locks: fix KASAN: use-after-free in trace_event_raw_event_filelock_lock
-Date: Wed, 20 Sep 2023 13:31:01 +0200
-Message-ID: <20230920112830.510497713@linuxfoundation.org>
+Subject: [PATCH 5.15 004/110] ACPICA: Add AML_NO_OPERAND_RESOLVE flag to Timer
+Date: Wed, 20 Sep 2023 13:31:02 +0200
+Message-ID: <20230920112830.548764406@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,85 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Shiu <Will.Shiu@mediatek.com>
+From: Abhishek Mainkar <abmainkar@nvidia.com>
 
-[ Upstream commit 74f6f5912693ce454384eaeec48705646a21c74f ]
+[ Upstream commit 3a21ffdbc825e0919db9da0e27ee5ff2cc8a863e ]
 
-As following backtrace, the struct file_lock request , in posix_lock_inode
-is free before ftrace function using.
-Replace the ftrace function ahead free flow could fix the use-after-free
-issue.
+ACPICA commit 90310989a0790032f5a0140741ff09b545af4bc5
 
-[name:report&]===============================================
-BUG:KASAN: use-after-free in trace_event_raw_event_filelock_lock+0x80/0x12c
-[name:report&]Read at addr f6ffff8025622620 by task NativeThread/16753
-[name:report_hw_tags&]Pointer tag: [f6], memory tag: [fe]
-[name:report&]
-BT:
-Hardware name: MT6897 (DT)
-Call trace:
- dump_backtrace+0xf8/0x148
- show_stack+0x18/0x24
- dump_stack_lvl+0x60/0x7c
- print_report+0x2c8/0xa08
- kasan_report+0xb0/0x120
- __do_kernel_fault+0xc8/0x248
- do_bad_area+0x30/0xdc
- do_tag_check_fault+0x1c/0x30
- do_mem_abort+0x58/0xbc
- el1_abort+0x3c/0x5c
- el1h_64_sync_handler+0x54/0x90
- el1h_64_sync+0x68/0x6c
- trace_event_raw_event_filelock_lock+0x80/0x12c
- posix_lock_inode+0xd0c/0xd60
- do_lock_file_wait+0xb8/0x190
- fcntl_setlk+0x2d8/0x440
-...
-[name:report&]
-[name:report&]Allocated by task 16752:
-...
- slab_post_alloc_hook+0x74/0x340
- kmem_cache_alloc+0x1b0/0x2f0
- posix_lock_inode+0xb0/0xd60
-...
- [name:report&]
- [name:report&]Freed by task 16752:
-...
-  kmem_cache_free+0x274/0x5b0
-  locks_dispose_list+0x3c/0x148
-  posix_lock_inode+0xc40/0xd60
-  do_lock_file_wait+0xb8/0x190
-  fcntl_setlk+0x2d8/0x440
-  do_fcntl+0x150/0xc18
-...
+According to the ACPI specification 19.6.134, no argument is required to be passed for ASL Timer instruction. For taking care of no argument, AML_NO_OPERAND_RESOLVE flag is added to ASL Timer instruction opcode.
 
-Signed-off-by: Will Shiu <Will.Shiu@mediatek.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+When ASL timer instruction interpreted by ACPI interpreter, getting error. After adding AML_NO_OPERAND_RESOLVE flag to ASL Timer instruction opcode, issue is not observed.
+
+=============================================================
+UBSAN: array-index-out-of-bounds in acpica/dswexec.c:401:12 index -1 is out of range for type 'union acpi_operand_object *[9]'
+CPU: 37 PID: 1678 Comm: cat Not tainted
+6.0.0-dev-th500-6.0.y-1+bcf8c46459e407-generic-64k
+HW name: NVIDIA BIOS v1.1.1-d7acbfc-dirty 12/19/2022 Call trace:
+ dump_backtrace+0xe0/0x130
+ show_stack+0x20/0x60
+ dump_stack_lvl+0x68/0x84
+ dump_stack+0x18/0x34
+ ubsan_epilogue+0x10/0x50
+ __ubsan_handle_out_of_bounds+0x80/0x90
+ acpi_ds_exec_end_op+0x1bc/0x6d8
+ acpi_ps_parse_loop+0x57c/0x618
+ acpi_ps_parse_aml+0x1e0/0x4b4
+ acpi_ps_execute_method+0x24c/0x2b8
+ acpi_ns_evaluate+0x3a8/0x4bc
+ acpi_evaluate_object+0x15c/0x37c
+ acpi_evaluate_integer+0x54/0x15c
+ show_power+0x8c/0x12c [acpi_power_meter]
+
+Link: https://github.com/acpica/acpica/commit/90310989
+Signed-off-by: Abhishek Mainkar <abmainkar@nvidia.com>
+Signed-off-by: Bob Moore <robert.moore@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/locks.c | 2 +-
+ drivers/acpi/acpica/psopcode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/locks.c b/fs/locks.c
-index 881fd16905c61..4899a4666f24d 100644
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -1339,6 +1339,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
-  out:
- 	spin_unlock(&ctx->flc_lock);
- 	percpu_up_read(&file_rwsem);
-+	trace_posix_lock_inode(inode, request, error);
- 	/*
- 	 * Free any unused locks.
- 	 */
-@@ -1347,7 +1348,6 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 	if (new_fl2)
- 		locks_free_lock(new_fl2);
- 	locks_dispose_list(&dispose);
--	trace_posix_lock_inode(inode, request, error);
+diff --git a/drivers/acpi/acpica/psopcode.c b/drivers/acpi/acpica/psopcode.c
+index 3e80eb1a5f35c..590326c200a28 100644
+--- a/drivers/acpi/acpica/psopcode.c
++++ b/drivers/acpi/acpica/psopcode.c
+@@ -603,7 +603,7 @@ const struct acpi_opcode_info acpi_gbl_aml_op_info[AML_NUM_OPCODES] = {
  
- 	return error;
- }
+ /* 7E */ ACPI_OP("Timer", ARGP_TIMER_OP, ARGI_TIMER_OP, ACPI_TYPE_ANY,
+ 			 AML_CLASS_EXECUTE, AML_TYPE_EXEC_0A_0T_1R,
+-			 AML_FLAGS_EXEC_0A_0T_1R),
++			 AML_FLAGS_EXEC_0A_0T_1R | AML_NO_OPERAND_RESOLVE),
+ 
+ /* ACPI 5.0 opcodes */
+ 
 -- 
 2.40.1
 
