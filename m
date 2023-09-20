@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2551168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24421C433C7;
-	Wed, 20 Sep 2023 12:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56633168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0027C433C8;
+	Wed, 20 Sep 2023 12:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214063;
-	bh=Js2Z/+OiwfNAfUe7ebVBU/aFs/v00X/oXs7VpxUg8tg=;
+	s=korg; t=1695214066;
+	bh=SuMJ1EoSedoSm01nX3JegMrtV/eqtIBQ5teWoWKrVz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiffLWt7bYX8KMKG8oxHjZFVhYj9DwXz5ZHhNAl3Z1wynYjkMjGDjmFYxR7GXFe58
-	 9Vapt5FztGCk0UMjSJiXx1ev5gksRsN/ts78S0AGrdBGMv/azt0sNPnoIB2xpnxqF3
-	 TxzkNk19y2sWc4pv3wSfU9pVHDIrdRiMtAOYLBOQ=
+	b=Kpq5PHb+5HXHCS8LfwPBK1GRL7r0LrNfmfVZcRGaiGt2tn1IHkrR3FhtmzN6dt1ZB
+	 xruUp/Q+21YxXu2MLZM9j2jfAeAdKfBuSFENbvYz5JToGZkNUJ64O2hjJXECf1Zfzf
+	 lBpChYwLg2Pljph5n/zJAJ9ldh/YHyFxGEHKRgoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 099/110] tracing: Have option files inc the trace array ref count
-Date: Wed, 20 Sep 2023 13:32:37 +0200
-Message-ID: <20230920112834.131292627@linuxfoundation.org>
+	Zhi Li <yieli@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 100/110] nfsd: fix change_info in NFSv4 RENAME replies
+Date: Wed, 20 Sep 2023 13:32:38 +0200
+Message-ID: <20230920112834.161343052@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -44,69 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 7e2cfbd2d3c86afcd5c26b5c4b1dd251f63c5838 upstream.
+commit fdd2630a7398191e84822612e589062063bd4f3d upstream.
 
-The option files update the options for a given trace array. For an
-instance, if the file is opened and the instance is deleted, reading or
-writing to the file will cause a use after free.
+nfsd sends the transposed directory change info in the RENAME reply. The
+source directory is in save_fh and the target is in current_fh.
 
-Up the ref count of the trace_array when an option file is opened.
-
-Link: https://lkml.kernel.org/r/20230907024804.086679464@goodmis.org
-Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Fixes: 8530dec63e7b4 ("tracing: Add tracing_check_open_get_tr()")
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: Zhi Li <yieli@redhat.com>
+Reported-by: Benjamin Coddington <bcodding@redhat.com>
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2218844
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8830,12 +8830,33 @@ trace_options_write(struct file *filp, c
- 	return cnt;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -895,8 +895,8 @@ nfsd4_rename(struct svc_rqst *rqstp, str
+ 			     rename->rn_tname, rename->rn_tnamelen);
+ 	if (status)
+ 		return status;
+-	set_change_info(&rename->rn_sinfo, &cstate->current_fh);
+-	set_change_info(&rename->rn_tinfo, &cstate->save_fh);
++	set_change_info(&rename->rn_sinfo, &cstate->save_fh);
++	set_change_info(&rename->rn_tinfo, &cstate->current_fh);
+ 	return nfs_ok;
  }
  
-+static int tracing_open_options(struct inode *inode, struct file *filp)
-+{
-+	struct trace_option_dentry *topt = inode->i_private;
-+	int ret;
-+
-+	ret = tracing_check_open_get_tr(topt->tr);
-+	if (ret)
-+		return ret;
-+
-+	filp->private_data = inode->i_private;
-+	return 0;
-+}
-+
-+static int tracing_release_options(struct inode *inode, struct file *file)
-+{
-+	struct trace_option_dentry *topt = file->private_data;
-+
-+	trace_array_put(topt->tr);
-+	return 0;
-+}
- 
- static const struct file_operations trace_options_fops = {
--	.open = tracing_open_generic,
-+	.open = tracing_open_options,
- 	.read = trace_options_read,
- 	.write = trace_options_write,
- 	.llseek	= generic_file_llseek,
-+	.release = tracing_release_options,
- };
- 
- /*
 
 
