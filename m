@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BCD30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D956C433C8;
-	Wed, 20 Sep 2023 12:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA0730FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E79C433C9;
+	Wed, 20 Sep 2023 12:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212578;
-	bh=lLhMnrzd7qw5v6hi8HpGn6DSxeUChSldXhANJg0VeO4=;
+	s=korg; t=1695212581;
+	bh=jPNUywYirS1I2lr2XEvXpKjPcSimCaQUgMa0rLBJL/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URPmF5UHk7P0WIJEx7DoJUEsxoMw3DpSogN4cmQT13jxNzGKuSDz37SDPfKpwcnEx
-	 ADfYUXAO/NFUcGjKI2+T8IuK8If2BlwzJL1Jib3DM4btvegZEkK0JBjljIoHxHcCcK
-	 6ymaAOSqmEptgw2DDZBaNKKUwqQ3hPr67KDEiE0A=
+	b=NiTWxQfzgBfoRYOYPW4dmY1mWeuU4zvNZWHdGTofIiVmSf4mMZDLoVSR3cOef5PIS
+	 WB9AEliIdn130CzkSpcUHdQywE+p3UMyMAHCIHioutbiMRI9xD39QDYnitu0j4+riM
+	 Zo9UXIEQMPr9VHJCR9v6RCYNsoNXyKh15emkTsN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Uday M Bhat <uday.m.bhat@intel.com>,
-	Jairaj Arava <jairaj.arava@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 27/83] ASoC: Intel: sof_sdw: Update BT offload config for soundwire config
-Date: Wed, 20 Sep 2023 13:31:17 +0200
-Message-ID: <20230920112827.751203739@linuxfoundation.org>
+Subject: [PATCH 5.10 28/83] ALSA: hda: intel-dsp-cfg: add LunarLake support
+Date: Wed, 20 Sep 2023 13:31:18 +0200
+Message-ID: <20230920112827.790355688@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -45,41 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday M Bhat <uday.m.bhat@intel.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit a14aded9299187bb17ef90700eb2cf1120ef5885 ]
+[ Upstream commit d2852b8c045ebd31d753b06f2810df5be30ed56a ]
 
-For soundwire config, SSP1 is used for BT offload. This is enabled
-in sof_sdw_quirk_table
+One more PCI ID for the road.
 
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Uday M Bhat <uday.m.bhat@intel.com>
-Signed-off-by: Jairaj Arava <jairaj.arava@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230731214257.444605-5-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20230802150105.24604-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/hda/intel-dsp-config.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index f36a0fda1b6ae..1955d277fdf20 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -214,7 +214,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Rex"),
- 		},
--		.driver_data = (void *)(SOF_SDW_PCH_DMIC),
-+		.driver_data = (void *)(SOF_SDW_PCH_DMIC |
-+					SOF_BT_OFFLOAD_SSP(1) |
-+					SOF_SSP_BT_OFFLOAD_PRESENT),
+diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
+index f96e70c85f84a..801c89a3a1b6f 100644
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -368,6 +368,14 @@ static const struct config_entry config_table[] = {
  	},
- 	/* LunarLake devices */
- 	{
+ #endif
+ 
++/* Lunar Lake */
++#if IS_ENABLED(CONFIG_SND_SOC_SOF_LUNARLAKE)
++	/* Lunarlake-P */
++	{
++		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
++		.device = PCI_DEVICE_ID_INTEL_HDA_LNL_P,
++	},
++#endif
+ };
+ 
+ static const struct config_entry *snd_intel_dsp_find_config
 -- 
 2.40.1
 
