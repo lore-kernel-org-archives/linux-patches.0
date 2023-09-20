@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0155630FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBE1C433C8;
-	Wed, 20 Sep 2023 12:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFBF30FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2E5C433C8;
+	Wed, 20 Sep 2023 12:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212347;
-	bh=gMXiOkccmfJ+TW4QLoMO80+9U6lmPsOvOS+KCyAgs6Y=;
+	s=korg; t=1695212350;
+	bh=crmP3BSp9aJ4JvPV0ALJy4g3WRmb9K6qDyGhD8SXABE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQ9z1G6hdOfcqO796xp0yNug/1kNjH3qZKmiIw4seMjBQcs0kP/qlfCTAZf6WRHJG
-	 CqzFl6a86gKLCv4s+3lGPVacM/c0ofH5HBXh5rYJ42jIbdPyVEsftUtUr7Lt4h2lLT
-	 fWxPGcXfldXExQjwk0P0x6vpxfJdPzpvDwead6e8=
+	b=rj7CMP63InP3wGRtVhjjLVXRtJjORTuNzuSni2kQa24qp+LVr4i7a6H4L5cJwaWCp
+	 zo6QW+YAh+tEgZptZxQzxNWBTHNxopbYEkmhquahDFMx2744b/60V4mgVj3SOw0LCB
+	 btcPGpS8Uxv0PGCWPHz/MhT/SBS7P/27UHp2zWyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wesley Chalmers <wesley.chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 4.19 235/273] drm/amd/display: Fix a bug when searching for insert_above_mpcc
-Date: Wed, 20 Sep 2023 13:31:15 +0200
-Message-ID: <20230920112853.626126584@linuxfoundation.org>
+	Mark ODonovan <shiftee@posteo.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 244/273] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
+Date: Wed, 20 Sep 2023 13:31:24 +0200
+Message-ID: <20230920112853.869513016@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -43,43 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Chalmers <wesley.chalmers@amd.com>
+From: Mark O'Donovan <shiftee@posteo.net>
 
-commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
+[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
 
-[WHY]
-Currently, when insert_plane is called with insert_above_mpcc
-parameter that is equal to tree->opp_list, the function returns NULL.
+During NVMeTCP Authentication a controller can trigger a kernel
+oops by specifying the 8192 bit Diffie Hellman group and passing
+a correctly sized, but zeroed Diffie Hellamn value.
+mpi_cmp_ui() was detecting this if the second parameter was 0,
+but 1 is passed from dh_is_pubkey_valid(). This causes the null
+pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
 
-[HOW]
-Instead, the function should insert the plane at the top of the tree.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/mpi/mpi-cmp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-@@ -193,8 +193,9 @@ struct mpcc *mpc1_insert_plane(
- 		/* check insert_above_mpcc exist in tree->opp_list */
- 		struct mpcc *temp_mpcc = tree->opp_list;
+diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
+index d25e9e96c310f..ceaebe181cd70 100644
+--- a/lib/mpi/mpi-cmp.c
++++ b/lib/mpi/mpi-cmp.c
+@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
+ 	mpi_limb_t limb = v;
  
--		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
--			temp_mpcc = temp_mpcc->mpcc_bot;
-+		if (temp_mpcc != insert_above_mpcc)
-+			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
-+				temp_mpcc = temp_mpcc->mpcc_bot;
- 		if (temp_mpcc == NULL)
- 			return NULL;
- 	}
+ 	mpi_normalize(u);
+-	if (!u->nlimbs && !limb)
+-		return 0;
++	if (u->nlimbs == 0) {
++		if (v == 0)
++			return 0;
++		else
++			return -1;
++	}
+ 	if (u->sign)
+ 		return -1;
+ 	if (u->nlimbs > 1)
+-- 
+2.40.1
+
 
 
