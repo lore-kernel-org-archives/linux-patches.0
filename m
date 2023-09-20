@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCECB2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BBBC433CB;
-	Wed, 20 Sep 2023 12:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F002E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DC6C433C7;
+	Wed, 20 Sep 2023 12:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211898;
-	bh=j/uUKOs8LvheqfUFxleaJiT5L01K06u0C2pQgbHrrJ0=;
+	s=korg; t=1695211901;
+	bh=k9zkcSZAVnYfNNBa796/uXnxE///tubSNcMhpzBgMWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O27H6UzADH9YU5KAoTQFlLmubaovDg0gPU+cOo1JMZI9E8SNcYFfI9/einZ6y2Vu4
-	 zOX4k+QZJ6RpUlG1fZicEiBSAd0pborlaom+xFe1sh+aTF6KSJK8f04yhX4JMzWx52
-	 9H7FT3ynP6tDxJogQhoprrcflXtjSlm7fYSD4C3g=
+	b=SAfIDD6UAgKz/IIDuFRLVAFfgJzKYtcCp5LnCgjv6+5SboOAn7aBJRyqMpay7yZCT
+	 axttWrB3/932zF2GNPtYTTh4lXPIEJy9WPCJVdQ1A4WBPvB4OTyRIOU9oUcXDngrOe
+	 6Z+CU32FzO+8hv/pWF5TFBLxe4tCyDIhCcBu0CEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
+	Amit Kucheria <amit.kucheria@linaro.org>,
+	Andy Gross <agross@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 077/273] quota: fix dqput() to follow the guarantees dquot_srcu should provide
-Date: Wed, 20 Sep 2023 13:28:37 +0200
-Message-ID: <20230920112848.837196843@linuxfoundation.org>
+Subject: [PATCH 4.19 078/273] arm64: dts: msm8996: thermal: Add interrupt support
+Date: Wed, 20 Sep 2023 13:28:38 +0200
+Message-ID: <20230920112848.866579718@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,246 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Amit Kucheria <amit.kucheria@linaro.org>
 
-[ Upstream commit dabc8b20756601b9e1cc85a81d47d3f98ed4d13a ]
+[ Upstream commit 6eb1c8ade5e8665eb97f8416eee0942c9f90b12b ]
 
-The dquot_mark_dquot_dirty() using dquot references from the inode
-should be protected by dquot_srcu. quota_off code takes care to call
-synchronize_srcu(&dquot_srcu) to not drop dquot references while they
-are used by other users. But dquot_transfer() breaks this assumption.
-We call dquot_transfer() to drop the last reference of dquot and add
-it to free_dquots, but there may still be other users using the dquot
-at this time, as shown in the function graph below:
+Register upper-lower interrupts for each of the two tsens controllers.
 
-       cpu1              cpu2
-_________________|_________________
-wb_do_writeback         CHOWN(1)
- ...
-  ext4_da_update_reserve_space
-   dquot_claim_block
-    ...
-     dquot_mark_dquot_dirty // try to dirty old quota
-      test_bit(DQ_ACTIVE_B, &dquot->dq_flags) // still ACTIVE
-      if (test_bit(DQ_MOD_B, &dquot->dq_flags))
-      // test no dirty, wait dq_list_lock
-                    ...
-                     dquot_transfer
-                      __dquot_transfer
-                      dqput_all(transfer_from) // rls old dquot
-                       dqput // last dqput
-                        dquot_release
-                         clear_bit(DQ_ACTIVE_B, &dquot->dq_flags)
-                        atomic_dec(&dquot->dq_count)
-                        put_dquot_last(dquot)
-                         list_add_tail(&dquot->dq_free, &free_dquots)
-                         // add the dquot to free_dquots
-      if (!test_and_set_bit(DQ_MOD_B, &dquot->dq_flags))
-        add dqi_dirty_list // add released dquot to dirty_list
-
-This can cause various issues, such as dquot being destroyed by
-dqcache_shrink_scan() after being added to free_dquots, which can trigger
-a UAF in dquot_mark_dquot_dirty(); or after dquot is added to free_dquots
-and then to dirty_list, it is added to free_dquots again after
-dquot_writeback_dquots() is executed, which causes the free_dquots list to
-be corrupted and triggers a UAF when dqcache_shrink_scan() is called for
-freeing dquot twice.
-
-As Honza said, we need to fix dquot_transfer() to follow the guarantees
-dquot_srcu should provide. But calling synchronize_srcu() directly from
-dquot_transfer() is too expensive (and mostly unnecessary). So we add
-dquot whose last reference should be dropped to the new global dquot
-list releasing_dquots, and then queue work item which would call
-synchronize_srcu() and after that perform the final cleanup of all the
-dquots on releasing_dquots.
-
-Fixes: 4580b30ea887 ("quota: Do not dirty bad dquots")
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230630110822.3881712-5-libaokun1@huawei.com>
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+Signed-off-by: Andy Gross <agross@kernel.org>
+Stable-dep-of: 36541089c473 ("arm64: dts: qcom: msm8996: Add missing interrupt to the USB2 controller")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 96 +++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 78 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 273971b4060d6..82af42717ef88 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -223,13 +223,22 @@ static void put_quota_format(struct quota_format_type *fmt)
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 3e7baabf64507..260adec7980d8 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -382,6 +382,8 @@ tsens0: thermal-sensor@4a9000 {
+ 			reg = <0x4a9000 0x1000>, /* TM */
+ 			      <0x4a8000 0x1000>; /* SROT */
+ 			#qcom,sensors = <13>;
++			interrupts = <GIC_SPI 458 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow";
+ 			#thermal-sensor-cells = <1>;
+ 		};
  
- /*
-  * Dquot List Management:
-- * The quota code uses four lists for dquot management: the inuse_list,
-- * free_dquots, dqi_dirty_list, and dquot_hash[] array. A single dquot
-- * structure may be on some of those lists, depending on its current state.
-+ * The quota code uses five lists for dquot management: the inuse_list,
-+ * releasing_dquots, free_dquots, dqi_dirty_list, and dquot_hash[] array.
-+ * A single dquot structure may be on some of those lists, depending on
-+ * its current state.
-  *
-  * All dquots are placed to the end of inuse_list when first created, and this
-  * list is used for invalidate operation, which must look at every dquot.
-  *
-+ * When the last reference of a dquot will be dropped, the dquot will be
-+ * added to releasing_dquots. We'd then queue work item which would call
-+ * synchronize_srcu() and after that perform the final cleanup of all the
-+ * dquots on the list. Both releasing_dquots and free_dquots use the
-+ * dq_free list_head in the dquot struct. When a dquot is removed from
-+ * releasing_dquots, a reference count is always subtracted, and if
-+ * dq_count == 0 at that point, the dquot will be added to the free_dquots.
-+ *
-  * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
-  * and this list is searched whenever we need an available dquot.  Dquots are
-  * removed from the list as soon as they are used again, and
-@@ -248,6 +257,7 @@ static void put_quota_format(struct quota_format_type *fmt)
- 
- static LIST_HEAD(inuse_list);
- static LIST_HEAD(free_dquots);
-+static LIST_HEAD(releasing_dquots);
- static unsigned int dq_hash_bits, dq_hash_mask;
- static struct hlist_head *dquot_hash;
- 
-@@ -258,6 +268,9 @@ static qsize_t inode_get_rsv_space(struct inode *inode);
- static qsize_t __inode_get_rsv_space(struct inode *inode);
- static int __dquot_initialize(struct inode *inode, int type);
- 
-+static void quota_release_workfn(struct work_struct *work);
-+static DECLARE_DELAYED_WORK(quota_release_work, quota_release_workfn);
-+
- static inline unsigned int
- hashfn(const struct super_block *sb, struct kqid qid)
- {
-@@ -305,12 +318,18 @@ static inline void put_dquot_last(struct dquot *dquot)
- 	dqstats_inc(DQST_FREE_DQUOTS);
- }
- 
-+static inline void put_releasing_dquots(struct dquot *dquot)
-+{
-+	list_add_tail(&dquot->dq_free, &releasing_dquots);
-+}
-+
- static inline void remove_free_dquot(struct dquot *dquot)
- {
- 	if (list_empty(&dquot->dq_free))
- 		return;
- 	list_del_init(&dquot->dq_free);
--	dqstats_dec(DQST_FREE_DQUOTS);
-+	if (!atomic_read(&dquot->dq_count))
-+		dqstats_dec(DQST_FREE_DQUOTS);
- }
- 
- static inline void put_inuse(struct dquot *dquot)
-@@ -542,6 +561,8 @@ static void invalidate_dquots(struct super_block *sb, int type)
- 	struct dquot *dquot, *tmp;
- 
- restart:
-+	flush_delayed_work(&quota_release_work);
-+
- 	spin_lock(&dq_list_lock);
- 	list_for_each_entry_safe(dquot, tmp, &inuse_list, dq_inuse) {
- 		if (dquot->dq_sb != sb)
-@@ -550,6 +571,12 @@ static void invalidate_dquots(struct super_block *sb, int type)
- 			continue;
- 		/* Wait for dquot users */
- 		if (atomic_read(&dquot->dq_count)) {
-+			/* dquot in releasing_dquots, flush and retry */
-+			if (!list_empty(&dquot->dq_free)) {
-+				spin_unlock(&dq_list_lock);
-+				goto restart;
-+			}
-+
- 			atomic_inc(&dquot->dq_count);
- 			spin_unlock(&dq_list_lock);
- 			/*
-@@ -760,6 +787,49 @@ static struct shrinker dqcache_shrinker = {
- 	.seeks = DEFAULT_SEEKS,
- };
- 
-+/*
-+ * Safely release dquot and put reference to dquot.
-+ */
-+static void quota_release_workfn(struct work_struct *work)
-+{
-+	struct dquot *dquot;
-+	struct list_head rls_head;
-+
-+	spin_lock(&dq_list_lock);
-+	/* Exchange the list head to avoid livelock. */
-+	list_replace_init(&releasing_dquots, &rls_head);
-+	spin_unlock(&dq_list_lock);
-+
-+restart:
-+	synchronize_srcu(&dquot_srcu);
-+	spin_lock(&dq_list_lock);
-+	while (!list_empty(&rls_head)) {
-+		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
-+		/* Dquot got used again? */
-+		if (atomic_read(&dquot->dq_count) > 1) {
-+			remove_free_dquot(dquot);
-+			atomic_dec(&dquot->dq_count);
-+			continue;
-+		}
-+		if (dquot_dirty(dquot)) {
-+			spin_unlock(&dq_list_lock);
-+			/* Commit dquot before releasing */
-+			dquot_write_dquot(dquot);
-+			goto restart;
-+		}
-+		if (dquot_active(dquot)) {
-+			spin_unlock(&dq_list_lock);
-+			dquot->dq_sb->dq_op->release_dquot(dquot);
-+			goto restart;
-+		}
-+		/* Dquot is inactive and clean, now move it to free list */
-+		remove_free_dquot(dquot);
-+		atomic_dec(&dquot->dq_count);
-+		put_dquot_last(dquot);
-+	}
-+	spin_unlock(&dq_list_lock);
-+}
-+
- /*
-  * Put reference to dquot
-  */
-@@ -776,7 +846,7 @@ void dqput(struct dquot *dquot)
- 	}
- #endif
- 	dqstats_inc(DQST_DROPS);
--we_slept:
-+
- 	spin_lock(&dq_list_lock);
- 	if (atomic_read(&dquot->dq_count) > 1) {
- 		/* We have more than one user... nothing to do */
-@@ -788,25 +858,15 @@ void dqput(struct dquot *dquot)
- 		spin_unlock(&dq_list_lock);
- 		return;
- 	}
-+
- 	/* Need to release dquot? */
--	if (dquot_dirty(dquot)) {
--		spin_unlock(&dq_list_lock);
--		/* Commit dquot before releasing */
--		dquot_write_dquot(dquot);
--		goto we_slept;
--	}
--	if (dquot_active(dquot)) {
--		spin_unlock(&dq_list_lock);
--		dquot->dq_sb->dq_op->release_dquot(dquot);
--		goto we_slept;
--	}
--	atomic_dec(&dquot->dq_count);
- #ifdef CONFIG_QUOTA_DEBUG
- 	/* sanity check */
- 	BUG_ON(!list_empty(&dquot->dq_free));
- #endif
--	put_dquot_last(dquot);
-+	put_releasing_dquots(dquot);
- 	spin_unlock(&dq_list_lock);
-+	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
- }
- EXPORT_SYMBOL(dqput);
+@@ -390,6 +392,8 @@ tsens1: thermal-sensor@4ad000 {
+ 			reg = <0x4ad000 0x1000>, /* TM */
+ 			      <0x4ac000 0x1000>; /* SROT */
+ 			#qcom,sensors = <8>;
++			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow";
+ 			#thermal-sensor-cells = <1>;
+ 		};
  
 -- 
 2.40.1
