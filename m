@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E162730F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676EAC433CA;
-	Wed, 20 Sep 2023 12:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8781B30F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02102C433CC;
+	Wed, 20 Sep 2023 12:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213719;
-	bh=Z92U/YH4qKEymo9OGchQLWZ6Al/Tex89FvzqBdFHZKo=;
+	s=korg; t=1695213722;
+	bh=YhfPE7IsfYAX4nh44iLfDffhxVc1iskutMoT7ZCCEKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKQgD3Rp4g/xDQAjf5akYLFl/2g3LOTZgIuKhO2u0KPsJy3iInEgk+/oqj5DQ1FyR
-	 w8+BzBhPsqcv0lCIVq3HpL9p+8AHs9Rf2H2VKUciUFuodnBFw1+GwYRkYz29d0jpgU
-	 bqfFI3zqrDbLroBYNhxU7MzQ1ghoz5IM8TFu1Elc=
+	b=xcpEU5VC4p1lUvuq5Z+AZxgw7b3zczgbucGeMzFWB4UW7ND6SNCgC4ZgK3OtOngkS
+	 x2lwB30uwIKgpHdZnnICHRGfHbz1rtF14JkYVYDmP15CRVtPDJ6gvlClY/Vxiv8UAD
+	 fpOjQxihKbJ3rwiD5NiwnowjEtUhvX5GFw2evyQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Li Yang <leoyang.li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 341/367] usb: gadget: fsl_qe_udc: validate endpoint index for ch9 udc
-Date: Wed, 20 Sep 2023 13:31:58 +0200
-Message-ID: <20230920112907.336362296@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	GONG
+Subject: [PATCH 5.4 324/367] alx: fix OOB-read compiler warning
+Date: Wed, 20 Sep 2023 13:31:41 +0200
+Message-ID: <20230920112906.926550225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -34,41 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit ce9daa2efc0872a9a68ea51dc8000df05893ef2e ]
+[ Upstream commit 3a198c95c95da10ad844cbeade2fe40bdf14c411 ]
 
-We should verify the bound of the array to assure that host
-may not manipulate the index to point past endpoint array.
+The following message shows up when compiling with W=1:
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Acked-by: Li Yang <leoyang.li@nxp.com>
-Link: https://lore.kernel.org/r/20230628081511.186850-1-make_ruc2021@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘alx_get_ethtool_stats’ at drivers/net/ethernet/atheros/alx/ethtool.c:297:2:
+./include/linux/fortify-string.h:592:4: error: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Werror=attribute-warning]
+  592 |    __read_overflow2_field(q_size_field, size);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to get alx stats altogether, alx_get_ethtool_stats() reads
+beyond hw->stats.rx_ok. Fix this warning by directly copying hw->stats,
+and refactor the unnecessarily complicated BUILD_BUG_ON btw.
+
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821013218.1614265-1-gongruiqi@huaweicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fsl_qe_udc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/atheros/alx/ethtool.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
-index 2707be6282988..63109c6e55068 100644
---- a/drivers/usb/gadget/udc/fsl_qe_udc.c
-+++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
-@@ -1950,6 +1950,8 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 	} else if ((request_type & USB_RECIP_MASK) == USB_RECIP_ENDPOINT) {
- 		/* Get endpoint status */
- 		int pipe = index & USB_ENDPOINT_NUMBER_MASK;
-+		if (pipe >= USB_MAX_ENDPOINTS)
-+			goto stall;
- 		struct qe_ep *target_ep = &udc->eps[pipe];
- 		u16 usep;
+diff --git a/drivers/net/ethernet/atheros/alx/ethtool.c b/drivers/net/ethernet/atheros/alx/ethtool.c
+index 2f4eabf652e80..51e5aa2c74b34 100644
+--- a/drivers/net/ethernet/atheros/alx/ethtool.c
++++ b/drivers/net/ethernet/atheros/alx/ethtool.c
+@@ -281,9 +281,8 @@ static void alx_get_ethtool_stats(struct net_device *netdev,
+ 	spin_lock(&alx->stats_lock);
  
+ 	alx_update_hw_stats(hw);
+-	BUILD_BUG_ON(sizeof(hw->stats) - offsetof(struct alx_hw_stats, rx_ok) <
+-		     ALX_NUM_STATS * sizeof(u64));
+-	memcpy(data, &hw->stats.rx_ok, ALX_NUM_STATS * sizeof(u64));
++	BUILD_BUG_ON(sizeof(hw->stats) != ALX_NUM_STATS * sizeof(u64));
++	memcpy(data, &hw->stats, sizeof(hw->stats));
+ 
+ 	spin_unlock(&alx->stats_lock);
+ }
 -- 
 2.40.1
 
