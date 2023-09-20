@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3BC2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97D0C433C7;
-	Wed, 20 Sep 2023 11:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307472AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DDDC433C8;
+	Wed, 20 Sep 2023 11:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211117;
-	bh=Qbo0SpsZ1YRJOVxlmWaNXA0w55bo2/vqC67b4ahusZ4=;
+	s=korg; t=1695211120;
+	bh=l/Wl4Se3Vq67bnZu5N2XwPzsBK1S1LImbCZD7hwEaXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJbwW0ChaQSPq1hXkwAXvZTWxashWLDYn1I7RmiklJ0M4ZYbdPH+xKO8NjKsSXO5l
-	 dlB+XNQCy2Ldy5nxvx0wQyhlOKn98YAqHOaQXJJWvGnNvsq1IRQ5nCR6HgxTQGdXDf
-	 9YneWyDZYdgPFzCt57P+uPGr0atIEGDkotMRygXo=
+	b=jF0JlpR9sr9/1mp3xBg2z+Ohx1P/tfa26dThrwO2IAuM2QTn0LhonNGEhwfJHBTiw
+	 3NG99ppiycKRDbQb5QIuG8IWYpUJHQWVJ3T8ezXkownAW6i/OdYEsCj0Fd0lLiJ3Qd
+	 dKksrAQapBYEqn/Ir4zqxvCSx4ZvmzOfrtpT9LuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/139] samples/hw_breakpoint: fix building without module unloading
-Date: Wed, 20 Sep 2023 13:30:41 +0200
-Message-ID: <20230920112839.548442247@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.1 116/139] Revert "drm/amd: Disable S/G for APUs when 64GB or more host memory"
+Date: Wed, 20 Sep 2023 13:30:50 +0200
+Message-ID: <20230920112839.887603968@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,48 +40,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit b9080468caeddc58a91edd1c3a7d212ea82b0d1d ]
+commit 169ed4ece8373f02f10642eae5240e3d1ef5c038 upstream.
 
-__symbol_put() is really meant as an internal helper and is not available
-when module unloading is disabled, unlike the previously used symbol_put():
+This reverts commit 70e64c4d522b732e31c6475a3be2349de337d321.
 
-samples/hw_breakpoint/data_breakpoint.c: In function 'hw_break_module_exit':
-samples/hw_breakpoint/data_breakpoint.c:73:9: error: implicit declaration of function '__symbol_put'; did you mean '__symbol_get'? [-Werror=implicit-function-declaration]
+Since, we now have an actual fix for this issue, we can get rid of this
+workaround as it can cause pin failures if enough VRAM isn't carved out
+by the BIOS.
 
-The hw_break_module_exit() function is not actually used when module
-unloading is disabled, but it still causes the build failure for an
-undefined identifier. Enclose this one call in an appropriate #ifdef to
-clarify what the requirement is. Leaving out the entire exit function
-would also work but feels less clar in this case.
-
-Fixes: 910e230d5f1bb ("samples/hw_breakpoint: Fix kernel BUG 'invalid opcode: 0000'")
-Fixes: d8a84d33a4954 ("samples/hw_breakpoint: drop use of kallsyms_lookup_name()")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 6.1+
+Acked-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/hw_breakpoint/data_breakpoint.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c        |   26 ----------------------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++--
+ 3 files changed, 3 insertions(+), 29 deletions(-)
 
-diff --git a/samples/hw_breakpoint/data_breakpoint.c b/samples/hw_breakpoint/data_breakpoint.c
-index 9debd128b2ab8..b99322f188e59 100644
---- a/samples/hw_breakpoint/data_breakpoint.c
-+++ b/samples/hw_breakpoint/data_breakpoint.c
-@@ -70,7 +70,9 @@ static int __init hw_break_module_init(void)
- static void __exit hw_break_module_exit(void)
- {
- 	unregister_wide_hw_breakpoint(sample_hbp);
-+#ifdef CONFIG_MODULE_UNLOAD
- 	__symbol_put(ksym_name);
-+#endif
- 	printk(KERN_INFO "HW Breakpoint for %s write uninstalled\n", ksym_name);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1266,7 +1266,6 @@ int amdgpu_device_gpu_recover(struct amd
+ void amdgpu_device_pci_config_reset(struct amdgpu_device *adev);
+ int amdgpu_device_pci_reset(struct amdgpu_device *adev);
+ bool amdgpu_device_need_post(struct amdgpu_device *adev);
+-bool amdgpu_sg_display_supported(struct amdgpu_device *adev);
+ bool amdgpu_device_pcie_dynamic_switching_supported(void);
+ bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
+ bool amdgpu_device_aspm_support_quirk(void);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1337,32 +1337,6 @@ bool amdgpu_device_need_post(struct amdg
  }
  
--- 
-2.40.1
-
+ /*
+- * On APUs with >= 64GB white flickering has been observed w/ SG enabled.
+- * Disable S/G on such systems until we have a proper fix.
+- * https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+- * https://gitlab.freedesktop.org/drm/amd/-/issues/2735
+- */
+-bool amdgpu_sg_display_supported(struct amdgpu_device *adev)
+-{
+-	switch (amdgpu_sg_display) {
+-	case -1:
+-		break;
+-	case 0:
+-		return false;
+-	case 1:
+-		return true;
+-	default:
+-		return false;
+-	}
+-	if ((totalram_pages() << (PAGE_SHIFT - 10)) +
+-	    (adev->gmc.real_vram_size / 1024) >= 64000000) {
+-		DRM_WARN("Disabling S/G due to >=64GB RAM\n");
+-		return false;
+-	}
+-	return true;
+-}
+-
+-/*
+  * Intel hosts such as Raptor Lake and Sapphire Rapids don't support dynamic
+  * speed switching. Until we have confirmation from Intel that a specific host
+  * supports it, it's safer that we keep it disabled for all.
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1634,8 +1634,9 @@ static int amdgpu_dm_init(struct amdgpu_
+ 		}
+ 		break;
+ 	}
+-	if (init_data.flags.gpu_vm_support)
+-		init_data.flags.gpu_vm_support = amdgpu_sg_display_supported(adev);
++	if (init_data.flags.gpu_vm_support &&
++	    (amdgpu_sg_display == 0))
++		init_data.flags.gpu_vm_support = false;
+ 
+ 	if (init_data.flags.gpu_vm_support)
+ 		adev->mode_info.gpu_vm_support = true;
 
 
