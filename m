@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658CA111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1354C433CA;
-	Wed, 20 Sep 2023 12:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB3E6FBD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A223CC433C8;
+	Wed, 20 Sep 2023 12:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213200;
-	bh=IGcxtZLwnCungFJizFfScBKT69roISbaIwBdKMeabCg=;
+	s=korg; t=1695213203;
+	bh=KgrAHmZcACVf93R5gKJHmxhO0TXU7NTAY+pzyouhFoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5zoQsZLsSNZFIQ77DCwx7PXBiX74rlc87eIccoscP7K7G9ctVSv3jQYhI1Q4fIDJ
-	 NVw7bDS6c32vt9o/k4+dME/OjUieTtn6URrB41Gb7X53OoRX3CdL54BkKFBvX1UtAj
-	 +TsFf56ksreCuz03tXTAhUSNAQRBeCfOzqfT6UIg=
+	b=cGEsrtNmcrR4OJFf9U/s7U2cpbr4AQj0j+WQNgHKXE+Td4aWqiLtbiT/GT4giwzSF
+	 nfOExyQK9qZrUaZ6IJ9LYTNHc1Mww6WSDOROqs5ceZcjhLAjo/3gTr3juaa4qulSdU
+	 EpbOUUoXFWCG3bak+7gUrPg3D2HLRw21bFqQzX+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yi Yang <yiyang13@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 198/367] rpmsg: glink: Add check for kstrdup
-Date: Wed, 20 Sep 2023 13:29:35 +0200
-Message-ID: <20230920112903.753045745@linuxfoundation.org>
+Subject: [PATCH 5.4 199/367] mtd: rawnand: fsmc: handle clk prepare error in fsmc_nand_resume()
+Date: Wed, 20 Sep 2023 13:29:36 +0200
+Message-ID: <20230920112903.777542201@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,37 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit b5c9ee8296a3760760c7b5d2e305f91412adc795 ]
+[ Upstream commit a5a88125d00612586e941ae13e7fcf36ba8f18a7 ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+In fsmc_nand_resume(), the return value of clk_prepare_enable() should be
+checked since it might fail.
 
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230619030631.12361-1-jiasheng@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e25da1c07dfb ("mtd: fsmc_nand: Add clk_{un}prepare() support")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230817115839.10192-1-yiyang13@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mtd/nand/raw/fsmc_nand.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 11ba44dc551e4..f65db95e78aa4 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -222,6 +222,10 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
+diff --git a/drivers/mtd/nand/raw/fsmc_nand.c b/drivers/mtd/nand/raw/fsmc_nand.c
+index cc8369a595de3..bccadf8f27fa4 100644
+--- a/drivers/mtd/nand/raw/fsmc_nand.c
++++ b/drivers/mtd/nand/raw/fsmc_nand.c
+@@ -1181,9 +1181,14 @@ static int fsmc_nand_suspend(struct device *dev)
+ static int fsmc_nand_resume(struct device *dev)
+ {
+ 	struct fsmc_nand_data *host = dev_get_drvdata(dev);
++	int ret;
  
- 	channel->glink = glink;
- 	channel->name = kstrdup(name, GFP_KERNEL);
-+	if (!channel->name) {
-+		kfree(channel);
-+		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	init_completion(&channel->open_req);
- 	init_completion(&channel->open_ack);
+ 	if (host) {
+-		clk_prepare_enable(host->clk);
++		ret = clk_prepare_enable(host->clk);
++		if (ret) {
++			dev_err(dev, "failed to enable clk\n");
++			return ret;
++		}
+ 		if (host->dev_timings)
+ 			fsmc_nand_setup(host, host->dev_timings);
+ 		nand_reset(&host->nand, 0);
 -- 
 2.40.1
 
