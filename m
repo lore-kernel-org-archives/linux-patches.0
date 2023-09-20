@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B3D28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:54:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC99C433C9;
-	Wed, 20 Sep 2023 11:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C60928E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:54:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E188C433C7;
+	Wed, 20 Sep 2023 11:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210874;
-	bh=qasryRYs7KhinHEP3v8aM8QZlZEaKPqLTtknE4hGwqU=;
+	s=korg; t=1695210876;
+	bh=K4F6w3moKzrDdO8MimPL343JntuHz2AVOriPM4kyhyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCW0+elMJbp7XKBvHIoMKFfdulaLyLkIL1xcMxHsOMoZQrP18iJ14/U2AGTY1fFra
-	 GGaH4e8fh/y19ugi5ZTkABWtRUFSRb08gbCpPBpdUBR1nXjhBhxGF0aw1++f51Y7tz
-	 Yh3tLCBTbyt2WiaJAvGMibxRkw3iX9rDvyP5Zy6k=
+	b=kRn4XwQValN0Hr8mSAwvqAyweqiWA2C5NgvnZPt6/oRoAYVKX/BqCWUYTvXrsPTNa
+	 WO8up9GeJ4hkt//tSZ9iP7I4wXUwMz9Bwk8mk1tvE6Y0C81GYBeNab1GtyhILKiYE3
+	 o2HBeXv/OA/exoRxQ4JROpl9D/827GUWRtVBRj8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	xu xin <xu.xin16@zte.com.cn>,
+	Yang Yang <yang.yang29@zte.com.cn>,
+	Si Hao <si.hao@zte.com.cn>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/139] net: Use sockaddr_storage for getsockopt(SO_PEERNAME).
-Date: Wed, 20 Sep 2023 13:29:18 +0200
-Message-ID: <20230920112836.493018915@linuxfoundation.org>
+Subject: [PATCH 6.1 025/139] net/ipv4: return the real errno instead of -EINVAL
+Date: Wed, 20 Sep 2023 13:29:19 +0200
+Message-ID: <20230920112836.534785001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,61 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: xu xin <xu.xin16@zte.com.cn>
 
-[ Upstream commit 8936bf53a091ad6a34b480c22002f1cb2422ab38 ]
+[ Upstream commit c67180efc507e04a87f22aa68bd7dd832db006b7 ]
 
-Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") started
-applying strict rules to standard string functions.
+For now, No matter what error pointer ip_neigh_for_gw() returns,
+ip_finish_output2() always return -EINVAL, which may mislead the upper
+users.
 
-It does not work well with conventional socket code around each protocol-
-specific sockaddr_XXX struct, which is cast from sockaddr_storage and has
-a bigger size than fortified functions expect.  See these commits:
+For exemple, an application uses sendto to send an UDP packet, but when the
+neighbor table overflows, sendto() will get a value of -EINVAL, and it will
+cause users to waste a lot of time checking parameters for errors.
 
- commit 06d4c8a80836 ("af_unix: Fix fortify_panic() in unix_bind_bsd().")
- commit ecb4534b6a1c ("af_unix: Terminate sun_path when bind()ing pathname socket.")
- commit a0ade8404c3b ("af_packet: Fix warning of fortified memcpy() in packet_getname().")
+Return the real errno instead of -EINVAL.
 
-We must cast the protocol-specific address back to sockaddr_storage
-to call such functions.
-
-However, in the case of getsockaddr(SO_PEERNAME), the rationale is a bit
-unclear as the buffer is defined by char[128] which is the same size as
-sockaddr_storage.
-
-Let's use sockaddr_storage explicitly.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: xu xin <xu.xin16@zte.com.cn>
+Reviewed-by: Yang Yang <yang.yang29@zte.com.cn>
+Cc: Si Hao <si.hao@zte.com.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://lore.kernel.org/r/20230807015408.248237-1-xu.xin16@zte.com.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/ip_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index e5858fa5d6d57..0ee2e33bbe5f8 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1774,14 +1774,14 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index ebd2cea5b7d7a..66908ce2dd116 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -234,7 +234,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
+ 	net_dbg_ratelimited("%s: No header cache and no neighbour!\n",
+ 			    __func__);
+ 	kfree_skb_reason(skb, SKB_DROP_REASON_NEIGH_CREATEFAIL);
+-	return -EINVAL;
++	return PTR_ERR(neigh);
+ }
  
- 	case SO_PEERNAME:
- 	{
--		char address[128];
-+		struct sockaddr_storage address;
- 
--		lv = sock->ops->getname(sock, (struct sockaddr *)address, 2);
-+		lv = sock->ops->getname(sock, (struct sockaddr *)&address, 2);
- 		if (lv < 0)
- 			return -ENOTCONN;
- 		if (lv < len)
- 			return -EINVAL;
--		if (copy_to_sockptr(optval, address, len))
-+		if (copy_to_sockptr(optval, &address, len))
- 			return -EFAULT;
- 		goto lenout;
- 	}
+ static int ip_finish_output_gso(struct net *net, struct sock *sk,
 -- 
 2.40.1
 
