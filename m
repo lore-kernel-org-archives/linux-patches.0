@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D208111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5942AC433C7;
-	Wed, 20 Sep 2023 12:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C499D111AB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07198C433C7;
+	Wed, 20 Sep 2023 12:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213619;
-	bh=bRQazNOhNdsFeSrqDlvDb9jjVj3Jtd35gujb1sRNWyk=;
+	s=korg; t=1695213622;
+	bh=Q535MoCnuPmvM++C8hrHGqSRgJDRJ014jFHWm5Lty4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9evKkf6c6ZqOGeLK2TltiUPsrg1s+QIuYTE41xWWHr1xNjEFgDB6I4oEVMz37OkI
-	 kFPMtOAPh4p8KNh02mLC5mYqsBFHFtRCndaCcCAZ0r70eitz1w79uat3EBMMvcflD8
-	 nFhY+H6poVSjkZJ2WWjg11NGLJXXGa5QT7yRv2NY=
+	b=fWKrJvM0IY1VkeJ4iYnezoLlJM4ZM8RGTn9zFoeOQkMzrnj0+UiE8Yo3jPx0FoSMy
+	 6FHK43U3s5Fj37yXFUywgvHTj+UiV88/y13xQtn3MAjI0PKNSqoor+RXg1hm1Gp9kX
+	 EwI0GacZIJzJqFknnJIbvSm2iKwwQtX7EZ4Z83Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Liu Jian <liujian56@huawei.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 304/367] platform/mellanox: mlxbf-tmfifo: Drop jumbo frames
-Date: Wed, 20 Sep 2023 13:31:21 +0200
-Message-ID: <20230920112906.416434473@linuxfoundation.org>
+Subject: [PATCH 5.4 305/367] net/tls: do not free tls_rec on async operation in bpf_exec_tx_verdict()
+Date: Wed, 20 Sep 2023 13:31:22 +0200
+Message-ID: <20230920112906.442926723@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,101 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liming Sun <limings@nvidia.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit fc4c655821546239abb3cf4274d66b9747aa87dd ]
+[ Upstream commit cfaa80c91f6f99b9342b6557f0f0e1143e434066 ]
 
-This commit drops over-sized network packets to avoid tmfifo
-queue stuck.
+I got the below warning when do fuzzing test:
+BUG: KASAN: null-ptr-deref in scatterwalk_copychunks+0x320/0x470
+Read of size 4 at addr 0000000000000008 by task kworker/u8:1/9
 
-Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/9318936c2447f76db475c985ca6d91f057efcd41.1693322547.git.limings@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+CPU: 0 PID: 9 Comm: kworker/u8:1 Tainted: G           OE
+Hardware name: linux,dummy-virt (DT)
+Workqueue: pencrypt_parallel padata_parallel_worker
+Call trace:
+ dump_backtrace+0x0/0x420
+ show_stack+0x34/0x44
+ dump_stack+0x1d0/0x248
+ __kasan_report+0x138/0x140
+ kasan_report+0x44/0x6c
+ __asan_load4+0x94/0xd0
+ scatterwalk_copychunks+0x320/0x470
+ skcipher_next_slow+0x14c/0x290
+ skcipher_walk_next+0x2fc/0x480
+ skcipher_walk_first+0x9c/0x110
+ skcipher_walk_aead_common+0x380/0x440
+ skcipher_walk_aead_encrypt+0x54/0x70
+ ccm_encrypt+0x13c/0x4d0
+ crypto_aead_encrypt+0x7c/0xfc
+ pcrypt_aead_enc+0x28/0x84
+ padata_parallel_worker+0xd0/0x2dc
+ process_one_work+0x49c/0xbdc
+ worker_thread+0x124/0x880
+ kthread+0x210/0x260
+ ret_from_fork+0x10/0x18
+
+This is because the value of rec_seq of tls_crypto_info configured by the
+user program is too large, for example, 0xffffffffffffff. In addition, TLS
+is asynchronously accelerated. When tls_do_encryption() returns
+-EINPROGRESS and sk->sk_err is set to EBADMSG due to rec_seq overflow,
+skmsg is released before the asynchronous encryption process ends. As a
+result, the UAF problem occurs during the asynchronous processing of the
+encryption module.
+
+If the operation is asynchronous and the encryption module returns
+EINPROGRESS, do not free the record information.
+
+Fixes: 635d93981786 ("net/tls: free record only on encryption error")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/20230909081434.2324940-1-liujian56@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ net/tls/tls_sw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 42fcccf06157f..194f3205e5597 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -205,7 +205,7 @@ static u8 mlxbf_tmfifo_net_default_mac[ETH_ALEN] = {
- static efi_char16_t mlxbf_tmfifo_efi_name[] = L"RshimMacAddr";
- 
- /* Maximum L2 header length. */
--#define MLXBF_TMFIFO_NET_L2_OVERHEAD	36
-+#define MLXBF_TMFIFO_NET_L2_OVERHEAD	(ETH_HLEN + VLAN_HLEN)
- 
- /* Supported virtio-net features. */
- #define MLXBF_TMFIFO_NET_FEATURES \
-@@ -623,13 +623,14 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
-  * flag is set.
-  */
- static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
--				     struct vring_desc *desc,
-+				     struct vring_desc **desc,
- 				     bool is_rx, bool *vring_change)
- {
- 	struct mlxbf_tmfifo *fifo = vring->fifo;
- 	struct virtio_net_config *config;
- 	struct mlxbf_tmfifo_msg_hdr hdr;
- 	int vdev_id, hdr_len;
-+	bool drop_rx = false;
- 
- 	/* Read/Write packet header. */
- 	if (is_rx) {
-@@ -649,8 +650,8 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 			if (ntohs(hdr.len) >
- 			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
- 					      config->mtu) +
--			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
--				return;
-+					      MLXBF_TMFIFO_NET_L2_OVERHEAD)
-+				drop_rx = true;
- 		} else {
- 			vdev_id = VIRTIO_ID_CONSOLE;
- 			hdr_len = 0;
-@@ -665,16 +666,25 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 
- 			if (!tm_dev2)
- 				return;
--			vring->desc = desc;
-+			vring->desc = *desc;
- 			vring = &tm_dev2->vrings[MLXBF_TMFIFO_VRING_RX];
- 			*vring_change = true;
- 		}
-+
-+		if (drop_rx && !IS_VRING_DROP(vring)) {
-+			if (vring->desc_head)
-+				mlxbf_tmfifo_release_pkt(vring);
-+			*desc = &vring->drop_desc;
-+			vring->desc_head = *desc;
-+			vring->desc = *desc;
-+		}
-+
- 		vring->pkt_len = ntohs(hdr.len) + hdr_len;
- 	} else {
- 		/* Network virtio has an extra header. */
- 		hdr_len = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			   sizeof(struct virtio_net_hdr) : 0;
--		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, desc);
-+		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, *desc);
- 		hdr.type = (vring->vdev_id == VIRTIO_ID_NET) ?
- 			    VIRTIO_ID_NET : VIRTIO_ID_CONSOLE;
- 		hdr.len = htons(vring->pkt_len - hdr_len);
-@@ -723,7 +733,7 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 
- 	/* Beginning of a packet. Start to Rx/Tx packet header. */
- 	if (vring->pkt_len == 0) {
--		mlxbf_tmfifo_rxtx_header(vring, desc, is_rx, &vring_change);
-+		mlxbf_tmfifo_rxtx_header(vring, &desc, is_rx, &vring_change);
- 		(*avail)--;
- 
- 		/* Return if new packet is for another ring. */
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index f4091fba4c722..62bc7e5c58e53 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -807,7 +807,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 	psock = sk_psock_get(sk);
+ 	if (!psock || !policy) {
+ 		err = tls_push_record(sk, flags, record_type);
+-		if (err && sk->sk_err == EBADMSG) {
++		if (err && err != -EINPROGRESS && sk->sk_err == EBADMSG) {
+ 			*copied -= sk_msg_free(sk, msg);
+ 			tls_free_open_rec(sk);
+ 			err = -sk->sk_err;
+@@ -836,7 +836,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 	switch (psock->eval) {
+ 	case __SK_PASS:
+ 		err = tls_push_record(sk, flags, record_type);
+-		if (err && sk->sk_err == EBADMSG) {
++		if (err && err != -EINPROGRESS && sk->sk_err == EBADMSG) {
+ 			*copied -= sk_msg_free(sk, msg);
+ 			tls_free_open_rec(sk);
+ 			err = -sk->sk_err;
 -- 
 2.40.1
 
