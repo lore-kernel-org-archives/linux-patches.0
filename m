@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA8D2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462A0C433C8;
-	Wed, 20 Sep 2023 12:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF552E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9563C433CA;
+	Wed, 20 Sep 2023 12:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212074;
-	bh=sOZzuEAZCi/jloHC+BJLNvii5bZ8580TRQ3QhZZ6D6s=;
+	s=korg; t=1695212077;
+	bh=QAKQQaZjhUCigVPvJuSRVbO6OaYzglDUhhH/jms7rB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pS36NexZBYixWQsqC59BVmAa5UxfDiTEmy5UzxxQ35lKwEsgiswAPala4tVM+YQ7
-	 9sg/131J/p+7NjYeyRMYWfFhTzeKs8NZdiz+PGQ64GMUkNyOR+fxsbmJ4fwsK+zBdx
-	 dkRmAt9WzciLm+RXN/3u1Fl0plUzrXaUkV1mI1zo=
+	b=MKBiGhA5mEcua3JcNTa1rfYXMGtgzWa+aMNO9ozVZo1Tq/cVN7d+zwi+bLaPxPlQS
+	 d//Ll8hCWPEzIPUaXlIZi3TAnusf5eRs/ePwL/E4lnkFjhIKBU20hyMq5SiRFiiLHd
+	 vc6Ez3AaPRlRc5SW8wyKunrn7YHal1MnqV4akH9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	x86@kernel.org,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 141/273] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Wed, 20 Sep 2023 13:29:41 +0200
-Message-ID: <20230920112850.886774836@linuxfoundation.org>
+Subject: [PATCH 4.19 142/273] x86/APM: drop the duplicate APM_MINOR_DEV macro
+Date: Wed, 20 Sep 2023 13:29:42 +0200
+Message-ID: <20230920112850.918607206@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,78 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+[ Upstream commit 4ba2909638a29630a346d6c4907a3105409bee7d ]
 
-There are three places that qla4xxx parses nlattrs:
+This source file already includes <linux/miscdevice.h>, which contains
+the same macro. It doesn't need to be defined here again.
 
- - qla4xxx_set_chap_entry()
-
- - qla4xxx_iface_set_param()
-
- - qla4xxx_sysfs_ddb_set_param()
-
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
-
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
-
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 874bcd00f520 ("apm-emulation: move APM_MINOR_DEV to include/linux/miscdevice.h")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: x86@kernel.org
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Link: https://lore.kernel.org/r/20230728011120.759-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/x86/kernel/apm_32.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index 4ba9f46fcf748..21cc9e2797a28 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -940,6 +940,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
+diff --git a/arch/x86/kernel/apm_32.c b/arch/x86/kernel/apm_32.c
+index f7151cd03cb08..3d7a8049f6376 100644
+--- a/arch/x86/kernel/apm_32.c
++++ b/arch/x86/kernel/apm_32.c
+@@ -246,12 +246,6 @@
+ extern int (*console_blank_hook)(int);
+ #endif
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
-+
- 		param_info = nla_data(attr);
- 
- 		switch (param_info->param) {
-@@ -2724,6 +2729,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
- 	}
- 
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
- 
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8098,6 +8108,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
- 
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
+-/*
+- * The apm_bios device is one of the misc char devices.
+- * This is its minor number.
+- */
+-#define	APM_MINOR_DEV	134
+-
+ /*
+  * Various options can be changed at boot time as follows:
+  * (We allow underscores for compatibility with the modules code)
 -- 
 2.40.1
 
