@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C207E2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45136C433C8;
-	Wed, 20 Sep 2023 12:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7DA2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A0DC433CC;
+	Wed, 20 Sep 2023 12:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212050;
-	bh=fs/BMjMQXHEz1/LH3FhXSSbhdnaovZLUhlMH+6/+BsA=;
+	s=korg; t=1695212053;
+	bh=OtFdAOJMtM6AcUlYXkymKkLupRYZ1hwc8GTmPvPnEco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ey/ooXWLssQ4uWc5dojofklhkg+W7Q3EEvbU/aWl+IUlk1uwW490pZL+KIkr0+fmC
-	 HSDarSRut1ackkhB8rV57VzTdAB8ui0eDmbcab2QtW7iLcmc+uegR2SB9BaAUPInYm
-	 Al8eDuh8KqJvuElC2p2VB59iLs6vv3WQ2brdZtXs=
+	b=W+aK5hkCxB5eLVpsGCoWpp6J18rK97Ihyw00iwOSyP6i9s8QAR4PXJdhu0WqDRb61
+	 iafagkGJKQO8+DD5j68pH74ZRfFiyXd+lxRzn0Dxhc7AnEKePZ6D6pgqDpxkVF6RvZ
+	 wbe21+LXBtEgX7cv3Wi2RnrhI8MgBfGqHEy596N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 133/273] drivers: usb: smsusb: fix error handling code in smsusb_init_device
-Date: Wed, 20 Sep 2023 13:29:33 +0200
-Message-ID: <20230920112850.626587121@linuxfoundation.org>
+Subject: [PATCH 4.19 134/273] media: dib7000p: Fix potential division by zero
+Date: Wed, 20 Sep 2023 13:29:34 +0200
+Message-ID: <20230920112850.658819950@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,78 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
+[ Upstream commit a1db7b2c5533fc67e2681eb5efc921a67bc7d5b8 ]
 
-The previous commit 4b208f8b561f ("[media] siano: register media controller
-earlier")moves siano_media_device_register before smscore_register_device,
-and adds corresponding error handling code if smscore_register_device
-fails. However, it misses the following error handling code of
-smsusb_init_device.
+Variable loopdiv can be assigned 0, then it is used as a denominator,
+without checking it for 0.
 
-Fix this by moving error handling code at the end of smsusb_init_device
-and adding a goto statement in the following error handling parts.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Fixes: 713d54a8bd81 ("[media] DiB7090: add support for the dib7090 based")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: (bw != NULL) -> bw]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/media/dvb-frontends/dib7000p.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index cd706874899c3..62e4fecc57d9c 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -467,12 +467,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_register_device(&params, &dev->coredev, 0, mdev);
- 	if (rc < 0) {
- 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
--		smsusb_term_device(intf);
--#ifdef CONFIG_MEDIA_CONTROLLER_DVB
--		media_device_unregister(mdev);
--#endif
--		kfree(mdev);
--		return rc;
-+		goto err_unregister_device;
- 	}
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index 58387860b62dc..f478b4859f44e 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -500,7 +500,7 @@ static int dib7000p_update_pll(struct dvb_frontend *fe, struct dibx000_bandwidth
+ 	prediv = reg_1856 & 0x3f;
+ 	loopdiv = (reg_1856 >> 6) & 0x3f;
  
- 	smscore_set_board_id(dev->coredev, board_id);
-@@ -489,8 +484,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smsusb_start_streaming(dev);
- 	if (rc < 0) {
- 		pr_err("smsusb_start_streaming(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
- 	}
- 
- 	dev->state = SMSUSB_ACTIVE;
-@@ -498,13 +492,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_start_device(dev->coredev);
- 	if (rc < 0) {
- 		pr_err("smscore_start_device(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
- 	}
- 
- 	pr_debug("device 0x%p created\n", dev);
- 
- 	return rc;
-+
-+err_unregister_device:
-+	smsusb_term_device(intf);
-+#ifdef CONFIG_MEDIA_CONTROLLER_DVB
-+	media_device_unregister(mdev);
-+#endif
-+	kfree(mdev);
-+	return rc;
- }
- 
- static int smsusb_probe(struct usb_interface *intf,
+-	if ((bw != NULL) && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
++	if (loopdiv && bw && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
+ 		dprintk("Updating pll (prediv: old =  %d new = %d ; loopdiv : old = %d new = %d)\n", prediv, bw->pll_prediv, loopdiv, bw->pll_ratio);
+ 		reg_1856 &= 0xf000;
+ 		reg_1857 = dib7000p_read_word(state, 1857);
 -- 
 2.40.1
 
