@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192BB2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91623C433C7;
-	Wed, 20 Sep 2023 12:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA430FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554CEC433C7;
+	Wed, 20 Sep 2023 12:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212481;
-	bh=iDBrDOsMIR/GjG6aCDIwv4JeX7dFRa1Nt6RlfTiDq0A=;
+	s=korg; t=1695212484;
+	bh=4ELIotB98orVCB9Y6MwQIm6tvFMZdGqaNDsUQBC/SJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwUIOnFqJWNtelKO7hj0a7zTyiq7hkZmsRgQpUXKK6CBSlMxjsUX/V1BJGLWPYhsI
-	 aSgWWdGgiMdPgRO+coscFwiZFnDyIVo4A/bDXHeZ923dmRq8fJCWGq/UJnos3QN+vD
-	 PLG4zg0LP4NTQrEB9gZ37bXb+33PGezob5Uyijyw=
+	b=OQA2wyjTSc39mblLn7W5+qhhuXCa8mvlhsLBDztrhIWhZiJFkIdQ8fG5kTjN7/UZT
+	 JPc5tYjZZPPKimuPwlrGcfS0m1JY5Q0lIPpAks6UyIBGmJXHXGPDnMqBoZ/yxprsbe
+	 y64WSfiG9mEM4vTRcw5s7tv3W70aCp/rnmtr3Dog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark ODonovan <shiftee@posteo.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexander Steffen <Alexander.Steffen@infineon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 18/83] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
-Date: Wed, 20 Sep 2023 13:31:08 +0200
-Message-ID: <20230920112827.396247779@linuxfoundation.org>
+Subject: [PATCH 5.10 19/83] tpm_tis: Resend command to recover from data transfer errors
+Date: Wed, 20 Sep 2023 13:31:09 +0200
+Message-ID: <20230920112827.434708860@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -40,43 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark O'Donovan <shiftee@posteo.net>
+From: Alexander Steffen <Alexander.Steffen@infineon.com>
 
-[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
+[ Upstream commit 280db21e153d8810ce3b93640c63ae922bcb9e8e ]
 
-During NVMeTCP Authentication a controller can trigger a kernel
-oops by specifying the 8192 bit Diffie Hellman group and passing
-a correctly sized, but zeroed Diffie Hellamn value.
-mpi_cmp_ui() was detecting this if the second parameter was 0,
-but 1 is passed from dh_is_pubkey_valid(). This causes the null
-pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
+Similar to the transmission of TPM responses, also the transmission of TPM
+commands may become corrupted. Instead of aborting when detecting such
+issues, try resending the command again.
 
-Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpi-cmp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
-index c4cfa3ff05818..0835b6213235e 100644
---- a/lib/mpi/mpi-cmp.c
-+++ b/lib/mpi/mpi-cmp.c
-@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
- 	mpi_limb_t limb = v;
- 
- 	mpi_normalize(u);
--	if (!u->nlimbs && !limb)
--		return 0;
-+	if (u->nlimbs == 0) {
-+		if (v == 0)
-+			return 0;
-+		else
-+			return -1;
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index d7c440ac465f3..b3452259d6e0b 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -469,10 +469,17 @@ static int tpm_tis_send_main(struct tpm_chip *chip, const u8 *buf, size_t len)
+ 	int rc;
+ 	u32 ordinal;
+ 	unsigned long dur;
+-
+-	rc = tpm_tis_send_data(chip, buf, len);
+-	if (rc < 0)
+-		return rc;
++	unsigned int try;
++
++	for (try = 0; try < TPM_RETRY; try++) {
++		rc = tpm_tis_send_data(chip, buf, len);
++		if (rc >= 0)
++			/* Data transfer done successfully */
++			break;
++		else if (rc != -EIO)
++			/* Data transfer failed, not recoverable */
++			return rc;
 +	}
- 	if (u->sign)
- 		return -1;
- 	if (u->nlimbs > 1)
+ 
+ 	/* go and do it */
+ 	rc = tpm_tis_write8(priv, TPM_STS(priv->locality), TPM_STS_GO);
 -- 
 2.40.1
 
