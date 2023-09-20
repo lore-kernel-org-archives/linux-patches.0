@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6451630FB3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFD3C433CA;
-	Wed, 20 Sep 2023 12:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1E630F8E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D72C433C9;
+	Wed, 20 Sep 2023 12:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213948;
-	bh=NbJq0nBJPHEktm4674kLJG2A8wO7lZodLR3bz4R3FRg=;
+	s=korg; t=1695213951;
+	bh=fCNenHqlXaWMIPj7Z7UG2zwaS+U01nnHg8mOm2+lfVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yH2kzYrPRfdVRDif9yWOEwaiAzyAbI8GLf+F5xVdMFqu2Zcw4HRnz8s3n7CIz9brF
-	 zJpH4GufhrVzgblk+4L3ITsbjksarCsORWUxoXa9ebPVLa3LapNsei5/4vs0wUHZSd
-	 VQ88EbZ5c0x3lO6N0ni491beOeeaYHAQ+XYR6dog=
+	b=0MVHNzN6BmUdVClr9CJRhLH9NSAq1BSU7aIUw39Cw0LnY84IipOTWPSOs4P+uq9Kz
+	 UyW7lng3pEfrAJDM9PQkc3nIpXr+F7hyNFWEoCQr4CE42UQJwtWnXepV+7L5x6EB6V
+	 CHhmO5mbQ0iUOvsF8QJ15cjh5H04fhBuGbH00gDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Tao <rongtao@cestc.cn>,
-	Petr Mladek <pmladek@suse.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/110] samples/hw_breakpoint: Fix kernel BUG invalid opcode: 0000
-Date: Wed, 20 Sep 2023 13:31:29 +0200
-Message-ID: <20230920112831.539643478@linuxfoundation.org>
+Subject: [PATCH 5.15 032/110] ALSA: hda: intel-dsp-cfg: add LunarLake support
+Date: Wed, 20 Sep 2023 13:31:30 +0200
+Message-ID: <20230920112831.574978974@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,75 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Tao <rongtao@cestc.cn>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 910e230d5f1bb72c54532e94fbb1705095c7bab6 ]
+[ Upstream commit d2852b8c045ebd31d753b06f2810df5be30ed56a ]
 
-Macro symbol_put() is defined as __symbol_put(__stringify(x))
+One more PCI ID for the road.
 
-    ksym_name = "jiffies"
-    symbol_put(ksym_name)
-
-will be resolved as
-
-    __symbol_put("ksym_name")
-
-which is clearly wrong. So symbol_put must be replaced with __symbol_put.
-
-When we uninstall hw_breakpoint.ko (rmmod), a kernel bug occurs with the
-following error:
-
-[11381.854152] kernel BUG at kernel/module/main.c:779!
-[11381.854159] invalid opcode: 0000 [#2] PREEMPT SMP PTI
-[11381.854163] CPU: 8 PID: 59623 Comm: rmmod Tainted: G      D    OE      6.2.9-200.fc37.x86_64 #1
-[11381.854167] Hardware name: To Be Filled By O.E.M. To Be Filled By O.E.M./B360M-HDV, BIOS P3.20 10/23/2018
-[11381.854169] RIP: 0010:__symbol_put+0xa2/0xb0
-[11381.854175] Code: 00 e8 92 d2 f7 ff 65 8b 05 c3 2f e6 78 85 c0 74 1b 48 8b 44 24 30 65 48 2b 04 25 28 00 00 00 75 12 48 83 c4 38 c3 cc cc cc cc <0f> 0b 0f 1f 44 00 00 eb de e8 c0 df d8 00 90 90 90 90 90 90 90 90
-[11381.854178] RSP: 0018:ffffad8ec6ae7dd0 EFLAGS: 00010246
-[11381.854181] RAX: 0000000000000000 RBX: ffffffffc1fd1240 RCX: 000000000000000c
-[11381.854184] RDX: 000000000000006b RSI: ffffffffc02bf7c7 RDI: ffffffffc1fd001c
-[11381.854186] RBP: 000055a38b76e7c8 R08: ffffffff871ccfe0 R09: 0000000000000000
-[11381.854188] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
-[11381.854190] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-[11381.854192] FS:  00007fbf7c62c740(0000) GS:ffff8c5badc00000(0000) knlGS:0000000000000000
-[11381.854195] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[11381.854197] CR2: 000055a38b7793f8 CR3: 0000000363e1e001 CR4: 00000000003726e0
-[11381.854200] DR0: ffffffffb3407980 DR1: 0000000000000000 DR2: 0000000000000000
-[11381.854202] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-[11381.854204] Call Trace:
-[11381.854207]  <TASK>
-[11381.854212]  s_module_exit+0xc/0xff0 [symbol_getput]
-[11381.854219]  __do_sys_delete_module.constprop.0+0x198/0x2f0
-[11381.854225]  do_syscall_64+0x58/0x80
-[11381.854231]  ? exit_to_user_mode_prepare+0x180/0x1f0
-[11381.854237]  ? syscall_exit_to_user_mode+0x17/0x40
-[11381.854241]  ? do_syscall_64+0x67/0x80
-[11381.854245]  ? syscall_exit_to_user_mode+0x17/0x40
-[11381.854248]  ? do_syscall_64+0x67/0x80
-[11381.854252]  ? exc_page_fault+0x70/0x170
-[11381.854256]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Signed-off-by: Rong Tao <rongtao@cestc.cn>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230802150105.24604-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/hw_breakpoint/data_breakpoint.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/intel-dsp-config.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/samples/hw_breakpoint/data_breakpoint.c b/samples/hw_breakpoint/data_breakpoint.c
-index 418c46fe5ffc3..9debd128b2ab8 100644
---- a/samples/hw_breakpoint/data_breakpoint.c
-+++ b/samples/hw_breakpoint/data_breakpoint.c
-@@ -70,7 +70,7 @@ static int __init hw_break_module_init(void)
- static void __exit hw_break_module_exit(void)
- {
- 	unregister_wide_hw_breakpoint(sample_hbp);
--	symbol_put(ksym_name);
-+	__symbol_put(ksym_name);
- 	printk(KERN_INFO "HW Breakpoint for %s write uninstalled\n", ksym_name);
- }
+diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
+index 513eadcc38d90..c69d069b3f2b6 100644
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -385,6 +385,14 @@ static const struct config_entry config_table[] = {
+ 	},
+ #endif
  
++/* Lunar Lake */
++#if IS_ENABLED(CONFIG_SND_SOC_SOF_LUNARLAKE)
++	/* Lunarlake-P */
++	{
++		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
++		.device = PCI_DEVICE_ID_INTEL_HDA_LNL_P,
++	},
++#endif
+ };
+ 
+ static const struct config_entry *snd_intel_dsp_find_config
 -- 
 2.40.1
 
