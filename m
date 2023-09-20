@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B9711723
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0DEC433C7;
-	Wed, 20 Sep 2023 12:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B546FBD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD6CC433CB;
+	Wed, 20 Sep 2023 12:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213170;
-	bh=HxApunOINuhpow4tbXPPK0hWVBAf13PwYBKHLhels3s=;
+	s=korg; t=1695213173;
+	bh=H/uluswX6VBD8pZmXHtuiL+ciWg4T0ow3QvcP5keeSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdhjnIE01o+tZ6PxOqxs/61Rha6LlqhRq+1tmUZaXZS1ZJddM4YO2NZG8mPkKOqPI
-	 81yEqx6dj3vG33XcLVaQDsBeIDWfLOe6+WKGMdq8WrO9atm036TmV995UH7Uu1oO7C
-	 n/eWVSTY60FEgXASJuslNqMaMdi1OaDKvBJRbN+k=
+	b=Bf/JmPRINkuNFXSia4BBqlxceEwu6GgYP2rYviUS44C/5V8vdCpRcMFoetqAr/CMW
+	 YmnD65ov3z0c5d3UWWa7JAx4Nc6M8M5T/3yrAjQWp+ifzV6ykGPIpArmlitkMJqWMy
+	 nLvSHSwd8Nhx1XMjYFChef3B5IL2icJWKztOCR1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 160/367] scsi: be2iscsi: Add length check when parsing nlattrs
-Date: Wed, 20 Sep 2023 13:28:57 +0200
-Message-ID: <20230920112902.792880006@linuxfoundation.org>
+Subject: [PATCH 5.4 151/367] media: v4l2-fwnode: simplify v4l2_fwnode_parse_link
+Date: Wed, 20 Sep 2023 13:28:48 +0200
+Message-ID: <20230920112902.573636741@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,44 +41,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit ee0268f230f66cb472df3424f380ea668da2749a ]
+[ Upstream commit 507a0ba93aa1cf2837d2abc4ab0cbad3c29409d3 ]
 
-beiscsi_iface_set_param() parses nlattr with nla_for_each_attr and assumes
-every attributes can be viewed as struct iscsi_iface_param_info.
+This helper was introduced before those helpers where awailable. Convert
+it to cleanup the code and improbe readability.
 
-This is not true because there is no any nla_policy to validate the
-attributes passed from the upper function iscsi_set_iface_params().
-
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
-
-Fixes: 0e43895ec1f4 ("[SCSI] be2iscsi: adding functionality to change network settings using iscsiadm")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723075938.3713864-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: d7b13edd4cb4 ("media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/be2iscsi/be_iscsi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/v4l2-core/v4l2-fwnode.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/scsi/be2iscsi/be_iscsi.c b/drivers/scsi/be2iscsi/be_iscsi.c
-index 2058d50d62e12..737d7087723af 100644
---- a/drivers/scsi/be2iscsi/be_iscsi.c
-+++ b/drivers/scsi/be2iscsi/be_iscsi.c
-@@ -441,6 +441,10 @@ int beiscsi_iface_set_param(struct Scsi_Host *shost,
+diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
+index 217d67cb31af2..56aad92b80fc9 100644
+--- a/drivers/media/v4l2-core/v4l2-fwnode.c
++++ b/drivers/media/v4l2-core/v4l2-fwnode.c
+@@ -560,33 +560,26 @@ int v4l2_fwnode_endpoint_alloc_parse(struct fwnode_handle *fwnode,
+ }
+ EXPORT_SYMBOL_GPL(v4l2_fwnode_endpoint_alloc_parse);
+ 
+-int v4l2_fwnode_parse_link(struct fwnode_handle *__fwnode,
++int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
+ 			   struct v4l2_fwnode_link *link)
+ {
+-	const char *port_prop = "reg";
+-	struct fwnode_handle *fwnode;
++	struct fwnode_endpoint fwep;
+ 
+ 	memset(link, 0, sizeof(*link));
+ 
+-	fwnode = fwnode_get_parent(__fwnode);
+-	fwnode_property_read_u32(fwnode, port_prop, &link->local_port);
+-	fwnode = fwnode_get_next_parent(fwnode);
+-	if (is_of_node(fwnode) && of_node_name_eq(to_of_node(fwnode), "ports"))
+-		fwnode = fwnode_get_next_parent(fwnode);
+-	link->local_node = fwnode;
++	fwnode_graph_parse_endpoint(fwnode, &fwep);
++	link->local_port = fwep.port;
++	link->local_node = fwnode_graph_get_port_parent(fwnode);
+ 
+-	fwnode = fwnode_graph_get_remote_endpoint(__fwnode);
++	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
+ 	if (!fwnode) {
+ 		fwnode_handle_put(fwnode);
+ 		return -ENOLINK;
  	}
  
- 	nla_for_each_attr(attrib, data, dt_len, rm_len) {
-+		/* ignore nla_type as it is never used */
-+		if (nla_len(attrib) < sizeof(*iface_param))
-+			return -EINVAL;
-+
- 		iface_param = nla_data(attrib);
+-	fwnode = fwnode_get_parent(fwnode);
+-	fwnode_property_read_u32(fwnode, port_prop, &link->remote_port);
+-	fwnode = fwnode_get_next_parent(fwnode);
+-	if (is_of_node(fwnode) && of_node_name_eq(to_of_node(fwnode), "ports"))
+-		fwnode = fwnode_get_next_parent(fwnode);
+-	link->remote_node = fwnode;
++	fwnode_graph_parse_endpoint(fwnode, &fwep);
++	link->remote_port = fwep.port;
++	link->remote_node = fwnode_graph_get_port_parent(fwnode);
  
- 		if (iface_param->param_type != ISCSI_NET_PARAM)
+ 	return 0;
+ }
 -- 
 2.40.1
 
