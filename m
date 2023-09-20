@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7309F31A6B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4F3C433C9;
-	Wed, 20 Sep 2023 12:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1DA31A6E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52D6C433CA;
+	Wed, 20 Sep 2023 12:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213655;
-	bh=UhLHQJTbhN9GoN3V7EGKqbfOEdQnCEJuAGJGavAXynA=;
+	s=korg; t=1695213658;
+	bh=7CbOR46xCngiFr39JMpUajZdnvyncOarCi0xAGOKTeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbC+jGs5bPN69xvO0cKX9IFak/hDsTD+jVORC8X/94PyvoLKMMPz574KlcPPycD+g
-	 gwfvFA+zhOhzUJXA1q4ztKw3CEzmgkap7YkHH0n1d9mG+ETlT9hQ/VoF0Ls2z9F5ap
-	 yPki5SBfA6hTCigpdZKFq2IpQtuEY+vWuurpVkbE=
+	b=LLdLjm+mvXuaUbNGoCT4HZ7Z7w15I9se7T0hfOTl5qjh8uXchu7NMXXtsaFeZsSDi
+	 igUWGLP+a78OSge2qEjom0BYKB05GIZ1ygYoH8mkJQM0t8Va61YLC7WwVf5V6G8KEb
+	 iDJ7HHfg2h0QfoFk0LslUhna5D5zdaMkGUKH/b+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
+	Tomislav Novak <tnovak@meta.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 316/367] perf/smmuv3: Enable HiSilicon Erratum 162001900 quirk for HIP08/09
-Date: Wed, 20 Sep 2023 13:31:33 +0200
-Message-ID: <20230920112906.728531776@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Samuel Gosselin <sgosselin@google.com>
+Subject: [PATCH 5.4 317/367] hw_breakpoint: fix single-stepping when using bpf_overflow_handler
+Date: Wed, 20 Sep 2023 13:31:34 +0200
+Message-ID: <20230920112906.752355947@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,158 +43,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Tomislav Novak <tnovak@meta.com>
 
-[ Upstream commit 0242737dc4eb9f6e9a5ea594b3f93efa0b12f28d ]
+[ Upstream commit d11a69873d9a7435fe6a48531e165ab80a8b1221 ]
 
-Some HiSilicon SMMU PMCG suffers the erratum 162001900 that the PMU
-disable control sometimes fail to disable the counters. This will lead
-to error or inaccurate data since before we enable the counters the
-counter's still counting for the event used in last perf session.
+Arm platforms use is_default_overflow_handler() to determine if the
+hw_breakpoint code should single-step over the breakpoint trigger or
+let the custom handler deal with it.
 
-This patch tries to fix this by hardening the global disable process.
-Before disable the PMU, writing an invalid event type (0xffff) to
-focibly stop the counters. Correspondingly restore each events on
-pmu::pmu_enable().
+Since bpf_overflow_handler() currently isn't recognized as a default
+handler, attaching a BPF program to a PERF_TYPE_BREAKPOINT event causes
+it to keep firing (the instruction triggering the data abort exception
+is never skipped). For example:
 
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20230814124012.58013-1-yangyicong@huawei.com
+  # bpftrace -e 'watchpoint:0x10000:4:w { print("hit") }' -c ./test
+  Attaching 1 probe...
+  hit
+  hit
+  [...]
+  ^C
+
+(./test performs a single 4-byte store to 0x10000)
+
+This patch replaces the check with uses_default_overflow_handler(),
+which accounts for the bpf_overflow_handler() case by also testing
+if one of the perf_event_output functions gets invoked indirectly,
+via orig_default_handler.
+
+Signed-off-by: Tomislav Novak <tnovak@meta.com>
+Tested-by: Samuel Gosselin <sgosselin@google.com> # arm64
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/linux-arm-kernel/20220923203644.2731604-1-tnovak@fb.com/
+Link: https://lore.kernel.org/r/20230605191923.1219974-1-tnovak@meta.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst |  3 ++
- drivers/acpi/arm64/iort.c              |  5 ++-
- drivers/perf/arm_smmuv3_pmu.c          | 46 +++++++++++++++++++++++++-
- include/linux/acpi_iort.h              |  1 +
- 4 files changed, 53 insertions(+), 2 deletions(-)
+ arch/arm/kernel/hw_breakpoint.c   |  8 ++++----
+ arch/arm64/kernel/hw_breakpoint.c |  4 ++--
+ include/linux/perf_event.h        | 22 +++++++++++++++++++---
+ 3 files changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 36a8c01191a07..6b70b6aabcffe 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -134,6 +134,9 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | Hisilicon      | Hip08 SMMU PMCG | #162001800      | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
-+| Hisilicon      | Hip08 SMMU PMCG | #162001900      | N/A                         |
-+|                | Hip09 SMMU PMCG |                 |                             |
-++----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
- | Qualcomm Tech. | Kryo/Falkor v1  | E1003           | QCOM_FALKOR_ERRATUM_1003    |
- +----------------+-----------------+-----------------+-----------------------------+
-diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-index 553c89b0bdcbb..09eb170f26d27 100644
---- a/drivers/acpi/arm64/iort.c
-+++ b/drivers/acpi/arm64/iort.c
-@@ -1393,7 +1393,10 @@ static void __init arm_smmu_v3_pmcg_init_resources(struct resource *res,
- static struct acpi_platform_list pmcg_plat_info[] __initdata = {
- 	/* HiSilicon Hip08 Platform */
- 	{"HISI  ", "HIP08   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
--	 "Erratum #162001800", IORT_SMMU_V3_PMCG_HISI_HIP08},
-+	 "Erratum #162001800, Erratum #162001900", IORT_SMMU_V3_PMCG_HISI_HIP08},
-+	/* HiSilicon Hip09 Platform */
-+	{"HISI  ", "HIP09   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
-+	 "Erratum #162001900", IORT_SMMU_V3_PMCG_HISI_HIP09},
- 	{ }
- };
+diff --git a/arch/arm/kernel/hw_breakpoint.c b/arch/arm/kernel/hw_breakpoint.c
+index b06d9ea07c846..a69dd64a84017 100644
+--- a/arch/arm/kernel/hw_breakpoint.c
++++ b/arch/arm/kernel/hw_breakpoint.c
+@@ -623,7 +623,7 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
+ 	hw->address &= ~alignment_mask;
+ 	hw->ctrl.len <<= offset;
  
-diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
-index 0b6af77196418..de85e9191947a 100644
---- a/drivers/perf/arm_smmuv3_pmu.c
-+++ b/drivers/perf/arm_smmuv3_pmu.c
-@@ -95,6 +95,7 @@
- #define SMMU_PMCG_PA_SHIFT              12
- 
- #define SMMU_PMCG_EVCNTR_RDONLY         BIT(0)
-+#define SMMU_PMCG_HARDEN_DISABLE        BIT(1)
- 
- static int cpuhp_state_num;
- 
-@@ -138,6 +139,20 @@ static inline void smmu_pmu_enable(struct pmu *pmu)
- 	writel(SMMU_PMCG_CR_ENABLE, smmu_pmu->reg_base + SMMU_PMCG_CR);
- }
- 
-+static int smmu_pmu_apply_event_filter(struct smmu_pmu *smmu_pmu,
-+				       struct perf_event *event, int idx);
-+
-+static inline void smmu_pmu_enable_quirk_hip08_09(struct pmu *pmu)
-+{
-+	struct smmu_pmu *smmu_pmu = to_smmu_pmu(pmu);
-+	unsigned int idx;
-+
-+	for_each_set_bit(idx, smmu_pmu->used_counters, smmu_pmu->num_counters)
-+		smmu_pmu_apply_event_filter(smmu_pmu, smmu_pmu->events[idx], idx);
-+
-+	smmu_pmu_enable(pmu);
-+}
-+
- static inline void smmu_pmu_disable(struct pmu *pmu)
- {
- 	struct smmu_pmu *smmu_pmu = to_smmu_pmu(pmu);
-@@ -146,6 +161,22 @@ static inline void smmu_pmu_disable(struct pmu *pmu)
- 	writel(0, smmu_pmu->reg_base + SMMU_PMCG_IRQ_CTRL);
- }
- 
-+static inline void smmu_pmu_disable_quirk_hip08_09(struct pmu *pmu)
-+{
-+	struct smmu_pmu *smmu_pmu = to_smmu_pmu(pmu);
-+	unsigned int idx;
-+
-+	/*
-+	 * The global disable of PMU sometimes fail to stop the counting.
-+	 * Harden this by writing an invalid event type to each used counter
-+	 * to forcibly stop counting.
-+	 */
-+	for_each_set_bit(idx, smmu_pmu->used_counters, smmu_pmu->num_counters)
-+		writel(0xffff, smmu_pmu->reg_base + SMMU_PMCG_EVTYPER(idx));
-+
-+	smmu_pmu_disable(pmu);
-+}
-+
- static inline void smmu_pmu_counter_set_value(struct smmu_pmu *smmu_pmu,
- 					      u32 idx, u64 value)
- {
-@@ -719,7 +750,10 @@ static void smmu_pmu_get_acpi_options(struct smmu_pmu *smmu_pmu)
- 	switch (model) {
- 	case IORT_SMMU_V3_PMCG_HISI_HIP08:
- 		/* HiSilicon Erratum 162001800 */
--		smmu_pmu->options |= SMMU_PMCG_EVCNTR_RDONLY;
-+		smmu_pmu->options |= SMMU_PMCG_EVCNTR_RDONLY | SMMU_PMCG_HARDEN_DISABLE;
-+		break;
-+	case IORT_SMMU_V3_PMCG_HISI_HIP09:
-+		smmu_pmu->options |= SMMU_PMCG_HARDEN_DISABLE;
- 		break;
+-	if (is_default_overflow_handler(bp)) {
++	if (uses_default_overflow_handler(bp)) {
+ 		/*
+ 		 * Mismatch breakpoints are required for single-stepping
+ 		 * breakpoints.
+@@ -795,7 +795,7 @@ static void watchpoint_handler(unsigned long addr, unsigned int fsr,
+ 		 * Otherwise, insert a temporary mismatch breakpoint so that
+ 		 * we can single-step over the watchpoint trigger.
+ 		 */
+-		if (!is_default_overflow_handler(wp))
++		if (!uses_default_overflow_handler(wp))
+ 			continue;
+ step:
+ 		enable_single_step(wp, instruction_pointer(regs));
+@@ -808,7 +808,7 @@ static void watchpoint_handler(unsigned long addr, unsigned int fsr,
+ 		info->trigger = addr;
+ 		pr_debug("watchpoint fired: address = 0x%x\n", info->trigger);
+ 		perf_bp_event(wp, regs);
+-		if (is_default_overflow_handler(wp))
++		if (uses_default_overflow_handler(wp))
+ 			enable_single_step(wp, instruction_pointer(regs));
  	}
  
-@@ -808,6 +842,16 @@ static int smmu_pmu_probe(struct platform_device *pdev)
+@@ -883,7 +883,7 @@ static void breakpoint_handler(unsigned long unknown, struct pt_regs *regs)
+ 			info->trigger = addr;
+ 			pr_debug("breakpoint fired: address = 0x%x\n", addr);
+ 			perf_bp_event(bp, regs);
+-			if (is_default_overflow_handler(bp))
++			if (uses_default_overflow_handler(bp))
+ 				enable_single_step(bp, addr);
+ 			goto unlock;
+ 		}
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index b4a1607958246..534578eba556e 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -654,7 +654,7 @@ static int breakpoint_handler(unsigned long unused, unsigned int esr,
+ 		perf_bp_event(bp, regs);
  
- 	smmu_pmu_get_acpi_options(smmu_pmu);
+ 		/* Do we need to handle the stepping? */
+-		if (is_default_overflow_handler(bp))
++		if (uses_default_overflow_handler(bp))
+ 			step = 1;
+ unlock:
+ 		rcu_read_unlock();
+@@ -733,7 +733,7 @@ static u64 get_distance_from_watchpoint(unsigned long addr, u64 val,
+ static int watchpoint_report(struct perf_event *wp, unsigned long addr,
+ 			     struct pt_regs *regs)
+ {
+-	int step = is_default_overflow_handler(wp);
++	int step = uses_default_overflow_handler(wp);
+ 	struct arch_hw_breakpoint *info = counter_arch_bp(wp);
  
-+	/*
-+	 * For platforms suffer this quirk, the PMU disable sometimes fails to
-+	 * stop the counters. This will leads to inaccurate or error counting.
-+	 * Forcibly disable the counters with these quirk handler.
-+	 */
-+	if (smmu_pmu->options & SMMU_PMCG_HARDEN_DISABLE) {
-+		smmu_pmu->pmu.pmu_enable = smmu_pmu_enable_quirk_hip08_09;
-+		smmu_pmu->pmu.pmu_disable = smmu_pmu_disable_quirk_hip08_09;
-+	}
+ 	info->trigger = addr;
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index b7ac395513c0f..c99e2f851d312 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -1018,15 +1018,31 @@ extern int perf_event_output(struct perf_event *event,
+ 			     struct pt_regs *regs);
+ 
+ static inline bool
+-is_default_overflow_handler(struct perf_event *event)
++__is_default_overflow_handler(perf_overflow_handler_t overflow_handler)
+ {
+-	if (likely(event->overflow_handler == perf_event_output_forward))
++	if (likely(overflow_handler == perf_event_output_forward))
+ 		return true;
+-	if (unlikely(event->overflow_handler == perf_event_output_backward))
++	if (unlikely(overflow_handler == perf_event_output_backward))
+ 		return true;
+ 	return false;
+ }
+ 
++#define is_default_overflow_handler(event) \
++	__is_default_overflow_handler((event)->overflow_handler)
 +
- 	/* Pick one CPU to be the preferred one to use */
- 	smmu_pmu->on_cpu = raw_smp_processor_id();
- 	WARN_ON(irq_set_affinity_hint(smmu_pmu->irq,
-diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-index 8e7e2ec37f1b2..64f700254ca0f 100644
---- a/include/linux/acpi_iort.h
-+++ b/include/linux/acpi_iort.h
-@@ -21,6 +21,7 @@
-  */
- #define IORT_SMMU_V3_PMCG_GENERIC        0x00000000 /* Generic SMMUv3 PMCG */
- #define IORT_SMMU_V3_PMCG_HISI_HIP08     0x00000001 /* HiSilicon HIP08 PMCG */
-+#define IORT_SMMU_V3_PMCG_HISI_HIP09     0x00000002 /* HiSilicon HIP09 PMCG */
- 
- int iort_register_domain_token(int trans_id, phys_addr_t base,
- 			       struct fwnode_handle *fw_node);
++#ifdef CONFIG_BPF_SYSCALL
++static inline bool uses_default_overflow_handler(struct perf_event *event)
++{
++	if (likely(is_default_overflow_handler(event)))
++		return true;
++
++	return __is_default_overflow_handler(event->orig_overflow_handler);
++}
++#else
++#define uses_default_overflow_handler(event) \
++	is_default_overflow_handler(event)
++#endif
++
+ extern void
+ perf_event_header__init_id(struct perf_event_header *header,
+ 			   struct perf_sample_data *data,
 -- 
 2.40.1
 
