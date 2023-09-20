@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA430FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554CEC433C7;
-	Wed, 20 Sep 2023 12:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86022AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F2BC433C8;
+	Wed, 20 Sep 2023 12:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212484;
-	bh=4ELIotB98orVCB9Y6MwQIm6tvFMZdGqaNDsUQBC/SJo=;
+	s=korg; t=1695212487;
+	bh=Wx515nzW7lE6TtMYlcQfyFFEclqVtf2AXm3Z7oUq4YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQA2wyjTSc39mblLn7W5+qhhuXCa8mvlhsLBDztrhIWhZiJFkIdQ8fG5kTjN7/UZT
-	 JPc5tYjZZPPKimuPwlrGcfS0m1JY5Q0lIPpAks6UyIBGmJXHXGPDnMqBoZ/yxprsbe
-	 y64WSfiG9mEM4vTRcw5s7tv3W70aCp/rnmtr3Dog=
+	b=gBsZ3U2DvCKuOLQ5YbQTRaAc/kn10PMyYKBIY+tFJljkJSBJD3sSY6ZRPjN8qY4i2
+	 Cy4oQ4pIM0/dw2x9pxB49OXMdixNFkMyKIlKIktcA9RFhnSkKPMOdfWuXMrPdoKJha
+	 69PlRHCHjbMtxwDQmc4qsf/GXbS4di27bHqq8kpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Steffen <Alexander.Steffen@infineon.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 19/83] tpm_tis: Resend command to recover from data transfer errors
-Date: Wed, 20 Sep 2023 13:31:09 +0200
-Message-ID: <20230920112827.434708860@linuxfoundation.org>
+Subject: [PATCH 5.10 02/83] btrfs: output extra debug info if we failed to find an inline backref
+Date: Wed, 20 Sep 2023 13:30:52 +0200
+Message-ID: <20230920112826.739478941@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -40,48 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Steffen <Alexander.Steffen@infineon.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 280db21e153d8810ce3b93640c63ae922bcb9e8e ]
+[ Upstream commit 7f72f50547b7af4ddf985b07fc56600a4deba281 ]
 
-Similar to the transmission of TPM responses, also the transmission of TPM
-commands may become corrupted. Instead of aborting when detecting such
-issues, try resending the command again.
+[BUG]
+Syzbot reported several warning triggered inside
+lookup_inline_extent_backref().
 
-Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[CAUSE]
+As usual, the reproducer doesn't reliably trigger locally here, but at
+least we know the WARN_ON() is triggered when an inline backref can not
+be found, and it can only be triggered when @insert is true. (I.e.
+inserting a new inline backref, which means the backref should already
+exist)
+
+[ENHANCEMENT]
+After the WARN_ON(), dump all the parameters and the extent tree
+leaf to help debug.
+
+Link: https://syzkaller.appspot.com/bug?extid=d6f9ff86c1d804ba2bc6
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/btrfs/extent-tree.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index d7c440ac465f3..b3452259d6e0b 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -469,10 +469,17 @@ static int tpm_tis_send_main(struct tpm_chip *chip, const u8 *buf, size_t len)
- 	int rc;
- 	u32 ordinal;
- 	unsigned long dur;
--
--	rc = tpm_tis_send_data(chip, buf, len);
--	if (rc < 0)
--		return rc;
-+	unsigned int try;
-+
-+	for (try = 0; try < TPM_RETRY; try++) {
-+		rc = tpm_tis_send_data(chip, buf, len);
-+		if (rc >= 0)
-+			/* Data transfer done successfully */
-+			break;
-+		else if (rc != -EIO)
-+			/* Data transfer failed, not recoverable */
-+			return rc;
-+	}
- 
- 	/* go and do it */
- 	rc = tpm_tis_write8(priv, TPM_STS(priv->locality), TPM_STS_GO);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 9cdf50e2484e1..4d2f25ebe3048 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -857,6 +857,11 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
+ 		err = -ENOENT;
+ 		goto out;
+ 	} else if (WARN_ON(ret)) {
++		btrfs_print_leaf(path->nodes[0]);
++		btrfs_err(fs_info,
++"extent item not found for insert, bytenr %llu num_bytes %llu parent %llu root_objectid %llu owner %llu offset %llu",
++			  bytenr, num_bytes, parent, root_objectid, owner,
++			  offset);
+ 		err = -EIO;
+ 		goto out;
+ 	}
 -- 
 2.40.1
 
