@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0BA30F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34F1C433C8;
-	Wed, 20 Sep 2023 12:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A64730F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1ADAC433C9;
+	Wed, 20 Sep 2023 12:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213776;
-	bh=2YbsDd+qphnJgvqKWnV2aN18d5wWIHl3ITBXWdXgi00=;
+	s=korg; t=1695213779;
+	bh=l9dB67RVYPzmCQG74kHEafPEivCS0KyI8cBlOdsH1os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoiOU6dHqJizSgO1zawibWXk9fMK0sjV1e/30+EkbaxvHhVl6Mc8Jg9NnOTc/cx9j
-	 RwuuD2y1PFCwVhUQUP/hmNdHSffZ3vhlup2DtknuQfZVFxSksRB+Ab+ssxF36MHBxU
-	 oYRXkuhkDjnBBvcUDKqjgM5I6PAM2kZCeXb5QABg=
+	b=lGqGOSiPyLSm6cdOFhXkwipNwLHmft+W4+hIdNRFaSWYUL1VEcIIB+WsPkN/LM4Bf
+	 +kqXFLwNqOVSxFnK8jm3mhE+mD36loayKQCjyCkMSQsTpPJoRhvZ47P2okkH5ZBAnb
+	 /UZd92l51QNz1l3d8aJHgE4uIyGeUMre/wBT8aso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommy Huang <tommy_huang@aspeedtech.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.4 362/367] i2c: aspeed: Reset the i2c controller when timeout occurs
-Date: Wed, 20 Sep 2023 13:32:19 +0200
-Message-ID: <20230920112907.856127571@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 363/367] scsi: megaraid_sas: Fix deadlock on firmware crashdump
+Date: Wed, 20 Sep 2023 13:32:20 +0200
+Message-ID: <20230920112907.881410516@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,44 +40,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommy Huang <tommy_huang@aspeedtech.com>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit fee465150b458351b6d9b9f66084f3cc3022b88b upstream.
+commit 0b0747d507bffb827e40fc0f9fb5883fffc23477 upstream.
 
-Reset the i2c controller when an i2c transfer timeout occurs.
-The remaining interrupts and device should be reset to avoid
-unpredictable controller behavior.
+The following processes run into a deadlock. CPU 41 was waiting for CPU 29
+to handle a CSD request while holding spinlock "crashdump_lock", but CPU 29
+was hung by that spinlock with IRQs disabled.
 
-Fixes: 2e57b7cebb98 ("i2c: aspeed: Add multi-master use case support")
-Cc: <stable@vger.kernel.org> # v5.1+
-Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+  PID: 17360    TASK: ffff95c1090c5c40  CPU: 41  COMMAND: "mrdiagd"
+  !# 0 [ffffb80edbf37b58] __read_once_size at ffffffff9b871a40 include/linux/compiler.h:185:0
+  !# 1 [ffffb80edbf37b58] atomic_read at ffffffff9b871a40 arch/x86/include/asm/atomic.h:27:0
+  !# 2 [ffffb80edbf37b58] dump_stack at ffffffff9b871a40 lib/dump_stack.c:54:0
+   # 3 [ffffb80edbf37b78] csd_lock_wait_toolong at ffffffff9b131ad5 kernel/smp.c:364:0
+   # 4 [ffffb80edbf37b78] __csd_lock_wait at ffffffff9b131ad5 kernel/smp.c:384:0
+   # 5 [ffffb80edbf37bf8] csd_lock_wait at ffffffff9b13267a kernel/smp.c:394:0
+   # 6 [ffffb80edbf37bf8] smp_call_function_many at ffffffff9b13267a kernel/smp.c:843:0
+   # 7 [ffffb80edbf37c50] smp_call_function at ffffffff9b13279d kernel/smp.c:867:0
+   # 8 [ffffb80edbf37c50] on_each_cpu at ffffffff9b13279d kernel/smp.c:976:0
+   # 9 [ffffb80edbf37c78] flush_tlb_kernel_range at ffffffff9b085c4b arch/x86/mm/tlb.c:742:0
+   #10 [ffffb80edbf37cb8] __purge_vmap_area_lazy at ffffffff9b23a1e0 mm/vmalloc.c:701:0
+   #11 [ffffb80edbf37ce0] try_purge_vmap_area_lazy at ffffffff9b23a2cc mm/vmalloc.c:722:0
+   #12 [ffffb80edbf37ce0] free_vmap_area_noflush at ffffffff9b23a2cc mm/vmalloc.c:754:0
+   #13 [ffffb80edbf37cf8] free_unmap_vmap_area at ffffffff9b23bb3b mm/vmalloc.c:764:0
+   #14 [ffffb80edbf37cf8] remove_vm_area at ffffffff9b23bb3b mm/vmalloc.c:1509:0
+   #15 [ffffb80edbf37d18] __vunmap at ffffffff9b23bb8a mm/vmalloc.c:1537:0
+   #16 [ffffb80edbf37d40] vfree at ffffffff9b23bc85 mm/vmalloc.c:1612:0
+   #17 [ffffb80edbf37d58] megasas_free_host_crash_buffer [megaraid_sas] at ffffffffc020b7f2 drivers/scsi/megaraid/megaraid_sas_fusion.c:3932:0
+   #18 [ffffb80edbf37d80] fw_crash_state_store [megaraid_sas] at ffffffffc01f804d drivers/scsi/megaraid/megaraid_sas_base.c:3291:0
+   #19 [ffffb80edbf37dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
+   #20 [ffffb80edbf37dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
+   #21 [ffffb80edbf37de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
+   #22 [ffffb80edbf37e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
+   #23 [ffffb80edbf37ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
+   #24 [ffffb80edbf37ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
+   #25 [ffffb80edbf37ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
+   #26 [ffffb80edbf37f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
+   #27 [ffffb80edbf37f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+
+  PID: 17355    TASK: ffff95c1090c3d80  CPU: 29  COMMAND: "mrdiagd"
+  !# 0 [ffffb80f2d3c7d30] __read_once_size at ffffffff9b0f2ab0 include/linux/compiler.h:185:0
+  !# 1 [ffffb80f2d3c7d30] native_queued_spin_lock_slowpath at ffffffff9b0f2ab0 kernel/locking/qspinlock.c:368:0
+   # 2 [ffffb80f2d3c7d58] pv_queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/paravirt.h:674:0
+   # 3 [ffffb80f2d3c7d58] queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/qspinlock.h:53:0
+   # 4 [ffffb80f2d3c7d68] queued_spin_lock at ffffffff9b8961a6 include/asm-generic/qspinlock.h:90:0
+   # 5 [ffffb80f2d3c7d68] do_raw_spin_lock_flags at ffffffff9b8961a6 include/linux/spinlock.h:173:0
+   # 6 [ffffb80f2d3c7d68] __raw_spin_lock_irqsave at ffffffff9b8961a6 include/linux/spinlock_api_smp.h:122:0
+   # 7 [ffffb80f2d3c7d68] _raw_spin_lock_irqsave at ffffffff9b8961a6 kernel/locking/spinlock.c:160:0
+   # 8 [ffffb80f2d3c7d88] fw_crash_buffer_store [megaraid_sas] at ffffffffc01f8129 drivers/scsi/megaraid/megaraid_sas_base.c:3205:0
+   # 9 [ffffb80f2d3c7dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
+   #10 [ffffb80f2d3c7dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
+   #11 [ffffb80f2d3c7de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
+   #12 [ffffb80f2d3c7e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
+   #13 [ffffb80f2d3c7ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
+   #14 [ffffb80f2d3c7ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
+   #15 [ffffb80f2d3c7ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
+   #16 [ffffb80f2d3c7f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
+   #17 [ffffb80f2d3c7f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+
+The lock is used to synchronize different sysfs operations, it doesn't
+protect any resource that will be touched by an interrupt. Consequently
+it's not required to disable IRQs. Replace the spinlock with a mutex to fix
+the deadlock.
+
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230828221018.19471-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas.h      |    2 +-
+ drivers/scsi/megaraid/megaraid_sas_base.c |   21 +++++++++------------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -693,13 +693,16 @@ static int aspeed_i2c_master_xfer(struct
+--- a/drivers/scsi/megaraid/megaraid_sas.h
++++ b/drivers/scsi/megaraid/megaraid_sas.h
+@@ -2324,7 +2324,7 @@ struct megasas_instance {
+ 	u32 support_morethan256jbod; /* FW support for more than 256 PD/JBOD */
+ 	bool use_seqnum_jbod_fp;   /* Added for PD sequence */
+ 	bool smp_affinity_enable;
+-	spinlock_t crashdump_lock;
++	struct mutex crashdump_lock;
  
- 	if (time_left == 0) {
- 		/*
--		 * If timed out and bus is still busy in a multi master
--		 * environment, attempt recovery at here.
-+		 * In a multi-master setup, if a timeout occurs, attempt
-+		 * recovery. But if the bus is idle, we still need to reset the
-+		 * i2c controller to clear the remaining interrupts.
- 		 */
- 		if (bus->multi_master &&
- 		    (readl(bus->base + ASPEED_I2C_CMD_REG) &
- 		     ASPEED_I2CD_BUS_BUSY_STS))
- 			aspeed_i2c_recover_bus(bus);
-+		else
-+			aspeed_i2c_reset(bus);
+ 	struct megasas_register_set __iomem *reg_set;
+ 	u32 __iomem *reply_post_host_index_addr[MR_MAX_MSIX_REG_ARRAY];
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -3208,14 +3208,13 @@ fw_crash_buffer_store(struct device *cde
+ 	struct megasas_instance *instance =
+ 		(struct megasas_instance *) shost->hostdata;
+ 	int val = 0;
+-	unsigned long flags;
  
- 		/*
- 		 * If timed out and the state is still pending, drop the pending
+ 	if (kstrtoint(buf, 0, &val) != 0)
+ 		return -EINVAL;
+ 
+-	spin_lock_irqsave(&instance->crashdump_lock, flags);
++	mutex_lock(&instance->crashdump_lock);
+ 	instance->fw_crash_buffer_offset = val;
+-	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++	mutex_unlock(&instance->crashdump_lock);
+ 	return strlen(buf);
+ }
+ 
+@@ -3230,24 +3229,23 @@ fw_crash_buffer_show(struct device *cdev
+ 	unsigned long dmachunk = CRASH_DMA_BUF_SIZE;
+ 	unsigned long chunk_left_bytes;
+ 	unsigned long src_addr;
+-	unsigned long flags;
+ 	u32 buff_offset;
+ 
+-	spin_lock_irqsave(&instance->crashdump_lock, flags);
++	mutex_lock(&instance->crashdump_lock);
+ 	buff_offset = instance->fw_crash_buffer_offset;
+ 	if (!instance->crash_dump_buf ||
+ 		!((instance->fw_crash_state == AVAILABLE) ||
+ 		(instance->fw_crash_state == COPYING))) {
+ 		dev_err(&instance->pdev->dev,
+ 			"Firmware crash dump is not available\n");
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (buff_offset > (instance->fw_crash_buffer_size * dmachunk)) {
+ 		dev_err(&instance->pdev->dev,
+ 			"Firmware crash dump offset is out of range\n");
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		return 0;
+ 	}
+ 
+@@ -3259,7 +3257,7 @@ fw_crash_buffer_show(struct device *cdev
+ 	src_addr = (unsigned long)instance->crash_buf[buff_offset / dmachunk] +
+ 		(buff_offset % dmachunk);
+ 	memcpy(buf, (void *)src_addr, size);
+-	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++	mutex_unlock(&instance->crashdump_lock);
+ 
+ 	return size;
+ }
+@@ -3284,7 +3282,6 @@ fw_crash_state_store(struct device *cdev
+ 	struct megasas_instance *instance =
+ 		(struct megasas_instance *) shost->hostdata;
+ 	int val = 0;
+-	unsigned long flags;
+ 
+ 	if (kstrtoint(buf, 0, &val) != 0)
+ 		return -EINVAL;
+@@ -3298,9 +3295,9 @@ fw_crash_state_store(struct device *cdev
+ 	instance->fw_crash_state = val;
+ 
+ 	if ((val == COPIED) || (val == COPY_ERROR)) {
+-		spin_lock_irqsave(&instance->crashdump_lock, flags);
++		mutex_lock(&instance->crashdump_lock);
+ 		megasas_free_host_crash_buffer(instance);
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		if (val == COPY_ERROR)
+ 			dev_info(&instance->pdev->dev, "application failed to "
+ 				"copy Firmware crash dump\n");
+@@ -7301,7 +7298,7 @@ static inline void megasas_init_ctrl_par
+ 	init_waitqueue_head(&instance->int_cmd_wait_q);
+ 	init_waitqueue_head(&instance->abort_cmd_wait_q);
+ 
+-	spin_lock_init(&instance->crashdump_lock);
++	mutex_init(&instance->crashdump_lock);
+ 	spin_lock_init(&instance->mfi_pool_lock);
+ 	spin_lock_init(&instance->hba_lock);
+ 	spin_lock_init(&instance->stream_lock);
 
 
