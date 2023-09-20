@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4EA2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40098C433C9;
-	Wed, 20 Sep 2023 12:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50832E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:13:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E9DC433CA;
+	Wed, 20 Sep 2023 12:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212033;
-	bh=tLC3R+LVvcl4hf+7mWAQ6lBfMxL4wdi8bzwETHR7Mbc=;
+	s=korg; t=1695212036;
+	bh=anxcBiLWjIZmSTq11QkjBl0wM39cUk70UkvpJ5m75kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cN9x0C3ZP7HxvYA5oX7oyW2l/SSk375O8bSOYIZABorYSjbJMj2BOiwW/WZTxZ2us
-	 azN5Vh21NzQasAY2vn/fPT4QZ8TP4wC2J/iQ+r29+d/xmgzmDeSeRQJcisZj8jKiHB
-	 /twtKaURTKaTs6+pEIKtUa0wOb/7l2Qh3G/nlDng=
+	b=GO9WPFkMZ1OE6FznVokikt7Z8PdyKRmtxjfBsJpf5IebAY8x7z5nXYegPujzzCr3L
+	 qzjyyzog73TVE30ik33JffHndyC/63/hxoeySe+Z71+4vZUox2Yr5MUggOdD+6gtr6
+	 SN36DIJSPpFRgFhzyLh745GUF5UH+/hXnOqy31HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Tan Zhongjun <tanzhongjun@yulong.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 096/273] ARM: dts: BCM53573: Fix Ethernet info for Luxul devices
-Date: Wed, 20 Sep 2023 13:28:56 +0200
-Message-ID: <20230920112849.408683394@linuxfoundation.org>
+Subject: [PATCH 4.19 097/273] drm/tegra: Remove superfluous error messages around platform_get_irq()
+Date: Wed, 20 Sep 2023 13:28:57 +0200
+Message-ID: <20230920112849.439892305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -34,89 +34,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Tan Zhongjun <tanzhongjun@yulong.com>
 
-[ Upstream commit 44ad8207806973f4e4f7d870fff36cc01f494250 ]
+[ Upstream commit d12919bb5da571ec50588ef97683d37e36dc2de5 ]
 
-Both Luxul's XAP devices (XAP-810 and XAP-1440) are access points that
-use a non-default design. They don't include switch but have a single
-Ethernet port and BCM54210E PHY connected to the Ethernet controller's
-MDIO bus.
+The platform_get_irq() prints error message telling that interrupt is
+missing,hence there is no need to duplicated that message in the
+drivers.
 
-Support for those devices regressed due to two changes:
-
-1. Describing MDIO bus with switch
-After commit 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125
-rev 4 switch") Linux stopped probing for MDIO devices.
-
-2. Dropping hardcoded BCM54210E delays
-In commit fea7fda7f50a ("net: phy: broadcom: Fix RGMII delays
-configuration for BCM54210E") support for other PHY modes was added but
-that requires a proper "phy-mode" value in DT.
-
-Both above changes are correct (they don't need to be reverted or
-anything) but they need this fix for DT data to be correct and for Linux
-to work properly.
-
-Fixes: 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125 rev 4 switch")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230713111145.14864-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Tan Zhongjun <tanzhongjun@yulong.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Stable-dep-of: 2a1ca44b6543 ("drm/tegra: dpaux: Fix incorrect return value of platform_get_irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 13 +++++++++++++
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+ drivers/gpu/drm/tegra/dpaux.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 74c83b0ca54e0..bb7dc00a71e06 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -48,3 +48,16 @@ restart {
- 		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 214df18f3a754..6561e3b81b606 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -85,3 +85,16 @@ pcie0_chipcommon: chipcommon@0 {
- 		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
+diff --git a/drivers/gpu/drm/tegra/dpaux.c b/drivers/gpu/drm/tegra/dpaux.c
+index d84e81ff36ad0..bed9efe36a1eb 100644
+--- a/drivers/gpu/drm/tegra/dpaux.c
++++ b/drivers/gpu/drm/tegra/dpaux.c
+@@ -449,10 +449,8 @@ static int tegra_dpaux_probe(struct platform_device *pdev)
+ 		return PTR_ERR(dpaux->regs);
+ 
+ 	dpaux->irq = platform_get_irq(pdev, 0);
+-	if (dpaux->irq < 0) {
+-		dev_err(&pdev->dev, "failed to get IRQ\n");
++	if (dpaux->irq < 0)
+ 		return -ENXIO;
+-	}
+ 
+ 	if (!pdev->dev.pm_domain) {
+ 		dpaux->rst = devm_reset_control_get(&pdev->dev, "dpaux");
 -- 
 2.40.1
 
