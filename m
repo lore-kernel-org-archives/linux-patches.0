@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B1B30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C770C433C7;
-	Wed, 20 Sep 2023 12:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8CA30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3572FC433C7;
+	Wed, 20 Sep 2023 12:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212931;
-	bh=X9Pjnv/yVhq8bKdAWVn1KuWkhAclV6p6gG4is1y6tWI=;
+	s=korg; t=1695212934;
+	bh=23TL1SrLYD9Me7SbWdXWOysmLjAEyNKynrCwOVGJPOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRwg/EbT9w6YZB9qUtlhUc0ncaL1CQBFYOOaJTE+sLCDkLhHeBM7NMmUt25mH/N6W
-	 VXhos+ATaCXWdrWcJ0pD+7J4yJ5A/55zCI+QRjF1xDd0a8GlxTgXZclgmv8eUvx/99
-	 LpUc4T+k2fjTUC4cAl6StA9QlpoKpTqMwpHluCng=
+	b=Sv/zjVzTBTv1hbXUhsWo07Jzk92xTFf101Efxe+Sy5K1/iXiHlOaEtPYszVrN8OfA
+	 Vfei9HQvuAtZKTkMDgUKckZlZr5ocvP+/2hxsaIhyGgQSmVqBUqka1Z5CXKc9dH7x6
+	 f1n/2mkHNjjwd+vs+pJaDfVFGIj3jQq1Qsg3OB80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jordan Griege <jgriege@cloudflare.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Stanislav Fomichev <sdf@google.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/367] hwrng: iproc-rng200 - Implement suspend and resume calls
-Date: Wed, 20 Sep 2023 13:27:29 +0200
-Message-ID: <20230920112900.387375456@linuxfoundation.org>
+Subject: [PATCH 5.4 073/367] lwt: Fix return values of BPF xmit ops
+Date: Wed, 20 Sep 2023 13:27:30 +0200
+Message-ID: <20230920112900.415317657@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,73 +43,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit 8e03dd62e5be811efbf0cbeba47e79e793519105 ]
+[ Upstream commit 29b22badb7a84b783e3a4fffca16f7768fb31205 ]
 
-Chips such as BCM7278 support system wide suspend/resume which will
-cause the HWRNG block to lose its state and reset to its power on reset
-register values. We need to cleanup and re-initialize the HWRNG for it
-to be functional coming out of a system suspend cycle.
+BPF encap ops can return different types of positive values, such like
+NET_RX_DROP, NET_XMIT_CN, NETDEV_TX_BUSY, and so on, from function
+skb_do_redirect and bpf_lwt_xmit_reroute. At the xmit hook, such return
+values would be treated implicitly as LWTUNNEL_XMIT_CONTINUE in
+ip(6)_finish_output2. When this happens, skbs that have been freed would
+continue to the neighbor subsystem, causing use-after-free bug and
+kernel crashes.
 
-Fixes: c3577f6100ca ("hwrng: iproc-rng200 - Add support for BCM7278")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+To fix the incorrect behavior, skb_do_redirect return values can be
+simply discarded, the same as tc-egress behavior. On the other hand,
+bpf_lwt_xmit_reroute returns useful errors to local senders, e.g. PMTU
+information. Thus convert its return values to avoid the conflict with
+LWTUNNEL_XMIT_CONTINUE.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Reported-by: Jordan Griege <jgriege@cloudflare.com>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Suggested-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/0d2b878186cfe215fec6b45769c1cd0591d3628d.1692326837.git.yan@cloudflare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/iproc-rng200.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/core/lwt_bpf.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/hw_random/iproc-rng200.c b/drivers/char/hw_random/iproc-rng200.c
-index 472f37f41317e..b2d3da17daa8e 100644
---- a/drivers/char/hw_random/iproc-rng200.c
-+++ b/drivers/char/hw_random/iproc-rng200.c
-@@ -202,6 +202,8 @@ static int iproc_rng200_probe(struct platform_device *pdev)
- 		return PTR_ERR(priv->base);
- 	}
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index bf270b6a99b4f..017ed82611a8d 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -59,9 +59,8 @@ static int run_lwt_bpf(struct sk_buff *skb, struct bpf_lwt_prog *lwt,
+ 			ret = BPF_OK;
+ 		} else {
+ 			skb_reset_mac_header(skb);
+-			ret = skb_do_redirect(skb);
+-			if (ret == 0)
+-				ret = BPF_REDIRECT;
++			skb_do_redirect(skb);
++			ret = BPF_REDIRECT;
+ 		}
+ 		break;
  
-+	dev_set_drvdata(dev, priv);
-+
- 	priv->rng.name = "iproc-rng200";
- 	priv->rng.read = iproc_rng200_read;
- 	priv->rng.init = iproc_rng200_init;
-@@ -219,6 +221,28 @@ static int iproc_rng200_probe(struct platform_device *pdev)
- 	return 0;
- }
+@@ -254,7 +253,7 @@ static int bpf_lwt_xmit_reroute(struct sk_buff *skb)
  
-+static int __maybe_unused iproc_rng200_suspend(struct device *dev)
-+{
-+	struct iproc_rng200_dev *priv = dev_get_drvdata(dev);
-+
-+	iproc_rng200_cleanup(&priv->rng);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused iproc_rng200_resume(struct device *dev)
-+{
-+	struct iproc_rng200_dev *priv =  dev_get_drvdata(dev);
-+
-+	iproc_rng200_init(&priv->rng);
-+
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops iproc_rng200_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(iproc_rng200_suspend, iproc_rng200_resume)
-+};
-+
- static const struct of_device_id iproc_rng200_of_match[] = {
- 	{ .compatible = "brcm,bcm7211-rng200", },
- 	{ .compatible = "brcm,bcm7278-rng200", },
-@@ -231,6 +255,7 @@ static struct platform_driver iproc_rng200_driver = {
- 	.driver = {
- 		.name		= "iproc-rng200",
- 		.of_match_table = iproc_rng200_of_match,
-+		.pm		= &iproc_rng200_pm_ops,
- 	},
- 	.probe		= iproc_rng200_probe,
- };
+ 	err = dst_output(dev_net(skb_dst(skb)->dev), skb->sk, skb);
+ 	if (unlikely(err))
+-		return err;
++		return net_xmit_errno(err);
+ 
+ 	/* ip[6]_finish_output2 understand LWTUNNEL_XMIT_DONE */
+ 	return LWTUNNEL_XMIT_DONE;
 -- 
 2.40.1
 
