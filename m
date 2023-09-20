@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB3B2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB432C433CA;
-	Wed, 20 Sep 2023 12:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033C82AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9EAC433C8;
+	Wed, 20 Sep 2023 12:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211277;
-	bh=H5SJ5NWi98LBqNNMvXGiYnTdWkQRjmGdZptjqTdZTBM=;
+	s=korg; t=1695211279;
+	bh=s2vc7+2lfXXVJX7ZscKTSG7Ap+3Lq06ckWfpxRDgW1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9eJxmHrnPcV7D3XaaNrLazncr8VoY5qM5kdft6hdd0ME+sHSpliZJckshog7OexO
-	 1TH33+UwaANc+NlXb4jjfyAURcNdMrfNnxxa4vDm3O0SsB1pIJGVXlL/vtO/j9lGxt
-	 kEBlzsHj4TY+/4mBqTjBDQHq4d+8A8z1eBj3BGi0=
+	b=KdKlgZAkB9ECCqLyhBCFf9Y6u3vUK6wDpcisBHAjByZSGGiAiUnniUZL/I74vRlvX
+	 C2YVyvwkHECDTIX0qzp0jPz0pBqpSzm0KD2ScksRu/JYrsG27QYt5mmfiCw1M1HCTr
+	 Ur/RdZehRSUmpI+/PrNt1nLQUgPTH+ZmVBsPG4hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 016/186] ethernet: atheros: fix return value check in atl1c_tso_csum()
-Date: Wed, 20 Sep 2023 13:28:39 +0200
-Message-ID: <20230920112837.452194056@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.14 034/186] Revert "net: macsec: preserve ingress frame ordering"
+Date: Wed, 20 Sep 2023 13:28:57 +0200
+Message-ID: <20230920112838.175666993@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,42 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
+commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
 
-in atl1c_tso_csum, it should check the return value of pskb_trim(),
-and return an error code if an unexpected value is returned
-by pskb_trim().
+This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It was trying to work around an issue at the crypto layer by excluding
+ASYNC implementations of gcm(aes), because a bug in the AESNI version
+caused reordering when some requests bypassed the cryptd queue while
+older requests were still pending on the queue.
+
+This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
+reordering problem on gcm"), which pre-dates ab046a5d4be4.
+
+Herbert Xu confirmed that all ASYNC implementations are expected to
+maintain the ordering of completions wrt requests, so we can use them
+in MACsec.
+
+On my test machine, this restores the performance of a single netperf
+instance, from 1.4Gbps to 4.4Gbps.
+
+Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
+Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
+Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
+Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index 3615c2a06fdad..6f5c7c1401ce0 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -2001,8 +2001,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
- 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
- 					+ ntohs(ip_hdr(skb)->tot_len));
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1311,8 +1311,7 @@ static struct crypto_aead *macsec_alloc_
+ 	struct crypto_aead *tfm;
+ 	int ret;
  
--			if (real_len < skb->len)
--				pskb_trim(skb, real_len);
-+			if (real_len < skb->len) {
-+				err = pskb_trim(skb, real_len);
-+				if (err)
-+					return err;
-+			}
+-	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
+-	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
++	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
  
- 			hdr_len = (skb_transport_offset(skb) + tcp_hdrlen(skb));
- 			if (unlikely(skb->len == hdr_len)) {
--- 
-2.40.1
-
+ 	if (IS_ERR(tfm))
+ 		return tfm;
 
 
