@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D9031A6B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B405C433C9;
-	Wed, 20 Sep 2023 12:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520F4168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8E6C433C9;
+	Wed, 20 Sep 2023 12:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214032;
-	bh=DpKevSgEgR3fwceAgNsem892I3K/M0OL3aZ9IoEyvPk=;
+	s=korg; t=1695214035;
+	bh=SSylqBAPI1r81Ii9DYjk9g0tyG0FQIOIme71Y7QZ4M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgZ8he5Zwx4ggyjGueXPX/CBa6FcUsc2K6nbbLB9GRI3Mq5+FktxTpR5T/5MQArni
-	 oL6jnlkHZicvv14ioX4tKDFK1+HQR9zJlm0BauXQbVvZOhbxlEh5EOYe6TjtLMGLls
-	 Z6hBS1LEa7hHmxfdYdElgfji+BxZu1rgUXNjz2Hc=
+	b=WO4fnY4lc/SOCscIvpYMqgo8FT+R8lj1j/ha1VSOSQDx7XHsMp1IoWt4wAr1nF9Yd
+	 Bt/eTRw6RfL1YviOxFxpV7QvCO9pdFeeI75SMrNZjmRlXIOjcKQ6lzGUSKlpG74k6v
+	 E8H1QfAlQs2bzurBAsPY5Ll84EZ65NRzGT/3/NYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ritesh Harjani <riteshh@linux.ibm.com>,
+	stable@kernel.org,
 	Jan Kara <jack@suse.cz>,
+	Ritesh Harjani <riteshh@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/110] jbd2: refactor wait logic for transaction updates into a common function
-Date: Wed, 20 Sep 2023 13:31:59 +0200
-Message-ID: <20230920112832.695623202@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+afa2ca5171d93e44b348@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 062/110] jbd2: fix use-after-free of transaction_t race
+Date: Wed, 20 Sep 2023 13:32:00 +0200
+Message-ID: <20230920112832.735395670@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -43,39 +45,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Ritesh Harjani <riteshh@linux.ibm.com>
 
-[ Upstream commit 4f98186848707f530669238d90e0562d92a78aab ]
+[ Upstream commit cc16eecae687912238ee6efbff71ad31e2bc414e ]
 
-No functionality change as such in this patch. This only refactors the
-common piece of code which waits for t_updates to finish into a common
-function named as jbd2_journal_wait_updates(journal_t *)
+jbd2_journal_wait_updates() is called with j_state_lock held. But if
+there is a commit in progress, then this transaction might get committed
+and freed via jbd2_journal_commit_transaction() ->
+jbd2_journal_free_transaction(), when we release j_state_lock.
+So check for journal->j_running_transaction everytime we release and
+acquire j_state_lock to avoid use-after-free issue.
 
-Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
+Link: https://lore.kernel.org/r/948c2fed518ae739db6a8f7f83f1d58b504f87d0.1644497105.git.ritesh.list@gmail.com
+Fixes: 4f98186848707f53 ("jbd2: refactor wait logic for transaction updates into a common function")
+Cc: stable@kernel.org
+Reported-and-tested-by: syzbot+afa2ca5171d93e44b348@syzkaller.appspotmail.com
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/8c564f70f4b2591171677a2a74fccb22a7b6c3a4.1642416995.git.riteshh@linux.ibm.com
+Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 2dfba3bb40ad ("jbd2: correct the end of the journal recovery scan range")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/commit.c      | 19 +++-------------
- fs/jbd2/transaction.c | 53 ++++++++++++++++++++++++++-----------------
- include/linux/jbd2.h  |  4 +++-
- 3 files changed, 38 insertions(+), 38 deletions(-)
+ fs/jbd2/transaction.c | 41 +++++++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
 
-diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
-index 20294c1bbeab7..2705850ca6460 100644
---- a/fs/jbd2/commit.c
-+++ b/fs/jbd2/commit.c
-@@ -484,22 +484,9 @@ void jbd2_journal_commit_transaction(journal_t *journal)
- 	stats.run.rs_running = jbd2_time_diff(commit_transaction->t_start,
- 					      stats.run.rs_locked);
+diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
+index 69aed72c8206d..59292b82d4424 100644
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -842,27 +842,38 @@ EXPORT_SYMBOL(jbd2_journal_restart);
+  */
+ void jbd2_journal_wait_updates(journal_t *journal)
+ {
+-	transaction_t *commit_transaction = journal->j_running_transaction;
++	DEFINE_WAIT(wait);
+ 
+-	if (!commit_transaction)
+-		return;
++	while (1) {
++		/*
++		 * Note that the running transaction can get freed under us if
++		 * this transaction is getting committed in
++		 * jbd2_journal_commit_transaction() ->
++		 * jbd2_journal_free_transaction(). This can only happen when we
++		 * release j_state_lock -> schedule() -> acquire j_state_lock.
++		 * Hence we should everytime retrieve new j_running_transaction
++		 * value (after j_state_lock release acquire cycle), else it may
++		 * lead to use-after-free of old freed transaction.
++		 */
++		transaction_t *transaction = journal->j_running_transaction;
  
 -	spin_lock(&commit_transaction->t_handle_lock);
 -	while (atomic_read(&commit_transaction->t_updates)) {
 -		DEFINE_WAIT(wait);
-+	// waits for any t_updates to finish
-+	jbd2_journal_wait_updates(journal);
++		if (!transaction)
++			break;
  
--		prepare_to_wait(&journal->j_wait_updates, &wait,
++		spin_lock(&transaction->t_handle_lock);
+ 		prepare_to_wait(&journal->j_wait_updates, &wait,
 -					TASK_UNINTERRUPTIBLE);
 -		if (atomic_read(&commit_transaction->t_updates)) {
 -			spin_unlock(&commit_transaction->t_handle_lock);
@@ -83,123 +108,31 @@ index 20294c1bbeab7..2705850ca6460 100644
 -			schedule();
 -			write_lock(&journal->j_state_lock);
 -			spin_lock(&commit_transaction->t_handle_lock);
--		}
--		finish_wait(&journal->j_wait_updates, &wait);
--	}
++				TASK_UNINTERRUPTIBLE);
++		if (!atomic_read(&transaction->t_updates)) {
++			spin_unlock(&transaction->t_handle_lock);
++			finish_wait(&journal->j_wait_updates, &wait);
++			break;
+ 		}
++		spin_unlock(&transaction->t_handle_lock);
++		write_unlock(&journal->j_state_lock);
++		schedule();
+ 		finish_wait(&journal->j_wait_updates, &wait);
++		write_lock(&journal->j_state_lock);
+ 	}
 -	spin_unlock(&commit_transaction->t_handle_lock);
- 	commit_transaction->t_state = T_SWITCH;
- 
- 	J_ASSERT (atomic_read(&commit_transaction->t_outstanding_credits) <=
-@@ -819,7 +806,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
- 	commit_transaction->t_state = T_COMMIT_DFLUSH;
- 	write_unlock(&journal->j_state_lock);
- 
--	/* 
-+	/*
- 	 * If the journal is not located on the file system device,
- 	 * then we must flush the file system device before we issue
- 	 * the commit record
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 62e68c5b8ec3d..69aed72c8206d 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -449,7 +449,7 @@ static int start_this_handle(journal_t *journal, handle_t *handle,
- 	}
- 
- 	/* OK, account for the buffers that this operation expects to
--	 * use and add the handle to the running transaction. 
-+	 * use and add the handle to the running transaction.
- 	 */
- 	update_t_max_wait(transaction, ts);
- 	handle->h_transaction = transaction;
-@@ -836,6 +836,35 @@ int jbd2_journal_restart(handle_t *handle, int nblocks)
  }
- EXPORT_SYMBOL(jbd2_journal_restart);
  
-+/*
-+ * Waits for any outstanding t_updates to finish.
-+ * This is called with write j_state_lock held.
-+ */
-+void jbd2_journal_wait_updates(journal_t *journal)
-+{
-+	transaction_t *commit_transaction = journal->j_running_transaction;
-+
-+	if (!commit_transaction)
-+		return;
-+
-+	spin_lock(&commit_transaction->t_handle_lock);
-+	while (atomic_read(&commit_transaction->t_updates)) {
-+		DEFINE_WAIT(wait);
-+
-+		prepare_to_wait(&journal->j_wait_updates, &wait,
-+					TASK_UNINTERRUPTIBLE);
-+		if (atomic_read(&commit_transaction->t_updates)) {
-+			spin_unlock(&commit_transaction->t_handle_lock);
-+			write_unlock(&journal->j_state_lock);
-+			schedule();
-+			write_lock(&journal->j_state_lock);
-+			spin_lock(&commit_transaction->t_handle_lock);
-+		}
-+		finish_wait(&journal->j_wait_updates, &wait);
-+	}
-+	spin_unlock(&commit_transaction->t_handle_lock);
-+}
-+
  /**
-  * jbd2_journal_lock_updates () - establish a transaction barrier.
-  * @journal:  Journal to establish a barrier on.
-@@ -863,27 +892,9 @@ void jbd2_journal_lock_updates(journal_t *journal)
- 		write_lock(&journal->j_state_lock);
- 	}
- 
--	/* Wait until there are no running updates */
--	while (1) {
--		transaction_t *transaction = journal->j_running_transaction;
+@@ -877,8 +888,6 @@ void jbd2_journal_wait_updates(journal_t *journal)
+  */
+ void jbd2_journal_lock_updates(journal_t *journal)
+ {
+-	DEFINE_WAIT(wait);
 -
--		if (!transaction)
--			break;
-+	/* Wait until there are no running t_updates */
-+	jbd2_journal_wait_updates(journal);
+ 	jbd2_might_wait_for_commit(journal);
  
--		spin_lock(&transaction->t_handle_lock);
--		prepare_to_wait(&journal->j_wait_updates, &wait,
--				TASK_UNINTERRUPTIBLE);
--		if (!atomic_read(&transaction->t_updates)) {
--			spin_unlock(&transaction->t_handle_lock);
--			finish_wait(&journal->j_wait_updates, &wait);
--			break;
--		}
--		spin_unlock(&transaction->t_handle_lock);
--		write_unlock(&journal->j_state_lock);
--		schedule();
--		finish_wait(&journal->j_wait_updates, &wait);
--		write_lock(&journal->j_state_lock);
--	}
- 	write_unlock(&journal->j_state_lock);
- 
- 	/*
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index ade8a6d7acff9..03d8ba98cbeb7 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -594,7 +594,7 @@ struct transaction_s
- 	 */
- 	unsigned long		t_log_start;
- 
--	/* 
-+	/*
- 	 * Number of buffers on the t_buffers list [j_list_lock, no locks
- 	 * needed for jbd2 thread]
- 	 */
-@@ -1538,6 +1538,8 @@ extern int	 jbd2_journal_flush(journal_t *journal, unsigned int flags);
- extern void	 jbd2_journal_lock_updates (journal_t *);
- extern void	 jbd2_journal_unlock_updates (journal_t *);
- 
-+void jbd2_journal_wait_updates(journal_t *);
-+
- extern journal_t * jbd2_journal_init_dev(struct block_device *bdev,
- 				struct block_device *fs_dev,
- 				unsigned long long start, int len, int bsize);
+ 	write_lock(&journal->j_state_lock);
 -- 
 2.40.1
 
