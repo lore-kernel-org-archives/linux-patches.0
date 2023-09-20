@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF62E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62EBC433C8;
-	Wed, 20 Sep 2023 12:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D072E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7929BC433C9;
+	Wed, 20 Sep 2023 12:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211823;
-	bh=FlU5Ak3Z08bYqN3WNm8SBIqYg7fRabx+DRecbJaq/7w=;
+	s=korg; t=1695211825;
+	bh=jHO9DRr8UDqXdjHUldmhVuxiHDxZyW3KQzsG/WkO19M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdDbczrdzGJZOkoL7M3ZIiP0dikVkxWRgTs2XKMsZgPJtlSEP3ytKEiS3avjKB4B0
-	 2J6qFWFRixsY6qALz5tiIQ5y4HDiMw9ViWw4sO457avewXAHsLMBAtWB7L429zP44F
-	 6N4bSolp98NsNR7T9Gx+DVTOyMbOLRupaI9iah+4=
+	b=cljZrJ7Pfmh5KGEDE0YbAgxQKSzFMsj0X6ZJeH/tICVzP/0WJXiRkLG+Fg/svrivu
+	 NHhDNQpz5j6CjhWvZgLjoTSHnyNEkWGDnSW3/k0rxmkVWuW0OiE5QohEdLtOSjf6hX
+	 hleE+8aM01xeKTaZkau2UsOgi2sq1PPwzdtDfBWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Yonghong Song <yhs@fb.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 049/273] cpufreq: powernow-k8: Use related_cpus instead of cpus in driver.exit()
-Date: Wed, 20 Sep 2023 13:28:09 +0200
-Message-ID: <20230920112847.940902396@linuxfoundation.org>
+Subject: [PATCH 4.19 050/273] bpf: Clear the probe_addr for uprobe
+Date: Wed, 20 Sep 2023 13:28:10 +0200
+Message-ID: <20230920112847.971792621@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,36 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 03997da042dac73c69e60d91942c727c76828b65 ]
+[ Upstream commit 5125e757e62f6c1d5478db4c2b61a744060ddf3f ]
 
-Since the 'cpus' field of policy structure will become empty in the
-cpufreq core API, it is better to use 'related_cpus' in the exit()
-callback of driver.
+To avoid returning uninitialized or random values when querying the file
+descriptor (fd) and accessing probe_addr, it is necessary to clear the
+variable prior to its use.
 
-Fixes: c3274763bfc3 ("cpufreq: powernow-k8: Initialize per-cpu data-structures properly")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230709025630.3735-6-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/powernow-k8.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/trace_events.h | 3 ++-
+ kernel/trace/bpf_trace.c     | 2 +-
+ kernel/trace/trace_uprobe.c  | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
-index 818f92798fb9b..55743d78016b0 100644
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1104,7 +1104,8 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
+diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
+index 0643c083ed862..93a1b5497bdf1 100644
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -581,7 +581,8 @@ extern int  perf_uprobe_init(struct perf_event *event, bool is_retprobe);
+ extern void perf_uprobe_destroy(struct perf_event *event);
+ extern int bpf_get_uprobe_info(const struct perf_event *event,
+ 			       u32 *fd_type, const char **filename,
+-			       u64 *probe_offset, bool perf_type_tracepoint);
++			       u64 *probe_offset, u64 *probe_addr,
++			       bool perf_type_tracepoint);
+ #endif
+ extern int  ftrace_profile_set_filter(struct perf_event *event, int event_id,
+ 				     char *filter_str);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 1cb13d6368f3f..b794470bb42ed 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1274,7 +1274,7 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ #ifdef CONFIG_UPROBE_EVENTS
+ 		if (flags & TRACE_EVENT_FL_UPROBE)
+ 			err = bpf_get_uprobe_info(event, fd_type, buf,
+-						  probe_offset,
++						  probe_offset, probe_addr,
+ 						  event->attr.type == PERF_TYPE_TRACEPOINT);
+ #endif
+ 	}
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 0da379b902492..0e3bdd69fa2d6 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -1159,7 +1159,7 @@ static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
  
- 	kfree(data->powernow_table);
- 	kfree(data);
--	for_each_cpu(cpu, pol->cpus)
-+	/* pol->cpus will be empty here, use related_cpus instead. */
-+	for_each_cpu(cpu, pol->related_cpus)
- 		per_cpu(powernow_data, cpu) = NULL;
- 
+ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 			const char **filename, u64 *probe_offset,
+-			bool perf_type_tracepoint)
++			u64 *probe_addr, bool perf_type_tracepoint)
+ {
+ 	const char *pevent = trace_event_name(event->tp_event);
+ 	const char *group = event->tp_event->class->system;
+@@ -1176,6 +1176,7 @@ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 				    : BPF_FD_TYPE_UPROBE;
+ 	*filename = tu->filename;
+ 	*probe_offset = tu->offset;
++	*probe_addr = 0;
  	return 0;
+ }
+ #endif	/* CONFIG_PERF_EVENTS */
 -- 
 2.40.1
 
