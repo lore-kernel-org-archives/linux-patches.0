@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4834015AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26EAC433CA;
-	Wed, 20 Sep 2023 12:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1C815AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85585C433C7;
+	Wed, 20 Sep 2023 12:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212120;
-	bh=LwBPq+eNK0+ERTpDRLT0ZcAisYCxwwz8URDXd41hAw8=;
+	s=korg; t=1695212122;
+	bh=Q3IWW32oepVxYI0sr8+j/m46apUAzx0UNgIQn/xUA/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqvF802w35zLYwlFsk4adUIDRfgqCLQWCY4i3nJE1NmyTSR7sB71czWszLDN2MGV8
-	 lW20IgZRl8M+iuAAsWFhlbe70AsnkTvGf6NGXn0Q1xpXFTzcZP0RVNqOdLnTBck9R9
-	 aCkDCu0Jy9n3GgxDx1ITUY4g5V0A8Uj4TE5xFRkE=
+	b=MNXNTyJZ7B1jlBoNrtDkkAS+THurl1tai0rEqKBSmfW0VAK9+xhUFCSWF+oAaR87O
+	 LrrVbp5IusCK7L5tRiiF5mt7vO8TGGC1wyDrb6ckxpl6dCBYS3rNiWdaBNW8lqoTBj
+	 9VirE7unkGrgHQVBPqQDCVsSgrpnGe/soxEifjGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 157/273] serial: tegra: handle clk prepare error in tegra_uart_hw_init()
-Date: Wed, 20 Sep 2023 13:29:57 +0200
-Message-ID: <20230920112851.381853847@linuxfoundation.org>
+Subject: [PATCH 4.19 125/273] powerpc/iommu: Fix notifiers being shared by PCI and VIO buses
+Date: Wed, 20 Sep 2023 13:29:25 +0200
+Message-ID: <20230920112850.362762131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,39 +42,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Russell Currey <ruscur@russell.cc>
 
-[ Upstream commit 5abd01145d0cc6cd1b7c2fe6ee0b9ea0fa13671e ]
+[ Upstream commit c37b6908f7b2bd24dcaaf14a180e28c9132b9c58 ]
 
-In tegra_uart_hw_init(), the return value of clk_prepare_enable() should
-be checked since it might fail.
+fail_iommu_setup() registers the fail_iommu_bus_notifier struct to both
+PCI and VIO buses.  struct notifier_block is a linked list node, so this
+causes any notifiers later registered to either bus type to also be
+registered to the other since they share the same node.
 
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://lore.kernel.org/r/20230817105406.228674-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This causes issues in (at least) the vgaarb code, which registers a
+notifier for PCI buses.  pci_notify() ends up being called on a vio
+device, converted with to_pci_dev() even though it's not a PCI device,
+and finally makes a bad access in vga_arbiter_add_pci_device() as
+discovered with KASAN:
+
+ BUG: KASAN: slab-out-of-bounds in vga_arbiter_add_pci_device+0x60/0xe00
+ Read of size 4 at addr c000000264c26fdc by task swapper/0/1
+
+ Call Trace:
+   dump_stack_lvl+0x1bc/0x2b8 (unreliable)
+   print_report+0x3f4/0xc60
+   kasan_report+0x244/0x698
+   __asan_load4+0xe8/0x250
+   vga_arbiter_add_pci_device+0x60/0xe00
+   pci_notify+0x88/0x444
+   notifier_call_chain+0x104/0x320
+   blocking_notifier_call_chain+0xa0/0x140
+   device_add+0xac8/0x1d30
+   device_register+0x58/0x80
+   vio_register_device_node+0x9ac/0xce0
+   vio_bus_scan_register_devices+0xc4/0x13c
+   __machine_initcall_pseries_vio_device_init+0x94/0xf0
+   do_one_initcall+0x12c/0xaa8
+   kernel_init_freeable+0xa48/0xba8
+   kernel_init+0x64/0x400
+   ret_from_kernel_thread+0x5c/0x64
+
+Fix this by creating separate notifier_block structs for each bus type.
+
+Fixes: d6b9a81b2a45 ("powerpc: IOMMU fault injection")
+Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+[mpe: Add #ifdef to fix CONFIG_IBMVIO=n build]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230322035322.328709-1-ruscur@russell.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/iommu.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index 41fe45f2349ef..a30f7ed123469 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -944,7 +944,11 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	tup->ier_shadow = 0;
- 	tup->current_baud = 0;
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index c3d2d5cd7c10c..af1a2bf758c5c 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -145,17 +145,28 @@ static int fail_iommu_bus_notify(struct notifier_block *nb,
+ 	return 0;
+ }
  
--	clk_prepare_enable(tup->uart_clk);
-+	ret = clk_prepare_enable(tup->uart_clk);
-+	if (ret) {
-+		dev_err(tup->uport.dev, "could not enable clk\n");
-+		return ret;
-+	}
+-static struct notifier_block fail_iommu_bus_notifier = {
++/*
++ * PCI and VIO buses need separate notifier_block structs, since they're linked
++ * list nodes.  Sharing a notifier_block would mean that any notifiers later
++ * registered for PCI buses would also get called by VIO buses and vice versa.
++ */
++static struct notifier_block fail_iommu_pci_bus_notifier = {
+ 	.notifier_call = fail_iommu_bus_notify
+ };
  
- 	/* Reset the UART controller to clear all previous status.*/
- 	reset_control_assert(tup->rst);
++#ifdef CONFIG_IBMVIO
++static struct notifier_block fail_iommu_vio_bus_notifier = {
++	.notifier_call = fail_iommu_bus_notify
++};
++#endif
++
+ static int __init fail_iommu_setup(void)
+ {
+ #ifdef CONFIG_PCI
+-	bus_register_notifier(&pci_bus_type, &fail_iommu_bus_notifier);
++	bus_register_notifier(&pci_bus_type, &fail_iommu_pci_bus_notifier);
+ #endif
+ #ifdef CONFIG_IBMVIO
+-	bus_register_notifier(&vio_bus_type, &fail_iommu_bus_notifier);
++	bus_register_notifier(&vio_bus_type, &fail_iommu_vio_bus_notifier);
+ #endif
+ 
+ 	return 0;
 -- 
 2.40.1
 
