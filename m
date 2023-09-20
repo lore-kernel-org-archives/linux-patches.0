@@ -1,31 +1,49 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D206C8E0;
-	Wed, 20 Sep 2023 08:17:17 +0000 (UTC)
-Received: by linux.microsoft.com (Postfix, from userid 1112)
-	id 00268212C4B0; Wed, 20 Sep 2023 01:11:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 00268212C4B0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695197462;
-	bh=MCcFdYcZBq72znSVOGs8taMAEPXbYkraDxusQXChN6k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KU12UclarmRWfDJZUmgx0gvenLqRo5r/VS7sUpslwGHf4LO3Wws2ZA5jOG84QhruY
-	 8HhLeUk21ak2eADTaCPLv7qJcrj3VPOyLofny44JVT1JcWCDMyJGhLum8gTiXCOLhN
-	 zyL+vxc/1fN0wN6vRAIz+G6P9iGEfIDV/r+0ixK4=
-Date: Wed, 20 Sep 2023 01:11:01 -0700
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>, Shakeel Butt <shakeelb@google.com>,
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783478C1F;
+	Wed, 20 Sep 2023 08:43:59 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A55041FDDA;
+	Wed, 20 Sep 2023 08:43:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1695199437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GjxBNZGORuJZTEppU8GKxjtCs5dciR43Qw/lEOGS50I=;
+	b=EQnrAlU/3fuFatTWKEmawTXMpJeQzH/U6qvScECWhU41Pu6gX6JI12bG3Nr+YOhd9n7IOo
+	q8G2eBepsmnJIuhaaiZ09mWIDB/3QPPqGQwfCCcOqZZEnyN5J9MY7jj18kpt1ks8tb3pEO
+	K+ubfa53ezr2wkkyOZuUPYWxTXmLf34=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7EDBD132C7;
+	Wed, 20 Sep 2023 08:43:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id ZkT2G82wCmWvXQAAMHmgww
+	(envelope-from <mhocko@suse.com>); Wed, 20 Sep 2023 08:43:57 +0000
+Date: Wed, 20 Sep 2023 10:43:56 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Shakeel Butt <shakeelb@google.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
 	Muchun Song <muchun.song@linux.dev>, Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
 	mathieu.tortuyaux@gmail.com
-Subject: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop kmem.limit_in_bytes
-Message-ID: <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Message-ID: <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
 References: <20230917191040.964416434@linuxfoundation.org>
  <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,120 +52,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230917191042.204185566@linuxfoundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 
-On Sun, Sep 17, 2023 at 09:12:40PM +0200, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
+On Wed 20-09-23 01:11:01, Jeremi Piotrowski wrote:
+> On Sun, Sep 17, 2023 at 09:12:40PM +0200, Greg Kroah-Hartman wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
 > 
-> ------------------
+> Hi Greg/Michal,
+> 
+> This commit breaks userspace which makes it a bad commit for mainline and an
+> even worse commit for stable.
+> 
+> We ingested 6.1.54 into our nightly testing and found that runc fails to gather
+> cgroup statistics (when reading kmem.limit_in_bytes). The same code is vendored
+> into kubelet and kubelet fails to start if this operation fails. 6.1.53 is
+> fine.
 
-Hi Greg/Michal,
+Could you expand some more on why is the file read? It doesn't support
+writing to it for some time so how does reading it helps in any sense?
 
-This commit breaks userspace which makes it a bad commit for mainline and an
-even worse commit for stable.
+Anyway, I do agree that the stable backport should be reverted.
 
-We ingested 6.1.54 into our nightly testing and found that runc fails to gather
-cgroup statistics (when reading kmem.limit_in_bytes). The same code is vendored
-into kubelet and kubelet fails to start if this operation fails. 6.1.53 is
-fine.
+> > Address this by wiping out the file completely and effectively get back to
+> > pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+> 
+> On reads, the runc code checks for MEMCG_KMEM=n by checking
+> kmem.usage_in_bytes. If it is present then runc expects the other cgroup files
+> to be there (including kmem.limit_in_bytes). So this change is not effectively
+> the same.
+> 
+> Here's a link to the PR that would be needed to handle this change in userspace
+> (not merged yet and would need to be propagated through the ecosystem):
+> 
+> https://github.com/opencontainers/runc/pull/4018.
 
-> Address this by wiping out the file completely and effectively get back to
-> pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+Thanks. Does that mean the revert is still necessary for the Linus tree
+or do you expect that the fix can be merged and propagated in a
+reasonable time?
 
-On reads, the runc code checks for MEMCG_KMEM=n by checking
-kmem.usage_in_bytes. If it is present then runc expects the other cgroup files
-to be there (including kmem.limit_in_bytes). So this change is not effectively
-the same.
-
-Here's a link to the PR that would be needed to handle this change in userspace
-(not merged yet and would need to be propagated through the ecosystem):
-
-https://github.com/opencontainers/runc/pull/4018.
-
-Jeremi
-
-> 
-> From: Michal Hocko <mhocko@suse.com>
-> 
-> commit 86327e8eb94c52eca4f93cfece2e29d1bf52acbf upstream.
-> 
-> kmem.limit_in_bytes (v1 way to limit kernel memory usage) has been
-> deprecated since 58056f77502f ("memcg, kmem: further deprecate
-> kmem.limit_in_bytes") merged in 5.16.  We haven't heard about any serious
-> users since then but it seems that the mere presence of the file is
-> causing more harm thatn good.  We (SUSE) have had several bug reports from
-> customers where Docker based containers started to fail because a write to
-> kmem.limit_in_bytes has failed.
-> 
-> This was unexpected because runc code only expects ENOENT (kmem disabled)
-> or EBUSY (tasks already running within cgroup).  So a new error code was
-> unexpected and the whole container startup failed.  This has been later
-> addressed by
-> https://github.com/opencontainers/runc/commit/52390d68040637dfc77f9fda6bbe70952423d380
-> so current Docker runtimes do not suffer from the problem anymore.  There
-> are still older version of Docker in use and likely hard to get rid of
-> completely.
-> 
-> Address this by wiping out the file completely and effectively get back to
-> pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
-> 
-> I would recommend backporting to stable trees which have picked up
-> 58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes").
-> 
-> [mhocko@suse.com: restore _KMEM switch case]
->   Link: https://lkml.kernel.org/r/ZKe5wxdbvPi5Cwd7@dhcp22.suse.cz
-> Link: https://lkml.kernel.org/r/20230704115240.14672-1-mhocko@kernel.org
-> Signed-off-by: Michal Hocko <mhocko@suse.com>
-> Acked-by: Shakeel Butt <shakeelb@google.com>
-> Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-> Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-> Cc: Muchun Song <muchun.song@linux.dev>
-> Cc: Tejun Heo <tj@kernel.org>
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  Documentation/admin-guide/cgroup-v1/memory.rst |    2 --
->  mm/memcontrol.c                                |   10 ----------
->  2 files changed, 12 deletions(-)
-> 
-> --- a/Documentation/admin-guide/cgroup-v1/memory.rst
-> +++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-> @@ -91,8 +91,6 @@ Brief summary of control files.
->   memory.oom_control		     set/show oom controls.
->   memory.numa_stat		     show the number of memory usage per numa
->  				     node
-> - memory.kmem.limit_in_bytes          This knob is deprecated and writing to
-> -                                     it will return -ENOTSUPP.
->   memory.kmem.usage_in_bytes          show current kernel memory allocation
->   memory.kmem.failcnt                 show the number of kernel memory usage
->  				     hits limits
-> --- a/mm/memcontrol.c
-> +++ b/mm/memcontrol.c
-> @@ -3841,10 +3841,6 @@ static ssize_t mem_cgroup_write(struct k
->  		case _MEMSWAP:
->  			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
->  			break;
-> -		case _KMEM:
-> -			/* kmem.limit_in_bytes is deprecated. */
-> -			ret = -EOPNOTSUPP;
-> -			break;
->  		case _TCP:
->  			ret = memcg_update_tcp_max(memcg, nr_pages);
->  			break;
-> @@ -5056,12 +5052,6 @@ static struct cftype mem_cgroup_legacy_f
->  	},
->  #endif
->  	{
-> -		.name = "kmem.limit_in_bytes",
-> -		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
-> -		.write = mem_cgroup_write,
-> -		.read_u64 = mem_cgroup_read_u64,
-> -	},
-> -	{
->  		.name = "kmem.usage_in_bytes",
->  		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
->  		.read_u64 = mem_cgroup_read_u64,
-> 
-> 
+-- 
+Michal Hocko
+SUSE Labs
