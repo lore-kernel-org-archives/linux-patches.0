@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A3F2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24018C433CC;
-	Wed, 20 Sep 2023 12:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479892AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3079C433C9;
+	Wed, 20 Sep 2023 12:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211566;
-	bh=eZ62FzJig4SyPTE3y4FtgQ3g9FhAnqUKDkaUuquGI7g=;
+	s=korg; t=1695211569;
+	bh=88UZ7nPZZDTUKVpEGiD61L26JWIdGHktiCfifhjRgw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S77dsq9uYlUKKuB410TJLZWkTWn255pqUMSV9N6Tyg2X/pALgI+VONgLvGyLXhP5y
-	 RpRIzj6MUBS8xiJXo3OzlqtgSL7Wil6RiDM1P9hPKr/mHbyhfmNuJOFa1WpXDAwt2r
-	 cUJSz6aR1TMw2LBKh1ih+dYYZXgCcPtKK41oC/R4=
+	b=smmvuUZFBB4hFW8dYXojYsK43LBCPTe6V53a7ZgfcErpwDI5OdjFw/E6ohmTQFsna
+	 B153ZFI65txCLlttDjYeIsk4KRzHX8nBOsTdNiUyiBLmSVH/lNBva2u2d9905PuSek
+	 ET0ABGwyEAvOXm7UPvDKTXf0AgyITF3C2n95yglo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Zaborska <olga.zaborska@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.14 141/186] igb: Change IGB_MIN to allow set rx/tx value between 64 and 80
-Date: Wed, 20 Sep 2023 13:30:44 +0200
-Message-ID: <20230920112842.081904609@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 4.14 142/186] ata: sata_gemini: Add missing MODULE_DESCRIPTION
+Date: Wed, 20 Sep 2023 13:30:45 +0200
+Message-ID: <20230920112842.114157421@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,44 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Zaborska <olga.zaborska@intel.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 6319685bdc8ad5310890add907b7c42f89302886 ]
+commit 8566572bf3b4d6e416a4bf2110dbb4817d11ba59 upstream.
 
-Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
-value between 64 and 80. All igb devices can use as low as 64 descriptors.
-This change will unify igb with other drivers.
-Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
+Add the missing MODULE_DESCRIPTION() to avoid warnings such as:
 
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ata/sata_gemini.o
+
+when compiling with W=1.
+
+Fixes: be4e456ed3a5 ("ata: Add driver for Faraday Technology FTIDE010")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/sata_gemini.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb.h b/drivers/net/ethernet/intel/igb/igb.h
-index 1113bf322f45b..a1e924391ae5b 100644
---- a/drivers/net/ethernet/intel/igb/igb.h
-+++ b/drivers/net/ethernet/intel/igb/igb.h
-@@ -52,11 +52,11 @@ struct igb_adapter;
- /* TX/RX descriptor defines */
- #define IGB_DEFAULT_TXD		256
- #define IGB_DEFAULT_TX_WORK	128
--#define IGB_MIN_TXD		80
-+#define IGB_MIN_TXD		64
- #define IGB_MAX_TXD		4096
+--- a/drivers/ata/sata_gemini.c
++++ b/drivers/ata/sata_gemini.c
+@@ -434,6 +434,7 @@ static struct platform_driver gemini_sat
+ };
+ module_platform_driver(gemini_sata_driver);
  
- #define IGB_DEFAULT_RXD		256
--#define IGB_MIN_RXD		80
-+#define IGB_MIN_RXD		64
- #define IGB_MAX_RXD		4096
- 
- #define IGB_DEFAULT_ITR		3 /* dynamic */
--- 
-2.40.1
-
++MODULE_DESCRIPTION("low level driver for Cortina Systems Gemini SATA bridge");
+ MODULE_AUTHOR("Linus Walleij <linus.walleij@linaro.org>");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRV_NAME);
 
 
