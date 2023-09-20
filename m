@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2128E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C331C433C8;
-	Wed, 20 Sep 2023 11:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517A628E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB13EC433C7;
+	Wed, 20 Sep 2023 11:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210776;
-	bh=3WkuMH1hpF9CmQP7xUrhjaJnXWGPBL4wLL7LxDwS3qg=;
+	s=korg; t=1695210779;
+	bh=uKXXiU7mmVZBnHMPJZocCfAxv5WulQps9TEbhaV/2OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IURKQYcpjT6AakqLh0Jtn78uPctUaRpV29Zl7/B1maL2kMdf4F0X6GJIm5tlLGm86
-	 IVALccw8Y50+VOBicdpjwFG1GhLhCTPNDOnNhdcWJiX4AURq8OWzH+PzV7gIynsM7m
-	 +Df0atw5XBi3mq3Tj5TzagfSxXF/wRD433cLYsZE=
+	b=oh7M21ZAMiWka8UsOsSEKmnXDNXZWCtjNWQOJpHsou4gCpQidkb1IvciqLSRxF4Am
+	 Gn3L7ZMyDN2ukkvlObbyGowfjzrlKWn4IPCQyDGeuKy3aZ+pXscU/TB8iCHRvGR2Hf
+	 QdJX+2eF46LoWZ/UbtZN5HqJE9WZFvvDvR8bqdLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Andreas Dilger <adilger@dilger.ca>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Shida Zhang <zhangshida@kylinos.cn>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.5 201/211] ext4: fix rec_len verify error
-Date: Wed, 20 Sep 2023 13:30:45 +0200
-Message-ID: <20230920112852.095637931@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.5 184/211] tracing/synthetic: Fix order of struct trace_dynamic_info
+Date: Wed, 20 Sep 2023 13:30:28 +0200
+Message-ID: <20230920112851.579736524@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,122 +41,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shida Zhang <zhangshida@kylinos.cn>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
+commit fc52a64416b010c8324e2cb50070faae868521c1 upstream.
 
-With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
-a problem occurred when more than 13 million files were directly created
-under a directory:
+To make handling BIG and LITTLE endian better the offset/len of dynamic
+fields of the synthetic events was changed into a structure of:
 
-EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
+ struct trace_dynamic_info {
+ #ifdef CONFIG_CPU_BIG_ENDIAN
+	u16	offset;
+	u16	len;
+ #else
+	u16	len;
+	u16	offset;
+ #endif
+ };
 
-When enough files are created, the fake_dirent->reclen will be 0xffff.
-it doesn't equal to the blocksize 65536, i.e. 0x10000.
+to replace the manual changes of:
 
-But it is not the same condition when blocksize equals to 4k.
-when enough files are created, the fake_dirent->reclen will be 0x1000.
-it equals to the blocksize 4k, i.e. 0x1000.
+ data_offset = offset & 0xffff;
+ data_offest = len << 16;
 
-The problem seems to be related to the limitation of the 16-bit field
-when the blocksize is set to 64k.
-To address this, helpers like ext4_rec_len_{from,to}_disk has already
-been introduced to complete the conversion between the encoded and the
-plain form of rec_len.
+But if you look closely, the above is:
 
-So fix this one by using the helper, and all the other in this file too.
+  <len> << 16 | offset
 
-Cc: stable@kernel.org
-Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
-Suggested-by: Andreas Dilger <adilger@dilger.ca>
-Suggested-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Which in little endian would be in memory:
+
+ offset_lo offset_hi len_lo len_hi
+
+and in big endian:
+
+ len_hi len_lo offset_hi offset_lo
+
+Which if broken into a structure would be:
+
+ struct trace_dynamic_info {
+ #ifdef CONFIG_CPU_BIG_ENDIAN
+	u16	len;
+	u16	offset;
+ #else
+	u16	offset;
+	u16	len;
+ #endif
+ };
+
+Which is the opposite of what was defined.
+
+Fix this and just to be safe also add "__packed".
+
+Link: https://lore.kernel.org/all/20230908154417.5172e343@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20230908163929.2c25f3dc@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Tested-by: Sven Schnelle <svens@linux.ibm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: ddeea494a16f3 ("tracing/synthetic: Use union instead of casts")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ include/linux/trace_events.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -343,17 +343,17 @@ static struct ext4_dir_entry_tail *get_d
- 						   struct buffer_head *bh)
- {
- 	struct ext4_dir_entry_tail *t;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
- 
- #ifdef PARANOID
- 	struct ext4_dir_entry *d, *top;
- 
- 	d = (struct ext4_dir_entry *)bh->b_data;
- 	top = (struct ext4_dir_entry *)(bh->b_data +
--		(EXT4_BLOCK_SIZE(inode->i_sb) -
--		 sizeof(struct ext4_dir_entry_tail)));
--	while (d < top && d->rec_len)
-+		(blocksize - sizeof(struct ext4_dir_entry_tail)));
-+	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
- 		d = (struct ext4_dir_entry *)(((void *)d) +
--		    le16_to_cpu(d->rec_len));
-+		    ext4_rec_len_from_disk(d->rec_len, blocksize));
- 
- 	if (d != top)
- 		return NULL;
-@@ -364,7 +364,8 @@ static struct ext4_dir_entry_tail *get_d
+diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
+index 12f875e9e69a..21ae37e49319 100644
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -62,13 +62,13 @@ void trace_event_printf(struct trace_iterator *iter, const char *fmt, ...);
+ /* Used to find the offset and length of dynamic fields in trace events */
+ struct trace_dynamic_info {
+ #ifdef CONFIG_CPU_BIG_ENDIAN
+-	u16	offset;
+ 	u16	len;
++	u16	offset;
+ #else
+-	u16	len;
+ 	u16	offset;
++	u16	len;
  #endif
+-};
++} __packed;
  
- 	if (t->det_reserved_zero1 ||
--	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
-+	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
-+	     sizeof(struct ext4_dir_entry_tail)) ||
- 	    t->det_reserved_zero2 ||
- 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
- 		return NULL;
-@@ -445,13 +446,14 @@ static struct dx_countlimit *get_dx_coun
- 	struct ext4_dir_entry *dp;
- 	struct dx_root_info *root;
- 	int count_offset;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
-+	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
- 
--	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
-+	if (rlen == blocksize)
- 		count_offset = 8;
--	else if (le16_to_cpu(dirent->rec_len) == 12) {
-+	else if (rlen == 12) {
- 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
--		if (le16_to_cpu(dp->rec_len) !=
--		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
-+		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
- 			return NULL;
- 		root = (struct dx_root_info *)(((void *)dp + 12));
- 		if (root->reserved_zero ||
-@@ -1315,6 +1317,7 @@ static int dx_make_map(struct inode *dir
- 	unsigned int buflen = bh->b_size;
- 	char *base = bh->b_data;
- 	struct dx_hash_info h = *hinfo;
-+	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
- 
- 	if (ext4_has_metadata_csum(dir->i_sb))
- 		buflen -= sizeof(struct ext4_dir_entry_tail);
-@@ -1335,11 +1338,12 @@ static int dx_make_map(struct inode *dir
- 			map_tail--;
- 			map_tail->hash = h.hash;
- 			map_tail->offs = ((char *) de - base)>>2;
--			map_tail->size = le16_to_cpu(de->rec_len);
-+			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
-+								blocksize);
- 			count++;
- 			cond_resched();
- 		}
--		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
-+		de = ext4_next_entry(de, blocksize);
- 	}
- 	return count;
- }
+ /*
+  * The trace entry - the most basic unit of tracing. This is what
+-- 
+2.42.0
+
 
 
