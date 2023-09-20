@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634A2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D898C433C8;
-	Wed, 20 Sep 2023 12:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0452E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EB6C433C9;
+	Wed, 20 Sep 2023 12:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211801;
-	bh=/wqa7FwaYV25dU3kQ2YI/8pH/P+1gQ7UxBTvFZHlMbw=;
+	s=korg; t=1695211804;
+	bh=RL0GTDRfECVC3lt0zt4NMKrT+tF++Xa+DTbyTVNUuB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QW7Qj0H4OnnGA2eIW8w1nc6JQZSfBmOaJ10K3BtESXc8Sh9J+qyvgOZUzFUmvA82U
-	 WFL2q8UpCLwitlJG1dJ6s5Z8k3Asi1uEI9sk4IkT6b3yyv8sI4I0LUinDSN5XwiVth
-	 +0O5xNLRUBz4qsrk3hzIlCLwNhS+YE8xBcYafHjs=
+	b=QsCARkb1Qhr8rgOCw1noJlJd4C9brCWkIJnLrwNIWRfTxj2qydyK62Lwts3DROYfy
+	 gRnHNXcrQKeqQCUCXqafzW2/WErfcKLIR8nopstNBV0caZhHpHUsiMTo3llWm9UB0w
+	 qilXFoCgJHPF1iofuXubKeWahEA1px+/g/cyingw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.19 041/273] Revert "net: macsec: preserve ingress frame ordering"
-Date: Wed, 20 Sep 2023 13:28:01 +0200
-Message-ID: <20230920112847.690892221@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
+	Edward Shishkin <edward.shishkin@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 042/273] reiserfs: Check the return value from __getblk()
+Date: Wed, 20 Sep 2023 13:28:02 +0200
+Message-ID: <20230920112847.721909389@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,50 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Matthew Wilcox <willy@infradead.org>
 
-commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
+[ Upstream commit ba38980add7ffc9e674ada5b4ded4e7d14e76581 ]
 
-This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
+__getblk() can return a NULL pointer if we run out of memory or if we
+try to access beyond the end of the device; check it and handle it
+appropriately.
 
-It was trying to work around an issue at the crypto layer by excluding
-ASYNC implementations of gcm(aes), because a bug in the AESNI version
-caused reordering when some requests bypassed the cryptd queue while
-older requests were still pending on the queue.
-
-This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
-reordering problem on gcm"), which pre-dates ab046a5d4be4.
-
-Herbert Xu confirmed that all ASYNC implementations are expected to
-maintain the ordering of completions wrt requests, so we can use them
-in MACsec.
-
-On my test machine, this restores the performance of a single netperf
-instance, from 1.4Gbps to 4.4Gbps.
-
-Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
-Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
-Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
-Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/lkml/CAFcO6XOacq3hscbXevPQP7sXRoYFz34ZdKPYjmd6k5sZuhGFDw@mail.gmail.com/
+Tested-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2") # probably introduced in 2002
+Acked-by: Edward Shishkin <edward.shishkin@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/reiserfs/journal.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -1315,8 +1315,7 @@ static struct crypto_aead *macsec_alloc_
- 	struct crypto_aead *tfm;
- 	int ret;
+diff --git a/fs/reiserfs/journal.c b/fs/reiserfs/journal.c
+index 78be6dbcd7627..3425a04bc8a01 100644
+--- a/fs/reiserfs/journal.c
++++ b/fs/reiserfs/journal.c
+@@ -2336,7 +2336,7 @@ static struct buffer_head *reiserfs_breada(struct block_device *dev,
+ 	int i, j;
  
--	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
--	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
-+	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
+ 	bh = __getblk(dev, block, bufsize);
+-	if (buffer_uptodate(bh))
++	if (!bh || buffer_uptodate(bh))
+ 		return (bh);
  
- 	if (IS_ERR(tfm))
- 		return tfm;
+ 	if (block + BUFNR > max_block) {
+@@ -2346,6 +2346,8 @@ static struct buffer_head *reiserfs_breada(struct block_device *dev,
+ 	j = 1;
+ 	for (i = 1; i < blocks; i++) {
+ 		bh = __getblk(dev, block + i, bufsize);
++		if (!bh)
++			break;
+ 		if (buffer_uptodate(bh)) {
+ 			brelse(bh);
+ 			break;
+-- 
+2.40.1
+
 
 
