@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4192AB5E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE64C433C8;
-	Wed, 20 Sep 2023 12:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62892AB5E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59751C433C7;
+	Wed, 20 Sep 2023 12:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211869;
-	bh=tvgXNM4ptifucaij1ttxlux9QH88ZIjE2SPaaXXXGOc=;
+	s=korg; t=1695211871;
+	bh=2y8Vyu2wq+JZoyk6s5yYM0lhiQFXK609jAk7EYILBso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIIrvpe/fW7uFBCdPmm9bujJ8e6KWaXlmxleHccloiZ9wS8eCVgoH64EeD4k551U1
-	 4yucovOnPSSm0ur23quJ9iceWZlleX323d2VH2x6Iwm5sBSnMC5S4aXTuEpt4lNp3i
-	 ldHHaqheQddefeUnR1s7vZ7tJ6k+W4/EeIOBuwgk=
+	b=vTqjg2iB7zpEF00WRdCF3ivYENy/DVqww8gvBpyHVQiEZIzGgKOKw7BOdrRv4ypiB
+	 bCut7Qb5NF3xjDM018sYLa+O8vu+yASktXBaQvCfwnbnCWpz0sX9tuf7MPvOHdd98U
+	 tHI7UzdVgcPEN1TH5iHvT0lhjg2/f0+1PnIhuGig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.19 040/273] udf: Handle error when adding extent to a file
-Date: Wed, 20 Sep 2023 13:28:00 +0200
-Message-ID: <20230920112847.662657580@linuxfoundation.org>
+	Dmitry Mastykin <dmastykin@astralinux.ru>,
+	Paul Moore <paul@paul-moore.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 031/273] netlabel: fix shift wrapping bug in netlbl_catmap_setlong()
+Date: Wed, 20 Sep 2023 13:27:51 +0200
+Message-ID: <20230920112847.385779759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -38,124 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Dmitry Mastykin <dmastykin@astralinux.ru>
 
-commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
+[ Upstream commit b403643d154d15176b060b82f7fc605210033edd ]
 
-When adding extent to a file fails, so far we've silently squelshed the
-error. Make sure to propagate it up properly.
+There is a shift wrapping bug in this code on 32-bit architectures.
+NETLBL_CATMAP_MAPTYPE is u64, bitmap is unsigned long.
+Every second 32-bit word of catmap becomes corrupted.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dmitry Mastykin <dmastykin@astralinux.ru>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ net/netlabel/netlabel_kapi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -50,15 +50,15 @@ static int udf_update_inode(struct inode
- static int udf_sync_inode(struct inode *inode);
- static int udf_alloc_i_data(struct inode *inode, size_t size);
- static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
--static int8_t udf_insert_aext(struct inode *, struct extent_position,
--			      struct kernel_lb_addr, uint32_t);
-+static int udf_insert_aext(struct inode *, struct extent_position,
-+			   struct kernel_lb_addr, uint32_t);
- static void udf_split_extents(struct inode *, int *, int, udf_pblk_t,
- 			      struct kernel_long_ad *, int *);
- static void udf_prealloc_extents(struct inode *, int, int,
- 				 struct kernel_long_ad *, int *);
- static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
--static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
--			       int, struct extent_position *);
-+static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
-+			      int, struct extent_position *);
- static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
+diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
+index 15fe2120b3109..14c3d640f94b9 100644
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -871,7 +871,8 @@ int netlbl_catmap_setlong(struct netlbl_lsm_catmap **catmap,
  
- static void __udf_clear_extent_cache(struct inode *inode)
-@@ -881,7 +881,9 @@ static sector_t inode_getblk(struct inod
- 	/* write back the new extents, inserting new extents if the new number
- 	 * of extents is greater than the old number, and deleting extents if
- 	 * the new number of extents is less than the old number */
--	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	if (*err < 0)
-+		goto out_free;
+ 	offset -= iter->startbit;
+ 	idx = offset / NETLBL_CATMAP_MAPSIZE;
+-	iter->bitmap[idx] |= bitmap << (offset % NETLBL_CATMAP_MAPSIZE);
++	iter->bitmap[idx] |= (NETLBL_CATMAP_MAPTYPE)bitmap
++			     << (offset % NETLBL_CATMAP_MAPSIZE);
  
- 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
- 				iinfo->i_location.partitionReferenceNum, 0);
-@@ -1149,21 +1151,30 @@ static void udf_merge_extents(struct ino
- 	}
+ 	return 0;
  }
- 
--static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
--			       int startnum, int endnum,
--			       struct extent_position *epos)
-+static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
-+			      int startnum, int endnum,
-+			      struct extent_position *epos)
- {
- 	int start = 0, i;
- 	struct kernel_lb_addr tmploc;
- 	uint32_t tmplen;
-+	int err;
- 
- 	if (startnum > endnum) {
- 		for (i = 0; i < (startnum - endnum); i++)
- 			udf_delete_aext(inode, *epos);
- 	} else if (startnum < endnum) {
- 		for (i = 0; i < (endnum - startnum); i++) {
--			udf_insert_aext(inode, *epos, laarr[i].extLocation,
--					laarr[i].extLength);
-+			err = udf_insert_aext(inode, *epos,
-+					      laarr[i].extLocation,
-+					      laarr[i].extLength);
-+			/*
-+			 * If we fail here, we are likely corrupting the extent
-+			 * list and leaking blocks. At least stop early to
-+			 * limit the damage.
-+			 */
-+			if (err < 0)
-+				return err;
- 			udf_next_aext(inode, epos, &laarr[i].extLocation,
- 				      &laarr[i].extLength, 1);
- 			start++;
-@@ -1175,6 +1186,7 @@ static void udf_update_extents(struct in
- 		udf_write_aext(inode, epos, &laarr[i].extLocation,
- 			       laarr[i].extLength, 1);
- 	}
-+	return 0;
- }
- 
- struct buffer_head *udf_bread(struct inode *inode, udf_pblk_t block,
-@@ -2191,12 +2203,13 @@ int8_t udf_current_aext(struct inode *in
- 	return etype;
- }
- 
--static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
--			      struct kernel_lb_addr neloc, uint32_t nelen)
-+static int udf_insert_aext(struct inode *inode, struct extent_position epos,
-+			   struct kernel_lb_addr neloc, uint32_t nelen)
- {
- 	struct kernel_lb_addr oeloc;
- 	uint32_t oelen;
- 	int8_t etype;
-+	int err;
- 
- 	if (epos.bh)
- 		get_bh(epos.bh);
-@@ -2206,10 +2219,10 @@ static int8_t udf_insert_aext(struct ino
- 		neloc = oeloc;
- 		nelen = (etype << 30) | oelen;
- 	}
--	udf_add_aext(inode, &epos, &neloc, nelen, 1);
-+	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
- 	brelse(epos.bh);
- 
--	return (nelen >> 30);
-+	return err;
- }
- 
- int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
+-- 
+2.40.1
+
 
 
