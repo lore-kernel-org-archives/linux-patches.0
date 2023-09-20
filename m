@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32431A6E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860D7C433C9;
-	Wed, 20 Sep 2023 12:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503E168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398CBC433C7;
+	Wed, 20 Sep 2023 12:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214114;
-	bh=0kHk+j66eW5Nib478z18hQdD9+9xJRb9prLqXnwNMnU=;
+	s=korg; t=1695214117;
+	bh=3PB4RWm2D/ljJVKIy8WIpiubAM0uoZrpbsjqpWkRkvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgqHIY1/NkFXyqVOorqzqIApmIbeoO0qfF9SMGrMN1zShUaMnci0S0YkufhLHA4p0
-	 /t0zSjcIKBuAHBlu9WoC5s+9nLbKXbhvfedQ4wRuQ5dB37SS3xZ6O9td9jvnmmu9ys
-	 5qX6ZDkBwig5ZVTQZooEO2xV6TXfvpRPG9GmoePM=
+	b=NoI4euFf7r9alIGrF2FlznOIVsVpFLNJTF2ONpsXY9osO0Q+/OqWIyKl5RHpR9Ieg
+	 iu4nnhWYOcsQ55Pd/TF4R1+vjctC5xJlrAhZrAYqUj5/hF/E2CvXMMeN6jqKJQGuAB
+	 BsZCaMZQYKj/LZiiq4/hD7yxKvZni8uCDaDSZ5RU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Florian Weimer <fweimer@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 092/110] attr: block mode changes of symlinks
-Date: Wed, 20 Sep 2023 13:32:30 +0200
-Message-ID: <20230920112833.868347636@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 083/110] netfilter: nf_tables: GC transaction API to avoid race with control plane
+Date: Wed, 20 Sep 2023 13:32:21 +0200
+Message-ID: <20230920112833.527435166@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,140 +39,573 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 5d1f903f75a80daa4dfb3d84e114ec8ecbf29956 upstream.
+[ Upstream commit 5f68718b34a531a556f2f50300ead2862278da26 ]
 
-Changing the mode of symlinks is meaningless as the vfs doesn't take the
-mode of a symlink into account during path lookup permission checking.
+The set types rhashtable and rbtree use a GC worker to reclaim memory.
+>From system work queue, in periodic intervals, a scan of the table is
+done.
 
-However, the vfs doesn't block mode changes on symlinks. This however,
-has lead to an untenable mess roughly classifiable into the following
-two categories:
+The major caveat here is that the nft transaction mutex is not held.
+This causes a race between control plane and GC when they attempt to
+delete the same element.
 
-(1) Filesystems that don't implement a i_op->setattr() for symlinks.
+We cannot grab the netlink mutex from the work queue, because the
+control plane has to wait for the GC work queue in case the set is to be
+removed, so we get following deadlock:
 
-    Such filesystems may or may not know that without i_op->setattr()
-    defined, notify_change() falls back to simple_setattr() causing the
-    inode's mode in the inode cache to be changed.
+   cpu 1                                cpu2
+     GC work                            transaction comes in , lock nft mutex
+       `acquire nft mutex // BLOCKS
+                                        transaction asks to remove the set
+                                        set destruction calls cancel_work_sync()
 
-    That's a generic issue as this will affect all non-size changing
-    inode attributes including ownership changes.
+cancel_work_sync will now block forever, because it is waiting for the
+mutex the caller already owns.
 
-    Example: afs
+This patch adds a new API that deals with garbage collection in two
+steps:
 
-(2) Filesystems that fail with EOPNOTSUPP but change the mode of the
-    symlink nonetheless.
+1) Lockless GC of expired elements sets on the NFT_SET_ELEM_DEAD_BIT
+   so they are not visible via lookup. Annotate current GC sequence in
+   the GC transaction. Enqueue GC transaction work as soon as it is
+   full. If ruleset is updated, then GC transaction is aborted and
+   retried later.
 
-    Some filesystems will happily update the mode of a symlink but still
-    return EOPNOTSUPP. This is the biggest source of confusion for
-    userspace.
+2) GC work grabs the mutex. If GC sequence has changed then this GC
+   transaction lost race with control plane, abort it as it contains
+   stale references to objects and let GC try again later. If the
+   ruleset is intact, then this GC transaction deactivates and removes
+   the elements and it uses call_rcu() to destroy elements.
 
-    The EOPNOTSUPP in this case comes from POSIX ACLs. Specifically it
-    comes from filesystems that call posix_acl_chmod(), e.g., btrfs via
+Note that no elements are removed from GC lockless path, the _DEAD bit
+is set and pointers are collected. GC catchall does not remove the
+elements anymore too. There is a new set->dead flag that is set on to
+abort the GC transaction to deal with set->ops->destroy() path which
+removes the remaining elements in the set from commit_release, where no
+mutex is held.
 
-        if (!err && attr->ia_valid & ATTR_MODE)
-                err = posix_acl_chmod(idmap, dentry, inode->i_mode);
+To deal with GC when mutex is held, which allows safe deactivate and
+removal, add sync GC API which releases the set element object via
+call_rcu(). This is used by rbtree and pipapo backends which also
+perform garbage collection from control plane path.
 
-    Filesystems including btrfs don't implement i_op->set_acl() so
-    posix_acl_chmod() will report EOPNOTSUPP.
+Since element removal from sets can happen from control plane and
+element garbage collection/timeout, it is necessary to keep the set
+structure alive until all elements have been deactivated and destroyed.
 
-    When posix_acl_chmod() is called, most filesystems will have
-    finished updating the inode.
+We cannot do a cancel_work_sync or flush_work in nft_set_destroy because
+its called with the transaction mutex held, but the aforementioned async
+work queue might be blocked on the very mutex that nft_set_destroy()
+callchain is sitting on.
 
-    Perversely, this has the consequences that this behavior may depend
-    on two kconfig options and mount options:
+This gives us the choice of ABBA deadlock or UaF.
 
-    * CONFIG_POSIX_ACL={y,n}
-    * CONFIG_${FSTYPE}_POSIX_ACL={y,n}
-    * Opt_acl, Opt_noacl
+To avoid both, add set->refs refcount_t member. The GC API can then
+increment the set refcount and release it once the elements have been
+free'd.
 
-    Example: btrfs, ext4, xfs
+Set backends are adapted to use the GC transaction API in a follow up
+patch entitled:
 
-The only way to change the mode on a symlink currently involves abusing
-an O_PATH file descriptor in the following manner:
+  ("netfilter: nf_tables: use gc transaction API in set backends")
 
-        fd = openat(-1, "/path/to/link", O_CLOEXEC | O_PATH | O_NOFOLLOW);
+This is joint work with Florian Westphal.
 
-        char path[PATH_MAX];
-        snprintf(path, sizeof(path), "/proc/self/fd/%d", fd);
-        chmod(path, 0000);
-
-But for most major filesystems with POSIX ACL support such as btrfs,
-ext4, ceph, tmpfs, xfs and others this will fail with EOPNOTSUPP with
-the mode still updated due to the aforementioned posix_acl_chmod()
-nonsense.
-
-So, given that for all major filesystems this would fail with EOPNOTSUPP
-and that both glibc (cf. [1]) and musl (cf. [2]) outright block mode
-changes on symlinks we should just try and block mode changes on
-symlinks directly in the vfs and have a clean break with this nonsense.
-
-If this causes any regressions, we do the next best thing and fix up all
-filesystems that do return EOPNOTSUPP with the mode updated to not call
-posix_acl_chmod() on symlinks.
-
-But as usual, let's try the clean cut solution first. It's a simple
-patch that can be easily reverted. Not marking this for backport as I'll
-do that manually if we're reasonably sure that this works and there are
-no strong objections.
-
-We could block this in chmod_common() but it's more appropriate to do it
-notify_change() as it will also mean that we catch filesystems that
-change symlink permissions explicitly or accidently.
-
-Similar proposals were floated in the past as in [3] and [4] and again
-recently in [5]. There's also a couple of bugs about this inconsistency
-as in [6] and [7].
-
-Link: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/fchmodat.c;h=99527a3727e44cb8661ee1f743068f108ec93979;hb=HEAD [1]
-Link: https://git.musl-libc.org/cgit/musl/tree/src/stat/fchmodat.c [2]
-Link: https://lore.kernel.org/all/20200911065733.GA31579@infradead.org [3]
-Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00518.html [4]
-Link: https://lore.kernel.org/lkml/87lefmbppo.fsf@oldenburg.str.redhat.com [5]
-Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00467.html [6]
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=14578#c17 [7]
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org # please backport to all LTSes but not before v6.6-rc2 is tagged
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Suggested-by: Florian Weimer <fweimer@redhat.com>
-Message-Id: <20230712-vfs-chmod-symlinks-v2-1-08cfb92b61dd@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cfed7e1b1f8e ("netfilter: nf_tables: add set garbage collection helpers")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/attr.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |  64 +++++++-
+ net/netfilter/nf_tables_api.c     | 248 ++++++++++++++++++++++++++++--
+ 2 files changed, 300 insertions(+), 12 deletions(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -402,9 +402,25 @@ int notify_change(struct user_namespace
- 		return error;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index b8d967e0eb1e2..a6bf58316a5d8 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -477,6 +477,7 @@ struct nft_set_elem_expr {
+  *
+  *	@list: table set list node
+  *	@bindings: list of set bindings
++ *	@refs: internal refcounting for async set destruction
+  *	@table: table this set belongs to
+  *	@net: netnamespace this set belongs to
+  * 	@name: name of the set
+@@ -506,6 +507,7 @@ struct nft_set_elem_expr {
+ struct nft_set {
+ 	struct list_head		list;
+ 	struct list_head		bindings;
++	refcount_t			refs;
+ 	struct nft_table		*table;
+ 	possible_net_t			net;
+ 	char				*name;
+@@ -527,7 +529,8 @@ struct nft_set {
+ 	struct list_head		pending_update;
+ 	/* runtime data below here */
+ 	const struct nft_set_ops	*ops ____cacheline_aligned;
+-	u16				flags:14,
++	u16				flags:13,
++					dead:1,
+ 					genmask:2;
+ 	u8				klen;
+ 	u8				dlen;
+@@ -1527,6 +1530,32 @@ static inline void nft_set_elem_clear_busy(struct nft_set_ext *ext)
+ 	clear_bit(NFT_SET_ELEM_BUSY_BIT, word);
+ }
  
- 	if ((ia_valid & ATTR_MODE)) {
--		umode_t amode = attr->ia_mode;
-+		/*
-+		 * Don't allow changing the mode of symlinks:
-+		 *
-+		 * (1) The vfs doesn't take the mode of symlinks into account
-+		 *     during permission checking.
-+		 * (2) This has never worked correctly. Most major filesystems
-+		 *     did return EOPNOTSUPP due to interactions with POSIX ACLs
-+		 *     but did still updated the mode of the symlink.
-+		 *     This inconsistency led system call wrapper providers such
-+		 *     as libc to block changing the mode of symlinks with
-+		 *     EOPNOTSUPP already.
-+		 * (3) To even do this in the first place one would have to use
-+		 *     specific file descriptors and quite some effort.
-+		 */
-+		if (S_ISLNK(inode->i_mode))
-+			return -EOPNOTSUPP;
++#define NFT_SET_ELEM_DEAD_MASK	(1 << 3)
 +
- 		/* Flag setting protected by i_mutex */
--		if (is_sxid(amode))
-+		if (is_sxid(attr->ia_mode))
- 			inode->i_flags &= ~S_NOSEC;
++#if defined(__LITTLE_ENDIAN_BITFIELD)
++#define NFT_SET_ELEM_DEAD_BIT	3
++#elif defined(__BIG_ENDIAN_BITFIELD)
++#define NFT_SET_ELEM_DEAD_BIT	(BITS_PER_LONG - BITS_PER_BYTE + 3)
++#else
++#error
++#endif
++
++static inline void nft_set_elem_dead(struct nft_set_ext *ext)
++{
++	unsigned long *word = (unsigned long *)ext;
++
++	BUILD_BUG_ON(offsetof(struct nft_set_ext, genmask) != 0);
++	set_bit(NFT_SET_ELEM_DEAD_BIT, word);
++}
++
++static inline int nft_set_elem_is_dead(const struct nft_set_ext *ext)
++{
++	unsigned long *word = (unsigned long *)ext;
++
++	BUILD_BUG_ON(offsetof(struct nft_set_ext, genmask) != 0);
++	return test_bit(NFT_SET_ELEM_DEAD_BIT, word);
++}
++
+ /**
+  *	struct nft_trans - nf_tables object update in transaction
+  *
+@@ -1658,6 +1687,38 @@ struct nft_trans_flowtable {
+ #define nft_trans_flowtable_flags(trans)	\
+ 	(((struct nft_trans_flowtable *)trans->data)->flags)
+ 
++#define NFT_TRANS_GC_BATCHCOUNT	256
++
++struct nft_trans_gc {
++	struct list_head	list;
++	struct net		*net;
++	struct nft_set		*set;
++	u32			seq;
++	u8			count;
++	void			*priv[NFT_TRANS_GC_BATCHCOUNT];
++	struct rcu_head		rcu;
++};
++
++struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
++					unsigned int gc_seq, gfp_t gfp);
++void nft_trans_gc_destroy(struct nft_trans_gc *trans);
++
++struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
++					      unsigned int gc_seq, gfp_t gfp);
++void nft_trans_gc_queue_async_done(struct nft_trans_gc *gc);
++
++struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp);
++void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans);
++
++void nft_trans_gc_elem_add(struct nft_trans_gc *gc, void *priv);
++
++struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
++					   unsigned int gc_seq);
++
++void nft_setelem_data_deactivate(const struct net *net,
++				 const struct nft_set *set,
++				 struct nft_set_elem *elem);
++
+ int __init nft_chain_filter_init(void);
+ void nft_chain_filter_fini(void);
+ 
+@@ -1684,6 +1745,7 @@ struct nftables_pernet {
+ 	struct mutex		commit_mutex;
+ 	u64			table_handle;
+ 	unsigned int		base_seq;
++	unsigned int		gc_seq;
+ };
+ 
+ extern unsigned int nf_tables_net_id;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index dde19be41610d..2333f5da1eb97 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -31,7 +31,9 @@ static LIST_HEAD(nf_tables_expressions);
+ static LIST_HEAD(nf_tables_objects);
+ static LIST_HEAD(nf_tables_flowtables);
+ static LIST_HEAD(nf_tables_destroy_list);
++static LIST_HEAD(nf_tables_gc_list);
+ static DEFINE_SPINLOCK(nf_tables_destroy_list_lock);
++static DEFINE_SPINLOCK(nf_tables_gc_list_lock);
+ 
+ enum {
+ 	NFT_VALIDATE_SKIP	= 0,
+@@ -120,6 +122,9 @@ static void nft_validate_state_update(struct nft_table *table, u8 new_validate_s
+ static void nf_tables_trans_destroy_work(struct work_struct *w);
+ static DECLARE_WORK(trans_destroy_work, nf_tables_trans_destroy_work);
+ 
++static void nft_trans_gc_work(struct work_struct *work);
++static DECLARE_WORK(trans_gc_work, nft_trans_gc_work);
++
+ static void nft_ctx_init(struct nft_ctx *ctx,
+ 			 struct net *net,
+ 			 const struct sk_buff *skb,
+@@ -581,10 +586,6 @@ static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
+ 	return __nft_trans_set_add(ctx, msg_type, set, NULL);
+ }
+ 
+-static void nft_setelem_data_deactivate(const struct net *net,
+-					const struct nft_set *set,
+-					struct nft_set_elem *elem);
+-
+ static int nft_mapelem_deactivate(const struct nft_ctx *ctx,
+ 				  struct nft_set *set,
+ 				  const struct nft_set_iter *iter,
+@@ -4756,6 +4757,7 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 
+ 	INIT_LIST_HEAD(&set->bindings);
+ 	INIT_LIST_HEAD(&set->catchall_list);
++	refcount_set(&set->refs, 1);
+ 	set->table = table;
+ 	write_pnet(&set->net, net);
+ 	set->ops = ops;
+@@ -4823,6 +4825,14 @@ static void nft_set_catchall_destroy(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
++static void nft_set_put(struct nft_set *set)
++{
++	if (refcount_dec_and_test(&set->refs)) {
++		kfree(set->name);
++		kvfree(set);
++	}
++}
++
+ static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	int i;
+@@ -4835,8 +4845,7 @@ static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
+ 
+ 	set->ops->destroy(ctx, set);
+ 	nft_set_catchall_destroy(ctx, set);
+-	kfree(set->name);
+-	kvfree(set);
++	nft_set_put(set);
+ }
+ 
+ static int nf_tables_delset(struct sk_buff *skb, const struct nfnl_info *info,
+@@ -5901,7 +5910,8 @@ struct nft_set_ext *nft_set_catchall_lookup(const struct net *net,
+ 	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
+ 		ext = nft_set_elem_ext(set, catchall->elem);
+ 		if (nft_set_elem_active(ext, genmask) &&
+-		    !nft_set_elem_expired(ext))
++		    !nft_set_elem_expired(ext) &&
++		    !nft_set_elem_is_dead(ext))
+ 			return ext;
  	}
  
+@@ -6545,9 +6555,9 @@ static void nft_setelem_data_activate(const struct net *net,
+ 		nft_use_inc_restore(&(*nft_set_ext_obj(ext))->use);
+ }
+ 
+-static void nft_setelem_data_deactivate(const struct net *net,
+-					const struct nft_set *set,
+-					struct nft_set_elem *elem)
++void nft_setelem_data_deactivate(const struct net *net,
++				 const struct nft_set *set,
++				 struct nft_set_elem *elem)
+ {
+ 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 
+@@ -8882,6 +8892,207 @@ void nft_chain_del(struct nft_chain *chain)
+ 	list_del_rcu(&chain->list);
+ }
+ 
++static void nft_trans_gc_setelem_remove(struct nft_ctx *ctx,
++					struct nft_trans_gc *trans)
++{
++	void **priv = trans->priv;
++	unsigned int i;
++
++	for (i = 0; i < trans->count; i++) {
++		struct nft_set_elem elem = {
++			.priv = priv[i],
++		};
++
++		nft_setelem_data_deactivate(ctx->net, trans->set, &elem);
++		nft_setelem_remove(ctx->net, trans->set, &elem);
++	}
++}
++
++void nft_trans_gc_destroy(struct nft_trans_gc *trans)
++{
++	nft_set_put(trans->set);
++	put_net(trans->net);
++	kfree(trans);
++}
++
++static void nft_trans_gc_trans_free(struct rcu_head *rcu)
++{
++	struct nft_set_elem elem = {};
++	struct nft_trans_gc *trans;
++	struct nft_ctx ctx = {};
++	unsigned int i;
++
++	trans = container_of(rcu, struct nft_trans_gc, rcu);
++	ctx.net	= read_pnet(&trans->set->net);
++
++	for (i = 0; i < trans->count; i++) {
++		elem.priv = trans->priv[i];
++		if (!nft_setelem_is_catchall(trans->set, &elem))
++			atomic_dec(&trans->set->nelems);
++
++		nf_tables_set_elem_destroy(&ctx, trans->set, elem.priv);
++	}
++
++	nft_trans_gc_destroy(trans);
++}
++
++static bool nft_trans_gc_work_done(struct nft_trans_gc *trans)
++{
++	struct nftables_pernet *nft_net;
++	struct nft_ctx ctx = {};
++
++	nft_net = nft_pernet(trans->net);
++
++	mutex_lock(&nft_net->commit_mutex);
++
++	/* Check for race with transaction, otherwise this batch refers to
++	 * stale objects that might not be there anymore. Skip transaction if
++	 * set has been destroyed from control plane transaction in case gc
++	 * worker loses race.
++	 */
++	if (READ_ONCE(nft_net->gc_seq) != trans->seq || trans->set->dead) {
++		mutex_unlock(&nft_net->commit_mutex);
++		return false;
++	}
++
++	ctx.net = trans->net;
++	ctx.table = trans->set->table;
++
++	nft_trans_gc_setelem_remove(&ctx, trans);
++	mutex_unlock(&nft_net->commit_mutex);
++
++	return true;
++}
++
++static void nft_trans_gc_work(struct work_struct *work)
++{
++	struct nft_trans_gc *trans, *next;
++	LIST_HEAD(trans_gc_list);
++
++	spin_lock(&nf_tables_destroy_list_lock);
++	list_splice_init(&nf_tables_gc_list, &trans_gc_list);
++	spin_unlock(&nf_tables_destroy_list_lock);
++
++	list_for_each_entry_safe(trans, next, &trans_gc_list, list) {
++		list_del(&trans->list);
++		if (!nft_trans_gc_work_done(trans)) {
++			nft_trans_gc_destroy(trans);
++			continue;
++		}
++		call_rcu(&trans->rcu, nft_trans_gc_trans_free);
++	}
++}
++
++struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
++					unsigned int gc_seq, gfp_t gfp)
++{
++	struct net *net = read_pnet(&set->net);
++	struct nft_trans_gc *trans;
++
++	trans = kzalloc(sizeof(*trans), gfp);
++	if (!trans)
++		return NULL;
++
++	refcount_inc(&set->refs);
++	trans->set = set;
++	trans->net = get_net(net);
++	trans->seq = gc_seq;
++
++	return trans;
++}
++
++void nft_trans_gc_elem_add(struct nft_trans_gc *trans, void *priv)
++{
++	trans->priv[trans->count++] = priv;
++}
++
++static void nft_trans_gc_queue_work(struct nft_trans_gc *trans)
++{
++	spin_lock(&nf_tables_gc_list_lock);
++	list_add_tail(&trans->list, &nf_tables_gc_list);
++	spin_unlock(&nf_tables_gc_list_lock);
++
++	schedule_work(&trans_gc_work);
++}
++
++static int nft_trans_gc_space(struct nft_trans_gc *trans)
++{
++	return NFT_TRANS_GC_BATCHCOUNT - trans->count;
++}
++
++struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
++					      unsigned int gc_seq, gfp_t gfp)
++{
++	if (nft_trans_gc_space(gc))
++		return gc;
++
++	nft_trans_gc_queue_work(gc);
++
++	return nft_trans_gc_alloc(gc->set, gc_seq, gfp);
++}
++
++void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
++{
++	if (trans->count == 0) {
++		nft_trans_gc_destroy(trans);
++		return;
++	}
++
++	nft_trans_gc_queue_work(trans);
++}
++
++struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp)
++{
++	if (WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net)))
++		return NULL;
++
++	if (nft_trans_gc_space(gc))
++		return gc;
++
++	call_rcu(&gc->rcu, nft_trans_gc_trans_free);
++
++	return nft_trans_gc_alloc(gc->set, 0, gfp);
++}
++
++void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
++{
++	WARN_ON_ONCE(!lockdep_commit_lock_is_held(trans->net));
++
++	if (trans->count == 0) {
++		nft_trans_gc_destroy(trans);
++		return;
++	}
++
++	call_rcu(&trans->rcu, nft_trans_gc_trans_free);
++}
++
++struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
++					   unsigned int gc_seq)
++{
++	struct nft_set_elem_catchall *catchall;
++	const struct nft_set *set = gc->set;
++	struct nft_set_ext *ext;
++
++	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++
++		if (!nft_set_elem_expired(ext))
++			continue;
++		if (nft_set_elem_is_dead(ext))
++			goto dead_elem;
++
++		nft_set_elem_dead(ext);
++dead_elem:
++		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
++		if (!gc)
++			return NULL;
++
++		nft_trans_gc_elem_add(gc, catchall->elem);
++	}
++
++	return gc;
++}
++
+ static void nf_tables_module_autoload_cleanup(struct net *net)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+@@ -9044,11 +9255,11 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+ 	struct nft_trans *trans, *next;
++	unsigned int base_seq, gc_seq;
+ 	LIST_HEAD(set_update_list);
+ 	struct nft_trans_elem *te;
+ 	struct nft_chain *chain;
+ 	struct nft_table *table;
+-	unsigned int base_seq;
+ 	LIST_HEAD(adl);
+ 	int err;
+ 
+@@ -9125,6 +9336,10 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 
+ 	WRITE_ONCE(nft_net->base_seq, base_seq);
+ 
++	/* Bump gc counter, it becomes odd, this is the busy mark. */
++	gc_seq = READ_ONCE(nft_net->gc_seq);
++	WRITE_ONCE(nft_net->gc_seq, ++gc_seq);
++
+ 	/* step 3. Start new generation, rules_gen_X now in use. */
+ 	net->nft.gencursor = nft_gencursor_next(net);
+ 
+@@ -9213,6 +9428,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_DELSET:
++			nft_trans_set(trans)->dead = 1;
+ 			list_del_rcu(&nft_trans_set(trans)->list);
+ 			nf_tables_set_notify(&trans->ctx, nft_trans_set(trans),
+ 					     NFT_MSG_DELSET, GFP_KERNEL);
+@@ -9312,6 +9528,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 	nft_commit_notify(net, NETLINK_CB(skb).portid);
+ 	nf_tables_gen_notify(net, skb, NFT_MSG_NEWGEN);
+ 	nf_tables_commit_audit_log(&adl, nft_net->base_seq);
++
++	WRITE_ONCE(nft_net->gc_seq, ++gc_seq);
+ 	nf_tables_commit_release(net);
+ 
+ 	return 0;
+@@ -10343,6 +10561,7 @@ static int __net_init nf_tables_init_net(struct net *net)
+ 	INIT_LIST_HEAD(&nft_net->notify_list);
+ 	mutex_init(&nft_net->commit_mutex);
+ 	nft_net->base_seq = 1;
++	nft_net->gc_seq = 0;
+ 
+ 	return 0;
+ }
+@@ -10371,10 +10590,16 @@ static void __net_exit nf_tables_exit_net(struct net *net)
+ 	WARN_ON_ONCE(!list_empty(&nft_net->notify_list));
+ }
+ 
++static void nf_tables_exit_batch(struct list_head *net_exit_list)
++{
++	flush_work(&trans_gc_work);
++}
++
+ static struct pernet_operations nf_tables_net_ops = {
+ 	.init		= nf_tables_init_net,
+ 	.pre_exit	= nf_tables_pre_exit_net,
+ 	.exit		= nf_tables_exit_net,
++	.exit_batch	= nf_tables_exit_batch,
+ 	.id		= &nf_tables_net_id,
+ 	.size		= sizeof(struct nftables_pernet),
+ };
+@@ -10446,6 +10671,7 @@ static void __exit nf_tables_module_exit(void)
+ 	nft_chain_filter_fini();
+ 	nft_chain_route_fini();
+ 	unregister_pernet_subsys(&nf_tables_net_ops);
++	cancel_work_sync(&trans_gc_work);
+ 	cancel_work_sync(&trans_destroy_work);
+ 	rcu_barrier();
+ 	rhltable_destroy(&nft_objname_ht);
+-- 
+2.40.1
+
 
 
