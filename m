@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4847418655
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD412C433C7;
-	Wed, 20 Sep 2023 11:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99CE18657
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDA7C433C8;
+	Wed, 20 Sep 2023 11:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210388;
-	bh=uYzYNOlCqgCXbSgIvd5rPQP2YjGgm9YbAD2w1ZuAS+8=;
+	s=korg; t=1695210390;
+	bh=4HBYmKtgv5iYFwezx82tdGeuThM4lvk1zmGkNL6yhN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPyJjkRMD1Ro9SFK9wwWMnbtnDzpDF2mNxfXz5nNMVqYvq6H2Sg9berrJqRfGUVn3
-	 AIuQMc0KAAUFALfwHKh+AiwTLE7oKH+kU9glzn8vzAryGRr/zbrEDVKhAnbiygEfm0
-	 3oERJmuwwfQ3QwC+FGg/whDD8oZPGOFlAq10sSq4=
+	b=RuCom70gTI5IWW2cAo0B2oSJVA878aoUkVZV5hKOmA9M+bB5+w+taC3WtN3gdXHeh
+	 9LUOY9Msg1TWPZxIduXeZBfla3+A/ukLAbgcTAgILxxFaPS+0ZdboNZFKDYxPtJFgG
+	 s4t641LDn3CMCrrjQHoE8+x8ABA0oS+qggqH8ios=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Hao Luo <haoluo@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 057/211] Revert "wifi: mac80211_hwsim: check the return value of nla_put_u32"
-Date: Wed, 20 Sep 2023 13:28:21 +0200
-Message-ID: <20230920112847.541223501@linuxfoundation.org>
+Subject: [PATCH 6.5 058/211] libbpf: Free btf_vmlinux when closing bpf_object
+Date: Wed, 20 Sep 2023 13:28:22 +0200
+Message-ID: <20230920112847.572163192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,37 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Hao Luo <haoluo@google.com>
 
-[ Upstream commit 1b78dd34560e9962f8e917fe4adde6f2ab0eb89f ]
+[ Upstream commit 29d67fdebc42af6466d1909c60fdd1ef4f3e5240 ]
 
-This reverts commit b970ac68e0c4 ("wifi: mac80211_hwsim: check the
-return value of nla_put_u32") since it introduced a memory leak in
-the error path, which seems worse than sending an incomplete skb,
-and the put can't fail anyway since the SKB was just allocated.
+I hit a memory leak when testing bpf_program__set_attach_target().
+Basically, set_attach_target() may allocate btf_vmlinux, for example,
+when setting attach target for bpf_iter programs. But btf_vmlinux
+is freed only in bpf_object_load(), which means if we only open
+bpf object but not load it, setting attach target may leak
+btf_vmlinux.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So let's free btf_vmlinux in bpf_object__close() anyway.
+
+Signed-off-by: Hao Luo <haoluo@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230822193840.1509809-1-haoluo@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index dd516cec41973..23307c8baea21 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -582,9 +582,8 @@ static int mac80211_hwsim_vendor_cmd_test(struct wiphy *wiphy,
- 		 */
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index e07dff7eba600..13b5623b720f1 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -8356,6 +8356,7 @@ void bpf_object__close(struct bpf_object *obj)
+ 	bpf_object__elf_finish(obj);
+ 	bpf_object_unload(obj);
+ 	btf__free(obj->btf);
++	btf__free(obj->btf_vmlinux);
+ 	btf_ext__free(obj->btf_ext);
  
- 		/* Add vendor data */
--		err = nla_put_u32(skb, QCA_WLAN_VENDOR_ATTR_TEST, val + 1);
--		if (err)
--			return err;
-+		nla_put_u32(skb, QCA_WLAN_VENDOR_ATTR_TEST, val + 1);
-+
- 		/* Send the event - this will call nla_nest_end() */
- 		cfg80211_vendor_event(skb, GFP_KERNEL);
- 	}
+ 	for (i = 0; i < obj->nr_maps; i++)
 -- 
 2.40.1
 
