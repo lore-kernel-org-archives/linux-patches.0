@@ -1,65 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D141915AE8;
-	Wed, 20 Sep 2023 11:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAEDC433C7;
-	Wed, 20 Sep 2023 11:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F71D156F8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCF6C433C7;
+	Wed, 20 Sep 2023 11:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695208564;
-	bh=lnb0O1ksQMJ7rJw1NAKO+dUYTXlWkz3GfIFHZ4hjhYw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hRpFtbRooXyjFa0r5RNeNmIgeYTw6ZeBzweQfv2VXCt+CXluRcoGptjDCBFLqGNQE
-	 rI+uyvPzuwHnB+vjJow0Oh53grNRxT8JIvmHwWR1+UR7lH/XBoMhaL/M67wMqmAUSo
-	 ruPUpZGkpO0u7KjxmPUYyEZFa/aVb7nxkoxappq4=
-Date: Wed, 20 Sep 2023 13:16:02 +0200
+	s=korg; t=1695210218;
+	bh=NN9qIWFUN0+6XgC7i0dSs4/8cWP1AIRxCYispwf3vAE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TxDsS216CYSJDnMbD/B6p63ZXULWHB4GY0HOrl/1CC4HJ614WjCFYe0wpEqVh0ova
+	 wqc8YVKM5X9MXrFDMm58PC+lPBkVYenBoEibYSYvPlOO2MB0yKqoJWzNGQ0/pcKIqE
+	 zaGW8U+4fK3Gf0br5uoVeK7CnhQrS0snhDqquT9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Michal Hocko <mhocko@suse.com>
-Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>, Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
-	mathieu.tortuyaux@gmail.com
-Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
- kmem.limit_in_bytes
-Message-ID: <2023092016-shield-confused-0e12@gregkh>
-References: <20230917191040.964416434@linuxfoundation.org>
- <20230917191042.204185566@linuxfoundation.org>
- <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
- <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
- <2023092032-applied-gave-0bff@gregkh>
- <76525b1a-6857-434d-86ee-3c2ff4db0e4c@linux.microsoft.com>
- <2023092044-porthole-impeding-e539@gregkh>
- <ZQrSu8lfwkk/nNxi@dhcp22.suse.cz>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Matthew Wilcox <willy@infradead.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 001/211] iomap: Fix possible overflow condition in iomap_write_delalloc_scan
+Date: Wed, 20 Sep 2023 13:27:25 +0200
+Message-ID: <20230920112845.904129842@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
+References: <20230920112845.859868994@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZQrSu8lfwkk/nNxi@dhcp22.suse.cz>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 20, 2023 at 01:08:43PM +0200, Michal Hocko wrote:
-> On Wed 20-09-23 12:45:08, Greg KH wrote:
-> [...]
-> > Ok, then we should revert this, I'll go drop it in the stable trees, it
-> > should also be reverted in Linus's tree too.
-> 
-> A simple revert would break other users as noted in other response so
-> wait with sending reverts to Linus before we agreen on the least painful
-> solution.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
-A revert should cause the systems that stopped working to start working
-again, so I'll keep the revert in the stable trees and wait for you to
-work out the real solution in Linus's tree and then backport all of them
-as needed.
+------------------
 
-thanks,
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-greg k-h
+[ Upstream commit eee2d2e6ea5550118170dbd5bb1316ceb38455fb ]
+
+folio_next_index() returns an unsigned long value which left shifted
+by PAGE_SHIFT could possibly cause an overflow on 32-bit system. Instead
+use folio_pos(folio) + folio_size(folio), which does this correctly.
+
+Suggested-by: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 7d2f70708f37d..794fda5bd9bc6 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -927,7 +927,7 @@ static int iomap_write_delalloc_scan(struct inode *inode,
+ 			 * the end of this data range, not the end of the folio.
+ 			 */
+ 			*punch_start_byte = min_t(loff_t, end_byte,
+-					folio_next_index(folio) << PAGE_SHIFT);
++					folio_pos(folio) + folio_size(folio));
+ 		}
+ 
+ 		/* move offset to start of next folio in range */
+-- 
+2.40.1
+
+
+
