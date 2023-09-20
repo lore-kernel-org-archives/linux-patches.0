@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCFA2AB5E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3F6C433CA;
-	Wed, 20 Sep 2023 12:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88762AB5E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE03EC433C7;
+	Wed, 20 Sep 2023 12:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211863;
-	bh=irmkspfCLEV6dsWlEkhpruqyRKEdtmQOlQBQQRkKCdM=;
+	s=korg; t=1695211866;
+	bh=a1HqLMsWoVlX9lvZWiIdsY9uHYX7bw3B42JEM2oUAA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pY3NWh7kd/dYaZB7AK4s1RdxHKFM0OgCHu810u6+MpWlwlyb8THZBmk+cOPaGLAU/
-	 J8bt1CX8kiJE9ttuUyi8FGej02WZ+ueaATOgiX8NynwJAOriO5QKOR+fMFWdE/fnIN
-	 AzoMivcISdR2Bh2XpDICMXjlZh8RXd5n8gojnlYc=
+	b=yEXZwSBHgxRwGKiGFlTNcW9xvv6/gN5m5Y968TkRBOwHuB+mnk45bJ/jrtCOwpzLP
+	 AeKmWFt6ME6D55Xv0Wz6ZNUo2akgukvA6OuKCrBmPKEHlNVhOxjauwSbujS9zmcrf5
+	 thiNqoeqU2gqjmi+WRUjr+qoIkXleUdsQDOHnogM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.19 038/273] powerpc/32s: Fix assembler warning about r0
-Date: Wed, 20 Sep 2023 13:27:58 +0200
-Message-ID: <20230920112847.604462223@linuxfoundation.org>
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.19 039/273] udf: Check consistency of Space Bitmap Descriptor
+Date: Wed, 20 Sep 2023 13:27:59 +0200
+Message-ID: <20230920112847.633735426@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,37 +39,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-commit b51ba4fe2e134b631f9c8f45423707aab71449b5 upstream.
+commit 1e0d4adf17e7ef03281d7b16555e7c1508c8ed2d upstream.
 
-The assembler says:
-  arch/powerpc/kernel/head_32.S:1095: Warning: invalid register expression
+Bits, which are related to Bitmap Descriptor logical blocks,
+are not reset when buffer headers are allocated for them. As the
+result, these logical blocks can be treated as free and
+be used for other blocks.This can cause usage of one buffer header
+for several types of data. UDF issues WARNING in this situation:
 
-It's objecting to the use of r0 as the RA argument. That's because
-when RA = 0 the literal value 0 is used, rather than the content of
-r0, making the use of r0 in the source potentially confusing.
+WARNING: CPU: 0 PID: 2703 at fs/udf/inode.c:2014
+  __udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
 
-Fix it to use a literal 0, the generated code is identical.
+RIP: 0010:__udf_add_aext+0x685/0x7d0 fs/udf/inode.c:2014
+Call Trace:
+ udf_setup_indirect_aext+0x573/0x880 fs/udf/inode.c:1980
+ udf_add_aext+0x208/0x2e0 fs/udf/inode.c:2067
+ udf_insert_aext fs/udf/inode.c:2233 [inline]
+ udf_update_extents fs/udf/inode.c:1181 [inline]
+ inode_getblk+0x1981/0x3b70 fs/udf/inode.c:885
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2b69ac8e1cddff6f808fc7415907179eab4aae9e.1596693679.git.christophe.leroy@csgroup.eu
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+[JK: Somewhat cleaned up the boundary checks]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/head_32.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/balloc.c |   31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kernel/head_32.S
-+++ b/arch/powerpc/kernel/head_32.S
-@@ -987,7 +987,7 @@ start_here:
- 	 */
- 	lis	r5, abatron_pteptrs@h
- 	ori	r5, r5, abatron_pteptrs@l
--	stw	r5, 0xf0(r0)	/* This much match your Abatron config */
-+	stw	r5, 0xf0(0)	/* This much match your Abatron config */
- 	lis	r6, swapper_pg_dir@h
- 	ori	r6, r6, swapper_pg_dir@l
- 	tophys(r5, r5)
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -36,18 +36,41 @@ static int read_block_bitmap(struct supe
+ 			     unsigned long bitmap_nr)
+ {
+ 	struct buffer_head *bh = NULL;
+-	int retval = 0;
++	int i;
++	int max_bits, off, count;
+ 	struct kernel_lb_addr loc;
+ 
+ 	loc.logicalBlockNum = bitmap->s_extPosition;
+ 	loc.partitionReferenceNum = UDF_SB(sb)->s_partition;
+ 
+ 	bh = udf_tread(sb, udf_get_lb_pblock(sb, &loc, block));
++	bitmap->s_block_bitmap[bitmap_nr] = bh;
+ 	if (!bh)
+-		retval = -EIO;
++		return -EIO;
+ 
+-	bitmap->s_block_bitmap[bitmap_nr] = bh;
+-	return retval;
++	/* Check consistency of Space Bitmap buffer. */
++	max_bits = sb->s_blocksize * 8;
++	if (!bitmap_nr) {
++		off = sizeof(struct spaceBitmapDesc) << 3;
++		count = min(max_bits - off, bitmap->s_nr_groups);
++	} else {
++		/*
++		 * Rough check if bitmap number is too big to have any bitmap
++		 * blocks reserved.
++		 */
++		if (bitmap_nr >
++		    (bitmap->s_nr_groups >> (sb->s_blocksize_bits + 3)) + 2)
++			return 0;
++		off = 0;
++		count = bitmap->s_nr_groups - bitmap_nr * max_bits +
++				(sizeof(struct spaceBitmapDesc) << 3);
++		count = min(count, max_bits);
++	}
++
++	for (i = 0; i < count; i++)
++		if (udf_test_bit(i + off, bh->b_data))
++			return -EFSCORRUPTED;
++	return 0;
+ }
+ 
+ static int __load_block_bitmap(struct super_block *sb,
 
 
