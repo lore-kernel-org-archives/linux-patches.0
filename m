@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6533115AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC92C433CC;
-	Wed, 20 Sep 2023 12:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7C515AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959FCC433C7;
+	Wed, 20 Sep 2023 12:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212293;
-	bh=GYidS0RDR2mVwszeBIhJulfYLnKUpr2TylbdeG5uEp8=;
+	s=korg; t=1695212295;
+	bh=UEp8yshibGkhwR0pMp7cbOHvuuDGqos8213cwuErxZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xA00N3F6MN9rZRgd2yHbmg3tIjGREAZwuxWJuWM7CeUZuyggBwvSw0hsLjrzXub6b
-	 ux9QcXeDNfNTCfytSQOuTZvWoE7AohpiGO+/u18sESkA3KYdTZ5/J+jdRuT6NRkviP
-	 CKlOOZAuzGxjKZ9P3rOc6128xeH0Q14T7K3krFpA=
+	b=Rq0i9/pfnLOTy/oFzsJMPQMb4tWgt8F4XziY8shPz474bFFM4nLRwQjP9zHcUulo6
+	 G0cuR89+eAmvsuW/moxQZmy08QWhVNnFmmUEb/Mq/VHBMYZENaOqfwRT+mj3Q35yBy
+	 4Xv7KekcG4Cvkh5svp5jMdzkFOWfeJFvUAOPJrsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ariel Marcovitch <arielmarcovitch@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Lucas Leong <wmliang@infosec.exchange>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 222/273] idr: fix param name in idr_alloc_cyclic() doc
-Date: Wed, 20 Sep 2023 13:31:02 +0200
-Message-ID: <20230920112853.277760942@linuxfoundation.org>
+Subject: [PATCH 4.19 223/273] netfilter: nfnetlink_osf: avoid OOB read
+Date: Wed, 20 Sep 2023 13:31:03 +0200
+Message-ID: <20230920112853.304823477@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,33 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ariel Marcovitch <arielmarcovitch@gmail.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 2a15de80dd0f7e04a823291aa9eb49c5294f56af ]
+[ Upstream commit f4f8a7803119005e87b716874bec07c751efafec ]
 
-The relevant parameter is 'start' and not 'nextid'
+The opt_num field is controlled by user mode and is not currently
+validated inside the kernel. An attacker can take advantage of this to
+trigger an OOB read and potentially leak information.
 
-Fixes: 460488c58ca8 ("idr: Remove idr_alloc_ext")
-Signed-off-by: Ariel Marcovitch <arielmarcovitch@gmail.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+BUG: KASAN: slab-out-of-bounds in nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+Read of size 2 at addr ffff88804bc64272 by task poc/6431
+
+CPU: 1 PID: 6431 Comm: poc Not tainted 6.0.0-rc4 #1
+Call Trace:
+ nf_osf_match_one+0xbed/0xd10 net/netfilter/nfnetlink_osf.c:88
+ nf_osf_find+0x186/0x2f0 net/netfilter/nfnetlink_osf.c:281
+ nft_osf_eval+0x37f/0x590 net/netfilter/nft_osf.c:47
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:214
+ nft_do_chain+0x2b0/0x1490 net/netfilter/nf_tables_core.c:264
+ nft_do_chain_ipv4+0x17c/0x1f0 net/netfilter/nft_chain_filter.c:23
+ [..]
+
+Also add validation to genre, subtype and version fields.
+
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Lucas Leong <wmliang@infosec.exchange>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/idr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nfnetlink_osf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/lib/idr.c b/lib/idr.c
-index 82c24a417dc65..432a985bf7727 100644
---- a/lib/idr.c
-+++ b/lib/idr.c
-@@ -103,7 +103,7 @@ EXPORT_SYMBOL_GPL(idr_alloc);
-  * @end: The maximum ID (exclusive).
-  * @gfp: Memory allocation flags.
-  *
-- * Allocates an unused ID in the range specified by @nextid and @end.  If
-+ * Allocates an unused ID in the range specified by @start and @end.  If
-  * @end is <= 0, it is treated as one larger than %INT_MAX.  This allows
-  * callers to use @start + N as @end as long as N is within integer range.
-  * The search for an unused ID will start at the last ID allocated and will
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 21e4554c76955..f3676238e64f2 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -318,6 +318,14 @@ static int nfnl_osf_add_callback(struct net *net, struct sock *ctnl,
+ 
+ 	f = nla_data(osf_attrs[OSF_ATTR_FINGER]);
+ 
++	if (f->opt_num > ARRAY_SIZE(f->opt))
++		return -EINVAL;
++
++	if (!memchr(f->genre, 0, MAXGENRELEN) ||
++	    !memchr(f->subtype, 0, MAXGENRELEN) ||
++	    !memchr(f->version, 0, MAXGENRELEN))
++		return -EINVAL;
++
+ 	kf = kmalloc(sizeof(struct nf_osf_finger), GFP_KERNEL);
+ 	if (!kf)
+ 		return -ENOMEM;
 -- 
 2.40.1
 
