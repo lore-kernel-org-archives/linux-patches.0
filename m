@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1C415AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96035C433C9;
-	Wed, 20 Sep 2023 12:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C4C15AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D784C433C7;
+	Wed, 20 Sep 2023 12:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213521;
-	bh=H4uRzfJfA0HM6GW6zhO98dNZcnLnP5JFPydoHxqK5a8=;
+	s=korg; t=1695213523;
+	bh=t+8qLhFOQqwdVg7DIPmYiO1kreLSslhvFW3aDo+uC2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hO9+QIhKNnbK2H6xHCxka7fbjE24hqfIrfECTJM+qhWRIR9a65K9xAMJ07KguRlzB
-	 FXBx3jKv0tcWWZk4bmw+ipYmBNDoCF/+zGhXTSFznGm8MkZ9N6sEQCAZHkrdAcwl53
-	 8lvELKHt58Fc4MvRkuLISo/DWrs2l+xlpxksG47I=
+	b=C0+j+W12kHJmakm9aAidFpMlQoC5mcfXWMo6fKD3T24dH7PgPBY8WTzZvk+44j/yO
+	 LCkS0vsOISkLVhgSPF+1VypNU2/ttqaY9bC6J++XpI3z7vBNZsuPyw+AYTzaCbNiyg
+	 mSwDS5Qe9I+Hao1N7XGViRKueMSg5ZNtHUTzkduo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 242/367] scsi: qla2xxx: Turn off noisy message log
-Date: Wed, 20 Sep 2023 13:30:19 +0200
-Message-ID: <20230920112904.824580962@linuxfoundation.org>
+Subject: [PATCH 5.4 243/367] scsi: qla2xxx: Remove unsupported ql2xenabledif option
+Date: Wed, 20 Sep 2023 13:30:20 +0200
+Message-ID: <20230920112904.848126252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,33 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-commit 8ebaa45163a3fedc885c1dc7d43ea987a2f00a06 upstream.
+commit e9105c4b7a9208a21a9bda133707624f12ddabc2 upstream.
 
-Some consider noisy log as test failure.  Turn off noisy message log.
+User accidently passed module parameter ql2xenabledif=1 which is
+unsupported. However, driver still initialized which lead to guard tag
+errors during device discovery.
+
+Remove unsupported ql2xenabledif=1 option and validate the user input.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-8-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230821130045.34850-7-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_attr.c |    2 --
+ drivers/scsi/qla2xxx/qla_dbg.c  |    2 +-
+ drivers/scsi/qla2xxx/qla_os.c   |    9 +++++++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -577,7 +577,7 @@ static int qla_nvme_post_cmd(struct nvme
- 
- 	rval = qla2x00_start_nvme_mq(sp);
- 	if (rval != QLA_SUCCESS) {
--		ql_log(ql_log_warn, vha, 0x212d,
-+		ql_dbg(ql_dbg_io + ql_dbg_verbose, vha, 0x212d,
- 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -2864,8 +2864,6 @@ qla24xx_vport_create(struct fc_vport *fc
+ 			vha->flags.difdix_supported = 1;
+ 			ql_dbg(ql_dbg_user, vha, 0x7082,
+ 			    "Registered for DIF/DIX type 1 and 3 protection.\n");
+-			if (ql2xenabledif == 1)
+-				prot = SHOST_DIX_TYPE0_PROTECTION;
+ 			scsi_host_set_prot(vha->host,
+ 			    prot | SHOST_DIF_TYPE1_PROTECTION
+ 			    | SHOST_DIF_TYPE2_PROTECTION
+--- a/drivers/scsi/qla2xxx/qla_dbg.c
++++ b/drivers/scsi/qla2xxx/qla_dbg.c
+@@ -22,7 +22,7 @@
+  * | Queue Command and IO tracing |       0x3074       | 0x300b         |
+  * |                              |                    | 0x3027-0x3028  |
+  * |                              |                    | 0x303d-0x3041  |
+- * |                              |                    | 0x302d,0x3033  |
++ * |                              |                    | 0x302e,0x3033  |
+  * |                              |                    | 0x3036,0x3038  |
+  * |                              |                    | 0x303a		|
+  * | DPC Thread                   |       0x4023       | 0x4002,0x4013  |
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -3112,6 +3112,13 @@ qla2x00_probe_one(struct pci_dev *pdev,
+ 	host->max_id = ha->max_fibre_devices;
+ 	host->cmd_per_lun = 3;
+ 	host->unique_id = host->host_no;
++
++	if (ql2xenabledif && ql2xenabledif != 2) {
++		ql_log(ql_log_warn, base_vha, 0x302d,
++		       "Invalid value for ql2xenabledif, resetting it to default (2)\n");
++		ql2xenabledif = 2;
++	}
++
+ 	if (IS_T10_PI_CAPABLE(ha) && ql2xenabledif)
+ 		host->max_cmd_len = 32;
+ 	else
+@@ -3343,8 +3350,6 @@ skip_dpc:
+ 			base_vha->flags.difdix_supported = 1;
+ 			ql_dbg(ql_dbg_init, base_vha, 0x00f1,
+ 			    "Registering for DIF/DIX type 1 and 3 protection.\n");
+-			if (ql2xenabledif == 1)
+-				prot = SHOST_DIX_TYPE0_PROTECTION;
+ 			if (ql2xprotmask)
+ 				scsi_host_set_prot(host, ql2xprotmask);
+ 			else
 
 
