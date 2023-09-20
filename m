@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3030018658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E1EC433C8;
-	Wed, 20 Sep 2023 11:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBCF18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A3EC433C7;
+	Wed, 20 Sep 2023 11:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210546;
-	bh=YvTH9xXpjN2rsZv1vKBZa4qYS2v/3zD6G5z3c6H0yNc=;
+	s=korg; t=1695210548;
+	bh=N905809uA/vQ8nVR4hkN2JcTTbVLm6sYM/+q45008lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4hsRCgXH3Z0Ft1K5fw98tzgRNcFJF8w44pecys/LxTsZEk0bi5aTekvayqXbjY7z
-	 ru/WZGvq/393MG6kuzqGz3jfgKtXVWvP9c2ncsdYBJvoDTZqObkwgLJ2jPK8e/4AKY
-	 H2+vXv6t+VPhGWvgSX+8cNkGk4URMXbnD58F59FE=
+	b=fRfthmVfa875CUJ0zIAqLl71ID9BD5BRWasf3g/up3eqw2O2sifgRqZ47hV2vzAkd
+	 X7k/EmqMVqfCzL4jOMVE2bTqT0MHunp4uqwqG27W1gt0+DSkD4WdrYRxQ9m0Z6q7xr
+	 PoYjDJw97Lzl/kt2d+tCmyBbQzD/QZDRriYq3gjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Chenyuan Mi <michenyuan@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 099/211] PCI: dwc: Provide deinit callback for i.MX
-Date: Wed, 20 Sep 2023 13:29:03 +0200
-Message-ID: <20230920112848.874228723@linuxfoundation.org>
+Subject: [PATCH 6.5 117/211] tools: iio: iio_generic_buffer: Fix some integer type and calculation
+Date: Wed, 20 Sep 2023 13:29:21 +0200
+Message-ID: <20230920112849.422339721@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -43,49 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Chenyuan Mi <michenyuan@huawei.com>
 
-[ Upstream commit fc8b24c28bec19fc0621d108b9ee81ddfdedb25a ]
+[ Upstream commit 49d736313d0975ddeb156f4f59801da833f78b30 ]
 
-The i.MX integration for the DesignWare PCI controller has a _host_exit()
-operation which undoes everything that the _host_init() operation does but
-does not wire this up as the host_deinit callback for the core, or call it
-in any path other than suspend. This means that if we ever unwind the
-initial probe of the device, for example because it fails, the regulator
-core complains that the regulators for the device were left enabled:
+In function size_from_channelarray(), the return value 'bytes' is defined
+as int type. However, the calcution of 'bytes' in this function is designed
+to use the unsigned int type. So it is necessary to change 'bytes' type to
+unsigned int to avoid integer overflow.
 
-imx6q-pcie 33800000.pcie: iATU: unroll T, 4 ob, 4 ib, align 64K, limit 16G
-imx6q-pcie 33800000.pcie: Phy link never came up
-imx6q-pcie 33800000.pcie: Phy link never came up
-imx6q-pcie: probe of 33800000.pcie failed with error -110
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 46 at drivers/regulator/core.c:2396 _regulator_put+0x110/0x128
+The size_from_channelarray() is called in main() function, its return value
+is directly multipled by 'buf_len' and then used as the malloc() parameter.
+The 'buf_len' is completely controllable by user, thus a multiplication
+overflow may occur here. This could allocate an unexpected small area.
 
-Wire up the callback so that the core can clean up after itself.
-
-Link: https://lore.kernel.org/r/20230731-pci-imx-regulator-cleanup-v2-1-fc8fa5c9893d@kernel.org
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
+Link: https://lore.kernel.org/r/20230725092407.62545-1-michenyuan@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/iio/iio_generic_buffer.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 27aaa2a6bf391..a18c20085e940 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1040,6 +1040,7 @@ static void imx6_pcie_host_exit(struct dw_pcie_rp *pp)
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index f8deae4e26a15..44bbf80f0cfdd 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -51,9 +51,9 @@ enum autochan {
+  * Has the side effect of filling the channels[i].location values used
+  * in processing the buffer output.
+  **/
+-static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
++static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ {
+-	int bytes = 0;
++	unsigned int bytes = 0;
+ 	int i = 0;
  
- static const struct dw_pcie_host_ops imx6_pcie_host_ops = {
- 	.host_init = imx6_pcie_host_init,
-+	.host_deinit = imx6_pcie_host_exit,
- };
+ 	while (i < num_channels) {
+@@ -348,7 +348,7 @@ int main(int argc, char **argv)
+ 	ssize_t read_size;
+ 	int dev_num = -1, trig_num = -1;
+ 	char *buffer_access = NULL;
+-	int scan_size;
++	unsigned int scan_size;
+ 	int noevents = 0;
+ 	int notrigger = 0;
+ 	char *dummy;
+@@ -674,7 +674,16 @@ int main(int argc, char **argv)
+ 	}
  
- static const struct dw_pcie_ops dw_pcie_ops = {
+ 	scan_size = size_from_channelarray(channels, num_channels);
+-	data = malloc(scan_size * buf_len);
++
++	size_t total_buf_len = scan_size * buf_len;
++
++	if (scan_size > 0 && total_buf_len / scan_size != buf_len) {
++		ret = -EFAULT;
++		perror("Integer overflow happened when calculate scan_size * buf_len");
++		goto error;
++	}
++
++	data = malloc(total_buf_len);
+ 	if (!data) {
+ 		ret = -ENOMEM;
+ 		goto error;
 -- 
 2.40.1
 
