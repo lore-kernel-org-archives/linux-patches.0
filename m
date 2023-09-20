@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67DE30F8E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6C3C433D9;
-	Wed, 20 Sep 2023 12:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D2830F8E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FDDC433B6;
+	Wed, 20 Sep 2023 12:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212185;
-	bh=jPUTZn8EZ1Ox+QbklQALCrAw5a6WKHoj9EAemuGB4qU=;
+	s=korg; t=1695212188;
+	bh=/0eGUFvhZlgzcqyGR3uO+0rf5VH2ijssEVXagZKnZcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtmN/ZgfPbHk/PC9Cwj6DMRfvRwiCsk7R5Gvn3MccDwDL25URv/ZFmGt9BTfbvDH1
-	 HJiuOe6N40CJ5inSyzoqz9G81cM7eQA+t9/50D8yi1IrC9dXbpa0E8UtKZ1+Ai6J31
-	 7w4byTw+oFZDWEf1n0TSm6dVOrolcCol5FGqcxuM=
+	b=Xl0kLlJ2txChoOwUkmd/kMa49912kbI/forEfb3P5IvndVMqjY/61daywTNO3UM47
+	 qsuhpW2D5DcRNUfeHZKXlAzjB9NosZ+6C43N5MjQnvL+ml9DHgOS8wI62DT9+oD7Sg
+	 nJpdzLcz5efbjaAVqdAjhMcjLmQr8LRrEKGswBSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 4.19 182/273] Revert "PCI: Mark NVIDIA T4 GPUs to avoid bus reset"
-Date: Wed, 20 Sep 2023 13:30:22 +0200
-Message-ID: <20230920112852.138468384@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 4.19 183/273] procfs: block chmod on /proc/thread-self/comm
+Date: Wed, 20 Sep 2023 13:30:23 +0200
+Message-ID: <20230920112852.168453672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -38,42 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 5260bd6d36c83c5b269c33baaaf8c78e520908b0 upstream.
+commit ccf61486fe1e1a48e18c638d1813cda77b3c0737 upstream.
 
-This reverts commit d5af729dc2071273f14cbb94abbc60608142fd83.
+Due to an oversight in commit 1b3044e39a89 ("procfs: fix pthread
+cross-thread naming if !PR_DUMPABLE") in switching from REG to NOD,
+chmod operations on /proc/thread-self/comm were no longer blocked as
+they are on almost all other procfs files.
 
-d5af729dc207 ("PCI: Mark NVIDIA T4 GPUs to avoid bus reset") avoided
-Secondary Bus Reset on the T4 because the reset seemed to not work when the
-T4 was directly attached to a Root Port.
+A very similar situation with /proc/self/environ was used to as a root
+exploit a long time ago, but procfs has SB_I_NOEXEC so this is simply a
+correctness issue.
 
-But NVIDIA thinks the issue is probably related to some issue with the Root
-Port, not with the T4.  The T4 provides neither PM nor FLR reset, so
-masking bus reset compromises this device for assignment scenarios.
-
-Revert d5af729dc207 as requested by Wu Zongyong.  This will leave SBR
-broken in the specific configuration Wu tested, as it was in v6.5, so Wu
-will debug that further.
-
-Link: https://lore.kernel.org/r/ZPqMCDWvITlOLHgJ@wuzongyong-alibaba
-Link: https://lore.kernel.org/r/20230908201104.GA305023@bhelgaas
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Ref: https://lwn.net/Articles/191954/
+Ref: 6d76fa58b050 ("Don't allow chmod() on the /proc/<pid>/ files")
+Fixes: 1b3044e39a89 ("procfs: fix pthread cross-thread naming if !PR_DUMPABLE")
+Cc: stable@vger.kernel.org # v4.7+
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Message-Id: <20230713141001.27046-1-cyphar@cyphar.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/base.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3472,7 +3472,7 @@ static void quirk_no_bus_reset(struct pc
-  */
- static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
- {
--	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
-+	if ((dev->device & 0xffc0) == 0x2340)
- 		quirk_no_bus_reset(dev);
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -3338,7 +3338,8 @@ static int proc_tid_comm_permission(stru
  }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
+ 
+ static const struct inode_operations proc_tid_comm_inode_operations = {
+-		.permission = proc_tid_comm_permission,
++		.setattr	= proc_setattr,
++		.permission	= proc_tid_comm_permission,
+ };
+ 
+ /*
 
 
