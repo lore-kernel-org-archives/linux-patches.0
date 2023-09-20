@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85E015AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF92C433CD;
-	Wed, 20 Sep 2023 12:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B715AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A61BC433C8;
+	Wed, 20 Sep 2023 12:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213572;
-	bh=4V8cky9ZelKUpPtbm6xqKJwiUmgfSeCAF08s8EMgBOs=;
+	s=korg; t=1695213575;
+	bh=BFmgQJEn5ehyFGwlROwpPYE7ioqRGencUceXcwzuIgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFH63XhQeC1Mi4n2pRBJqiLd7B2m0u/ensMcUgnIfi2Ksgr1CX1kXgv4kQu17qR9B
-	 pLJJ2ny4vDBUkKlKGGA0b35Qs8etd9VFII4MppPFH5f/Md3twQNV+R5L3m4SNbam9R
-	 IVYKbRjRjzHPDPnZklsjjm1kpvXuYD5CCV6JVfrk=
+	b=xL4ZzCXViDxGsioJs0bjyIm+jLv8THCRTR+Dft2oBoR8SEjY41elmZfHAT0E+byTg
+	 7kjLkKAA3orCv6hxtOXMHJkBTrf+5effS7Z02pBxmsIKjbcmBDQQfKn/w4klFf5Lgv
+	 myJMq/CLn1F9hVgGmqgvpRek1KOeZNjw6vAGCEcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 286/367] mtd: rawnand: brcmnand: Fix potential false time out warning
-Date: Wed, 20 Sep 2023 13:31:03 +0200
-Message-ID: <20230920112905.967102883@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.4 287/367] perf hists browser: Fix hierarchy mode header
+Date: Wed, 20 Sep 2023 13:31:04 +0200
+Message-ID: <20230920112905.990419459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,42 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit 9cc0a598b944816f2968baf2631757f22721b996 upstream.
+commit e2cabf2a44791f01c21f8d5189b946926e34142e upstream.
 
-If system is busy during the command status polling function, the driver
-may not get the chance to poll the status register till the end of time
-out and return the premature status.  Do a final check after time out
-happens to ensure reading the correct status.
+The commit ef9ff6017e3c4593 ("perf ui browser: Move the extra title
+lines from the hists browser") introduced ui_browser__gotorc_title() to
+help moving non-title lines easily.  But it missed to update the title
+for the hierarchy mode so it won't print the header line on TUI at all.
 
-Fixes: 9d2ee0a60b8b ("mtd: nand: brcmnand: Check flash #WP pin status before nand erase/program")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+  $ perf report --hierarchy
+
+Fixes: ef9ff6017e3c4593 ("perf ui browser: Move the extra title lines from the hists browser")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-3-william.zhang@broadcom.com
+Link: https://lore.kernel.org/r/20230731094934.1616495-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/ui/browsers/hists.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -891,6 +891,14 @@ static int bcmnand_ctrl_poll_status(stru
- 		cpu_relax();
- 	} while (time_after(limit, jiffies));
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -1718,7 +1718,7 @@ static void hists_browser__hierarchy_hea
+ 	hists_browser__scnprintf_hierarchy_headers(browser, headers,
+ 						   sizeof(headers));
  
-+	/*
-+	 * do a final check after time out in case the CPU was busy and the driver
-+	 * did not get enough time to perform the polling to avoid false alarms
-+	 */
-+	val = brcmnand_read_reg(ctrl, BRCMNAND_INTFC_STATUS);
-+	if ((val & mask) == expected_val)
-+		return 0;
-+
- 	dev_warn(ctrl->dev, "timeout on status poll (expected %x got %x)\n",
- 		 expected_val, val & mask);
- 
+-	ui_browser__gotorc(&browser->b, 0, 0);
++	ui_browser__gotorc_title(&browser->b, 0, 0);
+ 	ui_browser__set_color(&browser->b, HE_COLORSET_ROOT);
+ 	ui_browser__write_nstring(&browser->b, headers, browser->b.width + 1);
+ }
 
 
