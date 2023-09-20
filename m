@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3C11723
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B696C433C9;
-	Wed, 20 Sep 2023 12:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D83C11723
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1DFC433C9;
+	Wed, 20 Sep 2023 12:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213956;
-	bh=UQxTvHP1g7PqxOIhHijnwYsTdlhP/4ywSrAtYlwOC7U=;
+	s=korg; t=1695213959;
+	bh=wdwsQ9L3dQEHUAdfxZeIO++k+zRk0FkiDUjGk+rxeGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=en9XMy/QuxDfJOWjjN1t0S3WoRvCakCkwscfuK+siHjd0WQm8Gmmfv/tJo1ks2tQv
-	 7ZDPE5i9nOXx5esIn9dWPBnrxOkyhc1t+WY75TiR2iHY2a1b7nNMhUny+22J/JDLFt
-	 vT4lKeLNZqlaZByIEzR6JjtVQmt2+LMk9xox2yqI=
+	b=Wr/XipcixH09NVeA5HnCgmZLia7Cpj/CZAZu7loLHYszMJHcFyy4omfSd7POGf8er
+	 RNl+mEFu+W5GAQw3DzvAjHyBCCWja9VRkSAC9gG/DrYFPPwhgbmMrCGYg3mAkoZAo5
+	 4lMxjVbnpoNUClUwCJUJgQUFIwsYs+venx5aapv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Tuo Li <islituo@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Inki Dae <inki.dae@samsung.com>,
+	Nishanth Menon <nm@ti.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/110] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
-Date: Wed, 20 Sep 2023 13:31:32 +0200
-Message-ID: <20230920112831.643616448@linuxfoundation.org>
+Subject: [PATCH 5.15 035/110] bus: ti-sysc: Configure uart quirks for k3 SoC
+Date: Wed, 20 Sep 2023 13:31:33 +0200
+Message-ID: <20230920112831.681484875@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -42,58 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 2e63972a2de14482d0eae1a03a73e379f1c3f44c ]
+[ Upstream commit 03a711d3cb83692733f865312f49e665c49de6de ]
 
-The variable crtc->state->event is often protected by the lock
-crtc->dev->event_lock when is accessed. However, it is accessed as a
-condition of an if statement in exynos_drm_crtc_atomic_disable() without
-holding the lock:
+Enable the uart quirks similar to the earlier SoCs. Let's assume we are
+likely going to need a k3 specific quirk mask separate from the earlier
+SoCs, so let's not start changing the revision register mask at this point.
 
-  if (crtc->state->event && !crtc->state->active)
+Note that SYSC_QUIRK_LEGACY_IDLE will be needed until we can remove the
+need for pm_runtime_irq_safe() from 8250_omap driver.
 
-However, if crtc->state->event is changed to NULL by another thread right
-after the conditions of the if statement is checked to be true, a
-null-pointer dereference can occur in drm_crtc_send_vblank_event():
-
-  e->pipe = pipe;
-
-To fix this possible null-pointer dereference caused by data race, the
-spin lock coverage is extended to protect the if statement as well as the
-function call to drm_crtc_send_vblank_event().
-
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Link: https://sites.google.com/view/basscheck/home
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Added relevant link.
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reviewed-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_crtc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/bus/ti-sysc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_crtc.c b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
-index 4153f302de7c4..d19e796c20613 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_crtc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
-@@ -39,13 +39,12 @@ static void exynos_drm_crtc_atomic_disable(struct drm_crtc *crtc,
- 	if (exynos_crtc->ops->atomic_disable)
- 		exynos_crtc->ops->atomic_disable(exynos_crtc);
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 436c0f3563d79..74ab6cf031ce0 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -1504,6 +1504,8 @@ static const struct sysc_revision_quirk sysc_revision_quirks[] = {
+ 		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
+ 		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
++		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
  
-+	spin_lock_irq(&crtc->dev->event_lock);
- 	if (crtc->state->event && !crtc->state->active) {
--		spin_lock_irq(&crtc->dev->event_lock);
- 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
--		spin_unlock_irq(&crtc->dev->event_lock);
--
- 		crtc->state->event = NULL;
- 	}
-+	spin_unlock_irq(&crtc->dev->event_lock);
- }
- 
- static int exynos_crtc_atomic_check(struct drm_crtc *crtc,
+ 	/* Quirks that need to be set based on the module address */
+ 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
 -- 
 2.40.1
 
