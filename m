@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BB91863D
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E84EC433CA;
-	Wed, 20 Sep 2023 12:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4530FB3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F6EC433C7;
+	Wed, 20 Sep 2023 12:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213904;
-	bh=v+3RWqPIZ9zuEUFN4V0QrXGp458u+4nIHxYjv8i9Zkk=;
+	s=korg; t=1695213907;
+	bh=BsYAV/1TmzRVvPx5qZd6SLIwE7LEU6TEGDu/2g1MO34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lP1uBGM+zDvBLCihp9t3bj3WANx/UooEzd8YR7T7YZlnp+WBBRxFNX4bG1VSaWDxA
-	 B5tH238KRObUfuq6+1so2jgLa7kiA8+TmR06yVqv2S2RDmGvKQIu2T26+9C0HXIx1N
-	 Ih/OsKMhMRlbbOH7dcRLp20yYqWaRT7Z73MjIAj8=
+	b=LEXrwnpGFu+n8T4aP8oc/1fY+3bDIpRaoFjoFCO0jBjuUenN/I0s4yoE3fH18gBK7
+	 j6Ud42IiiZEN3ZA6oaYvfsvm+9U2/XOGuVhH/j+LV3JlbR+qSGAfM3WI8x44Lu3cf9
+	 A90ZHZWeSkGJ7niE5b3tI43HRUGPhPW8h3EyuEjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/110] powerpc/pseries: fix possible memory leak in ibmebus_bus_init()
-Date: Wed, 20 Sep 2023 13:31:39 +0200
-Message-ID: <20230920112831.899826414@linuxfoundation.org>
+Subject: [PATCH 5.15 042/110] PCI: fu740: Set the number of MSI vectors
+Date: Wed, 20 Sep 2023 13:31:40 +0200
+Message-ID: <20230920112831.937015136@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,37 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-[ Upstream commit afda85b963c12947e298ad85d757e333aa40fd74 ]
+[ Upstream commit 551a60e1225e71fff8efd9390204c505b0870e0f ]
 
-If device_register() returns error in ibmebus_bus_init(), name of kobject
-which is allocated in dev_set_name() called in device_add() is leaked.
+The iMSI-RX module of the DW PCIe controller provides multiple sets of
+MSI_CTRL_INT_i_* registers, and each set is capable of handling 32 MSI
+interrupts. However, the fu740 PCIe controller driver only enabled one set
+of MSI_CTRL_INT_i_* registers, as the total number of supported interrupts
+was not specified.
 
-As comment of device_add() says, it should call put_device() to drop
-the reference count that was set in device_initialize() when it fails,
-so the name can be freed in kobject_cleanup().
+Set the supported number of MSI vectors to enable all the MSI_CTRL_INT_i_*
+registers on the fu740 PCIe core, allowing the system to fully utilize the
+available MSI interrupts.
 
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20221110011929.3709774-1-ruanjinjie@huawei.com
+Link: https://lore.kernel.org/r/20230807055621.2431-1-yongxuan.wang@sifive.com
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/ibmebus.c | 1 +
+ drivers/pci/controller/dwc/pcie-fu740.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/pseries/ibmebus.c b/arch/powerpc/platforms/pseries/ibmebus.c
-index 7ee3ed7d6cc21..6936ffee253b2 100644
---- a/arch/powerpc/platforms/pseries/ibmebus.c
-+++ b/arch/powerpc/platforms/pseries/ibmebus.c
-@@ -451,6 +451,7 @@ static int __init ibmebus_bus_init(void)
- 	if (err) {
- 		printk(KERN_WARNING "%s: device_register returned %i\n",
- 		       __func__, err);
-+		put_device(&ibmebus_bus_device);
- 		bus_unregister(&ibmebus_bus_type);
+diff --git a/drivers/pci/controller/dwc/pcie-fu740.c b/drivers/pci/controller/dwc/pcie-fu740.c
+index 78d002be4f821..f6c71c1b657b6 100644
+--- a/drivers/pci/controller/dwc/pcie-fu740.c
++++ b/drivers/pci/controller/dwc/pcie-fu740.c
+@@ -301,6 +301,7 @@ static int fu740_pcie_probe(struct platform_device *pdev)
+ 	pci->dev = dev;
+ 	pci->ops = &dw_pcie_ops;
+ 	pci->pp.ops = &fu740_pcie_host_ops;
++	pci->pp.num_vectors = MAX_MSI_IRQS;
  
- 		return err;
+ 	/* SiFive specific region: mgmt */
+ 	afp->mgmt_base = devm_platform_ioremap_resource_byname(pdev, "mgmt");
 -- 
 2.40.1
 
