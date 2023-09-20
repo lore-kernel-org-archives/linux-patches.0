@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868A8154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06888C43391;
-	Wed, 20 Sep 2023 12:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52230154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B13C433CC;
+	Wed, 20 Sep 2023 12:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212177;
-	bh=UYGpmW7MglKjJKy02JcARy33fXXhfBKkoRbEuNzyyrM=;
+	s=korg; t=1695212180;
+	bh=p1Sk8sOljXAkaLYWCR0AqUFcYd9AYpN7HowjRf0Ez3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLbgzn1sMQhakgBi+de7J/Un+9cidJvgoGOrurUo3j/XikIpRz3yGJVNoTi1146pw
-	 +ubvHvhWtvX+1vVMPr7ynVOzMHZW7T3x6EtrenNfivvShm7a1skm8wH1KYEaZUqYVp
-	 JUci+ZvpkyFond1M46cPc9VPYdZazQJHSDvog4A8=
+	b=XiPJXNJpOLMJzoAuiImMVd4mU7Rt8w8FE0Sl5OjZrIz2nlm9BMKjJHVu7WjDJTvAT
+	 BrXQ/XJRhKaGYEdpVw/kEpmZNYNF2tCCO3qLmj9yKOk/BBID6MWhwbft4uJ4g8RXk0
+	 6Im+CuIVpl0g9V1VHw9Qt/TvhCVX+PDAuSfHfeo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 4.19 179/273] ntb: Drop packets when qp link is down
-Date: Wed, 20 Sep 2023 13:30:19 +0200
-Message-ID: <20230920112852.047979042@linuxfoundation.org>
+Subject: [PATCH 4.19 180/273] ntb: Clean up tx tail index on link down
+Date: Wed, 20 Sep 2023 13:30:20 +0200
+Message-ID: <20230920112852.077577556@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -43,14 +43,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-commit f195a1a6fe416882984f8bd6c61afc1383171860 upstream.
+commit cc79bd2738c2d40aba58b2be6ce47dc0e471df0e upstream.
 
-Currently when the transport receive packets after netdev has closed the
-transport returns error and triggers tx errors to be incremented and
-carrier to be stopped. There is no reason to return error if the device is
-already closed. Drop the packet and return 0.
+The tx tail index is not reset when the link goes down. This causes the
+tail index to go out of sync when the link goes down and comes back up.
+Refactor the ntb_qp_link_down_reset() and reset the tail index as well.
 
-Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
+Fixes: 2849b5d70641 ("NTB: Reset transport QP link stats on down")
 Reported-by: Yuan Y Lu <yuan.y.lu@intel.com>
 Tested-by: Yuan Y Lu <yuan.y.lu@intel.com>
 Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
@@ -58,25 +57,42 @@ Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/ntb/ntb_transport.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 --- a/drivers/ntb/ntb_transport.c
 +++ b/drivers/ntb/ntb_transport.c
-@@ -2046,9 +2046,13 @@ int ntb_transport_tx_enqueue(struct ntb_
- 	struct ntb_queue_entry *entry;
- 	int rc;
+@@ -746,7 +746,7 @@ static int ntb_set_mw(struct ntb_transpo
+ 	return 0;
+ }
  
--	if (!qp || !qp->link_is_up || !len)
-+	if (!qp || !len)
- 		return -EINVAL;
+-static void ntb_qp_link_down_reset(struct ntb_transport_qp *qp)
++static void ntb_qp_link_context_reset(struct ntb_transport_qp *qp)
+ {
+ 	qp->link_is_up = false;
+ 	qp->active = false;
+@@ -769,6 +769,13 @@ static void ntb_qp_link_down_reset(struc
+ 	qp->tx_async = 0;
+ }
  
-+	/* If the qp link is down already, just ignore. */
-+	if (!qp->link_is_up)
-+		return 0;
++static void ntb_qp_link_down_reset(struct ntb_transport_qp *qp)
++{
++	ntb_qp_link_context_reset(qp);
++	if (qp->remote_rx_info)
++		qp->remote_rx_info->entry = qp->rx_max_entry - 1;
++}
 +
- 	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
- 	if (!entry) {
- 		qp->tx_err_no_buf++;
+ static void ntb_qp_link_cleanup(struct ntb_transport_qp *qp)
+ {
+ 	struct ntb_transport_ctx *nt = qp->transport;
+@@ -993,7 +1000,7 @@ static int ntb_transport_init_queue(stru
+ 	qp->ndev = nt->ndev;
+ 	qp->client_ready = false;
+ 	qp->event_handler = NULL;
+-	ntb_qp_link_down_reset(qp);
++	ntb_qp_link_context_reset(qp);
+ 
+ 	if (mw_num < qp_count % mw_count)
+ 		num_qps_mw = qp_count / mw_count + 1;
 
 
