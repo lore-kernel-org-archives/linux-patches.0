@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF432AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DACC433C9;
-	Wed, 20 Sep 2023 11:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EAD2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B54FC433C8;
+	Wed, 20 Sep 2023 11:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211122;
-	bh=jEkmRgrxL4eyscqYepN32fkq01BvRbyXhKlHFHkV6t4=;
+	s=korg; t=1695211125;
+	bh=aFR01g0lApi+LO3K6AZfOKH8Fn9vyqgEQaKbgUDA+9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpZkiv0vJQOurpvtCw2pK/8BSQN5kbBrDfoS0zbCGQSzU2WqqapO3GPro49bsuqho
-	 4gpDmcXpqQ7YwiZMwL9En2Aehe0DtNZHfqBmr1O5vpPCxxsxRiLS8PdXwgoBR9koq7
-	 u7pfgyHjRl0R1QL2CFW8uII615MsMON2uzMEXtss=
+	b=f2RJ2hu0EtOj8ge472k8I9VQordlTSMU/E/+YwTxdz4lSOumgPVpKS1qnxWWQbLv+
+	 PlY9skrWLqC0B4n1A/5R6zThIIhhZGeetSzNrH1GFzqldmOMFlbfOzBkm5sU7QjjxK
+	 T8WhdOLVqQTf+uG1E4q7L5phTyAyoQNh77Z1sGko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 117/139] dm: dont attempt to queue IO under RCU protection
-Date: Wed, 20 Sep 2023 13:30:51 +0200
-Message-ID: <20230920112839.921638286@linuxfoundation.org>
+	syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 118/139] btrfs: fix lockdep splat and potential deadlock after failure running delayed items
+Date: Wed, 20 Sep 2023 13:30:52 +0200
+Message-ID: <20230920112839.965961468@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -39,180 +40,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit a9ce385344f916cd1c36a33905e564f5581beae9 upstream.
+commit e110f8911ddb93e6f55da14ccbbe705397b30d0b upstream.
 
-dm looks up the table for IO based on the request type, with an
-assumption that if the request is marked REQ_NOWAIT, it's fine to
-attempt to submit that IO while under RCU read lock protection. This
-is not OK, as REQ_NOWAIT just means that we should not be sleeping
-waiting on other IO, it does not mean that we can't potentially
-schedule.
+When running delayed items we are holding a delayed node's mutex and then
+we will attempt to modify a subvolume btree to insert/update/delete the
+delayed items. However if have an error during the insertions for example,
+btrfs_insert_delayed_items() may return with a path that has locked extent
+buffers (a leaf at the very least), and then we attempt to release the
+delayed node at __btrfs_run_delayed_items(), which requires taking the
+delayed node's mutex, causing an ABBA type of deadlock. This was reported
+by syzbot and the lockdep splat is the following:
 
-A simple test case demonstrates this quite nicely:
+  WARNING: possible circular locking dependency detected
+  6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0 Not tainted
+  ------------------------------------------------------
+  syz-executor.2/13257 is trying to acquire lock:
+  ffff88801835c0c0 (&delayed_node->mutex){+.+.}-{3:3}, at: __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
 
-int main(int argc, char *argv[])
-{
-        struct iovec iov;
-        int fd;
+  but task is already holding lock:
+  ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
 
-        fd = open("/dev/dm-0", O_RDONLY | O_DIRECT);
-        posix_memalign(&iov.iov_base, 4096, 4096);
-        iov.iov_len = 4096;
-        preadv2(fd, &iov, 1, 0, RWF_NOWAIT);
-        return 0;
-}
+  which lock already depends on the new lock.
 
-which will instantly spew:
+  the existing dependency chain (in reverse order) is:
 
-BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 5580, name: dm-nowait
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-INFO: lockdep is turned off.
-CPU: 7 PID: 5580 Comm: dm-nowait Not tainted 6.6.0-rc1-g39956d2dcd81 #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x11d/0x1b0
- __might_resched+0x3c3/0x5e0
- ? preempt_count_sub+0x150/0x150
- mempool_alloc+0x1e2/0x390
- ? mempool_resize+0x7d0/0x7d0
- ? lock_sync+0x190/0x190
- ? lock_release+0x4b7/0x670
- ? internal_get_user_pages_fast+0x868/0x2d40
- bio_alloc_bioset+0x417/0x8c0
- ? bvec_alloc+0x200/0x200
- ? internal_get_user_pages_fast+0xb8c/0x2d40
- bio_alloc_clone+0x53/0x100
- dm_submit_bio+0x27f/0x1a20
- ? lock_release+0x4b7/0x670
- ? blk_try_enter_queue+0x1a0/0x4d0
- ? dm_dax_direct_access+0x260/0x260
- ? rcu_is_watching+0x12/0xb0
- ? blk_try_enter_queue+0x1cc/0x4d0
- __submit_bio+0x239/0x310
- ? __bio_queue_enter+0x700/0x700
- ? kvm_clock_get_cycles+0x40/0x60
- ? ktime_get+0x285/0x470
- submit_bio_noacct_nocheck+0x4d9/0xb80
- ? should_fail_request+0x80/0x80
- ? preempt_count_sub+0x150/0x150
- ? lock_release+0x4b7/0x670
- ? __bio_add_page+0x143/0x2d0
- ? iov_iter_revert+0x27/0x360
- submit_bio_noacct+0x53e/0x1b30
- submit_bio_wait+0x10a/0x230
- ? submit_bio_wait_endio+0x40/0x40
- __blkdev_direct_IO_simple+0x4f8/0x780
- ? blkdev_bio_end_io+0x4c0/0x4c0
- ? stack_trace_save+0x90/0xc0
- ? __bio_clone+0x3c0/0x3c0
- ? lock_release+0x4b7/0x670
- ? lock_sync+0x190/0x190
- ? atime_needs_update+0x3bf/0x7e0
- ? timestamp_truncate+0x21b/0x2d0
- ? inode_owner_or_capable+0x240/0x240
- blkdev_direct_IO.part.0+0x84a/0x1810
- ? rcu_is_watching+0x12/0xb0
- ? lock_release+0x4b7/0x670
- ? blkdev_read_iter+0x40d/0x530
- ? reacquire_held_locks+0x4e0/0x4e0
- ? __blkdev_direct_IO_simple+0x780/0x780
- ? rcu_is_watching+0x12/0xb0
- ? __mark_inode_dirty+0x297/0xd50
- ? preempt_count_add+0x72/0x140
- blkdev_read_iter+0x2a4/0x530
- do_iter_readv_writev+0x2f2/0x3c0
- ? generic_copy_file_range+0x1d0/0x1d0
- ? fsnotify_perm.part.0+0x25d/0x630
- ? security_file_permission+0xd8/0x100
- do_iter_read+0x31b/0x880
- ? import_iovec+0x10b/0x140
- vfs_readv+0x12d/0x1a0
- ? vfs_iter_read+0xb0/0xb0
- ? rcu_is_watching+0x12/0xb0
- ? rcu_is_watching+0x12/0xb0
- ? lock_release+0x4b7/0x670
- do_preadv+0x1b3/0x260
- ? do_readv+0x370/0x370
- __x64_sys_preadv2+0xef/0x150
- do_syscall_64+0x39/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f5af41ad806
-Code: 41 54 41 89 fc 55 44 89 c5 53 48 89 cb 48 83 ec 18 80 3d e4 dd 0d 00 00 74 7a 45 89 c1 49 89 ca 45 31 c0 b8 47 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 be 00 00 00 48 85 c0 79 4a 48 8b 0d da 55
-RSP: 002b:00007ffd3145c7f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000147
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5af41ad806
-RDX: 0000000000000001 RSI: 00007ffd3145c850 RDI: 0000000000000003
-RBP: 0000000000000008 R08: 0000000000000000 R09: 0000000000000008
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-R13: 00007ffd3145c850 R14: 000055f5f0431dd8 R15: 0000000000000001
- </TASK>
+  -> #1 (btrfs-tree-00){++++}-{3:3}:
+         __lock_release kernel/locking/lockdep.c:5475 [inline]
+         lock_release+0x36f/0x9d0 kernel/locking/lockdep.c:5781
+         up_write+0x79/0x580 kernel/locking/rwsem.c:1625
+         btrfs_tree_unlock_rw fs/btrfs/locking.h:189 [inline]
+         btrfs_unlock_up_safe+0x179/0x3b0 fs/btrfs/locking.c:239
+         search_leaf fs/btrfs/ctree.c:1986 [inline]
+         btrfs_search_slot+0x2511/0x2f80 fs/btrfs/ctree.c:2230
+         btrfs_insert_empty_items+0x9c/0x180 fs/btrfs/ctree.c:4376
+         btrfs_insert_delayed_item fs/btrfs/delayed-inode.c:746 [inline]
+         btrfs_insert_delayed_items fs/btrfs/delayed-inode.c:824 [inline]
+         __btrfs_commit_inode_delayed_items+0xd24/0x2410 fs/btrfs/delayed-inode.c:1111
+         __btrfs_run_delayed_items+0x1db/0x430 fs/btrfs/delayed-inode.c:1153
+         flush_space+0x269/0xe70 fs/btrfs/space-info.c:723
+         btrfs_async_reclaim_metadata_space+0x106/0x350 fs/btrfs/space-info.c:1078
+         process_one_work+0x92c/0x12c0 kernel/workqueue.c:2600
+         worker_thread+0xa63/0x1210 kernel/workqueue.c:2751
+         kthread+0x2b8/0x350 kernel/kthread.c:389
+         ret_from_fork+0x2e/0x60 arch/x86/kernel/process.c:145
+         ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-where in fact it is dm itself that attempts to allocate a bio clone with
-GFP_NOIO under the rcu read lock, regardless of the request type.
+  -> #0 (&delayed_node->mutex){+.+.}-{3:3}:
+         check_prev_add kernel/locking/lockdep.c:3142 [inline]
+         check_prevs_add kernel/locking/lockdep.c:3261 [inline]
+         validate_chain kernel/locking/lockdep.c:3876 [inline]
+         __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
+         lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
+         __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
+         __mutex_lock kernel/locking/mutex.c:747 [inline]
+         mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
+         __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
+         btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
+         __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
+         btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
+         btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
+         vfs_fsync_range fs/sync.c:188 [inline]
+         vfs_fsync fs/sync.c:202 [inline]
+         do_fsync fs/sync.c:212 [inline]
+         __do_sys_fsync fs/sync.c:220 [inline]
+         __se_sys_fsync fs/sync.c:218 [inline]
+         __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+         do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+         do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+         entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix this by getting rid of the special casing for REQ_NOWAIT, and just
-use the normal SRCU protected table lookup. Get rid of the bio based
-table locking helpers at the same time, as they are now unused.
+  other info that might help us debug this:
 
-Cc: stable@vger.kernel.org
-Fixes: 563a225c9fd2 ("dm: introduce dm_{get,put}_live_table_bio called from dm_submit_bio")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+   Possible unsafe locking scenario:
+
+         CPU0                    CPU1
+         ----                    ----
+    lock(btrfs-tree-00);
+                                 lock(&delayed_node->mutex);
+                                 lock(btrfs-tree-00);
+    lock(&delayed_node->mutex);
+
+   *** DEADLOCK ***
+
+  3 locks held by syz-executor.2/13257:
+   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: spin_unlock include/linux/spinlock.h:391 [inline]
+   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: join_transaction+0xb87/0xe00 fs/btrfs/transaction.c:287
+   #1: ffff88802c1ee398 (btrfs_trans_num_extwriters){++++}-{0:0}, at: join_transaction+0xbb2/0xe00 fs/btrfs/transaction.c:288
+   #2: ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
+
+  stack backtrace:
+  CPU: 0 PID: 13257 Comm: syz-executor.2 Not tainted 6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+  Call Trace:
+   <TASK>
+   __dump_stack lib/dump_stack.c:88 [inline]
+   dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+   check_noncircular+0x375/0x4a0 kernel/locking/lockdep.c:2195
+   check_prev_add kernel/locking/lockdep.c:3142 [inline]
+   check_prevs_add kernel/locking/lockdep.c:3261 [inline]
+   validate_chain kernel/locking/lockdep.c:3876 [inline]
+   __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
+   lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
+   __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
+   __mutex_lock kernel/locking/mutex.c:747 [inline]
+   mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
+   __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
+   btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
+   __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
+   btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
+   btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
+   vfs_fsync_range fs/sync.c:188 [inline]
+   vfs_fsync fs/sync.c:202 [inline]
+   do_fsync fs/sync.c:212 [inline]
+   __do_sys_fsync fs/sync.c:220 [inline]
+   __se_sys_fsync fs/sync.c:218 [inline]
+   __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+   do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7f3ad047cae9
+  Code: 28 00 00 00 75 (...)
+  RSP: 002b:00007f3ad12510c8 EFLAGS: 00000246 ORIG_RAX: 000000000000004a
+  RAX: ffffffffffffffda RBX: 00007f3ad059bf80 RCX: 00007f3ad047cae9
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f3ad04c847a R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 000000000000000b R14: 00007f3ad059bf80 R15: 00007ffe56af92f8
+   </TASK>
+  ------------[ cut here ]------------
+
+Fix this by releasing the path before releasing the delayed node in the
+error path at __btrfs_run_delayed_items().
+
+Reported-by: syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000abba27060403b5bd@google.com/
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ fs/btrfs/delayed-inode.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -707,24 +707,6 @@ static void dm_put_live_table_fast(struc
- 	rcu_read_unlock();
- }
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1148,20 +1148,33 @@ static int __btrfs_run_delayed_items(str
+ 		ret = __btrfs_commit_inode_delayed_items(trans, path,
+ 							 curr_node);
+ 		if (ret) {
+-			btrfs_release_delayed_node(curr_node);
+-			curr_node = NULL;
+ 			btrfs_abort_transaction(trans, ret);
+ 			break;
+ 		}
  
--static inline struct dm_table *dm_get_live_table_bio(struct mapped_device *md,
--					int *srcu_idx, blk_opf_t bio_opf)
--{
--	if (bio_opf & REQ_NOWAIT)
--		return dm_get_live_table_fast(md);
--	else
--		return dm_get_live_table(md, srcu_idx);
--}
--
--static inline void dm_put_live_table_bio(struct mapped_device *md, int srcu_idx,
--					 blk_opf_t bio_opf)
--{
--	if (bio_opf & REQ_NOWAIT)
--		dm_put_live_table_fast(md);
--	else
--		dm_put_live_table(md, srcu_idx);
--}
--
- static char *_dm_claim_ptr = "I belong to device-mapper";
+ 		prev_node = curr_node;
+ 		curr_node = btrfs_next_delayed_node(curr_node);
++		/*
++		 * See the comment below about releasing path before releasing
++		 * node. If the commit of delayed items was successful the path
++		 * should always be released, but in case of an error, it may
++		 * point to locked extent buffers (a leaf at the very least).
++		 */
++		ASSERT(path->nodes[0] == NULL);
+ 		btrfs_release_delayed_node(prev_node);
+ 	}
  
- /*
-@@ -1805,9 +1787,8 @@ static void dm_submit_bio(struct bio *bi
- 	struct mapped_device *md = bio->bi_bdev->bd_disk->private_data;
- 	int srcu_idx;
- 	struct dm_table *map;
--	blk_opf_t bio_opf = bio->bi_opf;
++	/*
++	 * Release the path to avoid a potential deadlock and lockdep splat when
++	 * releasing the delayed node, as that requires taking the delayed node's
++	 * mutex. If another task starts running delayed items before we take
++	 * the mutex, it will first lock the mutex and then it may try to lock
++	 * the same btree path (leaf).
++	 */
++	btrfs_free_path(path);
++
+ 	if (curr_node)
+ 		btrfs_release_delayed_node(curr_node);
+-	btrfs_free_path(path);
+ 	trans->block_rsv = block_rsv;
  
--	map = dm_get_live_table_bio(md, &srcu_idx, bio_opf);
-+	map = dm_get_live_table(md, &srcu_idx);
- 
- 	/* If suspended, or map not yet available, queue this IO for later */
- 	if (unlikely(test_bit(DMF_BLOCK_IO_FOR_SUSPEND, &md->flags)) ||
-@@ -1823,7 +1804,7 @@ static void dm_submit_bio(struct bio *bi
- 
- 	dm_split_and_process_bio(md, map, bio);
- out:
--	dm_put_live_table_bio(md, srcu_idx, bio_opf);
-+	dm_put_live_table(md, srcu_idx);
- }
- 
- static bool dm_poll_dm_io(struct dm_io *io, struct io_comp_batch *iob,
+ 	return ret;
 
 
