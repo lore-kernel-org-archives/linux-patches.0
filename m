@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3351E154AF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A3DC433C7;
-	Wed, 20 Sep 2023 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC49154AF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65628C433C7;
+	Wed, 20 Sep 2023 11:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210350;
-	bh=GQVZdh9CKGEKKW5upq3Fk9yE5Y37ja9w1lXN2Jo55Tk=;
+	s=korg; t=1695210352;
+	bh=yd4QTJU1J8N/7xVkq53RUwDD5ps+UrpG7gPiQB0UiRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Ul+lfk6ITWm3H0nR+uya7DN51TutSCjhn5lhBX+anseyCX38O7jF9Ry27b1TkSQL
-	 bfRENpRBYjrT6B4HDkKq0U6AFNUEvn+xbZ7XtdnuUmv7dIQ8iwKFjO34aKvDlrBiJ1
-	 itzA0lLlYzd81iEPll59Y7ZQ4jPsgfYUKHUFFRyQ=
+	b=yxvTdwVRyRWnRddajl1psRiwrlsXq27jqq5pnh+tzhpIkHK+u+0v3hX6ca0//RPNG
+	 Pwaddfek5+yUBFRxfZOMJoFtJ3sMzmeD6zj/zrolQBkr6Q3lHAAF+LAjETa0/oDelE
+	 YEAOPUNaeHvJOp0QYYLeb3YSIbHxWtV5Sy4xUV6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Gammans <rgammans@gammascience.co.uk>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 045/211] Bluetooth: btusb: Add support for another MediaTek 7922 VID/PID
-Date: Wed, 20 Sep 2023 13:28:09 +0200
-Message-ID: <20230920112847.185984024@linuxfoundation.org>
+Subject: [PATCH 6.5 028/211] wifi: ath9k: fix printk specifier
+Date: Wed, 20 Sep 2023 13:27:52 +0200
+Message-ID: <20230920112846.672830342@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -34,82 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Gammans <rgammans@gammascience.co.uk>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit 0cefdaed944d1617852762ff1f66364199cf5d7d ]
+[ Upstream commit 061115fbfb2ce5870c9a004d68dc63138c07c782 ]
 
-This one is found on the Dell Inspiron 2-in-1 7435
+Smatch reports:
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+ath_pci_probe() warn: argument 4 to %lx specifier is cast from pointer
+ath_ahb_probe() warn: argument 4 to %lx specifier is cast from pointer
 
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0f1 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+Fix it by modifying %lx to %p in the printk format string.
 
-Signed-off-by: Roger Gammans <rgammans@gammascience.co.uk>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Note that with this change, the pointer address will be printed as a
+hashed value by default. This is appropriate because the kernel
+should not leak kernel pointers to user space in an informational
+message. If someone wants to see the real address for debugging
+purposes, this can be achieved with the no_hash_pointers kernel option.
+
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230723040403.296723-1-dzm91@hust.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath9k/ahb.c | 4 ++--
+ drivers/net/wireless/ath/ath9k/pci.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 26203b16ad911..dfdfb72d350fe 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -625,6 +625,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0e4), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0f1), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
- 	{ USB_DEVICE(0x0489, 0xe0f2), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
+diff --git a/drivers/net/wireless/ath/ath9k/ahb.c b/drivers/net/wireless/ath/ath9k/ahb.c
+index 9cd12b20b18d8..9bfaadfa6c009 100644
+--- a/drivers/net/wireless/ath/ath9k/ahb.c
++++ b/drivers/net/wireless/ath/ath9k/ahb.c
+@@ -132,8 +132,8 @@ static int ath_ahb_probe(struct platform_device *pdev)
+ 
+ 	ah = sc->sc_ah;
+ 	ath9k_hw_name(ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)mem, irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, mem, irq);
+ 
+ 	return 0;
+ 
+diff --git a/drivers/net/wireless/ath/ath9k/pci.c b/drivers/net/wireless/ath/ath9k/pci.c
+index a09f9d223f3de..0633589b85c23 100644
+--- a/drivers/net/wireless/ath/ath9k/pci.c
++++ b/drivers/net/wireless/ath/ath9k/pci.c
+@@ -988,8 +988,8 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	sc->sc_ah->msi_reg = 0;
+ 
+ 	ath9k_hw_name(sc->sc_ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)sc->mem, pdev->irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, sc->mem, pdev->irq);
+ 
+ 	return 0;
+ 
 -- 
 2.40.1
 
