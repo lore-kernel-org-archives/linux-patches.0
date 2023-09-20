@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94482E640
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEF1C433C9;
-	Wed, 20 Sep 2023 12:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C93A30F8E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210C8C433C7;
+	Wed, 20 Sep 2023 12:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213849;
-	bh=nF8Z5SYUYcUaWEw8Sl2RrTtZDW+JffUNW48NIp3Qoxs=;
+	s=korg; t=1695213852;
+	bh=5vBlaaDvWD3iyLbcS1cviDUrE7HlxfijrHEPM/t/GcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTpSE1giYxysO0tHjBmE5TYRpPYIHnN8SD2kmzqUlNOi5KPhafnnqAmoqtpCQIUHw
-	 cZG7RGzgupnDh/Kii2ubuA8RW83F7+66CSFx28l1lwe6uaYGC/62dF6TsVPrNf5p+M
-	 26Y5mwqFyK2WTxfkjfJPMSH/vfNZDf0/KHAM1JHE=
+	b=RNkarLNbTqfPFKQgeLRonL+7GXAgN2cmr+PlXyK6LMeBBMjSb3U/ZYuRPAMAQvYeQ
+	 cJzrFjudmLgK/lNVJcAglxhprC1VZZDpjYjcdXwKPUIjGnftkZ/974WNMnMMxrnElX
+	 2kw5nlfAnlhX+jNix9CjCCX8iBEKIgGeI7yDLs8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Steffen <Alexander.Steffen@infineon.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jim Reinhart <jimr@tekvox.com>,
+	James Autry <jautry@tekvox.com>,
+	Matthew Maron <matthewm@tekvox.com>,
+	Giulio Benetti <giulio.benetti@benettiengineering.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/110] tpm_tis: Resend command to recover from data transfer errors
-Date: Wed, 20 Sep 2023 13:31:18 +0200
-Message-ID: <20230920112831.150360994@linuxfoundation.org>
+Subject: [PATCH 5.15 021/110] mmc: sdhci-esdhc-imx: improve ESDHC_FLAG_ERR010450
+Date: Wed, 20 Sep 2023 13:31:19 +0200
+Message-ID: <20230920112831.189528841@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,48 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Steffen <Alexander.Steffen@infineon.com>
+From: Giulio Benetti <giulio.benetti@benettiengineering.com>
 
-[ Upstream commit 280db21e153d8810ce3b93640c63ae922bcb9e8e ]
+[ Upstream commit 5ae4b0d8875caa44946e579420c7fd5740d58653 ]
 
-Similar to the transmission of TPM responses, also the transmission of TPM
-commands may become corrupted. Instead of aborting when detecting such
-issues, try resending the command again.
+Errata ERR010450 only shows up if voltage is 1.8V, but if the device is
+supplied by 3v3 the errata can be ignored. So let's check for if quirk
+SDHCI_QUIRK2_NO_1_8_V is defined or not before limiting the frequency.
 
-Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jim Reinhart <jimr@tekvox.com>
+Cc: James Autry <jautry@tekvox.com>
+Cc: Matthew Maron <matthewm@tekvox.com>
+Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
+Acked-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230811214853.8623-1-giulio.benetti@benettiengineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index d7c440ac465f3..b3452259d6e0b 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -469,10 +469,17 @@ static int tpm_tis_send_main(struct tpm_chip *chip, const u8 *buf, size_t len)
- 	int rc;
- 	u32 ordinal;
- 	unsigned long dur;
--
--	rc = tpm_tis_send_data(chip, buf, len);
--	if (rc < 0)
--		return rc;
-+	unsigned int try;
-+
-+	for (try = 0; try < TPM_RETRY; try++) {
-+		rc = tpm_tis_send_data(chip, buf, len);
-+		if (rc >= 0)
-+			/* Data transfer done successfully */
-+			break;
-+		else if (rc != -EIO)
-+			/* Data transfer failed, not recoverable */
-+			return rc;
-+	}
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index a6aa33dcd2a2e..d8a4080712365 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -171,8 +171,8 @@
+ #define ESDHC_FLAG_HS400		BIT(9)
+ /*
+  * The IP has errata ERR010450
+- * uSDHC: Due to the I/O timing limit, for SDR mode, SD card clock can't
+- * exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
++ * uSDHC: At 1.8V due to the I/O timing limit, for SDR mode, SD card
++ * clock can't exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
+  */
+ #define ESDHC_FLAG_ERR010450		BIT(10)
+ /* The IP supports HS400ES mode */
+@@ -917,7 +917,8 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
+ 		| ESDHC_CLOCK_MASK);
+ 	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
  
- 	/* go and do it */
- 	rc = tpm_tis_write8(priv, TPM_STS(priv->locality), TPM_STS_GO);
+-	if (imx_data->socdata->flags & ESDHC_FLAG_ERR010450) {
++	if ((imx_data->socdata->flags & ESDHC_FLAG_ERR010450) &&
++	    (!(host->quirks2 & SDHCI_QUIRK2_NO_1_8_V))) {
+ 		unsigned int max_clock;
+ 
+ 		max_clock = imx_data->is_ddr ? 45000000 : 150000000;
 -- 
 2.40.1
 
