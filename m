@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6C83AC1E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64628C433C7;
-	Wed, 20 Sep 2023 12:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06C53AC19
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D873C433C9;
+	Wed, 20 Sep 2023 12:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213091;
-	bh=0i1zai7EkZlEDorUDBkBivFwUUWq8mjjmrz0N+dnBZQ=;
+	s=korg; t=1695213094;
+	bh=BNk+FfTp+371hEepFtscPtW4u02s7lUBkVNtFkdUBHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+tggrfVA1tZawcmG+uDyT3LL2O50FsOY9RVKShB1xXyJfQ75A7zuC9wTwvoste4e
-	 ygQ47qM2ycMe39d83erUqIqwwbYkFYhTf1FuNWSKEGax+CrTZEoZDTSgPwRJrXLf9N
-	 rNgS4/pROKvaekM78be9BfF1KS8nhWaL5G/T4WH8=
+	b=iI5j75O4wg70TV66mVqSdFhr5E1EFduFYRgxtEgWTKYNrrvFZIzU6r8clKd4I1RKK
+	 CSD7vYKrbUpp3aAaILan7So9Sb774R0ESYrmX0V4s22enfCplnF8RtpUc8QdqP6SJX
+	 x1Lvn6+a1foXHs6Fle+GElKuPYFRlMuRZmyglANM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 132/367] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
-Date: Wed, 20 Sep 2023 13:28:29 +0200
-Message-ID: <20230920112902.110116314@linuxfoundation.org>
+Subject: [PATCH 5.4 123/367] of: unittest: Fix overlay type in apply/revert check
+Date: Wed, 20 Sep 2023 13:28:20 +0200
+Message-ID: <20230920112901.840761065@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,75 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
+[ Upstream commit 6becf8f845ae1f0b1cfed395bbeccbd23654162d ]
 
-Reconfiguring the clock divider to the exact same value is observed
-on an i.MX8MN to often cause a longer than usual clock pause, probably
-because the divider restarts counting whenever the register is rewritten.
+The removal check in of_unittest_apply_revert_overlay_check()
+always uses the platform device overlay type, while it should use the
+actual overlay type, as passed as a parameter to the function.
 
-This issue doesn't show up normally, because the clock framework will
-take care to not call set_rate when the clock rate is the same.
-However, when we reconfigure an upstream clock, the common code will
-call set_rate with the newly calculated rate on all children, e.g.:
+This has no impact on any current test, as all tests calling
+of_unittest_apply_revert_overlay_check() use the platform device overlay
+type.
 
-  - sai5 is running normally and divides Audio PLL out by 16.
-  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
-  - rates for children are recalculated and rates are set recursively
-  - imx8m_clk_composite_divider_set_rate(sai5) is called with
-    32/16 = 2Hz more
-  - imx8m_clk_composite_divider_set_rate computes same divider as before
-  - divider register is written, so it restarts counting from zero and
-    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
-
-Some external clock consumers can be upset by such unexpected clock pauses,
-so let's make sure we only rewrite the divider value when the value to be
-written is actually different.
-
-Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: d5e75500ca401d31 ("of: unitest: Add I2C overlay unit tests.")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ba0234c41ba808f10112094f88792beeb6dbaedf.1690533838.git.geert+renesas@glider.be
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/of/unittest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index d3486ee79ab54..78122188ac39e 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -95,7 +95,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 	int prediv_value;
- 	int div_value;
- 	int ret;
--	u32 val;
-+	u32 orig, val;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index ef3c2112046fc..42acbb3668b2c 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -1582,7 +1582,7 @@ static int __init of_unittest_apply_revert_overlay_check(int overlay_nr,
+ 	}
  
- 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
- 						&prediv_value, &div_value);
-@@ -104,13 +104,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 
- 	spin_lock_irqsave(divider->lock, flags);
- 
--	val = readl(divider->reg);
--	val &= ~((clk_div_mask(divider->width) << divider->shift) |
--			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
-+	orig = readl(divider->reg);
-+	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
-+		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
- 
- 	val |= (u32)(prediv_value  - 1) << divider->shift;
- 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
--	writel(val, divider->reg);
-+
-+	if (val != orig)
-+		writel(val, divider->reg);
- 
- 	spin_unlock_irqrestore(divider->lock, flags);
- 
+ 	/* unittest device must be again in before state */
+-	if (of_unittest_device_exists(unittest_nr, PDEV_OVERLAY) != before) {
++	if (of_unittest_device_exists(unittest_nr, ovtype) != before) {
+ 		unittest(0, "%s with device @\"%s\" %s\n",
+ 				overlay_name_from_nr(overlay_nr),
+ 				unittest_path(unittest_nr, ovtype),
 -- 
 2.40.1
 
