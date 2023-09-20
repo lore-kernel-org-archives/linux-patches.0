@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1146C2AB5E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32992C433C7;
-	Wed, 20 Sep 2023 12:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF822AB5E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:10:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D424CC433C9;
+	Wed, 20 Sep 2023 12:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211855;
-	bh=kQ2/r1wdO2exJi9sUOpHs+NS3dmNkheni5B2p/Ydcis=;
+	s=korg; t=1695211858;
+	bh=4yHi2933vqK0q5Hn6XxmuZ3oGQWFPtcAksbRD+8MfAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fP6dURQB4HaC9Aa2RtOHqAMXH0RLBwp7X6HPoVCP9AmLOd2P6+nxtrQDdDCLgOdcr
-	 aNxKSAkiGnUkjaaVOaamqloC0oEPjzMatqnS1qFEMNoSpochtEFstxpL+IJfWCMEqm
-	 1Lfrpi/xFo4K3273Ur3UE5QaAES0kM+xTh1GKBbE=
+	b=XGbmREHR/uKUStrmaHbDQ0AW1cF8SRdSoCr9cioCq2v1pfJ9QHj8ihsvLaej1dqdz
+	 2YKF1nIH9CBybH4oL8AW8Gist0iMTTxZFOhMezAM96hanQyfCf/+PlxJmIIv6gIvth
+	 iY0Mi8wwfmNF17ANhlWzQKk+8SQiz371IMdutb7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gong, Sishuai" <sishuai@purdue.edu>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 035/273] ALSA: seq: oss: Fix racy open/close of MIDI devices
-Date: Wed, 20 Sep 2023 13:27:55 +0200
-Message-ID: <20230920112847.506689935@linuxfoundation.org>
+	Jordan Rife <jrife@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 036/273] net: Avoid address overwrite in kernel_connect
+Date: Wed, 20 Sep 2023 13:27:56 +0200
+Message-ID: <20230920112847.535756275@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,128 +39,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jordan Rife <jrife@google.com>
 
-[ Upstream commit 297224fc0922e7385573a30c29ffdabb67f27b7d ]
+commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
 
-Although snd_seq_oss_midi_open() and snd_seq_oss_midi_close() can be
-called concurrently from different code paths, we have no proper data
-protection against races.  Introduce open_mutex to each seq_oss_midi
-object for avoiding the races.
+BPF programs that run on connect can rewrite the connect address. For
+the connect system call this isn't a problem, because a copy of the address
+is made when it is moved into kernel space. However, kernel_connect
+simply passes through the address it is given, so the caller may observe
+its address value unexpectedly change.
 
-Reported-by: "Gong, Sishuai" <sishuai@purdue.edu>
-Closes: https://lore.kernel.org/r/7DC9AF71-F481-4ABA-955F-76C535661E33@purdue.edu
-Link: https://lore.kernel.org/r/20230612125533.27461-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A practical example where this is problematic is where NFS is combined
+with a system such as Cilium which implements BPF-based load balancing.
+A common pattern in software-defined storage systems is to have an NFS
+mount that connects to a persistent virtual IP which in turn maps to an
+ephemeral server IP. This is usually done to achieve high availability:
+if your server goes down you can quickly spin up a replacement and remap
+the virtual IP to that endpoint. With BPF-based load balancing, mounts
+will forget the virtual IP address when the address rewrite occurs
+because a pointer to the only copy of that address is passed down the
+stack. Server failover then breaks, because clients have forgotten the
+virtual IP address. Reconnects fail and mounts remain broken. This patch
+was tested by setting up a scenario like this and ensuring that NFS
+reconnects worked after applying the patch.
+
+Signed-off-by: Jordan Rife <jrife@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/oss/seq_oss_midi.c | 35 +++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ net/socket.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
-index 838c3c8b403cb..2ddfd6fed122e 100644
---- a/sound/core/seq/oss/seq_oss_midi.c
-+++ b/sound/core/seq/oss/seq_oss_midi.c
-@@ -50,6 +50,7 @@ struct seq_oss_midi {
- 	struct snd_midi_event *coder;	/* MIDI event coder */
- 	struct seq_oss_devinfo *devinfo;	/* assigned OSSseq device */
- 	snd_use_lock_t use_lock;
-+	struct mutex open_mutex;
- };
- 
- 
-@@ -184,6 +185,7 @@ snd_seq_oss_midi_check_new_port(struct snd_seq_port_info *pinfo)
- 	mdev->flags = pinfo->capability;
- 	mdev->opened = 0;
- 	snd_use_lock_init(&mdev->use_lock);
-+	mutex_init(&mdev->open_mutex);
- 
- 	/* copy and truncate the name of synth device */
- 	strlcpy(mdev->name, pinfo->name, sizeof(mdev->name));
-@@ -332,14 +334,16 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	int perm;
- 	struct seq_oss_midi *mdev;
- 	struct snd_seq_port_subscribe subs;
-+	int err;
- 
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
- 
-+	mutex_lock(&mdev->open_mutex);
- 	/* already used? */
- 	if (mdev->opened && mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -EBUSY;
-+		err = -EBUSY;
-+		goto unlock;
- 	}
- 
- 	perm = 0;
-@@ -349,14 +353,14 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 		perm |= PERM_READ;
- 	perm &= mdev->flags;
- 	if (perm == 0) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	/* already opened? */
- 	if ((mdev->opened & perm) == perm) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
-+		err = 0;
-+		goto unlock;
- 	}
- 
- 	perm &= ~mdev->opened;
-@@ -381,13 +385,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- 	}
- 
- 	if (! mdev->opened) {
--		snd_use_lock_free(&mdev->use_lock);
--		return -ENXIO;
-+		err = -ENXIO;
-+		goto unlock;
- 	}
- 
- 	mdev->devinfo = dp;
-+	err = 0;
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -3468,7 +3468,11 @@ EXPORT_SYMBOL(kernel_accept);
+ int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
+ 		   int flags)
+ {
+-	return sock->ops->connect(sock, addr, addrlen, flags);
++	struct sockaddr_storage address;
 +
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
--	return 0;
-+	return err;
++	memcpy(&address, addr, addrlen);
++
++	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
  }
+ EXPORT_SYMBOL(kernel_connect);
  
- /*
-@@ -401,10 +409,9 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- 
- 	if ((mdev = get_mididev(dp, dev)) == NULL)
- 		return -ENODEV;
--	if (! mdev->opened || mdev->devinfo != dp) {
--		snd_use_lock_free(&mdev->use_lock);
--		return 0;
--	}
-+	mutex_lock(&mdev->open_mutex);
-+	if (!mdev->opened || mdev->devinfo != dp)
-+		goto unlock;
- 
- 	memset(&subs, 0, sizeof(subs));
- 	if (mdev->opened & PERM_WRITE) {
-@@ -423,6 +430,8 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- 	mdev->opened = 0;
- 	mdev->devinfo = NULL;
- 
-+ unlock:
-+	mutex_unlock(&mdev->open_mutex);
- 	snd_use_lock_free(&mdev->use_lock);
- 	return 0;
- }
--- 
-2.40.1
-
 
 
