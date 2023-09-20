@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259CA15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A112BC433C9;
-	Wed, 20 Sep 2023 12:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B7E15AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C92C433CA;
+	Wed, 20 Sep 2023 12:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213466;
-	bh=5TJk3nsrvYx/dI934kKu+QBoEttnuiPGUvIKP/oHGTg=;
+	s=korg; t=1695213468;
+	bh=EyXQdD/HRm5LGokvsTKVzww4Cfu32MeETAsZZYONW3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=No6Wt4rOuXzFHOutmXQC73VR38wmWFCptKslq5/VNIkY3ZXGHIJirALcpEgdWc+qC
-	 jZQCyG2u3l+NnrFP/jBa33p2QcLzNXf3mNk3blxGcqDytwgtmlz+tVuxa216r6iAIB
-	 p1Tb7r9yL8owaSgWTT9CzXsS1YO+oZS5XGV542Zo=
+	b=uZZ2nj8lNnlVxSPWhy1lQsbkczitwoM/TwJGBA3Q9rLkFMboBojKk7FK59PKF0v5d
+	 ZldloGJnrYSPs1OiJcg4qeyP11iAcektJmh03DzDSZoUic+11/0MGzOUzgWAJi59Ks
+	 +t/KqwOHxiq1zu7GPVmHishdT1Z+bX3uQIotp430=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 248/367] parisc: led: Reduce CPU overhead for disk & lan LED computation
-Date: Wed, 20 Sep 2023 13:30:25 +0200
-Message-ID: <20230920112904.972862261@linuxfoundation.org>
+	stable@kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.4 249/367] clk: qcom: gcc-mdm9615: use proper parent for pll0_vote clock
+Date: Wed, 20 Sep 2023 13:30:26 +0200
+Message-ID: <20230920112905.004505382@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -38,38 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 358ad816e52d4253b38c2f312e6b1cbd89e0dbf7 upstream.
+commit 1583694bb4eaf186f17131dbc1b83d6057d2749b upstream.
 
-Older PA-RISC machines have LEDs which show the disk- and LAN-activity.
-The computation is done in software and takes quite some time, e.g. on a
-J6500 this may take up to 60% time of one CPU if the machine is loaded
-via network traffic.
+The pll0_vote clock definitely should have pll0 as a parent (instead of
+pll8).
 
-Since most people don't care about the LEDs, start with LEDs disabled and
-just show a CPU heartbeat LED. The disk and LAN LEDs can be turned on
-manually via /proc/pdc/led.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org>
+Fixes: 7792a8d6713c ("clk: mdm9615: Add support for MDM9615 Clock Controllers")
+Cc: stable@kernel.org
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230512211727.3445575-7-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/led.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-mdm9615.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/parisc/led.c
-+++ b/drivers/parisc/led.c
-@@ -56,8 +56,8 @@
- static int led_type __read_mostly = -1;
- static unsigned char lastleds;	/* LED state from most recent update */
- static unsigned int led_heartbeat __read_mostly = 1;
--static unsigned int led_diskio    __read_mostly = 1;
--static unsigned int led_lanrxtx   __read_mostly = 1;
-+static unsigned int led_diskio    __read_mostly;
-+static unsigned int led_lanrxtx   __read_mostly;
- static char lcd_text[32]          __read_mostly;
- static char lcd_text_default[32]  __read_mostly;
- static int  lcd_no_led_support    __read_mostly = 0; /* KittyHawk doesn't support LED on its LCD */
+--- a/drivers/clk/qcom/gcc-mdm9615.c
++++ b/drivers/clk/qcom/gcc-mdm9615.c
+@@ -58,7 +58,7 @@ static struct clk_regmap pll0_vote = {
+ 	.enable_mask = BIT(0),
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "pll0_vote",
+-		.parent_names = (const char *[]){ "pll8" },
++		.parent_names = (const char *[]){ "pll0" },
+ 		.num_parents = 1,
+ 		.ops = &clk_pll_vote_ops,
+ 	},
 
 
