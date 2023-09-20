@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF733156E5
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73152C433C7;
-	Wed, 20 Sep 2023 12:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AA8156E5
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291EAC433C7;
+	Wed, 20 Sep 2023 12:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213427;
-	bh=tFBQgFqqTdU4b+jcptAb4TZ1MG6XL4iywMCahsZR81o=;
+	s=korg; t=1695213430;
+	bh=7acR7u17667nbPryaR83Fcx8PxFHkM6l5Z7motR44yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qy0voXli603dyuZvVElENnwwycsc8bBXAjh38WABXmDaI83mOKCZOnRJdrN+r/A8D
-	 qYYCZWWkoajuQ4icz7DoSKLi2g2o8FAs3yRy2/a/DK9u8/7vzTpvjh9vYwAa555Jo8
-	 76nkFv3XNnL9TwIv2zCwslteSSlrQ2aLbNfuJJYY=
+	b=R/wqPAJZjzx00RLnybaNQ65SNTdpxE7/YNc6vEcLNnfbye7ayysYrNXyZ30CUKC0H
+	 8sXTtdH/FBbfLe9KoT3dg9WUXSI528YDREO7Mjf+W/g8YJE4arQPMKIEOzUol4/iB8
+	 B3aDb0l1yACscpcZJbTJ3W0IZwIrULpEdTwVlTes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 5.4 233/367] cpufreq: brcmstb-avs-cpufreq: Fix -Warray-bounds bug
-Date: Wed, 20 Sep 2023 13:30:10 +0200
-Message-ID: <20230920112904.608247250@linuxfoundation.org>
+	Daniel Mack <daniel@zonque.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 234/367] sc16is7xx: Set iobase to device index
+Date: Wed, 20 Sep 2023 13:30:11 +0200
+Message-ID: <20230920112904.633106287@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,64 +39,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Daniel Mack <daniel@zonque.org>
 
-commit e520d0b6be950ce3738cf4b9bd3b392be818f1dc upstream.
+[ Upstream commit 5da6b1c079e6804a81e63ab8337224cbd2148c91 ]
 
-Allocate extra space for terminating element at:
+Some derivates of sc16is7xx devices expose more than one tty device to
+userspace. If multiple such devices exist in a system, userspace
+currently has no clean way to infer which tty maps to which physical
+line.
 
-drivers/cpufreq/brcmstb-avs-cpufreq.c:
-449         table[i].frequency = CPUFREQ_TABLE_END;
+Set the .iobase value to the relative index within the device to allow
+infering the order through sysfs.
 
-and add code comment to make this clear.
-
-This fixes the following -Warray-bounds warning seen after building
-ARM with multi_v7_defconfig (GCC 13):
-In function 'brcm_avs_get_freq_table',
-    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
-drivers/cpufreq/brcmstb-avs-cpufreq.c:449:28: warning: array subscript 5 is outside array bounds of 'void[60]' [-Warray-bounds=]
-  449 |         table[i].frequency = CPUFREQ_TABLE_END;
-In file included from include/linux/node.h:18,
-                 from include/linux/cpu.h:17,
-                 from include/linux/cpufreq.h:12,
-                 from drivers/cpufreq/brcmstb-avs-cpufreq.c:44:
-In function 'devm_kmalloc_array',
-    inlined from 'devm_kcalloc' at include/linux/device.h:328:9,
-    inlined from 'brcm_avs_get_freq_table' at drivers/cpufreq/brcmstb-avs-cpufreq.c:437:10,
-    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
-include/linux/device.h:323:16: note: at offset 60 into object of size 60 allocated by 'devm_kmalloc'
-  323 |         return devm_kmalloc(dev, bytes, flags);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -Warray-bounds.
-
-Link: https://github.com/KSPP/linux/issues/324
-Fixes: de322e085995 ("cpufreq: brcmstb-avs-cpufreq: AVS CPUfreq driver for Broadcom STB SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Daniel Mack <daniel@zonque.org>
+Link: https://lore.kernel.org/r/20200901120329.4176302-1-daniel@zonque.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 2861ed4d6e6d ("serial: sc16is7xx: fix broken port 0 uart init")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/brcmstb-avs-cpufreq.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
-+++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-@@ -410,7 +410,11 @@ brcm_avs_get_freq_table(struct device *d
- 	if (ret)
- 		return ERR_PTR(ret);
- 
--	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1, sizeof(*table),
-+	/*
-+	 * We allocate space for the 5 different P-STATES AVS,
-+	 * plus extra space for a terminating element.
-+	 */
-+	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1 + 1, sizeof(*table),
- 			     GFP_KERNEL);
- 	if (!table)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index d8b015335009b..9b68725d4e9ba 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1270,6 +1270,7 @@ static int sc16is7xx_probe(struct device *dev,
+ 		s->p[i].port.type	= PORT_SC16IS7XX;
+ 		s->p[i].port.fifosize	= SC16IS7XX_FIFO_SIZE;
+ 		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY;
++		s->p[i].port.iobase	= i;
+ 		s->p[i].port.iotype	= UPIO_PORT;
+ 		s->p[i].port.uartclk	= freq;
+ 		s->p[i].port.rs485_config = sc16is7xx_config_rs485;
+-- 
+2.40.1
+
 
 
