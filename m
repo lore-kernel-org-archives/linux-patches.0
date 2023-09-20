@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7AF15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C144C433CB;
-	Wed, 20 Sep 2023 12:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9955D15AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB80C433C8;
+	Wed, 20 Sep 2023 12:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213487;
-	bh=33AqHuKc8YsXA/hRm8MXBWMIe5m353popSc7JA3P2ss=;
+	s=korg; t=1695213490;
+	bh=G9DqQ+jNkFa+IFlwK13IhGAXOW//nxN4gF58Jt5Dhk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5VROeXQ2Q19VqhEdjIuBYMFjWl9Hcs3AX2RtGnCxDTpMtUlLMa6ffD4T8hfUj/6m
-	 nfg3l69zTUOJs1X3iOu1Gtalc89Am1OGQqpM3+jgQR9ELjYx/celdLnrVRe4YPOz0W
-	 F7EyvytRAezw6D921M77RQ3eTMans6lRbo0rBAMY=
+	b=fjdWRARC3gE/Q6PDwgIV9zKQKsTj69KpDQEDJ9Bib1JvwP1WftYvYaAie55liP6AY
+	 iRmb0MDKoPOm4jG6WS8wjD6RcQy89AW8tnpT1reacYSDXzxdMFGhSV8Xe0kzrn2JOE
+	 8jqLxoRUcwuTj7DcrRNC3NW14ZUrdzBVWFH2cpQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 256/367] watchdog: intel-mid_wdt: add MODULE_ALIAS() to allow auto-load
-Date: Wed, 20 Sep 2023 13:30:33 +0200
-Message-ID: <20230920112905.184874066@linuxfoundation.org>
+	Lars Ekman <uablrek@gmail.com>,
+	Quan Tian <qtian@vmware.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 239/367] net/ipv6: SKB symmetric hash should incorporate transport ports
+Date: Wed, 20 Sep 2023 13:30:16 +0200
+Message-ID: <20230920112904.752845353@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,40 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Quan Tian <qtian@vmware.com>
 
-[ Upstream commit cf38e7691c85f1b09973b22a0b89bf1e1228d2f9 ]
+commit a5e2151ff9d5852d0ababbbcaeebd9646af9c8d9 upstream.
 
-When built with CONFIG_INTEL_MID_WATCHDOG=m, currently the driver
-needs to be loaded manually, for the lack of module alias.
-This causes unintended resets in cases where watchdog timer is
-set-up by bootloader and the driver is not explicitly loaded.
-Add MODULE_ALIAS() to load the driver automatically at boot and
-avoid this issue.
+__skb_get_hash_symmetric() was added to compute a symmetric hash over
+the protocol, addresses and transport ports, by commit eb70db875671
+("packet: Use symmetric hash for PACKET_FANOUT_HASH."). It uses
+flow_keys_dissector_symmetric_keys as the flow_dissector to incorporate
+IPv4 addresses, IPv6 addresses and ports. However, it should not specify
+the flag as FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL, which stops further
+dissection when an IPv6 flow label is encountered, making transport
+ports not being incorporated in such case.
 
-Fixes: 87a1ef8058d9 ("watchdog: add Intel MID watchdog driver support")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230811120220.31578-1-raag.jadav@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As a consequence, the symmetric hash is based on 5-tuple for IPv4 but
+3-tuple for IPv6 when flow label is present. It caused a few problems,
+e.g. when nft symhash and openvswitch l4_sym rely on the symmetric hash
+to perform load balancing as different L4 flows between two given IPv6
+addresses would always get the same symmetric hash, leading to uneven
+traffic distribution.
+
+Removing the use of FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL makes sure the
+symmetric hash is based on 5-tuple for both IPv4 and IPv6 consistently.
+
+Fixes: eb70db875671 ("packet: Use symmetric hash for PACKET_FANOUT_HASH.")
+Reported-by: Lars Ekman <uablrek@gmail.com>
+Closes: https://github.com/antrea-io/antrea/issues/5457
+Signed-off-by: Quan Tian <qtian@vmware.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/intel-mid_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/flow_dissector.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/intel-mid_wdt.c b/drivers/watchdog/intel-mid_wdt.c
-index 2cdbd37c700cf..7ee355c286284 100644
---- a/drivers/watchdog/intel-mid_wdt.c
-+++ b/drivers/watchdog/intel-mid_wdt.c
-@@ -181,3 +181,4 @@ module_platform_driver(mid_wdt_driver);
- MODULE_AUTHOR("David Cohen <david.a.cohen@linux.intel.com>");
- MODULE_DESCRIPTION("Watchdog Driver for Intel MID platform");
- MODULE_LICENSE("GPL");
-+MODULE_ALIAS("platform:intel_mid_wdt");
--- 
-2.40.1
-
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1564,8 +1564,7 @@ u32 __skb_get_hash_symmetric(const struc
+ 
+ 	memset(&keys, 0, sizeof(keys));
+ 	__skb_flow_dissect(NULL, skb, &flow_keys_dissector_symmetric,
+-			   &keys, NULL, 0, 0, 0,
+-			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
++			   &keys, NULL, 0, 0, 0, 0);
+ 
+ 	return __flow_hash_from_keys(&keys, &hashrnd);
+ }
 
 
