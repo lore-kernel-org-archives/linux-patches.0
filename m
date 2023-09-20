@@ -1,105 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D12F1865F
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EC0C433C8;
-	Wed, 20 Sep 2023 12:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213682;
-	bh=QmqKFD1IwW4KAfvaUs6GEYib2BOhi/YARoNkPLa3En0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=py/gZxUUGgNzhtWJ0fitpjbkEffmhqJmiVsHk234KNb7Elmywf482r0uCt6rtsVbR
-	 uJFl0/T1IFFuiLnAnKZR3olRYFuslHzEpdctz2PMs/n5wU6dcl+ZbT9vVPe3q/D+80
-	 MWaMqN3bCeWB+v8kQSrvcnu8/2WsX3j55RzAYRGQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 301/367] kcm: Fix memory leak in error path of kcm_sendmsg()
-Date: Wed, 20 Sep 2023 13:31:18 +0200
-Message-ID: <20230920112906.336949901@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
-References: <20230920112858.471730572@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8260115AF8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51CFC433C9;
+	Wed, 20 Sep 2023 12:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695213683;
+	bh=2zA9/3hYBCDqdDOzmjX8elA4J0poN9unNs0plv5T9bg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=E+yBfcW2X3Mbm6mFwDhMYLDmkVnpnPF58EbUV+U+CMtr4fVxFmJRnRYh7SvhH+mZG
+	 3SMFbolY174ts7mb5/iZZ6R+WhoqCXaWTIyc5FHmG9zs3kecxCHNmmcj+ZkvL68wdp
+	 gwnN6TaGHGnzA0ZyxSV1wbGFDVmw+YERXkGocu3AsEokpWIhowbykmLMYrjGysbQWx
+	 y8XttKjPrF6gb3Y2HhpNn4auTLbjrD9JROaZbPgKKeWiLI2bcNcF+SNJh3og28pK4d
+	 ocktE9OW3QOysGInL8N0oBpwsCi7ROsYYD+I35P+C+M8YBsGwv4QHC2cMD/bAZutiq
+	 uCmAs9SIWhOaA==
+Message-ID: <aadc0c48-4ffa-9ead-3992-c01878e46072@kernel.org>
+Date: Wed, 20 Sep 2023 05:41:22 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH 6.5 158/211] ata: libata: remove references to
+ non-existing error_handler()
+Content-Language: en-US
+To: Niklas Cassel <Niklas.Cassel@wdc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ Hannes Reinecke <hare@suse.de>, John Garry <john.g.garry@oracle.com>,
+ Jason Yan <yanaijie@huawei.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20230920112845.859868994@linuxfoundation.org>
+ <20230920112850.780030234@linuxfoundation.org> <ZQrn1rae3Y55/1DG@x1-carbon>
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <ZQrn1rae3Y55/1DG@x1-carbon>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+On 2023/09/20 5:38, Niklas Cassel wrote:
+> On Wed, Sep 20, 2023 at 01:30:02PM +0200, Greg Kroah-Hartman wrote:
+>> 6.5-stable review patch.  If anyone has any objections, please let me know.
+> 
+> Hello Greg,
+> 
+> I don't think that we should backport this commit.
 
-------------------
+Yes, we should not. The IPR driver is still in stable, so adding this patch
+would be wrong.
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+> 
+> While the patch did apply without conflicts, it was part of a series that
+> did a bunch of other cleanups as well.
+> 
+> I think that it is best to either have that whole series (and we don't want
+> to backport the whole series), or none of the patches in that series.
+> 
+> (So that at least we know that we have one or the other, not some half-way
+> cleanup that will only live in v6.5 stable.)
+> 
+> 
+>>
+>> ------------------
+>>
+>> From: Hannes Reinecke <hare@suse.de>
+>>
+>> [ Upstream commit ff8072d589dcff7c1f0345a6ec98b5fc1e9ee2a1 ]
+>>
+>> With commit 65a15d6560df ("scsi: ipr: Remove SATA support") all
+>> libata drivers now have the error_handler() callback provided,
+>> so we can stop checking for non-existing error_handler callback.
+>>
+>> Signed-off-by: Hannes Reinecke <hare@suse.de>
+>> [niklas: fixed review comments, rebased, solved conflicts during rebase,
+>> fixed bug that unconditionally dumped all QCs, removed the now unused
+>> function ata_dump_status(), removed the now unreachable failure paths in
+>> atapi_qc_complete(), removed the non-EH function to request ATAPI sense]
+>> Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+>> Reviewed-by: John Garry <john.g.garry@oracle.com>
+>> Reviewed-by: Jason Yan <yanaijie@huawei.com>
+>> Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+>> Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+>> Stable-dep-of: 5e35a9ac3fe3 ("ata: libata-core: fetch sense data for successful commands iff CDL enabled")
+> 
+> Yes, it is true that
+> 5e35a9ac3fe3 ("ata: libata-core: fetch sense data for successful commands iff CDL enabled")
+> does not apply cleanly to v6.5 stable without this big commit.
+> 
+> I'm attaching a backported version of that patch (which is only 2 lines or so)
+> that can be applied to v6.5 stable instead.
+> 
+> 
+> Kind regards,
+> Niklas
 
-[ Upstream commit c821a88bd720b0046433173185fd841a100d44ad ]
-
-syzbot reported a memory leak like below:
-
-BUG: memory leak
-unreferenced object 0xffff88810b088c00 (size 240):
-  comm "syz-executor186", pid 5012, jiffies 4294943306 (age 13.680s)
-  hex dump (first 32 bytes):
-    00 89 08 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff83e5d5ff>] __alloc_skb+0x1ef/0x230 net/core/skbuff.c:634
-    [<ffffffff84606e59>] alloc_skb include/linux/skbuff.h:1289 [inline]
-    [<ffffffff84606e59>] kcm_sendmsg+0x269/0x1050 net/kcm/kcmsock.c:815
-    [<ffffffff83e479c6>] sock_sendmsg_nosec net/socket.c:725 [inline]
-    [<ffffffff83e479c6>] sock_sendmsg+0x56/0xb0 net/socket.c:748
-    [<ffffffff83e47f55>] ____sys_sendmsg+0x365/0x470 net/socket.c:2494
-    [<ffffffff83e4c389>] ___sys_sendmsg+0xc9/0x130 net/socket.c:2548
-    [<ffffffff83e4c536>] __sys_sendmsg+0xa6/0x120 net/socket.c:2577
-    [<ffffffff84ad7bb8>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff84ad7bb8>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-In kcm_sendmsg(), kcm_tx_msg(head)->last_skb is used as a cursor to append
-newly allocated skbs to 'head'. If some bytes are copied, an error occurred,
-and jumped to out_error label, 'last_skb' is left unmodified. A later
-kcm_sendmsg() will use an obsoleted 'last_skb' reference, corrupting the
-'head' frag_list and causing the leak.
-
-This patch fixes this issue by properly updating the last allocated skb in
-'last_skb'.
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-and-tested-by: syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6f98de741f7dbbfc4ccb
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/kcm/kcmsock.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 50bcfc71389ab..8668348aa3f2b 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1075,6 +1075,8 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 
- 	if (head != kcm->seq_skb)
- 		kfree_skb(head);
-+	else if (copied)
-+		kcm_tx_msg(head)->last_skb = skb;
- 
- 	err = sk_stream_error(sk, msg->msg_flags, err);
- 
 -- 
-2.40.1
-
-
+Damien Le Moal
+Western Digital Research
 
