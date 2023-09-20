@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84262AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA9FC433CB;
-	Wed, 20 Sep 2023 12:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A3F2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24018C433CC;
+	Wed, 20 Sep 2023 12:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211563;
-	bh=K5AlHeKwRINGPj40oAxb/6Vl3b32tQeZgz6AjBkDnfc=;
+	s=korg; t=1695211566;
+	bh=eZ62FzJig4SyPTE3y4FtgQ3g9FhAnqUKDkaUuquGI7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMktnLR5Gpy7L+F2vQOOlCJIkhraNbRIWjOU2DT1tX0Z3HmXdnvtZhMnH5l2jb6Ri
-	 pRICJ/zcq05+naCCIaDb256e+VaiwlnjvhRQCWtAJu+ywadjGTCh5MR1UZkf3lS9cP
-	 IlihO1bSL22PzwL9tr6w3VIk/Iz4xLMIKWaKfuFs=
+	b=S77dsq9uYlUKKuB410TJLZWkTWn255pqUMSV9N6Tyg2X/pALgI+VONgLvGyLXhP5y
+	 RpRIzj6MUBS8xiJXo3OzlqtgSL7Wil6RiDM1P9hPKr/mHbyhfmNuJOFa1WpXDAwt2r
+	 cUJSz6aR1TMw2LBKh1ih+dYYZXgCcPtKK41oC/R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Olga Zaborska <olga.zaborska@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 140/186] igbvf: Change IGBVF_MIN to allow set rx/tx value between 64 and 80
-Date: Wed, 20 Sep 2023 13:30:43 +0200
-Message-ID: <20230920112842.047980691@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.14 141/186] igb: Change IGB_MIN to allow set rx/tx value between 64 and 80
+Date: Wed, 20 Sep 2023 13:30:44 +0200
+Message-ID: <20230920112842.081904609@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -43,40 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Olga Zaborska <olga.zaborska@intel.com>
 
-[ Upstream commit 8360717524a24a421c36ef8eb512406dbd42160a ]
+[ Upstream commit 6319685bdc8ad5310890add907b7c42f89302886 ]
 
 Change the minimum value of RX/TX descriptors to 64 to enable setting the rx/tx
-value between 64 and 80. All igbvf devices can use as low as 64 descriptors.
-This change will unify igbvf with other drivers.
+value between 64 and 80. All igb devices can use as low as 64 descriptors.
+This change will unify igb with other drivers.
 Based on commit 7b1be1987c1e ("e1000e: lower ring minimum size to 64")
 
-Fixes: d4e0fe01a38a ("igbvf: add new driver to support 82576 virtual functions")
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
 Signed-off-by: Olga Zaborska <olga.zaborska@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igbvf/igbvf.h | 4 ++--
+ drivers/net/ethernet/intel/igb/igb.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igbvf/igbvf.h b/drivers/net/ethernet/intel/igbvf/igbvf.h
-index bf69f01f84677..f69a7787a590d 100644
---- a/drivers/net/ethernet/intel/igbvf/igbvf.h
-+++ b/drivers/net/ethernet/intel/igbvf/igbvf.h
-@@ -62,11 +62,11 @@ enum latency_range {
- /* Tx/Rx descriptor defines */
- #define IGBVF_DEFAULT_TXD	256
- #define IGBVF_MAX_TXD		4096
--#define IGBVF_MIN_TXD		80
-+#define IGBVF_MIN_TXD		64
+diff --git a/drivers/net/ethernet/intel/igb/igb.h b/drivers/net/ethernet/intel/igb/igb.h
+index 1113bf322f45b..a1e924391ae5b 100644
+--- a/drivers/net/ethernet/intel/igb/igb.h
++++ b/drivers/net/ethernet/intel/igb/igb.h
+@@ -52,11 +52,11 @@ struct igb_adapter;
+ /* TX/RX descriptor defines */
+ #define IGB_DEFAULT_TXD		256
+ #define IGB_DEFAULT_TX_WORK	128
+-#define IGB_MIN_TXD		80
++#define IGB_MIN_TXD		64
+ #define IGB_MAX_TXD		4096
  
- #define IGBVF_DEFAULT_RXD	256
- #define IGBVF_MAX_RXD		4096
--#define IGBVF_MIN_RXD		80
-+#define IGBVF_MIN_RXD		64
+ #define IGB_DEFAULT_RXD		256
+-#define IGB_MIN_RXD		80
++#define IGB_MIN_RXD		64
+ #define IGB_MAX_RXD		4096
  
- #define IGBVF_MIN_ITR_USECS	10 /* 100000 irq/sec */
- #define IGBVF_MAX_ITR_USECS	10000 /* 100    irq/sec */
+ #define IGB_DEFAULT_ITR		3 /* dynamic */
 -- 
 2.40.1
 
