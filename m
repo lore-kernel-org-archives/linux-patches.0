@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAAB347C4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7415C433C8;
-	Wed, 20 Sep 2023 12:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8F9347AD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F0AC433C7;
+	Wed, 20 Sep 2023 12:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213030;
-	bh=+Rq05fCK4SXTinzeZp0nCcum570U1BUzrJCHu0P5/ek=;
+	s=korg; t=1695213032;
+	bh=nLono4eiYxpkYC9sV4QWsVA+wfSfrFrX+uo4YvOSTlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIrk6XW/hxNYyqBMnA7HXRMGaxg4J/PKa0eMQThZ/i1Miz4tLCplOft5hS9X/1TCI
-	 aep6wmDexnBh+HU+WeUVtE0FKZQrwsnnnc+yLkcKMuee27AzjIG12bhIzlAHlXZVsl
-	 fyjfbdcfNQCbuLQRFLw7d6jiPAOVtltUdFeqPeQU=
+	b=Mml5yBOTKrPojNACfEWfmU8hGjWa+oPcwc7aSZTm1PZVkviuWzGwC4jTTqpX/mI50
+	 /PniMONjWoeEpjNFz+KKkLdYebMs9e006LFQwaMMgi6Qhn0n8f1MV88V5KSi4Zy+2C
+	 qzswF7sYVyjye7pxADSwB3Nl1X7516gKm068ED2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/367] drm/amdgpu: Correct Transmit Margin masks
-Date: Wed, 20 Sep 2023 13:28:32 +0200
-Message-ID: <20230920112902.191129042@linuxfoundation.org>
+Subject: [PATCH 5.4 136/367] drm/amdgpu: Replace numbers with PCI_EXP_LNKCTL2 definitions
+Date: Wed, 20 Sep 2023 13:28:33 +0200
+Message-ID: <20230920112902.213972184@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,69 +42,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 19d7a95a8ba66b198f759cf610cc935ce9840d5b ]
+[ Upstream commit 35e768e296729ac96a8c33b7810b6cb1673ae961 ]
 
-Previously we masked PCIe Link Control 2 register values with "7 << 9",
-which was apparently intended to be the Transmit Margin field, but instead
-was the high order bit of Transmit Margin, the Enter Modified Compliance
-bit, and the Compliance SOS bit.
+Replace hard-coded magic numbers with the descriptive PCI_EXP_LNKCTL2
+definitions.  No functional change intended.
 
-Correct the mask to "7 << 7", which is the Transmit Margin field.
-
-Link: https://lore.kernel.org/r/20191112173503.176611-3-helgaas@kernel.org
+Link: https://lore.kernel.org/r/20191112173503.176611-4-helgaas@kernel.org
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: ce7d88110b9e ("drm/amdgpu: Use RMW accessors for changing LNKCTL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/cik.c | 8 ++++----
- drivers/gpu/drm/amd/amdgpu/si.c  | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/cik.c | 22 ++++++++++++++--------
+ drivers/gpu/drm/amd/amdgpu/si.c  | 22 ++++++++++++++--------
+ 2 files changed, 28 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
-index b81bb414fcb30..13a5696d2a6a2 100644
+index 13a5696d2a6a2..3067bb874032f 100644
 --- a/drivers/gpu/drm/amd/amdgpu/cik.c
 +++ b/drivers/gpu/drm/amd/amdgpu/cik.c
-@@ -1498,13 +1498,13 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+@@ -1498,13 +1498,19 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
  
  				/* linkctl2 */
  				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
--				tmp16 &= ~((1 << 4) | (7 << 9));
--				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 9)));
-+				tmp16 &= ~((1 << 4) | (7 << 7));
-+				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
+-				tmp16 &= ~((1 << 4) | (7 << 7));
+-				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
++				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN);
++				tmp16 |= (bridge_cfg2 &
++					  (PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN));
  				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
  
  				pci_read_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
--				tmp16 &= ~((1 << 4) | (7 << 9));
--				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 9)));
-+				tmp16 &= ~((1 << 4) | (7 << 7));
-+				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
+-				tmp16 &= ~((1 << 4) | (7 << 7));
+-				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
++				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN);
++				tmp16 |= (gpu_cfg2 &
++					  (PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN));
  				pci_write_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
  
  				tmp = RREG32_PCIE(ixPCIE_LC_CNTL4);
+@@ -1521,13 +1527,13 @@ static void cik_pcie_gen3_enable(struct amdgpu_device *adev)
+ 	WREG32_PCIE(ixPCIE_LC_SPEED_CNTL, speed_cntl);
+ 
+ 	pci_read_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
+-	tmp16 &= ~0xf;
++	tmp16 &= ~PCI_EXP_LNKCTL2_TLS;
+ 	if (adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN3)
+-		tmp16 |= 3; /* gen3 */
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_8_0GT; /* gen3 */
+ 	else if (adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN2)
+-		tmp16 |= 2; /* gen2 */
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_5_0GT; /* gen2 */
+ 	else
+-		tmp16 |= 1; /* gen1 */
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_2_5GT; /* gen1 */
+ 	pci_write_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
+ 
+ 	speed_cntl = RREG32_PCIE(ixPCIE_LC_SPEED_CNTL);
 diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
-index 493af42152f26..1e350172dc7bb 100644
+index 1e350172dc7bb..a7dcb0d0f039c 100644
 --- a/drivers/gpu/drm/amd/amdgpu/si.c
 +++ b/drivers/gpu/drm/amd/amdgpu/si.c
-@@ -1737,13 +1737,13 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+@@ -1737,13 +1737,19 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
  				pci_write_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL, tmp16);
  
  				pci_read_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, &tmp16);
--				tmp16 &= ~((1 << 4) | (7 << 9));
--				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 9)));
-+				tmp16 &= ~((1 << 4) | (7 << 7));
-+				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
+-				tmp16 &= ~((1 << 4) | (7 << 7));
+-				tmp16 |= (bridge_cfg2 & ((1 << 4) | (7 << 7)));
++				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN);
++				tmp16 |= (bridge_cfg2 &
++					  (PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN));
  				pci_write_config_word(root, bridge_pos + PCI_EXP_LNKCTL2, tmp16);
  
  				pci_read_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
--				tmp16 &= ~((1 << 4) | (7 << 9));
--				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 9)));
-+				tmp16 &= ~((1 << 4) | (7 << 7));
-+				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
+-				tmp16 &= ~((1 << 4) | (7 << 7));
+-				tmp16 |= (gpu_cfg2 & ((1 << 4) | (7 << 7)));
++				tmp16 &= ~(PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN);
++				tmp16 |= (gpu_cfg2 &
++					  (PCI_EXP_LNKCTL2_ENTER_COMP |
++					   PCI_EXP_LNKCTL2_TX_MARGIN));
  				pci_write_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
  
  				tmp = RREG32_PCIE_PORT(PCIE_LC_CNTL4);
+@@ -1758,13 +1764,13 @@ static void si_pcie_gen3_enable(struct amdgpu_device *adev)
+ 	WREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL, speed_cntl);
+ 
+ 	pci_read_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, &tmp16);
+-	tmp16 &= ~0xf;
++	tmp16 &= ~PCI_EXP_LNKCTL2_TLS;
+ 	if (adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN3)
+-		tmp16 |= 3;
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_8_0GT; /* gen3 */
+ 	else if (adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN2)
+-		tmp16 |= 2;
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_5_0GT; /* gen2 */
+ 	else
+-		tmp16 |= 1;
++		tmp16 |= PCI_EXP_LNKCTL2_TLS_2_5GT; /* gen1 */
+ 	pci_write_config_word(adev->pdev, gpu_pos + PCI_EXP_LNKCTL2, tmp16);
+ 
+ 	speed_cntl = RREG32_PCIE_PORT(PCIE_LC_SPEED_CNTL);
 -- 
 2.40.1
 
