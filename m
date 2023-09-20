@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C2D18657
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC646C433CC;
-	Wed, 20 Sep 2023 11:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AD818657
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EB1C433C8;
+	Wed, 20 Sep 2023 11:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210714;
-	bh=SnyW6lkZH8kXSah7rl4gosBOZUrw43Y9iezQFUVxXAw=;
+	s=korg; t=1695210716;
+	bh=azFpPDNZYFFbhaWd/vs5kJPbY3W3AyQC9wFIt1XsDgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=noJ8UyBzPdQgY1fZcQDnVyn62TOk82/VkHK80PulViYEo0FwryKCbYDT6IdUG4V96
-	 z3i4oNmU/3vy1ixucVjSY3q+pFyHE+hsy83k8IL0Fo8cXoxtdkJ/nP/bznXndtgXgP
-	 FsbdhGUWsE5k8sFGrf8UwIlZCYsIEExtv5GzMXcQ=
+	b=KCN155mp6Mlkiz0s4oAcb8HH/5cJ53pQuGgOTD0Fj/azv0T5lvQjn0KxvFI3nRH0U
+	 8mWpvqjJxpOJvMRmXEElW2ObIgLwzcKw85EX15wSlaV21mGnRY8I0eB6HYWM+PRnst
+	 ZQ+lpiASCVn54KFf5IKLEcstgMse1VDyXUSlMo4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Luo Meng <luomeng12@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.5 177/211] dm: dont attempt to queue IO under RCU protection
-Date: Wed, 20 Sep 2023 13:30:21 +0200
-Message-ID: <20230920112851.367191760@linuxfoundation.org>
+Subject: [PATCH 6.5 178/211] dm: fix a race condition in retrieve_deps
+Date: Wed, 20 Sep 2023 13:30:22 +0200
+Message-ID: <20230920112851.396519013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,180 +41,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit a9ce385344f916cd1c36a33905e564f5581beae9 upstream.
+commit f6007dce0cd35d634d9be91ef3515a6385dcee16 upstream.
 
-dm looks up the table for IO based on the request type, with an
-assumption that if the request is marked REQ_NOWAIT, it's fine to
-attempt to submit that IO while under RCU read lock protection. This
-is not OK, as REQ_NOWAIT just means that we should not be sleeping
-waiting on other IO, it does not mean that we can't potentially
-schedule.
+There's a race condition in the multipath target when retrieve_deps
+races with multipath_message calling dm_get_device and dm_put_device.
+retrieve_deps walks the list of open devices without holding any lock
+but multipath may add or remove devices to the list while it is
+running. The end result may be memory corruption or use-after-free
+memory access.
 
-A simple test case demonstrates this quite nicely:
+See this description of a UAF with multipath_message():
+https://listman.redhat.com/archives/dm-devel/2022-October/052373.html
 
-int main(int argc, char *argv[])
-{
-        struct iovec iov;
-        int fd;
+Fix this bug by introducing a new rw semaphore "devices_lock". We grab
+devices_lock for read in retrieve_deps and we grab it for write in
+dm_get_device and dm_put_device.
 
-        fd = open("/dev/dm-0", O_RDONLY | O_DIRECT);
-        posix_memalign(&iov.iov_base, 4096, 4096);
-        iov.iov_len = 4096;
-        preadv2(fd, &iov, 1, 0, RWF_NOWAIT);
-        return 0;
-}
-
-which will instantly spew:
-
-BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 5580, name: dm-nowait
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-INFO: lockdep is turned off.
-CPU: 7 PID: 5580 Comm: dm-nowait Not tainted 6.6.0-rc1-g39956d2dcd81 #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x11d/0x1b0
- __might_resched+0x3c3/0x5e0
- ? preempt_count_sub+0x150/0x150
- mempool_alloc+0x1e2/0x390
- ? mempool_resize+0x7d0/0x7d0
- ? lock_sync+0x190/0x190
- ? lock_release+0x4b7/0x670
- ? internal_get_user_pages_fast+0x868/0x2d40
- bio_alloc_bioset+0x417/0x8c0
- ? bvec_alloc+0x200/0x200
- ? internal_get_user_pages_fast+0xb8c/0x2d40
- bio_alloc_clone+0x53/0x100
- dm_submit_bio+0x27f/0x1a20
- ? lock_release+0x4b7/0x670
- ? blk_try_enter_queue+0x1a0/0x4d0
- ? dm_dax_direct_access+0x260/0x260
- ? rcu_is_watching+0x12/0xb0
- ? blk_try_enter_queue+0x1cc/0x4d0
- __submit_bio+0x239/0x310
- ? __bio_queue_enter+0x700/0x700
- ? kvm_clock_get_cycles+0x40/0x60
- ? ktime_get+0x285/0x470
- submit_bio_noacct_nocheck+0x4d9/0xb80
- ? should_fail_request+0x80/0x80
- ? preempt_count_sub+0x150/0x150
- ? lock_release+0x4b7/0x670
- ? __bio_add_page+0x143/0x2d0
- ? iov_iter_revert+0x27/0x360
- submit_bio_noacct+0x53e/0x1b30
- submit_bio_wait+0x10a/0x230
- ? submit_bio_wait_endio+0x40/0x40
- __blkdev_direct_IO_simple+0x4f8/0x780
- ? blkdev_bio_end_io+0x4c0/0x4c0
- ? stack_trace_save+0x90/0xc0
- ? __bio_clone+0x3c0/0x3c0
- ? lock_release+0x4b7/0x670
- ? lock_sync+0x190/0x190
- ? atime_needs_update+0x3bf/0x7e0
- ? timestamp_truncate+0x21b/0x2d0
- ? inode_owner_or_capable+0x240/0x240
- blkdev_direct_IO.part.0+0x84a/0x1810
- ? rcu_is_watching+0x12/0xb0
- ? lock_release+0x4b7/0x670
- ? blkdev_read_iter+0x40d/0x530
- ? reacquire_held_locks+0x4e0/0x4e0
- ? __blkdev_direct_IO_simple+0x780/0x780
- ? rcu_is_watching+0x12/0xb0
- ? __mark_inode_dirty+0x297/0xd50
- ? preempt_count_add+0x72/0x140
- blkdev_read_iter+0x2a4/0x530
- do_iter_readv_writev+0x2f2/0x3c0
- ? generic_copy_file_range+0x1d0/0x1d0
- ? fsnotify_perm.part.0+0x25d/0x630
- ? security_file_permission+0xd8/0x100
- do_iter_read+0x31b/0x880
- ? import_iovec+0x10b/0x140
- vfs_readv+0x12d/0x1a0
- ? vfs_iter_read+0xb0/0xb0
- ? rcu_is_watching+0x12/0xb0
- ? rcu_is_watching+0x12/0xb0
- ? lock_release+0x4b7/0x670
- do_preadv+0x1b3/0x260
- ? do_readv+0x370/0x370
- __x64_sys_preadv2+0xef/0x150
- do_syscall_64+0x39/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f5af41ad806
-Code: 41 54 41 89 fc 55 44 89 c5 53 48 89 cb 48 83 ec 18 80 3d e4 dd 0d 00 00 74 7a 45 89 c1 49 89 ca 45 31 c0 b8 47 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 be 00 00 00 48 85 c0 79 4a 48 8b 0d da 55
-RSP: 002b:00007ffd3145c7f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000147
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5af41ad806
-RDX: 0000000000000001 RSI: 00007ffd3145c850 RDI: 0000000000000003
-RBP: 0000000000000008 R08: 0000000000000000 R09: 0000000000000008
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-R13: 00007ffd3145c850 R14: 000055f5f0431dd8 R15: 0000000000000001
- </TASK>
-
-where in fact it is dm itself that attempts to allocate a bio clone with
-GFP_NOIO under the rcu read lock, regardless of the request type.
-
-Fix this by getting rid of the special casing for REQ_NOWAIT, and just
-use the normal SRCU protected table lookup. Get rid of the bio based
-table locking helpers at the same time, as they are now unused.
-
+Reported-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 563a225c9fd2 ("dm: introduce dm_{get,put}_live_table_bio called from dm_submit_bio")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ drivers/md/dm-core.h  |    1 +
+ drivers/md/dm-ioctl.c |    7 ++++++-
+ drivers/md/dm-table.c |   32 ++++++++++++++++++++++++--------
+ 3 files changed, 31 insertions(+), 9 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -715,24 +715,6 @@ static void dm_put_live_table_fast(struc
- 	rcu_read_unlock();
+--- a/drivers/md/dm-core.h
++++ b/drivers/md/dm-core.h
+@@ -214,6 +214,7 @@ struct dm_table {
+ 
+ 	/* a list of devices used by this table */
+ 	struct list_head devices;
++	struct rw_semaphore devices_lock;
+ 
+ 	/* events get handed up using this callback */
+ 	void (*event_fn)(void *data);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1630,6 +1630,8 @@ static void retrieve_deps(struct dm_tabl
+ 	struct dm_dev_internal *dd;
+ 	struct dm_target_deps *deps;
+ 
++	down_read(&table->devices_lock);
++
+ 	deps = get_result_buffer(param, param_size, &len);
+ 
+ 	/*
+@@ -1644,7 +1646,7 @@ static void retrieve_deps(struct dm_tabl
+ 	needed = struct_size(deps, dev, count);
+ 	if (len < needed) {
+ 		param->flags |= DM_BUFFER_FULL_FLAG;
+-		return;
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -1656,6 +1658,9 @@ static void retrieve_deps(struct dm_tabl
+ 		deps->dev[count++] = huge_encode_dev(dd->dm_dev->bdev->bd_dev);
+ 
+ 	param->data_size = param->data_start + needed;
++
++out:
++	up_read(&table->devices_lock);
  }
  
--static inline struct dm_table *dm_get_live_table_bio(struct mapped_device *md,
--					int *srcu_idx, blk_opf_t bio_opf)
--{
--	if (bio_opf & REQ_NOWAIT)
--		return dm_get_live_table_fast(md);
--	else
--		return dm_get_live_table(md, srcu_idx);
--}
--
--static inline void dm_put_live_table_bio(struct mapped_device *md, int srcu_idx,
--					 blk_opf_t bio_opf)
--{
--	if (bio_opf & REQ_NOWAIT)
--		dm_put_live_table_fast(md);
--	else
--		dm_put_live_table(md, srcu_idx);
--}
--
- static char *_dm_claim_ptr = "I belong to device-mapper";
+ static int table_deps(struct file *filp, struct dm_ioctl *param, size_t param_size)
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -135,6 +135,7 @@ int dm_table_create(struct dm_table **re
+ 		return -ENOMEM;
  
- /*
-@@ -1833,9 +1815,8 @@ static void dm_submit_bio(struct bio *bi
- 	struct mapped_device *md = bio->bi_bdev->bd_disk->private_data;
- 	int srcu_idx;
- 	struct dm_table *map;
--	blk_opf_t bio_opf = bio->bi_opf;
+ 	INIT_LIST_HEAD(&t->devices);
++	init_rwsem(&t->devices_lock);
  
--	map = dm_get_live_table_bio(md, &srcu_idx, bio_opf);
-+	map = dm_get_live_table(md, &srcu_idx);
+ 	if (!num_targets)
+ 		num_targets = KEYS_PER_NODE;
+@@ -359,16 +360,20 @@ int __ref dm_get_device(struct dm_target
+ 	if (dev == disk_devt(t->md->disk))
+ 		return -EINVAL;
  
- 	/* If suspended, or map not yet available, queue this IO for later */
- 	if (unlikely(test_bit(DMF_BLOCK_IO_FOR_SUSPEND, &md->flags)) ||
-@@ -1851,7 +1832,7 @@ static void dm_submit_bio(struct bio *bi
++	down_write(&t->devices_lock);
++
+ 	dd = find_device(&t->devices, dev);
+ 	if (!dd) {
+ 		dd = kmalloc(sizeof(*dd), GFP_KERNEL);
+-		if (!dd)
+-			return -ENOMEM;
++		if (!dd) {
++			r = -ENOMEM;
++			goto unlock_ret_r;
++		}
  
- 	dm_split_and_process_bio(md, map, bio);
+ 		r = dm_get_table_device(t->md, dev, mode, &dd->dm_dev);
+ 		if (r) {
+ 			kfree(dd);
+-			return r;
++			goto unlock_ret_r;
+ 		}
+ 
+ 		refcount_set(&dd->count, 1);
+@@ -378,12 +383,17 @@ int __ref dm_get_device(struct dm_target
+ 	} else if (dd->dm_dev->mode != (mode | dd->dm_dev->mode)) {
+ 		r = upgrade_mode(dd, mode, t->md);
+ 		if (r)
+-			return r;
++			goto unlock_ret_r;
+ 	}
+ 	refcount_inc(&dd->count);
  out:
--	dm_put_live_table_bio(md, srcu_idx, bio_opf);
-+	dm_put_live_table(md, srcu_idx);
++	up_write(&t->devices_lock);
+ 	*result = dd->dm_dev;
+ 	return 0;
++
++unlock_ret_r:
++	up_write(&t->devices_lock);
++	return r;
  }
+ EXPORT_SYMBOL(dm_get_device);
  
- static bool dm_poll_dm_io(struct dm_io *io, struct io_comp_batch *iob,
+@@ -419,9 +429,12 @@ static int dm_set_device_limits(struct d
+ void dm_put_device(struct dm_target *ti, struct dm_dev *d)
+ {
+ 	int found = 0;
+-	struct list_head *devices = &ti->table->devices;
++	struct dm_table *t = ti->table;
++	struct list_head *devices = &t->devices;
+ 	struct dm_dev_internal *dd;
+ 
++	down_write(&t->devices_lock);
++
+ 	list_for_each_entry(dd, devices, list) {
+ 		if (dd->dm_dev == d) {
+ 			found = 1;
+@@ -430,14 +443,17 @@ void dm_put_device(struct dm_target *ti,
+ 	}
+ 	if (!found) {
+ 		DMERR("%s: device %s not in table devices list",
+-		      dm_device_name(ti->table->md), d->name);
+-		return;
++		      dm_device_name(t->md), d->name);
++		goto unlock_ret;
+ 	}
+ 	if (refcount_dec_and_test(&dd->count)) {
+-		dm_put_table_device(ti->table->md, d);
++		dm_put_table_device(t->md, d);
+ 		list_del(&dd->list);
+ 		kfree(dd);
+ 	}
++
++unlock_ret:
++	up_write(&t->devices_lock);
+ }
+ EXPORT_SYMBOL(dm_put_device);
+ 
 
 
