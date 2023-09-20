@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CC915AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C650C43391;
-	Wed, 20 Sep 2023 12:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C999615AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C6EC433CD;
+	Wed, 20 Sep 2023 12:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212199;
-	bh=yRb7UzAj27y7UzwdnSrnIchAVjb7a/Bh5m+12m8KUQo=;
+	s=korg; t=1695212201;
+	bh=wWMT8NIahWMdzD3fXVfuwfBS7hyxPB0Xor+nGxA7CwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6uKzs5NLiTigDuq5+fo7zZXl8G5JWQMevwVlWPQF0v87UTnhJTl4hG3PA4t4sJzS
-	 TtEg2zbcFvIDFq6tDiq/bY4buqrfmfUXbxt6l8UO4WbuWyVu0GITrZ4gnuXLCHOnCr
-	 wul9bKzz4bNZPFPAg8vj2O/ep85yLiX8Kyivj7Dc=
+	b=rf92kUAgkx2UQIt5LpisNy3Eda5AHCBXPr5Udan46YcQUk0chchygrGnR6vye+OpA
+	 tIRyN/nCAL63TcbbrwIqL1rZq2mjC+h1r7ZNDBNMATJ9rZsCqedHzVZ8echOaf0QCs
+	 Timkmswga+GcXM3Me00A8uIRyzfVV9+5Ov+H4cTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.19 187/273] crypto: stm32 - fix loop iterating through scatterlist for DMA
-Date: Wed, 20 Sep 2023 13:30:27 +0200
-Message-ID: <20230920112852.289383313@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 161/273] rpmsg: glink: Add check for kstrdup
+Date: Wed, 20 Sep 2023 13:30:01 +0200
+Message-ID: <20230920112851.502638964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,37 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
+[ Upstream commit b5c9ee8296a3760760c7b5d2e305f91412adc795 ]
 
-We were reading the length of the scatterlist sg after copying value of
-tsg inside.
-So we are using the size of the previous scatterlist and for the first
-one we are using an unitialised value.
-Fix this by copying tsg in sg[0] before reading the size.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20230619030631.12361-1-jiasheng@iscas.ac.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/stm32/stm32-hash.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rpmsg/qcom_glink_native.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/crypto/stm32/stm32-hash.c
-+++ b/drivers/crypto/stm32/stm32-hash.c
-@@ -578,9 +578,9 @@ static int stm32_hash_dma_send(struct st
- 	}
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 940f099c2092f..02e39778d3c6b 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -222,6 +222,10 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
  
- 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
-+		sg[0] = *tsg;
- 		len = sg->length;
+ 	channel->glink = glink;
+ 	channel->name = kstrdup(name, GFP_KERNEL);
++	if (!channel->name) {
++		kfree(channel);
++		return ERR_PTR(-ENOMEM);
++	}
  
--		sg[0] = *tsg;
- 		if (sg_is_last(sg)) {
- 			if (hdev->dma_mode == 1) {
- 				len = (ALIGN(sg->length, 16) - 16);
+ 	init_completion(&channel->open_req);
+ 	init_completion(&channel->open_ack);
+-- 
+2.40.1
+
 
 
