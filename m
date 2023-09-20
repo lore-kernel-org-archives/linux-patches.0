@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65732208BB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDB0C433C9;
-	Wed, 20 Sep 2023 11:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0547D23752
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80530C433C8;
+	Wed, 20 Sep 2023 11:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210733;
-	bh=RQDNqqSPjEVrWVypEfmLuk/PPxk6jNcR82KJyH6h8gw=;
+	s=korg; t=1695210735;
+	bh=oR4wrezun5lGwCWrVeVN31HP52I5zpQIjmfeDnn2AWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMSjSK9L1CxpcGwGHCS2NGAyoDyCIGM3bdjo9GZ61bzLGT+MRSzCMa0KXMjaJATcp
-	 75WT/nZkR7BypCkX2YDbXBKYF3uhgL+Qro22P2kwtoMpFA1hZm7et/Df8V+i5LMcwN
-	 jpLP/WV1E0FNJ5dTQuSJ3oAXdqJe5Dcdk762o1t4=
+	b=GWAGVzKPBJ656DMcmLyQk8HMU3IuiNM4/MQQMIro/Qgbzo6O4NffCHAuYK8sxKKC+
+	 xkkWuUIUOxw4aaC1Dgh4gzZs8+QHhUXBNLhaMml5xJ0fF/OeTeROHcT1w6OWCrLu0L
+	 tUxRQHUu8XpgvHQ89SG+R5DXkM24QmUf7chNkdzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Aaron Lu <aaron.lu@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 159/211] ata: libata-core: fetch sense data for successful commands iff CDL enabled
-Date: Wed, 20 Sep 2023 13:30:03 +0200
-Message-ID: <20230920112850.812529282@linuxfoundation.org>
+Subject: [PATCH 6.5 160/211] x86/boot/compressed: Reserve more memory for page tables
+Date: Wed, 20 Sep 2023 13:30:04 +0200
+Message-ID: <20230920112850.845834625@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,65 +41,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 5e35a9ac3fe3a0d571b899a16ca84253e53dc70c ]
+[ Upstream commit f530ee95b72e77b09c141c4b1a4b94d1199ffbd9 ]
 
-Currently, we fetch sense data for a _successful_ command if either:
-1) Command was NCQ and ATA_DFLAG_CDL_ENABLED flag set (flag
-   ATA_DFLAG_CDL_ENABLED will only be set if the Successful NCQ command
-   sense data supported bit is set); or
-2) Command was non-NCQ and regular sense data reporting is enabled.
+The decompressor has a hard limit on the number of page tables it can
+allocate. This limit is defined at compile-time and will cause boot
+failure if it is reached.
 
-This means that case 2) will trigger for a non-NCQ command which has
-ATA_SENSE bit set, regardless if CDL is enabled or not.
+The kernel is very strict and calculates the limit precisely for the
+worst-case scenario based on the current configuration. However, it is
+easy to forget to adjust the limit when a new use-case arises. The
+worst-case scenario is rarely encountered during sanity checks.
 
-This decision was by design. If the device reports that it has sense data
-available, it makes sense to fetch that sense data, since the sk/asc/ascq
-could be important information regardless if CDL is enabled or not.
+In the case of enabling 5-level paging, a use-case was overlooked. The
+limit needs to be increased by one to accommodate the additional level.
+This oversight went unnoticed until Aaron attempted to run the kernel
+via kexec with 5-level paging and unaccepted memory enabled.
 
-However, the fetching of sense data for a successful command is done via
-ATA EH. Considering how intricate the ATA EH is, we really do not want to
-invoke ATA EH unless absolutely needed.
+Update wost-case calculations to include 5-level paging.
 
-Before commit 18bd7718b5c4 ("scsi: ata: libata: Handle completion of CDL
-commands using policy 0xD") we never fetched sense data for successful
-commands.
+To address this issue, let's allocate some extra space for page tables.
+128K should be sufficient for any use-case. The logic can be simplified
+by using a single value for all kernel configurations.
 
-In order to not invoke the ATA EH unless absolutely necessary, even if the
-device claims support for sense data reporting, only fetch sense data for
-successful (NCQ and non-NCQ commands) commands that are using CDL.
+[ Also add a warning, should this memory run low - by Dave Hansen. ]
 
-[Damien] Modified the check to test the qc flag ATA_QCFLAG_HAS_CDL
-instead of the device support for CDL, which is implied for commands
-using CDL.
-
-Fixes: 3ac873c76d79 ("ata: libata-core: fix when to fetch sense data for successful commands")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 34bbb0009f3b ("x86/boot/compressed: Enable 5-level paging during decompression stage")
+Reported-by: Aaron Lu <aaron.lu@intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230915070221.10266-1-kirill.shutemov@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/x86/boot/compressed/ident_map_64.c |  8 +++++
+ arch/x86/include/asm/boot.h             | 45 +++++++++++++++++--------
+ 2 files changed, 39 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index c7a29c3ac6701..291e128f4d2b4 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4919,11 +4919,8 @@ void ata_qc_complete(struct ata_queued_cmd *qc)
- 	 * been aborted by the device due to a limit timeout using the policy
- 	 * 0xD. For these commands, invoke EH to get the command sense data.
- 	 */
--	if (qc->result_tf.status & ATA_SENSE &&
--	    ((ata_is_ncq(qc->tf.protocol) &&
--	      dev->flags & ATA_DFLAG_CDL_ENABLED) ||
--	     (!ata_is_ncq(qc->tf.protocol) &&
--	      ata_id_sense_reporting_enabled(dev->id)))) {
-+	if (qc->flags & ATA_QCFLAG_HAS_CDL &&
-+	    qc->result_tf.status & ATA_SENSE) {
- 		/*
- 		 * Tell SCSI EH to not overwrite scmd->result even if this
- 		 * command is finished with result SAM_STAT_GOOD.
+diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
+index bcc956c17872b..08f93b0401bbd 100644
+--- a/arch/x86/boot/compressed/ident_map_64.c
++++ b/arch/x86/boot/compressed/ident_map_64.c
+@@ -59,6 +59,14 @@ static void *alloc_pgt_page(void *context)
+ 		return NULL;
+ 	}
+ 
++	/* Consumed more tables than expected? */
++	if (pages->pgt_buf_offset == BOOT_PGT_SIZE_WARN) {
++		debug_putstr("pgt_buf running low in " __FILE__ "\n");
++		debug_putstr("Need to raise BOOT_PGT_SIZE?\n");
++		debug_putaddr(pages->pgt_buf_offset);
++		debug_putaddr(pages->pgt_buf_size);
++	}
++
+ 	entry = pages->pgt_buf + pages->pgt_buf_offset;
+ 	pages->pgt_buf_offset += PAGE_SIZE;
+ 
+diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
+index 9191280d9ea31..215d37f7dde8a 100644
+--- a/arch/x86/include/asm/boot.h
++++ b/arch/x86/include/asm/boot.h
+@@ -40,23 +40,40 @@
+ #ifdef CONFIG_X86_64
+ # define BOOT_STACK_SIZE	0x4000
+ 
++/*
++ * Used by decompressor's startup_32() to allocate page tables for identity
++ * mapping of the 4G of RAM in 4-level paging mode:
++ * - 1 level4 table;
++ * - 1 level3 table;
++ * - 4 level2 table that maps everything with 2M pages;
++ *
++ * The additional level5 table needed for 5-level paging is allocated from
++ * trampoline_32bit memory.
++ */
+ # define BOOT_INIT_PGT_SIZE	(6*4096)
+-# ifdef CONFIG_RANDOMIZE_BASE
++
+ /*
+- * Assuming all cross the 512GB boundary:
+- * 1 page for level4
+- * (2+2)*4 pages for kernel, param, cmd_line, and randomized kernel
+- * 2 pages for first 2M (video RAM: CONFIG_X86_VERBOSE_BOOTUP).
+- * Total is 19 pages.
++ * Total number of page tables kernel_add_identity_map() can allocate,
++ * including page tables consumed by startup_32().
++ *
++ * Worst-case scenario:
++ *  - 5-level paging needs 1 level5 table;
++ *  - KASLR needs to map kernel, boot_params, cmdline and randomized kernel,
++ *    assuming all of them cross 256T boundary:
++ *    + 4*2 level4 table;
++ *    + 4*2 level3 table;
++ *    + 4*2 level2 table;
++ *  - X86_VERBOSE_BOOTUP needs to map the first 2M (video RAM):
++ *    + 1 level4 table;
++ *    + 1 level3 table;
++ *    + 1 level2 table;
++ * Total: 28 tables
++ *
++ * Add 4 spare table in case decompressor touches anything beyond what is
++ * accounted above. Warn if it happens.
+  */
+-#  ifdef CONFIG_X86_VERBOSE_BOOTUP
+-#   define BOOT_PGT_SIZE	(19*4096)
+-#  else /* !CONFIG_X86_VERBOSE_BOOTUP */
+-#   define BOOT_PGT_SIZE	(17*4096)
+-#  endif
+-# else /* !CONFIG_RANDOMIZE_BASE */
+-#  define BOOT_PGT_SIZE		BOOT_INIT_PGT_SIZE
+-# endif
++# define BOOT_PGT_SIZE_WARN	(28*4096)
++# define BOOT_PGT_SIZE		(32*4096)
+ 
+ #else /* !CONFIG_X86_64 */
+ # define BOOT_STACK_SIZE	0x1000
 -- 
 2.40.1
 
