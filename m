@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB59730FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:25:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C21C433C9;
-	Wed, 20 Sep 2023 12:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9087D30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1862DC433C9;
+	Wed, 20 Sep 2023 12:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212730;
-	bh=t77G2dfyg9kV3fgASqwwzpLYY8wjdzMtD+3ifdtIOik=;
+	s=korg; t=1695212733;
+	bh=v8JJDzf/lTKJCUC/maifZffq2SWQx6yHCz4rT34ZTvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3D0JqEp3EJRVG5/LVjety5d7SCLrGknU+wu9K8Zz6a4UTyjy+0bfbmsuTOwkilbh
-	 c70XGm/4PG7lsl1LxIfVhoUbYHb7hHhPMhYvrg6B5jbyQSUkNi0xjzci2Glsyb4onK
-	 xLmQY5AQ+H/39MMKKF6K8TZ34bWkuIIeapASbFdc=
+	b=vCcSqxsazJQUapxuk0CVP0FUsf8SE799wrO1nSsUVW5PLNMHOeCWz8IxEwkWDJqZk
+	 XwTvJ9VIQFhkZMW72U4ToSdK+AXDp3UW1N9D59/XW+bFEpEG+LiRCNivP1UYzI0UCB
+	 2bkx+2ZXLd1fBZOPTR5v+hOdOKT//jJ5NGdCplyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Winston Wen <wentao@uniontech.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/367] fs/nls: make load_nls() take a const parameter
-Date: Wed, 20 Sep 2023 13:26:43 +0200
-Message-ID: <20230920112859.197455931@linuxfoundation.org>
+	Aaron Skomra <skomra@gmail.com>,
+	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.4 009/367] HID: wacom: remove the battery when the EKR is off
+Date: Wed, 20 Sep 2023 13:26:26 +0200
+Message-ID: <20230920112858.738658438@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,66 +41,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Winston Wen <wentao@uniontech.com>
+From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
 
-[ Upstream commit c1ed39ec116272935528ca9b348b8ee79b0791da ]
+commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
 
-load_nls() take a char * parameter, use it to find nls module in list or
-construct the module name to load it.
+Currently the EKR battery remains even after we stop getting information
+from the device. This can lead to a stale battery persisting indefinitely
+in userspace.
 
-This change make load_nls() take a const parameter, so we don't need do
-some cast like this:
+The remote sends a heartbeat every 10 seconds. Delete the battery if we
+miss two heartbeats (after 21 seconds). Restore the battery once we see
+a heartbeat again.
 
-        ses->local_nls = load_nls((char *)ctx->local_nls->charset);
-
-Suggested-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Aaron Skomra <skomra@gmail.com>
+Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
+CC: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nls/nls_base.c   | 4 ++--
- include/linux/nls.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/wacom.h     |    1 +
+ drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
+ drivers/hid/wacom_wac.c |    1 +
+ drivers/hid/wacom_wac.h |    1 +
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
-index 52ccd34b1e792..a026dbd3593f6 100644
---- a/fs/nls/nls_base.c
-+++ b/fs/nls/nls_base.c
-@@ -272,7 +272,7 @@ int unregister_nls(struct nls_table * nls)
- 	return -EINVAL;
+--- a/drivers/hid/wacom.h
++++ b/drivers/hid/wacom.h
+@@ -153,6 +153,7 @@ struct wacom_remote {
+ 		struct input_dev *input;
+ 		bool registered;
+ 		struct wacom_battery battery;
++		ktime_t active_time;
+ 	} remotes[WACOM_MAX_REMOTES];
+ };
+ 
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2529,6 +2529,18 @@ fail:
+ 	return;
  }
  
--static struct nls_table *find_nls(char *charset)
-+static struct nls_table *find_nls(const char *charset)
++static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
++{
++	struct wacom_remote *remote = wacom->remote;
++
++	if (remote->remotes[index].battery.battery) {
++		devres_release_group(&wacom->hdev->dev,
++				     &remote->remotes[index].battery.bat_desc);
++		remote->remotes[index].battery.battery = NULL;
++		remote->remotes[index].active_time = 0;
++	}
++}
++
+ static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
  {
- 	struct nls_table *nls;
- 	spin_lock(&nls_lock);
-@@ -288,7 +288,7 @@ static struct nls_table *find_nls(char *charset)
- 	return nls;
- }
+ 	struct wacom_remote *remote = wacom->remote;
+@@ -2543,9 +2555,7 @@ static void wacom_remote_destroy_one(str
+ 			remote->remotes[i].registered = false;
+ 			spin_unlock_irqrestore(&remote->remote_lock, flags);
  
--struct nls_table *load_nls(char *charset)
-+struct nls_table *load_nls(const char *charset)
+-			if (remote->remotes[i].battery.battery)
+-				devres_release_group(&wacom->hdev->dev,
+-						     &remote->remotes[i].battery.bat_desc);
++			wacom_remote_destroy_battery(wacom, i);
+ 
+ 			if (remote->remotes[i].group.name)
+ 				devres_release_group(&wacom->hdev->dev,
+@@ -2553,7 +2563,6 @@ static void wacom_remote_destroy_one(str
+ 
+ 			remote->remotes[i].serial = 0;
+ 			remote->remotes[i].group.name = NULL;
+-			remote->remotes[i].battery.battery = NULL;
+ 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
+ 		}
+ 	}
+@@ -2638,6 +2647,9 @@ static int wacom_remote_attach_battery(s
+ 	if (remote->remotes[index].battery.battery)
+ 		return 0;
+ 
++	if (!remote->remotes[index].active_time)
++		return 0;
++
+ 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
+ 		return 0;
+ 
+@@ -2653,6 +2665,7 @@ static void wacom_remote_work(struct wor
  {
- 	return try_then_request_module(find_nls(charset), "nls_%s", charset);
- }
-diff --git a/include/linux/nls.h b/include/linux/nls.h
-index 499e486b3722d..e0bf8367b274a 100644
---- a/include/linux/nls.h
-+++ b/include/linux/nls.h
-@@ -47,7 +47,7 @@ enum utf16_endian {
- /* nls_base.c */
- extern int __register_nls(struct nls_table *, struct module *);
- extern int unregister_nls(struct nls_table *);
--extern struct nls_table *load_nls(char *);
-+extern struct nls_table *load_nls(const char *charset);
- extern void unload_nls(struct nls_table *);
- extern struct nls_table *load_nls_default(void);
- #define register_nls(nls) __register_nls((nls), THIS_MODULE)
--- 
-2.40.1
-
+ 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
+ 	struct wacom_remote *remote = wacom->remote;
++	ktime_t kt = ktime_get();
+ 	struct wacom_remote_data data;
+ 	unsigned long flags;
+ 	unsigned int count;
+@@ -2679,6 +2692,10 @@ static void wacom_remote_work(struct wor
+ 		serial = data.remote[i].serial;
+ 		if (data.remote[i].connected) {
+ 
++			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
++			    && remote->remotes[i].active_time != 0)
++				wacom_remote_destroy_battery(wacom, i);
++
+ 			if (remote->remotes[i].serial == serial) {
+ 				wacom_remote_attach_battery(wacom, i);
+ 				continue;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1127,6 +1127,7 @@ static int wacom_remote_irq(struct wacom
+ 	if (index < 0 || !remote->remotes[index].registered)
+ 		goto out;
+ 
++	remote->remotes[i].active_time = ktime_get();
+ 	input = remote->remotes[index].input;
+ 
+ 	input_report_key(input, BTN_0, (data[9] & 0x01));
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -15,6 +15,7 @@
+ #define WACOM_NAME_MAX		64
+ #define WACOM_MAX_REMOTES	5
+ #define WACOM_STATUS_UNKNOWN	255
++#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
+ 
+ /* packet length for individual models */
+ #define WACOM_PKGLEN_BBFUN	 9
 
 
