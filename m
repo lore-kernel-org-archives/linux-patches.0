@@ -1,87 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB504125C1;
-	Wed, 20 Sep 2023 09:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0BEC433C9;
-	Wed, 20 Sep 2023 09:25:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695201910;
-	bh=+Vx4pZyRUu1fyYPhOi72zytZP5DFTTN2SI/8tCaJRjg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NvoSEPeffyivIH5CT28GoxlHRWvGT8nI6rZcrGnSCP6Lnm79ksnS8+6TA8PxN+yi3
-	 0KQ5ntj66H6wThAh66/jNwsM7jK10nRNss2HY4PTf1Zz8rlT8jUkwcY1pywD/KVdw0
-	 2pxPMqnHxiFvS8l7uCnCacHDJvfR0m35IK2MZ7lM=
-Date: Wed, 20 Sep 2023 11:25:08 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Michal Hocko <mhocko@suse.com>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>, Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
-	mathieu.tortuyaux@gmail.com
-Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
- kmem.limit_in_bytes
-Message-ID: <2023092032-applied-gave-0bff@gregkh>
-References: <20230917191040.964416434@linuxfoundation.org>
- <20230917191042.204185566@linuxfoundation.org>
- <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
- <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA4341172F;
+	Wed, 20 Sep 2023 10:04:53 +0000 (UTC)
+Received: from [192.168.2.41] (77-166-152-30.fixed.kpn.net [77.166.152.30])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 112CB212C4B2;
+	Wed, 20 Sep 2023 03:04:49 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 112CB212C4B2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1695204292;
+	bh=3bC6p4sdHzytTO0QKfyFybQqp0lACEhiSf/B5PUqc00=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=h/YyjqOEiWd8pu5Aeb671sFZKoQY0fwShQJicaEbCnEbeLBtsh7LHpAw5WRPPLqc2
+	 BSkSqH5iAh9vTpQhEDIKk607F+IZLp27UXDd9uW9rs+uHhndP4n4ewpTFGgF5w1ycY
+	 KQ5DrwpI4tOdPwgzvZQ1f6U3SuOuZipLoAyhOBG4=
+Message-ID: <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+Date: Wed, 20 Sep 2023 12:04:48 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+To: Michal Hocko <mhocko@suse.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, Shakeel Butt <shakeelb@google.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Muchun Song <muchun.song@linux.dev>, Tejun Heo <tj@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-kernel@vger.kernel.org,
+ regressions@lists.linux.dev, mathieu.tortuyaux@gmail.com
+References: <20230917191040.964416434@linuxfoundation.org>
+ <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+Content-Language: en-US
 In-Reply-To: <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 20, 2023 at 10:43:56AM +0200, Michal Hocko wrote:
+On 9/20/2023 10:43 AM, Michal Hocko wrote:
 > On Wed 20-09-23 01:11:01, Jeremi Piotrowski wrote:
-> > On Sun, Sep 17, 2023 at 09:12:40PM +0200, Greg Kroah-Hartman wrote:
-> > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > 
-> > Hi Greg/Michal,
-> > 
-> > This commit breaks userspace which makes it a bad commit for mainline and an
-> > even worse commit for stable.
-> > 
-> > We ingested 6.1.54 into our nightly testing and found that runc fails to gather
-> > cgroup statistics (when reading kmem.limit_in_bytes). The same code is vendored
-> > into kubelet and kubelet fails to start if this operation fails. 6.1.53 is
-> > fine.
+>> On Sun, Sep 17, 2023 at 09:12:40PM +0200, Greg Kroah-Hartman wrote:
+>>> 6.1-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>
+>> Hi Greg/Michal,
+>>
+>> This commit breaks userspace which makes it a bad commit for mainline and an
+>> even worse commit for stable.
+>>
+>> We ingested 6.1.54 into our nightly testing and found that runc fails to gather
+>> cgroup statistics (when reading kmem.limit_in_bytes). The same code is vendored
+>> into kubelet and kubelet fails to start if this operation fails. 6.1.53 is
+>> fine.
 > 
 > Could you expand some more on why is the file read? It doesn't support
 > writing to it for some time so how does reading it helps in any sense?
 > 
 > Anyway, I do agree that the stable backport should be reverted.
+> 
 
-That will just postpone the breakage, we really shouldn't break
-userspace.
+This file is read together with all the other memcg files. Each prefix:
 
-That being said, having userspace "break" because a file is no longer
-present is not good coding style on the userspace side at all.  That's
-why we have sysfs and single-value-files now, if the file isn't present,
-then userspace instantly notices and can handle it.  Much easier than
-the old-style multi-fields-in-one-file problem.
+memory
+memory.memsw
+memory.kmem
+memory.kmem.tcp
 
-> > > Address this by wiping out the file completely and effectively get back to
-> > > pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+is combined with these suffixes
 
-The fact that this is a valid option (i.e. no file) with that config
-option disabled makes me want to keep this as well, as how does
-userspace handle this option disabled at all?  Or old kernels?
+.usage_in_bytes
+.max_usage_in_bytes
+.failcnt
+.limit_in_bytes
 
-I can drop this from stable kernels, but again, this feels like the runc
-developers are just postponing the problem...
+and read, the values are then forwarded on to other components for scheduling decisions.
+You want to know the limit when checking the usage (is the usage close to the limit or not).
 
-thanks,
+Userspace tolerates MEMCG/MEMCG_KMEM being disabled, but having a single file out of the
+set missing is an anomaly. So maybe we could keep the dummy file just for the
+sake of consistency? Cgroupv1 is legacy after all.
 
-greg k-h
+>>> Address this by wiping out the file completely and effectively get back to
+>>> pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+>>
+>> On reads, the runc code checks for MEMCG_KMEM=n by checking
+>> kmem.usage_in_bytes. If it is present then runc expects the other cgroup files
+>> to be there (including kmem.limit_in_bytes). So this change is not effectively
+>> the same.
+>>
+>> Here's a link to the PR that would be needed to handle this change in userspace
+>> (not merged yet and would need to be propagated through the ecosystem):
+>>
+>> https://github.com/opencontainers/runc/pull/4018.
+> 
+> Thanks. Does that mean the revert is still necessary for the Linus tree
+> or do you expect that the fix can be merged and propagated in a
+> reasonable time?
+> 
+
+We can probably get runc and currently supported kubernetes versions patched in time
+before 6.6 (or the next LTS kernel) hits LTS distros.
+
+But there's still a bunch of users running cgroupv1 with unsupported kubernetes
+versions that are still taking kernel updates as they come, so this might get reported
+again next year if it stays in mainline.
