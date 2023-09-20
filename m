@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C51168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5829EC433C7;
-	Wed, 20 Sep 2023 12:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B33A168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04772C433C8;
+	Wed, 20 Sep 2023 12:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214039;
-	bh=UXXHrAaKBhfW+5FD3GOd7c8tesDc+Pzrl8F+g7xn1vY=;
+	s=korg; t=1695214042;
+	bh=JpnDUUe2NYQ+lFbxocx/ZSyMXUaAr6FZOyUnYwOBhdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kf2brRpQ4PBtyDdEjOGQYzyBZvRnYe0wYV8wq4XRd+qLGIHeg+qV7vc5v9HFz7VIx
-	 Rm5Hwpf7QPD/Wa1O50y5GheYWT4rrMpeQz1flLWJrnfdeyhiNWm4oPECkM3hu7qIu3
-	 usaD6jGd9SMuHATDe+wdbZKq+CWQ+79v6ElArixY=
+	b=ylTjzbMPUsKFcr1rt/4wKJkDCiOdsnOatxFX72qMuPpy9Pdt7Xe9OQ7GOHsc7P9T/
+	 BWnjwRCIx54ceeO9m0LccTlNxuP+RNNePqEkvTwu6wOTobDbzWZQoZQ51b1yWgCyO6
+	 d+7zHvb/p0oA4IJ47YIsb5oDXR4ptCJOqe98futg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ritesh Harjani <riteshh@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Konstantin Shelekhin <k.shelekhin@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/110] jbd2: kill t_handle_lock transaction spinlock
-Date: Wed, 20 Sep 2023 13:32:01 +0200
-Message-ID: <20230920112832.774274238@linuxfoundation.org>
+Subject: [PATCH 5.15 054/110] scsi: target: iscsi: Fix buffer overflow in lio_target_nacl_info_show()
+Date: Wed, 20 Sep 2023 13:31:52 +0200
+Message-ID: <20230920112832.426652159@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,181 +40,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani <riteshh@linux.ibm.com>
+From: Konstantin Shelekhin <k.shelekhin@yadro.com>
 
-[ Upstream commit f7f497cb702462e8505ff3d8d4e7722ad95626a1 ]
+[ Upstream commit 801f287c93ff95582b0a2d2163f12870a2f076d4 ]
 
-This patch kills t_handle_lock transaction spinlock completely from
-jbd2.
+The function lio_target_nacl_info_show() uses sprintf() in a loop to print
+details for every iSCSI connection in a session without checking for the
+buffer length. With enough iSCSI connections it's possible to overflow the
+buffer provided by configfs and corrupt the memory.
 
-To explain the reasoning, currently there were three sites at which
-this spinlock was used.
+This patch replaces sprintf() with sysfs_emit_at() that checks for buffer
+boundries.
 
-1. jbd2_journal_wait_updates()
-   a. Based on careful code review it can be seen that, we don't need this
-      lock here. This is since we wait for any currently ongoing updates
-      based on a atomic variable t_updates. And we anyway don't take any
-      t_handle_lock while in stop_this_handle().
-      i.e.
-
-	write_lock(&journal->j_state_lock()
-	jbd2_journal_wait_updates() 			stop_this_handle()
-		while (atomic_read(txn->t_updates) { 		|
-		DEFINE_WAIT(wait); 				|
-		prepare_to_wait(); 				|
-		if (atomic_read(txn->t_updates) 		if (atomic_dec_and_test(txn->t_updates))
-			write_unlock(&journal->j_state_lock);
-			schedule();					wake_up()
-			write_lock(&journal->j_state_lock);
-		finish_wait();
-	   }
-	txn->t_state = T_COMMIT
-	write_unlock(&journal->j_state_lock);
-
-   b.  Also note that between atomic_inc(&txn->t_updates) in
-       start_this_handle() and jbd2_journal_wait_updates(), the
-       synchronization happens via read_lock(journal->j_state_lock) in
-       start_this_handle();
-
-2. jbd2_journal_extend()
-   a. jbd2_journal_extend() is called with the handle of each process from
-      task_struct. So no lock required in updating member fields of handle_t
-
-   b. For member fields of h_transaction, all updates happens only via
-      atomic APIs (which is also within read_lock()).
-      So, no need of this transaction spinlock.
-
-3. update_t_max_wait()
-   Based on Jan suggestion, this can be carefully removed using atomic
-   cmpxchg API.
-   Note that there can be several processes which are waiting for a new
-   transaction to be allocated and started. For doing this only one
-   process will succeed in taking write_lock() and allocating a new txn.
-   After that all of the process will be updating the t_max_wait (max
-   transaction wait time). This can be done via below method w/o taking
-   any locks using atomic cmpxchg.
-   For more details refer [1]
-
-	   new = get_new_val();
-	   old = READ_ONCE(ptr->max_val);
-	   while (old < new)
-		old = cmpxchg(&ptr->max_val, old, new);
-
-[1]: https://lwn.net/Articles/849237/
-
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/d89e599658b4a1f3893a48c6feded200073037fc.1644992076.git.riteshh@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 2dfba3bb40ad ("jbd2: correct the end of the journal recovery scan range")
+Signed-off-by: Konstantin Shelekhin <k.shelekhin@yadro.com>
+Link: https://lore.kernel.org/r/20230722152657.168859-2-k.shelekhin@yadro.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c | 28 +++++++++-------------------
- include/linux/jbd2.h  |  3 ---
- 2 files changed, 9 insertions(+), 22 deletions(-)
+ drivers/target/iscsi/iscsi_target_configfs.c | 54 ++++++++++----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 59292b82d4424..b31145b2bb6bf 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -107,7 +107,6 @@ static void jbd2_get_transaction(journal_t *journal,
- 	transaction->t_start_time = ktime_get();
- 	transaction->t_tid = journal->j_transaction_sequence++;
- 	transaction->t_expires = jiffies + journal->j_commit_interval;
--	spin_lock_init(&transaction->t_handle_lock);
- 	atomic_set(&transaction->t_updates, 0);
- 	atomic_set(&transaction->t_outstanding_credits,
- 		   jbd2_descriptor_blocks_per_trans(journal) +
-@@ -139,24 +138,21 @@ static void jbd2_get_transaction(journal_t *journal,
- /*
-  * Update transaction's maximum wait time, if debugging is enabled.
-  *
-- * In order for t_max_wait to be reliable, it must be protected by a
-- * lock.  But doing so will mean that start_this_handle() can not be
-- * run in parallel on SMP systems, which limits our scalability.  So
-- * unless debugging is enabled, we no longer update t_max_wait, which
-- * means that maximum wait time reported by the jbd2_run_stats
-- * tracepoint will always be zero.
-+ * t_max_wait is carefully updated here with use of atomic compare exchange.
-+ * Note that there could be multiplre threads trying to do this simultaneously
-+ * hence using cmpxchg to avoid any use of locks in this case.
-  */
- static inline void update_t_max_wait(transaction_t *transaction,
- 				     unsigned long ts)
- {
- #ifdef CONFIG_JBD2_DEBUG
-+	unsigned long oldts, newts;
- 	if (jbd2_journal_enable_debug &&
- 	    time_after(transaction->t_start, ts)) {
--		ts = jbd2_time_diff(ts, transaction->t_start);
--		spin_lock(&transaction->t_handle_lock);
--		if (ts > transaction->t_max_wait)
--			transaction->t_max_wait = ts;
--		spin_unlock(&transaction->t_handle_lock);
-+		newts = jbd2_time_diff(ts, transaction->t_start);
-+		oldts = READ_ONCE(transaction->t_max_wait);
-+		while (oldts < newts)
-+			oldts = cmpxchg(&transaction->t_max_wait, oldts, newts);
- 	}
- #endif
- }
-@@ -690,7 +686,6 @@ int jbd2_journal_extend(handle_t *handle, int nblocks, int revoke_records)
- 		DIV_ROUND_UP(
- 			handle->h_revoke_credits_requested,
- 			journal->j_revoke_records_per_block);
--	spin_lock(&transaction->t_handle_lock);
- 	wanted = atomic_add_return(nblocks,
- 				   &transaction->t_outstanding_credits);
+diff --git a/drivers/target/iscsi/iscsi_target_configfs.c b/drivers/target/iscsi/iscsi_target_configfs.c
+index f4a24fa5058e6..df399110fbf11 100644
+--- a/drivers/target/iscsi/iscsi_target_configfs.c
++++ b/drivers/target/iscsi/iscsi_target_configfs.c
+@@ -507,102 +507,102 @@ static ssize_t lio_target_nacl_info_show(struct config_item *item, char *page)
+ 	spin_lock_bh(&se_nacl->nacl_sess_lock);
+ 	se_sess = se_nacl->nacl_sess;
+ 	if (!se_sess) {
+-		rb += sprintf(page+rb, "No active iSCSI Session for Initiator"
++		rb += sysfs_emit_at(page, rb, "No active iSCSI Session for Initiator"
+ 			" Endpoint: %s\n", se_nacl->initiatorname);
+ 	} else {
+ 		sess = se_sess->fabric_sess_ptr;
  
-@@ -698,7 +693,7 @@ int jbd2_journal_extend(handle_t *handle, int nblocks, int revoke_records)
- 		jbd_debug(3, "denied handle %p %d blocks: "
- 			  "transaction too large\n", handle, nblocks);
- 		atomic_sub(nblocks, &transaction->t_outstanding_credits);
--		goto unlock;
-+		goto error_out;
- 	}
+-		rb += sprintf(page+rb, "InitiatorName: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorName: %s\n",
+ 			sess->sess_ops->InitiatorName);
+-		rb += sprintf(page+rb, "InitiatorAlias: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorAlias: %s\n",
+ 			sess->sess_ops->InitiatorAlias);
  
- 	trace_jbd2_handle_extend(journal->j_fs_dev->bd_dev,
-@@ -714,8 +709,6 @@ int jbd2_journal_extend(handle_t *handle, int nblocks, int revoke_records)
- 	result = 0;
- 
- 	jbd_debug(3, "extended handle %p by %d\n", handle, nblocks);
--unlock:
--	spin_unlock(&transaction->t_handle_lock);
- error_out:
- 	read_unlock(&journal->j_state_lock);
- 	return result;
-@@ -860,15 +853,12 @@ void jbd2_journal_wait_updates(journal_t *journal)
- 		if (!transaction)
+-		rb += sprintf(page+rb,
++		rb += sysfs_emit_at(page, rb,
+ 			      "LIO Session ID: %u   ISID: 0x%6ph  TSIH: %hu  ",
+ 			      sess->sid, sess->isid, sess->tsih);
+-		rb += sprintf(page+rb, "SessionType: %s\n",
++		rb += sysfs_emit_at(page, rb, "SessionType: %s\n",
+ 				(sess->sess_ops->SessionType) ?
+ 				"Discovery" : "Normal");
+-		rb += sprintf(page+rb, "Session State: ");
++		rb += sysfs_emit_at(page, rb, "Session State: ");
+ 		switch (sess->session_state) {
+ 		case TARG_SESS_STATE_FREE:
+-			rb += sprintf(page+rb, "TARG_SESS_FREE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_FREE\n");
  			break;
- 
--		spin_lock(&transaction->t_handle_lock);
- 		prepare_to_wait(&journal->j_wait_updates, &wait,
- 				TASK_UNINTERRUPTIBLE);
- 		if (!atomic_read(&transaction->t_updates)) {
--			spin_unlock(&transaction->t_handle_lock);
- 			finish_wait(&journal->j_wait_updates, &wait);
+ 		case TARG_SESS_STATE_ACTIVE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_ACTIVE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_ACTIVE\n");
+ 			break;
+ 		case TARG_SESS_STATE_LOGGED_IN:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_LOGGED_IN\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_LOGGED_IN\n");
+ 			break;
+ 		case TARG_SESS_STATE_FAILED:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_FAILED\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_FAILED\n");
+ 			break;
+ 		case TARG_SESS_STATE_IN_CONTINUE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_IN_CONTINUE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_IN_CONTINUE\n");
+ 			break;
+ 		default:
+-			rb += sprintf(page+rb, "ERROR: Unknown Session"
++			rb += sysfs_emit_at(page, rb, "ERROR: Unknown Session"
+ 					" State!\n");
  			break;
  		}
--		spin_unlock(&transaction->t_handle_lock);
- 		write_unlock(&journal->j_state_lock);
- 		schedule();
- 		finish_wait(&journal->j_wait_updates, &wait);
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index 03d8ba98cbeb7..f29fda630b2de 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -554,9 +554,6 @@ struct transaction_chp_stats_s {
-  *    ->j_list_lock
-  *
-  *    j_state_lock
-- *    ->t_handle_lock
-- *
-- *    j_state_lock
-  *    ->j_list_lock			(journal_unmap_buffer)
-  *
-  */
+ 
+-		rb += sprintf(page+rb, "---------------------[iSCSI Session"
++		rb += sysfs_emit_at(page, rb, "---------------------[iSCSI Session"
+ 				" Values]-----------------------\n");
+-		rb += sprintf(page+rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
++		rb += sysfs_emit_at(page, rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
+ 				"  :  MaxCmdSN  :     ITT    :     TTT\n");
+ 		max_cmd_sn = (u32) atomic_read(&sess->max_cmd_sn);
+-		rb += sprintf(page+rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
++		rb += sysfs_emit_at(page, rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
+ 				"   0x%08x   0x%08x\n",
+ 			sess->cmdsn_window,
+ 			(max_cmd_sn - sess->exp_cmd_sn) + 1,
+ 			sess->exp_cmd_sn, max_cmd_sn,
+ 			sess->init_task_tag, sess->targ_xfer_tag);
+-		rb += sprintf(page+rb, "----------------------[iSCSI"
++		rb += sysfs_emit_at(page, rb, "----------------------[iSCSI"
+ 				" Connections]-------------------------\n");
+ 
+ 		spin_lock(&sess->conn_lock);
+ 		list_for_each_entry(conn, &sess->sess_conn_list, conn_list) {
+-			rb += sprintf(page+rb, "CID: %hu  Connection"
++			rb += sysfs_emit_at(page, rb, "CID: %hu  Connection"
+ 					" State: ", conn->cid);
+ 			switch (conn->conn_state) {
+ 			case TARG_CONN_STATE_FREE:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_FREE\n");
+ 				break;
+ 			case TARG_CONN_STATE_XPT_UP:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_XPT_UP\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGIN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGIN\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGGED_IN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGGED_IN\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGOUT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGOUT\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGOUT_REQUESTED:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGOUT_REQUESTED\n");
+ 				break;
+ 			case TARG_CONN_STATE_CLEANUP_WAIT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_CLEANUP_WAIT\n");
+ 				break;
+ 			default:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"ERROR: Unknown Connection State!\n");
+ 				break;
+ 			}
+ 
+-			rb += sprintf(page+rb, "   Address %pISc %s", &conn->login_sockaddr,
++			rb += sysfs_emit_at(page, rb, "   Address %pISc %s", &conn->login_sockaddr,
+ 				(conn->network_transport == ISCSI_TCP) ?
+ 				"TCP" : "SCTP");
+-			rb += sprintf(page+rb, "  StatSN: 0x%08x\n",
++			rb += sysfs_emit_at(page, rb, "  StatSN: 0x%08x\n",
+ 				conn->stat_sn);
+ 		}
+ 		spin_unlock(&sess->conn_lock);
 -- 
 2.40.1
 
