@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E6C15AF8
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9231CC433CA;
-	Wed, 20 Sep 2023 12:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B835C28E23
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE5BC433CC;
+	Wed, 20 Sep 2023 12:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213684;
-	bh=cVIQbVlUckTfmUeC2ht6+VX9VY24VL02wgg/8JClGTs=;
+	s=korg; t=1695213687;
+	bh=PyLyKhAkUQsqj2vTDEQ9UxkPICI/tVPCFbWVsB2BW/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVLCKrzmxj7Nwv3rkvoA6yTRBhpOmAGj4lFAK3t5JMHibkDjm+79bIQJwQ0pga9+s
-	 DpCb8qLHYG2lUMk6TKeda3QCCHJIX8ICZawNsvYYa20b45GWBQXclgkpgDrpho7TQF
-	 SYw2J2H5D4bzRAwk0l+5BYGSJK5uWEx3fpVTmnaY=
+	b=fDcOwBOElYQs+Uv+KUZ5gM4IEYXasMOeo8IvGu2sAuXQYdncF1Ows8V/2x1xJQM2j
+	 s3oVy5dmKneeFOFoEB3EDpP+xjY+JFSkl/uELMK6E6rr+/QcIsgGOsUMasqWj8wXTu
+	 PzyWugAR6zftSkhnFEidBtlKjaft41/VBwun97uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 302/367] platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors
-Date: Wed, 20 Sep 2023 13:31:19 +0200
-Message-ID: <20230920112906.363682408@linuxfoundation.org>
+Subject: [PATCH 5.4 303/367] mlxbf-tmfifo: sparse tags for config access
+Date: Wed, 20 Sep 2023 13:31:20 +0200
+Message-ID: <20230920112906.390391865@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,173 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liming Sun <limings@nvidia.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 78034cbece79c2d730ad0770b3b7f23eedbbecf5 ]
+[ Upstream commit 03bea764bf61c9f9918324bda7362616024386e8 ]
 
-This commit fixes tmfifo console stuck issue when the virtual
-networking interface is in down state. In such case, the network
-Rx descriptors runs out and causes the Rx network packet staying
-in the head of the tmfifo thus blocking the console packets. The
-fix is to drop the Rx network packet when no more Rx descriptors.
-Function name mlxbf_tmfifo_release_pending_pkt() is also renamed
-to mlxbf_tmfifo_release_pkt() to be more approperiate.
+mlxbf-tmfifo accesses config space using native types -
+which works for it since the legacy virtio native types.
 
-Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/8c0177dc938ae03f52ff7e0b62dbeee74b7bec09.1693322547.git.limings@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+This will break if it ever needs to support modern virtio,
+so with new tags previously introduced for virtio net config,
+sparse now warns for this in drivers.
+
+Since this is a legacy only device, fix it up using
+virtio_legacy_is_little_endian for now.
+
+No functional changes.
+
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Cornelia Huck <cohuck@redhat.com>
+Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Stable-dep-of: fc4c65582154 ("platform/mellanox: mlxbf-tmfifo: Drop jumbo frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 66 ++++++++++++++++++------
- 1 file changed, 49 insertions(+), 17 deletions(-)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 4b18ebd7e850c..0d77cc94c3f0e 100644
+index 0d77cc94c3f0e..42fcccf06157f 100644
 --- a/drivers/platform/mellanox/mlxbf-tmfifo.c
 +++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -56,6 +56,7 @@ struct mlxbf_tmfifo;
-  * @vq: pointer to the virtio virtqueue
-  * @desc: current descriptor of the pending packet
-  * @desc_head: head descriptor of the pending packet
-+ * @drop_desc: dummy desc for packet dropping
-  * @cur_len: processed length of the current descriptor
-  * @rem_len: remaining length of the pending packet
-  * @pkt_len: total length of the pending packet
-@@ -72,6 +73,7 @@ struct mlxbf_tmfifo_vring {
- 	struct virtqueue *vq;
- 	struct vring_desc *desc;
- 	struct vring_desc *desc_head;
-+	struct vring_desc drop_desc;
- 	int cur_len;
- 	int rem_len;
- 	u32 pkt_len;
-@@ -83,6 +85,14 @@ struct mlxbf_tmfifo_vring {
- 	struct mlxbf_tmfifo *fifo;
- };
+@@ -645,7 +645,10 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 			vdev_id = VIRTIO_ID_NET;
+ 			hdr_len = sizeof(struct virtio_net_hdr);
+ 			config = &fifo->vdev[vdev_id]->config.net;
+-			if (ntohs(hdr.len) > config->mtu +
++			/* A legacy-only interface for now. */
++			if (ntohs(hdr.len) >
++			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
++					      config->mtu) +
+ 			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
+ 				return;
+ 		} else {
+@@ -1273,8 +1276,12 @@ static int mlxbf_tmfifo_probe(struct platform_device *pdev)
  
-+/* Check whether vring is in drop mode. */
-+#define IS_VRING_DROP(_r) ({ \
-+	typeof(_r) (r) = (_r); \
-+	(r->desc_head == &r->drop_desc ? true : false); })
+ 	/* Create the network vdev. */
+ 	memset(&net_config, 0, sizeof(net_config));
+-	net_config.mtu = ETH_DATA_LEN;
+-	net_config.status = VIRTIO_NET_S_LINK_UP;
 +
-+/* A stub length to drop maximum length packet. */
-+#define VRING_DROP_DESC_MAX_LEN		GENMASK(15, 0)
-+
- /* Interrupt types. */
- enum {
- 	MLXBF_TM_RX_LWM_IRQ,
-@@ -243,6 +253,7 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
- 		vring->align = SMP_CACHE_BYTES;
- 		vring->index = i;
- 		vring->vdev_id = tm_vdev->vdev.id.device;
-+		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
- 		dev = &tm_vdev->vdev.dev;
- 
- 		size = vring_size(vring->num, vring->align);
-@@ -348,7 +359,7 @@ static u32 mlxbf_tmfifo_get_pkt_len(struct mlxbf_tmfifo_vring *vring,
- 	return len;
- }
- 
--static void mlxbf_tmfifo_release_pending_pkt(struct mlxbf_tmfifo_vring *vring)
-+static void mlxbf_tmfifo_release_pkt(struct mlxbf_tmfifo_vring *vring)
- {
- 	struct vring_desc *desc_head;
- 	u32 len = 0;
-@@ -577,19 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
- 
- 	if (vring->cur_len + sizeof(u64) <= len) {
- 		/* The whole word. */
--		if (is_rx)
--			memcpy(addr + vring->cur_len, &data, sizeof(u64));
--		else
--			memcpy(&data, addr + vring->cur_len, sizeof(u64));
-+		if (!IS_VRING_DROP(vring)) {
-+			if (is_rx)
-+				memcpy(addr + vring->cur_len, &data,
-+				       sizeof(u64));
-+			else
-+				memcpy(&data, addr + vring->cur_len,
-+				       sizeof(u64));
-+		}
- 		vring->cur_len += sizeof(u64);
- 	} else {
- 		/* Leftover bytes. */
--		if (is_rx)
--			memcpy(addr + vring->cur_len, &data,
--			       len - vring->cur_len);
--		else
--			memcpy(&data, addr + vring->cur_len,
--			       len - vring->cur_len);
-+		if (!IS_VRING_DROP(vring)) {
-+			if (is_rx)
-+				memcpy(addr + vring->cur_len, &data,
-+				       len - vring->cur_len);
-+			else
-+				memcpy(&data, addr + vring->cur_len,
-+				       len - vring->cur_len);
-+		}
- 		vring->cur_len = len;
- 	}
- 
-@@ -687,8 +704,16 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 	/* Get the descriptor of the next packet. */
- 	if (!vring->desc) {
- 		desc = mlxbf_tmfifo_get_next_pkt(vring, is_rx);
--		if (!desc)
--			return false;
-+		if (!desc) {
-+			/* Drop next Rx packet to avoid stuck. */
-+			if (is_rx) {
-+				desc = &vring->drop_desc;
-+				vring->desc_head = desc;
-+				vring->desc = desc;
-+			} else {
-+				return false;
-+			}
-+		}
- 	} else {
- 		desc = vring->desc;
- 	}
-@@ -721,17 +746,24 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
- 		vring->rem_len -= len;
- 
- 		/* Get the next desc on the chain. */
--		if (vring->rem_len > 0 &&
-+		if (!IS_VRING_DROP(vring) && vring->rem_len > 0 &&
- 		    (virtio16_to_cpu(vdev, desc->flags) & VRING_DESC_F_NEXT)) {
- 			idx = virtio16_to_cpu(vdev, desc->next);
- 			desc = &vr->desc[idx];
- 			goto mlxbf_tmfifo_desc_done;
- 		}
- 
--		/* Done and release the pending packet. */
--		mlxbf_tmfifo_release_pending_pkt(vring);
-+		/* Done and release the packet. */
- 		desc = NULL;
- 		fifo->vring[is_rx] = NULL;
-+		if (!IS_VRING_DROP(vring)) {
-+			mlxbf_tmfifo_release_pkt(vring);
-+		} else {
-+			vring->pkt_len = 0;
-+			vring->desc_head = NULL;
-+			vring->desc = NULL;
-+			return false;
-+		}
- 
- 		/*
- 		 * Make sure the load/store are in order before
-@@ -911,7 +943,7 @@ static void mlxbf_tmfifo_virtio_del_vqs(struct virtio_device *vdev)
- 
- 		/* Release the pending packet. */
- 		if (vring->desc)
--			mlxbf_tmfifo_release_pending_pkt(vring);
-+			mlxbf_tmfifo_release_pkt(vring);
- 		vq = vring->vq;
- 		if (vq) {
- 			vring->vq = NULL;
++	/* A legacy-only interface for now. */
++	net_config.mtu = __cpu_to_virtio16(virtio_legacy_is_little_endian(),
++					   ETH_DATA_LEN);
++	net_config.status = __cpu_to_virtio16(virtio_legacy_is_little_endian(),
++					      VIRTIO_NET_S_LINK_UP);
+ 	mlxbf_tmfifo_get_cfg_mac(net_config.mac);
+ 	rc = mlxbf_tmfifo_create_vdev(dev, fifo, VIRTIO_ID_NET,
+ 				      MLXBF_TMFIFO_NET_FEATURES, &net_config,
 -- 
 2.40.1
 
