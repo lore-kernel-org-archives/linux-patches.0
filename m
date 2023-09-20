@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28AD28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3633DC433C9;
-	Wed, 20 Sep 2023 11:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6462928E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDFBC433C8;
+	Wed, 20 Sep 2023 11:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210803;
-	bh=EMXBAcWlUrIRala+pJkUpmBOThAZqd28xF0t4g6RRys=;
+	s=korg; t=1695210806;
+	bh=AeuKo47GmHnPnoasCjD9P4PdGssduLsocNvcMgccMEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXWmp5yEKmLbFAUEwNvmHeohjkBxHRnWhv4/zCMs77wF5yOrp9jIdhOEcGxLYBse+
-	 TMwIHIlOHxD5Nuv0tsHlzLD68L+8+ipBPJzrKYKYbK/uC4WCpoZuf7S/quSCjpW0Bs
-	 xmyB6n/LMoU02VtGn7k63VIMHAc0iSoXZfTKoAGw=
+	b=TtrGZcl+T0TgIZyNGO/oRmOvLW25cRAiqn5P9KYSja4yTxK2teCs4A3UVQ6uPpDvT
+	 PeMBkOoif5dFl9knw0Lui6OdPSoHkoiFU7BxSaxh5CgFUoRYQPgbiA5rkTz59WL97F
+	 sPHZP0B5U2E8jCYe7sxJQoUBMRc/nSG/evZt66YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 210/211] Revert "memcg: drop kmem.limit_in_bytes"
-Date: Wed, 20 Sep 2023 13:30:54 +0200
-Message-ID: <20230920112852.370864789@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.5 185/211] tracing: Have tracing_max_latency inc the trace array ref count
+Date: Wed, 20 Sep 2023 13:30:29 +0200
+Message-ID: <20230920112851.609944709@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -45,65 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-This reverts commit 75bb29b6c44f486e9bd048759669c205dccb2048 which is
-commit 86327e8eb94c52eca4f93cfece2e29d1bf52acbf upstream.
+commit 7d660c9b2bc95107f90a9f4c4759be85309a6550 upstream.
 
-It breaks existing runc systems, as the tool always thinks the file
-should be present.
+The tracing_max_latency file points to the trace_array max_latency field.
+For an instance, if the file is opened and the instance is deleted,
+reading or writing to the file will cause a use after free.
 
-Reported-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
+Up the ref count of the trace_array when tracing_max_latency is opened.
+
+Link: https://lkml.kernel.org/r/20230907024803.666889383@goodmis.org
+Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Fixes: 8530dec63e7b4 ("tracing: Add tracing_check_open_get_tr()")
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/cgroup-v1/memory.rst |    2 ++
- mm/memcontrol.c                                |   10 ++++++++++
- 2 files changed, 12 insertions(+)
+ kernel/trace/trace.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/Documentation/admin-guide/cgroup-v1/memory.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-@@ -92,6 +92,8 @@ Brief summary of control files.
-  memory.oom_control		     set/show oom controls.
-  memory.numa_stat		     show the number of memory usage per numa
- 				     node
-+ memory.kmem.limit_in_bytes          This knob is deprecated and writing to
-+                                     it will return -ENOTSUPP.
-  memory.kmem.usage_in_bytes          show current kernel memory allocation
-  memory.kmem.failcnt                 show the number of kernel memory usage
- 				     hits limits
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -3871,6 +3871,10 @@ static ssize_t mem_cgroup_write(struct k
- 		case _MEMSWAP:
- 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
- 			break;
-+		case _KMEM:
-+			/* kmem.limit_in_bytes is deprecated. */
-+			ret = -EOPNOTSUPP;
-+			break;
- 		case _TCP:
- 			ret = memcg_update_tcp_max(memcg, nr_pages);
- 			break;
-@@ -5082,6 +5086,12 @@ static struct cftype mem_cgroup_legacy_f
- 	},
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1772,7 +1772,7 @@ static void trace_create_maxlat_file(str
+ 	init_irq_work(&tr->fsnotify_irqwork, latency_fsnotify_workfn_irq);
+ 	tr->d_max_latency = trace_create_file("tracing_max_latency",
+ 					      TRACE_MODE_WRITE,
+-					      d_tracer, &tr->max_latency,
++					      d_tracer, tr,
+ 					      &tracing_max_lat_fops);
+ }
+ 
+@@ -1805,7 +1805,7 @@ void latency_fsnotify(struct trace_array
+ 
+ #define trace_create_maxlat_file(tr, d_tracer)				\
+ 	trace_create_file("tracing_max_latency", TRACE_MODE_WRITE,	\
+-			  d_tracer, &tr->max_latency, &tracing_max_lat_fops)
++			  d_tracer, tr, &tracing_max_lat_fops)
+ 
  #endif
- 	{
-+		.name = "kmem.limit_in_bytes",
-+		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
-+		.write = mem_cgroup_write,
-+		.read_u64 = mem_cgroup_read_u64,
-+	},
-+	{
- 		.name = "kmem.usage_in_bytes",
- 		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
- 		.read_u64 = mem_cgroup_read_u64,
+ 
+@@ -6706,14 +6706,18 @@ static ssize_t
+ tracing_max_lat_read(struct file *filp, char __user *ubuf,
+ 		     size_t cnt, loff_t *ppos)
+ {
+-	return tracing_nsecs_read(filp->private_data, ubuf, cnt, ppos);
++	struct trace_array *tr = filp->private_data;
++
++	return tracing_nsecs_read(&tr->max_latency, ubuf, cnt, ppos);
+ }
+ 
+ static ssize_t
+ tracing_max_lat_write(struct file *filp, const char __user *ubuf,
+ 		      size_t cnt, loff_t *ppos)
+ {
+-	return tracing_nsecs_write(filp->private_data, ubuf, cnt, ppos);
++	struct trace_array *tr = filp->private_data;
++
++	return tracing_nsecs_write(&tr->max_latency, ubuf, cnt, ppos);
+ }
+ 
+ #endif
+@@ -7770,10 +7774,11 @@ static const struct file_operations trac
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+ static const struct file_operations tracing_max_lat_fops = {
+-	.open		= tracing_open_generic,
++	.open		= tracing_open_generic_tr,
+ 	.read		= tracing_max_lat_read,
+ 	.write		= tracing_max_lat_write,
+ 	.llseek		= generic_file_llseek,
++	.release	= tracing_release_generic_tr,
+ };
+ #endif
+ 
 
 
