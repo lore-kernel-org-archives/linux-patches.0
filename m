@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D88B168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A79FC433CB;
-	Wed, 20 Sep 2023 12:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB1C168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D35EC433C9;
+	Wed, 20 Sep 2023 12:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214074;
-	bh=bdsuqymfEkeTxktq+SWsgeZn4fmnQgXvYep/TmlU0WU=;
+	s=korg; t=1695214076;
+	bh=86DZJoLVTlUVA1jLmdoUuFWio3vn1i34xFw9sWznzJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfdiSG0zxmEez8naz3qbsRnrJ+MzIK6NVcHLbff7LKujUTSrQAMZaE+HU/BkOACFq
-	 LLVRkUpGF7BNORDuOBMcKRcEqbMdXP0sxUkmJDWkwwOWN2X4gMMJCHXE+pB57NF4jF
-	 LdMpkfUx7YUJKBYdky245A/Qqq63KRcbk9JtMXco=
+	b=xnKZLaq7HJb/o50wZQkBWFBJHUvkQgXh1VvzDUiHpvJzNQdFpNM2mVzBfZTiejhFy
+	 Kwq+PgGjeIza1Ieb2CM6RnzUzudc893hddIL6ZklwOe+DydG0jvZRQ4zz7NtNJFKRD
+	 H5mLLrkcQ4IM37KxtXR3W6TiXFN+LtHbcHuNabQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/110] netfilter: nft_set_hash: mark set element as dead when deleting from packet path
-Date: Wed, 20 Sep 2023 13:32:23 +0200
-Message-ID: <20230920112833.596386253@linuxfoundation.org>
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 5.15 103/110] ata: libata: disallow dev-initiated LPM transitions to unsupported states
+Date: Wed, 20 Sep 2023 13:32:41 +0200
+Message-ID: <20230920112834.262373445@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -33,54 +33,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Niklas Cassel <niklas.cassel@wdc.com>
 
-[ Upstream commit c92db3030492b8ad1d0faace7a93bbcf53850d0c ]
+commit 24e0e61db3cb86a66824531989f1df80e0939f26 upstream.
 
-Set on the NFT_SET_ELEM_DEAD_BIT flag on this element, instead of
-performing element removal which might race with an ongoing transaction.
-Enable gc when dynamic flag is set on since dynset deletion requires
-garbage collection after this patch.
+In AHCI 1.3.1, the register description for CAP.SSC:
+"When cleared to ‘0’, software must not allow the HBA to initiate
+transitions to the Slumber state via agressive link power management nor
+the PxCMD.ICC field in each port, and the PxSCTL.IPM field in each port
+must be programmed to disallow device initiated Slumber requests."
 
-Fixes: d0a8d877da97 ("netfilter: nft_dynset: support for element deletion")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In AHCI 1.3.1, the register description for CAP.PSC:
+"When cleared to ‘0’, software must not allow the HBA to initiate
+transitions to the Partial state via agressive link power management nor
+the PxCMD.ICC field in each port, and the PxSCTL.IPM field in each port
+must be programmed to disallow device initiated Partial requests."
+
+Ensure that we always set the corresponding bits in PxSCTL.IPM, such that
+a device is not allowed to initiate transitions to power states which are
+unsupported by the HBA.
+
+DevSleep is always initiated by the HBA, however, for completeness, set the
+corresponding bit in PxSCTL.IPM such that agressive link power management
+cannot transition to DevSleep if DevSleep is not supported.
+
+sata_link_scr_lpm() is used by libahci, ata_piix and libata-pmp.
+However, only libahci has the ability to read the CAP/CAP2 register to see
+if these features are supported. Therefore, in order to not introduce any
+regressions on ata_piix or libata-pmp, create flags that indicate that the
+respective feature is NOT supported. This way, the behavior for ata_piix
+and libata-pmp should remain unchanged.
+
+This change is based on a patch originally submitted by Runa Guo-oc.
+
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Fixes: 1152b2617a6e ("libata: implement sata_link_scr_lpm() and make ata_dev_set_feature() global")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_hash.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/ata/ahci.c        |    9 +++++++++
+ drivers/ata/libata-sata.c |   19 ++++++++++++++++---
+ include/linux/libata.h    |    4 ++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 960cbd56c0406..8dfa97105d8a3 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -249,7 +249,9 @@ static bool nft_rhash_delete(const struct nft_set *set,
- 	if (he == NULL)
- 		return false;
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1886,6 +1886,15 @@ static int ahci_init_one(struct pci_dev
+ 	else
+ 		dev_info(&pdev->dev, "SSS flag set, parallel bus scan disabled\n");
  
--	return rhashtable_remove_fast(&priv->ht, &he->node, nft_rhash_params) == 0;
-+	nft_set_elem_dead(&he->ext);
++	if (!(hpriv->cap & HOST_CAP_PART))
++		host->flags |= ATA_HOST_NO_PART;
 +
-+	return true;
- }
++	if (!(hpriv->cap & HOST_CAP_SSC))
++		host->flags |= ATA_HOST_NO_SSC;
++
++	if (!(hpriv->cap2 & HOST_CAP2_SDS))
++		host->flags |= ATA_HOST_NO_DEVSLP;
++
+ 	if (pi.flags & ATA_FLAG_EM)
+ 		ahci_reset_em(host);
  
- static void nft_rhash_walk(const struct nft_ctx *ctx, struct nft_set *set,
-@@ -414,7 +416,7 @@ static int nft_rhash_init(const struct nft_set *set,
- 		return err;
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -394,10 +394,23 @@ int sata_link_scr_lpm(struct ata_link *l
+ 	case ATA_LPM_MED_POWER_WITH_DIPM:
+ 	case ATA_LPM_MIN_POWER_WITH_PARTIAL:
+ 	case ATA_LPM_MIN_POWER:
+-		if (ata_link_nr_enabled(link) > 0)
+-			/* no restrictions on LPM transitions */
++		if (ata_link_nr_enabled(link) > 0) {
++			/* assume no restrictions on LPM transitions */
+ 			scontrol &= ~(0x7 << 8);
+-		else {
++
++			/*
++			 * If the controller does not support partial, slumber,
++			 * or devsleep, then disallow these transitions.
++			 */
++			if (link->ap->host->flags & ATA_HOST_NO_PART)
++				scontrol |= (0x1 << 8);
++
++			if (link->ap->host->flags & ATA_HOST_NO_SSC)
++				scontrol |= (0x2 << 8);
++
++			if (link->ap->host->flags & ATA_HOST_NO_DEVSLP)
++				scontrol |= (0x4 << 8);
++		} else {
+ 			/* empty port, power off */
+ 			scontrol &= ~0xf;
+ 			scontrol |= (0x1 << 2);
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -264,6 +264,10 @@ enum {
+ 	ATA_HOST_PARALLEL_SCAN	= (1 << 2),	/* Ports on this host can be scanned in parallel */
+ 	ATA_HOST_IGNORE_ATA	= (1 << 3),	/* Ignore ATA devices on this host. */
  
- 	INIT_DEFERRABLE_WORK(&priv->gc_work, nft_rhash_gc);
--	if (set->flags & NFT_SET_TIMEOUT)
-+	if (set->flags & (NFT_SET_TIMEOUT | NFT_SET_EVAL))
- 		nft_rhash_gc_init(set);
++	ATA_HOST_NO_PART	= (1 << 4), /* Host does not support partial */
++	ATA_HOST_NO_SSC		= (1 << 5), /* Host does not support slumber */
++	ATA_HOST_NO_DEVSLP	= (1 << 6), /* Host does not support devslp */
++
+ 	/* bits 24:31 of host->flags are reserved for LLD specific flags */
  
- 	return 0;
--- 
-2.40.1
-
+ 	/* various lengths of time */
 
 
