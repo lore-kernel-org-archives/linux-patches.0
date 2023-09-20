@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F68C30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194BCC433C9;
-	Wed, 20 Sep 2023 12:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3989330FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6496C433C7;
+	Wed, 20 Sep 2023 12:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212616;
-	bh=pdXitPx7cokxsiinmPoUexAyv/OPqA5keMaAz4uzAKg=;
+	s=korg; t=1695212619;
+	bh=gQCH4LooJKg1GJPuR7DUuXR5FFSGgnylso7hOR22lpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i0vJ+AwmzEasGyP8PFK8jCqQCcNpIxxKa5kYmw4AOvzvQ/57bMhSdAa1ejiJJfUgU
-	 2gdogP6aLyVbyMBuHWhdmSTVG5StNX5wwLsOARYKGXRBJdcP1Fze/2LLbTyVNw36es
-	 VCL1KO6piKyd/hq93/BXfE5Y5pk+fZuRvbwWxkVo=
+	b=zQveou/ACvUDGzpa4hX8/WJujHQ2tkPkRHtfSf5SoK/jJldR6nxLIbn8+wAv1BSWr
+	 O21LW/k/mc0PzxOezOb6n/UcJrQ6XBtfbV9F/YcRksHBeVTdJfWEVKh2kQnTEA8UF7
+	 8ej17lDs9swk8KaVH4IFymCIkc2PtTanNIg2CRKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com,
+	syzbot+bf66ad948981797d2f1d@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 68/83] btrfs: fix lockdep splat and potential deadlock after failure running delayed items
-Date: Wed, 20 Sep 2023 13:31:58 +0200
-Message-ID: <20230920112829.343626198@linuxfoundation.org>
+Subject: [PATCH 5.10 69/83] btrfs: release path before inode lookup during the ino lookup ioctl
+Date: Wed, 20 Sep 2023 13:31:59 +0200
+Message-ID: <20230920112829.384312324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -42,71 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit e110f8911ddb93e6f55da14ccbbe705397b30d0b upstream.
+commit ee34a82e890a7babb5585daf1a6dd7d4d1cf142a upstream.
 
-When running delayed items we are holding a delayed node's mutex and then
-we will attempt to modify a subvolume btree to insert/update/delete the
-delayed items. However if have an error during the insertions for example,
-btrfs_insert_delayed_items() may return with a path that has locked extent
-buffers (a leaf at the very least), and then we attempt to release the
-delayed node at __btrfs_run_delayed_items(), which requires taking the
-delayed node's mutex, causing an ABBA type of deadlock. This was reported
-by syzbot and the lockdep splat is the following:
+During the ino lookup ioctl we can end up calling btrfs_iget() to get an
+inode reference while we are holding on a root's btree. If btrfs_iget()
+needs to lookup the inode from the root's btree, because it's not
+currently loaded in memory, then it will need to lock another or the
+same path in the same root btree. This may result in a deadlock and
+trigger the following lockdep splat:
 
   WARNING: possible circular locking dependency detected
-  6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0 Not tainted
+  6.5.0-rc7-syzkaller-00004-gf7757129e3de #0 Not tainted
   ------------------------------------------------------
-  syz-executor.2/13257 is trying to acquire lock:
-  ffff88801835c0c0 (&delayed_node->mutex){+.+.}-{3:3}, at: __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
+  syz-executor277/5012 is trying to acquire lock:
+  ffff88802df41710 (btrfs-tree-01){++++}-{3:3}, at: __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
 
   but task is already holding lock:
-  ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
+  ffff88802df418e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
 
   which lock already depends on the new lock.
 
   the existing dependency chain (in reverse order) is:
 
   -> #1 (btrfs-tree-00){++++}-{3:3}:
-         __lock_release kernel/locking/lockdep.c:5475 [inline]
-         lock_release+0x36f/0x9d0 kernel/locking/lockdep.c:5781
-         up_write+0x79/0x580 kernel/locking/rwsem.c:1625
-         btrfs_tree_unlock_rw fs/btrfs/locking.h:189 [inline]
-         btrfs_unlock_up_safe+0x179/0x3b0 fs/btrfs/locking.c:239
-         search_leaf fs/btrfs/ctree.c:1986 [inline]
-         btrfs_search_slot+0x2511/0x2f80 fs/btrfs/ctree.c:2230
-         btrfs_insert_empty_items+0x9c/0x180 fs/btrfs/ctree.c:4376
-         btrfs_insert_delayed_item fs/btrfs/delayed-inode.c:746 [inline]
-         btrfs_insert_delayed_items fs/btrfs/delayed-inode.c:824 [inline]
-         __btrfs_commit_inode_delayed_items+0xd24/0x2410 fs/btrfs/delayed-inode.c:1111
-         __btrfs_run_delayed_items+0x1db/0x430 fs/btrfs/delayed-inode.c:1153
-         flush_space+0x269/0xe70 fs/btrfs/space-info.c:723
-         btrfs_async_reclaim_metadata_space+0x106/0x350 fs/btrfs/space-info.c:1078
-         process_one_work+0x92c/0x12c0 kernel/workqueue.c:2600
-         worker_thread+0xa63/0x1210 kernel/workqueue.c:2751
-         kthread+0x2b8/0x350 kernel/kthread.c:389
-         ret_from_fork+0x2e/0x60 arch/x86/kernel/process.c:145
-         ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+         down_read_nested+0x49/0x2f0 kernel/locking/rwsem.c:1645
+         __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
+         btrfs_search_slot+0x13a4/0x2f80 fs/btrfs/ctree.c:2302
+         btrfs_init_root_free_objectid+0x148/0x320 fs/btrfs/disk-io.c:4955
+         btrfs_init_fs_root fs/btrfs/disk-io.c:1128 [inline]
+         btrfs_get_root_ref+0x5ae/0xae0 fs/btrfs/disk-io.c:1338
+         btrfs_get_fs_root fs/btrfs/disk-io.c:1390 [inline]
+         open_ctree+0x29c8/0x3030 fs/btrfs/disk-io.c:3494
+         btrfs_fill_super+0x1c7/0x2f0 fs/btrfs/super.c:1154
+         btrfs_mount_root+0x7e0/0x910 fs/btrfs/super.c:1519
+         legacy_get_tree+0xef/0x190 fs/fs_context.c:611
+         vfs_get_tree+0x8c/0x270 fs/super.c:1519
+         fc_mount fs/namespace.c:1112 [inline]
+         vfs_kern_mount+0xbc/0x150 fs/namespace.c:1142
+         btrfs_mount+0x39f/0xb50 fs/btrfs/super.c:1579
+         legacy_get_tree+0xef/0x190 fs/fs_context.c:611
+         vfs_get_tree+0x8c/0x270 fs/super.c:1519
+         do_new_mount+0x28f/0xae0 fs/namespace.c:3335
+         do_mount fs/namespace.c:3675 [inline]
+         __do_sys_mount fs/namespace.c:3884 [inline]
+         __se_sys_mount+0x2d9/0x3c0 fs/namespace.c:3861
+         do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+         do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+         entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  -> #0 (&delayed_node->mutex){+.+.}-{3:3}:
+  -> #0 (btrfs-tree-01){++++}-{3:3}:
          check_prev_add kernel/locking/lockdep.c:3142 [inline]
          check_prevs_add kernel/locking/lockdep.c:3261 [inline]
          validate_chain kernel/locking/lockdep.c:3876 [inline]
          __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
          lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
-         __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
-         __mutex_lock kernel/locking/mutex.c:747 [inline]
-         mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
-         __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
-         btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
-         __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
-         btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
-         btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
-         vfs_fsync_range fs/sync.c:188 [inline]
-         vfs_fsync fs/sync.c:202 [inline]
-         do_fsync fs/sync.c:212 [inline]
-         __do_sys_fsync fs/sync.c:220 [inline]
-         __se_sys_fsync fs/sync.c:218 [inline]
-         __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+         down_read_nested+0x49/0x2f0 kernel/locking/rwsem.c:1645
+         __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
+         btrfs_tree_read_lock fs/btrfs/locking.c:142 [inline]
+         btrfs_read_lock_root_node+0x292/0x3c0 fs/btrfs/locking.c:281
+         btrfs_search_slot_get_root fs/btrfs/ctree.c:1832 [inline]
+         btrfs_search_slot+0x4ff/0x2f80 fs/btrfs/ctree.c:2154
+         btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:412
+         btrfs_read_locked_inode fs/btrfs/inode.c:3892 [inline]
+         btrfs_iget_path+0x2d9/0x1520 fs/btrfs/inode.c:5716
+         btrfs_search_path_in_tree_user fs/btrfs/ioctl.c:1961 [inline]
+         btrfs_ioctl_ino_lookup_user+0x77a/0xf50 fs/btrfs/ioctl.c:2105
+         btrfs_ioctl+0xb0b/0xd40 fs/btrfs/ioctl.c:4683
+         vfs_ioctl fs/ioctl.c:51 [inline]
+         __do_sys_ioctl fs/ioctl.c:870 [inline]
+         __se_sys_ioctl+0xf8/0x170 fs/ioctl.c:856
          do_syscall_x64 arch/x86/entry/common.c:50 [inline]
          do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
          entry_SYSCALL_64_after_hwframe+0x63/0xcd
@@ -117,21 +122,18 @@ by syzbot and the lockdep splat is the following:
 
          CPU0                    CPU1
          ----                    ----
-    lock(btrfs-tree-00);
-                                 lock(&delayed_node->mutex);
+    rlock(btrfs-tree-00);
+                                 lock(btrfs-tree-01);
                                  lock(btrfs-tree-00);
-    lock(&delayed_node->mutex);
+    rlock(btrfs-tree-01);
 
    *** DEADLOCK ***
 
-  3 locks held by syz-executor.2/13257:
-   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: spin_unlock include/linux/spinlock.h:391 [inline]
-   #0: ffff88802c1ee370 (btrfs_trans_num_writers){++++}-{0:0}, at: join_transaction+0xb87/0xe00 fs/btrfs/transaction.c:287
-   #1: ffff88802c1ee398 (btrfs_trans_num_extwriters){++++}-{0:0}, at: join_transaction+0xbb2/0xe00 fs/btrfs/transaction.c:288
-   #2: ffff88802a5ab8e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_lock+0x3c/0x2a0 fs/btrfs/locking.c:198
+  1 lock held by syz-executor277/5012:
+   #0: ffff88802df418e8 (btrfs-tree-00){++++}-{3:3}, at: __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
 
   stack backtrace:
-  CPU: 0 PID: 13257 Comm: syz-executor.2 Not tainted 6.5.0-rc7-syzkaller-00024-g93f5de5f648d #0
+  CPU: 1 PID: 5012 Comm: syz-executor277 Not tainted 6.5.0-rc7-syzkaller-00004-gf7757129e3de #0
   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
   Call Trace:
    <TASK>
@@ -143,85 +145,65 @@ by syzbot and the lockdep splat is the following:
    validate_chain kernel/locking/lockdep.c:3876 [inline]
    __lock_acquire+0x39ff/0x7f70 kernel/locking/lockdep.c:5144
    lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5761
-   __mutex_lock_common+0x1d8/0x2530 kernel/locking/mutex.c:603
-   __mutex_lock kernel/locking/mutex.c:747 [inline]
-   mutex_lock_nested+0x1b/0x20 kernel/locking/mutex.c:799
-   __btrfs_release_delayed_node+0x9a/0xaa0 fs/btrfs/delayed-inode.c:256
-   btrfs_release_delayed_node fs/btrfs/delayed-inode.c:281 [inline]
-   __btrfs_run_delayed_items+0x2b5/0x430 fs/btrfs/delayed-inode.c:1156
-   btrfs_commit_transaction+0x859/0x2ff0 fs/btrfs/transaction.c:2276
-   btrfs_sync_file+0xf56/0x1330 fs/btrfs/file.c:1988
-   vfs_fsync_range fs/sync.c:188 [inline]
-   vfs_fsync fs/sync.c:202 [inline]
-   do_fsync fs/sync.c:212 [inline]
-   __do_sys_fsync fs/sync.c:220 [inline]
-   __se_sys_fsync fs/sync.c:218 [inline]
-   __x64_sys_fsync+0x196/0x1e0 fs/sync.c:218
+   down_read_nested+0x49/0x2f0 kernel/locking/rwsem.c:1645
+   __btrfs_tree_read_lock+0x2f/0x220 fs/btrfs/locking.c:136
+   btrfs_tree_read_lock fs/btrfs/locking.c:142 [inline]
+   btrfs_read_lock_root_node+0x292/0x3c0 fs/btrfs/locking.c:281
+   btrfs_search_slot_get_root fs/btrfs/ctree.c:1832 [inline]
+   btrfs_search_slot+0x4ff/0x2f80 fs/btrfs/ctree.c:2154
+   btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:412
+   btrfs_read_locked_inode fs/btrfs/inode.c:3892 [inline]
+   btrfs_iget_path+0x2d9/0x1520 fs/btrfs/inode.c:5716
+   btrfs_search_path_in_tree_user fs/btrfs/ioctl.c:1961 [inline]
+   btrfs_ioctl_ino_lookup_user+0x77a/0xf50 fs/btrfs/ioctl.c:2105
+   btrfs_ioctl+0xb0b/0xd40 fs/btrfs/ioctl.c:4683
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:870 [inline]
+   __se_sys_ioctl+0xf8/0x170 fs/ioctl.c:856
    do_syscall_x64 arch/x86/entry/common.c:50 [inline]
    do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  RIP: 0033:0x7f3ad047cae9
-  Code: 28 00 00 00 75 (...)
-  RSP: 002b:00007f3ad12510c8 EFLAGS: 00000246 ORIG_RAX: 000000000000004a
-  RAX: ffffffffffffffda RBX: 00007f3ad059bf80 RCX: 00007f3ad047cae9
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
-  RBP: 00007f3ad04c847a R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 000000000000000b R14: 00007f3ad059bf80 R15: 00007ffe56af92f8
-   </TASK>
-  ------------[ cut here ]------------
+  RIP: 0033:0x7f0bec94ea39
 
-Fix this by releasing the path before releasing the delayed node in the
-error path at __btrfs_run_delayed_items().
+Fix this simply by releasing the path before calling btrfs_iget() as at
+point we don't need the path anymore.
 
-Reported-by: syzbot+a379155f07c134ea9879@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/000000000000abba27060403b5bd@google.com/
-CC: stable@vger.kernel.org # 4.14+
+Reported-by: syzbot+bf66ad948981797d2f1d@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/00000000000045fa140603c4a969@google.com/
+Fixes: 23d0b79dfaed ("btrfs: Add unprivileged version of ino_lookup ioctl")
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/delayed-inode.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/btrfs/ioctl.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -1173,20 +1173,33 @@ static int __btrfs_run_delayed_items(str
- 		ret = __btrfs_commit_inode_delayed_items(trans, path,
- 							 curr_node);
- 		if (ret) {
--			btrfs_release_delayed_node(curr_node);
--			curr_node = NULL;
- 			btrfs_abort_transaction(trans, ret);
- 			break;
- 		}
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2550,6 +2550,13 @@ static int btrfs_search_path_in_tree_use
+ 				goto out_put;
+ 			}
  
- 		prev_node = curr_node;
- 		curr_node = btrfs_next_delayed_node(curr_node);
-+		/*
-+		 * See the comment below about releasing path before releasing
-+		 * node. If the commit of delayed items was successful the path
-+		 * should always be released, but in case of an error, it may
-+		 * point to locked extent buffers (a leaf at the very least).
-+		 */
-+		ASSERT(path->nodes[0] == NULL);
- 		btrfs_release_delayed_node(prev_node);
- 	}
++			/*
++			 * We don't need the path anymore, so release it and
++			 * avoid deadlocks and lockdep warnings in case
++			 * btrfs_iget() needs to lookup the inode from its root
++			 * btree and lock the same leaf.
++			 */
++			btrfs_release_path(path);
+ 			temp_inode = btrfs_iget(sb, key2.objectid, root);
+ 			if (IS_ERR(temp_inode)) {
+ 				ret = PTR_ERR(temp_inode);
+@@ -2569,7 +2576,6 @@ static int btrfs_search_path_in_tree_use
+ 				goto out_put;
+ 			}
  
-+	/*
-+	 * Release the path to avoid a potential deadlock and lockdep splat when
-+	 * releasing the delayed node, as that requires taking the delayed node's
-+	 * mutex. If another task starts running delayed items before we take
-+	 * the mutex, it will first lock the mutex and then it may try to lock
-+	 * the same btree path (leaf).
-+	 */
-+	btrfs_free_path(path);
-+
- 	if (curr_node)
- 		btrfs_release_delayed_node(curr_node);
--	btrfs_free_path(path);
- 	trans->block_rsv = block_rsv;
- 
- 	return ret;
+-			btrfs_release_path(path);
+ 			key.objectid = key.offset;
+ 			key.offset = (u64)-1;
+ 			dirid = key.objectid;
 
 
