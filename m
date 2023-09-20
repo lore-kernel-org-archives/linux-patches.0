@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F0D30FA5
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A88C433CB;
-	Wed, 20 Sep 2023 12:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CC915AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C650C43391;
+	Wed, 20 Sep 2023 12:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212196;
-	bh=brAcAfTMuL0ut+H/Kj88gixZitEsBl0YEvcAUrJ0Tok=;
+	s=korg; t=1695212199;
+	bh=yRb7UzAj27y7UzwdnSrnIchAVjb7a/Bh5m+12m8KUQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlndC65p0zRTR6PytTsW7EiNt8jtRpUdkEAg9EgL4COxvYOUiLXrDSe5R8bqaLE9L
-	 Vdb3KFRCarsW7TtG5upYu9XkVIMz1LMRHJ1ok9pO9CaxX08J6+HcmRtPiRTH3ei7D3
-	 /KMcctTwHp/JjyfYxpvI/HUfa6lwYTo4E5VfTBJU=
+	b=S6uKzs5NLiTigDuq5+fo7zZXl8G5JWQMevwVlWPQF0v87UTnhJTl4hG3PA4t4sJzS
+	 TtEg2zbcFvIDFq6tDiq/bY4buqrfmfUXbxt6l8UO4WbuWyVu0GITrZ4gnuXLCHOnCr
+	 wul9bKzz4bNZPFPAg8vj2O/ep85yLiX8Kyivj7Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 186/273] dccp: Fix out of bounds access in DCCP error handler
-Date: Wed, 20 Sep 2023 13:30:26 +0200
-Message-ID: <20230920112852.259471128@linuxfoundation.org>
+	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 4.19 187/273] crypto: stm32 - fix loop iterating through scatterlist for DMA
+Date: Wed, 20 Sep 2023 13:30:27 +0200
+Message-ID: <20230920112852.289383313@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,84 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-commit 977ad86c2a1bcaf58f01ab98df5cc145083c489c upstream.
+commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
 
-There was a previous attempt to fix an out-of-bounds access in the DCCP
-error handlers, but that fix assumed that the error handlers only want
-to access the first 8 bytes of the DCCP header. Actually, they also look
-at the DCCP sequence number, which is stored beyond 8 bytes, so an
-explicit pskb_may_pull() is required.
+We were reading the length of the scatterlist sg after copying value of
+tsg inside.
+So we are using the size of the previous scatterlist and for the first
+one we are using an unitialised value.
+Fix this by copying tsg in sg[0] before reading the size.
 
-Fixes: 6706a97fec96 ("dccp: fix out of bound access in dccp_v4_err()")
-Fixes: 1aa9d1a0e7ee ("ipv6: dccp: fix out of bound access in dccp_v6_err()")
+Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/ipv4.c |   13 +++++++++----
- net/dccp/ipv6.c |   15 ++++++++++-----
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ drivers/crypto/stm32/stm32-hash.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -247,12 +247,17 @@ static void dccp_v4_err(struct sk_buff *
- 	int err;
- 	struct net *net = dev_net(skb->dev);
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -578,9 +578,9 @@ static int stm32_hash_dma_send(struct st
+ 	}
  
--	/* Only need dccph_dport & dccph_sport which are the first
--	 * 4 bytes in dccp header.
-+	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
-+	 * which is in byte 7 of the dccp header.
- 	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
-+	 *
-+	 * Later on, we want to access the sequence number fields, which are
-+	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
- 	 */
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
-+	dh = (struct dccp_hdr *)(skb->data + offset);
-+	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
-+		return;
-+	iph = (struct iphdr *)skb->data;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
++		sg[0] = *tsg;
+ 		len = sg->length;
  
- 	sk = __inet_lookup_established(net, &dccp_hashinfo,
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -71,7 +71,7 @@ static inline __u64 dccp_v6_init_sequenc
- static void dccp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 			u8 type, u8 code, int offset, __be32 info)
- {
--	const struct ipv6hdr *hdr = (const struct ipv6hdr *)skb->data;
-+	const struct ipv6hdr *hdr;
- 	const struct dccp_hdr *dh;
- 	struct dccp_sock *dp;
- 	struct ipv6_pinfo *np;
-@@ -80,12 +80,17 @@ static void dccp_v6_err(struct sk_buff *
- 	__u64 seq;
- 	struct net *net = dev_net(skb->dev);
- 
--	/* Only need dccph_dport & dccph_sport which are the first
--	 * 4 bytes in dccp header.
-+	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
-+	 * which is in byte 7 of the dccp header.
- 	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
-+	 *
-+	 * Later on, we want to access the sequence number fields, which are
-+	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
- 	 */
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
-+	dh = (struct dccp_hdr *)(skb->data + offset);
-+	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
-+		return;
-+	hdr = (const struct ipv6hdr *)skb->data;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
- 
- 	sk = __inet6_lookup_established(net, &dccp_hashinfo,
+-		sg[0] = *tsg;
+ 		if (sg_is_last(sg)) {
+ 			if (hdev->dma_mode == 1) {
+ 				len = (ALIGN(sg->length, 16) - 16);
 
 
