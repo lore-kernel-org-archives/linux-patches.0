@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E90B30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9683DC433C8;
-	Wed, 20 Sep 2023 12:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE28130FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433D8C433C7;
+	Wed, 20 Sep 2023 12:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212603;
-	bh=YoKuYUjsJEte10xex38grSD15gKO0cehWpFwonMkdqQ=;
+	s=korg; t=1695212605;
+	bh=0z1n0mMOsZN5kyMY5KqQL+zrv1BQL3cty13cUXweBA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgXhEznhVJk1bl2KEEMd1GSKt+hppolQhuenxNbt9Aj9hneaKVfyAMhQ1nuxf+RXx
-	 bduOdfGFOiSH6Q9z+QgT8Cl+aYRdPcfNpxLMOEzjSph/YUDMmJm9QZzuCYeghuriBx
-	 15YqNnThNHDqX1D+QFnDvgzj+WcymbTiJtoVaDx4=
+	b=RsN63IUPNqPL3is66q3huvcUNVST02kZZYs3Efg9k4V95LAjulbYgm36/foI6gUi8
+	 lYE9Dkf55JveKMYyskQs7DH1m2Z9nkYrVJvT7ns9h1f93MsuU9C8mpdBvFcZzbboAB
+	 7a7XXYDTbci8Zf4dSFna/rQI4cS9YMbFN2Wtf6T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lu <aaron.lu@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 63/83] x86/boot/compressed: Reserve more memory for page tables
-Date: Wed, 20 Sep 2023 13:31:53 +0200
-Message-ID: <20230920112829.151273638@linuxfoundation.org>
+Subject: [PATCH 5.10 64/83] samples/hw_breakpoint: fix building without module unloading
+Date: Wed, 20 Sep 2023 13:31:54 +0200
+Message-ID: <20230920112829.192836671@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -41,121 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f530ee95b72e77b09c141c4b1a4b94d1199ffbd9 ]
+[ Upstream commit b9080468caeddc58a91edd1c3a7d212ea82b0d1d ]
 
-The decompressor has a hard limit on the number of page tables it can
-allocate. This limit is defined at compile-time and will cause boot
-failure if it is reached.
+__symbol_put() is really meant as an internal helper and is not available
+when module unloading is disabled, unlike the previously used symbol_put():
 
-The kernel is very strict and calculates the limit precisely for the
-worst-case scenario based on the current configuration. However, it is
-easy to forget to adjust the limit when a new use-case arises. The
-worst-case scenario is rarely encountered during sanity checks.
+samples/hw_breakpoint/data_breakpoint.c: In function 'hw_break_module_exit':
+samples/hw_breakpoint/data_breakpoint.c:73:9: error: implicit declaration of function '__symbol_put'; did you mean '__symbol_get'? [-Werror=implicit-function-declaration]
 
-In the case of enabling 5-level paging, a use-case was overlooked. The
-limit needs to be increased by one to accommodate the additional level.
-This oversight went unnoticed until Aaron attempted to run the kernel
-via kexec with 5-level paging and unaccepted memory enabled.
+The hw_break_module_exit() function is not actually used when module
+unloading is disabled, but it still causes the build failure for an
+undefined identifier. Enclose this one call in an appropriate #ifdef to
+clarify what the requirement is. Leaving out the entire exit function
+would also work but feels less clar in this case.
 
-Update wost-case calculations to include 5-level paging.
-
-To address this issue, let's allocate some extra space for page tables.
-128K should be sufficient for any use-case. The logic can be simplified
-by using a single value for all kernel configurations.
-
-[ Also add a warning, should this memory run low - by Dave Hansen. ]
-
-Fixes: 34bbb0009f3b ("x86/boot/compressed: Enable 5-level paging during decompression stage")
-Reported-by: Aaron Lu <aaron.lu@intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230915070221.10266-1-kirill.shutemov@linux.intel.com
+Fixes: 910e230d5f1bb ("samples/hw_breakpoint: Fix kernel BUG 'invalid opcode: 0000'")
+Fixes: d8a84d33a4954 ("samples/hw_breakpoint: drop use of kallsyms_lookup_name()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/ident_map_64.c |  8 +++++
- arch/x86/include/asm/boot.h             | 45 +++++++++++++++++--------
- 2 files changed, 39 insertions(+), 14 deletions(-)
+ samples/hw_breakpoint/data_breakpoint.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
-index 39b2eded7bc2b..f4a2e6d373b29 100644
---- a/arch/x86/boot/compressed/ident_map_64.c
-+++ b/arch/x86/boot/compressed/ident_map_64.c
-@@ -67,6 +67,14 @@ static void *alloc_pgt_page(void *context)
- 		return NULL;
- 	}
+diff --git a/samples/hw_breakpoint/data_breakpoint.c b/samples/hw_breakpoint/data_breakpoint.c
+index 9debd128b2ab8..b99322f188e59 100644
+--- a/samples/hw_breakpoint/data_breakpoint.c
++++ b/samples/hw_breakpoint/data_breakpoint.c
+@@ -70,7 +70,9 @@ static int __init hw_break_module_init(void)
+ static void __exit hw_break_module_exit(void)
+ {
+ 	unregister_wide_hw_breakpoint(sample_hbp);
++#ifdef CONFIG_MODULE_UNLOAD
+ 	__symbol_put(ksym_name);
++#endif
+ 	printk(KERN_INFO "HW Breakpoint for %s write uninstalled\n", ksym_name);
+ }
  
-+	/* Consumed more tables than expected? */
-+	if (pages->pgt_buf_offset == BOOT_PGT_SIZE_WARN) {
-+		debug_putstr("pgt_buf running low in " __FILE__ "\n");
-+		debug_putstr("Need to raise BOOT_PGT_SIZE?\n");
-+		debug_putaddr(pages->pgt_buf_offset);
-+		debug_putaddr(pages->pgt_buf_size);
-+	}
-+
- 	entry = pages->pgt_buf + pages->pgt_buf_offset;
- 	pages->pgt_buf_offset += PAGE_SIZE;
- 
-diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
-index 9191280d9ea31..215d37f7dde8a 100644
---- a/arch/x86/include/asm/boot.h
-+++ b/arch/x86/include/asm/boot.h
-@@ -40,23 +40,40 @@
- #ifdef CONFIG_X86_64
- # define BOOT_STACK_SIZE	0x4000
- 
-+/*
-+ * Used by decompressor's startup_32() to allocate page tables for identity
-+ * mapping of the 4G of RAM in 4-level paging mode:
-+ * - 1 level4 table;
-+ * - 1 level3 table;
-+ * - 4 level2 table that maps everything with 2M pages;
-+ *
-+ * The additional level5 table needed for 5-level paging is allocated from
-+ * trampoline_32bit memory.
-+ */
- # define BOOT_INIT_PGT_SIZE	(6*4096)
--# ifdef CONFIG_RANDOMIZE_BASE
-+
- /*
-- * Assuming all cross the 512GB boundary:
-- * 1 page for level4
-- * (2+2)*4 pages for kernel, param, cmd_line, and randomized kernel
-- * 2 pages for first 2M (video RAM: CONFIG_X86_VERBOSE_BOOTUP).
-- * Total is 19 pages.
-+ * Total number of page tables kernel_add_identity_map() can allocate,
-+ * including page tables consumed by startup_32().
-+ *
-+ * Worst-case scenario:
-+ *  - 5-level paging needs 1 level5 table;
-+ *  - KASLR needs to map kernel, boot_params, cmdline and randomized kernel,
-+ *    assuming all of them cross 256T boundary:
-+ *    + 4*2 level4 table;
-+ *    + 4*2 level3 table;
-+ *    + 4*2 level2 table;
-+ *  - X86_VERBOSE_BOOTUP needs to map the first 2M (video RAM):
-+ *    + 1 level4 table;
-+ *    + 1 level3 table;
-+ *    + 1 level2 table;
-+ * Total: 28 tables
-+ *
-+ * Add 4 spare table in case decompressor touches anything beyond what is
-+ * accounted above. Warn if it happens.
-  */
--#  ifdef CONFIG_X86_VERBOSE_BOOTUP
--#   define BOOT_PGT_SIZE	(19*4096)
--#  else /* !CONFIG_X86_VERBOSE_BOOTUP */
--#   define BOOT_PGT_SIZE	(17*4096)
--#  endif
--# else /* !CONFIG_RANDOMIZE_BASE */
--#  define BOOT_PGT_SIZE		BOOT_INIT_PGT_SIZE
--# endif
-+# define BOOT_PGT_SIZE_WARN	(28*4096)
-+# define BOOT_PGT_SIZE		(32*4096)
- 
- #else /* !CONFIG_X86_64 */
- # define BOOT_STACK_SIZE	0x1000
 -- 
 2.40.1
 
