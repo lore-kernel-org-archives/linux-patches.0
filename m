@@ -1,37 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB8930FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB55C433C8;
-	Wed, 20 Sep 2023 12:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7CD30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A78DC43397;
+	Wed, 20 Sep 2023 12:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212818;
-	bh=KFGWJpQl4J4z6mh8girfOUZf/dUUh5td6TmshyWaqL0=;
+	s=korg; t=1695212820;
+	bh=xKv9gL4Q5wSve6jHOQYz7C62hD4aYrqWmv8wkjQYGpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzYV2FVLZaxvKXDvX2FQTlGvlw9Wyt8P7TMR3gMjIvxxF+OcNM4UDKc+MIBd0Usga
-	 5c1exxM66iAcvEEiNau3xTsWcSn7KdW0Z4djWZczGOLZzwAYdFjOgh5b2YxLmPhOb6
-	 7ONu7IQ3ad6oIP0yrXWnaJiloa4t09dprkSeO0v0=
+	b=JFr50shcSxF9XpDXk+JxmRb/0UBzQ/ypJggN6D4zKarB5PuQ3yV0KaGYXTeDIawPO
+	 JRQPuK8DNFYuGewjYxZNPZEdHjO0fHgoyXDORyyD0mQ6Hqv9wZCEYqQozRNGZQDEcJ
+	 ULtvR+81cbm7wZTKylIdYf+0ZG88MBGUU4YXcXA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jslaby@suse.cz>,
-	Borislav Petkov <bp@suse.de>,
-	Cao jin <caoj.fnst@cn.fujitsu.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Kate Stewart <kstewart@linuxfoundation.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	linux-arch@vger.kernel.org,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Wei Huang <wei@redhat.com>,
-	x86-ml <x86@kernel.org>,
-	Xiaoyao Li <xiaoyao.li@linux.intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/367] x86/boot: Annotate local functions
-Date: Wed, 20 Sep 2023 13:27:13 +0200
-Message-ID: <20230920112859.951125884@linuxfoundation.org>
+Subject: [PATCH 5.4 057/367] x86/decompressor: Dont rely on upper 32 bits of GPRs being preserved
+Date: Wed, 20 Sep 2023 13:27:14 +0200
+Message-ID: <20230920112859.977728923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -44,131 +34,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit deff8a24e1021fb39dddf5f6bc5832e0e3a632ea ]
+[ Upstream commit 264b82fdb4989cf6a44a2bcd0c6ea05e8026b2ac ]
 
-.Lrelocated, .Lpaging_enabled, .Lno_longmode, and .Lin_pm32 are
-self-standing local functions, annotate them as such and preserve "no
-alignment".
+The 4-to-5 level mode switch trampoline disables long mode and paging in
+order to be able to flick the LA57 bit. According to section 3.4.1.1 of
+the x86 architecture manual [0], 64-bit GPRs might not retain the upper
+32 bits of their contents across such a mode switch.
 
-The annotations do not generate anything yet.
+Given that RBP, RBX and RSI are live at this point, preserve them on the
+stack, along with the return address that might be above 4G as well.
 
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Cc: Cao jin <caoj.fnst@cn.fujitsu.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kate Stewart <kstewart@linuxfoundation.org>
-Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Cc: linux-arch@vger.kernel.org
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Wei Huang <wei@redhat.com>
-Cc: x86-ml <x86@kernel.org>
-Cc: Xiaoyao Li <xiaoyao.li@linux.intel.com>
-Link: https://lkml.kernel.org/r/20191011115108.12392-8-jslaby@suse.cz
-Stable-dep-of: 264b82fdb498 ("x86/decompressor: Don't rely on upper 32 bits of GPRs being preserved")
+[0] Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1: Basic Architecture
+
+  "Because the upper 32 bits of 64-bit general-purpose registers are
+   undefined in 32-bit modes, the upper 32 bits of any general-purpose
+   register are not preserved when switching from 64-bit mode to a 32-bit
+   mode (to protected mode or compatibility mode). Software must not
+   depend on these bits to maintain a value after a 64-bit to 32-bit
+   mode switch."
+
+Fixes: 194a9749c73d650c ("x86/boot/compressed/64: Handle 5-level paging boot if kernel is above 4G")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230807162720.545787-2-ardb@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/head_32.S | 3 ++-
- arch/x86/boot/compressed/head_64.S | 9 ++++++---
- arch/x86/boot/pmjump.S             | 4 ++--
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ arch/x86/boot/compressed/head_64.S | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/head_32.S b/arch/x86/boot/compressed/head_32.S
-index d7c0fcc1dbf9e..b788b986f3351 100644
---- a/arch/x86/boot/compressed/head_32.S
-+++ b/arch/x86/boot/compressed/head_32.S
-@@ -210,7 +210,7 @@ ENDPROC(efi32_stub_entry)
- #endif
- 
- 	.text
--.Lrelocated:
-+SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated)
- 
- /*
-  * Clear BSS (stack is currently empty)
-@@ -261,6 +261,7 @@ ENDPROC(efi32_stub_entry)
-  */
- 	xorl	%ebx, %ebx
- 	jmp	*%eax
-+SYM_FUNC_END(.Lrelocated)
- 
- #ifdef CONFIG_EFI_STUB
- 	.data
 diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
-index 50c9eeb36f0d8..95ee795d97964 100644
+index 95ee795d97964..d8164e6abaaff 100644
 --- a/arch/x86/boot/compressed/head_64.S
 +++ b/arch/x86/boot/compressed/head_64.S
-@@ -517,7 +517,7 @@ ENDPROC(efi64_stub_entry)
- #endif
+@@ -381,11 +381,25 @@ ENTRY(startup_64)
+ 	/* Save the trampoline address in RCX */
+ 	movq	%rax, %rcx
  
- 	.text
--.Lrelocated:
-+SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated)
++	/* Set up 32-bit addressable stack */
++	leaq	TRAMPOLINE_32BIT_STACK_END(%rcx), %rsp
++
++	/*
++	 * Preserve live 64-bit registers on the stack: this is necessary
++	 * because the architecture does not guarantee that GPRs will retain
++	 * their full 64-bit values across a 32-bit mode switch.
++	 */
++	pushq	%rbp
++	pushq	%rbx
++	pushq	%rsi
++
+ 	/*
+-	 * Load the address of trampoline_return() into RDI.
+-	 * It will be used by the trampoline to return to the main code.
++	 * Push the 64-bit address of trampoline_return() onto the new stack.
++	 * It will be used by the trampoline to return to the main code. Due to
++	 * the 32-bit mode switch, it cannot be kept it in a register either.
+ 	 */
+ 	leaq	trampoline_return(%rip), %rdi
++	pushq	%rdi
  
+ 	/* Switch to compatibility mode (CS.L = 0 CS.D = 1) via far return */
+ 	pushq	$__KERNEL32_CS
+@@ -393,6 +407,11 @@ ENTRY(startup_64)
+ 	pushq	%rax
+ 	lretq
+ trampoline_return:
++	/* Restore live 64-bit registers */
++	popq	%rsi
++	popq	%rbx
++	popq	%rbp
++
+ 	/* Restore the stack, the 32-bit trampoline uses its own stack */
+ 	leaq	boot_stack_end(%rbx), %rsp
+ 
+@@ -573,7 +592,7 @@ SYM_FUNC_END(.Lrelocated)
  /*
-  * Clear BSS (stack is currently empty)
-@@ -546,6 +546,7 @@ ENDPROC(efi64_stub_entry)
-  * Jump to the decompressed kernel.
+  * This is the 32-bit trampoline that will be copied over to low memory.
+  *
+- * RDI contains the return address (might be above 4G).
++ * Return address is at the top of the stack (might be above 4G).
+  * ECX contains the base address of the trampoline memory.
+  * Non zero RDX means trampoline needs to enable 5-level paging.
   */
- 	jmp	*%rax
-+SYM_FUNC_END(.Lrelocated)
+@@ -583,9 +602,6 @@ ENTRY(trampoline_32bit_src)
+ 	movl	%eax, %ds
+ 	movl	%eax, %ss
  
- /*
-  * Adjust the global offset table
-@@ -641,9 +642,10 @@ ENTRY(trampoline_32bit_src)
- 	lret
- 
+-	/* Set up new stack */
+-	leal	TRAMPOLINE_32BIT_STACK_END(%ecx), %esp
+-
+ 	/* Disable paging */
+ 	movl	%cr0, %eax
+ 	btrl	$X86_CR0_PG_BIT, %eax
+@@ -644,7 +660,7 @@ ENTRY(trampoline_32bit_src)
  	.code64
--.Lpaging_enabled:
-+SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
+ SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
  	/* Return from the trampoline */
- 	jmp	*%rdi
-+SYM_FUNC_END(.Lpaging_enabled)
+-	jmp	*%rdi
++	retq
+ SYM_FUNC_END(.Lpaging_enabled)
  
  	/*
-          * The trampoline code has a size limit.
-@@ -653,11 +655,12 @@ ENTRY(trampoline_32bit_src)
- 	.org	trampoline_32bit_src + TRAMPOLINE_32BIT_CODE_SIZE
- 
- 	.code32
--.Lno_longmode:
-+SYM_FUNC_START_LOCAL_NOALIGN(.Lno_longmode)
- 	/* This isn't an x86-64 CPU, so hang intentionally, we cannot continue */
- 1:
- 	hlt
- 	jmp     1b
-+SYM_FUNC_END(.Lno_longmode)
- 
- #include "../../kernel/verify_cpu.S"
- 
-diff --git a/arch/x86/boot/pmjump.S b/arch/x86/boot/pmjump.S
-index ea88d52eeac70..81658fe353808 100644
---- a/arch/x86/boot/pmjump.S
-+++ b/arch/x86/boot/pmjump.S
-@@ -46,7 +46,7 @@ ENDPROC(protected_mode_jump)
- 
- 	.code32
- 	.section ".text32","ax"
--.Lin_pm32:
-+SYM_FUNC_START_LOCAL_NOALIGN(.Lin_pm32)
- 	# Set up data segments for flat 32-bit mode
- 	movl	%ecx, %ds
- 	movl	%ecx, %es
-@@ -72,4 +72,4 @@ ENDPROC(protected_mode_jump)
- 	lldt	%cx
- 
- 	jmpl	*%eax			# Jump to the 32-bit entrypoint
--ENDPROC(.Lin_pm32)
-+SYM_FUNC_END(.Lin_pm32)
 -- 
 2.40.1
 
