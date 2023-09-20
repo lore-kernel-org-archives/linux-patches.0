@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF81347BE
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D52C433CA;
-	Wed, 20 Sep 2023 12:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA813717E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28F7C433BA;
+	Wed, 20 Sep 2023 12:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213157;
-	bh=bGAZuRkKCUSWao4DpO787F8ptT6PPiOmHAmGbbUArh4=;
+	s=korg; t=1695213160;
+	bh=XKkOJRgAf+fwLKMOwq5AYdWPjMp+qm5pqLfeJgYc4WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTtKngRR/p+iFgIrCXYsuF97cRQqFZRAth9u9LOi8XdnImMiz2E8P//+Od5zZtolD
-	 8/OhpBNoPqNGB9cz84biPfJ/FWzGCczEYS6lnliNRYJG9k1qB8b/6YT5Nu7InAtViz
-	 Pd/YAN4g4c7SdnFflJnf6lSkoKl2lI2azAmZ5YKI=
+	b=Fr/Ygqwtu/rsvgtcqi2ms/Daa7zwTW+C8YZ+bESnAB7WxY0oiC6qR3WLsXikXZcPj
+	 8XFcc+X0FVl0aQpYHJcqBR91PK3/k+IGnV2Ni+nUuFra57JqYRHUi0qg/54wlXhkw3
+	 AVBw5x7rysktYB7anqEqr/Cm5Dim7Z9nH8A4pfZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 155/367] media: dvb-usb: m920x: Fix a potential memory leak in m920x_i2c_xfer()
-Date: Wed, 20 Sep 2023 13:28:52 +0200
-Message-ID: <20230920112902.666300545@linuxfoundation.org>
+Subject: [PATCH 5.4 156/367] media: cx24120: Add retval check for cx24120_message_send()
+Date: Wed, 20 Sep 2023 13:28:53 +0200
+Message-ID: <20230920112902.691842553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,47 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit ea9ef6c2e001c5dc94bee35ebd1c8a98621cf7b8 ]
+[ Upstream commit 96002c0ac824e1773d3f706b1f92e2a9f2988047 ]
 
-'read' is freed when it is known to be NULL, but not when a read error
-occurs.
+If cx24120_message_send() returns error, we should keep local struct
+unchanged.
 
-Revert the logic to avoid a small leak, should a m920x_read() call fail.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: a2ab06d7c4d6 ("media: m920x: don't use stack on USB reads")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: 5afc9a25be8d ("[media] Add support for TechniSat Skystar S2")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/m920x.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/dvb-frontends/cx24120.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/m920x.c b/drivers/media/usb/dvb-usb/m920x.c
-index 7282f60226558..8b19ae67f1879 100644
---- a/drivers/media/usb/dvb-usb/m920x.c
-+++ b/drivers/media/usb/dvb-usb/m920x.c
-@@ -277,7 +277,6 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
- 			char *read = kmalloc(1, GFP_KERNEL);
- 			if (!read) {
- 				ret = -ENOMEM;
--				kfree(read);
- 				goto unlock;
- 			}
+diff --git a/drivers/media/dvb-frontends/cx24120.c b/drivers/media/dvb-frontends/cx24120.c
+index 2464b63fe0cf4..307efef263f27 100644
+--- a/drivers/media/dvb-frontends/cx24120.c
++++ b/drivers/media/dvb-frontends/cx24120.c
+@@ -972,7 +972,9 @@ static void cx24120_set_clock_ratios(struct dvb_frontend *fe)
+ 	cmd.arg[8] = (clock_ratios_table[idx].rate >> 8) & 0xff;
+ 	cmd.arg[9] = (clock_ratios_table[idx].rate >> 0) & 0xff;
  
-@@ -288,8 +287,10 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+-	cx24120_message_send(state, &cmd);
++	ret = cx24120_message_send(state, &cmd);
++	if (ret != 0)
++		return;
  
- 				if ((ret = m920x_read(d->udev, M9206_I2C, 0x0,
- 						      0x20 | stop,
--						      read, 1)) != 0)
-+						      read, 1)) != 0) {
-+					kfree(read);
- 					goto unlock;
-+				}
- 				msg[i].buf[j] = read[0];
- 			}
- 
+ 	/* Calculate ber window rates for stat work */
+ 	cx24120_calculate_ber_window(state, clock_ratios_table[idx].rate);
 -- 
 2.40.1
 
