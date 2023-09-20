@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8080815AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EB8C433C9;
-	Wed, 20 Sep 2023 12:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEBF2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBAAC433C9;
+	Wed, 20 Sep 2023 12:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212155;
-	bh=I+l3AZ30fZdOfNUiCvbZp/cwR64Q6kqlGU7CNtpGWnE=;
+	s=korg; t=1695212158;
+	bh=FiTM6+kK6tGMOPbIZlGk0EnJ/cWenZM/i8KTk/5LRGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIeiZjAQCIeTzFE0riTbhujo1+25MRZcZ74zZKiIXtAOnWikwChhCVe1dlPara62B
-	 0Rx7Kn0YCXnzWVQcHtvzoZzuSoOKA/H8YMnqu4/aaA5j1UlPLfHDe1XxGGJuTKTu86
-	 Og8jH5cDQzidJAvSm7ZU7eC0392W3XBOex3bZOmY=
+	b=Dn70BounJDnuJKPeowNC9usY3uiO2WMawZflPnFUlBG6OvaZkqfa5scJQ4qx50F3E
+	 HIaBevMi7AdL4vKX3EKmlmWy8/cdjnuDOA5fYHnZRTM/ips4pyOpR6J7BG4O6jVw9l
+	 Mfu7run/9LvbOQIOhYA54+ig/1JDWDaHVpGZcqms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meng_Cai@novatek.com.cn,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 172/273] ALSA: pcm: Fix missing fixup call in compat hw_refine ioctl
-Date: Wed, 20 Sep 2023 13:30:12 +0200
-Message-ID: <20230920112851.832965054@linuxfoundation.org>
+	Yi Yang <yiyang13@huawei.com>,
+	"GONG, Ruiqi" <gongruiqi@huaweicloud.com>,
+	Corey Minyard <minyard@acm.org>,
+	GONG
+Subject: [PATCH 4.19 173/273] ipmi_si: fix a memleak in try_smi_init()
+Date: Wed, 20 Sep 2023 13:30:13 +0200
+Message-ID: <20230920112851.862775795@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,49 +41,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit 358040e3807754944dbddf948a23c6d914297ed7 upstream.
+commit 6cf1a126de2992b4efe1c3c4d398f8de4aed6e3f upstream.
 
-The update of rate_num/den and msbits were factored out to
-fixup_unreferenced_params() function to be called explicitly after the
-hw_refine or hw_params procedure.  It's called from
-snd_pcm_hw_refine_user(), but it's forgotten in the PCM compat ioctl.
-This ended up with the incomplete rate_num/den and msbits parameters
-when 32bit compat ioctl is used.
+Kmemleak reported the following leak info in try_smi_init():
 
-This patch adds the missing call in snd_pcm_ioctl_hw_params_compat().
+unreferenced object 0xffff00018ecf9400 (size 1024):
+  comm "modprobe", pid 2707763, jiffies 4300851415 (age 773.308s)
+  backtrace:
+    [<000000004ca5b312>] __kmalloc+0x4b8/0x7b0
+    [<00000000953b1072>] try_smi_init+0x148/0x5dc [ipmi_si]
+    [<000000006460d325>] 0xffff800081b10148
+    [<0000000039206ea5>] do_one_initcall+0x64/0x2a4
+    [<00000000601399ce>] do_init_module+0x50/0x300
+    [<000000003c12ba3c>] load_module+0x7a8/0x9e0
+    [<00000000c246fffe>] __se_sys_init_module+0x104/0x180
+    [<00000000eea99093>] __arm64_sys_init_module+0x24/0x30
+    [<0000000021b1ef87>] el0_svc_common.constprop.0+0x94/0x250
+    [<0000000070f4f8b7>] do_el0_svc+0x48/0xe0
+    [<000000005a05337f>] el0_svc+0x24/0x3c
+    [<000000005eb248d6>] el0_sync_handler+0x160/0x164
+    [<0000000030a59039>] el0_sync+0x160/0x180
 
-Reported-by: Meng_Cai@novatek.com.cn
-Fixes: f9a076bff053 ("ALSA: pcm: calculate non-mask/non-interval parameters always when possible")
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230829134344.31588-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The problem was that when an error occurred before handlers registration
+and after allocating `new_smi->si_sm`, the variable wouldn't be freed in
+the error handling afterwards since `shutdown_smi()` hadn't been
+registered yet. Fix it by adding a `kfree()` in the error handling path
+in `try_smi_init()`.
+
+Cc: stable@vger.kernel.org # 4.19+
+Fixes: 7960f18a5647 ("ipmi_si: Convert over to a shutdown handler")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: GONG, Ruiqi <gongruiqi@huaweicloud.com>
+Signed-off-by: GONG, Ruiqi <gongruiqi@huaweicloud.com>
+Message-Id: <20230629123328.2402075-1-gongruiqi@huaweicloud.com>
+Signed-off-by: Corey Minyard <minyard@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_compat.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/sound/core/pcm_compat.c
-+++ b/sound/core/pcm_compat.c
-@@ -329,10 +329,14 @@ static int snd_pcm_ioctl_hw_params_compa
- 		goto error;
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -2119,6 +2119,11 @@ static int try_smi_init(struct smi_info
+ 		new_smi->io.io_cleanup = NULL;
  	}
  
--	if (refine)
-+	if (refine) {
- 		err = snd_pcm_hw_refine(substream, data);
--	else
-+		if (err < 0)
-+			goto error;
-+		err = fixup_unreferenced_params(substream, data);
-+	} else {
- 		err = snd_pcm_hw_params(substream, data);
++	if (rv && new_smi->si_sm) {
++		kfree(new_smi->si_sm);
++		new_smi->si_sm = NULL;
 +	}
- 	if (err < 0)
- 		goto error;
- 	if (copy_to_user(data32, data, sizeof(*data32)) ||
++
+ 	kfree(init_name);
+ 	return rv;
+ }
 
 
