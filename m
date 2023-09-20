@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AA8156E5
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291EAC433C7;
-	Wed, 20 Sep 2023 12:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B410156E5
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE99C433C8;
+	Wed, 20 Sep 2023 12:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213430;
-	bh=7acR7u17667nbPryaR83Fcx8PxFHkM6l5Z7motR44yM=;
+	s=korg; t=1695213433;
+	bh=ivbeCynZxSvRnKVXm/jU0qDpQRtrt4wsNb++YGz1DPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/wqPAJZjzx00RLnybaNQ65SNTdpxE7/YNc6vEcLNnfbye7ayysYrNXyZ30CUKC0H
-	 8sXTtdH/FBbfLe9KoT3dg9WUXSI528YDREO7Mjf+W/g8YJE4arQPMKIEOzUol4/iB8
-	 B3aDb0l1yACscpcZJbTJ3W0IZwIrULpEdTwVlTes=
+	b=OzxeL5U1vAMWJeS96xB+KbWzdxKxcMNX/87+65YvdVaILHTVTxfaAEZIvGZ/XpHTf
+	 sMpsW2bfNn56XybHZyTM2mk0KMvsGvm4WQMI0cEdE4rVSkAQsToiTqURZX2xFB2yg0
+	 KeA3HzQYCf3KlMNHZ8NuFoERobVbnwPGoj8dve3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mack <daniel@zonque.org>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 234/367] sc16is7xx: Set iobase to device index
-Date: Wed, 20 Sep 2023 13:30:11 +0200
-Message-ID: <20230920112904.633106287@linuxfoundation.org>
+Subject: [PATCH 5.4 235/367] serial: sc16is7xx: fix broken port 0 uart init
+Date: Wed, 20 Sep 2023 13:30:12 +0200
+Message-ID: <20230920112904.656415502@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -33,42 +35,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Mack <daniel@zonque.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 5da6b1c079e6804a81e63ab8337224cbd2148c91 ]
+[ Upstream commit 2861ed4d6e6d1a2c9de9bf5b0abd996c2dc673d0 ]
 
-Some derivates of sc16is7xx devices expose more than one tty device to
-userspace. If multiple such devices exist in a system, userspace
-currently has no clean way to infer which tty maps to which physical
-line.
+The sc16is7xx_config_rs485() function is called only for the second
+port (index 1, channel B), causing initialization problems for the
+first port.
 
-Set the .iobase value to the relative index within the device to allow
-infering the order through sysfs.
+For the sc16is7xx driver, port->membase and port->mapbase are not set,
+and their default values are 0. And we set port->iobase to the device
+index. This means that when the first device is registered using the
+uart_add_one_port() function, the following values will be in the port
+structure:
+    port->membase = 0
+    port->mapbase = 0
+    port->iobase  = 0
 
-Signed-off-by: Daniel Mack <daniel@zonque.org>
-Link: https://lore.kernel.org/r/20200901120329.4176302-1-daniel@zonque.org
+Therefore, the function uart_configure_port() in serial_core.c will
+exit early because of the following check:
+	/*
+	 * If there isn't a port here, don't do anything further.
+	 */
+	if (!port->iobase && !port->mapbase && !port->membase)
+		return;
+
+Typically, I2C and SPI drivers do not set port->membase and
+port->mapbase.
+
+The max310x driver sets port->membase to ~0 (all ones). By
+implementing the same change in this driver, uart_configure_port() is
+now correctly executed for all ports.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
+Link: https://lore.kernel.org/r/20230807214556.540627-2-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2861ed4d6e6d ("serial: sc16is7xx: fix broken port 0 uart init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/sc16is7xx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index d8b015335009b..9b68725d4e9ba 100644
+index 9b68725d4e9ba..091cf5fe90304 100644
 --- a/drivers/tty/serial/sc16is7xx.c
 +++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1270,6 +1270,7 @@ static int sc16is7xx_probe(struct device *dev,
- 		s->p[i].port.type	= PORT_SC16IS7XX;
+@@ -1271,6 +1271,12 @@ static int sc16is7xx_probe(struct device *dev,
  		s->p[i].port.fifosize	= SC16IS7XX_FIFO_SIZE;
  		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY;
-+		s->p[i].port.iobase	= i;
+ 		s->p[i].port.iobase	= i;
++		/*
++		 * Use all ones as membase to make sure uart_configure_port() in
++		 * serial_core.c does not abort for SPI/I2C devices where the
++		 * membase address is not applicable.
++		 */
++		s->p[i].port.membase	= (void __iomem *)~0;
  		s->p[i].port.iotype	= UPIO_PORT;
  		s->p[i].port.uartclk	= freq;
  		s->p[i].port.rs485_config = sc16is7xx_config_rs485;
