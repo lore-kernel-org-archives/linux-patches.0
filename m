@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FAC28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F30C433C8;
-	Wed, 20 Sep 2023 11:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0D528E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7EC433C9;
+	Wed, 20 Sep 2023 11:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210811;
-	bh=3FXbHG5XTst+mKgJnSW7ImAFOyynUu+H5zuqFuz9h8E=;
+	s=korg; t=1695210814;
+	bh=3Q/9w5AseCaa1OAzom0zxia1A8SM0ZdgiG0W8GW1z3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKpJt6sXPEq1hI6JsyUSp6lzwqd0zd+vIluF61kicgDO0KKhoN5NGdGQsaaPUbkoj
-	 89vYfrKXJj6JHtrsCZ1MTA2xvlzLq8fCYxQfMpaAq5I4y4PegsF3tJM/UlTdj1Uz8t
-	 A/SmSKvzD48yUV62UkePiu721wrFkC/wJun9a4zE=
+	b=Ea3+3QS3wMshDWJ7VigW/kvPlatxHXI1i/v5eNyfE0xfDmJYrImQnsENDBqA5vhnr
+	 JYugsAIWxDV3kTGhZiYtxx2p9DW8RQpOwJ36WEU2IScVQlzTCpWP2aiKaaLvNWAxdx
+	 1hNXF81/V9QUUtaaquvcq9DDEgjVSLPFlhdohECQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tero Kristo <tero.kristo@linux.intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 187/211] tracing/synthetic: Print out u64 values properly
-Date: Wed, 20 Sep 2023 13:30:31 +0200
-Message-ID: <20230920112851.670295143@linuxfoundation.org>
+Subject: [PATCH 6.5 188/211] tracing: Increase trace array ref count on enable and filter files
+Date: Wed, 20 Sep 2023 13:30:32 +0200
+Message-ID: <20230920112851.702163219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,40 +44,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tero Kristo <tero.kristo@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 62663b849662c1a5126b6274d91671b90566ef13 upstream.
+commit f5ca233e2e66dc1c249bf07eefa37e34a6c9346a upstream.
 
-The synth traces incorrectly print pointer to the synthetic event values
-instead of the actual value when using u64 type. Fix by addressing the
-contents of the union properly.
+When the trace event enable and filter files are opened, increment the
+trace array ref counter, otherwise they can be accessed when the trace
+array is being deleted. The ref counter keeps the trace array from being
+deleted while those files are opened.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230911141704.3585965-1-tero.kristo@linux.intel.com
+Link: https://lkml.kernel.org/r/20230907024803.456187066@goodmis.org
+Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
 
-Fixes: ddeea494a16f ("tracing/synthetic: Use union instead of casts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8530dec63e7b4 ("tracing: Add tracing_check_open_get_tr()")
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reported-by: Zheng Yejian <zhengyejian1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c        |   27 +++++++++++++++++++++++++++
+ kernel/trace/trace.h        |    2 ++
+ kernel/trace/trace_events.c |    6 ++++--
+ 3 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
-index 9897d0bfcab7..14cb275a0bab 100644
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -337,7 +337,7 @@ static void print_synth_event_num_val(struct trace_seq *s,
- 		break;
- 
- 	default:
--		trace_seq_printf(s, print_fmt, name, val, space);
-+		trace_seq_printf(s, print_fmt, name, val->as_u64, space);
- 		break;
- 	}
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4987,6 +4987,33 @@ int tracing_open_generic_tr(struct inode
+ 	return 0;
  }
--- 
-2.42.0
-
+ 
++/*
++ * The private pointer of the inode is the trace_event_file.
++ * Update the tr ref count associated to it.
++ */
++int tracing_open_file_tr(struct inode *inode, struct file *filp)
++{
++	struct trace_event_file *file = inode->i_private;
++	int ret;
++
++	ret = tracing_check_open_get_tr(file->tr);
++	if (ret)
++		return ret;
++
++	filp->private_data = inode->i_private;
++
++	return 0;
++}
++
++int tracing_release_file_tr(struct inode *inode, struct file *filp)
++{
++	struct trace_event_file *file = inode->i_private;
++
++	trace_array_put(file->tr);
++
++	return 0;
++}
++
+ static int tracing_mark_open(struct inode *inode, struct file *filp)
+ {
+ 	stream_open(inode, filp);
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -601,6 +601,8 @@ void tracing_reset_all_online_cpus(void)
+ void tracing_reset_all_online_cpus_unlocked(void);
+ int tracing_open_generic(struct inode *inode, struct file *filp);
+ int tracing_open_generic_tr(struct inode *inode, struct file *filp);
++int tracing_open_file_tr(struct inode *inode, struct file *filp);
++int tracing_release_file_tr(struct inode *inode, struct file *filp);
+ bool tracing_is_disabled(void);
+ bool tracer_tracing_is_on(struct trace_array *tr);
+ void tracer_tracing_on(struct trace_array *tr);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2103,9 +2103,10 @@ static const struct file_operations ftra
+ };
+ 
+ static const struct file_operations ftrace_enable_fops = {
+-	.open = tracing_open_generic,
++	.open = tracing_open_file_tr,
+ 	.read = event_enable_read,
+ 	.write = event_enable_write,
++	.release = tracing_release_file_tr,
+ 	.llseek = default_llseek,
+ };
+ 
+@@ -2122,9 +2123,10 @@ static const struct file_operations ftra
+ };
+ 
+ static const struct file_operations ftrace_event_filter_fops = {
+-	.open = tracing_open_generic,
++	.open = tracing_open_file_tr,
+ 	.read = event_filter_read,
+ 	.write = event_filter_write,
++	.release = tracing_release_file_tr,
+ 	.llseek = default_llseek,
+ };
+ 
 
 
