@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9634C2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC1BC433CA;
-	Wed, 20 Sep 2023 12:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED07E2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499EEC433C9;
+	Wed, 20 Sep 2023 12:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211588;
-	bh=QykjWcp2OevlBtiQcr8BNVe9UFV46L9VoPoVOegxwxU=;
+	s=korg; t=1695211590;
+	bh=22WZIh8qPYXQhbhW6eHxOmZFqpcXexaNc+fMv2+ZMK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EghhM14BlFoDTlPvEs5Swtby3jU47MMR4KTlPscYuZYPAAXJPJL0C60Gt8e2YM9hr
-	 zWuhVghNnZP/75c7uG986/WTUwU6zyT9PpL05BTN72zE9BGdrRHxHr0Lg1RqpVALsk
-	 2UunWleNnDGRDQ0jQU/q2rhBFFVfzH2EKiTRrtOI=
+	b=iUuu15aC8w9haaJew70ibVIYVCMaUMbCBE1GRjngG1m4xrTxnsGaS/Gf9almE3wI3
+	 m9V42lj4u5L4Wi3dujL3EiNzB8bd4wWvRQeV1J/bmNx3P0s9SBxF1v66G0zZPux0b0
+	 k2rrsnVeOWPh68HuPRgsEUl8RUGS8wk4eax0CnSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com,
+	Takeshi Misawa <jeliantsurux@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Ian Kent <raven@themaw.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrei Vagin <avagin@gmail.com>,
+	autofs@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 131/186] net: read sk->sk_family once in sk_mc_loop()
-Date: Wed, 20 Sep 2023 13:30:34 +0200
-Message-ID: <20230920112841.746879815@linuxfoundation.org>
+Subject: [PATCH 4.14 149/186] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date: Wed, 20 Sep 2023 13:30:52 +0200
+Message-ID: <20230920112842.349000704@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -42,85 +48,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a3e0fdf71bbe031de845e8e08ed7fba49f9c702c ]
+[ Upstream commit ccbe77f7e45dfb4420f7f531b650c00c6e9c7507 ]
 
-syzbot is playing with IPV6_ADDRFORM quite a lot these days,
-and managed to hit the WARN_ON_ONCE(1) in sk_mc_loop()
+Syzkaller reports a memory leak:
 
-We have many more similar issues to fix.
+BUG: memory leak
+unreferenced object 0xffff88810b279e00 (size 96):
+  comm "syz-executor399", pid 3631, jiffies 4294964921 (age 23.870s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 9e 27 0b 81 88 ff ff  ..........'.....
+    08 9e 27 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ..'.............
+  backtrace:
+    [<ffffffff814cfc90>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff81bb75ca>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff81bb75ca>] autofs_wait+0x3fa/0x9a0 fs/autofs/waitq.c:378
+    [<ffffffff81bb88a7>] autofs_do_expire_multi+0xa7/0x3e0 fs/autofs/expire.c:593
+    [<ffffffff81bb8c33>] autofs_expire_multi+0x53/0x80 fs/autofs/expire.c:619
+    [<ffffffff81bb6972>] autofs_root_ioctl_unlocked+0x322/0x3b0 fs/autofs/root.c:897
+    [<ffffffff81bb6a95>] autofs_root_ioctl+0x25/0x30 fs/autofs/root.c:910
+    [<ffffffff81602a9c>] vfs_ioctl fs/ioctl.c:51 [inline]
+    [<ffffffff81602a9c>] __do_sys_ioctl fs/ioctl.c:870 [inline]
+    [<ffffffff81602a9c>] __se_sys_ioctl fs/ioctl.c:856 [inline]
+    [<ffffffff81602a9c>] __x64_sys_ioctl+0xfc/0x140 fs/ioctl.c:856
+    [<ffffffff84608225>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84608225>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-WARNING: CPU: 1 PID: 1593 at net/core/sock.c:782 sk_mc_loop+0x165/0x260
-Modules linked in:
-CPU: 1 PID: 1593 Comm: kworker/1:3 Not tainted 6.1.40-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-Workqueue: events_power_efficient gc_worker
-RIP: 0010:sk_mc_loop+0x165/0x260 net/core/sock.c:782
-Code: 34 1b fd 49 81 c7 18 05 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 20 00 74 08 4c 89 ff e8 25 36 6d fd 4d 8b 37 eb 13 e8 db 33 1b fd <0f> 0b b3 01 eb 34 e8 d0 33 1b fd 45 31 f6 49 83 c6 38 4c 89 f0 48
-RSP: 0018:ffffc90000388530 EFLAGS: 00010246
-RAX: ffffffff846d9b55 RBX: 0000000000000011 RCX: ffff88814f884980
-RDX: 0000000000000102 RSI: ffffffff87ae5160 RDI: 0000000000000011
-RBP: ffffc90000388550 R08: 0000000000000003 R09: ffffffff846d9a65
-R10: 0000000000000002 R11: ffff88814f884980 R12: dffffc0000000000
-R13: ffff88810dbee000 R14: 0000000000000010 R15: ffff888150084000
-FS: 0000000000000000(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000180 CR3: 000000014ee5b000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<IRQ>
-[<ffffffff8507734f>] ip6_finish_output2+0x33f/0x1ae0 net/ipv6/ip6_output.c:83
-[<ffffffff85062766>] __ip6_finish_output net/ipv6/ip6_output.c:200 [inline]
-[<ffffffff85062766>] ip6_finish_output+0x6c6/0xb10 net/ipv6/ip6_output.c:211
-[<ffffffff85061f8c>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff85061f8c>] ip6_output+0x2bc/0x3d0 net/ipv6/ip6_output.c:232
-[<ffffffff852071cf>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff852071cf>] ip6_local_out+0x10f/0x140 net/ipv6/output_core.c:161
-[<ffffffff83618fb4>] ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:483 [inline]
-[<ffffffff83618fb4>] ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:529 [inline]
-[<ffffffff83618fb4>] ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
-[<ffffffff83618fb4>] ipvlan_queue_xmit+0x1174/0x1be0 drivers/net/ipvlan/ipvlan_core.c:677
-[<ffffffff8361ddd9>] ipvlan_start_xmit+0x49/0x100 drivers/net/ipvlan/ipvlan_main.c:229
-[<ffffffff84763fc0>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
-[<ffffffff84763fc0>] xmit_one net/core/dev.c:3644 [inline]
-[<ffffffff84763fc0>] dev_hard_start_xmit+0x320/0x980 net/core/dev.c:3660
-[<ffffffff8494c650>] sch_direct_xmit+0x2a0/0x9c0 net/sched/sch_generic.c:342
-[<ffffffff8494d883>] qdisc_restart net/sched/sch_generic.c:407 [inline]
-[<ffffffff8494d883>] __qdisc_run+0xb13/0x1e70 net/sched/sch_generic.c:415
-[<ffffffff8478c426>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
-[<ffffffff84796eac>] net_tx_action+0x7ac/0x940 net/core/dev.c:5247
-[<ffffffff858002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:599
-[<ffffffff814c3fe8>] invoke_softirq kernel/softirq.c:430 [inline]
-[<ffffffff814c3fe8>] __irq_exit_rcu+0xc8/0x170 kernel/softirq.c:683
-[<ffffffff814c3f09>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:695
+autofs_wait_queue structs should be freed if their wait_ctr becomes zero.
+Otherwise they will be lost.
 
-Fixes: 7ad6848c7e81 ("ip: fix mc_loop checks for tunnels with multicast outer addresses")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230830101244.1146934-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In this case an AUTOFS_IOC_EXPIRE_MULTI ioctl is done, then a new
+waitqueue struct is allocated in autofs_wait(), its initial wait_ctr
+equals 2. After that wait_event_killable() is interrupted (it returns
+-ERESTARTSYS), so that 'wq->name.name == NULL' condition may be not
+satisfied. Actually, this condition can be satisfied when
+autofs_wait_release() or autofs_catatonic_mode() is called and, what is
+also important, wait_ctr is decremented in those places. Upon the exit of
+autofs_wait(), wait_ctr is decremented to 1. Then the unmounting process
+begins: kill_sb calls autofs_catatonic_mode(), which should have freed the
+waitqueues, but it only decrements its usage counter to zero which is not
+a correct behaviour.
+
+edit:imk
+This description is of course not correct. The umount performed as a result
+of an expire is a umount of a mount that has been automounted, it's not the
+autofs mount itself. They happen independently, usually after everything
+mounted within the autofs file system has been expired away. If everything
+hasn't been expired away the automount daemon can still exit leaving mounts
+in place. But expires done in both cases will result in a notification that
+calls autofs_wait_release() with a result status. The problem case is the
+summary execution of of the automount daemon. In this case any waiting
+processes won't be woken up until either they are terminated or the mount
+is umounted.
+end edit: imk
+
+So in catatonic mode we should free waitqueues which counter becomes zero.
+
+edit: imk
+Initially I was concerned that the calling of autofs_wait_release() and
+autofs_catatonic_mode() was not mutually exclusive but that can't be the
+case (obviously) because the queue entry (or entries) is removed from the
+list when either of these two functions are called. Consequently the wait
+entry will be freed by only one of these functions or by the woken process
+in autofs_wait() depending on the order of the calls.
+end edit: imk
+
+Reported-by: syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com
+Suggested-by: Takeshi Misawa <jeliantsurux@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Ian Kent <raven@themaw.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: autofs@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Message-Id: <169112719161.7590.6700123246297365841.stgit@donald.themaw.net>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 ++-
+ fs/autofs4/waitq.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index a7a0bc9c2a9f0..1f76e7a78a8d1 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -670,7 +670,8 @@ bool sk_mc_loop(struct sock *sk)
- 		return false;
- 	if (!sk)
- 		return true;
--	switch (sk->sk_family) {
-+	/* IPV6_ADDRFORM can change sk->sk_family under us. */
-+	switch (READ_ONCE(sk->sk_family)) {
- 	case AF_INET:
- 		return inet_sk(sk)->mc_loop;
- #if IS_ENABLED(CONFIG_IPV6)
+diff --git a/fs/autofs4/waitq.c b/fs/autofs4/waitq.c
+index 961a12dc6dc81..5863532675e3c 100644
+--- a/fs/autofs4/waitq.c
++++ b/fs/autofs4/waitq.c
+@@ -42,8 +42,9 @@ void autofs4_catatonic_mode(struct autofs_sb_info *sbi)
+ 		wq->status = -ENOENT; /* Magic is gone - report failure */
+ 		kfree(wq->name.name);
+ 		wq->name.name = NULL;
+-		wq->wait_ctr--;
+ 		wake_up_interruptible(&wq->queue);
++		if (!--wq->wait_ctr)
++			kfree(wq);
+ 		wq = nwq;
+ 	}
+ 	fput(sbi->pipe);	/* Close the pipe */
 -- 
 2.40.1
 
