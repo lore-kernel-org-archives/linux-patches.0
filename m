@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24A030FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB8AC433C8;
-	Wed, 20 Sep 2023 12:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA6230FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EECC433CB;
+	Wed, 20 Sep 2023 12:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212761;
-	bh=1hHVowjTFM4OmL2XiAbYIb2sSZXpNlvQ4RgGMuiZpIM=;
+	s=korg; t=1695212764;
+	bh=aD/kRnc4zWdJ26UhX2d5AmMlIGqQiwX3d2FJWUCtXXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yRKQDPqyAP4SQVhEVHT26I2CE9UViC2oMY1hQTXavI20krZQTmNiLXpVKYveJKnWw
-	 DnNfDEhzTrlbSwFngUjO8b/BtTKxjqQ8fkw+R9t3jmH1vEM8DhPe8mOVgrMfCVa7UB
-	 Alx63SGwM9Dh23mAa4FD20m0IuS+z3bcNweEeM64=
+	b=TxgDAjqMzfjJsJNgYNNDjPm4AvDn5ySbxjOABzQTFhIqT9KC82j07KYNAQ56W3b9h
+	 zYMCiPiI+3Jmw+dulaIKq7TBuCoNIWNJNdusxfYYgfXF4F38++bKPQNGDvQOfRgAIs
+	 8wdK7fx1pOvtcOw700qsGkviPnBLCrcJAV4kTQyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/367] scsi: qedi: Fix potential deadlock on &qedi_percpu->p_work_lock
-Date: Wed, 20 Sep 2023 13:26:52 +0200
-Message-ID: <20230920112859.418144230@linuxfoundation.org>
+	syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nam Cao <namcaov@gmail.com>
+Subject: [PATCH 5.4 010/367] staging: rtl8712: fix race condition
+Date: Wed, 20 Sep 2023 13:26:27 +0200
+Message-ID: <20230920112858.766740304@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,67 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Nam Cao <namcaov@gmail.com>
 
-[ Upstream commit dd64f80587190265ca8a0f4be6c64c2fda6d3ac2 ]
+commit 1422b526fba994cf05fd288a152106563b875fce upstream.
 
-As &qedi_percpu->p_work_lock is acquired by hard IRQ qedi_msix_handler(),
-other acquisitions of the same lock under process context should disable
-IRQ, otherwise deadlock could happen if the IRQ preempts the execution
-while the lock is held in process context on the same CPU.
+In probe function, request_firmware_nowait() is called to load firmware
+asynchronously. At completion of firmware loading, register_netdev() is
+called. However, a mutex needed by netdev is initialized after the call
+to request_firmware_nowait(). Consequently, it can happen that
+register_netdev() is called before the driver is ready.
 
-qedi_cpu_offline() is one such function which acquires the lock in process
-context.
+Move the mutex initialization into r8712_init_drv_sw(), which is called
+before request_firmware_nowait().
 
-[Deadlock Scenario]
-qedi_cpu_offline()
-    ->spin_lock(&p->p_work_lock)
-        <irq>
-        ->qedi_msix_handler()
-        ->edi_process_completions()
-        ->spin_lock_irqsave(&p->p_work_lock, flags); (deadlock here)
-
-This flaw was found by an experimental static analysis tool I am developing
-for IRQ-related deadlocks.
-
-The tentative patch fix the potential deadlock by spin_lock_irqsave()
-under process context.
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230726125655.4197-1-dg573847474@gmail.com
-Acked-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-staging/000000000000d9d4560601b8e0d7@google.com/T/#u
+Fixes: 8c213fa59199 ("staging: r8712u: Use asynchronous firmware loading")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Link: https://lore.kernel.org/r/20230731110620.116562-1-namcaov@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qedi/qedi_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8712/os_intfs.c |    1 +
+ drivers/staging/rtl8712/usb_intf.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
-index 92c4a367b7bd7..6b47921202eba 100644
---- a/drivers/scsi/qedi/qedi_main.c
-+++ b/drivers/scsi/qedi/qedi_main.c
-@@ -1910,8 +1910,9 @@ static int qedi_cpu_offline(unsigned int cpu)
- 	struct qedi_percpu_s *p = this_cpu_ptr(&qedi_percpu);
- 	struct qedi_work *work, *tmp;
- 	struct task_struct *thread;
-+	unsigned long flags;
+--- a/drivers/staging/rtl8712/os_intfs.c
++++ b/drivers/staging/rtl8712/os_intfs.c
+@@ -323,6 +323,7 @@ int r8712_init_drv_sw(struct _adapter *p
+ 	mp871xinit(padapter);
+ 	init_default_value(padapter);
+ 	r8712_InitSwLeds(padapter);
++	mutex_init(&padapter->mutex_start);
+ 	return ret;
+ }
  
--	spin_lock_bh(&p->p_work_lock);
-+	spin_lock_irqsave(&p->p_work_lock, flags);
- 	thread = p->iothread;
- 	p->iothread = NULL;
- 
-@@ -1922,7 +1923,7 @@ static int qedi_cpu_offline(unsigned int cpu)
- 			kfree(work);
- 	}
- 
--	spin_unlock_bh(&p->p_work_lock);
-+	spin_unlock_irqrestore(&p->p_work_lock, flags);
- 	if (thread)
- 		kthread_stop(thread);
+--- a/drivers/staging/rtl8712/usb_intf.c
++++ b/drivers/staging/rtl8712/usb_intf.c
+@@ -570,7 +570,6 @@ static int r871xu_drv_init(struct usb_in
+ 	if (rtl871x_load_fw(padapter))
+ 		goto error;
+ 	spin_lock_init(&padapter->lock_rx_ff0_filter);
+-	mutex_init(&padapter->mutex_start);
  	return 0;
--- 
-2.40.1
-
+ error:
+ 	usb_put_dev(udev);
 
 
