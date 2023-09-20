@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5939A111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9183C433C8;
-	Wed, 20 Sep 2023 12:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFD7111AB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEA4C433C8;
+	Wed, 20 Sep 2023 12:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213625;
-	bh=59GvZcfXo3mfoD8AGfYVX3GpljKLnUe4i3WtoHW0fvM=;
+	s=korg; t=1695213627;
+	bh=UilHsd7RKMw0EgfhgIx5VVdLg4F/L3dH1r7eM0bIKYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAGu9mKHi209RdqrcDS6Zn0nD590Xbi+XCU+eYXJXA1CLqOp3A7Z5uuJYOB4p6P9j
-	 e1vy0DN11583EqpPO9BSCkWqJ3EhV2AlhApbR5Th6YGZhy6ECQyKUgfT6G062xMSJG
-	 ufgETsfmHZKJwnH6KJe7riJzzGKPCngbkADon3cI=
+	b=rI2H3XOrLr/VfqZlRKlNuKGjDQ6d/hlsdsTxyf5yFx5LLVRINUQF5m1trBj3r7Yeb
+	 urCfv8r6BKQyUexvSiAKkywvI6P6ukQUJYz20mxJkQHUv4fuYQXkRcUPRpLmdYrHzO
+	 5tqtzBeDVw7yEojvl2jTHfidQL1k3LectObw48jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.4 306/367] ixgbe: fix timestamp configuration code
-Date: Wed, 20 Sep 2023 13:31:23 +0200
-Message-ID: <20230920112906.473144901@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 307/367] kcm: Fix error handling for SOCK_DGRAM in kcm_sendmsg().
+Date: Wed, 20 Sep 2023 13:31:24 +0200
+Message-ID: <20230920112906.500269340@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,147 +40,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 3c44191dd76cf9c0cc49adaf34384cbd42ef8ad2 ]
+[ Upstream commit a22730b1b4bf437c6bbfdeff5feddf54be4aeada ]
 
-The commit in fixes introduced flags to control the status of hardware
-configuration while processing packets. At the same time another structure
-is used to provide configuration of timestamper to user-space applications.
-The way it was coded makes this structures go out of sync easily. The
-repro is easy for 82599 chips:
+syzkaller found a memory leak in kcm_sendmsg(), and commit c821a88bd720
+("kcm: Fix memory leak in error path of kcm_sendmsg()") suppressed it by
+updating kcm_tx_msg(head)->last_skb if partial data is copied so that the
+following sendmsg() will resume from the skb.
 
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 12 -t 1
-current settings:
-tx_type 0
-rx_filter 0
-new settings:
-tx_type 1
-rx_filter 12
+However, we cannot know how many bytes were copied when we get the error.
+Thus, we could mess up the MSG_MORE queue.
 
-The eth0 device is properly configured to timestamp any PTPv2 events.
+When kcm_sendmsg() fails for SOCK_DGRAM, we should purge the queue as we
+do so for UDP by udp_flush_pending_frames().
 
-[root@hostname ~]# hwstamp_ctl -i eth0 -r 1 -t 1
-current settings:
-tx_type 1
-rx_filter 12
-SIOCSHWTSTAMP failed: Numerical result out of range
-The requested time stamping mode is not supported by the hardware.
+Even without this change, when the error occurred, the following sendmsg()
+resumed from a wrong skb and the queue was messed up.  However, we have
+yet to get such a report, and only syzkaller stumbled on it.  So, this
+can be changed safely.
 
-The error is properly returned because HW doesn't support all packets
-timestamping. But the adapter->flags is cleared of timestamp flags
-even though no HW configuration was done. From that point no RX timestamps
-are received by user-space application. But configuration shows good
-values:
+Note this does not change SOCK_SEQPACKET behaviour.
 
-[root@hostname ~]# hwstamp_ctl -i eth0
-current settings:
-tx_type 1
-rx_filter 12
-
-Fix the issue by applying new flags only when the HW was actually
-configured.
-
-Fixes: a9763f3cb54c ("ixgbe: Update PTP to support X550EM_x devices")
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c821a88bd720 ("kcm: Fix memory leak in error path of kcm_sendmsg()")
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230912022753.33327-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c | 28 +++++++++++---------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ net/kcm/kcmsock.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-index d155181b939e4..f5e36417c33e2 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ptp.c
-@@ -989,6 +989,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	u32 tsync_tx_ctl = IXGBE_TSYNCTXCTL_ENABLED;
- 	u32 tsync_rx_ctl = IXGBE_TSYNCRXCTL_ENABLED;
- 	u32 tsync_rx_mtrl = PTP_EV_PORT << 16;
-+	u32 aflags = adapter->flags;
- 	bool is_l2 = false;
- 	u32 regval;
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 8668348aa3f2b..8a8ea7e6774d5 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1066,17 +1066,18 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ out_error:
+ 	kcm_push(kcm);
  
-@@ -1009,20 +1010,20 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 	case HWTSTAMP_FILTER_NONE:
- 		tsync_rx_ctl = 0;
- 		tsync_rx_mtrl = 0;
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_SYNC:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_SYNC_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ:
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= IXGBE_RXMTRL_V1_DELAY_REQ_MSG;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V2_EVENT:
- 	case HWTSTAMP_FILTER_PTP_V2_L2_EVENT:
-@@ -1036,8 +1037,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_EVENT_V2;
- 		is_l2 = true;
- 		config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
--		adapter->flags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
-+		aflags |= (IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
-+			   IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_EVENT:
- 	case HWTSTAMP_FILTER_NTP_ALL:
-@@ -1048,7 +1049,7 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		if (hw->mac.type >= ixgbe_mac_X550) {
- 			tsync_rx_ctl |= IXGBE_TSYNCRXCTL_TYPE_ALL;
- 			config->rx_filter = HWTSTAMP_FILTER_ALL;
--			adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+			aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
- 			break;
- 		}
- 		/* fall through */
-@@ -1059,8 +1060,6 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 		 * Delay_Req messages and hardware does not support
- 		 * timestamping all packets => return error
+-	if (copied && sock->type == SOCK_SEQPACKET) {
++	if (sock->type == SOCK_SEQPACKET) {
+ 		/* Wrote some bytes before encountering an
+ 		 * error, return partial success.
  		 */
--		adapter->flags &= ~(IXGBE_FLAG_RX_HWTSTAMP_ENABLED |
--				    IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER);
- 		config->rx_filter = HWTSTAMP_FILTER_NONE;
- 		return -ERANGE;
- 	}
-@@ -1092,8 +1091,8 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
- 			       IXGBE_TSYNCRXCTL_TYPE_ALL |
- 			       IXGBE_TSYNCRXCTL_TSIP_UT_EN;
- 		config->rx_filter = HWTSTAMP_FILTER_ALL;
--		adapter->flags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
--		adapter->flags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
-+		aflags |= IXGBE_FLAG_RX_HWTSTAMP_ENABLED;
-+		aflags &= ~IXGBE_FLAG_RX_HWTSTAMP_IN_REGISTER;
- 		is_l2 = true;
- 		break;
- 	default:
-@@ -1126,6 +1125,9 @@ static int ixgbe_ptp_set_timestamp_mode(struct ixgbe_adapter *adapter,
+-		goto partial_message;
+-	}
+-
+-	if (head != kcm->seq_skb)
++		if (copied)
++			goto partial_message;
++		if (head != kcm->seq_skb)
++			kfree_skb(head);
++	} else {
+ 		kfree_skb(head);
+-	else if (copied)
+-		kcm_tx_msg(head)->last_skb = skb;
++		kcm->seq_skb = NULL;
++	}
  
- 	IXGBE_WRITE_FLUSH(hw);
+ 	err = sk_stream_error(sk, msg->msg_flags, err);
  
-+	/* configure adapter flags only when HW is actually configured */
-+	adapter->flags = aflags;
-+
- 	/* clear TX/RX time stamp registers, just to be sure */
- 	ixgbe_ptp_clear_tx_timestamp(adapter);
- 	IXGBE_READ_REG(hw, IXGBE_RXSTMPH);
 -- 
 2.40.1
 
