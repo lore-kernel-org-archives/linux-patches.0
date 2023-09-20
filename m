@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE64230FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3305AC433CA;
-	Wed, 20 Sep 2023 12:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7314330FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFDDC433C8;
+	Wed, 20 Sep 2023 12:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212635;
-	bh=r7sYNdA6PodDS4OprRBccx/TvwygNjVOn0PFzqhcfXQ=;
+	s=korg; t=1695212638;
+	bh=TQ2dGBQYMO28Sl1lcbQ/6h5xq+mJSOe02GDAsK+Su8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knlOoeTKgxzAwBgUrLxRcAp//Hhd3rCFR3NVFhvjUVQMZpp0xCL3GCPfsZxBeoS9k
-	 SAHu10Rq02xv1yceFrXs5mckEwUp/99btoKLrbpx1az75UmIN8vx9dsiLk8tsZTvAg
-	 aiIvVygWKSyoMREE2pOmoxDsTO5RlhyPEZ6JpV48=
+	b=nb1i3waEFdFe1AZaLCf6lH4agcAXevGLY48TZrr3IwJ3nNnbyEVUi3er7WmwOXJ6C
+	 rTLe+fCac3Aw/C46Oh9TmJl9HFnIWxH7PkmrCmMr4kpsKCmfflkeg0KqAohcN68f3k
+	 dG2eN15BOXQ+1g6UNGTHTBYO5go9YH7fIrJaCbj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 74/83] drm/amd/display: enable cursor degamma for DCN3+ DRM legacy gamma
-Date: Wed, 20 Sep 2023 13:32:04 +0200
-Message-ID: <20230920112829.575850763@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 75/83] tracing: Have current_trace inc the trace array ref count
+Date: Wed, 20 Sep 2023 13:32:05 +0200
+Message-ID: <20230920112829.615763625@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -39,44 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 57a943ebfcdb4a97fbb409640234bdb44bfa1953 upstream.
+commit 9b37febc578b2e1ad76a105aab11d00af5ec3d27 upstream.
 
-For DRM legacy gamma, AMD display manager applies implicit sRGB degamma
-using a pre-defined sRGB transfer function. It works fine for DCN2
-family where degamma ROM and custom curves go to the same color block.
-But, on DCN3+, degamma is split into two blocks: degamma ROM for
-pre-defined TFs and `gamma correction` for user/custom curves and
-degamma ROM settings doesn't apply to cursor plane. To get DRM legacy
-gamma working as expected, enable cursor degamma ROM for implict sRGB
-degamma on HW with this configuration.
+The current_trace updates the trace array tracer. For an instance, if the
+file is opened and the instance is deleted, reading or writing to the file
+will cause a use after free.
+
+Up the ref count of the trace array when current_trace is opened.
+
+Link: https://lkml.kernel.org/r/20230907024803.877687227@goodmis.org
+Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
 
 Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2803
-Fixes: 96b020e2163f ("drm/amd/display: check attr flag before set cursor degamma on DCN3+")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Fixes: 8530dec63e7b4 ("tracing: Add tracing_check_open_get_tr()")
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/trace/trace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6971,6 +6971,13 @@ static void handle_cursor_update(struct
- 	attributes.rotation_angle    = 0;
- 	attributes.attribute_flags.value = 0;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7324,10 +7324,11 @@ static const struct file_operations trac
+ #endif
  
-+	/* Enable cursor degamma ROM on DCN3+ for implicit sRGB degamma in DRM
-+	 * legacy gamma setup.
-+	 */
-+	if (crtc_state->cm_is_degamma_srgb &&
-+	    adev->dm.dc->caps.color.dpp.gamma_corr)
-+		attributes.attribute_flags.bits.ENABLE_CURSOR_DEGAMMA = 1;
-+
- 	attributes.pitch = attributes.width;
+ static const struct file_operations set_tracer_fops = {
+-	.open		= tracing_open_generic,
++	.open		= tracing_open_generic_tr,
+ 	.read		= tracing_set_trace_read,
+ 	.write		= tracing_set_trace_write,
+ 	.llseek		= generic_file_llseek,
++	.release	= tracing_release_generic_tr,
+ };
  
- 	if (crtc_state->stream) {
+ static const struct file_operations tracing_pipe_fops = {
 
 
