@@ -1,128 +1,88 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ED941216
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 20:13:19 +0000 (UTC)
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-32157c8e4c7so227327f8f.1
-        for <patches@lists.linux.dev>; Wed, 20 Sep 2023 13:13:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6058341A80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 21:23:31 +0000 (UTC)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-79d27df62f1so4525639f.0
+        for <patches@lists.linux.dev>; Wed, 20 Sep 2023 14:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695240797; x=1695845597; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
+        d=linuxfoundation.org; s=google; t=1695245010; x=1695849810; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zd8Do9SJJUDst37nmnERp+r9LxKeGK/VDgtvpwIPuCY=;
-        b=UL5vVSExp31EhLy5hvpIRF1eMaKVLE/ORili9pLfjJ4Nbp3XOi7wqOSqVw1cMb/LPv
-         jlcEnsmKFZGB1nvmN1c36zknqfd1ol3pADwNqqikxlhcq6mmbK38CQFaluMMsMu4l4Fh
-         njwIpLg/S1eNot0V0ZkPrNVWJrABnEvp0deU0PNrzDly0yNv6qC+SX6KpwuDAz2GWF/G
-         XXqPGswvGL3SJJzTQtoeul1ZAkmVOChhI+vUq+GRK2A2kva8XR7C6MTprwxjSGArDnN5
-         BGOLQ+COPbNInD5LpClw3qfQg/Qw3Tv8ZVEMnmC3V6SCnmL/oJ9Bbu3JNY+5yWh3R7JO
-         iDyg==
+        bh=R+kTXKWF/KX1FezcljKFfED0Qa2CUlrf+Ao7Mn6CWqU=;
+        b=G+EMCSntBi8MeIr8Lw6n22ZTghiQ96Diz41/pzkR/TEfe/4X53sKZauay33W69uVnq
+         //5UYfDESx6PFNRndS4WHwWGr4v/16oTbJUND7GKzzk81BmPmTK72RkikPF1kcJMKMQN
+         eXu+0FPgZJ760DQPmEgfHE0HxZqHj0MQJ210U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695240797; x=1695845597;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
+        d=1e100.net; s=20230601; t=1695245010; x=1695849810;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zd8Do9SJJUDst37nmnERp+r9LxKeGK/VDgtvpwIPuCY=;
-        b=IetN1avZ3SO/sMYsY/HQepVfKu0cw94lryHB0OAa93z0Syx3N1U/cDyDDbwpJAKy6G
-         vifUwBhfmUDyya6bPRm2pKZ3SJ5SgV0Fs89oesX8a1XFfkFiHD9sLI59uolw0BW7s7JZ
-         TjJtdwHTHBH61O9OTF34cI9kqETddhL1iGccqhuY2vQjDskLsNIzUXJiiEHliQD+WbOj
-         /JqYSp0pe/fgwqZGbF1qhH9qUVjx+V+5vIGsMeta6kdGJcFpR1P6RNM2qRvY8W8sDM2n
-         swFv3W58IZT891acnte8s+rquqK2v4215s3xQthgJ8EDV+M9wAQ8q6mQkorEhx+zSHbq
-         4cew==
-X-Gm-Message-State: AOJu0YzEmT60Zsa9oahxQ+Bg5dZbJUXN2OwAPOuNKn2lwUdWRcbomm1X
-	ohZOk7/kf1Y3AzTk+R0Yy2c=
-X-Google-Smtp-Source: AGHT+IGar0PuT+VjHqU64mWQ3i2PiNibAkrooc0IjrAJPYVu/s5ByDeuaxe9SVZq4z3GLtKPFhBI6g==
-X-Received: by 2002:adf:ee11:0:b0:314:350a:6912 with SMTP id y17-20020adfee11000000b00314350a6912mr3418365wrn.36.1695240797195;
-        Wed, 20 Sep 2023 13:13:17 -0700 (PDT)
-Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
-        by smtp.gmail.com with ESMTPSA id k1-20020adfd221000000b003217c096c1esm1390198wrh.73.2023.09.20.13.13.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Sep 2023 13:13:15 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id B7506BE2DE0; Wed, 20 Sep 2023 22:13:14 +0200 (CEST)
-Date: Wed, 20 Sep 2023 22:13:14 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Uday M Bhat <uday.m.bhat@intel.com>,
-	Jairaj Arava <jairaj.arava@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 27/83] ASoC: Intel: sof_sdw: Update BT offload
- config for soundwire config
-Message-ID: <ZQtSWm3ycmA1W7Ry@eldamar.lan>
-References: <20230920112826.634178162@linuxfoundation.org>
- <20230920112827.751203739@linuxfoundation.org>
+        bh=R+kTXKWF/KX1FezcljKFfED0Qa2CUlrf+Ao7Mn6CWqU=;
+        b=jaexAMG5d/F61ZWjDyyrlLxf37etRK6fjzQkKyuHZcGzOnYosUXPjqDgs1i9CG3bEt
+         BOICjwhSu2bIibzmpJi8xiG5pVG3Lx3EFg+bURLjdmblyzpAwz//AGoZ5XoZyecdqVWZ
+         qJFeASIHChzKxPjto2RZRKAu+dORI1C0xzpGmJVBDN8e0vzeHZrmuESIWXJQ0brQdDlI
+         q0msK+/9Z0a8EubhV9TkdCTL92TXT0BNuajjZecfk0Wert/UyoB1K9Pa5TsgqaehuE37
+         RC2gl4AkHDG6/b1zcfWdomAdcB6H8twvIU8EUiQAtBEaX9a2DSBcAntYrfDCgpGuAeYV
+         rKoA==
+X-Gm-Message-State: AOJu0YyZm0xpKyHl6vaBWrCcVINkqqtAFHTMo9z8CBBh9oNt5eiLgtvv
+	2tjSHEfG3OER40nlCXP4HqeNg3k8W5APcA1z7Q4=
+X-Google-Smtp-Source: AGHT+IHKK0frf2smMGPMVw9UQ7ZkzFuDG6iiZ3tu4xgNQkwCux9hKlN41noej6BF6Bi5CAx1pWRvbA==
+X-Received: by 2002:a05:6602:178e:b0:792:8011:22f with SMTP id y14-20020a056602178e00b007928011022fmr4163079iox.0.1695245010355;
+        Wed, 20 Sep 2023 14:23:30 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id w9-20020a056638030900b0041fb2506011sm4265481jap.172.2023.09.20.14.23.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Sep 2023 14:23:29 -0700 (PDT)
+Message-ID: <391f4acc-5e0e-5838-8ed5-bad58d2f5f84@linuxfoundation.org>
+Date: Wed, 20 Sep 2023 15:23:28 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230920112827.751203739@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 6.5 000/211] 6.5.5-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230920112845.859868994@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Greg,
+On 9/20/23 05:27, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.5 release.
+> There are 211 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-On Wed, Sep 20, 2023 at 01:31:17PM +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Uday M Bhat <uday.m.bhat@intel.com>
-> 
-> [ Upstream commit a14aded9299187bb17ef90700eb2cf1120ef5885 ]
-> 
-> For soundwire config, SSP1 is used for BT offload. This is enabled
-> in sof_sdw_quirk_table
-> 
-> Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-> Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-> Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-> Signed-off-by: Uday M Bhat <uday.m.bhat@intel.com>
-> Signed-off-by: Jairaj Arava <jairaj.arava@intel.com>
-> Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-> Link: https://lore.kernel.org/r/20230731214257.444605-5-pierre-louis.bossart@linux.intel.com
-> Signed-off-by: Mark Brown <broonie@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  sound/soc/intel/boards/sof_sdw.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-> index f36a0fda1b6ae..1955d277fdf20 100644
-> --- a/sound/soc/intel/boards/sof_sdw.c
-> +++ b/sound/soc/intel/boards/sof_sdw.c
-> @@ -214,7 +214,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
->  			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
->  			DMI_MATCH(DMI_PRODUCT_NAME, "Rex"),
->  		},
-> -		.driver_data = (void *)(SOF_SDW_PCH_DMIC),
-> +		.driver_data = (void *)(SOF_SDW_PCH_DMIC |
-> +					SOF_BT_OFFLOAD_SSP(1) |
-> +					SOF_SSP_BT_OFFLOAD_PRESENT),
->  	},
->  	/* LunarLake devices */
->  	{
-> -- 
-> 2.40.1
+Compiled and booted on my test system. No dmesg regressions.
 
-I see the following build issue while trying to check 5.10.196-rc1:
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-sound/soc/intel/boards/sof_sdw.c:218:6: error: implicit declaration of function ‘SOF_BT_OFFLOAD_SSP’ [-Werror=implicit-function-declaration]
-  218 |      SOF_BT_OFFLOAD_SSP(1) |
-      |      ^~~~~~~~~~~~~~~~~~
-sound/soc/intel/boards/sof_sdw.c:219:6: error: ‘SOF_SSP_BT_OFFLOAD_PRESENT’ undeclared here (not in a function)
-  219 |      SOF_SSP_BT_OFFLOAD_PRESENT),
-      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
-make[7]: *** [scripts/Makefile.build:286: sound/soc/intel/boards/sof_sdw.o] Error 1
-
-Regards,
-Salvatore
+thanks,
+-- Shuah
