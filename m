@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755772E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:12:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE5DC433C8;
-	Wed, 20 Sep 2023 12:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2032E2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:12:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1A8C433C8;
+	Wed, 20 Sep 2023 12:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211923;
-	bh=tD6QiMIQAKQXsKOkWDVZ2daNg92EO0YblZ68wITi4qk=;
+	s=korg; t=1695211926;
+	bh=Xt8nj20Umz5ioJW3uP0OSZzfFxnwk+EmfH9cnOkhgAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/BhuAYLwGn8j78o9+VGVp7f6TM0tFHznR/ASRUU8aWQSOqKkMoXAsE6AkrDivBpI
-	 dCi3rfyTJtoXvUtsmIcfnZXdCLAllJLRCcrGg46J2OWXVzdYSRpeR3ERM2sKuz0wH4
-	 Zs5l+TvGiiMcf1lxaZmEBq26XcrVkFWh/F8ngank=
+	b=VyO7l9T8XOLNv6bH+I0JoVkpWI8/2yfI37n6HQFeoO0XenWjBLWhFUyMQyqEvO4eC
+	 WP6Q3v9Cn3km61FCFx+rqWPgiHZASa43pVfum1WVaFSw2LviRRbN3dMUawnocf5DO0
+	 KK8X0fMwdMV97YKGVbidi6AdEnn0fBKzYDOepGHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 085/273] ARM: dts: BCM53573: Use updated "spi-gpio" binding properties
-Date: Wed, 20 Sep 2023 13:28:45 +0200
-Message-ID: <20230920112849.073378829@linuxfoundation.org>
+Subject: [PATCH 4.19 086/273] ARM: dts: s3c6410: move fixed clocks under root node in Mini6410
+Date: Wed, 20 Sep 2023 13:28:46 +0200
+Message-ID: <20230920112849.103563876@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -34,56 +33,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 2c0fd6b3d0778ceab40205315ccef74568490f17 ]
+[ Upstream commit 8b81a8decea77bf2ca3c718732184d4aaf949096 ]
 
-Switch away from deprecated properties.
+The fixed clocks are kept under dedicated 'clocks' node but this causes
+multiple dtschema warnings:
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-sck: False schema does not allow [[3, 21, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-miso: False schema does not allow [[3, 22, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-mosi: False schema does not allow [[3, 23, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: 'sck-gpios' is a required property
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: Unevaluated properties are not allowed ('gpio-miso', 'gpio-mosi', 'gpio-sck' were unexpected)
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+  clocks: $nodename:0: 'clocks' does not match '^([a-z][a-z0-9\\-]+-bus|bus|soc|axi|ahb|apb)(@[0-9a-f]+)?$'
+  clocks: #size-cells:0:0: 0 is not one of [1, 2]
+  clocks: oscillator@0:reg:0: [0] is too short
+  clocks: oscillator@1:reg:0: [1] is too short
+  clocks: 'ranges' is a required property
+  oscillator@0: 'reg' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-4-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20200907183313.29234-3-krzk@kernel.org
+Stable-dep-of: cf0cb2af6a18 ("ARM: dts: samsung: s3c6410-mini6410: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm947189acdbmr.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/s3c6410-mini6410.dts | 30 ++++++++++----------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm947189acdbmr.dts b/arch/arm/boot/dts/bcm947189acdbmr.dts
-index ef263412fea51..02c916bedd281 100644
---- a/arch/arm/boot/dts/bcm947189acdbmr.dts
-+++ b/arch/arm/boot/dts/bcm947189acdbmr.dts
-@@ -61,9 +61,9 @@ wps {
- 	spi {
- 		compatible = "spi-gpio";
- 		num-chipselects = <1>;
--		gpio-sck = <&chipcommon 21 0>;
--		gpio-miso = <&chipcommon 22 0>;
--		gpio-mosi = <&chipcommon 23 0>;
-+		sck-gpios = <&chipcommon 21 0>;
-+		miso-gpios = <&chipcommon 22 0>;
-+		mosi-gpios = <&chipcommon 23 0>;
- 		cs-gpios = <&chipcommon 24 0>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+diff --git a/arch/arm/boot/dts/s3c6410-mini6410.dts b/arch/arm/boot/dts/s3c6410-mini6410.dts
+index 1aeac33b0d341..75067dbcf7e83 100644
+--- a/arch/arm/boot/dts/s3c6410-mini6410.dts
++++ b/arch/arm/boot/dts/s3c6410-mini6410.dts
+@@ -28,26 +28,18 @@ chosen {
+ 		bootargs = "console=ttySAC0,115200n8 earlyprintk rootwait root=/dev/mmcblk0p1";
+ 	};
+ 
+-	clocks {
+-		compatible = "simple-bus";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		fin_pll: oscillator@0 {
+-			compatible = "fixed-clock";
+-			reg = <0>;
+-			clock-frequency = <12000000>;
+-			clock-output-names = "fin_pll";
+-			#clock-cells = <0>;
+-		};
++	fin_pll: oscillator-0 {
++		compatible = "fixed-clock";
++		clock-frequency = <12000000>;
++		clock-output-names = "fin_pll";
++		#clock-cells = <0>;
++	};
+ 
+-		xusbxti: oscillator@1 {
+-			compatible = "fixed-clock";
+-			reg = <1>;
+-			clock-output-names = "xusbxti";
+-			clock-frequency = <48000000>;
+-			#clock-cells = <0>;
+-		};
++	xusbxti: oscillator-1 {
++		compatible = "fixed-clock";
++		clock-output-names = "xusbxti";
++		clock-frequency = <48000000>;
++		#clock-cells = <0>;
+ 	};
+ 
+ 	srom-cs1@18000000 {
 -- 
 2.40.1
 
