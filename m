@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA6230FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EECC433CB;
-	Wed, 20 Sep 2023 12:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4BD30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB3DC433CC;
+	Wed, 20 Sep 2023 12:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212764;
-	bh=aD/kRnc4zWdJ26UhX2d5AmMlIGqQiwX3d2FJWUCtXXk=;
+	s=korg; t=1695212767;
+	bh=TBa8nFEsW81o7irTuW+LEpYeOqTQ1q8PX6E0dLvfWD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxgDAjqMzfjJsJNgYNNDjPm4AvDn5ySbxjOABzQTFhIqT9KC82j07KYNAQ56W3b9h
-	 zYMCiPiI+3Jmw+dulaIKq7TBuCoNIWNJNdusxfYYgfXF4F38++bKPQNGDvQOfRgAIs
-	 8wdK7fx1pOvtcOw700qsGkviPnBLCrcJAV4kTQyk=
+	b=wmiOQXUxVD6sE8YXRLn5k1+JLAkW91ap72fUENFXBxE4Hz4SQyR6x0ypbUhwbJHfE
+	 ydxaNTptkaUUGzkGeATeGg+HwDA755HJh0sKiNgLD7ef37Dis6xD55VhjHYk4rWcgM
+	 CRjY5b/KZn6VLmn62IFZDSBNN/ibHmFUat7QAeTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Nam Cao <namcaov@gmail.com>
-Subject: [PATCH 5.4 010/367] staging: rtl8712: fix race condition
-Date: Wed, 20 Sep 2023 13:26:27 +0200
-Message-ID: <20230920112858.766740304@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Denis Efremov (Oracle)" <efremov@linux.com>
+Subject: [PATCH 5.4 011/367] Bluetooth: btsdio: fix use after free bug in btsdio_remove due to race condition
+Date: Wed, 20 Sep 2023 13:26:28 +0200
+Message-ID: <20230920112858.794072521@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,50 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcaov@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 1422b526fba994cf05fd288a152106563b875fce upstream.
+commit 73f7b171b7c09139eb3c6a5677c200dc1be5f318 upstream.
 
-In probe function, request_firmware_nowait() is called to load firmware
-asynchronously. At completion of firmware loading, register_netdev() is
-called. However, a mutex needed by netdev is initialized after the call
-to request_firmware_nowait(). Consequently, it can happen that
-register_netdev() is called before the driver is ready.
+In btsdio_probe, the data->work is bound with btsdio_work. It will be
+started in btsdio_send_frame.
 
-Move the mutex initialization into r8712_init_drv_sw(), which is called
-before request_firmware_nowait().
+If the btsdio_remove runs with a unfinished work, there may be a race
+condition that hdev is freed but used in btsdio_work. Fix it by
+canceling the work before do cleanup in btsdio_remove.
 
-Reported-by: syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-staging/000000000000d9d4560601b8e0d7@google.com/T/#u
-Fixes: 8c213fa59199 ("staging: r8712u: Use asynchronous firmware loading")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nam Cao <namcaov@gmail.com>
-Link: https://lore.kernel.org/r/20230731110620.116562-1-namcaov@gmail.com
+Fixes: CVE-2023-1989
+Fixes: ddbaf13e3609 ("[Bluetooth] Add generic driver for Bluetooth SDIO devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Denis: Added CVE-2023-1989 and fixes tags. ]
+Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8712/os_intfs.c |    1 +
- drivers/staging/rtl8712/usb_intf.c |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btsdio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/rtl8712/os_intfs.c
-+++ b/drivers/staging/rtl8712/os_intfs.c
-@@ -323,6 +323,7 @@ int r8712_init_drv_sw(struct _adapter *p
- 	mp871xinit(padapter);
- 	init_default_value(padapter);
- 	r8712_InitSwLeds(padapter);
-+	mutex_init(&padapter->mutex_start);
- 	return ret;
- }
+--- a/drivers/bluetooth/btsdio.c
++++ b/drivers/bluetooth/btsdio.c
+@@ -346,6 +346,7 @@ static void btsdio_remove(struct sdio_fu
+ 	if (!data)
+ 		return;
  
---- a/drivers/staging/rtl8712/usb_intf.c
-+++ b/drivers/staging/rtl8712/usb_intf.c
-@@ -570,7 +570,6 @@ static int r871xu_drv_init(struct usb_in
- 	if (rtl871x_load_fw(padapter))
- 		goto error;
- 	spin_lock_init(&padapter->lock_rx_ff0_filter);
--	mutex_init(&padapter->mutex_start);
- 	return 0;
- error:
- 	usb_put_dev(udev);
++	cancel_work_sync(&data->work);
+ 	hdev = data->hdev;
+ 
+ 	sdio_set_drvdata(func, NULL);
 
 
