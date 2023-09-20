@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E673215AF8
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED18C433C7;
-	Wed, 20 Sep 2023 12:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A611315AF8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C95C433C8;
+	Wed, 20 Sep 2023 12:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213668;
-	bh=3JJaI5BaSasstDHa55QqlrTmu3Quew4yNglkA8fMszc=;
+	s=korg; t=1695213671;
+	bh=60X427uDv0zVmJH9YugxC6MtjI/yI60lJRhLcZCKL/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTK3r03db03kNnu8WH8Bb9GtLKeCoPWQPIdNncOr0YhQZKDrMPlJ3CmCJV9F5tvPl
-	 GUIleKJrQXc3RmOpV6QmH2eLU+kAqwmGQL/3YwAgfzCvv/SwutgY4OCOq9X5DsYP1H
-	 zF13tbx0tJBajHo4OdetPg2Ug/Et421aPInFU0Fg=
+	b=QD7CIMFP7vv+Z1yJEitWVnCMcMak9qdr6oI8xdhAMvV19M5le3tOpTU7z7mXVL+8Y
+	 8YTNSPyUdu4sC26FjGlHqiffVKPegvh6hxTr9BA/8sXwjc6vjBOz8l3vgvK2zeatFn
+	 qw4QkejlSAKqJMSYXVLXfGQPe4TWzJHkHQvN+1Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark ODonovan <shiftee@posteo.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Liu Jian <liujian56@huawei.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 321/367] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
-Date: Wed, 20 Sep 2023 13:31:38 +0200
-Message-ID: <20230920112906.851740658@linuxfoundation.org>
+Subject: [PATCH 5.4 297/367] net: ipv4: fix one memleak in __inet_del_ifa()
+Date: Wed, 20 Sep 2023 13:31:14 +0200
+Message-ID: <20230920112906.233959225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,43 +41,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark O'Donovan <shiftee@posteo.net>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
+[ Upstream commit ac28b1ec6135649b5d78b028e47264cb3ebca5ea ]
 
-During NVMeTCP Authentication a controller can trigger a kernel
-oops by specifying the 8192 bit Diffie Hellman group and passing
-a correctly sized, but zeroed Diffie Hellamn value.
-mpi_cmp_ui() was detecting this if the second parameter was 0,
-but 1 is passed from dh_is_pubkey_valid(). This causes the null
-pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
+I got the below warning when do fuzzing test:
+unregister_netdevice: waiting for bond0 to become free. Usage count = 2
 
-Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+It can be repoduced via:
+
+ip link add bond0 type bond
+sysctl -w net.ipv4.conf.bond0.promote_secondaries=1
+ip addr add 4.117.174.103/0 scope 0x40 dev bond0
+ip addr add 192.168.100.111/255.255.255.254 scope 0 dev bond0
+ip addr add 0.0.0.4/0 scope 0x40 secondary dev bond0
+ip addr del 4.117.174.103/0 scope 0x40 dev bond0
+ip link delete bond0 type bond
+
+In this reproduction test case, an incorrect 'last_prim' is found in
+__inet_del_ifa(), as a result, the secondary address(0.0.0.4/0 scope 0x40)
+is lost. The memory of the secondary address is leaked and the reference of
+in_device and net_device is leaked.
+
+Fix this problem:
+Look for 'last_prim' starting at location of the deleted IP and inserting
+the promoted IP into the location of 'last_prim'.
+
+Fixes: 0ff60a45678e ("[IPV4]: Fix secondary IP addresses after promotion")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpi-cmp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv4/devinet.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
-index d25e9e96c310f..ceaebe181cd70 100644
---- a/lib/mpi/mpi-cmp.c
-+++ b/lib/mpi/mpi-cmp.c
-@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
- 	mpi_limb_t limb = v;
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index 4a8ad46397c0e..4c013f8800f0c 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -351,14 +351,14 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ {
+ 	struct in_ifaddr *promote = NULL;
+ 	struct in_ifaddr *ifa, *ifa1;
+-	struct in_ifaddr *last_prim;
++	struct in_ifaddr __rcu **last_prim;
+ 	struct in_ifaddr *prev_prom = NULL;
+ 	int do_promote = IN_DEV_PROMOTE_SECONDARIES(in_dev);
  
- 	mpi_normalize(u);
--	if (!u->nlimbs && !limb)
--		return 0;
-+	if (u->nlimbs == 0) {
-+		if (v == 0)
-+			return 0;
-+		else
-+			return -1;
-+	}
- 	if (u->sign)
- 		return -1;
- 	if (u->nlimbs > 1)
+ 	ASSERT_RTNL();
+ 
+ 	ifa1 = rtnl_dereference(*ifap);
+-	last_prim = rtnl_dereference(in_dev->ifa_list);
++	last_prim = ifap;
+ 	if (in_dev->dead)
+ 		goto no_promotions;
+ 
+@@ -372,7 +372,7 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 		while ((ifa = rtnl_dereference(*ifap1)) != NULL) {
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) &&
+ 			    ifa1->ifa_scope <= ifa->ifa_scope)
+-				last_prim = ifa;
++				last_prim = &ifa->ifa_next;
+ 
+ 			if (!(ifa->ifa_flags & IFA_F_SECONDARY) ||
+ 			    ifa1->ifa_mask != ifa->ifa_mask ||
+@@ -436,9 +436,9 @@ static void __inet_del_ifa(struct in_device *in_dev,
+ 
+ 			rcu_assign_pointer(prev_prom->ifa_next, next_sec);
+ 
+-			last_sec = rtnl_dereference(last_prim->ifa_next);
++			last_sec = rtnl_dereference(*last_prim);
+ 			rcu_assign_pointer(promote->ifa_next, last_sec);
+-			rcu_assign_pointer(last_prim->ifa_next, promote);
++			rcu_assign_pointer(*last_prim, promote);
+ 		}
+ 
+ 		promote->ifa_flags &= ~IFA_F_SECONDARY;
 -- 
 2.40.1
 
