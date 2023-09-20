@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF12915AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63723C433C9;
-	Wed, 20 Sep 2023 12:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4D111732
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3951AC433CC;
+	Wed, 20 Sep 2023 12:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213583;
-	bh=xYTawRPuZIh+jF//ehjOGQs9cS92JY+RaafCKnmR3BI=;
+	s=korg; t=1695213586;
+	bh=SDfb68nTbYdHm/8k3Q6Es1cQuhqPJ+fG4dkVA6K2CFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r89zsJqKsJ9ufIsxmQSYu162cIstL9LvtqI9zn6lPdUDBjXwp1SvKmiVSvQCoVH0L
-	 DdyDI9UMUVC3VgBrw0ww/3MfilPPDwtt78qTWSE7CpfhZBlV310gtEHzCdKPm7wLWZ
-	 KVliuCjwMNKjlZSwLPtxBxUim6kazLZuMSD/xSJE=
+	b=o3XPbVg4qFM0zyeb4BCmEkUISqhth5LN95Lr7dMbOCbiC5rnDn6eJMuoFCf6BJTGT
+	 J8kcY1tCW4BBti3ozNBuiRGYPdDHlicbHeRnXKa5ucBGzk/lmV4t3koGxD3c74D78W
+	 iRvHTU1OzDZOYZYXIaghi8D+prhbwCK4/9rztIA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	RD Babiera <rdbabiera@google.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 290/367] usb: typec: tcpm: Refactor tcpm_handle_vdm_request
-Date: Wed, 20 Sep 2023 13:31:07 +0200
-Message-ID: <20230920112906.062768780@linuxfoundation.org>
+Subject: [PATCH 5.4 291/367] usb: typec: bus: verify partner exists in typec_altmode_attention
+Date: Wed, 20 Sep 2023 13:31:08 +0200
+Message-ID: <20230920112906.089534305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,185 +41,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: RD Babiera <rdbabiera@google.com>
 
-[ Upstream commit 95b4d51c96a87cd760c2a4f27fb28a59a27b6368 ]
+[ Upstream commit f23643306430f86e2f413ee2b986e0773e79da31 ]
 
-Refactor tcpm_handle_vdm_request and its tcpm_pd_svdm helper function so
-that reporting the results of the vdm to the altmode-driver is separated
-out into a clear separate step inside tcpm_handle_vdm_request, instead
-of being scattered over various places inside the tcpm_pd_svdm helper.
+Some usb hubs will negotiate DisplayPort Alt mode with the device
+but will then negotiate a data role swap after entering the alt
+mode. The data role swap causes the device to unregister all alt
+modes, however the usb hub will still send Attention messages
+even after failing to reregister the Alt Mode. type_altmode_attention
+currently does not verify whether or not a device's altmode partner
+exists, which results in a NULL pointer error when dereferencing
+the typec_altmode and typec_altmode_ops belonging to the altmode
+partner.
 
-This is a preparation patch for fixing an AB BA lock inversion between the
-tcpm code and some altmode drivers.
+Verify the presence of a device's altmode partner before sending
+the Attention message to the Alt Mode driver.
 
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Cc: stable@vger.kernel.org
+Signed-off-by: RD Babiera <rdbabiera@google.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20200724174702.61754-4-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20230814180559.923475-1-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: f23643306430 ("usb: typec: bus: verify partner exists in typec_altmode_attention")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 76 ++++++++++++++++++++++-------------
- 1 file changed, 48 insertions(+), 28 deletions(-)
+ drivers/usb/typec/bus.c           | 12 ++++++++++--
+ drivers/usb/typec/tcpm/tcpm.c     |  3 ++-
+ include/linux/usb/typec_altmode.h |  2 +-
+ 3 files changed, 13 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
+index 0369ad92a1c8e..052b8fb21344c 100644
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -146,12 +146,20 @@ EXPORT_SYMBOL_GPL(typec_altmode_exit);
+  *
+  * Notifies the partner of @adev about Attention command.
+  */
+-void typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
++int typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
+ {
+-	struct typec_altmode *pdev = &to_altmode(adev)->partner->adev;
++	struct altmode *partner = to_altmode(adev)->partner;
++	struct typec_altmode *pdev;
++
++	if (!partner)
++		return -ENODEV;
++
++	pdev = &partner->adev;
+ 
+ 	if (pdev->ops && pdev->ops->attention)
+ 		pdev->ops->attention(pdev, vdo);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(typec_altmode_attention);
+ 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 949325692e664..9e71e0d9a09cd 100644
+index 9e71e0d9a09cd..07db1f1a1f72a 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -159,6 +159,14 @@ enum pd_msg_request {
- 	PD_MSG_DATA_SOURCE_CAP,
- };
- 
-+enum adev_actions {
-+	ADEV_NONE = 0,
-+	ADEV_NOTIFY_USB_AND_QUEUE_VDM,
-+	ADEV_QUEUE_VDM,
-+	ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL,
-+	ADEV_ATTENTION,
-+};
-+
- /* Events from low level driver */
- 
- #define TCPM_CC_EVENT		BIT(0)
-@@ -1080,10 +1088,10 @@ static void tcpm_register_partner_altmodes(struct tcpm_port *port)
- 
- #define supports_modal(port)	PD_IDH_MODAL_SUPP((port)->partner_ident.id_header)
- 
--static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
--			u32 *response)
-+static int tcpm_pd_svdm(struct tcpm_port *port, struct typec_altmode *adev,
-+			const u32 *p, int cnt, u32 *response,
-+			enum adev_actions *adev_action)
- {
--	struct typec_altmode *adev;
- 	struct typec_altmode *pdev;
- 	struct pd_mode_data *modep;
- 	int rlen = 0;
-@@ -1099,9 +1107,6 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
- 
- 	modep = &port->mode_data;
- 
--	adev = typec_match_altmode(port->port_altmode, ALTMODE_DISCOVERY_MAX,
--				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
--
- 	pdev = typec_match_altmode(port->partner_altmode, ALTMODE_DISCOVERY_MAX,
- 				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
- 
-@@ -1127,8 +1132,7 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
- 			break;
- 		case CMD_ATTENTION:
- 			/* Attention command does not have response */
--			if (adev)
--				typec_altmode_attention(adev, p[1]);
-+			*adev_action = ADEV_ATTENTION;
- 			return 0;
- 		default:
- 			break;
-@@ -1182,23 +1186,15 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
- 		case CMD_ENTER_MODE:
- 			if (adev && pdev) {
- 				typec_altmode_update_active(pdev, true);
--
--				if (typec_altmode_vdm(adev, p[0], &p[1], cnt)) {
--					response[0] = VDO(adev->svid, 1,
--							  CMD_EXIT_MODE);
--					response[0] |= VDO_OPOS(adev->mode);
--					return 1;
--				}
-+				*adev_action = ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL;
- 			}
- 			return 0;
- 		case CMD_EXIT_MODE:
- 			if (adev && pdev) {
- 				typec_altmode_update_active(pdev, false);
--
- 				/* Back to USB Operation */
--				WARN_ON(typec_altmode_notify(adev,
--							     TYPEC_STATE_USB,
--							     NULL));
-+				*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
-+				return 0;
+@@ -1270,7 +1270,8 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
  			}
  			break;
- 		default:
-@@ -1209,11 +1205,8 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
- 		switch (cmd) {
- 		case CMD_ENTER_MODE:
- 			/* Back to USB Operation */
--			if (adev)
--				WARN_ON(typec_altmode_notify(adev,
--							     TYPEC_STATE_USB,
--							     NULL));
--			break;
-+			*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
-+			return 0;
- 		default:
+ 		case ADEV_ATTENTION:
+-			typec_altmode_attention(adev, p[1]);
++			if (typec_altmode_attention(adev, p[1]))
++				tcpm_log(port, "typec_altmode_attention no port partner altmode");
  			break;
  		}
-@@ -1223,15 +1216,15 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
  	}
+diff --git a/include/linux/usb/typec_altmode.h b/include/linux/usb/typec_altmode.h
+index 9a88c74a1d0d0..969b7c5040875 100644
+--- a/include/linux/usb/typec_altmode.h
++++ b/include/linux/usb/typec_altmode.h
+@@ -67,7 +67,7 @@ struct typec_altmode_ops {
  
- 	/* Informing the alternate mode drivers about everything */
--	if (adev)
--		typec_altmode_vdm(adev, p[0], &p[1], cnt);
--
-+	*adev_action = ADEV_QUEUE_VDM;
- 	return rlen;
- }
- 
- static void tcpm_handle_vdm_request(struct tcpm_port *port,
- 				    const __le32 *payload, int cnt)
- {
-+	enum adev_actions adev_action = ADEV_NONE;
-+	struct typec_altmode *adev;
- 	u32 p[PD_MAX_PAYLOAD];
- 	u32 response[8] = { };
- 	int i, rlen = 0;
-@@ -1239,6 +1232,9 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
- 	for (i = 0; i < cnt; i++)
- 		p[i] = le32_to_cpu(payload[i]);
- 
-+	adev = typec_match_altmode(port->port_altmode, ALTMODE_DISCOVERY_MAX,
-+				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
-+
- 	if (port->vdm_state == VDM_STATE_BUSY) {
- 		/* If UFP responded busy retry after timeout */
- 		if (PD_VDO_CMDT(p[0]) == CMDT_RSP_BUSY) {
-@@ -1253,7 +1249,31 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
- 	}
- 
- 	if (PD_VDO_SVDM(p[0]))
--		rlen = tcpm_pd_svdm(port, p, cnt, response);
-+		rlen = tcpm_pd_svdm(port, adev, p, cnt, response, &adev_action);
-+
-+	if (adev) {
-+		switch (adev_action) {
-+		case ADEV_NONE:
-+			break;
-+		case ADEV_NOTIFY_USB_AND_QUEUE_VDM:
-+			WARN_ON(typec_altmode_notify(adev, TYPEC_STATE_USB, NULL));
-+			typec_altmode_vdm(adev, p[0], &p[1], cnt);
-+			break;
-+		case ADEV_QUEUE_VDM:
-+			typec_altmode_vdm(adev, p[0], &p[1], cnt);
-+			break;
-+		case ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL:
-+			if (typec_altmode_vdm(adev, p[0], &p[1], cnt)) {
-+				response[0] = VDO(adev->svid, 1, CMD_EXIT_MODE);
-+				response[0] |= VDO_OPOS(adev->mode);
-+				rlen = 1;
-+			}
-+			break;
-+		case ADEV_ATTENTION:
-+			typec_altmode_attention(adev, p[1]);
-+			break;
-+		}
-+	}
- 
- 	if (rlen > 0) {
- 		tcpm_queue_vdm(port, response[0], &response[1], rlen - 1);
+ int typec_altmode_enter(struct typec_altmode *altmode);
+ int typec_altmode_exit(struct typec_altmode *altmode);
+-void typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
++int typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
+ int typec_altmode_vdm(struct typec_altmode *altmode,
+ 		      const u32 header, const u32 *vdo, int count);
+ int typec_altmode_notify(struct typec_altmode *altmode, unsigned long conf,
 -- 
 2.40.1
 
