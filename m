@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FBA2AB36
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FCBC433C8;
-	Wed, 20 Sep 2023 12:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E970A23752
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5B6C433C7;
+	Wed, 20 Sep 2023 12:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211477;
-	bh=XlR4UHI2YLPkdGoOXpcL2px84L4+PJ5bStd/UayL0j0=;
+	s=korg; t=1695211479;
+	bh=d+qBoWaE7c27JzpdekqDr21fcrFd1CK+nwfzD8L/Kuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S68hD56FmwBsR4xIFFl/prOls9YrBppzBzPlHtStMDrquwMoKiEBNrARrSM7g5AC6
-	 lWBRfpZbDa6I+3Ffc/X7w93i0oNRKkN0QHxIm2IUPbnKIq5SODoFh8AvkRkMfQovL9
-	 gXPB19RA4mMcy//UdOMScxF6TClUmOuLZGdTRKB4=
+	b=WG0n4QckQLutcpx9cQaWIpC3/N4oR0dpZZkj6KJ3NCUgNRrBxb0gHOIjd1NZfUlC5
+	 6KDrer+hjxWAef97d8Knr3J0QJCClQ0KWDsYiwWbf2g0DBw+cZWXuS/qsT8Zxmkv/y
+	 f1w1jvae/TvfMyZ68kFi7J28ecMDNXxAyk/ZyVdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Tom Haynes <loghyr@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 072/186] NFSD: da_addr_body field missing in some GETDEVICEINFO replies
-Date: Wed, 20 Sep 2023 13:29:35 +0200
-Message-ID: <20230920112839.470145600@linuxfoundation.org>
+	Manfred Rudigier <manfred.rudigier@omicronenergy.com>,
+	Radoslaw Tyl <radoslawx.tyl@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 4.14 101/186] igb: set max size RX buffer when store bad packet is enabled
+Date: Wed, 20 Sep 2023 13:30:04 +0200
+Message-ID: <20230920112840.631814965@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,139 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Radoslaw Tyl <radoslawx.tyl@intel.com>
 
-[ Upstream commit 6372e2ee629894433fe6107d7048536a3280a284 ]
+commit bb5ed01cd2428cd25b1c88a3a9cba87055eb289f upstream.
 
-The XDR specification in RFC 8881 looks like this:
+Increase the RX buffer size to 3K when the SBP bit is on. The size of
+the RX buffer determines the number of pages allocated which may not
+be sufficient for receive frames larger than the set MTU size.
 
-struct device_addr4 {
-	layouttype4	da_layout_type;
-	opaque		da_addr_body<>;
-};
-
-struct GETDEVICEINFO4resok {
-	device_addr4	gdir_device_addr;
-	bitmap4		gdir_notification;
-};
-
-union GETDEVICEINFO4res switch (nfsstat4 gdir_status) {
-case NFS4_OK:
-	GETDEVICEINFO4resok gdir_resok4;
-case NFS4ERR_TOOSMALL:
-	count4		gdir_mincount;
-default:
-	void;
-};
-
-Looking at nfsd4_encode_getdeviceinfo() ....
-
-When the client provides a zero gd_maxcount, then the Linux NFS
-server implementation encodes the da_layout_type field and then
-skips the da_addr_body field completely, proceeding directly to
-encode gdir_notification field.
-
-There does not appear to be an option in the specification to skip
-encoding da_addr_body. Moreover, Section 18.40.3 says:
-
-> If the client wants to just update or turn off notifications, it
-> MAY send a GETDEVICEINFO operation with gdia_maxcount set to zero.
-> In that event, if the device ID is valid, the reply's da_addr_body
-> field of the gdir_device_addr field will be of zero length.
-
-Since the layout drivers are responsible for encoding the
-da_addr_body field, put this fix inside the ->encode_getdeviceinfo
-methods.
-
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Tom Haynes <loghyr@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 89eaefb61dc9 ("igb: Support RX-ALL feature flag.")
+Reported-by: Manfred Rudigier <manfred.rudigier@omicronenergy.com>
+Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayoutxdr.c    |  9 +++++++++
- fs/nfsd/flexfilelayoutxdr.c |  9 +++++++++
- fs/nfsd/nfs4xdr.c           | 25 +++++++++++--------------
- 3 files changed, 29 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/blocklayoutxdr.c b/fs/nfsd/blocklayoutxdr.c
-index 442543304930b..2455dc8be18a8 100644
---- a/fs/nfsd/blocklayoutxdr.c
-+++ b/fs/nfsd/blocklayoutxdr.c
-@@ -82,6 +82,15 @@ nfsd4_block_encode_getdeviceinfo(struct xdr_stream *xdr,
- 	int len = sizeof(__be32), ret, i;
- 	__be32 *p;
- 
-+	/*
-+	 * See paragraph 5 of RFC 8881 S18.40.3.
-+	 */
-+	if (!gdp->gd_maxcount) {
-+		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
-+			return nfserr_resource;
-+		return nfs_ok;
-+	}
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -3856,6 +3856,10 @@ void igb_configure_rx_ring(struct igb_ad
+ static void igb_set_rx_buffer_len(struct igb_adapter *adapter,
+ 				  struct igb_ring *rx_ring)
+ {
++#if (PAGE_SIZE < 8192)
++	struct e1000_hw *hw = &adapter->hw;
++#endif
 +
- 	p = xdr_reserve_space(xdr, len + sizeof(__be32));
- 	if (!p)
- 		return nfserr_resource;
-diff --git a/fs/nfsd/flexfilelayoutxdr.c b/fs/nfsd/flexfilelayoutxdr.c
-index e81d2a5cf381e..bb205328e043d 100644
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -85,6 +85,15 @@ nfsd4_ff_encode_getdeviceinfo(struct xdr_stream *xdr,
- 	int addr_len;
- 	__be32 *p;
+ 	/* set build_skb and buffer size flags */
+ 	clear_ring_build_skb_enabled(rx_ring);
+ 	clear_ring_uses_large_buffer(rx_ring);
+@@ -3866,10 +3870,9 @@ static void igb_set_rx_buffer_len(struct
+ 	set_ring_build_skb_enabled(rx_ring);
  
-+	/*
-+	 * See paragraph 5 of RFC 8881 S18.40.3.
-+	 */
-+	if (!gdp->gd_maxcount) {
-+		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
-+			return nfserr_resource;
-+		return nfs_ok;
-+	}
-+
- 	/* len + padding for two strings */
- 	addr_len = 16 + da->netaddr.netid_len + da->netaddr.addr_len;
- 	ver_len = 20;
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index d34ed6575e8fb..997d3134beb32 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -4091,20 +4091,17 @@ nfsd4_encode_getdeviceinfo(struct nfsd4_compoundres *resp, __be32 nfserr,
+ #if (PAGE_SIZE < 8192)
+-	if (adapter->max_frame_size <= IGB_MAX_FRAME_BUILD_SKB)
+-		return;
+-
+-	set_ring_uses_large_buffer(rx_ring);
++	if (adapter->max_frame_size > IGB_MAX_FRAME_BUILD_SKB ||
++	    rd32(E1000_RCTL) & E1000_RCTL_SBP)
++		set_ring_uses_large_buffer(rx_ring);
+ #endif
+ }
  
- 	*p++ = cpu_to_be32(gdev->gd_layout_type);
- 
--	/* If maxcount is 0 then just update notifications */
--	if (gdev->gd_maxcount != 0) {
--		ops = nfsd4_layout_ops[gdev->gd_layout_type];
--		nfserr = ops->encode_getdeviceinfo(xdr, gdev);
--		if (nfserr) {
--			/*
--			 * We don't bother to burden the layout drivers with
--			 * enforcing gd_maxcount, just tell the client to
--			 * come back with a bigger buffer if it's not enough.
--			 */
--			if (xdr->buf->len + 4 > gdev->gd_maxcount)
--				goto toosmall;
--			return nfserr;
--		}
-+	ops = nfsd4_layout_ops[gdev->gd_layout_type];
-+	nfserr = ops->encode_getdeviceinfo(xdr, gdev);
-+	if (nfserr) {
-+		/*
-+		 * We don't bother to burden the layout drivers with
-+		 * enforcing gd_maxcount, just tell the client to
-+		 * come back with a bigger buffer if it's not enough.
-+		 */
-+		if (xdr->buf->len + 4 > gdev->gd_maxcount)
-+			goto toosmall;
-+		return nfserr;
- 	}
- 
- 	if (gdev->gd_notify_types) {
--- 
-2.40.1
-
 
 
