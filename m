@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11FE30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABECC433CB;
-	Wed, 20 Sep 2023 12:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCF130FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03685C433C8;
+	Wed, 20 Sep 2023 12:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212586;
-	bh=k3E+vNULP8HnhXGSTqukk/eBSm1QoA/Q3yBigUt69CM=;
+	s=korg; t=1695212589;
+	bh=rtsHmbhTCaYuZZ9+aMmxM0hVxutZApzDRyu3YsSUloY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGFPUOkpEUJ1gNUhDcb6q45nMfttsmdV6WyW566WAEi5NBZmKSETmr31sbOglUw/z
-	 FKcadm57uXFGwogKFrdQJmfB94g08XHnSu8Z2/5ipleAaZskT5uW8Z2w7bD/ZCu1Eo
-	 pO2VhsaHiQ1ICCg12TpIAtywtrwEynSJ0LknIdSA=
+	b=gd1uDItodB7neh5nUo8WKeJwZ4IFdXGK0vCOvVP+0lkBY9JwhaGH3QtZ687aIM896
+	 BP8WsX4BQzF1Dp0vJZCJJIIWmGY3IYhElyHc39L6lYUi8MY+1Cw8qzDZORaBedYS/U
+	 haG1nBp2jST+zvn4kggqapoiuYkNfUeY0Pftuy28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/83] bus: ti-sysc: Configure uart quirks for k3 SoC
-Date: Wed, 20 Sep 2023 13:31:20 +0200
-Message-ID: <20230920112827.865485736@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	GONG
+Subject: [PATCH 5.10 21/83] alx: fix OOB-read compiler warning
+Date: Wed, 20 Sep 2023 13:31:11 +0200
+Message-ID: <20230920112827.511944676@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -34,43 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit 03a711d3cb83692733f865312f49e665c49de6de ]
+[ Upstream commit 3a198c95c95da10ad844cbeade2fe40bdf14c411 ]
 
-Enable the uart quirks similar to the earlier SoCs. Let's assume we are
-likely going to need a k3 specific quirk mask separate from the earlier
-SoCs, so let's not start changing the revision register mask at this point.
+The following message shows up when compiling with W=1:
 
-Note that SYSC_QUIRK_LEGACY_IDLE will be needed until we can remove the
-need for pm_runtime_irq_safe() from 8250_omap driver.
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘alx_get_ethtool_stats’ at drivers/net/ethernet/atheros/alx/ethtool.c:297:2:
+./include/linux/fortify-string.h:592:4: error: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Werror=attribute-warning]
+  592 |    __read_overflow2_field(q_size_field, size);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+In order to get alx stats altogether, alx_get_ethtool_stats() reads
+beyond hw->stats.rx_ok. Fix this warning by directly copying hw->stats,
+and refactor the unnecessarily complicated BUILD_BUG_ON btw.
+
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821013218.1614265-1-gongruiqi@huaweicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/atheros/alx/ethtool.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index c8e0f8cb9aa32..5e8c078efd22a 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -1504,6 +1504,8 @@ static const struct sysc_revision_quirk sysc_revision_quirks[] = {
- 		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
- 		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
-+		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
+diff --git a/drivers/net/ethernet/atheros/alx/ethtool.c b/drivers/net/ethernet/atheros/alx/ethtool.c
+index 2f4eabf652e80..51e5aa2c74b34 100644
+--- a/drivers/net/ethernet/atheros/alx/ethtool.c
++++ b/drivers/net/ethernet/atheros/alx/ethtool.c
+@@ -281,9 +281,8 @@ static void alx_get_ethtool_stats(struct net_device *netdev,
+ 	spin_lock(&alx->stats_lock);
  
- 	/* Quirks that need to be set based on the module address */
- 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
+ 	alx_update_hw_stats(hw);
+-	BUILD_BUG_ON(sizeof(hw->stats) - offsetof(struct alx_hw_stats, rx_ok) <
+-		     ALX_NUM_STATS * sizeof(u64));
+-	memcpy(data, &hw->stats.rx_ok, ALX_NUM_STATS * sizeof(u64));
++	BUILD_BUG_ON(sizeof(hw->stats) != ALX_NUM_STATS * sizeof(u64));
++	memcpy(data, &hw->stats, sizeof(hw->stats));
+ 
+ 	spin_unlock(&alx->stats_lock);
+ }
 -- 
 2.40.1
 
