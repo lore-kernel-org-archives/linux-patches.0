@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E6D18657
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88146C433C7;
-	Wed, 20 Sep 2023 11:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5D418657
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50387C433C9;
+	Wed, 20 Sep 2023 11:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210724;
-	bh=7cbRDKoenBdyh1PIaKjgAAwj7UrHY6z3HnuLEthB7dw=;
+	s=korg; t=1695210727;
+	bh=xQ9AZf6CUzJdyRdvYiqz1Np6h3B86zObEvjBIAsSnDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pyQS00E53ss8Ezcm+wACsgOJAtTUscJf99xoDCiOq8H1afuTsx0ZY5ykRvf9zEKj+
-	 gbVMnJ2UWrvLCqN0T++4kjXxlqON16N/Wbz5ulV6569FcATDeAvqqAt+/GzzTtvS9d
-	 OhvtXnDTlszniujpkNwAVDghR4mvDGHVAtgLmcZ8=
+	b=clH8c8DLQ28+Lu9wkclSx73k2m5jH+C0D+iDpEOqh2q1saoqEmAEDqmBdFDhTz1cm
+	 0SQAsWawX9lc9H4b2nkPvN4uurgKVtvBy1qmFEmWm393oA3tl6S/oDFV0ZuUpr1ndP
+	 uvi74HxRwxGFYbU+QF1kYFKBKAEJj58qKhnKPFRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 181/211] btrfs: fix race between finishing block group creation and its item update
-Date: Wed, 20 Sep 2023 13:30:25 +0200
-Message-ID: <20230920112851.487681142@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 157/211] panic: Reenable preemption in WARN slowpath
+Date: Wed, 20 Sep 2023 13:30:01 +0200
+Message-ID: <20230920112850.747491772@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,103 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 2d6cd791e63ec0c68ae95ecd55dc6c50ac7829cf upstream.
+[ Upstream commit cccd32816506cbac3a4c65d9dff51b3125ef1a03 ]
 
-Commit 675dfe1223a6 ("btrfs: fix block group item corruption after
-inserting new block group") fixed one race that resulted in not persisting
-a block group's item when its "used" bytes field decreases to zero.
-However there's another race that can happen in a much shorter time window
-that results in the same problem. The following sequence of steps explains
-how it can happen:
+Commit:
 
-1) Task A creates a metadata block group X, its "used" and "commit_used"
-   fields are initialized to 0;
+  5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
 
-2) Two extents are allocated from block group X, so its "used" field is
-   updated to 32K, and its "commit_used" field remains as 0;
+amended warn_slowpath_fmt() to disable preemption until the WARN splat
+has been emitted.
 
-3) Transaction commit starts, by some task B, and it enters
-   btrfs_start_dirty_block_groups(). There it tries to update the block
-   group item for block group X, which currently has its "used" field with
-   a value of 32K and its "commit_used" field with a value of 0. However
-   that fails since the block group item was not yet inserted, so at
-   update_block_group_item(), the btrfs_search_slot() call returns 1, and
-   then we set 'ret' to -ENOENT. Before jumping to the label 'fail'...
+However the commit neglected to reenable preemption in the !fmt codepath,
+i.e. when a WARN splat is emitted without additional format string.
 
-4) The block group item is inserted by task A, when for example
-   btrfs_create_pending_block_groups() is called when releasing its
-   transaction handle. This results in insert_block_group_item() inserting
-   the block group item in the extent tree (or block group tree), with a
-   "used" field having a value of 32K and setting "commit_used", in struct
-   btrfs_block_group, to the same value (32K);
+One consequence is that users may see more splats than intended.  E.g. a
+WARN splat emitted in a work item results in at least two extra splats:
 
-5) Task B jumps to the 'fail' label and then resets the "commit_used"
-   field to 0. At btrfs_start_dirty_block_groups(), because -ENOENT was
-   returned from update_block_group_item(), we add the block group again
-   to the list of dirty block groups, so that we will try again in the
-   critical section of the transaction commit when calling
-   btrfs_write_dirty_block_groups();
+  BUG: workqueue leaked lock or atomic
+  (emitted by process_one_work())
 
-6) Later the two extents from block group X are freed, so its "used" field
-   becomes 0;
+  BUG: scheduling while atomic
+  (emitted by worker_thread() -> schedule())
 
-7) If no more extents are allocated from block group X before we get into
-   btrfs_write_dirty_block_groups(), then when we call
-   update_block_group_item() again for block group X, we will not update
-   the block group item to reflect that it has 0 bytes used, because the
-   "used" and "commit_used" fields in struct btrfs_block_group have the
-   same value, a value of 0.
+Ironically the point of the commit was to *avoid* extra splats. ;)
 
-   As a result after committing the transaction we have an empty block
-   group with its block group item having a 32K value for its "used" field.
-   This will trigger errors from fsck ("btrfs check" command) and after
-   mounting again the fs, the cleaner kthread will not automatically delete
-   the empty block group, since its "used" field is not 0. Possibly there
-   are other issues due to this inconsistency.
+Fix it.
 
-   When this issue happens, the error reported by fsck is like this:
-
-     [1/7] checking root items
-     [2/7] checking extents
-     block group [1104150528 1073741824] used 39796736 but extent items used 0
-     ERROR: errors found in extent allocation tree or chunk allocation
-     (...)
-
-So fix this by not resetting the "commit_used" field of a block group when
-we don't find the block group item at update_block_group_item().
-
-Fixes: 7248e0cebbef ("btrfs: skip update of block group item if used bytes are the same")
-CC: stable@vger.kernel.org # 6.2+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/3ec48fde01e4ee6505f77908ba351bad200ae3d1.1694763684.git.lukas@wunner.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/panic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -3014,8 +3014,16 @@ static int update_block_group_item(struc
- 	btrfs_mark_buffer_dirty(leaf);
- fail:
- 	btrfs_release_path(path);
--	/* We didn't update the block group item, need to revert @commit_used. */
--	if (ret < 0) {
-+	/*
-+	 * We didn't update the block group item, need to revert commit_used
-+	 * unless the block group item didn't exist yet - this is to prevent a
-+	 * race with a concurrent insertion of the block group item, with
-+	 * insert_block_group_item(), that happened just after we attempted to
-+	 * update. In that case we would reset commit_used to 0 just after the
-+	 * insertion set it to a value greater than 0 - if the block group later
-+	 * becomes with 0 used bytes, we would incorrectly skip its update.
-+	 */
-+	if (ret < 0 && ret != -ENOENT) {
- 		spin_lock(&cache->lock);
- 		cache->commit_used = old_commit_used;
- 		spin_unlock(&cache->lock);
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 10effe40a3fa6..ea1c5fcb2d191 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -697,6 +697,7 @@ void warn_slowpath_fmt(const char *file, int line, unsigned taint,
+ 	if (!fmt) {
+ 		__warn(file, line, __builtin_return_address(0), taint,
+ 		       NULL, NULL);
++		warn_rcu_exit(rcu);
+ 		return;
+ 	}
+ 
+-- 
+2.40.1
+
 
 
