@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98A02AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DB8C433C7;
-	Wed, 20 Sep 2023 12:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692C12AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43F9C433C7;
+	Wed, 20 Sep 2023 12:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211709;
-	bh=AyS3mPDnuyvluUcLwhiPxkWB9mIUZCEfoegab0xsnJw=;
+	s=korg; t=1695211712;
+	bh=ZwrubW2VvMcfxhzCOQsXYPWbef1uf+K08Oj1Ijm2y+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wq/FyHZK3cw0sWPxmdkyNcgIsgVseAf+K+S1O+P5E4qXlwVWL1ShcOM6wl1c2dAqb
-	 KMeocCbUgzbcPLc3mXOsdDYZd5qwKhYWxNZIFRnYS1MxRpn5N0TSEs2mepa4uUwXEz
-	 W2x5vCTDm5desY1Hi/YR1jqJ0bPLWDT7rg2iLTNI=
+	b=jkfMchyRGUZG4/BWRuGjYbccueDkgCgzlg2/TTvH9dxvQKOAExm8kwxlsT5P7TXOb
+	 FX1vs97CUzA0sxDYEL37dKuGUwVu5ev6jIrfUPYkSQPG/XEW5D5jLkDdK8VVhM1Q2w
+	 VUMTvDEAG2uirI2ix1u4zuFaBkSNdiavyzmh2jLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 167/186] media: af9005: Fix null-ptr-deref in af9005_i2c_xfer
-Date: Wed, 20 Sep 2023 13:31:10 +0200
-Message-ID: <20230920112842.924312775@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	GONG
+Subject: [PATCH 4.14 158/186] alx: fix OOB-read compiler warning
+Date: Wed, 20 Sep 2023 13:31:01 +0200
+Message-ID: <20230920112842.642925302@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -34,55 +36,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit f4ee84f27625ce1fdf41e8483fa0561a1b837d10 ]
+[ Upstream commit 3a198c95c95da10ad844cbeade2fe40bdf14c411 ]
 
-In af9005_i2c_xfer, msg is controlled by user. When msg[i].buf
-is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach af9005_i2c_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen.
-We add check on msg[i].len to prevent crash.
+The following message shows up when compiling with W=1:
 
-Similar commit:
-commit 0ed554fd769a
-("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘alx_get_ethtool_stats’ at drivers/net/ethernet/atheros/alx/ethtool.c:297:2:
+./include/linux/fortify-string.h:592:4: error: call to ‘__read_overflow2_field’
+declared with attribute warning: detected read beyond size of field (2nd parameter);
+maybe use struct_group()? [-Werror=attribute-warning]
+  592 |    __read_overflow2_field(q_size_field, size);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In order to get alx stats altogether, alx_get_ethtool_stats() reads
+beyond hw->stats.rx_ok. Fix this warning by directly copying hw->stats,
+and refactor the unnecessarily complicated BUILD_BUG_ON btw.
+
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821013218.1614265-1-gongruiqi@huaweicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/af9005.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/atheros/alx/ethtool.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/af9005.c b/drivers/media/usb/dvb-usb/af9005.c
-index 66990a193bc50..83971daa72506 100644
---- a/drivers/media/usb/dvb-usb/af9005.c
-+++ b/drivers/media/usb/dvb-usb/af9005.c
-@@ -431,6 +431,10 @@ static int af9005_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 		if (ret == 0)
- 			ret = 2;
- 	} else {
-+		if (msg[0].len < 2) {
-+			ret = -EOPNOTSUPP;
-+			goto unlock;
-+		}
- 		/* write one or more registers */
- 		reg = msg[0].buf[0];
- 		addr = msg[0].addr;
-@@ -440,6 +444,7 @@ static int af9005_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 			ret = 1;
- 	}
+diff --git a/drivers/net/ethernet/atheros/alx/ethtool.c b/drivers/net/ethernet/atheros/alx/ethtool.c
+index 2f4eabf652e80..51e5aa2c74b34 100644
+--- a/drivers/net/ethernet/atheros/alx/ethtool.c
++++ b/drivers/net/ethernet/atheros/alx/ethtool.c
+@@ -281,9 +281,8 @@ static void alx_get_ethtool_stats(struct net_device *netdev,
+ 	spin_lock(&alx->stats_lock);
  
-+unlock:
- 	mutex_unlock(&d->i2c_mutex);
- 	return ret;
+ 	alx_update_hw_stats(hw);
+-	BUILD_BUG_ON(sizeof(hw->stats) - offsetof(struct alx_hw_stats, rx_ok) <
+-		     ALX_NUM_STATS * sizeof(u64));
+-	memcpy(data, &hw->stats.rx_ok, ALX_NUM_STATS * sizeof(u64));
++	BUILD_BUG_ON(sizeof(hw->stats) != ALX_NUM_STATS * sizeof(u64));
++	memcpy(data, &hw->stats, sizeof(hw->stats));
+ 
+ 	spin_unlock(&alx->stats_lock);
  }
 -- 
 2.40.1
