@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC332AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D387C433C9;
-	Wed, 20 Sep 2023 12:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB3B2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB432C433CA;
+	Wed, 20 Sep 2023 12:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211274;
-	bh=uJD1ldlG28ZUgpcl3IYc3sOJe/N+CYv7l0khd38Aok8=;
+	s=korg; t=1695211277;
+	bh=H5SJ5NWi98LBqNNMvXGiYnTdWkQRjmGdZptjqTdZTBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8BzFkR8s4rpHwZDcZBoxNynvsbjWV+yr+0+sRKeDuv+W1Ky2A75kuhOYl/19NXHy
-	 l7ENA8IzSq6wY8tta0b11kKeFRK6SPXX9BzIwsG1d//cgNNqlLLgg7FAkuxsmvxGG3
-	 mFWrka3VWBz9nBn7pnIaA2aBImaQzZpGuUpB8lQc=
+	b=P9eJxmHrnPcV7D3XaaNrLazncr8VoY5qM5kdft6hdd0ME+sHSpliZJckshog7OexO
+	 1TH33+UwaANc+NlXb4jjfyAURcNdMrfNnxxa4vDm3O0SsB1pIJGVXlL/vtO/j9lGxt
+	 kEBlzsHj4TY+/4mBqTjBDQHq4d+8A8z1eBj3BGi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.14 033/186] udf: Handle error when adding extent to a file
-Date: Wed, 20 Sep 2023 13:28:56 +0200
-Message-ID: <20230920112838.134597082@linuxfoundation.org>
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 016/186] ethernet: atheros: fix return value check in atl1c_tso_csum()
+Date: Wed, 20 Sep 2023 13:28:39 +0200
+Message-ID: <20230920112837.452194056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -38,124 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
+[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
 
-When adding extent to a file fails, so far we've silently squelshed the
-error. Make sure to propagate it up properly.
+in atl1c_tso_csum, it should check the return value of pskb_trim(),
+and return an error code if an unexpected value is returned
+by pskb_trim().
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -50,15 +50,15 @@ static int udf_update_inode(struct inode
- static int udf_sync_inode(struct inode *inode);
- static int udf_alloc_i_data(struct inode *inode, size_t size);
- static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
--static int8_t udf_insert_aext(struct inode *, struct extent_position,
--			      struct kernel_lb_addr, uint32_t);
-+static int udf_insert_aext(struct inode *, struct extent_position,
-+			   struct kernel_lb_addr, uint32_t);
- static void udf_split_extents(struct inode *, int *, int, int,
- 			      struct kernel_long_ad *, int *);
- static void udf_prealloc_extents(struct inode *, int, int,
- 				 struct kernel_long_ad *, int *);
- static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
--static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
--			       int, struct extent_position *);
-+static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
-+			      int, struct extent_position *);
- static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
+diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+index 3615c2a06fdad..6f5c7c1401ce0 100644
+--- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
++++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+@@ -2001,8 +2001,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
+ 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
+ 					+ ntohs(ip_hdr(skb)->tot_len));
  
- static void __udf_clear_extent_cache(struct inode *inode)
-@@ -883,7 +883,9 @@ static sector_t inode_getblk(struct inod
- 	/* write back the new extents, inserting new extents if the new number
- 	 * of extents is greater than the old number, and deleting extents if
- 	 * the new number of extents is less than the old number */
--	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	if (*err < 0)
-+		goto out_free;
+-			if (real_len < skb->len)
+-				pskb_trim(skb, real_len);
++			if (real_len < skb->len) {
++				err = pskb_trim(skb, real_len);
++				if (err)
++					return err;
++			}
  
- 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
- 				iinfo->i_location.partitionReferenceNum, 0);
-@@ -1151,21 +1153,30 @@ static void udf_merge_extents(struct ino
- 	}
- }
- 
--static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
--			       int startnum, int endnum,
--			       struct extent_position *epos)
-+static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
-+			      int startnum, int endnum,
-+			      struct extent_position *epos)
- {
- 	int start = 0, i;
- 	struct kernel_lb_addr tmploc;
- 	uint32_t tmplen;
-+	int err;
- 
- 	if (startnum > endnum) {
- 		for (i = 0; i < (startnum - endnum); i++)
- 			udf_delete_aext(inode, *epos);
- 	} else if (startnum < endnum) {
- 		for (i = 0; i < (endnum - startnum); i++) {
--			udf_insert_aext(inode, *epos, laarr[i].extLocation,
--					laarr[i].extLength);
-+			err = udf_insert_aext(inode, *epos,
-+					      laarr[i].extLocation,
-+					      laarr[i].extLength);
-+			/*
-+			 * If we fail here, we are likely corrupting the extent
-+			 * list and leaking blocks. At least stop early to
-+			 * limit the damage.
-+			 */
-+			if (err < 0)
-+				return err;
- 			udf_next_aext(inode, epos, &laarr[i].extLocation,
- 				      &laarr[i].extLength, 1);
- 			start++;
-@@ -1177,6 +1188,7 @@ static void udf_update_extents(struct in
- 		udf_write_aext(inode, epos, &laarr[i].extLocation,
- 			       laarr[i].extLength, 1);
- 	}
-+	return 0;
- }
- 
- struct buffer_head *udf_bread(struct inode *inode, int block,
-@@ -2172,12 +2184,13 @@ int8_t udf_current_aext(struct inode *in
- 	return etype;
- }
- 
--static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
--			      struct kernel_lb_addr neloc, uint32_t nelen)
-+static int udf_insert_aext(struct inode *inode, struct extent_position epos,
-+			   struct kernel_lb_addr neloc, uint32_t nelen)
- {
- 	struct kernel_lb_addr oeloc;
- 	uint32_t oelen;
- 	int8_t etype;
-+	int err;
- 
- 	if (epos.bh)
- 		get_bh(epos.bh);
-@@ -2187,10 +2200,10 @@ static int8_t udf_insert_aext(struct ino
- 		neloc = oeloc;
- 		nelen = (etype << 30) | oelen;
- 	}
--	udf_add_aext(inode, &epos, &neloc, nelen, 1);
-+	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
- 	brelse(epos.bh);
- 
--	return (nelen >> 30);
-+	return err;
- }
- 
- int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
+ 			hdr_len = (skb_transport_offset(skb) + tcp_hdrlen(skb));
+ 			if (unlikely(skb->len == hdr_len)) {
+-- 
+2.40.1
+
 
 
