@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F03123752
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A23C433CA;
-	Wed, 20 Sep 2023 11:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEDF23752
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A54C433C8;
+	Wed, 20 Sep 2023 11:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210993;
-	bh=LRHoVk6omr8VQ1gmpf6THNRg9z1ipGoChiZS10DDBWI=;
+	s=korg; t=1695210996;
+	bh=N1PzgjG7aWEllmxCCkfZLde98RjeEWwscUEIgQJpKog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/GMFQTivUtzp5UGzGAxHZC0aT7Ra9yxoColwRl7swuNplPr2UjCNqUh3BPmEAhmz
-	 HATf33CLYzuBpqHZI5cGQ4HWc8xc5LxsLdN46HAsz8mGrtlSF4WTaSppzE062Vfis0
-	 8YKl7ZONWdaPbKhAcvNvNCOTiPojeNBBQIAvevU4=
+	b=LVL2QdB5XWdieL2XwNS1ULSMtv4tC+q19js4q+yuu2GUqQw2k2PtDwaBYF1gB64Is
+	 7VEgAZudIo8H6As7kqRv3mJlpQ9WEjgfWCXVw/PUaPEKGZh0vKpqmnhOS2vRtkpD2D
+	 +BsA/KLCYjBTNopglN0RlvJI61d50355DiotNC3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/139] arm64: dts: qcom: sm6125-pdx201: correct ramoops pmsg-size
-Date: Wed, 20 Sep 2023 13:29:35 +0200
-Message-ID: <20230920112837.168933032@linuxfoundation.org>
+Subject: [PATCH 6.1 068/139] media: af9005: Fix null-ptr-deref in af9005_i2c_xfer
+Date: Wed, 20 Sep 2023 13:30:02 +0200
+Message-ID: <20230920112838.240036999@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,37 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit c42f5452de6ad2599c6e5e2a64c180a4ac835d27 ]
+[ Upstream commit f4ee84f27625ce1fdf41e8483fa0561a1b837d10 ]
 
-There is no 'msg-size' property in ramoops, so assume intention was for
-'pmsg-size':
+In af9005_i2c_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach af9005_i2c_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
-  sm6125-sony-xperia-seine-pdx201.dtb: ramoops@ffc00000: Unevaluated properties are not allowed ('msg-size' was unexpected)
+Similar commit:
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230618114442.140185-3-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/af9005.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-index e1ab5b5189949..4a77b650c0d8d 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-@@ -73,7 +73,7 @@ pstore_mem: ramoops@ffc00000 {
- 			reg = <0x0 0xffc40000 0x0 0xc0000>;
- 			record-size = <0x1000>;
- 			console-size = <0x40000>;
--			msg-size = <0x20000 0x20000>;
-+			pmsg-size = <0x20000>;
- 		};
+diff --git a/drivers/media/usb/dvb-usb/af9005.c b/drivers/media/usb/dvb-usb/af9005.c
+index 0827bf3d4e8c7..13604e6acdb83 100644
+--- a/drivers/media/usb/dvb-usb/af9005.c
++++ b/drivers/media/usb/dvb-usb/af9005.c
+@@ -422,6 +422,10 @@ static int af9005_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 		if (ret == 0)
+ 			ret = 2;
+ 	} else {
++		if (msg[0].len < 2) {
++			ret = -EOPNOTSUPP;
++			goto unlock;
++		}
+ 		/* write one or more registers */
+ 		reg = msg[0].buf[0];
+ 		addr = msg[0].addr;
+@@ -431,6 +435,7 @@ static int af9005_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = 1;
+ 	}
  
- 		cmdline_mem: memory@ffd00000 {
++unlock:
+ 	mutex_unlock(&d->i2c_mutex);
+ 	return ret;
+ }
 -- 
 2.40.1
 
