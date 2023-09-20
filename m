@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2778A27701
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E930C433C8;
-	Wed, 20 Sep 2023 11:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD99027EFE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B75C433C8;
+	Wed, 20 Sep 2023 11:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210744;
-	bh=VfQ96Z2Gl+Q2kZ1MiUCHenWai9OOy6ikjvJF64tlRcw=;
+	s=korg; t=1695210746;
+	bh=Bp7yoiIy326M010oPSSiusbLbF6InCcKKEvCRmE+waI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDu9uLuGPdRPxcXXvTZfG6/eeAjzYvDFRmtmsMGOzGWmG0q6y/aVjd8YbSfTTH+9l
-	 duyUvKoD71A3yE+uQnY2yufhOpVHe8rGyANjffSphWoGI/Y8Ru1XekVeaFaJgjRQSn
-	 Jq8StacSVUkC91JzhgqOYgNhuzEUY6byxA3prXWw=
+	b=OuJGdsULEUwndkCyYO50XRnu1r1Dzab8Et7BagmIQckPQIWGp5Mv6lkhYQvHet303
+	 4bdVmvNN0IiOcTcyM3YuzLqr0n+kzEXSUci2EagyhAEh6rWjTH3mU/KUMIWhbAZ4io
+	 F7KGO0ZHhDysvGDg+/wLPlGBqTgy7CGVbrJE/mow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 163/211] blk-mq: prealloc tags when increase tagset nr_hw_queues
-Date: Wed, 20 Sep 2023 13:30:07 +0200
-Message-ID: <20230920112850.941684982@linuxfoundation.org>
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Caleb Callaway <caleb.callaway@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 154/211] x86/sched: Restore the SD_ASYM_PACKING flag in the DIE domain
+Date: Wed, 20 Sep 2023 13:29:58 +0200
+Message-ID: <20230920112850.648170505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,47 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-commit 7222657e51b5626d10154b3e48ad441c33b5da96 upstream.
+[ Upstream commit 108af4b4bd3813610701379a58538e3339b162e4 ]
 
-Just like blk_mq_alloc_tag_set(), it's better to prepare all tags before
-using to map to queue ctxs in blk_mq_map_swqueue(), which now have to
-consider empty set->tags[].
+Commit 8f2d6c41e5a6 ("x86/sched: Rewrite topology setup") dropped the
+SD_ASYM_PACKING flag in the DIE domain added in commit 044f0e27dec6
+("x86/sched: Add the SD_ASYM_PACKING flag to the die domain of hybrid
+processors"). Restore it on hybrid processors.
 
-The good point is that we can fallback easily if increasing nr_hw_queues
-fail, instead of just mapping to hctx[0] when fail in blk_mq_map_swqueue().
+The die-level domain does not depend on any build configuration and now
+x86_sched_itmt_flags() is always needed. Remove the build dependency on
+CONFIG_SCHED_[SMT|CLUSTER|MC].
 
-And the fallback path already has tags free & clean handling, so all
-is good.
-
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230821095602.70742-3-chengming.zhou@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8f2d6c41e5a6 ("x86/sched: Rewrite topology setup")
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Tested-by: Caleb Callaway <caleb.callaway@intel.com>
+Link: https://lkml.kernel.org/r/20230815035747.11529-1-ricardo.neri-calderon@linux.intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kernel/smpboot.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4420,6 +4420,16 @@ static int blk_mq_realloc_tag_set_tags(s
- 		       sizeof(*set->tags));
- 	kfree(set->tags);
- 	set->tags = new_tags;
+diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
+index 7d82f0bd449c7..747b83a373a2d 100644
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -587,7 +587,6 @@ static bool match_llc(struct cpuinfo_x86 *c, struct cpuinfo_x86 *o)
+ }
+ 
+ 
+-#if defined(CONFIG_SCHED_SMT) || defined(CONFIG_SCHED_CLUSTER) || defined(CONFIG_SCHED_MC)
+ static inline int x86_sched_itmt_flags(void)
+ {
+ 	return sysctl_sched_itmt_enabled ? SD_ASYM_PACKING : 0;
+@@ -611,7 +610,14 @@ static int x86_cluster_flags(void)
+ 	return cpu_cluster_flags() | x86_sched_itmt_flags();
+ }
+ #endif
+-#endif
 +
-+	for (i = set->nr_hw_queues; i < new_nr_hw_queues; i++) {
-+		if (!__blk_mq_alloc_map_and_rqs(set, i)) {
-+			while (--i >= set->nr_hw_queues)
-+				__blk_mq_free_map_and_rqs(set, i);
-+			return -ENOMEM;
-+		}
-+		cond_resched();
-+	}
++static int x86_die_flags(void)
++{
++	if (cpu_feature_enabled(X86_FEATURE_HYBRID_CPU))
++	       return x86_sched_itmt_flags();
 +
- done:
- 	set->nr_hw_queues = new_nr_hw_queues;
- 	return 0;
++	return 0;
++}
+ 
+ /*
+  * Set if a package/die has multiple NUMA nodes inside.
+@@ -653,7 +659,7 @@ static void __init build_sched_topology(void)
+ 	 */
+ 	if (!x86_has_numa_in_package) {
+ 		x86_topology[i++] = (struct sched_domain_topology_level){
+-			cpu_cpu_mask, SD_INIT_NAME(DIE)
++			cpu_cpu_mask, x86_die_flags, SD_INIT_NAME(DIE)
+ 		};
+ 	}
+ 
+-- 
+2.40.1
+
 
 
