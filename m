@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BE030F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E36CC433C7;
-	Wed, 20 Sep 2023 12:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20F830F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352A3C433C7;
+	Wed, 20 Sep 2023 12:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213781;
-	bh=oS5D72Txkwa91jtGKUTJxdhH8gXgMZ+V48FIdGsmETE=;
+	s=korg; t=1695213784;
+	bh=qisdGkkbGVkPtVlZ7rU/m37Ht52m7rAZol/7jOrJFIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKUhn//Csi/yvYFHj9v8On2GICH93Iug7zydGDoqemSEhqhB+AScnryn9Bd/aTGP9
-	 WneTLm56LEPvz80MXaNC2pl17MuspZl6lfWzGRyQrWDFKeR6YO4AE+0TyHqvffPf6/
-	 V8tVDVv+wtg1wGrUPHFQuR7TIaT0EGz/TjPrA6GA=
+	b=hYZS+kKDxq9Kj4tVBobuzoHj/5/TVz+LGvWcWH72xj0cpuKapaOycXKKz42f12K89
+	 /udFSedg5WUoK2pb51aWCIjCOaQUHccIHuxHcNls/z/9r8cpoia8ZsN3u362ApVgmX
+	 XCaNwWX7ztv0l7wwpBNQmI1wfTWCKV0sLWOvpk1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Andreas Dilger <adilger@dilger.ca>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Shida Zhang <zhangshida@kylinos.cn>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 364/367] ext4: fix rec_len verify error
-Date: Wed, 20 Sep 2023 13:32:21 +0200
-Message-ID: <20230920112907.904542766@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 365/367] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
+Date: Wed, 20 Sep 2023 13:32:22 +0200
+Message-ID: <20230920112907.927491601@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,122 +40,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shida Zhang <zhangshida@kylinos.cn>
+From: William Zhang <william.zhang@broadcom.com>
 
-commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
+commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b upstream.
 
-With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
-a problem occurred when more than 13 million files were directly created
-under a directory:
+v7.2 controller has different ECC level field size and shift in the acc
+control register than its predecessor and successor controller. It needs
+to be set specifically.
 
-EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
-EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
-
-When enough files are created, the fake_dirent->reclen will be 0xffff.
-it doesn't equal to the blocksize 65536, i.e. 0x10000.
-
-But it is not the same condition when blocksize equals to 4k.
-when enough files are created, the fake_dirent->reclen will be 0x1000.
-it equals to the blocksize 4k, i.e. 0x1000.
-
-The problem seems to be related to the limitation of the 16-bit field
-when the blocksize is set to 64k.
-To address this, helpers like ext4_rec_len_{from,to}_disk has already
-been introduced to complete the conversion between the encoded and the
-plain form of rec_len.
-
-So fix this one by using the helper, and all the other in this file too.
-
-Cc: stable@kernel.org
-Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
-Suggested-by: Andreas Dilger <adilger@dilger.ca>
-Suggested-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   74 +++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 33 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -325,17 +325,17 @@ static struct ext4_dir_entry_tail *get_d
- 						   struct buffer_head *bh)
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -197,6 +197,7 @@ struct brcmnand_controller {
+ 	unsigned int		max_page_size;
+ 	const unsigned int	*page_sizes;
+ 	unsigned int		max_oob;
++	u32			ecc_level_shift;
+ 	u32			features;
+ 
+ 	/* for low-power standby/resume only */
+@@ -487,6 +488,34 @@ enum {
+ 	INTFC_CTLR_READY		= BIT(31),
+ };
+ 
++/***********************************************************************
++ * NAND ACC CONTROL bitfield
++ *
++ * Some bits have remained constant throughout hardware revision, while
++ * others have shifted around.
++ ***********************************************************************/
++
++/* Constant for all versions (where supported) */
++enum {
++	/* See BRCMNAND_HAS_CACHE_MODE */
++	ACC_CONTROL_CACHE_MODE				= BIT(22),
++
++	/* See BRCMNAND_HAS_PREFETCH */
++	ACC_CONTROL_PREFETCH				= BIT(23),
++
++	ACC_CONTROL_PAGE_HIT				= BIT(24),
++	ACC_CONTROL_WR_PREEMPT				= BIT(25),
++	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
++	ACC_CONTROL_RD_ERASED				= BIT(27),
++	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
++	ACC_CONTROL_WR_ECC				= BIT(30),
++	ACC_CONTROL_RD_ECC				= BIT(31),
++};
++
++#define	ACC_CONTROL_ECC_SHIFT			16
++/* Only for v7.2 */
++#define	ACC_CONTROL_ECC_EXT_SHIFT		13
++
+ static inline u32 nand_readreg(struct brcmnand_controller *ctrl, u32 offs)
  {
- 	struct ext4_dir_entry_tail *t;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
+ 	return brcmnand_readl(ctrl->nand_base + offs);
+@@ -590,6 +619,12 @@ static int brcmnand_revision_init(struct
+ 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
+ 		ctrl->features |= BRCMNAND_HAS_WP;
  
- #ifdef PARANOID
- 	struct ext4_dir_entry *d, *top;
- 
- 	d = (struct ext4_dir_entry *)bh->b_data;
- 	top = (struct ext4_dir_entry *)(bh->b_data +
--		(EXT4_BLOCK_SIZE(inode->i_sb) -
--		 sizeof(struct ext4_dir_entry_tail)));
--	while (d < top && d->rec_len)
-+		(blocksize - sizeof(struct ext4_dir_entry_tail)));
-+	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
- 		d = (struct ext4_dir_entry *)(((void *)d) +
--		    le16_to_cpu(d->rec_len));
-+		    ext4_rec_len_from_disk(d->rec_len, blocksize));
- 
- 	if (d != top)
- 		return NULL;
-@@ -346,7 +346,8 @@ static struct ext4_dir_entry_tail *get_d
- #endif
- 
- 	if (t->det_reserved_zero1 ||
--	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
-+	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
-+	     sizeof(struct ext4_dir_entry_tail)) ||
- 	    t->det_reserved_zero2 ||
- 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
- 		return NULL;
-@@ -427,13 +428,14 @@ static struct dx_countlimit *get_dx_coun
- 	struct ext4_dir_entry *dp;
- 	struct dx_root_info *root;
- 	int count_offset;
-+	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
-+	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
- 
--	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
-+	if (rlen == blocksize)
- 		count_offset = 8;
--	else if (le16_to_cpu(dirent->rec_len) == 12) {
-+	else if (rlen == 12) {
- 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
--		if (le16_to_cpu(dp->rec_len) !=
--		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
-+		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
- 			return NULL;
- 		root = (struct dx_root_info *)(((void *)dp + 12));
- 		if (root->reserved_zero ||
-@@ -1246,6 +1248,7 @@ static int dx_make_map(struct inode *dir
- 	unsigned int buflen = bh->b_size;
- 	char *base = bh->b_data;
- 	struct dx_hash_info h = *hinfo;
-+	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
- 
- 	if (ext4_has_metadata_csum(dir->i_sb))
- 		buflen -= sizeof(struct ext4_dir_entry_tail);
-@@ -1259,11 +1262,12 @@ static int dx_make_map(struct inode *dir
- 			map_tail--;
- 			map_tail->hash = h.hash;
- 			map_tail->offs = ((char *) de - base)>>2;
--			map_tail->size = le16_to_cpu(de->rec_len);
-+			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
-+								blocksize);
- 			count++;
- 			cond_resched();
- 		}
--		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
-+		de = ext4_next_entry(de, blocksize);
- 	}
- 	return count;
++	/* v7.2 has different ecc level shift in the acc register */
++	if (ctrl->nand_version == 0x0702)
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
++	else
++		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
++
+ 	return 0;
  }
+ 
+@@ -752,30 +787,6 @@ static inline int brcmnand_cmd_shift(str
+ 	return 0;
+ }
+ 
+-/***********************************************************************
+- * NAND ACC CONTROL bitfield
+- *
+- * Some bits have remained constant throughout hardware revision, while
+- * others have shifted around.
+- ***********************************************************************/
+-
+-/* Constant for all versions (where supported) */
+-enum {
+-	/* See BRCMNAND_HAS_CACHE_MODE */
+-	ACC_CONTROL_CACHE_MODE				= BIT(22),
+-
+-	/* See BRCMNAND_HAS_PREFETCH */
+-	ACC_CONTROL_PREFETCH				= BIT(23),
+-
+-	ACC_CONTROL_PAGE_HIT				= BIT(24),
+-	ACC_CONTROL_WR_PREEMPT				= BIT(25),
+-	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
+-	ACC_CONTROL_RD_ERASED				= BIT(27),
+-	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
+-	ACC_CONTROL_WR_ECC				= BIT(30),
+-	ACC_CONTROL_RD_ECC				= BIT(31),
+-};
+-
+ static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
+ {
+ 	if (ctrl->nand_version == 0x0702)
+@@ -786,18 +797,15 @@ static inline u32 brcmnand_spare_area_ma
+ 		return GENMASK(5, 0);
+ }
+ 
+-#define NAND_ACC_CONTROL_ECC_SHIFT	16
+-#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
+-
+ static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
+ {
+ 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
+ 
+-	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
++	mask <<= ACC_CONTROL_ECC_SHIFT;
+ 
+ 	/* v7.2 includes additional ECC levels */
+-	if (ctrl->nand_version >= 0x0702)
+-		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
++	if (ctrl->nand_version == 0x0702)
++		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
+ 
+ 	return mask;
+ }
+@@ -811,8 +819,8 @@ static void brcmnand_set_ecc_enabled(str
+ 
+ 	if (en) {
+ 		acc_control |= ecc_flags; /* enable RD/WR ECC */
+-		acc_control |= host->hwcfg.ecc_level
+-			       << NAND_ACC_CONTROL_ECC_SHIFT;
++		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
++		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
+ 	} else {
+ 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
+ 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
+@@ -2193,7 +2201,7 @@ static int brcmnand_set_cfg(struct brcmn
+ 
+ 	tmp = nand_readreg(ctrl, acc_control_offs);
+ 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
+-	tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
++	tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
+ 	tmp &= ~brcmnand_spare_area_mask(ctrl);
+ 	tmp |= cfg->spare_area_size;
+ 	nand_writereg(ctrl, acc_control_offs, tmp);
 
 
