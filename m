@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8965315AE7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:20:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA3EC433CA;
-	Wed, 20 Sep 2023 12:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF7515AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3400C433C8;
+	Wed, 20 Sep 2023 12:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212457;
-	bh=xwymALzAacZnemZvVZab/beQrgh4jXPKph6MAnLObdk=;
+	s=korg; t=1695212460;
+	bh=NfivgJP9PqPLEduQNwZPAusMx1L/Ytmkx7nc+UXs988=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPtLkz+XfLB4dM1laBwLbc+XyI2NO4SAzSlf64e4tIMaT6vZrz2xzwT2bH5WpUWac
-	 Qsi17Dev+kihfYFYKgfU4VVt7cR+8yPxxPgf4RjCJiDRHMzZh2LFkIF/Aqaf02yW/w
-	 QMUw1wh/81SRNCQ7LLiKjr3OALKQAE3tWBMDe6Fc=
+	b=h7odYjG1vLt1HLanZv1P9qVFtQdOOb12iZrlCNwjCXUgXH7klxVjwO9EfHxnzdmaC
+	 sJTOJNJCWn9PXQ5MNd9lVF+Ao1ZChEubWooxtA9j00XTUNuC4ta87BaGlKQcPrEAmX
+	 psNO1mGKlep275cqZnSK5O8XV4bqKxgbqcmvPaTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com,
-	Takeshi Misawa <jeliantsurux@gmail.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Ian Kent <raven@themaw.net>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrei Vagin <avagin@gmail.com>,
-	autofs@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/83] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
-Date: Wed, 20 Sep 2023 13:30:51 +0200
-Message-ID: <20230920112826.700554884@linuxfoundation.org>
+Subject: [PATCH 5.10 10/83] ACPI: video: Add backlight=native DMI quirk for Apple iMac12,1 and iMac12,2
+Date: Wed, 20 Sep 2023 13:31:00 +0200
+Message-ID: <20230920112827.062829137@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -48,104 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit ccbe77f7e45dfb4420f7f531b650c00c6e9c7507 ]
+[ Upstream commit 8cf04bb321f036dd2e523e993897e0789bd5265c ]
 
-Syzkaller reports a memory leak:
+Linux defaults to picking the non-working ACPI video backlight interface
+on the Apple iMac12,1 and iMac12,2.
 
-BUG: memory leak
-unreferenced object 0xffff88810b279e00 (size 96):
-  comm "syz-executor399", pid 3631, jiffies 4294964921 (age 23.870s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 08 9e 27 0b 81 88 ff ff  ..........'.....
-    08 9e 27 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ..'.............
-  backtrace:
-    [<ffffffff814cfc90>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
-    [<ffffffff81bb75ca>] kmalloc include/linux/slab.h:576 [inline]
-    [<ffffffff81bb75ca>] autofs_wait+0x3fa/0x9a0 fs/autofs/waitq.c:378
-    [<ffffffff81bb88a7>] autofs_do_expire_multi+0xa7/0x3e0 fs/autofs/expire.c:593
-    [<ffffffff81bb8c33>] autofs_expire_multi+0x53/0x80 fs/autofs/expire.c:619
-    [<ffffffff81bb6972>] autofs_root_ioctl_unlocked+0x322/0x3b0 fs/autofs/root.c:897
-    [<ffffffff81bb6a95>] autofs_root_ioctl+0x25/0x30 fs/autofs/root.c:910
-    [<ffffffff81602a9c>] vfs_ioctl fs/ioctl.c:51 [inline]
-    [<ffffffff81602a9c>] __do_sys_ioctl fs/ioctl.c:870 [inline]
-    [<ffffffff81602a9c>] __se_sys_ioctl fs/ioctl.c:856 [inline]
-    [<ffffffff81602a9c>] __x64_sys_ioctl+0xfc/0x140 fs/ioctl.c:856
-    [<ffffffff84608225>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff84608225>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Add a DMI quirk to pick the working native radeon_bl0 interface instead.
 
-autofs_wait_queue structs should be freed if their wait_ctr becomes zero.
-Otherwise they will be lost.
-
-In this case an AUTOFS_IOC_EXPIRE_MULTI ioctl is done, then a new
-waitqueue struct is allocated in autofs_wait(), its initial wait_ctr
-equals 2. After that wait_event_killable() is interrupted (it returns
--ERESTARTSYS), so that 'wq->name.name == NULL' condition may be not
-satisfied. Actually, this condition can be satisfied when
-autofs_wait_release() or autofs_catatonic_mode() is called and, what is
-also important, wait_ctr is decremented in those places. Upon the exit of
-autofs_wait(), wait_ctr is decremented to 1. Then the unmounting process
-begins: kill_sb calls autofs_catatonic_mode(), which should have freed the
-waitqueues, but it only decrements its usage counter to zero which is not
-a correct behaviour.
-
-edit:imk
-This description is of course not correct. The umount performed as a result
-of an expire is a umount of a mount that has been automounted, it's not the
-autofs mount itself. They happen independently, usually after everything
-mounted within the autofs file system has been expired away. If everything
-hasn't been expired away the automount daemon can still exit leaving mounts
-in place. But expires done in both cases will result in a notification that
-calls autofs_wait_release() with a result status. The problem case is the
-summary execution of of the automount daemon. In this case any waiting
-processes won't be woken up until either they are terminated or the mount
-is umounted.
-end edit: imk
-
-So in catatonic mode we should free waitqueues which counter becomes zero.
-
-edit: imk
-Initially I was concerned that the calling of autofs_wait_release() and
-autofs_catatonic_mode() was not mutually exclusive but that can't be the
-case (obviously) because the queue entry (or entries) is removed from the
-list when either of these two functions are called. Consequently the wait
-entry will be freed by only one of these functions or by the woken process
-in autofs_wait() depending on the order of the calls.
-end edit: imk
-
-Reported-by: syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com
-Suggested-by: Takeshi Misawa <jeliantsurux@gmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Ian Kent <raven@themaw.net>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: autofs@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Message-Id: <169112719161.7590.6700123246297365841.stgit@donald.themaw.net>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1838
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2753
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/autofs/waitq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
-index 5ced859dac539..dd479198310e8 100644
---- a/fs/autofs/waitq.c
-+++ b/fs/autofs/waitq.c
-@@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
- 		wq->status = -ENOENT; /* Magic is gone - report failure */
- 		kfree(wq->name.name);
- 		wq->name.name = NULL;
--		wq->wait_ctr--;
- 		wake_up_interruptible(&wq->queue);
-+		if (!--wq->wait_ctr)
-+			kfree(wq);
- 		wq = nwq;
- 	}
- 	fput(sbi->pipe);	/* Close the pipe */
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 28e816be4753e..a5cb9e1d48bcc 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -357,6 +357,24 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "iMac11,3"),
+ 		},
+ 	},
++	{
++	 /* https://gitlab.freedesktop.org/drm/amd/-/issues/1838 */
++	 .callback = video_detect_force_native,
++	 /* Apple iMac12,1 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "iMac12,1"),
++		},
++	},
++	{
++	 /* https://gitlab.freedesktop.org/drm/amd/-/issues/2753 */
++	 .callback = video_detect_force_native,
++	 /* Apple iMac12,2 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "iMac12,2"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1217249 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.40.1
 
