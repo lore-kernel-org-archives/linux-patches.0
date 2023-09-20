@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084D731A6B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546ECC433C8;
-	Wed, 20 Sep 2023 12:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0AC31A6B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308D0C433C8;
+	Wed, 20 Sep 2023 12:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213649;
-	bh=SvpVS/CguyviS4otOjhvbM0BW7ES/q6aHkf6VIscVOQ=;
+	s=korg; t=1695213652;
+	bh=SR5LK3EQge2pTNSXI1kwagJcyH9klmAs64KayfAfNb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgTrO94mDnJlNHdQqfCBqJf9vAB0ubqg2P4KNdMOO7k6hNmVb7mhQ8N2bhBBTl2aY
-	 xEwjLTe7ENRokCiAeColOn4EdK3M9qd59J9AKR50btQPcWRqOscaTJGcdSqvdqB+px
-	 /5g9LmnRiSfk6IiT0KGvEf1LhTsv6dMLEAyaNu/M=
+	b=XZPkpZen4i9dq+usTmaxMiXJQluqCABS5w0yaSfOFSwCCWleWWGQwUoRDWwbI+fQl
+	 +OLI/ooNtvaG1SiABCttteeclVTK/sZ+a4cO1rWrSZYRSx0jbaB1p2VhA6U8tJSG9t
+	 zl/N/WoKB36NZkLojkWS7KLd6hkYbUWAl88K1DZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hu Chunyu <chuhu@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Wander Lairson Costa <wander@redhat.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 314/367] kernel/fork: beware of __put_task_struct() calling context
-Date: Wed, 20 Sep 2023 13:31:31 +0200
-Message-ID: <20230920112906.679597648@linuxfoundation.org>
+Subject: [PATCH 5.4 315/367] ACPI: video: Add backlight=native DMI quirk for Lenovo Ideapad Z470
+Date: Wed, 20 Sep 2023 13:31:32 +0200
+Message-ID: <20230920112906.704050342@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,126 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit d243b34459cea30cfe5f3a9b2feb44e7daff9938 ]
+[ Upstream commit 96b709be183c56293933ef45b8b75f8af268c6de ]
 
-Under PREEMPT_RT, __put_task_struct() indirectly acquires sleeping
-locks. Therefore, it can't be called from an non-preemptible context.
+The Lenovo Ideapad Z470 predates Windows 8, so it defaults to using
+acpi_video for backlight control. But this is not functional on this
+model.
 
-One practical example is splat inside inactive_task_timer(), which is
-called in a interrupt context:
+Add a DMI quirk to use the native backlight interface which works.
 
-  CPU: 1 PID: 2848 Comm: life Kdump: loaded Tainted: G W ---------
-   Hardware name: HP ProLiant DL388p Gen8, BIOS P70 07/15/2012
-   Call Trace:
-   dump_stack_lvl+0x57/0x7d
-   mark_lock_irq.cold+0x33/0xba
-   mark_lock+0x1e7/0x400
-   mark_usage+0x11d/0x140
-   __lock_acquire+0x30d/0x930
-   lock_acquire.part.0+0x9c/0x210
-   rt_spin_lock+0x27/0xe0
-   refill_obj_stock+0x3d/0x3a0
-   kmem_cache_free+0x357/0x560
-   inactive_task_timer+0x1ad/0x340
-   __run_hrtimer+0x8a/0x1a0
-   __hrtimer_run_queues+0x91/0x130
-   hrtimer_interrupt+0x10f/0x220
-   __sysvec_apic_timer_interrupt+0x7b/0xd0
-   sysvec_apic_timer_interrupt+0x4f/0xd0
-   asm_sysvec_apic_timer_interrupt+0x12/0x20
-   RIP: 0033:0x7fff196bf6f5
-
-Instead of calling __put_task_struct() directly, we defer it using
-call_rcu(). A more natural approach would use a workqueue, but since
-in PREEMPT_RT, we can't allocate dynamic memory from atomic context,
-the code would become more complex because we would need to put the
-work_struct instance in the task_struct and initialize it when we
-allocate a new task_struct.
-
-The issue is reproducible with stress-ng:
-
-  while true; do
-      stress-ng --sched deadline --sched-period 1000000000 \
-	      --sched-runtime 800000000 --sched-deadline \
-	      1000000000 --mmapfork 23 -t 20
-  done
-
-Reported-by: Hu Chunyu <chuhu@redhat.com>
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Suggested-by: Valentin Schneider <vschneid@redhat.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230614122323.37957-2-wander@redhat.com
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1208724
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/task.h | 28 +++++++++++++++++++++++++++-
- kernel/fork.c              |  8 ++++++++
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 853ab403e77b8..e3c20a4f81f5e 100644
---- a/include/linux/sched/task.h
-+++ b/include/linux/sched/task.h
-@@ -113,10 +113,36 @@ static inline struct task_struct *get_task_struct(struct task_struct *t)
- }
- 
- extern void __put_task_struct(struct task_struct *t);
-+extern void __put_task_struct_rcu_cb(struct rcu_head *rhp);
- 
- static inline void put_task_struct(struct task_struct *t)
- {
--	if (refcount_dec_and_test(&t->usage))
-+	if (!refcount_dec_and_test(&t->usage))
-+		return;
-+
-+	/*
-+	 * under PREEMPT_RT, we can't call put_task_struct
-+	 * in atomic context because it will indirectly
-+	 * acquire sleeping locks.
-+	 *
-+	 * call_rcu() will schedule delayed_put_task_struct_rcu()
-+	 * to be called in process context.
-+	 *
-+	 * __put_task_struct() is called when
-+	 * refcount_dec_and_test(&t->usage) succeeds.
-+	 *
-+	 * This means that it can't "conflict" with
-+	 * put_task_struct_rcu_user() which abuses ->rcu the same
-+	 * way; rcu_users has a reference so task->usage can't be
-+	 * zero after rcu_users 1 -> 0 transition.
-+	 *
-+	 * delayed_free_task() also uses ->rcu, but it is only called
-+	 * when it fails to fork a process. Therefore, there is no
-+	 * way it can conflict with put_task_struct().
-+	 */
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && !preemptible())
-+		call_rcu(&t->rcu, __put_task_struct_rcu_cb);
-+	else
- 		__put_task_struct(t);
- }
- 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 39134effb2bff..1728aa77861cb 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -749,6 +749,14 @@ void __put_task_struct(struct task_struct *tsk)
- }
- EXPORT_SYMBOL_GPL(__put_task_struct);
- 
-+void __put_task_struct_rcu_cb(struct rcu_head *rhp)
-+{
-+	struct task_struct *task = container_of(rhp, struct task_struct, rcu);
-+
-+	__put_task_struct(task);
-+}
-+EXPORT_SYMBOL_GPL(__put_task_struct_rcu_cb);
-+
- void __init __weak arch_task_cache_init(void) { }
- 
- /*
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index ef40cd7f36eba..be9c70806b620 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -310,6 +310,15 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_BOARD_NAME, "Lenovo IdeaPad S405"),
+ 		},
+ 	},
++	{
++	 /* https://bugzilla.suse.com/show_bug.cgi?id=1208724 */
++	 .callback = video_detect_force_native,
++	 /* Lenovo Ideapad Z470 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Z470"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1187004 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.40.1
 
