@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85A928E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39123C433C8;
-	Wed, 20 Sep 2023 11:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8015C28E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05611C433C9;
+	Wed, 20 Sep 2023 11:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210817;
-	bh=BlOZndg25s4Y0ULMraBDRh7CSUigIrPz6YUtTHjMNlY=;
+	s=korg; t=1695210820;
+	bh=MAOLaL/okPiSwnXLO+yigENIP+2FHsUntLc8wqNmO8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dh4TezbsATyS8EpLU8qgT32VNF+UD4qYbVG/TuIXtGXnFhr/Q8xnTOjpT8DyP4gFx
-	 59DFy1dDi65ocZa13rlIiyfxFdfZCoy9ukCNLMhafs0S5nNU/OuYezCPEuCr+sPGNv
-	 ivypcW7DoQ1mlyUx7qUU7AOfHEW7VLKxOJ1GHSug=
+	b=oApV2wbSWxbBT7W3Ts6XWslzOFikzrNeqxEQMNjeI2JNumGi1w0BAk7kxlvELrXfl
+	 lSn/J2d1gkPkRZb1kImaM4tHz/MmHqmS927qhYSTN3hXtGXaR5+uRVaMrWOixE9DeX
+	 B/lDGOvShMhvFlb/EkagDsTrs0QYVwlPADf1KsHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linux Kernel Functional Testing <lkft@linaro.org>,
 	Naresh Kamboju <naresh.kamboju@linaro.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 189/211] tracing: Have current_trace inc the trace array ref count
-Date: Wed, 20 Sep 2023 13:30:33 +0200
-Message-ID: <20230920112851.731543220@linuxfoundation.org>
+Subject: [PATCH 6.5 190/211] tracing: Have option files inc the trace array ref count
+Date: Wed, 20 Sep 2023 13:30:34 +0200
+Message-ID: <20230920112851.762249725@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -46,15 +46,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 9b37febc578b2e1ad76a105aab11d00af5ec3d27 upstream.
+commit 7e2cfbd2d3c86afcd5c26b5c4b1dd251f63c5838 upstream.
 
-The current_trace updates the trace array tracer. For an instance, if the
-file is opened and the instance is deleted, reading or writing to the file
-will cause a use after free.
+The option files update the options for a given trace array. For an
+instance, if the file is opened and the instance is deleted, reading or
+writing to the file will cause a use after free.
 
-Up the ref count of the trace array when current_trace is opened.
+Up the ref count of the trace_array when an option file is opened.
 
-Link: https://lkml.kernel.org/r/20230907024803.877687227@goodmis.org
+Link: https://lkml.kernel.org/r/20230907024804.086679464@goodmis.org
 Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
 
 Cc: stable@vger.kernel.org
@@ -68,23 +68,45 @@ Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -7810,10 +7810,11 @@ static const struct file_operations trac
- #endif
+@@ -9007,12 +9007,33 @@ trace_options_write(struct file *filp, c
+ 	return cnt;
+ }
  
- static const struct file_operations set_tracer_fops = {
--	.open		= tracing_open_generic,
-+	.open		= tracing_open_generic_tr,
- 	.read		= tracing_set_trace_read,
- 	.write		= tracing_set_trace_write,
- 	.llseek		= generic_file_llseek,
-+	.release	= tracing_release_generic_tr,
++static int tracing_open_options(struct inode *inode, struct file *filp)
++{
++	struct trace_option_dentry *topt = inode->i_private;
++	int ret;
++
++	ret = tracing_check_open_get_tr(topt->tr);
++	if (ret)
++		return ret;
++
++	filp->private_data = inode->i_private;
++	return 0;
++}
++
++static int tracing_release_options(struct inode *inode, struct file *file)
++{
++	struct trace_option_dentry *topt = file->private_data;
++
++	trace_array_put(topt->tr);
++	return 0;
++}
+ 
+ static const struct file_operations trace_options_fops = {
+-	.open = tracing_open_generic,
++	.open = tracing_open_options,
+ 	.read = trace_options_read,
+ 	.write = trace_options_write,
+ 	.llseek	= generic_file_llseek,
++	.release = tracing_release_options,
  };
  
- static const struct file_operations tracing_pipe_fops = {
+ /*
 
 
