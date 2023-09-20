@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB11F2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E96C433C7;
-	Wed, 20 Sep 2023 12:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576E42AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9ABC433C9;
+	Wed, 20 Sep 2023 12:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211247;
-	bh=sPODTPILHffVAgNVclezvPsfg9rbWUIRdiCeAUsYLss=;
+	s=korg; t=1695211250;
+	bh=7kAWMtrIhUk534mLyF/CeOrY0Zxgkc6k9VmiPzoSDX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akJTqfsZxEb9aXRHdVDvdXFB8kJstfz31CH01le3MDbLYabhJxoARs6rpCCB1e6Uz
-	 0exFrjq0dqQJ9c7KZZoly7wybViU2iqeAEUHhOPB/NTDr2a86davnUF52//WujC/Lg
-	 S3hljq9Q54cX3FWGeJO889kZnu0g5J9aDpI3Jiqk=
+	b=dU9Sf8wxIkHvDf4ddygWe2uF1PwO3Ha9HNKVkCca3pu39OmD2wsOwLwVGBxMPOW1n
+	 7hDrP6IuCN/bTVwqiFBGiQmrdQZNvNI+Ir3MD7lam7RHLe9GbA2p16lJqPWUwqZ3cp
+	 5AEk/OijorbAEJbARxuGcmSO8w9GJU+VTocauHRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Maluka <dmy@semihalf.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 015/186] ASoC: da7219: Flush pending AAD IRQ when suspending
-Date: Wed, 20 Sep 2023 13:28:38 +0200
-Message-ID: <20230920112837.417734245@linuxfoundation.org>
+Subject: [PATCH 4.14 024/186] scsi: qedi: Fix potential deadlock on &qedi_percpu->p_work_lock
+Date: Wed, 20 Sep 2023 13:28:47 +0200
+Message-ID: <20230920112837.775089945@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,75 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmytro Maluka <dmy@semihalf.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 91e292917dad64ab8d1d5ca2ab3069ad9dac6f72 ]
+[ Upstream commit dd64f80587190265ca8a0f4be6c64c2fda6d3ac2 ]
 
-da7219_aad_suspend() disables jack detection, which should prevent
-generating new interrupts by DA7219 while suspended. However, there is a
-theoretical possibility that there is a pending interrupt generated just
-before suspending DA7219 and not handled yet, so the IRQ handler may
-still run after DA7219 is suspended. To prevent that, wait until the
-pending IRQ handling is done.
+As &qedi_percpu->p_work_lock is acquired by hard IRQ qedi_msix_handler(),
+other acquisitions of the same lock under process context should disable
+IRQ, otherwise deadlock could happen if the IRQ preempts the execution
+while the lock is held in process context on the same CPU.
 
-This patch arose as an attempt to fix the following I2C failure
-occurring sometimes during system suspend or resume:
+qedi_cpu_offline() is one such function which acquires the lock in process
+context.
 
-[  355.876211] i2c_designware i2c_designware.3: Transfer while suspended
-[  355.876245] WARNING: CPU: 2 PID: 3576 at drivers/i2c/busses/i2c-designware-master.c:570 i2c_dw_xfer+0x411/0x440
-...
-[  355.876462] Call Trace:
-[  355.876468]  <TASK>
-[  355.876475]  ? update_load_avg+0x1b3/0x615
-[  355.876484]  __i2c_transfer+0x101/0x1d8
-[  355.876494]  i2c_transfer+0x74/0x10d
-[  355.876504]  regmap_i2c_read+0x6a/0x9c
-[  355.876513]  _regmap_raw_read+0x179/0x223
-[  355.876521]  regmap_raw_read+0x1e1/0x28e
-[  355.876527]  regmap_bulk_read+0x17d/0x1ba
-[  355.876532]  ? __wake_up+0xed/0x1bb
-[  355.876542]  da7219_aad_irq_thread+0x54/0x2c9 [snd_soc_da7219 5fb8ebb2179cf2fea29af090f3145d68ed8e2184]
-[  355.876556]  irq_thread+0x13c/0x231
-[  355.876563]  ? irq_forced_thread_fn+0x5f/0x5f
-[  355.876570]  ? irq_thread_fn+0x4d/0x4d
-[  355.876576]  kthread+0x13a/0x152
-[  355.876581]  ? synchronize_irq+0xc3/0xc3
-[  355.876587]  ? kthread_blkcg+0x31/0x31
-[  355.876592]  ret_from_fork+0x1f/0x30
-[  355.876601]  </TASK>
+[Deadlock Scenario]
+qedi_cpu_offline()
+    ->spin_lock(&p->p_work_lock)
+        <irq>
+        ->qedi_msix_handler()
+        ->edi_process_completions()
+        ->spin_lock_irqsave(&p->p_work_lock, flags); (deadlock here)
 
-which indicates that the AAD IRQ handler is unexpectedly running when
-DA7219 is suspended, and as a result, is trying to read data from DA7219
-over I2C and is hitting the I2C driver "Transfer while suspended"
-failure.
+This flaw was found by an experimental static analysis tool I am developing
+for IRQ-related deadlocks.
 
-However, with this patch the above failure is still reproducible. So
-this patch does not fix any real observed issue so far, but at least is
-useful for confirming that the above issue is not caused by a pending
-IRQ but rather looks like a DA7219 hardware issue with an IRQ
-unexpectedly generated after jack detection is already disabled.
+The tentative patch fix the potential deadlock by spin_lock_irqsave()
+under process context.
 
-Signed-off-by: Dmytro Maluka <dmy@semihalf.com>
-Link: https://lore.kernel.org/r/20230717193737.161784-2-dmy@semihalf.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230726125655.4197-1-dg573847474@gmail.com
+Acked-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qedi/qedi_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index 1d1d10dd92ae2..793c8768f7c44 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -854,6 +854,8 @@ void da7219_aad_suspend(struct snd_soc_codec *codec)
- 			}
- 		}
- 	}
-+
-+	synchronize_irq(da7219_aad->irq);
- }
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index 09f57ef35990c..b8b177018031c 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -1669,8 +1669,9 @@ static int qedi_cpu_offline(unsigned int cpu)
+ 	struct qedi_percpu_s *p = this_cpu_ptr(&qedi_percpu);
+ 	struct qedi_work *work, *tmp;
+ 	struct task_struct *thread;
++	unsigned long flags;
  
- void da7219_aad_resume(struct snd_soc_codec *codec)
+-	spin_lock_bh(&p->p_work_lock);
++	spin_lock_irqsave(&p->p_work_lock, flags);
+ 	thread = p->iothread;
+ 	p->iothread = NULL;
+ 
+@@ -1681,7 +1682,7 @@ static int qedi_cpu_offline(unsigned int cpu)
+ 			kfree(work);
+ 	}
+ 
+-	spin_unlock_bh(&p->p_work_lock);
++	spin_unlock_irqrestore(&p->p_work_lock, flags);
+ 	if (thread)
+ 		kthread_stop(thread);
+ 	return 0;
 -- 
 2.40.1
 
