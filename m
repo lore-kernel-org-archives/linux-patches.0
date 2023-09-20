@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31065E544
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEF5C433C8;
-	Wed, 20 Sep 2023 12:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1133E544
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ED0C433C7;
+	Wed, 20 Sep 2023 12:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211761;
-	bh=65WiDRCUCEhxZxjCtaVM+MXykYCf9YFZm0c3tNVi7Qs=;
+	s=korg; t=1695211763;
+	bh=V92Qpj6BvdSBPdFjP0nDhjX+NwixLX+qIR2JE6P14NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCOJ18/H7oZl8sNuq11wRYuF7dfMyp4WrVEZDe5Od2AdL1UAuLpl8FxNPKTkIydfd
-	 ickYtGHVFB1oVcEk64/Xpns2PynsZYoJ2SWfgJKgASC9VV1hvO5Z6xy5HIhvmvfyEx
-	 jn7IRht0GQkEGaAc14kf6llQrsIRyMA92gxLFTU8=
+	b=X1cw9jCC1mQVdNeJN1/Wk6y8NkziITEr1fOOJSR9nrMIIx52h9WDfUp7dW0neSv3W
+	 uuwQxVcngdWK2yrKy1dBYfRb4PK2ApLaHHMdPwhxEIXYRult4Ppj/NJpL3Fnhzkypc
+	 SD9lcP6WOFgcSkJc1+8owI9n5bzUNHxXWTstv4Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guiting Shen <aarongt.shen@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 025/273] ASoC: atmel: Fix the 8K sample parameter in I2SC master
-Date: Wed, 20 Sep 2023 13:27:45 +0200
-Message-ID: <20230920112847.205823373@linuxfoundation.org>
+Subject: [PATCH 4.19 026/273] platform/x86: intel: hid: Always call BTNL ACPI method
+Date: Wed, 20 Sep 2023 13:27:46 +0200
+Message-ID: <20230920112847.236198832@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,44 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guiting Shen <aarongt.shen@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f85739c0b2b0d98a32f5ca4fcc5501d2b76df4f6 ]
+[ Upstream commit e3ab18de2b09361d6f0e4aafb9cfd6d002ce43a1 ]
 
-The 8K sample parameter of 12.288Mhz main system bus clock doesn't work
-because the I2SC_MR.IMCKDIV must not be 0 according to the sama5d2
-series datasheet(I2SC Mode Register of Register Summary).
+On a HP Elite Dragonfly G2 the 0xcc and 0xcd events for SW_TABLET_MODE
+are only send after the BTNL ACPI method has been called.
 
-So use the 6.144Mhz instead of 12.288Mhz to support 8K sample.
+Likely more devices need this, so make the BTNL ACPI method unconditional
+instead of only doing it on devices with a 5 button array.
 
-Signed-off-by: Guiting Shen <aarongt.shen@gmail.com>
-Link: https://lore.kernel.org/r/20230715030620.62328-1-aarongt.shen@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note this also makes the intel_button_array_enable() call in probe()
+unconditional, that function does its own priv->array check. This makes
+the intel_button_array_enable() call in probe() consistent with the calls
+done on suspend/resume which also rely on the priv->array check inside
+the function.
+
+Reported-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/20230712175023.31651-1-maxtram95@gmail.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230715181516.5173-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel-hid.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 99cc731505769..ab7f761174742 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -174,11 +174,14 @@ struct atmel_i2s_gck_param {
+diff --git a/drivers/platform/x86/intel-hid.c b/drivers/platform/x86/intel-hid.c
+index fa3cda69cec96..159284bfdd7f2 100644
+--- a/drivers/platform/x86/intel-hid.c
++++ b/drivers/platform/x86/intel-hid.c
+@@ -449,7 +449,7 @@ static bool button_array_present(struct platform_device *device)
+ static int intel_hid_probe(struct platform_device *device)
+ {
+ 	acpi_handle handle = ACPI_HANDLE(&device->dev);
+-	unsigned long long mode;
++	unsigned long long mode, dummy;
+ 	struct intel_hid_priv *priv;
+ 	acpi_status status;
+ 	int err;
+@@ -501,18 +501,15 @@ static int intel_hid_probe(struct platform_device *device)
+ 	if (err)
+ 		goto err_remove_notify;
  
- #define I2S_MCK_12M288		12288000UL
- #define I2S_MCK_11M2896		11289600UL
-+#define I2S_MCK_6M144		6144000UL
+-	if (priv->array) {
+-		unsigned long long dummy;
++	intel_button_array_enable(&device->dev, true);
  
- /* mck = (32 * (imckfs+1) / (imckdiv+1)) * fs */
- static const struct atmel_i2s_gck_param gck_params[] = {
-+	/* mck = 6.144Mhz */
-+	{  8000, I2S_MCK_6M144,  1, 47},	/* mck =  768 fs */
-+
- 	/* mck = 12.288MHz */
--	{  8000, I2S_MCK_12M288, 0, 47},	/* mck = 1536 fs */
- 	{ 16000, I2S_MCK_12M288, 1, 47},	/* mck =  768 fs */
- 	{ 24000, I2S_MCK_12M288, 3, 63},	/* mck =  512 fs */
- 	{ 32000, I2S_MCK_12M288, 3, 47},	/* mck =  384 fs */
+-		intel_button_array_enable(&device->dev, true);
+-
+-		/* Call button load method to enable HID power button */
+-		if (!intel_hid_evaluate_method(handle, INTEL_HID_DSM_BTNL_FN,
+-					       &dummy)) {
+-			dev_warn(&device->dev,
+-				 "failed to enable HID power button\n");
+-		}
+-	}
++	/*
++	 * Call button load method to enable HID power button
++	 * Always do this since it activates events on some devices without
++	 * a button array too.
++	 */
++	if (!intel_hid_evaluate_method(handle, INTEL_HID_DSM_BTNL_FN, &dummy))
++		dev_warn(&device->dev, "failed to enable HID power button\n");
+ 
+ 	device_init_wakeup(&device->dev, true);
+ 	return 0;
 -- 
 2.40.1
 
