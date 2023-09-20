@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314513AC21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D390C433C8;
-	Wed, 20 Sep 2023 12:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10553AC1E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635D5C433C8;
+	Wed, 20 Sep 2023 12:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213081;
-	bh=Nti33WSmxl5x5/m8rJ5OFj1PR0716Ga6tOw0TFK2ruo=;
+	s=korg; t=1695213083;
+	bh=AlHvl54Y8eFzLmAwjpOwi8TS4rlZnAhXHPgYSkrhSFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIW42tXwXAHFNANgn4DU+cqVm2I8PAPcKVZZlbhQInIRXe6HvzNTdBZH6+ZiSgnM4
-	 b6SdZqM3T/MzHG97afc4XDF548QOf1yNOeMhFzCjJWAa2B6X/xyW3X2AsAaC8Vyp0A
-	 CmYBHFnevMwaEL4QgESCYfc9jG2UKP0UOYVWl1wM=
+	b=co/KkFsJR4GI+9ITyw4Kn7XbqTJhWXyQItygHkxVhNsnT3C8Ob0RdcaGyEdeyPMTg
+	 FDmXvhVHW3qaDuvrUqWteiFk92gHWYC9O0ZI8AzxbRnzyUR4qq1lbDae2XJxqu4zhk
+	 qEArzZlYbzhiEpTToa3DT0a86V/AvRQH1A7wuTQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Jianhua <chris.zjh@huawei.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Wu Zongyong <wuzongyong@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/367] clk: sunxi-ng: Modify mismatched function name
-Date: Wed, 20 Sep 2023 13:28:25 +0200
-Message-ID: <20230920112901.991272691@linuxfoundation.org>
+Subject: [PATCH 5.4 129/367] PCI: Mark NVIDIA T4 GPUs to avoid bus reset
+Date: Wed, 20 Sep 2023 13:28:26 +0200
+Message-ID: <20230920112902.020652367@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,37 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Jianhua <chris.zjh@huawei.com>
+From: Wu Zongyong <wuzongyong@linux.alibaba.com>
 
-[ Upstream commit 075d9ca5b4e17f84fd1c744a405e69ec743be7f0 ]
+[ Upstream commit d5af729dc2071273f14cbb94abbc60608142fd83 ]
 
-No functional modification involved.
+NVIDIA T4 GPUs do not work with SBR. This problem is found when the T4 card
+is direct attached to a Root Port only. Avoid bus reset by marking T4 GPUs
+PCI_DEV_FLAGS_NO_BUS_RESET.
 
-drivers/clk/sunxi-ng/ccu_mmc_timing.c:54: warning: expecting prototype for sunxi_ccu_set_mmc_timing_mode(). Prototype was for sunxi_ccu_get_mmc_timing_mode() instead
-
-Fixes: f6f64ed868d3 ("clk: sunxi-ng: Add interface to query or configure MMC timing modes.")
-Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230722153107.2078179-1-chris.zjh@huawei.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Fixes: 4c207e7121fa ("PCI: Mark some NVIDIA GPUs to avoid bus reset")
+Link: https://lore.kernel.org/r/2dcebea53a6eb9bd212ec6d8974af2e5e0333ef6.1681129861.git.wuzongyong@linux.alibaba.com
+Signed-off-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_mmc_timing.c | 2 +-
+ drivers/pci/quirks.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_mmc_timing.c b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-index de33414fc5c28..c6a6ce98ca03a 100644
---- a/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-+++ b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-@@ -43,7 +43,7 @@ int sunxi_ccu_set_mmc_timing_mode(struct clk *clk, bool new_mode)
- EXPORT_SYMBOL_GPL(sunxi_ccu_set_mmc_timing_mode);
- 
- /**
-- * sunxi_ccu_set_mmc_timing_mode: Get the current MMC clock timing mode
-+ * sunxi_ccu_get_mmc_timing_mode: Get the current MMC clock timing mode
-  * @clk: clock to query
-  *
-  * Returns 0 if the clock is in old timing mode, > 0 if it is in
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 73260bd217278..6d258f146aa90 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3566,7 +3566,7 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
+  */
+ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+ {
+-	if ((dev->device & 0xffc0) == 0x2340)
++	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
+ 		quirk_no_bus_reset(dev);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
 -- 
 2.40.1
 
