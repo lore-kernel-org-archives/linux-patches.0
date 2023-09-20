@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BBC2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6827BC433CB;
-	Wed, 20 Sep 2023 12:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925B32AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEE2C433C7;
+	Wed, 20 Sep 2023 12:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211660;
-	bh=Fvf9/DSqtBXdCBxQzC92ulSBuMJWTL/mA8CuIE6M4oA=;
+	s=korg; t=1695211663;
+	bh=50i59VdnkDX4Aa7QX8dOrEVSu+9hZBH25fAOwi1JlrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciVDSlOd8v6BO8Jf378WN5+iYQYO6d77gPnWueIgy2itJ8oFSHTBpuSi46oaLSPRB
-	 p3a6GwOy7eBQwNMi1aY+8+kjSPf11mdxYuSHqD5kq5iAI2RW5pEocDyYW65B23psfA
-	 BIHgX6thdQe7VKtLUGqP4/pDO6EwLZtKZGi0eaWE=
+	b=X8aS2vMGTZGixfFb8Repw13na6JzW17+UdappOFgnmmXrKyrnqQzOFOhGliptctvm
+	 1Qwolg4U/cWaux+nSwvdn6EPlhGjEgU+t0OrelNLHIvi1r9zJ0lIMtIW4q+QmDFxlW
+	 +OAlrDhX5uO0SZ06dZfnE5ra9FXY9hLhTIq5Yydw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
+	Nigel Croxon <ncroxon@redhat.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 176/186] kobject: Add sanity check for kset->kobj.ktype in kset_register()
-Date: Wed, 20 Sep 2023 13:31:19 +0200
-Message-ID: <20230920112843.240593473@linuxfoundation.org>
+Subject: [PATCH 4.14 177/186] md/raid1: fix error: ISO C90 forbids mixed declarations
+Date: Wed, 20 Sep 2023 13:31:20 +0200
+Message-ID: <20230920112843.274460526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -33,64 +34,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Nigel Croxon <ncroxon@redhat.com>
 
-[ Upstream commit 4d0fe8c52bb3029d83e323c961221156ab98680b ]
+[ Upstream commit df203da47f4428bc286fc99318936416253a321c ]
 
-When I register a kset in the following way:
-	static struct kset my_kset;
-	kobject_set_name(&my_kset.kobj, "my_kset");
-        ret = kset_register(&my_kset);
+There is a compile error when this commit is added:
+md: raid1: fix potential OOB in raid1_remove_disk()
 
-A null pointer dereference exception is occurred:
-[ 4453.568337] Unable to handle kernel NULL pointer dereference at \
-virtual address 0000000000000028
-... ...
-[ 4453.810361] Call trace:
-[ 4453.813062]  kobject_get_ownership+0xc/0x34
-[ 4453.817493]  kobject_add_internal+0x98/0x274
-[ 4453.822005]  kset_register+0x5c/0xb4
-[ 4453.825820]  my_kobj_init+0x44/0x1000 [my_kset]
-... ...
+drivers/md/raid1.c: In function 'raid1_remove_disk':
+drivers/md/raid1.c:1844:9: error: ISO C90 forbids mixed declarations
+and code [-Werror=declaration-after-statement]
+1844 |         struct raid1_info *p = conf->mirrors + number;
+     |         ^~~~~~
 
-Because I didn't initialize my_kset.kobj.ktype.
+That's because the new code was inserted before the struct.
+The change is move the struct command above this commit.
 
-According to the description in Documentation/core-api/kobject.rst:
- - A ktype is the type of object that embeds a kobject.  Every structure
-   that embeds a kobject needs a corresponding ktype.
-
-So add sanity check to make sure kset->kobj.ktype is not NULL.
-
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Link: https://lore.kernel.org/r/20230805084114.1298-2-thunder.leizhen@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8b0472b50bcf ("md: raid1: fix potential OOB in raid1_remove_disk()")
+Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/46d929d0-2aab-4cf2-b2bf-338963e8ba5a@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kobject.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/raid1.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/lib/kobject.c b/lib/kobject.c
-index bbbb067de8ecd..b908655c58123 100644
---- a/lib/kobject.c
-+++ b/lib/kobject.c
-@@ -814,6 +814,11 @@ int kset_register(struct kset *k)
- 	if (!k)
- 		return -EINVAL;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 3e54b6639e213..7e37e4b2ec6ae 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1775,12 +1775,11 @@ static int raid1_remove_disk(struct mddev *mddev, struct md_rdev *rdev)
+ 	struct r1conf *conf = mddev->private;
+ 	int err = 0;
+ 	int number = rdev->raid_disk;
++	struct raid1_info *p = conf->mirrors + number;
  
-+	if (!k->kobj.ktype) {
-+		pr_err("must have a ktype to be initialized properly!\n");
-+		return -EINVAL;
-+	}
-+
- 	kset_init(k);
- 	err = kobject_add_internal(&k->kobj);
- 	if (err)
+ 	if (unlikely(number >= conf->raid_disks))
+ 		goto abort;
+ 
+-	struct raid1_info *p = conf->mirrors + number;
+-
+ 	if (rdev != p->rdev)
+ 		p = conf->mirrors + conf->raid_disks + number;
+ 
 -- 
 2.40.1
 
