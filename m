@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5B930FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43048C433C7;
-	Wed, 20 Sep 2023 12:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556CB30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D066EC433C9;
+	Wed, 20 Sep 2023 12:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212597;
-	bh=VqXnn+b58Ur8m9C/0upHB1oq698ryWW0SaRt4iIpB/M=;
+	s=korg; t=1695212600;
+	bh=M/DlGqqR3N8IHSZYEAbh/zTkPS0SPKm2pXRwVsQlTy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdbGLDMsdJWbI0yREeBN+SyAVSUFDyZ0nnEeJFVe3qBNkVu51OjiVhY4hkCIU46QF
-	 x4fF1rs1ZzaxDcltC4X2n7hspkQzlhdXFmu4AU4CEme15hv9+NpdREDew+qJYxbqNf
-	 untbYKHVrJYN9HJNt0mbUvfoqozZYptjE1AIXdKo=
+	b=l2UYh8cTunCkgvHKOvZFwktJTBuTBFNLN5ly+Uob7Q4br//eLr+z1RVESuG2YHwBg
+	 A+i9HM7AqnEP9nLIDy+wPqisxGXaYCKGWzz+mmy9Hf0GTF1V5eEWUPvPb8Zuhw853D
+	 qIiVYF3QxZQ3HSr0hqsQJxMClDvd68NUiPWYyflE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 61/83] selftests: tracing: Fix to unmount tracefs for recovering environment
-Date: Wed, 20 Sep 2023 13:31:51 +0200
-Message-ID: <20230920112829.070598142@linuxfoundation.org>
+Subject: [PATCH 5.10 62/83] scsi: lpfc: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
+Date: Wed, 20 Sep 2023 13:31:52 +0200
+Message-ID: <20230920112829.111310490@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -42,63 +41,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 7e021da80f48582171029714f8a487347f29dddb ]
+[ Upstream commit 7dcc683db3639eadd11bf0d59a09088a43de5e22 ]
 
-Fix to unmount the tracefs if the ftracetest mounted it for recovering
-system environment. If the tracefs is already mounted, this does nothing.
+Since debugfs_create_file() returns ERR_PTR and never NULL, use IS_ERR() to
+check the return value.
 
-Suggested-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/all/29fce076-746c-4650-8358-b4e0fa215cf7@sirena.org.uk/
-Fixes: cbd965bde74c ("ftrace/selftests: Return the skip code when tracing directory not configured in kernel")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 2fcbc569b9f5 ("scsi: lpfc: Make debugfs ktime stats generic for NVME and SCSI")
+Fixes: 4c47efc140fa ("scsi: lpfc: Move SCSI and NVME Stats to hardware queue structures")
+Fixes: 6a828b0f6192 ("scsi: lpfc: Support non-uniform allocation of MSIX vectors to hardware queues")
+Fixes: 95bfc6d8ad86 ("scsi: lpfc: Make FW logging dynamically configurable")
+Fixes: 9f77870870d8 ("scsi: lpfc: Add debugfs support for cm framework buffers")
+Fixes: c490850a0947 ("scsi: lpfc: Adapt partitioned XRI lists to efficient sharing")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230906030809.2847970-1-ruanjinjie@huawei.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/lpfc/lpfc_debugfs.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index 8ec1922e974eb..55314cd197ab9 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -30,6 +30,9 @@ err_ret=1
- # kselftest skip code is 4
- err_skip=4
- 
-+# umount required
-+UMOUNT_DIR=""
-+
- # cgroup RT scheduling prevents chrt commands from succeeding, which
- # induces failures in test wakeup tests.  Disable for the duration of
- # the tests.
-@@ -44,6 +47,9 @@ setup() {
- 
- cleanup() {
-   echo $sched_rt_runtime_orig > $sched_rt_runtime
-+  if [ -n "${UMOUNT_DIR}" ]; then
-+    umount ${UMOUNT_DIR} ||:
-+  fi
- }
- 
- errexit() { # message
-@@ -155,11 +161,13 @@ if [ -z "$TRACING_DIR" ]; then
- 	    mount -t tracefs nodev /sys/kernel/tracing ||
- 	      errexit "Failed to mount /sys/kernel/tracing"
- 	    TRACING_DIR="/sys/kernel/tracing"
-+	    UMOUNT_DIR=${TRACING_DIR}
- 	# If debugfs exists, then so does /sys/kernel/debug
- 	elif [ -d "/sys/kernel/debug" ]; then
- 	    mount -t debugfs nodev /sys/kernel/debug ||
- 	      errexit "Failed to mount /sys/kernel/debug"
- 	    TRACING_DIR="/sys/kernel/debug/tracing"
-+	    UMOUNT_DIR=${TRACING_DIR}
- 	else
- 	    err_ret=$err_skip
- 	    errexit "debugfs and tracefs are not configured in this kernel"
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index 2b77cbbcdccb6..f91eee01ce95e 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -5909,7 +5909,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 					    phba->hba_debugfs_root,
+ 					    phba,
+ 					    &lpfc_debugfs_op_multixripools);
+-		if (!phba->debug_multixri_pools) {
++		if (IS_ERR(phba->debug_multixri_pools)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "0527 Cannot create debugfs multixripools\n");
+ 			goto debug_failed;
+@@ -5921,7 +5921,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_debugfs_ras_log);
+-		if (!phba->debug_ras_log) {
++		if (IS_ERR(phba->debug_ras_log)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "6148 Cannot create debugfs"
+ 					 " ras_log\n");
+@@ -5942,7 +5942,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			debugfs_create_file(name, S_IFREG | 0644,
+ 					    phba->hba_debugfs_root,
+ 					    phba, &lpfc_debugfs_op_lockstat);
+-		if (!phba->debug_lockstat) {
++		if (IS_ERR(phba->debug_lockstat)) {
+ 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 					 "4610 Can't create debugfs lockstat\n");
+ 			goto debug_failed;
+@@ -6171,7 +6171,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 		debugfs_create_file(name, 0644,
+ 				    vport->vport_debugfs_root,
+ 				    vport, &lpfc_debugfs_op_scsistat);
+-	if (!vport->debug_scsistat) {
++	if (IS_ERR(vport->debug_scsistat)) {
+ 		lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 				 "4611 Cannot create debugfs scsistat\n");
+ 		goto debug_failed;
+@@ -6182,7 +6182,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 		debugfs_create_file(name, 0644,
+ 				    vport->vport_debugfs_root,
+ 				    vport, &lpfc_debugfs_op_ioktime);
+-	if (!vport->debug_ioktime) {
++	if (IS_ERR(vport->debug_ioktime)) {
+ 		lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
+ 				 "0815 Cannot create debugfs ioktime\n");
+ 		goto debug_failed;
 -- 
 2.40.1
 
