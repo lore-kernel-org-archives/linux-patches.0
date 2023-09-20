@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0502AB29
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710CCC433C7;
-	Wed, 20 Sep 2023 11:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86CB20B19
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAEBC433C8;
+	Wed, 20 Sep 2023 11:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210971;
-	bh=fc4kj3Cd/8xnque4OU3OkMHAQSAH1vexi1BLcpXzVM8=;
+	s=korg; t=1695210974;
+	bh=1eRRs5MrpOY8nc7Lu0j3x+GS+NqKow5uEZRCgY31twQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1IWMYtms6w/RkKdCQb7TROSH4t4IZMrDOeSm/pj1PTa0dxa1xE8iIgI6p9KilY58
-	 TKdREulrUYwP7C5WgHlbCmtshdcJ5KUhFwhoruXGFW/HBpU6A5lZwwKyCIIfl871yj
-	 D9DB7aO0ieHUnVsZoBkWrTkRoP2v6TDMcDf8yunc=
+	b=a+x79I109jwiGJg3A09aG44UuX6KVFLhy3f2G4EL2XMj3sqjDYi3OMOshSRxsADLp
+	 L7dBv1T8ibtZBNoq6HPyd7bnIstjMEc6rmdLYUic3M8rR94TXHNfgDl4TEjW0+3FyN
+	 26ecY8m3CqCrxKVX7zviqC/CdxuHM+vG+tkxjW50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/139] PCI: dwc: Provide deinit callback for i.MX
-Date: Wed, 20 Sep 2023 13:29:54 +0200
-Message-ID: <20230920112837.932805948@linuxfoundation.org>
+Subject: [PATCH 6.1 061/139] ARM: 9317/1: kexec: Make smp stop calls asynchronous
+Date: Wed, 20 Sep 2023 13:29:55 +0200
+Message-ID: <20230920112837.972951044@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -37,55 +34,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Mårten Lindahl <marten.lindahl@axis.com>
 
-[ Upstream commit fc8b24c28bec19fc0621d108b9ee81ddfdedb25a ]
+[ Upstream commit 8922ba71c969d2a0c01a94372a71477d879470de ]
 
-The i.MX integration for the DesignWare PCI controller has a _host_exit()
-operation which undoes everything that the _host_init() operation does but
-does not wire this up as the host_deinit callback for the core, or call it
-in any path other than suspend. This means that if we ever unwind the
-initial probe of the device, for example because it fails, the regulator
-core complains that the regulators for the device were left enabled:
+If a panic is triggered by a hrtimer interrupt all online cpus will be
+notified and set offline. But as highlighted by commit 19dbdcb8039c
+("smp: Warn on function calls from softirq context") this call should
+not be made synchronous with disabled interrupts:
 
-imx6q-pcie 33800000.pcie: iATU: unroll T, 4 ob, 4 ib, align 64K, limit 16G
-imx6q-pcie 33800000.pcie: Phy link never came up
-imx6q-pcie 33800000.pcie: Phy link never came up
-imx6q-pcie: probe of 33800000.pcie failed with error -110
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 46 at drivers/regulator/core.c:2396 _regulator_put+0x110/0x128
+ softdog: Initiating panic
+ Kernel panic - not syncing: Software Watchdog Timer expired
+ WARNING: CPU: 1 PID: 0 at kernel/smp.c:753 smp_call_function_many_cond
+   unwind_backtrace:
+     show_stack
+     dump_stack_lvl
+     __warn
+     warn_slowpath_fmt
+     smp_call_function_many_cond
+     smp_call_function
+     crash_smp_send_stop.part.0
+     machine_crash_shutdown
+     __crash_kexec
+     panic
+     softdog_fire
+     __hrtimer_run_queues
+     hrtimer_interrupt
 
-Wire up the callback so that the core can clean up after itself.
+Make the smp call for machine_crash_nonpanic_core() asynchronous.
 
-Link: https://lore.kernel.org/r/20230731-pci-imx-regulator-cleanup-v2-1-fc8fa5c9893d@kernel.org
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/kernel/machine_kexec.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 47db2d20568ef..388354a8e31cf 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -999,6 +999,7 @@ static void imx6_pcie_host_exit(struct dw_pcie_rp *pp)
+diff --git a/arch/arm/kernel/machine_kexec.c b/arch/arm/kernel/machine_kexec.c
+index f567032a09c0b..6d1938d1b4df7 100644
+--- a/arch/arm/kernel/machine_kexec.c
++++ b/arch/arm/kernel/machine_kexec.c
+@@ -92,16 +92,28 @@ void machine_crash_nonpanic_core(void *unused)
+ 	}
+ }
  
- static const struct dw_pcie_host_ops imx6_pcie_host_ops = {
- 	.host_init = imx6_pcie_host_init,
-+	.host_deinit = imx6_pcie_host_exit,
- };
++static DEFINE_PER_CPU(call_single_data_t, cpu_stop_csd) =
++	CSD_INIT(machine_crash_nonpanic_core, NULL);
++
+ void crash_smp_send_stop(void)
+ {
+ 	static int cpus_stopped;
+ 	unsigned long msecs;
++	call_single_data_t *csd;
++	int cpu, this_cpu = raw_smp_processor_id();
  
- static const struct dw_pcie_ops dw_pcie_ops = {
+ 	if (cpus_stopped)
+ 		return;
+ 
+ 	atomic_set(&waiting_for_crash_ipi, num_online_cpus() - 1);
+-	smp_call_function(machine_crash_nonpanic_core, NULL, false);
++	for_each_online_cpu(cpu) {
++		if (cpu == this_cpu)
++			continue;
++
++		csd = &per_cpu(cpu_stop_csd, cpu);
++		smp_call_function_single_async(cpu, csd);
++	}
++
+ 	msecs = 1000; /* Wait at most a second for the other cpus to stop */
+ 	while ((atomic_read(&waiting_for_crash_ipi) > 0) && msecs) {
+ 		mdelay(1);
 -- 
 2.40.1
 
