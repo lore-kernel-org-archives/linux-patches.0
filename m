@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FF530FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67910C433CA;
-	Wed, 20 Sep 2023 12:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE64230FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3305AC433CA;
+	Wed, 20 Sep 2023 12:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212632;
-	bh=MjCM6iJ7HMzJuuAQU7ZDD8JMtrj6NPzD4sFLsJbzd6s=;
+	s=korg; t=1695212635;
+	bh=r7sYNdA6PodDS4OprRBccx/TvwygNjVOn0PFzqhcfXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0+/H2ymF0oI167HEXx3a6RmdKgoG2rdDPEyPcfenVKxhUDvOJVlc+jlPQI4u16BN
-	 gqY4f5VtlE2YIUVf0YYK26za+xfrL2wqA9URMSvu8aj6b6SR7EGkQ5lCnqMVunp/Yv
-	 486Cjw753cc3vMSa7r0tR7LmZm56owsVsOZ73Kbg=
+	b=knlOoeTKgxzAwBgUrLxRcAp//Hhd3rCFR3NVFhvjUVQMZpp0xCL3GCPfsZxBeoS9k
+	 SAHu10Rq02xv1yceFrXs5mckEwUp/99btoKLrbpx1az75UmIN8vx9dsiLk8tsZTvAg
+	 aiIvVygWKSyoMREE2pOmoxDsTO5RlhyPEZ6JpV48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 5.10 73/83] mm/filemap: fix infinite loop in generic_file_buffered_read()
-Date: Wed, 20 Sep 2023 13:32:03 +0200
-Message-ID: <20230920112829.541295877@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 74/83] drm/amd/display: enable cursor degamma for DCN3+ DRM legacy gamma
+Date: Wed, 20 Sep 2023 13:32:04 +0200
+Message-ID: <20230920112829.575850763@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -41,39 +39,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Overstreet <kent.overstreet@gmail.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit 3644e2d2dda78e21edd8f5415b6d7ab03f5f54f3 upstream.
+commit 57a943ebfcdb4a97fbb409640234bdb44bfa1953 upstream.
 
-If iter->count is 0 and iocb->ki_pos is page aligned, this causes
-nr_pages to be 0.
+For DRM legacy gamma, AMD display manager applies implicit sRGB degamma
+using a pre-defined sRGB transfer function. It works fine for DCN2
+family where degamma ROM and custom curves go to the same color block.
+But, on DCN3+, degamma is split into two blocks: degamma ROM for
+pre-defined TFs and `gamma correction` for user/custom curves and
+degamma ROM settings doesn't apply to cursor plane. To get DRM legacy
+gamma working as expected, enable cursor degamma ROM for implict sRGB
+degamma on HW with this configuration.
 
-Then in generic_file_buffered_read_get_pages() find_get_pages_contig()
-returns 0 - because we asked for 0 pages, so we call
-generic_file_buffered_read_no_cached_page() which attempts to add a page
-to the page cache, which fails with -EEXIST, and then we loop. Oops...
-
-Signed-off-by: Kent Overstreet <kent.overstreet@gmail.com>
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2803
+Fixes: 96b020e2163f ("drm/amd/display: check attr flag before set cursor degamma on DCN3+")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2203,6 +2203,9 @@ ssize_t generic_file_buffered_read(struc
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6971,6 +6971,13 @@ static void handle_cursor_update(struct
+ 	attributes.rotation_angle    = 0;
+ 	attributes.attribute_flags.value = 0;
  
- 	if (unlikely(*ppos >= inode->i_sb->s_maxbytes))
- 		return 0;
-+	if (unlikely(!iov_iter_count(iter)))
-+		return 0;
++	/* Enable cursor degamma ROM on DCN3+ for implicit sRGB degamma in DRM
++	 * legacy gamma setup.
++	 */
++	if (crtc_state->cm_is_degamma_srgb &&
++	    adev->dm.dc->caps.color.dpp.gamma_corr)
++		attributes.attribute_flags.bits.ENABLE_CURSOR_DEGAMMA = 1;
 +
- 	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
+ 	attributes.pitch = attributes.width;
  
- 	index = *ppos >> PAGE_SHIFT;
+ 	if (crtc_state->stream) {
 
 
