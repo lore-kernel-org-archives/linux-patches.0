@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F0D2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E77C433C8;
-	Wed, 20 Sep 2023 12:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66FB2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59652C433C8;
+	Wed, 20 Sep 2023 12:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211674;
-	bh=df4yxF3BUCsLXEgRBcbOqMM7k+vBT+OE8+nkpn9GEiE=;
+	s=korg; t=1695211676;
+	bh=92n9t0pvXYsdGbcI5rIbougYnQfvtB7DX2OzvzuHwGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFgRft0NZhZ8aoV+X0uU2GqAng9kIeHuY5R4lhWsQrxP9WNDj3HN8vrSo2Awjmtef
-	 KsTz7/OEf/XGesZFbxl3nRehUPAJX8fHyoxU7TjAnG0DyVY65aBCdEKduwL4OxtGVl
-	 GCj7ancQJYuClE2E0Xomr3J5C59vKBx+NBIFrCSM=
+	b=qgbuGwi2/TNHU+Z6Q7GhBrym3TLyo1xOAj3I3wGCIAOwebdz+CsnahQNMBlVKCtHr
+	 084FBtofHy/4iITZbrun+m2o9Wd0qO/qqqtMscGhSBpgk/KfVIcU8l25wownhScTt/
+	 mYDxbQfWRVcY82+hYPVSg6v7xVZHzJ/mfTqwMpss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 4.14 180/186] nfsd: fix change_info in NFSv4 RENAME replies
-Date: Wed, 20 Sep 2023 13:31:23 +0200
-Message-ID: <20230920112843.393797195@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 4.14 181/186] mtd: rawnand: brcmnand: Fix crash during the panic_write
+Date: Wed, 20 Sep 2023 13:31:24 +0200
+Message-ID: <20230920112843.428027657@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,36 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: William Zhang <william.zhang@broadcom.com>
 
-commit fdd2630a7398191e84822612e589062063bd4f3d upstream.
+commit e66dd317194daae0475fe9e5577c80aa97f16cb9 upstream.
 
-nfsd sends the transposed directory change info in the RENAME reply. The
-source directory is in save_fh and the target is in current_fh.
+When executing a NAND command within the panic write path, wait for any
+pending command instead of calling BUG_ON to avoid crashing while
+already crashing.
 
-Reported-by: Zhi Li <yieli@redhat.com>
-Reported-by: Benjamin Coddington <bcodding@redhat.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2218844
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
+Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-4-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/brcmnand/brcmnand.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -870,8 +870,8 @@ nfsd4_rename(struct svc_rqst *rqstp, str
- 			     rename->rn_tname, rename->rn_tnamelen);
- 	if (status)
- 		return status;
--	set_change_info(&rename->rn_sinfo, &cstate->current_fh);
--	set_change_info(&rename->rn_tinfo, &cstate->save_fh);
-+	set_change_info(&rename->rn_sinfo, &cstate->save_fh);
-+	set_change_info(&rename->rn_tinfo, &cstate->current_fh);
- 	return nfs_ok;
- }
+--- a/drivers/mtd/nand/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/brcmnand/brcmnand.c
+@@ -1271,7 +1271,17 @@ static void brcmnand_send_cmd(struct brc
  
+ 	dev_dbg(ctrl->dev, "send native cmd %d addr 0x%llx\n", cmd, cmd_addr);
+ 
+-	BUG_ON(ctrl->cmd_pending != 0);
++	/*
++	 * If we came here through _panic_write and there is a pending
++	 * command, try to wait for it. If it times out, rather than
++	 * hitting BUG_ON, just return so we don't crash while crashing.
++	 */
++	if (oops_in_progress) {
++		if (ctrl->cmd_pending &&
++			bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0))
++			return;
++	} else
++		BUG_ON(ctrl->cmd_pending != 0);
+ 	ctrl->cmd_pending = cmd;
+ 
+ 	ret = bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0);
 
 
