@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27892AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384C8C433C7;
-	Wed, 20 Sep 2023 12:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752162AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB20DC433C9;
+	Wed, 20 Sep 2023 12:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211720;
-	bh=s4l9GxShkAql3/Jq14poFX+WrC917cPCluWW6ckTvk4=;
+	s=korg; t=1695211723;
+	bh=dGgfLtYnJse9Nzoc36KI5g/+boAc6h3BgB2TT1rsKWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TSjzQtFLG+8pGLL9EjzxOjFIZHE2iZDsFTX5vCl7Eb4QMdY5i0444EPIPjU3ZypE
-	 2CnI4oJZOnmm56yQwSNgd6rrfrtbpBBOZ/WYChSLjEY+mHGKzYdeS+CRv5YyYn5PcC
-	 c+pA+VAzURQUfWNxqhoaMUyKDzGs55JCmILW7qHI=
+	b=2wAUxQMUsXje0cGJxZLAtK4610YbLJL6Ie+o2JUqeiNJ7Rq6l0Iu/G4O260M9loC2
+	 n9sntD8rnGKo+t80txSzFv/TGaA2AD0b/6uvfh7jvf7UZwJYGmpq4zIDDxFCo2fpCw
+	 HekH+2ajGtNvYjWS26rgW91rZEz4Krd+aRJ/uWX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Manuel Lauss <manuel.lauss@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 4.19 003/273] mmc: au1xmmc: force non-modular build and remove symbol_get usage
-Date: Wed, 20 Sep 2023 13:27:23 +0200
-Message-ID: <20230920112846.546493564@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 012/273] nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
+Date: Wed, 20 Sep 2023 13:27:32 +0200
+Message-ID: <20230920112846.809663482@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,139 +40,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit d4a5c59a955bba96b273ec1a5885bada24c56979 upstream.
+commit f83913f8c5b882a312e72b7669762f8a5c9385e4 upstream.
 
-au1xmmc is split somewhat awkwardly into the main mmc subsystem driver,
-and callbacks in platform_data that sit under arch/mips/ and are
-always built in.  The latter than call mmc_detect_change through
-symbol_get.  Remove the use of symbol_get by requiring the driver
-to be built in.  In the future the interrupt handlers for card
-insert/eject detection should probably be moved into the main driver,
-and which point it can be built modular again.
+A syzbot stress test reported that create_empty_buffers() called from
+nilfs_lookup_dirty_data_buffers() can cause a general protection fault.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Manuel Lauss <manuel.lauss@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-[mcgrof: squashed in depends on MMC=y suggested by Arnd]
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Analysis using its reproducer revealed that the back reference "mapping"
+from a page/folio has been changed to NULL after dirty page/folio gang
+lookup in nilfs_lookup_dirty_data_buffers().
+
+Fix this issue by excluding pages/folios from being collected if, after
+acquiring a lock on each page/folio, its back reference "mapping" differs
+from the pointer to the address space struct that held the page/folio.
+
+Link: https://lkml.kernel.org/r/20230805132038.6435-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000002930a705fc32b231@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/alchemy/devboards/db1000.c |    8 +-------
- arch/mips/alchemy/devboards/db1200.c |   19 ++-----------------
- arch/mips/alchemy/devboards/db1300.c |   10 +---------
- drivers/mmc/host/Kconfig             |    5 +++--
- 4 files changed, 7 insertions(+), 35 deletions(-)
+fs/nilfs2/segment.c | 5 +++++
+ fs/nilfs2/segment.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/alchemy/devboards/db1000.c
-+++ b/arch/mips/alchemy/devboards/db1000.c
-@@ -27,7 +27,6 @@
- #include <linux/interrupt.h>
- #include <linux/leds.h>
- #include <linux/mmc/host.h>
--#include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/spi/spi.h>
-@@ -176,12 +175,7 @@ static struct platform_device db1x00_aud
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -730,6 +730,11 @@ static size_t nilfs_lookup_dirty_data_bu
+ 		struct page *page = pvec.pages[i];
  
- static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
- {
--	void (*mmc_cd)(struct mmc_host *, unsigned long);
--	/* link against CONFIG_MMC=m */
--	mmc_cd = symbol_get(mmc_detect_change);
--	mmc_cd(ptr, msecs_to_jiffies(500));
--	symbol_put(mmc_detect_change);
--
-+	mmc_detect_change(ptr, msecs_to_jiffies(500));
- 	return IRQ_HANDLED;
- }
- 
---- a/arch/mips/alchemy/devboards/db1200.c
-+++ b/arch/mips/alchemy/devboards/db1200.c
-@@ -23,7 +23,6 @@
- #include <linux/gpio.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
--#include <linux/module.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/leds.h>
-@@ -355,14 +354,7 @@ static irqreturn_t db1200_mmc_cd(int irq
- 
- static irqreturn_t db1200_mmc_cdfn(int irq, void *ptr)
- {
--	void (*mmc_cd)(struct mmc_host *, unsigned long);
--
--	/* link against CONFIG_MMC=m */
--	mmc_cd = symbol_get(mmc_detect_change);
--	if (mmc_cd) {
--		mmc_cd(ptr, msecs_to_jiffies(200));
--		symbol_put(mmc_detect_change);
--	}
-+	mmc_detect_change(ptr, msecs_to_jiffies(200));
- 
- 	msleep(100);	/* debounce */
- 	if (irq == DB1200_SD0_INSERT_INT)
-@@ -446,14 +438,7 @@ static irqreturn_t pb1200_mmc1_cd(int ir
- 
- static irqreturn_t pb1200_mmc1_cdfn(int irq, void *ptr)
- {
--	void (*mmc_cd)(struct mmc_host *, unsigned long);
--
--	/* link against CONFIG_MMC=m */
--	mmc_cd = symbol_get(mmc_detect_change);
--	if (mmc_cd) {
--		mmc_cd(ptr, msecs_to_jiffies(200));
--		symbol_put(mmc_detect_change);
--	}
-+	mmc_detect_change(ptr, msecs_to_jiffies(200));
- 
- 	msleep(100);	/* debounce */
- 	if (irq == PB1200_SD1_INSERT_INT)
---- a/arch/mips/alchemy/devboards/db1300.c
-+++ b/arch/mips/alchemy/devboards/db1300.c
-@@ -17,7 +17,6 @@
- #include <linux/interrupt.h>
- #include <linux/ata_platform.h>
- #include <linux/mmc/host.h>
--#include <linux/module.h>
- #include <linux/mtd/mtd.h>
- #include <linux/mtd/rawnand.h>
- #include <linux/mtd/partitions.h>
-@@ -457,14 +456,7 @@ static irqreturn_t db1300_mmc_cd(int irq
- 
- static irqreturn_t db1300_mmc_cdfn(int irq, void *ptr)
- {
--	void (*mmc_cd)(struct mmc_host *, unsigned long);
--
--	/* link against CONFIG_MMC=m.  We can only be called once MMC core has
--	 * initialized the controller, so symbol_get() should always succeed.
--	 */
--	mmc_cd = symbol_get(mmc_detect_change);
--	mmc_cd(ptr, msecs_to_jiffies(200));
--	symbol_put(mmc_detect_change);
-+	mmc_detect_change(ptr, msecs_to_jiffies(200));
- 
- 	msleep(100);	/* debounce */
- 	if (irq == DB1300_SD1_INSERT_INT)
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -431,11 +431,12 @@ config MMC_WBSD
- 	  If unsure, say N.
- 
- config MMC_AU1X
--	tristate "Alchemy AU1XX0 MMC Card Interface support"
-+	bool "Alchemy AU1XX0 MMC Card Interface support"
- 	depends on MIPS_ALCHEMY
-+	depends on MMC=y
- 	help
- 	  This selects the AMD Alchemy(R) Multimedia card interface.
--	  If you have a Alchemy platform with a MMC slot, say Y or M here.
-+	  If you have a Alchemy platform with a MMC slot, say Y here.
- 
- 	  If unsure, say N.
- 
+ 		lock_page(page);
++		if (unlikely(page->mapping != mapping)) {
++			/* Exclude pages removed from the address space */
++			unlock_page(page);
++			continue;
++		}
+ 		if (!page_has_buffers(page))
+ 			create_empty_buffers(page, i_blocksize(inode), 0);
+ 		unlock_page(page);
 
 
