@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B244F6FBD
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3190DC433C7;
-	Wed, 20 Sep 2023 12:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B4B6FBD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6D2C433C9;
+	Wed, 20 Sep 2023 12:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213189;
-	bh=Eb+gEDOskDKe0NslSx7XvVAHWO+IGeASL6oO+Yw90g0=;
+	s=korg; t=1695213192;
+	bh=kjRhf7dVBxObVSXr3Dn6Nsm9bIgeeq92ARZ91psmndQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykokxaBIOGyon9IIVK3+W+2i6NNc4BpgfJI33wxUoEJgegNt9Ts4D1cyByRR+bMSj
-	 jbfdpJeKez01MFvbf52SvxaaAvZYFfAHYOFvPA0ViGR2prI8u4UcHfsYMjgNEiuWdZ
-	 LP3VVMBV22NtziWEX4S17T6WHw3s7fzn3p+w5rvY=
+	b=Sbc0ayKkcpsxtPF1YXKUdzscIYuqpUWEzEudMTRVxnGUCcPiZC+Sj4ygBJlsIVb0s
+	 FEBxP88Te4aIW9kgPjla4ID1bgPL8OhDxP9Sg76YagJXzsM53LL+03iajRAukPy6W1
+	 psztZAuPYpZUqruGVVGRYa+aA9vJBUOgb+Y99ThM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 194/367] tracing: Fix race issue between cpu buffer write and swap
-Date: Wed, 20 Sep 2023 13:29:31 +0200
-Message-ID: <20230920112903.654286020@linuxfoundation.org>
+Subject: [PATCH 5.4 195/367] phy/rockchip: inno-hdmi: use correct vco_div_5 macro on rk3328
+Date: Wed, 20 Sep 2023 13:29:32 +0200
+Message-ID: <20230920112903.679120463@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,139 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 3163f635b20e9e1fb4659e74f47918c9dddfe64e ]
+[ Upstream commit 644c06dfbd0da713f772abf0a8f8581ac78e6264 ]
 
-Warning happened in rb_end_commit() at code:
-	if (RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing)))
+inno_hdmi_phy_rk3328_clk_set_rate() is using the RK3228 macro
+when configuring vco_div_5 on RK3328.
 
-  WARNING: CPU: 0 PID: 139 at kernel/trace/ring_buffer.c:3142
-	rb_commit+0x402/0x4a0
-  Call Trace:
-   ring_buffer_unlock_commit+0x42/0x250
-   trace_buffer_unlock_commit_regs+0x3b/0x250
-   trace_event_buffer_commit+0xe5/0x440
-   trace_event_buffer_reserve+0x11c/0x150
-   trace_event_raw_event_sched_switch+0x23c/0x2c0
-   __traceiter_sched_switch+0x59/0x80
-   __schedule+0x72b/0x1580
-   schedule+0x92/0x120
-   worker_thread+0xa0/0x6f0
+Fix this by using correct vco_div_5 macro for RK3328.
 
-It is because the race between writing event into cpu buffer and swapping
-cpu buffer through file per_cpu/cpu0/snapshot:
-
-  Write on CPU 0             Swap buffer by per_cpu/cpu0/snapshot on CPU 1
-  --------                   --------
-                             tracing_snapshot_write()
-                               [...]
-
-  ring_buffer_lock_reserve()
-    cpu_buffer = buffer->buffers[cpu]; // 1. Suppose find 'cpu_buffer_a';
-    [...]
-    rb_reserve_next_event()
-      [...]
-
-                               ring_buffer_swap_cpu()
-                                 if (local_read(&cpu_buffer_a->committing))
-                                     goto out_dec;
-                                 if (local_read(&cpu_buffer_b->committing))
-                                     goto out_dec;
-                                 buffer_a->buffers[cpu] = cpu_buffer_b;
-                                 buffer_b->buffers[cpu] = cpu_buffer_a;
-                                 // 2. cpu_buffer has swapped here.
-
-      rb_start_commit(cpu_buffer);
-      if (unlikely(READ_ONCE(cpu_buffer->buffer)
-          != buffer)) { // 3. This check passed due to 'cpu_buffer->buffer'
-        [...]           //    has not changed here.
-        return NULL;
-      }
-                                 cpu_buffer_b->buffer = buffer_a;
-                                 cpu_buffer_a->buffer = buffer_b;
-                                 [...]
-
-      // 4. Reserve event from 'cpu_buffer_a'.
-
-  ring_buffer_unlock_commit()
-    [...]
-    cpu_buffer = buffer->buffers[cpu]; // 5. Now find 'cpu_buffer_b' !!!
-    rb_commit(cpu_buffer)
-      rb_end_commit()  // 6. WARN for the wrong 'committing' state !!!
-
-Based on above analysis, we can easily reproduce by following testcase:
-  ``` bash
-  #!/bin/bash
-
-  dmesg -n 7
-  sysctl -w kernel.panic_on_warn=1
-  TR=/sys/kernel/tracing
-  echo 7 > ${TR}/buffer_size_kb
-  echo "sched:sched_switch" > ${TR}/set_event
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  ```
-
-To fix it, IIUC, we can use smp_call_function_single() to do the swap on
-the target cpu where the buffer is located, so that above race would be
-avoided.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230831132739.4070878-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Fixes: f1affcaaa861 ("tracing: Add snapshot in the per_cpu trace directories")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20230615171005.2251032-2-jonas@kwiboo.se
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index ad0ee4de92485..dd64ce26d48dd 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6791,6 +6791,11 @@ static int tracing_snapshot_open(struct inode *inode, struct file *file)
- 	return ret;
- }
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+index 9ca20c947283d..b0ac1d3ee3905 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+@@ -790,8 +790,8 @@ static int inno_hdmi_phy_rk3328_clk_set_rate(struct clk_hw *hw,
+ 			 RK3328_PRE_PLL_POWER_DOWN);
  
-+static void tracing_swap_cpu_buffer(void *tr)
-+{
-+	update_max_tr_single((struct trace_array *)tr, current, smp_processor_id());
-+}
-+
- static ssize_t
- tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 		       loff_t *ppos)
-@@ -6849,13 +6854,15 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 			ret = tracing_alloc_snapshot_instance(tr);
- 		if (ret < 0)
- 			break;
--		local_irq_disable();
- 		/* Now, we're going to swap */
--		if (iter->cpu_file == RING_BUFFER_ALL_CPUS)
-+		if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
-+			local_irq_disable();
- 			update_max_tr(tr, current, smp_processor_id(), NULL);
--		else
--			update_max_tr_single(tr, current, iter->cpu_file);
--		local_irq_enable();
-+			local_irq_enable();
-+		} else {
-+			smp_call_function_single(iter->cpu_file, tracing_swap_cpu_buffer,
-+						 (void *)tr, 1);
-+		}
- 		break;
- 	default:
- 		if (tr->allocated_snapshot) {
+ 	/* Configure pre-pll */
+-	inno_update_bits(inno, 0xa0, RK3228_PCLK_VCO_DIV_5_MASK,
+-			 RK3228_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
++	inno_update_bits(inno, 0xa0, RK3328_PCLK_VCO_DIV_5_MASK,
++			 RK3328_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
+ 	inno_write(inno, 0xa1, RK3328_PRE_PLL_PRE_DIV(cfg->prediv));
+ 
+ 	val = RK3328_SPREAD_SPECTRUM_MOD_DISABLE;
 -- 
 2.40.1
 
