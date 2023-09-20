@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190122AB29
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B066C433CA;
-	Wed, 20 Sep 2023 12:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CEC30FAB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B06C433CA;
+	Wed, 20 Sep 2023 12:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211344;
-	bh=FtHNR7RSxJcBj+E7JBmCUyQRIGReUr6MdwWzJXw96pk=;
+	s=korg; t=1695211347;
+	bh=vJbXT4wHUpZZL0do69IKhxIdSxiB+tXXi1ciBto6Zxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCekj3RSnZlRaEJdcpRb2lk99MFSuWLBW40rcoSMAEH0r5gBdGeG4S7el9zeGY7my
-	 v89sbEQpYv3EKGTuw2zBYZc9wzjKt41amxEoHL1UXm+60CLBR0eZbNQUnF8zGrWCoR
-	 TaI6wlavlS49HQ9/Ab8/91WwEpqYm3raMpu4BPSc=
+	b=DNxqFArrLPO15Vfzx/b55KrbaQYolkOremj6gkY0Q7fRO8c87Ty51t0dHbEmbCMaZ
+	 MC22ylEi/7e/w8o1uFimH6wqjTwbnsg6oTrwWh3NvgY4bEvpr/AvJZO0RSL+YnWczL
+	 UQEPoaSYTzVjWPyXvYf7VDGd7aL7L7oEMRKgz6Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 059/186] of: unittest: fix null pointer dereferencing in of_unittest_find_node_by_name()
-Date: Wed, 20 Sep 2023 13:29:22 +0200
-Message-ID: <20230920112839.029631955@linuxfoundation.org>
+Subject: [PATCH 4.14 060/186] smackfs: Prevent underflow in smk_set_cipso()
+Date: Wed, 20 Sep 2023 13:29:23 +0200
+Message-ID: <20230920112839.060802111@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,71 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d6ce4f0ea19c32f10867ed93d8386924326ab474 ]
+[ Upstream commit 3ad49d37cf5759c3b8b68d02e3563f633d9c1aee ]
 
-when kmalloc() fail to allocate memory in kasprintf(), name
-or full_name will be NULL, strcmp() will cause
-null pointer dereference.
+There is a upper bound to "catlen" but no lower bound to prevent
+negatives.  I don't see that this necessarily causes a problem but we
+may as well be safe.
 
-Fixes: 0d638a07d3a1 ("of: Convert to using %pOF instead of full_name")
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230727080246.519539-1-ruanjinjie@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ security/smack/smackfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 55c98f119df22..89d1011d5b327 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -51,7 +51,7 @@ static void __init of_unittest_find_node_by_name(void)
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index a9c516362170a..61e734baa332a 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -923,7 +923,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
+ 	}
  
- 	np = of_find_node_by_path("/testcase-data");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find /testcase-data failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -62,14 +62,14 @@ static void __init of_unittest_find_node_by_name(void)
+ 	ret = sscanf(rule, "%d", &catlen);
+-	if (ret != 1 || catlen > SMACK_CIPSO_MAXCATNUM)
++	if (ret != 1 || catlen < 0 || catlen > SMACK_CIPSO_MAXCATNUM)
+ 		goto out;
  
- 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find /testcase-data/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
- 
- 	np = of_find_node_by_path("testcase-alias");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find testcase-alias failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -80,7 +80,7 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("testcase-alias/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find testcase-alias/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -966,6 +966,8 @@ static void attach_node_and_children(struct device_node *np)
- 	const char *full_name;
- 
- 	full_name = kasprintf(GFP_KERNEL, "%pOF", np);
-+	if (!full_name)
-+		return;
- 
- 	if (!strcmp(full_name, "/__local_fixups__") ||
- 	    !strcmp(full_name, "/__fixups__")) {
+ 	if (format == SMK_FIXED24_FMT &&
 -- 
 2.40.1
 
