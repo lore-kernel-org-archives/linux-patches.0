@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC7918658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661F2C433C8;
-	Wed, 20 Sep 2023 11:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F53218658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054D9C433C9;
+	Wed, 20 Sep 2023 11:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210638;
-	bh=DAf19xp33GLkVxVRLMmh7svB1/lqSFIiE581PC4hrog=;
+	s=korg; t=1695210641;
+	bh=NXohepC+KGVw4vyH6K34MiohhwvQH8eweLcnuGV4JTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOV5Kh0jNNVxNx6kSb5JymgmapKWDrANtgBk35VsUg1juX9WY+6oEabCHT0olODcE
-	 ptBMZfnrPUfU1/M6Q7JxwiBQKO5M5HDOso0hNNhJghvCWA/BDn0+QFS9EHAzS5JKtx
-	 SC32xC3ukNQgUfuADdXUvj/zuKDxYkiDP7uVgYdU=
+	b=GUywThhDT32c5V98JYAxvvSeGaLmHTrO0pdPkGuA6Pk64Sd0eCMezH8NRDMhQsr0V
+	 ebn8+pkp/negR6yr0BO82Ewg7JE/7Ynpy1BQPp7Up3pG452rDojUmYypcmsKbioJ4l
+	 NWuDJZpH9+DKxL+6qTDSDLkDXvSMIe9k1SFW8+94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Chenzhou Feng <chenzhoux.feng@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 149/211] PM: hibernate: Fix the exclusive get block device in test_resume mode
-Date: Wed, 20 Sep 2023 13:29:53 +0200
-Message-ID: <20230920112850.484315193@linuxfoundation.org>
+Subject: [PATCH 6.5 150/211] selftests: tracing: Fix to unmount tracefs for recovering environment
+Date: Wed, 20 Sep 2023 13:29:54 +0200
+Message-ID: <20230920112850.519560568@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,85 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 148b6f4cc3920e563094540fe1a12d00d3bbccae ]
+[ Upstream commit 7e021da80f48582171029714f8a487347f29dddb ]
 
-Commit 5904de0d735b ("PM: hibernate: Do not get block device exclusively
-in test_resume mode") fixes a hibernation issue under test_resume mode.
-That commit is supposed to open the block device in non-exclusive mode
-when in test_resume. However the code does the opposite, which is against
-its description.
+Fix to unmount the tracefs if the ftracetest mounted it for recovering
+system environment. If the tracefs is already mounted, this does nothing.
 
-In summary, the swap device is only opened exclusively by swsusp_check()
-with its corresponding *close(), and must be in non test_resume mode.
-This is to avoid the race condition that different processes scribble the
-device at the same time. All the other cases should use non-exclusive mode.
-
-Fix it by really disabling exclusive mode under test_resume.
-
-Fixes: 5904de0d735b ("PM: hibernate: Do not get block device exclusively in test_resume mode")
-Closes: https://lore.kernel.org/lkml/000000000000761f5f0603324129@google.com/
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Tested-by: Chenzhou Feng <chenzhoux.feng@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/all/29fce076-746c-4650-8358-b4e0fa215cf7@sirena.org.uk/
+Fixes: cbd965bde74c ("ftrace/selftests: Return the skip code when tracing directory not configured in kernel")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/hibernate.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/ftrace/ftracetest | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index 2b4a946a6ff5c..8d35b9f9aaa3f 100644
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -786,9 +786,9 @@ int hibernate(void)
- 	unlock_device_hotplug();
- 	if (snapshot_test) {
- 		pm_pr_dbg("Checking hibernation image\n");
--		error = swsusp_check(snapshot_test);
-+		error = swsusp_check(false);
- 		if (!error)
--			error = load_image_and_restore(snapshot_test);
-+			error = load_image_and_restore(false);
- 	}
- 	thaw_processes();
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index cb5f18c06593d..d68264a5f3f03 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -31,6 +31,9 @@ err_ret=1
+ # kselftest skip code is 4
+ err_skip=4
  
-@@ -945,14 +945,14 @@ static int software_resume(void)
- 	pm_pr_dbg("Looking for hibernation image.\n");
++# umount required
++UMOUNT_DIR=""
++
+ # cgroup RT scheduling prevents chrt commands from succeeding, which
+ # induces failures in test wakeup tests.  Disable for the duration of
+ # the tests.
+@@ -45,6 +48,9 @@ setup() {
  
- 	mutex_lock(&system_transition_mutex);
--	error = swsusp_check(false);
-+	error = swsusp_check(true);
- 	if (error)
- 		goto Unlock;
- 
- 	/* The snapshot device should not be opened while we're running */
- 	if (!hibernate_acquire()) {
- 		error = -EBUSY;
--		swsusp_close(false);
-+		swsusp_close(true);
- 		goto Unlock;
- 	}
- 
-@@ -973,7 +973,7 @@ static int software_resume(void)
- 		goto Close_Finish;
- 	}
- 
--	error = load_image_and_restore(false);
-+	error = load_image_and_restore(true);
- 	thaw_processes();
-  Finish:
- 	pm_notifier_call_chain(PM_POST_RESTORE);
-@@ -987,7 +987,7 @@ static int software_resume(void)
- 	pm_pr_dbg("Hibernation image not present or could not be loaded.\n");
- 	return error;
-  Close_Finish:
--	swsusp_close(false);
-+	swsusp_close(true);
- 	goto Finish;
+ cleanup() {
+   echo $sched_rt_runtime_orig > $sched_rt_runtime
++  if [ -n "${UMOUNT_DIR}" ]; then
++    umount ${UMOUNT_DIR} ||:
++  fi
  }
  
+ errexit() { # message
+@@ -160,11 +166,13 @@ if [ -z "$TRACING_DIR" ]; then
+ 	    mount -t tracefs nodev /sys/kernel/tracing ||
+ 	      errexit "Failed to mount /sys/kernel/tracing"
+ 	    TRACING_DIR="/sys/kernel/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	# If debugfs exists, then so does /sys/kernel/debug
+ 	elif [ -d "/sys/kernel/debug" ]; then
+ 	    mount -t debugfs nodev /sys/kernel/debug ||
+ 	      errexit "Failed to mount /sys/kernel/debug"
+ 	    TRACING_DIR="/sys/kernel/debug/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	else
+ 	    err_ret=$err_skip
+ 	    errexit "debugfs and tracefs are not configured in this kernel"
 -- 
 2.40.1
 
