@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52651D6A7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548A5C433C8;
-	Wed, 20 Sep 2023 11:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FEA1D6A7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F213C433CB;
+	Wed, 20 Sep 2023 11:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211049;
-	bh=BvLEHjiKCJjgILmXdFdrGGWgR/wtB6GM5BXqMOOoZmI=;
+	s=korg; t=1695211052;
+	bh=WkWcHHdcjTdQ3W/bmYoucZoYWfx7OybnLojx5uqGAdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVQ6Qet/21xEUkxeLMpkgy6QQeorzYQye49vGE9stoQRlfJRVIDrNdABiEHTj5bSG
-	 40UqNfj/vuMZg9++/lUM02c7BKhrDkVrfmYBDePhAxP6rwp3fBXvrgLI7A0J0GH96o
-	 DQIRMra4IKG0n3EsTtexPsSAM8+VBnwJnFl3M4z0=
+	b=hofS2Vpxg++39RatqIgdY+O3Pv9sPYmMtdr5dCNDbbos1hyGInoqfOQdE000qnqA1
+	 5aCSg24BikYPrhYLbzgA9Xb61l/8QGXUsVWCFZvoyYuT56kNbnrgV1c/Q7hcbKSCXc
+	 y4jewSCT4sQgHVYV4LayqRKPxXFhwn2gllQ8oS3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/139] misc: fastrpc: Fix incorrect DMA mapping unmap request
-Date: Wed, 20 Sep 2023 13:30:24 +0200
-Message-ID: <20230920112838.970698785@linuxfoundation.org>
+Subject: [PATCH 6.1 091/139] MIPS: Use "grep -E" instead of "egrep"
+Date: Wed, 20 Sep 2023 13:30:25 +0200
+Message-ID: <20230920112839.006159435@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,58 +40,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit a2cb9cd6a3949a3804ad9fd7da234892ce6719ec ]
+[ Upstream commit d42f0c6ad502c9f612410e125ebdf290cce8bdc3 ]
 
-Scatterlist table is obtained during map create request and the same
-table is used for DMA mapping unmap. In case there is any failure
-while getting the sg_table, ERR_PTR is returned instead of sg_table.
+The latest version of grep claims the egrep is now obsolete so the build
+now contains warnings that look like:
+	egrep: warning: egrep is obsolescent; using grep -E
+fix this up by moving the related file to use "grep -E" instead.
 
-When the map is getting freed, there is only a non-NULL check of
-sg_table which will also be true in case failure was returned instead
-of sg_table. This would result in improper unmap request. Add proper
-check before setting map table to avoid bad unmap request.
+Here are the steps to install the latest grep:
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230811115643.38578-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
+  tar xf grep-3.8.tar.gz
+  cd grep-3.8 && ./configure && make
+  sudo make install
+  export PATH=/usr/local/bin:$PATH
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 4fe4a6374c4d ("MIPS: Only fiddle with CHECKFLAGS if `need-compiler'")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/mips/Makefile      | 2 +-
+ arch/mips/vdso/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index e9291694922bc..4c51d216f3d43 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -711,6 +711,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-+	struct sg_table *table;
- 	int err = 0;
+diff --git a/arch/mips/Makefile b/arch/mips/Makefile
+index ee8f47aef98b3..dd6486097e1dc 100644
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -352,7 +352,7 @@ KBUILD_LDFLAGS		+= -m $(ld-emul)
  
- 	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
-@@ -736,11 +737,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 		goto attach_err;
- 	}
+ ifdef need-compiler
+ CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
+-	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
++	grep -E -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
+ 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
+ endif
  
--	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
--	if (IS_ERR(map->table)) {
--		err = PTR_ERR(map->table);
-+	table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
-+	if (IS_ERR(table)) {
-+		err = PTR_ERR(table);
- 		goto map_err;
- 	}
-+	map->table = table;
+diff --git a/arch/mips/vdso/Makefile b/arch/mips/vdso/Makefile
+index f72658b3a53f7..1f7d5c6c10b08 100644
+--- a/arch/mips/vdso/Makefile
++++ b/arch/mips/vdso/Makefile
+@@ -71,7 +71,7 @@ KCOV_INSTRUMENT := n
  
- 	map->phys = sg_dma_address(map->table->sgl);
- 	map->phys += ((u64)fl->sctx->sid << 32);
+ # Check that we don't have PIC 'jalr t9' calls left
+ quiet_cmd_vdso_mips_check = VDSOCHK $@
+-      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | egrep -h "jalr.*t9" > /dev/null; \
++      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | grep -E -h "jalr.*t9" > /dev/null; \
+ 		       then (echo >&2 "$@: PIC 'jalr t9' calls are not supported"; \
+ 			     rm -f $@; /bin/false); fi
+ 
 -- 
 2.40.1
 
