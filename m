@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED222E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88582C433D9;
-	Wed, 20 Sep 2023 12:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C207E2E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:14:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45136C433C8;
+	Wed, 20 Sep 2023 12:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212047;
-	bh=jKTphTkQ8gUMUsLxhGHhGdvRycfalJTHShEqrI2mMJ4=;
+	s=korg; t=1695212050;
+	bh=fs/BMjMQXHEz1/LH3FhXSSbhdnaovZLUhlMH+6/+BsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKaiaIT2EpRrDu66wQb/tuwm5/M/4vm9pfil7nqiu/BrUUjWH9O6SjnYl+bZYpstf
-	 UuB3kGp+OFavsgrEf+tcU7voaTOJ4MFFJZbWdJ02kE5PGL9dPV/+EN4qYO7lvVagCF
-	 swWGqUNBd+Bm3BkBsnvLRIr6nw06stBG8Nt3VUlA=
+	b=ey/ooXWLssQ4uWc5dojofklhkg+W7Q3EEvbU/aWl+IUlk1uwW490pZL+KIkr0+fmC
+	 HSDarSRut1ackkhB8rV57VzTdAB8ui0eDmbcab2QtW7iLcmc+uegR2SB9BaAUPInYm
+	 Al8eDuh8KqJvuElC2p2VB59iLs6vv3WQ2brdZtXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 132/273] media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()
-Date: Wed, 20 Sep 2023 13:29:32 +0200
-Message-ID: <20230920112850.594845479@linuxfoundation.org>
+Subject: [PATCH 4.19 133/273] drivers: usb: smsusb: fix error handling code in smsusb_init_device
+Date: Wed, 20 Sep 2023 13:29:33 +0200
+Message-ID: <20230920112850.626587121@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,67 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit d7b13edd4cb4bfa335b6008ab867ac28582d3e5c ]
+[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
 
-If fwnode_graph_get_remote_endpoint() fails, 'fwnode' is known to be NULL,
-so fwnode_handle_put() is a no-op.
+The previous commit 4b208f8b561f ("[media] siano: register media controller
+earlier")moves siano_media_device_register before smscore_register_device,
+and adds corresponding error handling code if smscore_register_device
+fails. However, it misses the following error handling code of
+smsusb_init_device.
 
-Release the reference taken from a previous fwnode_graph_get_port_parent()
-call instead.
+Fix this by moving error handling code at the end of smsusb_init_device
+and adding a goto statement in the following error handling parts.
 
-Also handle fwnode_graph_get_port_parent() failures.
-
-In order to fix these issues, add an error handling path to the function
-and the needed gotos.
-
-Fixes: ca50c197bd96 ("[media] v4l: fwnode: Support generic fwnode for parsing standardised properties")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
-index 14530fddbef47..95079229a772b 100644
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -289,18 +289,28 @@ int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
- 	fwnode_graph_parse_endpoint(fwnode, &fwep);
- 	link->local_port = fwep.port;
- 	link->local_node = fwnode_graph_get_port_parent(fwnode);
-+	if (!link->local_node)
-+		return -ENOLINK;
+diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
+index cd706874899c3..62e4fecc57d9c 100644
+--- a/drivers/media/usb/siano/smsusb.c
++++ b/drivers/media/usb/siano/smsusb.c
+@@ -467,12 +467,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_register_device(&params, &dev->coredev, 0, mdev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
+-		smsusb_term_device(intf);
+-#ifdef CONFIG_MEDIA_CONTROLLER_DVB
+-		media_device_unregister(mdev);
+-#endif
+-		kfree(mdev);
+-		return rc;
++		goto err_unregister_device;
+ 	}
  
- 	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
--	if (!fwnode) {
--		fwnode_handle_put(fwnode);
--		return -ENOLINK;
--	}
-+	if (!fwnode)
-+		goto err_put_local_node;
+ 	smscore_set_board_id(dev->coredev, board_id);
+@@ -489,8 +484,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smsusb_start_streaming(dev);
+ 	if (rc < 0) {
+ 		pr_err("smsusb_start_streaming(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
  
- 	fwnode_graph_parse_endpoint(fwnode, &fwep);
- 	link->remote_port = fwep.port;
- 	link->remote_node = fwnode_graph_get_port_parent(fwnode);
-+	if (!link->remote_node)
-+		goto err_put_remote_endpoint;
+ 	dev->state = SMSUSB_ACTIVE;
+@@ -498,13 +492,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_start_device(dev->coredev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_start_device(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
  
- 	return 0;
+ 	pr_debug("device 0x%p created\n", dev);
+ 
+ 	return rc;
 +
-+err_put_remote_endpoint:
-+	fwnode_handle_put(fwnode);
-+
-+err_put_local_node:
-+	fwnode_handle_put(link->local_node);
-+
-+	return -ENOLINK;
++err_unregister_device:
++	smsusb_term_device(intf);
++#ifdef CONFIG_MEDIA_CONTROLLER_DVB
++	media_device_unregister(mdev);
++#endif
++	kfree(mdev);
++	return rc;
  }
- EXPORT_SYMBOL_GPL(v4l2_fwnode_parse_link);
  
+ static int smsusb_probe(struct usb_interface *intf,
 -- 
 2.40.1
 
