@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517A628E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB13EC433C7;
-	Wed, 20 Sep 2023 11:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBF28E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774DCC433C8;
+	Wed, 20 Sep 2023 11:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210779;
-	bh=uKXXiU7mmVZBnHMPJZocCfAxv5WulQps9TEbhaV/2OQ=;
+	s=korg; t=1695210781;
+	bh=b0pI8QF9dNR9egM/XNf/eJxNYQU4g8fSrg+p5jwLhpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oh7M21ZAMiWka8UsOsSEKmnXDNXZWCtjNWQOJpHsou4gCpQidkb1IvciqLSRxF4Am
-	 Gn3L7ZMyDN2ukkvlObbyGowfjzrlKWn4IPCQyDGeuKy3aZ+pXscU/TB8iCHRvGR2Hf
-	 QdJX+2eF46LoWZ/UbtZN5HqJE9WZFvvDvR8bqdLo=
+	b=1t7ateqmXeQuDvDZorM7jKd6z7giPhYhVW+MiYnwXbvJfazCc5cM0zB0+nrcbsBZ5
+	 mPsjPjBu5OTiagEbqf60rCUVpqx0TOlPyVea3fPAFbH5e0ZYjehHM47dIqQhxGORWm
+	 Cx13dPL4gxQX+XoTHejMEIHrAYm4ej+ToVoK1Tqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 184/211] tracing/synthetic: Fix order of struct trace_dynamic_info
-Date: Wed, 20 Sep 2023 13:30:28 +0200
-Message-ID: <20230920112851.579736524@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Simon Pilkington <simonp.git@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.5 202/211] drm/radeon: make fence wait in suballocator uninterrruptable
+Date: Wed, 20 Sep 2023 13:30:46 +0200
+Message-ID: <20230920112852.128341215@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -35,99 +34,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit fc52a64416b010c8324e2cb50070faae868521c1 upstream.
+commit dcbad727513d277144aee482b2ffbcd2255c37aa upstream.
 
-To make handling BIG and LITTLE endian better the offset/len of dynamic
-fields of the synthetic events was changed into a structure of:
+Commit 254986e324ad ("drm/radeon: Use the drm suballocation manager implementation.")
+made the fence wait in amdgpu_sa_bo_new() interruptible but there is no
+code to handle an interrupt. This caused the kernel to randomly explode
+in high-VRAM-pressure situations so make it uninterruptible again.
 
- struct trace_dynamic_info {
- #ifdef CONFIG_CPU_BIG_ENDIAN
-	u16	offset;
-	u16	len;
- #else
-	u16	len;
-	u16	offset;
- #endif
- };
-
-to replace the manual changes of:
-
- data_offset = offset & 0xffff;
- data_offest = len << 16;
-
-But if you look closely, the above is:
-
-  <len> << 16 | offset
-
-Which in little endian would be in memory:
-
- offset_lo offset_hi len_lo len_hi
-
-and in big endian:
-
- len_hi len_lo offset_hi offset_lo
-
-Which if broken into a structure would be:
-
- struct trace_dynamic_info {
- #ifdef CONFIG_CPU_BIG_ENDIAN
-	u16	len;
-	u16	offset;
- #else
-	u16	offset;
-	u16	len;
- #endif
- };
-
-Which is the opposite of what was defined.
-
-Fix this and just to be safe also add "__packed".
-
-Link: https://lore.kernel.org/all/20230908154417.5172e343@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230908163929.2c25f3dc@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Tested-by: Sven Schnelle <svens@linux.ibm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: ddeea494a16f3 ("tracing/synthetic: Use union instead of casts")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 254986e324ad ("drm/radeon: Use the drm suballocation manager implementation.")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2769
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+CC: stable@vger.kernel.org # 6.4+
+CC: Simon Pilkington <simonp.git@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230906195517.1345717-1-alexander.deucher@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon_sa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 12f875e9e69a..21ae37e49319 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -62,13 +62,13 @@ void trace_event_printf(struct trace_iterator *iter, const char *fmt, ...);
- /* Used to find the offset and length of dynamic fields in trace events */
- struct trace_dynamic_info {
- #ifdef CONFIG_CPU_BIG_ENDIAN
--	u16	offset;
- 	u16	len;
-+	u16	offset;
- #else
--	u16	len;
- 	u16	offset;
-+	u16	len;
- #endif
--};
-+} __packed;
+--- a/drivers/gpu/drm/radeon/radeon_sa.c
++++ b/drivers/gpu/drm/radeon/radeon_sa.c
+@@ -123,7 +123,7 @@ int radeon_sa_bo_new(struct radeon_sa_ma
+ 		     unsigned int size, unsigned int align)
+ {
+ 	struct drm_suballoc *sa = drm_suballoc_new(&sa_manager->base, size,
+-						   GFP_KERNEL, true, align);
++						   GFP_KERNEL, false, align);
  
- /*
-  * The trace entry - the most basic unit of tracing. This is what
--- 
-2.42.0
-
+ 	if (IS_ERR(sa)) {
+ 		*sa_bo = NULL;
 
 
