@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488702AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45E4C433C7;
-	Wed, 20 Sep 2023 12:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5EE2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FD1C433C7;
+	Wed, 20 Sep 2023 12:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211212;
-	bh=i5CwbQ9hFqvnMq7NRhr9raHAM4+J7JWAsw7+POd0pZY=;
+	s=korg; t=1695211214;
+	bh=EpKiPwjLFOF7EI+/a5iS4+V6XoWVodtXYusZpqGg7ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qa1kzFBx+M5yinArzb4o6XfyUc1vcHj+Rd7s6Cbm5ihsw6lWdWqiABu9+ITWtrkFl
-	 xeEyCzXupGuPkpmOcQtTqcneUupvjoG56TN3P6Oaal5B3D8MCzN0IU/ymnIQE6mpyC
-	 ATLubiI1jAxH97mSsG3cqt05nSAjtLBPiba0fkUM=
+	b=koOowAn06qGKAAYSvmkAbtXFP/v7hsNUw4dP36ctLSfPxFNQhFHJLfz/FFUz3PRrY
+	 eq63QA4ENWcoeqAXNttkiJ4ydruDPMLyuDvMnB5pgakSPuWbs2ABLGgVcWMQVcK6+K
+	 0s0SC1MLjyo+LCFDlhCodogW2gzJNF1alcKqL5PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com,
+	syzbot+cdfcae656bac88ba0e2d@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 010/186] nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
-Date: Wed, 20 Sep 2023 13:28:33 +0200
-Message-ID: <20230920112837.221545420@linuxfoundation.org>
+Subject: [PATCH 4.14 011/186] nilfs2: fix WARNING in mark_buffer_dirty due to discarded buffer reuse
+Date: Wed, 20 Sep 2023 13:28:34 +0200
+Message-ID: <20230920112837.263015836@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -42,46 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit f83913f8c5b882a312e72b7669762f8a5c9385e4 upstream.
+commit cdaac8e7e5a059f9b5e816cda257f08d0abffacd upstream.
 
-A syzbot stress test reported that create_empty_buffers() called from
-nilfs_lookup_dirty_data_buffers() can cause a general protection fault.
+A syzbot stress test using a corrupted disk image reported that
+mark_buffer_dirty() called from __nilfs_mark_inode_dirty() or
+nilfs_palloc_commit_alloc_entry() may output a kernel warning, and can
+panic if the kernel is booted with panic_on_warn.
 
-Analysis using its reproducer revealed that the back reference "mapping"
-from a page/folio has been changed to NULL after dirty page/folio gang
-lookup in nilfs_lookup_dirty_data_buffers().
+This is because nilfs2 keeps buffer pointers in local structures for some
+metadata and reuses them, but such buffers may be forcibly discarded by
+nilfs_clear_dirty_page() in some critical situations.
 
-Fix this issue by excluding pages/folios from being collected if, after
-acquiring a lock on each page/folio, its back reference "mapping" differs
-from the pointer to the address space struct that held the page/folio.
+This issue is reported to appear after commit 28a65b49eb53 ("nilfs2: do
+not write dirty data after degenerating to read-only"), but the issue has
+potentially existed before.
 
-Link: https://lkml.kernel.org/r/20230805132038.6435-1-konishi.ryusuke@gmail.com
+Fix this issue by checking the uptodate flag when attempting to reuse an
+internally held buffer, and reloading the metadata instead of reusing the
+buffer if the flag was lost.
+
+Link: https://lkml.kernel.org/r/20230818131804.7758-1-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/0000000000002930a705fc32b231@google.com
+Reported-by: syzbot+cdfcae656bac88ba0e2d@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000003da75f05fdeffd12@google.com
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
+Cc: <stable@vger.kernel.org> # 3.10+
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-fs/nilfs2/segment.c | 5 +++++
- fs/nilfs2/segment.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/alloc.c |    3 ++-
+ fs/nilfs2/inode.c |    7 +++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -743,6 +743,11 @@ static size_t nilfs_lookup_dirty_data_bu
- 			break;
+--- a/fs/nilfs2/alloc.c
++++ b/fs/nilfs2/alloc.c
+@@ -214,7 +214,8 @@ static int nilfs_palloc_get_block(struct
+ 	int ret;
  
- 		lock_page(page);
-+		if (unlikely(page->mapping != mapping)) {
-+			/* Exclude pages removed from the address space */
-+			unlock_page(page);
-+			continue;
-+		}
- 		if (!page_has_buffers(page))
- 			create_empty_buffers(page, i_blocksize(inode), 0);
- 		unlock_page(page);
+ 	spin_lock(lock);
+-	if (prev->bh && blkoff == prev->blkoff) {
++	if (prev->bh && blkoff == prev->blkoff &&
++	    likely(buffer_uptodate(prev->bh))) {
+ 		get_bh(prev->bh);
+ 		*bhp = prev->bh;
+ 		spin_unlock(lock);
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -1045,7 +1045,7 @@ int nilfs_load_inode_block(struct inode
+ 	int err;
+ 
+ 	spin_lock(&nilfs->ns_inode_lock);
+-	if (ii->i_bh == NULL) {
++	if (ii->i_bh == NULL || unlikely(!buffer_uptodate(ii->i_bh))) {
+ 		spin_unlock(&nilfs->ns_inode_lock);
+ 		err = nilfs_ifile_get_inode_block(ii->i_root->ifile,
+ 						  inode->i_ino, pbh);
+@@ -1054,7 +1054,10 @@ int nilfs_load_inode_block(struct inode
+ 		spin_lock(&nilfs->ns_inode_lock);
+ 		if (ii->i_bh == NULL)
+ 			ii->i_bh = *pbh;
+-		else {
++		else if (unlikely(!buffer_uptodate(ii->i_bh))) {
++			__brelse(ii->i_bh);
++			ii->i_bh = *pbh;
++		} else {
+ 			brelse(*pbh);
+ 			*pbh = ii->i_bh;
+ 		}
 
 
