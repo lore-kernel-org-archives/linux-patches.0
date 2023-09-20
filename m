@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4B52AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6302FC433C9;
-	Wed, 20 Sep 2023 11:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC312AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20731C433D9;
+	Wed, 20 Sep 2023 11:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211057;
-	bh=mZMihZ6UIDZE9mNoIC6fS9yLGbbZMYXYF/wFnlIqKWQ=;
+	s=korg; t=1695211060;
+	bh=FA/Ru3aAo8BlaWQm0jspi2p+fova6ZFpDnHcVn/00vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVatUTxlRmdFfXI10/OSV3twoAjwqf88bqTLPpcBi4qYQt3Yu0uFHYo1OK4cOieuy
-	 4wMgF/O9bIoaUlZWm8Q+g3UGoX/iWV2TuwMD8bbmQzRpzNJ19ikTvVfU+PDspxTBMc
-	 5y0Sb9g1xheabccMBYbDVej+pJJ4CcpB2ROF0wLQ=
+	b=EqlZEi2R8X07ydq9wH2knktuOnNhIAya7o+vb1GNXvDKLPzGG3xgFwjshCNiejIxl
+	 fG5axFmaX2IAC3a1QmdnNyfF6mQhlXCzYXoe+W7GUoWzS8UK0KEHl3DPjkv9hg84n0
+	 aeVSu3hOmLSW7tgEuSTV9CYmtDzgjJ0mpxjPeRho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Li Yang <leoyang.li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/139] btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
-Date: Wed, 20 Sep 2023 13:30:27 +0200
-Message-ID: <20230920112839.073200237@linuxfoundation.org>
+Subject: [PATCH 6.1 076/139] usb: gadget: fsl_qe_udc: validate endpoint index for ch9 udc
+Date: Wed, 20 Sep 2023 13:30:10 +0200
+Message-ID: <20230920112838.509345595@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,63 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 6bfe3959b0e7a526f5c64747801a8613f002f05a ]
+[ Upstream commit ce9daa2efc0872a9a68ea51dc8000df05893ef2e ]
 
-The function btrfs_validate_super() should verify the metadata_uuid in
-the provided superblock argument. Because, all its callers expect it to
-do that.
+We should verify the bound of the array to assure that host
+may not manipulate the index to point past endpoint array.
 
-Such as in the following stacks:
-
-  write_all_supers()
-   sb = fs_info->super_for_commit;
-   btrfs_validate_write_super(.., sb)
-     btrfs_validate_super(.., sb, ..)
-
-  scrub_one_super()
-	btrfs_validate_super(.., sb, ..)
-
-And
-   check_dev_super()
-	btrfs_validate_super(.., sb, ..)
-
-However, it currently verifies the fs_info::super_copy::metadata_uuid
-instead.  Fix this using the correct metadata_uuid in the superblock
-argument.
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Acked-by: Li Yang <leoyang.li@nxp.com>
+Link: https://lore.kernel.org/r/20230628081511.186850-1-make_ruc2021@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/udc/fsl_qe_udc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 64daae693afd1..c44f1fcc19097 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2728,13 +2728,11 @@ int btrfs_validate_super(struct btrfs_fs_info *fs_info,
- 		ret = -EINVAL;
- 	}
- 
--	if (btrfs_fs_incompat(fs_info, METADATA_UUID) &&
--	    memcmp(fs_info->fs_devices->metadata_uuid,
--		   fs_info->super_copy->metadata_uuid, BTRFS_FSID_SIZE)) {
-+	if (memcmp(fs_info->fs_devices->metadata_uuid, btrfs_sb_fsid_ptr(sb),
-+		   BTRFS_FSID_SIZE) != 0) {
- 		btrfs_err(fs_info,
- "superblock metadata_uuid doesn't match metadata uuid of fs_devices: %pU != %pU",
--			fs_info->super_copy->metadata_uuid,
--			fs_info->fs_devices->metadata_uuid);
-+			  btrfs_sb_fsid_ptr(sb), fs_info->fs_devices->metadata_uuid);
- 		ret = -EINVAL;
- 	}
+diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
+index 3b1cc8fa30c83..f4e5cbd193b7b 100644
+--- a/drivers/usb/gadget/udc/fsl_qe_udc.c
++++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
+@@ -1959,6 +1959,8 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 	} else if ((request_type & USB_RECIP_MASK) == USB_RECIP_ENDPOINT) {
+ 		/* Get endpoint status */
+ 		int pipe = index & USB_ENDPOINT_NUMBER_MASK;
++		if (pipe >= USB_MAX_ENDPOINTS)
++			goto stall;
+ 		struct qe_ep *target_ep = &udc->eps[pipe];
+ 		u16 usep;
  
 -- 
 2.40.1
