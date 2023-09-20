@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F102AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09175C433C8;
-	Wed, 20 Sep 2023 11:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3500F2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC01C433C7;
+	Wed, 20 Sep 2023 11:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211095;
-	bh=MQUXiiPNgcEg3uvYIuuSMKX9plBvKb/y9cvqNc31IFw=;
+	s=korg; t=1695211098;
+	bh=Uejn4nY77WbVDbTyG+C051pP3g8XeSvBAeoMt38G8Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7aiV6+ptYNON+OrILdEAmXh8Z/qIzU0a2Td0VI0jWaBaM3E2OH4flL8DZUfa9tEG
-	 SCg1HUyYVdJ7hNOsFSZntRGmgWmEoFy0pk5e6Pd5q531pnIT8KHChBwGqAzlpmpfun
-	 9BDpiL0Ohd4zdjfTndpgsT2DTCyJknvEvwQCjeAs=
+	b=xnSitoSMIavbQSGmKX/JHcWqE4UOKz/9JUSJenJTX4Hlvec7aaWA67Y5AQVgepzvG
+	 OEFC/x/Q/exDJXhgnv4gXtCHiLOd1qSJzvbmHZzL1EP8D4Eucqp/IcnA6JOaajSUhM
+	 G/uQbgqIthfi5X/CG4fE3UShuS9K470epIv7b0JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lu <aaron.lu@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Konstantin Shelekhin <k.shelekhin@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/139] x86/boot/compressed: Reserve more memory for page tables
-Date: Wed, 20 Sep 2023 13:30:39 +0200
-Message-ID: <20230920112839.481421024@linuxfoundation.org>
+Subject: [PATCH 6.1 078/139] scsi: target: iscsi: Fix buffer overflow in lio_target_nacl_info_show()
+Date: Wed, 20 Sep 2023 13:30:12 +0200
+Message-ID: <20230920112838.573855031@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,121 +40,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Konstantin Shelekhin <k.shelekhin@yadro.com>
 
-[ Upstream commit f530ee95b72e77b09c141c4b1a4b94d1199ffbd9 ]
+[ Upstream commit 801f287c93ff95582b0a2d2163f12870a2f076d4 ]
 
-The decompressor has a hard limit on the number of page tables it can
-allocate. This limit is defined at compile-time and will cause boot
-failure if it is reached.
+The function lio_target_nacl_info_show() uses sprintf() in a loop to print
+details for every iSCSI connection in a session without checking for the
+buffer length. With enough iSCSI connections it's possible to overflow the
+buffer provided by configfs and corrupt the memory.
 
-The kernel is very strict and calculates the limit precisely for the
-worst-case scenario based on the current configuration. However, it is
-easy to forget to adjust the limit when a new use-case arises. The
-worst-case scenario is rarely encountered during sanity checks.
+This patch replaces sprintf() with sysfs_emit_at() that checks for buffer
+boundries.
 
-In the case of enabling 5-level paging, a use-case was overlooked. The
-limit needs to be increased by one to accommodate the additional level.
-This oversight went unnoticed until Aaron attempted to run the kernel
-via kexec with 5-level paging and unaccepted memory enabled.
-
-Update wost-case calculations to include 5-level paging.
-
-To address this issue, let's allocate some extra space for page tables.
-128K should be sufficient for any use-case. The logic can be simplified
-by using a single value for all kernel configurations.
-
-[ Also add a warning, should this memory run low - by Dave Hansen. ]
-
-Fixes: 34bbb0009f3b ("x86/boot/compressed: Enable 5-level paging during decompression stage")
-Reported-by: Aaron Lu <aaron.lu@intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230915070221.10266-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Konstantin Shelekhin <k.shelekhin@yadro.com>
+Link: https://lore.kernel.org/r/20230722152657.168859-2-k.shelekhin@yadro.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/ident_map_64.c |  8 +++++
- arch/x86/include/asm/boot.h             | 45 +++++++++++++++++--------
- 2 files changed, 39 insertions(+), 14 deletions(-)
+ drivers/target/iscsi/iscsi_target_configfs.c | 54 ++++++++++----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
-index 321a5011042d4..b4155273df891 100644
---- a/arch/x86/boot/compressed/ident_map_64.c
-+++ b/arch/x86/boot/compressed/ident_map_64.c
-@@ -67,6 +67,14 @@ static void *alloc_pgt_page(void *context)
- 		return NULL;
- 	}
+diff --git a/drivers/target/iscsi/iscsi_target_configfs.c b/drivers/target/iscsi/iscsi_target_configfs.c
+index 5d0f51822414e..c142a67dc7cc2 100644
+--- a/drivers/target/iscsi/iscsi_target_configfs.c
++++ b/drivers/target/iscsi/iscsi_target_configfs.c
+@@ -533,102 +533,102 @@ static ssize_t lio_target_nacl_info_show(struct config_item *item, char *page)
+ 	spin_lock_bh(&se_nacl->nacl_sess_lock);
+ 	se_sess = se_nacl->nacl_sess;
+ 	if (!se_sess) {
+-		rb += sprintf(page+rb, "No active iSCSI Session for Initiator"
++		rb += sysfs_emit_at(page, rb, "No active iSCSI Session for Initiator"
+ 			" Endpoint: %s\n", se_nacl->initiatorname);
+ 	} else {
+ 		sess = se_sess->fabric_sess_ptr;
  
-+	/* Consumed more tables than expected? */
-+	if (pages->pgt_buf_offset == BOOT_PGT_SIZE_WARN) {
-+		debug_putstr("pgt_buf running low in " __FILE__ "\n");
-+		debug_putstr("Need to raise BOOT_PGT_SIZE?\n");
-+		debug_putaddr(pages->pgt_buf_offset);
-+		debug_putaddr(pages->pgt_buf_size);
-+	}
-+
- 	entry = pages->pgt_buf + pages->pgt_buf_offset;
- 	pages->pgt_buf_offset += PAGE_SIZE;
+-		rb += sprintf(page+rb, "InitiatorName: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorName: %s\n",
+ 			sess->sess_ops->InitiatorName);
+-		rb += sprintf(page+rb, "InitiatorAlias: %s\n",
++		rb += sysfs_emit_at(page, rb, "InitiatorAlias: %s\n",
+ 			sess->sess_ops->InitiatorAlias);
  
-diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
-index 9191280d9ea31..215d37f7dde8a 100644
---- a/arch/x86/include/asm/boot.h
-+++ b/arch/x86/include/asm/boot.h
-@@ -40,23 +40,40 @@
- #ifdef CONFIG_X86_64
- # define BOOT_STACK_SIZE	0x4000
+-		rb += sprintf(page+rb,
++		rb += sysfs_emit_at(page, rb,
+ 			      "LIO Session ID: %u   ISID: 0x%6ph  TSIH: %hu  ",
+ 			      sess->sid, sess->isid, sess->tsih);
+-		rb += sprintf(page+rb, "SessionType: %s\n",
++		rb += sysfs_emit_at(page, rb, "SessionType: %s\n",
+ 				(sess->sess_ops->SessionType) ?
+ 				"Discovery" : "Normal");
+-		rb += sprintf(page+rb, "Session State: ");
++		rb += sysfs_emit_at(page, rb, "Session State: ");
+ 		switch (sess->session_state) {
+ 		case TARG_SESS_STATE_FREE:
+-			rb += sprintf(page+rb, "TARG_SESS_FREE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_FREE\n");
+ 			break;
+ 		case TARG_SESS_STATE_ACTIVE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_ACTIVE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_ACTIVE\n");
+ 			break;
+ 		case TARG_SESS_STATE_LOGGED_IN:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_LOGGED_IN\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_LOGGED_IN\n");
+ 			break;
+ 		case TARG_SESS_STATE_FAILED:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_FAILED\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_FAILED\n");
+ 			break;
+ 		case TARG_SESS_STATE_IN_CONTINUE:
+-			rb += sprintf(page+rb, "TARG_SESS_STATE_IN_CONTINUE\n");
++			rb += sysfs_emit_at(page, rb, "TARG_SESS_STATE_IN_CONTINUE\n");
+ 			break;
+ 		default:
+-			rb += sprintf(page+rb, "ERROR: Unknown Session"
++			rb += sysfs_emit_at(page, rb, "ERROR: Unknown Session"
+ 					" State!\n");
+ 			break;
+ 		}
  
-+/*
-+ * Used by decompressor's startup_32() to allocate page tables for identity
-+ * mapping of the 4G of RAM in 4-level paging mode:
-+ * - 1 level4 table;
-+ * - 1 level3 table;
-+ * - 4 level2 table that maps everything with 2M pages;
-+ *
-+ * The additional level5 table needed for 5-level paging is allocated from
-+ * trampoline_32bit memory.
-+ */
- # define BOOT_INIT_PGT_SIZE	(6*4096)
--# ifdef CONFIG_RANDOMIZE_BASE
-+
- /*
-- * Assuming all cross the 512GB boundary:
-- * 1 page for level4
-- * (2+2)*4 pages for kernel, param, cmd_line, and randomized kernel
-- * 2 pages for first 2M (video RAM: CONFIG_X86_VERBOSE_BOOTUP).
-- * Total is 19 pages.
-+ * Total number of page tables kernel_add_identity_map() can allocate,
-+ * including page tables consumed by startup_32().
-+ *
-+ * Worst-case scenario:
-+ *  - 5-level paging needs 1 level5 table;
-+ *  - KASLR needs to map kernel, boot_params, cmdline and randomized kernel,
-+ *    assuming all of them cross 256T boundary:
-+ *    + 4*2 level4 table;
-+ *    + 4*2 level3 table;
-+ *    + 4*2 level2 table;
-+ *  - X86_VERBOSE_BOOTUP needs to map the first 2M (video RAM):
-+ *    + 1 level4 table;
-+ *    + 1 level3 table;
-+ *    + 1 level2 table;
-+ * Total: 28 tables
-+ *
-+ * Add 4 spare table in case decompressor touches anything beyond what is
-+ * accounted above. Warn if it happens.
-  */
--#  ifdef CONFIG_X86_VERBOSE_BOOTUP
--#   define BOOT_PGT_SIZE	(19*4096)
--#  else /* !CONFIG_X86_VERBOSE_BOOTUP */
--#   define BOOT_PGT_SIZE	(17*4096)
--#  endif
--# else /* !CONFIG_RANDOMIZE_BASE */
--#  define BOOT_PGT_SIZE		BOOT_INIT_PGT_SIZE
--# endif
-+# define BOOT_PGT_SIZE_WARN	(28*4096)
-+# define BOOT_PGT_SIZE		(32*4096)
+-		rb += sprintf(page+rb, "---------------------[iSCSI Session"
++		rb += sysfs_emit_at(page, rb, "---------------------[iSCSI Session"
+ 				" Values]-----------------------\n");
+-		rb += sprintf(page+rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
++		rb += sysfs_emit_at(page, rb, "  CmdSN/WR  :  CmdSN/WC  :  ExpCmdSN"
+ 				"  :  MaxCmdSN  :     ITT    :     TTT\n");
+ 		max_cmd_sn = (u32) atomic_read(&sess->max_cmd_sn);
+-		rb += sprintf(page+rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
++		rb += sysfs_emit_at(page, rb, " 0x%08x   0x%08x   0x%08x   0x%08x"
+ 				"   0x%08x   0x%08x\n",
+ 			sess->cmdsn_window,
+ 			(max_cmd_sn - sess->exp_cmd_sn) + 1,
+ 			sess->exp_cmd_sn, max_cmd_sn,
+ 			sess->init_task_tag, sess->targ_xfer_tag);
+-		rb += sprintf(page+rb, "----------------------[iSCSI"
++		rb += sysfs_emit_at(page, rb, "----------------------[iSCSI"
+ 				" Connections]-------------------------\n");
  
- #else /* !CONFIG_X86_64 */
- # define BOOT_STACK_SIZE	0x1000
+ 		spin_lock(&sess->conn_lock);
+ 		list_for_each_entry(conn, &sess->sess_conn_list, conn_list) {
+-			rb += sprintf(page+rb, "CID: %hu  Connection"
++			rb += sysfs_emit_at(page, rb, "CID: %hu  Connection"
+ 					" State: ", conn->cid);
+ 			switch (conn->conn_state) {
+ 			case TARG_CONN_STATE_FREE:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_FREE\n");
+ 				break;
+ 			case TARG_CONN_STATE_XPT_UP:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_XPT_UP\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGIN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGIN\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGGED_IN:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGGED_IN\n");
+ 				break;
+ 			case TARG_CONN_STATE_IN_LOGOUT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_IN_LOGOUT\n");
+ 				break;
+ 			case TARG_CONN_STATE_LOGOUT_REQUESTED:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_LOGOUT_REQUESTED\n");
+ 				break;
+ 			case TARG_CONN_STATE_CLEANUP_WAIT:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"TARG_CONN_STATE_CLEANUP_WAIT\n");
+ 				break;
+ 			default:
+-				rb += sprintf(page+rb,
++				rb += sysfs_emit_at(page, rb,
+ 					"ERROR: Unknown Connection State!\n");
+ 				break;
+ 			}
+ 
+-			rb += sprintf(page+rb, "   Address %pISc %s", &conn->login_sockaddr,
++			rb += sysfs_emit_at(page, rb, "   Address %pISc %s", &conn->login_sockaddr,
+ 				(conn->network_transport == ISCSI_TCP) ?
+ 				"TCP" : "SCTP");
+-			rb += sprintf(page+rb, "  StatSN: 0x%08x\n",
++			rb += sysfs_emit_at(page, rb, "  StatSN: 0x%08x\n",
+ 				conn->stat_sn);
+ 		}
+ 		spin_unlock(&sess->conn_lock);
 -- 
 2.40.1
 
