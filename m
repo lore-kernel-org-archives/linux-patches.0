@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B835C28E23
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE5BC433CC;
-	Wed, 20 Sep 2023 12:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1792E640
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0B7C433C7;
+	Wed, 20 Sep 2023 12:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213687;
-	bh=PyLyKhAkUQsqj2vTDEQ9UxkPICI/tVPCFbWVsB2BW/o=;
+	s=korg; t=1695213690;
+	bh=2D3HpySPV3f5ePvFTYzszdjbec5iWkk4vogILZ5qNNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDcOwBOElYQs+Uv+KUZ5gM4IEYXasMOeo8IvGu2sAuXQYdncF1Ows8V/2x1xJQM2j
-	 s3oVy5dmKneeFOFoEB3EDpP+xjY+JFSkl/uELMK6E6rr+/QcIsgGOsUMasqWj8wXTu
-	 PzyWugAR6zftSkhnFEidBtlKjaft41/VBwun97uA=
+	b=vadD/b5uho1LKWoeg9JQygukutOAqDgFHl4e2d3J+V4c0JjRZX8sTPju7xA3e4an7
+	 uJ9Sso19QefVjAqLDxWic+Jv8k7YEDrxPVeJW0OVGqQhfvgbd6SkPwk1stqRgKI5ab
+	 hZgACOwWp7zs+GPQerJW+ZXM13ElpEG5mlby3vV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hulk Robot <hulkci@huawei.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Anson Huang <Anson.Huang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 303/367] mlxbf-tmfifo: sparse tags for config access
-Date: Wed, 20 Sep 2023 13:31:20 +0200
-Message-ID: <20230920112906.390391865@linuxfoundation.org>
+Subject: [PATCH 5.4 294/367] clk: imx: clk-pll14xx: Make two variables static
+Date: Wed, 20 Sep 2023 13:31:11 +0200
+Message-ID: <20230920112906.160888443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,63 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 03bea764bf61c9f9918324bda7362616024386e8 ]
+[ Upstream commit 8f2d3c1759d19232edf1e9ef43d40a44e31493d6 ]
 
-mlxbf-tmfifo accesses config space using native types -
-which works for it since the legacy virtio native types.
+Fix sparse warnings:
 
-This will break if it ever needs to support modern virtio,
-so with new tags previously introduced for virtio net config,
-sparse now warns for this in drivers.
+drivers/clk/imx/clk-pll14xx.c:44:37:
+ warning: symbol 'imx_pll1416x_tbl' was not declared. Should it be static?
+drivers/clk/imx/clk-pll14xx.c:57:37:
+ warning: symbol 'imx_pll1443x_tbl' was not declared. Should it be static?
 
-Since this is a legacy only device, fix it up using
-virtio_legacy_is_little_endian for now.
-
-No functional changes.
-
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Cornelia Huck <cohuck@redhat.com>
-Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Stable-dep-of: fc4c65582154 ("platform/mellanox: mlxbf-tmfifo: Drop jumbo frames")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Anson Huang <Anson.Huang@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: 72d00e560d10 ("clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-pll14xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 0d77cc94c3f0e..42fcccf06157f 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -645,7 +645,10 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
- 			vdev_id = VIRTIO_ID_NET;
- 			hdr_len = sizeof(struct virtio_net_hdr);
- 			config = &fifo->vdev[vdev_id]->config.net;
--			if (ntohs(hdr.len) > config->mtu +
-+			/* A legacy-only interface for now. */
-+			if (ntohs(hdr.len) >
-+			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
-+					      config->mtu) +
- 			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
- 				return;
- 		} else {
-@@ -1273,8 +1276,12 @@ static int mlxbf_tmfifo_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/imx/clk-pll14xx.c b/drivers/clk/imx/clk-pll14xx.c
+index c43e9653b4156..129a28c3366eb 100644
+--- a/drivers/clk/imx/clk-pll14xx.c
++++ b/drivers/clk/imx/clk-pll14xx.c
+@@ -41,7 +41,7 @@ struct clk_pll14xx {
  
- 	/* Create the network vdev. */
- 	memset(&net_config, 0, sizeof(net_config));
--	net_config.mtu = ETH_DATA_LEN;
--	net_config.status = VIRTIO_NET_S_LINK_UP;
-+
-+	/* A legacy-only interface for now. */
-+	net_config.mtu = __cpu_to_virtio16(virtio_legacy_is_little_endian(),
-+					   ETH_DATA_LEN);
-+	net_config.status = __cpu_to_virtio16(virtio_legacy_is_little_endian(),
-+					      VIRTIO_NET_S_LINK_UP);
- 	mlxbf_tmfifo_get_cfg_mac(net_config.mac);
- 	rc = mlxbf_tmfifo_create_vdev(dev, fifo, VIRTIO_ID_NET,
- 				      MLXBF_TMFIFO_NET_FEATURES, &net_config,
+ #define to_clk_pll14xx(_hw) container_of(_hw, struct clk_pll14xx, hw)
+ 
+-const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
++static const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
+ 	PLL_1416X_RATE(1800000000U, 225, 3, 0),
+ 	PLL_1416X_RATE(1600000000U, 200, 3, 0),
+ 	PLL_1416X_RATE(1200000000U, 300, 3, 1),
+@@ -52,7 +52,7 @@ const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
+ 	PLL_1416X_RATE(600000000U,  300, 3, 2),
+ };
+ 
+-const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
++static const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
+ 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
+ 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
+ 	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
 -- 
 2.40.1
 
