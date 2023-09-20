@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A872328E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDEDC433C7;
-	Wed, 20 Sep 2023 11:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8450428E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AF2C433C9;
+	Wed, 20 Sep 2023 11:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210792;
-	bh=NBBlDsctGUllFDY3jUE93e9id1lfkt6Qfam5Hubi6A0=;
+	s=korg; t=1695210795;
+	bh=c7oBUeo98XDc9gN/TGwOL+RxN41jcZ1dYaag1VUjvsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WH9Ht6pp56NvUU2Iy9USvqcyqt43xmOVUZPqYuE3tfHXaLftJNT09M69NOGnQ13vx
-	 l6ggBEpcm98B4vJG53+0fhZA+1bECSwmtYvKx/fyB5rPOnDvfZmO2Z8jbcsL5W+IdV
-	 RPR2ojXhA3HkuwljCGyN+387nHBvvsZXzfrgpjyU=
+	b=F161x/aRhIlscDnuZ3Q06zYNyBgAWvqKsADqt6GIOkuOcJYCOemxii3BT+imkiQ5p
+	 dhB2LkB+yXlLee1hOTrMLe+V9ae70Wui9/4W+OuyCeNb6yBs+0QiGufcuzJkeqYZTI
+	 +eMPK0ZhyN8Ohlgw7UUtOeTuZHrruauckUyVO+Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao-kai Wang <stylon.wang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.5 206/211] drm/amd/display: Adjust the MST resume flow
-Date: Wed, 20 Sep 2023 13:30:50 +0200
-Message-ID: <20230920112852.252157798@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.5 207/211] drm/amd/display: fix the white screen issue when >= 64GB DRAM
+Date: Wed, 20 Sep 2023 13:30:51 +0200
+Message-ID: <20230920112852.282283464@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,178 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit ec5fa9fcdeca69edf7dab5ca3b2e0ceb1c08fe9a upstream.
+commit ef064187a9709393a981a56cce1e31880fd97107 upstream.
 
-[Why]
-In drm_dp_mst_topology_mgr_resume() today, it will resume the
-mst branch to be ready handling mst mode and also consecutively do
-the mst topology probing. Which will cause the dirver have chance
-to fire hotplug event before restoring the old state. Then Userspace
-will react to the hotplug event based on a wrong state.
+Dropping bit 31:4 of page table base is wrong, it makes page table
+base points to wrong address if phys addr is beyond 64GB; dropping
+page_table_start/end bit 31:4 is unnecessary since dcn20_vmid_setup
+will do that. Also, while we are at it, cleanup the assignments using
+upper_32_bits()/lower_32_bits() and AMDGPU_GPU_PAGE_SHIFT.
 
-[How]
-Adjust the mst resume flow as:
-1. set dpcd to resume mst branch status
-2. restore source old state
-3. Do mst resume topology probing
-
-For drm_dp_mst_topology_mgr_resume(), it's better to adjust it to
-pull out topology probing work into a 2nd part procedure of the mst
-resume. Will have a follow up patch in drm.
-
-Reviewed-by: Chao-kai Wang <stylon.wang@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
+Acked-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Co-developed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   93 ++++++++++++++++++----
- 1 file changed, 80 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2329,14 +2329,62 @@ static int dm_late_init(void *handle)
- 	return detect_mst_link_for_all_connectors(adev_to_drm(adev));
- }
+@@ -1272,11 +1272,15 @@ static void mmhub_read_system_context(st
  
-+static void resume_mst_branch_status(struct drm_dp_mst_topology_mgr *mgr)
-+{
-+	int ret;
-+	u8 guid[16];
-+	u64 tmp64;
-+
-+	mutex_lock(&mgr->lock);
-+	if (!mgr->mst_primary)
-+		goto out_fail;
-+
-+	if (drm_dp_read_dpcd_caps(mgr->aux, mgr->dpcd) < 0) {
-+		drm_dbg_kms(mgr->dev, "dpcd read failed - undocked during suspend?\n");
-+		goto out_fail;
-+	}
-+
-+	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
-+				 DP_MST_EN |
-+				 DP_UP_REQ_EN |
-+				 DP_UPSTREAM_IS_SRC);
-+	if (ret < 0) {
-+		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
-+		goto out_fail;
-+	}
-+
-+	/* Some hubs forget their guids after they resume */
-+	ret = drm_dp_dpcd_read(mgr->aux, DP_GUID, guid, 16);
-+	if (ret != 16) {
-+		drm_dbg_kms(mgr->dev, "dpcd read failed - undocked during suspend?\n");
-+		goto out_fail;
-+	}
-+
-+	if (memchr_inv(guid, 0, 16) == NULL) {
-+		tmp64 = get_jiffies_64();
-+		memcpy(&guid[0], &tmp64, sizeof(u64));
-+		memcpy(&guid[8], &tmp64, sizeof(u64));
-+
-+		ret = drm_dp_dpcd_write(mgr->aux, DP_GUID, guid, 16);
-+
-+		if (ret != 16) {
-+			drm_dbg_kms(mgr->dev, "check mstb guid failed - undocked during suspend?\n");
-+			goto out_fail;
-+		}
-+	}
-+
-+	memcpy(mgr->mst_primary->guid, guid, 16);
-+
-+out_fail:
-+	mutex_unlock(&mgr->lock);
-+}
-+
- static void s3_handle_mst(struct drm_device *dev, bool suspend)
- {
- 	struct amdgpu_dm_connector *aconnector;
- 	struct drm_connector *connector;
- 	struct drm_connector_list_iter iter;
- 	struct drm_dp_mst_topology_mgr *mgr;
--	int ret;
--	bool need_hotplug = false;
+ 	pt_base = amdgpu_gmc_pd_addr(adev->gart.bo);
  
- 	drm_connector_list_iter_begin(dev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
-@@ -2358,18 +2406,15 @@ static void s3_handle_mst(struct drm_dev
- 			if (!dp_is_lttpr_present(aconnector->dc_link))
- 				try_to_configure_aux_timeout(aconnector->dc_link->ddc, LINK_AUX_DEFAULT_TIMEOUT_PERIOD);
+-	page_table_start.high_part = (u32)(adev->gmc.gart_start >> 44) & 0xF;
+-	page_table_start.low_part = (u32)(adev->gmc.gart_start >> 12);
+-	page_table_end.high_part = (u32)(adev->gmc.gart_end >> 44) & 0xF;
+-	page_table_end.low_part = (u32)(adev->gmc.gart_end >> 12);
+-	page_table_base.high_part = upper_32_bits(pt_base) & 0xF;
++	page_table_start.high_part = upper_32_bits(adev->gmc.gart_start >>
++						   AMDGPU_GPU_PAGE_SHIFT);
++	page_table_start.low_part = lower_32_bits(adev->gmc.gart_start >>
++						  AMDGPU_GPU_PAGE_SHIFT);
++	page_table_end.high_part = upper_32_bits(adev->gmc.gart_end >>
++						 AMDGPU_GPU_PAGE_SHIFT);
++	page_table_end.low_part = lower_32_bits(adev->gmc.gart_end >>
++						AMDGPU_GPU_PAGE_SHIFT);
++	page_table_base.high_part = upper_32_bits(pt_base);
+ 	page_table_base.low_part = lower_32_bits(pt_base);
  
--			ret = drm_dp_mst_topology_mgr_resume(mgr, true);
--			if (ret < 0) {
--				dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
--					aconnector->dc_link);
--				need_hotplug = true;
--			}
-+			/* TODO: move resume_mst_branch_status() into drm mst resume again
-+			 * once topology probing work is pulled out from mst resume into mst
-+			 * resume 2nd step. mst resume 2nd step should be called after old
-+			 * state getting restored (i.e. drm_atomic_helper_resume()).
-+			 */
-+			resume_mst_branch_status(mgr);
- 		}
- 	}
- 	drm_connector_list_iter_end(&iter);
--
--	if (need_hotplug)
--		drm_kms_helper_hotplug_event(dev);
- }
- 
- static int amdgpu_dm_smu_write_watermarks_table(struct amdgpu_device *adev)
-@@ -2763,7 +2808,8 @@ static int dm_resume(void *handle)
- 	struct dm_atomic_state *dm_state = to_dm_atomic_state(dm->atomic_obj.state);
- 	enum dc_connection_type new_connection_type = dc_connection_none;
- 	struct dc_state *dc_state;
--	int i, r, j;
-+	int i, r, j, ret;
-+	bool need_hotplug = false;
- 
- 	if (amdgpu_in_reset(adev)) {
- 		dc_state = dm->cached_dc_state;
-@@ -2861,7 +2907,7 @@ static int dm_resume(void *handle)
- 			continue;
- 
- 		/*
--		 * this is the case when traversing through already created
-+		 * this is the case when traversing through already created end sink
- 		 * MST connectors, should be skipped
- 		 */
- 		if (aconnector && aconnector->mst_root)
-@@ -2921,6 +2967,27 @@ static int dm_resume(void *handle)
- 
- 	dm->cached_state = NULL;
- 
-+	/* Do mst topology probing after resuming cached state*/
-+	drm_connector_list_iter_begin(ddev, &iter);
-+	drm_for_each_connector_iter(connector, &iter) {
-+		aconnector = to_amdgpu_dm_connector(connector);
-+		if (aconnector->dc_link->type != dc_connection_mst_branch ||
-+		    aconnector->mst_root)
-+			continue;
-+
-+		ret = drm_dp_mst_topology_mgr_resume(&aconnector->mst_mgr, true);
-+
-+		if (ret < 0) {
-+			dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
-+					aconnector->dc_link);
-+			need_hotplug = true;
-+		}
-+	}
-+	drm_connector_list_iter_end(&iter);
-+
-+	if (need_hotplug)
-+		drm_kms_helper_hotplug_event(ddev);
-+
- 	amdgpu_dm_irq_resume_late(adev);
- 
- 	amdgpu_dm_smu_write_watermarks_table(adev);
+ 	pa_config->system_aperture.start_addr = (uint64_t)logical_addr_low << 18;
 
 
