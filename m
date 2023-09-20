@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348AA2E63B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:12:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CCDC433CA;
-	Wed, 20 Sep 2023 12:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAF12E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:12:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60477C433C7;
+	Wed, 20 Sep 2023 12:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211934;
-	bh=oavpBm6jYKG2d3GiDXVg/zDgLVovGagMaKDZmxhq7Dc=;
+	s=korg; t=1695211936;
+	bh=Goi641lDrjlDiIoPEJWUikcJKAkTABck/2LwKHl9WsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MA1Ny/L2QIKudGNjqolrAze/tw/FIWAIzGcbs79BkehUeo0/ts9OV4zavFM6UYMp/
-	 BfWB1YLyhMZ4Eyxb6QvJlrG9R95nyKzbM164J4Hc0ZmUJ809DzFKoq+GBUeZniPAbo
-	 Wlw2ei7Rxgy7XwcwbqOyRLDgOKnrsqOd6tyMzaBM=
+	b=OTqbPvyCOBfcBj/OZNaRwoHgi0BPx9CRf4gB49hQi/2nfvQ5RbKWx8K0ZV+cO6pur
+	 lBqyxi2KH8DwI1rH662xklaWe+u/Rr1PLL9GMD8LqzCvpGtX7+RFoG7bMYJ3EMcnG/
+	 Z/Jp+B44Hu+QfNkUCdml9NzpgvrNuGAWbjMiFpx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
+	Polaris Pi <pinkperfect2021@gmail.com>,
 	Dmitry Antipov <dmantipov@yandex.ru>,
+	Brian Norris <briannorris@chromium.org>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/273] wifi: mwifiex: fix memory leak in mwifiex_histogram_read()
-Date: Wed, 20 Sep 2023 13:28:23 +0200
-Message-ID: <20230920112848.409170611@linuxfoundation.org>
+Subject: [PATCH 4.19 064/273] wifi: mwifiex: Fix missed return in oob checks failed path
+Date: Wed, 20 Sep 2023 13:28:24 +0200
+Message-ID: <20230920112848.440364096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,50 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Polaris Pi <pinkperfect2021@gmail.com>
 
-[ Upstream commit 9c8fd72a5c2a031cbc680a2990107ecd958ffcdb ]
+[ Upstream commit 2785851c627f2db05f9271f7f63661b5dbd95c4c ]
 
-Always free the zeroed page on return from 'mwifiex_histogram_read()'.
+Add missed return in mwifiex_uap_queue_bridged_pkt() and
+mwifiex_process_rx_packet().
 
-Fixes: cbf6e05527a7 ("mwifiex: add rx histogram statistics support")
-
+Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
+Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
+Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
 Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230802160726.85545-1-dmantipov@yandex.ru
+Link: https://lore.kernel.org/r/20230810083911.3725248-1-pinkperfect2021@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/debugfs.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sta_rx.c   | 1 +
+ drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/debugfs.c b/drivers/net/wireless/marvell/mwifiex/debugfs.c
-index cbe4493b32664..0f62da50e11a2 100644
---- a/drivers/net/wireless/marvell/mwifiex/debugfs.c
-+++ b/drivers/net/wireless/marvell/mwifiex/debugfs.c
-@@ -265,8 +265,11 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
- 	if (!p)
- 		return -ENOMEM;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+index a3d716a215ef2..f3c6daeba1b85 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+@@ -104,6 +104,7 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 			    skb->len, rx_pkt_off);
+ 		priv->stats.rx_dropped++;
+ 		dev_kfree_skb_any(skb);
++		return -1;
+ 	}
  
--	if (!priv || !priv->hist_data)
--		return -EFAULT;
-+	if (!priv || !priv->hist_data) {
-+		ret = -EFAULT;
-+		goto free_and_exit;
-+	}
-+
- 	phist_data = priv->hist_data;
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+index c1dec186784b9..c723eb16d0914 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+@@ -123,6 +123,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
+ 		priv->stats.rx_dropped++;
+ 		dev_kfree_skb_any(skb);
++		return;
+ 	}
  
- 	p += sprintf(p, "\n"
-@@ -321,6 +324,8 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
- 	ret = simple_read_from_buffer(ubuf, count, ppos, (char *)page,
- 				      (unsigned long)p - page);
- 
-+free_and_exit:
-+	free_page(page);
- 	return ret;
- }
- 
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
 -- 
 2.40.1
 
