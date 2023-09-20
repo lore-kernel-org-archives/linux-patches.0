@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFD7111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEA4C433C8;
-	Wed, 20 Sep 2023 12:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F2111AB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A511C433CA;
+	Wed, 20 Sep 2023 12:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213627;
-	bh=UilHsd7RKMw0EgfhgIx5VVdLg4F/L3dH1r7eM0bIKYI=;
+	s=korg; t=1695213630;
+	bh=9jEenxPkkzj5tp0TyuCi6uaThl17m80uTSMNERr9hKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rI2H3XOrLr/VfqZlRKlNuKGjDQ6d/hlsdsTxyf5yFx5LLVRINUQF5m1trBj3r7Yeb
-	 urCfv8r6BKQyUexvSiAKkywvI6P6ukQUJYz20mxJkQHUv4fuYQXkRcUPRpLmdYrHzO
-	 5tqtzBeDVw7yEojvl2jTHfidQL1k3LectObw48jE=
+	b=j54XbyLPpWc6bvGoVw6isp2ta7s7GqYrTzT71dxs40AGr7jnmzk8Ofeq36E6nQv1f
+	 zb/kuQwQnkARJEW4Mf4XO1eJ276TymLwG6YHahxFWFX4rJIx2Sj6AWE3q0TYAFzojH
+	 6R/aaHpTvE2GEgg5fIiNiUul+/PEw1Jm2ssm7efE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 307/367] kcm: Fix error handling for SOCK_DGRAM in kcm_sendmsg().
-Date: Wed, 20 Sep 2023 13:31:24 +0200
-Message-ID: <20230920112906.500269340@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wesley Chalmers <wesley.chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 5.4 308/367] drm/amd/display: Fix a bug when searching for insert_above_mpcc
+Date: Wed, 20 Sep 2023 13:31:25 +0200
+Message-ID: <20230920112906.527048472@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,70 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Wesley Chalmers <wesley.chalmers@amd.com>
 
-[ Upstream commit a22730b1b4bf437c6bbfdeff5feddf54be4aeada ]
+commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
 
-syzkaller found a memory leak in kcm_sendmsg(), and commit c821a88bd720
-("kcm: Fix memory leak in error path of kcm_sendmsg()") suppressed it by
-updating kcm_tx_msg(head)->last_skb if partial data is copied so that the
-following sendmsg() will resume from the skb.
+[WHY]
+Currently, when insert_plane is called with insert_above_mpcc
+parameter that is equal to tree->opp_list, the function returns NULL.
 
-However, we cannot know how many bytes were copied when we get the error.
-Thus, we could mess up the MSG_MORE queue.
+[HOW]
+Instead, the function should insert the plane at the top of the tree.
 
-When kcm_sendmsg() fails for SOCK_DGRAM, we should purge the queue as we
-do so for UDP by udp_flush_pending_frames().
-
-Even without this change, when the error occurred, the following sendmsg()
-resumed from a wrong skb and the queue was messed up.  However, we have
-yet to get such a report, and only syzkaller stumbled on it.  So, this
-can be changed safely.
-
-Note this does not change SOCK_SEQPACKET behaviour.
-
-Fixes: c821a88bd720 ("kcm: Fix memory leak in error path of kcm_sendmsg()")
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230912022753.33327-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 8668348aa3f2b..8a8ea7e6774d5 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1066,17 +1066,18 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- out_error:
- 	kcm_push(kcm);
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
+@@ -199,8 +199,9 @@ struct mpcc *mpc1_insert_plane(
+ 		/* check insert_above_mpcc exist in tree->opp_list */
+ 		struct mpcc *temp_mpcc = tree->opp_list;
  
--	if (copied && sock->type == SOCK_SEQPACKET) {
-+	if (sock->type == SOCK_SEQPACKET) {
- 		/* Wrote some bytes before encountering an
- 		 * error, return partial success.
- 		 */
--		goto partial_message;
--	}
--
--	if (head != kcm->seq_skb)
-+		if (copied)
-+			goto partial_message;
-+		if (head != kcm->seq_skb)
-+			kfree_skb(head);
-+	} else {
- 		kfree_skb(head);
--	else if (copied)
--		kcm_tx_msg(head)->last_skb = skb;
-+		kcm->seq_skb = NULL;
-+	}
- 
- 	err = sk_stream_error(sk, msg->msg_flags, err);
- 
--- 
-2.40.1
-
+-		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
+-			temp_mpcc = temp_mpcc->mpcc_bot;
++		if (temp_mpcc != insert_above_mpcc)
++			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
++				temp_mpcc = temp_mpcc->mpcc_bot;
+ 		if (temp_mpcc == NULL)
+ 			return NULL;
+ 	}
 
 
