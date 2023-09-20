@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5995F30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F59C433C8;
-	Wed, 20 Sep 2023 12:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3C230FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB1EC433C9;
+	Wed, 20 Sep 2023 12:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212552;
-	bh=yC/H/WrEu44MKxrtfnGCGgFmZN4WNW3Ye4hyihrEKd0=;
+	s=korg; t=1695212554;
+	bh=r3t9h9BVaHceX8Lqo4LMUoigG+i1kckgVeZd5ENxpN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POQ423CpO4w7lofJ/8sUE3cHtRIhYN/sQ7gqxYhywtqNl4IO4mZjgQg231i8zGHTZ
-	 p+mrCcl32apxce52S/k1Da+k4vZgki2gy488/taaptVC3i65f4cauohv3OaRnShZw4
-	 +m8zHh8DVf8XiZdmrvdAOQM8dGdMAKfQMKVDdTPk=
+	b=sbxprqo//UC+ItcNlKO1sYa4q+mQxmqGjFlATbkYsCUl6VuFeniIXaUHUoPt9JKvv
+	 nq5ZI3ymx2PutWkShZhG2iYECEY3PY7hp3R/g8FLReSepCz7Qaf4Emx3ux3aNvkH2W
+	 VPD+hVSstoddS67vfUtc/oqH1CrxhCKVf2+05cuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Ma Ke <make_ruc2021@163.com>,
+	Li Yang <leoyang.li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 43/83] media: pci: cx23885: replace BUG with error return
-Date: Wed, 20 Sep 2023 13:31:33 +0200
-Message-ID: <20230920112828.380149127@linuxfoundation.org>
+Subject: [PATCH 5.10 44/83] usb: gadget: fsl_qe_udc: validate endpoint index for ch9 udc
+Date: Wed, 20 Sep 2023 13:31:34 +0200
+Message-ID: <20230920112828.411552744@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -39,34 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 2e1796fd4904fdd6062a8e4589778ea899ea0c8d ]
+[ Upstream commit ce9daa2efc0872a9a68ea51dc8000df05893ef2e ]
 
-It was completely unnecessary to use BUG in buffer_prepare().
-Just replace it with an error return. This also fixes a smatch warning:
+We should verify the bound of the array to assure that host
+may not manipulate the index to point past endpoint array.
 
-drivers/media/pci/cx23885/cx23885-video.c:422 buffer_prepare() error: uninitialized symbol 'ret'.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Acked-by: Li Yang <leoyang.li@nxp.com>
+Link: https://lore.kernel.org/r/20230628081511.186850-1-make_ruc2021@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx23885/cx23885-video.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/fsl_qe_udc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/pci/cx23885/cx23885-video.c b/drivers/media/pci/cx23885/cx23885-video.c
-index a380e0920a21f..86e3bb5903712 100644
---- a/drivers/media/pci/cx23885/cx23885-video.c
-+++ b/drivers/media/pci/cx23885/cx23885-video.c
-@@ -412,7 +412,7 @@ static int buffer_prepare(struct vb2_buffer *vb)
- 				dev->height >> 1);
- 		break;
- 	default:
--		BUG();
-+		return -EINVAL; /* should not happen */
- 	}
- 	dprintk(2, "[%p/%d] buffer_init - %dx%d %dbpp 0x%08x - dma=0x%08lx\n",
- 		buf, buf->vb.vb2_buf.index,
+diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
+index fa66449b39075..f3388c720e0fa 100644
+--- a/drivers/usb/gadget/udc/fsl_qe_udc.c
++++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
+@@ -1950,6 +1950,8 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 	} else if ((request_type & USB_RECIP_MASK) == USB_RECIP_ENDPOINT) {
+ 		/* Get endpoint status */
+ 		int pipe = index & USB_ENDPOINT_NUMBER_MASK;
++		if (pipe >= USB_MAX_ENDPOINTS)
++			goto stall;
+ 		struct qe_ep *target_ep = &udc->eps[pipe];
+ 		u16 usep;
+ 
 -- 
 2.40.1
 
