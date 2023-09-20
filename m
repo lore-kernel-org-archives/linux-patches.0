@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270C72AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC76C433C7;
-	Wed, 20 Sep 2023 12:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC53830FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:18:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51063C433C8;
+	Wed, 20 Sep 2023 12:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212307;
-	bh=qJWb+C24nhMpusO7dnW9ATbkmkfJj8q+9saKGkMF7PU=;
+	s=korg; t=1695212309;
+	bh=k/jBvkO4DmQmbM483y37sioDkNvCLqSA/DkRXPos7J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWppWtYwsPTW21BBp2QCildoSfjry1VwrOI94CHzBKiHwCr8didJk/Z5tyHiokguI
-	 KHpuA5ncEb+0eOkyjFR8xUz4Apt331zqZhs3wWTDtErFuwmpV00or+MH2AWfjxnKKG
-	 4oMswFLr7fj5Ly7/nOqr8VpLH5THe6ln1871zyzE=
+	b=WeU8JjrAUOASEozW41QE5yUa6F0VYEU/9NrUxeUa2nV6QgyZyl3KD3AjiAVwXWMZ3
+	 ef3hFrjF/KKlZxZwK/taSE87pDoiokGRGz6+flZrCmm91ZtFbu/vwt1sRoMcwk2yPA
+	 BgIV6RwVHL6wwyUC/s8JRzzAD2m+nXi6urh+5I4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	William Zhang <william.zhang@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.19 227/273] mtd: rawnand: brcmnand: Fix crash during the panic_write
-Date: Wed, 20 Sep 2023 13:31:07 +0200
-Message-ID: <20230920112853.413832383@linuxfoundation.org>
+Subject: [PATCH 4.19 228/273] mtd: rawnand: brcmnand: Fix potential out-of-bounds access in oob write
+Date: Wed, 20 Sep 2023 13:31:08 +0200
+Message-ID: <20230920112853.441500122@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -44,45 +42,62 @@ Content-Transfer-Encoding: 8bit
 
 From: William Zhang <william.zhang@broadcom.com>
 
-commit e66dd317194daae0475fe9e5577c80aa97f16cb9 upstream.
+commit 5d53244186c9ac58cb88d76a0958ca55b83a15cd upstream.
 
-When executing a NAND command within the panic write path, wait for any
-pending command instead of calling BUG_ON to avoid crashing while
-already crashing.
+When the oob buffer length is not in multiple of words, the oob write
+function does out-of-bounds read on the oob source buffer at the last
+iteration. Fix that by always checking length limit on the oob buffer
+read and fill with 0xff when reaching the end of the buffer to the oob
+registers.
 
 Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
 Signed-off-by: William Zhang <william.zhang@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-4-william.zhang@broadcom.com
+Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-5-william.zhang@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 --- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
 +++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -1271,7 +1271,17 @@ static void brcmnand_send_cmd(struct brc
+@@ -1213,19 +1213,33 @@ static int write_oob_to_regs(struct brcm
+ 			     const u8 *oob, int sas, int sector_1k)
+ {
+ 	int tbytes = sas << sector_1k;
+-	int j;
++	int j, k = 0;
++	u32 last = 0xffffffff;
++	u8 *plast = (u8 *)&last;
  
- 	dev_dbg(ctrl->dev, "send native cmd %d addr 0x%llx\n", cmd, cmd_addr);
+ 	/* Adjust OOB values for 1K sector size */
+ 	if (sector_1k && (i & 0x01))
+ 		tbytes = max(0, tbytes - (int)ctrl->max_oob);
+ 	tbytes = min_t(int, tbytes, ctrl->max_oob);
  
--	BUG_ON(ctrl->cmd_pending != 0);
+-	for (j = 0; j < tbytes; j += 4)
 +	/*
-+	 * If we came here through _panic_write and there is a pending
-+	 * command, try to wait for it. If it times out, rather than
-+	 * hitting BUG_ON, just return so we don't crash while crashing.
++	 * tbytes may not be multiple of words. Make sure we don't read out of
++	 * the boundary and stop at last word.
 +	 */
-+	if (oops_in_progress) {
-+		if (ctrl->cmd_pending &&
-+			bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0))
-+			return;
-+	} else
-+		BUG_ON(ctrl->cmd_pending != 0);
- 	ctrl->cmd_pending = cmd;
++	for (j = 0; (j + 3) < tbytes; j += 4)
+ 		oob_reg_write(ctrl, j,
+ 				(oob[j + 0] << 24) |
+ 				(oob[j + 1] << 16) |
+ 				(oob[j + 2] <<  8) |
+ 				(oob[j + 3] <<  0));
++
++	/* handle the remaing bytes */
++	while (j < tbytes)
++		plast[k++] = oob[j++];
++
++	if (tbytes & 0x3)
++		oob_reg_write(ctrl, (tbytes & ~0x3), (__force u32)cpu_to_be32(last));
++
+ 	return tbytes;
+ }
  
- 	ret = bcmnand_ctrl_poll_status(ctrl, NAND_CTRL_RDY, NAND_CTRL_RDY, 0);
 
 
