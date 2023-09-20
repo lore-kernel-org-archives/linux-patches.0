@@ -1,77 +1,89 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2A837162
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 13:29:16 +0000 (UTC)
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38K9sRrb007737;
-	Wed, 20 Sep 2023 13:29:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-03-30;
- bh=+pb4FziG/+9KvH3wJEMYj7N5TikDHdqMRzvLlHd6jEc=;
- b=AConn3zww41lFKosbYIrkmhF+N92KFm/A6aLKs9Edjh76BcN3ym7LOAhPPON5RFeZzfr
- 2JsWpRpH7lQSPaYqYTIEHDS4TlnGOFtG9CRzVIg2SQdQxtp/zKb0/tcpBYJP98Czu090
- Twoas1cuH4hTxfxj4Z8EyZj4pmEEAppfFqV6sqbPsQlYa3LTKPnVrKDKkvhIH82SZmUD
- 7tCXXwCpfZhKkT8aowdYZN6CSUszZhByBTVoWvIdobIspnOydwQA+hDgUzF+HjJdXQ38
- SbNTm48pflXI4XV4JgR+Gar2QAVXuKb24tNP9lClFcW7gH9BYDi4fVY+wFVi9VYUuJlL OA== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3t539cqcuq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 20 Sep 2023 13:29:02 +0000
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 38KCn0R6012048;
-	Wed, 20 Sep 2023 13:29:00 GMT
-Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2042.outbound.protection.outlook.com [104.47.66.42])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3t52t7bq1t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 20 Sep 2023 13:29:00 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBB236AEE
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 13:45:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695217547; x=1726753547;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=60Bsxv8ngUJ8xyYO7UsOfpsTcnrO+LXqtU/F0Pt0Hk8=;
+  b=RsavCVv9RlOO9N5pkfvjj8VHVH8eIUg+uJYpAZV/z5hM9pu5IDOhgX0J
+   GD8brjdMCtcO1lVdrb2dLnQ32MXlDV6X/5Fhek/08EW6f/cL22TpeRaun
+   da/d2W7/Vg41HFwA1rBlFr+RL6D6sEa9oeX4r2ou9+wfKXSQBvT8RCWYH
+   oORDx7QKXe4K7QSi/CIlH+cZH8Y3mX61SnSqb7+/FBVtDJMd0MI3Ttk7A
+   EfE9ZAjZi/zp7RiNk78DKRywEZbMexQHc46yASvGBsY8J5+a7dABti0Rk
+   TNpns8cH6XjuB0Wop3U517HPk6oHbj1USDCtqHt6/4xO6TaLC2PKOOluL
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="382968982"
+X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
+   d="scan'208";a="382968982"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 06:45:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="836849498"
+X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
+   d="scan'208";a="836849498"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by FMSMGA003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Sep 2023 06:45:45 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Wed, 20 Sep 2023 06:45:45 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Wed, 20 Sep 2023 06:45:44 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Wed, 20 Sep 2023 06:45:44 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Wed, 20 Sep 2023 06:45:44 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dvJ/FeShwTFjqpKOGbAPII7DwS1yM2u2MKhOTArHuDs1m8xk706LnAcAwUPpVaO8iTThCgahKbWW9Ucy+8abnE7WcZmV80x4s4wCOA/OOsI483YqvzB17dsp2kkncTsdWtebS+JwWW28JwKS3oEl8p0otQHg1piC0lhwy5E3VWkYy9770z/uFX3bnwM/+kPOnPBlCqXuEu4VUSthcP85v4CRPzUk7vgo4vDH8jh10iYZ79qNkJTw9yhLB4Hu+ObXVJaUDgo7UM9JXaYipfUBMGnsfQDjotdvO2Mzei/UwbYMU0IoaS6mIkhTYthnIqbdWe88xXjtyCbmYC6iHV8dvw==
+ b=NmtLG7TgOIqEsMImxU/7VpqoFLuAsYN+RhcNBjDvWCq0aIJq6LzZO02f8c3RofDoxwCiWUgxuUtSLlpfXaZflVuXFKzhDcfq84/H3ACvUkIvt5p5r0Hbc2WNYwuxq/WgZVCa7SXziWCq/bnFX5LQ3xeqWZWsCmsdgjvJ48wuEVldz/TL4uEcTvyOo370RpmQ2j8+P7l1rSt68T7gUcNCpy8YrNpUiExklckyv20BWONVySN8OIYfFUlZ1GAn5MNxUQba6Se/MISM5B2OjaG7Impr8AF4gwdBWm5kLC2cwzwXY/xFCbtZbs/f1qZ2jhQV0Q6mkRufPs3WMiDtho1maA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+pb4FziG/+9KvH3wJEMYj7N5TikDHdqMRzvLlHd6jEc=;
- b=cKI1tMfJ1V3TQupjzVAoh9XDYrIXpG6oze+gR61YJUkwCQ2G6z4uOAaLma0umQmgFegTCDIl/bshGW1VkIFPO+pyrWGvtQP/sZHXAbvNrXbsvcDaSMj3vjzZY3CaD31cHA1n0gFOw4mlkprA3OvADyb8+o7bSPP30xGhqDJGHJ6k3dRhLuA/H1b+N5xuo/0Mu6lOHrhMDJc5f1noSU8M/e0y3kJGcf/t65FNoMYC4qxpPDrReN+f5W+WjqAdEYGeR2oE8ALw+LXJWIG4OAR7ihYh6zJePPz4uoPQEnEhGW+VQ8SBU+UVFuF4k0/GwhsMABYUwW8RLDAt+Qx31dCxcg==
+ bh=J5aeN67t30pGFXYO1Kn2l+83mdMd41kuip42g+hI27Y=;
+ b=G2HLDbfHi+MgL1kKblHOK44bKvYpoZvhCo09qBVcGldp/aanLzFbn6r81iGSsJyO5xseHnRtnF+IsL6p/eN9rQ1LXYD0GGXrb9U3Dd+iQ6bviq8an7Y8e5ujCmSRQ0Mu0zHlQ2T5EfEe1kiVESveVaxIsnP23FdaWr9f93fn1i8sfGgIG7ZGoaO6T7kEg+p8zVMvYfQpcjq96ACSkvJ8/tE6U5b/nRR3sCt/GhSrS8D/2++RoOcKyIKnrROasGXzGXioPSma+mUHYmLpG4m/eVoQnjowTJtJXSOMPMWXs0hzibdh+GPnA6gHsIRmyw2dsR4Jmye0m6BgU7RAImEuYw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+pb4FziG/+9KvH3wJEMYj7N5TikDHdqMRzvLlHd6jEc=;
- b=OjrB5GrUrGiNC9BDNWZFhdwCstV893yzqAknfGK+WAI8hbVTXUGUkYDO0agHWBdV4n0HPog5543iNcpU4VZ4EJkokGl3lLwc9ykQirJOPmrxz670CoKD0LJouJoCn1RzbccOqrURDORMvjyewcqwfX0/Ngvx+q5bjXrbd41lD5I=
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
- by DM6PR10MB4347.namprd10.prod.outlook.com (2603:10b6:5:211::11) with
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from MN0PR11MB6304.namprd11.prod.outlook.com (2603:10b6:208:3c0::7)
+ by SN7PR11MB8041.namprd11.prod.outlook.com (2603:10b6:806:2ec::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.27; Wed, 20 Sep
- 2023 13:28:58 +0000
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::3ec2:5bfc:fb8e:3ff4]) by PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::3ec2:5bfc:fb8e:3ff4%4]) with mapi id 15.20.6792.026; Wed, 20 Sep 2023
- 13:28:58 +0000
-Message-ID: <e7e9df6b-d3c1-0fad-1cea-94dc74dbf281@oracle.com>
-Date: Wed, 20 Sep 2023 18:58:45 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 5.4 326/367] libbpf: Free btf_vmlinux when closing
- bpf_object
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-        Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, Hao Luo <haoluo@google.com>,
-        Andrii Nakryiko <andrii@kernel.org>,
-        Vegard Nossum
- <vegard.nossum@oracle.com>,
-        Darren Kenny <darren.kenny@oracle.com>
-References: <20230920112858.471730572@linuxfoundation.org>
- <20230920112906.975001366@linuxfoundation.org>
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20230920112906.975001366@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR06CA0201.apcprd06.prod.outlook.com (2603:1096:4:1::33)
- To PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.20; Wed, 20 Sep
+ 2023 13:45:43 +0000
+Received: from MN0PR11MB6304.namprd11.prod.outlook.com
+ ([fe80::7edc:de45:7f2d:9ade]) by MN0PR11MB6304.namprd11.prod.outlook.com
+ ([fe80::7edc:de45:7f2d:9ade%4]) with mapi id 15.20.6792.026; Wed, 20 Sep 2023
+ 13:45:42 +0000
+Date: Wed, 20 Sep 2023 21:36:11 +0800
+From: Feng Tang <feng.tang@intel.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+CC: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>, "linux-mm@kvack.org"
+	<linux-mm@kvack.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
+ calc_slab_order()
+Message-ID: <ZQr1SwNeNA+nTpzW@feng-clx>
+References: <20230908145302.30320-6-vbabka@suse.cz>
+ <20230908145302.30320-10-vbabka@suse.cz>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230908145302.30320-10-vbabka@suse.cz>
+X-ClientProxiedBy: SI2PR04CA0004.apcprd04.prod.outlook.com
+ (2603:1096:4:197::22) To MN0PR11MB6304.namprd11.prod.outlook.com
+ (2603:10b6:208:3c0::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -79,133 +91,145 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|DM6PR10MB4347:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64585213-c7ab-4e79-8fba-08dbb9dd8b4c
+X-MS-TrafficTypeDiagnostic: MN0PR11MB6304:EE_|SN7PR11MB8041:EE_
+X-MS-Office365-Filtering-Correlation-Id: 872d16f0-32aa-4fa3-80c9-08dbb9dfe1d2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	Wq5dN8i9xMo6td0jf98Vlwdwcuo3UUE+TPej1w3wfJN51OAYR16cMWyKYaYYtbhP7akE16dsbtB6t7bJfZ21XwaBsc1Ck6do7F0X3KmxyxhrD49ErMPoAp070Qzslr4M7h1Rast/wBc1vELa/qpqZFw0ThietCQmkITF3zpSRq0fEpnvQ1WRjb+nsfkvmNdXRVoLnPAFzneDYsV5020Kc8/Z1eiPFj1rS2GpMzug+shxs1P+MrYacTTE7RdfsW0ePWuIGQC3+1T8knDYzGOQJGlZ6hMlxt996lBZTbFIP5KiOkdcHMw86Dhr8B8QQctyso7h1bGxN5jnQbyTCTZBGkN45raxmaWxMvfVm4ycdqoWfFHf7CbcfFm1zEKslg8myLEP2c9wSm2SU4xF6KGBL66QmzHHAARPbUTOv0DWMxQ/HwwsFtFQzcGqnLDAVU+D0lPx/w4Zw8X+w/zEdrl3iCGxjl7U78X/X8sY13XIOlxcwtQY7KcMW9wzCa0shoblqfPRsBRZMNKCSh+dwJIoIJecvPVogwzo1FWx029BkQpMyv9FJ4kcN8Y76jcgLmxMDqmdOqDTKxrXB07Yyq8doWKunBJ2pCIcXO/OWqg0DjE11IL8ZXp6duiC79674WBh69ZBvrSI0WCUyyM0KeNiOQ==
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(136003)(376002)(396003)(366004)(346002)(186009)(451199024)(1800799009)(53546011)(36756003)(6512007)(6666004)(6506007)(6486002)(38100700002)(83380400001)(86362001)(31696002)(107886003)(2616005)(66476007)(26005)(110136005)(41300700001)(66946007)(316002)(66556008)(54906003)(478600001)(2906002)(5660300002)(8936002)(4326008)(31686004)(8676002)(966005)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: zd6B4Uch2EdrNmh7tfyom90unrDRpIUmZ+ylvyi9nsrWtRiKAIAnmutgPVQZFTi5QjTnnHPbEFqXRWkRgyLHr9u991+y3fodwSwIY48mDZmdebBM+47nv3mnr/whSZ8enBb9Wyz9c9FlF2RWMfdbK9Mpmzm3I8huNzdJjhxUFcsnh4m46ULkwye43hZrPaA14anYc+UyNZKMp5jTJEUaS33cP8N5UkQkNNImEwv/dfxUqsySbwP8ztF9O63dMpTnmfMnautqTdsoGUvyuvhvqKvwwUzgTqAq5s9RCRXCE4Mj/Tcxh1YtjLJScUinAsvlDlHJ+I7BQWNw8Aj0u5Zo09Ji+M5JJe43Zcbs/jHHZ8dGWy6twBTEUKzUbgFN+qRnbDD4+2sjubgoT47LPSlGaEyb3670oMd65Xae4/bUIFms0BUkSP42fiQFFonhUfKRj/v/fsfRd1D++lcigik7Hsta19jOqdC4ANwy+0jQNuDQdhn9xGjMHvXU+e9bnVfdmOBINYybxQBXUNuLhpI4JorVG4v28IBhaNm66zbSrFEeNf8UVO4rFT9YElUTjkoZi4dKjgT77o2eaVhUzdakcWdYkRXMjIeGRNckWTnXvuo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR11MB6304.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7916004)(346002)(376002)(366004)(136003)(39860400002)(396003)(451199024)(1800799009)(186009)(38100700002)(6512007)(6486002)(9686003)(6666004)(26005)(6506007)(86362001)(82960400001)(41300700001)(33716001)(7416002)(2906002)(478600001)(5660300002)(83380400001)(8936002)(316002)(44832011)(6916009)(66556008)(4326008)(66946007)(54906003)(8676002)(66476007)(67856001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?ZTVsYjVEU1NhQTEycGRibmdJMS9FRUNpamI1TENFVnJPK2JIcEswZjVCREdu?=
- =?utf-8?B?clpZL3V4bUtML01YZ3JUSUJ5WDA2YzQxclVFR3FBVmJiTUdqMHZ3NnZaK1JG?=
- =?utf-8?B?WEpUYWo1MGh0LzlIS2ZKWDNLNU5DY2t2T3NuMjIzS3dtYm4wSHNJemw2a3lB?=
- =?utf-8?B?elVpVVluelZIS3FicTFicTZqMFg4ME1VOTZWYWMrUHNKYnVBZmxxOWRONkRG?=
- =?utf-8?B?VDdYQ2pvaW9lamJyd0Ywb3ZIMG5yYncwdU9XeHFiWnJBOUlvcVl5alhCUTdU?=
- =?utf-8?B?WHU1c0ZiZVg2ZUMyT2xiYnk5Zy8zQVlLMXpIRG52d0RvVFhqT3hRU1hQNHU2?=
- =?utf-8?B?NEV5S09VYUhKdHJJQ1lWb2NRa1VGcVo5MXZyUlRSMWl2bVpxOUJOR081U205?=
- =?utf-8?B?bDdBRE41SWlOcDNOZDhzdVlNR2x6KzV0d29Ha0dWdTRaUysyUDlZNHVnY0Ev?=
- =?utf-8?B?WGlnWlhZWWhDSDlnRG1XQWpjNFJ6aTFFSVZqNDFjMkRlWGx2N2NUT2RPa2pj?=
- =?utf-8?B?aVR1cVE5RVZZZi9SU1NqMEk4VjlQd1daLzJibWNkOUsxOGtsdGZnQ3BnQmVI?=
- =?utf-8?B?MzNKQ09oRHg0Q3VrdHpPUnhKZ2VOOHI1SjFVOVliNmtyRU5Dc1hmdmVId05L?=
- =?utf-8?B?eWlBVVMzMFpMOWZPWWVJd0h0TWs3RFFtd0d4UENTQ2g2eWIwNTUzRHhoR1pT?=
- =?utf-8?B?OWZzQmdOR21QbzZkSGpoQWdxMXpwRlFSbUhLUHlVQkFTR2VQbHpJMFdsR0k3?=
- =?utf-8?B?L3BPenZDVTVoZW4rdHFSaVAzNGlMUVlneTIzcDh5WTRnUjljVG1pYTZiQ1Qx?=
- =?utf-8?B?cWJiSEdpQ3B3bG9OTnhkejZVYVlZNEMwNGw5b0s0NHp3YW1qRktjL3lpcDJs?=
- =?utf-8?B?SXpMNng0eFFVR3pPbSt4QzUxOEhPNlJMSitNeXZUWE1PVmpxWXBMSnRHQVBI?=
- =?utf-8?B?aDhtNlVQTStzZmZIV0E0dTJtL1ZESTg2UUtxNGxLU3RabkNCL1NINW1mT0RD?=
- =?utf-8?B?dHd0ZXc3MmR5UzdhMDQya3p5SXdXRU1EeldDRVRIdTNtSjViSi81cVVBNUUv?=
- =?utf-8?B?MDRLMzdWS3ZmSno3QlpNOVc4MFZXYVlrNmIwTWFXZlRqcFhrVTVjTlNoc21m?=
- =?utf-8?B?NjZqY1RkOVlOVE92QStBYW9aZ1VWZERKVXhNcXRXbEN5RmxpUUE0SzdkcUE0?=
- =?utf-8?B?eUlhRE5PV1IzTGs2aHpCS1VOeHI4OGF1ODFsaUF3ZGpaNmtOd001SjdSMyto?=
- =?utf-8?B?cVJOdnhIdzlPcTRQdjZwUnVleEJDMmczeUtFdGhZOTY3M0k1SXhlL1R2MndO?=
- =?utf-8?B?aTVtblVBMFovS3ZrdVh6SGE0bXhSSktXT1pHQzkyeElJTUYydnJuVndTcHJV?=
- =?utf-8?B?OWhOblRHYm1hYW5oVEVEcVlaYnFMcXVaa0ZnNko5bkdHREFXUlJheDhLeXJC?=
- =?utf-8?B?cEU5amhSSFVEbHdQTzYrclhWOEJQUVRwczNSVURodE95RXNuL0ZtQkl4eWRY?=
- =?utf-8?B?ZVZrNVdScWNQU2w0bm9TdHVTNTlnMTU1VG5TaENVTkNoQ2xsRkFuNFByb2dr?=
- =?utf-8?B?azJ2LzJEUnVHdjlCaHRwQ0tUeU9GaUNrU0xUOEMxazFPWXFyVGprOUhiUWV0?=
- =?utf-8?B?ckdhdGtCeDJLSFNlU00rWHZNSjNvOGlDL0YvOHB4c2lwcDFTYTgxWFk0NCtl?=
- =?utf-8?B?ODZGdjVHWlVCdTJGMHpFL1M5SWlobXpGc2lHMXB5K0Z4Y3pIWTJtbDM2S1RV?=
- =?utf-8?B?ZXpsVnZQRDZwOEJ1Q3ovbi9lRDRjWEgrYXJKZVh2RnlBMVRIS1gydFpBY2FC?=
- =?utf-8?B?TkV3WHFTVWY2T0JBU0ZmU01TNUc5TTNndVlxVU5Cc3pUTXBSdGZaRTVwMGFv?=
- =?utf-8?B?cGIzSzlGbThtZWIvalQrYkx4V2hlbEVPTU4zUUV5NG5xQ0xZMzdqdGd5dHRk?=
- =?utf-8?B?MDF2UDVZQTEwK0t0NDJ3d1laNENONGxJUzhLYjVtRWtGWUJZbUVHY29XTEpy?=
- =?utf-8?B?RXFUYWxobEh5WEN6YVNIa1ZjSjBpb1NUTncrSVUwZEQ1akNTSTZIYzY2djNj?=
- =?utf-8?B?VjZ5c3Z4a21xc2x3clh3ZFh3WlNqUUhwQ0ljQkFyMGthVktlTDVyTkxnbUdW?=
- =?utf-8?B?emFLdklrWlhWT0ZuR2Y3M2p1ZWNnV0VlNUF6ZjcxOWhveVlHOURXcFZMZkhi?=
- =?utf-8?Q?pIB+OiikDAKkW4wQ5WNNquY=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	eiwfL24ALNqVgbpztDSabvvEhMqzaKKz+gpttu0WHm7nZgV3vkEGk0fXqK2wMK+WdFrlXBC5BNmAURiVYPu3x3XsQBuqxwU9LzYPl7hL5LR3BjDCUgkLmQHDFdH3Rp582CoQ/3i3TQ7fyF9A6d8ecgfQSBeCvcWGBhyvboDLbRl8htxqBFuTENl6jZCmKDEG4kn9I69Qbe60NDAdedHejml0sNX5wNihrGD/dO/xAdiTmXsD6t2wtGvoY0TJjL9LNFBnbaccV9/z7utSLxavH7zPpkgidD2U0NwKz2V2Q1JDXwaAIJkkC/K1rCloGTsFQqjFvyhjY4Kk3lKkvGbrpLIauzmSt7yxHdQmRstciNU34pPh8hJ5n9Wk/O2KJvQoBeF+jnQjbWjOD75FcdcAuWmDUVNJQFQXeY5Wn7LeXaDYGvD7CCBAOlkbfqqYTOKXEQvHpTHq6DnmoINjkP51jJhecc8mU/Zcn9/oqgv9WTNSK699sapEK4+SlSOgHxTZdqgno+0t/IN/wkmbVQ5saHAN5B5NvYytRreiifJq9KbTiGNVPNMyf59qvJC1p/khHnPYFdolFyaViXwxDAQgbtLNXC0pauxM50Ry36XuhT3rocFM92y4nO0hSRgHG3i/tZPY3NJvXA8Se5ZblIwE3qV8QJOUe1NuqgV5py9O3jf9Aq0x7rW8pqaShZg0PS76JEb3yHN/8Bs4s79YV1Qny79q4V/fQag9Yik25abKRr6sBPoG8c85ZhvF8Ceb2uAhheR8C3rVjsYUmdrib5H5C/3zKMQrwLdUwREaZhuFW1UtDTdbHGpl5Lz87HK2GlsVpq2rBxM89f4wv3yUvxrereine/UtY9kDlBR0DF9N4WPYfLQ0BFIMEkuehzQjNH9uCxyjMFGI8s8UpV6Cgg0WGZynTKfq1CXdwqOYhKoB4Vo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64585213-c7ab-4e79-8fba-08dbb9dd8b4c
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Rv6o3D3TszUBPfX3ofM6jbDIT7VEUdW/En6xsYrSAbYrvn0kYTC9UhXxpNj/?=
+ =?us-ascii?Q?u6d4GFnxqYyGJaM3XTy9rt1proHa4c816GUubVTYg2F34O3/IZ4kixNCKWFz?=
+ =?us-ascii?Q?W19BvU3PMF45xHmIv+nUw82xaL81r02Nvy78gOqc3jS/M2zWoGHPvqlmiLdd?=
+ =?us-ascii?Q?KwLfl68r/BjNDjnY/lgCDdHmsLuzRP/F1E0y436pTtvSzNSodEEyU5floW8y?=
+ =?us-ascii?Q?e9fKsRh6cefnQmPPL9nKf9Esi5Mj1illmBlotutL7J9IE+AjfaOFXYJh0LBm?=
+ =?us-ascii?Q?2dDBl1ebkCulochodK8wx+gOaJ40gjd25oQxVwSGMU0x/00NEmwASXc/sfYw?=
+ =?us-ascii?Q?cXjH0T79pXZ79m9Hdux+e5Mvn3QKZyBE5RQD5STD/n2FKZZ0dOGBBu+HufTC?=
+ =?us-ascii?Q?iLrMaRTBJNqPGYQNk48jKeUC0FdR0TtbAU+2TnXBnciD+mpBG7jeacKTNaoy?=
+ =?us-ascii?Q?0gUC0vHKE01uS7R/ENhWGPp0Skzb9SFdiqSKMh3NmV3l7gY9p7d01CrZogxh?=
+ =?us-ascii?Q?ispnS9cFd5L5itQL91vcwRSk7NjrYtb5KQR7r01pRcNLEu6/WUPLlgLd+CkD?=
+ =?us-ascii?Q?O0cdGYE+SQupDosBVuYxHNE1bcNKFJX8X+Dzd6HEAzduJyzXPk5WmG6vzbW6?=
+ =?us-ascii?Q?jiGMZM6bIYjsk+f0QxSZVobvSOplaCjhUWJo7CD2OWoaQPhcVM1WlAxesp0D?=
+ =?us-ascii?Q?LpIC1kndoM8CrcYsmebnMk17Bv00Y6pHfhXdiW9RnJfBDzh+hhjomsRJKUPK?=
+ =?us-ascii?Q?QcYqCOQ7WuPrk8NGFAyu6Gwlp9pHHU0+9mnB0dC1hFd2KP8xiOy39jILcpFh?=
+ =?us-ascii?Q?NAN4a97TB6h1ZIuGxH2S7w6Kg+amnE2O5CelGWUOA+7muH6mj17mJwry4xOg?=
+ =?us-ascii?Q?7ptcn4a78UrBLYcgM2ZZFzQ3ImBvrpOVWLxvGCCV+uVBKIz/Clayq+GjVDZO?=
+ =?us-ascii?Q?O9yqcyW+AqRB83r3CAijak29cSYi4xw/MJc+KVgoh60pakV06MBNgWvL0SLk?=
+ =?us-ascii?Q?k5pCYWULDLhkkiFMuIhGfWnZhH9oYMubAlsC53RrChnMypl6nCr89DgrbUnc?=
+ =?us-ascii?Q?0a0MbiJ+qyMQiQJ5ZAKJvex7bpoSOUD0UqesKYCL2Boybv/i6j6Vf06ZlyyJ?=
+ =?us-ascii?Q?Bja3Nt/AMxYiA/yj0gerUvSNkNFAFIPbnwawV6V27poSzOxUidOdeMCSl1o6?=
+ =?us-ascii?Q?1ybmK69RCb4UNZO71wp0vwmveNf5dHKegmOBMs29sKekxQ38uZQ6eEcffQpA?=
+ =?us-ascii?Q?I/TEkYi/JQvg6tSXRtStqY0PDsJnjKb2sg9mY3YzQMt0t8yadBhLT10ennkA?=
+ =?us-ascii?Q?W1J1i+jzgT321k2LO1wZ+NT+R3UbflG1eBXIllaR5yDWrSdSZL1xxWvV1+Vz?=
+ =?us-ascii?Q?DbsPldJYVR1yVEAG/IvDEoVGpxvnIq2OnUoG1tTbP0MNB9JqDMer97zl3OqJ?=
+ =?us-ascii?Q?F2RjwyChjy+uqPHs4aHdfVTs5k4IJgLY8E2v9h7dpyl71OMfFpR+R6OMZHd0?=
+ =?us-ascii?Q?reGIMmx4tj6kw05cp6OtOc3qSL91ZorQHnv57zBrIgEUDErIfeb4BSqUtpk5?=
+ =?us-ascii?Q?qBYMl0KUo4V8v3mYRiKeCyskwEa4va74y9S2Ia2v?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 872d16f0-32aa-4fa3-80c9-08dbb9dfe1d2
+X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB6304.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2023 13:28:58.1778
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2023 13:45:42.2397
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jcpBhXeS/IIL4G/p5kUNpqb3L+5X2EmCyao0xvq2CYU4zWQuJV7zJDfQLMmngDcRtGhlqHhYS8zHqvVRzJIa1BNcycThBuM2516YSytjAAKQnjYoT2zcarB3gU1h1fTa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4347
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-20_05,2023-09-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 malwarescore=0
- adultscore=0 suspectscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309200110
-X-Proofpoint-ORIG-GUID: Z6tyNY_ew_W8-fGd3Xfh4zeeJ9jUS_QJ
-X-Proofpoint-GUID: Z6tyNY_ew_W8-fGd3Xfh4zeeJ9jUS_QJ
+X-MS-Exchange-CrossTenant-UserPrincipalName: I4m/eli1qwYa+5bhn3sHGZ4hF/PPZ22YbG0l9Et1byeplBhp5Yzezntb3cxQMZRu+e6OsrNEYcXuy/qnxSrB1w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB8041
+X-OriginatorOrg: intel.com
 
-Hi Greg,
+On Fri, Sep 08, 2023 at 10:53:07PM +0800, Vlastimil Babka wrote:
+> After the previous cleanups, we can now move some code from
+> calc_slab_order() to calculate_order() so it's executed just once, and
+> do some more cleanups.
+> 
+> - move the min_order and MAX_OBJS_PER_PAGE evaluation to
+>   calc_slab_order().
 
-On 20/09/23 5:01 pm, Greg Kroah-Hartman wrote:
-> 5.4-stable review patch.  If anyone has any objections, please let me know.
+Nit: here is to 'move ... to calculate_order()'?
+
+I tried this patch series with normal boot on a desktop and one 2
+socket server: patch 2/4 doesn't change order of any slab, and patch
+3/4 does make the slab order of big objects more consistent.
+
+Thanks for making the code much cleaner! And for the whole series, 
+
+Reviewed-by: Feng Tang <feng.tang@intel.com>
+
+> - change calc_slab_order() parameter min_objects to min_order
 > 
-> ------------------
+> Also make MAX_OBJS_PER_PAGE check more robust by considering also
+> min_objects in addition to slub_min_order. Otherwise this is not a
+> functional change.
 > 
-> From: Hao Luo <haoluo@google.com>
-> 
-> [ Upstream commit 29d67fdebc42af6466d1909c60fdd1ef4f3e5240 ]
-> 
-> I hit a memory leak when testing bpf_program__set_attach_target().
-> Basically, set_attach_target() may allocate btf_vmlinux, for example,
-> when setting attach target for bpf_iter programs. But btf_vmlinux
-> is freed only in bpf_object_load(), which means if we only open
-> bpf object but not load it, setting attach target may leak
-> btf_vmlinux.
-> 
-> So let's free btf_vmlinux in bpf_object__close() anyway.
-> 
-> Signed-off-by: Hao Luo <haoluo@google.com>
-> Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-> Link: https://lore.kernel.org/bpf/20230822193840.1509809-1-haoluo@google.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 > ---
->   tools/lib/bpf/libbpf.c | 1 +
->   1 file changed, 1 insertion(+)
+>  mm/slub.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
 > 
-> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-> index b8849812449c3..343018632d2d1 100644
-> --- a/tools/lib/bpf/libbpf.c
-> +++ b/tools/lib/bpf/libbpf.c
-> @@ -4202,6 +4202,7 @@ void bpf_object__close(struct bpf_object *obj)
->   	bpf_object__elf_finish(obj);
->   	bpf_object__unload(obj);
->   	btf__free(obj->btf);
-> +	btf__free(obj->btf_vmlinux);
-
-
-This patch introduces a build failure.
-
-libbpf.c: In function 'bpf_object__close':
-libbpf.c:4205:22: error: 'struct bpf_object' has no member named 
-'btf_vmlinux'
-  4205 |         btf__free(obj->btf_vmlinux);
-       |                      ^~
-
-This struct member "btf_vmlinux" is added in commit a6ed02cac690 
-("libbpf: Load btf_vmlinux only once per object.") which is not in 5.4.y
-
-So I think we should drop this patch.
-
-Thanks,
-Harshit
-
->   	btf_ext__free(obj->btf_ext);
->   
->   	for (i = 0; i < obj->nr_maps; i++) {
+> diff --git a/mm/slub.c b/mm/slub.c
+> index f04eb029d85a..1c91f72c7239 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -4110,17 +4110,12 @@ static unsigned int slub_min_objects;
+>   * the smallest order which will fit the object.
+>   */
+>  static inline unsigned int calc_slab_order(unsigned int size,
+> -		unsigned int min_objects, unsigned int max_order,
+> +		unsigned int min_order, unsigned int max_order,
+>  		unsigned int fract_leftover)
+>  {
+> -	unsigned int min_order = slub_min_order;
+>  	unsigned int order;
+>  
+> -	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+> -		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+> -
+> -	for (order = max(min_order, (unsigned int)get_order(min_objects * size));
+> -			order <= max_order; order++) {
+> +	for (order = min_order; order <= max_order; order++) {
+>  
+>  		unsigned int slab_size = (unsigned int)PAGE_SIZE << order;
+>  		unsigned int rem;
+> @@ -4139,7 +4134,7 @@ static inline int calculate_order(unsigned int size)
+>  	unsigned int order;
+>  	unsigned int min_objects;
+>  	unsigned int max_objects;
+> -	unsigned int nr_cpus;
+> +	unsigned int min_order;
+>  
+>  	min_objects = slub_min_objects;
+>  	if (!min_objects) {
+> @@ -4152,7 +4147,7 @@ static inline int calculate_order(unsigned int size)
+>  		 * order on systems that appear larger than they are, and too
+>  		 * low order on systems that appear smaller than they are.
+>  		 */
+> -		nr_cpus = num_present_cpus();
+> +		unsigned int nr_cpus = num_present_cpus();
+>  		if (nr_cpus <= 1)
+>  			nr_cpus = nr_cpu_ids;
+>  		min_objects = 4 * (fls(nr_cpus) + 1);
+> @@ -4160,6 +4155,10 @@ static inline int calculate_order(unsigned int size)
+>  	max_objects = order_objects(slub_max_order, size);
+>  	min_objects = min(min_objects, max_objects);
+>  
+> +	min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
+> +	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+> +		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+> +
+>  	/*
+>  	 * Attempt to find best configuration for a slab. This works by first
+>  	 * attempting to generate a layout with the best possible configuration and
+> @@ -4176,7 +4175,7 @@ static inline int calculate_order(unsigned int size)
+>  	 * long as at least single object fits within slub_max_order.
+>  	 */
+>  	for (unsigned int fraction = 16; fraction > 1; fraction /= 2) {
+> -		order = calc_slab_order(size, min_objects, slub_max_order,
+> +		order = calc_slab_order(size, min_order, slub_max_order,
+>  					fraction);
+>  		if (order <= slub_max_order)
+>  			return order;
+> -- 
+> 2.42.0
+> 
+> 
