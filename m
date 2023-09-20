@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680992AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD581C433C8;
-	Wed, 20 Sep 2023 12:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0F52AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A426CC433C7;
+	Wed, 20 Sep 2023 12:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211323;
-	bh=mgpqCkwpTV99KSFGcW24etN+To1a4T4UIqCCosUvrbw=;
+	s=korg; t=1695211326;
+	bh=BYW8HUiBF0kyh11FNsD+N4QIkPpCb+62heK35vtFuvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=au6I1xbPC/jKrSkV2bfX7Yk4Yk0sGsHLMbKpB8vMPfeyYA58Y49tXovpw+wErkLOo
-	 94YheOsy5VvgHJfviVqQg8laQhqcBypn25D3v6RzNMkirgEPLjrsEeweTT/coAhxrZ
-	 mBqodQCO1H6V5QFQ4XUjr7gKSrwwKbl51jjUh7DI=
+	b=geexigheZhcU0sUyx9Cp4+lUOTZZlrzJBFMTGepH1SY8qe6g13mcajeT9Nz4nveBe
+	 iuJtPNhEM2MdDfa7SPrle91TNWEKX24deRc/nUPAaHYcmYRbm3ps97mSiV6FjTeqEZ
+	 3eTBzpRRxwj5rAXedoW9d+10QJiJVcV2DwIye5FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 014/186] 9p: virtio: make sure offs is initialized in zc_request
-Date: Wed, 20 Sep 2023 13:28:37 +0200
-Message-ID: <20230920112837.379095182@linuxfoundation.org>
+Subject: [PATCH 4.14 044/186] crypto: caam - fix unchecked return value error
+Date: Wed, 20 Sep 2023 13:29:07 +0200
+Message-ID: <20230920112838.529221033@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,41 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Gaurav Jain <gaurav.jain@nxp.com>
 
-[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
+[ Upstream commit e30685204711a6be40dec2622606950ccd37dafe ]
 
-Similarly to the previous patch: offs can be used in handle_rerrors
-without initializing on small payloads; in this case handle_rerrors will
-not use it because of the size check, but it doesn't hurt to make sure
-it is zero to please scan-build.
+error:
+Unchecked return value (CHECKED_RETURN)
+check_return: Calling sg_miter_next without checking return value
 
-This fixes the following warning:
-net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
-                handle_rerror(req, in_hdr_len, offs, in_pages);
-                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+fix:
+added check if(!sg_miter_next)
 
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: 8a2a0dd35f2e ("crypto: caam - strip input zeros from RSA input buffer")
+Signed-off-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>
+Reviewed-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/caam/caampkc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index c6a46e8e9eda5..25f5caa57289b 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -401,7 +401,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
- 	struct page **in_pages = NULL, **out_pages = NULL;
- 	struct virtio_chan *chan = client->trans;
- 	struct scatterlist *sgs[4];
--	size_t offs;
-+	size_t offs = 0;
- 	int need_drop = 0;
+diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
+index 6f3f81bb880b5..01f9053db287b 100644
+--- a/drivers/crypto/caam/caampkc.c
++++ b/drivers/crypto/caam/caampkc.c
+@@ -194,7 +194,9 @@ static int caam_rsa_count_leading_zeros(struct scatterlist *sgl,
+ 		if (len && *buff)
+ 			break;
  
- 	p9_debug(P9_DEBUG_TRANS, "virtio request\n");
+-		sg_miter_next(&miter);
++		if (!sg_miter_next(&miter))
++			break;
++
+ 		buff = miter.addr;
+ 		len = miter.length;
+ 
 -- 
 2.40.1
 
