@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE932AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669F3C433C7;
-	Wed, 20 Sep 2023 12:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F162AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF38C433C8;
+	Wed, 20 Sep 2023 12:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211309;
-	bh=kgar6npVGF50JuRZN75JNVmC+BnQ2fM4BcEm4T0Foo0=;
+	s=korg; t=1695211312;
+	bh=CaCIEm4SMi6wMEDqfio4vggklonxQu7lZpv0zAp+eWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YuiY8fyYNZLVez6RZ9j803qg13+RBl9Cts36+iDnc9MR+nIUduNSlkCrb4VZcjzX9
-	 rTCScL0kDfEkggCah8fjqb4cWRpeCUQvpNnb5N5Uer3h9hg5SGKzulNGUMIR3d3Sdo
-	 sqe4mFejvdu50s+kJY2QT8mIJb1MK7GJ/4xy93V8=
+	b=ji4YPs2BhovcV8GAXAwSscMWm76/2HQTEcqetEK/mapMhBppZRVQzZjq43bn9ihSU
+	 9MVAvjEDQjN8hXP5MIGgzhUbaplvCNHb3c2Ntu45Hdlb+s0dDCawxpj34MYsicLWZH
+	 AINR5niZ1yIXS/x7iALrysA8toy/YGSBtMVzlX+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Winston Wen <wentao@uniontech.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Edgar <ljijcj@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 019/186] fs/nls: make load_nls() take a const parameter
-Date: Wed, 20 Sep 2023 13:28:42 +0200
-Message-ID: <20230920112837.569626948@linuxfoundation.org>
+Subject: [PATCH 4.14 020/186] ASoc: codecs: ES8316: Fix DMIC config
+Date: Wed, 20 Sep 2023 13:28:43 +0200
+Message-ID: <20230920112837.610612182@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -43,64 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Winston Wen <wentao@uniontech.com>
+From: Edgar <ljijcj@163.com>
 
-[ Upstream commit c1ed39ec116272935528ca9b348b8ee79b0791da ]
+[ Upstream commit d20d35d1ad62c6cca36368c1e8f29335a068659e ]
 
-load_nls() take a char * parameter, use it to find nls module in list or
-construct the module name to load it.
+According to the datasheet, the DMIC config should
+be changed to { 0, 2 ,3 }
 
-This change make load_nls() take a const parameter, so we don't need do
-some cast like this:
-
-        ses->local_nls = load_nls((char *)ctx->local_nls->charset);
-
-Suggested-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Edgar <ljijcj@163.com>
+Link: https://lore.kernel.org/r/20230719054722.401954-1-ljijcj@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nls/nls_base.c   | 4 ++--
- include/linux/nls.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/es8316.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
-index 52ccd34b1e792..a026dbd3593f6 100644
---- a/fs/nls/nls_base.c
-+++ b/fs/nls/nls_base.c
-@@ -272,7 +272,7 @@ int unregister_nls(struct nls_table * nls)
- 	return -EINVAL;
- }
- 
--static struct nls_table *find_nls(char *charset)
-+static struct nls_table *find_nls(const char *charset)
- {
- 	struct nls_table *nls;
- 	spin_lock(&nls_lock);
-@@ -288,7 +288,7 @@ static struct nls_table *find_nls(char *charset)
- 	return nls;
- }
- 
--struct nls_table *load_nls(char *charset)
-+struct nls_table *load_nls(const char *charset)
- {
- 	return try_then_request_module(find_nls(charset), "nls_%s", charset);
- }
-diff --git a/include/linux/nls.h b/include/linux/nls.h
-index 499e486b3722d..e0bf8367b274a 100644
---- a/include/linux/nls.h
-+++ b/include/linux/nls.h
-@@ -47,7 +47,7 @@ enum utf16_endian {
- /* nls_base.c */
- extern int __register_nls(struct nls_table *, struct module *);
- extern int unregister_nls(struct nls_table *);
--extern struct nls_table *load_nls(char *);
-+extern struct nls_table *load_nls(const char *charset);
- extern void unload_nls(struct nls_table *);
- extern struct nls_table *load_nls_default(void);
- #define register_nls(nls) __register_nls((nls), THIS_MODULE)
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index fad918c44ec97..75a6b8b4e9c09 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -145,7 +145,7 @@ static const char * const es8316_dmic_txt[] = {
+ 		"dmic data at high level",
+ 		"dmic data at low level",
+ };
+-static const unsigned int es8316_dmic_values[] = { 0, 1, 2 };
++static const unsigned int es8316_dmic_values[] = { 0, 2, 3 };
+ static const struct soc_enum es8316_dmic_src_enum =
+ 	SOC_VALUE_ENUM_SINGLE(ES8316_ADC_DMIC, 0, 3,
+ 			      ARRAY_SIZE(es8316_dmic_txt),
 -- 
 2.40.1
 
