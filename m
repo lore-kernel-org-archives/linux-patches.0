@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DD18465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3732C433C9;
-	Wed, 20 Sep 2023 11:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314D38465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBA8C433C8;
+	Wed, 20 Sep 2023 11:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210333;
-	bh=GdzxupQRlJLl3CgytiPSxI59eS/enp+Pbi3hg6rYtaM=;
+	s=korg; t=1695210336;
+	bh=7I5v5eFuInLWgLHTZxi5VnFYUMPHy7+woRbEsUEb3Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5ltN27tnaxnFeu8NpzCyCx2jW9CscTYYJI2RHZqCvPzEo83rsnAkeIJrsig1WZrA
-	 8kMNt/rb7yl79kGBvZARsW3Q9kkHbB4IXYkVabufs2IbT/ZgAB3h0cuGWvEftsnJnY
-	 ht3mn0KMc5HAtQq0O6yylI7nT9B5SKihPhFr/AvM=
+	b=A4k6fELanaUfi0m/mkY8vHTZydKd23W5+e7g5cA0kkxss8YL0XQLp9vmhU/GQ4us9
+	 6WCIk5XRXXAz8UIUW3VSnOUJ3fGQdJAtzrFgu40CIVJof0AAkXOgLHgOJYlswfuRBX
+	 AiMkX6l4pWvRYgH+AiGEVndB2N7fPR+x2tm3gIxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark ODonovan <shiftee@posteo.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Valentin David <valentin.david@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 039/211] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
-Date: Wed, 20 Sep 2023 13:28:03 +0200
-Message-ID: <20230920112847.003629479@linuxfoundation.org>
+Subject: [PATCH 6.5 040/211] Bluetooth: btusb: Add device 0489:e0f5 as MT7922 device
+Date: Wed, 20 Sep 2023 13:28:04 +0200
+Message-ID: <20230920112847.034393206@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,43 +40,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark O'Donovan <shiftee@posteo.net>
+From: Valentin David <valentin.david@gmail.com>
 
-[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
+[ Upstream commit e160a8f4e920e5cf4e16a17f57367954c9436aea ]
 
-During NVMeTCP Authentication a controller can trigger a kernel
-oops by specifying the 8192 bit Diffie Hellman group and passing
-a correctly sized, but zeroed Diffie Hellamn value.
-mpi_cmp_ui() was detecting this if the second parameter was 0,
-but 1 is passed from dh_is_pubkey_valid(). This causes the null
-pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
+Asus ROG Ally gaming computer has a MediaTek MT7922 chip that uses USB id
+0489:e0f5 and needs to be added to the table. Without this, the device is
+not usable and gives the following error:
 
-Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Bluetooth: hci0: Opcode 0x c03 failed: -110
+
+Output from /sys/kernel/debug/usb/devices:
+
+T:  Bus=01 Lev=01 Prnt=01 Port=03 Cnt=03 Dev#=  4 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e0f5 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Valentin David <valentin.david@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpi-cmp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
-index c4cfa3ff05818..0835b6213235e 100644
---- a/lib/mpi/mpi-cmp.c
-+++ b/lib/mpi/mpi-cmp.c
-@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
- 	mpi_limb_t limb = v;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index e685acc5cacd9..e5c7852f8b133 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -628,6 +628,9 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x0489, 0xe0f2), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
++	{ USB_DEVICE(0x0489, 0xe0f5), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
  
- 	mpi_normalize(u);
--	if (!u->nlimbs && !limb)
--		return 0;
-+	if (u->nlimbs == 0) {
-+		if (v == 0)
-+			return 0;
-+		else
-+			return -1;
-+	}
- 	if (u->sign)
- 		return -1;
- 	if (u->nlimbs > 1)
+ 	/* Additional Realtek 8723AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
 -- 
 2.40.1
 
