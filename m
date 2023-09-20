@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A590168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:46:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71D5C433CB;
-	Wed, 20 Sep 2023 12:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA046168A9
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722FCC433C8;
+	Wed, 20 Sep 2023 12:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214019;
-	bh=06kRVzEeMqIj8oxoBuN3s9RA3eQDIm4tenDzwULI4OU=;
+	s=korg; t=1695214021;
+	bh=wwRXJpWXD8pGeZfh19nYj0y0P2a72MCO7mL6+D3vK+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5QO3uARW30Rt60MmJwE7otggzLcY2rz2sQwPDeGZCBM6n79bU8UrrggKZBv5TU6m
-	 nufuqQDJiDqWi57Rv0qpCvMPCzT4DwB8FtWgQndAtf7n0ma/q7G+0rliLlPlhaHBlj
-	 neaLdB6bzEscjWYSseJSwCmpJdDROjmBzCjhbZsM=
+	b=Gxaz9sY9pMfUk+USyDzaEzcAqOTLnbsVfHYX3KorNz61bCIIqYz2/3mS8dKMgPlPn
+	 fq8mwZ+r/C7JZbxuFsFl6BCQO98CVKzNqe0HZYBV8rXLn0RRh2ipo+4skLfTifdWhV
+	 /A+i3eTfnHhKYMDyv4bxWl263VmI4+7FJyhcOXBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/110] netfilter: nf_tables: make validation state per table
-Date: Wed, 20 Sep 2023 13:32:20 +0200
-Message-ID: <20230920112833.489041399@linuxfoundation.org>
+Subject: [PATCH 5.15 057/110] media: pci: ipu3-cio2: Initialise timing struct to avoid a compiler warning
+Date: Wed, 20 Sep 2023 13:31:55 +0200
+Message-ID: <20230920112832.533586847@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,170 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 00c320f9b75560628e840bef027a27c746706759 ]
+[ Upstream commit 9d7531be3085a8f013cf173ccc4e72e3cf493538 ]
 
-We only need to validate tables that saw changes in the current
-transaction.
+Initialise timing struct in cio2_hw_init() to zero in order to avoid a
+compiler warning. The warning was a false positive.
 
-The existing code revalidates all tables, but this isn't needed as
-cross-table jumps are not allowed (chains have table scope).
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Reported-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  3 ++-
- net/netfilter/nf_tables_api.c     | 38 +++++++++++++++----------------
- 2 files changed, 20 insertions(+), 21 deletions(-)
+ drivers/media/pci/intel/ipu3/ipu3-cio2-main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 1458b3eae8ada..b8d967e0eb1e2 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1183,6 +1183,7 @@ static inline void nft_use_inc_restore(u32 *use)
-  *	@genmask: generation mask
-  *	@afinfo: address family info
-  *	@name: name of the table
-+ *	@validate_state: internal, set when transaction adds jumps
-  */
- struct nft_table {
- 	struct list_head		list;
-@@ -1201,6 +1202,7 @@ struct nft_table {
- 	char				*name;
- 	u16				udlen;
- 	u8				*udata;
-+	u8				validate_state;
- };
+diff --git a/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c b/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
+index 3a8af3936e93a..162ab089124f3 100644
+--- a/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
++++ b/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
+@@ -345,7 +345,7 @@ static int cio2_hw_init(struct cio2_device *cio2, struct cio2_queue *q)
+ 	void __iomem *const base = cio2->base;
+ 	u8 lanes, csi2bus = q->csi2.port;
+ 	u8 sensor_vc = SENSOR_VIR_CH_DFLT;
+-	struct cio2_csi2_timing timing;
++	struct cio2_csi2_timing timing = { 0 };
+ 	int i, r;
  
- static inline bool nft_table_has_owner(const struct nft_table *table)
-@@ -1682,7 +1684,6 @@ struct nftables_pernet {
- 	struct mutex		commit_mutex;
- 	u64			table_handle;
- 	unsigned int		base_seq;
--	u8			validate_state;
- };
- 
- extern unsigned int nf_tables_net_id;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index d84da11aaee5c..dde19be41610d 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -102,11 +102,9 @@ static const u8 nft2audit_op[NFT_MSG_MAX] = { // enum nf_tables_msg_types
- 	[NFT_MSG_DELFLOWTABLE]	= AUDIT_NFT_OP_FLOWTABLE_UNREGISTER,
- };
- 
--static void nft_validate_state_update(struct net *net, u8 new_validate_state)
-+static void nft_validate_state_update(struct nft_table *table, u8 new_validate_state)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
--
--	switch (nft_net->validate_state) {
-+	switch (table->validate_state) {
- 	case NFT_VALIDATE_SKIP:
- 		WARN_ON_ONCE(new_validate_state == NFT_VALIDATE_DO);
- 		break;
-@@ -117,7 +115,7 @@ static void nft_validate_state_update(struct net *net, u8 new_validate_state)
- 			return;
- 	}
- 
--	nft_net->validate_state = new_validate_state;
-+	table->validate_state = new_validate_state;
- }
- static void nf_tables_trans_destroy_work(struct work_struct *w);
- static DECLARE_WORK(trans_destroy_work, nf_tables_trans_destroy_work);
-@@ -1286,6 +1284,7 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (table == NULL)
- 		goto err_kzalloc;
- 
-+	table->validate_state = NFT_VALIDATE_SKIP;
- 	table->name = nla_strdup(attr, GFP_KERNEL);
- 	if (table->name == NULL)
- 		goto err_strdup;
-@@ -3650,7 +3649,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 		}
- 
- 		if (expr_info[i].ops->validate)
--			nft_validate_state_update(net, NFT_VALIDATE_NEED);
-+			nft_validate_state_update(table, NFT_VALIDATE_NEED);
- 
- 		expr_info[i].ops = NULL;
- 		expr = nft_expr_next(expr);
-@@ -3704,7 +3703,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (flow)
- 		nft_trans_flow_rule(trans) = flow;
- 
--	if (nft_net->validate_state == NFT_VALIDATE_DO)
-+	if (table->validate_state == NFT_VALIDATE_DO)
- 		return nft_table_validate(net, table);
- 
- 	return 0;
-@@ -6347,7 +6346,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 			if (desc.type == NFT_DATA_VERDICT &&
- 			    (elem.data.val.verdict.code == NFT_GOTO ||
- 			     elem.data.val.verdict.code == NFT_JUMP))
--				nft_validate_state_update(ctx->net,
-+				nft_validate_state_update(ctx->table,
- 							  NFT_VALIDATE_NEED);
- 		}
- 
-@@ -6465,7 +6464,6 @@ static int nf_tables_newsetelem(struct sk_buff *skb,
- 				const struct nfnl_info *info,
- 				const struct nlattr * const nla[])
- {
--	struct nftables_pernet *nft_net = nft_pernet(info->net);
- 	struct netlink_ext_ack *extack = info->extack;
- 	u8 genmask = nft_genmask_next(info->net);
- 	u8 family = info->nfmsg->nfgen_family;
-@@ -6503,7 +6501,7 @@ static int nf_tables_newsetelem(struct sk_buff *skb,
- 			return err;
- 	}
- 
--	if (nft_net->validate_state == NFT_VALIDATE_DO)
-+	if (table->validate_state == NFT_VALIDATE_DO)
- 		return nft_table_validate(net, table);
- 
- 	return 0;
-@@ -8600,19 +8598,20 @@ static int nf_tables_validate(struct net *net)
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct nft_table *table;
- 
--	switch (nft_net->validate_state) {
--	case NFT_VALIDATE_SKIP:
--		break;
--	case NFT_VALIDATE_NEED:
--		nft_validate_state_update(net, NFT_VALIDATE_DO);
--		fallthrough;
--	case NFT_VALIDATE_DO:
--		list_for_each_entry(table, &nft_net->tables, list) {
-+	list_for_each_entry(table, &nft_net->tables, list) {
-+		switch (table->validate_state) {
-+		case NFT_VALIDATE_SKIP:
-+			continue;
-+		case NFT_VALIDATE_NEED:
-+			nft_validate_state_update(table, NFT_VALIDATE_DO);
-+			fallthrough;
-+		case NFT_VALIDATE_DO:
- 			if (nft_table_validate(net, table) < 0)
- 				return -EAGAIN;
-+
-+			nft_validate_state_update(table, NFT_VALIDATE_SKIP);
- 		}
- 
--		nft_validate_state_update(net, NFT_VALIDATE_SKIP);
- 		break;
- 	}
- 
-@@ -10344,7 +10343,6 @@ static int __net_init nf_tables_init_net(struct net *net)
- 	INIT_LIST_HEAD(&nft_net->notify_list);
- 	mutex_init(&nft_net->commit_mutex);
- 	nft_net->base_seq = 1;
--	nft_net->validate_state = NFT_VALIDATE_SKIP;
- 
- 	return 0;
- }
+ 	fmt = cio2_find_format(NULL, &q->subdev_fmt.code);
 -- 
 2.40.1
 
