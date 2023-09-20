@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BED2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B41C433CB;
-	Wed, 20 Sep 2023 12:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73D02AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F236C433C7;
+	Wed, 20 Sep 2023 12:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211333;
-	bh=0GaRIkzcwfNPkPxdvfLRt3dimsBKMKruk1Vf9abC/VY=;
+	s=korg; t=1695211336;
+	bh=VfdO7d7WvdFDHIqT+fRZLWoXV341n7O4nQiretivYKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UL7nWecKJN/IjLNwQDv8fysayxqAPpn/Ywyh1gl5NKmuDNMPjqCOrL/Yxcx4jWrWp
-	 xRqBfTvLr8J4gdUkkdbFf3FwSecMkBtQjfswdXQiW2mVa+erOdZ8cAbG5gmHnbsYXp
-	 NyEfeIdNMrsuI5RhJUQ+ITpIdNpDE3i5Wx7xE0XU=
+	b=01uTfGjewxwukc+2w3mCn0tlIVrRfn8htoHz5jK7uyFRxI+boCogIjKpiu0z2WOnR
+	 TCMfS+YJYmhvZTLQ0bYSSd58evqlUQn/tJEjjn1Gz3Q8jE8eb6zCkd8SvWl4nqAaP+
+	 DeTjcamrsxcJy0y61A7bQ/pc5nHovgSNTOy0rdFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 055/186] ARM: dts: BCM53573: Use updated "spi-gpio" binding properties
-Date: Wed, 20 Sep 2023 13:29:18 +0200
-Message-ID: <20230920112838.896837720@linuxfoundation.org>
+Subject: [PATCH 4.14 056/186] ARM: dts: samsung: s3c6410-mini6410: correct ethernet reg addresses (split)
+Date: Wed, 20 Sep 2023 13:29:19 +0200
+Message-ID: <20230920112838.934221829@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -34,56 +34,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2c0fd6b3d0778ceab40205315ccef74568490f17 ]
+[ Upstream commit cf0cb2af6a18f28b84f9f1416bff50ca60d6e98a ]
 
-Switch away from deprecated properties.
+The davicom,dm9000 Ethernet Controller accepts two reg addresses.
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-sck: False schema does not allow [[3, 21, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-miso: False schema does not allow [[3, 22, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-mosi: False schema does not allow [[3, 23, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: 'sck-gpios' is a required property
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: Unevaluated properties are not allowed ('gpio-miso', 'gpio-mosi', 'gpio-sck' were unexpected)
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-4-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: a43736deb47d ("ARM: dts: Add dts file for S3C6410-based Mini6410 board")
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20230713152926.82884-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm947189acdbmr.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/s3c6410-mini6410.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/bcm947189acdbmr.dts b/arch/arm/boot/dts/bcm947189acdbmr.dts
-index ef263412fea51..02c916bedd281 100644
---- a/arch/arm/boot/dts/bcm947189acdbmr.dts
-+++ b/arch/arm/boot/dts/bcm947189acdbmr.dts
-@@ -61,9 +61,9 @@ wps {
- 	spi {
- 		compatible = "spi-gpio";
- 		num-chipselects = <1>;
--		gpio-sck = <&chipcommon 21 0>;
--		gpio-miso = <&chipcommon 22 0>;
--		gpio-mosi = <&chipcommon 23 0>;
-+		sck-gpios = <&chipcommon 21 0>;
-+		miso-gpios = <&chipcommon 22 0>;
-+		mosi-gpios = <&chipcommon 23 0>;
- 		cs-gpios = <&chipcommon 24 0>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+diff --git a/arch/arm/boot/dts/s3c6410-mini6410.dts b/arch/arm/boot/dts/s3c6410-mini6410.dts
+index de04d8764b0f9..98de4ea8b8bca 100644
+--- a/arch/arm/boot/dts/s3c6410-mini6410.dts
++++ b/arch/arm/boot/dts/s3c6410-mini6410.dts
+@@ -61,7 +61,7 @@ srom-cs1@18000000 {
+ 
+ 		ethernet@18000000 {
+ 			compatible = "davicom,dm9000";
+-			reg = <0x18000000 0x2 0x18000004 0x2>;
++			reg = <0x18000000 0x2>, <0x18000004 0x2>;
+ 			interrupt-parent = <&gpn>;
+ 			interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
+ 			davicom,no-eeprom;
 -- 
 2.40.1
 
