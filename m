@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CEC3AC21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CEBC433C7;
-	Wed, 20 Sep 2023 12:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9B03AC00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A4FC433C8;
+	Wed, 20 Sep 2023 12:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213097;
-	bh=7IEZCg2MkSoTzyOT7VPhPHTbsXYohaioKg8rdfAgFww=;
+	s=korg; t=1695213100;
+	bh=AEUIsuy5OOCX08N37I59pY+p3GXrVZVb9Zju3VlaQ08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhOC1V1vD1Zi1L9r/wJyewoH4dBvy+3R9DJnQWerQjlssI877Phd/epaf9KbVPGQ4
-	 y6+KO86HyR//j4U4fV4JVRw23T6FkYzKto6+rPWCTGqzBh+YCqjDaUIvSKmj4rbfGq
-	 6WVIRlGyncOUhQp6DmALSdZo6A9w+7hVkCwZ/hbk=
+	b=BHdWHoYEMZADMMrNg6++kga+SJd2MH1W23awRzthyk1buM/NCKu2/FX7fea3nbTH/
+	 jx0jStJb72IsK4Y7dN5g8bn0JDbqV1YE5klAzExIXLDe5BLqARuupiL/SE9OEH1Zqe
+	 SxGzxRtbXSYDwoVHUGe/dURJFPIMoE3uXXpdr9vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 152/367] media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()
-Date: Wed, 20 Sep 2023 13:28:49 +0200
-Message-ID: <20230920112902.596439597@linuxfoundation.org>
+Subject: [PATCH 5.4 161/367] scsi: qla4xxx: Add length check when parsing nlattrs
+Date: Wed, 20 Sep 2023 13:28:58 +0200
+Message-ID: <20230920112902.817405409@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,67 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit d7b13edd4cb4bfa335b6008ab867ac28582d3e5c ]
+[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
 
-If fwnode_graph_get_remote_endpoint() fails, 'fwnode' is known to be NULL,
-so fwnode_handle_put() is a no-op.
+There are three places that qla4xxx parses nlattrs:
 
-Release the reference taken from a previous fwnode_graph_get_port_parent()
-call instead.
+ - qla4xxx_set_chap_entry()
 
-Also handle fwnode_graph_get_port_parent() failures.
+ - qla4xxx_iface_set_param()
 
-In order to fix these issues, add an error handling path to the function
-and the needed gotos.
+ - qla4xxx_sysfs_ddb_set_param()
 
-Fixes: ca50c197bd96 ("[media] v4l: fwnode: Support generic fwnode for parsing standardised properties")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+and each of them directly converts the nlattr to specific pointer of
+structure without length checking. This could be dangerous as those
+attributes are not validated and a malformed nlattr (e.g., length 0) could
+result in an OOB read that leaks heap dirty data.
+
+Add the nla_len check before accessing the nlattr data and return EINVAL if
+the length check fails.
+
+Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
+Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
+Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
-index 56aad92b80fc9..00d66495b47d7 100644
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -570,18 +570,28 @@ int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
- 	fwnode_graph_parse_endpoint(fwnode, &fwep);
- 	link->local_port = fwep.port;
- 	link->local_node = fwnode_graph_get_port_parent(fwnode);
-+	if (!link->local_node)
-+		return -ENOLINK;
+diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
+index df43cf6405a8e..ea15bbe0397fc 100644
+--- a/drivers/scsi/qla4xxx/ql4_os.c
++++ b/drivers/scsi/qla4xxx/ql4_os.c
+@@ -939,6 +939,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
+ 	memset(&chap_rec, 0, sizeof(chap_rec));
  
- 	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
--	if (!fwnode) {
--		fwnode_handle_put(fwnode);
--		return -ENOLINK;
--	}
-+	if (!fwnode)
-+		goto err_put_local_node;
- 
- 	fwnode_graph_parse_endpoint(fwnode, &fwep);
- 	link->remote_port = fwep.port;
- 	link->remote_node = fwnode_graph_get_port_parent(fwnode);
-+	if (!link->remote_node)
-+		goto err_put_remote_endpoint;
- 
- 	return 0;
+ 	nla_for_each_attr(attr, data, len, rem) {
++		if (nla_len(attr) < sizeof(*param_info)) {
++			rc = -EINVAL;
++			goto exit_set_chap;
++		}
 +
-+err_put_remote_endpoint:
-+	fwnode_handle_put(fwnode);
-+
-+err_put_local_node:
-+	fwnode_handle_put(link->local_node);
-+
-+	return -ENOLINK;
- }
- EXPORT_SYMBOL_GPL(v4l2_fwnode_parse_link);
+ 		param_info = nla_data(attr);
  
+ 		switch (param_info->param) {
+@@ -2723,6 +2728,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
+ 	}
+ 
+ 	nla_for_each_attr(attr, data, len, rem) {
++		if (nla_len(attr) < sizeof(*iface_param)) {
++			rval = -EINVAL;
++			goto exit_init_fw_cb;
++		}
++
+ 		iface_param = nla_data(attr);
+ 
+ 		if (iface_param->param_type == ISCSI_NET_PARAM) {
+@@ -8093,6 +8103,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
+ 
+ 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
+ 	nla_for_each_attr(attr, data, len, rem) {
++		if (nla_len(attr) < sizeof(*fnode_param)) {
++			rc = -EINVAL;
++			goto exit_set_param;
++		}
++
+ 		fnode_param = nla_data(attr);
+ 
+ 		switch (fnode_param->param) {
 -- 
 2.40.1
 
