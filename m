@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DED46FBD
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AD5C433CA;
-	Wed, 20 Sep 2023 12:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DF16FBD
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:33:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9C1C433CA;
+	Wed, 20 Sep 2023 12:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213213;
-	bh=jDE+uz+KEiq3r4kidCFaYL+gNv5jHDiCfJ5y2Z/vO8I=;
+	s=korg; t=1695213216;
+	bh=9OL4dYu5Z5MVc5sdmdOf2kFkNtHPngz7tzGSCjJyf00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNT99lDWEB2vW+kkw3Od+UWpCZtcS1hRLiDqF7JBD57F4nZpbcr5Y+0VL4iDVqbLZ
-	 WMBNudjuvDHOwbwegjzE1C8YIE4rYmQNdkbK6+WE4IO2JxNGteQmWOkZTob1ptZh76
-	 I86KWSYzudVWbfk2CXD7Wk2zX4n37httHuJ/rx/s=
+	b=XNTvdd0OnIn/oNdBVtGsRBt6tDzDmQP+w2AhNTndYqt2wWND9/5QQiKZQAyKKnFCU
+	 2+CCe0ALVubkXZeEoamMIqT4ckfDIkhiXjUXj8Tb2G8N+h/+buB526oA9QoPfx7fod
+	 XEsEZeSTAHpTLqDBtaaXMTpgmJtac1hbdUHJU9t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yuan Yao <yuanyaogoog@chromium.org>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 202/367] cpufreq: Fix the race condition while updating the transition_task of policy
-Date: Wed, 20 Sep 2023 13:29:39 +0200
-Message-ID: <20230920112903.854234776@linuxfoundation.org>
+Subject: [PATCH 5.4 203/367] virtio_ring: fix avail_wrap_counter in virtqueue_add_packed
+Date: Wed, 20 Sep 2023 13:29:40 +0200
+Message-ID: <20230920112903.879317771@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -35,84 +35,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Yuan Yao <yuanyaogoog@chromium.org>
 
-[ Upstream commit 61bfbf7951ba561dcbdd5357702d3cbc2d447812 ]
+[ Upstream commit 1acfe2c1225899eab5ab724c91b7e1eb2881b9ab ]
 
-The field 'transition_task' of policy structure is used to track the
-task which is performing the frequency transition. Using this field to
-print a warning once detect a case where the same task is calling
-_begin() again before completing the preivous frequency transition via
-the _end().
+In current packed virtqueue implementation, the avail_wrap_counter won't
+flip, in the case when the driver supplies a descriptor chain with a
+length equals to the queue size; total_sg == vq->packed.vring.num.
 
-However, there is a potential race condition in _end() and _begin() APIs
-while updating the field 'transition_task' of policy, the scenario is
-depicted below:
+Let’s assume the following situation:
+vq->packed.vring.num=4
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 0
 
-             Task A                            Task B
+Then the driver adds a descriptor chain containing 4 descriptors.
 
-        /* 1st freq transition */
-        Invoke _begin() {
-                ...
-                ...
-        }
-                                        /* 2nd freq transition */
-                                        Invoke _begin() {
-                                                ... //waiting for A to
-                                                ... //clear
-                                                ... //transition_ongoing
-                                                ... //in _end() for
-                                                ... //the 1st transition
-                                                        |
-        Change the frequency                            |
-                                                        |
-        Invoke _end() {                                 |
-                ...                                     |
-                ...                                     |
-                transition_ongoing = false;             V
-                                                transition_ongoing = true;
-                                                transition_task = current;
-                transition_task = NULL;
-                ... //A overwrites the task
-                ... //performing the transition
-                ... //result in error warning.
-        }
+We expect the following result with avail_wrap_counter flipped:
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 1
 
-To fix this race condition, the transition_lock of policy structure is
-now acquired before updating policy structure in _end() API. Which ensure
-that only one task can update the 'transition_task' field at a time.
+But, the current implementation gives the following result:
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 0
 
-Link: https://lore.kernel.org/all/b3c61d8a-d52d-3136-fbf0-d1de9f1ba411@huawei.com/
-Fixes: ca654dc3a93d ("cpufreq: Catch double invocations of cpufreq_freq_transition_begin/end")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To reproduce the bug, you can set a packed queue size as small as
+possible, so that the driver is more likely to provide a descriptor
+chain with a length equal to the packed queue size. For example, in
+qemu run following commands:
+sudo qemu-system-x86_64 \
+-enable-kvm \
+-nographic \
+-kernel "path/to/kernel_image" \
+-m 1G \
+-drive file="path/to/rootfs",if=none,id=disk \
+-device virtio-blk,drive=disk \
+-drive file="path/to/disk_image",if=none,id=rwdisk \
+-device virtio-blk,drive=rwdisk,packed=on,queue-size=4,\
+indirect_desc=off \
+-append "console=ttyS0 root=/dev/vda rw init=/bin/bash"
+
+Inside the VM, create a directory and mount the rwdisk device on it. The
+rwdisk will hang and mount operation will not complete.
+
+This commit fixes the wrap counter error by flipping the
+packed.avail_wrap_counter, when start of descriptor chain equals to the
+end of descriptor chain (head == i).
+
+Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
+Signed-off-by: Yuan Yao <yuanyaogoog@chromium.org>
+Message-Id: <20230808051110.3492693-1-yuanyaogoog@chromium.org>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virtio/virtio_ring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 01f0a8bdd534b..11b9edc713baa 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -441,8 +441,10 @@ void cpufreq_freq_transition_end(struct cpufreq_policy *policy,
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index b5c0509112769..e3c78c9f84584 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -1180,7 +1180,7 @@ static inline int virtqueue_add_packed(struct virtqueue *_vq,
+ 		}
+ 	}
  
- 	cpufreq_notify_post_transition(policy, freqs, transition_failed);
+-	if (i < head)
++	if (i <= head)
+ 		vq->packed.avail_wrap_counter ^= 1;
  
-+	spin_lock(&policy->transition_lock);
- 	policy->transition_ongoing = false;
- 	policy->transition_task = NULL;
-+	spin_unlock(&policy->transition_lock);
- 
- 	wake_up(&policy->transition_wait);
- }
+ 	/* We're using some buffers from the free list. */
 -- 
 2.40.1
 
