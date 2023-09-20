@@ -1,91 +1,96 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AED41206
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 20:00:02 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-690d2441b95so88103b3a.1
-        for <patches@lists.linux.dev>; Wed, 20 Sep 2023 13:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695240001; x=1695844801; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GMAeJbPcmItdDgf4xgk+JNHaknHRQgjDFugqEkpXkAc=;
-        b=Ms1tUgGOUOxlEkGv3sxKnAEyWDtcOMPr982yPSIdDHH8vEyDgUgIyHNzOeOkGNIIRV
-         EuikjHZcnVsD5kfSDSZEfV6tC0cHh1pWkAasectDzRLqhDaOejBBrkI1RMVRNuyn954s
-         mMqlGbBtmqddH+t5kuO+foC10wRIG2Awo066H2sEG0pFmC7D0hNEQIARAhPx6ZIvXLxf
-         tdun5iruWsBSXr/vDwi99YXcraGzrue+sXnbghlNhSlt7kDEUHlQOTuNdgZDR5s87+f7
-         r10/lHRVH9VQ2InhqwjmpIerAsEI6w8oSiOs9OyzzYC9+1eDE2D1x0C/GV+tCED5R0Ys
-         8ZQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695240001; x=1695844801;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMAeJbPcmItdDgf4xgk+JNHaknHRQgjDFugqEkpXkAc=;
-        b=BHpXtOyh3LOIyoxx5/SAmigQTUs6hCidogqGLiwBpGY8ZUXh4d9BDHhPuFuqmzDRDz
-         iAl60w0MSFBZ+P1wGzXze8AjTIjWmI6zFqXW/wy2OWeMv5aDp2a4Gi6zLk8mH0flpUv8
-         Ukb0eQKDuH1H9l27/3yVO1iUT85Qia0C9vvwJTQIoPEDqzZAWE3A546IDrbh8pp3wTRY
-         jz/HIZIj4nTpwiXlpAdPWxt4rhLm4Hk5zS0QE8u+iTU4VYdq7YcqbfzNp3xKpOa2mc5V
-         jMBkphIMNUi6ZTPi9xeo7upeUzCLFrOA0DU1qUn10UFeZkixXWOyUhq22aXHuKTzojVL
-         ZMhQ==
-X-Gm-Message-State: AOJu0YxQNHfwZaLz41TjoL4oypcwlUxgr+neE00cpDh7jfnBR4KLRPs7
-	cpzU7h5lrXGWxfgLvjAY24A=
-X-Google-Smtp-Source: AGHT+IGQvVEeSuvsRNTzKfh0H6AJmFAA5vkIfdi+bWjfJVdsi4gXOQ/xAkDweZEoNes91BOOHx3/hg==
-X-Received: by 2002:a05:6a20:6a23:b0:159:c07d:66f0 with SMTP id p35-20020a056a206a2300b00159c07d66f0mr5162159pzk.6.1695240001285;
-        Wed, 20 Sep 2023 13:00:01 -0700 (PDT)
-Received: from [10.67.49.139] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id x18-20020aa79192000000b0063b898b3502sm10638330pfa.153.2023.09.20.12.59.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Sep 2023 13:00:00 -0700 (PDT)
-Message-ID: <4ef9c827-f061-7b39-ea4d-6d57c16df9f9@gmail.com>
-Date: Wed, 20 Sep 2023 12:59:58 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7014120C;
+	Wed, 20 Sep 2023 20:08:14 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id E8F8E202D0;
+	Wed, 20 Sep 2023 20:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1695240492; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zacjS2oDob3p7eHr2oY8UG1OkZiVCpmrl6tk1i02zBw=;
+	b=D7iEZ49EnDc3Ssg0WXscpTKL66CU7apcB4NXqQ+nGJae9wBgMTDFMU3IykgutBmSGmR8B6
+	HAp9/8RiSDyuLK9loyOPpFQ57NUrP/COR3vQSm0M0cmBwhkQWvBoO5i/x4Ab/h1Orf7aw9
+	g7zegnpkCusd4lHjtKshjQ5a6+jY2p0=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C6250132C7;
+	Wed, 20 Sep 2023 20:08:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id gtZWLSxRC2XKUQAAMHmgww
+	(envelope-from <mhocko@suse.com>); Wed, 20 Sep 2023 20:08:12 +0000
+Date: Wed, 20 Sep 2023 22:08:11 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Shakeel Butt <shakeelb@google.com>
+Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
+	mathieu.tortuyaux@gmail.com
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Message-ID: <ZQtRKzUOfdaVKRCF@dhcp22.suse.cz>
+References: <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+ <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+ <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+ <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
+ <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
+ <CALvZod7E_Jm9y+40OKtLs5EFA0ptKGjoe2BU58SY29pUiPc93g@mail.gmail.com>
+ <ZQskGGAwlsr1YxAp@dhcp22.suse.cz>
+ <CALvZod6b3=+=xXEUeWOQW3t_URJpeeVX46WjBHv5BS+436KoFA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 6.5 000/211] 6.5.5-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230920112845.859868994@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALvZod6b3=+=xXEUeWOQW3t_URJpeeVX46WjBHv5BS+436KoFA@mail.gmail.com>
 
-On 9/20/23 04:27, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.5 release.
-> There are 211 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed 20-09-23 12:46:23, Shakeel Butt wrote:
+> On Wed, Sep 20, 2023 at 9:55 AM Michal Hocko <mhocko@suse.com> wrote:
+> >
+> > On Wed 20-09-23 08:32:42, Shakeel Butt wrote:
+> > > Also I don't think reverting 58056f77502f would give any benefit.
+> >
+> > Not reverting 58056f77502f would re-introduce the regression in some
+> > non-patched versions of Docker runtimes which cannot handle ENOTSUPP.
+> > So I think we need to revert both or none of them. I would prefer the
+> > later (option 1) as the fix is trivial but I do understand headache
+> > of chasing all those outdated deployments or vendor code forks.
 > 
-> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> I think that would be too much conservative an approach but I don't
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Well, TBH I do not really see any sifference between one set of broken
+userspace or the other. Both are making assumptions on our interfaces
+and they do not overlap unfortunately.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+> have a strong opinion against it. Also just to be clear we are not
+> talking about full revert of 58056f77502f but just the returning of
+> EOPNOTSUPP, right?
+
+If we allow the limit to be set without returning a failure then we
+still have options 2 and 3 on how to deal with that. One of them is to
+enforce the limit.
+
 -- 
-Florian
-
+Michal Hocko
+SUSE Labs
