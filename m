@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3BC328A2
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E20C433C9;
-	Wed, 20 Sep 2023 12:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB083328A2
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309FAC433C8;
+	Wed, 20 Sep 2023 12:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213975;
-	bh=jHGQQH0tHulEX3LLR272VW78JJU5/MyJ3Ow5k9UvsYE=;
+	s=korg; t=1695213978;
+	bh=e8RhCdZTWtpvxEmMvpkp3bzrYGQdeS15XErtdtxFyUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqiSwR4CtGG2hJOUORLwbpsD5dmZECoQLZ1C15WFzvGVm1ESMN3fjgRxXr6zmLQaj
-	 FINPyDAdrqugwQKRgHP3z2Upbgqzxm1tkGYBkS8aCKypA+yA8qjR16ZKyZ2lXBliAg
-	 Zs3xzyL1vqZW8CFUe3CGOjyJ3s2TwppYlNsqfqcs=
+	b=I3d+egxnsPZgEUl8M5QYg8a4pvKGhw7jO4HMbMYqjQ8fUuATc/PA2I/dahiccokiS
+	 bAnEHA3suznqvA0v0Bu0tt5Luek19dxp+D0N6p+Gz/LvcRDnhx/ikQrCeVwxWi0G+C
+	 ZUU2N7YlM9ynW0sYCed6UDnwKbYWn+zLPQAGS60U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/110] mtd: rawnand: brcmnand: Fix ECC level field setting for v7.2 controller
-Date: Wed, 20 Sep 2023 13:32:05 +0200
-Message-ID: <20230920112832.930455262@linuxfoundation.org>
+Subject: [PATCH 5.15 068/110] MIPS: Use "grep -E" instead of "egrep"
+Date: Wed, 20 Sep 2023 13:32:06 +0200
+Message-ID: <20230920112832.966844403@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,158 +40,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 2ec2839a9062db8a592525a3fdabd42dcd9a3a9b ]
+[ Upstream commit d42f0c6ad502c9f612410e125ebdf290cce8bdc3 ]
 
-v7.2 controller has different ECC level field size and shift in the acc
-control register than its predecessor and successor controller. It needs
-to be set specifically.
+The latest version of grep claims the egrep is now obsolete so the build
+now contains warnings that look like:
+	egrep: warning: egrep is obsolescent; using grep -E
+fix this up by moving the related file to use "grep -E" instead.
 
-Fixes: decba6d47869 ("mtd: brcmnand: Add v7.2 controller support")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-2-william.zhang@broadcom.com
+Here are the steps to install the latest grep:
+
+  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
+  tar xf grep-3.8.tar.gz
+  cd grep-3.8 && ./configure && make
+  sudo make install
+  export PATH=/usr/local/bin:$PATH
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 4fe4a6374c4d ("MIPS: Only fiddle with CHECKFLAGS if `need-compiler'")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 74 +++++++++++++-----------
- 1 file changed, 41 insertions(+), 33 deletions(-)
+ arch/mips/Makefile      | 2 +-
+ arch/mips/vdso/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index f20a3154a0adb..c1e7ab13e7773 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -271,6 +271,7 @@ struct brcmnand_controller {
- 	const unsigned int	*page_sizes;
- 	unsigned int		page_size_shift;
- 	unsigned int		max_oob;
-+	u32			ecc_level_shift;
- 	u32			features;
+diff --git a/arch/mips/Makefile b/arch/mips/Makefile
+index 151e98698f763..3830217fab414 100644
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -323,7 +323,7 @@ KBUILD_LDFLAGS		+= -m $(ld-emul)
  
- 	/* for low-power standby/resume only */
-@@ -595,6 +596,34 @@ enum {
- 	INTFC_CTLR_READY		= BIT(31),
- };
+ ifdef need-compiler
+ CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
+-	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
++	grep -E -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
+ 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
+ endif
  
-+/***********************************************************************
-+ * NAND ACC CONTROL bitfield
-+ *
-+ * Some bits have remained constant throughout hardware revision, while
-+ * others have shifted around.
-+ ***********************************************************************/
-+
-+/* Constant for all versions (where supported) */
-+enum {
-+	/* See BRCMNAND_HAS_CACHE_MODE */
-+	ACC_CONTROL_CACHE_MODE				= BIT(22),
-+
-+	/* See BRCMNAND_HAS_PREFETCH */
-+	ACC_CONTROL_PREFETCH				= BIT(23),
-+
-+	ACC_CONTROL_PAGE_HIT				= BIT(24),
-+	ACC_CONTROL_WR_PREEMPT				= BIT(25),
-+	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
-+	ACC_CONTROL_RD_ERASED				= BIT(27),
-+	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
-+	ACC_CONTROL_WR_ECC				= BIT(30),
-+	ACC_CONTROL_RD_ECC				= BIT(31),
-+};
-+
-+#define	ACC_CONTROL_ECC_SHIFT			16
-+/* Only for v7.2 */
-+#define	ACC_CONTROL_ECC_EXT_SHIFT		13
-+
- static inline bool brcmnand_non_mmio_ops(struct brcmnand_controller *ctrl)
- {
- 	return static_branch_unlikely(&brcmnand_soc_has_ops_key);
-@@ -732,6 +761,12 @@ static int brcmnand_revision_init(struct brcmnand_controller *ctrl)
- 	else if (of_property_read_bool(ctrl->dev->of_node, "brcm,nand-has-wp"))
- 		ctrl->features |= BRCMNAND_HAS_WP;
+diff --git a/arch/mips/vdso/Makefile b/arch/mips/vdso/Makefile
+index 1b2ea34c3d3bb..ed090ef30757c 100644
+--- a/arch/mips/vdso/Makefile
++++ b/arch/mips/vdso/Makefile
+@@ -68,7 +68,7 @@ KCOV_INSTRUMENT := n
  
-+	/* v7.2 has different ecc level shift in the acc register */
-+	if (ctrl->nand_version == 0x0702)
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_EXT_SHIFT;
-+	else
-+		ctrl->ecc_level_shift = ACC_CONTROL_ECC_SHIFT;
-+
- 	return 0;
- }
+ # Check that we don't have PIC 'jalr t9' calls left
+ quiet_cmd_vdso_mips_check = VDSOCHK $@
+-      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | egrep -h "jalr.*t9" > /dev/null; \
++      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | grep -E -h "jalr.*t9" > /dev/null; \
+ 		       then (echo >&2 "$@: PIC 'jalr t9' calls are not supported"; \
+ 			     rm -f $@; /bin/false); fi
  
-@@ -920,30 +955,6 @@ static inline int brcmnand_cmd_shift(struct brcmnand_controller *ctrl)
- 	return 0;
- }
- 
--/***********************************************************************
-- * NAND ACC CONTROL bitfield
-- *
-- * Some bits have remained constant throughout hardware revision, while
-- * others have shifted around.
-- ***********************************************************************/
--
--/* Constant for all versions (where supported) */
--enum {
--	/* See BRCMNAND_HAS_CACHE_MODE */
--	ACC_CONTROL_CACHE_MODE				= BIT(22),
--
--	/* See BRCMNAND_HAS_PREFETCH */
--	ACC_CONTROL_PREFETCH				= BIT(23),
--
--	ACC_CONTROL_PAGE_HIT				= BIT(24),
--	ACC_CONTROL_WR_PREEMPT				= BIT(25),
--	ACC_CONTROL_PARTIAL_PAGE			= BIT(26),
--	ACC_CONTROL_RD_ERASED				= BIT(27),
--	ACC_CONTROL_FAST_PGM_RDIN			= BIT(28),
--	ACC_CONTROL_WR_ECC				= BIT(30),
--	ACC_CONTROL_RD_ECC				= BIT(31),
--};
--
- static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
- {
- 	if (ctrl->nand_version == 0x0702)
-@@ -956,18 +967,15 @@ static inline u32 brcmnand_spare_area_mask(struct brcmnand_controller *ctrl)
- 		return GENMASK(4, 0);
- }
- 
--#define NAND_ACC_CONTROL_ECC_SHIFT	16
--#define NAND_ACC_CONTROL_ECC_EXT_SHIFT	13
--
- static inline u32 brcmnand_ecc_level_mask(struct brcmnand_controller *ctrl)
- {
- 	u32 mask = (ctrl->nand_version >= 0x0600) ? 0x1f : 0x0f;
- 
--	mask <<= NAND_ACC_CONTROL_ECC_SHIFT;
-+	mask <<= ACC_CONTROL_ECC_SHIFT;
- 
- 	/* v7.2 includes additional ECC levels */
--	if (ctrl->nand_version >= 0x0702)
--		mask |= 0x7 << NAND_ACC_CONTROL_ECC_EXT_SHIFT;
-+	if (ctrl->nand_version == 0x0702)
-+		mask |= 0x7 << ACC_CONTROL_ECC_EXT_SHIFT;
- 
- 	return mask;
- }
-@@ -981,8 +989,8 @@ static void brcmnand_set_ecc_enabled(struct brcmnand_host *host, int en)
- 
- 	if (en) {
- 		acc_control |= ecc_flags; /* enable RD/WR ECC */
--		acc_control |= host->hwcfg.ecc_level
--			       << NAND_ACC_CONTROL_ECC_SHIFT;
-+		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-+		acc_control |= host->hwcfg.ecc_level << ctrl->ecc_level_shift;
- 	} else {
- 		acc_control &= ~ecc_flags; /* disable RD/WR ECC */
- 		acc_control &= ~brcmnand_ecc_level_mask(ctrl);
-@@ -2582,7 +2590,7 @@ static int brcmnand_set_cfg(struct brcmnand_host *host,
- 	tmp &= ~brcmnand_ecc_level_mask(ctrl);
- 	tmp &= ~brcmnand_spare_area_mask(ctrl);
- 	if (ctrl->nand_version >= 0x0302) {
--		tmp |= cfg->ecc_level << NAND_ACC_CONTROL_ECC_SHIFT;
-+		tmp |= cfg->ecc_level << ctrl->ecc_level_shift;
- 		tmp |= cfg->spare_area_size;
- 	}
- 	nand_writereg(ctrl, acc_control_offs, tmp);
 -- 
 2.40.1
 
