@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03B218658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292E7C433C8;
-	Wed, 20 Sep 2023 11:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574FE18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4576C433CA;
+	Wed, 20 Sep 2023 11:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210665;
-	bh=nOuM8c9Lw2Ltrq7NtQ5o4IzU7V87K2v+F1khW1fJdhY=;
+	s=korg; t=1695210668;
+	bh=Q1yYSFJYyeH5i0ev/h0GfUo7WUeFEFhNnucgseW89rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvbzLmgPwsi1jg6Os9CCZqbfIgwDY5fD4ZJ4pvyzSpTt/QEKZ1HnF/rT16cCJSNTA
-	 kqOhbsKAk3G6cfpGu2/xUeZCvMAprJMIEe2VImFibDdDh+lI7UPu78EytMo3hWHCOO
-	 jX1IFTeXKq3gJzV5Cf1jFV2U0IbZJz0bLRuY8Txw=
+	b=zEPz2yJ2/37tzYkGcRdS/42ztm6QVyF0JcGdS4MaG78WG33cNmjWAiJjnIFZrh6gR
+	 gkg+f7X9AmD8sJfJma1AjNyNyEqCqtKgSzdFoxH2uXOb/Y5UPjJBNvWyE4y+5DDkgg
+	 Z3DwBPlQIevd8qQlwheFymM56VsW/FHyt9hL6mFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.5 133/211] ext4: fix BUG in ext4_mb_new_inode_pa() due to overflow
-Date: Wed, 20 Sep 2023 13:29:37 +0200
-Message-ID: <20230920112849.946155807@linuxfoundation.org>
+	Christoph Hellwig <hch@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 134/211] btrfs: introduce struct to consolidate extent buffer write context
+Date: Wed, 20 Sep 2023 13:29:38 +0200
+Message-ID: <20230920112849.982067599@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,120 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit bc056e7163ac7db945366de219745cf94f32a3e6 ]
+[ Upstream commit 861093eff4f01319edfc1d1ee276a7f2bf720f1d ]
 
-When we calculate the end position of ext4_free_extent, this position may
-be exactly where ext4_lblk_t (i.e. uint) overflows. For example, if
-ac_g_ex.fe_logical is 4294965248 and ac_orig_goal_len is 2048, then the
-computed end is 0x100000000, which is 0. If ac->ac_o_ex.fe_logical is not
-the first case of adjusting the best extent, that is, new_bex_end > 0, the
-following BUG_ON will be triggered:
+Introduce btrfs_eb_write_context to consolidate writeback_control and the
+exntent buffer context.  This will help adding a block group context as
+well.
 
-=========================================================
-kernel BUG at fs/ext4/mballoc.c:5116!
-invalid opcode: 0000 [#1] PREEMPT SMP PTI
-CPU: 3 PID: 673 Comm: xfs_io Tainted: G E 6.5.0-rc1+ #279
-RIP: 0010:ext4_mb_new_inode_pa+0xc5/0x430
-Call Trace:
- <TASK>
- ext4_mb_use_best_found+0x203/0x2f0
- ext4_mb_try_best_found+0x163/0x240
- ext4_mb_regular_allocator+0x158/0x1550
- ext4_mb_new_blocks+0x86a/0xe10
- ext4_ext_map_blocks+0xb0c/0x13a0
- ext4_map_blocks+0x2cd/0x8f0
- ext4_iomap_begin+0x27b/0x400
- iomap_iter+0x222/0x3d0
- __iomap_dio_rw+0x243/0xcb0
- iomap_dio_rw+0x16/0x80
-=========================================================
+While at it, move the eb context setting before
+btrfs_check_meta_write_pointer(). We can set it here because we anyway need
+to skip pages in the same eb if that eb is rejected by
+btrfs_check_meta_write_pointer().
 
-A simple reproducer demonstrating the problem:
-
-	mkfs.ext4 -F /dev/sda -b 4096 100M
-	mount /dev/sda /tmp/test
-	fallocate -l1M /tmp/test/tmp
-	fallocate -l10M /tmp/test/file
-	fallocate -i -o 1M -l16777203M /tmp/test/file
-	fsstress -d /tmp/test -l 0 -n 100000 -p 8 &
-	sleep 10 && killall -9 fsstress
-	rm -f /tmp/test/tmp
-	xfs_io -c "open -ad /tmp/test/file" -c "pwrite -S 0xff 0 8192"
-
-We simply refactor the logic for adjusting the best extent by adding
-a temporary ext4_free_extent ex and use extent_logical_end() to avoid
-overflow, which also simplifies the code.
-
-Cc: stable@kernel.org # 6.4
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230724121059.11834-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 13bb483d32ab ("btrfs: zoned: activate metadata block group on write time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ fs/btrfs/extent_io.c | 14 +++++++-------
+ fs/btrfs/extent_io.h |  5 +++++
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 5c3055a32e57a..bd7557d8dec41 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -5177,8 +5177,11 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 	pa = ac->ac_pa;
- 
- 	if (ac->ac_b_ex.fe_len < ac->ac_orig_goal_len) {
--		int new_bex_start;
--		int new_bex_end;
-+		struct ext4_free_extent ex = {
-+			.fe_logical = ac->ac_g_ex.fe_logical,
-+			.fe_len = ac->ac_orig_goal_len,
-+		};
-+		loff_t orig_goal_end = extent_logical_end(sbi, &ex);
- 
- 		/* we can't allocate as much as normalizer wants.
- 		 * so, found space must get proper lstart
-@@ -5197,29 +5200,23 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		 *    still cover original start
- 		 * 3. Else, keep the best ex at start of original request.
- 		 */
--		new_bex_end = ac->ac_g_ex.fe_logical +
--			EXT4_C2B(sbi, ac->ac_orig_goal_len);
--		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (ac->ac_o_ex.fe_logical >= new_bex_start)
--			goto adjust_bex;
-+		ex.fe_len = ac->ac_b_ex.fe_len;
- 
--		new_bex_start = ac->ac_g_ex.fe_logical;
--		new_bex_end =
--			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (ac->ac_o_ex.fe_logical < new_bex_end)
-+		ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
- 			goto adjust_bex;
- 
--		new_bex_start = ac->ac_o_ex.fe_logical;
--		new_bex_end =
--			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		ex.fe_logical = ac->ac_g_ex.fe_logical;
-+		if (ac->ac_o_ex.fe_logical < extent_logical_end(sbi, &ex))
-+			goto adjust_bex;
- 
-+		ex.fe_logical = ac->ac_o_ex.fe_logical;
- adjust_bex:
--		ac->ac_b_ex.fe_logical = new_bex_start;
-+		ac->ac_b_ex.fe_logical = ex.fe_logical;
- 
- 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
- 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
--		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
--				      EXT4_C2B(sbi, ac->ac_orig_goal_len)));
-+		BUG_ON(extent_logical_end(sbi, &ex) > orig_goal_end);
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 90ad3006ef3a7..b3bf2e2704888 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1877,9 +1877,9 @@ static int submit_eb_subpage(struct page *page, struct writeback_control *wbc)
+  * previous call.
+  * Return <0 for fatal error.
+  */
+-static int submit_eb_page(struct page *page, struct writeback_control *wbc,
+-			  struct extent_buffer **eb_context)
++static int submit_eb_page(struct page *page, struct btrfs_eb_write_context *ctx)
+ {
++	struct writeback_control *wbc = ctx->wbc;
+ 	struct address_space *mapping = page->mapping;
+ 	struct btrfs_block_group *cache = NULL;
+ 	struct extent_buffer *eb;
+@@ -1908,7 +1908,7 @@ static int submit_eb_page(struct page *page, struct writeback_control *wbc,
+ 		return 0;
  	}
  
- 	pa->pa_lstart = ac->ac_b_ex.fe_logical;
+-	if (eb == *eb_context) {
++	if (eb == ctx->eb) {
+ 		spin_unlock(&mapping->private_lock);
+ 		return 0;
+ 	}
+@@ -1917,6 +1917,8 @@ static int submit_eb_page(struct page *page, struct writeback_control *wbc,
+ 	if (!ret)
+ 		return 0;
+ 
++	ctx->eb = eb;
++
+ 	if (!btrfs_check_meta_write_pointer(eb->fs_info, eb, &cache)) {
+ 		/*
+ 		 * If for_sync, this hole will be filled with
+@@ -1930,8 +1932,6 @@ static int submit_eb_page(struct page *page, struct writeback_control *wbc,
+ 		return ret;
+ 	}
+ 
+-	*eb_context = eb;
+-
+ 	if (!lock_extent_buffer_for_io(eb, wbc)) {
+ 		btrfs_revert_meta_write_pointer(cache, eb);
+ 		if (cache)
+@@ -1954,7 +1954,7 @@ static int submit_eb_page(struct page *page, struct writeback_control *wbc,
+ int btree_write_cache_pages(struct address_space *mapping,
+ 				   struct writeback_control *wbc)
+ {
+-	struct extent_buffer *eb_context = NULL;
++	struct btrfs_eb_write_context ctx = { .wbc = wbc };
+ 	struct btrfs_fs_info *fs_info = BTRFS_I(mapping->host)->root->fs_info;
+ 	int ret = 0;
+ 	int done = 0;
+@@ -1996,7 +1996,7 @@ int btree_write_cache_pages(struct address_space *mapping,
+ 		for (i = 0; i < nr_folios; i++) {
+ 			struct folio *folio = fbatch.folios[i];
+ 
+-			ret = submit_eb_page(&folio->page, wbc, &eb_context);
++			ret = submit_eb_page(&folio->page, &ctx);
+ 			if (ret == 0)
+ 				continue;
+ 			if (ret < 0) {
+diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
+index c5fae3a7d911b..ecc1660007c11 100644
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -94,6 +94,11 @@ struct extent_buffer {
+ #endif
+ };
+ 
++struct btrfs_eb_write_context {
++	struct writeback_control *wbc;
++	struct extent_buffer *eb;
++};
++
+ /*
+  * Get the correct offset inside the page of extent buffer.
+  *
 -- 
 2.40.1
 
