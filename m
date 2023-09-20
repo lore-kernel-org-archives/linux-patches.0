@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A881B20B19
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEFAC433CA;
-	Wed, 20 Sep 2023 11:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A07420B19
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D50C433C9;
+	Wed, 20 Sep 2023 11:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210920;
-	bh=gyJo1wT2TvXs8kbyhTBBgu17yQ+hzKBHvPevIiS4f5I=;
+	s=korg; t=1695210923;
+	bh=tSHD87igLk4pcFiXigZnBP6BYYRhURcYrhMcLHMnwig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAeagGtHKG4nE81o8uwEtPyblZUx6HpB0+JLZwxTJqsOh6GZqKLjwgmno/8drMvWX
-	 qrz8quV8lEA35P5H+Oo+Lpuq0wzkYoRLvTw4NEv7TAIVDZtZTM+SWnYMDHmogoPWK0
-	 Xg2pAKcO2dxSezdCtvvblT0DI+0qx1OV7jny37SM=
+	b=FlaXIXOarqgjCOWmnRnq8o99L0z0j95N5CNLNEces5Gm6aJs1+OM9XrmevVCWwzWE
+	 ZKrsRz0GsMxwbPz4eSKwvtVGzej8dqNsDiKIE/Erp1YRu6ikV9XAPfMy+0einxipK+
+	 MGpgv4Rx59CAAeqf7EovwSrSYZzl+f9T7gQuETPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/139] rcuscale: Move rcu_scale_writer() schedule_timeout_uninterruptible() to _idle()
-Date: Wed, 20 Sep 2023 13:29:00 +0200
-Message-ID: <20230920112835.810847954@linuxfoundation.org>
+Subject: [PATCH 6.1 007/139] scftorture: Forgive memory-allocation failure if KASAN
+Date: Wed, 20 Sep 2023 13:29:01 +0200
+Message-ID: <20230920112835.853306717@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -40,68 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit e60c122a1614b4f65b29a7bef9d83b9fd30e937a ]
+[ Upstream commit 013608cd0812bdb21fc26d39ed8fdd2fc76e8b9b ]
 
-The rcuscale.holdoff module parameter can be used to delay the start
-of rcu_scale_writer() kthread.  However, the hung-task timeout will
-trigger when the timeout specified by rcuscale.holdoff is greater than
-hung_task_timeout_secs:
+Kernels built with CONFIG_KASAN=y quarantine newly freed memory in order
+to better detect use-after-free errors.  However, this can exhaust memory
+more quickly in allocator-heavy tests, which can result in spurious
+scftorture failure.  This commit therefore forgives memory-allocation
+failure in kernels built with CONFIG_KASAN=y, but continues counting
+the errors for use in detailed test-result analyses.
 
-runqemu kvm nographic slirp qemuparams="-smp 4 -m 2048M"
-bootparams="rcuscale.shutdown=0 rcuscale.holdoff=300"
-
-[  247.071753] INFO: task rcu_scale_write:59 blocked for more than 122 seconds.
-[  247.072529]       Not tainted 6.4.0-rc1-00134-gb9ed6de8d4ff #7
-[  247.073400] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[  247.074331] task:rcu_scale_write state:D stack:30144 pid:59    ppid:2      flags:0x00004000
-[  247.075346] Call Trace:
-[  247.075660]  <TASK>
-[  247.075965]  __schedule+0x635/0x1280
-[  247.076448]  ? __pfx___schedule+0x10/0x10
-[  247.076967]  ? schedule_timeout+0x2dc/0x4d0
-[  247.077471]  ? __pfx_lock_release+0x10/0x10
-[  247.078018]  ? enqueue_timer+0xe2/0x220
-[  247.078522]  schedule+0x84/0x120
-[  247.078957]  schedule_timeout+0x2e1/0x4d0
-[  247.079447]  ? __pfx_schedule_timeout+0x10/0x10
-[  247.080032]  ? __pfx_rcu_scale_writer+0x10/0x10
-[  247.080591]  ? __pfx_process_timeout+0x10/0x10
-[  247.081163]  ? __pfx_sched_set_fifo_low+0x10/0x10
-[  247.081760]  ? __pfx_rcu_scale_writer+0x10/0x10
-[  247.082287]  rcu_scale_writer+0x6b1/0x7f0
-[  247.082773]  ? mark_held_locks+0x29/0xa0
-[  247.083252]  ? __pfx_rcu_scale_writer+0x10/0x10
-[  247.083865]  ? __pfx_rcu_scale_writer+0x10/0x10
-[  247.084412]  kthread+0x179/0x1c0
-[  247.084759]  ? __pfx_kthread+0x10/0x10
-[  247.085098]  ret_from_fork+0x2c/0x50
-[  247.085433]  </TASK>
-
-This commit therefore replaces schedule_timeout_uninterruptible() with
-schedule_timeout_idle().
-
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/scftorture.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index 7854dc3226e1b..0b88d96511adc 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -423,7 +423,7 @@ rcu_scale_writer(void *arg)
- 	sched_set_fifo_low(current);
- 
- 	if (holdoff)
--		schedule_timeout_uninterruptible(holdoff * HZ);
-+		schedule_timeout_idle(holdoff * HZ);
- 
- 	/*
- 	 * Wait until rcu_end_inkernel_boot() is called for normal GP tests
+diff --git a/kernel/scftorture.c b/kernel/scftorture.c
+index 5d113aa59e773..83c33ba0ca7e0 100644
+--- a/kernel/scftorture.c
++++ b/kernel/scftorture.c
+@@ -171,7 +171,8 @@ static void scf_torture_stats_print(void)
+ 		scfs.n_all_wait += scf_stats_p[i].n_all_wait;
+ 	}
+ 	if (atomic_read(&n_errs) || atomic_read(&n_mb_in_errs) ||
+-	    atomic_read(&n_mb_out_errs) || atomic_read(&n_alloc_errs))
++	    atomic_read(&n_mb_out_errs) ||
++	    (!IS_ENABLED(CONFIG_KASAN) && atomic_read(&n_alloc_errs)))
+ 		bangstr = "!!! ";
+ 	pr_alert("%s %sscf_invoked_count %s: %lld resched: %lld single: %lld/%lld single_ofl: %lld/%lld single_rpc: %lld single_rpc_ofl: %lld many: %lld/%lld all: %lld/%lld ",
+ 		 SCFTORT_FLAG, bangstr, isdone ? "VER" : "ver", invoked_count, scfs.n_resched,
+@@ -323,7 +324,8 @@ static void scftorture_invoke_one(struct scf_statistics *scfp, struct torture_ra
+ 		preempt_disable();
+ 	if (scfsp->scfs_prim == SCF_PRIM_SINGLE || scfsp->scfs_wait) {
+ 		scfcp = kmalloc(sizeof(*scfcp), GFP_ATOMIC);
+-		if (WARN_ON_ONCE(!scfcp)) {
++		if (!scfcp) {
++			WARN_ON_ONCE(!IS_ENABLED(CONFIG_KASAN));
+ 			atomic_inc(&n_alloc_errs);
+ 		} else {
+ 			scfcp->scfc_cpu = -1;
 -- 
 2.40.1
 
