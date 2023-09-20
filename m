@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB15A30FA5
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CC3C433AB;
-	Wed, 20 Sep 2023 12:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1FF15AE7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8206C4339A;
+	Wed, 20 Sep 2023 12:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212255;
-	bh=7hJ5yK9X51tnUCh3ItGKKsZ0kaguA29sI6Fxn2R70Lc=;
+	s=korg; t=1695212258;
+	bh=54wNdgs0O0sngvfPcAWYfwCxThCI5tqOhJLdveA37nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAr66AwGFmwqY4jHbnY2Onz9BMZKjB4Vs9J/Yy1HaMBOo+ZeBkpN/Z0Bs50mOr3+v
-	 +zjRCXDZCUU12z+Vh2TZgMjY6g8XJoNGAItXGeIpwpu1V7yI6j0W44iBxrUAZYuvnC
-	 lNt88RUR/y04G3D7yIO7qdZk5dLVbZ5FA+lctDMk=
+	b=S4HehnmxO38YF/d1pk9DtrFb1SUYlpJqzva5cKRfWuDaPQsso7f0BMhdMVvxYW0mb
+	 bRo+KrEXpvLiHUOC6jff6JOUlXbF5rUa+JXiQh9QhMw9EBd+xpf+jtyoD/W02sPrg/
+	 Mo5gvitmwIXkVwOqboivj+3XDH+jtZJRRx0Crjk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 167/273] netfilter: xt_u32: validate user space input
-Date: Wed, 20 Sep 2023 13:30:07 +0200
-Message-ID: <20230920112851.683360050@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 158/273] amba: bus: fix refcount leak
+Date: Wed, 20 Sep 2023 13:29:58 +0200
+Message-ID: <20230920112851.412157014@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,61 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
+[ Upstream commit e312cbdc11305568554a9e18a2ea5c2492c183f3 ]
 
-The xt_u32 module doesn't validate the fields in the xt_u32 structure.
-An attacker may take advantage of this to trigger an OOB read by setting
-the size fields with a value beyond the arrays boundaries.
+commit 5de1540b7bc4 ("drivers/amba: create devices from device tree")
+increases the refcount of of_node, but not releases it in
+amba_device_release, so there is refcount leak. By using of_node_put
+to avoid refcount leak.
 
-Add a checkentry function to validate the structure.
-
-This was originally reported by the ZDI project (ZDI-CAN-18408).
-
-Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5de1540b7bc4 ("drivers/amba: create devices from device tree")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230821023928.3324283-1-peng.fan@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/amba/bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/xt_u32.c
-+++ b/net/netfilter/xt_u32.c
-@@ -95,11 +95,32 @@ static bool u32_mt(const struct sk_buff
- 	return ret ^ data->invert;
- }
+diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
+index e1992f361c9a6..2aaec96f83849 100644
+--- a/drivers/amba/bus.c
++++ b/drivers/amba/bus.c
+@@ -349,6 +349,7 @@ static void amba_device_release(struct device *dev)
+ {
+ 	struct amba_device *d = to_amba_device(dev);
  
-+static int u32_mt_checkentry(const struct xt_mtchk_param *par)
-+{
-+	const struct xt_u32 *data = par->matchinfo;
-+	const struct xt_u32_test *ct;
-+	unsigned int i;
-+
-+	if (data->ntests > ARRAY_SIZE(data->tests))
-+		return -EINVAL;
-+
-+	for (i = 0; i < data->ntests; ++i) {
-+		ct = &data->tests[i];
-+
-+		if (ct->nnums > ARRAY_SIZE(ct->location) ||
-+		    ct->nvalues > ARRAY_SIZE(ct->value))
-+			return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static struct xt_match xt_u32_mt_reg __read_mostly = {
- 	.name       = "u32",
- 	.revision   = 0,
- 	.family     = NFPROTO_UNSPEC,
- 	.match      = u32_mt,
-+	.checkentry = u32_mt_checkentry,
- 	.matchsize  = sizeof(struct xt_u32),
- 	.me         = THIS_MODULE,
- };
++	of_node_put(d->dev.of_node);
+ 	if (d->res.parent)
+ 		release_resource(&d->res);
+ 	kfree(d);
+-- 
+2.40.1
+
 
 
