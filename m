@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0FF28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BA7C433C8;
-	Wed, 20 Sep 2023 11:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FAC28E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F30C433C8;
+	Wed, 20 Sep 2023 11:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210808;
-	bh=twPCkCSd/AKzg6yLjRzjxiRqOkS/tcre+Sd2tSGM0Nc=;
+	s=korg; t=1695210811;
+	bh=3FXbHG5XTst+mKgJnSW7ImAFOyynUu+H5zuqFuz9h8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeFlY3yHHLBJG0dnl8aCRkhC5YIgGj13BBWIR2JMyap00RcWR3pQM3hzuQ4k6faGE
-	 HDS3abMIRq2+vQcLw92Y/CCWBjh9ieArrtggt9Viv9gLebLN6eO5vO7pxB0akOHY4R
-	 KuS01hpZTq8Osi+oaLLODaSx5LkzH/YPRLwLmBm8=
+	b=OKpJt6sXPEq1hI6JsyUSp6lzwqd0zd+vIluF61kicgDO0KKhoN5NGdGQsaaPUbkoj
+	 89vYfrKXJj6JHtrsCZ1MTA2xvlzLq8fCYxQfMpaAq5I4y4PegsF3tJM/UlTdj1Uz8t
+	 A/SmSKvzD48yUV62UkePiu721wrFkC/wJun9a4zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Tero Kristo <tero.kristo@linux.intel.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 186/211] tracing: Have event inject files inc the trace array ref count
-Date: Wed, 20 Sep 2023 13:30:30 +0200
-Message-ID: <20230920112851.640114311@linuxfoundation.org>
+Subject: [PATCH 6.5 187/211] tracing/synthetic: Print out u64 values properly
+Date: Wed, 20 Sep 2023 13:30:31 +0200
+Message-ID: <20230920112851.670295143@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -44,44 +39,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Tero Kristo <tero.kristo@linux.intel.com>
 
-commit e5c624f027ac74f97e97c8f36c69228ac9f1102d upstream.
+commit 62663b849662c1a5126b6274d91671b90566ef13 upstream.
 
-The event inject files add events for a specific trace array. For an
-instance, if the file is opened and the instance is deleted, reading or
-writing to the file will cause a use after free.
+The synth traces incorrectly print pointer to the synthetic event values
+instead of the actual value when using u64 type. Fix by addressing the
+contents of the union properly.
 
-Up the ref count of the trace_array when a event inject file is opened.
+Link: https://lore.kernel.org/linux-trace-kernel/20230911141704.3585965-1-tero.kristo@linux.intel.com
 
-Link: https://lkml.kernel.org/r/20230907024804.292337868@goodmis.org
-Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
-
+Fixes: ddeea494a16f ("tracing/synthetic: Use union instead of casts")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Fixes: 6c3edaf9fd6a ("tracing: Introduce trace event injection")
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_inject.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_synth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_inject.c
-+++ b/kernel/trace/trace_events_inject.c
-@@ -328,7 +328,8 @@ event_inject_read(struct file *file, cha
- }
+diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
+index 9897d0bfcab7..14cb275a0bab 100644
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -337,7 +337,7 @@ static void print_synth_event_num_val(struct trace_seq *s,
+ 		break;
  
- const struct file_operations event_inject_fops = {
--	.open = tracing_open_generic,
-+	.open = tracing_open_file_tr,
- 	.read = event_inject_read,
- 	.write = event_inject_write,
-+	.release = tracing_release_file_tr,
- };
+ 	default:
+-		trace_seq_printf(s, print_fmt, name, val, space);
++		trace_seq_printf(s, print_fmt, name, val->as_u64, space);
+ 		break;
+ 	}
+ }
+-- 
+2.42.0
+
 
 
