@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA0730FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E79C433C9;
-	Wed, 20 Sep 2023 12:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C4330FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91403C433C7;
+	Wed, 20 Sep 2023 12:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212581;
-	bh=jPNUywYirS1I2lr2XEvXpKjPcSimCaQUgMa0rLBJL/I=;
+	s=korg; t=1695212583;
+	bh=o1ZGzsBE0ocvU4y3Ai8HDeTGgd6uYH9GMwTpaODyVDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NiTWxQfzgBfoRYOYPW4dmY1mWeuU4zvNZWHdGTofIiVmSf4mMZDLoVSR3cOef5PIS
-	 WB9AEliIdn130CzkSpcUHdQywE+p3UMyMAHCIHioutbiMRI9xD39QDYnitu0j4+riM
-	 Zo9UXIEQMPr9VHJCR9v6RCYNsoNXyKh15emkTsN4=
+	b=0bQzY0E0aLmlIcjPDegvPrpmwRVSe77CIV+OZl9n9id7gcoMebVcBJJhrRViOGmBl
+	 chqLS6WuZFi+e3WndVNwE4qPY9HTFSJksOzWyml3Fv63pUtpM56Ow76Nwc6JL4fbM7
+	 llvjyeI/mdwLKjjp+MgA7cEQMN0v4LcPA87/383g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	BassCheck <bass@buaa.edu.cn>,
+	Tuo Li <islituo@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 28/83] ALSA: hda: intel-dsp-cfg: add LunarLake support
-Date: Wed, 20 Sep 2023 13:31:18 +0200
-Message-ID: <20230920112827.790355688@linuxfoundation.org>
+Subject: [PATCH 5.10 29/83] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
+Date: Wed, 20 Sep 2023 13:31:19 +0200
+Message-ID: <20230920112827.828092189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -42,41 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit d2852b8c045ebd31d753b06f2810df5be30ed56a ]
+[ Upstream commit 2e63972a2de14482d0eae1a03a73e379f1c3f44c ]
 
-One more PCI ID for the road.
+The variable crtc->state->event is often protected by the lock
+crtc->dev->event_lock when is accessed. However, it is accessed as a
+condition of an if statement in exynos_drm_crtc_atomic_disable() without
+holding the lock:
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230802150105.24604-5-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  if (crtc->state->event && !crtc->state->active)
+
+However, if crtc->state->event is changed to NULL by another thread right
+after the conditions of the if statement is checked to be true, a
+null-pointer dereference can occur in drm_crtc_send_vblank_event():
+
+  e->pipe = pipe;
+
+To fix this possible null-pointer dereference caused by data race, the
+spin lock coverage is extended to protect the if statement as well as the
+function call to drm_crtc_send_vblank_event().
+
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Link: https://sites.google.com/view/basscheck/home
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Added relevant link.
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-dsp-config.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_crtc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
-index f96e70c85f84a..801c89a3a1b6f 100644
---- a/sound/hda/intel-dsp-config.c
-+++ b/sound/hda/intel-dsp-config.c
-@@ -368,6 +368,14 @@ static const struct config_entry config_table[] = {
- 	},
- #endif
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_crtc.c b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+index 1c03485676efa..de9fadccf22e5 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_crtc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+@@ -39,13 +39,12 @@ static void exynos_drm_crtc_atomic_disable(struct drm_crtc *crtc,
+ 	if (exynos_crtc->ops->atomic_disable)
+ 		exynos_crtc->ops->atomic_disable(exynos_crtc);
  
-+/* Lunar Lake */
-+#if IS_ENABLED(CONFIG_SND_SOC_SOF_LUNARLAKE)
-+	/* Lunarlake-P */
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = PCI_DEVICE_ID_INTEL_HDA_LNL_P,
-+	},
-+#endif
- };
++	spin_lock_irq(&crtc->dev->event_lock);
+ 	if (crtc->state->event && !crtc->state->active) {
+-		spin_lock_irq(&crtc->dev->event_lock);
+ 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
+-		spin_unlock_irq(&crtc->dev->event_lock);
+-
+ 		crtc->state->event = NULL;
+ 	}
++	spin_unlock_irq(&crtc->dev->event_lock);
+ }
  
- static const struct config_entry *snd_intel_dsp_find_config
+ static int exynos_crtc_atomic_check(struct drm_crtc *crtc,
 -- 
 2.40.1
 
