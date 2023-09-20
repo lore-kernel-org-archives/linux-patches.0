@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0E730FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A77C433C8;
-	Wed, 20 Sep 2023 12:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F50F30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5735C433C7;
+	Wed, 20 Sep 2023 12:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212918;
-	bh=rctiPsA5SyCmduTWHkQ/LyynlBLXDrFSwU3ZGyQ7aYo=;
+	s=korg; t=1695212921;
+	bh=ZyuuyoOehzQW5k6GN8ia6BrR7QcoxifODM0r9XJQPUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+Th3j+U0nfyIFcXgGXydQ52luZi0uln79T11jB5OiZlos6OQWbJTo5t8/Uu3LhRY
-	 383+jj5LRG+OQrCjqF+gROf05x7ton6sO8JrxtpBMBgI5/+7XW1+K6vEBBgWTZEBvE
-	 EuOLoNfIrr22jvby39lESU1yZE58HnCXrCft2vEI=
+	b=rxnNf4LiG3+YTVCc6MJGCJ2UqtEkxs0mPRH65LqtlQZmIFW8xMv+aFdzXtyc3q/aa
+	 /M7wMhBOSS3foYHCvFhFOaCC2cxU7lsK+pCESbDHBVlFVyDvybqhh2XZlBPo/oFopG
+	 lXdTapKK+GEWK7mnAdLd+sC4pDvQrNF5EU8e9s2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/367] wifi: mwifiex: fix error recovery in PCIE buffer descriptor management
-Date: Wed, 20 Sep 2023 13:27:24 +0200
-Message-ID: <20230920112900.247774787@linuxfoundation.org>
+Subject: [PATCH 5.4 068/367] crypto: stm32 - Properly handle pm_runtime_get failing
+Date: Wed, 20 Sep 2023 13:27:25 +0200
+Message-ID: <20230920112900.274273727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -35,124 +34,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 288c63d5cb4667a51a04668b3e2bb0ea499bc5f4 ]
+[ Upstream commit aec48805163338f8413118796c1dd035661b9140 ]
 
-Add missing 'kfree_skb()' in 'mwifiex_init_rxq_ring()' and never do
-'kfree(card->rxbd_ring_vbase)' because this area is DMAed and should
-be released with 'dma_free_coherent()'. The latter is performed in
-'mwifiex_pcie_delete_rxbd_ring()', which is now called to recover
-from possible errors in 'mwifiex_pcie_create_rxbd_ring()'. Likewise
-for 'mwifiex_pcie_init_evt_ring()', 'kfree(card->evtbd_ring_vbase)'
-'mwifiex_pcie_delete_evtbd_ring()' and 'mwifiex_pcie_create_rxbd_ring()'.
+If pm_runtime_get() (disguised as pm_runtime_resume_and_get()) fails, this
+means the clk wasn't prepared and enabled. Returning early in this case
+however is wrong as then the following resource frees are skipped and this
+is never catched up. So do all the cleanups but clk_disable_unprepare().
 
-Fixes: d930faee141b ("mwifiex: add support for Marvell pcie8766 chipset")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230731074334.56463-1-dmantipov@yandex.ru
+Also don't emit a warning, as stm32_hash_runtime_resume() already emitted
+one.
+
+Note that the return value of stm32_hash_remove() is mostly ignored by
+the device core. The only effect of returning zero instead of an error
+value is to suppress another warning in platform_remove(). So return 0
+even if pm_runtime_resume_and_get() failed.
+
+Fixes: 8b4d566de6a5 ("crypto: stm32/hash - Add power management support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 25 ++++++++++++++-------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/crypto/stm32/stm32-hash.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index 80dde94b65c87..78d7674e71f9f 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -50,6 +50,8 @@ static int mwifiex_pcie_probe_of(struct device *dev)
+diff --git a/drivers/crypto/stm32/stm32-hash.c b/drivers/crypto/stm32/stm32-hash.c
+index dcce15b558091..7beb07def3d3a 100644
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -1553,9 +1553,7 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	if (!hdev)
+ 		return -ENODEV;
+ 
+-	ret = pm_runtime_resume_and_get(hdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(hdev->dev);
+ 
+ 	stm32_hash_unregister_algs(hdev);
+ 
+@@ -1571,7 +1569,8 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	pm_runtime_disable(hdev->dev);
+ 	pm_runtime_put_noidle(hdev->dev);
+ 
+-	clk_disable_unprepare(hdev->clk);
++	if (ret >= 0)
++		clk_disable_unprepare(hdev->clk);
+ 
+ 	return 0;
  }
- 
- static void mwifiex_pcie_work(struct work_struct *work);
-+static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter);
-+static int mwifiex_pcie_delete_evtbd_ring(struct mwifiex_adapter *adapter);
- 
- static int
- mwifiex_map_pci_memory(struct mwifiex_adapter *adapter, struct sk_buff *skb,
-@@ -627,14 +629,15 @@ static int mwifiex_init_rxq_ring(struct mwifiex_adapter *adapter)
- 		if (!skb) {
- 			mwifiex_dbg(adapter, ERROR,
- 				    "Unable to allocate skb for RX ring.\n");
--			kfree(card->rxbd_ring_vbase);
- 			return -ENOMEM;
- 		}
- 
- 		if (mwifiex_map_pci_memory(adapter, skb,
- 					   MWIFIEX_RX_DATA_BUF_SIZE,
--					   DMA_FROM_DEVICE))
--			return -1;
-+					   DMA_FROM_DEVICE)) {
-+			kfree_skb(skb);
-+			return -ENOMEM;
-+		}
- 
- 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
- 
-@@ -684,7 +687,6 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
- 		if (!skb) {
- 			mwifiex_dbg(adapter, ERROR,
- 				    "Unable to allocate skb for EVENT buf.\n");
--			kfree(card->evtbd_ring_vbase);
- 			return -ENOMEM;
- 		}
- 		skb_put(skb, MAX_EVENT_SIZE);
-@@ -692,8 +694,7 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
- 		if (mwifiex_map_pci_memory(adapter, skb, MAX_EVENT_SIZE,
- 					   DMA_FROM_DEVICE)) {
- 			kfree_skb(skb);
--			kfree(card->evtbd_ring_vbase);
--			return -1;
-+			return -ENOMEM;
- 		}
- 
- 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
-@@ -892,6 +893,7 @@ static int mwifiex_pcie_delete_txbd_ring(struct mwifiex_adapter *adapter)
-  */
- static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
- {
-+	int ret;
- 	struct pcie_service_card *card = adapter->card;
- 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
- 
-@@ -930,7 +932,10 @@ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
- 		    (u32)((u64)card->rxbd_ring_pbase >> 32),
- 		    card->rxbd_ring_size);
- 
--	return mwifiex_init_rxq_ring(adapter);
-+	ret = mwifiex_init_rxq_ring(adapter);
-+	if (ret)
-+		mwifiex_pcie_delete_rxbd_ring(adapter);
-+	return ret;
- }
- 
- /*
-@@ -961,6 +966,7 @@ static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter)
-  */
- static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
- {
-+	int ret;
- 	struct pcie_service_card *card = adapter->card;
- 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
- 
-@@ -995,7 +1001,10 @@ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
- 		    (u32)((u64)card->evtbd_ring_pbase >> 32),
- 		    card->evtbd_ring_size);
- 
--	return mwifiex_pcie_init_evt_ring(adapter);
-+	ret = mwifiex_pcie_init_evt_ring(adapter);
-+	if (ret)
-+		mwifiex_pcie_delete_evtbd_ring(adapter);
-+	return ret;
- }
- 
- /*
 -- 
 2.40.1
 
