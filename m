@@ -1,221 +1,186 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510E01643E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 13:21:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695216072; x=1726752072;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=lhdLReCii2ISQFHNbKVIvHvfrV+2NuEbDiwV4d1wxEg=;
-  b=Vg7noFjlr2q77mC6vFSvJxQvVxv/U0bqHhelOYj+HnO8oxWNWqYmbsOw
-   MnQ9QCcdJ6VUy1auUhuu62KyzA58nxuFHA7hMecC2NBk57y7o0M1qj1SQ
-   +WqFLsqOO75jJlO+1YpXRUba+ujkDuizC3ufeh2l7VLWGrLZzxszS5xjH
-   AcClGXK0tO/1KgfPUV2AlbY+gk7oXGX0WayC6sy25v+AwtNAuNUuRod2e
-   orC//G88VycmK5JAEAWNYLjud3tGfhf+Au+rY5eSmT89eda7ovsTIYkIt
-   T987oWb2HBzspfCF256nBg3L2fXSL2vxrlO1sZpUOf06WO6SiVkivchRe
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="411163206"
-X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="411163206"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 06:21:11 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="746654689"
-X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="746654689"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orsmga002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Sep 2023 06:21:10 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Wed, 20 Sep 2023 06:21:10 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Wed, 20 Sep 2023 06:21:09 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Wed, 20 Sep 2023 06:21:09 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.46) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Wed, 20 Sep 2023 06:21:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SYiIN5Xzt9w/JOu4pXyYITbtnhhcbYUqJCm7MRpsX6bIrg8XTuV8eEu94bdcOYD0hXYoQO5isqzxN9x2a6Yc5/KJDGLverl3Fmzbx5gCkqF3UuE/ONF9ALqd5pHLiUElRh7XDhyMSZE5UASL6iqEE+DXE4gXNVyyZnKH3EWF2aNGu1Iziip5fERy/a0Ch2dwi3AxJhW7KXoMePr1Bpfv/nWgifCkaIpeiDnNdnuHzOm67HYvwBDUQbZq9HQBsMhaN0mIwQ3PEda+IK3SiOHxq/JGu73DFcgfCsVLULUVKU/VIxF+RuXXsgNG195mBKuojLkMn0DAFf6xqAxWGdk11g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e9Z+WPyOGygEltknSOxydsiJCBsXC1vr9EloomxWcwQ=;
- b=Km95ZCTe2DiWujPNupiy06aw97EB46ezapbVdjJpqESAMZJPtIZp/UMkv8G8H0z64zplSc3JmjCa9Ujxs2XVSmwWX+8nqY7fN8V4zggz6IzXec/eFoliilPAN4hi6jLdc2tYSISD3PnrgxOe7kPuoYBiULQZQJPk/ylcpnwjBjvqADNJzQosjAK7uj9/PNsaw1YgZMHF18OQfnfwq9EkAgLtrJFTb17t1uo3e1G26rrTBozOPqeJjHp27ALdrVRpODtBD6jHw5DGifcOZgv6E/HjFu2gzbQBQg7qaQKhlUfYk4+QbT/0eWYDmHj0Ylic3EUC6Rvqk0mcWadaBVa6zw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from MN0PR11MB6304.namprd11.prod.outlook.com (2603:10b6:208:3c0::7)
- by BN9PR11MB5225.namprd11.prod.outlook.com (2603:10b6:408:132::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.28; Wed, 20 Sep
- 2023 13:21:07 +0000
-Received: from MN0PR11MB6304.namprd11.prod.outlook.com
- ([fe80::7edc:de45:7f2d:9ade]) by MN0PR11MB6304.namprd11.prod.outlook.com
- ([fe80::7edc:de45:7f2d:9ade%4]) with mapi id 15.20.6792.026; Wed, 20 Sep 2023
- 13:21:07 +0000
-Date: Wed, 20 Sep 2023 21:11:40 +0800
-From: Feng Tang <feng.tang@intel.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-CC: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, "linux-mm@kvack.org"
-	<linux-mm@kvack.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 3/4] mm/slub: attempt to find layouts up to 1/2 waste in
- calculate_order()
-Message-ID: <ZQrvjFuSAO6DHhQ0@feng-clx>
-References: <20230908145302.30320-6-vbabka@suse.cz>
- <20230908145302.30320-9-vbabka@suse.cz>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230908145302.30320-9-vbabka@suse.cz>
-X-ClientProxiedBy: SI2P153CA0033.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:190::21) To MN0PR11MB6304.namprd11.prod.outlook.com
- (2603:10b6:208:3c0::7)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B210636AF3;
+	Wed, 20 Sep 2023 13:25:29 +0000 (UTC)
+Received: from [192.168.2.41] (77-166-152-30.fixed.kpn.net [77.166.152.30])
+	by linux.microsoft.com (Postfix) with ESMTPSA id E405B212C4B7;
+	Wed, 20 Sep 2023 06:25:24 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E405B212C4B7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1695216327;
+	bh=+TFCyhLrjU2GRB3G3Q8iRvFT2orGxXvTmChxV5qs6Zw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gM3OCePsIjHUaMbiv7MbJMJw/8oYmz0qHYOZrdvg7+1n7bjVyOAuBE4CLMpR3zsrV
+	 /ZQ5ML7SX/MwuePkPxDBfAWeDjwKsepvl5FoTJBXTEjXWqQdtQshVGinujOfiRjXgs
+	 zV8utcR0SgzC40NFBHREnWvI1P+91ogOH7My327o=
+Message-ID: <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
+Date: Wed, 20 Sep 2023 15:25:23 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN0PR11MB6304:EE_|BN9PR11MB5225:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6adf5664-8d1e-4f1c-c766-08dbb9dc72df
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: vgtUcu1X3GgKG4rrlHhkW802x1Iv6chx5SuQsahgHe264TU0G2aSR1ObhTySwynLffcW4vuzi6hu4otw7TSMyN5QQgX7G+40rvU0jpGeoZ6sOpzp0w3TXdVIciTcj79Qacw349YzEucG4grma7lUUXumK4fb1/2g7agE9bozXYt/HsqriOhJvcLNM2kLsjZzf8YEtrDoVg1kaofSrRi/8kQEUezr22bcKAx0J2jt3e2X7eWi94lhhA/Hg7vvymYusMwr/fzt8AgSZaPHT0siSVWUABYLuL26yWq4eTaDh23B6JM2nYWArDggMuia9l8OenzUT6wubTmgMGt1MaG166SkYwg7AJ+AbqIWW9zND17zLdiMr3MjvI8sngD+ndDlkx3W/y8ccbLYVpc+T8eyhLHxq4cSntEAV7/13VFTcc/DJ6duzZgMZ4ap8F3dRsUHskunuPTXVjz/8SmmJSUVLIXwartiWBVXGb/lf2NFwiZRn4SC8GfCknmIp881pQ+YkkHNiIEipiBtJ+1K0PXR511Gj4J+7Yt+O3BnPmoT986py/nFJYCaAH01Rwmxen1ix76MjPK4Nfk3lsZYz8vaDDGPdSGsy5OrcDwFV0HAQmM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR11MB6304.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7916004)(346002)(366004)(39860400002)(136003)(396003)(376002)(451199024)(1800799009)(186009)(26005)(4326008)(8936002)(8676002)(83380400001)(2906002)(44832011)(5660300002)(7416002)(86362001)(6512007)(6666004)(6506007)(6486002)(9686003)(38100700002)(82960400001)(33716001)(41300700001)(478600001)(316002)(66556008)(6916009)(66476007)(54906003)(66946007)(37363002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?dv3TYCcX+eepzv6+IXT35ktV+UQQdOj1cRSNqqIeZrEPqZWSDjTTQdsc61cp?=
- =?us-ascii?Q?t212cfKmt3syEU4pWfk1bBqjvCVptqTST/qhcFTs6CrPkEQ3XOmyWWdlE18I?=
- =?us-ascii?Q?kT+Un9v1yopAVlRojzXGvKYYpQD/gB84EKQEHCAHhe9tF19KB5tlINxqP1RZ?=
- =?us-ascii?Q?IWhP2xvyhcLEb1U8L7NhIs7J3IoR0oeW2t5rqPh78t31qnLXsq3MqSUDTPog?=
- =?us-ascii?Q?SiDudbh/FnTZ9C7OpbdFgn4vKaDXo0BJNMEfgWC6jVwZcNneXH2IY2ch+oyB?=
- =?us-ascii?Q?T2kzVYVACO6sqHVMYYRKRVeovI7peE75BsTz4wfKsh0xrMgcCytBf032wjeK?=
- =?us-ascii?Q?DbePwLyG+5BuY7BXaGnyUyi0O5O4fAIKHqOUEg2w1JUujheYiTlL/QBVetRq?=
- =?us-ascii?Q?cwBVh2vTHkmhu+B9egQQXXXlk/SzmKA1nErvT+Fm6f5DnhDNbuJ4fm2IpG4d?=
- =?us-ascii?Q?FgQZzxfHVntWylWQfXYw7Xz1DimFGPvr+d0chCJ3RqbMn9t8WVrXiQYF6R8E?=
- =?us-ascii?Q?xqgwGfL4bWNV9hP9KpDsrV8xeaDs21loTwkhtQt+lFTdo55DElnSiPEcDdi0?=
- =?us-ascii?Q?eqvpcA0BnTbX8exYrdPSqpMrqvU4CorDPAw8I4XjoxDbqZrbXTamThh4FTLa?=
- =?us-ascii?Q?78HTOO9td01kwjh/jyz/LbylL5phF6tE+Zv/EiCntBLjL3LhBDCFCtMHzLZe?=
- =?us-ascii?Q?RADIdGBOdAvkvdHFLDwKQPrgozVOm8i+ioLQ48LQl+edO6GZZoia4tlSLm6P?=
- =?us-ascii?Q?ROqIW88omr95a83WpGPUBVLOeEpS+tHYnp1jvDQrC3vRwPklil3aTEUr3kgS?=
- =?us-ascii?Q?I4fvSwBtJpMQ1TFWZj/lU4M7hP2FYpHR6ujHEdtfTNKOYC0v2vqo8WXBaYi5?=
- =?us-ascii?Q?8Fdxuq5CyncOE7fPCVw1THRirDMJkftCti8iUT3Xgj/JzyJK0dAq5sLKN6Cm?=
- =?us-ascii?Q?ISh1TQeDmawp1RUYHQRI1i+ZO7igtMCcZXd49xo8/0Oi2iHHCa/N8O8n8403?=
- =?us-ascii?Q?/I2mSVZ2arB/m3GNxGAGVPyGd7HC7dIT83bw1yAeGXrYbKu87f/L42DLLOQ9?=
- =?us-ascii?Q?EiUGOiu+e9iQSD/xY8UtgHsaGZaCaKklbXJQQi2/b7bpVfRl9BMtRaKK1rDt?=
- =?us-ascii?Q?0R5efaUx9cr9Gg08TSQtJvllQciK0nnJLi8Bampj2lBQNWI2qwKaXgSSjCxH?=
- =?us-ascii?Q?HQ4QdctLhv80wcANSGRe5vMt2lYabXoP+lhQusEvCC9bbfdF2rEH3RLAMKcf?=
- =?us-ascii?Q?GH6nbgS7OIAQm+fR62JUZJ8sEfuwjI+yWicGE6aRZMW8KoFM85h4VRCN6znd?=
- =?us-ascii?Q?A8uAaFUKS0HyQ+yWRvvz9iLVdDqy0ZJSgPQUlElnGn4w8tVykWJ1dwMQkQE4?=
- =?us-ascii?Q?EEHIzvebsMjhP9gN+SqiuuLqw982z6W9gxTfQPPZApyn3J8ZrOW2iXx4r9qJ?=
- =?us-ascii?Q?wd8+PeplGxxf5znuqPIlg4ZqwLCFjfGXSEiE0Dmv1Bg2harWS1H0OxemTw40?=
- =?us-ascii?Q?/eNISUKDCaKchBhoEYqsR8gLws3VgWhElfwUTRKuVHihtfYvM4AKUQVXrwO2?=
- =?us-ascii?Q?WTvvZ//v40FXtFqve4ewYkt2qMgQY0BZJgW/pEjM?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6adf5664-8d1e-4f1c-c766-08dbb9dc72df
-X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB6304.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2023 13:21:07.7775
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: J6yaTP/24i0VYcGQZmAxU4Q5+eQdY2Sb7X1u+8WuwhTBWrqt4tp7J8eYO33y5pK5s5wuhZ8Tsqmc3VQde1H5VQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5225
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Content-Language: en-US
+To: Michal Hocko <mhocko@suse.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, Shakeel Butt <shakeelb@google.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Muchun Song <muchun.song@linux.dev>, Tejun Heo <tj@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-kernel@vger.kernel.org,
+ regressions@lists.linux.dev, mathieu.tortuyaux@gmail.com
+References: <20230917191040.964416434@linuxfoundation.org>
+ <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+ <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+ <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+In-Reply-To: <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 08, 2023 at 10:53:06PM +0800, Vlastimil Babka wrote:
-> The main loop in calculate_order() currently tries to find an order with
-> at most 1/4 waste. If that's impossible (for particular large object
-> sizes), there's a fallback that will try to place one object within
-> slab_max_order.
+On 9/20/2023 1:07 PM, Michal Hocko wrote:
+> On Wed 20-09-23 12:04:48, Jeremi Piotrowski wrote:
+>> On 9/20/2023 10:43 AM, Michal Hocko wrote:
+>>> On Wed 20-09-23 01:11:01, Jeremi Piotrowski wrote:
+>>>> On Sun, Sep 17, 2023 at 09:12:40PM +0200, Greg Kroah-Hartman wrote:
+>>>>> 6.1-stable review patch.  If anyone has any objections, please let me know.
+>>>>>
+>>>>> ------------------
+>>>>
+>>>> Hi Greg/Michal,
+>>>>
+>>>> This commit breaks userspace which makes it a bad commit for mainline and an
+>>>> even worse commit for stable.
+>>>>
+>>>> We ingested 6.1.54 into our nightly testing and found that runc fails to gather
+>>>> cgroup statistics (when reading kmem.limit_in_bytes). The same code is vendored
+>>>> into kubelet and kubelet fails to start if this operation fails. 6.1.53 is
+>>>> fine.
+>>>
+>>> Could you expand some more on why is the file read? It doesn't support
+>>> writing to it for some time so how does reading it helps in any sense?
+>>>
+>>> Anyway, I do agree that the stable backport should be reverted.
+>>>
+>>
+>> This file is read together with all the other memcg files. Each prefix:
+>>
+>> memory
+>> memory.memsw
+>> memory.kmem
+>> memory.kmem.tcp
+>>
+>> is combined with these suffixes
+>>
+>> .usage_in_bytes
+>> .max_usage_in_bytes
+>> .failcnt
+>> .limit_in_bytes
+>>
+>> and read, the values are then forwarded on to other components for scheduling decisions.
+>> You want to know the limit when checking the usage (is the usage close to the limit or not).
 > 
-> If we expand the loop boundary to also allow up to 1/2 waste as the last
-> resort, we can remove the fallback and simplify the code, as the loop
-> will find an order for such sizes as well. Note we don't need to allow
-> more than 1/2 waste as that will never happen - calc_slab_order() would
-> calculate more objects to fit, reducing waste below 1/2.
-> 
-> Sucessfully finding an order in the loop (compared to the fallback) will
-> also have the benefit in trying to satisfy min_objects, because the
-> fallback was passing 1. Thus the resulting slab orders might be larger
-> (not because it would improve waste, but to reduce pressure on shared
-> locks), which is one of the goals of calculate_order().
-> 
-> For example, with nr_cpus=1 and 4kB PAGE_SIZE, slub_max_order=3, before
-> the patch we would get the following orders for these object sizes:
-> 
->  2056 to 10920 - order-3 as selected by the loop
-> 10928 to 12280 - order-2 due to fallback, as <1/4 waste is not possible
-> 12288 to 32768 - order-3 as <1/4 waste is again possible
-> 
-> After the patch:
-> 
-> 2056 to 32768 - order-3, because even in the range of 10928 to 12280 we
->                 try to satisfy the calculated min_objects.
-> 
-> As a result the code is simpler and gives more consistent results.
- 
-Current code already tries the fraction "1" in the follwing 2 fallback
-calls of calc_slab_order(), so trying fraction "2" makes sense to me.
+> You know there is no kmem limit as there is no way to set it for some
+> time (since 5.16 - i.e. 2 years ago). I can see that users following old
+> kernels could have missed that though.
 
-Reviewed-by: Feng Tang <feng.tang@intel.com>
+I know what you mean, but I think this generally went unnoticed because the limit file is read
+unconditionally, but only written when a kmem limit is explicitly requested for a specific
+container, which is rarely (if ever) done.
 
-Thanks,
-Feng
+Regarding following old kernels: a majority of kubernetes users are still on 5.15 and only slowly
+started shifting to >=6.1 very recently (this summer). This is mostly driven by distro vendor
+policies which tend to follow the pattern of "follow LTS kernels but don't switch to the next
+LTS immediately".
 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/slub.c | 14 ++++----------
->  1 file changed, 4 insertions(+), 10 deletions(-)
+I know this is far from ideal for reporting these kinds of issues, would love to report
+them as soon as a kernel release happens.
+
 > 
-> diff --git a/mm/slub.c b/mm/slub.c
-> index 5c287d96b212..f04eb029d85a 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -4171,23 +4171,17 @@ static inline int calculate_order(unsigned int size)
->  	 * the order can only result in same or less fractional waste, not more.
->  	 *
->  	 * If that fails, we increase the acceptable fraction of waste and try
-> -	 * again.
-> +	 * again. The last iteration with fraction of 1/2 would effectively
-> +	 * accept any waste and give us the order determined by min_objects, as
-> +	 * long as at least single object fits within slub_max_order.
->  	 */
-> -	for (unsigned int fraction = 16; fraction >= 4; fraction /= 2) {
-> +	for (unsigned int fraction = 16; fraction > 1; fraction /= 2) {
->  		order = calc_slab_order(size, min_objects, slub_max_order,
->  					fraction);
->  		if (order <= slub_max_order)
->  			return order;
->  	}
->  
-> -	/*
-> -	 * We were unable to place multiple objects in a slab. Now
-> -	 * lets see if we can place a single object there.
-> -	 */
-> -	order = calc_slab_order(size, 1, slub_max_order, 1);
-> -	if (order <= slub_max_order)
-> -		return order;
-> -
->  	/*
->  	 * Doh this slab cannot be placed using slub_max_order.
->  	 */
-> -- 
-> 2.42.0
+>> Userspace tolerates MEMCG/MEMCG_KMEM being disabled, but having a single file out of the
+>> set missing is an anomaly. So maybe we could keep the dummy file just for the
+>> sake of consistency? Cgroupv1 is legacy after all.
 > 
+> What we had was a dummy file. It didn't allow to write any value so it
+> would have always reported unlimited. The reason I've decided to remove
+> the file was that there were other users not being able to handle the
+> write failure while they are just fine not having the file. So we are
+> effectively between a rock and hard place here. Either way something is
+> broken. The other SW got fixed as well but similar to your case it takes
+> some time to absorb the change through all 3rd party users.
 > 
+>>>>> Address this by wiping out the file completely and effectively get back to
+>>>>> pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
+>>>>
+>>>> On reads, the runc code checks for MEMCG_KMEM=n by checking
+>>>> kmem.usage_in_bytes.
+> 
+> Just one side note. Config options get renamed and their semantic
+> changes over time so I would just recomment to never make any
+> dependencies on any specific one. 
+> 
+
+Right, what i meant is the logic is this, with checking the "usage"
+file to determine whether the controller is available:
+
+    value, err := fscommon.GetCgroupParamUint(path, usage)
+    if err != nil {
+        if name != "" && os.IsNotExist(err) {
+            // Ignore ENOENT as swap and kmem controllers
+            // are optional in the kernel.
+            return cgroups.MemoryData{}, nil
+        }
+        return cgroups.MemoryData{}, err
+    }
+
+and if it is, then it proceeds to read "limit_in_bytes" and the others.
+
+>>>> If it is present then runc expects the other cgroup files
+>>>> to be there (including kmem.limit_in_bytes). So this change is not effectively
+>>>> the same.
+>>>>
+>>>> Here's a link to the PR that would be needed to handle this change in userspace
+>>>> (not merged yet and would need to be propagated through the ecosystem):
+>>>>
+>>>> https://github.com/opencontainers/runc/pull/4018.
+>>>
+>>> Thanks. Does that mean the revert is still necessary for the Linus tree
+>>> or do you expect that the fix can be merged and propagated in a
+>>> reasonable time?
+>>>
+>>
+>> We can probably get runc and currently supported kubernetes versions patched in time
+>> before 6.6 (or the next LTS kernel) hits LTS distros.
+>>
+>> But there's still a bunch of users running cgroupv1 with unsupported kubernetes
+>> versions that are still taking kernel updates as they come, so this might get reported
+>> again next year if it stays in mainline.
+> 
+> I can see how 3rd party users are hard to get aligned but having a fix
+> available should allow them to apply it or is there any actual roadblock
+> for them to adapt as soon as they hit the issue?
+> 
+
+The issue with this is that these users are running a frozen set of kubernetes (+runc)
+binaries, but still pull kernel updates from the base distro. These kubernetes versions
+are out of maintenance so the code will not get fixed and no one will release fixed
+binaries.
+
+> I mean, normally I would be just fine reverting this API change because
+> it is disruptive but the only way to have the file available and not
+> break somebody is to revert 58056f77502f ("memcg, kmem: further
+> deprecate kmem.limit_in_bytes") as well. Or to ignore any value written
+> there but that sounds rather dubious. Although one could argue this
+> would mimic nokmem kernel option.
+> 
+
+I just want to make sure we don't introduce yet another new behavior in this legacy
+system. I have not seen breakage due to 58056f77502f. Mimicing nokmem sounds good but
+does this mean "don't enforce limits" (that should be fine) or "ignore writes to the limit"
+(=don't event store the written limit). The latter might have unintended consequences.
+
