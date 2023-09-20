@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BBC3AC19
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE1FC433C8;
-	Wed, 20 Sep 2023 12:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669863AC14
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9EBC433C8;
+	Wed, 20 Sep 2023 12:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213051;
-	bh=50CSQ2/TBdpfkWsVeqL2SkDxhDmiGqNHWTH8wIYg1V0=;
+	s=korg; t=1695213054;
+	bh=HfxYaZq4GM6DVaV8FU2f6D0NP/LLZE67aYc77uISa30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KB10GVAEA2bx1PsvUA71rHXLZxW8nw8wvucvo9+LGlyECOBjfZTR65tSTLvnBmutp
-	 +zIUqiX74+Km4RqU8PCzBOjg8fstgUx971uOEpij0i/fOVJgJn29/p8enZBFNlZJbg
-	 Uf7XV1FULbx9FzhbQdPp6DWXxg4s7ZlAglG9sWrM=
+	b=nddmd2697FUtABIjKbMYRXypuTJ7/eHQBNe0LumZya4P870lMwu7fGjyKTvaqwaB5
+	 WGmGJ1urmOeyLyoh3TqelbPPevYqDS9mSnYCs33h0Yv7f84C9vHpJi1h7Fz6N2e6pD
+	 11Bde3sIglBe800swlrnbsMwdIM5xRCZemFqHnKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Corey Minyard <minyard@acm.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/367] ipmi:ssif: Add check for kstrdup
-Date: Wed, 20 Sep 2023 13:28:22 +0200
-Message-ID: <20230920112901.901992834@linuxfoundation.org>
+Subject: [PATCH 5.4 143/367] wifi: ath10k: Use RMW accessors for changing LNKCTL
+Date: Wed, 20 Sep 2023 13:28:40 +0200
+Message-ID: <20230920112902.381794811@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -34,44 +37,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit c5586d0f711e9744d0cade39b0c4a2d116a333ca ]
+[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+Don't assume that only the driver would be accessing LNKCTL. ASPM policy
+changes can trigger write to LNKCTL outside of driver's control.
 
-Fixes: c4436c9149c5 ("ipmi_ssif: avoid registering duplicate ssif interface")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Message-Id: <20230619092802.35384-1-jiasheng@iscas.ac.cn>
-Signed-off-by: Corey Minyard <minyard@acm.org>
+Use RMW capability accessors which does proper locking to avoid losing
+concurrent updates to the register value. On restore, clear the ASPMC field
+properly.
+
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 76d870ed09ab ("ath10k: enable ASPM")
+Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index 2907b0bca1af0..0061f2207f318 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1609,6 +1609,11 @@ static int ssif_add_infos(struct i2c_client *client)
- 	info->addr_src = SI_ACPI;
- 	info->client = client;
- 	info->adapter_name = kstrdup(client->adapter->name, GFP_KERNEL);
-+	if (!info->adapter_name) {
-+		kfree(info);
-+		return -ENOMEM;
-+	}
-+
- 	info->binfo.addr = client->addr;
- 	list_add_tail(&info->link, &ssif_infos);
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index c28328c96307b..464dd0246a97d 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -1960,8 +1960,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
+ 	ath10k_pci_irq_enable(ar);
+ 	ath10k_pci_rx_post(ar);
+ 
+-	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+-				   ar_pci->link_ctl);
++	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_ASPMC,
++					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
+ 
  	return 0;
+ }
+@@ -2818,8 +2819,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
+ 
+ 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+ 				  &ar_pci->link_ctl);
+-	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+-				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
++	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
++				   PCI_EXP_LNKCTL_ASPMC);
+ 
+ 	/*
+ 	 * Bring the target up cleanly.
 -- 
 2.40.1
 
