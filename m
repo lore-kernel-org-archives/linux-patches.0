@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9B03AC00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A4FC433C8;
-	Wed, 20 Sep 2023 12:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB37D3AC2B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72734C433C7;
+	Wed, 20 Sep 2023 12:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213100;
-	bh=AEUIsuy5OOCX08N37I59pY+p3GXrVZVb9Zju3VlaQ08=;
+	s=korg; t=1695213102;
+	bh=G641JYNYRh/p5YrXbzFB4K+Yv/tTlvGLzwSIlFPGCRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHdWHoYEMZADMMrNg6++kga+SJd2MH1W23awRzthyk1buM/NCKu2/FX7fea3nbTH/
-	 jx0jStJb72IsK4Y7dN5g8bn0JDbqV1YE5klAzExIXLDe5BLqARuupiL/SE9OEH1Zqe
-	 SxGzxRtbXSYDwoVHUGe/dURJFPIMoE3uXXpdr9vQ=
+	b=OmrDGenEP3KHgnuhedVyMKz0T0EwVK1YpRLnzwEOhpp+5aINRvV35zKJA9SWygAxB
+	 1LaulFATmBHIl7bGIuV2LNd3zB++O3MNwkB7zHYRlZc6jLD4ynk7tl39sj6qccAz+7
+	 WXLx3CuBlZfgnJ5xOpYHm0HSKNnMt4APrJ8S5EiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Baolin Wang <baolin.wang7@gmail.com>,
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 161/367] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Wed, 20 Sep 2023 13:28:58 +0200
-Message-ID: <20230920112902.817405409@linuxfoundation.org>
+Subject: [PATCH 5.4 162/367] serial: sprd: getting port index via serial aliases only
+Date: Wed, 20 Sep 2023 13:28:59 +0200
+Message-ID: <20230920112902.842181970@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,78 +40,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+[ Upstream commit 4b7349cb4e26e79429ecd619eb588bf384f69fdb ]
 
-There are three places that qla4xxx parses nlattrs:
+This patch simplifies the process of getting serial port number, with
+this patch, serial devices must have aliases configured in devicetree.
 
- - qla4xxx_set_chap_entry()
+The serial port searched out via sprd_port array maybe wrong if we don't
+have serial alias defined in devicetree, and specify console with command
+line, we would get the wrong port number if other serial ports probe
+failed before console's. So using aliases is mandatory.
 
- - qla4xxx_iface_set_param()
-
- - qla4xxx_sysfs_ddb_set_param()
-
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
-
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
-
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
+Link: https://lore.kernel.org/r/20200318105049.19623-2-zhang.lyra@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f9608f188756 ("serial: sprd: Assign sprd_port after initialized to avoid wrong access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/tty/serial/sprd_serial.c | 36 +++++---------------------------
+ 1 file changed, 5 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index df43cf6405a8e..ea15bbe0397fc 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -939,6 +939,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index 07573de70445c..e6acf2c848f39 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -1073,29 +1073,6 @@ static struct uart_driver sprd_uart_driver = {
+ 	.cons = SPRD_CONSOLE,
+ };
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
-+
- 		param_info = nla_data(attr);
+-static int sprd_probe_dt_alias(int index, struct device *dev)
+-{
+-	struct device_node *np;
+-	int ret = index;
+-
+-	if (!IS_ENABLED(CONFIG_OF))
+-		return ret;
+-
+-	np = dev->of_node;
+-	if (!np)
+-		return ret;
+-
+-	ret = of_alias_get_id(np, "serial");
+-	if (ret < 0)
+-		ret = index;
+-	else if (ret >= ARRAY_SIZE(sprd_port) || sprd_port[ret] != NULL) {
+-		dev_warn(dev, "requested serial port %d not available.\n", ret);
+-		ret = index;
+-	}
+-
+-	return ret;
+-}
+-
+ static int sprd_remove(struct platform_device *dev)
+ {
+ 	struct sprd_uart_port *sup = platform_get_drvdata(dev);
+@@ -1173,14 +1150,11 @@ static int sprd_probe(struct platform_device *pdev)
+ 	int index;
+ 	int ret;
  
- 		switch (param_info->param) {
-@@ -2723,6 +2728,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
- 	}
+-	for (index = 0; index < ARRAY_SIZE(sprd_port); index++)
+-		if (sprd_port[index] == NULL)
+-			break;
+-
+-	if (index == ARRAY_SIZE(sprd_port))
+-		return -EBUSY;
+-
+-	index = sprd_probe_dt_alias(index, &pdev->dev);
++	index = of_alias_get_id(pdev->dev.of_node, "serial");
++	if (index < 0 || index >= ARRAY_SIZE(sprd_port)) {
++		dev_err(&pdev->dev, "got a wrong serial alias id %d\n", index);
++		return -EINVAL;
++	}
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
- 
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8093,6 +8103,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
- 
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
+ 	sprd_port[index] = devm_kzalloc(&pdev->dev, sizeof(*sprd_port[index]),
+ 					GFP_KERNEL);
 -- 
 2.40.1
 
