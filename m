@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1D42AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805CCC433C9;
-	Wed, 20 Sep 2023 12:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1E52AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:07:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E050C433CA;
+	Wed, 20 Sep 2023 12:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211633;
-	bh=3fFGPrWjlysK+1jbGr2bKT1gdNEIe4hGbW+xl8BGUSY=;
+	s=korg; t=1695211636;
+	bh=XYNBgtuVza/eLnvouYKCByeJ5dv4N6FfnWSbqoN1JQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpKOaEHcoOdOjqsjuVs4J0W4cjZAzgBHrx7yiXbDvJJELcWuhmY6mglzbSS8AaUhw
-	 IMfTaO2K2vbqi1/4LHfbOciLLc2VHubvCN8SgW4otAGxQtYf9XJVaSDi3P/Jik6dcs
-	 USJn3Gy0WpaDad62bxDbPdMKbTwIrjyM0njJ5740=
+	b=KYO/S1E5nHBCjaFLyRz+yC0pEzeIA6Wy+WfzBMd9LH1+5AIXyUmzoYBPZOt0FSQA1
+	 0GxWAeWzcyKpisjdzRVTKH2hD0zkrk1Fjsx0jpeVQYCoAgE7oyIDJX69LSTGqGhZ2B
+	 Krn+DLk20KJoOg/D8KvoqZ/6frGnvAXvYAsi6AOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	BassCheck <bass@buaa.edu.cn>,
+	Tuo Li <islituo@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 129/186] watchdog: intel-mid_wdt: add MODULE_ALIAS() to allow auto-load
-Date: Wed, 20 Sep 2023 13:30:32 +0200
-Message-ID: <20230920112841.681210399@linuxfoundation.org>
+Subject: [PATCH 4.14 159/186] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
+Date: Wed, 20 Sep 2023 13:31:02 +0200
+Message-ID: <20230920112842.673747666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -42,38 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit cf38e7691c85f1b09973b22a0b89bf1e1228d2f9 ]
+[ Upstream commit 2e63972a2de14482d0eae1a03a73e379f1c3f44c ]
 
-When built with CONFIG_INTEL_MID_WATCHDOG=m, currently the driver
-needs to be loaded manually, for the lack of module alias.
-This causes unintended resets in cases where watchdog timer is
-set-up by bootloader and the driver is not explicitly loaded.
-Add MODULE_ALIAS() to load the driver automatically at boot and
-avoid this issue.
+The variable crtc->state->event is often protected by the lock
+crtc->dev->event_lock when is accessed. However, it is accessed as a
+condition of an if statement in exynos_drm_crtc_atomic_disable() without
+holding the lock:
 
-Fixes: 87a1ef8058d9 ("watchdog: add Intel MID watchdog driver support")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230811120220.31578-1-raag.jadav@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+  if (crtc->state->event && !crtc->state->active)
+
+However, if crtc->state->event is changed to NULL by another thread right
+after the conditions of the if statement is checked to be true, a
+null-pointer dereference can occur in drm_crtc_send_vblank_event():
+
+  e->pipe = pipe;
+
+To fix this possible null-pointer dereference caused by data race, the
+spin lock coverage is extended to protect the if statement as well as the
+function call to drm_crtc_send_vblank_event().
+
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Link: https://sites.google.com/view/basscheck/home
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Added relevant link.
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/intel-mid_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/exynos/exynos_drm_crtc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/intel-mid_wdt.c b/drivers/watchdog/intel-mid_wdt.c
-index 72c108a12c19d..0dec3fba02b99 100644
---- a/drivers/watchdog/intel-mid_wdt.c
-+++ b/drivers/watchdog/intel-mid_wdt.c
-@@ -186,3 +186,4 @@ module_platform_driver(mid_wdt_driver);
- MODULE_AUTHOR("David Cohen <david.a.cohen@linux.intel.com>");
- MODULE_DESCRIPTION("Watchdog Driver for Intel MID platform");
- MODULE_LICENSE("GPL");
-+MODULE_ALIAS("platform:intel_mid_wdt");
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_crtc.c b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+index 4787560bf93e7..e1aa518ea0ba1 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_crtc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+@@ -43,13 +43,12 @@ static void exynos_drm_crtc_atomic_disable(struct drm_crtc *crtc,
+ 	if (exynos_crtc->ops->disable)
+ 		exynos_crtc->ops->disable(exynos_crtc);
+ 
++	spin_lock_irq(&crtc->dev->event_lock);
+ 	if (crtc->state->event && !crtc->state->active) {
+-		spin_lock_irq(&crtc->dev->event_lock);
+ 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
+-		spin_unlock_irq(&crtc->dev->event_lock);
+-
+ 		crtc->state->event = NULL;
+ 	}
++	spin_unlock_irq(&crtc->dev->event_lock);
+ }
+ 
+ static int exynos_crtc_atomic_check(struct drm_crtc *crtc,
 -- 
 2.40.1
 
