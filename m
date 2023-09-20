@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1974D2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4517EC433C9;
-	Wed, 20 Sep 2023 12:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697AD2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1828C433CB;
+	Wed, 20 Sep 2023 12:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211574;
-	bh=xGWtkXjPRU6WbbXC9H3ZaFCwV7YhcNt7sFzvqL5TJmo=;
+	s=korg; t=1695211577;
+	bh=bJ5Dp4qZAzy0+MCahqhzjrPGvQc7ycSCvAVdbcDXdrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeID8Ou1KHPWLEDUdWssWSblO/OM/vQP9o5LM8pouhl2LuKH7paHv4Q5IzVdQ/YEh
-	 g/K1jrZywfYPksW1x3QJpuXFAciH4qN86C2t5lMdBHMZNOXFxibIkhiei4fHP/OORK
-	 rxAbruTaep8TirXvgEktNYc17aKROiWW+21QpgyU=
+	b=Rp5Aujp/axSahVPILgGy6j1CMDpaAzw5oeZ+T4u3SSp5sLYtHlJ+7Rj04eeE1Tbgp
+	 7eVrQ/l4V1/OtlvN+JZ0nTFbfOPjvOe2s1JE4CBr0okbr800JQ9B37qaAEpYa7nS78
+	 Sm6fJ5lFlMh3KMfufNFPZQjUHlYa+mxDNjjswuvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Shigeru Yoshida <syoshida@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 144/186] net: ethernet: mtk_eth_soc: fix possible NULL pointer dereference in mtk_hwlro_get_fdir_all()
-Date: Wed, 20 Sep 2023 13:30:47 +0200
-Message-ID: <20230920112842.179727648@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 145/186] kcm: Fix memory leak in error path of kcm_sendmsg()
+Date: Wed, 20 Sep 2023 13:30:48 +0200
+Message-ID: <20230920112842.214863015@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,37 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit e4c79810755f66c9a933ca810da2724133b1165a ]
+[ Upstream commit c821a88bd720b0046433173185fd841a100d44ad ]
 
-rule_locs is allocated in ethtool_get_rxnfc and the size is determined by
-rule_cnt from user space. So rule_cnt needs to be check before using
-rule_locs to avoid NULL pointer dereference.
+syzbot reported a memory leak like below:
 
-Fixes: 7aab747e5563 ("net: ethernet: mediatek: add ethtool functions to configure RX flows of HW LRO")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+BUG: memory leak
+unreferenced object 0xffff88810b088c00 (size 240):
+  comm "syz-executor186", pid 5012, jiffies 4294943306 (age 13.680s)
+  hex dump (first 32 bytes):
+    00 89 08 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff83e5d5ff>] __alloc_skb+0x1ef/0x230 net/core/skbuff.c:634
+    [<ffffffff84606e59>] alloc_skb include/linux/skbuff.h:1289 [inline]
+    [<ffffffff84606e59>] kcm_sendmsg+0x269/0x1050 net/kcm/kcmsock.c:815
+    [<ffffffff83e479c6>] sock_sendmsg_nosec net/socket.c:725 [inline]
+    [<ffffffff83e479c6>] sock_sendmsg+0x56/0xb0 net/socket.c:748
+    [<ffffffff83e47f55>] ____sys_sendmsg+0x365/0x470 net/socket.c:2494
+    [<ffffffff83e4c389>] ___sys_sendmsg+0xc9/0x130 net/socket.c:2548
+    [<ffffffff83e4c536>] __sys_sendmsg+0xa6/0x120 net/socket.c:2577
+    [<ffffffff84ad7bb8>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84ad7bb8>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+In kcm_sendmsg(), kcm_tx_msg(head)->last_skb is used as a cursor to append
+newly allocated skbs to 'head'. If some bytes are copied, an error occurred,
+and jumped to out_error label, 'last_skb' is left unmodified. A later
+kcm_sendmsg() will use an obsoleted 'last_skb' reference, corrupting the
+'head' frag_list and causing the leak.
+
+This patch fixes this issue by properly updating the last allocated skb in
+'last_skb'.
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-and-tested-by: syzbot+6f98de741f7dbbfc4ccb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6f98de741f7dbbfc4ccb
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/kcm/kcmsock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index fb48efa707979..ff7c267df6e40 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -1625,6 +1625,9 @@ static int mtk_hwlro_get_fdir_all(struct net_device *dev,
- 	int i;
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 0589b6b560eca..96b5fbe919b67 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1074,6 +1074,8 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
  
- 	for (i = 0; i < MTK_MAX_LRO_IP_CNT; i++) {
-+		if (cnt == cmd->rule_cnt)
-+			return -EMSGSIZE;
-+
- 		if (mac->hwlro_ip[i]) {
- 			rule_locs[cnt] = i;
- 			cnt++;
+ 	if (head != kcm->seq_skb)
+ 		kfree_skb(head);
++	else if (copied)
++		kcm_tx_msg(head)->last_skb = skb;
+ 
+ 	err = sk_stream_error(sk, msg->msg_flags, err);
+ 
 -- 
 2.40.1
 
