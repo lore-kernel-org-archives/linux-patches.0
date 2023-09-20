@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F5530FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFB3C433CC;
-	Wed, 20 Sep 2023 12:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB9130FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2020C433C8;
+	Wed, 20 Sep 2023 12:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212725;
-	bh=ApeVeDw4YdiJ9twEljBpXzpvrIRC3QZ0Vp9iVyPjxVg=;
+	s=korg; t=1695212728;
+	bh=Sr2clNzyDpbUJPXQBvOX2CSmdTt6BXi254jxiCboKuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v81a3l0l6Y5CjvQ+gXnwanOHEO19Mss9ZGvyP/zIq0ieiS1qPDJXcBVfcAaxILOj1
-	 o6+BhIc+nNp4baYzr3XLWLMJm2OkTaJMv2CeXYVOnjXsZKFCfugtrzp17esawwUJkY
-	 PT/5/I2/1U/Uv/L8CqVz2Bg0l/bCWg/6KxbOKWKA=
+	b=wmqvHie5vyTsO8OKfdtDbQ31Q6OEFZuZtjRt0KJrIOBF3UdsKpgNZW+iolHf0G5wH
+	 ShySLfDghmrgoPzsGaDktik/FQLylUpGKJAo1bveQQBLasgfY3vyr0f5bNYNa+/lbN
+	 PT3qnqSk9YtMcx/iWzY4WT9J6qvHtU/XHEkLlcpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Hoeppner <hoeppner@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 024/367] s390/dasd: use correct number of retries for ERP requests
-Date: Wed, 20 Sep 2023 13:26:41 +0200
-Message-ID: <20230920112859.150036115@linuxfoundation.org>
+Subject: [PATCH 5.4 025/367] s390/dasd: fix hanging device after request requeue
+Date: Wed, 20 Sep 2023 13:26:42 +0200
+Message-ID: <20230920112859.174332326@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,41 +43,218 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit acea28a6b74f458defda7417d2217b051ba7d444 ]
+[ Upstream commit 8a2278ce9c25048d999fe1a3561def75d963f471 ]
 
-If a DASD request fails an error recovery procedure (ERP) request might
-be built as a copy of the original request to do error recovery.
+The DASD device driver has a function to requeue requests to the
+blocklayer.
+This function is used in various cases when basic settings for the device
+have to be changed like High Performance Ficon related parameters or copy
+pair settings.
 
-The ERP request gets a number of retries assigned.
-This number is always 256 no matter what other value might have been set
-for the original request. This is not what is expected when a user
-specifies a certain amount of retries for the device via sysfs.
+The functions iterates over the device->ccw_queue and also removes the
+requests from the block->ccw_queue.
+In case the device is started on an alias device instead of the base
+device it might be removed from the block->ccw_queue without having it
+canceled properly before. This might lead to a hanging device since the
+request is no longer on a queue and can not be handled properly.
 
-Correctly use the number of retries of the original request for ERP
-requests.
+Fix by iterating over the block->ccw_queue instead of the
+device->ccw_queue. This will take care of all blocklayer related requests
+and handle them on all associated DASD devices.
 
 Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
 Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-3-sth@linux.ibm.com
+Link: https://lore.kernel.org/r/20230721193647.3889634-4-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_3990_erp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/block/dasd.c | 125 +++++++++++++++-----------------------
+ 1 file changed, 48 insertions(+), 77 deletions(-)
 
-diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
-index ee73b0607e47c..8598c792ded30 100644
---- a/drivers/s390/block/dasd_3990_erp.c
-+++ b/drivers/s390/block/dasd_3990_erp.c
-@@ -2436,7 +2436,7 @@ static struct dasd_ccw_req *dasd_3990_erp_add_erp(struct dasd_ccw_req *cqr)
- 	erp->block    = cqr->block;
- 	erp->magic    = cqr->magic;
- 	erp->expires  = cqr->expires;
--	erp->retries  = 256;
-+	erp->retries  = device->default_retries;
- 	erp->buildclk = get_tod_clock();
- 	erp->status = DASD_CQR_FILLED;
+diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
+index 187565830b5b4..58027cdc58e3e 100644
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -2985,41 +2985,32 @@ static void _dasd_wake_block_flush_cb(struct dasd_ccw_req *cqr, void *data)
+  * Requeue a request back to the block request queue
+  * only works for block requests
+  */
+-static int _dasd_requeue_request(struct dasd_ccw_req *cqr)
++static void _dasd_requeue_request(struct dasd_ccw_req *cqr)
+ {
+-	struct dasd_block *block = cqr->block;
+ 	struct request *req;
  
+-	if (!block)
+-		return -EINVAL;
+ 	/*
+ 	 * If the request is an ERP request there is nothing to requeue.
+ 	 * This will be done with the remaining original request.
+ 	 */
+ 	if (cqr->refers)
+-		return 0;
++		return;
+ 	spin_lock_irq(&cqr->dq->lock);
+ 	req = (struct request *) cqr->callback_data;
+ 	blk_mq_requeue_request(req, true);
+ 	spin_unlock_irq(&cqr->dq->lock);
+ 
+-	return 0;
++	return;
+ }
+ 
+-/*
+- * Go through all request on the dasd_block request queue, cancel them
+- * on the respective dasd_device, and return them to the generic
+- * block layer.
+- */
+-static int dasd_flush_block_queue(struct dasd_block *block)
++static int _dasd_requests_to_flushqueue(struct dasd_block *block,
++					struct list_head *flush_queue)
+ {
+ 	struct dasd_ccw_req *cqr, *n;
+-	int rc, i;
+-	struct list_head flush_queue;
+ 	unsigned long flags;
++	int rc, i;
+ 
+-	INIT_LIST_HEAD(&flush_queue);
+-	spin_lock_bh(&block->queue_lock);
++	spin_lock_irqsave(&block->queue_lock, flags);
+ 	rc = 0;
+ restart:
+ 	list_for_each_entry_safe(cqr, n, &block->ccw_queue, blocklist) {
+@@ -3034,13 +3025,32 @@ static int dasd_flush_block_queue(struct dasd_block *block)
+ 		 * is returned from the dasd_device layer.
+ 		 */
+ 		cqr->callback = _dasd_wake_block_flush_cb;
+-		for (i = 0; cqr != NULL; cqr = cqr->refers, i++)
+-			list_move_tail(&cqr->blocklist, &flush_queue);
++		for (i = 0; cqr; cqr = cqr->refers, i++)
++			list_move_tail(&cqr->blocklist, flush_queue);
+ 		if (i > 1)
+ 			/* moved more than one request - need to restart */
+ 			goto restart;
+ 	}
+-	spin_unlock_bh(&block->queue_lock);
++	spin_unlock_irqrestore(&block->queue_lock, flags);
++
++	return rc;
++}
++
++/*
++ * Go through all request on the dasd_block request queue, cancel them
++ * on the respective dasd_device, and return them to the generic
++ * block layer.
++ */
++static int dasd_flush_block_queue(struct dasd_block *block)
++{
++	struct dasd_ccw_req *cqr, *n;
++	struct list_head flush_queue;
++	unsigned long flags;
++	int rc;
++
++	INIT_LIST_HEAD(&flush_queue);
++	rc = _dasd_requests_to_flushqueue(block, &flush_queue);
++
+ 	/* Now call the callback function of flushed requests */
+ restart_cb:
+ 	list_for_each_entry_safe(cqr, n, &flush_queue, blocklist) {
+@@ -3977,75 +3987,36 @@ EXPORT_SYMBOL_GPL(dasd_generic_space_avail);
+  */
+ static int dasd_generic_requeue_all_requests(struct dasd_device *device)
+ {
++	struct dasd_block *block = device->block;
+ 	struct list_head requeue_queue;
+ 	struct dasd_ccw_req *cqr, *n;
+-	struct dasd_ccw_req *refers;
+ 	int rc;
+ 
+-	INIT_LIST_HEAD(&requeue_queue);
+-	spin_lock_irq(get_ccwdev_lock(device->cdev));
+-	rc = 0;
+-	list_for_each_entry_safe(cqr, n, &device->ccw_queue, devlist) {
+-		/* Check status and move request to flush_queue */
+-		if (cqr->status == DASD_CQR_IN_IO) {
+-			rc = device->discipline->term_IO(cqr);
+-			if (rc) {
+-				/* unable to terminate requeust */
+-				dev_err(&device->cdev->dev,
+-					"Unable to terminate request %p "
+-					"on suspend\n", cqr);
+-				spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-				dasd_put_device(device);
+-				return rc;
+-			}
+-		}
+-		list_move_tail(&cqr->devlist, &requeue_queue);
+-	}
+-	spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-
+-	list_for_each_entry_safe(cqr, n, &requeue_queue, devlist) {
+-		wait_event(dasd_flush_wq,
+-			   (cqr->status != DASD_CQR_CLEAR_PENDING));
++	if (!block)
++		return 0;
+ 
+-		/*
+-		 * requeue requests to blocklayer will only work
+-		 * for block device requests
+-		 */
+-		if (_dasd_requeue_request(cqr))
+-			continue;
++	INIT_LIST_HEAD(&requeue_queue);
++	rc = _dasd_requests_to_flushqueue(block, &requeue_queue);
+ 
+-		/* remove requests from device and block queue */
+-		list_del_init(&cqr->devlist);
+-		while (cqr->refers != NULL) {
+-			refers = cqr->refers;
+-			/* remove the request from the block queue */
+-			list_del(&cqr->blocklist);
+-			/* free the finished erp request */
+-			dasd_free_erp_request(cqr, cqr->memdev);
+-			cqr = refers;
++	/* Now call the callback function of flushed requests */
++restart_cb:
++	list_for_each_entry_safe(cqr, n, &requeue_queue, blocklist) {
++		wait_event(dasd_flush_wq, (cqr->status < DASD_CQR_QUEUED));
++		/* Process finished ERP request. */
++		if (cqr->refers) {
++			spin_lock_bh(&block->queue_lock);
++			__dasd_process_erp(block->base, cqr);
++			spin_unlock_bh(&block->queue_lock);
++			/* restart list_for_xx loop since dasd_process_erp
++			 * might remove multiple elements
++			 */
++			goto restart_cb;
+ 		}
+-
+-		/*
+-		 * _dasd_requeue_request already checked for a valid
+-		 * blockdevice, no need to check again
+-		 * all erp requests (cqr->refers) have a cqr->block
+-		 * pointer copy from the original cqr
+-		 */
++		_dasd_requeue_request(cqr);
+ 		list_del_init(&cqr->blocklist);
+ 		cqr->block->base->discipline->free_cp(
+ 			cqr, (struct request *) cqr->callback_data);
+ 	}
+-
+-	/*
+-	 * if requests remain then they are internal request
+-	 * and go back to the device queue
+-	 */
+-	if (!list_empty(&requeue_queue)) {
+-		/* move freeze_queue to start of the ccw_queue */
+-		spin_lock_irq(get_ccwdev_lock(device->cdev));
+-		list_splice_tail(&requeue_queue, &device->ccw_queue);
+-		spin_unlock_irq(get_ccwdev_lock(device->cdev));
+-	}
+ 	dasd_schedule_device_bh(device);
+ 	return rc;
+ }
 -- 
 2.40.1
 
