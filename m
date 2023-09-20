@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0B731A82
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B93C433CC;
-	Wed, 20 Sep 2023 12:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C833347C4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840DCC433C8;
+	Wed, 20 Sep 2023 12:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213022;
-	bh=3MV7uvfcIGj3HFkOsOUzI568/nprzdlotEEZt+yT/3I=;
+	s=korg; t=1695213024;
+	bh=NQl5Pzm2FVf82Lv89zs5GRJpIgUVNjmaMv6gjnVnK4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1eDgksN3vydqbW+llKOkMUPof0tSRVfRdoAsw219/SOmSvisYbbTfY72r1HKqBYu
-	 zeqvZWGUcMHHGc6PlXI2+wUpvvdZhdw9kiSBBk5u0THKFeYwvEkoD/yTEAWuCTHTyS
-	 aLXlCJx+VWXgMz7ZM7sztb8plNmNiyctwnDOSdWM=
+	b=VQZMf121ZM/xTDK1dK7DarurskrccTBD2RGntJd1FWX1yiBoPJcyGKDGNayPQQrk5
+	 e8kQUe9goCr237k53LzJRfAPWRBkSJo0ESrl4Rw/QqghHWwakP6xa38C6e8RfWEN97
+	 /DkHrjLCTMLW6wMSlrhN5aoAYOVs0FGdXJyRGf9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 124/367] ALSA: ac97: Fix possible error value of *rac97
-Date: Wed, 20 Sep 2023 13:28:21 +0200
-Message-ID: <20230920112901.870001585@linuxfoundation.org>
+Subject: [PATCH 5.4 133/367] powerpc/fadump: reset dump area size if fadump memory reserve fails
+Date: Wed, 20 Sep 2023 13:28:30 +0200
+Message-ID: <20230920112902.140123672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,50 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit 67de40c9df94037769967ba28c7d951afb45b7fb ]
+[ Upstream commit d1eb75e0dfed80d2d85b664e28a39f65b290ab55 ]
 
-Before committing 79597c8bf64c, *rac97 always be NULL if there is
-an error. When error happens, make sure *rac97 is NULL is safer.
+In case fadump_reserve_mem() fails to reserve memory, the
+reserve_dump_area_size variable will retain the reserve area size. This
+will lead to /sys/kernel/fadump/mem_reserved node displaying an incorrect
+memory reserved by fadump.
 
-For examble, in snd_vortex_mixer():
-	err = snd_ac97_mixer(pbus, &ac97, &vortex->codec);
-	vortex->isquad = ((vortex->codec == NULL) ?
-		0 : (vortex->codec->ext_id&0x80));
-If error happened but vortex->codec isn't NULL, this may cause some
-problems.
+To fix this problem, reserve dump area size variable is set to 0 if fadump
+failed to reserve memory.
 
-Move the judgement order to be clearer and better.
-
-Fixes: 79597c8bf64c ("ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230823025212.1000961-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8255da95e545 ("powerpc/fadump: release all the memory above boot memory size")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230704050715.203581-1-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/fadump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index b920c739d6863..418a7a666cf4e 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2006,10 +2006,9 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
+index 69d64f406204f..15405db43141c 100644
+--- a/arch/powerpc/kernel/fadump.c
++++ b/arch/powerpc/kernel/fadump.c
+@@ -629,6 +629,7 @@ int __init fadump_reserve_mem(void)
+ 	return ret;
+ error_out:
+ 	fw_dump.fadump_enabled = 0;
++	fw_dump.reserve_dump_area_size = 0;
+ 	return 0;
+ }
  
--	if (!rac97)
--		return -EINVAL;
--	if (snd_BUG_ON(!bus || !template))
-+	if (snd_BUG_ON(!bus || !template || !rac97))
- 		return -EINVAL;
-+	*rac97 = NULL;
- 	if (snd_BUG_ON(template->num >= 4))
- 		return -EINVAL;
- 	if (bus->codec[template->num])
 -- 
 2.40.1
 
