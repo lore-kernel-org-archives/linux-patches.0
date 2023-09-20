@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CFB3B2A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D43C433CA;
-	Wed, 20 Sep 2023 12:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB403C696
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2875FC433CA;
+	Wed, 20 Sep 2023 12:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213129;
-	bh=sZl42vvCCq5WZvRzfvdqfMANFDBRM9EiDAiuSMLxRpw=;
+	s=korg; t=1695213132;
+	bh=DYPgfxrFceErtptM5SFB6b/xd5vB6aaREwTFhQzIDEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ad8H0C7ftr9XNq4GbfRwbcxm13XS3e/4L5vDKnwhRA2yvI3OOsD23Q3M6KY4XG2JK
-	 6n977j+eVqWQaE3X0lQfH//ztWBLFCFhdrosqL8BCGmLROF+OCbOoh+XcOR7m/pk+8
-	 afhyDYrhBL4+WKHzsUt4AK9bUAqKkQac3GIATTxU=
+	b=VCBB9Tb6fvxA6YoUIQggp4QhyzBqaUsalM/dNcpCVmW41Xm9hurtNDOPcFQCEV+V/
+	 8OeTTeuAWnJBJaeAtqmkkzCEJHHfe8RT7/gu50aSAuUTKXnHMx6jKfaxA5gcLqsqnk
+	 34n55r02IELXPCKDxJROTgFl8jBiW2v1zJJvFSyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 171/367] dma-buf/sync_file: Fix docs syntax
-Date: Wed, 20 Sep 2023 13:29:08 +0200
-Message-ID: <20230920112903.070732954@linuxfoundation.org>
+Subject: [PATCH 5.4 172/367] driver core: test_async: fix an error code
+Date: Wed, 20 Sep 2023 13:29:09 +0200
+Message-ID: <20230920112903.095288991@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,37 +39,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 05d56d8079d510a2994039470f65bea85f0075ee ]
+[ Upstream commit 22d2381bbd70a5853c2ee77522f4965139672db9 ]
 
-Fixes the warning:
+The test_platform_device_register_node() function should return error
+pointers instead of NULL.  That is what the callers are expecting.
 
-  include/uapi/linux/sync_file.h:77: warning: Function parameter or member 'num_fences' not described in 'sync_file_info'
-
-Fixes: 2d75c88fefb2 ("staging/android: refactor SYNC IOCTLs")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230724145000.125880-1-robdclark@gmail.com
+Fixes: 57ea974fb871 ("driver core: Rewrite test_async_driver_probe to cover serialization and NUMA affinity")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/1e11ed19-e1f6-43d8-b352-474134b7c008@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/sync_file.h | 2 +-
+ drivers/base/test/test_async_driver_probe.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/sync_file.h b/include/uapi/linux/sync_file.h
-index ee2dcfb3d6602..d7f7c04a6e0c1 100644
---- a/include/uapi/linux/sync_file.h
-+++ b/include/uapi/linux/sync_file.h
-@@ -52,7 +52,7 @@ struct sync_fence_info {
-  * @name:	name of fence
-  * @status:	status of fence. 1: signaled 0:active <0:error
-  * @flags:	sync_file_info flags
-- * @num_fences	number of fences in the sync_file
-+ * @num_fences:	number of fences in the sync_file
-  * @pad:	padding for 64-bit alignment, should always be zero
-  * @sync_fence_info: pointer to array of structs sync_fence_info with all
-  *		 fences in the sync_file
+diff --git a/drivers/base/test/test_async_driver_probe.c b/drivers/base/test/test_async_driver_probe.c
+index c157a912d6739..88336f093decd 100644
+--- a/drivers/base/test/test_async_driver_probe.c
++++ b/drivers/base/test/test_async_driver_probe.c
+@@ -84,7 +84,7 @@ test_platform_device_register_node(char *name, int id, int nid)
+ 
+ 	pdev = platform_device_alloc(name, id);
+ 	if (!pdev)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	if (nid != NUMA_NO_NODE)
+ 		set_dev_node(&pdev->dev, nid);
 -- 
 2.40.1
 
