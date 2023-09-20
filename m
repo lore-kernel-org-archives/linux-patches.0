@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F71D156F8
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCF6C433C7;
-	Wed, 20 Sep 2023 11:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA39E156F8
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F13EC433C8;
+	Wed, 20 Sep 2023 11:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210218;
-	bh=NN9qIWFUN0+6XgC7i0dSs4/8cWP1AIRxCYispwf3vAE=;
+	s=korg; t=1695210221;
+	bh=85tzRXfProF2N0lme5vjBlUtB4xCsv+2gqYxNEbjL5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxDsS216CYSJDnMbD/B6p63ZXULWHB4GY0HOrl/1CC4HJ614WjCFYe0wpEqVh0ova
-	 wqc8YVKM5X9MXrFDMm58PC+lPBkVYenBoEibYSYvPlOO2MB0yKqoJWzNGQ0/pcKIqE
-	 zaGW8U+4fK3Gf0br5uoVeK7CnhQrS0snhDqquT9w=
+	b=dFHxF2xCnu8ney6mug/NznhCM6zy7H6DKQK8WkLdpY+62h8tALwdHQPC/g+OrpEQv
+	 csw5kUiGwD566nox/QtumrngxuJ6SJXawFXd5nQjdJoRAIsFuzR6249HwIvUZyjCzb
+	 36vrPDaKiKjjP0lM15vmeK/LKkmw6xDaOAKlYeGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 001/211] iomap: Fix possible overflow condition in iomap_write_delalloc_scan
-Date: Wed, 20 Sep 2023 13:27:25 +0200
-Message-ID: <20230920112845.904129842@linuxfoundation.org>
+Subject: [PATCH 6.5 010/211] ACPI: video: Add backlight=native DMI quirk for Lenovo Ideapad Z470
+Date: Wed, 20 Sep 2023 13:27:34 +0200
+Message-ID: <20230920112846.155346037@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,35 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit eee2d2e6ea5550118170dbd5bb1316ceb38455fb ]
+[ Upstream commit 96b709be183c56293933ef45b8b75f8af268c6de ]
 
-folio_next_index() returns an unsigned long value which left shifted
-by PAGE_SHIFT could possibly cause an overflow on 32-bit system. Instead
-use folio_pos(folio) + folio_size(folio), which does this correctly.
+The Lenovo Ideapad Z470 predates Windows 8, so it defaults to using
+acpi_video for backlight control. But this is not functional on this
+model.
 
-Suggested-by: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Add a DMI quirk to use the native backlight interface which works.
+
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1208724
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 7d2f70708f37d..794fda5bd9bc6 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -927,7 +927,7 @@ static int iomap_write_delalloc_scan(struct inode *inode,
- 			 * the end of this data range, not the end of the folio.
- 			 */
- 			*punch_start_byte = min_t(loff_t, end_byte,
--					folio_next_index(folio) << PAGE_SHIFT);
-+					folio_pos(folio) + folio_size(folio));
- 		}
- 
- 		/* move offset to start of next folio in range */
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 18cc08c858cf2..0c376edd64fe1 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -445,6 +445,15 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_BOARD_NAME, "Lenovo IdeaPad S405"),
+ 		},
+ 	},
++	{
++	 /* https://bugzilla.suse.com/show_bug.cgi?id=1208724 */
++	 .callback = video_detect_force_native,
++	 /* Lenovo Ideapad Z470 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Z470"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1187004 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.40.1
 
