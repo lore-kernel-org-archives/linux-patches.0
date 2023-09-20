@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399DF2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5FBC433C7;
-	Wed, 20 Sep 2023 12:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B7A2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:21:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BB0C433CA;
+	Wed, 20 Sep 2023 12:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212490;
-	bh=rXDpqzmyFJ5UXqqutqrBWeizwSxCaiS2CuSglwg28Ko=;
+	s=korg; t=1695212492;
+	bh=i8zctY06lwaeasOYIWSNQ+KvGcxFO6xc0GJZDe9vcqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiKkPEZQrGKI+caQ/YjaZlVFbg0oy7Jj5+MTRa2cUccw/vdv+nujYvacYK14xmLzh
-	 +/5KW4TDT5kquTjMhphAMLFuoB9rTKFpl+VElrrApZ4/YC3HAepTgc8q/SBnwQkIrM
-	 r0RwPpT+I6mBMeTFDJJC/QQYquq9f1v8KBPPyGUw=
+	b=Umrdjua8fLZm0m19umgk6rn1sTwy+D6LG1go9BU501HAPy2Q1+mpiVHB4aGVVv30q
+	 v0qp+rTcCNjjrZgbSBRPGBRwxoOi5ggfKytVdmyuSEqywzO69yU4XBwVlmCHYRvZdZ
+	 COEgPTpcWJvW6TUyC4CGPMvHqtL4qj603bW7eeoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Reinhart <jimr@tekvox.com>,
-	James Autry <jautry@tekvox.com>,
-	Matthew Maron <matthewm@tekvox.com>,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Will Shiu <Will.Shiu@mediatek.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/83] mmc: sdhci-esdhc-imx: improve ESDHC_FLAG_ERR010450
-Date: Wed, 20 Sep 2023 13:31:10 +0200
-Message-ID: <20230920112827.474092580@linuxfoundation.org>
+Subject: [PATCH 5.10 03/83] locks: fix KASAN: use-after-free in trace_event_raw_event_filelock_lock
+Date: Wed, 20 Sep 2023 13:30:53 +0200
+Message-ID: <20230920112826.783263085@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -45,52 +40,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+From: Will Shiu <Will.Shiu@mediatek.com>
 
-[ Upstream commit 5ae4b0d8875caa44946e579420c7fd5740d58653 ]
+[ Upstream commit 74f6f5912693ce454384eaeec48705646a21c74f ]
 
-Errata ERR010450 only shows up if voltage is 1.8V, but if the device is
-supplied by 3v3 the errata can be ignored. So let's check for if quirk
-SDHCI_QUIRK2_NO_1_8_V is defined or not before limiting the frequency.
+As following backtrace, the struct file_lock request , in posix_lock_inode
+is free before ftrace function using.
+Replace the ftrace function ahead free flow could fix the use-after-free
+issue.
 
-Cc: Jim Reinhart <jimr@tekvox.com>
-Cc: James Autry <jautry@tekvox.com>
-Cc: Matthew Maron <matthewm@tekvox.com>
-Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Acked-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230811214853.8623-1-giulio.benetti@benettiengineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[name:report&]===============================================
+BUG:KASAN: use-after-free in trace_event_raw_event_filelock_lock+0x80/0x12c
+[name:report&]Read at addr f6ffff8025622620 by task NativeThread/16753
+[name:report_hw_tags&]Pointer tag: [f6], memory tag: [fe]
+[name:report&]
+BT:
+Hardware name: MT6897 (DT)
+Call trace:
+ dump_backtrace+0xf8/0x148
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x60/0x7c
+ print_report+0x2c8/0xa08
+ kasan_report+0xb0/0x120
+ __do_kernel_fault+0xc8/0x248
+ do_bad_area+0x30/0xdc
+ do_tag_check_fault+0x1c/0x30
+ do_mem_abort+0x58/0xbc
+ el1_abort+0x3c/0x5c
+ el1h_64_sync_handler+0x54/0x90
+ el1h_64_sync+0x68/0x6c
+ trace_event_raw_event_filelock_lock+0x80/0x12c
+ posix_lock_inode+0xd0c/0xd60
+ do_lock_file_wait+0xb8/0x190
+ fcntl_setlk+0x2d8/0x440
+...
+[name:report&]
+[name:report&]Allocated by task 16752:
+...
+ slab_post_alloc_hook+0x74/0x340
+ kmem_cache_alloc+0x1b0/0x2f0
+ posix_lock_inode+0xb0/0xd60
+...
+ [name:report&]
+ [name:report&]Freed by task 16752:
+...
+  kmem_cache_free+0x274/0x5b0
+  locks_dispose_list+0x3c/0x148
+  posix_lock_inode+0xc40/0xd60
+  do_lock_file_wait+0xb8/0x190
+  fcntl_setlk+0x2d8/0x440
+  do_fcntl+0x150/0xc18
+...
+
+Signed-off-by: Will Shiu <Will.Shiu@mediatek.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/locks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index 70f388f83485c..b030f657e2534 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -166,8 +166,8 @@
- #define ESDHC_FLAG_HS400		BIT(9)
- /*
-  * The IP has errata ERR010450
-- * uSDHC: Due to the I/O timing limit, for SDR mode, SD card clock can't
-- * exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
-+ * uSDHC: At 1.8V due to the I/O timing limit, for SDR mode, SD card
-+ * clock can't exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
-  */
- #define ESDHC_FLAG_ERR010450		BIT(10)
- /* The IP supports HS400ES mode */
-@@ -873,7 +873,8 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
- 		| ESDHC_CLOCK_MASK);
- 	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
+diff --git a/fs/locks.c b/fs/locks.c
+index 12d72c3d8756c..cbb5701ce9f37 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -1339,6 +1339,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+  out:
+ 	spin_unlock(&ctx->flc_lock);
+ 	percpu_up_read(&file_rwsem);
++	trace_posix_lock_inode(inode, request, error);
+ 	/*
+ 	 * Free any unused locks.
+ 	 */
+@@ -1347,7 +1348,6 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+ 	if (new_fl2)
+ 		locks_free_lock(new_fl2);
+ 	locks_dispose_list(&dispose);
+-	trace_posix_lock_inode(inode, request, error);
  
--	if (imx_data->socdata->flags & ESDHC_FLAG_ERR010450) {
-+	if ((imx_data->socdata->flags & ESDHC_FLAG_ERR010450) &&
-+	    (!(host->quirks2 & SDHCI_QUIRK2_NO_1_8_V))) {
- 		unsigned int max_clock;
- 
- 		max_clock = imx_data->is_ddr ? 45000000 : 150000000;
+ 	return error;
+ }
 -- 
 2.40.1
 
