@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D2B15ACC
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CFDC433C7;
-	Wed, 20 Sep 2023 12:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EE715ACC
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD88C433C7;
+	Wed, 20 Sep 2023 12:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212994;
-	bh=gflwZCc6hMGWyDWW5gbWA5Ye5q/5C6OAnb9mNfvE7/Q=;
+	s=korg; t=1695212997;
+	bh=W6in0XI+5vF9msbKg6jM5qufyql9DCkRU09nw/+xggM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxUT+2/EE5u3gCE/2kRi8R11jJr1LE4Xnj4AJefLMUopTIV7IonRDKhgO0eeAt3EM
-	 J3vqi/KFbLo3B83WAeQp8Mndjc53fwZr8o2Z7CoXWWbfdf3ypCWhvySEVwoXjwWu1B
-	 YRRS2AkXXpgxZNgi+ikeHhmKO02M5fdeAhIRbmTA=
+	b=p7z+yCljCcxulYj1usikxzLK9F3Q25YqNVpOXzhaPI+qV161RV9/S/uf3RKJHC6Bj
+	 WNnnGSjjgw3U9FPI21cvalBZDeArtuUNjeDNuZ2LSXkod3OmDn2Ol0oUFVTflCbbPV
+	 0sHrSEJwydny5SnELwIONEz5QdukJ/zCsvF6Rcng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/367] audit: fix possible soft lockup in __audit_inode_child()
-Date: Wed, 20 Sep 2023 13:28:18 +0200
-Message-ID: <20230920112901.782031107@linuxfoundation.org>
+Subject: [PATCH 5.4 122/367] drm/mediatek: Fix potential memory leak if vmap() fail
+Date: Wed, 20 Sep 2023 13:28:19 +0200
+Message-ID: <20230920112901.811304840@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,78 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-[ Upstream commit b59bc6e37237e37eadf50cd5de369e913f524463 ]
+[ Upstream commit 379091e0f6d179d1a084c65de90fa44583b14a70 ]
 
-Tracefs or debugfs maybe cause hundreds to thousands of PATH records,
-too many PATH records maybe cause soft lockup.
+Also return -ENOMEM if such a failure happens, the implement should take
+responsibility for the error handling.
 
-For example:
-  1. CONFIG_KASAN=y && CONFIG_PREEMPTION=n
-  2. auditctl -a exit,always -S open -k key
-  3. sysctl -w kernel.watchdog_thresh=5
-  4. mkdir /sys/kernel/debug/tracing/instances/test
-
-There may be a soft lockup as follows:
-  watchdog: BUG: soft lockup - CPU#45 stuck for 7s! [mkdir:15498]
-  Kernel panic - not syncing: softlockup: hung tasks
-  Call trace:
-   dump_backtrace+0x0/0x30c
-   show_stack+0x20/0x30
-   dump_stack+0x11c/0x174
-   panic+0x27c/0x494
-   watchdog_timer_fn+0x2bc/0x390
-   __run_hrtimer+0x148/0x4fc
-   __hrtimer_run_queues+0x154/0x210
-   hrtimer_interrupt+0x2c4/0x760
-   arch_timer_handler_phys+0x48/0x60
-   handle_percpu_devid_irq+0xe0/0x340
-   __handle_domain_irq+0xbc/0x130
-   gic_handle_irq+0x78/0x460
-   el1_irq+0xb8/0x140
-   __audit_inode_child+0x240/0x7bc
-   tracefs_create_file+0x1b8/0x2a0
-   trace_create_file+0x18/0x50
-   event_create_dir+0x204/0x30c
-   __trace_add_new_event+0xac/0x100
-   event_trace_add_tracer+0xa0/0x130
-   trace_array_create_dir+0x60/0x140
-   trace_array_create+0x1e0/0x370
-   instance_mkdir+0x90/0xd0
-   tracefs_syscall_mkdir+0x68/0xa0
-   vfs_mkdir+0x21c/0x34c
-   do_mkdirat+0x1b4/0x1d4
-   __arm64_sys_mkdirat+0x4c/0x60
-   el0_svc_common.constprop.0+0xa8/0x240
-   do_el0_svc+0x8c/0xc0
-   el0_svc+0x20/0x30
-   el0_sync_handler+0xb0/0xb4
-   el0_sync+0x160/0x180
-
-Therefore, we add cond_resched() to __audit_inode_child() to fix it.
-
-Fixes: 5195d8e217a7 ("audit: dynamically allocate audit_names when not enough space is in the names array")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230706134000.130098-1-suijingfeng@loongson.cn/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/auditsc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/auditsc.c b/kernel/auditsc.c
-index e8e90c0c49367..fc4223f30e847 100644
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -2161,6 +2161,8 @@ void __audit_inode_child(struct inode *parent,
- 		}
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 2fa432287d690..e51394982efb6 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -267,7 +267,11 @@ void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj)
  	}
+ 	mtk_gem->kvaddr = vmap(mtk_gem->pages, npages, VM_MAP,
+ 			       pgprot_writecombine(PAGE_KERNEL));
+-
++	if (!mtk_gem->kvaddr) {
++		kfree(sgt);
++		kfree(mtk_gem->pages);
++		return -ENOMEM;
++	}
+ out:
+ 	kfree(sgt);
  
-+	cond_resched();
-+
- 	/* is there a matching child entry? */
- 	list_for_each_entry(n, &context->names_list, list) {
- 		/* can only match entries that have a name */
 -- 
 2.40.1
 
