@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1F128E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311E6C433C8;
-	Wed, 20 Sep 2023 11:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B5828E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB186C433C8;
+	Wed, 20 Sep 2023 11:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210784;
-	bh=5mpXTahiy4TKMHUOhP4mMeHXXC+RvNm6OSQu+gV0Lkg=;
+	s=korg; t=1695210787;
+	bh=78KAu7mmakuSowL/a/lViX+WtEXHI9v8c27S/Wdlqmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftdn6THPZN3sahKQ5A8kMtUSO6Y8GqSyjCFb0iiJCSyKvCrzpS9NycKb76U2OtQlG
-	 ButJh2V1JLdSVgbSSO0pZde2N1prxi5SEClZ1N4LNqef+STLepI/GiCgHioLa7B1O+
-	 AllEmMowLUOQr55hZqKeS1AEYQwdGZqDLHlet8ao=
+	b=K/gS4Jfeggh6iCx0hdivgalkMrr7k2oSZYN4TpX5pl4XnBL/JqvmTBFH8uA9C8SLE
+	 qYSb5xyrXRbBaXr8KM5KSs+3Yx7NOqlWDyZh0IM8NIg7T91z1O4Yq9fXOWNqPRtTpG
+	 96tIrtuH0QL7uQn91v/C6BqrLPeLVCQfAdTg0MJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.5 203/211] drm/i915: Only check eDP HPD when AUX CH is shared
-Date: Wed, 20 Sep 2023 13:30:47 +0200
-Message-ID: <20230920112852.162043787@linuxfoundation.org>
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.5 204/211] drm/amdkfd: Insert missing TLB flush on GFX10 and later
+Date: Wed, 20 Sep 2023 13:30:48 +0200
+Message-ID: <20230920112852.191893915@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -34,108 +34,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 
-commit 7c95ec3b59479bb24093918bbfc801c9f31826f2 upstream.
+commit edcfe22985d09ee8e2346c9217f5a52ab150099f upstream.
 
-Apparently Acer Chromebook C740 (BDW-ULT) doesn't have the
-eDP HPD line properly connected, and thus fails the new
-HPD check during eDP probe. The result is that we lose the
-eDP output.
+Heavy-weight TLB flush is required after unmap on all GPUs for
+correctness and security.
 
-I suspect all such machines would be Chromebooks or other
-Linux exclusive systems as the Windows driver likely wouldn't
-work either. I did check a few other BDW machines here and
-those do have eDP HPD connected, one of them even is a
-different Chromebook (Samus).
-
-To account for these funky machines let's skip the HPD check when
-it looks like the eDP port is the only one using that specific AUX
-channel. In case of multiple ports sharing the same AUX CH (eg. on
-Asrock B250M-HDV) we still do the check and thus should correctly
-ignore the eDP port in favor of the other DP port (usually a DP->VGA
-converter).
-
-v2: Don't oops during list iteration
-
+Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9264
-Fixes: cfe5bdfb27fa ("drm/i915: Check HPD live state during eDP probe")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230908052527.685-1-ville.syrjala@linux.intel.com
-Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
-(cherry picked from commit 70052100fabec5d8c1b09c9959817a2f4517e6b5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c |   21 +++++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_bios.h |    1 +
- drivers/gpu/drm/i915/display/intel_dp.c   |    7 ++++++-
- 3 files changed, 28 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -3659,6 +3659,27 @@ enum aux_ch intel_bios_dp_aux_ch(const s
- 	return map_aux_ch(devdata->i915, devdata->child.aux_channel);
- }
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -1487,8 +1487,7 @@ void kfd_flush_tlb(struct kfd_process_de
  
-+bool intel_bios_dp_has_shared_aux_ch(const struct intel_bios_encoder_data *devdata)
-+{
-+	struct drm_i915_private *i915;
-+	u8 aux_channel;
-+	int count = 0;
-+
-+	if (!devdata || !devdata->child.aux_channel)
-+		return false;
-+
-+	i915 = devdata->i915;
-+	aux_channel = devdata->child.aux_channel;
-+
-+	list_for_each_entry(devdata, &i915->display.vbt.display_devices, node) {
-+		if (intel_bios_encoder_supports_dp(devdata) &&
-+		    aux_channel == devdata->child.aux_channel)
-+			count++;
-+	}
-+
-+	return count > 1;
-+}
-+
- int intel_bios_dp_boost_level(const struct intel_bios_encoder_data *devdata)
+ static inline bool kfd_flush_tlb_after_unmap(struct kfd_dev *dev)
  {
- 	if (!devdata || devdata->i915->display.vbt.version < 196 || !devdata->child.iboost)
---- a/drivers/gpu/drm/i915/display/intel_bios.h
-+++ b/drivers/gpu/drm/i915/display/intel_bios.h
-@@ -271,6 +271,7 @@ enum aux_ch intel_bios_dp_aux_ch(const s
- int intel_bios_dp_boost_level(const struct intel_bios_encoder_data *devdata);
- int intel_bios_dp_max_lane_count(const struct intel_bios_encoder_data *devdata);
- int intel_bios_dp_max_link_rate(const struct intel_bios_encoder_data *devdata);
-+bool intel_bios_dp_has_shared_aux_ch(const struct intel_bios_encoder_data *devdata);
- int intel_bios_hdmi_boost_level(const struct intel_bios_encoder_data *devdata);
- int intel_bios_hdmi_ddc_pin(const struct intel_bios_encoder_data *devdata);
- int intel_bios_hdmi_level_shift(const struct intel_bios_encoder_data *devdata);
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -5503,8 +5503,13 @@ static bool intel_edp_init_connector(str
- 	/*
- 	 * VBT and straps are liars. Also check HPD as that seems
- 	 * to be the most reliable piece of information available.
-+	 *
-+	 * ... expect on devices that forgot to hook HPD up for eDP
-+	 * (eg. Acer Chromebook C710), so we'll check it only if multiple
-+	 * ports are attempting to use the same AUX CH, according to VBT.
- 	 */
--	if (!intel_digital_port_connected(encoder)) {
-+	if (intel_bios_dp_has_shared_aux_ch(encoder->devdata) &&
-+	    !intel_digital_port_connected(encoder)) {
- 		/*
- 		 * If this fails, presume the DPCD answer came
- 		 * from some other port using the same AUX CH.
+-	return KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 3) ||
+-	       KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 2) ||
++	return KFD_GC_VERSION(dev) > IP_VERSION(9, 4, 2) ||
+ 	       (KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 1) && dev->sdma_fw_version >= 18) ||
+ 	       KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 0);
+ }
 
 
