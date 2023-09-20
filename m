@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3326F2AB3B
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90052C433CA;
-	Wed, 20 Sep 2023 12:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F066D2AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74982C433CB;
+	Wed, 20 Sep 2023 12:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211729;
-	bh=7X4itSIO51KfLkhhjHzjGBFqTw7uErmfHamb7pu3npM=;
+	s=korg; t=1695211731;
+	bh=kAwfSYAcXrHGP6/Zd/qdiKEw7GAnDKGlGUJvTtBHtrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oy/TBsHptBH7qzIWciR0EqyjxbnhQghsX0J4SBWSTVk/ZXWJl66586iEgpFnlkB+9
-	 6jqUGm3yXpmNHA/oHn7A/fR8FCsfOaWTgyONq7YoDn8ySHFXar4RGUWkWZhcQPXFt6
-	 LvX02L2WJPKr3ZcMhVxv9MtCxJ3LVYYc9MejM9Es=
+	b=Ee4/8DFsR0ompbUOJtMFiA/iiLiLgARzfThmrU4E2JHLlUevuW1DAUFf1T/AgsZjR
+	 JU9PxjmBhHondYN/SvzsL7jSXrdxXdeWqvTk7F9nuJC/lFqAUfSVSst2+wJU40onqu
+	 wOKS4T4J+gO9pkJX0Sio1JC0ou6ZnHWCbDZ0O7ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 4.19 014/273] pinctrl: amd: Dont show `Invalid config param` errors
-Date: Wed, 20 Sep 2023 13:27:34 +0200
-Message-ID: <20230920112846.872604778@linuxfoundation.org>
+	Simon Horman <simon.horman@corigine.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 015/273] 9p: virtio: make sure offs is initialized in zc_request
+Date: Wed, 20 Sep 2023 13:27:35 +0200
+Message-ID: <20230920112846.904219553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -39,46 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-commit 87b549efcb0f7934b0916d2a00607a878b6f1e0f upstream.
+[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
 
-On some systems amd_pinconf_set() is called with parameters
-0x8 (PIN_CONFIG_DRIVE_PUSH_PULL) or 0x14 (PIN_CONFIG_PERSIST_STATE)
-which are not supported by pinctrl-amd.
+Similarly to the previous patch: offs can be used in handle_rerrors
+without initializing on small payloads; in this case handle_rerrors will
+not use it because of the size check, but it doesn't hurt to make sure
+it is zero to please scan-build.
 
-Don't show an err message when called with an invalid parameter,
-downgrade this to debug instead.
+This fixes the following warning:
+net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
+                handle_rerror(req, in_hdr_len, offs, in_pages);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cc: stable@vger.kernel.org # 6.1
-Fixes: 635a750d958e1 ("pinctrl: amd: Use amd_pinconf_set() for all config options")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230717201652.17168-1-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/9p/trans_virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -663,7 +663,7 @@ static int amd_pinconf_get(struct pinctr
- 		break;
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index f7cd8e018bde0..6b3357a77d992 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -409,7 +409,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
+ 	struct page **in_pages = NULL, **out_pages = NULL;
+ 	struct virtio_chan *chan = client->trans;
+ 	struct scatterlist *sgs[4];
+-	size_t offs;
++	size_t offs = 0;
+ 	int need_drop = 0;
+ 	int kicked = 0;
  
- 	default:
--		dev_err(&gpio_dev->pdev->dev, "Invalid config param %04x\n",
-+		dev_dbg(&gpio_dev->pdev->dev, "Invalid config param %04x\n",
- 			param);
- 		return -ENOTSUPP;
- 	}
-@@ -716,7 +716,7 @@ static int amd_pinconf_set(struct pinctr
- 			break;
- 
- 		default:
--			dev_err(&gpio_dev->pdev->dev,
-+			dev_dbg(&gpio_dev->pdev->dev,
- 				"Invalid config param %04x\n", param);
- 			ret = -ENOTSUPP;
- 		}
+-- 
+2.40.1
+
 
 
