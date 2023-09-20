@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9408A2AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC58C433C8;
-	Wed, 20 Sep 2023 12:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1F72AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D799CC433C7;
+	Wed, 20 Sep 2023 12:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211698;
-	bh=GFIRs67SQH+si8xJU7boYx5k2wDnrruNM0CTSYx+1x8=;
+	s=korg; t=1695211701;
+	bh=Ts4WTCCIQ3/hC9CplLsuDsJGUb32iJFlcWpeGq/A/+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaJtrC1X0LaVmQt64O4tz/kG34HNg/36bsG7nYS56BuD8WEQFvYzCNrIOlD4t6ftP
-	 eDq0Qz0q01ezX5s53QAc2UQlo/9aRSogcIPsF7KZFwfP28H/ms463KfRHPsrO6GKQr
-	 GEFqBUaN6PXcaClFq8DyUW81dv/e3w9NuFOa9hYs=
+	b=HItwXYobrrj9e0WBsH7nU0r4iZv0hQhD1lj3IME1+zE/hJLNTTRhPwGqRzBOYoUUa
+	 TrQpuS4OObz97+TgTiFT4Xp/ajJ//2LavhuL0PFutBV5HRWKP3CPcjjS9Fshkvvo1H
+	 YJ6M8FRLst1Q0ESzMlCofaiUceOiZ1oh5RkBjn90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+90a11e6b1e810785c6ff@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 163/186] jfs: fix invalid free of JFS_IP(ipimap)->i_imap in diUnmount
-Date: Wed, 20 Sep 2023 13:31:06 +0200
-Message-ID: <20230920112842.797569931@linuxfoundation.org>
+Subject: [PATCH 4.14 164/186] powerpc/pseries: fix possible memory leak in ibmebus_bus_init()
+Date: Wed, 20 Sep 2023 13:31:07 +0200
+Message-ID: <20230920112842.828338013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,75 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Shixin via Jfs-discussion <jfs-discussion@lists.sourceforge.net>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 6e2bda2c192d0244b5a78b787ef20aa10cb319b7 ]
+[ Upstream commit afda85b963c12947e298ad85d757e333aa40fd74 ]
 
-syzbot found an invalid-free in diUnmount:
+If device_register() returns error in ibmebus_bus_init(), name of kobject
+which is allocated in dev_set_name() called in device_add() is leaked.
 
-BUG: KASAN: double-free in slab_free mm/slub.c:3661 [inline]
-BUG: KASAN: double-free in __kmem_cache_free+0x71/0x110 mm/slub.c:3674
-Free of addr ffff88806f410000 by task syz-executor131/3632
+As comment of device_add() says, it should call put_device() to drop
+the reference count that was set in device_initialize() when it fails,
+so the name can be freed in kobject_cleanup().
 
- CPU: 0 PID: 3632 Comm: syz-executor131 Not tainted 6.1.0-rc7-syzkaller-00012-gca57f02295f1 #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
-  print_address_description+0x74/0x340 mm/kasan/report.c:284
-  print_report+0x107/0x1f0 mm/kasan/report.c:395
-  kasan_report_invalid_free+0xac/0xd0 mm/kasan/report.c:460
-  ____kasan_slab_free+0xfb/0x120
-  kasan_slab_free include/linux/kasan.h:177 [inline]
-  slab_free_hook mm/slub.c:1724 [inline]
-  slab_free_freelist_hook+0x12e/0x1a0 mm/slub.c:1750
-  slab_free mm/slub.c:3661 [inline]
-  __kmem_cache_free+0x71/0x110 mm/slub.c:3674
-  diUnmount+0xef/0x100 fs/jfs/jfs_imap.c:195
-  jfs_umount+0x108/0x370 fs/jfs/jfs_umount.c:63
-  jfs_put_super+0x86/0x190 fs/jfs/super.c:194
-  generic_shutdown_super+0x130/0x310 fs/super.c:492
-  kill_block_super+0x79/0xd0 fs/super.c:1428
-  deactivate_locked_super+0xa7/0xf0 fs/super.c:332
-  cleanup_mnt+0x494/0x520 fs/namespace.c:1186
-  task_work_run+0x243/0x300 kernel/task_work.c:179
-  exit_task_work include/linux/task_work.h:38 [inline]
-  do_exit+0x664/0x2070 kernel/exit.c:820
-  do_group_exit+0x1fd/0x2b0 kernel/exit.c:950
-  __do_sys_exit_group kernel/exit.c:961 [inline]
-  __se_sys_exit_group kernel/exit.c:959 [inline]
-  __x64_sys_exit_group+0x3b/0x40 kernel/exit.c:959
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[...]
-
-JFS_IP(ipimap)->i_imap is not setting to NULL after free in diUnmount.
-If jfs_remount() free JFS_IP(ipimap)->i_imap but then failed at diMount().
-JFS_IP(ipimap)->i_imap will be freed once again.
-Fix this problem by setting JFS_IP(ipimap)->i_imap to NULL after free.
-
-Reported-by: syzbot+90a11e6b1e810785c6ff@syzkaller.appspotmail.com
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20221110011929.3709774-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 1 +
+ arch/powerpc/platforms/pseries/ibmebus.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index f36ef68905a74..12fc016244581 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -208,6 +208,7 @@ int diUnmount(struct inode *ipimap, int mounterror)
- 	 * free in-memory control structure
- 	 */
- 	kfree(imap);
-+	JFS_IP(ipimap)->i_imap = NULL;
+diff --git a/arch/powerpc/platforms/pseries/ibmebus.c b/arch/powerpc/platforms/pseries/ibmebus.c
+index 408a860441330..a3d6d064754e8 100644
+--- a/arch/powerpc/platforms/pseries/ibmebus.c
++++ b/arch/powerpc/platforms/pseries/ibmebus.c
+@@ -452,6 +452,7 @@ static int __init ibmebus_bus_init(void)
+ 	if (err) {
+ 		printk(KERN_WARNING "%s: device_register returned %i\n",
+ 		       __func__, err);
++		put_device(&ibmebus_bus_device);
+ 		bus_unregister(&ibmebus_bus_type);
  
- 	return (0);
- }
+ 		return err;
 -- 
 2.40.1
 
