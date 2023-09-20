@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296D218650
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906CBC433C8;
-	Wed, 20 Sep 2023 11:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F7418650
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:43:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76204C433C7;
+	Wed, 20 Sep 2023 11:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210232;
-	bh=sHx0/kE+hyIoguxb6+JzPMjrFC2bswJ/HlvKXoFa/8c=;
+	s=korg; t=1695210235;
+	bh=y5bo3q4hiS6F1vqDF9scD4Q1ya8pAzkLO+8El/qj+1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvIQbsp16U8938y8OKg/zAxJisJPL6HfH/g/lvQoE4yiJZvLzB828PEjTRJTyomfP
-	 kO64cZoDorsFdG1inzvJRJkAIlFbg0aalIuOWvnLWZjJj1tEjwms+e6OD4XUWQO2XJ
-	 UZg5r2JQVaysGEGGzoFzV7tbE5ZoC4fyOn9FJUyA=
+	b=byl7Vlnhodr8nMFxcn8DDYcXSe4DPVyFRbSPlNR79L2+7lTaObwohsVyu2WL2dupL
+	 Fp40Em0jxZJuZ3DzF1fMKhjZYz5cXOOwVd/usgnEQ+KgIkHy2MLOp+he7BVzD5+dNh
+	 FRIQB3N3Gvtc1RUWk/AQ1gmQhg3R1DnAOMjEnCNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ding Xiang <dingxiang@cmss.chinamobile.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 014/211] s390/boot: cleanup number of page table levels setup
-Date: Wed, 20 Sep 2023 13:27:38 +0200
-Message-ID: <20230920112846.266477365@linuxfoundation.org>
+Subject: [PATCH 6.5 015/211] kselftest/arm64: fix a memleak in zt_regs_run()
+Date: Wed, 20 Sep 2023 13:27:39 +0200
+Message-ID: <20230920112846.294300219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,61 +40,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Ding Xiang <dingxiang@cmss.chinamobile.com>
 
-[ Upstream commit 8ddccc8a7d06f7ea4d8579970c95609d1b1de77b ]
+[ Upstream commit 46862da15e37efedb7d2d21e167f506c0b533772 ]
 
-The separate vmalloc area size check against _REGION2_SIZE
-is needed in case user provided insanely large value using
-vmalloc= kernel command line parameter. That could lead to
-overflow and selecting 3 page table levels instead of 4.
+If memcmp() does not return 0, "zeros" need to be freed to prevent memleak
 
-Use size_add() for the overflow check and get rid of the
-extra vmalloc area check.
-
-With the current values of CONFIG_MAX_PHYSMEM_BITS and
-PAGES_PER_SECTION the sum of maximal possible size of
-identity mapping and vmemmap area (derived from these
-macros) plus modules area size MODULES_LEN can not
-overflow. Thus, that sum is used as first addend while
-vmalloc area size is second addend for size_add().
-
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Ding Xiang <dingxiang@cmss.chinamobile.com>
+Link: https://lore.kernel.org/r/20230815074915.245528-1-dingxiang@cmss.chinamobile.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/startup.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ tools/testing/selftests/arm64/signal/testcases/zt_regs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 64bd7ac3e35d1..f8d0550e5d2af 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -176,6 +176,7 @@ static unsigned long setup_kernel_memory_layout(void)
- 	unsigned long asce_limit;
- 	unsigned long rte_size;
- 	unsigned long pages;
-+	unsigned long vsize;
- 	unsigned long vmax;
+diff --git a/tools/testing/selftests/arm64/signal/testcases/zt_regs.c b/tools/testing/selftests/arm64/signal/testcases/zt_regs.c
+index e1eb4d5c027ab..2e384d731618b 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/zt_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/zt_regs.c
+@@ -65,6 +65,7 @@ int zt_regs_run(struct tdescr *td, siginfo_t *si, ucontext_t *uc)
+ 	if (memcmp(zeros, (char *)zt + ZT_SIG_REGS_OFFSET,
+ 		   ZT_SIG_REGS_SIZE(zt->nregs)) != 0) {
+ 		fprintf(stderr, "ZT data invalid\n");
++		free(zeros);
+ 		return 1;
+ 	}
  
- 	pages = ident_map_size / PAGE_SIZE;
-@@ -183,11 +184,9 @@ static unsigned long setup_kernel_memory_layout(void)
- 	vmemmap_size = SECTION_ALIGN_UP(pages) * sizeof(struct page);
- 
- 	/* choose kernel address space layout: 4 or 3 levels. */
--	vmemmap_start = round_up(ident_map_size, _REGION3_SIZE);
--	if (IS_ENABLED(CONFIG_KASAN) ||
--	    vmalloc_size > _REGION2_SIZE ||
--	    vmemmap_start + vmemmap_size + vmalloc_size + MODULES_LEN >
--		    _REGION2_SIZE) {
-+	vsize = round_up(ident_map_size, _REGION3_SIZE) + vmemmap_size + MODULES_LEN;
-+	vsize = size_add(vsize, vmalloc_size);
-+	if (IS_ENABLED(CONFIG_KASAN) || (vsize > _REGION2_SIZE)) {
- 		asce_limit = _REGION1_SIZE;
- 		rte_size = _REGION2_SIZE;
- 	} else {
 -- 
 2.40.1
 
