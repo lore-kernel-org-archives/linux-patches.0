@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3ADE544
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97A3C433C9;
-	Wed, 20 Sep 2023 12:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170332AB3E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2C8C433CB;
+	Wed, 20 Sep 2023 12:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211377;
-	bh=GFapavElACLxw57aL1dQkEN9iSYsl3DxJF+5BuLC4F0=;
+	s=korg; t=1695211379;
+	bh=4+tXXP3sEvaFA3GyL91BA7vL9CptbOMiexoNFf2FRhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rECUz5YQbj5m8Fc2NpUR874MzEqdHD1fx9r3SMnCS04SBJ9BQoXAKRnuWn+kP+APL
-	 X4ZnJiRN4N4NjxRbSp4spYffGQ+3nKFuiMkQUP+8R3c9OeWAptmj79tTAqb6GcjD5/
-	 tCva0VaiOrjCmQ5xB+Wc3p9jYypXqbp+c8qnJA+k=
+	b=pm3ONvm/eRMPuF0j5wSi7GXnUbE763M7JFTRMaTPyIraxAJ9WIU6Ikcw+3WCNimvg
+	 +v9QAUbCG5vIm9nwz9niSeD/r9wrhkA5RszjCXW97t2ukFz0jyvcdIe7pF8ltacK3I
+	 YmZ+qXWZ3yJGmn9QRAyqIXNEb610pCRIp35NZJhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Filippov <halip0503@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+5f088f29593e6b4c8db8@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 070/186] jfs: validate max amount of blocks before allocation.
-Date: Wed, 20 Sep 2023 13:29:33 +0200
-Message-ID: <20230920112839.400122369@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 071/186] fs: lockd: avoid possible wrong NULL parameter
+Date: Wed, 20 Sep 2023 13:29:34 +0200
+Message-ID: <20230920112839.431456302@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,40 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Filippov <halip0503@gmail.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 0225e10972fa809728b8d4c1bd2772b3ec3fdb57 ]
+[ Upstream commit de8d38cf44bac43e83bad28357ba84784c412752 ]
 
-The lack of checking bmp->db_max_freebud in extBalloc() can lead to
-shift out of bounds, so this patch prevents undefined behavior, because
-bmp->db_max_freebud == -1 only if there is no free space.
+clang's static analysis warning: fs/lockd/mon.c: line 293, column 2:
+Null pointer passed as 2nd argument to memory copy function.
 
-Signed-off-by: Aleksei Filippov <halip0503@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+5f088f29593e6b4c8db8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=01abadbd6ae6a08b1f1987aa61554c6b3ac19ff2
+Assuming 'hostname' is NULL and calling 'nsm_create_handle()', this will
+pass NULL as 2nd argument to memory copy function 'memcpy()'. So return
+NULL if 'hostname' is invalid.
+
+Fixes: 77a3ef33e2de ("NSM: More clean up of nsm_get_handle()")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_extent.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/lockd/mon.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/jfs/jfs_extent.c b/fs/jfs/jfs_extent.c
-index 2ae7d59ab10a5..c971e8a6525de 100644
---- a/fs/jfs/jfs_extent.c
-+++ b/fs/jfs/jfs_extent.c
-@@ -521,6 +521,11 @@ extBalloc(struct inode *ip, s64 hint, s64 * nblocks, s64 * blkno)
- 	 * blocks in the map. in that case, we'll start off with the
- 	 * maximum free.
- 	 */
+diff --git a/fs/lockd/mon.c b/fs/lockd/mon.c
+index 9fbbd11f9ecbb..4a2da67fc255c 100644
+--- a/fs/lockd/mon.c
++++ b/fs/lockd/mon.c
+@@ -274,6 +274,9 @@ static struct nsm_handle *nsm_create_handle(const struct sockaddr *sap,
+ {
+ 	struct nsm_handle *new;
+ 
++	if (!hostname)
++		return NULL;
 +
-+	/* give up if no space left */
-+	if (bmp->db_maxfreebud == -1)
-+		return -ENOSPC;
-+
- 	max = (s64) 1 << bmp->db_maxfreebud;
- 	if (*nblocks >= max && *nblocks > nbperpage)
- 		nb = nblks = (max > nbperpage) ? max : nbperpage;
+ 	new = kzalloc(sizeof(*new) + hostname_len + 1, GFP_KERNEL);
+ 	if (unlikely(new == NULL))
+ 		return NULL;
 -- 
 2.40.1
 
