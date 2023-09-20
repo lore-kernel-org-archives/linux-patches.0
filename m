@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13A32AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462A0C433C8;
-	Wed, 20 Sep 2023 12:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903512AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3099C433BD;
+	Wed, 20 Sep 2023 12:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211206;
-	bh=InXAawHOZ2Sf7D0QcGjngxF1hUMKADQ5DBL60qE49sk=;
+	s=korg; t=1695211209;
+	bh=Wu+sTfeekVRBDrcRyqONa8jBEu7ldeZo8fUP5wW0fhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6ld72/CBRe8t7sHQmcGxp6pQaEanpbLs4Z3XOF7v7XZsku2W9kHQk9QTb2IiCWGU
-	 P0ROAu4sxgzLjEzvm3/P8C55zTyMOnb3wPNnCwwEnmx90ln7xvVigvnqakP+6I2cXp
-	 RbGuo0dWr1t5IELdIrUktTkLZj73zIlLh/70KyBE=
+	b=UpqcMYuKuLyS5b88yaDtIQwxBzQfhh6B6UKkxs7bmbjDkH2d9tSp5y5pT1L9Rux85
+	 PJgTztkAfsp3aoQP4I8HD2ARL3bSq/kSLJjosYa+6HmTWl8vz4dyzfapkbcFp1qqAO
+	 pZvd+5nOGwCMzAASudWao7o0YxJV8Kmqm2+728Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 134/139] scsi: pm8001: Setup IRQs on resume
-Date: Wed, 20 Sep 2023 13:31:08 +0200
-Message-ID: <20230920112840.628726222@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 4.14 001/186] ARM: pxa: remove use of symbol_get()
+Date: Wed, 20 Sep 2023 13:28:24 +0200
+Message-ID: <20230920112836.860603500@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
-References: <20230920112835.549467415@linuxfoundation.org>
+In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
+References: <20230920112836.799946261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,121 +36,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit c91774818b041ed290df29fb1dc0725be9b12e83 upstream.
+commit 0faa29c4207e6e29cfc81b427df60e326c37083a upstream.
 
-The function pm8001_pci_resume() only calls pm8001_request_irq() without
-calling pm8001_setup_irq(). This causes the IRQ allocation to fail, which
-leads all drives being removed from the system.
+The spitz board file uses the obscure symbol_get() function
+to optionally call a function from sharpsl_pm.c if that is
+built. However, the two files are always built together
+these days, and have been for a long time, so this can
+be changed to a normal function call.
 
-Fix this issue by integrating the code for pm8001_setup_irq() directly
-inside pm8001_request_irq() so that MSI-X setup is performed both during
-normal initialization and resume operations.
-
-Fixes: dbf9bfe61571 ("[SCSI] pm8001: add SAS/SATA HBA driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230911232745.325149-2-dlemoal@kernel.org
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/lkml/20230731162639.GA9441@lst.de/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c |   51 ++++++++++++--------------------------
- 1 file changed, 17 insertions(+), 34 deletions(-)
+ arch/arm/mach-pxa/sharpsl_pm.c |    2 --
+ arch/arm/mach-pxa/spitz.c      |   14 +-------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -274,7 +274,6 @@ static irqreturn_t pm8001_interrupt_hand
- 	return ret;
+--- a/arch/arm/mach-pxa/sharpsl_pm.c
++++ b/arch/arm/mach-pxa/sharpsl_pm.c
+@@ -224,8 +224,6 @@ void sharpsl_battery_kick(void)
+ {
+ 	schedule_delayed_work(&sharpsl_bat, msecs_to_jiffies(125));
  }
+-EXPORT_SYMBOL(sharpsl_battery_kick);
+-
  
--static u32 pm8001_setup_irq(struct pm8001_hba_info *pm8001_ha);
- static u32 pm8001_request_irq(struct pm8001_hba_info *pm8001_ha);
+ static void sharpsl_battery_thread(struct work_struct *private_)
+ {
+--- a/arch/arm/mach-pxa/spitz.c
++++ b/arch/arm/mach-pxa/spitz.c
+@@ -13,7 +13,6 @@
+  */
  
- /**
-@@ -295,13 +294,6 @@ static int pm8001_alloc(struct pm8001_hb
- 	pm8001_dbg(pm8001_ha, INIT, "pm8001_alloc: PHY:%x\n",
- 		   pm8001_ha->chip->n_phy);
+ #include <linux/kernel.h>
+-#include <linux/module.h>	/* symbol_get ; symbol_put */
+ #include <linux/platform_device.h>
+ #include <linux/delay.h>
+ #include <linux/gpio_keys.h>
+@@ -517,17 +516,6 @@ static struct pxa2xx_spi_chip spitz_ads7
+ 	.gpio_cs		= SPITZ_GPIO_ADS7846_CS,
+ };
  
--	/* Setup Interrupt */
--	rc = pm8001_setup_irq(pm8001_ha);
--	if (rc) {
--		pm8001_dbg(pm8001_ha, FAIL,
--			   "pm8001_setup_irq failed [ret: %d]\n", rc);
--		goto err_out;
--	}
- 	/* Request Interrupt */
- 	rc = pm8001_request_irq(pm8001_ha);
- 	if (rc)
-@@ -1021,47 +1013,38 @@ static u32 pm8001_request_msix(struct pm
- }
- #endif
- 
--static u32 pm8001_setup_irq(struct pm8001_hba_info *pm8001_ha)
+-static void spitz_bl_kick_battery(void)
 -{
--	struct pci_dev *pdev;
+-	void (*kick_batt)(void);
 -
--	pdev = pm8001_ha->pdev;
--
--#ifdef PM8001_USE_MSIX
--	if (pci_find_capability(pdev, PCI_CAP_ID_MSIX))
--		return pm8001_setup_msix(pm8001_ha);
--	pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
--#endif
--	return 0;
+-	kick_batt = symbol_get(sharpsl_battery_kick);
+-	if (kick_batt) {
+-		kick_batt();
+-		symbol_put(sharpsl_battery_kick);
+-	}
 -}
 -
- /**
-  * pm8001_request_irq - register interrupt
-  * @pm8001_ha: our ha struct.
-  */
- static u32 pm8001_request_irq(struct pm8001_hba_info *pm8001_ha)
- {
--	struct pci_dev *pdev;
-+	struct pci_dev *pdev = pm8001_ha->pdev;
-+#ifdef PM8001_USE_MSIX
- 	int rc;
+ static struct corgi_lcd_platform_data spitz_lcdcon_info = {
+ 	.init_mode		= CORGI_LCD_MODE_VGA,
+ 	.max_intensity		= 0x2f,
+@@ -535,7 +523,7 @@ static struct corgi_lcd_platform_data sp
+ 	.limit_mask		= 0x0b,
+ 	.gpio_backlight_cont	= SPITZ_GPIO_BACKLIGHT_CONT,
+ 	.gpio_backlight_on	= SPITZ_GPIO_BACKLIGHT_ON,
+-	.kick_battery		= spitz_bl_kick_battery,
++	.kick_battery		= sharpsl_battery_kick,
+ };
  
--	pdev = pm8001_ha->pdev;
-+	if (pci_find_capability(pdev, PCI_CAP_ID_MSIX)) {
-+		rc = pm8001_setup_msix(pm8001_ha);
-+		if (rc) {
-+			pm8001_dbg(pm8001_ha, FAIL,
-+				   "pm8001_setup_irq failed [ret: %d]\n", rc);
-+			return rc;
-+		}
- 
--#ifdef PM8001_USE_MSIX
--	if (pdev->msix_cap && pci_msi_enabled())
--		return pm8001_request_msix(pm8001_ha);
--	else {
--		pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
--		goto intx;
-+		if (pdev->msix_cap && pci_msi_enabled())
-+			return pm8001_request_msix(pm8001_ha);
- 	}
-+
-+	pm8001_dbg(pm8001_ha, INIT, "MSIX not supported!!!\n");
- #endif
- 
--intx:
- 	/* initialize the INT-X interrupt */
- 	pm8001_ha->irq_vector[0].irq_id = 0;
- 	pm8001_ha->irq_vector[0].drv_inst = pm8001_ha;
--	rc = request_irq(pdev->irq, pm8001_interrupt_handler_intx, IRQF_SHARED,
--		pm8001_ha->name, SHOST_TO_SAS_HA(pm8001_ha->shost));
--	return rc;
-+
-+	return request_irq(pdev->irq, pm8001_interrupt_handler_intx,
-+			   IRQF_SHARED, pm8001_ha->name,
-+			   SHOST_TO_SAS_HA(pm8001_ha->shost));
- }
- 
- /**
+ static struct pxa2xx_spi_chip spitz_lcdcon_chip = {
 
 
