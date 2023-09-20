@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6808E544
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F86C433CA;
-	Wed, 20 Sep 2023 12:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D6711C8A
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E53C433C7;
+	Wed, 20 Sep 2023 12:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211363;
-	bh=svs4PDXZG0SfnPz16z/dqTKUtec5PbyQOkwlFWnoDCM=;
+	s=korg; t=1695211366;
+	bh=q+GHX9+HiK6RHUDYmDKAblIJXKYa+G8ehalEHqJTzkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uI/af8lnWXkEepKQ4ddG6rDTcSMDm0Pp7aJnQHsiOsYTOvGPMdIP2bdT5WqR3Zs9E
-	 9UmuMcdcrKNxxoZr3Tp22jXMpM/L/ZpHLN+XNGrbkoxiP5Z8neVAS3DZRs5s6Hg3lO
-	 mA40BGXtDKR02N5RmkuYinp8/vMlh7/8J1Ig25g8=
+	b=vqiySw5c6gAoZEUrSoaVTSLsI2DcDBEppw4cXTA07fJJGVXfRHGFT3fBneK+JZUW5
+	 PK10Ln97dVeAEzrVYxllZH/W+dZ+Ma8NSQ1ZhyY9YP2ir2uXV1NVWBnIWd5LIMhx5h
+	 DUmr1U6er5lEY0k5UucIch8ettFH40CNHmDaDl2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Zongyong <wuzongyong@linux.alibaba.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 065/186] PCI: Mark NVIDIA T4 GPUs to avoid bus reset
-Date: Wed, 20 Sep 2023 13:29:28 +0200
-Message-ID: <20230920112839.228285087@linuxfoundation.org>
+Subject: [PATCH 4.14 066/186] PCI: pciehp: Use RMW accessors for changing LNKCTL
+Date: Wed, 20 Sep 2023 13:29:29 +0200
+Message-ID: <20230920112839.262181268@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -34,42 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wu Zongyong <wuzongyong@linux.alibaba.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit d5af729dc2071273f14cbb94abbc60608142fd83 ]
+[ Upstream commit 5f75f96c61039151c193775d776fde42477eace1 ]
 
-NVIDIA T4 GPUs do not work with SBR. This problem is found when the T4 card
-is direct attached to a Root Port only. Avoid bus reset by marking T4 GPUs
-PCI_DEV_FLAGS_NO_BUS_RESET.
+As hotplug is not the only driver touching LNKCTL, use the RMW capability
+accessor which handles concurrent changes correctly.
 
-Fixes: 4c207e7121fa ("PCI: Mark some NVIDIA GPUs to avoid bus reset")
-Link: https://lore.kernel.org/r/2dcebea53a6eb9bd212ec6d8974af2e5e0333ef6.1681129861.git.wuzongyong@linux.alibaba.com
-Signed-off-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 7f822999e12a ("PCI: pciehp: Add Disable/enable link functions")
+Link: https://lore.kernel.org/r/20230717120503.15276-4-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/hotplug/pciehp_hpc.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 7ca82b8c5c37e..b61e6587e9d72 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3396,7 +3396,7 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
-  */
- static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
+index c2dd297d4007b..2ec015d1f6710 100644
+--- a/drivers/pci/hotplug/pciehp_hpc.c
++++ b/drivers/pci/hotplug/pciehp_hpc.c
+@@ -338,17 +338,11 @@ int pciehp_check_link_status(struct controller *ctrl)
+ static int __pciehp_link_set(struct controller *ctrl, bool enable)
  {
--	if ((dev->device & 0xffc0) == 0x2340)
-+	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
- 		quirk_no_bus_reset(dev);
+ 	struct pci_dev *pdev = ctrl_dev(ctrl);
+-	u16 lnk_ctrl;
+ 
+-	pcie_capability_read_word(pdev, PCI_EXP_LNKCTL, &lnk_ctrl);
++	pcie_capability_clear_and_set_word(pdev, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_LD,
++					   enable ? 0 : PCI_EXP_LNKCTL_LD);
+ 
+-	if (enable)
+-		lnk_ctrl &= ~PCI_EXP_LNKCTL_LD;
+-	else
+-		lnk_ctrl |= PCI_EXP_LNKCTL_LD;
+-
+-	pcie_capability_write_word(pdev, PCI_EXP_LNKCTL, lnk_ctrl);
+-	ctrl_dbg(ctrl, "%s: lnk_ctrl = %x\n", __func__, lnk_ctrl);
+ 	return 0;
  }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
+ 
 -- 
 2.40.1
 
