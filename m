@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62892AB5E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59751C433C7;
-	Wed, 20 Sep 2023 12:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCB92E63B
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:11:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BD4C433CA;
+	Wed, 20 Sep 2023 12:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211871;
-	bh=2y8Vyu2wq+JZoyk6s5yYM0lhiQFXK609jAk7EYILBso=;
+	s=korg; t=1695211874;
+	bh=MuWJG0y0YKLzqAmM8HGKhRX55G8b2iSQAwKgwSZy5lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTqjg2iB7zpEF00WRdCF3ivYENy/DVqww8gvBpyHVQiEZIzGgKOKw7BOdrRv4ypiB
-	 bCut7Qb5NF3xjDM018sYLa+O8vu+yASktXBaQvCfwnbnCWpz0sX9tuf7MPvOHdd98U
-	 tHI7UzdVgcPEN1TH5iHvT0lhjg2/f0+1PnIhuGig=
+	b=VZRzO15sH+i4o13VV4PzNpv0vxjQO0A0Pl7iacTLrJGS90+q5y9l9N+cos4mhhuAP
+	 4tAb6/OD2rOFGugOKrXgVOe4wrsO8KSxJDnTHuPdBCon1dEwjVd6W/pWA3AJFsMboU
+	 0nfGOfM0dMMUVmFnDd+Nxx+EQ49yiHIxGriWaudk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Mastykin <dmastykin@astralinux.ru>,
-	Paul Moore <paul@paul-moore.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 031/273] netlabel: fix shift wrapping bug in netlbl_catmap_setlong()
-Date: Wed, 20 Sep 2023 13:27:51 +0200
-Message-ID: <20230920112847.385779759@linuxfoundation.org>
+Subject: [PATCH 4.19 060/273] crypto: caam - fix unchecked return value error
+Date: Wed, 20 Sep 2023 13:28:20 +0200
+Message-ID: <20230920112848.305329666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,36 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Mastykin <dmastykin@astralinux.ru>
+From: Gaurav Jain <gaurav.jain@nxp.com>
 
-[ Upstream commit b403643d154d15176b060b82f7fc605210033edd ]
+[ Upstream commit e30685204711a6be40dec2622606950ccd37dafe ]
 
-There is a shift wrapping bug in this code on 32-bit architectures.
-NETLBL_CATMAP_MAPTYPE is u64, bitmap is unsigned long.
-Every second 32-bit word of catmap becomes corrupted.
+error:
+Unchecked return value (CHECKED_RETURN)
+check_return: Calling sg_miter_next without checking return value
 
-Signed-off-by: Dmitry Mastykin <dmastykin@astralinux.ru>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+fix:
+added check if(!sg_miter_next)
+
+Fixes: 8a2a0dd35f2e ("crypto: caam - strip input zeros from RSA input buffer")
+Signed-off-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>
+Reviewed-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/caam/caampkc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 15fe2120b3109..14c3d640f94b9 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -871,7 +871,8 @@ int netlbl_catmap_setlong(struct netlbl_lsm_catmap **catmap,
+diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
+index f26d62e5533a7..701e4ad8077b4 100644
+--- a/drivers/crypto/caam/caampkc.c
++++ b/drivers/crypto/caam/caampkc.c
+@@ -194,7 +194,9 @@ static int caam_rsa_count_leading_zeros(struct scatterlist *sgl,
+ 		if (len && *buff)
+ 			break;
  
- 	offset -= iter->startbit;
- 	idx = offset / NETLBL_CATMAP_MAPSIZE;
--	iter->bitmap[idx] |= bitmap << (offset % NETLBL_CATMAP_MAPSIZE);
-+	iter->bitmap[idx] |= (NETLBL_CATMAP_MAPTYPE)bitmap
-+			     << (offset % NETLBL_CATMAP_MAPSIZE);
+-		sg_miter_next(&miter);
++		if (!sg_miter_next(&miter))
++			break;
++
+ 		buff = miter.addr;
+ 		len = miter.length;
  
- 	return 0;
- }
 -- 
 2.40.1
 
