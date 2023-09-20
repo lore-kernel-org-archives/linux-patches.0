@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D2A15ACC
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF247C433C8;
-	Wed, 20 Sep 2023 12:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1079715ACC
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:29:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8513BC433CB;
+	Wed, 20 Sep 2023 12:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212978;
-	bh=RJnlzB3tQUOe2PLwjjyQw7MlV5cVV/yvPDIpiMsYif8=;
+	s=korg; t=1695212980;
+	bh=K3GvFh9zyJrEOfKFK99P7SYpqX5hM79OphQcplpHKsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksqA1YGqzPJyZvBGf/ZDKGJMGPLemCb3uzAJNCHcDtr88lawGPAN36XWheM16qcum
-	 6nFUszjtLZqSoBTByBwHZIM6RLigh367xhno5xzZR4HJ4vogUV3pK7ensZfgAUMCu4
-	 T0klSMG27WNilk50tWENF7luVPMqY/SRFUCrcU2Q=
+	b=RTuzkGYrBHuN02N7cUGUxKuqEP2qow8E8Jwkzy4e9P/Vsl8gANMcQ27mQ55dyNlgm
+	 +4yiMw0NGGg9mpdcQKKbPetHAFihhaJyr4g1D5W3MpXgQhwVy9A8MhVfOdKMmODXl0
+	 cuX8s2KYQIXxwT1Syy8Jp7VSePE7txLRBQ6IXXE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/367] of: unittest: fix null pointer dereferencing in of_unittest_find_node_by_name()
-Date: Wed, 20 Sep 2023 13:28:12 +0200
-Message-ID: <20230920112901.596311143@linuxfoundation.org>
+Subject: [PATCH 5.4 116/367] drm/armada: Fix off-by-one error in armada_overlay_get_property()
+Date: Wed, 20 Sep 2023 13:28:13 +0200
+Message-ID: <20230920112901.626103621@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,71 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d6ce4f0ea19c32f10867ed93d8386924326ab474 ]
+[ Upstream commit 5f0d984053f74983a287100a9519b2fabb785fb5 ]
 
-when kmalloc() fail to allocate memory in kasprintf(), name
-or full_name will be NULL, strcmp() will cause
-null pointer dereference.
+As ffs() returns one more than the index of the first bit set (zero
+means no bits set), the color key mode value is shifted one position too
+much.
 
-Fixes: 0d638a07d3a1 ("of: Convert to using %pOF instead of full_name")
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230727080246.519539-1-ruanjinjie@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fix this by using FIELD_GET() instead.
+
+Fixes: c96103b6c49ff9a8 ("drm/armada: move colorkey properties into overlay plane state")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/a4d779d954a7515ddbbf31cb0f0d8184c0e7c879.1689600265.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/armada/armada_overlay.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 5707c309a7545..ef3c2112046fc 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -52,7 +52,7 @@ static void __init of_unittest_find_node_by_name(void)
+diff --git a/drivers/gpu/drm/armada/armada_overlay.c b/drivers/gpu/drm/armada/armada_overlay.c
+index 07f0da4d9ba19..8e7c5ce71608f 100644
+--- a/drivers/gpu/drm/armada/armada_overlay.c
++++ b/drivers/gpu/drm/armada/armada_overlay.c
+@@ -4,6 +4,8 @@
+  *  Rewritten from the dovefb driver, and Armada510 manuals.
+  */
  
- 	np = of_find_node_by_path("/testcase-data");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find /testcase-data failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -63,14 +63,14 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find /testcase-data/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
- 
- 	np = of_find_node_by_path("testcase-alias");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find testcase-alias failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -81,7 +81,7 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("testcase-alias/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find testcase-alias/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -1151,6 +1151,8 @@ static void attach_node_and_children(struct device_node *np)
- 	const char *full_name;
- 
- 	full_name = kasprintf(GFP_KERNEL, "%pOF", np);
-+	if (!full_name)
-+		return;
- 
- 	if (!strcmp(full_name, "/__local_fixups__") ||
- 	    !strcmp(full_name, "/__fixups__")) {
++#include <linux/bitfield.h>
++
+ #include <drm/armada_drm.h>
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_atomic_helper.h>
+@@ -446,8 +448,8 @@ static int armada_overlay_get_property(struct drm_plane *plane,
+ 			     drm_to_overlay_state(state)->colorkey_ug,
+ 			     drm_to_overlay_state(state)->colorkey_vb, 0);
+ 	} else if (property == priv->colorkey_mode_prop) {
+-		*val = (drm_to_overlay_state(state)->colorkey_mode &
+-			CFG_CKMODE_MASK) >> ffs(CFG_CKMODE_MASK);
++		*val = FIELD_GET(CFG_CKMODE_MASK,
++				 drm_to_overlay_state(state)->colorkey_mode);
+ 	} else if (property == priv->brightness_prop) {
+ 		*val = drm_to_overlay_state(state)->brightness + 256;
+ 	} else if (property == priv->contrast_prop) {
 -- 
 2.40.1
 
