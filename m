@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D92A1D6A7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA614C433C9;
-	Wed, 20 Sep 2023 11:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4951D6A7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA2C433CC;
+	Wed, 20 Sep 2023 11:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211023;
-	bh=Vo4ZwTwKB6ukKtMEw7/yxysmQ2QmcTHskWPId7lw9oY=;
+	s=korg; t=1695211025;
+	bh=tc35an1yL6bdqHVeKrwODlFTyysbOo07uho2dXSYu0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUF8YVthT+OaVROScslikqAH7oa2cjfcIFkXQue6MGVY8cnhpgLFBBfzi1Rgz9jFM
-	 Lw0mlg1PferVmGGT0rXx3FxIntNHPqZo6REfze6wi2eE/CWb9vBDpGXDNpa3jrHpFo
-	 xmkPDILpgPepXJpPaJMIUNqv+r8fRlM+9kdD9KJA=
+	b=V5040v+h11bmrTfUh0WXzy6MkeWFC9XAetNLe9MU2eYGXG4utFKYqu4Pbx9AvrQGb
+	 /GhMClqRT1OIBbB6i3jIPdAfdsDKhveIq3dBYB9lw6LW85v1wgB+Dgd0ikPmTr+Bmu
+	 GIFnfwyD2cq/UioWTG+jsKP7kxyUthlR79nNWroc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Leo Ma <hanghong.ma@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Yaochun Hung <yc.hung@mediatek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/139] drm/amd/display: Fix underflow issue on 175hz timing
-Date: Wed, 20 Sep 2023 13:29:40 +0200
-Message-ID: <20230920112837.348839777@linuxfoundation.org>
+Subject: [PATCH 6.1 047/139] ASoC: SOF: topology: simplify code to prevent static analysis warnings
+Date: Wed, 20 Sep 2023 13:29:41 +0200
+Message-ID: <20230920112837.387018223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -37,70 +37,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Ma <hanghong.ma@amd.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 735688eb905db529efea0c78466fccc1461c3fde ]
+[ Upstream commit 55cb3dc271d81f1982c949a2ac483a6daf613b92 ]
 
-[Why]
-Screen underflows happen on 175hz timing for 3 plane overlay case.
+make KCFLAGS='-fanalyzer' sound/soc/sof/intel/ reports a possible NULL
+pointer dereference.
 
-[How]
-Based on dst y prefetch value clamp to equ or oto for bandwidth
-calculation.
+sound/soc/sof/topology.c:1136:21: error: dereference of NULL ‘w’
+[CWE-476] [-Werror=analyzer-null-dereference]
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Leo Ma <hanghong.ma@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ 1136 |     strcmp(w->sname, rtd->dai_link->stream_name))
+
+The code is rather confusing and can be simplified to make static
+analysis happy. No functionality change.
+
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Yaochun Hung <yc.hung@mediatek.com>
+Link: https://lore.kernel.org/r/20230731213748.440285-4-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dml/dcn32/display_mode_vba_util_32.c    | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/sof/topology.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-index b53feeaf5cf11..23e4be2ad63f9 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-@@ -3454,6 +3454,7 @@ bool dml32_CalculatePrefetchSchedule(
- 	double TimeForFetchingMetaPTE = 0;
- 	double TimeForFetchingRowInVBlank = 0;
- 	double LinesToRequestPrefetchPixelData = 0;
-+	double LinesForPrefetchBandwidth = 0;
- 	unsigned int HostVMDynamicLevelsTrips;
- 	double  trip_to_mem;
- 	double  Tvm_trips;
-@@ -3883,11 +3884,15 @@ bool dml32_CalculatePrefetchSchedule(
- 			TimeForFetchingMetaPTE = Tvm_oto;
- 			TimeForFetchingRowInVBlank = Tr0_oto;
- 			*PrefetchBandwidth = prefetch_bw_oto;
-+			/* Clamp to oto for bandwidth calculation */
-+			LinesForPrefetchBandwidth = dst_y_prefetch_oto;
- 		} else {
- 			*DestinationLinesForPrefetch = dst_y_prefetch_equ;
- 			TimeForFetchingMetaPTE = Tvm_equ;
- 			TimeForFetchingRowInVBlank = Tr0_equ;
- 			*PrefetchBandwidth = prefetch_bw_equ;
-+			/* Clamp to equ for bandwidth calculation */
-+			LinesForPrefetchBandwidth = dst_y_prefetch_equ;
- 		}
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index 872e44408298f..e7305ce57ea1f 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -1086,16 +1086,17 @@ static void sof_disconnect_dai_widget(struct snd_soc_component *scomp,
+ {
+ 	struct snd_soc_card *card = scomp->card;
+ 	struct snd_soc_pcm_runtime *rtd;
++	const char *sname = w->sname;
+ 	struct snd_soc_dai *cpu_dai;
+ 	int i;
  
- 		*DestinationLinesToRequestVMInVBlank = dml_ceil(4.0 * TimeForFetchingMetaPTE / LineTime, 1.0) / 4.0;
-@@ -3895,7 +3900,7 @@ bool dml32_CalculatePrefetchSchedule(
- 		*DestinationLinesToRequestRowInVBlank =
- 				dml_ceil(4.0 * TimeForFetchingRowInVBlank / LineTime, 1.0) / 4.0;
+-	if (!w->sname)
++	if (!sname)
+ 		return;
  
--		LinesToRequestPrefetchPixelData = *DestinationLinesForPrefetch -
-+		LinesToRequestPrefetchPixelData = LinesForPrefetchBandwidth -
- 				*DestinationLinesToRequestVMInVBlank - 2 * *DestinationLinesToRequestRowInVBlank;
+ 	list_for_each_entry(rtd, &card->rtd_list, list) {
+ 		/* does stream match DAI link ? */
+ 		if (!rtd->dai_link->stream_name ||
+-		    strcmp(w->sname, rtd->dai_link->stream_name))
++		    strcmp(sname, rtd->dai_link->stream_name))
+ 			continue;
  
- #ifdef __DML_VBA_DEBUG__
+ 		switch (w->id) {
 -- 
 2.40.1
 
