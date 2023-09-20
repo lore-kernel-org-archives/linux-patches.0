@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0500715AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3FC433C9;
-	Wed, 20 Sep 2023 12:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C654715AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485E6C433C8;
+	Wed, 20 Sep 2023 12:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213531;
-	bh=dp/vaowTz/5FKxgNO+TH8+AW4jB85XHe3+u9OsaHxwg=;
+	s=korg; t=1695213534;
+	bh=snrybmw2usD/EF3CqreV6fY3DFN4tzP6/cAvbLCJFcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRhckDNnUPOBF9sI4kWibj6Xzxf5yoJODuHBvsuRoccpSD0bTnxvX5RoMs4TKLk6m
-	 /9AoQ42hvA47S3bYs4F+T0oJd6HP8NsYUV3i9UpQ6R1Maxvkylj+FRf/Ho+j8tdc13
-	 qmKv+nBtnGsA8BJ6rBrrFfsaUbNuI0aEsweJnkM0=
+	b=YB9Pd+rMy/g+iwpfGYJPgB5GIYJP2rL44j69Kt6jZxK3ZtpYp4j4L9s8MyfIsPfV5
+	 PVtWnNwwKGN57a2tjttWdz67SOhf+SmufMzPUsG6ct0PKeDSbKskAsyP4Yw4Zmg7Hd
+	 wIiPkLiGDg+ZyimsH9D1RloVZLHdWk7oP3YeOTVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 246/367] lib/test_meminit: allocate pages up to order MAX_ORDER
-Date: Wed, 20 Sep 2023 13:30:23 +0200
-Message-ID: <20230920112904.921107485@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Tom Rix <trix@redhat.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 237/367] udf: initialize newblock to 0
+Date: Wed, 20 Sep 2023 13:30:14 +0200
+Message-ID: <20230920112904.703195800@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,44 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Donnellan <ajd@linux.ibm.com>
+From: Tom Rix <trix@redhat.com>
 
-commit efb78fa86e95832b78ca0ba60f3706788a818938 upstream.
+commit 23970a1c9475b305770fd37bebfec7a10f263787 upstream.
 
-test_pages() tests the page allocator by calling alloc_pages() with
-different orders up to order 10.
+The clang build reports this error
+fs/udf/inode.c:805:6: error: variable 'newblock' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+        if (*err < 0)
+            ^~~~~~~~
+newblock is never set before error handling jump.
+Initialize newblock to 0 and remove redundant settings.
 
-However, different architectures and platforms support different maximum
-contiguous allocation sizes.  The default maximum allocation order
-(MAX_ORDER) is 10, but architectures can use CONFIG_ARCH_FORCE_MAX_ORDER
-to override this.  On platforms where this is less than 10, test_meminit()
-will blow up with a WARN().  This is expected, so let's not do that.
-
-Replace the hardcoded "10" with the MAX_ORDER macro so that we test
-allocations up to the expected platform limit.
-
-Link: https://lkml.kernel.org/r/20230714015238.47931-1-ajd@linux.ibm.com
-Fixes: 5015a300a522 ("lib: introduce test_meminit module")
-Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d8b39db5fab8 ("udf: Handle error when adding extent to a file")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Tom Rix <trix@redhat.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20221230175341.1629734-1-trix@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_meminit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -86,7 +86,7 @@ static int __init test_pages(int *total_
- 	int failures = 0, num_tests = 0;
- 	int i;
- 
--	for (i = 0; i < 10; i++)
-+	for (i = 0; i <= MAX_ORDER; i++)
- 		num_tests += do_alloc_pages_order(i, &failures);
- 
- 	REPORT_FAILURES_IN_FN();
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -698,7 +698,7 @@ static sector_t inode_getblk(struct inod
+ 	struct kernel_lb_addr eloc, tmpeloc;
+ 	int c = 1;
+ 	loff_t lbcount = 0, b_off = 0;
+-	udf_pblk_t newblocknum, newblock;
++	udf_pblk_t newblocknum, newblock = 0;
+ 	sector_t offset = 0;
+ 	int8_t etype;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
+@@ -801,7 +801,6 @@ static sector_t inode_getblk(struct inod
+ 		ret = udf_do_extend_file(inode, &prev_epos, laarr, hole_len);
+ 		if (ret < 0) {
+ 			*err = ret;
+-			newblock = 0;
+ 			goto out_free;
+ 		}
+ 		c = 0;
+@@ -864,7 +863,6 @@ static sector_t inode_getblk(struct inod
+ 				goal, err);
+ 		if (!newblocknum) {
+ 			*err = -ENOSPC;
+-			newblock = 0;
+ 			goto out_free;
+ 		}
+ 		if (isBeyondEOF)
 
 
