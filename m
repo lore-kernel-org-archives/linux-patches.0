@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E22168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D83C433C9;
-	Wed, 20 Sep 2023 12:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F26128E23
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8078C433C8;
+	Wed, 20 Sep 2023 12:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213888;
-	bh=Yo6fUNWrqYjOWMiNSC8nUfGx/wyPMDVJRLp3hpfuBC0=;
+	s=korg; t=1695213891;
+	bh=la+2+/i0dupowSAFVOMW5iaENFtVyqJhi/l8VOVkylc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzN7AZy1X4h9gHYQ7U5urQdrJBjD1jy8Ywj2gRLIl0Jq/tvPxpa0mVQULR0ajGsiA
-	 zrBD+OR8xkWvVAg9ob8v9VKE7AcGmul5JzpnuTkMKLUJ9YP2yYnkmWaKP/vowxkz4w
-	 IjEOfRTBXYriMEbCRmiudNhpHD30THd2JvvyHyoU=
+	b=vOTJNj1dhn5Tyz4h5vI4pTtUQ+xxY8b7eJ9TKMNWv8yFmamGe0SWApDtAgfV1VESL
+	 jVZE1/DbeHLdFYMEJXn+QWY7syhDUefvMWJWbF04kjX94xW517Nahf/FGObtpXTlRt
+	 Uxhn7ZWQ6cTsTYQU318OB8AXWFi5cx+eSkRozqBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/110] drm/bridge: tc358762: Instruct DSI host to generate HSE packets
-Date: Wed, 20 Sep 2023 13:31:25 +0200
-Message-ID: <20230920112831.406225233@linuxfoundation.org>
+Subject: [PATCH 5.15 036/110] md: raid1: fix potential OOB in raid1_remove_disk()
+Date: Wed, 20 Sep 2023 13:31:34 +0200
+Message-ID: <20230920112831.716804481@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -41,36 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 362fa8f6e6a05089872809f4465bab9d011d05b3 ]
+[ Upstream commit 8b0472b50bcf0f19a5119b00a53b63579c8e1e4d ]
 
-This bridge seems to need the HSE packet, otherwise the image is
-shifted up and corrupted at the bottom. This makes the bridge
-work with Samsung DSIM on i.MX8MM and i.MX8MP.
+If rddev->raid_disk is greater than mddev->raid_disks, there will be
+an out-of-bounds in raid1_remove_disk(). We have already found
+similar reports as follows:
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230615201902.566182-3-marex@denx.de
+1) commit d17f744e883b ("md-raid10: fix KASAN warning")
+2) commit 1ebc2cec0b7d ("dm raid: fix KASAN warning in raid5_remove_disk")
+
+Fix this bug by checking whether the "number" variable is
+valid.
+
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/tencent_0D24426FAC6A21B69AC0C03CE4143A508F09@qq.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358762.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid1.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358762.c b/drivers/gpu/drm/bridge/tc358762.c
-index 1bfdfc6affafe..21c57d3435687 100644
---- a/drivers/gpu/drm/bridge/tc358762.c
-+++ b/drivers/gpu/drm/bridge/tc358762.c
-@@ -224,7 +224,7 @@ static int tc358762_probe(struct mipi_dsi_device *dsi)
- 	dsi->lanes = 1;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
--			  MIPI_DSI_MODE_LPM;
-+			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_VIDEO_HSE;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 084bfea6ad316..5360d6ed16e05 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1820,6 +1820,10 @@ static int raid1_remove_disk(struct mddev *mddev, struct md_rdev *rdev)
+ 	struct r1conf *conf = mddev->private;
+ 	int err = 0;
+ 	int number = rdev->raid_disk;
++
++	if (unlikely(number >= conf->raid_disks))
++		goto abort;
++
+ 	struct raid1_info *p = conf->mirrors + number;
  
- 	ret = tc358762_parse_dt(ctx);
- 	if (ret < 0)
+ 	if (rdev != p->rdev)
 -- 
 2.40.1
 
