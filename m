@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686D218657
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23BAC433CB;
-	Wed, 20 Sep 2023 11:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E6D18657
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:52:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88146C433C7;
+	Wed, 20 Sep 2023 11:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210722;
-	bh=YoDaYVT3x6lc3QZS/5HISEwu9a556qikLXUdlDzOxLQ=;
+	s=korg; t=1695210724;
+	bh=7cbRDKoenBdyh1PIaKjgAAwj7UrHY6z3HnuLEthB7dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6ljfagH0IEG1ML6vFA8HTg/zVLgTtixDLdS3hJGSNRu8b9w5ZU5B41AhB7bksW/A
-	 +2wk1xu4/Y0C/6cM2DKu56EHqd+z01/Z0domXi5FAq/C+M64G2WJbA/aIFbm5n2xxl
-	 SdY6GI0MyhdI4+/ShS/RsCfj+d28yUTWovu1OjG4=
+	b=pyQS00E53ss8Ezcm+wACsgOJAtTUscJf99xoDCiOq8H1afuTsx0ZY5ykRvf9zEKj+
+	 gbVMnJ2UWrvLCqN0T++4kjXxlqON16N/Wbz5ulV6569FcATDeAvqqAt+/GzzTtvS9d
+	 OhvtXnDTlszniujpkNwAVDghR4mvDGHVAtgLmcZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 180/211] btrfs: fix a compilation error if DEBUG is defined in btree_dirty_folio
-Date: Wed, 20 Sep 2023 13:30:24 +0200
-Message-ID: <20230920112851.457336641@linuxfoundation.org>
+Subject: [PATCH 6.5 181/211] btrfs: fix race between finishing block group creation and its item update
+Date: Wed, 20 Sep 2023 13:30:25 +0200
+Message-ID: <20230920112851.487681142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,88 +40,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 5e0e879926c1ce7e1f5e0dfaacaf2d105f7d8a05 upstream.
+commit 2d6cd791e63ec0c68ae95ecd55dc6c50ac7829cf upstream.
 
-[BUG]
-After commit 72a69cd03082 ("btrfs: subpage: pack all subpage bitmaps
-into a larger bitmap"), the DEBUG section of btree_dirty_folio() would
-no longer compile.
+Commit 675dfe1223a6 ("btrfs: fix block group item corruption after
+inserting new block group") fixed one race that resulted in not persisting
+a block group's item when its "used" bytes field decreases to zero.
+However there's another race that can happen in a much shorter time window
+that results in the same problem. The following sequence of steps explains
+how it can happen:
 
-[CAUSE]
-If DEBUG is defined, we would do extra checks for btree_dirty_folio(),
-mostly to make sure the range we marked dirty has an extent buffer and
-that extent buffer is dirty.
+1) Task A creates a metadata block group X, its "used" and "commit_used"
+   fields are initialized to 0;
 
-For subpage, we need to iterate through all the extent buffers covered
-by that page range, and make sure they all matches the criteria.
+2) Two extents are allocated from block group X, so its "used" field is
+   updated to 32K, and its "commit_used" field remains as 0;
 
-However commit 72a69cd03082 ("btrfs: subpage: pack all subpage bitmaps
-into a larger bitmap") changes how we store the bitmap, we pack all the
-16 bits bitmaps into a larger bitmap, which would save some space.
+3) Transaction commit starts, by some task B, and it enters
+   btrfs_start_dirty_block_groups(). There it tries to update the block
+   group item for block group X, which currently has its "used" field with
+   a value of 32K and its "commit_used" field with a value of 0. However
+   that fails since the block group item was not yet inserted, so at
+   update_block_group_item(), the btrfs_search_slot() call returns 1, and
+   then we set 'ret' to -ENOENT. Before jumping to the label 'fail'...
 
-This means we no longer have btrfs_subpage::dirty_bitmap, instead the
-dirty bitmap is starting at btrfs_subpage_info::dirty_offset, and has a
-length of btrfs_subpage_info::bitmap_nr_bits.
+4) The block group item is inserted by task A, when for example
+   btrfs_create_pending_block_groups() is called when releasing its
+   transaction handle. This results in insert_block_group_item() inserting
+   the block group item in the extent tree (or block group tree), with a
+   "used" field having a value of 32K and setting "commit_used", in struct
+   btrfs_block_group, to the same value (32K);
 
-[FIX]
-Although I'm not sure if it still makes sense to maintain such code, at
-least let it compile.
+5) Task B jumps to the 'fail' label and then resets the "commit_used"
+   field to 0. At btrfs_start_dirty_block_groups(), because -ENOENT was
+   returned from update_block_group_item(), we add the block group again
+   to the list of dirty block groups, so that we will try again in the
+   critical section of the transaction commit when calling
+   btrfs_write_dirty_block_groups();
 
-This patch would let us test the bits one by one through the bitmaps.
+6) Later the two extents from block group X are freed, so its "used" field
+   becomes 0;
 
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+7) If no more extents are allocated from block group X before we get into
+   btrfs_write_dirty_block_groups(), then when we call
+   update_block_group_item() again for block group X, we will not update
+   the block group item to reflect that it has 0 bytes used, because the
+   "used" and "commit_used" fields in struct btrfs_block_group have the
+   same value, a value of 0.
+
+   As a result after committing the transaction we have an empty block
+   group with its block group item having a 32K value for its "used" field.
+   This will trigger errors from fsck ("btrfs check" command) and after
+   mounting again the fs, the cleaner kthread will not automatically delete
+   the empty block group, since its "used" field is not 0. Possibly there
+   are other issues due to this inconsistency.
+
+   When this issue happens, the error reported by fsck is like this:
+
+     [1/7] checking root items
+     [2/7] checking extents
+     block group [1104150528 1073741824] used 39796736 but extent items used 0
+     ERROR: errors found in extent allocation tree or chunk allocation
+     (...)
+
+So fix this by not resetting the "commit_used" field of a block group when
+we don't find the block group item at update_block_group_item().
+
+Fixes: 7248e0cebbef ("btrfs: skip update of block group item if used bytes are the same")
+CC: stable@vger.kernel.org # 6.2+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/btrfs/block-group.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -525,6 +525,7 @@ static bool btree_dirty_folio(struct add
- 		struct folio *folio)
- {
- 	struct btrfs_fs_info *fs_info = btrfs_sb(mapping->host->i_sb);
-+	struct btrfs_subpage_info *spi = fs_info->subpage_info;
- 	struct btrfs_subpage *subpage;
- 	struct extent_buffer *eb;
- 	int cur_bit = 0;
-@@ -538,18 +539,19 @@ static bool btree_dirty_folio(struct add
- 		btrfs_assert_tree_write_locked(eb);
- 		return filemap_dirty_folio(mapping, folio);
- 	}
-+
-+	ASSERT(spi);
- 	subpage = folio_get_private(folio);
- 
--	ASSERT(subpage->dirty_bitmap);
--	while (cur_bit < BTRFS_SUBPAGE_BITMAP_SIZE) {
-+	for (cur_bit = spi->dirty_offset;
-+	     cur_bit < spi->dirty_offset + spi->bitmap_nr_bits;
-+	     cur_bit++) {
- 		unsigned long flags;
- 		u64 cur;
--		u16 tmp = (1 << cur_bit);
- 
- 		spin_lock_irqsave(&subpage->lock, flags);
--		if (!(tmp & subpage->dirty_bitmap)) {
-+		if (!test_bit(cur_bit, subpage->bitmaps)) {
- 			spin_unlock_irqrestore(&subpage->lock, flags);
--			cur_bit++;
- 			continue;
- 		}
- 		spin_unlock_irqrestore(&subpage->lock, flags);
-@@ -562,7 +564,7 @@ static bool btree_dirty_folio(struct add
- 		btrfs_assert_tree_write_locked(eb);
- 		free_extent_buffer(eb);
- 
--		cur_bit += (fs_info->nodesize >> fs_info->sectorsize_bits);
-+		cur_bit += (fs_info->nodesize >> fs_info->sectorsize_bits) - 1;
- 	}
- 	return filemap_dirty_folio(mapping, folio);
- }
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3014,8 +3014,16 @@ static int update_block_group_item(struc
+ 	btrfs_mark_buffer_dirty(leaf);
+ fail:
+ 	btrfs_release_path(path);
+-	/* We didn't update the block group item, need to revert @commit_used. */
+-	if (ret < 0) {
++	/*
++	 * We didn't update the block group item, need to revert commit_used
++	 * unless the block group item didn't exist yet - this is to prevent a
++	 * race with a concurrent insertion of the block group item, with
++	 * insert_block_group_item(), that happened just after we attempted to
++	 * update. In that case we would reset commit_used to 0 just after the
++	 * insertion set it to a value greater than 0 - if the block group later
++	 * becomes with 0 used bytes, we would incorrectly skip its update.
++	 */
++	if (ret < 0 && ret != -ENOENT) {
+ 		spin_lock(&cache->lock);
+ 		cache->commit_used = old_commit_used;
+ 		spin_unlock(&cache->lock);
 
 
