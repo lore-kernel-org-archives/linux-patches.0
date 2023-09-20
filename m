@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0F818658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:44:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9C1C433C9;
-	Wed, 20 Sep 2023 11:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2B92AB29
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:44:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B5AC433C8;
+	Wed, 20 Sep 2023 11:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210246;
-	bh=5UQadOcwbMrJ/Y658I907Ti6q4EzT06kqDw6rywS0m4=;
+	s=korg; t=1695210249;
+	bh=DyKwxzaJYpoA4xccVeB9/sY8k2MBqmWTPVNgHC29ZJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/XmvXHTSbR1H7NLqM9vKGH0VXXMqECicc0I6TdKnMJW3nd/zYA9cG1eEmwA2QH0g
-	 wYjQA3tiNt/YFnUgXSFd4MnEphacOUeC3xj/KuF6vYP4uYe0ebt6+Yg6mteqSzvAuz
-	 P/hYXoA6VJNforn4sbLX/17FnE3CC+mvYUaWQn7A=
+	b=O7TiMV+pDIK3FoaObHDGu1K4CQ6eJwE4N9erCjK5mtgXnvNlBjylqB7riLvnSKTrf
+	 G8GQVyd/K3L7d81la5ACGOV3ooYzYNP+nmo80nf/BI9L9kfGpf0C2NGRgW+7uGH+8n
+	 QQ+/141Y0130ehiahkBefwIkFnVz/n2FpslRmrAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com,
+	Takeshi Misawa <jeliantsurux@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Ian Kent <raven@themaw.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrei Vagin <avagin@gmail.com>,
+	autofs@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 019/211] ACPI: x86: s2idle: Catch multiple ACPI_TYPE_PACKAGE objects
-Date: Wed, 20 Sep 2023 13:27:43 +0200
-Message-ID: <20230920112846.405524189@linuxfoundation.org>
+Subject: [PATCH 6.5 002/211] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date: Wed, 20 Sep 2023 13:27:26 +0200
+Message-ID: <20230920112845.931609612@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,39 +48,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 883cf0d4cf288313b71146ddebdf5d647b76c78b ]
+[ Upstream commit ccbe77f7e45dfb4420f7f531b650c00c6e9c7507 ]
 
-If a badly constructed firmware includes multiple `ACPI_TYPE_PACKAGE`
-objects while evaluating the AMD LPS0 _DSM, there will be a memory
-leak.  Explicitly guard against this.
+Syzkaller reports a memory leak:
 
-Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+BUG: memory leak
+unreferenced object 0xffff88810b279e00 (size 96):
+  comm "syz-executor399", pid 3631, jiffies 4294964921 (age 23.870s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 9e 27 0b 81 88 ff ff  ..........'.....
+    08 9e 27 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ..'.............
+  backtrace:
+    [<ffffffff814cfc90>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff81bb75ca>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff81bb75ca>] autofs_wait+0x3fa/0x9a0 fs/autofs/waitq.c:378
+    [<ffffffff81bb88a7>] autofs_do_expire_multi+0xa7/0x3e0 fs/autofs/expire.c:593
+    [<ffffffff81bb8c33>] autofs_expire_multi+0x53/0x80 fs/autofs/expire.c:619
+    [<ffffffff81bb6972>] autofs_root_ioctl_unlocked+0x322/0x3b0 fs/autofs/root.c:897
+    [<ffffffff81bb6a95>] autofs_root_ioctl+0x25/0x30 fs/autofs/root.c:910
+    [<ffffffff81602a9c>] vfs_ioctl fs/ioctl.c:51 [inline]
+    [<ffffffff81602a9c>] __do_sys_ioctl fs/ioctl.c:870 [inline]
+    [<ffffffff81602a9c>] __se_sys_ioctl fs/ioctl.c:856 [inline]
+    [<ffffffff81602a9c>] __x64_sys_ioctl+0xfc/0x140 fs/ioctl.c:856
+    [<ffffffff84608225>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84608225>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+autofs_wait_queue structs should be freed if their wait_ctr becomes zero.
+Otherwise they will be lost.
+
+In this case an AUTOFS_IOC_EXPIRE_MULTI ioctl is done, then a new
+waitqueue struct is allocated in autofs_wait(), its initial wait_ctr
+equals 2. After that wait_event_killable() is interrupted (it returns
+-ERESTARTSYS), so that 'wq->name.name == NULL' condition may be not
+satisfied. Actually, this condition can be satisfied when
+autofs_wait_release() or autofs_catatonic_mode() is called and, what is
+also important, wait_ctr is decremented in those places. Upon the exit of
+autofs_wait(), wait_ctr is decremented to 1. Then the unmounting process
+begins: kill_sb calls autofs_catatonic_mode(), which should have freed the
+waitqueues, but it only decrements its usage counter to zero which is not
+a correct behaviour.
+
+edit:imk
+This description is of course not correct. The umount performed as a result
+of an expire is a umount of a mount that has been automounted, it's not the
+autofs mount itself. They happen independently, usually after everything
+mounted within the autofs file system has been expired away. If everything
+hasn't been expired away the automount daemon can still exit leaving mounts
+in place. But expires done in both cases will result in a notification that
+calls autofs_wait_release() with a result status. The problem case is the
+summary execution of of the automount daemon. In this case any waiting
+processes won't be woken up until either they are terminated or the mount
+is umounted.
+end edit: imk
+
+So in catatonic mode we should free waitqueues which counter becomes zero.
+
+edit: imk
+Initially I was concerned that the calling of autofs_wait_release() and
+autofs_catatonic_mode() was not mutually exclusive but that can't be the
+case (obviously) because the queue entry (or entries) is removed from the
+list when either of these two functions are called. Consequently the wait
+entry will be freed by only one of these functions or by the woken process
+in autofs_wait() depending on the order of the calls.
+end edit: imk
+
+Reported-by: syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com
+Suggested-by: Takeshi Misawa <jeliantsurux@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Ian Kent <raven@themaw.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: autofs@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Message-Id: <169112719161.7590.6700123246297365841.stgit@donald.themaw.net>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/s2idle.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/autofs/waitq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index 60cc4605169c5..60835953ebfc4 100644
---- a/drivers/acpi/x86/s2idle.c
-+++ b/drivers/acpi/x86/s2idle.c
-@@ -113,6 +113,12 @@ static void lpi_device_get_constraints_amd(void)
- 		union acpi_object *package = &out_obj->package.elements[i];
- 
- 		if (package->type == ACPI_TYPE_PACKAGE) {
-+			if (lpi_constraints_table) {
-+				acpi_handle_err(lps0_device_handle,
-+						"Duplicate constraints list\n");
-+				goto free_acpi_buffer;
-+			}
-+
- 			lpi_constraints_table = kcalloc(package->package.count,
- 							sizeof(*lpi_constraints_table),
- 							GFP_KERNEL);
+diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
+index 54c1f8b8b0757..efdc76732faed 100644
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
+ 		wq->status = -ENOENT; /* Magic is gone - report failure */
+ 		kfree(wq->name.name - wq->offset);
+ 		wq->name.name = NULL;
+-		wq->wait_ctr--;
+ 		wake_up_interruptible(&wq->queue);
++		if (!--wq->wait_ctr)
++			kfree(wq);
+ 		wq = nwq;
+ 	}
+ 	fput(sbi->pipe);	/* Close the pipe */
 -- 
 2.40.1
 
