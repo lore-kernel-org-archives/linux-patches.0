@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AA03AC13
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2852C433C7;
-	Wed, 20 Sep 2023 12:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6C83AC1E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:31:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64628C433C7;
+	Wed, 20 Sep 2023 12:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213089;
-	bh=9+u8O2HQM+a8mvgKyFBMMfVAiOEFJlglDrWm/TQOHLE=;
+	s=korg; t=1695213091;
+	bh=0i1zai7EkZlEDorUDBkBivFwUUWq8mjjmrz0N+dnBZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVe2ITYjN6Yt51Hu9Tgf8nWD9eQHjCVGSCvWV6Ed9RwL8hz73gVVU6GBVMzg+oJVQ
-	 nP+maeABw7ssUtBh5NgmFGGHnf/rhyfvw9pn0ukZ0oLwfDK+iY7AsUIgFrlZndNFzU
-	 dUtQz9yeHBXCCbzYUzjFO/YUr/oYy8tmllbScvlo=
+	b=u+tggrfVA1tZawcmG+uDyT3LL2O50FsOY9RVKShB1xXyJfQ75A7zuC9wTwvoste4e
+	 ygQ47qM2ycMe39d83erUqIqwwbYkFYhTf1FuNWSKEGax+CrTZEoZDTSgPwRJrXLf9N
+	 rNgS4/pROKvaekM78be9BfF1KS8nhWaL5G/T4WH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 131/367] PCI/ASPM: Use RMW accessors for changing LNKCTL
-Date: Wed, 20 Sep 2023 13:28:28 +0200
-Message-ID: <20230920112902.080329068@linuxfoundation.org>
+Subject: [PATCH 5.4 132/367] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
+Date: Wed, 20 Sep 2023 13:28:29 +0200
+Message-ID: <20230920112902.110116314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -36,106 +35,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
+[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
 
-Don't assume that the device is fully under the control of ASPM and use RMW
-capability accessors which do proper locking to avoid losing concurrent
-updates to the register values.
+Reconfiguring the clock divider to the exact same value is observed
+on an i.MX8MN to often cause a longer than usual clock pause, probably
+because the divider restarts counting whenever the register is rewritten.
 
-If configuration fails in pcie_aspm_configure_common_clock(), the
-function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
-only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
-than the content of the whole LNKCTL registers. It aligns better with
-how pcie_lnkctl_clear_and_set() expects its parameter and makes the
-code more obvious to understand.
+This issue doesn't show up normally, because the clock framework will
+take care to not call set_rate when the clock rate is the same.
+However, when we reconfigure an upstream clock, the common code will
+call set_rate with the newly calculated rate on all children, e.g.:
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+  - sai5 is running normally and divides Audio PLL out by 16.
+  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
+  - rates for children are recalculated and rates are set recursively
+  - imx8m_clk_composite_divider_set_rate(sai5) is called with
+    32/16 = 2Hz more
+  - imx8m_clk_composite_divider_set_rate computes same divider as before
+  - divider register is written, so it restarts counting from zero and
+    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
+
+Some external clock consumers can be upset by such unexpected clock pauses,
+so let's make sure we only rewrite the divider value when the value to be
+written is actually different.
+
+Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 55270180ae081..ee51e433fdedb 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -257,7 +257,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- {
- 	int same_clock = 1;
--	u16 reg16, parent_reg, child_reg[8];
-+	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
- 	struct pci_dev *child, *parent = link->pdev;
- 	struct pci_bus *linkbus = parent->subordinate;
- 	/*
-@@ -279,6 +279,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
+index d3486ee79ab54..78122188ac39e 100644
+--- a/drivers/clk/imx/clk-composite-8m.c
++++ b/drivers/clk/imx/clk-composite-8m.c
+@@ -95,7 +95,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+ 	int prediv_value;
+ 	int div_value;
+ 	int ret;
+-	u32 val;
++	u32 orig, val;
  
- 	/* Port might be already in common clock mode */
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-+	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
- 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
- 		bool consistent = true;
+ 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
+ 						&prediv_value, &div_value);
+@@ -104,13 +104,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
  
-@@ -295,34 +296,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- 		pci_warn(parent, "ASPM: current common clock configuration is broken, reconfiguring\n");
- 	}
+ 	spin_lock_irqsave(divider->lock, flags);
  
-+	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
- 	/* Configure downstream component, all functions */
- 	list_for_each_entry(child, &linkbus->devices, bus_list) {
- 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
--		child_reg[PCI_FUNC(child->devfn)] = reg16;
--		if (same_clock)
--			reg16 |= PCI_EXP_LNKCTL_CCC;
--		else
--			reg16 &= ~PCI_EXP_LNKCTL_CCC;
--		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
-+		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
-+		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, ccc);
- 	}
+-	val = readl(divider->reg);
+-	val &= ~((clk_div_mask(divider->width) << divider->shift) |
+-			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
++	orig = readl(divider->reg);
++	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
++		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
  
- 	/* Configure upstream component */
--	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
--	parent_reg = reg16;
--	if (same_clock)
--		reg16 |= PCI_EXP_LNKCTL_CCC;
--	else
--		reg16 &= ~PCI_EXP_LNKCTL_CCC;
--	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
-+	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CCC, ccc);
+ 	val |= (u32)(prediv_value  - 1) << divider->shift;
+ 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
+-	writel(val, divider->reg);
++
++	if (val != orig)
++		writel(val, divider->reg);
  
- 	if (pcie_retrain_link(link)) {
- 
- 		/* Training failed. Restore common clock configurations */
- 		pci_err(parent, "ASPM: Could not configure common clock\n");
- 		list_for_each_entry(child, &linkbus->devices, bus_list)
--			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
--					   child_reg[PCI_FUNC(child->devfn)]);
--		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
-+			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+							   PCI_EXP_LNKCTL_CCC,
-+							   child_old_ccc[PCI_FUNC(child->devfn)]);
-+		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
- 	}
- }
+ 	spin_unlock_irqrestore(divider->lock, flags);
  
 -- 
 2.40.1
