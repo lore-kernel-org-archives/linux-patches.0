@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2F630FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947B0C433C8;
-	Wed, 20 Sep 2023 12:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2475130FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58216C433C7;
+	Wed, 20 Sep 2023 12:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212374;
-	bh=uT6+ofBvE7Bpufbp6Jy3HAPdXBXrlhAb5jZGMswd6ZQ=;
+	s=korg; t=1695212377;
+	bh=QOLWnM/4tOywfjKBGMQdYTk+nSv82ny9329/sezwFSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjSgXaP/VpTfvI0yYr/tHVgz8LSXEqgP5GXOT4SiyaVXPGOBNzEMF9z7NbglDbACj
-	 cqgBeg5tAbaer5u/YJ1M6K/0u8IWqmQHfZ3bfwHXB4aTqaEoA2IkMijGmcCJkfqPgf
-	 kYrZMKyd03LxqGfTD1YfEmSCypWUyyj0dbSQzJmI=
+	b=fvg9UTx/15JHc13ZvggN9+06YEu/w1LI55hd8UDqp6FfttE8s2nIvsOpanJySpl0T
+	 qyy7rcOVLtjtnagLiFtXypHvMEsoyK6DQPxCbb/PRslTxHeq3p2dyLjIDNl40qrcrp
+	 m3Bpq2vWVlyLXX8Y/wBW3looOSYgL2wy+x2Y3V84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 253/273] powerpc/pseries: fix possible memory leak in ibmebus_bus_init()
-Date: Wed, 20 Sep 2023 13:31:33 +0200
-Message-ID: <20230920112854.106526457@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 4.19 236/273] parisc: Drop loops_per_jiffy from per_cpu struct
+Date: Wed, 20 Sep 2023 13:31:16 +0200
+Message-ID: <20230920112853.652866142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -40,39 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit afda85b963c12947e298ad85d757e333aa40fd74 ]
+commit 93346da8ff47cc00f953c7f38a2d6ba11977fc42 upstream.
 
-If device_register() returns error in ibmebus_bus_init(), name of kobject
-which is allocated in dev_set_name() called in device_add() is leaked.
+There is no need to keep a loops_per_jiffy value per cpu. Drop it.
 
-As comment of device_add() says, it should call put_device() to drop
-the reference count that was set in device_initialize() when it fails,
-so the name can be freed in kobject_cleanup().
-
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20221110011929.3709774-1-ruanjinjie@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/ibmebus.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/include/asm/processor.h |    1 -
+ arch/parisc/kernel/processor.c      |    5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/ibmebus.c b/arch/powerpc/platforms/pseries/ibmebus.c
-index c7c1140c13b6c..3fce7508a4fc6 100644
---- a/arch/powerpc/platforms/pseries/ibmebus.c
-+++ b/arch/powerpc/platforms/pseries/ibmebus.c
-@@ -452,6 +452,7 @@ static int __init ibmebus_bus_init(void)
- 	if (err) {
- 		printk(KERN_WARNING "%s: device_register returned %i\n",
- 		       __func__, err);
-+		put_device(&ibmebus_bus_device);
- 		bus_unregister(&ibmebus_bus_type);
+--- a/arch/parisc/include/asm/processor.h
++++ b/arch/parisc/include/asm/processor.h
+@@ -108,7 +108,6 @@ struct cpuinfo_parisc {
+ 	unsigned long cpu_loc;      /* CPU location from PAT firmware */
+ 	unsigned int state;
+ 	struct parisc_device *dev;
+-	unsigned long loops_per_jiffy;
+ };
  
- 		return err;
--- 
-2.40.1
-
+ extern struct system_cpuinfo_parisc boot_cpu_data;
+--- a/arch/parisc/kernel/processor.c
++++ b/arch/parisc/kernel/processor.c
+@@ -177,7 +177,6 @@ static int __init processor_probe(struct
+ 	if (cpuid)
+ 		memset(p, 0, sizeof(struct cpuinfo_parisc));
+ 
+-	p->loops_per_jiffy = loops_per_jiffy;
+ 	p->dev = dev;		/* Save IODC data in case we need it */
+ 	p->hpa = dev->hpa.start;	/* save CPU hpa */
+ 	p->cpuid = cpuid;	/* save CPU id */
+@@ -444,8 +443,8 @@ show_cpuinfo (struct seq_file *m, void *
+ 		show_cache_info(m);
+ 
+ 		seq_printf(m, "bogomips\t: %lu.%02lu\n",
+-			     cpuinfo->loops_per_jiffy / (500000 / HZ),
+-			     (cpuinfo->loops_per_jiffy / (5000 / HZ)) % 100);
++			     loops_per_jiffy / (500000 / HZ),
++			     loops_per_jiffy / (5000 / HZ) % 100);
+ 
+ 		seq_printf(m, "software id\t: %ld\n\n",
+ 				boot_cpu_data.pdc.model.sw_id);
 
 
