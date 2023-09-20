@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0CB111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8722BC433C7;
-	Wed, 20 Sep 2023 12:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D208111AB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5942AC433C7;
+	Wed, 20 Sep 2023 12:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213616;
-	bh=FCTHsZN7ynK/t5Lag6KIJPe8375IqfM2MzrW2fFNVj4=;
+	s=korg; t=1695213619;
+	bh=bRQazNOhNdsFeSrqDlvDb9jjVj3Jtd35gujb1sRNWyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usXwKP8YIUg2G08w72rCToTjV+AO3+jbYvQxrdo/ty0a4pqlyg8KVwUdTYPXrrXFU
-	 pT9dN4AXhKvZE+GWJeUd/5T7vNwTdqDaCXDH1or8t25KAvfJMifSpMcjkyXtZM+u/j
-	 +nMW7quhdIBzncKCxIisCKIPEEf/NGLNmcSVsypU=
+	b=d9evKkf6c6ZqOGeLK2TltiUPsrg1s+QIuYTE41xWWHr1xNjEFgDB6I4oEVMz37OkI
+	 kFPMtOAPh4p8KNh02mLC5mYqsBFHFtRCndaCcCAZ0r70eitz1w79uat3EBMMvcflD8
+	 nFhY+H6poVSjkZJ2WWjg11NGLJXXGa5QT7yRv2NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anson Huang <Anson.Huang@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Liming Sun <limings@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 295/367] clk: imx: pll14xx: Add new frequency entries for pll1443x table
-Date: Wed, 20 Sep 2023 13:31:12 +0200
-Message-ID: <20230920112906.184275369@linuxfoundation.org>
+Subject: [PATCH 5.4 304/367] platform/mellanox: mlxbf-tmfifo: Drop jumbo frames
+Date: Wed, 20 Sep 2023 13:31:21 +0200
+Message-ID: <20230920112906.416434473@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,37 +42,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anson Huang <Anson.Huang@nxp.com>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit 57795654fb553a78f07a9f92d87fb2582379cd93 ]
+[ Upstream commit fc4c655821546239abb3cf4274d66b9747aa87dd ]
 
-Add new frequency entries to pll1443x table to meet different
-display settings requirement.
+This commit drops over-sized network packets to avoid tmfifo
+queue stuck.
 
-Signed-off-by: Anson Huang <Anson.Huang@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: 72d00e560d10 ("clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz")
+Fixes: 1357dfd7261f ("platform/mellanox: Add TmFifo driver for Mellanox BlueField Soc")
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/9318936c2447f76db475c985ca6d91f057efcd41.1693322547.git.limings@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-pll14xx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-pll14xx.c b/drivers/clk/imx/clk-pll14xx.c
-index 129a28c3366eb..e7bf6babc28b4 100644
---- a/drivers/clk/imx/clk-pll14xx.c
-+++ b/drivers/clk/imx/clk-pll14xx.c
-@@ -53,8 +53,10 @@ static const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
- };
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 42fcccf06157f..194f3205e5597 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -205,7 +205,7 @@ static u8 mlxbf_tmfifo_net_default_mac[ETH_ALEN] = {
+ static efi_char16_t mlxbf_tmfifo_efi_name[] = L"RshimMacAddr";
  
- static const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
-+	PLL_1443X_RATE(1039500000U, 173, 2, 1, 16384),
- 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
- 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
-+	PLL_1443X_RATE(519750000U, 173, 2, 2, 16384),
- 	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
- 	PLL_1443X_RATE(361267200U, 361, 3, 3, 17511),
- };
+ /* Maximum L2 header length. */
+-#define MLXBF_TMFIFO_NET_L2_OVERHEAD	36
++#define MLXBF_TMFIFO_NET_L2_OVERHEAD	(ETH_HLEN + VLAN_HLEN)
+ 
+ /* Supported virtio-net features. */
+ #define MLXBF_TMFIFO_NET_FEATURES \
+@@ -623,13 +623,14 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
+  * flag is set.
+  */
+ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+-				     struct vring_desc *desc,
++				     struct vring_desc **desc,
+ 				     bool is_rx, bool *vring_change)
+ {
+ 	struct mlxbf_tmfifo *fifo = vring->fifo;
+ 	struct virtio_net_config *config;
+ 	struct mlxbf_tmfifo_msg_hdr hdr;
+ 	int vdev_id, hdr_len;
++	bool drop_rx = false;
+ 
+ 	/* Read/Write packet header. */
+ 	if (is_rx) {
+@@ -649,8 +650,8 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 			if (ntohs(hdr.len) >
+ 			    __virtio16_to_cpu(virtio_legacy_is_little_endian(),
+ 					      config->mtu) +
+-			    MLXBF_TMFIFO_NET_L2_OVERHEAD)
+-				return;
++					      MLXBF_TMFIFO_NET_L2_OVERHEAD)
++				drop_rx = true;
+ 		} else {
+ 			vdev_id = VIRTIO_ID_CONSOLE;
+ 			hdr_len = 0;
+@@ -665,16 +666,25 @@ static void mlxbf_tmfifo_rxtx_header(struct mlxbf_tmfifo_vring *vring,
+ 
+ 			if (!tm_dev2)
+ 				return;
+-			vring->desc = desc;
++			vring->desc = *desc;
+ 			vring = &tm_dev2->vrings[MLXBF_TMFIFO_VRING_RX];
+ 			*vring_change = true;
+ 		}
++
++		if (drop_rx && !IS_VRING_DROP(vring)) {
++			if (vring->desc_head)
++				mlxbf_tmfifo_release_pkt(vring);
++			*desc = &vring->drop_desc;
++			vring->desc_head = *desc;
++			vring->desc = *desc;
++		}
++
+ 		vring->pkt_len = ntohs(hdr.len) + hdr_len;
+ 	} else {
+ 		/* Network virtio has an extra header. */
+ 		hdr_len = (vring->vdev_id == VIRTIO_ID_NET) ?
+ 			   sizeof(struct virtio_net_hdr) : 0;
+-		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, desc);
++		vring->pkt_len = mlxbf_tmfifo_get_pkt_len(vring, *desc);
+ 		hdr.type = (vring->vdev_id == VIRTIO_ID_NET) ?
+ 			    VIRTIO_ID_NET : VIRTIO_ID_CONSOLE;
+ 		hdr.len = htons(vring->pkt_len - hdr_len);
+@@ -723,7 +733,7 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
+ 
+ 	/* Beginning of a packet. Start to Rx/Tx packet header. */
+ 	if (vring->pkt_len == 0) {
+-		mlxbf_tmfifo_rxtx_header(vring, desc, is_rx, &vring_change);
++		mlxbf_tmfifo_rxtx_header(vring, &desc, is_rx, &vring_change);
+ 		(*avail)--;
+ 
+ 		/* Return if new packet is for another ring. */
 -- 
 2.40.1
 
