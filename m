@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C2B15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6F2C433CA;
-	Wed, 20 Sep 2023 12:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF12915AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:39:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63723C433C9;
+	Wed, 20 Sep 2023 12:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213581;
-	bh=uanJtc3BU2606/puhkMK1j/vROfufs/941MnsGAbLXo=;
+	s=korg; t=1695213583;
+	bh=xYTawRPuZIh+jF//ehjOGQs9cS92JY+RaafCKnmR3BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsnTihdaCeVSrPeIMojZTFt/0y3Z2TgfpyCrscRuOyO2Z9M6jKiurUI0Tuz2/ABj3
-	 dCM1clyTzdbn5NDuBLAOTj5JOsuNXAXX2iEXXLPBeUbQ/iEI/QWAT71wpXTlH/xfEy
-	 sQHKbJktmo5jh2yxA5YuAXGMSJzrTRYpmvZK49uI=
+	b=r89zsJqKsJ9ufIsxmQSYu162cIstL9LvtqI9zn6lPdUDBjXwp1SvKmiVSvQCoVH0L
+	 DdyDI9UMUVC3VgBrw0ww/3MfilPPDwtt78qTWSE7CpfhZBlV310gtEHzCdKPm7wLWZ
+	 KVliuCjwMNKjlZSwLPtxBxUim6kazLZuMSD/xSJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 289/367] usb: typec: tcpm: Refactor tcpm_handle_vdm_request payload handling
-Date: Wed, 20 Sep 2023 13:31:06 +0200
-Message-ID: <20230920112906.037249518@linuxfoundation.org>
+Subject: [PATCH 5.4 290/367] usb: typec: tcpm: Refactor tcpm_handle_vdm_request
+Date: Wed, 20 Sep 2023 13:31:07 +0200
+Message-ID: <20230920112906.062768780@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,179 +43,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8afe9a3548f9d1805dcea6d97978f2179c8403a3 ]
+[ Upstream commit 95b4d51c96a87cd760c2a4f27fb28a59a27b6368 ]
 
-Refactor the tcpm_handle_vdm_request payload handling by doing the
-endianness conversion only once directly inside tcpm_handle_vdm_request
-itself instead of doing it multiple times inside various helper functions
-called by tcpm_handle_vdm_request.
+Refactor tcpm_handle_vdm_request and its tcpm_pd_svdm helper function so
+that reporting the results of the vdm to the altmode-driver is separated
+out into a clear separate step inside tcpm_handle_vdm_request, instead
+of being scattered over various places inside the tcpm_pd_svdm helper.
 
-This is a preparation patch for some further refactoring to fix an AB BA
-lock inversion between the tcpm code and some altmode drivers.
+This is a preparation patch for fixing an AB BA lock inversion between the
+tcpm code and some altmode drivers.
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20200724174702.61754-3-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20200724174702.61754-4-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: f23643306430 ("usb: typec: bus: verify partner exists in typec_altmode_attention")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 49 ++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 27 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c | 76 ++++++++++++++++++++++-------------
+ 1 file changed, 48 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index b259a4a28f81a..949325692e664 100644
+index 949325692e664..9e71e0d9a09cd 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -969,16 +969,15 @@ static void tcpm_queue_vdm(struct tcpm_port *port, const u32 header,
- 	port->vdm_state = VDM_STATE_READY;
- }
+@@ -159,6 +159,14 @@ enum pd_msg_request {
+ 	PD_MSG_DATA_SOURCE_CAP,
+ };
  
--static void svdm_consume_identity(struct tcpm_port *port, const __le32 *payload,
--				  int cnt)
-+static void svdm_consume_identity(struct tcpm_port *port, const u32 *p, int cnt)
- {
--	u32 vdo = le32_to_cpu(payload[VDO_INDEX_IDH]);
--	u32 product = le32_to_cpu(payload[VDO_INDEX_PRODUCT]);
-+	u32 vdo = p[VDO_INDEX_IDH];
-+	u32 product = p[VDO_INDEX_PRODUCT];
++enum adev_actions {
++	ADEV_NONE = 0,
++	ADEV_NOTIFY_USB_AND_QUEUE_VDM,
++	ADEV_QUEUE_VDM,
++	ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL,
++	ADEV_ATTENTION,
++};
++
+ /* Events from low level driver */
  
- 	memset(&port->mode_data, 0, sizeof(port->mode_data));
- 
- 	port->partner_ident.id_header = vdo;
--	port->partner_ident.cert_stat = le32_to_cpu(payload[VDO_INDEX_CSTAT]);
-+	port->partner_ident.cert_stat = p[VDO_INDEX_CSTAT];
- 	port->partner_ident.product = product;
- 
- 	typec_partner_set_identity(port->partner);
-@@ -988,17 +987,15 @@ static void svdm_consume_identity(struct tcpm_port *port, const __le32 *payload,
- 		 PD_PRODUCT_PID(product), product & 0xffff);
- }
- 
--static bool svdm_consume_svids(struct tcpm_port *port, const __le32 *payload,
--			       int cnt)
-+static bool svdm_consume_svids(struct tcpm_port *port, const u32 *p, int cnt)
- {
- 	struct pd_mode_data *pmdata = &port->mode_data;
- 	int i;
- 
- 	for (i = 1; i < cnt; i++) {
--		u32 p = le32_to_cpu(payload[i]);
- 		u16 svid;
- 
--		svid = (p >> 16) & 0xffff;
-+		svid = (p[i] >> 16) & 0xffff;
- 		if (!svid)
- 			return false;
- 
-@@ -1008,7 +1005,7 @@ static bool svdm_consume_svids(struct tcpm_port *port, const __le32 *payload,
- 		pmdata->svids[pmdata->nsvids++] = svid;
- 		tcpm_log(port, "SVID %d: 0x%x", pmdata->nsvids, svid);
- 
--		svid = p & 0xffff;
-+		svid = p[i] & 0xffff;
- 		if (!svid)
- 			return false;
- 
-@@ -1038,8 +1035,7 @@ static bool svdm_consume_svids(struct tcpm_port *port, const __le32 *payload,
- 	return false;
- }
- 
--static void svdm_consume_modes(struct tcpm_port *port, const __le32 *payload,
--			       int cnt)
-+static void svdm_consume_modes(struct tcpm_port *port, const u32 *p, int cnt)
- {
- 	struct pd_mode_data *pmdata = &port->mode_data;
- 	struct typec_altmode_desc *paltmode;
-@@ -1056,7 +1052,7 @@ static void svdm_consume_modes(struct tcpm_port *port, const __le32 *payload,
- 
- 		paltmode->svid = pmdata->svids[pmdata->svid_index];
- 		paltmode->mode = i;
--		paltmode->vdo = le32_to_cpu(payload[i]);
-+		paltmode->vdo = p[i];
- 
- 		tcpm_log(port, " Alternate mode %d: SVID 0x%04x, VDO %d: 0x%08x",
- 			 pmdata->altmodes, paltmode->svid,
-@@ -1084,21 +1080,17 @@ static void tcpm_register_partner_altmodes(struct tcpm_port *port)
+ #define TCPM_CC_EVENT		BIT(0)
+@@ -1080,10 +1088,10 @@ static void tcpm_register_partner_altmodes(struct tcpm_port *port)
  
  #define supports_modal(port)	PD_IDH_MODAL_SUPP((port)->partner_ident.id_header)
  
--static int tcpm_pd_svdm(struct tcpm_port *port, const __le32 *payload, int cnt,
-+static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
- 			u32 *response)
+-static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
+-			u32 *response)
++static int tcpm_pd_svdm(struct tcpm_port *port, struct typec_altmode *adev,
++			const u32 *p, int cnt, u32 *response,
++			enum adev_actions *adev_action)
  {
- 	struct typec_altmode *adev;
+-	struct typec_altmode *adev;
  	struct typec_altmode *pdev;
  	struct pd_mode_data *modep;
--	u32 p[PD_MAX_PAYLOAD];
  	int rlen = 0;
- 	int cmd_type;
- 	int cmd;
- 	int i;
+@@ -1099,9 +1107,6 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
  
--	for (i = 0; i < cnt; i++)
--		p[i] = le32_to_cpu(payload[i]);
+ 	modep = &port->mode_data;
+ 
+-	adev = typec_match_altmode(port->port_altmode, ALTMODE_DISCOVERY_MAX,
+-				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
 -
- 	cmd_type = PD_VDO_CMDT(p[0]);
- 	cmd = PD_VDO_CMD(p[0]);
+ 	pdev = typec_match_altmode(port->partner_altmode, ALTMODE_DISCOVERY_MAX,
+ 				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
  
-@@ -1159,13 +1151,13 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const __le32 *payload, int cnt,
+@@ -1127,8 +1132,7 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
+ 			break;
+ 		case CMD_ATTENTION:
+ 			/* Attention command does not have response */
+-			if (adev)
+-				typec_altmode_attention(adev, p[1]);
++			*adev_action = ADEV_ATTENTION;
+ 			return 0;
+ 		default:
+ 			break;
+@@ -1182,23 +1186,15 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
+ 		case CMD_ENTER_MODE:
+ 			if (adev && pdev) {
+ 				typec_altmode_update_active(pdev, true);
+-
+-				if (typec_altmode_vdm(adev, p[0], &p[1], cnt)) {
+-					response[0] = VDO(adev->svid, 1,
+-							  CMD_EXIT_MODE);
+-					response[0] |= VDO_OPOS(adev->mode);
+-					return 1;
+-				}
++				*adev_action = ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL;
+ 			}
+ 			return 0;
+ 		case CMD_EXIT_MODE:
+ 			if (adev && pdev) {
+ 				typec_altmode_update_active(pdev, false);
+-
+ 				/* Back to USB Operation */
+-				WARN_ON(typec_altmode_notify(adev,
+-							     TYPEC_STATE_USB,
+-							     NULL));
++				*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
++				return 0;
+ 			}
+ 			break;
+ 		default:
+@@ -1209,11 +1205,8 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
  		switch (cmd) {
- 		case CMD_DISCOVER_IDENT:
- 			/* 6.4.4.3.1 */
--			svdm_consume_identity(port, payload, cnt);
-+			svdm_consume_identity(port, p, cnt);
- 			response[0] = VDO(USB_SID_PD, 1, CMD_DISCOVER_SVID);
- 			rlen = 1;
+ 		case CMD_ENTER_MODE:
+ 			/* Back to USB Operation */
+-			if (adev)
+-				WARN_ON(typec_altmode_notify(adev,
+-							     TYPEC_STATE_USB,
+-							     NULL));
+-			break;
++			*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
++			return 0;
+ 		default:
  			break;
- 		case CMD_DISCOVER_SVID:
- 			/* 6.4.4.3.2 */
--			if (svdm_consume_svids(port, payload, cnt)) {
-+			if (svdm_consume_svids(port, p, cnt)) {
- 				response[0] = VDO(USB_SID_PD, 1,
- 						  CMD_DISCOVER_SVID);
- 				rlen = 1;
-@@ -1177,7 +1169,7 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const __le32 *payload, int cnt,
- 			break;
- 		case CMD_DISCOVER_MODES:
- 			/* 6.4.4.3.3 */
--			svdm_consume_modes(port, payload, cnt);
-+			svdm_consume_modes(port, p, cnt);
- 			modep->svid_index++;
- 			if (modep->svid_index < modep->nsvids) {
- 				u16 svid = modep->svids[modep->svid_index];
-@@ -1240,15 +1232,18 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const __le32 *payload, int cnt,
+ 		}
+@@ -1223,15 +1216,15 @@ static int tcpm_pd_svdm(struct tcpm_port *port, const u32 *p, int cnt,
+ 	}
+ 
+ 	/* Informing the alternate mode drivers about everything */
+-	if (adev)
+-		typec_altmode_vdm(adev, p[0], &p[1], cnt);
+-
++	*adev_action = ADEV_QUEUE_VDM;
+ 	return rlen;
+ }
+ 
  static void tcpm_handle_vdm_request(struct tcpm_port *port,
  				    const __le32 *payload, int cnt)
  {
--	int rlen = 0;
-+	u32 p[PD_MAX_PAYLOAD];
++	enum adev_actions adev_action = ADEV_NONE;
++	struct typec_altmode *adev;
+ 	u32 p[PD_MAX_PAYLOAD];
  	u32 response[8] = { };
--	u32 p0 = le32_to_cpu(payload[0]);
-+	int i, rlen = 0;
-+
-+	for (i = 0; i < cnt; i++)
-+		p[i] = le32_to_cpu(payload[i]);
+ 	int i, rlen = 0;
+@@ -1239,6 +1232,9 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
+ 	for (i = 0; i < cnt; i++)
+ 		p[i] = le32_to_cpu(payload[i]);
  
++	adev = typec_match_altmode(port->port_altmode, ALTMODE_DISCOVERY_MAX,
++				   PD_VDO_VID(p[0]), PD_VDO_OPOS(p[0]));
++
  	if (port->vdm_state == VDM_STATE_BUSY) {
  		/* If UFP responded busy retry after timeout */
--		if (PD_VDO_CMDT(p0) == CMDT_RSP_BUSY) {
-+		if (PD_VDO_CMDT(p[0]) == CMDT_RSP_BUSY) {
- 			port->vdm_state = VDM_STATE_WAIT_RSP_BUSY;
--			port->vdo_retry = (p0 & ~VDO_CMDT_MASK) |
-+			port->vdo_retry = (p[0] & ~VDO_CMDT_MASK) |
- 				CMDT_INIT;
- 			mod_delayed_work(port->wq, &port->vdm_state_machine,
- 					 msecs_to_jiffies(PD_T_VDM_BUSY));
-@@ -1257,8 +1252,8 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
- 		port->vdm_state = VDM_STATE_DONE;
+ 		if (PD_VDO_CMDT(p[0]) == CMDT_RSP_BUSY) {
+@@ -1253,7 +1249,31 @@ static void tcpm_handle_vdm_request(struct tcpm_port *port,
  	}
  
--	if (PD_VDO_SVDM(p0))
--		rlen = tcpm_pd_svdm(port, payload, cnt, response);
-+	if (PD_VDO_SVDM(p[0]))
-+		rlen = tcpm_pd_svdm(port, p, cnt, response);
+ 	if (PD_VDO_SVDM(p[0]))
+-		rlen = tcpm_pd_svdm(port, p, cnt, response);
++		rlen = tcpm_pd_svdm(port, adev, p, cnt, response, &adev_action);
++
++	if (adev) {
++		switch (adev_action) {
++		case ADEV_NONE:
++			break;
++		case ADEV_NOTIFY_USB_AND_QUEUE_VDM:
++			WARN_ON(typec_altmode_notify(adev, TYPEC_STATE_USB, NULL));
++			typec_altmode_vdm(adev, p[0], &p[1], cnt);
++			break;
++		case ADEV_QUEUE_VDM:
++			typec_altmode_vdm(adev, p[0], &p[1], cnt);
++			break;
++		case ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL:
++			if (typec_altmode_vdm(adev, p[0], &p[1], cnt)) {
++				response[0] = VDO(adev->svid, 1, CMD_EXIT_MODE);
++				response[0] |= VDO_OPOS(adev->mode);
++				rlen = 1;
++			}
++			break;
++		case ADEV_ATTENTION:
++			typec_altmode_attention(adev, p[1]);
++			break;
++		}
++	}
  
  	if (rlen > 0) {
  		tcpm_queue_vdm(port, response[0], &response[1], rlen - 1);
