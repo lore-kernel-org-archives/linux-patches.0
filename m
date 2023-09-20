@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E3F2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9769DC433C8;
-	Wed, 20 Sep 2023 11:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1572AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9D8C433C8;
+	Wed, 20 Sep 2023 11:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211089;
-	bh=G8dEks/Ds08kZ3s/k+/8uFqdVgonlCVrte17iBYme68=;
+	s=korg; t=1695211092;
+	bh=sI4sKj3VTWsXHpKOFeBHh16lQ4ASbjPx1cZCFRVi2TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iov8MMQlcubbY4Y/7f7dbcFDwtf3zRJOe8JxVIawOnA+z6zTf0GIKxIkwmifVGVsY
-	 dgfYd+d9X1P7lUpEx4zRjePTgk5KYPn8GJnXN4lNVqNwD0bcyVj+5zQ9C0fFVam6/g
-	 fTk0Aa2mN/jd2elp6/9apABaU5RyT0q++VrKv5N8=
+	b=08HYxHQZAHYAFnCCCDaNEmqhXf6tSWGNOlKyD/3ZZbdxaybjJEkKPPvRPyHDJ7Uh2
+	 TD7wovv76tXyQ6ERKM+6bo1SPMyxUwji6stj/6K1Lj3S5FwPzbPAiZBnunAPflZq3T
+	 K7VmBss4df41qXSFlrcoISAurSWDPRnt62lChngQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/139] tools: iio: iio_generic_buffer: Fix some integer type and calculation
-Date: Wed, 20 Sep 2023 13:30:11 +0200
-Message-ID: <20230920112838.540468511@linuxfoundation.org>
+Subject: [PATCH 6.1 104/139] panic: Reenable preemption in WARN slowpath
+Date: Wed, 20 Sep 2023 13:30:38 +0200
+Message-ID: <20230920112839.443577444@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -40,71 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Mi <michenyuan@huawei.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 49d736313d0975ddeb156f4f59801da833f78b30 ]
+[ Upstream commit cccd32816506cbac3a4c65d9dff51b3125ef1a03 ]
 
-In function size_from_channelarray(), the return value 'bytes' is defined
-as int type. However, the calcution of 'bytes' in this function is designed
-to use the unsigned int type. So it is necessary to change 'bytes' type to
-unsigned int to avoid integer overflow.
+Commit:
 
-The size_from_channelarray() is called in main() function, its return value
-is directly multipled by 'buf_len' and then used as the malloc() parameter.
-The 'buf_len' is completely controllable by user, thus a multiplication
-overflow may occur here. This could allocate an unexpected small area.
+  5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
 
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Link: https://lore.kernel.org/r/20230725092407.62545-1-michenyuan@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+amended warn_slowpath_fmt() to disable preemption until the WARN splat
+has been emitted.
+
+However the commit neglected to reenable preemption in the !fmt codepath,
+i.e. when a WARN splat is emitted without additional format string.
+
+One consequence is that users may see more splats than intended.  E.g. a
+WARN splat emitted in a work item results in at least two extra splats:
+
+  BUG: workqueue leaked lock or atomic
+  (emitted by process_one_work())
+
+  BUG: scheduling while atomic
+  (emitted by worker_thread() -> schedule())
+
+Ironically the point of the commit was to *avoid* extra splats. ;)
+
+Fix it.
+
+Fixes: 5a5d7e9badd2 ("cpuidle: lib/bug: Disable rcu_is_watching() during WARN/BUG")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/3ec48fde01e4ee6505f77908ba351bad200ae3d1.1694763684.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ kernel/panic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index f8deae4e26a15..44bbf80f0cfdd 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -51,9 +51,9 @@ enum autochan {
-  * Has the side effect of filling the channels[i].location values used
-  * in processing the buffer output.
-  **/
--static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
-+static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
- {
--	int bytes = 0;
-+	unsigned int bytes = 0;
- 	int i = 0;
- 
- 	while (i < num_channels) {
-@@ -348,7 +348,7 @@ int main(int argc, char **argv)
- 	ssize_t read_size;
- 	int dev_num = -1, trig_num = -1;
- 	char *buffer_access = NULL;
--	int scan_size;
-+	unsigned int scan_size;
- 	int noevents = 0;
- 	int notrigger = 0;
- 	char *dummy;
-@@ -674,7 +674,16 @@ int main(int argc, char **argv)
+diff --git a/kernel/panic.c b/kernel/panic.c
+index ca5452afb456d..63e94f3bd8dcd 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -695,6 +695,7 @@ void warn_slowpath_fmt(const char *file, int line, unsigned taint,
+ 	if (!fmt) {
+ 		__warn(file, line, __builtin_return_address(0), taint,
+ 		       NULL, NULL);
++		warn_rcu_exit(rcu);
+ 		return;
  	}
  
- 	scan_size = size_from_channelarray(channels, num_channels);
--	data = malloc(scan_size * buf_len);
-+
-+	size_t total_buf_len = scan_size * buf_len;
-+
-+	if (scan_size > 0 && total_buf_len / scan_size != buf_len) {
-+		ret = -EFAULT;
-+		perror("Integer overflow happened when calculate scan_size * buf_len");
-+		goto error;
-+	}
-+
-+	data = malloc(total_buf_len);
- 	if (!data) {
- 		ret = -ENOMEM;
- 		goto error;
 -- 
 2.40.1
 
