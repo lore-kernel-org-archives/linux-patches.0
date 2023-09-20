@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B59C30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EC4C433C8;
-	Wed, 20 Sep 2023 12:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5B930FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:23:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43048C433C7;
+	Wed, 20 Sep 2023 12:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212594;
-	bh=vYxnYbZMsOBvMK2RhANFwW+p1tXsb1ze3uH5eL0NT8Y=;
+	s=korg; t=1695212597;
+	bh=VqXnn+b58Ur8m9C/0upHB1oq698ryWW0SaRt4iIpB/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhHg0Ofmvig8vu4hTBY8HWKaIdAvg4IzN6SMzYkYv+jzTLDQicyOvLUEdefnzpiMB
-	 r0yvKNQFjQ73mg6R33/7pxwB5ofNbsPeCNFaULi4woI1zcRwL4MQR5UHhg3M0uunnp
-	 Gbq/pjftFATLkqbOHah64CDz/hpQ55KQrEq1gMAw=
+	b=kdbGLDMsdJWbI0yREeBN+SyAVSUFDyZ0nnEeJFVe3qBNkVu51OjiVhY4hkCIU46QF
+	 x4fF1rs1ZzaxDcltC4X2n7hspkQzlhdXFmu4AU4CEme15hv9+NpdREDew+qJYxbqNf
+	 untbYKHVrJYN9HJNt0mbUvfoqozZYptjE1AIXdKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 60/83] scsi: qla2xxx: Fix NULL vs IS_ERR() bug for debugfs_create_dir()
-Date: Wed, 20 Sep 2023 13:31:50 +0200
-Message-ID: <20230920112829.031562401@linuxfoundation.org>
+Subject: [PATCH 5.10 61/83] selftests: tracing: Fix to unmount tracefs for recovering environment
+Date: Wed, 20 Sep 2023 13:31:51 +0200
+Message-ID: <20230920112829.070598142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -40,52 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit d0b0822e32dbae80bbcb3cc86f34d28539d913df ]
+[ Upstream commit 7e021da80f48582171029714f8a487347f29dddb ]
 
-Since both debugfs_create_dir() and debugfs_create_file() return ERR_PTR
-and never NULL, use IS_ERR() instead of checking for NULL.
+Fix to unmount the tracefs if the ftracetest mounted it for recovering
+system environment. If the tracefs is already mounted, this does nothing.
 
-Fixes: 1e98fb0f9208 ("scsi: qla2xxx: Setup debugfs entries for remote ports")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230831140930.3166359-1-ruanjinjie@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Suggested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/all/29fce076-746c-4650-8358-b4e0fa215cf7@sirena.org.uk/
+Fixes: cbd965bde74c ("ftrace/selftests: Return the skip code when tracing directory not configured in kernel")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_dfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/ftrace/ftracetest | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
-index d5ebcf7d70ff0..7d778bf3fd722 100644
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -116,7 +116,7 @@ qla2x00_dfs_create_rport(scsi_qla_host_t *vha, struct fc_port *fp)
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index 8ec1922e974eb..55314cd197ab9 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -30,6 +30,9 @@ err_ret=1
+ # kselftest skip code is 4
+ err_skip=4
  
- 	sprintf(wwn, "pn-%016llx", wwn_to_u64(fp->port_name));
- 	fp->dfs_rport_dir = debugfs_create_dir(wwn, vha->dfs_rport_root);
--	if (!fp->dfs_rport_dir)
-+	if (IS_ERR(fp->dfs_rport_dir))
- 		return;
- 	if (NVME_TARGET(vha->hw, fp))
- 		debugfs_create_file("dev_loss_tmo", 0600, fp->dfs_rport_dir,
-@@ -571,14 +571,14 @@ qla2x00_dfs_setup(scsi_qla_host_t *vha)
- 	if (IS_QLA27XX(ha) || IS_QLA83XX(ha) || IS_QLA28XX(ha)) {
- 		ha->tgt.dfs_naqp = debugfs_create_file("naqp",
- 		    0400, ha->dfs_dir, vha, &dfs_naqp_ops);
--		if (!ha->tgt.dfs_naqp) {
-+		if (IS_ERR(ha->tgt.dfs_naqp)) {
- 			ql_log(ql_log_warn, vha, 0xd011,
- 			       "Unable to create debugFS naqp node.\n");
- 			goto out;
- 		}
- 	}
- 	vha->dfs_rport_root = debugfs_create_dir("rports", ha->dfs_dir);
--	if (!vha->dfs_rport_root) {
-+	if (IS_ERR(vha->dfs_rport_root)) {
- 		ql_log(ql_log_warn, vha, 0xd012,
- 		       "Unable to create debugFS rports node.\n");
- 		goto out;
++# umount required
++UMOUNT_DIR=""
++
+ # cgroup RT scheduling prevents chrt commands from succeeding, which
+ # induces failures in test wakeup tests.  Disable for the duration of
+ # the tests.
+@@ -44,6 +47,9 @@ setup() {
+ 
+ cleanup() {
+   echo $sched_rt_runtime_orig > $sched_rt_runtime
++  if [ -n "${UMOUNT_DIR}" ]; then
++    umount ${UMOUNT_DIR} ||:
++  fi
+ }
+ 
+ errexit() { # message
+@@ -155,11 +161,13 @@ if [ -z "$TRACING_DIR" ]; then
+ 	    mount -t tracefs nodev /sys/kernel/tracing ||
+ 	      errexit "Failed to mount /sys/kernel/tracing"
+ 	    TRACING_DIR="/sys/kernel/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	# If debugfs exists, then so does /sys/kernel/debug
+ 	elif [ -d "/sys/kernel/debug" ]; then
+ 	    mount -t debugfs nodev /sys/kernel/debug ||
+ 	      errexit "Failed to mount /sys/kernel/debug"
+ 	    TRACING_DIR="/sys/kernel/debug/tracing"
++	    UMOUNT_DIR=${TRACING_DIR}
+ 	else
+ 	    err_ret=$err_skip
+ 	    errexit "debugfs and tracefs are not configured in this kernel"
 -- 
 2.40.1
 
