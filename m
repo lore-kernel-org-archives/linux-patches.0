@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CED2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D26EC433CC;
-	Wed, 20 Sep 2023 12:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0262AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:01:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445C1C433C7;
+	Wed, 20 Sep 2023 12:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211260;
-	bh=SlpV3CHcwtw6AXTAgQtICJBhdNsP1gjYleEAerZEaCY=;
+	s=korg; t=1695211263;
+	bh=f6zGIADNv1liOg1WZXaX8IwUjoCo2MmVxwy8YWzaoOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYrtwMu/jr97uKsmd0pK3q3yN29gQ1rVmrLOVpMD7LatsqG2pFVJXiPv91TQ91ymS
-	 SSMB0kbCM34/NRZxnNtk3zo5mfEYcyamYeDOg7WFzL9W7hAG2+vWt8POoMmfbl0N/G
-	 SUQXbyzEnP1667uH5t1wMxXZi0LSVLSLMTKhC8Ec=
+	b=CoklqvmWry8PrcUA3m6pC5IpGnQuXFY/t2F1sFQ4lYatx7+CCfbLQClHw4nsTcBTi
+	 xQgJwOxeSDWeenr+mbMbB3iayMOuCL+TiztjnEFRJgYQhkNxVFqDNZbLWoJHbOp3jC
+	 4j+osMDoFvXNaTpHUZ/NnWTLSVksWxO/Uk0HJFGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	"Gong, Sishuai" <sishuai@purdue.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 028/186] cifs: add a warning when the in-flight count goes negative
-Date: Wed, 20 Sep 2023 13:28:51 +0200
-Message-ID: <20230920112837.935065327@linuxfoundation.org>
+Subject: [PATCH 4.14 029/186] ALSA: seq: oss: Fix racy open/close of MIDI devices
+Date: Wed, 20 Sep 2023 13:28:52 +0200
+Message-ID: <20230920112837.977265825@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,36 +40,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e4645cc2f1e2d6f268bb8dcfac40997c52432aed ]
+[ Upstream commit 297224fc0922e7385573a30c29ffdabb67f27b7d ]
 
-We've seen the in-flight count go into negative with some
-internal stress testing in Microsoft.
+Although snd_seq_oss_midi_open() and snd_seq_oss_midi_close() can be
+called concurrently from different code paths, we have no proper data
+protection against races.  Introduce open_mutex to each seq_oss_midi
+object for avoiding the races.
 
-Adding a WARN when this happens, in hope of understanding
-why this happens when it happens.
-
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: "Gong, Sishuai" <sishuai@purdue.edu>
+Closes: https://lore.kernel.org/r/7DC9AF71-F481-4ABA-955F-76C535661E33@purdue.edu
+Link: https://lore.kernel.org/r/20230612125533.27461-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/seq/oss/seq_oss_midi.c | 35 +++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index dec306a3b0f41..3287795c648e5 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -78,6 +78,7 @@ smb2_add_credits(struct TCP_Server_Info *server, const unsigned int add,
- 		*val = 65000; /* Don't get near 64K credits, avoid srv bugs */
- 		printk_once(KERN_WARNING "server overflowed SMB3 credits\n");
+diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
+index cc8f06638edca..7226c03f15934 100644
+--- a/sound/core/seq/oss/seq_oss_midi.c
++++ b/sound/core/seq/oss/seq_oss_midi.c
+@@ -50,6 +50,7 @@ struct seq_oss_midi {
+ 	struct snd_midi_event *coder;	/* MIDI event coder */
+ 	struct seq_oss_devinfo *devinfo;	/* assigned OSSseq device */
+ 	snd_use_lock_t use_lock;
++	struct mutex open_mutex;
+ };
+ 
+ 
+@@ -184,6 +185,7 @@ snd_seq_oss_midi_check_new_port(struct snd_seq_port_info *pinfo)
+ 	mdev->flags = pinfo->capability;
+ 	mdev->opened = 0;
+ 	snd_use_lock_init(&mdev->use_lock);
++	mutex_init(&mdev->open_mutex);
+ 
+ 	/* copy and truncate the name of synth device */
+ 	strlcpy(mdev->name, pinfo->name, sizeof(mdev->name));
+@@ -332,14 +334,16 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 	int perm;
+ 	struct seq_oss_midi *mdev;
+ 	struct snd_seq_port_subscribe subs;
++	int err;
+ 
+ 	if ((mdev = get_mididev(dp, dev)) == NULL)
+ 		return -ENODEV;
+ 
++	mutex_lock(&mdev->open_mutex);
+ 	/* already used? */
+ 	if (mdev->opened && mdev->devinfo != dp) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -EBUSY;
++		err = -EBUSY;
++		goto unlock;
  	}
-+	WARN_ON_ONCE(server->in_flight == 0);
- 	server->in_flight--;
- 	if (server->in_flight == 0 && (optype & CIFS_OP_MASK) != CIFS_NEG_OP)
- 		rc = change_conf(server);
+ 
+ 	perm = 0;
+@@ -349,14 +353,14 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 		perm |= PERM_READ;
+ 	perm &= mdev->flags;
+ 	if (perm == 0) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -ENXIO;
++		err = -ENXIO;
++		goto unlock;
+ 	}
+ 
+ 	/* already opened? */
+ 	if ((mdev->opened & perm) == perm) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return 0;
++		err = 0;
++		goto unlock;
+ 	}
+ 
+ 	perm &= ~mdev->opened;
+@@ -381,13 +385,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 	}
+ 
+ 	if (! mdev->opened) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -ENXIO;
++		err = -ENXIO;
++		goto unlock;
+ 	}
+ 
+ 	mdev->devinfo = dp;
++	err = 0;
++
++ unlock:
++	mutex_unlock(&mdev->open_mutex);
+ 	snd_use_lock_free(&mdev->use_lock);
+-	return 0;
++	return err;
+ }
+ 
+ /*
+@@ -401,10 +409,9 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
+ 
+ 	if ((mdev = get_mididev(dp, dev)) == NULL)
+ 		return -ENODEV;
+-	if (! mdev->opened || mdev->devinfo != dp) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return 0;
+-	}
++	mutex_lock(&mdev->open_mutex);
++	if (!mdev->opened || mdev->devinfo != dp)
++		goto unlock;
+ 
+ 	memset(&subs, 0, sizeof(subs));
+ 	if (mdev->opened & PERM_WRITE) {
+@@ -423,6 +430,8 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
+ 	mdev->opened = 0;
+ 	mdev->devinfo = NULL;
+ 
++ unlock:
++	mutex_unlock(&mdev->open_mutex);
+ 	snd_use_lock_free(&mdev->use_lock);
+ 	return 0;
+ }
 -- 
 2.40.1
 
