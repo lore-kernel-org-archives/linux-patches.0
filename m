@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783EF1643E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DB7C433C8;
-	Wed, 20 Sep 2023 12:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE871643E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A96C433C7;
+	Wed, 20 Sep 2023 12:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213877;
-	bh=SEc7274w+8DViA+h0LIHPI5/dQXitpgKLsRHjMN9khI=;
+	s=korg; t=1695213880;
+	bh=Xu5pm8ev0H8JoW3KNYqzSaAAeHd1NcCCnDJSYzWjaus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iil8d+U22MQYQgJ49agnO+C2MNSDtXYHc+vCLMyAPs1fbF/sSBAUGstYerNSyosoi
-	 4kyDc5lidl59/AWSvOkNyXLMyEJ5BUg3t94Ql06DShcYikKsuUJbX53cMr0BAUOjiH
-	 9gFgrauYT5hwziZTyRMc6Jv+GJQ8xIcsr71oGW4E=
+	b=vz6zCOJ8H5V0shLPhfOcVVhzZ9TO8uTKDD2mB6shQ+5GI6lCmq4Y40XPwDU6Mqc3u
+	 6v/5+eKzN97o3ZIfJwp4AxsmWJCW6UsK1NC1/oCa324QImZoGE9qKEW3rXtIuS5elU
+	 HlKXA6iesc6nPjcseqxfeJlDhpgkXZG5uEFFCx4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/110] scftorture: Forgive memory-allocation failure if KASAN
-Date: Wed, 20 Sep 2023 13:31:05 +0200
-Message-ID: <20230920112830.660831884@linuxfoundation.org>
+Subject: [PATCH 5.15 008/110] ACPI: video: Add backlight=native DMI quirk for Lenovo Ideapad Z470
+Date: Wed, 20 Sep 2023 13:31:06 +0200
+Message-ID: <20230920112830.700004759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -39,47 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 013608cd0812bdb21fc26d39ed8fdd2fc76e8b9b ]
+[ Upstream commit 96b709be183c56293933ef45b8b75f8af268c6de ]
 
-Kernels built with CONFIG_KASAN=y quarantine newly freed memory in order
-to better detect use-after-free errors.  However, this can exhaust memory
-more quickly in allocator-heavy tests, which can result in spurious
-scftorture failure.  This commit therefore forgives memory-allocation
-failure in kernels built with CONFIG_KASAN=y, but continues counting
-the errors for use in detailed test-result analyses.
+The Lenovo Ideapad Z470 predates Windows 8, so it defaults to using
+acpi_video for backlight control. But this is not functional on this
+model.
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Add a DMI quirk to use the native backlight interface which works.
+
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1208724
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/scftorture.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/video_detect.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/scftorture.c b/kernel/scftorture.c
-index 27286d99e0c28..41006eef003f6 100644
---- a/kernel/scftorture.c
-+++ b/kernel/scftorture.c
-@@ -175,7 +175,8 @@ static void scf_torture_stats_print(void)
- 		scfs.n_all_wait += scf_stats_p[i].n_all_wait;
- 	}
- 	if (atomic_read(&n_errs) || atomic_read(&n_mb_in_errs) ||
--	    atomic_read(&n_mb_out_errs) || atomic_read(&n_alloc_errs))
-+	    atomic_read(&n_mb_out_errs) ||
-+	    (!IS_ENABLED(CONFIG_KASAN) && atomic_read(&n_alloc_errs)))
- 		bangstr = "!!! ";
- 	pr_alert("%s %sscf_invoked_count %s: %lld resched: %lld single: %lld/%lld single_ofl: %lld/%lld single_rpc: %lld single_rpc_ofl: %lld many: %lld/%lld all: %lld/%lld ",
- 		 SCFTORT_FLAG, bangstr, isdone ? "VER" : "ver", invoked_count, scfs.n_resched,
-@@ -327,7 +328,8 @@ static void scftorture_invoke_one(struct scf_statistics *scfp, struct torture_ra
- 		preempt_disable();
- 	if (scfsp->scfs_prim == SCF_PRIM_SINGLE || scfsp->scfs_wait) {
- 		scfcp = kmalloc(sizeof(*scfcp), GFP_ATOMIC);
--		if (WARN_ON_ONCE(!scfcp)) {
-+		if (!scfcp) {
-+			WARN_ON_ONCE(!IS_ENABLED(CONFIG_KASAN));
- 			atomic_inc(&n_alloc_errs);
- 		} else {
- 			scfcp->scfc_cpu = -1;
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 038542b3a80a7..5afc42d52e49b 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -307,6 +307,15 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_BOARD_NAME, "Lenovo IdeaPad S405"),
+ 		},
+ 	},
++	{
++	 /* https://bugzilla.suse.com/show_bug.cgi?id=1208724 */
++	 .callback = video_detect_force_native,
++	 /* Lenovo Ideapad Z470 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "IdeaPad Z470"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1187004 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.40.1
 
