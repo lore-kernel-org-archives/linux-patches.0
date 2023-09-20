@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3720330FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBCDC433C7;
-	Wed, 20 Sep 2023 12:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CC230FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5699FC433C7;
+	Wed, 20 Sep 2023 12:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212356;
-	bh=3BCugA7uIwGwpJoSRxlYgfoC+avEIRkUHwjiDW+OKAE=;
+	s=korg; t=1695212358;
+	bh=Z/mbSunyyOSU9ikNxPAdMMnDA/SoqyUCEVJjJbnzp1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWYgKQc0n2DhbTmpupzTOZ7ajOrcTxuqn3A7+FntPH5L5O7y/9iHvRrsEkGWmbD7r
-	 vqltkYr1C4iKuavxZOpb+/Y669wTEKcZCmZDhr1J/pOmR8GFZyoSvYk+wdk8fYNZB5
-	 2uYyvJNDEq4bozPWbGyM0cU2ou8HrTHecXemBLOU=
+	b=NwRejVpNzn0CuiMcIT9X95CYiGz3Cxt10+VqaD/6IMZNRAo31y3/gpeuMftGfCDfx
+	 jD0u5kJBRXvD059EMnUWs60gn9H63AiK7J4SYSZvLiKmrnfxl/wAH+kkzEI8YPBLKZ
+	 vYXIm3hkqpLxu4524bLUjhsIbUgqLGNwKV2jB6TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	GONG
-Subject: [PATCH 4.19 246/273] alx: fix OOB-read compiler warning
-Date: Wed, 20 Sep 2023 13:31:26 +0200
-Message-ID: <20230920112853.919681905@linuxfoundation.org>
+	BassCheck <bass@buaa.edu.cn>,
+	Tuo Li <islituo@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Inki Dae <inki.dae@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 247/273] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
+Date: Wed, 20 Sep 2023 13:31:27 +0200
+Message-ID: <20230920112853.948873163@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -36,56 +36,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: GONG, Ruiqi <gongruiqi1@huawei.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 3a198c95c95da10ad844cbeade2fe40bdf14c411 ]
+[ Upstream commit 2e63972a2de14482d0eae1a03a73e379f1c3f44c ]
 
-The following message shows up when compiling with W=1:
+The variable crtc->state->event is often protected by the lock
+crtc->dev->event_lock when is accessed. However, it is accessed as a
+condition of an if statement in exynos_drm_crtc_atomic_disable() without
+holding the lock:
 
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘alx_get_ethtool_stats’ at drivers/net/ethernet/atheros/alx/ethtool.c:297:2:
-./include/linux/fortify-string.h:592:4: error: call to ‘__read_overflow2_field’
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Werror=attribute-warning]
-  592 |    __read_overflow2_field(q_size_field, size);
-      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  if (crtc->state->event && !crtc->state->active)
 
-In order to get alx stats altogether, alx_get_ethtool_stats() reads
-beyond hw->stats.rx_ok. Fix this warning by directly copying hw->stats,
-and refactor the unnecessarily complicated BUILD_BUG_ON btw.
+However, if crtc->state->event is changed to NULL by another thread right
+after the conditions of the if statement is checked to be true, a
+null-pointer dereference can occur in drm_crtc_send_vblank_event():
 
-Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230821013218.1614265-1-gongruiqi@huaweicloud.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  e->pipe = pipe;
+
+To fix this possible null-pointer dereference caused by data race, the
+spin lock coverage is extended to protect the if statement as well as the
+function call to drm_crtc_send_vblank_event().
+
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Link: https://sites.google.com/view/basscheck/home
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Added relevant link.
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/alx/ethtool.c | 5 ++---
+ drivers/gpu/drm/exynos/exynos_drm_crtc.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/alx/ethtool.c b/drivers/net/ethernet/atheros/alx/ethtool.c
-index 2f4eabf652e80..51e5aa2c74b34 100644
---- a/drivers/net/ethernet/atheros/alx/ethtool.c
-+++ b/drivers/net/ethernet/atheros/alx/ethtool.c
-@@ -281,9 +281,8 @@ static void alx_get_ethtool_stats(struct net_device *netdev,
- 	spin_lock(&alx->stats_lock);
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_crtc.c b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+index 2696289ecc78f..b3e23ace5869c 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_crtc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_crtc.c
+@@ -43,13 +43,12 @@ static void exynos_drm_crtc_atomic_disable(struct drm_crtc *crtc,
+ 	if (exynos_crtc->ops->disable)
+ 		exynos_crtc->ops->disable(exynos_crtc);
  
- 	alx_update_hw_stats(hw);
--	BUILD_BUG_ON(sizeof(hw->stats) - offsetof(struct alx_hw_stats, rx_ok) <
--		     ALX_NUM_STATS * sizeof(u64));
--	memcpy(data, &hw->stats.rx_ok, ALX_NUM_STATS * sizeof(u64));
-+	BUILD_BUG_ON(sizeof(hw->stats) != ALX_NUM_STATS * sizeof(u64));
-+	memcpy(data, &hw->stats, sizeof(hw->stats));
- 
- 	spin_unlock(&alx->stats_lock);
++	spin_lock_irq(&crtc->dev->event_lock);
+ 	if (crtc->state->event && !crtc->state->active) {
+-		spin_lock_irq(&crtc->dev->event_lock);
+ 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
+-		spin_unlock_irq(&crtc->dev->event_lock);
+-
+ 		crtc->state->event = NULL;
+ 	}
++	spin_unlock_irq(&crtc->dev->event_lock);
  }
+ 
+ static int exynos_crtc_atomic_check(struct drm_crtc *crtc,
 -- 
 2.40.1
 
