@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7913C68E
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496FDC433C8;
-	Wed, 20 Sep 2023 12:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967D13C691
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B737C433C7;
+	Wed, 20 Sep 2023 12:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213140;
-	bh=nOvCJEDy7cIcoi85Xs9+4WpjA7y1arNLPxg2tCjhxiA=;
+	s=korg; t=1695213143;
+	bh=rKFip+BFWAuk9l4ZWXC7whWmehwkQ9jzIArl2l4JC40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWSyTgdHxyRCXQx5tk+mDebr1ieuLK639/AY+1AzXP2UfI5WBon41MdaiAmyu8x/q
-	 sjYB08N7rIqBTWLMKq54Xu+hxCkxRn0aDhcgxqqq8LTSwYKsgt6sAD4fdznHkF7k2J
-	 /vdFdlPKXYp+yd9zu+ZgebAZOF6fbPuGt6yXKgys=
+	b=LP4B/6Dxs3Wm+b78lWXRblwnj/8YGDRpd6vnCHHgAqJP5fjveVcrL0tDVyfgmh3rp
+	 LIXRza0q9O0cXjAwavqle+Y2xBnet5U1/dGvWONAYQgAprdNJsp/u3p692TZi4J5OF
+	 ZSllIS71Xy8NjkYuseMs2tEigtbYEOwU4g06Vq+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 175/367] media: go7007: Remove redundant if statement
-Date: Wed, 20 Sep 2023 13:29:12 +0200
-Message-ID: <20230920112903.169067434@linuxfoundation.org>
+Subject: [PATCH 5.4 176/367] USB: gadget: f_mass_storage: Fix unused variable warning
+Date: Wed, 20 Sep 2023 13:29:13 +0200
+Message-ID: <20230920112903.194380247@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,41 +39,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit f33cb49081da0ec5af0888f8ecbd566bd326eed1 ]
+[ Upstream commit 55c3e571d2a0aabef4f1354604443f1c415d2e85 ]
 
-The if statement that compares msgs[i].len != 3 is always false because
-it is in a code block where msg[i].len is equal to 3. The check is
-redundant and can be removed.
+Fix a "variable set but not used" warning in f_mass_storage.c.  rc is
+used if	verbose debugging is enabled but not otherwise.
 
-As detected by cppcheck static analysis:
-drivers/media/usb/go7007/go7007-i2c.c:168:20: warning: Opposite inner
-'if' condition leads to a dead code block. [oppositeInnerCondition]
-
-Link: https://lore.kernel.org/linux-media/20230727174007.635572-1-colin.i.king@gmail.com
-
-Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: d5e2b67aae79 ("USB: g_mass_storage: template f_mass_storage.c file created")
+Link: https://lore.kernel.org/r/cfed16c7-aa46-494b-ba84-b0e0dc99be3a@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/go7007-i2c.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/gadget/function/f_mass_storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/go7007/go7007-i2c.c b/drivers/media/usb/go7007/go7007-i2c.c
-index 38339dd2f83f7..2880370e45c8b 100644
---- a/drivers/media/usb/go7007/go7007-i2c.c
-+++ b/drivers/media/usb/go7007/go7007-i2c.c
-@@ -165,8 +165,6 @@ static int go7007_i2c_master_xfer(struct i2c_adapter *adapter,
- 		} else if (msgs[i].len == 3) {
- 			if (msgs[i].flags & I2C_M_RD)
- 				return -EIO;
--			if (msgs[i].len != 3)
--				return -EIO;
- 			if (go7007_i2c_xfer(go, msgs[i].addr, 0,
- 					(msgs[i].buf[0] << 8) | msgs[i].buf[1],
- 					0x01, &msgs[i].buf[2]) < 0)
+diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
+index 7c96c4665178e..6c8aba574e6e9 100644
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -950,7 +950,7 @@ static void invalidate_sub(struct fsg_lun *curlun)
+ {
+ 	struct file	*filp = curlun->filp;
+ 	struct inode	*inode = file_inode(filp);
+-	unsigned long	rc;
++	unsigned long __maybe_unused	rc;
+ 
+ 	rc = invalidate_mapping_pages(inode->i_mapping, 0, -1);
+ 	VLDBG(curlun, "invalidate_mapping_pages -> %ld\n", rc);
 -- 
 2.40.1
 
