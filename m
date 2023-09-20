@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DA22AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FA8C433C8;
-	Wed, 20 Sep 2023 11:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656072AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:59:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0265C433C9;
+	Wed, 20 Sep 2023 11:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211187;
-	bh=kZj1Sg0Q/OWi46q1q3Y+s4iuzRKw4K5EPqHOMnF/C04=;
+	s=korg; t=1695211190;
+	bh=eHbr9RVtUiNk8n9V4ouMnWyhYmZELE4hX5rU9TTwOEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQV+MtOUAKM3JwmrqkFTmQOuMUyiAZwcayualKVyzvJjld4yNxmuCD4I5mynuJ5YR
-	 ntCXwgQWX5CYxStP9985Ek3EjrTgV6/9jRzzHQhH8iw23UMIbASOtSIO35tQCCfVJj
-	 YbSE0zzoH1Fx4W7bdZ/VHbxArOs2ycDRNr8iTAOc=
+	b=aFhXDPiWYjAcbOGXXDq5ZEGb7e3/iG8hQOoW1eUO2yk221DZBQPm7SBmxOIew2wZH
+	 q+94vfhWfek3PCMuI+3H/dPxv/yfRz34FBG8Tfqtxv7/COotw6ZutB5ehhXmTxaTYD
+	 d7j3u00Gedvzbyxfncc1gGA59kHEFEBzI/MAA76k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AceLan Kao <acelan@gmail.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mariusz Tkaczyk <mariusz.tkaczyk@linux.intel.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 115/139] md: Put the right device in md_seq_next
-Date: Wed, 20 Sep 2023 13:30:49 +0200
-Message-ID: <20230920112839.849618169@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 106/139] x86/purgatory: Remove LTO flags
+Date: Wed, 20 Sep 2023 13:30:40 +0200
+Message-ID: <20230920112839.516349920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -41,41 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mariusz Tkaczyk <mariusz.tkaczyk@linux.intel.com>
+From: Song Liu <song@kernel.org>
 
-commit c8870379a21fbd9ad14ca36204ccfbe9d25def43 upstream.
+[ Upstream commit 75b2f7e4c9e0fd750a5a27ca9736d1daa7a3762a ]
 
-If there are multiple arrays in system and one mddevice is marked
-with MD_DELETED and md_seq_next() is called in the middle of removal
-then it _get()s proper device but it may _put() deleted one. As a result,
-active counter may never be zeroed for mddevice and it cannot
-be removed.
+-flto* implies -ffunction-sections. With LTO enabled, ld.lld generates
+multiple .text sections for purgatory.ro:
 
-Put the device which has been _get with previous md_seq_next() call.
+  $ readelf -S purgatory.ro  | grep " .text"
+    [ 1] .text             PROGBITS         0000000000000000  00000040
+    [ 7] .text.purgatory   PROGBITS         0000000000000000  000020e0
+    [ 9] .text.warn        PROGBITS         0000000000000000  000021c0
+    [13] .text.sha256_upda PROGBITS         0000000000000000  000022f0
+    [15] .text.sha224_upda PROGBITS         0000000000000000  00002be0
+    [17] .text.sha256_fina PROGBITS         0000000000000000  00002bf0
+    [19] .text.sha224_fina PROGBITS         0000000000000000  00002cc0
 
-Cc: stable@vger.kernel.org
-Fixes: 12a6caf27324 ("md: only delete entries from all_mddevs when the disk is freed")
-Reported-by: AceLan Kao <acelan@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217798
-Cc: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Mariusz Tkaczyk <mariusz.tkaczyk@linux.intel.com>
+This causes WARNING from kexec_purgatory_setup_sechdrs():
+
+  WARNING: CPU: 26 PID: 110894 at kernel/kexec_file.c:919
+  kexec_load_purgatory+0x37f/0x390
+
+Fix this by disabling LTO for purgatory.
+
+[ AFAICT, x86 is the only arch that supports LTO and purgatory. ]
+
+We could also fix this with an explicit linker script to rejoin .text.*
+sections back into .text. However, given the benefit of LTOing purgatory
+is small, simply disable the production of more .text.* sections for now.
+
+Fixes: b33fff07e3e3 ("x86, build: allow LTO to be selected")
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230914152416.10819-1-mariusz.tkaczyk@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://lore.kernel.org/r/20230914170138.995606-1-song@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/purgatory/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8228,7 +8228,7 @@ static void *md_seq_next(struct seq_file
- 	spin_unlock(&all_mddevs_lock);
+diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
+index 42abd6af11984..d28e0987aa85b 100644
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -19,6 +19,10 @@ CFLAGS_sha256.o := -D__DISABLE_EXPORTS
+ # optimization flags.
+ KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
  
- 	if (to_put)
--		mddev_put(mddev);
-+		mddev_put(to_put);
- 	return next_mddev;
- 
- }
++# When LTO is enabled, llvm emits many text sections, which is not supported
++# by kexec. Remove -flto=* flags.
++KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO),$(KBUILD_CFLAGS))
++
+ # When linking purgatory.ro with -r unresolved symbols are not checked,
+ # also link a purgatory.chk binary without -r to check for unresolved symbols.
+ PURGATORY_LDFLAGS := -e purgatory_start -z nodefaultlib
+-- 
+2.40.1
+
 
 
