@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3172F28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EB9C433C7;
-	Wed, 20 Sep 2023 11:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2566208BB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7332DC433C8;
+	Wed, 20 Sep 2023 11:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210904;
-	bh=EsNr+rOY+QaczB4BgH0xskAe7Wf9yIUZ3QsjFBOX+E4=;
+	s=korg; t=1695210906;
+	bh=3D7z9iBbiOLr/hfL5mzD5tFVrwRfIqGJhHNZim80gfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhWiPcrGTbiumPkshsjFM+FjeFd9JvuLDGwmITTKU30e6lC3UxZ0umjS+2iU77vw1
-	 zjVovj+FLHbqyjPb9TEL3nn9mCn1EdX8L785lnN0OTiWBlvmmwD2N7baXZWzGmJQMc
-	 ArpF8ueTZ7uigYk7E0zTZvfLj+yYlnb9l/dZQrgc=
+	b=aqTZ0KFrdbZgZJeFsYofmwIEWQJd+ki/Rwjal89SjAdkwSO4Kh6dvhNn0k/I1HuoP
+	 jOh5S7Uu/Z+MTx96frvkDZPQ+zp7InfPnWfv3AarKyOCYJcPP9VF2AGV1L3GieJpDj
+	 EBNkf+OK3uARZ2TSFCWb8wcm/mtbgLexYY3ZmCOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2676771ed06a6df166ad@syzkaller.appspotmail.com,
+	syzbot+09d1cd2f71e6dd3bfd2c@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/139] wifi: cfg80211: reject auth/assoc to AP with our address
-Date: Wed, 20 Sep 2023 13:29:28 +0200
-Message-ID: <20230920112836.891109207@linuxfoundation.org>
+Subject: [PATCH 6.1 035/139] wifi: cfg80211: ocb: dont leave if not joined
+Date: Wed, 20 Sep 2023 13:29:29 +0200
+Message-ID: <20230920112836.928182102@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,57 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 5d4e04bf3a0f098bd9033de3a5291810fa14c7a6 ]
+[ Upstream commit abc76cf552e13cfa88a204b362a86b0e08e95228 ]
 
-If the AP uses our own address as its MLD address or BSSID, then
-clearly something's wrong. Reject such connections so we don't
-try and fail later.
+If there's no OCB state, don't ask the driver/mac80211 to
+leave, since that's just confusing. Since set/clear the
+chandef state, that's a simple check.
 
-Reported-by: syzbot+2676771ed06a6df166ad@syzkaller.appspotmail.com
+Reported-by: syzbot+09d1cd2f71e6dd3bfd2c@syzkaller.appspotmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/wireless/ocb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 581df7f4c5240..e7fa0608341d8 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -277,6 +277,11 @@ int cfg80211_mlme_auth(struct cfg80211_registered_device *rdev,
- 	    ether_addr_equal(req->bss->bssid, wdev->u.client.connected_addr))
- 		return -EALREADY;
+diff --git a/net/wireless/ocb.c b/net/wireless/ocb.c
+index 27a1732264f95..29afaf3da54f3 100644
+--- a/net/wireless/ocb.c
++++ b/net/wireless/ocb.c
+@@ -68,6 +68,9 @@ int __cfg80211_leave_ocb(struct cfg80211_registered_device *rdev,
+ 	if (!rdev->ops->leave_ocb)
+ 		return -EOPNOTSUPP;
  
-+	if (ether_addr_equal(req->bss->bssid, dev->dev_addr) ||
-+	    (req->link_id >= 0 &&
-+	     ether_addr_equal(req->ap_mld_addr, dev->dev_addr)))
-+		return -EINVAL;
++	if (!wdev->u.ocb.chandef.chan)
++		return -ENOTCONN;
 +
- 	return rdev_auth(rdev, dev, req);
- }
- 
-@@ -331,6 +336,9 @@ int cfg80211_mlme_assoc(struct cfg80211_registered_device *rdev,
- 			if (req->links[i].bss == req->links[j].bss)
- 				return -EINVAL;
- 		}
-+
-+		if (ether_addr_equal(req->links[i].bss->bssid, dev->dev_addr))
-+			return -EINVAL;
- 	}
- 
- 	if (wdev->connected &&
-@@ -338,6 +346,11 @@ int cfg80211_mlme_assoc(struct cfg80211_registered_device *rdev,
- 	     !ether_addr_equal(wdev->u.client.connected_addr, req->prev_bssid)))
- 		return -EALREADY;
- 
-+	if ((req->bss && ether_addr_equal(req->bss->bssid, dev->dev_addr)) ||
-+	    (req->link_id >= 0 &&
-+	     ether_addr_equal(req->ap_mld_addr, dev->dev_addr)))
-+		return -EINVAL;
-+
- 	cfg80211_oper_and_ht_capa(&req->ht_capa_mask,
- 				  rdev->wiphy.ht_capa_mod_mask);
- 	cfg80211_oper_and_vht_capa(&req->vht_capa_mask,
+ 	err = rdev_leave_ocb(rdev, dev);
+ 	if (!err)
+ 		memset(&wdev->u.ocb.chandef, 0, sizeof(wdev->u.ocb.chandef));
 -- 
 2.40.1
 
