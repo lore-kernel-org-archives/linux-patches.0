@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C4E15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD089C433CB;
-	Wed, 20 Sep 2023 12:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0500715AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3FC433C9;
+	Wed, 20 Sep 2023 12:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213529;
-	bh=07RqPkdGi1fu9o1EZNTKSVDQDEX2CI5yQUcFK05QZlM=;
+	s=korg; t=1695213531;
+	bh=dp/vaowTz/5FKxgNO+TH8+AW4jB85XHe3+u9OsaHxwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Td8cPYFf2MywSDOeio+NTgujcNFeIJxJM2FmfhcqBkyw+TTm+s64L7+grDH6Lrun
-	 BIEfchYSsyo8rmUpD/5a3/CUcO1mbSMuuiZlQw1bz/2crG0Av8dwsoUPf1qANG+oNa
-	 RLKXSTb4eeFaPOuv7l+OZYDsnh533OCJEBuHdDWs=
+	b=PRhckDNnUPOBF9sI4kWibj6Xzxf5yoJODuHBvsuRoccpSD0bTnxvX5RoMs4TKLk6m
+	 /9AoQ42hvA47S3bYs4F+T0oJd6HP8NsYUV3i9UpQ6R1Maxvkylj+FRf/Ho+j8tdc13
+	 qmKv+nBtnGsA8BJ6rBrrFfsaUbNuI0aEsweJnkM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Jocelyn Falempe <jfalempe@redhat.com>
-Subject: [PATCH 5.4 245/367] drm/ast: Fix DRAM init on AST2200
-Date: Wed, 20 Sep 2023 13:30:22 +0200
-Message-ID: <20230920112904.896644501@linuxfoundation.org>
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Xiaoke Wang <xkernel.wang@foxmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 246/367] lib/test_meminit: allocate pages up to order MAX_ORDER
+Date: Wed, 20 Sep 2023 13:30:23 +0200
+Message-ID: <20230920112904.921107485@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,41 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Andrew Donnellan <ajd@linux.ibm.com>
 
-commit 4cfe75f0f14f044dae66ad0e6eea812d038465d9 upstream.
+commit efb78fa86e95832b78ca0ba60f3706788a818938 upstream.
 
-Fix the test for the AST2200 in the DRAM initialization. The value
-in ast->chip has to be compared against an enum constant instead of
-a numerical value.
+test_pages() tests the page allocator by calling alloc_pages() with
+different orders up to order 10.
 
-This bug got introduced when the driver was first imported into the
-kernel.
+However, different architectures and platforms support different maximum
+contiguous allocation sizes.  The default maximum allocation order
+(MAX_ORDER) is 10, but architectures can use CONFIG_ARCH_FORCE_MAX_ORDER
+to override this.  On platforms where this is less than 10, test_meminit()
+will blow up with a WARN().  This is expected, so let's not do that.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.5+
-Reviewed-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Tested-by: Jocelyn Falempe <jfalempe@redhat.com> # AST2600
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621130032.3568-2-tzimmermann@suse.de
+Replace the hardcoded "10" with the MAX_ORDER macro so that we test
+allocations up to the expected platform limit.
+
+Link: https://lkml.kernel.org/r/20230714015238.47931-1-ajd@linux.ibm.com
+Fixes: 5015a300a522 ("lib: introduce test_meminit module")
+Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_post.c |    2 +-
+ lib/test_meminit.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/ast/ast_post.c
-+++ b/drivers/gpu/drm/ast/ast_post.c
-@@ -294,7 +294,7 @@ static void ast_init_dram_reg(struct drm
- 				;
- 			} while (ast_read32(ast, 0x10100) != 0xa8);
- 		} else {/* AST2100/1100 */
--			if (ast->chip == AST2100 || ast->chip == 2200)
-+			if (ast->chip == AST2100 || ast->chip == AST2200)
- 				dram_reg_info = ast2100_dram_table_data;
- 			else
- 				dram_reg_info = ast1100_dram_table_data;
+--- a/lib/test_meminit.c
++++ b/lib/test_meminit.c
+@@ -86,7 +86,7 @@ static int __init test_pages(int *total_
+ 	int failures = 0, num_tests = 0;
+ 	int i;
+ 
+-	for (i = 0; i < 10; i++)
++	for (i = 0; i <= MAX_ORDER; i++)
+ 		num_tests += do_alloc_pages_order(i, &failures);
+ 
+ 	REPORT_FAILURES_IN_FN();
 
 
