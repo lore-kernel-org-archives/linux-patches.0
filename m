@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F2111AB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A511C433CA;
-	Wed, 20 Sep 2023 12:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0421111AB
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFF2C433D9;
+	Wed, 20 Sep 2023 12:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213630;
-	bh=9jEenxPkkzj5tp0TyuCi6uaThl17m80uTSMNERr9hKo=;
+	s=korg; t=1695213633;
+	bh=KQz9RwJ0j+5T5qSm7oRI+keuen2Pp2To/WtKuSFUDyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j54XbyLPpWc6bvGoVw6isp2ta7s7GqYrTzT71dxs40AGr7jnmzk8Ofeq36E6nQv1f
-	 zb/kuQwQnkARJEW4Mf4XO1eJ276TymLwG6YHahxFWFX4rJIx2Sj6AWE3q0TYAFzojH
-	 6R/aaHpTvE2GEgg5fIiNiUul+/PEw1Jm2ssm7efE=
+	b=zIGLvmwGuja/HwtEcB26AlCBWLKFElh8Kukz2hvfslNFgr6owcLSsFRw8ycYdL9U8
+	 HuKHM+eucZECBcdXFOqIm1RGFbqpkoA2loNAogQijFv3b+TQj6U5bHASE+2bQbW9LP
+	 ohwKrO2UNIESRINSLyvZuWdoSUVlc+4RbF2BVf88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wesley Chalmers <wesley.chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 5.4 308/367] drm/amd/display: Fix a bug when searching for insert_above_mpcc
-Date: Wed, 20 Sep 2023 13:31:25 +0200
-Message-ID: <20230920112906.527048472@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.4 309/367] parisc: Drop loops_per_jiffy from per_cpu struct
+Date: Wed, 20 Sep 2023 13:31:26 +0200
+Message-ID: <20230920112906.553888927@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -43,43 +39,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Chalmers <wesley.chalmers@amd.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
+commit 93346da8ff47cc00f953c7f38a2d6ba11977fc42 upstream.
 
-[WHY]
-Currently, when insert_plane is called with insert_above_mpcc
-parameter that is equal to tree->opp_list, the function returns NULL.
+There is no need to keep a loops_per_jiffy value per cpu. Drop it.
 
-[HOW]
-Instead, the function should insert the plane at the top of the tree.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/processor.h |    1 -
+ arch/parisc/kernel/processor.c      |    5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
-@@ -199,8 +199,9 @@ struct mpcc *mpc1_insert_plane(
- 		/* check insert_above_mpcc exist in tree->opp_list */
- 		struct mpcc *temp_mpcc = tree->opp_list;
+--- a/arch/parisc/include/asm/processor.h
++++ b/arch/parisc/include/asm/processor.h
+@@ -97,7 +97,6 @@ struct cpuinfo_parisc {
+ 	unsigned long cpu_loc;      /* CPU location from PAT firmware */
+ 	unsigned int state;
+ 	struct parisc_device *dev;
+-	unsigned long loops_per_jiffy;
+ };
  
--		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
--			temp_mpcc = temp_mpcc->mpcc_bot;
-+		if (temp_mpcc != insert_above_mpcc)
-+			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
-+				temp_mpcc = temp_mpcc->mpcc_bot;
- 		if (temp_mpcc == NULL)
- 			return NULL;
- 	}
+ extern struct system_cpuinfo_parisc boot_cpu_data;
+--- a/arch/parisc/kernel/processor.c
++++ b/arch/parisc/kernel/processor.c
+@@ -163,7 +163,6 @@ static int __init processor_probe(struct
+ 	if (cpuid)
+ 		memset(p, 0, sizeof(struct cpuinfo_parisc));
+ 
+-	p->loops_per_jiffy = loops_per_jiffy;
+ 	p->dev = dev;		/* Save IODC data in case we need it */
+ 	p->hpa = dev->hpa.start;	/* save CPU hpa */
+ 	p->cpuid = cpuid;	/* save CPU id */
+@@ -440,8 +439,8 @@ show_cpuinfo (struct seq_file *m, void *
+ 		show_cache_info(m);
+ 
+ 		seq_printf(m, "bogomips\t: %lu.%02lu\n",
+-			     cpuinfo->loops_per_jiffy / (500000 / HZ),
+-			     (cpuinfo->loops_per_jiffy / (5000 / HZ)) % 100);
++			     loops_per_jiffy / (500000 / HZ),
++			     loops_per_jiffy / (5000 / HZ) % 100);
+ 
+ 		seq_printf(m, "software id\t: %ld\n\n",
+ 				boot_cpu_data.pdc.model.sw_id);
 
 
