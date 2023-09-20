@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A72A1865F
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3262C433C9;
-	Wed, 20 Sep 2023 12:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDF31865F
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9909BC433C9;
+	Wed, 20 Sep 2023 12:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213760;
-	bh=VUZMGl6F3/61KOFwk0MQ9esFYYV/gvnwuE5fL357IVQ=;
+	s=korg; t=1695213763;
+	bh=40W9JvAztDwURwksh2lwK17+6o9qGv9VZ4LFkW87GY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OG6WWQHdhWEzBRjax62czIZgNqUur5l/STtow1K9kGtA6dSc4QOaKtYQR22kewfav
-	 x6vfCokiUE2Y6Jzn1tUGeZFbMISHwt+b2PqmWLrqDB4VwhdoLahLEIgj8K+OhRaTGf
-	 ZZJs2j9JJ+ybe6+uKpWZy5j3LNRpwXxdATegaaz4=
+	b=An0O+H/8b2OEL+YUWUesX1Fmi41Jz7YBEUplVUMStSDpmJJIqKvvqx1c84VfFLkfW
+	 9wafx3hzHH5SOJWfM1eYl03oLH8fFlb2sodghbVy8Y3FZRje6JvIh7MjKGDZhh276q
+	 74jyY2PWecF9LeILW8p3nhMA3W0azBKZCpM8Voqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Georg Ottinger <g.ottinger@gmx.at>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 329/367] md: raid1: fix potential OOB in raid1_remove_disk()
-Date: Wed, 20 Sep 2023 13:31:46 +0200
-Message-ID: <20230920112907.047346156@linuxfoundation.org>
+Subject: [PATCH 5.4 330/367] ext2: fix datatype of block number in ext2_xattr_set2()
+Date: Wed, 20 Sep 2023 13:31:47 +0200
+Message-ID: <20230920112907.071260938@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,44 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Georg Ottinger <g.ottinger@gmx.at>
 
-[ Upstream commit 8b0472b50bcf0f19a5119b00a53b63579c8e1e4d ]
+[ Upstream commit e88076348425b7d0491c8c98d8732a7df8de7aa3 ]
 
-If rddev->raid_disk is greater than mddev->raid_disks, there will be
-an out-of-bounds in raid1_remove_disk(). We have already found
-similar reports as follows:
+I run a small server that uses external hard drives for backups. The
+backup software I use uses ext2 filesystems with 4KiB block size and
+the server is running SELinux and therefore relies on xattr. I recently
+upgraded the hard drives from 4TB to 12TB models. I noticed that after
+transferring some TBs I got a filesystem error "Freeing blocks not in
+datazone - block = 18446744071529317386, count = 1" and the backup
+process stopped. Trying to fix the fs with e2fsck resulted in a
+completely corrupted fs. The error probably came from ext2_free_blocks(),
+and because of the large number 18e19 this problem immediately looked
+like some kind of integer overflow. Whereas the 4TB fs was about 1e9
+blocks, the new 12TB is about 3e9 blocks. So, searching the ext2 code,
+I came across the line in fs/ext2/xattr.c:745 where ext2_new_block()
+is called and the resulting block number is stored in the variable block
+as an int datatype. If a block with a block number greater than
+INT32_MAX is returned, this variable overflows and the call to
+sb_getblk() at line fs/ext2/xattr.c:750 fails, then the call to
+ext2_free_blocks() produces the error.
 
-1) commit d17f744e883b ("md-raid10: fix KASAN warning")
-2) commit 1ebc2cec0b7d ("dm raid: fix KASAN warning in raid5_remove_disk")
-
-Fix this bug by checking whether the "number" variable is
-valid.
-
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/tencent_0D24426FAC6A21B69AC0C03CE4143A508F09@qq.com
-Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Georg Ottinger <g.ottinger@gmx.at>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230815100340.22121-1-g.ottinger@gmx.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ext2/xattr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 1919de4c8c12d..f96e079454700 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1808,6 +1808,10 @@ static int raid1_remove_disk(struct mddev *mddev, struct md_rdev *rdev)
- 	struct r1conf *conf = mddev->private;
- 	int err = 0;
- 	int number = rdev->raid_disk;
-+
-+	if (unlikely(number >= conf->raid_disks))
-+		goto abort;
-+
- 	struct raid1_info *p = conf->mirrors + number;
+diff --git a/fs/ext2/xattr.c b/fs/ext2/xattr.c
+index 62acbe27d8bf4..ca7ff31a1f194 100644
+--- a/fs/ext2/xattr.c
++++ b/fs/ext2/xattr.c
+@@ -690,10 +690,10 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
+ 			/* We need to allocate a new block */
+ 			ext2_fsblk_t goal = ext2_group_first_block_no(sb,
+ 						EXT2_I(inode)->i_block_group);
+-			int block = ext2_new_block(inode, goal, &error);
++			ext2_fsblk_t block = ext2_new_block(inode, goal, &error);
+ 			if (error)
+ 				goto cleanup;
+-			ea_idebug(inode, "creating block %d", block);
++			ea_idebug(inode, "creating block %lu", block);
  
- 	if (rdev != p->rdev)
+ 			new_bh = sb_getblk(sb, block);
+ 			if (unlikely(!new_bh)) {
 -- 
 2.40.1
 
