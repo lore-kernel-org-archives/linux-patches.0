@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AB08465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8B6C433D9;
-	Wed, 20 Sep 2023 11:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67998465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:51:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4783EC433CB;
+	Wed, 20 Sep 2023 11:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210689;
-	bh=XdoTYrfYjZOY7xeV6GVI61740DY+2IsPr+jkJzTHIJ4=;
+	s=korg; t=1695210692;
+	bh=lC0320bE+MUSpYUq1M4XR00wOSdL0QPTABCw/MWwoNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfhxfmAJcqk6Cu6L2qSLiEXW91YfeOg8HeCzip6gvL/6LaLn0oxfkNQl6tjfU06Il
-	 ncfH0mFA2W24qMgFTFC7afUnCoFqxzSgb0SliTzJKsPaae1VLXpi5cmCVvl8i0J7hD
-	 GdIDmAFj+E8DLavpV4pByWfvtRmzvKjQHB5C5hQI=
+	b=l8vPaivs7I5pVP9nZGEtgsStaRmkg/2jIIHMnLT2tujNvjfJt1LamLEasLGnWjAuk
+	 pZ3D8JSKOPxQciBH+eRHb+7A97b7R+q9QrJ7DcY/MLgqZz44mDrc6sVD3OvOhgJ8pn
+	 pLWa0ar9HJewlsnVkBy6x82/em2dYSGDQMWcLSs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.5 169/211] ovl: fix incorrect fdput() on aio completion
-Date: Wed, 20 Sep 2023 13:30:13 +0200
-Message-ID: <20230920112851.130235386@linuxfoundation.org>
+	syzbot+a4c6e5ef999b68b26ed1@syzkaller.appspotmail.com,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 170/211] io_uring/net: fix iter retargeting for selected buf
+Date: Wed, 20 Sep 2023 13:30:14 +0200
+Message-ID: <20230920112851.160600434@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -39,69 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 724768a39374d35b70eaeae8dd87048a2ec7ae8e upstream.
+commit c21a8027ad8a68c340d0d58bf1cc61dcb0bc4d2f upstream.
 
-ovl_{read,write}_iter() always call fdput(real) to put one or zero
-refcounts of the real file, but for aio, whether it was submitted or not,
-ovl_aio_put() also calls fdput(), which is not balanced.  This is only a
-problem in the less common case when FDPUT_FPUT flag is set.
+When using selected buffer feature, io_uring delays data iter setup
+until later. If io_setup_async_msg() is called before that it might see
+not correctly setup iterator. Pre-init nr_segs and judge from its state
+whether we repointing.
 
-To fix the problem use get_file() to take file refcount and use fput()
-instead of fdput() in ovl_aio_put().
-
-Fixes: 2406a307ac7d ("ovl: implement async IO routines")
-Cc: <stable@vger.kernel.org> # v5.6
-Reviewed-by: Miklos Szeredi <miklos@szeredi.hu>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+a4c6e5ef999b68b26ed1@syzkaller.appspotmail.com
+Fixes: 0455d4ccec548 ("io_uring: add POLL_FIRST support for send/sendmsg and recv/recvmsg")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/0000000000002770be06053c7757@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/file.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ io_uring/net.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -19,7 +19,6 @@ struct ovl_aio_req {
- 	struct kiocb iocb;
- 	refcount_t ref;
- 	struct kiocb *orig_iocb;
--	struct fd fd;
- };
- 
- static struct kmem_cache *ovl_aio_request_cachep;
-@@ -277,7 +276,7 @@ static rwf_t ovl_iocb_to_rwf(int ifl)
- static inline void ovl_aio_put(struct ovl_aio_req *aio_req)
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -183,6 +183,10 @@ static int io_setup_async_msg(struct io_
+ 	memcpy(async_msg, kmsg, sizeof(*kmsg));
+ 	if (async_msg->msg.msg_name)
+ 		async_msg->msg.msg_name = &async_msg->addr;
++
++	if ((req->flags & REQ_F_BUFFER_SELECT) && !async_msg->msg.msg_iter.nr_segs)
++		return -EAGAIN;
++
+ 	/* if were using fast_iov, set it to the new one */
+ 	if (iter_is_iovec(&kmsg->msg.msg_iter) && !kmsg->free_iov) {
+ 		size_t fast_idx = iter_iov(&kmsg->msg.msg_iter) - kmsg->fast_iov;
+@@ -542,6 +546,7 @@ static int io_recvmsg_copy_hdr(struct io
+ 			       struct io_async_msghdr *iomsg)
  {
- 	if (refcount_dec_and_test(&aio_req->ref)) {
--		fdput(aio_req->fd);
-+		fput(aio_req->iocb.ki_filp);
- 		kmem_cache_free(ovl_aio_request_cachep, aio_req);
- 	}
- }
-@@ -342,10 +341,9 @@ static ssize_t ovl_read_iter(struct kioc
- 		if (!aio_req)
- 			goto out;
+ 	iomsg->msg.msg_name = &iomsg->addr;
++	iomsg->msg.msg_iter.nr_segs = 0;
  
--		aio_req->fd = real;
- 		real.flags = 0;
- 		aio_req->orig_iocb = iocb;
--		kiocb_clone(&aio_req->iocb, iocb, real.file);
-+		kiocb_clone(&aio_req->iocb, iocb, get_file(real.file));
- 		aio_req->iocb.ki_complete = ovl_aio_rw_complete;
- 		refcount_set(&aio_req->ref, 2);
- 		ret = vfs_iocb_iter_read(real.file, &aio_req->iocb, iter);
-@@ -413,10 +411,9 @@ static ssize_t ovl_write_iter(struct kio
- 		/* Pacify lockdep, same trick as done in aio_write() */
- 		__sb_writers_release(file_inode(real.file)->i_sb,
- 				     SB_FREEZE_WRITE);
--		aio_req->fd = real;
- 		real.flags = 0;
- 		aio_req->orig_iocb = iocb;
--		kiocb_clone(&aio_req->iocb, iocb, real.file);
-+		kiocb_clone(&aio_req->iocb, iocb, get_file(real.file));
- 		aio_req->iocb.ki_flags = ifl;
- 		aio_req->iocb.ki_complete = ovl_aio_rw_complete;
- 		refcount_set(&aio_req->ref, 2);
+ #ifdef CONFIG_COMPAT
+ 	if (req->ctx->compat)
 
 
