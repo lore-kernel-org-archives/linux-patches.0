@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A64730F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1ADAC433C9;
-	Wed, 20 Sep 2023 12:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BE030F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:43:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E36CC433C7;
+	Wed, 20 Sep 2023 12:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213779;
-	bh=l9dB67RVYPzmCQG74kHEafPEivCS0KyI8cBlOdsH1os=;
+	s=korg; t=1695213781;
+	bh=oS5D72Txkwa91jtGKUTJxdhH8gXgMZ+V48FIdGsmETE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGqGOSiPyLSm6cdOFhXkwipNwLHmft+W4+hIdNRFaSWYUL1VEcIIB+WsPkN/LM4Bf
-	 +kqXFLwNqOVSxFnK8jm3mhE+mD36loayKQCjyCkMSQsTpPJoRhvZ47P2okkH5ZBAnb
-	 /UZd92l51QNz1l3d8aJHgE4uIyGeUMre/wBT8aso=
+	b=OKUhn//Csi/yvYFHj9v8On2GICH93Iug7zydGDoqemSEhqhB+AScnryn9Bd/aTGP9
+	 WneTLm56LEPvz80MXaNC2pl17MuspZl6lfWzGRyQrWDFKeR6YO4AE+0TyHqvffPf6/
+	 V8tVDVv+wtg1wGrUPHFQuR7TIaT0EGz/TjPrA6GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 363/367] scsi: megaraid_sas: Fix deadlock on firmware crashdump
-Date: Wed, 20 Sep 2023 13:32:20 +0200
-Message-ID: <20230920112907.881410516@linuxfoundation.org>
+	stable@kernel.org,
+	Andreas Dilger <adilger@dilger.ca>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 364/367] ext4: fix rec_len verify error
+Date: Wed, 20 Sep 2023 13:32:21 +0200
+Message-ID: <20230920112907.904542766@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -40,175 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-commit 0b0747d507bffb827e40fc0f9fb5883fffc23477 upstream.
+commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
 
-The following processes run into a deadlock. CPU 41 was waiting for CPU 29
-to handle a CSD request while holding spinlock "crashdump_lock", but CPU 29
-was hung by that spinlock with IRQs disabled.
+With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
+a problem occurred when more than 13 million files were directly created
+under a directory:
 
-  PID: 17360    TASK: ffff95c1090c5c40  CPU: 41  COMMAND: "mrdiagd"
-  !# 0 [ffffb80edbf37b58] __read_once_size at ffffffff9b871a40 include/linux/compiler.h:185:0
-  !# 1 [ffffb80edbf37b58] atomic_read at ffffffff9b871a40 arch/x86/include/asm/atomic.h:27:0
-  !# 2 [ffffb80edbf37b58] dump_stack at ffffffff9b871a40 lib/dump_stack.c:54:0
-   # 3 [ffffb80edbf37b78] csd_lock_wait_toolong at ffffffff9b131ad5 kernel/smp.c:364:0
-   # 4 [ffffb80edbf37b78] __csd_lock_wait at ffffffff9b131ad5 kernel/smp.c:384:0
-   # 5 [ffffb80edbf37bf8] csd_lock_wait at ffffffff9b13267a kernel/smp.c:394:0
-   # 6 [ffffb80edbf37bf8] smp_call_function_many at ffffffff9b13267a kernel/smp.c:843:0
-   # 7 [ffffb80edbf37c50] smp_call_function at ffffffff9b13279d kernel/smp.c:867:0
-   # 8 [ffffb80edbf37c50] on_each_cpu at ffffffff9b13279d kernel/smp.c:976:0
-   # 9 [ffffb80edbf37c78] flush_tlb_kernel_range at ffffffff9b085c4b arch/x86/mm/tlb.c:742:0
-   #10 [ffffb80edbf37cb8] __purge_vmap_area_lazy at ffffffff9b23a1e0 mm/vmalloc.c:701:0
-   #11 [ffffb80edbf37ce0] try_purge_vmap_area_lazy at ffffffff9b23a2cc mm/vmalloc.c:722:0
-   #12 [ffffb80edbf37ce0] free_vmap_area_noflush at ffffffff9b23a2cc mm/vmalloc.c:754:0
-   #13 [ffffb80edbf37cf8] free_unmap_vmap_area at ffffffff9b23bb3b mm/vmalloc.c:764:0
-   #14 [ffffb80edbf37cf8] remove_vm_area at ffffffff9b23bb3b mm/vmalloc.c:1509:0
-   #15 [ffffb80edbf37d18] __vunmap at ffffffff9b23bb8a mm/vmalloc.c:1537:0
-   #16 [ffffb80edbf37d40] vfree at ffffffff9b23bc85 mm/vmalloc.c:1612:0
-   #17 [ffffb80edbf37d58] megasas_free_host_crash_buffer [megaraid_sas] at ffffffffc020b7f2 drivers/scsi/megaraid/megaraid_sas_fusion.c:3932:0
-   #18 [ffffb80edbf37d80] fw_crash_state_store [megaraid_sas] at ffffffffc01f804d drivers/scsi/megaraid/megaraid_sas_base.c:3291:0
-   #19 [ffffb80edbf37dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #20 [ffffb80edbf37dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #21 [ffffb80edbf37de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #22 [ffffb80edbf37e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #23 [ffffb80edbf37ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #24 [ffffb80edbf37ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #25 [ffffb80edbf37ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #26 [ffffb80edbf37f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #27 [ffffb80edbf37f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
 
-  PID: 17355    TASK: ffff95c1090c3d80  CPU: 29  COMMAND: "mrdiagd"
-  !# 0 [ffffb80f2d3c7d30] __read_once_size at ffffffff9b0f2ab0 include/linux/compiler.h:185:0
-  !# 1 [ffffb80f2d3c7d30] native_queued_spin_lock_slowpath at ffffffff9b0f2ab0 kernel/locking/qspinlock.c:368:0
-   # 2 [ffffb80f2d3c7d58] pv_queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/paravirt.h:674:0
-   # 3 [ffffb80f2d3c7d58] queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/qspinlock.h:53:0
-   # 4 [ffffb80f2d3c7d68] queued_spin_lock at ffffffff9b8961a6 include/asm-generic/qspinlock.h:90:0
-   # 5 [ffffb80f2d3c7d68] do_raw_spin_lock_flags at ffffffff9b8961a6 include/linux/spinlock.h:173:0
-   # 6 [ffffb80f2d3c7d68] __raw_spin_lock_irqsave at ffffffff9b8961a6 include/linux/spinlock_api_smp.h:122:0
-   # 7 [ffffb80f2d3c7d68] _raw_spin_lock_irqsave at ffffffff9b8961a6 kernel/locking/spinlock.c:160:0
-   # 8 [ffffb80f2d3c7d88] fw_crash_buffer_store [megaraid_sas] at ffffffffc01f8129 drivers/scsi/megaraid/megaraid_sas_base.c:3205:0
-   # 9 [ffffb80f2d3c7dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #10 [ffffb80f2d3c7dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #11 [ffffb80f2d3c7de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #12 [ffffb80f2d3c7e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #13 [ffffb80f2d3c7ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #14 [ffffb80f2d3c7ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #15 [ffffb80f2d3c7ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #16 [ffffb80f2d3c7f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #17 [ffffb80f2d3c7f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
+When enough files are created, the fake_dirent->reclen will be 0xffff.
+it doesn't equal to the blocksize 65536, i.e. 0x10000.
 
-The lock is used to synchronize different sysfs operations, it doesn't
-protect any resource that will be touched by an interrupt. Consequently
-it's not required to disable IRQs. Replace the spinlock with a mutex to fix
-the deadlock.
+But it is not the same condition when blocksize equals to 4k.
+when enough files are created, the fake_dirent->reclen will be 0x1000.
+it equals to the blocksize 4k, i.e. 0x1000.
 
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Link: https://lore.kernel.org/r/20230828221018.19471-1-junxiao.bi@oracle.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The problem seems to be related to the limitation of the 16-bit field
+when the blocksize is set to 64k.
+To address this, helpers like ext4_rec_len_{from,to}_disk has already
+been introduced to complete the conversion between the encoded and the
+plain form of rec_len.
+
+So fix this one by using the helper, and all the other in this file too.
+
+Cc: stable@kernel.org
+Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h      |    2 +-
- drivers/scsi/megaraid/megaraid_sas_base.c |   21 +++++++++------------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ fs/ext4/namei.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas.h
-+++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -2324,7 +2324,7 @@ struct megasas_instance {
- 	u32 support_morethan256jbod; /* FW support for more than 256 PD/JBOD */
- 	bool use_seqnum_jbod_fp;   /* Added for PD sequence */
- 	bool smp_affinity_enable;
--	spinlock_t crashdump_lock;
-+	struct mutex crashdump_lock;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -325,17 +325,17 @@ static struct ext4_dir_entry_tail *get_d
+ 						   struct buffer_head *bh)
+ {
+ 	struct ext4_dir_entry_tail *t;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
  
- 	struct megasas_register_set __iomem *reg_set;
- 	u32 __iomem *reply_post_host_index_addr[MR_MAX_MSIX_REG_ARRAY];
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -3208,14 +3208,13 @@ fw_crash_buffer_store(struct device *cde
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
+ #ifdef PARANOID
+ 	struct ext4_dir_entry *d, *top;
  
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
+ 	d = (struct ext4_dir_entry *)bh->b_data;
+ 	top = (struct ext4_dir_entry *)(bh->b_data +
+-		(EXT4_BLOCK_SIZE(inode->i_sb) -
+-		 sizeof(struct ext4_dir_entry_tail)));
+-	while (d < top && d->rec_len)
++		(blocksize - sizeof(struct ext4_dir_entry_tail)));
++	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
+ 		d = (struct ext4_dir_entry *)(((void *)d) +
+-		    le16_to_cpu(d->rec_len));
++		    ext4_rec_len_from_disk(d->rec_len, blocksize));
  
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	instance->fw_crash_buffer_offset = val;
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 	return strlen(buf);
- }
+ 	if (d != top)
+ 		return NULL;
+@@ -346,7 +346,8 @@ static struct ext4_dir_entry_tail *get_d
+ #endif
  
-@@ -3230,24 +3229,23 @@ fw_crash_buffer_show(struct device *cdev
- 	unsigned long dmachunk = CRASH_DMA_BUF_SIZE;
- 	unsigned long chunk_left_bytes;
- 	unsigned long src_addr;
--	unsigned long flags;
- 	u32 buff_offset;
+ 	if (t->det_reserved_zero1 ||
+-	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
++	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
++	     sizeof(struct ext4_dir_entry_tail)) ||
+ 	    t->det_reserved_zero2 ||
+ 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
+ 		return NULL;
+@@ -427,13 +428,14 @@ static struct dx_countlimit *get_dx_coun
+ 	struct ext4_dir_entry *dp;
+ 	struct dx_root_info *root;
+ 	int count_offset;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
++	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
  
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	buff_offset = instance->fw_crash_buffer_offset;
- 	if (!instance->crash_dump_buf ||
- 		!((instance->fw_crash_state == AVAILABLE) ||
- 		(instance->fw_crash_state == COPYING))) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump is not available\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return -EINVAL;
+-	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
++	if (rlen == blocksize)
+ 		count_offset = 8;
+-	else if (le16_to_cpu(dirent->rec_len) == 12) {
++	else if (rlen == 12) {
+ 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
+-		if (le16_to_cpu(dp->rec_len) !=
+-		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
++		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
+ 			return NULL;
+ 		root = (struct dx_root_info *)(((void *)dp + 12));
+ 		if (root->reserved_zero ||
+@@ -1246,6 +1248,7 @@ static int dx_make_map(struct inode *dir
+ 	unsigned int buflen = bh->b_size;
+ 	char *base = bh->b_data;
+ 	struct dx_hash_info h = *hinfo;
++	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
+ 
+ 	if (ext4_has_metadata_csum(dir->i_sb))
+ 		buflen -= sizeof(struct ext4_dir_entry_tail);
+@@ -1259,11 +1262,12 @@ static int dx_make_map(struct inode *dir
+ 			map_tail--;
+ 			map_tail->hash = h.hash;
+ 			map_tail->offs = ((char *) de - base)>>2;
+-			map_tail->size = le16_to_cpu(de->rec_len);
++			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
++								blocksize);
+ 			count++;
+ 			cond_resched();
+ 		}
+-		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
++		de = ext4_next_entry(de, blocksize);
  	}
- 
- 	if (buff_offset > (instance->fw_crash_buffer_size * dmachunk)) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump offset is out of range\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return 0;
- 	}
- 
-@@ -3259,7 +3257,7 @@ fw_crash_buffer_show(struct device *cdev
- 	src_addr = (unsigned long)instance->crash_buf[buff_offset / dmachunk] +
- 		(buff_offset % dmachunk);
- 	memcpy(buf, (void *)src_addr, size);
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 
- 	return size;
+ 	return count;
  }
-@@ -3284,7 +3282,6 @@ fw_crash_state_store(struct device *cdev
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
- 
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
-@@ -3298,9 +3295,9 @@ fw_crash_state_store(struct device *cdev
- 	instance->fw_crash_state = val;
- 
- 	if ((val == COPIED) || (val == COPY_ERROR)) {
--		spin_lock_irqsave(&instance->crashdump_lock, flags);
-+		mutex_lock(&instance->crashdump_lock);
- 		megasas_free_host_crash_buffer(instance);
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		if (val == COPY_ERROR)
- 			dev_info(&instance->pdev->dev, "application failed to "
- 				"copy Firmware crash dump\n");
-@@ -7301,7 +7298,7 @@ static inline void megasas_init_ctrl_par
- 	init_waitqueue_head(&instance->int_cmd_wait_q);
- 	init_waitqueue_head(&instance->abort_cmd_wait_q);
- 
--	spin_lock_init(&instance->crashdump_lock);
-+	mutex_init(&instance->crashdump_lock);
- 	spin_lock_init(&instance->mfi_pool_lock);
- 	spin_lock_init(&instance->hba_lock);
- 	spin_lock_init(&instance->stream_lock);
 
 
