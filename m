@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2AF15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9BEC433C8;
-	Wed, 20 Sep 2023 12:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B0715AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F39C433C9;
+	Wed, 20 Sep 2023 12:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213493;
-	bh=/oosVk0SBcjbClX66t2tsSL3gmgWzDsbl1FmLGCxTJg=;
+	s=korg; t=1695213496;
+	bh=n3jcekIBaJfbptF5HZIqObG+EmqTDuVQnSfRSJFa+e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixRSEEaC1V4WG+hniZua2lRVgaUsMM//kZ2R5TAmnXxlXob7SY91loLYa17NjCrAV
-	 DHDc2jxcMrjTu7DWfmnKzaGAA1Hzqng0zCuGDtW7uFIyG2Oy9YHkOpPvU6q1vAPYi3
-	 a1s+axGscb99/6EjmdWQO7OGxMtiKaih6qPW+tA8=
+	b=r2iCbgz/ibMsS3LaCxvuPLStrOIpe5WmVP64sBKLUZ3PqZORUmnIxAasOjiGSuqO2
+	 rYk48JrUQ2dWYI2ql5pA5WacP2zFIQSP321VuJCd3ZwntqnmvneAGe+NmXR41ITyAk
+	 2WhFmKZ9AMqLZthcqnl42Lp5NiysOZAEGmSZJYLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 257/367] pwm: lpc32xx: Remove handling of PWM channels
-Date: Wed, 20 Sep 2023 13:30:34 +0200
-Message-ID: <20230920112905.210627254@linuxfoundation.org>
+Subject: [PATCH 5.4 258/367] sctp: annotate data-races around sk->sk_wmem_queued
+Date: Wed, 20 Sep 2023 13:30:35 +0200
+Message-ID: <20230920112905.240074963@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -36,90 +37,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@mleia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
+[ Upstream commit dc9511dd6f37fe803f6b15b61b030728d7057417 ]
 
-Because LPC32xx PWM controllers have only a single output which is
-registered as the only PWM device/channel per controller, it is known in
-advance that pwm->hwpwm value is always 0. On basis of this fact
-simplify the code by removing operations with pwm->hwpwm, there is no
-controls which require channel number as input.
+sk->sk_wmem_queued can be read locklessly from sctp_poll()
 
-Even though I wasn't aware at the time when I forward ported that patch,
-this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
-before devm_pwmchip_add() is called.
+Use sk_wmem_queued_add() when the field is changed,
+and add READ_ONCE() annotations in sctp_writeable()
+and sctp_assocs_seq_show()
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+syzbot reported:
+
+BUG: KCSAN: data-race in sctp_poll / sctp_wfree
+
+read-write to 0xffff888149d77810 of 4 bytes by interrupt on cpu 0:
+sctp_wfree+0x170/0x4a0 net/sctp/socket.c:9147
+skb_release_head_state+0xb7/0x1a0 net/core/skbuff.c:988
+skb_release_all net/core/skbuff.c:1000 [inline]
+__kfree_skb+0x16/0x140 net/core/skbuff.c:1016
+consume_skb+0x57/0x180 net/core/skbuff.c:1232
+sctp_chunk_destroy net/sctp/sm_make_chunk.c:1503 [inline]
+sctp_chunk_put+0xcd/0x130 net/sctp/sm_make_chunk.c:1530
+sctp_datamsg_put+0x29a/0x300 net/sctp/chunk.c:128
+sctp_chunk_free+0x34/0x50 net/sctp/sm_make_chunk.c:1515
+sctp_outq_sack+0xafa/0xd70 net/sctp/outqueue.c:1381
+sctp_cmd_process_sack net/sctp/sm_sideeffect.c:834 [inline]
+sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1366 [inline]
+sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+sctp_do_sm+0x12c7/0x31b0 net/sctp/sm_sideeffect.c:1169
+sctp_assoc_bh_rcv+0x2b2/0x430 net/sctp/associola.c:1051
+sctp_inq_push+0x108/0x120 net/sctp/inqueue.c:80
+sctp_rcv+0x116e/0x1340 net/sctp/input.c:243
+sctp6_rcv+0x25/0x40 net/sctp/ipv6.c:1120
+ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
+ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
+__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
+process_backlog+0x21f/0x380 net/core/dev.c:5894
+__napi_poll+0x60/0x3b0 net/core/dev.c:6460
+napi_poll net/core/dev.c:6527 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6660
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:389
+ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+read to 0xffff888149d77810 of 4 bytes by task 17828 on cpu 1:
+sctp_writeable net/sctp/socket.c:9304 [inline]
+sctp_poll+0x265/0x410 net/sctp/socket.c:8671
+sock_poll+0x253/0x270 net/socket.c:1374
+vfs_poll include/linux/poll.h:88 [inline]
+do_pollfd fs/select.c:873 [inline]
+do_poll fs/select.c:921 [inline]
+do_sys_poll+0x636/0xc00 fs/select.c:1015
+__do_sys_ppoll fs/select.c:1121 [inline]
+__se_sys_ppoll+0x1af/0x1f0 fs/select.c:1101
+__x64_sys_ppoll+0x67/0x80 fs/select.c:1101
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00019e80 -> 0x0000cc80
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 17828 Comm: syz-executor.1 Not tainted 6.5.0-rc7-syzkaller-00185-g28f20a19294d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230830094519.950007-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/sctp/proc.c   |  2 +-
+ net/sctp/socket.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
-index 522f862eca526..504a8f506195a 100644
---- a/drivers/pwm/pwm-lpc32xx.c
-+++ b/drivers/pwm/pwm-lpc32xx.c
-@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (duty_cycles > 255)
- 		duty_cycles = 255;
+diff --git a/net/sctp/proc.c b/net/sctp/proc.c
+index 982a87b3e11f8..963b94517ec20 100644
+--- a/net/sctp/proc.c
++++ b/net/sctp/proc.c
+@@ -284,7 +284,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
+ 		assoc->init_retries, assoc->shutdown_retries,
+ 		assoc->rtx_data_chunks,
+ 		refcount_read(&sk->sk_wmem_alloc),
+-		sk->sk_wmem_queued,
++		READ_ONCE(sk->sk_wmem_queued),
+ 		sk->sk_sndbuf,
+ 		sk->sk_rcvbuf);
+ 	seq_printf(seq, "\n");
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 431b9399a781f..d1dd261e8b010 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -68,7 +68,7 @@
+ #include <net/sctp/stream_sched.h>
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~0xFFFF;
- 	val |= (period_cycles << 8) | duty_cycles;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
+ /* Forward declarations for internal helper functions. */
+-static bool sctp_writeable(struct sock *sk);
++static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+ 				size_t msg_len);
+@@ -138,7 +138,7 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
- 	return 0;
+ 	refcount_add(sizeof(struct sctp_chunk), &sk->sk_wmem_alloc);
+ 	asoc->sndbuf_used += chunk->skb->truesize + sizeof(struct sctp_chunk);
+-	sk->sk_wmem_queued += chunk->skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, chunk->skb->truesize + sizeof(struct sctp_chunk));
+ 	sk_mem_charge(sk, chunk->skb->truesize);
  }
-@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (ret)
- 		return ret;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val |= PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
+@@ -8997,7 +8997,7 @@ static void sctp_wfree(struct sk_buff *skb)
+ 	struct sock *sk = asoc->base.sk;
  
- 	return 0;
+ 	sk_mem_uncharge(sk, skb->truesize);
+-	sk->sk_wmem_queued -= skb->truesize + sizeof(struct sctp_chunk);
++	sk_wmem_queued_add(sk, -(skb->truesize + sizeof(struct sctp_chunk)));
+ 	asoc->sndbuf_used -= skb->truesize + sizeof(struct sctp_chunk);
+ 	WARN_ON(refcount_sub_and_test(sizeof(struct sctp_chunk),
+ 				      &sk->sk_wmem_alloc));
+@@ -9152,9 +9152,9 @@ void sctp_write_space(struct sock *sk)
+  * UDP-style sockets or TCP-style sockets, this code should work.
+  *  - Daisy
+  */
+-static bool sctp_writeable(struct sock *sk)
++static bool sctp_writeable(const struct sock *sk)
+ {
+-	return sk->sk_sndbuf > sk->sk_wmem_queued;
++	return READ_ONCE(sk->sk_sndbuf) > READ_ONCE(sk->sk_wmem_queued);
  }
-@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
- 	u32 val;
  
--	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_ENABLE;
--	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	clk_disable_unprepare(lpc32xx->clk);
- }
-@@ -121,9 +121,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
- 	lpc32xx->chip.base = -1;
- 
- 	/* If PWM is disabled, configure the output to the default value */
--	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	val = readl(lpc32xx->base);
- 	val &= ~PWM_PIN_LEVEL;
--	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
-+	writel(val, lpc32xx->base);
- 
- 	ret = pwmchip_add(&lpc32xx->chip);
- 	if (ret < 0) {
+ /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
 -- 
 2.40.1
 
