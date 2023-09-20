@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C5F2AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:57:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3543C433CA;
-	Wed, 20 Sep 2023 11:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21582AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:58:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753E8C433C9;
+	Wed, 20 Sep 2023 11:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211079;
-	bh=n9zMEk8uOA4N+BZrDZbMtN9ZFGSKpvYuuSrovOYzHI8=;
+	s=korg; t=1695211081;
+	bh=r9syP48IwkGsnQaIyvoSf3YCTfuTW2G6EF7MOrKqRa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJqAiYz+eAs3QQTFELzT13jB12AjEe/yP+blV3syPEDJR6FQ7Q6g5eU5i+EHF8Jcz
-	 6xUChVctjOn20RjllAPH8gy+imt2hWf7QoyhrejjDCu0L84oA8sVFv2H/tG2IwvXVy
-	 +q18Bu66Xi7gfMIo8QsXEGpwaVx5HGfMKf697s+g=
+	b=FKJXaxpjM3ceKCX8ZuSAXSmn6aaKHRLwb9qYGXO3tBOCzgNQalpkwQKVrVHiqVqwu
+	 SxyFeJO3pMgt3NSEZoEyQhwP7oJOiCq911hhQmS2PMDojcQyVuSSaL97gItxlwM3WL
+	 +u9s1fekIfgNv7NRFOnLbpCduzbOJCog+dxWtF8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Kaplan <David.Kaplan@amd.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/139] x86/ibt: Suppress spurious ENDBR
-Date: Wed, 20 Sep 2023 13:30:34 +0200
-Message-ID: <20230920112839.302512456@linuxfoundation.org>
+Subject: [PATCH 6.1 101/139] riscv: kexec: Align the kexeced kernel entry
+Date: Wed, 20 Sep 2023 13:30:35 +0200
+Message-ID: <20230920112839.333921805@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -42,68 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Song Shuai <songshuaishuai@tinylab.org>
 
-[ Upstream commit 25e73b7e3f72a25aa30cbb2eecb49036e0acf066 ]
+[ Upstream commit 1bfb2b618d52e59a4ef1896b46c4698ad2be66b7 ]
 
-It was reported that under certain circumstances GCC emits ENDBR
-instructions for _THIS_IP_ usage. Specifically, when it appears at the
-start of a basic block -- but not elsewhere.
+The current riscv boot protocol requires 2MB alignment for RV64
+and 4MB alignment for RV32.
 
-Since _THIS_IP_ is never used for control flow, these ENDBR
-instructions are completely superfluous. Override the _THIS_IP_
-definition for x86_64 to avoid this.
+In KEXEC_FILE path, the elf_find_pbase() function should align
+the kexeced kernel entry according to the requirement, otherwise
+the kexeced kernel would silently BUG at the setup_vm().
 
-Less ENDBR instructions is better.
-
-Fixes: 156ff4a544ae ("x86/ibt: Base IBT bits")
-Reported-by: David Kaplan <David.Kaplan@amd.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230802110323.016197440@infradead.org
+Fixes: 8acea455fafa ("RISC-V: Support for kexec_file on panic")
+Signed-off-by: Song Shuai <songshuaishuai@tinylab.org>
+Link: https://lore.kernel.org/r/20230906095817.364390-1-songshuaishuai@tinylab.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/linkage.h      | 8 ++++++++
- include/linux/instruction_pointer.h | 5 +++++
- 2 files changed, 13 insertions(+)
+ arch/riscv/kernel/elf_kexec.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
-index f484d656d34ee..3a0282a6a55df 100644
---- a/arch/x86/include/asm/linkage.h
-+++ b/arch/x86/include/asm/linkage.h
-@@ -8,6 +8,14 @@
- #undef notrace
- #define notrace __attribute__((no_instrument_function))
- 
-+#ifdef CONFIG_64BIT
-+/*
-+ * The generic version tends to create spurious ENDBR instructions under
-+ * certain conditions.
-+ */
-+#define _THIS_IP_ ({ unsigned long __here; asm ("lea 0(%%rip), %0" : "=r" (__here)); __here; })
-+#endif
+diff --git a/arch/riscv/kernel/elf_kexec.c b/arch/riscv/kernel/elf_kexec.c
+index c08bb5c3b3857..b3b96ff46d193 100644
+--- a/arch/riscv/kernel/elf_kexec.c
++++ b/arch/riscv/kernel/elf_kexec.c
+@@ -98,7 +98,13 @@ static int elf_find_pbase(struct kimage *image, unsigned long kernel_len,
+ 	kbuf.image = image;
+ 	kbuf.buf_min = lowest_paddr;
+ 	kbuf.buf_max = ULONG_MAX;
+-	kbuf.buf_align = PAGE_SIZE;
 +
- #ifdef CONFIG_X86_32
- #define asmlinkage CPP_ASMLINKAGE __attribute__((regparm(0)))
- #endif /* CONFIG_X86_32 */
-diff --git a/include/linux/instruction_pointer.h b/include/linux/instruction_pointer.h
-index cda1f706eaeb1..aa0b3ffea9353 100644
---- a/include/linux/instruction_pointer.h
-+++ b/include/linux/instruction_pointer.h
-@@ -2,7 +2,12 @@
- #ifndef _LINUX_INSTRUCTION_POINTER_H
- #define _LINUX_INSTRUCTION_POINTER_H
- 
-+#include <asm/linkage.h>
-+
- #define _RET_IP_		(unsigned long)__builtin_return_address(0)
-+
-+#ifndef _THIS_IP_
- #define _THIS_IP_  ({ __label__ __here; __here: (unsigned long)&&__here; })
-+#endif
- 
- #endif /* _LINUX_INSTRUCTION_POINTER_H */
++	/*
++	 * Current riscv boot protocol requires 2MB alignment for
++	 * RV64 and 4MB alignment for RV32
++	 *
++	 */
++	kbuf.buf_align = PMD_SIZE;
+ 	kbuf.mem = KEXEC_BUF_MEM_UNKNOWN;
+ 	kbuf.memsz = ALIGN(kernel_len, PAGE_SIZE);
+ 	kbuf.top_down = false;
 -- 
 2.40.1
 
