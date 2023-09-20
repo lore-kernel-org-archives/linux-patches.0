@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA8C30FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81040C433C9;
-	Wed, 20 Sep 2023 12:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A450F30FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0EBC433C7;
+	Wed, 20 Sep 2023 12:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212567;
-	bh=Bufx6qpc1sVpPogPc7wr8cugo2odHsVPp6iQAM9f4K8=;
+	s=korg; t=1695212570;
+	bh=/kMXrJ8P+88eKyoRjYpc5mrLm1GKkaKuAuPOBD9Bgxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BM5lS7ncCoCm3DjO0TqGntzwMaTKl1Y/nsivsMWH00vGN0LOqSBuKZADYcPs5GTcA
-	 0GVsHSTgsUyLg2jpXjB9wCXn4kXKHLfDOYKmKD4DCh3dW3xSKpCh4yyhFKz8Bo/DVa
-	 O+qN9aqM+n9aPt+f8mlgT3FbBvmGtpdNJEbi1zOQ=
+	b=E6+T6rM1KCz2pnhQGHWhiH/pAXowHXSEwMqL49PSAhhqcyb5zcPQGPElN1lD15zqq
+	 lXoHPCYxqeMGNMeC6tXLlCUgITEuhYmlqBOsxn0gjFP+eaTQDH934i48ZAeszQcAd4
+	 Vc5xnQcT9eFgsHCLxPpIEXq+PHUacVCcAmdrUqOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Hao Luo <haoluo@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 49/83] interconnect: Fix locking for runpm vs reclaim
-Date: Wed, 20 Sep 2023 13:31:39 +0200
-Message-ID: <20230920112828.604885445@linuxfoundation.org>
+Subject: [PATCH 5.10 24/83] libbpf: Free btf_vmlinux when closing bpf_object
+Date: Wed, 20 Sep 2023 13:31:14 +0200
+Message-ID: <20230920112827.625163235@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -40,247 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Hao Luo <haoluo@google.com>
 
-[ Upstream commit af42269c3523492d71ebbe11fefae2653e9cdc78 ]
+[ Upstream commit 29d67fdebc42af6466d1909c60fdd1ef4f3e5240 ]
 
-For cases where icc_bw_set() can be called in callbaths that could
-deadlock against shrinker/reclaim, such as runpm resume, we need to
-decouple the icc locking.  Introduce a new icc_bw_lock for cases where
-we need to serialize bw aggregation and update to decouple that from
-paths that require memory allocation such as node/link creation/
-destruction.
+I hit a memory leak when testing bpf_program__set_attach_target().
+Basically, set_attach_target() may allocate btf_vmlinux, for example,
+when setting attach target for bpf_iter programs. But btf_vmlinux
+is freed only in bpf_object_load(), which means if we only open
+bpf object but not load it, setting attach target may leak
+btf_vmlinux.
 
-Fixes this lockdep splat:
+So let's free btf_vmlinux in bpf_object__close() anyway.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   6.2.0-rc8-debug+ #554 Not tainted
-   ------------------------------------------------------
-   ring0/132 is trying to acquire lock:
-   ffffff80871916d0 (&gmu->lock){+.+.}-{3:3}, at: a6xx_pm_resume+0xf0/0x234
-
-   but task is already holding lock:
-   ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
-
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #4 (dma_fence_map){++++}-{0:0}:
-          __dma_fence_might_wait+0x74/0xc0
-          dma_resv_lockdep+0x1f4/0x2f4
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #3 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-          fs_reclaim_acquire+0x80/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          topology_parse_cpu_capacity+0x8c/0x178
-          get_cpu_for_node+0x88/0xc4
-          parse_cluster+0x1b0/0x28c
-          parse_cluster+0x8c/0x28c
-          init_cpu_topology+0x168/0x188
-          smp_prepare_cpus+0x24/0xf8
-          kernel_init_freeable+0x18c/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #2 (fs_reclaim){+.+.}-{0:0}:
-          __fs_reclaim_acquire+0x3c/0x48
-          fs_reclaim_acquire+0x54/0xa8
-          slab_pre_alloc_hook.constprop.0+0x40/0x25c
-          __kmem_cache_alloc_node+0x60/0x1cc
-          __kmalloc+0xd8/0x100
-          kzalloc.constprop.0+0x14/0x20
-          icc_node_create_nolock+0x4c/0xc4
-          icc_node_create+0x38/0x58
-          qcom_icc_rpmh_probe+0x1b8/0x248
-          platform_probe+0x70/0xc4
-          really_probe+0x158/0x290
-          __driver_probe_device+0xc8/0xe0
-          driver_probe_device+0x44/0x100
-          __driver_attach+0xf8/0x108
-          bus_for_each_dev+0x78/0xc4
-          driver_attach+0x2c/0x38
-          bus_add_driver+0xd0/0x1d8
-          driver_register+0xbc/0xf8
-          __platform_driver_register+0x30/0x3c
-          qnoc_driver_init+0x24/0x30
-          do_one_initcall+0x104/0x2bc
-          kernel_init_freeable+0x344/0x34c
-          kernel_init+0x30/0x134
-          ret_from_fork+0x10/0x20
-
-   -> #1 (icc_lock){+.+.}-{3:3}:
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          icc_set_bw+0x88/0x2b4
-          _set_opp_bw+0x8c/0xd8
-          _set_opp+0x19c/0x300
-          dev_pm_opp_set_opp+0x84/0x94
-          a6xx_gmu_resume+0x18c/0x804
-          a6xx_pm_resume+0xf8/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          adreno_load_gpu+0xc4/0x17c
-          msm_open+0x50/0x120
-          drm_file_alloc+0x17c/0x228
-          drm_open_helper+0x74/0x118
-          drm_open+0xa0/0x144
-          drm_stub_open+0xd4/0xe4
-          chrdev_open+0x1b8/0x1e4
-          do_dentry_open+0x2f8/0x38c
-          vfs_open+0x34/0x40
-          path_openat+0x64c/0x7b4
-          do_filp_open+0x54/0xc4
-          do_sys_openat2+0x9c/0x100
-          do_sys_open+0x50/0x7c
-          __arm64_sys_openat+0x28/0x34
-          invoke_syscall+0x8c/0x128
-          el0_svc_common.constprop.0+0xa0/0x11c
-          do_el0_svc+0xac/0xbc
-          el0_svc+0x48/0xa0
-          el0t_64_sync_handler+0xac/0x13c
-          el0t_64_sync+0x190/0x194
-
-   -> #0 (&gmu->lock){+.+.}-{3:3}:
-          __lock_acquire+0xe00/0x1060
-          lock_acquire+0x1e0/0x2f8
-          __mutex_lock+0xcc/0x3c8
-          mutex_lock_nested+0x30/0x44
-          a6xx_pm_resume+0xf0/0x234
-          adreno_runtime_resume+0x2c/0x38
-          pm_generic_runtime_resume+0x30/0x44
-          __rpm_callback+0x15c/0x174
-          rpm_callback+0x78/0x7c
-          rpm_resume+0x318/0x524
-          __pm_runtime_resume+0x78/0xbc
-          pm_runtime_get_sync.isra.0+0x14/0x20
-          msm_gpu_submit+0x58/0x178
-          msm_job_run+0x78/0x150
-          drm_sched_main+0x290/0x370
-          kthread+0xf0/0x100
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-
-   Chain exists of:
-     &gmu->lock --> mmu_notifier_invalidate_range_start --> dma_fence_map
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(dma_fence_map);
-                                  lock(mmu_notifier_invalidate_range_start);
-                                  lock(dma_fence_map);
-     lock(&gmu->lock);
-
-    *** DEADLOCK ***
-
-   2 locks held by ring0/132:
-    #0: ffffff8087191170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64/0x150
-    #1: ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
-
-   stack backtrace:
-   CPU: 7 PID: 132 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #554
-   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-   Call trace:
-    dump_backtrace.part.0+0xb4/0xf8
-    show_stack+0x20/0x38
-    dump_stack_lvl+0x9c/0xd0
-    dump_stack+0x18/0x34
-    print_circular_bug+0x1b4/0x1f0
-    check_noncircular+0x78/0xac
-    __lock_acquire+0xe00/0x1060
-    lock_acquire+0x1e0/0x2f8
-    __mutex_lock+0xcc/0x3c8
-    mutex_lock_nested+0x30/0x44
-    a6xx_pm_resume+0xf0/0x234
-    adreno_runtime_resume+0x2c/0x38
-    pm_generic_runtime_resume+0x30/0x44
-    __rpm_callback+0x15c/0x174
-    rpm_callback+0x78/0x7c
-    rpm_resume+0x318/0x524
-    __pm_runtime_resume+0x78/0xbc
-    pm_runtime_get_sync.isra.0+0x14/0x20
-    msm_gpu_submit+0x58/0x178
-    msm_job_run+0x78/0x150
-    drm_sched_main+0x290/0x370
-    kthread+0xf0/0x100
-    ret_from_fork+0x10/0x20
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20230807171148.210181-7-robdclark@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Hao Luo <haoluo@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230822193840.1509809-1-haoluo@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/lib/bpf/libbpf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 7db6d0fc6ec2e..64d8dcdc41fd8 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -29,6 +29,7 @@ static LIST_HEAD(icc_providers);
- static int providers_count;
- static bool synced_state;
- static DEFINE_MUTEX(icc_lock);
-+static DEFINE_MUTEX(icc_bw_lock);
- static struct dentry *icc_debugfs_dir;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 015ed8253f739..44646c5286fbe 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -7962,6 +7962,7 @@ void bpf_object__close(struct bpf_object *obj)
+ 	bpf_object__elf_finish(obj);
+ 	bpf_object__unload(obj);
+ 	btf__free(obj->btf);
++	btf__free(obj->btf_vmlinux);
+ 	btf_ext__free(obj->btf_ext);
  
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
-@@ -632,7 +633,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
- 		return -EINVAL;
- 
--	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 
- 	old_avg = path->reqs[0].avg_bw;
- 	old_peak = path->reqs[0].peak_bw;
-@@ -664,7 +665,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 		apply_constraints(path);
- 	}
- 
--	mutex_unlock(&icc_lock);
-+	mutex_unlock(&icc_bw_lock);
- 
- 	trace_icc_set_bw_end(path, ret);
- 
-@@ -964,6 +965,7 @@ EXPORT_SYMBOL_GPL(icc_link_destroy);
- void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- {
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 
- 	node->provider = provider;
- 	list_add_tail(&node->node_list, &provider->nodes);
-@@ -989,6 +991,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 	node->avg_bw = 0;
- 	node->peak_bw = 0;
- 
-+	mutex_unlock(&icc_bw_lock);
- 	mutex_unlock(&icc_lock);
- }
- EXPORT_SYMBOL_GPL(icc_node_add);
-@@ -1115,6 +1118,7 @@ void icc_sync_state(struct device *dev)
- 		return;
- 
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
- 	synced_state = true;
- 	list_for_each_entry(p, &icc_providers, provider_list) {
- 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
+ 	for (i = 0; i < obj->nr_maps; i++)
 -- 
 2.40.1
 
