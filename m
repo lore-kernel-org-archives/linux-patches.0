@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AE018658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:48:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BF4C433C7;
-	Wed, 20 Sep 2023 11:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDD518658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:48:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08D7C433C8;
+	Wed, 20 Sep 2023 11:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210532;
-	bh=Y+GrV09JPAnCGuHE/q9Ot/M3aZ/Iy7iA01NvUog7A24=;
+	s=korg; t=1695210535;
+	bh=nhjHHP/HbHFDPgK+i4Cbb/6SvYR/5/IYWtFdsp+MaMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPcldaOTGSIlUZZbPDWh6cqGy+qP6ZdZ6PkD32fA5osUJP/vuQnO86ajNHTQlWYdZ
-	 1H4LUTBk6Tuwd77ISpPBjoxK0VRuX39y5CDnlAUjjekxxedX2BzkwfI0a3huuDsony
-	 grw7ilh0o4lUK+lVT89HtzeoEYqGViMqDvMJn16E=
+	b=AF/4ukFakY4c8UiJ3I0gqjENVpTEW1twvDn2qKfnheL6eWF8AranNCWwPkobzlYoA
+	 C8BWK9X41IZD1aRAzdy04KuXsDKcpUO7h5Fzzb02nye47hbtwElFERKjwlIPYe8riz
+	 0g+/XfkQvnIPOZCXBXnnrSlXDelUR5p5tCmAoiQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 112/211] media: tuners: qt1010: replace BUG_ON with a regular error
-Date: Wed, 20 Sep 2023 13:29:16 +0200
-Message-ID: <20230920112849.267914653@linuxfoundation.org>
+Subject: [PATCH 6.5 113/211] media: pci: cx23885: replace BUG with error return
+Date: Wed, 20 Sep 2023 13:29:17 +0200
+Message-ID: <20230920112849.297470751@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,42 +41,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit ee630b29ea44d1851bb6c903f400956604834463 ]
+[ Upstream commit 2e1796fd4904fdd6062a8e4589778ea899ea0c8d ]
 
-BUG_ON is unnecessary here, and in addition it confuses smatch.
-Replacing this with an error return help resolve this smatch
-warning:
+It was completely unnecessary to use BUG in buffer_prepare().
+Just replace it with an error return. This also fixes a smatch warning:
 
-drivers/media/tuners/qt1010.c:350 qt1010_init() error: buffer overflow 'i2c_data' 34 <= 34
+drivers/media/pci/cx23885/cx23885-video.c:422 buffer_prepare() error: uninitialized symbol 'ret'.
 
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/tuners/qt1010.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/media/pci/cx23885/cx23885-video.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/tuners/qt1010.c b/drivers/media/tuners/qt1010.c
-index 60931367b82ca..48fc79cd40273 100644
---- a/drivers/media/tuners/qt1010.c
-+++ b/drivers/media/tuners/qt1010.c
-@@ -345,11 +345,12 @@ static int qt1010_init(struct dvb_frontend *fe)
- 			else
- 				valptr = &tmpval;
- 
--			BUG_ON(i >= ARRAY_SIZE(i2c_data) - 1);
--
--			err = qt1010_init_meas1(priv, i2c_data[i+1].reg,
--						i2c_data[i].reg,
--						i2c_data[i].val, valptr);
-+			if (i >= ARRAY_SIZE(i2c_data) - 1)
-+				err = -EIO;
-+			else
-+				err = qt1010_init_meas1(priv, i2c_data[i + 1].reg,
-+							i2c_data[i].reg,
-+							i2c_data[i].val, valptr);
- 			i++;
- 			break;
- 		}
+diff --git a/drivers/media/pci/cx23885/cx23885-video.c b/drivers/media/pci/cx23885/cx23885-video.c
+index 671fc0588e431..9af2c5596121c 100644
+--- a/drivers/media/pci/cx23885/cx23885-video.c
++++ b/drivers/media/pci/cx23885/cx23885-video.c
+@@ -413,7 +413,7 @@ static int buffer_prepare(struct vb2_buffer *vb)
+ 				dev->height >> 1);
+ 		break;
+ 	default:
+-		BUG();
++		return -EINVAL; /* should not happen */
+ 	}
+ 	dprintk(2, "[%p/%d] buffer_init - %dx%d %dbpp 0x%08x - dma=0x%08lx\n",
+ 		buf, buf->vb.vb2_buf.index,
 -- 
 2.40.1
 
