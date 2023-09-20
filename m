@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0215330FA0
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC14C433CB;
-	Wed, 20 Sep 2023 12:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DB530FA0
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA72C43397;
+	Wed, 20 Sep 2023 12:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212236;
-	bh=qR9hcgc+Klv0sh8UNAR/q6BQtXqNgXtu5ytMnX1KL/c=;
+	s=korg; t=1695212239;
+	bh=1XKlxmZPQASdpuT/1P4u/+1Ahwq3QTYJ5JknPYxWjIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rc4sLXyDP2EcCNHeRJLLwqgcZ2mH2rveflPnq8JibvUCQUemfICb6ZaRpO4yfIvkY
-	 4weEKsULdApNyI3+EPGzTRpoQURopV1EDyodHzrGog4FCpjVg2tz6lGaztLZqdhyF6
-	 H+VgxgLZYoeLKOwi9qsd1m1Rm3F2LMO7mU7knQxQ=
+	b=J0q7fnUgHNZr+F4tOkcFgtZavK9XrRuvLepJMKjQZrfZqI6XpEpgM/cUhRrUgdMFq
+	 zy5sge18omn8YCcP3mq+3jtHImwUsmS6mDhkv71qjlF8iCp3YgY6x4EF8stmbwlF5v
+	 Vn15RhtmBv7qYIZNJTtvuVbWyIofSEKgXDbfZbWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 4.19 199/273] fbdev/ep93xx-fb: Do not assign to struct fb_info.dev
-Date: Wed, 20 Sep 2023 13:30:39 +0200
-Message-ID: <20230920112852.643435496@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Jocelyn Falempe <jfalempe@redhat.com>
+Subject: [PATCH 4.19 200/273] drm/ast: Fix DRAM init on AST2200
+Date: Wed, 20 Sep 2023 13:30:40 +0200
+Message-ID: <20230920112852.673594848@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -42,38 +44,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit f90a0e5265b60cdd3c77990e8105f79aa2fac994 upstream.
+commit 4cfe75f0f14f044dae66ad0e6eea812d038465d9 upstream.
 
-Do not assing the Linux device to struct fb_info.dev. The call to
-register_framebuffer() initializes the field to the fbdev device.
-Drivers should not override its value.
+Fix the test for the AST2200 in the DRAM initialization. The value
+in ast->chip has to be compared against an enum constant instead of
+a numerical value.
 
-Fixes a bug where the driver incorrectly decreases the hardware
-device's reference counter and leaks the fbdev device.
-
-v2:
-	* add Fixes tag (Dan)
+This bug got introduced when the driver was first imported into the
+kernel.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 88017bda96a5 ("ep93xx video driver")
-Cc: <stable@vger.kernel.org> # v2.6.32+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-15-tzimmermann@suse.de
+Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.5+
+Reviewed-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Tested-by: Jocelyn Falempe <jfalempe@redhat.com> # AST2600
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621130032.3568-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/ep93xx-fb.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/ast/ast_post.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/ep93xx-fb.c
-+++ b/drivers/video/fbdev/ep93xx-fb.c
-@@ -478,7 +478,6 @@ static int ep93xxfb_probe(struct platfor
- 	if (!info)
- 		return -ENOMEM;
- 
--	info->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, info);
- 	fbi = info->par;
- 	fbi->mach_info = mach_info;
+--- a/drivers/gpu/drm/ast/ast_post.c
++++ b/drivers/gpu/drm/ast/ast_post.c
+@@ -291,7 +291,7 @@ static void ast_init_dram_reg(struct drm
+ 				;
+ 			} while (ast_read32(ast, 0x10100) != 0xa8);
+ 		} else {/* AST2100/1100 */
+-			if (ast->chip == AST2100 || ast->chip == 2200)
++			if (ast->chip == AST2100 || ast->chip == AST2200)
+ 				dram_reg_info = ast2100_dram_table_data;
+ 			else
+ 				dram_reg_info = ast1100_dram_table_data;
 
 
