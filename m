@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD29D18658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B88EC433CB;
-	Wed, 20 Sep 2023 11:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8933C18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEC3C433C8;
+	Wed, 20 Sep 2023 11:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210613;
-	bh=so4nrHgpxyDv+qJT177hZO+WhhDe0E+rrkuHOwEP49A=;
+	s=korg; t=1695210619;
+	bh=4khR2NFengDV1O9XAhKt0gTe/1Atd299eLMzrB0JRY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loHSPGqbJKt4j6DyYx6ErqtNRHta7c9yDD+00meawmp7yGkuR47yRZL+uH8n7tyU+
-	 rSaQD7uKQi9cXr2YQ/Yi191re25tZVq2mWQhNyv/1aXOedhqha3JBnLv4dKiczon1N
-	 7cAnOLVBZDEWg2vCYRmIVP6uM4oH7etQVYX9rIyk=
+	b=hRqNrW8BIGFU4SuFJtEKcBsGtTWD4qMdOhn3cMeZWJ4IPqzXx61qf+JsjF/tCf7dH
+	 KuXGG8P1o3/ZZgbm0+zGRoRVO/rBhKHmuBYJ8z2IXFQgIgjM2d+GMqN+FuEX3z9JEd
+	 ETe2Xl0yzcwqufwDD+tlsssUP1M/m4RP8joLG6Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Rakshana Sridhar <rakshanas@chelsio.com>,
+	Varun Prakash <varun@chelsio.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 142/211] btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
-Date: Wed, 20 Sep 2023 13:29:46 +0200
-Message-ID: <20230920112850.249017463@linuxfoundation.org>
+Subject: [PATCH 6.5 143/211] nvmet-tcp: pass iov_len instead of sg->length to bvec_set_page()
+Date: Wed, 20 Sep 2023 13:29:47 +0200
+Message-ID: <20230920112850.282640475@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,64 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Varun Prakash <varun@chelsio.com>
 
-[ Upstream commit 6bfe3959b0e7a526f5c64747801a8613f002f05a ]
+[ Upstream commit 1f0bbf28940cf5edad90ab57b62aa8197bf5e836 ]
 
-The function btrfs_validate_super() should verify the metadata_uuid in
-the provided superblock argument. Because, all its callers expect it to
-do that.
+iov_len is the valid data length, so pass iov_len instead of sg->length to
+bvec_set_page().
 
-Such as in the following stacks:
-
-  write_all_supers()
-   sb = fs_info->super_for_commit;
-   btrfs_validate_write_super(.., sb)
-     btrfs_validate_super(.., sb, ..)
-
-  scrub_one_super()
-	btrfs_validate_super(.., sb, ..)
-
-And
-   check_dev_super()
-	btrfs_validate_super(.., sb, ..)
-
-However, it currently verifies the fs_info::super_copy::metadata_uuid
-instead.  Fix this using the correct metadata_uuid in the superblock
-argument.
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 5bfaba275ae6 ("nvmet-tcp: don't map pages which can't come from HIGHMEM")
+Signed-off-by: Rakshana Sridhar <rakshanas@chelsio.com>
+Signed-off-by: Varun Prakash <varun@chelsio.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/nvme/target/tcp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 4494883a19abc..0593f8f458a6e 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2391,13 +2391,11 @@ int btrfs_validate_super(struct btrfs_fs_info *fs_info,
- 		ret = -EINVAL;
- 	}
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 868aa4de2e4c4..cd92d7ddf5ed1 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -348,7 +348,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 	while (length) {
+ 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
  
--	if (btrfs_fs_incompat(fs_info, METADATA_UUID) &&
--	    memcmp(fs_info->fs_devices->metadata_uuid,
--		   fs_info->super_copy->metadata_uuid, BTRFS_FSID_SIZE)) {
-+	if (memcmp(fs_info->fs_devices->metadata_uuid, btrfs_sb_fsid_ptr(sb),
-+		   BTRFS_FSID_SIZE) != 0) {
- 		btrfs_err(fs_info,
- "superblock metadata_uuid doesn't match metadata uuid of fs_devices: %pU != %pU",
--			fs_info->super_copy->metadata_uuid,
--			fs_info->fs_devices->metadata_uuid);
-+			  btrfs_sb_fsid_ptr(sb), fs_info->fs_devices->metadata_uuid);
- 		ret = -EINVAL;
- 	}
+-		bvec_set_page(iov, sg_page(sg), sg->length,
++		bvec_set_page(iov, sg_page(sg), iov_len,
+ 				sg->offset + sg_offset);
  
+ 		length -= iov_len;
 -- 
 2.40.1
 
