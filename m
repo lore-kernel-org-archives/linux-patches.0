@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561AF328A2;
-	Wed, 20 Sep 2023 12:46:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D5AC433CA;
-	Wed, 20 Sep 2023 12:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB88328A2
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6401C433C8;
+	Wed, 20 Sep 2023 12:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213989;
-	bh=GhHn7z7pT4T8Lyy/OVsC4TQSNE5PsW5IxF4LHM9Lm6o=;
+	s=korg; t=1695213992;
+	bh=rFT0fXBSdYGd3XzhGeNA81O5dEcTwYZTZ1zdLVIHhm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HS0KJ3chT1Retjubs86OdDEMvBxu7zbkKziXbJlKGR4HdamQLXS1rXIgB8RMJoeZR
-	 NSK+h9Zl8oq7coDf33mYxo3jCa/H0wSbH+cmNT0XJAKs6rBD8YMEL77p9xQFzReSQS
-	 P4ynJD32fOl178ygwg6cGJ/nx+TGGVnt80eDPXFY=
+	b=gjTDC5EKZFnxLVdVwR2I7NtFqbWuQnZt/mgtEAqk+9OhMUbEqBR/9d85wxPAEHaGs
+	 HSM48yT5zB0KuGcwrcfeebbMPvZy5zXPiJV8+RvPV3eD9k1WOrbe2hue1PD8zt9ra9
+	 cf5KYWN2EzWGt9Gt9sJqNiSjR/19M8XAs3Q0Vi04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	bpf@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/110] perf test shell stat_bpf_counters: Fix test on Intel
-Date: Wed, 20 Sep 2023 13:32:10 +0200
-Message-ID: <20230920112833.126246427@linuxfoundation.org>
+Subject: [PATCH 5.15 073/110] btrfs: move btrfs_pinned_by_swapfile prototype into volumes.h
+Date: Wed, 20 Sep 2023 13:32:11 +0200
+Message-ID: <20230920112833.164803789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -47,54 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 68ca249c964f520af7f8763e22f12bd26b57b870 ]
+[ Upstream commit c2e79e865b87c2920a3cd39de69c35f2bc758a51 ]
 
-As of now, bpf counters (bperf) don't support event groups.  But the
-default perf stat includes topdown metrics if supported (on recent Intel
-machines) which require groups.  That makes perf stat exiting.
+This is defined in volumes.c, move the prototype into volumes.h.
 
-  $ sudo perf stat --bpf-counter true
-  bpf managed perf events do not yet support groups.
-
-Actually the test explicitly uses cycles event only, but it missed to
-pass the option when it checks the availability of the command.
-
-Fixes: 2c0cb9f56020d2ea ("perf test: Add a shell test for 'perf stat --bpf-counters' new option")
-Reviewed-by: Song Liu <song@kernel.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: bpf@vger.kernel.org
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230825164152.165610-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 6bfe3959b0e7 ("btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/ctree.h   | 2 --
+ fs/btrfs/volumes.h | 2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 13473aeba489c..6bf24b85294c7 100755
---- a/tools/perf/tests/shell/stat_bpf_counters.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -22,10 +22,10 @@ compare_number()
- }
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 02d3ee6c7d9b0..1467bf439cb48 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -536,8 +536,6 @@ struct btrfs_swapfile_pin {
+ 	int bg_extent_count;
+ };
  
- # skip if --bpf-counters is not supported
--if ! perf stat --bpf-counters true > /dev/null 2>&1; then
-+if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
- 	if [ "$1" = "-v" ]; then
- 		echo "Skipping: --bpf-counters not supported"
--		perf --no-pager stat --bpf-counters true || true
-+		perf --no-pager stat -e cycles --bpf-counters true || true
- 	fi
- 	exit 2
- fi
+-bool btrfs_pinned_by_swapfile(struct btrfs_fs_info *fs_info, void *ptr);
+-
+ enum {
+ 	BTRFS_FS_BARRIER,
+ 	BTRFS_FS_CLOSING_START,
+diff --git a/fs/btrfs/volumes.h b/fs/btrfs/volumes.h
+index b49fa784e5ba3..1f6461b568659 100644
+--- a/fs/btrfs/volumes.h
++++ b/fs/btrfs/volumes.h
+@@ -622,4 +622,6 @@ const char *btrfs_bg_type_to_raid_name(u64 flags);
+ int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info);
+ int btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical);
+ 
++bool btrfs_pinned_by_swapfile(struct btrfs_fs_info *fs_info, void *ptr);
++
+ #endif
 -- 
 2.40.1
 
