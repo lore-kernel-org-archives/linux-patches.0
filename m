@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491A62E653
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C377FC433C8;
-	Wed, 20 Sep 2023 12:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C8823752
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED5FC433C8;
+	Wed, 20 Sep 2023 12:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211493;
-	bh=mzoW8hq/M1WzGA8swSYr2t4clnV/ARLxoGsCnOrgHuo=;
+	s=korg; t=1695211495;
+	bh=SahqjaZzc532Yph/xcv/mLbfH9BN/J4L8FJKhpJ4nKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cud3vgPT4RN8dbseJ8cGkdurKfrQg2ARJ5wh2VDgWegmTirtwWLxpO9Kb4LUpn0Pb
-	 hwIUeWCQ2SQ1yMqIOug2TlYIjUUIcVzOrN87hrXC1E16DZIFjwN9kv2+w7YVvnFetN
-	 hyZod499qed+ju8CZHnin1STTsMaCBD9tOMYSIRA=
+	b=gP5TIU9sgNtaIgJj26YBg6vfr2jNugAodZwK1COXs3h+FfchQdaMMx/IENPgMEJwz
+	 uSZlteZk5GXsnNBc2bfbvq4PS1xJc7h2U2BWYN7zhlVcY3L6+OVFk8o5tXIrz75NIB
+	 8YME+P3kTd6NZyGyp+rq4txguqOuhTCgx+cXop6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 114/186] parisc: Fix /proc/cpuinfo output for lscpu
-Date: Wed, 20 Sep 2023 13:30:17 +0200
-Message-ID: <20230920112841.147455771@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.14 115/186] dccp: Fix out of bounds access in DCCP error handler
+Date: Wed, 20 Sep 2023 13:30:18 +0200
+Message-ID: <20230920112841.183382399@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -38,61 +40,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Jann Horn <jannh@google.com>
 
-commit 9f5ba4b3e1b3c123eeca5d2d09161e8720048b5c upstream.
+commit 977ad86c2a1bcaf58f01ab98df5cc145083c489c upstream.
 
-The lscpu command is broken since commit cab56b51ec0e ("parisc: Fix
-device names in /proc/iomem") added the PA pathname to all PA
-devices, includig the CPUs.
+There was a previous attempt to fix an out-of-bounds access in the DCCP
+error handlers, but that fix assumed that the error handlers only want
+to access the first 8 bytes of the DCCP header. Actually, they also look
+at the DCCP sequence number, which is stored beyond 8 bytes, so an
+explicit pskb_may_pull() is required.
 
-lscpu parses /proc/cpuinfo and now believes it found different CPU
-types since every CPU is listed with an unique identifier (PA
-pathname).
-
-Fix this problem by simply dropping the PA pathname when listing the
-CPUs in /proc/cpuinfo. There is no need to show the pathname in this
-procfs file.
-
-Fixes: cab56b51ec0e ("parisc: Fix device names in /proc/iomem")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v4.9+
+Fixes: 6706a97fec96 ("dccp: fix out of bound access in dccp_v4_err()")
+Fixes: 1aa9d1a0e7ee ("ipv6: dccp: fix out of bound access in dccp_v6_err()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/processor.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/dccp/ipv4.c |   13 +++++++++----
+ net/dccp/ipv6.c |   15 ++++++++++-----
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
---- a/arch/parisc/kernel/processor.c
-+++ b/arch/parisc/kernel/processor.c
-@@ -370,10 +370,18 @@ int
- show_cpuinfo (struct seq_file *m, void *v)
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -247,12 +247,17 @@ static void dccp_v4_err(struct sk_buff *
+ 	int err;
+ 	struct net *net = dev_net(skb->dev);
+ 
+-	/* Only need dccph_dport & dccph_sport which are the first
+-	 * 4 bytes in dccp header.
++	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
++	 * which is in byte 7 of the dccp header.
+ 	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
++	 *
++	 * Later on, we want to access the sequence number fields, which are
++	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+ 	 */
+-	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
+-	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
++	dh = (struct dccp_hdr *)(skb->data + offset);
++	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
++		return;
++	iph = (struct iphdr *)skb->data;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 
+ 	sk = __inet_lookup_established(net, &dccp_hashinfo,
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -71,7 +71,7 @@ static inline __u64 dccp_v6_init_sequenc
+ static void dccp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 			u8 type, u8 code, int offset, __be32 info)
  {
- 	unsigned long cpu;
-+	char cpu_name[60], *p;
-+
-+	/* strip PA path from CPU name to not confuse lscpu */
-+	strlcpy(cpu_name, per_cpu(cpu_data, 0).dev->name, sizeof(cpu_name));
-+	p = strrchr(cpu_name, '[');
-+	if (p)
-+		*(--p) = 0;
+-	const struct ipv6hdr *hdr = (const struct ipv6hdr *)skb->data;
++	const struct ipv6hdr *hdr;
+ 	const struct dccp_hdr *dh;
+ 	struct dccp_sock *dp;
+ 	struct ipv6_pinfo *np;
+@@ -80,12 +80,17 @@ static void dccp_v6_err(struct sk_buff *
+ 	__u64 seq;
+ 	struct net *net = dev_net(skb->dev);
  
- 	for_each_online_cpu(cpu) {
--		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
- #ifdef CONFIG_SMP
-+		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
-+
- 		if (0 == cpuinfo->hpa)
- 			continue;
- #endif
-@@ -410,8 +418,7 @@ show_cpuinfo (struct seq_file *m, void *
+-	/* Only need dccph_dport & dccph_sport which are the first
+-	 * 4 bytes in dccp header.
++	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
++	 * which is in byte 7 of the dccp header.
+ 	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
++	 *
++	 * Later on, we want to access the sequence number fields, which are
++	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+ 	 */
+-	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
+-	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
++	dh = (struct dccp_hdr *)(skb->data + offset);
++	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
++		return;
++	hdr = (const struct ipv6hdr *)skb->data;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
  
- 		seq_printf(m, "model\t\t: %s - %s\n",
- 				 boot_cpu_data.pdc.sys_model_name,
--				 cpuinfo->dev ?
--				 cpuinfo->dev->name : "Unknown");
-+				 cpu_name);
- 
- 		seq_printf(m, "hversion\t: 0x%08x\n"
- 			        "sversion\t: 0x%08x\n",
+ 	sk = __inet6_lookup_established(net, &dccp_hashinfo,
 
 
