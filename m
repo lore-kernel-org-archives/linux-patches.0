@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96884347BB
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E80C433C7;
-	Wed, 20 Sep 2023 12:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0B731A82
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B93C433CC;
+	Wed, 20 Sep 2023 12:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213019;
-	bh=GHDYzeDtr7PH4Uz1YcWA//sCkacEOrykFCYbx8nOnGg=;
+	s=korg; t=1695213022;
+	bh=3MV7uvfcIGj3HFkOsOUzI568/nprzdlotEEZt+yT/3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYaB5s7Z5usU1uLOQHcBCcffLty/CwMsp7BtafPBpBal8bkwKRLw3sigH8/1TLCiT
-	 5tX0JSt701lRiLPy6cVy/eQFdo2XjV2DhThbQBIGuXuKZ7DYaZdWt5gxR+U3+7n/vq
-	 HjYKc/jusF/3pmHe559LxOSYSxdQeZTRUvJS2w7s=
+	b=j1eDgksN3vydqbW+llKOkMUPof0tSRVfRdoAsw219/SOmSvisYbbTfY72r1HKqBYu
+	 zeqvZWGUcMHHGc6PlXI2+wUpvvdZhdw9kiSBBk5u0THKFeYwvEkoD/yTEAWuCTHTyS
+	 aLXlCJx+VWXgMz7ZM7sztb8plNmNiyctwnDOSdWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Su Hui <suhui@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/367] drm/amdgpu: avoid integer overflow warning in amdgpu_device_resize_fb_bar()
-Date: Wed, 20 Sep 2023 13:27:50 +0200
-Message-ID: <20230920112900.944790553@linuxfoundation.org>
+Subject: [PATCH 5.4 124/367] ALSA: ac97: Fix possible error value of *rac97
+Date: Wed, 20 Sep 2023 13:28:21 +0200
+Message-ID: <20230920112901.870001585@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -35,53 +35,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 822130b5e8834ab30ad410cf19a582e5014b9a85 ]
+[ Upstream commit 67de40c9df94037769967ba28c7d951afb45b7fb ]
 
-On 32-bit architectures comparing a resource against a value larger than
-U32_MAX can cause a warning:
+Before committing 79597c8bf64c, *rac97 always be NULL if there is
+an error. When error happens, make sure *rac97 is NULL is safer.
 
-drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1344:18: error: result of comparison of constant 4294967296 with expression of type 'resource_size_t' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-                    res->start > 0x100000000ull)
-                    ~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+For examble, in snd_vortex_mixer():
+	err = snd_ac97_mixer(pbus, &ac97, &vortex->codec);
+	vortex->isquad = ((vortex->codec == NULL) ?
+		0 : (vortex->codec->ext_id&0x80));
+If error happened but vortex->codec isn't NULL, this may cause some
+problems.
 
-As gcc does not warn about this in dead code, add an IS_ENABLED() check at
-the start of the function. This will always return success but not actually resize
-the BAR on 32-bit architectures without high memory, which is exactly what
-we want here, as the driver can fall back to bank switching the VRAM
-access.
+Move the judgement order to be clearer and better.
 
-Fixes: 31b8adab3247 ("drm/amdgpu: require a root bus window above 4GB for BAR resize")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 79597c8bf64c ("ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer")
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20230823025212.1000961-1-suhui@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/ac97/ac97_codec.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index d0e1fd011de54..e5032eb9ae291 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -759,6 +759,9 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
- 	u16 cmd;
- 	int r;
+diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
+index b920c739d6863..418a7a666cf4e 100644
+--- a/sound/pci/ac97/ac97_codec.c
++++ b/sound/pci/ac97/ac97_codec.c
+@@ -2006,10 +2006,9 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
+ 		.dev_disconnect =	snd_ac97_dev_disconnect,
+ 	};
  
-+	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
-+		return 0;
-+
- 	/* Bypass for VF */
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+-	if (!rac97)
+-		return -EINVAL;
+-	if (snd_BUG_ON(!bus || !template))
++	if (snd_BUG_ON(!bus || !template || !rac97))
+ 		return -EINVAL;
++	*rac97 = NULL;
+ 	if (snd_BUG_ON(template->num >= 4))
+ 		return -EINVAL;
+ 	if (bus->codec[template->num])
 -- 
 2.40.1
 
