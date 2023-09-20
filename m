@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9955D15AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB80C433C8;
-	Wed, 20 Sep 2023 12:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2AF15AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9BEC433C8;
+	Wed, 20 Sep 2023 12:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213490;
-	bh=G9DqQ+jNkFa+IFlwK13IhGAXOW//nxN4gF58Jt5Dhk4=;
+	s=korg; t=1695213493;
+	bh=/oosVk0SBcjbClX66t2tsSL3gmgWzDsbl1FmLGCxTJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjdWRARC3gE/Q6PDwgIV9zKQKsTj69KpDQEDJ9Bib1JvwP1WftYvYaAie55liP6AY
-	 iRmb0MDKoPOm4jG6WS8wjD6RcQy89AW8tnpT1reacYSDXzxdMFGhSV8Xe0kzrn2JOE
-	 8jqLxoRUcwuTj7DcrRNC3NW14ZUrdzBVWFH2cpQA=
+	b=ixRSEEaC1V4WG+hniZua2lRVgaUsMM//kZ2R5TAmnXxlXob7SY91loLYa17NjCrAV
+	 DHDc2jxcMrjTu7DWfmnKzaGAA1Hzqng0zCuGDtW7uFIyG2Oy9YHkOpPvU6q1vAPYi3
+	 a1s+axGscb99/6EjmdWQO7OGxMtiKaih6qPW+tA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Ekman <uablrek@gmail.com>,
-	Quan Tian <qtian@vmware.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 239/367] net/ipv6: SKB symmetric hash should incorporate transport ports
-Date: Wed, 20 Sep 2023 13:30:16 +0200
-Message-ID: <20230920112904.752845353@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 257/367] pwm: lpc32xx: Remove handling of PWM channels
+Date: Wed, 20 Sep 2023 13:30:34 +0200
+Message-ID: <20230920112905.210627254@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -35,57 +36,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quan Tian <qtian@vmware.com>
+From: Vladimir Zapolskiy <vz@mleia.com>
 
-commit a5e2151ff9d5852d0ababbbcaeebd9646af9c8d9 upstream.
+[ Upstream commit 4aae44f65827f0213a7361cf9c32cfe06114473f ]
 
-__skb_get_hash_symmetric() was added to compute a symmetric hash over
-the protocol, addresses and transport ports, by commit eb70db875671
-("packet: Use symmetric hash for PACKET_FANOUT_HASH."). It uses
-flow_keys_dissector_symmetric_keys as the flow_dissector to incorporate
-IPv4 addresses, IPv6 addresses and ports. However, it should not specify
-the flag as FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL, which stops further
-dissection when an IPv6 flow label is encountered, making transport
-ports not being incorporated in such case.
+Because LPC32xx PWM controllers have only a single output which is
+registered as the only PWM device/channel per controller, it is known in
+advance that pwm->hwpwm value is always 0. On basis of this fact
+simplify the code by removing operations with pwm->hwpwm, there is no
+controls which require channel number as input.
 
-As a consequence, the symmetric hash is based on 5-tuple for IPv4 but
-3-tuple for IPv6 when flow label is present. It caused a few problems,
-e.g. when nft symhash and openvswitch l4_sym rely on the symmetric hash
-to perform load balancing as different L4 flows between two given IPv6
-addresses would always get the same symmetric hash, leading to uneven
-traffic distribution.
+Even though I wasn't aware at the time when I forward ported that patch,
+this fixes a null pointer dereference as lpc32xx->chip.pwms is NULL
+before devm_pwmchip_add() is called.
 
-Removing the use of FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL makes sure the
-symmetric hash is based on 5-tuple for both IPv4 and IPv6 consistently.
-
-Fixes: eb70db875671 ("packet: Use symmetric hash for PACKET_FANOUT_HASH.")
-Reported-by: Lars Ekman <uablrek@gmail.com>
-Closes: https://github.com/antrea-io/antrea/issues/5457
-Signed-off-by: Quan Tian <qtian@vmware.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 3d2813fb17e5 ("pwm: lpc32xx: Don't modify HW state in .probe() after the PWM chip was registered")
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pwm/pwm-lpc32xx.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1564,8 +1564,7 @@ u32 __skb_get_hash_symmetric(const struc
+diff --git a/drivers/pwm/pwm-lpc32xx.c b/drivers/pwm/pwm-lpc32xx.c
+index 522f862eca526..504a8f506195a 100644
+--- a/drivers/pwm/pwm-lpc32xx.c
++++ b/drivers/pwm/pwm-lpc32xx.c
+@@ -51,10 +51,10 @@ static int lpc32xx_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	if (duty_cycles > 255)
+ 		duty_cycles = 255;
  
- 	memset(&keys, 0, sizeof(keys));
- 	__skb_flow_dissect(NULL, skb, &flow_keys_dissector_symmetric,
--			   &keys, NULL, 0, 0, 0,
--			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
-+			   &keys, NULL, 0, 0, 0, 0);
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~0xFFFF;
+ 	val |= (period_cycles << 8) | duty_cycles;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
  
- 	return __flow_hash_from_keys(&keys, &hashrnd);
+ 	return 0;
  }
+@@ -69,9 +69,9 @@ static int lpc32xx_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	if (ret)
+ 		return ret;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val |= PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	return 0;
+ }
+@@ -81,9 +81,9 @@ static void lpc32xx_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct lpc32xx_pwm_chip *lpc32xx = to_lpc32xx_pwm_chip(chip);
+ 	u32 val;
+ 
+-	val = readl(lpc32xx->base + (pwm->hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_ENABLE;
+-	writel(val, lpc32xx->base + (pwm->hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	clk_disable_unprepare(lpc32xx->clk);
+ }
+@@ -121,9 +121,9 @@ static int lpc32xx_pwm_probe(struct platform_device *pdev)
+ 	lpc32xx->chip.base = -1;
+ 
+ 	/* If PWM is disabled, configure the output to the default value */
+-	val = readl(lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	val = readl(lpc32xx->base);
+ 	val &= ~PWM_PIN_LEVEL;
+-	writel(val, lpc32xx->base + (lpc32xx->chip.pwms[0].hwpwm << 2));
++	writel(val, lpc32xx->base);
+ 
+ 	ret = pwmchip_add(&lpc32xx->chip);
+ 	if (ret < 0) {
+-- 
+2.40.1
+
 
 
