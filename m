@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697B5E544
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85286C433CC;
-	Wed, 20 Sep 2023 12:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F8BE544
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:09:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3777AC433C7;
+	Wed, 20 Sep 2023 12:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211747;
-	bh=Yui9NCKjiIQ02MnZT9qc9/2zU9wRcVpbkXh7kojGI6A=;
+	s=korg; t=1695211750;
+	bh=D6U8glx+io/KriHRY+V+/qmiFOq4+ssFGgR2SdGbGn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rXhye/bXHco/Q99todJ5B73iClS1PRScTG5bBaceBHXGkygtSboDeCOIyNsi/Tr3
-	 RYgnqpJ80LdMvGHPBoz4GmKH5bfnO5B7aQRnS344kLVNpIQ+1bKN5Dvexvh05usibA
-	 s6ML4zHXjn8MZycCK8ripDlmHqB/BYDeRhJJnLa0=
+	b=a043XTmg/rlP10GqtrxJ1D/DcrTU9jl2qNLs30+F7QmwscHwAo6Avdlbf7M8I8pwU
+	 biYiM3GfRLLEMROMggH7vNEm2+cGfOizxtxYhEHamAH/CHRrD3vfDcAw4+k78L1+so
+	 aGAo9fQm2/CKT74CMUjgBMwamNB2thJ893NvgjKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 021/273] s390/dasd: use correct number of retries for ERP requests
-Date: Wed, 20 Sep 2023 13:27:41 +0200
-Message-ID: <20230920112847.086938166@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Joshua Kinard <kumba@gentoo.org>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 4.19 004/273] rtc: ds1685: use EXPORT_SYMBOL_GPL for ds1685_rtc_poweroff
+Date: Wed, 20 Sep 2023 13:27:24 +0200
+Message-ID: <20230920112846.574591938@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -41,45 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit acea28a6b74f458defda7417d2217b051ba7d444 ]
+commit 95e7ebc6823170256a8ce19fad87912805bfa001 upstream.
 
-If a DASD request fails an error recovery procedure (ERP) request might
-be built as a copy of the original request to do error recovery.
+ds1685_rtc_poweroff is only used externally via symbol_get, which was
+only ever intended for very internal symbols like this one.  Use
+EXPORT_SYMBOL_GPL for it so that symbol_get can enforce only being used
+on EXPORT_SYMBOL_GPL symbols.
 
-The ERP request gets a number of retries assigned.
-This number is always 256 no matter what other value might have been set
-for the original request. This is not what is expected when a user
-specifies a certain amount of retries for the device via sysfs.
-
-Correctly use the number of retries of the original request for ERP
-requests.
-
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Joshua Kinard <kumba@gentoo.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_3990_erp.c | 2 +-
+ drivers/rtc/rtc-ds1685.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
-index ee73b0607e47c..8598c792ded30 100644
---- a/drivers/s390/block/dasd_3990_erp.c
-+++ b/drivers/s390/block/dasd_3990_erp.c
-@@ -2436,7 +2436,7 @@ static struct dasd_ccw_req *dasd_3990_erp_add_erp(struct dasd_ccw_req *cqr)
- 	erp->block    = cqr->block;
- 	erp->magic    = cqr->magic;
- 	erp->expires  = cqr->expires;
--	erp->retries  = 256;
-+	erp->retries  = device->default_retries;
- 	erp->buildclk = get_tod_clock();
- 	erp->status = DASD_CQR_FILLED;
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1630,7 +1630,7 @@ ds1685_rtc_poweroff(struct platform_devi
+ 		unreachable();
+ 	}
+ }
+-EXPORT_SYMBOL(ds1685_rtc_poweroff);
++EXPORT_SYMBOL_GPL(ds1685_rtc_poweroff);
+ /* ----------------------------------------------------------------------- */
  
--- 
-2.40.1
-
+ 
 
 
