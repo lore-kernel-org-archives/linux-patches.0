@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0200118658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B486C433C8;
-	Wed, 20 Sep 2023 11:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD29D18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:50:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B88EC433CB;
+	Wed, 20 Sep 2023 11:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210610;
-	bh=Go5otpWzaK9ZNzzlwAQaoTNS5pw4RgX6LG+ERCmksMc=;
+	s=korg; t=1695210613;
+	bh=so4nrHgpxyDv+qJT177hZO+WhhDe0E+rrkuHOwEP49A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W5EXOf8PfVbB9Vs2zn/VilRBA9I1lgeLekyappUeAYcFaBRDeRPFfwqXRwCzTB3NX
-	 eX99SfEffD0kHF54vtruB3acgi7Uz/hT13q1PqeI02jR7uAleaR3PyFNZ7aJgsLY2g
-	 Fz8QYg2U8P8Z6IlvwyxaPCjPMHkvNQXXd36+y7+o=
+	b=loHSPGqbJKt4j6DyYx6ErqtNRHta7c9yDD+00meawmp7yGkuR47yRZL+uH8n7tyU+
+	 rSaQD7uKQi9cXr2YQ/Yi191re25tZVq2mWQhNyv/1aXOedhqha3JBnLv4dKiczon1N
+	 7cAnOLVBZDEWg2vCYRmIVP6uM4oH7etQVYX9rIyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 141/211] btrfs: add a helper to read the superblock metadata_uuid
-Date: Wed, 20 Sep 2023 13:29:45 +0200
-Message-ID: <20230920112850.213523813@linuxfoundation.org>
+Subject: [PATCH 6.5 142/211] btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
+Date: Wed, 20 Sep 2023 13:29:46 +0200
+Message-ID: <20230920112850.249017463@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -44,54 +44,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Anand Jain <anand.jain@oracle.com>
 
-[ Upstream commit 4844c3664a72d36cc79752cb651c78860b14c240 ]
+[ Upstream commit 6bfe3959b0e7a526f5c64747801a8613f002f05a ]
 
-In some cases, we need to read the FSID from the superblock when the
-metadata_uuid is not set, and otherwise, read the metadata_uuid. So,
-add a helper.
+The function btrfs_validate_super() should verify the metadata_uuid in
+the provided superblock argument. Because, all its callers expect it to
+do that.
 
+Such as in the following stacks:
+
+  write_all_supers()
+   sb = fs_info->super_for_commit;
+   btrfs_validate_write_super(.., sb)
+     btrfs_validate_super(.., sb, ..)
+
+  scrub_one_super()
+	btrfs_validate_super(.., sb, ..)
+
+And
+   check_dev_super()
+	btrfs_validate_super(.., sb, ..)
+
+However, it currently verifies the fs_info::super_copy::metadata_uuid
+instead.  Fix this using the correct metadata_uuid in the superblock
+argument.
+
+CC: stable@vger.kernel.org # 5.4+
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
 Signed-off-by: Anand Jain <anand.jain@oracle.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 6bfe3959b0e7 ("btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 8 ++++++++
- fs/btrfs/volumes.h | 1 +
- 2 files changed, 9 insertions(+)
+ fs/btrfs/disk-io.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 6aa9bf3661ac8..51070c0d4141e 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -681,6 +681,14 @@ static int btrfs_open_one_device(struct btrfs_fs_devices *fs_devices,
- 	return -EINVAL;
- }
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 4494883a19abc..0593f8f458a6e 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2391,13 +2391,11 @@ int btrfs_validate_super(struct btrfs_fs_info *fs_info,
+ 		ret = -EINVAL;
+ 	}
  
-+u8 *btrfs_sb_fsid_ptr(struct btrfs_super_block *sb)
-+{
-+	bool has_metadata_uuid = (btrfs_super_incompat_flags(sb) &
-+				  BTRFS_FEATURE_INCOMPAT_METADATA_UUID);
-+
-+	return has_metadata_uuid ? sb->metadata_uuid : sb->fsid;
-+}
-+
- /*
-  * Handle scanned device having its CHANGING_FSID_V2 flag set and the fs_devices
-  * being created with a disk that has already completed its fsid change. Such
-diff --git a/fs/btrfs/volumes.h b/fs/btrfs/volumes.h
-index b8c51f16ba867..0f87057bb575f 100644
---- a/fs/btrfs/volumes.h
-+++ b/fs/btrfs/volumes.h
-@@ -749,5 +749,6 @@ int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info);
- bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical);
+-	if (btrfs_fs_incompat(fs_info, METADATA_UUID) &&
+-	    memcmp(fs_info->fs_devices->metadata_uuid,
+-		   fs_info->super_copy->metadata_uuid, BTRFS_FSID_SIZE)) {
++	if (memcmp(fs_info->fs_devices->metadata_uuid, btrfs_sb_fsid_ptr(sb),
++		   BTRFS_FSID_SIZE) != 0) {
+ 		btrfs_err(fs_info,
+ "superblock metadata_uuid doesn't match metadata uuid of fs_devices: %pU != %pU",
+-			fs_info->super_copy->metadata_uuid,
+-			fs_info->fs_devices->metadata_uuid);
++			  btrfs_sb_fsid_ptr(sb), fs_info->fs_devices->metadata_uuid);
+ 		ret = -EINVAL;
+ 	}
  
- bool btrfs_pinned_by_swapfile(struct btrfs_fs_info *fs_info, void *ptr);
-+u8 *btrfs_sb_fsid_ptr(struct btrfs_super_block *sb);
- 
- #endif
 -- 
 2.40.1
 
