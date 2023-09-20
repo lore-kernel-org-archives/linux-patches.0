@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C00A168A9
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E34C433C9;
-	Wed, 20 Sep 2023 12:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32431A6E
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:48:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860D7C433C9;
+	Wed, 20 Sep 2023 12:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695214112;
-	bh=s77qdFIhLrsbQhyw9qfmtM5+vXZEPuhisUx1TJmRejc=;
+	s=korg; t=1695214114;
+	bh=0kHk+j66eW5Nib478z18hQdD9+9xJRb9prLqXnwNMnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+Ai2+8DIQA2pDvSlKch+VVG38cXz+J+qkeYRpLWpj2+YcTpQ5U9+ZLRw+84etCuD
-	 v87HdrlLaqQooLqadwqhBUuQ8QhxWuczYYKA337p5vzW1TSKONvKxdRpmIgigc8TTK
-	 GWZew5hXb2Pa1hAJQaL0HFvvjB1DlaxUK3MGn5Xw=
+	b=KgqHIY1/NkFXyqVOorqzqIApmIbeoO0qfF9SMGrMN1zShUaMnci0S0YkufhLHA4p0
+	 /t0zSjcIKBuAHBlu9WoC5s+9nLbKXbhvfedQ4wRuQ5dB37SS3xZ6O9td9jvnmmu9ys
+	 5qX6ZDkBwig5ZVTQZooEO2xV6TXfvpRPG9GmoePM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nigel Croxon <ncroxon@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/110] md/raid1: fix error: ISO C90 forbids mixed declarations
-Date: Wed, 20 Sep 2023 13:32:29 +0200
-Message-ID: <20230920112833.829434165@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Florian Weimer <fweimer@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 092/110] attr: block mode changes of symlinks
+Date: Wed, 20 Sep 2023 13:32:30 +0200
+Message-ID: <20230920112833.868347636@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -34,58 +35,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nigel Croxon <ncroxon@redhat.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit df203da47f4428bc286fc99318936416253a321c ]
+commit 5d1f903f75a80daa4dfb3d84e114ec8ecbf29956 upstream.
 
-There is a compile error when this commit is added:
-md: raid1: fix potential OOB in raid1_remove_disk()
+Changing the mode of symlinks is meaningless as the vfs doesn't take the
+mode of a symlink into account during path lookup permission checking.
 
-drivers/md/raid1.c: In function 'raid1_remove_disk':
-drivers/md/raid1.c:1844:9: error: ISO C90 forbids mixed declarations
-and code [-Werror=declaration-after-statement]
-1844 |         struct raid1_info *p = conf->mirrors + number;
-     |         ^~~~~~
+However, the vfs doesn't block mode changes on symlinks. This however,
+has lead to an untenable mess roughly classifiable into the following
+two categories:
 
-That's because the new code was inserted before the struct.
-The change is move the struct command above this commit.
+(1) Filesystems that don't implement a i_op->setattr() for symlinks.
 
-Fixes: 8b0472b50bcf ("md: raid1: fix potential OOB in raid1_remove_disk()")
-Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/46d929d0-2aab-4cf2-b2bf-338963e8ba5a@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    Such filesystems may or may not know that without i_op->setattr()
+    defined, notify_change() falls back to simple_setattr() causing the
+    inode's mode in the inode cache to be changed.
+
+    That's a generic issue as this will affect all non-size changing
+    inode attributes including ownership changes.
+
+    Example: afs
+
+(2) Filesystems that fail with EOPNOTSUPP but change the mode of the
+    symlink nonetheless.
+
+    Some filesystems will happily update the mode of a symlink but still
+    return EOPNOTSUPP. This is the biggest source of confusion for
+    userspace.
+
+    The EOPNOTSUPP in this case comes from POSIX ACLs. Specifically it
+    comes from filesystems that call posix_acl_chmod(), e.g., btrfs via
+
+        if (!err && attr->ia_valid & ATTR_MODE)
+                err = posix_acl_chmod(idmap, dentry, inode->i_mode);
+
+    Filesystems including btrfs don't implement i_op->set_acl() so
+    posix_acl_chmod() will report EOPNOTSUPP.
+
+    When posix_acl_chmod() is called, most filesystems will have
+    finished updating the inode.
+
+    Perversely, this has the consequences that this behavior may depend
+    on two kconfig options and mount options:
+
+    * CONFIG_POSIX_ACL={y,n}
+    * CONFIG_${FSTYPE}_POSIX_ACL={y,n}
+    * Opt_acl, Opt_noacl
+
+    Example: btrfs, ext4, xfs
+
+The only way to change the mode on a symlink currently involves abusing
+an O_PATH file descriptor in the following manner:
+
+        fd = openat(-1, "/path/to/link", O_CLOEXEC | O_PATH | O_NOFOLLOW);
+
+        char path[PATH_MAX];
+        snprintf(path, sizeof(path), "/proc/self/fd/%d", fd);
+        chmod(path, 0000);
+
+But for most major filesystems with POSIX ACL support such as btrfs,
+ext4, ceph, tmpfs, xfs and others this will fail with EOPNOTSUPP with
+the mode still updated due to the aforementioned posix_acl_chmod()
+nonsense.
+
+So, given that for all major filesystems this would fail with EOPNOTSUPP
+and that both glibc (cf. [1]) and musl (cf. [2]) outright block mode
+changes on symlinks we should just try and block mode changes on
+symlinks directly in the vfs and have a clean break with this nonsense.
+
+If this causes any regressions, we do the next best thing and fix up all
+filesystems that do return EOPNOTSUPP with the mode updated to not call
+posix_acl_chmod() on symlinks.
+
+But as usual, let's try the clean cut solution first. It's a simple
+patch that can be easily reverted. Not marking this for backport as I'll
+do that manually if we're reasonably sure that this works and there are
+no strong objections.
+
+We could block this in chmod_common() but it's more appropriate to do it
+notify_change() as it will also mean that we catch filesystems that
+change symlink permissions explicitly or accidently.
+
+Similar proposals were floated in the past as in [3] and [4] and again
+recently in [5]. There's also a couple of bugs about this inconsistency
+as in [6] and [7].
+
+Link: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/fchmodat.c;h=99527a3727e44cb8661ee1f743068f108ec93979;hb=HEAD [1]
+Link: https://git.musl-libc.org/cgit/musl/tree/src/stat/fchmodat.c [2]
+Link: https://lore.kernel.org/all/20200911065733.GA31579@infradead.org [3]
+Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00518.html [4]
+Link: https://lore.kernel.org/lkml/87lefmbppo.fsf@oldenburg.str.redhat.com [5]
+Link: https://sourceware.org/legacy-ml/libc-alpha/2020-02/msg00467.html [6]
+Link: https://sourceware.org/bugzilla/show_bug.cgi?id=14578#c17 [7]
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: stable@vger.kernel.org # please backport to all LTSes but not before v6.6-rc2 is tagged
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Florian Weimer <fweimer@redhat.com>
+Message-Id: <20230712-vfs-chmod-symlinks-v2-1-08cfb92b61dd@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/attr.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 5360d6ed16e05..8427c9767a61b 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1820,12 +1820,11 @@ static int raid1_remove_disk(struct mddev *mddev, struct md_rdev *rdev)
- 	struct r1conf *conf = mddev->private;
- 	int err = 0;
- 	int number = rdev->raid_disk;
-+	struct raid1_info *p = conf->mirrors + number;
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -402,9 +402,25 @@ int notify_change(struct user_namespace
+ 		return error;
  
- 	if (unlikely(number >= conf->raid_disks))
- 		goto abort;
+ 	if ((ia_valid & ATTR_MODE)) {
+-		umode_t amode = attr->ia_mode;
++		/*
++		 * Don't allow changing the mode of symlinks:
++		 *
++		 * (1) The vfs doesn't take the mode of symlinks into account
++		 *     during permission checking.
++		 * (2) This has never worked correctly. Most major filesystems
++		 *     did return EOPNOTSUPP due to interactions with POSIX ACLs
++		 *     but did still updated the mode of the symlink.
++		 *     This inconsistency led system call wrapper providers such
++		 *     as libc to block changing the mode of symlinks with
++		 *     EOPNOTSUPP already.
++		 * (3) To even do this in the first place one would have to use
++		 *     specific file descriptors and quite some effort.
++		 */
++		if (S_ISLNK(inode->i_mode))
++			return -EOPNOTSUPP;
++
+ 		/* Flag setting protected by i_mutex */
+-		if (is_sxid(amode))
++		if (is_sxid(attr->ia_mode))
+ 			inode->i_flags &= ~S_NOSEC;
+ 	}
  
--	struct raid1_info *p = conf->mirrors + number;
--
- 	if (rdev != p->rdev)
- 		p = conf->mirrors + conf->raid_disks + number;
- 
--- 
-2.40.1
-
 
 
