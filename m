@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39B730FA0
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2808BC433C7;
-	Wed, 20 Sep 2023 12:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD2F28E23
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:44:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0401C433C8;
+	Wed, 20 Sep 2023 12:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213844;
-	bh=+sEDUwwooZozQ66/zmatUNKEBR5/1gKX8nwQZN4r+YA=;
+	s=korg; t=1695213847;
+	bh=eBX61kjbRBW+wpxyX2nZ3UrE5mMibmUXv9/bJINOcpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnWqXcjh6pkF7S2MK5GdEjRq2VkjUn4UtzNYMl5eioxSErFjQjON5co4lzfUdYmRY
-	 YZHxvGqntZ17pcod+isHPMKQJ5pMTxFY0/4jc+rkkMmy7y/WCTmfkBjejuz7bskiSW
-	 SBP2wc8yVukOYl1VKPo18+P0aU6RRhIlB1B+Hmjw=
+	b=lCTgJ0BFk6K3w4teLFixOs8Uo17DPwdgcd86qgaa8RNcO4PMm3GWlML6//xaARWoc
+	 TdmuOhdfwlsdpICTadJ0NfSPF7q5Kv8Mrln9WZm+KLZK+AtdUTsMfiOi6L5jKETPOT
+	 O36sqHAmx/r9eb1BCXHGsBlvW2CwlOq6G479Of/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark ODonovan <shiftee@posteo.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/110] crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
-Date: Wed, 20 Sep 2023 13:31:17 +0200
-Message-ID: <20230920112831.112090632@linuxfoundation.org>
+Subject: [PATCH 5.15 002/110] btrfs: output extra debug info if we failed to find an inline backref
+Date: Wed, 20 Sep 2023 13:31:00 +0200
+Message-ID: <20230920112830.472407308@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: <20230920112830.377666128@linuxfoundation.org>
@@ -40,43 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark O'Donovan <shiftee@posteo.net>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 9e47a758b70167c9301d2b44d2569f86c7796f2d ]
+[ Upstream commit 7f72f50547b7af4ddf985b07fc56600a4deba281 ]
 
-During NVMeTCP Authentication a controller can trigger a kernel
-oops by specifying the 8192 bit Diffie Hellman group and passing
-a correctly sized, but zeroed Diffie Hellamn value.
-mpi_cmp_ui() was detecting this if the second parameter was 0,
-but 1 is passed from dh_is_pubkey_valid(). This causes the null
-pointer u->d to be dereferenced towards the end of mpi_cmp_ui()
+[BUG]
+Syzbot reported several warning triggered inside
+lookup_inline_extent_backref().
 
-Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[CAUSE]
+As usual, the reproducer doesn't reliably trigger locally here, but at
+least we know the WARN_ON() is triggered when an inline backref can not
+be found, and it can only be triggered when @insert is true. (I.e.
+inserting a new inline backref, which means the backref should already
+exist)
+
+[ENHANCEMENT]
+After the WARN_ON(), dump all the parameters and the extent tree
+leaf to help debug.
+
+Link: https://syzkaller.appspot.com/bug?extid=d6f9ff86c1d804ba2bc6
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpi-cmp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/lib/mpi/mpi-cmp.c b/lib/mpi/mpi-cmp.c
-index c4cfa3ff05818..0835b6213235e 100644
---- a/lib/mpi/mpi-cmp.c
-+++ b/lib/mpi/mpi-cmp.c
-@@ -25,8 +25,12 @@ int mpi_cmp_ui(MPI u, unsigned long v)
- 	mpi_limb_t limb = v;
- 
- 	mpi_normalize(u);
--	if (!u->nlimbs && !limb)
--		return 0;
-+	if (u->nlimbs == 0) {
-+		if (v == 0)
-+			return 0;
-+		else
-+			return -1;
-+	}
- 	if (u->sign)
- 		return -1;
- 	if (u->nlimbs > 1)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 597cc2607481c..48f2de789b755 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -860,6 +860,11 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
+ 		err = -ENOENT;
+ 		goto out;
+ 	} else if (WARN_ON(ret)) {
++		btrfs_print_leaf(path->nodes[0]);
++		btrfs_err(fs_info,
++"extent item not found for insert, bytenr %llu num_bytes %llu parent %llu root_objectid %llu owner %llu offset %llu",
++			  bytenr, num_bytes, parent, root_objectid, owner,
++			  offset);
+ 		err = -EIO;
+ 		goto out;
+ 	}
 -- 
 2.40.1
 
