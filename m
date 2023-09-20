@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315E22AB22
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93A3C433C8;
-	Wed, 20 Sep 2023 12:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF522AB22
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36ACDC433C8;
+	Wed, 20 Sep 2023 12:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211685;
-	bh=PJ9Nq/H5upNZPZTQZXR9gkuX8LyqZh8HyozPcS47KkU=;
+	s=korg; t=1695211687;
+	bh=JWUeEW/2wRF3OVfZp0jr1Cn3NgJUpHDhxnwpwaB3IVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OI7uSbsJvlhxYVLX2TIJVjpTfrMtv2H0Lr7SglezunJPhDx7Qck5c2+QF9Jq5aPoP
-	 OqVHwgbbRQ3fyDanTSU4QHyOEbMfQJ01ziUb8XUodHYgim4Krul2gYGs1jvqM8AmqZ
-	 RnGkj8ZtU4V7c93iQ2oJ/rm5mgCeGNXeKIjNiQZE=
+	b=vYC/1w/j7sl/Tlx8SJ7r3yKH4zXQXdjaNCwOTkYqDsUUrlVF2xKuGlWxyb4UVQsEE
+	 D1c59L/Zdng6hBJqKDZ6yEWVNkZYCbxSVOpU/IuftP8mFhTbNZmqjVAts/E0NwETrq
+	 ADRqh5+OwtJAKVpWBX63Y63bbe7CmTqzkrFpQd2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.14 184/186] mtd: rawnand: brcmnand: Fix potential out-of-bounds access in oob write
-Date: Wed, 20 Sep 2023 13:31:27 +0200
-Message-ID: <20230920112843.523779453@linuxfoundation.org>
+	valis <sec@valis.email>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Capitulino <luizcap@amazon.com>
+Subject: [PATCH 4.14 185/186] net/sched: cls_fw: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed, 20 Sep 2023 13:31:28 +0200
+Message-ID: <20230920112843.555347765@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,64 +45,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: valis <sec@valis.email>
 
-commit 5d53244186c9ac58cb88d76a0958ca55b83a15cd upstream.
+commit 76e42ae831991c828cffa8c37736ebfb831ad5ec upstream.
 
-When the oob buffer length is not in multiple of words, the oob write
-function does out-of-bounds read on the oob source buffer at the last
-iteration. Fix that by always checking length limit on the oob buffer
-read and fill with 0xff when reaching the end of the buffer to the oob
-registers.
+When fw_change() is called on an existing filter, the whole
+tcf_result struct is always copied into the new instance of the filter.
 
-Fixes: 27c5b17cd1b1 ("mtd: nand: add NAND driver "library" for Broadcom STB NAND controller")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-5-william.zhang@broadcom.com
+This causes a problem when updating a filter bound to a class,
+as tcf_unbind_filter() is always called on the old instance in the
+success path, decreasing filter_cnt of the still referenced class
+and allowing it to be deleted, leading to a use-after-free.
+
+Fix this by no longer copying the tcf_result struct from the old filter.
+
+Fixes: e35a8ee5993b ("net: sched: fw use RCU")
+Reported-by: valis <sec@valis.email>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Signed-off-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
+Link: https://lore.kernel.org/r/20230729123202.72406-3-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Fixed small conflict as 'fnew->ifindex' assignment is not protected by
+  CONFIG_NET_CLS_IND on upstream since a51486266c3 ]
+Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/brcmnand/brcmnand.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/sched/cls_fw.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mtd/nand/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/brcmnand/brcmnand.c
-@@ -1229,19 +1229,33 @@ static int write_oob_to_regs(struct brcm
- 			     const u8 *oob, int sas, int sector_1k)
- {
- 	int tbytes = sas << sector_1k;
--	int j;
-+	int j, k = 0;
-+	u32 last = 0xffffffff;
-+	u8 *plast = (u8 *)&last;
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -281,7 +281,6 @@ static int fw_change(struct net *net, st
+ 			return -ENOBUFS;
  
- 	/* Adjust OOB values for 1K sector size */
- 	if (sector_1k && (i & 0x01))
- 		tbytes = max(0, tbytes - (int)ctrl->max_oob);
- 	tbytes = min_t(int, tbytes, ctrl->max_oob);
- 
--	for (j = 0; j < tbytes; j += 4)
-+	/*
-+	 * tbytes may not be multiple of words. Make sure we don't read out of
-+	 * the boundary and stop at last word.
-+	 */
-+	for (j = 0; (j + 3) < tbytes; j += 4)
- 		oob_reg_write(ctrl, j,
- 				(oob[j + 0] << 24) |
- 				(oob[j + 1] << 16) |
- 				(oob[j + 2] <<  8) |
- 				(oob[j + 3] <<  0));
-+
-+	/* handle the remaing bytes */
-+	while (j < tbytes)
-+		plast[k++] = oob[j++];
-+
-+	if (tbytes & 0x3)
-+		oob_reg_write(ctrl, (tbytes & ~0x3), (__force u32)cpu_to_be32(last));
-+
- 	return tbytes;
- }
- 
+ 		fnew->id = f->id;
+-		fnew->res = f->res;
+ #ifdef CONFIG_NET_CLS_IND
+ 		fnew->ifindex = f->ifindex;
+ #endif /* CONFIG_NET_CLS_IND */
 
 
