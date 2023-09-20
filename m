@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBF28E00
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774DCC433C8;
-	Wed, 20 Sep 2023 11:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1F128E00
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:53:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311E6C433C8;
+	Wed, 20 Sep 2023 11:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210781;
-	bh=b0pI8QF9dNR9egM/XNf/eJxNYQU4g8fSrg+p5jwLhpk=;
+	s=korg; t=1695210784;
+	bh=5mpXTahiy4TKMHUOhP4mMeHXXC+RvNm6OSQu+gV0Lkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1t7ateqmXeQuDvDZorM7jKd6z7giPhYhVW+MiYnwXbvJfazCc5cM0zB0+nrcbsBZ5
-	 mPsjPjBu5OTiagEbqf60rCUVpqx0TOlPyVea3fPAFbH5e0ZYjehHM47dIqQhxGORWm
-	 Cx13dPL4gxQX+XoTHejMEIHrAYm4ej+ToVoK1Tqk=
+	b=ftdn6THPZN3sahKQ5A8kMtUSO6Y8GqSyjCFb0iiJCSyKvCrzpS9NycKb76U2OtQlG
+	 ButJh2V1JLdSVgbSSO0pZde2N1prxi5SEClZ1N4LNqef+STLepI/GiCgHioLa7B1O+
+	 AllEmMowLUOQr55hZqKeS1AEYQwdGZqDLHlet8ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Simon Pilkington <simonp.git@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.5 202/211] drm/radeon: make fence wait in suballocator uninterrruptable
-Date: Wed, 20 Sep 2023 13:30:46 +0200
-Message-ID: <20230920112852.128341215@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.5 203/211] drm/i915: Only check eDP HPD when AUX CH is shared
+Date: Wed, 20 Sep 2023 13:30:47 +0200
+Message-ID: <20230920112852.162043787@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -41,37 +41,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit dcbad727513d277144aee482b2ffbcd2255c37aa upstream.
+commit 7c95ec3b59479bb24093918bbfc801c9f31826f2 upstream.
 
-Commit 254986e324ad ("drm/radeon: Use the drm suballocation manager implementation.")
-made the fence wait in amdgpu_sa_bo_new() interruptible but there is no
-code to handle an interrupt. This caused the kernel to randomly explode
-in high-VRAM-pressure situations so make it uninterruptible again.
+Apparently Acer Chromebook C740 (BDW-ULT) doesn't have the
+eDP HPD line properly connected, and thus fails the new
+HPD check during eDP probe. The result is that we lose the
+eDP output.
 
-Fixes: 254986e324ad ("drm/radeon: Use the drm suballocation manager implementation.")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2769
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-CC: stable@vger.kernel.org # 6.4+
-CC: Simon Pilkington <simonp.git@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906195517.1345717-1-alexander.deucher@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+I suspect all such machines would be Chromebooks or other
+Linux exclusive systems as the Windows driver likely wouldn't
+work either. I did check a few other BDW machines here and
+those do have eDP HPD connected, one of them even is a
+different Chromebook (Samus).
+
+To account for these funky machines let's skip the HPD check when
+it looks like the eDP port is the only one using that specific AUX
+channel. In case of multiple ports sharing the same AUX CH (eg. on
+Asrock B250M-HDV) we still do the check and thus should correctly
+ignore the eDP port in favor of the other DP port (usually a DP->VGA
+converter).
+
+v2: Don't oops during list iteration
+
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9264
+Fixes: cfe5bdfb27fa ("drm/i915: Check HPD live state during eDP probe")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230908052527.685-1-ville.syrjala@linux.intel.com
+Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
+(cherry picked from commit 70052100fabec5d8c1b09c9959817a2f4517e6b5)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_sa.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_bios.c |   21 +++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_bios.h |    1 +
+ drivers/gpu/drm/i915/display/intel_dp.c   |    7 ++++++-
+ 3 files changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/radeon/radeon_sa.c
-+++ b/drivers/gpu/drm/radeon/radeon_sa.c
-@@ -123,7 +123,7 @@ int radeon_sa_bo_new(struct radeon_sa_ma
- 		     unsigned int size, unsigned int align)
- {
- 	struct drm_suballoc *sa = drm_suballoc_new(&sa_manager->base, size,
--						   GFP_KERNEL, true, align);
-+						   GFP_KERNEL, false, align);
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -3659,6 +3659,27 @@ enum aux_ch intel_bios_dp_aux_ch(const s
+ 	return map_aux_ch(devdata->i915, devdata->child.aux_channel);
+ }
  
- 	if (IS_ERR(sa)) {
- 		*sa_bo = NULL;
++bool intel_bios_dp_has_shared_aux_ch(const struct intel_bios_encoder_data *devdata)
++{
++	struct drm_i915_private *i915;
++	u8 aux_channel;
++	int count = 0;
++
++	if (!devdata || !devdata->child.aux_channel)
++		return false;
++
++	i915 = devdata->i915;
++	aux_channel = devdata->child.aux_channel;
++
++	list_for_each_entry(devdata, &i915->display.vbt.display_devices, node) {
++		if (intel_bios_encoder_supports_dp(devdata) &&
++		    aux_channel == devdata->child.aux_channel)
++			count++;
++	}
++
++	return count > 1;
++}
++
+ int intel_bios_dp_boost_level(const struct intel_bios_encoder_data *devdata)
+ {
+ 	if (!devdata || devdata->i915->display.vbt.version < 196 || !devdata->child.iboost)
+--- a/drivers/gpu/drm/i915/display/intel_bios.h
++++ b/drivers/gpu/drm/i915/display/intel_bios.h
+@@ -271,6 +271,7 @@ enum aux_ch intel_bios_dp_aux_ch(const s
+ int intel_bios_dp_boost_level(const struct intel_bios_encoder_data *devdata);
+ int intel_bios_dp_max_lane_count(const struct intel_bios_encoder_data *devdata);
+ int intel_bios_dp_max_link_rate(const struct intel_bios_encoder_data *devdata);
++bool intel_bios_dp_has_shared_aux_ch(const struct intel_bios_encoder_data *devdata);
+ int intel_bios_hdmi_boost_level(const struct intel_bios_encoder_data *devdata);
+ int intel_bios_hdmi_ddc_pin(const struct intel_bios_encoder_data *devdata);
+ int intel_bios_hdmi_level_shift(const struct intel_bios_encoder_data *devdata);
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -5503,8 +5503,13 @@ static bool intel_edp_init_connector(str
+ 	/*
+ 	 * VBT and straps are liars. Also check HPD as that seems
+ 	 * to be the most reliable piece of information available.
++	 *
++	 * ... expect on devices that forgot to hook HPD up for eDP
++	 * (eg. Acer Chromebook C710), so we'll check it only if multiple
++	 * ports are attempting to use the same AUX CH, according to VBT.
+ 	 */
+-	if (!intel_digital_port_connected(encoder)) {
++	if (intel_bios_dp_has_shared_aux_ch(encoder->devdata) &&
++	    !intel_digital_port_connected(encoder)) {
+ 		/*
+ 		 * If this fails, presume the DPCD answer came
+ 		 * from some other port using the same AUX CH.
 
 
