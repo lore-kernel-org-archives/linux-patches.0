@@ -1,56 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4839530FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A678C433C7;
-	Wed, 20 Sep 2023 12:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175830FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F04C433C8;
+	Wed, 20 Sep 2023 12:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212652;
-	bh=TuXIXxQ9TlSsCt9VaVn5EeUnxuyui5J0JhVczaeM1uI=;
+	s=korg; t=1695212654;
+	bh=9ZL3lwd0NzgeaFin+NgJN+MTixCXbqDjYqWW2IQt3TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgwHSAbEqCFt6fW1Hja/Mm5Ihxbo9f+hpX/A1anLfXbTwYCMFbJCwbvVHzW37Vdwt
-	 qjy7OmrOu3mHIQrJ8gKI3rMyIa0j17aQqUi0zplJY/4CzhiJqUWDPKoNOpABGHO34u
-	 HJOKnp+O0VVmXsnUjwJPGw2gtAIZsoWhYuY3RNNo=
+	b=czPm1sRjsYOShGEbPG50MBaQoAIgrkcKEXL+jVtSEHWa7jD7f1WZt3xIlcDhXzyG9
+	 HVRCsM0L8K27qJ4JYzIgOOp9dXpgf+Vexnm01oqAwPwrCl8UYagPU3Oxt0tM4ksA1d
+	 C0YJkm2Ep6gDHS1MBN/LbOsmjBB2P7dJ9Ajx2N74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	John Garry <john.garry@huawei.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ananth Narayan <ananth.narayan@amd.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Andrew Kilroy <andrew.kilroy@arm.com>,
-	Caleb Biggers <caleb.biggers@intel.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Ian Rogers <rogers.email@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Kshipra Bopardikar <kshipra.bopardikar@intel.com>,
-	Like Xu <likexu@tencent.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Nick Forrington <nick.forrington@arm.com>,
-	Paul Clarke <pc@us.ibm.com>,
-	Perry Taylor <perry.taylor@intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Anup Sharma <anupnewsmail@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Qi Liu <liuqi115@huawei.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Santosh Shukla <santosh.shukla@amd.com>,
-	Stephane Eranian <eranian@google.com>,
-	Will Deacon <will@kernel.org>,
-	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 54/83] perf jevents: Switch build to use jevents.py
-Date: Wed, 20 Sep 2023 13:31:44 +0200
-Message-ID: <20230920112828.790164068@linuxfoundation.org>
+Subject: [PATCH 5.10 55/83] perf build: Update build rule for generated files
+Date: Wed, 20 Sep 2023 13:31:45 +0200
+Message-ID: <20230920112828.836521956@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
 References: <20230920112826.634178162@linuxfoundation.org>
@@ -69,293 +47,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <rogers.email@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 00facc760903be6675870c2749e2cd72140e396e ]
+[ Upstream commit 7822a8913f4c51c7d1aff793b525d60c3384fb5b ]
 
-Generate pmu-events.c using jevents.py rather than the binary built from
-jevents.c.
+The bison and flex generate C files from the source (.y and .l)
+files.  When O= option is used, they are saved in a separate directory
+but the default build rule assumes the .C files are in the source
+directory.  So it might read invalid file if there are generated files
+from an old version.  The same is true for the pmu-events files.
 
-Add a new config variable NO_JEVENTS that is set when there is no
-architecture json or an appropriate python interpreter isn't present.
+For example, the following command would cause a build failure:
 
-When NO_JEVENTS is defined the file pmu-events/empty-pmu-events.c is
-copied and used as the pmu-events.c file.
+  $ git checkout v6.3
+  $ make -C tools/perf  # build in the same directory
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: John Garry <john.garry@huawei.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ananth Narayan <ananth.narayan@amd.com>
+  $ git checkout v6.5-rc2
+  $ mkdir build  # create a build directory
+  $ make -C tools/perf O=build  # build in a different directory but it
+                                # refers files in the source directory
+
+Let's update the build rule to specify those cases explicitly to depend
+on the files in the output directory.
+
+Note that it's not a complete fix and it needs the next patch for the
+include path too.
+
+Fixes: 80eeb67fe577aa76 ("perf jevents: Program to convert JSON file")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Andrew Kilroy <andrew.kilroy@arm.com>
-Cc: Caleb Biggers <caleb.biggers@intel.com>
-Cc: Felix Fietkau <nbd@nbd.name>
-Cc: Ian Rogers <rogers.email@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
+Cc: Anup Sharma <anupnewsmail@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Kshipra Bopardikar <kshipra.bopardikar@intel.com>
-Cc: Like Xu <likexu@tencent.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nick Forrington <nick.forrington@arm.com>
-Cc: Paul Clarke <pc@us.ibm.com>
-Cc: Perry Taylor <perry.taylor@intel.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qi Liu <liuqi115@huawei.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Santosh Shukla <santosh.shukla@amd.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20220629182505.406269-4-irogers@google.com
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230728022447.1323563-1-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 7822a8913f4c ("perf build: Update build rule for generated files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config               |  19 +++
- tools/perf/Makefile.perf                 |   1 +
- tools/perf/pmu-events/Build              |  13 +-
- tools/perf/pmu-events/empty-pmu-events.c | 158 +++++++++++++++++++++++
- 4 files changed, 189 insertions(+), 2 deletions(-)
- create mode 100644 tools/perf/pmu-events/empty-pmu-events.c
+ tools/build/Makefile.build  | 10 ++++++++++
+ tools/perf/pmu-events/Build |  6 ++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index 89905b4e93091..a92d5422041ee 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -824,6 +824,25 @@ else
-   endif
- endif
+diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
+index cd72016c3cfa7..5a727094ae832 100644
+--- a/tools/build/Makefile.build
++++ b/tools/build/Makefile.build
+@@ -116,6 +116,16 @@ $(OUTPUT)%.s: %.c FORCE
+ 	$(call rule_mkdir)
+ 	$(call if_changed_dep,cc_s_c)
  
-+ifneq ($(NO_JEVENTS),1)
-+  ifeq ($(wildcard pmu-events/arch/$(SRCARCH)/mapfile.csv),)
-+    NO_JEVENTS := 1
-+  endif
-+endif
-+ifneq ($(NO_JEVENTS),1)
-+  NO_JEVENTS := 0
-+  ifndef PYTHON
-+    $(warning No python interpreter disabling jevent generation)
-+    NO_JEVENTS := 1
-+  else
-+    # jevents.py uses f-strings present in Python 3.6 released in Dec. 2016.
-+    JEVENTS_PYTHON_GOOD := $(shell $(PYTHON) -c 'import sys;print("1" if(sys.version_info.major >= 3 and sys.version_info.minor >= 6) else "0")' 2> /dev/null)
-+    ifneq ($(JEVENTS_PYTHON_GOOD), 1)
-+      $(warning Python interpreter too old (older than 3.6) disabling jevent generation)
-+      NO_JEVENTS := 1
-+    endif
-+  endif
-+endif
- 
- ifndef NO_LIBBFD
-   ifeq ($(feature-libbfd), 1)
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index e41a8f9b99d2d..ef25028b2e2fa 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -634,6 +634,7 @@ JEVENTS       := $(OUTPUT)pmu-events/jevents
- JEVENTS_IN    := $(OUTPUT)pmu-events/jevents-in.o
- 
- PMU_EVENTS_IN := $(OUTPUT)pmu-events/pmu-events-in.o
-+export NO_JEVENTS
- 
- export JEVENTS
- 
++# bison and flex files are generated in the OUTPUT directory
++# so it needs a separate rule to depend on them properly
++$(OUTPUT)%-bison.o: $(OUTPUT)%-bison.c FORCE
++	$(call rule_mkdir)
++	$(call if_changed_dep,$(host)cc_o_c)
++
++$(OUTPUT)%-flex.o: $(OUTPUT)%-flex.c FORCE
++	$(call rule_mkdir)
++	$(call if_changed_dep,$(host)cc_o_c)
++
+ # Gather build data:
+ #   obj-y        - list of build objects
+ #   subdir-y     - list of directories to nest
 diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
-index a055dee6a46af..5ec5ce8c31bab 100644
+index 5ec5ce8c31bab..ea8c41f9c7398 100644
 --- a/tools/perf/pmu-events/Build
 +++ b/tools/perf/pmu-events/Build
-@@ -9,10 +9,19 @@ JSON		=  $(shell [ -d $(JDIR) ] &&				\
- JDIR_TEST	=  pmu-events/arch/test
- JSON_TEST	=  $(shell [ -d $(JDIR_TEST) ] &&			\
- 			find $(JDIR_TEST) -name '*.json')
-+JEVENTS_PY	=  pmu-events/jevents.py
- 
- #
- # Locate/process JSON files in pmu-events/arch/
- # directory and create tables in pmu-events.c.
- #
--$(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS)
--	$(Q)$(call echo-cmd,gen)$(JEVENTS) $(SRCARCH) pmu-events/arch $(OUTPUT)pmu-events/pmu-events.c $(V)
+@@ -25,3 +25,9 @@ $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
+ 	$(call rule_mkdir)
+ 	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(SRCARCH) pmu-events/arch $@
+ endif
 +
-+ifeq ($(NO_JEVENTS),1)
-+$(OUTPUT)pmu-events/pmu-events.c: pmu-events/empty-pmu-events.c
++# pmu-events.c file is generated in the OUTPUT directory so it needs a
++# separate rule to depend on it properly
++$(OUTPUT)pmu-events/pmu-events.o: $(PMU_EVENTS_C)
 +	$(call rule_mkdir)
-+	$(Q)$(call echo-cmd,gen)cp $< $@
-+else
-+$(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
-+	$(call rule_mkdir)
-+	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(SRCARCH) pmu-events/arch $@
-+endif
-diff --git a/tools/perf/pmu-events/empty-pmu-events.c b/tools/perf/pmu-events/empty-pmu-events.c
-new file mode 100644
-index 0000000000000..77e655c6f1162
---- /dev/null
-+++ b/tools/perf/pmu-events/empty-pmu-events.c
-@@ -0,0 +1,158 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * An empty pmu-events.c file used when there is no architecture json files in
-+ * arch or when the jevents.py script cannot be run.
-+ *
-+ * The test cpu/soc is provided for testing.
-+ */
-+#include "pmu-events/pmu-events.h"
-+
-+static const struct pmu_event pme_test_soc_cpu[] = {
-+	{
-+		.name = "l3_cache_rd",
-+		.event = "event=0x40",
-+		.desc = "L3 cache access, read",
-+		.topic = "cache",
-+		.long_desc = "Attributable Level 3 cache access, read",
-+	},
-+	{
-+		.name = "segment_reg_loads.any",
-+		.event = "event=0x6,period=200000,umask=0x80",
-+		.desc = "Number of segment register loads",
-+		.topic = "other",
-+	},
-+	{
-+		.name = "dispatch_blocked.any",
-+		.event = "event=0x9,period=200000,umask=0x20",
-+		.desc = "Memory cluster signals to block micro-op dispatch for any reason",
-+		.topic = "other",
-+	},
-+	{
-+		.name = "eist_trans",
-+		.event = "event=0x3a,period=200000,umask=0x0",
-+		.desc = "Number of Enhanced Intel SpeedStep(R) Technology (EIST) transitions",
-+		.topic = "other",
-+	},
-+	{
-+		.name = "uncore_hisi_ddrc.flux_wcmd",
-+		.event = "event=0x2",
-+		.desc = "DDRC write commands. Unit: hisi_sccl,ddrc ",
-+		.topic = "uncore",
-+		.long_desc = "DDRC write commands",
-+		.pmu = "hisi_sccl,ddrc",
-+	},
-+	{
-+		.name = "unc_cbo_xsnp_response.miss_eviction",
-+		.event = "event=0x22,umask=0x81",
-+		.desc = "A cross-core snoop resulted from L3 Eviction which misses in some processor core. Unit: uncore_cbox ",
-+		.topic = "uncore",
-+		.long_desc = "A cross-core snoop resulted from L3 Eviction which misses in some processor core",
-+		.pmu = "uncore_cbox",
-+	},
-+	{
-+		.name = "event-hyphen",
-+		.event = "event=0xe0,umask=0x00",
-+		.desc = "UNC_CBO_HYPHEN. Unit: uncore_cbox ",
-+		.topic = "uncore",
-+		.long_desc = "UNC_CBO_HYPHEN",
-+		.pmu = "uncore_cbox",
-+	},
-+	{
-+		.name = "event-two-hyph",
-+		.event = "event=0xc0,umask=0x00",
-+		.desc = "UNC_CBO_TWO_HYPH. Unit: uncore_cbox ",
-+		.topic = "uncore",
-+		.long_desc = "UNC_CBO_TWO_HYPH",
-+		.pmu = "uncore_cbox",
-+	},
-+	{
-+		.name = "uncore_hisi_l3c.rd_hit_cpipe",
-+		.event = "event=0x7",
-+		.desc = "Total read hits. Unit: hisi_sccl,l3c ",
-+		.topic = "uncore",
-+		.long_desc = "Total read hits",
-+		.pmu = "hisi_sccl,l3c",
-+	},
-+	{
-+		.name = "uncore_imc_free_running.cache_miss",
-+		.event = "event=0x12",
-+		.desc = "Total cache misses. Unit: uncore_imc_free_running ",
-+		.topic = "uncore",
-+		.long_desc = "Total cache misses",
-+		.pmu = "uncore_imc_free_running",
-+	},
-+	{
-+		.name = "uncore_imc.cache_hits",
-+		.event = "event=0x34",
-+		.desc = "Total cache hits. Unit: uncore_imc ",
-+		.topic = "uncore",
-+		.long_desc = "Total cache hits",
-+		.pmu = "uncore_imc",
-+	},
-+	{
-+		.name = "bp_l1_btb_correct",
-+		.event = "event=0x8a",
-+		.desc = "L1 BTB Correction",
-+		.topic = "branch",
-+	},
-+	{
-+		.name = "bp_l2_btb_correct",
-+		.event = "event=0x8b",
-+		.desc = "L2 BTB Correction",
-+		.topic = "branch",
-+	},
-+	{
-+		.name = 0,
-+		.event = 0,
-+		.desc = 0,
-+	},
-+};
-+
-+const struct pmu_events_map pmu_events_map[] = {
-+	{
-+		.cpuid = "testcpu",
-+		.version = "v1",
-+		.type = "core",
-+		.table = pme_test_soc_cpu,
-+	},
-+	{
-+		.cpuid = 0,
-+		.version = 0,
-+		.type = 0,
-+		.table = 0,
-+	},
-+};
-+
-+static const struct pmu_event pme_test_soc_sys[] = {
-+	{
-+		.name = "sys_ddr_pmu.write_cycles",
-+		.event = "event=0x2b",
-+		.desc = "ddr write-cycles event. Unit: uncore_sys_ddr_pmu ",
-+		.compat = "v8",
-+		.topic = "uncore",
-+		.pmu = "uncore_sys_ddr_pmu",
-+	},
-+	{
-+		.name = "sys_ccn_pmu.read_cycles",
-+		.event = "config=0x2c",
-+		.desc = "ccn read-cycles event. Unit: uncore_sys_ccn_pmu ",
-+		.compat = "0x01",
-+		.topic = "uncore",
-+		.pmu = "uncore_sys_ccn_pmu",
-+	},
-+	{
-+		.name = 0,
-+		.event = 0,
-+		.desc = 0,
-+	},
-+};
-+
-+const struct pmu_sys_events pmu_sys_event_tables[] = {
-+	{
-+		.table = pme_test_soc_sys,
-+		.name = "pme_test_soc_sys",
-+	},
-+	{
-+		.table = 0
-+	},
-+};
++	$(call if_changed_dep,cc_o_c)
 -- 
 2.40.1
 
