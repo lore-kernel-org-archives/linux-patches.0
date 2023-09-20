@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B0715AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F39C433C9;
-	Wed, 20 Sep 2023 12:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6399715AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBDBC433C8;
+	Wed, 20 Sep 2023 12:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213496;
-	bh=n3jcekIBaJfbptF5HZIqObG+EmqTDuVQnSfRSJFa+e4=;
+	s=korg; t=1695213499;
+	bh=k/IX7BLKwcqTvHlJZw451odjbrioplZoxxDzV4Jyzpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2iCbgz/ibMsS3LaCxvuPLStrOIpe5WmVP64sBKLUZ3PqZORUmnIxAasOjiGSuqO2
-	 rYk48JrUQ2dWYI2ql5pA5WacP2zFIQSP321VuJCd3ZwntqnmvneAGe+NmXR41ITyAk
-	 2WhFmKZ9AMqLZthcqnl42Lp5NiysOZAEGmSZJYLA=
+	b=JXpzasY4vULRLsphq8b807q3mA0BAAv3TXr/YfcImE30XzC+l8MWskZpF8VIbWCh8
+	 THIny6WW9wDHWYinRH1zeQdgVGVQzdCgJKNf+ob/v2aqfoTZwG4a4DrKwDwH9G5cX0
+	 FuIE3MM35ToxiEs5oiDUCcPe4hAk/7v7iEdd/avk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 258/367] sctp: annotate data-races around sk->sk_wmem_queued
-Date: Wed, 20 Sep 2023 13:30:35 +0200
-Message-ID: <20230920112905.240074963@linuxfoundation.org>
+Subject: [PATCH 5.4 259/367] ipv4: annotate data-races around fi->fib_dead
+Date: Wed, 20 Sep 2023 13:30:36 +0200
+Message-ID: <20230920112905.266606699@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -45,148 +44,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dc9511dd6f37fe803f6b15b61b030728d7057417 ]
+[ Upstream commit fce92af1c29d90184dfec638b5738831097d66e9 ]
 
-sk->sk_wmem_queued can be read locklessly from sctp_poll()
+syzbot complained about a data-race in fib_table_lookup() [1]
 
-Use sk_wmem_queued_add() when the field is changed,
-and add READ_ONCE() annotations in sctp_writeable()
-and sctp_assocs_seq_show()
+Add appropriate annotations to document it.
 
-syzbot reported:
+[1]
+BUG: KCSAN: data-race in fib_release_info / fib_table_lookup
 
-BUG: KCSAN: data-race in sctp_poll / sctp_wfree
-
-read-write to 0xffff888149d77810 of 4 bytes by interrupt on cpu 0:
-sctp_wfree+0x170/0x4a0 net/sctp/socket.c:9147
-skb_release_head_state+0xb7/0x1a0 net/core/skbuff.c:988
-skb_release_all net/core/skbuff.c:1000 [inline]
-__kfree_skb+0x16/0x140 net/core/skbuff.c:1016
-consume_skb+0x57/0x180 net/core/skbuff.c:1232
-sctp_chunk_destroy net/sctp/sm_make_chunk.c:1503 [inline]
-sctp_chunk_put+0xcd/0x130 net/sctp/sm_make_chunk.c:1530
-sctp_datamsg_put+0x29a/0x300 net/sctp/chunk.c:128
-sctp_chunk_free+0x34/0x50 net/sctp/sm_make_chunk.c:1515
-sctp_outq_sack+0xafa/0xd70 net/sctp/outqueue.c:1381
-sctp_cmd_process_sack net/sctp/sm_sideeffect.c:834 [inline]
-sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1366 [inline]
-sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
-sctp_do_sm+0x12c7/0x31b0 net/sctp/sm_sideeffect.c:1169
-sctp_assoc_bh_rcv+0x2b2/0x430 net/sctp/associola.c:1051
-sctp_inq_push+0x108/0x120 net/sctp/inqueue.c:80
-sctp_rcv+0x116e/0x1340 net/sctp/input.c:243
-sctp6_rcv+0x25/0x40 net/sctp/ipv6.c:1120
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-process_backlog+0x21f/0x380 net/core/dev.c:5894
-__napi_poll+0x60/0x3b0 net/core/dev.c:6460
-napi_poll net/core/dev.c:6527 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6660
-__do_softirq+0xc1/0x265 kernel/softirq.c:553
-run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
-smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
-kthread+0x1d7/0x210 kernel/kthread.c:389
-ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-read to 0xffff888149d77810 of 4 bytes by task 17828 on cpu 1:
-sctp_writeable net/sctp/socket.c:9304 [inline]
-sctp_poll+0x265/0x410 net/sctp/socket.c:8671
-sock_poll+0x253/0x270 net/socket.c:1374
-vfs_poll include/linux/poll.h:88 [inline]
-do_pollfd fs/select.c:873 [inline]
-do_poll fs/select.c:921 [inline]
-do_sys_poll+0x636/0xc00 fs/select.c:1015
-__do_sys_ppoll fs/select.c:1121 [inline]
-__se_sys_ppoll+0x1af/0x1f0 fs/select.c:1101
-__x64_sys_ppoll+0x67/0x80 fs/select.c:1101
+write to 0xffff888150f31744 of 1 bytes by task 1189 on cpu 0:
+fib_release_info+0x3a0/0x460 net/ipv4/fib_semantics.c:281
+fib_table_delete+0x8d2/0x900 net/ipv4/fib_trie.c:1777
+fib_magic+0x1c1/0x1f0 net/ipv4/fib_frontend.c:1106
+fib_del_ifaddr+0x8cf/0xa60 net/ipv4/fib_frontend.c:1317
+fib_inetaddr_event+0x77/0x200 net/ipv4/fib_frontend.c:1448
+notifier_call_chain kernel/notifier.c:93 [inline]
+blocking_notifier_call_chain+0x90/0x200 kernel/notifier.c:388
+__inet_del_ifa+0x4df/0x800 net/ipv4/devinet.c:432
+inet_del_ifa net/ipv4/devinet.c:469 [inline]
+inetdev_destroy net/ipv4/devinet.c:322 [inline]
+inetdev_event+0x553/0xaf0 net/ipv4/devinet.c:1606
+notifier_call_chain kernel/notifier.c:93 [inline]
+raw_notifier_call_chain+0x6b/0x1c0 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1962 [inline]
+call_netdevice_notifiers_mtu+0xd2/0x130 net/core/dev.c:2037
+dev_set_mtu_ext+0x30b/0x3e0 net/core/dev.c:8673
+do_setlink+0x5be/0x2430 net/core/rtnetlink.c:2837
+rtnl_setlink+0x255/0x300 net/core/rtnetlink.c:3177
+rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6445
+netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2549
+rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6463
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1914
+sock_sendmsg_nosec net/socket.c:725 [inline]
+sock_sendmsg net/socket.c:748 [inline]
+sock_write_iter+0x1aa/0x230 net/socket.c:1129
+do_iter_write+0x4b4/0x7b0 fs/read_write.c:860
+vfs_writev+0x1a8/0x320 fs/read_write.c:933
+do_writev+0xf8/0x220 fs/read_write.c:976
+__do_sys_writev fs/read_write.c:1049 [inline]
+__se_sys_writev fs/read_write.c:1046 [inline]
+__x64_sys_writev+0x45/0x50 fs/read_write.c:1046
 do_syscall_x64 arch/x86/entry/common.c:50 [inline]
 do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
 entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-value changed: 0x00019e80 -> 0x0000cc80
+read to 0xffff888150f31744 of 1 bytes by task 21839 on cpu 1:
+fib_table_lookup+0x2bf/0xd50 net/ipv4/fib_trie.c:1585
+fib_lookup include/net/ip_fib.h:383 [inline]
+ip_route_output_key_hash_rcu+0x38c/0x12c0 net/ipv4/route.c:2751
+ip_route_output_key_hash net/ipv4/route.c:2641 [inline]
+__ip_route_output_key include/net/route.h:134 [inline]
+ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2869
+send4+0x1e7/0x500 drivers/net/wireguard/socket.c:61
+wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
+wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
+wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
+wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
+process_one_work+0x434/0x860 kernel/workqueue.c:2600
+worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
+kthread+0x1d7/0x210 kernel/kthread.c:389
+ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+value changed: 0x00 -> 0x01
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 17828 Comm: syz-executor.1 Not tainted 6.5.0-rc7-syzkaller-00185-g28f20a19294d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+CPU: 1 PID: 21839 Comm: kworker/u4:18 Tainted: G W 6.5.0-syzkaller #0
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: dccd9ecc3744 ("ipv4: Do not use dead fib_info entries.")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230830094519.950007-1-edumazet@google.com
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230830095520.1046984-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/proc.c   |  2 +-
- net/sctp/socket.c | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ net/ipv4/fib_semantics.c | 5 ++++-
+ net/ipv4/fib_trie.c      | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/proc.c b/net/sctp/proc.c
-index 982a87b3e11f8..963b94517ec20 100644
---- a/net/sctp/proc.c
-+++ b/net/sctp/proc.c
-@@ -284,7 +284,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
- 		assoc->init_retries, assoc->shutdown_retries,
- 		assoc->rtx_data_chunks,
- 		refcount_read(&sk->sk_wmem_alloc),
--		sk->sk_wmem_queued,
-+		READ_ONCE(sk->sk_wmem_queued),
- 		sk->sk_sndbuf,
- 		sk->sk_rcvbuf);
- 	seq_printf(seq, "\n");
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 431b9399a781f..d1dd261e8b010 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -68,7 +68,7 @@
- #include <net/sctp/stream_sched.h>
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index 42a4ee192f8dc..51cfb650060ba 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -275,7 +275,8 @@ void fib_release_info(struct fib_info *fi)
+ 				hlist_del(&nexthop_nh->nh_hash);
+ 			} endfor_nexthops(fi)
+ 		}
+-		fi->fib_dead = 1;
++		/* Paired with READ_ONCE() from fib_table_lookup() */
++		WRITE_ONCE(fi->fib_dead, 1);
+ 		fib_info_put(fi);
+ 	}
+ 	spin_unlock_bh(&fib_info_lock);
+@@ -1586,6 +1587,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
+ link_it:
+ 	ofi = fib_find_info(fi);
+ 	if (ofi) {
++		/* fib_table_lookup() should not see @fi yet. */
+ 		fi->fib_dead = 1;
+ 		free_fib_info(fi);
+ 		ofi->fib_treeref++;
+@@ -1623,6 +1625,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
  
- /* Forward declarations for internal helper functions. */
--static bool sctp_writeable(struct sock *sk);
-+static bool sctp_writeable(const struct sock *sk);
- static void sctp_wfree(struct sk_buff *skb);
- static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
- 				size_t msg_len);
-@@ -138,7 +138,7 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
- 
- 	refcount_add(sizeof(struct sctp_chunk), &sk->sk_wmem_alloc);
- 	asoc->sndbuf_used += chunk->skb->truesize + sizeof(struct sctp_chunk);
--	sk->sk_wmem_queued += chunk->skb->truesize + sizeof(struct sctp_chunk);
-+	sk_wmem_queued_add(sk, chunk->skb->truesize + sizeof(struct sctp_chunk));
- 	sk_mem_charge(sk, chunk->skb->truesize);
- }
- 
-@@ -8997,7 +8997,7 @@ static void sctp_wfree(struct sk_buff *skb)
- 	struct sock *sk = asoc->base.sk;
- 
- 	sk_mem_uncharge(sk, skb->truesize);
--	sk->sk_wmem_queued -= skb->truesize + sizeof(struct sctp_chunk);
-+	sk_wmem_queued_add(sk, -(skb->truesize + sizeof(struct sctp_chunk)));
- 	asoc->sndbuf_used -= skb->truesize + sizeof(struct sctp_chunk);
- 	WARN_ON(refcount_sub_and_test(sizeof(struct sctp_chunk),
- 				      &sk->sk_wmem_alloc));
-@@ -9152,9 +9152,9 @@ void sctp_write_space(struct sock *sk)
-  * UDP-style sockets or TCP-style sockets, this code should work.
-  *  - Daisy
-  */
--static bool sctp_writeable(struct sock *sk)
-+static bool sctp_writeable(const struct sock *sk)
- {
--	return sk->sk_sndbuf > sk->sk_wmem_queued;
-+	return READ_ONCE(sk->sk_sndbuf) > READ_ONCE(sk->sk_wmem_queued);
- }
- 
- /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
+ failure:
+ 	if (fi) {
++		/* fib_table_lookup() should not see @fi yet. */
+ 		fi->fib_dead = 1;
+ 		free_fib_info(fi);
+ 	}
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index a1f830da4ad30..7f933ead3bf4c 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -1448,7 +1448,8 @@ int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
+ 		}
+ 		if (fa->fa_tos && fa->fa_tos != flp->flowi4_tos)
+ 			continue;
+-		if (fi->fib_dead)
++		/* Paired with WRITE_ONCE() in fib_release_info() */
++		if (READ_ONCE(fi->fib_dead))
+ 			continue;
+ 		if (fa->fa_info->fib_scope < flp->flowi4_scope)
+ 			continue;
 -- 
 2.40.1
 
