@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5004930FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C754DC433C7;
-	Wed, 20 Sep 2023 12:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0155630FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:19:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBE1C433C8;
+	Wed, 20 Sep 2023 12:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212345;
-	bh=gh8lIb8VLZukvGlPIezxxObjeu/jrqy0O9Gqj1EVbpM=;
+	s=korg; t=1695212347;
+	bh=gMXiOkccmfJ+TW4QLoMO80+9U6lmPsOvOS+KCyAgs6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTD/eRXz/42Ko66iUxATN/pDKx4FYIf81PdSsxYfqrO3DdfzxRXnx3+3ecbLTVWYr
-	 eIm/VunzaKEYOkReqJpZvnsDUk76OFHY2elXzYcj5GfOISodHDJ0bkxhG0CAQuoak8
-	 LYIjnAOyjWSRUNRi9UdePlUpH+GzuqND7GtaCwgI=
+	b=KQ9z1G6hdOfcqO796xp0yNug/1kNjH3qZKmiIw4seMjBQcs0kP/qlfCTAZf6WRHJG
+	 CqzFl6a86gKLCv4s+3lGPVacM/c0ofH5HBXh5rYJ42jIbdPyVEsftUtUr7Lt4h2lLT
+	 fWxPGcXfldXExQjwk0P0x6vpxfJdPzpvDwead6e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 202/273] parisc: led: Reduce CPU overhead for disk & lan LED computation
-Date: Wed, 20 Sep 2023 13:30:42 +0200
-Message-ID: <20230920112852.735467937@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wesley Chalmers <wesley.chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 4.19 235/273] drm/amd/display: Fix a bug when searching for insert_above_mpcc
+Date: Wed, 20 Sep 2023 13:31:15 +0200
+Message-ID: <20230920112853.626126584@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -38,38 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Wesley Chalmers <wesley.chalmers@amd.com>
 
-commit 358ad816e52d4253b38c2f312e6b1cbd89e0dbf7 upstream.
+commit 3d028d5d60d516c536de1ddd3ebf3d55f3f8983b upstream.
 
-Older PA-RISC machines have LEDs which show the disk- and LAN-activity.
-The computation is done in software and takes quite some time, e.g. on a
-J6500 this may take up to 60% time of one CPU if the machine is loaded
-via network traffic.
+[WHY]
+Currently, when insert_plane is called with insert_above_mpcc
+parameter that is equal to tree->opp_list, the function returns NULL.
 
-Since most people don't care about the LEDs, start with LEDs disabled and
-just show a CPU heartbeat LED. The disk and LAN LEDs can be turned on
-manually via /proc/pdc/led.
+[HOW]
+Instead, the function should insert the plane at the top of the tree.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Wesley Chalmers <wesley.chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/led.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/parisc/led.c
-+++ b/drivers/parisc/led.c
-@@ -60,8 +60,8 @@
- static int led_type __read_mostly = -1;
- static unsigned char lastleds;	/* LED state from most recent update */
- static unsigned int led_heartbeat __read_mostly = 1;
--static unsigned int led_diskio    __read_mostly = 1;
--static unsigned int led_lanrxtx   __read_mostly = 1;
-+static unsigned int led_diskio    __read_mostly;
-+static unsigned int led_lanrxtx   __read_mostly;
- static char lcd_text[32]          __read_mostly;
- static char lcd_text_default[32]  __read_mostly;
- static int  lcd_no_led_support    __read_mostly = 0; /* KittyHawk doesn't support LED on its LCD */
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_mpc.c
+@@ -193,8 +193,9 @@ struct mpcc *mpc1_insert_plane(
+ 		/* check insert_above_mpcc exist in tree->opp_list */
+ 		struct mpcc *temp_mpcc = tree->opp_list;
+ 
+-		while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
+-			temp_mpcc = temp_mpcc->mpcc_bot;
++		if (temp_mpcc != insert_above_mpcc)
++			while (temp_mpcc && temp_mpcc->mpcc_bot != insert_above_mpcc)
++				temp_mpcc = temp_mpcc->mpcc_bot;
+ 		if (temp_mpcc == NULL)
+ 			return NULL;
+ 	}
 
 
