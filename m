@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB47E544
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B70C433C8;
-	Wed, 20 Sep 2023 12:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FBA2AB36
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:04:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FCBC433C8;
+	Wed, 20 Sep 2023 12:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211474;
-	bh=HEOuq2dSQENrD+f4dqApkv1l/2Ov4aWC6nDnQWsJ46c=;
+	s=korg; t=1695211477;
+	bh=XlR4UHI2YLPkdGoOXpcL2px84L4+PJ5bStd/UayL0j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mg9JdSaB+77FEl/YvfhVmo2JF+KX1UxW17sS2RmN+vE9RXMSGTR7P73+YAqfxnape
-	 UqagDl+++LEAACTxBl1/cfrIlnrSzfhe0yqJveU7TWZXmfgpgH5vVwSpWXdW9zcPtG
-	 8KspZYIKXS+q1RVUwiwxpIiLX+CVNEkSUWhDYgD4=
+	b=S68hD56FmwBsR4xIFFl/prOls9YrBppzBzPlHtStMDrquwMoKiEBNrARrSM7g5AC6
+	 lWBRfpZbDa6I+3Ffc/X7w93i0oNRKkN0QHxIm2IUPbnKIq5SODoFh8AvkRkMfQovL9
+	 gXPB19RA4mMcy//UdOMScxF6TClUmOuLZGdTRKB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Tom Haynes <loghyr@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 081/186] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Wed, 20 Sep 2023 13:29:44 +0200
-Message-ID: <20230920112839.800413175@linuxfoundation.org>
+Subject: [PATCH 4.14 072/186] NFSD: da_addr_body field missing in some GETDEVICEINFO replies
+Date: Wed, 20 Sep 2023 13:29:35 +0200
+Message-ID: <20230920112839.470145600@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -41,78 +41,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+[ Upstream commit 6372e2ee629894433fe6107d7048536a3280a284 ]
 
-There are three places that qla4xxx parses nlattrs:
+The XDR specification in RFC 8881 looks like this:
 
- - qla4xxx_set_chap_entry()
+struct device_addr4 {
+	layouttype4	da_layout_type;
+	opaque		da_addr_body<>;
+};
 
- - qla4xxx_iface_set_param()
+struct GETDEVICEINFO4resok {
+	device_addr4	gdir_device_addr;
+	bitmap4		gdir_notification;
+};
 
- - qla4xxx_sysfs_ddb_set_param()
+union GETDEVICEINFO4res switch (nfsstat4 gdir_status) {
+case NFS4_OK:
+	GETDEVICEINFO4resok gdir_resok4;
+case NFS4ERR_TOOSMALL:
+	count4		gdir_mincount;
+default:
+	void;
+};
 
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
+Looking at nfsd4_encode_getdeviceinfo() ....
 
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
+When the client provides a zero gd_maxcount, then the Linux NFS
+server implementation encodes the da_layout_type field and then
+skips the da_addr_body field completely, proceeding directly to
+encode gdir_notification field.
 
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+There does not appear to be an option in the specification to skip
+encoding da_addr_body. Moreover, Section 18.40.3 says:
+
+> If the client wants to just update or turn off notifications, it
+> MAY send a GETDEVICEINFO operation with gdia_maxcount set to zero.
+> In that event, if the device ID is valid, the reply's da_addr_body
+> field of the gdir_device_addr field will be of zero length.
+
+Since the layout drivers are responsible for encoding the
+da_addr_body field, put this fix inside the ->encode_getdeviceinfo
+methods.
+
+Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Tom Haynes <loghyr@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/nfsd/blocklayoutxdr.c    |  9 +++++++++
+ fs/nfsd/flexfilelayoutxdr.c |  9 +++++++++
+ fs/nfsd/nfs4xdr.c           | 25 +++++++++++--------------
+ 3 files changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index 62022a66e9ee2..d6e9717cb0fb5 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -942,6 +942,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
+diff --git a/fs/nfsd/blocklayoutxdr.c b/fs/nfsd/blocklayoutxdr.c
+index 442543304930b..2455dc8be18a8 100644
+--- a/fs/nfsd/blocklayoutxdr.c
++++ b/fs/nfsd/blocklayoutxdr.c
+@@ -82,6 +82,15 @@ nfsd4_block_encode_getdeviceinfo(struct xdr_stream *xdr,
+ 	int len = sizeof(__be32), ret, i;
+ 	__be32 *p;
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
++	/*
++	 * See paragraph 5 of RFC 8881 S18.40.3.
++	 */
++	if (!gdp->gd_maxcount) {
++		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
++			return nfserr_resource;
++		return nfs_ok;
++	}
 +
- 		param_info = nla_data(attr);
+ 	p = xdr_reserve_space(xdr, len + sizeof(__be32));
+ 	if (!p)
+ 		return nfserr_resource;
+diff --git a/fs/nfsd/flexfilelayoutxdr.c b/fs/nfsd/flexfilelayoutxdr.c
+index e81d2a5cf381e..bb205328e043d 100644
+--- a/fs/nfsd/flexfilelayoutxdr.c
++++ b/fs/nfsd/flexfilelayoutxdr.c
+@@ -85,6 +85,15 @@ nfsd4_ff_encode_getdeviceinfo(struct xdr_stream *xdr,
+ 	int addr_len;
+ 	__be32 *p;
  
- 		switch (param_info->param) {
-@@ -2727,6 +2732,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
++	/*
++	 * See paragraph 5 of RFC 8881 S18.40.3.
++	 */
++	if (!gdp->gd_maxcount) {
++		if (xdr_stream_encode_u32(xdr, 0) != XDR_UNIT)
++			return nfserr_resource;
++		return nfs_ok;
++	}
++
+ 	/* len + padding for two strings */
+ 	addr_len = 16 + da->netaddr.netid_len + da->netaddr.addr_len;
+ 	ver_len = 20;
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index d34ed6575e8fb..997d3134beb32 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -4091,20 +4091,17 @@ nfsd4_encode_getdeviceinfo(struct nfsd4_compoundres *resp, __be32 nfserr,
+ 
+ 	*p++ = cpu_to_be32(gdev->gd_layout_type);
+ 
+-	/* If maxcount is 0 then just update notifications */
+-	if (gdev->gd_maxcount != 0) {
+-		ops = nfsd4_layout_ops[gdev->gd_layout_type];
+-		nfserr = ops->encode_getdeviceinfo(xdr, gdev);
+-		if (nfserr) {
+-			/*
+-			 * We don't bother to burden the layout drivers with
+-			 * enforcing gd_maxcount, just tell the client to
+-			 * come back with a bigger buffer if it's not enough.
+-			 */
+-			if (xdr->buf->len + 4 > gdev->gd_maxcount)
+-				goto toosmall;
+-			return nfserr;
+-		}
++	ops = nfsd4_layout_ops[gdev->gd_layout_type];
++	nfserr = ops->encode_getdeviceinfo(xdr, gdev);
++	if (nfserr) {
++		/*
++		 * We don't bother to burden the layout drivers with
++		 * enforcing gd_maxcount, just tell the client to
++		 * come back with a bigger buffer if it's not enough.
++		 */
++		if (xdr->buf->len + 4 > gdev->gd_maxcount)
++			goto toosmall;
++		return nfserr;
  	}
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
- 
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8102,6 +8112,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
- 
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
+ 	if (gdev->gd_notify_types) {
 -- 
 2.40.1
 
