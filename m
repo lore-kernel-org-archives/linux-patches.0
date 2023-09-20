@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F065030FA7
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DFDC433CB;
-	Wed, 20 Sep 2023 12:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9B130FA7
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176F8C433C8;
+	Wed, 20 Sep 2023 12:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212785;
-	bh=wnAwaRFO2h1qYIf0wPR3pVPXsfE/FSlhlHxd3c43WBI=;
+	s=korg; t=1695212788;
+	bh=tUuCgVN9BvauVGIP0N5AXmwN+yOhZLGsOKFWdyh4pZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4/QaoqcgK/ZzChTVguRoSedyd4A/1G5yVv1EtSoJGiv/3Dk1aRXzmGn4JSZ95KBB
-	 ezpC0FOMP/LJxM/nOW5tixd0A2mgrypscyFz3dPwjWG5lfD/1Q6uMBFLwo4gjjclrH
-	 vz4kUe+iL2UjgRjV+t5CWvEuky7BECzW2qmb6cKU=
+	b=RCFM+1wwROnS7vwig9wCAFbHFYD5AhOvW1/fYnomkXYHGT30V1PeArluWqg4nA3Hy
+	 FUnIa9k0yGr91aIRp+1X1ioSzfJk2LFvSf2jRPFvmdG0sEjwSno9wGRqxhTKnkhz/6
+	 2c6py7vDcr+oPBYsgTeX+fCRq0Rus4TaPGK+gMeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Christensen <drc@linux.vnet.ibm.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/367] bnx2x: fix page fault following EEH recovery
-Date: Wed, 20 Sep 2023 13:26:54 +0200
-Message-ID: <20230920112859.467279399@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 046/367] udf: Handle error when adding extent to a file
+Date: Wed, 20 Sep 2023 13:27:03 +0200
+Message-ID: <20230920112859.683200078@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -41,55 +38,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Christensen <drc@linux.vnet.ibm.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 7ebe4eda4265642859507d1b3ca330d8c196cfe5 ]
+commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
 
-In the last step of the EEH recovery process, the EEH driver calls into
-bnx2x_io_resume() to re-initialize the NIC hardware via the function
-bnx2x_nic_load().  If an error occurs during bnx2x_nic_load(), OS and
-hardware resources are released and an error code is returned to the
-caller.  When called from bnx2x_io_resume(), the return code is ignored
-and the network interface is brought up unconditionally.  Later attempts
-to send a packet via this interface result in a page fault due to a null
-pointer reference.
+When adding extent to a file fails, so far we've silently squelshed the
+error. Make sure to propagate it up properly.
 
-This patch checks the return code of bnx2x_nic_load(), prints an error
-message if necessary, and does not enable the interface.
-
-Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-index b5f58c62e7d20..211fbc8f75712 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -14426,11 +14426,16 @@ static void bnx2x_io_resume(struct pci_dev *pdev)
- 	bp->fw_seq = SHMEM_RD(bp, func_mb[BP_FW_MB_IDX(bp)].drv_mb_header) &
- 							DRV_MSG_SEQ_NUMBER_MASK;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -57,15 +57,15 @@ static int udf_update_inode(struct inode
+ static int udf_sync_inode(struct inode *inode);
+ static int udf_alloc_i_data(struct inode *inode, size_t size);
+ static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
+-static int8_t udf_insert_aext(struct inode *, struct extent_position,
+-			      struct kernel_lb_addr, uint32_t);
++static int udf_insert_aext(struct inode *, struct extent_position,
++			   struct kernel_lb_addr, uint32_t);
+ static void udf_split_extents(struct inode *, int *, int, udf_pblk_t,
+ 			      struct kernel_long_ad *, int *);
+ static void udf_prealloc_extents(struct inode *, int, int,
+ 				 struct kernel_long_ad *, int *);
+ static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
+-static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
+-			       int, struct extent_position *);
++static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
++			      int, struct extent_position *);
+ static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
  
--	if (netif_running(dev))
--		bnx2x_nic_load(bp, LOAD_NORMAL);
-+	if (netif_running(dev)) {
-+		if (bnx2x_nic_load(bp, LOAD_NORMAL)) {
-+			netdev_err(bp->dev, "Error during driver initialization, try unloading/reloading the driver\n");
-+			goto done;
-+		}
-+	}
+ static void __udf_clear_extent_cache(struct inode *inode)
+@@ -890,7 +890,9 @@ static sector_t inode_getblk(struct inod
+ 	/* write back the new extents, inserting new extents if the new number
+ 	 * of extents is greater than the old number, and deleting extents if
+ 	 * the new number of extents is less than the old number */
+-	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
++	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
++	if (*err < 0)
++		goto out_free;
  
- 	netif_device_attach(dev);
- 
-+done:
- 	rtnl_unlock();
+ 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
+ 				iinfo->i_location.partitionReferenceNum, 0);
+@@ -1158,21 +1160,30 @@ static void udf_merge_extents(struct ino
+ 	}
  }
  
--- 
-2.40.1
-
+-static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
+-			       int startnum, int endnum,
+-			       struct extent_position *epos)
++static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
++			      int startnum, int endnum,
++			      struct extent_position *epos)
+ {
+ 	int start = 0, i;
+ 	struct kernel_lb_addr tmploc;
+ 	uint32_t tmplen;
++	int err;
+ 
+ 	if (startnum > endnum) {
+ 		for (i = 0; i < (startnum - endnum); i++)
+ 			udf_delete_aext(inode, *epos);
+ 	} else if (startnum < endnum) {
+ 		for (i = 0; i < (endnum - startnum); i++) {
+-			udf_insert_aext(inode, *epos, laarr[i].extLocation,
+-					laarr[i].extLength);
++			err = udf_insert_aext(inode, *epos,
++					      laarr[i].extLocation,
++					      laarr[i].extLength);
++			/*
++			 * If we fail here, we are likely corrupting the extent
++			 * list and leaking blocks. At least stop early to
++			 * limit the damage.
++			 */
++			if (err < 0)
++				return err;
+ 			udf_next_aext(inode, epos, &laarr[i].extLocation,
+ 				      &laarr[i].extLength, 1);
+ 			start++;
+@@ -1184,6 +1195,7 @@ static void udf_update_extents(struct in
+ 		udf_write_aext(inode, epos, &laarr[i].extLocation,
+ 			       laarr[i].extLength, 1);
+ 	}
++	return 0;
+ }
+ 
+ struct buffer_head *udf_bread(struct inode *inode, udf_pblk_t block,
+@@ -2218,12 +2230,13 @@ int8_t udf_current_aext(struct inode *in
+ 	return etype;
+ }
+ 
+-static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
+-			      struct kernel_lb_addr neloc, uint32_t nelen)
++static int udf_insert_aext(struct inode *inode, struct extent_position epos,
++			   struct kernel_lb_addr neloc, uint32_t nelen)
+ {
+ 	struct kernel_lb_addr oeloc;
+ 	uint32_t oelen;
+ 	int8_t etype;
++	int err;
+ 
+ 	if (epos.bh)
+ 		get_bh(epos.bh);
+@@ -2233,10 +2246,10 @@ static int8_t udf_insert_aext(struct ino
+ 		neloc = oeloc;
+ 		nelen = (etype << 30) | oelen;
+ 	}
+-	udf_add_aext(inode, &epos, &neloc, nelen, 1);
++	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
+ 	brelse(epos.bh);
+ 
+-	return (nelen >> 30);
++	return err;
+ }
+ 
+ int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
 
 
