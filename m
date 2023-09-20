@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D19C18658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23413C433C7;
-	Wed, 20 Sep 2023 11:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515AE18658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF718C433C9;
+	Wed, 20 Sep 2023 11:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210524;
-	bh=k3dp5OUwFlqW8+OTvh5wDgQSysXcQzRlAo/SMzyqR9o=;
+	s=korg; t=1695210527;
+	bh=f4zg7ygaDK62R6pc8CTe7Mp0u1eDZZNz/vpkGbbtfME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnlM46TXAIfzPYvmWxqnJiFmMgucPLko3GuNdhYPIbgpljlUvKSQzzxiXYyWv4Tb0
-	 GCU9Wc6VWfRhfyDHW8RxxPVGSwoZkT8N2H3D0PdO60araAJYJkWwQ+p2x29/zFbC4Z
-	 4uuvBGoikd2eZzkugv3QPEI0xv7J1wsYsjHBAdCk=
+	b=f07CHEaJnshXn+jaVJEaAhD7TN/J5N1SK4APB+4wzII63PuuE8A8Hamb+Ezh4JrvP
+	 XH6HqzGxK3HpofSgWAvcB79021BFMCyQKwagK02j/7APmVHUaFYVuIxKtAjaLAw69m
+	 GxJr+kNjRRPcjBkGVoa115ImJaOPRpa2Arj+nzvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Shurong <zhang_shurong@foxmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 109/211] media: az6007: Fix null-ptr-deref in az6007_i2c_xfer()
-Date: Wed, 20 Sep 2023 13:29:13 +0200
-Message-ID: <20230920112849.175542404@linuxfoundation.org>
+Subject: [PATCH 6.5 110/211] media: dvb-usb-v2: gl861: Fix null-ptr-deref in gl861_i2c_master_xfer
+Date: Wed, 20 Sep 2023 13:29:14 +0200
+Message-ID: <20230920112849.205591059@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -42,11 +42,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 1047f9343011f2cedc73c64829686206a7e9fc3f ]
+[ Upstream commit b97719a66970601cd3151a3e2020f4454a1c4ff6 ]
 
-In az6007_i2c_xfer, msg is controlled by user. When msg[i].buf
+In gl861_i2c_master_xfer, msg is controlled by user. When msg[i].buf
 is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach az6007_i2c_xfer. If accessing
+passed. Malicious data finally reach gl861_i2c_master_xfer. If accessing
 msg[i].buf[0] without sanity check, null ptr deref would happen.
 We add check on msg[i].len to prevent crash.
 
@@ -58,35 +58,22 @@ Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/az6007.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/usb/dvb-usb-v2/gl861.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
-index 2dcbb49d66dab..2410054ddb2c3 100644
---- a/drivers/media/usb/dvb-usb-v2/az6007.c
-+++ b/drivers/media/usb/dvb-usb-v2/az6007.c
-@@ -788,6 +788,10 @@ static int az6007_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
- 			if (az6007_xfer_debug)
- 				printk(KERN_DEBUG "az6007: I2C W addr=0x%x len=%d\n",
- 				       addr, msgs[i].len);
-+			if (msgs[i].len < 1) {
-+				ret = -EIO;
-+				goto err;
-+			}
- 			req = AZ6007_I2C_WR;
- 			index = msgs[i].buf[0];
- 			value = addr | (1 << 8);
-@@ -802,6 +806,10 @@ static int az6007_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
- 			if (az6007_xfer_debug)
- 				printk(KERN_DEBUG "az6007: I2C R addr=0x%x len=%d\n",
- 				       addr, msgs[i].len);
-+			if (msgs[i].len < 1) {
-+				ret = -EIO;
-+				goto err;
-+			}
- 			req = AZ6007_I2C_RD;
- 			index = msgs[i].buf[0];
- 			value = addr;
+diff --git a/drivers/media/usb/dvb-usb-v2/gl861.c b/drivers/media/usb/dvb-usb-v2/gl861.c
+index 0c434259c36f1..c71e7b93476de 100644
+--- a/drivers/media/usb/dvb-usb-v2/gl861.c
++++ b/drivers/media/usb/dvb-usb-v2/gl861.c
+@@ -120,7 +120,7 @@ static int gl861_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 	} else if (num == 2 && !(msg[0].flags & I2C_M_RD) &&
+ 		   (msg[1].flags & I2C_M_RD)) {
+ 		/* I2C write + read */
+-		if (msg[0].len > 1 || msg[1].len > sizeof(ctx->buf)) {
++		if (msg[0].len != 1 || msg[1].len > sizeof(ctx->buf)) {
+ 			ret = -EOPNOTSUPP;
+ 			goto err;
+ 		}
 -- 
 2.40.1
 
