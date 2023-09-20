@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0D418658
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071EAC433C7;
-	Wed, 20 Sep 2023 11:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3030018658
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E1EC433C8;
+	Wed, 20 Sep 2023 11:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210543;
-	bh=rTf/RRHYqGz488O6YKUd+1YIaPsD/7iBnK44wy7vTZQ=;
+	s=korg; t=1695210546;
+	bh=YvTH9xXpjN2rsZv1vKBZa4qYS2v/3zD6G5z3c6H0yNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0SGgJ3memWHsAPMZXoU5Lcw4KqQf9SIf/YdIZdwymzx4Jy9dRuNOchUlemHqRE5a
-	 qfLBKHc7W2soGCals0Dk6rDcJLQrBZ252X8U83EvQ69kgG9Ry0SCQVmFJYi4pvQk3Q
-	 nXz/zKiYA97q1q9LYkOWhhvuCR7SL2CkPJ+Ph2Ak=
+	b=i4hsRCgXH3Z0Ft1K5fw98tzgRNcFJF8w44pecys/LxTsZEk0bi5aTekvayqXbjY7z
+	 ru/WZGvq/393MG6kuzqGz3jfgKtXVWvP9c2ncsdYBJvoDTZqObkwgLJ2jPK8e/4AKY
+	 H2+vXv6t+VPhGWvgSX+8cNkGk4URMXbnD58F59FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Li Yang <leoyang.li@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 116/211] usb: gadget: fsl_qe_udc: validate endpoint index for ch9 udc
-Date: Wed, 20 Sep 2023 13:29:20 +0200
-Message-ID: <20230920112849.391473106@linuxfoundation.org>
+Subject: [PATCH 6.5 099/211] PCI: dwc: Provide deinit callback for i.MX
+Date: Wed, 20 Sep 2023 13:29:03 +0200
+Message-ID: <20230920112848.874228723@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
 References: <20230920112845.859868994@linuxfoundation.org>
@@ -40,35 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit ce9daa2efc0872a9a68ea51dc8000df05893ef2e ]
+[ Upstream commit fc8b24c28bec19fc0621d108b9ee81ddfdedb25a ]
 
-We should verify the bound of the array to assure that host
-may not manipulate the index to point past endpoint array.
+The i.MX integration for the DesignWare PCI controller has a _host_exit()
+operation which undoes everything that the _host_init() operation does but
+does not wire this up as the host_deinit callback for the core, or call it
+in any path other than suspend. This means that if we ever unwind the
+initial probe of the device, for example because it fails, the regulator
+core complains that the regulators for the device were left enabled:
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Acked-by: Li Yang <leoyang.li@nxp.com>
-Link: https://lore.kernel.org/r/20230628081511.186850-1-make_ruc2021@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+imx6q-pcie 33800000.pcie: iATU: unroll T, 4 ob, 4 ib, align 64K, limit 16G
+imx6q-pcie 33800000.pcie: Phy link never came up
+imx6q-pcie 33800000.pcie: Phy link never came up
+imx6q-pcie: probe of 33800000.pcie failed with error -110
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 46 at drivers/regulator/core.c:2396 _regulator_put+0x110/0x128
+
+Wire up the callback so that the core can clean up after itself.
+
+Link: https://lore.kernel.org/r/20230731-pci-imx-regulator-cleanup-v2-1-fc8fa5c9893d@kernel.org
+Tested-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fsl_qe_udc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/dwc/pci-imx6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
-index 9c5dc1c1a68ea..4aae86b47edfc 100644
---- a/drivers/usb/gadget/udc/fsl_qe_udc.c
-+++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
-@@ -1959,6 +1959,8 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 	} else if ((request_type & USB_RECIP_MASK) == USB_RECIP_ENDPOINT) {
- 		/* Get endpoint status */
- 		int pipe = index & USB_ENDPOINT_NUMBER_MASK;
-+		if (pipe >= USB_MAX_ENDPOINTS)
-+			goto stall;
- 		struct qe_ep *target_ep = &udc->eps[pipe];
- 		u16 usep;
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index 27aaa2a6bf391..a18c20085e940 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -1040,6 +1040,7 @@ static void imx6_pcie_host_exit(struct dw_pcie_rp *pp)
  
+ static const struct dw_pcie_host_ops imx6_pcie_host_ops = {
+ 	.host_init = imx6_pcie_host_init,
++	.host_deinit = imx6_pcie_host_exit,
+ };
+ 
+ static const struct dw_pcie_ops dw_pcie_ops = {
 -- 
 2.40.1
 
