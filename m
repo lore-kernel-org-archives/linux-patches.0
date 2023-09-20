@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF2F30FA4
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1241C433BA;
-	Wed, 20 Sep 2023 12:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB77930FA4
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64637C433CD;
+	Wed, 20 Sep 2023 12:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695212416;
-	bh=c54qSLbn44zabGJFkntSEv1q3nNL/PqslYpdaIVajSs=;
+	s=korg; t=1695212418;
+	bh=CX8KnYXGLI9ffszWSw8iqqy+9cdY32U/qDhyZu3aVW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOSYna7JaLmVDAcHSGxO8Ft7Cg07gqGFxyl1VorIeZV75NFZ7K8SiMchp7rR1GB0O
-	 5qadab1n1lt/fCIg0t7TuT0dP7xjOcSSTDlv3g/Mes8sjjwo+oO5ojoIcBnCNMHRYa
-	 32afCuWIpBXJQU8yxwuNJAookpMfcYEnyC2rcdOQ=
+	b=EnfuidVHKGImCJEnpvC/BV9Do2eSaASDtOWBfBTLmsBjFu3aLrVpN+j8yDEeU/NAf
+	 ur67tWOfNkNFnkbG1N6w+N8a78US5rt4TFA3pFUnW+z++tETj0gSg7Xe9Tperck+XD
+	 ZYwODrlN63DusFKxPlZsNJc+hl6Ztwl39rxTW5VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomislav Novak <tnovak@meta.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Samuel Gosselin <sgosselin@google.com>
-Subject: [PATCH 4.19 241/273] hw_breakpoint: fix single-stepping when using bpf_overflow_handler
-Date: Wed, 20 Sep 2023 13:31:21 +0200
-Message-ID: <20230920112853.790639624@linuxfoundation.org>
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 242/273] wifi: ath9k: fix printk specifier
+Date: Wed, 20 Sep 2023 13:31:22 +0200
+Message-ID: <20230920112853.817444749@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
 References: <20230920112846.440597133@linuxfoundation.org>
@@ -37,154 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomislav Novak <tnovak@meta.com>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit d11a69873d9a7435fe6a48531e165ab80a8b1221 ]
+[ Upstream commit 061115fbfb2ce5870c9a004d68dc63138c07c782 ]
 
-Arm platforms use is_default_overflow_handler() to determine if the
-hw_breakpoint code should single-step over the breakpoint trigger or
-let the custom handler deal with it.
+Smatch reports:
 
-Since bpf_overflow_handler() currently isn't recognized as a default
-handler, attaching a BPF program to a PERF_TYPE_BREAKPOINT event causes
-it to keep firing (the instruction triggering the data abort exception
-is never skipped). For example:
+ath_pci_probe() warn: argument 4 to %lx specifier is cast from pointer
+ath_ahb_probe() warn: argument 4 to %lx specifier is cast from pointer
 
-  # bpftrace -e 'watchpoint:0x10000:4:w { print("hit") }' -c ./test
-  Attaching 1 probe...
-  hit
-  hit
-  [...]
-  ^C
+Fix it by modifying %lx to %p in the printk format string.
 
-(./test performs a single 4-byte store to 0x10000)
+Note that with this change, the pointer address will be printed as a
+hashed value by default. This is appropriate because the kernel
+should not leak kernel pointers to user space in an informational
+message. If someone wants to see the real address for debugging
+purposes, this can be achieved with the no_hash_pointers kernel option.
 
-This patch replaces the check with uses_default_overflow_handler(),
-which accounts for the bpf_overflow_handler() case by also testing
-if one of the perf_event_output functions gets invoked indirectly,
-via orig_default_handler.
-
-Signed-off-by: Tomislav Novak <tnovak@meta.com>
-Tested-by: Samuel Gosselin <sgosselin@google.com> # arm64
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/linux-arm-kernel/20220923203644.2731604-1-tnovak@fb.com/
-Link: https://lore.kernel.org/r/20230605191923.1219974-1-tnovak@meta.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230723040403.296723-1-dzm91@hust.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/hw_breakpoint.c   |  8 ++++----
- arch/arm64/kernel/hw_breakpoint.c |  4 ++--
- include/linux/perf_event.h        | 22 +++++++++++++++++++---
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath9k/ahb.c | 4 ++--
+ drivers/net/wireless/ath/ath9k/pci.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/kernel/hw_breakpoint.c b/arch/arm/kernel/hw_breakpoint.c
-index 2ee5b7f5e7ad0..c71ecd06131ca 100644
---- a/arch/arm/kernel/hw_breakpoint.c
-+++ b/arch/arm/kernel/hw_breakpoint.c
-@@ -631,7 +631,7 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
- 	hw->address &= ~alignment_mask;
- 	hw->ctrl.len <<= offset;
+diff --git a/drivers/net/wireless/ath/ath9k/ahb.c b/drivers/net/wireless/ath/ath9k/ahb.c
+index 63019c3de034d..26023e3b4b9df 100644
+--- a/drivers/net/wireless/ath/ath9k/ahb.c
++++ b/drivers/net/wireless/ath/ath9k/ahb.c
+@@ -136,8 +136,8 @@ static int ath_ahb_probe(struct platform_device *pdev)
  
--	if (is_default_overflow_handler(bp)) {
-+	if (uses_default_overflow_handler(bp)) {
- 		/*
- 		 * Mismatch breakpoints are required for single-stepping
- 		 * breakpoints.
-@@ -803,7 +803,7 @@ static void watchpoint_handler(unsigned long addr, unsigned int fsr,
- 		 * Otherwise, insert a temporary mismatch breakpoint so that
- 		 * we can single-step over the watchpoint trigger.
- 		 */
--		if (!is_default_overflow_handler(wp))
-+		if (!uses_default_overflow_handler(wp))
- 			continue;
- step:
- 		enable_single_step(wp, instruction_pointer(regs));
-@@ -816,7 +816,7 @@ static void watchpoint_handler(unsigned long addr, unsigned int fsr,
- 		info->trigger = addr;
- 		pr_debug("watchpoint fired: address = 0x%x\n", info->trigger);
- 		perf_bp_event(wp, regs);
--		if (is_default_overflow_handler(wp))
-+		if (uses_default_overflow_handler(wp))
- 			enable_single_step(wp, instruction_pointer(regs));
- 	}
+ 	ah = sc->sc_ah;
+ 	ath9k_hw_name(ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)mem, irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, mem, irq);
  
-@@ -891,7 +891,7 @@ static void breakpoint_handler(unsigned long unknown, struct pt_regs *regs)
- 			info->trigger = addr;
- 			pr_debug("breakpoint fired: address = 0x%x\n", addr);
- 			perf_bp_event(bp, regs);
--			if (is_default_overflow_handler(bp))
-+			if (uses_default_overflow_handler(bp))
- 				enable_single_step(bp, addr);
- 			goto unlock;
- 		}
-diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
-index 9f105fe58595d..5d120e39bf61a 100644
---- a/arch/arm64/kernel/hw_breakpoint.c
-+++ b/arch/arm64/kernel/hw_breakpoint.c
-@@ -661,7 +661,7 @@ static int breakpoint_handler(unsigned long unused, unsigned int esr,
- 		perf_bp_event(bp, regs);
+ 	return 0;
  
- 		/* Do we need to handle the stepping? */
--		if (is_default_overflow_handler(bp))
-+		if (uses_default_overflow_handler(bp))
- 			step = 1;
- unlock:
- 		rcu_read_unlock();
-@@ -740,7 +740,7 @@ static u64 get_distance_from_watchpoint(unsigned long addr, u64 val,
- static int watchpoint_report(struct perf_event *wp, unsigned long addr,
- 			     struct pt_regs *regs)
- {
--	int step = is_default_overflow_handler(wp);
-+	int step = uses_default_overflow_handler(wp);
- 	struct arch_hw_breakpoint *info = counter_arch_bp(wp);
+diff --git a/drivers/net/wireless/ath/ath9k/pci.c b/drivers/net/wireless/ath/ath9k/pci.c
+index 92b2dd396436a..cb3318bd3cad2 100644
+--- a/drivers/net/wireless/ath/ath9k/pci.c
++++ b/drivers/net/wireless/ath/ath9k/pci.c
+@@ -993,8 +993,8 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	sc->sc_ah->msi_reg = 0;
  
- 	info->trigger = addr;
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index efe30b9b11908..f17e08bd294c2 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -998,15 +998,31 @@ extern void perf_event_output(struct perf_event *event,
- 			      struct pt_regs *regs);
+ 	ath9k_hw_name(sc->sc_ah, hw_name, sizeof(hw_name));
+-	wiphy_info(hw->wiphy, "%s mem=0x%lx, irq=%d\n",
+-		   hw_name, (unsigned long)sc->mem, pdev->irq);
++	wiphy_info(hw->wiphy, "%s mem=0x%p, irq=%d\n",
++		   hw_name, sc->mem, pdev->irq);
  
- static inline bool
--is_default_overflow_handler(struct perf_event *event)
-+__is_default_overflow_handler(perf_overflow_handler_t overflow_handler)
- {
--	if (likely(event->overflow_handler == perf_event_output_forward))
-+	if (likely(overflow_handler == perf_event_output_forward))
- 		return true;
--	if (unlikely(event->overflow_handler == perf_event_output_backward))
-+	if (unlikely(overflow_handler == perf_event_output_backward))
- 		return true;
- 	return false;
- }
+ 	return 0;
  
-+#define is_default_overflow_handler(event) \
-+	__is_default_overflow_handler((event)->overflow_handler)
-+
-+#ifdef CONFIG_BPF_SYSCALL
-+static inline bool uses_default_overflow_handler(struct perf_event *event)
-+{
-+	if (likely(is_default_overflow_handler(event)))
-+		return true;
-+
-+	return __is_default_overflow_handler(event->orig_overflow_handler);
-+}
-+#else
-+#define uses_default_overflow_handler(event) \
-+	is_default_overflow_handler(event)
-+#endif
-+
- extern void
- perf_event_header__init_id(struct perf_event_header *header,
- 			   struct perf_sample_data *data,
 -- 
 2.40.1
 
