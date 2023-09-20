@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1792E640
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0B7C433C7;
-	Wed, 20 Sep 2023 12:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0E430F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:41:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F9EC433CD;
+	Wed, 20 Sep 2023 12:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213690;
-	bh=2D3HpySPV3f5ePvFTYzszdjbec5iWkk4vogILZ5qNNc=;
+	s=korg; t=1695213692;
+	bh=lXnYU39OPapoTiKwcR3wfdmnpT1f0fgoi6hvK/S1CvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vadD/b5uho1LKWoeg9JQygukutOAqDgFHl4e2d3J+V4c0JjRZX8sTPju7xA3e4an7
-	 uJ9Sso19QefVjAqLDxWic+Jv8k7YEDrxPVeJW0OVGqQhfvgbd6SkPwk1stqRgKI5ab
-	 hZgACOwWp7zs+GPQerJW+ZXM13ElpEG5mlby3vV8=
+	b=2p6HZJuwavSk8A8kua4ouyspHymT2pQ2O85ElG+wWTNwCZEjm8yfmPtcYzlpaRzcJ
+	 UrWuU9Te9+t74mLo+0WVwmVFehkojULy9kPSNGIE6si6sW+fHHldQenTezVX2F/RqW
+	 7w0MKdExe5FDD7MKmoElxeuayZfKrF56hUxKVrIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	YueHaibing <yuehaibing@huawei.com>,
-	Anson Huang <Anson.Huang@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jim Reinhart <jimr@tekvox.com>,
+	James Autry <jautry@tekvox.com>,
+	Matthew Maron <matthewm@tekvox.com>,
+	Giulio Benetti <giulio.benetti@benettiengineering.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 294/367] clk: imx: clk-pll14xx: Make two variables static
-Date: Wed, 20 Sep 2023 13:31:11 +0200
-Message-ID: <20230920112906.160888443@linuxfoundation.org>
+Subject: [PATCH 5.4 323/367] mmc: sdhci-esdhc-imx: improve ESDHC_FLAG_ERR010450
+Date: Wed, 20 Sep 2023 13:31:40 +0200
+Message-ID: <20230920112906.902056310@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -42,49 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Giulio Benetti <giulio.benetti@benettiengineering.com>
 
-[ Upstream commit 8f2d3c1759d19232edf1e9ef43d40a44e31493d6 ]
+[ Upstream commit 5ae4b0d8875caa44946e579420c7fd5740d58653 ]
 
-Fix sparse warnings:
+Errata ERR010450 only shows up if voltage is 1.8V, but if the device is
+supplied by 3v3 the errata can be ignored. So let's check for if quirk
+SDHCI_QUIRK2_NO_1_8_V is defined or not before limiting the frequency.
 
-drivers/clk/imx/clk-pll14xx.c:44:37:
- warning: symbol 'imx_pll1416x_tbl' was not declared. Should it be static?
-drivers/clk/imx/clk-pll14xx.c:57:37:
- warning: symbol 'imx_pll1443x_tbl' was not declared. Should it be static?
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Anson Huang <Anson.Huang@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: 72d00e560d10 ("clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz")
+Cc: Jim Reinhart <jimr@tekvox.com>
+Cc: James Autry <jautry@tekvox.com>
+Cc: Matthew Maron <matthewm@tekvox.com>
+Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
+Acked-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230811214853.8623-1-giulio.benetti@benettiengineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-pll14xx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-pll14xx.c b/drivers/clk/imx/clk-pll14xx.c
-index c43e9653b4156..129a28c3366eb 100644
---- a/drivers/clk/imx/clk-pll14xx.c
-+++ b/drivers/clk/imx/clk-pll14xx.c
-@@ -41,7 +41,7 @@ struct clk_pll14xx {
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index b3f761eca8299..762288c6d30ce 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -153,8 +153,8 @@
+ #define ESDHC_FLAG_HS400		BIT(9)
+ /*
+  * The IP has errata ERR010450
+- * uSDHC: Due to the I/O timing limit, for SDR mode, SD card clock can't
+- * exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
++ * uSDHC: At 1.8V due to the I/O timing limit, for SDR mode, SD card
++ * clock can't exceed 150MHz, for DDR mode, SD card clock can't exceed 45MHz.
+  */
+ #define ESDHC_FLAG_ERR010450		BIT(10)
+ /* The IP supports HS400ES mode */
+@@ -777,7 +777,8 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
+ 		| ESDHC_CLOCK_MASK);
+ 	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
  
- #define to_clk_pll14xx(_hw) container_of(_hw, struct clk_pll14xx, hw)
+-	if (imx_data->socdata->flags & ESDHC_FLAG_ERR010450) {
++	if ((imx_data->socdata->flags & ESDHC_FLAG_ERR010450) &&
++	    (!(host->quirks2 & SDHCI_QUIRK2_NO_1_8_V))) {
+ 		unsigned int max_clock;
  
--const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
-+static const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
- 	PLL_1416X_RATE(1800000000U, 225, 3, 0),
- 	PLL_1416X_RATE(1600000000U, 200, 3, 0),
- 	PLL_1416X_RATE(1200000000U, 300, 3, 1),
-@@ -52,7 +52,7 @@ const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
- 	PLL_1416X_RATE(600000000U,  300, 3, 2),
- };
- 
--const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
-+static const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
- 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
- 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
- 	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
+ 		max_clock = imx_data->is_ddr ? 45000000 : 150000000;
 -- 
 2.40.1
 
