@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F94F8465
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D5DC433CC;
-	Wed, 20 Sep 2023 11:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90BC8465
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 11:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A07C433C7;
+	Wed, 20 Sep 2023 11:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695210961;
-	bh=1icQZj3mBT2IB6NwzAA1jV7NTX7pHyoKrw9nHWCVWAc=;
+	s=korg; t=1695210963;
+	bh=V7FRL8FwEObH8wmNneCsSOy8lDXtzGiI9tmE5E0WqP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zS5OoTnR0ds0Bsziig9anS5O4SXHiHxpfTviDEXgZ/UfgAl85SdgDFhCebd7pAMJt
-	 j9wmmPabgZlnOaF1xYMA/b2JywQ87aw7htEJJkADs4fMKxHeNLqHg5C/yk2zd1/Ger
-	 XzwqqvtZ3GKx8JwlnaeWEKM5oPJ9ACKVo1gUNh+8=
+	b=FP0sDMSjCIFCE2zWWlwNUnMIc7cpKHtf5UYY1RaWgP2yLVwK6YzrzdkolnfVcBXY+
+	 Mh2SqqaX+FhYVqTkNTUfCm+7UYRH2VFqQyT1l0uRn31DoKEIbV4kg8cPqyHTC5Ak7v
+	 ZWSY8t+pwyvwyMwUT2hIPyaHPTPILoamh/Wdozsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Ottinger <g.ottinger@gmx.at>,
-	Jan Kara <jack@suse.cz>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/139] ext2: fix datatype of block number in ext2_xattr_set2()
-Date: Wed, 20 Sep 2023 13:29:51 +0200
-Message-ID: <20230920112837.804437343@linuxfoundation.org>
+Subject: [PATCH 6.1 040/139] drm/edid: Add quirk for OSVR HDK 2.0
+Date: Wed, 20 Sep 2023 13:29:34 +0200
+Message-ID: <20230920112837.129414835@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 References: <20230920112835.549467415@linuxfoundation.org>
@@ -40,53 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georg Ottinger <g.ottinger@gmx.at>
+From: Ralph Campbell <rcampbell@nvidia.com>
 
-[ Upstream commit e88076348425b7d0491c8c98d8732a7df8de7aa3 ]
+[ Upstream commit 98d4cb705bc00afd4a9a71cc1e84f7111682639a ]
 
-I run a small server that uses external hard drives for backups. The
-backup software I use uses ext2 filesystems with 4KiB block size and
-the server is running SELinux and therefore relies on xattr. I recently
-upgraded the hard drives from 4TB to 12TB models. I noticed that after
-transferring some TBs I got a filesystem error "Freeing blocks not in
-datazone - block = 18446744071529317386, count = 1" and the backup
-process stopped. Trying to fix the fs with e2fsck resulted in a
-completely corrupted fs. The error probably came from ext2_free_blocks(),
-and because of the large number 18e19 this problem immediately looked
-like some kind of integer overflow. Whereas the 4TB fs was about 1e9
-blocks, the new 12TB is about 3e9 blocks. So, searching the ext2 code,
-I came across the line in fs/ext2/xattr.c:745 where ext2_new_block()
-is called and the resulting block number is stored in the variable block
-as an int datatype. If a block with a block number greater than
-INT32_MAX is returned, this variable overflows and the call to
-sb_getblk() at line fs/ext2/xattr.c:750 fails, then the call to
-ext2_free_blocks() produces the error.
+The OSVR virtual reality headset HDK 2.0 uses a different EDID
+vendor and device identifier than the HDK 1.1 - 1.4 headsets.
+Add the HDK 2.0 vendor and device identifier to the quirks table so
+that window managers do not try to display the desktop screen on the
+headset display.
 
-Signed-off-by: Georg Ottinger <g.ottinger@gmx.at>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230815100340.22121-1-g.ottinger@gmx.at>
+Closes: https://gitlab.freedesktop.org/drm/misc/-/issues/30
+Signed-off-by: Ralph Campbell <rcampbell@nvidia.com>
+Tested-by: Ralph Campbell <rcampbell@nvidia.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621061903.3422648-1-rcampbell@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_edid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext2/xattr.c b/fs/ext2/xattr.c
-index 641abfa4b718a..2f89b1073307b 100644
---- a/fs/ext2/xattr.c
-+++ b/fs/ext2/xattr.c
-@@ -744,10 +744,10 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
- 			/* We need to allocate a new block */
- 			ext2_fsblk_t goal = ext2_group_first_block_no(sb,
- 						EXT2_I(inode)->i_block_group);
--			int block = ext2_new_block(inode, goal, &error);
-+			ext2_fsblk_t block = ext2_new_block(inode, goal, &error);
- 			if (error)
- 				goto cleanup;
--			ea_idebug(inode, "creating block %d", block);
-+			ea_idebug(inode, "creating block %lu", block);
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 739e0d40cca61..5ed77e3361fd7 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -231,6 +231,7 @@ static const struct edid_quirk {
  
- 			new_bh = sb_getblk(sb, block);
- 			if (unlikely(!new_bh)) {
+ 	/* OSVR HDK and HDK2 VR Headsets */
+ 	EDID_QUIRK('S', 'V', 'R', 0x1019, EDID_QUIRK_NON_DESKTOP),
++	EDID_QUIRK('A', 'U', 'O', 0x1111, EDID_QUIRK_NON_DESKTOP),
+ };
+ 
+ /*
 -- 
 2.40.1
 
