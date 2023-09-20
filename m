@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C05154BF
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0816C433C7;
-	Wed, 20 Sep 2023 12:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B38A154BF
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:03:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838A1C433C9;
+	Wed, 20 Sep 2023 12:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211415;
-	bh=40fp3mHNnnykiizQvbpMe6c5Nzv2mA2wg3XH86Zsnw0=;
+	s=korg; t=1695211417;
+	bh=wBxpB75ZvgVDbKn02UjRMMDeS54xZ0VV5RTRlLnYyXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQlDYNX0E7UuBp8O8j0uDfcPusmgVG15d5JqYO8AbtRp/Rz4QQTdcHzUimwv93E6T
-	 McwnxrjxkjkDkt5iONuKThzt+nCDGUIDqRyuhV0xAZnlvkaQIKY1y4HjSuHFg1GdpM
-	 hrvPt+8Gor0XI1AkGjLj6kBQghx9OhDf19Qy1u0Y=
+	b=WNUdhg8Tm/IXGSxeyJHSUAwQfKSekjadyfXece5OI6Zuf2XX/UCA2Rfy0jq4HnyCY
+	 HCoZPRyChdZWm2yYRTxIAp3Bx/kcVtCtqryfZfT4322HZBdGCx+pA3HJr9rd+uvec6
+	 /soy1ZUbK119V4l197QWRArRinAWXjLNdI3ZHDhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 085/186] dma-buf/sync_file: Fix docs syntax
-Date: Wed, 20 Sep 2023 13:29:48 +0200
-Message-ID: <20230920112839.955579898@linuxfoundation.org>
+Subject: [PATCH 4.14 086/186] media: go7007: Remove redundant if statement
+Date: Wed, 20 Sep 2023 13:29:49 +0200
+Message-ID: <20230920112840.001274742@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -40,37 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 05d56d8079d510a2994039470f65bea85f0075ee ]
+[ Upstream commit f33cb49081da0ec5af0888f8ecbd566bd326eed1 ]
 
-Fixes the warning:
+The if statement that compares msgs[i].len != 3 is always false because
+it is in a code block where msg[i].len is equal to 3. The check is
+redundant and can be removed.
 
-  include/uapi/linux/sync_file.h:77: warning: Function parameter or member 'num_fences' not described in 'sync_file_info'
+As detected by cppcheck static analysis:
+drivers/media/usb/go7007/go7007-i2c.c:168:20: warning: Opposite inner
+'if' condition leads to a dead code block. [oppositeInnerCondition]
 
-Fixes: 2d75c88fefb2 ("staging/android: refactor SYNC IOCTLs")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230724145000.125880-1-robdclark@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-media/20230727174007.635572-1-colin.i.king@gmail.com
+
+Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/sync_file.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/go7007/go7007-i2c.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/uapi/linux/sync_file.h b/include/uapi/linux/sync_file.h
-index ee2dcfb3d6602..d7f7c04a6e0c1 100644
---- a/include/uapi/linux/sync_file.h
-+++ b/include/uapi/linux/sync_file.h
-@@ -52,7 +52,7 @@ struct sync_fence_info {
-  * @name:	name of fence
-  * @status:	status of fence. 1: signaled 0:active <0:error
-  * @flags:	sync_file_info flags
-- * @num_fences	number of fences in the sync_file
-+ * @num_fences:	number of fences in the sync_file
-  * @pad:	padding for 64-bit alignment, should always be zero
-  * @sync_fence_info: pointer to array of structs sync_fence_info with all
-  *		 fences in the sync_file
+diff --git a/drivers/media/usb/go7007/go7007-i2c.c b/drivers/media/usb/go7007/go7007-i2c.c
+index c084bf794b567..64f25d4e52b20 100644
+--- a/drivers/media/usb/go7007/go7007-i2c.c
++++ b/drivers/media/usb/go7007/go7007-i2c.c
+@@ -173,8 +173,6 @@ static int go7007_i2c_master_xfer(struct i2c_adapter *adapter,
+ 		} else if (msgs[i].len == 3) {
+ 			if (msgs[i].flags & I2C_M_RD)
+ 				return -EIO;
+-			if (msgs[i].len != 3)
+-				return -EIO;
+ 			if (go7007_i2c_xfer(go, msgs[i].addr, 0,
+ 					(msgs[i].buf[0] << 8) | msgs[i].buf[1],
+ 					0x01, &msgs[i].buf[2]) < 0)
 -- 
 2.40.1
 
