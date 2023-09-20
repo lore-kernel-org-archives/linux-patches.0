@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6399715AD3
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBDBC433C8;
-	Wed, 20 Sep 2023 12:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2700315AD3
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:38:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E71DC433CA;
+	Wed, 20 Sep 2023 12:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213499;
-	bh=k/IX7BLKwcqTvHlJZw451odjbrioplZoxxDzV4Jyzpo=;
+	s=korg; t=1695213502;
+	bh=BEFJ/26C2aFWz3c77jQwiD1wPfMojvoTJIk9FGTHfKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXpzasY4vULRLsphq8b807q3mA0BAAv3TXr/YfcImE30XzC+l8MWskZpF8VIbWCh8
-	 THIny6WW9wDHWYinRH1zeQdgVGVQzdCgJKNf+ob/v2aqfoTZwG4a4DrKwDwH9G5cX0
-	 FuIE3MM35ToxiEs5oiDUCcPe4hAk/7v7iEdd/avk=
+	b=KAcxu6pE682P/p8LNcDb67TgLAqVkusUmYcFt93ZJbrT9S803BAwbZkclxfk1gjMt
+	 yYEyGucUQ7Ot8xLQnrh9GxZKoLH+XofZfionU3sBnAYsqhicWL+tp+cHsNba0ABcZ8
+	 zT+vxULGOfqg+hkZk8l15RShvOb9T9LSivk3YXNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 259/367] ipv4: annotate data-races around fi->fib_dead
-Date: Wed, 20 Sep 2023 13:30:36 +0200
-Message-ID: <20230920112905.266606699@linuxfoundation.org>
+Subject: [PATCH 5.4 260/367] net: read sk->sk_family once in sk_mc_loop()
+Date: Wed, 20 Sep 2023 13:30:37 +0200
+Message-ID: <20230920112905.293027465@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -44,132 +44,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fce92af1c29d90184dfec638b5738831097d66e9 ]
+[ Upstream commit a3e0fdf71bbe031de845e8e08ed7fba49f9c702c ]
 
-syzbot complained about a data-race in fib_table_lookup() [1]
+syzbot is playing with IPV6_ADDRFORM quite a lot these days,
+and managed to hit the WARN_ON_ONCE(1) in sk_mc_loop()
 
-Add appropriate annotations to document it.
+We have many more similar issues to fix.
 
-[1]
-BUG: KCSAN: data-race in fib_release_info / fib_table_lookup
+WARNING: CPU: 1 PID: 1593 at net/core/sock.c:782 sk_mc_loop+0x165/0x260
+Modules linked in:
+CPU: 1 PID: 1593 Comm: kworker/1:3 Not tainted 6.1.40-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+Workqueue: events_power_efficient gc_worker
+RIP: 0010:sk_mc_loop+0x165/0x260 net/core/sock.c:782
+Code: 34 1b fd 49 81 c7 18 05 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 20 00 74 08 4c 89 ff e8 25 36 6d fd 4d 8b 37 eb 13 e8 db 33 1b fd <0f> 0b b3 01 eb 34 e8 d0 33 1b fd 45 31 f6 49 83 c6 38 4c 89 f0 48
+RSP: 0018:ffffc90000388530 EFLAGS: 00010246
+RAX: ffffffff846d9b55 RBX: 0000000000000011 RCX: ffff88814f884980
+RDX: 0000000000000102 RSI: ffffffff87ae5160 RDI: 0000000000000011
+RBP: ffffc90000388550 R08: 0000000000000003 R09: ffffffff846d9a65
+R10: 0000000000000002 R11: ffff88814f884980 R12: dffffc0000000000
+R13: ffff88810dbee000 R14: 0000000000000010 R15: ffff888150084000
+FS: 0000000000000000(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000180 CR3: 000000014ee5b000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<IRQ>
+[<ffffffff8507734f>] ip6_finish_output2+0x33f/0x1ae0 net/ipv6/ip6_output.c:83
+[<ffffffff85062766>] __ip6_finish_output net/ipv6/ip6_output.c:200 [inline]
+[<ffffffff85062766>] ip6_finish_output+0x6c6/0xb10 net/ipv6/ip6_output.c:211
+[<ffffffff85061f8c>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
+[<ffffffff85061f8c>] ip6_output+0x2bc/0x3d0 net/ipv6/ip6_output.c:232
+[<ffffffff852071cf>] dst_output include/net/dst.h:444 [inline]
+[<ffffffff852071cf>] ip6_local_out+0x10f/0x140 net/ipv6/output_core.c:161
+[<ffffffff83618fb4>] ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:483 [inline]
+[<ffffffff83618fb4>] ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:529 [inline]
+[<ffffffff83618fb4>] ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
+[<ffffffff83618fb4>] ipvlan_queue_xmit+0x1174/0x1be0 drivers/net/ipvlan/ipvlan_core.c:677
+[<ffffffff8361ddd9>] ipvlan_start_xmit+0x49/0x100 drivers/net/ipvlan/ipvlan_main.c:229
+[<ffffffff84763fc0>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
+[<ffffffff84763fc0>] xmit_one net/core/dev.c:3644 [inline]
+[<ffffffff84763fc0>] dev_hard_start_xmit+0x320/0x980 net/core/dev.c:3660
+[<ffffffff8494c650>] sch_direct_xmit+0x2a0/0x9c0 net/sched/sch_generic.c:342
+[<ffffffff8494d883>] qdisc_restart net/sched/sch_generic.c:407 [inline]
+[<ffffffff8494d883>] __qdisc_run+0xb13/0x1e70 net/sched/sch_generic.c:415
+[<ffffffff8478c426>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
+[<ffffffff84796eac>] net_tx_action+0x7ac/0x940 net/core/dev.c:5247
+[<ffffffff858002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:599
+[<ffffffff814c3fe8>] invoke_softirq kernel/softirq.c:430 [inline]
+[<ffffffff814c3fe8>] __irq_exit_rcu+0xc8/0x170 kernel/softirq.c:683
+[<ffffffff814c3f09>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:695
 
-write to 0xffff888150f31744 of 1 bytes by task 1189 on cpu 0:
-fib_release_info+0x3a0/0x460 net/ipv4/fib_semantics.c:281
-fib_table_delete+0x8d2/0x900 net/ipv4/fib_trie.c:1777
-fib_magic+0x1c1/0x1f0 net/ipv4/fib_frontend.c:1106
-fib_del_ifaddr+0x8cf/0xa60 net/ipv4/fib_frontend.c:1317
-fib_inetaddr_event+0x77/0x200 net/ipv4/fib_frontend.c:1448
-notifier_call_chain kernel/notifier.c:93 [inline]
-blocking_notifier_call_chain+0x90/0x200 kernel/notifier.c:388
-__inet_del_ifa+0x4df/0x800 net/ipv4/devinet.c:432
-inet_del_ifa net/ipv4/devinet.c:469 [inline]
-inetdev_destroy net/ipv4/devinet.c:322 [inline]
-inetdev_event+0x553/0xaf0 net/ipv4/devinet.c:1606
-notifier_call_chain kernel/notifier.c:93 [inline]
-raw_notifier_call_chain+0x6b/0x1c0 kernel/notifier.c:461
-call_netdevice_notifiers_info net/core/dev.c:1962 [inline]
-call_netdevice_notifiers_mtu+0xd2/0x130 net/core/dev.c:2037
-dev_set_mtu_ext+0x30b/0x3e0 net/core/dev.c:8673
-do_setlink+0x5be/0x2430 net/core/rtnetlink.c:2837
-rtnl_setlink+0x255/0x300 net/core/rtnetlink.c:3177
-rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6445
-netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2549
-rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6463
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1914
-sock_sendmsg_nosec net/socket.c:725 [inline]
-sock_sendmsg net/socket.c:748 [inline]
-sock_write_iter+0x1aa/0x230 net/socket.c:1129
-do_iter_write+0x4b4/0x7b0 fs/read_write.c:860
-vfs_writev+0x1a8/0x320 fs/read_write.c:933
-do_writev+0xf8/0x220 fs/read_write.c:976
-__do_sys_writev fs/read_write.c:1049 [inline]
-__se_sys_writev fs/read_write.c:1046 [inline]
-__x64_sys_writev+0x45/0x50 fs/read_write.c:1046
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff888150f31744 of 1 bytes by task 21839 on cpu 1:
-fib_table_lookup+0x2bf/0xd50 net/ipv4/fib_trie.c:1585
-fib_lookup include/net/ip_fib.h:383 [inline]
-ip_route_output_key_hash_rcu+0x38c/0x12c0 net/ipv4/route.c:2751
-ip_route_output_key_hash net/ipv4/route.c:2641 [inline]
-__ip_route_output_key include/net/route.h:134 [inline]
-ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2869
-send4+0x1e7/0x500 drivers/net/wireguard/socket.c:61
-wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work+0x434/0x860 kernel/workqueue.c:2600
-worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
-kthread+0x1d7/0x210 kernel/kthread.c:389
-ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-value changed: 0x00 -> 0x01
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 21839 Comm: kworker/u4:18 Tainted: G W 6.5.0-syzkaller #0
-
-Fixes: dccd9ecc3744 ("ipv4: Do not use dead fib_info entries.")
+Fixes: 7ad6848c7e81 ("ip: fix mc_loop checks for tunnels with multicast outer addresses")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230830095520.1046984-1-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230830101244.1146934-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c | 5 ++++-
- net/ipv4/fib_trie.c      | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ net/core/sock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 42a4ee192f8dc..51cfb650060ba 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -275,7 +275,8 @@ void fib_release_info(struct fib_info *fi)
- 				hlist_del(&nexthop_nh->nh_hash);
- 			} endfor_nexthops(fi)
- 		}
--		fi->fib_dead = 1;
-+		/* Paired with READ_ONCE() from fib_table_lookup() */
-+		WRITE_ONCE(fi->fib_dead, 1);
- 		fib_info_put(fi);
- 	}
- 	spin_unlock_bh(&fib_info_lock);
-@@ -1586,6 +1587,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
- link_it:
- 	ofi = fib_find_info(fi);
- 	if (ofi) {
-+		/* fib_table_lookup() should not see @fi yet. */
- 		fi->fib_dead = 1;
- 		free_fib_info(fi);
- 		ofi->fib_treeref++;
-@@ -1623,6 +1625,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
- 
- failure:
- 	if (fi) {
-+		/* fib_table_lookup() should not see @fi yet. */
- 		fi->fib_dead = 1;
- 		free_fib_info(fi);
- 	}
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index a1f830da4ad30..7f933ead3bf4c 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1448,7 +1448,8 @@ int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
- 		}
- 		if (fa->fa_tos && fa->fa_tos != flp->flowi4_tos)
- 			continue;
--		if (fi->fib_dead)
-+		/* Paired with WRITE_ONCE() in fib_release_info() */
-+		if (READ_ONCE(fi->fib_dead))
- 			continue;
- 		if (fa->fa_info->fib_scope < flp->flowi4_scope)
- 			continue;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 69b4158a29f74..1fed45f29e0ec 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -701,7 +701,8 @@ bool sk_mc_loop(struct sock *sk)
+ 		return false;
+ 	if (!sk)
+ 		return true;
+-	switch (sk->sk_family) {
++	/* IPV6_ADDRFORM can change sk->sk_family under us. */
++	switch (READ_ONCE(sk->sk_family)) {
+ 	case AF_INET:
+ 		return inet_sk(sk)->mc_loop;
+ #if IS_ENABLED(CONFIG_IPV6)
 -- 
 2.40.1
 
