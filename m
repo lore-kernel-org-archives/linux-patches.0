@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D832AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2E9C433C8;
-	Wed, 20 Sep 2023 12:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E9B2AB21
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6519BC43391;
+	Wed, 20 Sep 2023 12:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211220;
-	bh=7F3sDRYk3/fu29YeI5dlbZEsTH871CS37ht8kp0FcWE=;
+	s=korg; t=1695211222;
+	bh=ZUZ+9ke8hVDEqhn/2hd2GwEu0YIc7JlJgu+ZEvM1SWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3LqJbV12z/UmDyxSgLV6ZGgjafXUEcnUooGJ/NAxLQsXprINPIPrP0mfAclQlsVV
-	 2vsgofI+0tsooQocdSEh/+gHq1qxP3j1nQPCVRAr4b4yEisPjZ8lVe+Cf29CwKyxtG
-	 m8t2cKGauwq2Rtp4kbpp8bj49EUuLK4aXI27LIR0=
+	b=CGEejk/H4FBpuUw3tX7+NBWxMAgf+qE2badSHpX9syS2yO5mtDgvkSlQcVOg4l3mT
+	 gZwSEUmNkFLO5fWz8FzLVLpZnsCmPMnULufDuMo9FYUQlWpbHItTuPCOV+g+xRRElc
+	 ETtSoOJkpnpuzttYqXWcB1dI7YDLs5gL5MeUADTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Ryabinin <aryabinin@virtuozzo.com>,
-	Sodagudi Prasad <psodagud@codeaurora.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 4.14 013/186] lib/ubsan: remove returns-nonnull-attribute checks
-Date: Wed, 20 Sep 2023 13:28:36 +0200
-Message-ID: <20230920112837.344434821@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Manuel Lauss <manuel.lauss@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 4.14 002/186] mmc: au1xmmc: force non-modular build and remove symbol_get usage
+Date: Wed, 20 Sep 2023 13:28:25 +0200
+Message-ID: <20230920112836.905530940@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -42,101 +41,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Ryabinin <aryabinin@virtuozzo.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit bac7a1fff7926fb9891a18fe33650884b0e13e41 upstream.
+commit d4a5c59a955bba96b273ec1a5885bada24c56979 upstream.
 
-Similarly to type mismatch checks, new GCC 8.x and Clang also changed for
-ABI for returns_nonnull checks.  While we can update our code to conform
-the new ABI it's more reasonable to just remove it.  Because it's just
-dead code, we don't have any single user of returns_nonnull attribute in
-the whole kernel.
+au1xmmc is split somewhat awkwardly into the main mmc subsystem driver,
+and callbacks in platform_data that sit under arch/mips/ and are
+always built in.  The latter than call mmc_detect_change through
+symbol_get.  Remove the use of symbol_get by requiring the driver
+to be built in.  In the future the interrupt handlers for card
+insert/eject detection should probably be moved into the main driver,
+and which point it can be built modular again.
 
-And AFAIU the advantage that this attribute could bring would be mitigated
-by -fno-delete-null-pointer-checks cflag that we use to build the kernel.
-So it's unlikely we will have a lot of returns_nonnull attribute in
-future.
-
-So let's just remove the code, it has no use.
-
-[aryabinin@virtuozzo.com: fix warning]
-  Link: http://lkml.kernel.org/r/20180122165711.11510-1-aryabinin@virtuozzo.com
-Link: http://lkml.kernel.org/r/20180119152853.16806-2-aryabinin@virtuozzo.com
-Signed-off-by: Andrey Ryabinin <aryabinin@virtuozzo.com>
-Cc: Sodagudi Prasad <psodagud@codeaurora.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Manuel Lauss <manuel.lauss@gmail.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+[mcgrof: squashed in depends on MMC=y suggested by Arnd]
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/ubsan.c            |   24 ------------------------
- lib/ubsan.h            |    5 -----
- scripts/Makefile.ubsan |    1 -
- 3 files changed, 30 deletions(-)
+ arch/mips/alchemy/devboards/db1000.c |    8 +-------
+ arch/mips/alchemy/devboards/db1200.c |   19 ++-----------------
+ arch/mips/alchemy/devboards/db1300.c |   10 +---------
+ drivers/mmc/host/Kconfig             |    5 +++--
+ 4 files changed, 7 insertions(+), 35 deletions(-)
 
---- a/lib/ubsan.c
-+++ b/lib/ubsan.c
-@@ -143,11 +143,6 @@ static void val_to_string(char *str, siz
- 	}
- }
+--- a/arch/mips/alchemy/devboards/db1000.c
++++ b/arch/mips/alchemy/devboards/db1000.c
+@@ -26,7 +26,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/leds.h>
+ #include <linux/mmc/host.h>
+-#include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+ #include <linux/spi/spi.h>
+@@ -175,12 +174,7 @@ static struct platform_device db1x00_aud
  
--static bool location_is_valid(struct source_location *loc)
--{
--	return loc->file_name != NULL;
--}
--
- static DEFINE_SPINLOCK(report_lock);
- 
- static void ubsan_prologue(struct source_location *location,
-@@ -354,25 +349,6 @@ void __ubsan_handle_type_mismatch_v1(str
- }
- EXPORT_SYMBOL(__ubsan_handle_type_mismatch_v1);
- 
--void __ubsan_handle_nonnull_return(struct nonnull_return_data *data)
--{
--	unsigned long flags;
--
--	if (suppress_report(&data->location))
--		return;
--
--	ubsan_prologue(&data->location, &flags);
--
--	pr_err("null pointer returned from function declared to never return null\n");
--
--	if (location_is_valid(&data->attr_location))
--		print_source_location("returns_nonnull attribute specified in",
--				&data->attr_location);
--
--	ubsan_epilogue(&flags);
--}
--EXPORT_SYMBOL(__ubsan_handle_nonnull_return);
--
- void __ubsan_handle_vla_bound_not_positive(struct vla_bound_data *data,
- 					void *bound)
+ static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
  {
---- a/lib/ubsan.h
-+++ b/lib/ubsan.h
-@@ -57,11 +57,6 @@ struct nonnull_arg_data {
- 	int arg_index;
- };
- 
--struct nonnull_return_data {
--	struct source_location location;
--	struct source_location attr_location;
--};
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	mmc_cd(ptr, msecs_to_jiffies(500));
+-	symbol_put(mmc_detect_change);
 -
- struct vla_bound_data {
- 	struct source_location location;
- 	struct type_descriptor *type;
---- a/scripts/Makefile.ubsan
-+++ b/scripts/Makefile.ubsan
-@@ -7,7 +7,6 @@ ifdef CONFIG_UBSAN
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=signed-integer-overflow)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=bounds)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=object-size)
--      CFLAGS_UBSAN += $(call cc-option, -fsanitize=returns-nonnull-attribute)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=bool)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=enum)
++	mmc_detect_change(ptr, msecs_to_jiffies(500));
+ 	return IRQ_HANDLED;
+ }
+ 
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -23,7 +23,6 @@
+ #include <linux/gpio.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
+-#include <linux/module.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/leds.h>
+@@ -355,14 +354,7 @@ static irqreturn_t db1200_mmc_cd(int irq
+ 
+ static irqreturn_t db1200_mmc_cdfn(int irq, void *ptr)
+ {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	if (mmc_cd) {
+-		mmc_cd(ptr, msecs_to_jiffies(200));
+-		symbol_put(mmc_detect_change);
+-	}
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
+ 
+ 	msleep(100);	/* debounce */
+ 	if (irq == DB1200_SD0_INSERT_INT)
+@@ -446,14 +438,7 @@ static irqreturn_t pb1200_mmc1_cd(int ir
+ 
+ static irqreturn_t pb1200_mmc1_cdfn(int irq, void *ptr)
+ {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	if (mmc_cd) {
+-		mmc_cd(ptr, msecs_to_jiffies(200));
+-		symbol_put(mmc_detect_change);
+-	}
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
+ 
+ 	msleep(100);	/* debounce */
+ 	if (irq == PB1200_SD1_INSERT_INT)
+--- a/arch/mips/alchemy/devboards/db1300.c
++++ b/arch/mips/alchemy/devboards/db1300.c
+@@ -17,7 +17,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/ata_platform.h>
+ #include <linux/mmc/host.h>
+-#include <linux/module.h>
+ #include <linux/mtd/mtd.h>
+ #include <linux/mtd/rawnand.h>
+ #include <linux/mtd/partitions.h>
+@@ -457,14 +456,7 @@ static irqreturn_t db1300_mmc_cd(int irq
+ 
+ static irqreturn_t db1300_mmc_cdfn(int irq, void *ptr)
+ {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m.  We can only be called once MMC core has
+-	 * initialized the controller, so symbol_get() should always succeed.
+-	 */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	mmc_cd(ptr, msecs_to_jiffies(200));
+-	symbol_put(mmc_detect_change);
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
+ 
+ 	msleep(100);	/* debounce */
+ 	if (irq == DB1300_SD1_INSERT_INT)
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -407,11 +407,12 @@ config MMC_WBSD
+ 	  If unsure, say N.
+ 
+ config MMC_AU1X
+-	tristate "Alchemy AU1XX0 MMC Card Interface support"
++	bool "Alchemy AU1XX0 MMC Card Interface support"
+ 	depends on MIPS_ALCHEMY
++	depends on MMC=y
+ 	help
+ 	  This selects the AMD Alchemy(R) Multimedia card interface.
+-	  If you have a Alchemy platform with a MMC slot, say Y or M here.
++	  If you have a Alchemy platform with a MMC slot, say Y here.
+ 
+ 	  If unsure, say N.
  
 
 
