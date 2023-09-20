@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B17C30F80
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8687BC433C8;
-	Wed, 20 Sep 2023 12:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764630F80
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E42EC433C8;
+	Wed, 20 Sep 2023 12:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695213732;
-	bh=stvYSHI4Fc4L7UOaWhXQkT0IOzqncdVakChJwqMoNn0=;
+	s=korg; t=1695213735;
+	bh=pL7pJTDvGzoCDKI9M1qX/qyE2pDRnxllN5kR9MhY3Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mc9kd3cMWutD8+/yLjKxZ58S+vn4OxeyOqpc1FRnQP+XHztt6whQ9lTEiHvQl6cD1
-	 ShmGMbaMV6NwdNXOQLBNNA/XH9Y/BM5Na0xZHPZXWqRYT8ZtVx+lzX03pPxTEgxbT3
-	 IUa5aGNMK/1Gk61O7tkdwTysNhUecR3nl66KGr5k=
+	b=FwHyRDdq9OvRmxHKX8OvBVPK4RtZcOE62sGqmq2ucFvt3FXk+RGmoocOzhFwJlkWN
+	 kKWEn3UR131yznYl6iarYcUUYHM5vr38eacOO6VRF2Oa+gPcnJbG33EmHIjP7YoZpt
+	 v5KYsRrjPiPtOu5uiVQsNWH331QE54P++2siODts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jacek Caban <jacek@codeweavers.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Remi Bernon <rbernon@codeweavers.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 345/367] kobject: Add sanity check for kset->kobj.ktype in kset_register()
-Date: Wed, 20 Sep 2023 13:32:02 +0200
-Message-ID: <20230920112907.433006365@linuxfoundation.org>
+Subject: [PATCH 5.4 346/367] tools features: Add feature test to check if libbfd has buildid support
+Date: Wed, 20 Sep 2023 13:32:03 +0200
+Message-ID: <20230920112907.456013815@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 References: <20230920112858.471730572@linuxfoundation.org>
@@ -39,58 +48,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4d0fe8c52bb3029d83e323c961221156ab98680b ]
+[ Upstream commit e71e19a9ea70952a53d58a99971820ce6c1794a8 ]
 
-When I register a kset in the following way:
-	static struct kset my_kset;
-	kobject_set_name(&my_kset.kobj, "my_kset");
-        ret = kset_register(&my_kset);
+Which is needed by the PE executable support, for instance.
 
-A null pointer dereference exception is occurred:
-[ 4453.568337] Unable to handle kernel NULL pointer dereference at \
-virtual address 0000000000000028
-... ...
-[ 4453.810361] Call trace:
-[ 4453.813062]  kobject_get_ownership+0xc/0x34
-[ 4453.817493]  kobject_add_internal+0x98/0x274
-[ 4453.822005]  kset_register+0x5c/0xb4
-[ 4453.825820]  my_kobj_init+0x44/0x1000 [my_kset]
-... ...
-
-Because I didn't initialize my_kset.kobj.ktype.
-
-According to the description in Documentation/core-api/kobject.rst:
- - A ktype is the type of object that embeds a kobject.  Every structure
-   that embeds a kobject needs a corresponding ktype.
-
-So add sanity check to make sure kset->kobj.ktype is not NULL.
-
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Link: https://lore.kernel.org/r/20230805084114.1298-2-thunder.leizhen@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jacek Caban <jacek@codeweavers.com>
+Cc: Jiri Olsa <jolsa@redhat.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Remi Bernon <rbernon@codeweavers.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 7822a8913f4c ("perf build: Update build rule for generated files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kobject.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/build/Makefile.feature              | 2 ++
+ tools/build/feature/Makefile              | 4 ++++
+ tools/build/feature/test-all.c            | 5 +++++
+ tools/build/feature/test-libbfd-buildid.c | 8 ++++++++
+ tools/perf/Makefile.config                | 6 ++++++
+ 5 files changed, 25 insertions(+)
+ create mode 100644 tools/build/feature/test-libbfd-buildid.c
 
-diff --git a/lib/kobject.c b/lib/kobject.c
-index 0c6d17503a113..c4025a880d753 100644
---- a/lib/kobject.c
-+++ b/lib/kobject.c
-@@ -877,6 +877,11 @@ int kset_register(struct kset *k)
- 	if (!k)
- 		return -EINVAL;
+diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
+index 1ea26bb8c5791..6714c886940f8 100644
+--- a/tools/build/Makefile.feature
++++ b/tools/build/Makefile.feature
+@@ -42,6 +42,7 @@ FEATURE_TESTS_BASIC :=                  \
+         gtk2-infobar                    \
+         libaudit                        \
+         libbfd                          \
++        libbfd-buildid			\
+         libcap                          \
+         libelf                          \
+         libelf-getphdrnum               \
+@@ -110,6 +111,7 @@ FEATURE_DISPLAY ?=              \
+          gtk2                   \
+          libaudit               \
+          libbfd                 \
++         libbfd-buildid		\
+          libcap                 \
+          libelf                 \
+          libnuma                \
+diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
+index 88392219d425e..8104e505efde6 100644
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -15,6 +15,7 @@ FILES=                                          \
+          test-hello.bin                         \
+          test-libaudit.bin                      \
+          test-libbfd.bin                        \
++         test-libbfd-buildid.bin		\
+          test-disassembler-four-args.bin        \
+          test-reallocarray.bin			\
+          test-libbfd-liberty.bin                \
+@@ -223,6 +224,9 @@ $(OUTPUT)test-libpython.bin:
+ $(OUTPUT)test-libbfd.bin:
+ 	$(BUILD) -DPACKAGE='"perf"' -lbfd -ldl
  
-+	if (!k->kobj.ktype) {
-+		pr_err("must have a ktype to be initialized properly!\n");
-+		return -EINVAL;
-+	}
++$(OUTPUT)test-libbfd-buildid.bin:
++	$(BUILD) -DPACKAGE='"perf"' -lbfd -ldl
 +
- 	kset_init(k);
- 	err = kobject_add_internal(&k->kobj);
- 	if (err)
+ $(OUTPUT)test-disassembler-four-args.bin:
+ 	$(BUILD) -DPACKAGE='"perf"' -lbfd -lopcodes
+ 
+diff --git a/tools/build/feature/test-all.c b/tools/build/feature/test-all.c
+index 6eaeaf2da36ea..039bd2fbe7d9e 100644
+--- a/tools/build/feature/test-all.c
++++ b/tools/build/feature/test-all.c
+@@ -90,6 +90,10 @@
+ # include "test-libbfd.c"
+ #undef main
+ 
++#define main main_test_libbfd_buildid
++# include "test-libbfd-buildid.c"
++#undef main
++
+ #define main main_test_backtrace
+ # include "test-backtrace.c"
+ #undef main
+@@ -208,6 +212,7 @@ int main(int argc, char *argv[])
+ 	main_test_gtk2(argc, argv);
+ 	main_test_gtk2_infobar(argc, argv);
+ 	main_test_libbfd();
++	main_test_libbfd_buildid();
+ 	main_test_backtrace();
+ 	main_test_libnuma();
+ 	main_test_numa_num_possible_cpus();
+diff --git a/tools/build/feature/test-libbfd-buildid.c b/tools/build/feature/test-libbfd-buildid.c
+new file mode 100644
+index 0000000000000..157644b04c052
+--- /dev/null
++++ b/tools/build/feature/test-libbfd-buildid.c
+@@ -0,0 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <bfd.h>
++
++int main(void)
++{
++	bfd *abfd = bfd_openr("Pedro", 0);
++	return abfd && (!abfd->build_id || abfd->build_id->size > 0x506564726f);
++}
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index b94d9afad3f79..cc11050420496 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -775,6 +775,12 @@ else
+   $(call feature_check,disassembler-four-args)
+ endif
+ 
++ifeq ($(feature-libbfd-buildid), 1)
++  CFLAGS += -DHAVE_LIBBFD_BUILDID_SUPPORT
++else
++  msg := $(warning Old version of libbfd/binutils things like PE executable profiling will not be available);
++endif
++
+ ifdef NO_DEMANGLE
+   CFLAGS += -DNO_DEMANGLE
+ else
 -- 
 2.40.1
 
