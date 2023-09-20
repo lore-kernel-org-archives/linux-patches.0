@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B532AB21
-	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91399C433C7;
-	Wed, 20 Sep 2023 12:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190122AB29
+	for <patches@lists.linux.dev>; Wed, 20 Sep 2023 12:02:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B066C433CA;
+	Wed, 20 Sep 2023 12:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695211341;
-	bh=T6RlR9GNDwKx9hjGFAVQRDK6UHv5qEkwPoSUHy0VOJw=;
+	s=korg; t=1695211344;
+	bh=FtHNR7RSxJcBj+E7JBmCUyQRIGReUr6MdwWzJXw96pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyWjDzeC+d3YGHhe8fJmALdZFbdgaX9PXVQbkl7H7dXl9Tkrj5JR1/FHAwnJMEj0m
-	 hqa4XYuLiYboltcyGgmQIZkx/Ms8SPPfukC5aoDYpxkhEquZGEO/Ix1xP9/rEeIvix
-	 opT1tp6DrT/Gc+veo/LkxS9pQbgcFB8bnUJbI5J8=
+	b=wCekj3RSnZlRaEJdcpRb2lk99MFSuWLBW40rcoSMAEH0r5gBdGeG4S7el9zeGY7my
+	 v89sbEQpYv3EKGTuw2zBYZc9wzjKt41amxEoHL1UXm+60CLBR0eZbNQUnF8zGrWCoR
+	 TaI6wlavlS49HQ9/Ab8/91WwEpqYm3raMpu4BPSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Foss <rfoss@kernel.org>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Bogdan Togorean <bogdan.togorean@analog.com>,
-	Alexandru Ardelean <alex@shruggie.ro>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 058/186] drm: adv7511: Fix low refresh rate register for ADV7533/5
-Date: Wed, 20 Sep 2023 13:29:21 +0200
-Message-ID: <20230920112838.998639022@linuxfoundation.org>
+Subject: [PATCH 4.14 059/186] of: unittest: fix null pointer dereferencing in of_unittest_find_node_by_name()
+Date: Wed, 20 Sep 2023 13:29:22 +0200
+Message-ID: <20230920112839.029631955@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230920112836.799946261@linuxfoundation.org>
 References: <20230920112836.799946261@linuxfoundation.org>
@@ -43,47 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bogdan Togorean <bogdan.togorean@analog.com>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit d281eeaa4de2636ff0c8e6ae387bb07b50e5fcbb ]
+[ Upstream commit d6ce4f0ea19c32f10867ed93d8386924326ab474 ]
 
-For ADV7533 and ADV7535 low refresh rate is selected using
-bits [3:2] of 0x4a main register.
-So depending on ADV model write 0xfb or 0x4a register.
+when kmalloc() fail to allocate memory in kasprintf(), name
+or full_name will be NULL, strcmp() will cause
+null pointer dereference.
 
-Fixes: 2437e7cd88e8 ("drm/bridge: adv7533: Initial support for ADV7533")
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: Bogdan Togorean <bogdan.togorean@analog.com>
-Signed-off-by: Alexandru Ardelean <alex@shruggie.ro>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230719060143.63649-1-alex@shruggie.ro
+Fixes: 0d638a07d3a1 ("of: Convert to using %pOF instead of full_name")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230727080246.519539-1-ruanjinjie@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/of/unittest.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-index f5195d9841f86..687c68e0a59d0 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -744,8 +744,13 @@ static void adv7511_mode_set(struct adv7511 *adv7511,
- 	else
- 		low_refresh_rate = ADV7511_LOW_REFRESH_RATE_NONE;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 55c98f119df22..89d1011d5b327 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -51,7 +51,7 @@ static void __init of_unittest_find_node_by_name(void)
  
--	regmap_update_bits(adv7511->regmap, 0xfb,
--		0x6, low_refresh_rate << 1);
-+	if (adv7511->type == ADV7511)
-+		regmap_update_bits(adv7511->regmap, 0xfb,
-+				   0x6, low_refresh_rate << 1);
-+	else
-+		regmap_update_bits(adv7511->regmap, 0x4a,
-+				   0xc, low_refresh_rate << 2);
-+
- 	regmap_update_bits(adv7511->regmap, 0x17,
- 		0x60, (vsync_polarity << 6) | (hsync_polarity << 5));
+ 	np = of_find_node_by_path("/testcase-data");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data", name),
++	unittest(np && name && !strcmp("/testcase-data", name),
+ 		"find /testcase-data failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -62,14 +62,14 @@ static void __init of_unittest_find_node_by_name(void)
  
+ 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
++	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
+ 		"find /testcase-data/phandle-tests/consumer-a failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+ 
+ 	np = of_find_node_by_path("testcase-alias");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data", name),
++	unittest(np && name && !strcmp("/testcase-data", name),
+ 		"find testcase-alias failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -80,7 +80,7 @@ static void __init of_unittest_find_node_by_name(void)
+ 
+ 	np = of_find_node_by_path("testcase-alias/phandle-tests/consumer-a");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
++	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
+ 		"find testcase-alias/phandle-tests/consumer-a failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -966,6 +966,8 @@ static void attach_node_and_children(struct device_node *np)
+ 	const char *full_name;
+ 
+ 	full_name = kasprintf(GFP_KERNEL, "%pOF", np);
++	if (!full_name)
++		return;
+ 
+ 	if (!strcmp(full_name, "/__local_fixups__") ||
+ 	    !strcmp(full_name, "/__fixups__")) {
 -- 
 2.40.1
 
