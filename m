@@ -1,68 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78405B641
-	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 13:06:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FF9C4E67F;
-	Thu, 21 Sep 2023 13:06:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695301564;
-	bh=EP89eX6yOgeR2iekeqQE5Ry2w+5p5CtBuX7Qtt6d/CQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l25MNE5TKqRvrezR1WxWkXus4o+3QMHHByEzPOD8kGXHGZ+pHxqjzO0fUYSqCzbXx
-	 p/byGA7XWmMESx0vismQs3Zo/uZReQy6C8NOR0G3B6Sbiws+MuA8tDxa1VLWExCs2I
-	 KOHqDJExW3/Ms1d6461wv5Vo41MWG6ar2P3jjtwaJL9YWb8rL/SyyE4rWbkSeNl4HM
-	 CMcl8QrtbEW9jKCeLyDm7SVcTbfmkkamyA/YNFFMim9a6jvm7JbdsnWsDL2vZ0+Yi2
-	 3LapxG6qg62nk5b+ql9AHoTo3uypWbNth32QIn0cOiEyui0TYRcq2qGTKpFDeOeIRM
-	 iFipAwLH3IpbQ==
-Date: Thu, 21 Sep 2023 14:05:58 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.5 000/211] 6.5.5-rc1 review
-Message-ID: <20230921-exposure-writing-f10542bd5826@spud>
-References: <20230920112845.859868994@linuxfoundation.org>
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D9BDB641
+	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 13:10:57 +0000 (UTC)
+Received: from loongson.cn (unknown [10.20.42.43])
+	by gateway (Coremail) with SMTP id _____8CxbeveQAxl9IoqAA--.14125S3;
+	Thu, 21 Sep 2023 21:10:54 +0800 (CST)
+Received: from [0.0.0.0] (unknown [10.20.42.43])
+	by localhost.localdomain (Coremail) with SMTP id AQAAf8Dxnd7MQAxlS0cNAA--.28996S3;
+	Thu, 21 Sep 2023 21:10:45 +0800 (CST)
+Message-ID: <cab7d157-946e-6b8f-1b29-5618a0ac0da6@loongson.cn>
+Date: Thu, 21 Sep 2023 21:10:36 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="MdHrbX13gF8e3+ch"
-Content-Disposition: inline
-In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 5.4 000/367] 5.4.257-rc1 review
+To: Naresh Kamboju <naresh.kamboju@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ Chun-Kuang Hu <chunkuang.hu@kernel.org>, dri-devel@lists.freedesktop.org
+References: <20230920112858.471730572@linuxfoundation.org>
+ <CA+G9fYsM0Lr8TNQJxsZFDZwcH-rEzkVV+y+x5FX18oH5wm5dRg@mail.gmail.com>
+Content-Language: en-US
+From: Sui Jingfeng <suijingfeng@loongson.cn>
+In-Reply-To: <CA+G9fYsM0Lr8TNQJxsZFDZwcH-rEzkVV+y+x5FX18oH5wm5dRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:AQAAf8Dxnd7MQAxlS0cNAA--.28996S3
+X-CM-SenderInfo: xvxlyxpqjiv03j6o00pqjv00gofq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CF17WryktFWxtFWfXFy8tFc_yoW8uFW5pF
+	W5t34Yyr4jyr47tan7Zr1Sva4Yyan3J3y7Wr1DWry3uF1UWF4xKw1v9rZIvF9rWFWkKa1U
+	tr4qga4jva109rbCm3ZEXasCq-sJn29KB7ZKAUJUUUUk529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUP2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6F4UJVW0owAaw2AFwI0_Jw0_GFyle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
+	Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_
+	WrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrw
+	CYjI0SjxkI62AI1cAE67vIY487MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48J
+	MxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r1q6r43MI8I3I0E5I8CrVAFwI
+	0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y
+	0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+	W8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1l
+	IxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU0L0ePUUUU
+	U==
+
+Hi,
 
 
---MdHrbX13gF8e3+ch
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 2023/9/21 20:08, Naresh Kamboju wrote:
+> On Wed, 20 Sept 2023 at 14:25, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+>> This is the start of the stable review cycle for the 5.4.257 release.
+>> There are 367 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+>> Anything received after that time might be too late.
+>>
+>> The whole patch series can be found in one patch at:
+>>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.257-rc1.gz
+>> or in the git tree and branch at:
+>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+>> and the diffstat can be found below.
+>>
+>> thanks,
+>>
+>> greg k-h
+> Following build warnings noticed while building arm64 with allmodconfig
+> on stable-rc 5.4 with gcc-8 and gcc-12 toolchains.
+>
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>
+> drivers/gpu/drm/mediatek/mtk_drm_gem.c: In function 'mtk_drm_gem_prime_vmap':
+> drivers/gpu/drm/mediatek/mtk_drm_gem.c:273:10: warning: returning
+> 'int' from a function with return type 'void *' makes pointer from
+> integer without a cast [-Wint-conversion]
+>     return -ENOMEM;
+>            ^
 
-On Wed, Sep 20, 2023 at 01:27:24PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.5 release.
-> There are 211 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Well, this is easy to solve.
+For the Linux-5.4 kernel, we should use "return -ERR_PTR(-ENOMEM)" instead of "return -ENOMEM".
+Since, newer version kernel prefer to return error code instead of error pointer.
+See below commit for more information.
 
-Thanks,
-Conor.
+commit <7e542ff8b463>  ("drm/mediatek: Use struct dma_buf_map in GEM 
+vmap ops")
+commit <49a3f51dfeee> ("drm/gem: Use struct dma_buf_map in GEM vmap ops 
+and convert GEM backends")
 
---MdHrbX13gF8e3+ch
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+> Links:
+>   - https://storage.tuxsuite.com/public/linaro/lkft/builds/2VfG47LmPH9MUEuIcMVftu6NsFy/
+>
+>
+> Following commit is causing this build warning.
+>
+> drm/mediatek: Fix potential memory leak if vmap() fail
+> [ Upstream commit 379091e0f6d179d1a084c65de90fa44583b14a70 ]
+>
+> --
+> Linaro LKFT
+> https://lkft.linaro.org
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZQw/tgAKCRB4tDGHoIJi
-0pu/AQDDDTW275Cw6AhB/QoX1H5646dHJnrJSJClq1QdYOf+RQEA+ejVENELniKD
-EnLwAKZLEQzSFITcxrNqqN2mSNFGZgg=
-=V+jH
------END PGP SIGNATURE-----
-
---MdHrbX13gF8e3+ch--
