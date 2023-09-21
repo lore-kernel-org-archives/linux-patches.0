@@ -1,139 +1,182 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727033D90
-	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 07:13:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E54C433AD;
-	Thu, 21 Sep 2023 07:13:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695280397;
-	bh=x6BlTSESHv0WOlUjZBFf7l1hNElIvW/QK5IYHQsxdnM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uOG/GtzpdZ6fKTbu7bwE8JZTsAYH8Mrh0VxH+3Ui+QkMyKgVIj/fI3zUjIltrXetl
-	 jSCh54mrGeo6oAq92d5bWKuSxOlC9hvnDQBCnd7/Gx6FbR7aJVufEETB+FzRH0+pO2
-	 2X2+DOXVmYemtaJPCW4aoGbZ09JjVqo9Ic1wJqhA=
-Date: Thu, 21 Sep 2023 09:13:16 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Kyle Zeng <zengyhkyle@gmail.com>
-Cc: Florian Fainelli <f.fainelli@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 5.10 000/406] 5.10.195-rc1 review
-Message-ID: <2023092111-grill-excusable-f67a@gregkh>
-References: <20230917191101.035638219@linuxfoundation.org>
- <07a04540-554c-4394-1e79-46ea665f8c03@roeck-us.net>
- <2023092009-angriness-sank-ae4f@gregkh>
- <27f978f3-11ca-6054-5160-ab66d4c918bc@roeck-us.net>
- <8457ff12-c28b-898b-3f12-97aa12ce6716@gmail.com>
- <ZQtEVR+Vc6CD6iUG@westworld>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB739524E;
+	Thu, 21 Sep 2023 07:52:19 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 1FD971FEEE;
+	Thu, 21 Sep 2023 07:52:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1695282738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8/0oYUclWySzO4UEPbzCuo3zYsDaVkz6hpk5DqEwIcE=;
+	b=Jiw05hdmZB0DhYYIEhnqVdYUHb3kJrZBFq7kscrw26w2oZw+aLFwI4+vQgabJLGMtsYVEX
+	qioOOJkV2NTvpd559t3IitKAnSVb/9yrMkWTwxlNvgZy6NlBRSLPZJcAYjZo9oZ6pcvEcE
+	b1a0G34c7tFDVbN65GfAruRXpRHGdx0=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 11792134B0;
+	Thu, 21 Sep 2023 07:52:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id wySoAzL2C2UbBgAAMHmgww
+	(envelope-from <mhocko@suse.com>); Thu, 21 Sep 2023 07:52:18 +0000
+Date: Thu, 21 Sep 2023 09:52:17 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Shakeel Butt <shakeelb@google.com>
+Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
+	mathieu.tortuyaux@gmail.com
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Message-ID: <ZQv2MXOynlEPW/bX@dhcp22.suse.cz>
+References: <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+ <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+ <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+ <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
+ <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
+ <CALvZod7E_Jm9y+40OKtLs5EFA0ptKGjoe2BU58SY29pUiPc93g@mail.gmail.com>
+ <ZQskGGAwlsr1YxAp@dhcp22.suse.cz>
+ <CALvZod6b3=+=xXEUeWOQW3t_URJpeeVX46WjBHv5BS+436KoFA@mail.gmail.com>
+ <ZQtRKzUOfdaVKRCF@dhcp22.suse.cz>
+ <CALvZod5DSMoEGY0CwGz=P-2=Opbr4SmMfwHhZRROBx7yCaBdDA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZQtEVR+Vc6CD6iUG@westworld>
+In-Reply-To: <CALvZod5DSMoEGY0CwGz=P-2=Opbr4SmMfwHhZRROBx7yCaBdDA@mail.gmail.com>
 
-On Wed, Sep 20, 2023 at 12:13:25PM -0700, Kyle Zeng wrote:
-> On Wed, Sep 20, 2023 at 10:01:55AM -0700, Florian Fainelli wrote:
-> > On 9/20/23 08:18, Guenter Roeck wrote:
-> > > On 9/20/23 01:11, Greg Kroah-Hartman wrote:
-> > > > On Tue, Sep 19, 2023 at 09:57:25PM -0700, Guenter Roeck wrote:
-> > > > > On 9/17/23 12:07, Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 5.10.195 release.
-> > > > > > There are 406 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > > > 
-> > > > > > Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
-> > > > > > Anything received after that time might be too late.
-> > > > > > 
-> > > > > 
-> > > > > chromeos-5.10 locks up in configfs_lookup() after the merge of
-> > > > > v5.10.195.
-> > > > > 
-> > > > > I am a bit puzzled because I see
-> > > > > 
-> > > > > c709c7ca020a configfs: fix a race in configfs_lookup()
-> > > > > 
-> > > > > in v5.10.195 but not in the list of commits below. I guess I must be
-> > > > > missing something.
-> > > > 
-> > > > It was part of the big patchset, it was posted here:
-> > > >     https://lore.kernel.org/r/20230917191101.511939651@linuxfoundation.org
-> > > > 
-> > > > Not hidden at all :)
-> > > > 
-> > > > and was submitted here:
-> > > >     https://lore.kernel.org/r/ZPOZFHHA0abVmGx+@westworld
-> > > > 
-> > > > > Either case, the code now looks as follows.
-> > > > > 
-> > > > > configfs_lookup()
-> > > > > {
-> > > > >      ...
-> > > > >      spin_lock(&configfs_dirent_lock);
-> > > > >      ...
-> > > > >          err = configfs_attach_attr(sd, dentry);
-> > > > >      ...
-> > > > >      spin_unlock(&configfs_dirent_lock);
-> > > > >      ...
-> > > > > }
-> > > > > 
-> > > > > and
-> > > > > 
-> > > > > configfs_attach_attr(...)
-> > > > > {
-> > > > >      ...
-> > > > >      spin_lock(&configfs_dirent_lock);
-> > > > >      ...
-> > > > > }
-> > > > > 
-> > > > > which unless it is way too late here and I really need to go to sleep
-> > > > > just won't work.
-> > > > 
-> > > > Kyle, you did the backport, any comments?
-> > > > 
-> > > 
-> > > After a good night sleep, the code still looks wrong to me. Reverting
-> > > the offending patch in chromeos-5.10 solved the problem there.
-> > > That makes me suspect that no one actually tests configfs.
-> > 
-> > Humm indeed, looking at our testing we don't have our USB devices being
-> > tested which would exercise configfs since we switch the USB device between
-> > different configurations (mass storage, serial, networking etc.). Let me see
-> > about adding that so we get some coverage.
-> > -- 
-> > Florian
-> > 
+On Wed 20-09-23 14:46:52, Shakeel Butt wrote:
+> On Wed, Sep 20, 2023 at 1:08â€¯PM Michal Hocko <mhocko@suse.com> wrote:
+> >
+> [...]
+> > > have a strong opinion against it. Also just to be clear we are not
+> > > talking about full revert of 58056f77502f but just the returning of
+> > > EOPNOTSUPP, right?
+> >
+> > If we allow the limit to be set without returning a failure then we
+> > still have options 2 and 3 on how to deal with that. One of them is to
+> > enforce the limit.
+> >
 > 
-> Sorry for the wrong patch. My intention was to backport c42dd069be8dfc9b2239a5c89e73bbd08ab35de0
-> to v5.10 to avoid a race condition triggered in my test. I tested the
-> patch with my PoC program and made sure it won't trigger the crash. But
-> I didn't notice that it could hang the kernel.
-> I sincerely apologize for the mistake.
-> 
-> My new proposed patch backports both
-> c42dd069be8dfc9b2239a5c89e73bbd08ab35de0 and d07f132a225c013e59aa77f514ad9211ecab82ee.
-> I made sure it does not trigger the race condition anymore.
-> Can anyone having access to more comprehensive tests please check whether it works?
-> 
-> Also, I'm not sure whether it is OK or how to backport two patches in
-> one patch. Please advise on how to do it properly.
+> Option 3 is a partial revert of 58056f77502f where we keep the no
+> limit enforcement and remove the EOPNOTSUPP return on write. Let's go
+> with option 3. In addition, let's add pr_warn_once on the read of
+> kmem.limit_in_bytes as well.
 
-Please backport them both individually, do not merge them together.
+How about this?
+--- 
+From 81ae0797d8da1b9cfbf357b4be4787a5bbf46bb4 Mon Sep 17 00:00:00 2001
+From: Michal Hocko <mhocko@suse.com>
+Date: Thu, 21 Sep 2023 09:38:29 +0200
+Subject: [PATCH] mm, memcg: reconsider kmem.limit_in_bytes deprecation
 
-I'll go revert the current change now and push out a release with it so
-that it fixes users of this kernel tree.
+This reverts commits 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
+and partially reverts 58056f77502f ("memcg, kmem: further deprecate
+kmem.limit_in_bytes") which have incrementally removed support for the
+kernel memory accounting hard limit. Unfortunately it has turned out
+that there is still userspace depending on the existence of
+memory.kmem.limit_in_bytes [1]. The underlying functionality is not
+really required but the non-existent file just confuses the userspace
+which fails in the result. The patch to fix this on the userspace side
+has been submitted but it is hard to predict how it will propagate
+through the maze of 3rd party consumers of the software.
 
-thanks,
+Now, reverting alone 86327e8eb94c is not an option because there is
+another set of userspace which cannot cope with ENOTSUPP returned when
+writing to the file. Therefore we have to go and revisit 58056f77502f
+as well. There are two ways to go ahead. Either we give up on the
+deprecation and fully revert 58056f77502f as well or we can keep
+kmem.limit_in_bytes but make the write a noop and warn about the fact.
+This should work for both known breaking workloads which depend on the
+existence but do not depend on the hard limit enforcement.
 
-greg k-h
+[1] http://lkml.kernel.org/r/20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
+Fixes: 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
+Fixes: 58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes")
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+---
+ Documentation/admin-guide/cgroup-v1/memory.rst |  7 +++++++
+ mm/memcontrol.c                                | 12 ++++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/Documentation/admin-guide/cgroup-v1/memory.rst b/Documentation/admin-guide/cgroup-v1/memory.rst
+index 5f502bf68fbc..ff456871bf4b 100644
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -92,6 +92,13 @@ Brief summary of control files.
+  memory.oom_control		     set/show oom controls.
+  memory.numa_stat		     show the number of memory usage per numa
+ 				     node
++ memory.kmem.limit_in_bytes          Deprecated knob to set and read the kernel
++                                     memory hard limit. Kernel hard limit is not
++                                     supported since 5.16. Writing any value to
++                                     do file will not have any effect same as if
++                                     nokmem kernel parameter was specified.
++                                     Kernel memory is still charged and reported
++                                     by memory.kmem.usage_in_bytes.
+  memory.kmem.usage_in_bytes          show current kernel memory allocation
+  memory.kmem.failcnt                 show the number of kernel memory usage
+ 				     hits limits
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index a4d3282493b6..ac7f14b2338d 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3097,6 +3097,7 @@ static void obj_cgroup_uncharge_pages(struct obj_cgroup *objcg,
+ static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
+ 				   unsigned int nr_pages)
+ {
++	struct page_counter *counter;
+ 	struct mem_cgroup *memcg;
+ 	int ret;
+ 
+@@ -3107,6 +3108,10 @@ static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
+ 		goto out;
+ 
+ 	memcg_account_kmem(memcg, nr_pages);
++
++	/* There is no way to set up kmem hard limit so this operation cannot fail */
++	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
++		WARN_ON(!page_counter_try_charge(&memcg->kmem, nr_pages, &counter));
+ out:
+ 	css_put(&memcg->css);
+ 
+@@ -3867,6 +3872,13 @@ static ssize_t mem_cgroup_write(struct kernfs_open_file *of,
+ 		case _MEMSWAP:
+ 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
+ 			break;
++		case _KMEM:
++			pr_warn_once("kmem.limit_in_bytes is deprecated and will be removed. "
++				     "Writing any value to this file has no effect. "
++				     "Please report your usecase to linux-mm@kvack.org if you "
++				     "depend on this functionality.\n");
++			ret = 0;
++			break;
+ 		case _TCP:
+ 			ret = memcg_update_tcp_max(memcg, nr_pages);
+ 			break;
+-- 
+2.30.2
+
+-- 
+Michal Hocko
+SUSE Labs
