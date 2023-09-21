@@ -1,45 +1,45 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F949199B8
-	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 16:01:40 +0000 (UTC)
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-34fe5d0f0ffso3699255ab.1
-        for <patches@lists.linux.dev>; Thu, 21 Sep 2023 09:01:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E0D20E7
+	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 16:03:11 +0000 (UTC)
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-79f7e7342e3so41280739f.1
+        for <patches@lists.linux.dev>; Thu, 21 Sep 2023 09:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695312099; x=1695916899; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1695312191; x=1695916991; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WU8P0CekVto2VQuEEJkIEik99UNqAGFpSJMBei3Lvvc=;
-        b=TH34ZhoVc2MCFRmv6Ld8vNKromvO3lfUCClsdjPMFPCNd5OObibp+LdpWjL1cUnsrc
-         U36tbJ034BiGvuMu6o0tKq6ZYpsgulkehrB3vKcbbCuJplgXxzIdfzZg4klYPyiDj2T9
-         o6nxlOTrSc1WE7P6Qcs1hlvz8O9wBdreKTfwCylAyebC//YfyywZdx0SVZLrE1emsqbT
-         wxZCJGBhiXnULSUsTfL/gcD+hg7RttcvTBth9KHLk7qtK6lFtakFSxy58uxmpjXIifaD
-         Zp0ajLCNVTko90ScFVzDbX8sTl1nRV20GCS/58XIG9m5nv/xsJpCCUiV+kEoMRyka+xy
-         woyQ==
+        bh=stmDjRqrydw9T+1lCouVY3Uv1f4EVHPERdZg9Bbajbw=;
+        b=Ul4i6m82vLrRuoCuptBGguJgXCXIFOJ3jq6t0LWv46J33lx+h92ZxEsdhbgRKVBNDF
+         bs3dEs+W3rL/uTfSWcLiih/igAbcXPFBu2wHjcg/DgVbkrQ57um96+ihHjDUWokHez+s
+         Djcf3wMVy/Z8Z0fqiJ0U7BFMkoWjSnHWjeSEfOJZyssRGFHiZNglNuZmzX/iPI9nU+AS
+         aZj6OZG3DhxI4R4wVx9HC/v/SIBlx+YP9ZIbNjAg83ekNa/gqlAvpXNtTkx5UJeW/vXX
+         oWMrSDXvHb1EZpE5zZC/wwbamNkVmm6VBSXZvb48f9hjuYinjHiD8mIQScqtsD3spJxE
+         8UWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695312099; x=1695916899;
+        d=1e100.net; s=20230601; t=1695312191; x=1695916991;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WU8P0CekVto2VQuEEJkIEik99UNqAGFpSJMBei3Lvvc=;
-        b=VQaLvUjzMqcipucHMDoKubqyU6efyRFr5iIKaQBc7jDpfvtBIpelwYw2k+RngqHDWI
-         sy9NftCK9O1YjGiIFu860k3QrzDrOLKHP2Ta8bkQNMzpvQ5bUrBs9JTHFWTdstZJsvwb
-         V8tUyifqiWqC01geXt0GULhL1PuGnjOXmp57mhf5MDakxEHny5RtRicbZRAL7ALkGu9A
-         u4VpzD4H7PfnPGTfysFRW69aJ1CZj0TNhYxGlgaHDdW5K6ArH5ENZh45Bhp3PKON80FU
-         m1OXicVxy4IorgFD0GmmCWWZScnpeUf5IhFUAXacWBivXGAPZajeNI4dobziRUiLyzxr
-         7jqQ==
-X-Gm-Message-State: AOJu0YyRs1jVhYHZh3sPa7gy1TPHEydmGE+JpIVb43xug90IdijEtwHq
-	wRphtDx2bhBPHZM59XBv6DQ=
-X-Google-Smtp-Source: AGHT+IHEv/CSaHX/fbLRdTnOGYJa6deCdOKlP7QfQB9TdWWM2iN9gdfnXB5iVytkf1NYOP814o1arA==
-X-Received: by 2002:a05:6e02:eec:b0:348:e9e4:4902 with SMTP id j12-20020a056e020eec00b00348e9e44902mr6117606ilk.0.1695312099570;
-        Thu, 21 Sep 2023 09:01:39 -0700 (PDT)
+        bh=stmDjRqrydw9T+1lCouVY3Uv1f4EVHPERdZg9Bbajbw=;
+        b=VTku/mF/dvHOrMJdq2gvXxtD/o+NBzInt17NWcW1KJBn2YKrt2b4oHd0nyjJuxM3+n
+         oUnK8LTk7EAuONglQlFoYMA4TH7cFHu+PAQ1MzAKiy9W1Vw62dagmbxsAOaVGtfAF5ku
+         NG0zpYpMGIKEKGhukukNOYSLfB4tBrY704PbUdpnmtUcoet5q9tbyiu+5UuMVrVZH3FI
+         vGXVpMD9w+YqQLX47P27cX1Q5C8oaaAd79NzIot5ZS2aQBLH6LZziBgpfAPDDTjyjUJk
+         qm6zevoH1iug3pufy4PlVMs0RggwZm2L5pUcqJjOc9gGwR85DnB3Vn/H1T5ebdWiXhBR
+         OApQ==
+X-Gm-Message-State: AOJu0YxT9mf6vyyn5TFZejhrDFCvJ+UkT/nrz+nLAPJDBvr4MnTWq+8/
+	k3YwRZdQI0A+JUpg2dZ0HsM=
+X-Google-Smtp-Source: AGHT+IFiHZyMRpdGiZ1E6UXgm573zyR7TWSjF/T7qDc93cQOg6cZFDoXUiDGgaEVHX5802gBYd7LEQ==
+X-Received: by 2002:a05:6e02:b24:b0:349:2cd0:4368 with SMTP id e4-20020a056e020b2400b003492cd04368mr7539506ilu.18.1695312190710;
+        Thu, 21 Sep 2023 09:03:10 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id r15-20020a92ce8f000000b0034cabf65f2dsm505719ilo.64.2023.09.21.09.01.38
+        by smtp.gmail.com with ESMTPSA id u9-20020a92da89000000b0034e13ce8ddesm511420iln.21.2023.09.21.09.03.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Sep 2023 09:01:39 -0700 (PDT)
+        Thu, 21 Sep 2023 09:03:10 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 21 Sep 2023 09:01:38 -0700
+Date: Thu, 21 Sep 2023 09:03:09 -0700
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 5.15 000/110] 5.15.133-rc1 review
-Message-ID: <90acb11f-a4b2-4918-8b39-0bbd2357303c@roeck-us.net>
-References: <20230920112830.377666128@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/139] 6.1.55-rc1 review
+Message-ID: <7d99c7d8-cf39-4ab8-a385-36af98f4a30a@roeck-us.net>
+References: <20230920112835.549467415@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,11 +59,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
+In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
 
-On Wed, Sep 20, 2023 at 01:30:58PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.133 release.
-> There are 110 patches in this series, all will be posted as a response
+On Wed, Sep 20, 2023 at 01:28:54PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.55 release.
+> There are 139 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,27 +72,16 @@ On Wed, Sep 20, 2023 at 01:30:58PM +0200, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 160 pass: 157 fail: 3
+	total: 157 pass: 156 fail: 1
 Failed builds:
-	i386:tools/perf
 	powerpc:ppc32_allmodconfig
-	x86_64:tools/perf
 Qemu test results:
-	total: 509 pass: 509 fail: 0
-
-perf:
-
-gcc-10: fatal error: no input files
-
-same as the problem in 5.10.y.
-
-powerpc:ppc32_allmodconfig:
+	total: 529 pass: 529 fail: 0
 
 Building powerpc:ppc32_allmodconfig ... failed
 --------------
 Error log:
 drivers/usb/gadget/udc/fsl_qe_udc.c: In function 'ch9getstatus':
-drivers/usb/gadget/udc/fsl_qe_udc.c:1961:17: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
- 1961 |                 struct qe_ep *target_ep = &udc->eps[pipe];
+drivers/usb/gadget/udc/fsl_qe_udc.c:1964:17: error: ISO C90 forbids mixed declarations and code
 
 Guenter
