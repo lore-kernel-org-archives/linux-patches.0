@@ -1,65 +1,67 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D4BA956
-	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 12:00:53 +0000 (UTC)
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-7a8aec82539so373444241.2
-        for <patches@lists.linux.dev>; Thu, 21 Sep 2023 05:00:53 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B69EAD2A
+	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 12:08:56 +0000 (UTC)
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-7a7857e5290so365870241.1
+        for <patches@lists.linux.dev>; Thu, 21 Sep 2023 05:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695297653; x=1695902453; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1695298135; x=1695902935; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=P/PqXWQfhVy+I8T2s3N1D7o33scIo2tfwpAYEoZrILA=;
-        b=gLoeFFJnOTa86ckGa+9nPryzU6WbQz5asDXzc2dn14/tHWIQGrvzSstvHVFbGN+Azn
-         6m4AITvBx2/s/GMPPEWT+aXz9phfFE17e+IFWWlhVBl6L9TLUsEePp+He+c/6H81z+jR
-         6iUGqN+ISwwa91fb0MCDxeozApRYzwCrKtDGEd1mvKvGjNXqNnNr9Wc5jK3hGGG+HGvx
-         GU6eU9QDw/6qe7PhDDpQzlFYRz1OILxwoXJ/sjZYStNztXGSSoS23SYjBrxZfKFVuYqf
-         KoP9R3zhWh9HTbz69wlgIY72A34eSdBlqeo/QtkbmDldB1lNaBGvJ5iF5k1cCpGAkoaU
-         vt9Q==
+        bh=f0A4cf8xaLph2RFxNW2e2zC/ozNHYMpBHiQTWSZDrd4=;
+        b=zx2f3VIghu/nczWuJp4ZctAAcr9kQao63xUqTBD6P29ocavH8Tzm9PRR6fDJQbkzdU
+         iOqGW69dPVplzmZEIx2IomR9AxeoOhc1hf9CZlqgIPi+HL5sMGzjxdHW804gJvFoiCMN
+         SfNJbeJgeqUBD2k+jOXcznDjnl4YWKftEg3BSUdSmhxWarNN3Mz4R1x4Y9VMRevIaXJM
+         /iHk9vhh9Z5SbkmSgxjCdPP8X10a7nzvxs3yDpE1nIqx2n7CiFRfhsAGD4nosV1jAWDN
+         2LTuqeeNIje3dazMOLFjBuPWrElqYMIiH1e6PUExXT4ibvbT6aVj/2XlZP0CawtdOujP
+         hUfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695297653; x=1695902453;
+        d=1e100.net; s=20230601; t=1695298135; x=1695902935;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=P/PqXWQfhVy+I8T2s3N1D7o33scIo2tfwpAYEoZrILA=;
-        b=bn+YDh/oDu83iDAyeXcQtnZi/k/O5fD2J8kL7jhWtQ9+yvvcCv3eSRxzpwoF0NSZ5P
-         +5eNwwZH3d5L1YTO64rNHWPcCgyl8kscIoePYR8sVU1+toe4SDz0OM91njIhaq0gkfBH
-         clsPkjywO+UEvg/vx/2Tt4Hld+n8WilyvuCo9/JBCvG2tVpqac8TTmhcVjRi0jyaVumE
-         2JZ+RD9Vq9CakyP0gvBooMH+PvBwj1xtvYWQAwpRkl4lLUIrtqHVubsDYt02GxgPKaIS
-         W/JY3VMObuDW3GjxwcB9j/vVX3SZWw7JigBsX/Lr5TpkWZquzcIN6b8l77a5qx3IvkVT
-         hZ+g==
-X-Gm-Message-State: AOJu0YwgPb96sojGTQiRJg4AquVp17u7BBHwucayZpLCZCLh7WI16uGp
-	LdNvpE7bNWNqAXXQfPyDZIBAortMsUkJu9MXkVqX3w==
-X-Google-Smtp-Source: AGHT+IFWlx6n2/Kk0g46UDZm3S6M/U7TGZzI2JNZdQpgITr3ukFkfiSX7//HF3bxEWslCcCtpPLluke/ZzL90KT7rwE=
-X-Received: by 2002:a05:6102:101:b0:452:700c:7230 with SMTP id
- z1-20020a056102010100b00452700c7230mr5965430vsq.8.1695297652808; Thu, 21 Sep
- 2023 05:00:52 -0700 (PDT)
+        bh=f0A4cf8xaLph2RFxNW2e2zC/ozNHYMpBHiQTWSZDrd4=;
+        b=ELxb7H0+YlycjJSn/cJbmzFicUz1WB7Rj+X9hMpzgPjRRIKON6dsfbquSxOSEP28pV
+         uQ+uD9xEQQ4jZhtTvCkI2ryJNDWDs1sbgmBMAl9WYPRc4i7ZeSsU+hsebAJH95HwoSjB
+         r32+CYZnYxpfEY7agqT3XUpYj7K02ts74keX9HXiiMuErBnuIDdX3t5mKnib3wj85RDC
+         j1H3RwMRu1Z8yiC6bkDE/q33d+eG1vDv5CjwCJR7uL6plgU8/pHXt31EF3kkvR59HUr3
+         sekqeJzsQfxwv0bz6m0kVbwHaIixZJV6ePZcZIJnYbYmW9xKhu50ZZbn34m7SYi8J4qu
+         pX5Q==
+X-Gm-Message-State: AOJu0YxuIHx2HmK9WOvAwc+ah9xGC0S3FHzYvs0VVCyVYfVLjFXHjwYO
+	kcOXAWma/o4YFr61reIdwBcUcviwMSaoBxmejIt0lA==
+X-Google-Smtp-Source: AGHT+IF6qOrjEY9if7ZapsXGGL1X2pv/FF05y7VvQhm8TwsXueJgwhY8SQCZZx9F8vyaLZqpsJvBOnpMrRr0N4EDD4o=
+X-Received: by 2002:a1f:c6c1:0:b0:495:ec90:997e with SMTP id
+ w184-20020a1fc6c1000000b00495ec90997emr5200602vkf.7.1695298135191; Thu, 21
+ Sep 2023 05:08:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230920112846.440597133@linuxfoundation.org>
-In-Reply-To: <20230920112846.440597133@linuxfoundation.org>
+References: <20230920112858.471730572@linuxfoundation.org>
+In-Reply-To: <20230920112858.471730572@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 21 Sep 2023 14:00:41 +0200
-Message-ID: <CA+G9fYsZ-dwwaQRRPxUpCx+hhKuUNCp9C5K2EhgyH-kuZR+5GQ@mail.gmail.com>
-Subject: Re: [PATCH 4.19 000/273] 4.19.295-rc1 review
+Date: Thu, 21 Sep 2023 14:08:44 +0200
+Message-ID: <CA+G9fYsM0Lr8TNQJxsZFDZwcH-rEzkVV+y+x5FX18oH5wm5dRg@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/367] 5.4.257-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Sui Jingfeng <suijingfeng@loongson.cn>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+	dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 20 Sept 2023 at 14:08, Greg Kroah-Hartman
+On Wed, 20 Sept 2023 at 14:25, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 4.19.295 release.
-> There are 273 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.4.257 release.
+> There are 367 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -67,165 +69,35 @@ On Wed, 20 Sept 2023 at 14:08, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.295-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.257-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-
-Following arm build regressions noticed on 4.19 kernel.
-
-* arm, build
-  - clang-17-imx_v6_v7_defconfig
-  - gcc-12-imx_v6_v7_defconfig
-  - gcc-8-imx_v6_v7_defconfig
+Following build warnings noticed while building arm64 with allmodconfig
+on stable-rc 5.4 with gcc-8 and gcc-12 toolchains.
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Logs:
-------
-drivers/pci/controller/dwc/pci-imx6.c:645:10: error: 'const struct
-dw_pcie_host_ops' has no member named 'host_deinit'; did you mean
-'host_init'?
-  645 |         .host_deinit = imx6_pcie_host_exit,
-      |          ^~~~~~~~~~~
-      |          host_init
-drivers/pci/controller/dwc/pci-imx6.c:645:24: error:
-'imx6_pcie_host_exit' undeclared here (not in a function); did you
-mean 'imx6_pcie_host_init'?
-  645 |         .host_deinit = imx6_pcie_host_exit,
-      |                        ^~~~~~~~~~~~~~~~~~~
-      |                        imx6_pcie_host_init
+drivers/gpu/drm/mediatek/mtk_drm_gem.c: In function 'mtk_drm_gem_prime_vmap':
+drivers/gpu/drm/mediatek/mtk_drm_gem.c:273:10: warning: returning
+'int' from a function with return type 'void *' makes pointer from
+integer without a cast [-Wint-conversion]
+   return -ENOMEM;
+          ^
 
 Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.294-274-gb67b483f6a45/testrun/20075618/suite/build/test/gcc-12-imx_v6_v7_defconfig/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.294-274-gb67b483f6a45/testrun/20075618/suite/build/test/gcc-12-imx_v6_v7_defconfig/log
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2VfG47LmPH9MUEuIcMVftu6NsFy/
 
-## Build
-* kernel: 4.19.295-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.19.y
-* git commit: b67b483f6a4512bad5b589f3bf49503cfe941cf9
-* git describe: v4.19.294-274-gb67b483f6a45
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.294-274-gb67b483f6a45
 
-## Test Regressions (compared to v4.19.294-235-gf91592b50ab2)
-* arm, build
-  - clang-17-imx_v6_v7_defconfig
-  - gcc-12-imx_v6_v7_defconfig
-  - gcc-8-imx_v6_v7_defconfig
+Following commit is causing this build warning.
 
-## Metric Regressions (compared to v4.19.294-235-gf91592b50ab2)
-
-## Test Fixes (compared to v4.19.294-235-gf91592b50ab2)
-
-## Metric Fixes (compared to v4.19.294-235-gf91592b50ab2)
-
-## Test result summary
-total: 52194, pass: 44599, fail: 1323, skip: 6238, xfail: 34
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 111 total, 102 passed, 9 failed
-* arm64: 37 total, 32 passed, 5 failed
-* i386: 21 total, 18 passed, 3 failed
-* mips: 21 total, 21 passed, 0 failed
-* parisc: 3 total, 0 passed, 3 failed
-* powerpc: 24 total, 24 passed, 0 failed
-* s390: 6 total, 6 passed, 0 failed
-* sh: 12 total, 12 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 30 total, 25 passed, 5 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-lib
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-user
-* kselftest-vm
-* kselftest-zram
-* kunit
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-crypto
-* ltp-cve
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* rcutorture
+drm/mediatek: Fix potential memory leak if vmap() fail
+[ Upstream commit 379091e0f6d179d1a084c65de90fa44583b14a70 ]
 
 --
 Linaro LKFT
