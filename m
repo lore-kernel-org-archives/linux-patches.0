@@ -1,39 +1,50 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1D84946B;
-	Thu, 21 Sep 2023 10:43:16 +0000 (UTC)
-Received: from [192.168.2.41] (77-166-152-30.fixed.kpn.net [77.166.152.30])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 8EBC7212C5B4;
-	Thu, 21 Sep 2023 03:43:07 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8EBC7212C5B4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695292989;
-	bh=SOX5o5oyS7LBbpizIPBbrtijPHb6zgqQsGJ5vxNHoRg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KS6RUS3maeHbxTGmUE9NWlj60qEleuPTBYYk8JsyzO4q+sPwdZ//gABDcp7SHFTee
-	 /HMZ15pczaXyx4Wt3T0Vx2enaJFbBL2dpK8qSyfX4WFsQwsfwfJ2CFSZWIx4ULFx8X
-	 +p5xFjwwMSC9rbg7dOFDrm3Lzd9qo9uGqLViDvxg=
-Message-ID: <f01b5d93-0f43-41c8-b3d8-40ef9696dcf8@linux.microsoft.com>
-Date: Thu, 21 Sep 2023 12:43:05 +0200
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD41946D;
+	Thu, 21 Sep 2023 11:21:56 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E5B612229E;
+	Thu, 21 Sep 2023 11:21:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1695295314; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4K5YBr9/tEzngbv3UTbthsjK/IjLYc1431CBjULW/cI=;
+	b=FjEdrQSslwZHZzAMEniNGI7aZwN68qkF7uStSsT/dl2ljLF1akmGyCnmLTbOuXad5cjvhJ
+	56YHR3X13JuV5uOzU1Rj3/l56+9QzKeR55dD7xzo8EDQ3QnsNpL4mYuq86hAzlVIXXN2lY
+	s1e7dKT1d2+T921R6NjvhAxzdLUTI3Q=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D745B13513;
+	Thu, 21 Sep 2023 11:21:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id D8wVNFInDGV/dAAAMHmgww
+	(envelope-from <mhocko@suse.com>); Thu, 21 Sep 2023 11:21:54 +0000
+Date: Thu, 21 Sep 2023 13:21:54 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Cc: Shakeel Butt <shakeelb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
+	mathieu.tortuyaux@gmail.com
 Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
  kmem.limit_in_bytes
-To: Michal Hocko <mhocko@suse.com>, Shakeel Butt <shakeelb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Muchun Song <muchun.song@linux.dev>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, Tejun Heo <tj@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, linux-kernel@vger.kernel.org,
- regressions@lists.linux.dev, mathieu.tortuyaux@gmail.com
-References: <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
- <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
- <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+Message-ID: <ZQwnUpX7FlzIOWXP@dhcp22.suse.cz>
+References: <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
  <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
  <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
  <CALvZod7E_Jm9y+40OKtLs5EFA0ptKGjoe2BU58SY29pUiPc93g@mail.gmail.com>
@@ -42,136 +53,163 @@ References: <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
  <ZQtRKzUOfdaVKRCF@dhcp22.suse.cz>
  <CALvZod5DSMoEGY0CwGz=P-2=Opbr4SmMfwHhZRROBx7yCaBdDA@mail.gmail.com>
  <ZQv2MXOynlEPW/bX@dhcp22.suse.cz>
-Content-Language: en-US
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-In-Reply-To: <ZQv2MXOynlEPW/bX@dhcp22.suse.cz>
-Content-Type: text/plain; charset=UTF-8
+ <f01b5d93-0f43-41c8-b3d8-40ef9696dcf8@linux.microsoft.com>
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <f01b5d93-0f43-41c8-b3d8-40ef9696dcf8@linux.microsoft.com>
 
-On 9/21/2023 9:52 AM, Michal Hocko wrote:
-> On Wed 20-09-23 14:46:52, Shakeel Butt wrote:
->> On Wed, Sep 20, 2023 at 1:08 PM Michal Hocko <mhocko@suse.com> wrote:
->>>
->> [...]
->>>> have a strong opinion against it. Also just to be clear we are not
->>>> talking about full revert of 58056f77502f but just the returning of
->>>> EOPNOTSUPP, right?
->>>
->>> If we allow the limit to be set without returning a failure then we
->>> still have options 2 and 3 on how to deal with that. One of them is to
->>> enforce the limit.
->>>
->>
->> Option 3 is a partial revert of 58056f77502f where we keep the no
->> limit enforcement and remove the EOPNOTSUPP return on write. Let's go
->> with option 3. In addition, let's add pr_warn_once on the read of
->> kmem.limit_in_bytes as well.
+On Thu 21-09-23 12:43:05, Jeremi Piotrowski wrote:
+> On 9/21/2023 9:52 AM, Michal Hocko wrote:
+> > On Wed 20-09-23 14:46:52, Shakeel Butt wrote:
+> >> On Wed, Sep 20, 2023 at 1:08 PM Michal Hocko <mhocko@suse.com> wrote:
+> >>>
+> >> [...]
+> >>>> have a strong opinion against it. Also just to be clear we are not
+> >>>> talking about full revert of 58056f77502f but just the returning of
+> >>>> EOPNOTSUPP, right?
+> >>>
+> >>> If we allow the limit to be set without returning a failure then we
+> >>> still have options 2 and 3 on how to deal with that. One of them is to
+> >>> enforce the limit.
+> >>>
+> >>
+> >> Option 3 is a partial revert of 58056f77502f where we keep the no
+> >> limit enforcement and remove the EOPNOTSUPP return on write. Let's go
+> >> with option 3. In addition, let's add pr_warn_once on the read of
+> >> kmem.limit_in_bytes as well.
+> > 
+> > How about this?
+> > --- 
 > 
-> How about this?
-> --- 
-
-I'm OK with this approach. You're missing this in the patch below:
-
-// static struct cftype mem_cgroup_legacy_files[] = {
-
-+       {
-+               .name = "kmem.limit_in_bytes",
-+               .private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
-+               .write = mem_cgroup_write,
-+               .read_u64 = mem_cgroup_read_u64,
-+       },
-
-
-Thanks,
-Jeremi
-
->>From 81ae0797d8da1b9cfbf357b4be4787a5bbf46bb4 Mon Sep 17 00:00:00 2001
-> From: Michal Hocko <mhocko@suse.com>
-> Date: Thu, 21 Sep 2023 09:38:29 +0200
-> Subject: [PATCH] mm, memcg: reconsider kmem.limit_in_bytes deprecation
+> I'm OK with this approach. You're missing this in the patch below:
 > 
-> This reverts commits 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
-> and partially reverts 58056f77502f ("memcg, kmem: further deprecate
-> kmem.limit_in_bytes") which have incrementally removed support for the
-> kernel memory accounting hard limit. Unfortunately it has turned out
-> that there is still userspace depending on the existence of
-> memory.kmem.limit_in_bytes [1]. The underlying functionality is not
-> really required but the non-existent file just confuses the userspace
-> which fails in the result. The patch to fix this on the userspace side
-> has been submitted but it is hard to predict how it will propagate
-> through the maze of 3rd party consumers of the software.
+> // static struct cftype mem_cgroup_legacy_files[] = {
 > 
-> Now, reverting alone 86327e8eb94c is not an option because there is
-> another set of userspace which cannot cope with ENOTSUPP returned when
-> writing to the file. Therefore we have to go and revisit 58056f77502f
-> as well. There are two ways to go ahead. Either we give up on the
-> deprecation and fully revert 58056f77502f as well or we can keep
-> kmem.limit_in_bytes but make the write a noop and warn about the fact.
-> This should work for both known breaking workloads which depend on the
-> existence but do not depend on the hard limit enforcement.
-> 
-> [1] http://lkml.kernel.org/r/20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
-> Fixes: 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
-> Fixes: 58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes")
-> Signed-off-by: Michal Hocko <mhocko@suse.com>
-> ---
->  Documentation/admin-guide/cgroup-v1/memory.rst |  7 +++++++
->  mm/memcontrol.c                                | 12 ++++++++++++
->  2 files changed, 19 insertions(+)
-> 
-> diff --git a/Documentation/admin-guide/cgroup-v1/memory.rst b/Documentation/admin-guide/cgroup-v1/memory.rst
-> index 5f502bf68fbc..ff456871bf4b 100644
-> --- a/Documentation/admin-guide/cgroup-v1/memory.rst
-> +++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-> @@ -92,6 +92,13 @@ Brief summary of control files.
->   memory.oom_control		     set/show oom controls.
->   memory.numa_stat		     show the number of memory usage per numa
->  				     node
-> + memory.kmem.limit_in_bytes          Deprecated knob to set and read the kernel
-> +                                     memory hard limit. Kernel hard limit is not
-> +                                     supported since 5.16. Writing any value to
-> +                                     do file will not have any effect same as if
-> +                                     nokmem kernel parameter was specified.
-> +                                     Kernel memory is still charged and reported
-> +                                     by memory.kmem.usage_in_bytes.
->   memory.kmem.usage_in_bytes          show current kernel memory allocation
->   memory.kmem.failcnt                 show the number of kernel memory usage
->  				     hits limits
-> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-> index a4d3282493b6..ac7f14b2338d 100644
-> --- a/mm/memcontrol.c
-> +++ b/mm/memcontrol.c
-> @@ -3097,6 +3097,7 @@ static void obj_cgroup_uncharge_pages(struct obj_cgroup *objcg,
->  static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
->  				   unsigned int nr_pages)
->  {
-> +	struct page_counter *counter;
->  	struct mem_cgroup *memcg;
->  	int ret;
->  
-> @@ -3107,6 +3108,10 @@ static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
->  		goto out;
->  
->  	memcg_account_kmem(memcg, nr_pages);
-> +
-> +	/* There is no way to set up kmem hard limit so this operation cannot fail */
-> +	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
-> +		WARN_ON(!page_counter_try_charge(&memcg->kmem, nr_pages, &counter));
->  out:
->  	css_put(&memcg->css);
->  
-> @@ -3867,6 +3872,13 @@ static ssize_t mem_cgroup_write(struct kernfs_open_file *of,
->  		case _MEMSWAP:
->  			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
->  			break;
-> +		case _KMEM:
-> +			pr_warn_once("kmem.limit_in_bytes is deprecated and will be removed. "
-> +				     "Writing any value to this file has no effect. "
-> +				     "Please report your usecase to linux-mm@kvack.org if you "
-> +				     "depend on this functionality.\n");
-> +			ret = 0;
-> +			break;
->  		case _TCP:
->  			ret = memcg_update_tcp_max(memcg, nr_pages);
->  			break;
+> +       {
+> +               .name = "kmem.limit_in_bytes",
+> +               .private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
+> +               .write = mem_cgroup_write,
+> +               .read_u64 = mem_cgroup_read_u64,
+> +       },
 
+Of course. I've lost the hunk while massaging the revert. Thanks for
+spotting. Updated version below. Btw. I've decided to not pr_{warn,info}
+on the read side because realistically I do not think this will help all
+that much. I am worried we will get stuck with this for ever because
+there always be somebody stuck on unpatched userspace.
+--- 
+From bb6702b698efd31f3f90f4f1dd36ffe223397bec Mon Sep 17 00:00:00 2001
+From: Michal Hocko <mhocko@suse.com>
+Date: Thu, 21 Sep 2023 09:38:29 +0200
+Subject: [PATCH] mm, memcg: reconsider kmem.limit_in_bytes deprecation
+
+This reverts commits 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
+and partially reverts 58056f77502f ("memcg, kmem: further deprecate
+kmem.limit_in_bytes") which have incrementally removed support for the
+kernel memory accounting hard limit. Unfortunately it has turned out
+that there is still userspace depending on the existence of
+memory.kmem.limit_in_bytes [1]. The underlying functionality is not
+really required but the non-existent file just confuses the userspace
+which fails in the result. The patch to fix this on the userspace side
+has been submitted but it is hard to predict how it will propagate
+through the maze of 3rd party consumers of the software.
+
+Now, reverting alone 86327e8eb94c is not an option because there is
+another set of userspace which cannot cope with ENOTSUPP returned when
+writing to the file. Therefore we have to go and revisit 58056f77502f
+as well. There are two ways to go ahead. Either we give up on the
+deprecation and fully revert 58056f77502f as well or we can keep
+kmem.limit_in_bytes but make the write a noop and warn about the fact.
+This should work for both known breaking workloads which depend on the
+existence but do not depend on the hard limit enforcement.
+
+[1] http://lkml.kernel.org/r/20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
+Fixes: 86327e8eb94c ("memcg: drop kmem.limit_in_bytes")
+Fixes: 58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes")
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+---
+ Documentation/admin-guide/cgroup-v1/memory.rst |  7 +++++++
+ mm/memcontrol.c                                | 18 ++++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/Documentation/admin-guide/cgroup-v1/memory.rst b/Documentation/admin-guide/cgroup-v1/memory.rst
+index 5f502bf68fbc..ff456871bf4b 100644
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -92,6 +92,13 @@ Brief summary of control files.
+  memory.oom_control		     set/show oom controls.
+  memory.numa_stat		     show the number of memory usage per numa
+ 				     node
++ memory.kmem.limit_in_bytes          Deprecated knob to set and read the kernel
++                                     memory hard limit. Kernel hard limit is not
++                                     supported since 5.16. Writing any value to
++                                     do file will not have any effect same as if
++                                     nokmem kernel parameter was specified.
++                                     Kernel memory is still charged and reported
++                                     by memory.kmem.usage_in_bytes.
+  memory.kmem.usage_in_bytes          show current kernel memory allocation
+  memory.kmem.failcnt                 show the number of kernel memory usage
+ 				     hits limits
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index a4d3282493b6..0b161705ef36 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3097,6 +3097,7 @@ static void obj_cgroup_uncharge_pages(struct obj_cgroup *objcg,
+ static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
+ 				   unsigned int nr_pages)
+ {
++	struct page_counter *counter;
+ 	struct mem_cgroup *memcg;
+ 	int ret;
+ 
+@@ -3107,6 +3108,10 @@ static int obj_cgroup_charge_pages(struct obj_cgroup *objcg, gfp_t gfp,
+ 		goto out;
+ 
+ 	memcg_account_kmem(memcg, nr_pages);
++
++	/* There is no way to set up kmem hard limit so this operation cannot fail */
++	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
++		WARN_ON(!page_counter_try_charge(&memcg->kmem, nr_pages, &counter));
+ out:
+ 	css_put(&memcg->css);
+ 
+@@ -3867,6 +3872,13 @@ static ssize_t mem_cgroup_write(struct kernfs_open_file *of,
+ 		case _MEMSWAP:
+ 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
+ 			break;
++		case _KMEM:
++			pr_warn_once("kmem.limit_in_bytes is deprecated and will be removed. "
++				     "Writing any value to this file has no effect. "
++				     "Please report your usecase to linux-mm@kvack.org if you "
++				     "depend on this functionality.\n");
++			ret = 0;
++			break;
+ 		case _TCP:
+ 			ret = memcg_update_tcp_max(memcg, nr_pages);
+ 			break;
+@@ -5077,6 +5089,12 @@ static struct cftype mem_cgroup_legacy_files[] = {
+ 		.seq_show = memcg_numa_stat_show,
+ 	},
+ #endif
++	{
++		.name = "kmem.limit_in_bytes",
++		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
++		.write = mem_cgroup_write,
++		.read_u64 = mem_cgroup_read_u64,
++	},
+ 	{
+ 		.name = "kmem.usage_in_bytes",
+ 		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
+-- 
+2.30.2
+
+-- 
+Michal Hocko
+SUSE Labs
