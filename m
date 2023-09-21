@@ -1,65 +1,224 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09220B641
-	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 13:17:04 +0000 (UTC)
-Received: from loongson.cn (unknown [10.20.42.43])
-	by gateway (Coremail) with SMTP id _____8AxDOtMQgxlJ4sqAA--.11047S3;
-	Thu, 21 Sep 2023 21:17:00 +0800 (CST)
-Received: from [0.0.0.0] (unknown [10.20.42.43])
-	by localhost.localdomain (Coremail) with SMTP id AQAAf8DxiuRJQgxl0UcNAA--.28942S3;
-	Thu, 21 Sep 2023 21:16:59 +0800 (CST)
-Message-ID: <741fb6da-3a77-84de-0f03-b925defd7f52@loongson.cn>
-Date: Thu, 21 Sep 2023 21:16:57 +0800
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F8FB641
+	for <patches@lists.linux.dev>; Thu, 21 Sep 2023 13:32:17 +0000 (UTC)
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-495cf1bf9f9so383565e0c.2
+        for <patches@lists.linux.dev>; Thu, 21 Sep 2023 06:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695303136; x=1695907936; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WUBffOBfeC4iGfE0wxrC0Btm8jAtr1Pc1HT4AAEfzTE=;
+        b=VLf2aqkIg+e9Ty269a76UgYjDrchlNbYrweum2d9Cus3LBW8vNkIVLSmGfSZjceJR4
+         m5CdK44EkVi1LTRcJSg/frND8L7aA59Y7vkJc3fTla4f5/Gzvb2fa3K8+O/mRFBlX3IS
+         mYL41ur6lAsbZF4mX91Y8WFeO97f2NzIt8uKdhL/2WTJnl8oUPNALHhdD/uT1MaFho0L
+         66DHrt4Oa+QyGRs5PJ8vouPMD8iH3uWu0nPj69D02qChDJaP1nJQPUlzJakSbktIcX/P
+         ERfLf1yvMjOLyfd7VLhTPaN/qw3b7S9L35FxcmAW5xA+G7AvbWNaKWmKwGhTyNWKkx6L
+         ey1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695303136; x=1695907936;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WUBffOBfeC4iGfE0wxrC0Btm8jAtr1Pc1HT4AAEfzTE=;
+        b=WzrUHCAgITvlwH91ZCc4KouvU+NtDWCB+zKUONchBCAqCt8csSLLe1jKvKqFDp5fkb
+         I505x+VxReGTBeHCpS6Ht/sLVGcB9yHvE6tyFEM1UjirVL+5ume3J1XChbSFQp/Btbdy
+         XNR1qVpEs2pFlWUykHEpT0L7Y0v8/GKkLF/kj4/qIUrQeW52rBfUQverqw1zZ4i7ju2D
+         0AjaAnECff+DcJf4cOg3yvBgb3lhHLUpLJGCk961qZ0qV9Ee5F1pMfqrFAqIDLTjhGa0
+         gRTNCQ1z0v9IMdLo0Vm8lJ+Kcf48jea6mxCRCpBfwS2TmxU7TrJB/4PsAwhJFFdSNxGr
+         T7Jw==
+X-Gm-Message-State: AOJu0YzMNdK2O6pmsUS0NRSIvUdfJVQrDyG6nPPAzH+YOP4/BVOsRnm+
+	QEUeQy8KC1jajdY/GAuryLzj4tW/VRZdlpv8vQTMVA==
+X-Google-Smtp-Source: AGHT+IHvvzJ5FrOBVxuU7MJlhhXjUqpDEKLo7haizXBfU6s6ceBJbpHRnsjrEsB19ulthb+AD7V/9xxV7AFl676QuJM=
+X-Received: by 2002:a1f:6243:0:b0:486:de54:b11 with SMTP id
+ w64-20020a1f6243000000b00486de540b11mr4378052vkb.16.1695303136171; Thu, 21
+ Sep 2023 06:32:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 5.4 000/367] 5.4.257-rc1 review
-Content-Language: en-US
-From: Sui Jingfeng <suijingfeng@loongson.cn>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, dri-devel@lists.freedesktop.org
-References: <20230920112858.471730572@linuxfoundation.org>
- <CA+G9fYsM0Lr8TNQJxsZFDZwcH-rEzkVV+y+x5FX18oH5wm5dRg@mail.gmail.com>
- <cab7d157-946e-6b8f-1b29-5618a0ac0da6@loongson.cn>
-In-Reply-To: <cab7d157-946e-6b8f-1b29-5618a0ac0da6@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:AQAAf8DxiuRJQgxl0UcNAA--.28942S3
-X-CM-SenderInfo: xvxlyxpqjiv03j6o00pqjv00gofq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
-	ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
-	BjDU0xBIdaVrnRJUUUmjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
-	xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
-	j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxV
-	AFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E
-	14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
-	0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280
-	aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
-	xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4c8EcI0En4kS14v26r1q6r43MxAqzxv26xkF
-	7I0En4kS14v26r1q6r43MxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r4a6r
-	W5MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
-	67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26ryj6F1UMIIF0xvE2I
-	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
-	z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
-	UI43ZEXa7IU8l38UUUUUU==
+References: <20230920112826.634178162@linuxfoundation.org>
+In-Reply-To: <20230920112826.634178162@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 21 Sep 2023 15:32:04 +0200
+Message-ID: <CA+G9fYsCDqeonuM3Z-RHmbAyJ4w-UMwXYTevdKwHXEk2JhN7GQ@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/83] 5.10.196-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Wed, 20 Sept 2023 at 14:21, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.196 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.196-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
-On 2023/9/21 21:10, Sui Jingfeng wrote:
-> return -ERR_PTR(-ENOMEM)
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-return ERR_PTR(-ENOMEM);
+## Build
+* kernel: 5.10.196-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.10.y
+* git commit: f147286de8e534b063d97de0c66a4a5895bfc6ad
+* git describe: v5.10.195-84-gf147286de8e5
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.195-84-gf147286de8e5
 
+## Test Regressions (compared to v5.10.195)
+
+## Metric Regressions (compared to v5.10.195)
+
+## Test Fixes (compared to v5.10.195)
+
+## Metric Fixes (compared to v5.10.195)
+
+## Test result summary
+total: 89352, pass: 70107, fail: 2413, skip: 16770, xfail: 62
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 116 passed, 1 failed
+* arm64: 44 total, 43 passed, 1 failed
+* i386: 35 total, 35 passed, 0 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 4 total, 0 passed, 4 failed
+* powerpc: 26 total, 25 passed, 1 failed
+* riscv: 12 total, 11 passed, 1 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 38 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
