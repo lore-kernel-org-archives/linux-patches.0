@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64BCB45F64
-	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6B7245F71
+	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:50 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 681F9212C7E7;
-	Fri, 22 Sep 2023 11:38:42 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 681F9212C7E7
+	by linux.microsoft.com (Postfix) with ESMTPSA id D1C7C212C5CF;
+	Fri, 22 Sep 2023 11:38:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D1C7C212C5CF
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695407922;
-	bh=y30J44j0l6tN36vbJKcYdpAVzciWndqiQo97e8G7vD8=;
+	s=default; t=1695407921;
+	bh=cwj9fix3EwPTsj2jgOlURtKuqXv0kbtpiSQT3yeAd5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2/PKIjDfKd5f0tArDcF/+QUbAxOX2ZH2hGLYpGtD8NRh5nZ8YB1Umtae9U72pQGY
-	 RSdRrNJnL8IXmAWmwW1lWuFRfqRWCuJL326st7LsvNzCDCWFWx5PRHwFFkP+DNfDjJ
-	 DYu85ggJ6CQldX5KWb9zjN1dBKssFeJoOnNS45X0=
+	b=bDV1/EccyZmYnhMw8Pm3GCPS4nTyOqW7fgvhu24SAWYdnus3W1XJIdVj03GbdAjvl
+	 z/xSPNWPoBQxFHSu3cS47VO6sH2GXnDak8E8Rg06I/03ahhRFus1qaA5f44kie6LQB
+	 aEbD9TImzqZn4CjgjPYcekPJ8ccctFR5TAVij1AY=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v3 14/15] asm-generic: hyperv: Use new Hyper-V headers conditionally.
-Date: Fri, 22 Sep 2023 11:38:34 -0700
-Message-Id: <1695407915-12216-15-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v3 09/15] Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
+Date: Fri, 22 Sep 2023 11:38:29 -0700
+Message-Id: <1695407915-12216-10-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,125 +51,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-Add asm-generic/hyperv-defs.h. It includes hyperv-tlfs.h or hvhdk.h
-depending on compile-time constant HV_HYPERV_DEFS which will be defined in
-the mshv driver.
-
-This is needed to keep unstable Hyper-V interfaces independent of
-hyperv-tlfs.h. This ensures hvhdk.h replaces hyperv-tlfs.h in the mshv
-driver, even via indirect includes.
+This is a more flexible approach for determining whether to allocate the
+output page.
 
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- arch/arm64/include/asm/mshyperv.h |  2 +-
- arch/x86/include/asm/mshyperv.h   |  3 +--
- drivers/hv/hyperv_vmbus.h         |  1 -
- include/asm-generic/hyperv-defs.h | 26 ++++++++++++++++++++++++++
- include/asm-generic/mshyperv.h    |  2 +-
- include/linux/hyperv.h            |  2 +-
- 6 files changed, 30 insertions(+), 6 deletions(-)
- create mode 100644 include/asm-generic/hyperv-defs.h
+ drivers/hv/hv_common.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/mshyperv.h b/arch/arm64/include/asm/mshyperv.h
-index 20070a847304..8ec14caf3d4f 100644
---- a/arch/arm64/include/asm/mshyperv.h
-+++ b/arch/arm64/include/asm/mshyperv.h
-@@ -20,7 +20,7 @@
+diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+index d346ce6adf00..89f5c1fb2a35 100644
+--- a/drivers/hv/hv_common.c
++++ b/drivers/hv/hv_common.c
+@@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
+ void * __percpu *hyperv_pcpu_output_arg;
+ EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
  
- #include <linux/types.h>
- #include <linux/arm-smccc.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
- 
- /*
-  * Declare calls to get and set Hyper-V VP register values on ARM64, which
-diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/mshyperv.h
-index 6e96d3420a9d..e19fc6140a31 100644
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -6,10 +6,9 @@
- #include <linux/nmi.h>
- #include <linux/msi.h>
- #include <asm/io.h>
--#include <asm/hyperv-tlfs.h>
- #include <asm/nospec-branch.h>
- #include <asm/paravirt.h>
--#include <asm/mshyperv.h>
-+#include <asm-generic/hyperv-defs.h>
- 
- /*
-  * Hyper-V always provides a single IO-APIC at this MMIO address.
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 09792eb4ffed..0e4bc18a13fa 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -15,7 +15,6 @@
- #include <linux/list.h>
- #include <linux/bitops.h>
- #include <asm/sync_bitops.h>
--#include <asm/hyperv-tlfs.h>
- #include <linux/atomic.h>
- #include <linux/hyperv.h>
- #include <linux/interrupt.h>
-diff --git a/include/asm-generic/hyperv-defs.h b/include/asm-generic/hyperv-defs.h
-new file mode 100644
-index 000000000000..ac6fcba35c8c
---- /dev/null
-+++ b/include/asm-generic/hyperv-defs.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _ASM_GENERIC_HYPERV_DEFS_H
-+#define _ASM_GENERIC_HYPERV_DEFS_H
-+
 +/*
-+ * There are cases where Microsoft Hypervisor ABIs are needed which may not be
-+ * stable or present in the Hyper-V TLFS document. E.g. the mshv_root driver.
-+ *
-+ * As these interfaces are unstable and may differ from hyperv-tlfs.h, they
-+ * must be kept separate and independent.
-+ *
-+ * However, code from files that depend on hyperv-tlfs.h (such as mshyperv.h)
-+ * is still needed, so work around the issue by conditionally including the
-+ * correct definitions.
-+ *
-+ * Note: Since they are independent of each other, there are many definitions
-+ * duplicated in both hyperv-tlfs.h and uapi/hyperv/hv*.h files.
++ * Determine whether output arg is needed
 + */
-+#ifdef HV_HYPERV_DEFS
-+#include <uapi/hyperv/hvhdk.h>
-+#else
-+#include <asm/hyperv-tlfs.h>
-+#endif
++static inline bool hv_output_arg_exists(void)
++{
++	return hv_root_partition ? true : false;
++}
 +
-+#endif /* _ASM_GENERIC_HYPERV_DEFS_H */
+ static void hv_kmsg_dump_unregister(void);
+ 
+ static struct ctl_table_header *hv_ctl_table_hdr;
+@@ -342,10 +350,12 @@ int __init hv_common_init(void)
+ 	hyperv_pcpu_input_arg = alloc_percpu(void  *);
+ 	BUG_ON(!hyperv_pcpu_input_arg);
+ 
+-	/* Allocate the per-CPU state for output arg for root */
+-	if (hv_root_partition) {
++	if (hv_output_arg_exists()) {
+ 		hyperv_pcpu_output_arg = alloc_percpu(void *);
+ 		BUG_ON(!hyperv_pcpu_output_arg);
++	}
 +
-diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index 0a9e8ff31b73..d3864ba64e47 100644
---- a/include/asm-generic/mshyperv.h
-+++ b/include/asm-generic/mshyperv.h
-@@ -25,7 +25,7 @@
- #include <linux/cpumask.h>
- #include <linux/nmi.h>
- #include <asm/ptrace.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
++	if (hv_root_partition) {
+ 		hv_synic_eventring_tail = alloc_percpu(u8 *);
+ 		BUG_ON(hv_synic_eventring_tail == NULL);
+ 	}
+@@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
+ 	u8 **synic_eventring_tail;
+ 	u64 msr_vp_index;
+ 	gfp_t flags;
+-	int pgcount = hv_root_partition ? 2 : 1;
++	int pgcount = hv_output_arg_exists() ? 2 : 1;
+ 	void *mem;
+ 	int ret;
  
- #define VTPM_BASE_ADDRESS 0xfed40000
+@@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
+ 		if (!mem)
+ 			return -ENOMEM;
  
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 2d8568708d90..d0bc3d34241c 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -24,7 +24,7 @@
- #include <linux/mod_devicetable.h>
- #include <linux/interrupt.h>
- #include <linux/reciprocal_div.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
- 
- #define MAX_PAGE_BUFFER_COUNT				32
- #define MAX_MULTIPAGE_BUFFER_COUNT			32 /* 128K */
+-		if (hv_root_partition) {
++		if (hv_output_arg_exists()) {
+ 			outputarg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
+ 			*outputarg = (char *)mem + HV_HYP_PAGE_SIZE;
++		}
++
++		if (hv_root_partition) {
+ 			synic_eventring_tail = (u8 **)this_cpu_ptr(hv_synic_eventring_tail);
+ 			*synic_eventring_tail = kcalloc(HV_SYNIC_SINT_COUNT, sizeof(u8),
+ 							flags);
 -- 
 2.25.1
 
