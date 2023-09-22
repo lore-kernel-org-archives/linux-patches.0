@@ -1,44 +1,44 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954CC16429
-	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 06:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F0A168A2
+	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 07:00:47 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id D647321C47;
-	Fri, 22 Sep 2023 06:55:27 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 05D031F38A;
+	Fri, 22 Sep 2023 07:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1695365727; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1695366046; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j1UXkIX7PgB9a+J0veY2Drx28CRiXF/v4BDQq2G9vDY=;
-	b=ks8tfM2/+BomuV8RcvIe/Ay38m9ZdkBwdHui++JtBxgfdkW0JViPTsA7Z4SRs6Wdkqp5+k
-	7E65RV7En0sr6SPG6RZl1adkp+qfDKIByDutAivXLBFE97HwETUhCSdE3V5Wl0694DxA/I
-	EkWVe+0BRVoUu0ISWNcyUu09b2ozUSc=
+	bh=hzC90i38T7FBA12FfFnH5tEY2/bPD5iOP/QAXB6HLew=;
+	b=mpg0WKy4e1LNUZ0O9RZBFgZG3LRiQOVOUFzGi6eudHfJf9xRXvkb2CNXkH9uupPBn1ZTsD
+	WFyB8AqhoFCyBU9CMTq0ETaSWsu8quH+ekQNv3ufMj+tKStXqHrxFSIpSJPA8rB3Y1RFCb
+	JoXkpHvkpxw2Uj5oLlWN0v2UyLUIUi8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1695365727;
+	s=susede2_ed25519; t=1695366046;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j1UXkIX7PgB9a+J0veY2Drx28CRiXF/v4BDQq2G9vDY=;
-	b=Xh0TFS/ebPdUHJUOI9aYVIZO0vbCwA8PqqC9P3wmyPtbIBjYiUX/jheFptxcWPalHUsBpe
-	/IAvAjSO/lAcJ+Dw==
+	bh=hzC90i38T7FBA12FfFnH5tEY2/bPD5iOP/QAXB6HLew=;
+	b=3RPCloKxh+Kl7Ij3jJpGTh4ew9VIdNDrcsxKs54eoWzjDikCQ5hmvisS4iQg7Jr3CW8HDa
+	5m5Ed1ULPIj9mvCQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AD49E13478;
-	Fri, 22 Sep 2023 06:55:27 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id CAF1813478;
+	Fri, 22 Sep 2023 07:00:45 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 5AWrKV86DWU5DwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 22 Sep 2023 06:55:27 +0000
-Message-ID: <210044a1-1f07-b579-bdf5-3f9ac8fbdc8c@suse.cz>
-Date: Fri, 22 Sep 2023 08:55:27 +0200
+	id Y5vCMJ07DWXjEQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 22 Sep 2023 07:00:45 +0000
+Message-ID: <4662588e-fc8b-1854-57f8-d15e08a3c368@suse.cz>
+Date: Fri, 22 Sep 2023 09:00:45 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,89 +50,21 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
 Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
  calc_slab_order()
 Content-Language: en-US
-To: Feng Tang <feng.tang@intel.com>
+To: Baoquan He <bhe@redhat.com>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
  Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
  Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg
  <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+ linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org
 References: <20230908145302.30320-6-vbabka@suse.cz>
- <20230908145302.30320-10-vbabka@suse.cz> <ZQr1SwNeNA+nTpzW@feng-clx>
+ <20230908145302.30320-10-vbabka@suse.cz> <ZQUE0e4i8HrGUthB@MiWiFi-R3L-srv>
 From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <ZQr1SwNeNA+nTpzW@feng-clx>
+In-Reply-To: <ZQUE0e4i8HrGUthB@MiWiFi-R3L-srv>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 9/20/23 15:36, Feng Tang wrote:
-> On Fri, Sep 08, 2023 at 10:53:07PM +0800, Vlastimil Babka wrote:
->> After the previous cleanups, we can now move some code from
->> calc_slab_order() to calculate_order() so it's executed just once, and
->> do some more cleanups.
->> 
->> - move the min_order and MAX_OBJS_PER_PAGE evaluation to
->>   calc_slab_order().
-> 
-> Nit: here is to 'move ... to calculate_order()'?
-
-Oops, right, fixed.
-
-> I tried this patch series with normal boot on a desktop and one 2
-> socket server: patch 2/4 doesn't change order of any slab, and patch
-> 3/4 does make the slab order of big objects more consistent.
-> 
-> Thanks for making the code much cleaner! And for the whole series, 
-> 
-> Reviewed-by: Feng Tang <feng.tang@intel.com>
-
-Thanks! Applied.
-
-> 
->> - change calc_slab_order() parameter min_objects to min_order
->> 
->> Also make MAX_OBJS_PER_PAGE check more robust by considering also
->> min_objects in addition to slub_min_order. Otherwise this is not a
->> functional change.
->> 
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> ---
->>  mm/slub.c | 19 +++++++++----------
->>  1 file changed, 9 insertions(+), 10 deletions(-)
->> 
->> diff --git a/mm/slub.c b/mm/slub.c
->> index f04eb029d85a..1c91f72c7239 100644
->> --- a/mm/slub.c
->> +++ b/mm/slub.c
->> @@ -4110,17 +4110,12 @@ static unsigned int slub_min_objects;
->>   * the smallest order which will fit the object.
->>   */
->>  static inline unsigned int calc_slab_order(unsigned int size,
->> -		unsigned int min_objects, unsigned int max_order,
->> +		unsigned int min_order, unsigned int max_order,
->>  		unsigned int fract_leftover)
->>  {
->> -	unsigned int min_order = slub_min_order;
->>  	unsigned int order;
->>  
->> -	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
->> -		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
->> -
->> -	for (order = max(min_order, (unsigned int)get_order(min_objects * size));
->> -			order <= max_order; order++) {
->> +	for (order = min_order; order <= max_order; order++) {
->>  
->>  		unsigned int slab_size = (unsigned int)PAGE_SIZE << order;
->>  		unsigned int rem;
->> @@ -4139,7 +4134,7 @@ static inline int calculate_order(unsigned int size)
->>  	unsigned int order;
->>  	unsigned int min_objects;
->>  	unsigned int max_objects;
->> -	unsigned int nr_cpus;
->> +	unsigned int min_order;
->>  
->>  	min_objects = slub_min_objects;
->>  	if (!min_objects) {
+On 9/16/23 03:28, Baoquan He wrote:
+> On 09/08/23 at 04:53pm, Vlastimil Babka wrote:
 >> @@ -4152,7 +4147,7 @@ static inline int calculate_order(unsigned int size)
 >>  		 * order on systems that appear larger than they are, and too
 >>  		 * low order on systems that appear smaller than they are.
@@ -142,6 +74,17 @@ Thanks! Applied.
 >>  		if (nr_cpus <= 1)
 >>  			nr_cpus = nr_cpu_ids;
 >>  		min_objects = 4 * (fls(nr_cpus) + 1);
+> 
+> A minor concern, should we change 'min_objects' to be a local static
+> to avoid the "if (!min_objects) {" code block every time?  It's deducing
+> the value from nr_cpus, we may not need do the calculation each time.
+
+Maybe, although it's not a hot path. But we should make sure the
+num_present_cpus() cannot change. Could it be e.g. low (1) very early when
+we bootstrap the initial caches, but then update and at least most of the
+caches then reflect the real number of cpus? With a static we would create
+everything with 1.
+
 >> @@ -4160,6 +4155,10 @@ static inline int calculate_order(unsigned int size)
 >>  	max_objects = order_objects(slub_max_order, size);
 >>  	min_objects = min(min_objects, max_objects);
@@ -165,5 +108,5 @@ Thanks! Applied.
 >> -- 
 >> 2.42.0
 >> 
->> 
+> 
 
