@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 801BC45F5B
-	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B7645F58
+	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:51 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 9ACF7212C5DB;
-	Fri, 22 Sep 2023 11:38:41 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9ACF7212C5DB
+	by linux.microsoft.com (Postfix) with ESMTPSA id 3002F212C7E3;
+	Fri, 22 Sep 2023 11:38:42 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3002F212C7E3
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695407921;
-	bh=RKZydIn4UQ6vJMtTvrGmy2tMpzVMUVNUu9QYHvsW164=;
+	s=default; t=1695407922;
+	bh=aL5El9c71MWrlr8MRz/X5/nVNwfU9u77bS051hju8/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbC8qDnGnNI2tFwGzQQFKfdgG/ulZFl7vvsh+i6JSpeA0JkRhoaJGqPfckHukVs8X
-	 20DgduItz8VUlhrOzM0dK67AgycyBHMMWb0Yb/shotObuKccXGJT8uStQnBZkA3+GS
-	 usP1Gx/S4sND+z99l74NQ1Aygg6OPVR29vfDLxDM=
+	b=lypAwHUSsfVsrLBQpkf3+tXoLg0OhMUfB07GSBYFpngHJ2dlfelrHFZLtdvqcPcfw
+	 gb2jGkWx7jj7j+KFok33DCkuHAGLGwcP0MZF1UkZ+GwDk1YNhPBq92jBizu2BHWhMX
+	 Q545R3c7wv5EA4M6D7VsqCjQtmPbT5E1s31Ycv6g=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v3 07/15] Drivers: hv: Move hv_call_deposit_pages and hv_call_create_vp to common code
-Date: Fri, 22 Sep 2023 11:38:27 -0700
-Message-Id: <1695407915-12216-8-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v3 12/15] Documentation: Reserve ioctl number for mshv driver
+Date: Fri, 22 Sep 2023 11:38:32 -0700
+Message-Id: <1695407915-12216-13-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,371 +51,25 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-These hypercalls are not arch-specific. Move them to common code.
-
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
+Acked-by: Jonathan Corbet <corbet@lwn.net>
 ---
- arch/x86/hyperv/hv_proc.c       | 152 --------------------------------
- arch/x86/include/asm/mshyperv.h |   1 -
- drivers/hv/hv_common.c          | 147 ++++++++++++++++++++++++++++++
- include/asm-generic/mshyperv.h  |   2 +
- 4 files changed, 149 insertions(+), 153 deletions(-)
+ Documentation/userspace-api/ioctl/ioctl-number.rst | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/hyperv/hv_proc.c b/arch/x86/hyperv/hv_proc.c
-index ed80da64649e..0a35cb865427 100644
---- a/arch/x86/hyperv/hv_proc.c
-+++ b/arch/x86/hyperv/hv_proc.c
-@@ -3,7 +3,6 @@
- #include <linux/vmalloc.h>
- #include <linux/mm.h>
- #include <linux/clockchips.h>
--#include <linux/acpi.h>
- #include <linux/hyperv.h>
- #include <linux/slab.h>
- #include <linux/cpuhotplug.h>
-@@ -14,106 +13,6 @@
- 
- #include <asm/trace/hyperv.h>
- 
--/*
-- * See struct hv_deposit_memory. The first u64 is partition ID, the rest
-- * are GPAs.
-- */
--#define HV_DEPOSIT_MAX (HV_HYP_PAGE_SIZE / sizeof(u64) - 1)
--
--/* Deposits exact number of pages. Must be called with interrupts enabled.  */
--int hv_call_deposit_pages(int node, u64 partition_id, u32 num_pages)
--{
--	struct page **pages, *page;
--	int *counts;
--	int num_allocations;
--	int i, j, page_count;
--	int order;
--	u64 status;
--	int ret;
--	u64 base_pfn;
--	struct hv_deposit_memory *input_page;
--	unsigned long flags;
--
--	if (num_pages > HV_DEPOSIT_MAX)
--		return -E2BIG;
--	if (!num_pages)
--		return 0;
--
--	/* One buffer for page pointers and counts */
--	page = alloc_page(GFP_KERNEL);
--	if (!page)
--		return -ENOMEM;
--	pages = page_address(page);
--
--	counts = kcalloc(HV_DEPOSIT_MAX, sizeof(int), GFP_KERNEL);
--	if (!counts) {
--		free_page((unsigned long)pages);
--		return -ENOMEM;
--	}
--
--	/* Allocate all the pages before disabling interrupts */
--	i = 0;
--
--	while (num_pages) {
--		/* Find highest order we can actually allocate */
--		order = 31 - __builtin_clz(num_pages);
--
--		while (1) {
--			pages[i] = alloc_pages_node(node, GFP_KERNEL, order);
--			if (pages[i])
--				break;
--			if (!order) {
--				ret = -ENOMEM;
--				num_allocations = i;
--				goto err_free_allocations;
--			}
--			--order;
--		}
--
--		split_page(pages[i], order);
--		counts[i] = 1 << order;
--		num_pages -= counts[i];
--		i++;
--	}
--	num_allocations = i;
--
--	local_irq_save(flags);
--
--	input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
--
--	input_page->partition_id = partition_id;
--
--	/* Populate gpa_page_list - these will fit on the input page */
--	for (i = 0, page_count = 0; i < num_allocations; ++i) {
--		base_pfn = page_to_pfn(pages[i]);
--		for (j = 0; j < counts[i]; ++j, ++page_count)
--			input_page->gpa_page_list[page_count] = base_pfn + j;
--	}
--	status = hv_do_rep_hypercall(HVCALL_DEPOSIT_MEMORY,
--				     page_count, 0, input_page, NULL);
--	local_irq_restore(flags);
--	if (!hv_result_success(status)) {
--		pr_err("Failed to deposit pages: %lld\n", status);
--		ret = hv_result(status);
--		goto err_free_allocations;
--	}
--
--	ret = 0;
--	goto free_buf;
--
--err_free_allocations:
--	for (i = 0; i < num_allocations; ++i) {
--		base_pfn = page_to_pfn(pages[i]);
--		for (j = 0; j < counts[i]; ++j)
--			__free_page(pfn_to_page(base_pfn + j));
--	}
--
--free_buf:
--	free_page((unsigned long)pages);
--	kfree(counts);
--	return ret;
--}
--
- int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
- {
- 	struct hv_add_logical_processor_in *input;
-@@ -156,54 +55,3 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
- 	return ret;
- }
- 
--int hv_call_create_vp(int node, u64 partition_id, u32 vp_index, u32 flags)
--{
--	struct hv_create_vp *input;
--	u64 status;
--	unsigned long irq_flags;
--	int ret = HV_STATUS_SUCCESS;
--	int pxm = node_to_pxm(node);
--
--	/* Root VPs don't seem to need pages deposited */
--	if (partition_id != hv_current_partition_id) {
--		/* The value 90 is empirically determined. It may change. */
--		ret = hv_call_deposit_pages(node, partition_id, 90);
--		if (ret)
--			return ret;
--	}
--
--	do {
--		local_irq_save(irq_flags);
--
--		input = *this_cpu_ptr(hyperv_pcpu_input_arg);
--
--		input->partition_id = partition_id;
--		input->vp_index = vp_index;
--		input->flags = flags;
--		input->subnode_type = HvSubnodeAny;
--		if (node != NUMA_NO_NODE) {
--			input->proximity_domain_info.domain_id = pxm;
--			input->proximity_domain_info.flags.reserved = 0;
--			input->proximity_domain_info.flags.proximity_info_valid = 1;
--			input->proximity_domain_info.flags.proximity_preferred = 1;
--		} else {
--			input->proximity_domain_info.as_uint64 = 0;
--		}
--		status = hv_do_hypercall(HVCALL_CREATE_VP, input, NULL);
--		local_irq_restore(irq_flags);
--
--		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY) {
--			if (!hv_result_success(status)) {
--				pr_err("%s: vcpu %u, lp %u, %lld\n", __func__,
--				       vp_index, flags, status);
--				ret = hv_result(status);
--			}
--			break;
--		}
--		ret = hv_call_deposit_pages(node, partition_id, 1);
--
--	} while (!ret);
--
--	return ret;
--}
--
-diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/mshyperv.h
-index a1d098505b60..6e96d3420a9d 100644
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -62,7 +62,6 @@ u64 hv_tdx_hypercall(u64 control, u64 param1, u64 param2);
- 
- int hv_call_deposit_pages(int node, u64 partition_id, u32 num_pages);
- int hv_call_add_logical_proc(int node, u32 lp_index, u32 acpi_id);
--int hv_call_create_vp(int node, u64 partition_id, u32 vp_index, u32 flags);
- 
- /*
-  * If the hypercall involves no input or output parameters, the hypervisor
-diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
-index d5a46dacc03f..8c6ab60d5387 100644
---- a/drivers/hv/hv_common.c
-+++ b/drivers/hv/hv_common.c
-@@ -584,3 +584,150 @@ u64 __weak hv_tdx_hypercall(u64 control, u64 param1, u64 param2)
- 	return HV_STATUS_INVALID_PARAMETER;
- }
- EXPORT_SYMBOL_GPL(hv_tdx_hypercall);
-+
-+int hv_call_create_vp(int node, u64 partition_id, u32 vp_index, u32 flags)
-+{
-+	struct hv_create_vp *input;
-+	u64 status;
-+	unsigned long irq_flags;
-+	int ret = HV_STATUS_SUCCESS;
-+
-+	/* Root VPs don't seem to need pages deposited */
-+	if (partition_id != hv_current_partition_id) {
-+		/* The value 90 is empirically determined. It may change. */
-+		ret = hv_call_deposit_pages(node, partition_id, 90);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	do {
-+		local_irq_save(irq_flags);
-+
-+		input = *this_cpu_ptr(hyperv_pcpu_input_arg);
-+
-+		input->partition_id = partition_id;
-+		input->vp_index = vp_index;
-+		input->flags = flags;
-+		input->subnode_type = HvSubnodeAny;
-+		input->proximity_domain_info =
-+			numa_node_to_proximity_domain_info(node);
-+		status = hv_do_hypercall(HVCALL_CREATE_VP, input, NULL);
-+		local_irq_restore(irq_flags);
-+
-+		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY) {
-+			if (!hv_result_success(status)) {
-+				pr_err("%s: vcpu %u, lp %u, %s\n", __func__,
-+				       vp_index, flags, hv_status_to_string(status));
-+				ret = hv_status_to_errno(status);
-+			}
-+			break;
-+		}
-+		ret = hv_call_deposit_pages(node, partition_id, 1);
-+
-+	} while (!ret);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(hv_call_create_vp);
-+
-+/*
-+ * See struct hv_deposit_memory. The first u64 is partition ID, the rest
-+ * are GPAs.
-+ */
-+#define HV_DEPOSIT_MAX (HV_HYP_PAGE_SIZE / sizeof(u64) - 1)
-+
-+/* Deposits exact number of pages. Must be called with interrupts enabled.  */
-+int hv_call_deposit_pages(int node, u64 partition_id, u32 num_pages)
-+{
-+	struct page **pages, *page;
-+	int *counts;
-+	int num_allocations;
-+	int i, j, page_count;
-+	int order;
-+	u64 status;
-+	int ret;
-+	u64 base_pfn;
-+	struct hv_deposit_memory *input_page;
-+	unsigned long flags;
-+
-+	if (num_pages > HV_DEPOSIT_MAX)
-+		return -E2BIG;
-+	if (!num_pages)
-+		return 0;
-+
-+	/* One buffer for page pointers and counts */
-+	page = alloc_page(GFP_KERNEL);
-+	if (!page)
-+		return -ENOMEM;
-+	pages = page_address(page);
-+
-+	counts = kcalloc(HV_DEPOSIT_MAX, sizeof(int), GFP_KERNEL);
-+	if (!counts) {
-+		free_page((unsigned long)pages);
-+		return -ENOMEM;
-+	}
-+
-+	/* Allocate all the pages before disabling interrupts */
-+	i = 0;
-+
-+	while (num_pages) {
-+		/* Find highest order we can actually allocate */
-+		order = 31 - __builtin_clz(num_pages);
-+
-+		while (1) {
-+			pages[i] = alloc_pages_node(node, GFP_KERNEL, order);
-+			if (pages[i])
-+				break;
-+			if (!order) {
-+				ret = -ENOMEM;
-+				num_allocations = i;
-+				goto err_free_allocations;
-+			}
-+			--order;
-+		}
-+
-+		split_page(pages[i], order);
-+		counts[i] = 1 << order;
-+		num_pages -= counts[i];
-+		i++;
-+	}
-+	num_allocations = i;
-+
-+	local_irq_save(flags);
-+
-+	input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
-+
-+	input_page->partition_id = partition_id;
-+
-+	/* Populate gpa_page_list - these will fit on the input page */
-+	for (i = 0, page_count = 0; i < num_allocations; ++i) {
-+		base_pfn = page_to_pfn(pages[i]);
-+		for (j = 0; j < counts[i]; ++j, ++page_count)
-+			input_page->gpa_page_list[page_count] = base_pfn + j;
-+	}
-+	status = hv_do_rep_hypercall(HVCALL_DEPOSIT_MEMORY,
-+				     page_count, 0, input_page, NULL);
-+	local_irq_restore(flags);
-+	if (!hv_result_success(status)) {
-+		pr_err("Failed to deposit pages: %s\n", hv_status_to_string(status));
-+		ret = hv_status_to_errno(status);
-+		goto err_free_allocations;
-+	}
-+
-+	ret = 0;
-+	goto free_buf;
-+
-+err_free_allocations:
-+	for (i = 0; i < num_allocations; ++i) {
-+		base_pfn = page_to_pfn(pages[i]);
-+		for (j = 0; j < counts[i]; ++j)
-+			__free_page(pfn_to_page(base_pfn + j));
-+	}
-+
-+free_buf:
-+	free_page((unsigned long)pages);
-+	kfree(counts);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(hv_call_deposit_pages);
-+
-diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index 81bacd4bce66..5be3e3402e37 100644
---- a/include/asm-generic/mshyperv.h
-+++ b/include/asm-generic/mshyperv.h
-@@ -349,6 +349,8 @@ u64 hv_tdx_hypercall(u64 control, u64 param1, u64 param2);
- void hyperv_cleanup(void);
- bool hv_query_ext_cap(u64 cap_query);
- void hv_setup_dma_ops(struct device *dev, bool coherent);
-+int hv_call_create_vp(int node, u64 partition_id, u32 vp_index, u32 flags);
-+int hv_call_deposit_pages(int node, u64 partition_id, u32 num_pages);
- #else /* CONFIG_HYPERV */
- static inline bool hv_is_hyperv_initialized(void) { return false; }
- static inline bool hv_is_hibernation_supported(void) { return false; }
+diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
+index 4ea5b837399a..71e6d23070ca 100644
+--- a/Documentation/userspace-api/ioctl/ioctl-number.rst
++++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
+@@ -355,6 +355,8 @@ Code  Seq#    Include File                                           Comments
+ 0xB6  all    linux/fpga-dfl.h
+ 0xB7  all    uapi/linux/remoteproc_cdev.h                            <mailto:linux-remoteproc@vger.kernel.org>
+ 0xB7  all    uapi/linux/nsfs.h                                       <mailto:Andrei Vagin <avagin@openvz.org>>
++0xB8  all    uapi/linux/mshv.h                                       Microsoft Hypervisor VM management APIs
++                                                                     <mailto:linux-hyperv@vger.kernel.org>
+ 0xC0  00-0F  linux/usb/iowarrior.h
+ 0xCA  00-0F  uapi/misc/cxl.h
+ 0xCA  10-2F  uapi/misc/ocxl.h
 -- 
 2.25.1
 
