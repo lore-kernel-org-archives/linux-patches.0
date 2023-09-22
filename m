@@ -1,51 +1,42 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-207.mta1.migadu.com (out-207.mta1.migadu.com [95.215.58.207])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AF044462
-	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 20:03:28 +0000 (UTC)
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3ae214a077cso612065b6e.0
-        for <patches@lists.linux.dev>; Fri, 22 Sep 2023 13:03:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695413007; x=1696017807;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=92vwJf3WLmkpUBPfM1uX6jdmCsJTt9zpYit4o1iVPi8=;
-        b=O+gSVq6F8X8MMMqcufmZ/MTtZTai2yYpRq49ZuuINt/QtL6nx+OM/ut60dWi+89NrF
-         pXQ7H7OU99ouwkf6O1PW0Wr4iB4WbStTRkUpkt4QebI5i4OnSQnFM6fddSbVE2S0bqNz
-         jbytSsQ++14MNhmb3WG+cscn4EvIS8Og1l3CMpS3cskWGMLRdMtzj/N/VJW4wkayjPaW
-         0Xkc20MvOu+2ruustkZ13rY3p5ieUSUadnvPHh9YzBEmQ4gbWu41ykYX10pkFu1ElG29
-         NDjlfzQ0Vi3mXWFjvfUs7Pmj7n9whVD+aV9hOB+yZ3qMScpOfPiQY/5WKhixv48XfNtP
-         f9WA==
-X-Gm-Message-State: AOJu0YwajTybgG3Q8mnEnT0hv8i8YFopS4rNbyhu+jlXR3GmH7K6vEoW
-	/U9RbEFwZYfD3zafWUlTjXs=
-X-Google-Smtp-Source: AGHT+IEP3JVa7YW6iKvp3c2447aJv58pC9gBEASQVTZuq+rvJLqoI+1fmX0Z9I0z5RQGrE60EI+KSw==
-X-Received: by 2002:a05:6808:4d4:b0:3a7:35af:bbc0 with SMTP id a20-20020a05680804d400b003a735afbbc0mr664405oie.54.1695413007358;
-        Fri, 22 Sep 2023 13:03:27 -0700 (PDT)
-Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
-        by smtp.gmail.com with ESMTPSA id fe20-20020a056a002f1400b0068fadc9226dsm3614729pfb.33.2023.09.22.13.03.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 13:03:26 -0700 (PDT)
-Date: Fri, 22 Sep 2023 20:02:43 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
-	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arch@vger.kernel.org, patches@lists.linux.dev,
-	mikelley@microsoft.com, kys@microsoft.com, wei.liu@kernel.org,
-	gregkh@linuxfoundation.org, haiyangz@microsoft.com,
-	decui@microsoft.com, apais@linux.microsoft.com,
-	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
-	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
-	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
-	catalin.marinas@arm.com
-Subject: Re: [PATCH v3 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Message-ID: <ZQ3y47GDfhjf23Rh@liuwe-devbox-debian-v2>
-References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1695407915-12216-16-git-send-email-nunodasneves@linux.microsoft.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEC248854
+	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 23:00:39 +0000 (UTC)
+Date: Fri, 22 Sep 2023 16:00:30 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1695423637;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xnLthAI2KKZwUYazrEPUSMFwID0MKjI3FCNZtFBM4m4=;
+	b=E35HnXox4DMrYu3DkYtdgmp0uOW7ubbbmSyrum1CRnX+YpPXnGRoXIqr21W5ok6+a5jcR5
+	KJdYqD8of5GS6tMtn3L1CKtyBVVxIrjiG8nUcORjD1mPjNYsdtJSFSZOomwvYiNfPOr+XR
+	Rqo+dUaRoJrsrQX0lusdx455KWZkuxg=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Roman Gushchin <roman.gushchin@linux.dev>
+To: Michal Hocko <mhocko@suse.com>
+Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, regressions@lists.linux.dev,
+	mathieu.tortuyaux@gmail.com
+Subject: Re: [REGRESSION] Re: [PATCH 6.1 033/219] memcg: drop
+ kmem.limit_in_bytes
+Message-ID: <ZQ4cjqQLhgX1pOVX@P9FQF9L96D.corp.robot.car>
+References: <20230917191040.964416434@linuxfoundation.org>
+ <20230917191042.204185566@linuxfoundation.org>
+ <20230920081101.GA12096@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <ZQqwzK/fDm+GLiKM@dhcp22.suse.cz>
+ <101987a1-b1ab-429d-af03-b6bdf6216474@linux.microsoft.com>
+ <ZQrSXh+riB7NnZuE@dhcp22.suse.cz>
+ <4eb47d6a-b127-4aad-af30-896c3b9505b4@linux.microsoft.com>
+ <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,41 +45,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1695407915-12216-16-git-send-email-nunodasneves@linux.microsoft.com>
+In-Reply-To: <ZQr3+YfcBM2Er6F7@dhcp22.suse.cz>
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, Sep 22, 2023 at 11:38:35AM -0700, Nuno Das Neves wrote:
-> Add mshv, mshv_root, and mshv_vtl modules:
+On Wed, Sep 20, 2023 at 03:47:37PM +0200, Michal Hocko wrote:
+> On Wed 20-09-23 15:25:23, Jeremi Piotrowski wrote:
+> > On 9/20/2023 1:07 PM, Michal Hocko wrote:
+> [...]
+> > > I mean, normally I would be just fine reverting this API change because
+> > > it is disruptive but the only way to have the file available and not
+> > > break somebody is to revert 58056f77502f ("memcg, kmem: further
+> > > deprecate kmem.limit_in_bytes") as well. Or to ignore any value written
+> > > there but that sounds rather dubious. Although one could argue this
+> > > would mimic nokmem kernel option.
+> > > 
+> > 
+> > I just want to make sure we don't introduce yet another new behavior in this legacy
+> > system. I have not seen breakage due to 58056f77502f. Mimicing nokmem sounds good but
+> > does this mean "don't enforce limits" (that should be fine) or "ignore writes to the limit"
+> > (=don't event store the written limit). The latter might have unintended consequences.
 > 
-> Module mshv is the parent module to the other two. It provides /dev/mshv,
-> plus some common hypercall helper code. When one of the child modules is
-> loaded, it is registered with the mshv module, which then provides entry
-> point(s) to the child module via the IOCTLs defined in uapi/linux/mshv.h.
+> Yes it would mean that the limit is never enforced. Bad as it is the
+> thing is that the hard limit on kernel memory is broken by design and
+> unfixable.  This causes all sorts of unexpected kernel allocation
+> failures that this is simply unsafe to use.
 > 
-> E.g. When the mshv_root module is loaded, it registers itself, and the
-> MSHV_CREATE_PARTITION IOCTL becomes available in /dev/mshv. That is used to
-> get a partition fd managed by mshv_root.
-> 
-> Similarly for mshv_vtl module, there is MSHV_CREATE_VTL, which creates
-> an fd representing the lower vtl, managed by mshv_vtl.
-> 
-> Module mshv_root provides APIs for creating and managing child partitions.
-> It defines abstractions for partitions (vms), vps (vcpus), and other things
-> related to running a guest. It exposes the userspace interfaces for a VMM
-> to manage the guest.
-> 
-> Module mshv_vtl provides VTL (Virtual Trust Level) support for VMMs. In
-> this scenario, the host kernel and VMM run in a higher trust level than the
-> guest, but within the same partition. This provides better isolation and
-> performance.
-> 
-> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+> All that being said I can see the following options
+> 1) keep the current upstream status and not export the file
+> 2) revert both 58056f77502f and 86327e8eb94 and make it clear
+>    that kmem.limit_in_bytes is unsupported so failures or misbehavior
+>    as a result of the limit being hit are likely not going to be
+>    investigated or fixed.
+> 3) reverting like in 2) but never inforce the limit (so basically nokmem
+>    semantic)
 
-As far as I can tell, all my comments from the previous version are
-addressed. I believe Saurabh and Boqun's comments are addressed, too.
+Since it's a part of cgroup v1 interface, which is in a frozen state as a whole,
+and there is no significant (performance, code complexity) benefit of
+additionally deprecating kmem.limit_in_bytes, I vote for 2).
+1) is also an option.
 
-The code looks good to me, so:
-
-Acked-by: Wei Liu <wei.liu@kernel.org>
-
-I will wait for some time for others to chime in, just in case the
-community has more comments.
+Thanks!
