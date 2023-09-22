@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4824D44492
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CD0A45F58
 	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:47 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id C95A3212C5CD;
-	Fri, 22 Sep 2023 11:38:40 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C95A3212C5CD
+	by linux.microsoft.com (Postfix) with ESMTPSA id 2AF50212C5D2;
+	Fri, 22 Sep 2023 11:38:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2AF50212C5D2
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695407920;
-	bh=RjSwxBRyWpJEBY1wCo9rYn7tpDxkXA16qcqUnB6DS6U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Rem98psiD47ctTHRdEliz2PAHvhy2Xq7qqCkWEAskTT3DoQh58gKEAmVWn8NsDW8a
-	 TR+3qw41aBo0Px150sF8BtWvvJpOHUtr/H1FBfSJxOPYxNNtTvWe2tmt411TJ9TUFH
-	 0hdTV8HFmc4hevu5bvGCbhDVyWs9Q5Nqutup4h9I=
+	s=default; t=1695407921;
+	bh=MKa+JmKM3e3p5195TvJLc+j4786CSagh61v3508iSU8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZKSbFwRP8Q1U1u1avWKnyiIgY1flSIU+1V4BPU/t9+tRrPrPt5qx2cht4uwmkF3aU
+	 NVqs9k5EBpfLZPfrCLpe0GTsuPGHKZKNif3SekZublr5ZBydDXfsnpUPoOanP606Z3
+	 W+IL9tC4Mk1W0Bvdq3xqWrR4DUuHnmiG8Q1ccXp8=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,196 +39,142 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v3 00/15] Introduce /dev/mshv drivers
-Date: Fri, 22 Sep 2023 11:38:20 -0700
-Message-Id: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v3 03/15] mshyperv: Introduce numa_node_to_proximity_domain_info
+Date: Fri, 22 Sep 2023 11:38:23 -0700
+Message-Id: <1695407915-12216-4-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
+References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-This series introduces support for creating and running guest machines
-while running on the Microsoft Hypervisor. [0]
-This is done via an IOCTL interface accessed through /dev/mshv, similar to
-/dev/kvm. Another series introducing this support was previously posted.
-[1]
+Factor out logic for converting numa node to proximity domain info into
+a helper function, and export it.
 
-These interfaces support VMMs running in:
-1. The root patition - provided in the mshv_root module, and
-2. VTL 2 - provided in the mshv_vtl module [2]
+Change hv_proximity_domain_info to a struct to simplify the code.
 
-Patches breakdown
------------------
-The first 7 patches are refactoring and adding some helper functions.
-They provide some benefit on their own and could be applied independently
-as cleanup patches.
+Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+---
+ arch/x86/hyperv/hv_proc.c         |  8 ++------
+ drivers/acpi/numa/srat.c          |  1 +
+ include/asm-generic/hyperv-tlfs.h | 14 +++++---------
+ include/asm-generic/mshyperv.h    | 15 +++++++++++++++
+ 4 files changed, 23 insertions(+), 15 deletions(-)
 
-Patches 8-12 just set things up for the driver code to come. These are very
-small. They come first so that the remaining patches are more self-contained.
-
-The final 3 patches are the meat of the series:
-- Patch 13 contains new header files used by the driver.
-  These are designed to mirror the ABI headers exported by Hyper-V. This is
-  done to avoid polluting hyperv-tlfs.h and help track changes to the ABIs
-  that are still unstable. (See FAQ below).
-- Patch 14 conditionally includes these new header files into mshyperv.h
-  and linux/hyperv.h, in order to be able to use these files in the new
-  drivers while remaining independent from hyperv-tlfs.h.
-- Patch 15 contains the new driver code located in drivers/hv. This is a
-  large amount of code and new files, but it is mostly self-contained and
-  all within drivers/hv - apart from the IOCTL interface itself in uapi.
-
-Patch 15 is rather big and has bounced back from some mailing lists. If you
-did not get a copy in your inbox, you can view it here instead:
-https://github.com/NunoDasNeves/linux/commit/2ae1cabd82257cb303296ab6af707d1bac867e42
-
-FAQ on include/uapi/hyperv/*.h
-------------------------------
-Q:
-Why not just add these definitions to hyperv-tlfs.h?
-A:
-The intention of hyperv-tlfs.h is to contain stable definitions documented
-in the public TLFS document. These new definitions don't fit that criteria,
-so they should be separate.
-
-Q:
-The new headers redefine many things that are already in hyperv-tlfs.h - why?
-A:
-Some definitions are extended compared to what is documented in the TLFS.
-In order to avoid adding undocumented or unstable definitions to hyperv-tlfs.h,
-the new headers must compile independently.
-Therefore, the new headers must redefine many things in hyperv-tlfs.h in order
-to compile.
-
-Q:
-Why are these files named hvgdk.h, hvgdk_mini.h, hvhdk.h and hvhdk_mini.h?
-A:
-The precise meaning of the names reflects conventions used internally at
-Microsoft.
-Naming them this way makes it easy to find where particular Hyper-V
-definitions come from, and check their correctness.
-It also facilitates the future work of automatically generating these files.
-
-Q:
-Why are they in uapi?
-A:
-In short, to keep things simple. There are many definitions needed in both
-the kernel and the VMM in userspace. Separating them doesn't serve much
-purpose, and makes it more laborious to import definitions from Hyper-V
-code.
-
---------------------------
-[0] "Hyper-V" is more well-known, but it really refers to the whole stack
-    including the hypervisor and other components that run in Windows
-    kernel and userspace.
-[1] Previous /dev/mshv patch series and discussion:
-    https://lore.kernel.org/linux-hyperv/1632853875-20261-1-git-send-email-nunodasneves@linux.microsoft.com/
-[2] Virtual Secure Mode (VSM) and Virtual Trust Levels (VTL):
-    https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/vsm
---------------------------
-
-Changes since v2:
-    * Fix some commit message wrapping
-    * Fix many checkpatch.pl --strict style issues
-    * Replace uapi ints with __s32
-    * Replace uapi enums with __u32
-    * Replace uapi pointers with __u64
-    * Add explicit padding to uapi structures
-    * Initialize status in get/set registers hypercall helpers
-    * Add missing return on error in get_vp_signaled_count
-    * Remove select TRANSPARENT_HUGEPAGES for mshv_vtl
-    * Use __func__ prefix consistently in printks
-    * Use single generic cpuid() to get all 4 registers instead of 4 calls
-    * Change hv_proximity_domain_info from union to struct for clarity
-Changes since v1:
-    * Clean up formatting, capitalization in commit messages
-    * Add detail to commit message for patch 15
-    * Remove errant lines in Makefile and Kconfig in patch 15
-    * Move a reference to CONFIG_MSHV_VTL from patch 9 to 15
-
-Nuno Das Neves (15):
-  hyperv-tlfs: Change shared HV_REGISTER_* defines to HV_MSR_*
-  mshyperv: Introduce hv_get_hypervisor_version function
-  mshyperv: Introduce numa_node_to_proximity_domain_info
-  asm-generic/mshyperv: Introduce hv_recommend_using_aeoi()
-  hyperv: Move hv_connection_id to hyperv-tlfs
-  hyperv-tlfs: Introduce hv_status_to_string and hv_status_to_errno
-  Drivers: hv: Move hv_call_deposit_pages and hv_call_create_vp to
-    common code
-  Drivers: hv: Introduce per-cpu event ring tail
-  Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
-  x86: hyperv: Add mshv_handler irq handler and setup function
-  Drivers: hv: export vmbus_isr, hv_context and hv_post_message
-  Documentation: Reserve ioctl number for mshv driver
-  uapi: hyperv: Add mshv driver headers defining hypervisor ABIs
-  asm-generic: hyperv: Use new Hyper-V headers conditionally.
-  Drivers: hv: Add modules to expose /dev/mshv to VMMs running on
-    Hyper-V
-
- .../userspace-api/ioctl/ioctl-number.rst      |    2 +
- arch/arm64/hyperv/mshyperv.c                  |   23 +-
- arch/arm64/include/asm/hyperv-tlfs.h          |   25 +
- arch/arm64/include/asm/mshyperv.h             |    2 +-
- arch/x86/hyperv/hv_init.c                     |    2 +-
- arch/x86/hyperv/hv_proc.c                     |  166 +-
- arch/x86/include/asm/hyperv-tlfs.h            |  137 +-
- arch/x86/include/asm/mshyperv.h               |   12 +-
- arch/x86/kernel/cpu/mshyperv.c                |   67 +-
- drivers/acpi/numa/srat.c                      |    1 +
- drivers/clocksource/hyperv_timer.c            |   24 +-
- drivers/hv/Kconfig                            |   49 +
- drivers/hv/Makefile                           |   20 +
- drivers/hv/hv.c                               |   50 +-
- drivers/hv/hv_call.c                          |  113 +
- drivers/hv/hv_common.c                        |  223 +-
- drivers/hv/hyperv_vmbus.h                     |    2 +-
- drivers/hv/mshv.h                             |  123 ++
- drivers/hv/mshv_eventfd.c                     |  761 +++++++
- drivers/hv/mshv_eventfd.h                     |   80 +
- drivers/hv/mshv_main.c                        |  208 ++
- drivers/hv/mshv_msi.c                         |  129 ++
- drivers/hv/mshv_portid_table.c                |   84 +
- drivers/hv/mshv_root.h                        |  193 ++
- drivers/hv/mshv_root_hv_call.c                | 1015 +++++++++
- drivers/hv/mshv_root_main.c                   | 1920 +++++++++++++++++
- drivers/hv/mshv_synic.c                       |  688 ++++++
- drivers/hv/mshv_vtl.h                         |   52 +
- drivers/hv/mshv_vtl_main.c                    | 1517 +++++++++++++
- drivers/hv/vmbus_drv.c                        |    3 +-
- drivers/hv/xfer_to_guest.c                    |   28 +
- include/asm-generic/hyperv-defs.h             |   26 +
- include/asm-generic/hyperv-tlfs.h             |   93 +-
- include/asm-generic/mshyperv.h                |   73 +-
- include/linux/hyperv.h                        |   11 +-
- include/uapi/hyperv/hvgdk.h                   |   41 +
- include/uapi/hyperv/hvgdk_mini.h              | 1076 +++++++++
- include/uapi/hyperv/hvhdk.h                   | 1342 ++++++++++++
- include/uapi/hyperv/hvhdk_mini.h              |  160 ++
- include/uapi/linux/mshv.h                     |  306 +++
- 40 files changed, 10483 insertions(+), 364 deletions(-)
- create mode 100644 drivers/hv/hv_call.c
- create mode 100644 drivers/hv/mshv.h
- create mode 100644 drivers/hv/mshv_eventfd.c
- create mode 100644 drivers/hv/mshv_eventfd.h
- create mode 100644 drivers/hv/mshv_main.c
- create mode 100644 drivers/hv/mshv_msi.c
- create mode 100644 drivers/hv/mshv_portid_table.c
- create mode 100644 drivers/hv/mshv_root.h
- create mode 100644 drivers/hv/mshv_root_hv_call.c
- create mode 100644 drivers/hv/mshv_root_main.c
- create mode 100644 drivers/hv/mshv_synic.c
- create mode 100644 drivers/hv/mshv_vtl.h
- create mode 100644 drivers/hv/mshv_vtl_main.c
- create mode 100644 drivers/hv/xfer_to_guest.c
- create mode 100644 include/asm-generic/hyperv-defs.h
- create mode 100644 include/uapi/hyperv/hvgdk.h
- create mode 100644 include/uapi/hyperv/hvgdk_mini.h
- create mode 100644 include/uapi/hyperv/hvhdk.h
- create mode 100644 include/uapi/hyperv/hvhdk_mini.h
- create mode 100644 include/uapi/linux/mshv.h
-
+diff --git a/arch/x86/hyperv/hv_proc.c b/arch/x86/hyperv/hv_proc.c
+index 68a0843d4750..5ba5ca1b2089 100644
+--- a/arch/x86/hyperv/hv_proc.c
++++ b/arch/x86/hyperv/hv_proc.c
+@@ -121,7 +121,6 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
+ 	u64 status;
+ 	unsigned long flags;
+ 	int ret = HV_STATUS_SUCCESS;
+-	int pxm = node_to_pxm(node);
+ 
+ 	/*
+ 	 * When adding a logical processor, the hypervisor may return
+@@ -137,11 +136,8 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
+ 
+ 		input->lp_index = lp_index;
+ 		input->apic_id = apic_id;
+-		input->flags = 0;
+-		input->proximity_domain_info.domain_id = pxm;
+-		input->proximity_domain_info.flags.reserved = 0;
+-		input->proximity_domain_info.flags.proximity_info_valid = 1;
+-		input->proximity_domain_info.flags.proximity_preferred = 1;
++		input->proximity_domain_info =
++			numa_node_to_proximity_domain_info(node);
+ 		status = hv_do_hypercall(HVCALL_ADD_LOGICAL_PROCESSOR,
+ 					 input, output);
+ 		local_irq_restore(flags);
+diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
+index 1f4fc5f8a819..0cf9f0574495 100644
+--- a/drivers/acpi/numa/srat.c
++++ b/drivers/acpi/numa/srat.c
+@@ -48,6 +48,7 @@ int node_to_pxm(int node)
+ 		return PXM_INVAL;
+ 	return node_to_pxm_map[node];
+ }
++EXPORT_SYMBOL(node_to_pxm);
+ 
+ static void __acpi_map_pxm_to_node(int pxm, int node)
+ {
+diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
+index f63b3704d89e..a6dffb346bf2 100644
+--- a/include/asm-generic/hyperv-tlfs.h
++++ b/include/asm-generic/hyperv-tlfs.h
+@@ -512,13 +512,9 @@ struct hv_proximity_domain_flags {
+ 	u32 proximity_info_valid : 1;
+ } __packed;
+ 
+-/* Not a union in windows but useful for zeroing */
+-union hv_proximity_domain_info {
+-	struct {
+-		u32 domain_id;
+-		struct hv_proximity_domain_flags flags;
+-	};
+-	u64 as_uint64;
++struct hv_proximity_domain_info {
++	u32 domain_id;
++	struct hv_proximity_domain_flags flags;
+ } __packed;
+ 
+ struct hv_lp_startup_status {
+@@ -535,7 +531,7 @@ struct hv_lp_startup_status {
+ struct hv_add_logical_processor_in {
+ 	u32 lp_index;
+ 	u32 apic_id;
+-	union hv_proximity_domain_info proximity_domain_info;
++	struct hv_proximity_domain_info proximity_domain_info;
+ 	u64 flags;
+ } __packed;
+ 
+@@ -560,7 +556,7 @@ struct hv_create_vp {
+ 	u8 padding[3];
+ 	u8 subnode_type;
+ 	u64 subnode_id;
+-	union hv_proximity_domain_info proximity_domain_info;
++	struct hv_proximity_domain_info proximity_domain_info;
+ 	u64 flags;
+ } __packed;
+ 
+diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
+index 5b3512e5a72e..e16557523b6e 100644
+--- a/include/asm-generic/mshyperv.h
++++ b/include/asm-generic/mshyperv.h
+@@ -21,6 +21,7 @@
+ #include <linux/types.h>
+ #include <linux/atomic.h>
+ #include <linux/bitops.h>
++#include <acpi/acpi_numa.h>
+ #include <linux/cpumask.h>
+ #include <linux/nmi.h>
+ #include <asm/ptrace.h>
+@@ -28,6 +29,20 @@
+ 
+ #define VTPM_BASE_ADDRESS 0xfed40000
+ 
++static inline struct hv_proximity_domain_info
++numa_node_to_proximity_domain_info(int node)
++{
++	struct hv_proximity_domain_info proximity_domain_info = {};
++
++	if (node != NUMA_NO_NODE) {
++		proximity_domain_info.domain_id = node_to_pxm(node);
++		proximity_domain_info.flags.proximity_info_valid = 1;
++		proximity_domain_info.flags.proximity_preferred = 1;
++	}
++
++	return proximity_domain_info;
++}
++
+ struct ms_hyperv_info {
+ 	u32 features;
+ 	u32 priv_high;
 -- 
 2.25.1
 
