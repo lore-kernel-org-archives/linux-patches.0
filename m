@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445E841E40
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4824D44492
 	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 18:38:47 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 0F671212C5D0;
-	Fri, 22 Sep 2023 11:38:41 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0F671212C5D0
+	by linux.microsoft.com (Postfix) with ESMTPSA id C95A3212C5CD;
+	Fri, 22 Sep 2023 11:38:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C95A3212C5CD
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695407921;
-	bh=NIfGVUlO7WQ33ga3OGW5GP0MsO2X2+qMCAxYLtCBKi8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCeq+BcHF6IgXlUxk71xccHS8s89u9ojevfczhxOorqjOTzwcR2Mr3kkXmSI0HoOJ
-	 Npbpm9gyhhDOgfOIXcmSkCd7JtYLPFqoLfthfOLvAUYzNYJY1l8jORxfrlkUiNFDNK
-	 gSlF8MvKfETlfwz42VzB0pkoaTXxqTykw18wfHFw=
+	s=default; t=1695407920;
+	bh=RjSwxBRyWpJEBY1wCo9rYn7tpDxkXA16qcqUnB6DS6U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Rem98psiD47ctTHRdEliz2PAHvhy2Xq7qqCkWEAskTT3DoQh58gKEAmVWn8NsDW8a
+	 TR+3qw41aBo0Px150sF8BtWvvJpOHUtr/H1FBfSJxOPYxNNtTvWe2tmt411TJ9TUFH
+	 0hdTV8HFmc4hevu5bvGCbhDVyWs9Q5Nqutup4h9I=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,180 +39,196 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v3 02/15] mshyperv: Introduce hv_get_hypervisor_version function
-Date: Fri, 22 Sep 2023 11:38:22 -0700
-Message-Id: <1695407915-12216-3-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v3 00/15] Introduce /dev/mshv drivers
+Date: Fri, 22 Sep 2023 11:38:20 -0700
+Message-Id: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
-References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-x86_64 and arm64 implementations to get the hypervisor version
-information. Store these in hv_hypervisor_version_info structure to
-simplify parsing the fields.
+This series introduces support for creating and running guest machines
+while running on the Microsoft Hypervisor. [0]
+This is done via an IOCTL interface accessed through /dev/mshv, similar to
+/dev/kvm. Another series introducing this support was previously posted.
+[1]
 
-Replace the existing parsing when printing the version numbers at boot.
+These interfaces support VMMs running in:
+1. The root patition - provided in the mshv_root module, and
+2. VTL 2 - provided in the mshv_vtl module [2]
 
-Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
----
- arch/arm64/hyperv/mshyperv.c      | 23 +++++++++++++-------
- arch/x86/kernel/cpu/mshyperv.c    | 36 +++++++++++++++++++------------
- include/asm-generic/hyperv-tlfs.h | 23 ++++++++++++++++++++
- include/asm-generic/mshyperv.h    |  2 ++
- 4 files changed, 62 insertions(+), 22 deletions(-)
+Patches breakdown
+-----------------
+The first 7 patches are refactoring and adding some helper functions.
+They provide some benefit on their own and could be applied independently
+as cleanup patches.
 
-diff --git a/arch/arm64/hyperv/mshyperv.c b/arch/arm64/hyperv/mshyperv.c
-index f1b8a04ee9f2..53bdd3bc81ac 100644
---- a/arch/arm64/hyperv/mshyperv.c
-+++ b/arch/arm64/hyperv/mshyperv.c
-@@ -19,10 +19,19 @@
- 
- static bool hyperv_initialized;
- 
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
-+{
-+	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION,
-+			 (struct hv_get_vp_registers_output *)info);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
-+
- static int __init hyperv_init(void)
- {
--	struct hv_get_vp_registers_output	result;
--	u32	a, b, c, d;
-+	struct hv_get_vp_registers_output result;
-+	union hv_hypervisor_version_info version;
- 	u64	guest_id;
- 	int	ret;
- 
-@@ -55,13 +64,11 @@ static int __init hyperv_init(void)
- 		ms_hyperv.misc_features);
- 
- 	/* Get information about the Hyper-V host version */
--	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION, &result);
--	a = result.as32.a;
--	b = result.as32.b;
--	c = result.as32.c;
--	d = result.as32.d;
-+	hv_get_hypervisor_version(&version);
- 	pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
--		b >> 16, b & 0xFFFF, a,	d & 0xFFFFFF, c, d >> 24);
-+		version.major_version, version.minor_version,
-+		version.build_number, version.service_number,
-+		version.service_pack, version.service_branch);
- 
- 	ret = hv_common_init();
- 	if (ret)
-diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index 7c82b96da11f..73fbcc003d68 100644
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -347,13 +347,26 @@ static void __init reduced_hw_init(void)
- 	x86_init.irqs.pre_vector_init	= x86_init_noop;
- }
- 
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
-+{
-+	unsigned int hv_max_functions;
-+
-+	hv_max_functions = cpuid_eax(HYPERV_CPUID_VENDOR_AND_MAX_FUNCTIONS);
-+	if (hv_max_functions < HYPERV_CPUID_VERSION) {
-+		pr_err("%s: Could not detect Hyper-V version\n", __func__);
-+		return -ENODEV;
-+	}
-+
-+	cpuid(HYPERV_CPUID_VERSION, &info->eax, &info->ebx, &info->ecx, &info->edx);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
-+
- static void __init ms_hyperv_init_platform(void)
- {
- 	int hv_max_functions_eax;
--	int hv_host_info_eax;
--	int hv_host_info_ebx;
--	int hv_host_info_ecx;
--	int hv_host_info_edx;
-+	union hv_hypervisor_version_info version;
- 
- #ifdef CONFIG_PARAVIRT
- 	pv_info.name = "Hyper-V";
-@@ -407,16 +420,11 @@ static void __init ms_hyperv_init_platform(void)
- 	/*
- 	 * Extract host information.
- 	 */
--	if (hv_max_functions_eax >= HYPERV_CPUID_VERSION) {
--		hv_host_info_eax = cpuid_eax(HYPERV_CPUID_VERSION);
--		hv_host_info_ebx = cpuid_ebx(HYPERV_CPUID_VERSION);
--		hv_host_info_ecx = cpuid_ecx(HYPERV_CPUID_VERSION);
--		hv_host_info_edx = cpuid_edx(HYPERV_CPUID_VERSION);
--
--		pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
--			hv_host_info_ebx >> 16, hv_host_info_ebx & 0xFFFF,
--			hv_host_info_eax, hv_host_info_edx & 0xFFFFFF,
--			hv_host_info_ecx, hv_host_info_edx >> 24);
-+	if (hv_get_hypervisor_version(&version) == 0) {
-+		pr_info("Hyper-V Host Build:%d-%d.%d-%d-%d.%d\n",
-+			version.build_number, version.major_version,
-+			version.minor_version, version.service_pack,
-+			version.service_branch, version.service_number);
- 	}
- 
- 	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
-diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
-index fdac4a1714ec..f63b3704d89e 100644
---- a/include/asm-generic/hyperv-tlfs.h
-+++ b/include/asm-generic/hyperv-tlfs.h
-@@ -787,6 +787,29 @@ struct hv_input_unmap_device_interrupt {
- #define HV_SOURCE_SHADOW_NONE               0x0
- #define HV_SOURCE_SHADOW_BRIDGE_BUS_RANGE   0x1
- 
-+/*
-+ * Version info reported by hypervisor
-+ */
-+union hv_hypervisor_version_info {
-+	struct {
-+		u32 build_number;
-+
-+		u32 minor_version : 16;
-+		u32 major_version : 16;
-+
-+		u32 service_pack;
-+
-+		u32 service_number : 24;
-+		u32 service_branch : 8;
-+	};
-+	struct {
-+		u32 eax;
-+		u32 ebx;
-+		u32 ecx;
-+		u32 edx;
-+	};
-+};
-+
- /*
-  * The whole argument should fit in a page to be able to pass to the hypervisor
-  * in one hypercall.
-diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index 38fc48405d5f..5b3512e5a72e 100644
---- a/include/asm-generic/mshyperv.h
-+++ b/include/asm-generic/mshyperv.h
-@@ -161,6 +161,8 @@ static inline void vmbus_signal_eom(struct hv_message *msg, u32 old_msg_type)
- 	}
- }
- 
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info);
-+
- void hv_setup_vmbus_handler(void (*handler)(void));
- void hv_remove_vmbus_handler(void);
- void hv_setup_stimer0_handler(void (*handler)(void));
+Patches 8-12 just set things up for the driver code to come. These are very
+small. They come first so that the remaining patches are more self-contained.
+
+The final 3 patches are the meat of the series:
+- Patch 13 contains new header files used by the driver.
+  These are designed to mirror the ABI headers exported by Hyper-V. This is
+  done to avoid polluting hyperv-tlfs.h and help track changes to the ABIs
+  that are still unstable. (See FAQ below).
+- Patch 14 conditionally includes these new header files into mshyperv.h
+  and linux/hyperv.h, in order to be able to use these files in the new
+  drivers while remaining independent from hyperv-tlfs.h.
+- Patch 15 contains the new driver code located in drivers/hv. This is a
+  large amount of code and new files, but it is mostly self-contained and
+  all within drivers/hv - apart from the IOCTL interface itself in uapi.
+
+Patch 15 is rather big and has bounced back from some mailing lists. If you
+did not get a copy in your inbox, you can view it here instead:
+https://github.com/NunoDasNeves/linux/commit/2ae1cabd82257cb303296ab6af707d1bac867e42
+
+FAQ on include/uapi/hyperv/*.h
+------------------------------
+Q:
+Why not just add these definitions to hyperv-tlfs.h?
+A:
+The intention of hyperv-tlfs.h is to contain stable definitions documented
+in the public TLFS document. These new definitions don't fit that criteria,
+so they should be separate.
+
+Q:
+The new headers redefine many things that are already in hyperv-tlfs.h - why?
+A:
+Some definitions are extended compared to what is documented in the TLFS.
+In order to avoid adding undocumented or unstable definitions to hyperv-tlfs.h,
+the new headers must compile independently.
+Therefore, the new headers must redefine many things in hyperv-tlfs.h in order
+to compile.
+
+Q:
+Why are these files named hvgdk.h, hvgdk_mini.h, hvhdk.h and hvhdk_mini.h?
+A:
+The precise meaning of the names reflects conventions used internally at
+Microsoft.
+Naming them this way makes it easy to find where particular Hyper-V
+definitions come from, and check their correctness.
+It also facilitates the future work of automatically generating these files.
+
+Q:
+Why are they in uapi?
+A:
+In short, to keep things simple. There are many definitions needed in both
+the kernel and the VMM in userspace. Separating them doesn't serve much
+purpose, and makes it more laborious to import definitions from Hyper-V
+code.
+
+--------------------------
+[0] "Hyper-V" is more well-known, but it really refers to the whole stack
+    including the hypervisor and other components that run in Windows
+    kernel and userspace.
+[1] Previous /dev/mshv patch series and discussion:
+    https://lore.kernel.org/linux-hyperv/1632853875-20261-1-git-send-email-nunodasneves@linux.microsoft.com/
+[2] Virtual Secure Mode (VSM) and Virtual Trust Levels (VTL):
+    https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/vsm
+--------------------------
+
+Changes since v2:
+    * Fix some commit message wrapping
+    * Fix many checkpatch.pl --strict style issues
+    * Replace uapi ints with __s32
+    * Replace uapi enums with __u32
+    * Replace uapi pointers with __u64
+    * Add explicit padding to uapi structures
+    * Initialize status in get/set registers hypercall helpers
+    * Add missing return on error in get_vp_signaled_count
+    * Remove select TRANSPARENT_HUGEPAGES for mshv_vtl
+    * Use __func__ prefix consistently in printks
+    * Use single generic cpuid() to get all 4 registers instead of 4 calls
+    * Change hv_proximity_domain_info from union to struct for clarity
+Changes since v1:
+    * Clean up formatting, capitalization in commit messages
+    * Add detail to commit message for patch 15
+    * Remove errant lines in Makefile and Kconfig in patch 15
+    * Move a reference to CONFIG_MSHV_VTL from patch 9 to 15
+
+Nuno Das Neves (15):
+  hyperv-tlfs: Change shared HV_REGISTER_* defines to HV_MSR_*
+  mshyperv: Introduce hv_get_hypervisor_version function
+  mshyperv: Introduce numa_node_to_proximity_domain_info
+  asm-generic/mshyperv: Introduce hv_recommend_using_aeoi()
+  hyperv: Move hv_connection_id to hyperv-tlfs
+  hyperv-tlfs: Introduce hv_status_to_string and hv_status_to_errno
+  Drivers: hv: Move hv_call_deposit_pages and hv_call_create_vp to
+    common code
+  Drivers: hv: Introduce per-cpu event ring tail
+  Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
+  x86: hyperv: Add mshv_handler irq handler and setup function
+  Drivers: hv: export vmbus_isr, hv_context and hv_post_message
+  Documentation: Reserve ioctl number for mshv driver
+  uapi: hyperv: Add mshv driver headers defining hypervisor ABIs
+  asm-generic: hyperv: Use new Hyper-V headers conditionally.
+  Drivers: hv: Add modules to expose /dev/mshv to VMMs running on
+    Hyper-V
+
+ .../userspace-api/ioctl/ioctl-number.rst      |    2 +
+ arch/arm64/hyperv/mshyperv.c                  |   23 +-
+ arch/arm64/include/asm/hyperv-tlfs.h          |   25 +
+ arch/arm64/include/asm/mshyperv.h             |    2 +-
+ arch/x86/hyperv/hv_init.c                     |    2 +-
+ arch/x86/hyperv/hv_proc.c                     |  166 +-
+ arch/x86/include/asm/hyperv-tlfs.h            |  137 +-
+ arch/x86/include/asm/mshyperv.h               |   12 +-
+ arch/x86/kernel/cpu/mshyperv.c                |   67 +-
+ drivers/acpi/numa/srat.c                      |    1 +
+ drivers/clocksource/hyperv_timer.c            |   24 +-
+ drivers/hv/Kconfig                            |   49 +
+ drivers/hv/Makefile                           |   20 +
+ drivers/hv/hv.c                               |   50 +-
+ drivers/hv/hv_call.c                          |  113 +
+ drivers/hv/hv_common.c                        |  223 +-
+ drivers/hv/hyperv_vmbus.h                     |    2 +-
+ drivers/hv/mshv.h                             |  123 ++
+ drivers/hv/mshv_eventfd.c                     |  761 +++++++
+ drivers/hv/mshv_eventfd.h                     |   80 +
+ drivers/hv/mshv_main.c                        |  208 ++
+ drivers/hv/mshv_msi.c                         |  129 ++
+ drivers/hv/mshv_portid_table.c                |   84 +
+ drivers/hv/mshv_root.h                        |  193 ++
+ drivers/hv/mshv_root_hv_call.c                | 1015 +++++++++
+ drivers/hv/mshv_root_main.c                   | 1920 +++++++++++++++++
+ drivers/hv/mshv_synic.c                       |  688 ++++++
+ drivers/hv/mshv_vtl.h                         |   52 +
+ drivers/hv/mshv_vtl_main.c                    | 1517 +++++++++++++
+ drivers/hv/vmbus_drv.c                        |    3 +-
+ drivers/hv/xfer_to_guest.c                    |   28 +
+ include/asm-generic/hyperv-defs.h             |   26 +
+ include/asm-generic/hyperv-tlfs.h             |   93 +-
+ include/asm-generic/mshyperv.h                |   73 +-
+ include/linux/hyperv.h                        |   11 +-
+ include/uapi/hyperv/hvgdk.h                   |   41 +
+ include/uapi/hyperv/hvgdk_mini.h              | 1076 +++++++++
+ include/uapi/hyperv/hvhdk.h                   | 1342 ++++++++++++
+ include/uapi/hyperv/hvhdk_mini.h              |  160 ++
+ include/uapi/linux/mshv.h                     |  306 +++
+ 40 files changed, 10483 insertions(+), 364 deletions(-)
+ create mode 100644 drivers/hv/hv_call.c
+ create mode 100644 drivers/hv/mshv.h
+ create mode 100644 drivers/hv/mshv_eventfd.c
+ create mode 100644 drivers/hv/mshv_eventfd.h
+ create mode 100644 drivers/hv/mshv_main.c
+ create mode 100644 drivers/hv/mshv_msi.c
+ create mode 100644 drivers/hv/mshv_portid_table.c
+ create mode 100644 drivers/hv/mshv_root.h
+ create mode 100644 drivers/hv/mshv_root_hv_call.c
+ create mode 100644 drivers/hv/mshv_root_main.c
+ create mode 100644 drivers/hv/mshv_synic.c
+ create mode 100644 drivers/hv/mshv_vtl.h
+ create mode 100644 drivers/hv/mshv_vtl_main.c
+ create mode 100644 drivers/hv/xfer_to_guest.c
+ create mode 100644 include/asm-generic/hyperv-defs.h
+ create mode 100644 include/uapi/hyperv/hvgdk.h
+ create mode 100644 include/uapi/hyperv/hvgdk_mini.h
+ create mode 100644 include/uapi/hyperv/hvhdk.h
+ create mode 100644 include/uapi/hyperv/hvhdk_mini.h
+ create mode 100644 include/uapi/linux/mshv.h
+
 -- 
 2.25.1
 
