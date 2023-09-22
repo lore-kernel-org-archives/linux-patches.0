@@ -1,122 +1,169 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182C980C
-	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 04:48:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Reply-To:Content-ID:Content-Description;
-	bh=WzZqa3rocV6baVg9nN1haYz7bTxH+VDBp3FoCoYTHuA=; b=qH4NAFKZSLK/sDp4JWBBogPpcD
-	rGbuYiD4NR0Gm7nZRel+r8wUcfojHRODORb2YUgzp4Z4RQXVZzDN2vFsqBvind5fRGTUxPCdC66z+
-	lnXsM1u76KplnAk8cttQ0Do3cSTcvu/dHlYGpDm6O9bbpbxa2i8U/UxixtWC7GP8bD4oG4IGoesUt
-	KJkyB/rZcWOafFzt71bsYyw1OkjzKIRSIhVH998gJoRzACJNtl+RfVYbeBU7MlegtOyeymD1ZX9rg
-	6VBl4bdfiBOdO/psivoybAiVYmEmWmAcAtZNEX8AQ4sZO4LLd9fQFuntZDW5XlhBY/nhATMuDvanD
-	U3xEAZmQ==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.94.2)
-	(envelope-from <carnil@debian.org>)
-	id 1qjXxF-00CVWl-Q6; Fri, 22 Sep 2023 04:39:50 +0000
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id 74D08BE2DE0; Fri, 22 Sep 2023 06:39:48 +0200 (CEST)
-Date: Fri, 22 Sep 2023 06:39:48 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Uday M Bhat <uday.m.bhat@intel.com>,
-	Jairaj Arava <jairaj.arava@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 27/83] ASoC: Intel: sof_sdw: Update BT offload
- config for soundwire config
-Message-ID: <ZQ0alCnaXpqWRuuQ@eldamar.lan>
-References: <20230920112826.634178162@linuxfoundation.org>
- <20230920112827.751203739@linuxfoundation.org>
- <ZQtSWm3ycmA1W7Ry@eldamar.lan>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954CC16429
+	for <patches@lists.linux.dev>; Fri, 22 Sep 2023 06:55:30 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id D647321C47;
+	Fri, 22 Sep 2023 06:55:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1695365727; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j1UXkIX7PgB9a+J0veY2Drx28CRiXF/v4BDQq2G9vDY=;
+	b=ks8tfM2/+BomuV8RcvIe/Ay38m9ZdkBwdHui++JtBxgfdkW0JViPTsA7Z4SRs6Wdkqp5+k
+	7E65RV7En0sr6SPG6RZl1adkp+qfDKIByDutAivXLBFE97HwETUhCSdE3V5Wl0694DxA/I
+	EkWVe+0BRVoUu0ISWNcyUu09b2ozUSc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1695365727;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j1UXkIX7PgB9a+J0veY2Drx28CRiXF/v4BDQq2G9vDY=;
+	b=Xh0TFS/ebPdUHJUOI9aYVIZO0vbCwA8PqqC9P3wmyPtbIBjYiUX/jheFptxcWPalHUsBpe
+	/IAvAjSO/lAcJ+Dw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AD49E13478;
+	Fri, 22 Sep 2023 06:55:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 5AWrKV86DWU5DwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 22 Sep 2023 06:55:27 +0000
+Message-ID: <210044a1-1f07-b579-bdf5-3f9ac8fbdc8c@suse.cz>
+Date: Fri, 22 Sep 2023 08:55:27 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZQtSWm3ycmA1W7Ry@eldamar.lan>
-X-Debian-User: carnil
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 4/4] mm/slub: refactor calculate_order() and
+ calc_slab_order()
+Content-Language: en-US
+To: Feng Tang <feng.tang@intel.com>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Jay Patel <jaypatel@linux.ibm.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, Pekka Enberg
+ <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20230908145302.30320-6-vbabka@suse.cz>
+ <20230908145302.30320-10-vbabka@suse.cz> <ZQr1SwNeNA+nTpzW@feng-clx>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <ZQr1SwNeNA+nTpzW@feng-clx>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Greg,
-
-On Wed, Sep 20, 2023 at 10:13:14PM +0200, Salvatore Bonaccorso wrote:
-> Hi Greg,
+On 9/20/23 15:36, Feng Tang wrote:
+> On Fri, Sep 08, 2023 at 10:53:07PM +0800, Vlastimil Babka wrote:
+>> After the previous cleanups, we can now move some code from
+>> calc_slab_order() to calculate_order() so it's executed just once, and
+>> do some more cleanups.
+>> 
+>> - move the min_order and MAX_OBJS_PER_PAGE evaluation to
+>>   calc_slab_order().
 > 
-> On Wed, Sep 20, 2023 at 01:31:17PM +0200, Greg Kroah-Hartman wrote:
-> > 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Uday M Bhat <uday.m.bhat@intel.com>
-> > 
-> > [ Upstream commit a14aded9299187bb17ef90700eb2cf1120ef5885 ]
-> > 
-> > For soundwire config, SSP1 is used for BT offload. This is enabled
-> > in sof_sdw_quirk_table
-> > 
-> > Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-> > Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-> > Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-> > Signed-off-by: Uday M Bhat <uday.m.bhat@intel.com>
-> > Signed-off-by: Jairaj Arava <jairaj.arava@intel.com>
-> > Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-> > Link: https://lore.kernel.org/r/20230731214257.444605-5-pierre-louis.bossart@linux.intel.com
-> > Signed-off-by: Mark Brown <broonie@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  sound/soc/intel/boards/sof_sdw.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-> > index f36a0fda1b6ae..1955d277fdf20 100644
-> > --- a/sound/soc/intel/boards/sof_sdw.c
-> > +++ b/sound/soc/intel/boards/sof_sdw.c
-> > @@ -214,7 +214,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
-> >  			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
-> >  			DMI_MATCH(DMI_PRODUCT_NAME, "Rex"),
-> >  		},
-> > -		.driver_data = (void *)(SOF_SDW_PCH_DMIC),
-> > +		.driver_data = (void *)(SOF_SDW_PCH_DMIC |
-> > +					SOF_BT_OFFLOAD_SSP(1) |
-> > +					SOF_SSP_BT_OFFLOAD_PRESENT),
-> >  	},
-> >  	/* LunarLake devices */
-> >  	{
-> > -- 
-> > 2.40.1
+> Nit: here is to 'move ... to calculate_order()'?
+
+Oops, right, fixed.
+
+> I tried this patch series with normal boot on a desktop and one 2
+> socket server: patch 2/4 doesn't change order of any slab, and patch
+> 3/4 does make the slab order of big objects more consistent.
 > 
-> I see the following build issue while trying to check 5.10.196-rc1:
+> Thanks for making the code much cleaner! And for the whole series, 
 > 
-> sound/soc/intel/boards/sof_sdw.c:218:6: error: implicit declaration of function ‘SOF_BT_OFFLOAD_SSP’ [-Werror=implicit-function-declaration]
->   218 |      SOF_BT_OFFLOAD_SSP(1) |
->       |      ^~~~~~~~~~~~~~~~~~
-> sound/soc/intel/boards/sof_sdw.c:219:6: error: ‘SOF_SSP_BT_OFFLOAD_PRESENT’ undeclared here (not in a function)
->   219 |      SOF_SSP_BT_OFFLOAD_PRESENT),
->       |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-> cc1: some warnings being treated as errors
-> make[7]: *** [scripts/Makefile.build:286: sound/soc/intel/boards/sof_sdw.o] Error 1
+> Reviewed-by: Feng Tang <feng.tang@intel.com>
 
-Would it be better to drop this patch for the 5.10.y series?
+Thanks! Applied.
 
-SOF_SSP_BT_OFFLOAD_PRESENT only got introduced in 19f1eace0441 ("ASoC:
-Intel: sof_sdw: add support for Bluetooth offload") in 5.14-rc1 and
-later the bit changed again in 368fa526e6e3 ("ASoC: Intel: sof_sdw:
-extends SOF_RT711_JDSRC to 4 bits") ?
+> 
+>> - change calc_slab_order() parameter min_objects to min_order
+>> 
+>> Also make MAX_OBJS_PER_PAGE check more robust by considering also
+>> min_objects in addition to slub_min_order. Otherwise this is not a
+>> functional change.
+>> 
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> ---
+>>  mm/slub.c | 19 +++++++++----------
+>>  1 file changed, 9 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/mm/slub.c b/mm/slub.c
+>> index f04eb029d85a..1c91f72c7239 100644
+>> --- a/mm/slub.c
+>> +++ b/mm/slub.c
+>> @@ -4110,17 +4110,12 @@ static unsigned int slub_min_objects;
+>>   * the smallest order which will fit the object.
+>>   */
+>>  static inline unsigned int calc_slab_order(unsigned int size,
+>> -		unsigned int min_objects, unsigned int max_order,
+>> +		unsigned int min_order, unsigned int max_order,
+>>  		unsigned int fract_leftover)
+>>  {
+>> -	unsigned int min_order = slub_min_order;
+>>  	unsigned int order;
+>>  
+>> -	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+>> -		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+>> -
+>> -	for (order = max(min_order, (unsigned int)get_order(min_objects * size));
+>> -			order <= max_order; order++) {
+>> +	for (order = min_order; order <= max_order; order++) {
+>>  
+>>  		unsigned int slab_size = (unsigned int)PAGE_SIZE << order;
+>>  		unsigned int rem;
+>> @@ -4139,7 +4134,7 @@ static inline int calculate_order(unsigned int size)
+>>  	unsigned int order;
+>>  	unsigned int min_objects;
+>>  	unsigned int max_objects;
+>> -	unsigned int nr_cpus;
+>> +	unsigned int min_order;
+>>  
+>>  	min_objects = slub_min_objects;
+>>  	if (!min_objects) {
+>> @@ -4152,7 +4147,7 @@ static inline int calculate_order(unsigned int size)
+>>  		 * order on systems that appear larger than they are, and too
+>>  		 * low order on systems that appear smaller than they are.
+>>  		 */
+>> -		nr_cpus = num_present_cpus();
+>> +		unsigned int nr_cpus = num_present_cpus();
+>>  		if (nr_cpus <= 1)
+>>  			nr_cpus = nr_cpu_ids;
+>>  		min_objects = 4 * (fls(nr_cpus) + 1);
+>> @@ -4160,6 +4155,10 @@ static inline int calculate_order(unsigned int size)
+>>  	max_objects = order_objects(slub_max_order, size);
+>>  	min_objects = min(min_objects, max_objects);
+>>  
+>> +	min_order = max(slub_min_order, (unsigned int)get_order(min_objects * size));
+>> +	if (order_objects(min_order, size) > MAX_OBJS_PER_PAGE)
+>> +		return get_order(size * MAX_OBJS_PER_PAGE) - 1;
+>> +
+>>  	/*
+>>  	 * Attempt to find best configuration for a slab. This works by first
+>>  	 * attempting to generate a layout with the best possible configuration and
+>> @@ -4176,7 +4175,7 @@ static inline int calculate_order(unsigned int size)
+>>  	 * long as at least single object fits within slub_max_order.
+>>  	 */
+>>  	for (unsigned int fraction = 16; fraction > 1; fraction /= 2) {
+>> -		order = calc_slab_order(size, min_objects, slub_max_order,
+>> +		order = calc_slab_order(size, min_order, slub_max_order,
+>>  					fraction);
+>>  		if (order <= slub_max_order)
+>>  			return order;
+>> -- 
+>> 2.42.0
+>> 
+>> 
 
-Again, note I'm only the person seeing a build failure while testing
-the new RC version for 5.10.y.
-
-Regards,
-Salvatore
