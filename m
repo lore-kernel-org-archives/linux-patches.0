@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3435CA68
-	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:17:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D2AC433C7;
-	Sat, 23 Sep 2023 08:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F40C63B9
+	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E5AC433C8;
+	Sat, 23 Sep 2023 08:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695457037;
-	bh=lUrqarf5J/wNG3skXdLJr09ehc0tAMmI/R3wOn0LZUo=;
+	s=korg; t=1695457317;
+	bh=cgt8U+WuuxOkmJa3l0IV5IeSzT0CfYQS+6r9yIt3bBo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XtjlFyPFGldr9hWy6p8i/8u5Enjr/9tXZQ7qOlyoyhycQ383ULchc7Z4K3BNSSEVt
-	 XBb5aUkHwQ0LPF6MQPNnGMUM4dH4DaN7THbEH04P1+R9Lw+FbTw6YBrMlRdjn+D851
-	 f4QeIiabtoONTn9J7vOezPTxwUj3wybIaSQbkDGw=
-Date: Sat, 23 Sep 2023 10:17:15 +0200
+	b=yfOegEcpcTy5DHqp01qhSo77COjWJ3g2/zHIxlfCtbXUuMy4ms/kZo6fA7oUvniIX
+	 1199CzYW5/E80ozvNxhTqctlYB6WiAMLOodHDWtQJKs/P2N3bt4IFK4/XXq80jUC97
+	 iLmSgk2Tbx6FNZYftZZYRwNvJ2i2NRBAzoTLZRM8=
+Date: Sat, 23 Sep 2023 10:21:56 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Niklas Cassel <Niklas.Cassel@wdc.com>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Hannes Reinecke <hare@suse.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.5 158/211] ata: libata: remove references to
- non-existing error_handler()
-Message-ID: <2023092355-shadow-halves-8c2a@gregkh>
-References: <20230920112845.859868994@linuxfoundation.org>
- <20230920112850.780030234@linuxfoundation.org>
- <ZQrn1rae3Y55/1DG@x1-carbon>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 000/110] 5.15.133-rc1 review
+Message-ID: <2023092349-hamstring-galvanize-2318@gregkh>
+References: <20230920112830.377666128@linuxfoundation.org>
+ <6a577578-8adb-aa70-1bf8-b1a4573152cf@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,26 +33,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZQrn1rae3Y55/1DG@x1-carbon>
+In-Reply-To: <6a577578-8adb-aa70-1bf8-b1a4573152cf@gmail.com>
 
-On Wed, Sep 20, 2023 at 12:38:50PM +0000, Niklas Cassel wrote:
-> On Wed, Sep 20, 2023 at 01:30:02PM +0200, Greg Kroah-Hartman wrote:
-> > 6.5-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Sep 20, 2023 at 11:47:17AM -0700, Florian Fainelli wrote:
+> On 9/20/23 04:30, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.133 release.
+> > There are 110 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.133-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
 > 
-> Hello Greg,
+> Same thing as with 5.10 on ARM, ARM64 and MIPS:
 > 
-> I don't think that we should backport this commit.
+>   CC /local/users/fainelli/buildroot/output/bmips/build/linux-custom/tools/perf/pmu-events/pmu-events.o
+> fixdep: error opening depfile: /local/users/fainelli/buildroot/output/bmips/build/linux-custom/tools/perf/pmu-events/.pmu-events.o.d:
+> No such file or directory
+> make[5]: *** [pmu-events/Build:33: /local/users/fainelli/buildroot/output/bmips/build/linux-custom/tools/perf/pmu-events/pmu-events.o]
+> Error 2
+> make[4]: *** [Makefile.perf:668: /local/users/fainelli/buildroot/output/bmips/build/linux-custom/tools/perf/pmu-events/pmu-events-in.o]
+> Error 2
+> make[3]: *** [Makefile.perf:238: sub-make] Error 2
+> make[2]: *** [Makefile:70: all] Error 2
+> make[1]: *** [package/pkg-generic.mk:294:
+> /local/users/fainelli/buildroot/output/bmips/build/linux-tools/.stamp_built]
+> Error 2
+> make: *** [Makefile:27: _all] Error 2
 > 
-> While the patch did apply without conflicts, it was part of a series that
-> did a bunch of other cleanups as well.
-> 
-> I think that it is best to either have that whole series (and we don't want
-> to backport the whole series), or none of the patches in that series.
-> 
-> (So that at least we know that we have one or the other, not some half-way
-> cleanup that will only live in v6.5 stable.)
+> reverting 95466975f143df7423bbf4905348c7b6260f4d29 ("perf build: Update
+> build rule for generated files") and
+> 12ff96780ebd93d1aacb396994e3a32b50dccecf ("perf jevents: Switch build to use
+> jevents.py") gets us going again.
 
-Thanks, now dropped.  It was added for a later patch as a dependancy,
-but I fixed that up by hand so all should be good now.
+Now dropped from all queues, thanks!
 
 greg k-h
