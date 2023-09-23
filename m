@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B48CA68
-	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F5DC433C7;
-	Sat, 23 Sep 2023 08:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE373212
+	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:30:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A71C433C7;
+	Sat, 23 Sep 2023 08:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695457702;
-	bh=cXYllov6kwwjbsZToxpPEImhIzItaoo6s+C0oXgoYtI=;
+	s=korg; t=1695457851;
+	bh=/8TgiVvhyoEQjmMNICoH2j+HfPup1Rblzd+bjpUol3k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AVHkhWie5TxAG8s6ZWh8m1ws6syV9uvAWgY8N8D3+hvfF5YtP1qvaq5GdpIclLa/j
-	 LRbyQcoS1siQso9AptdqUwdRZih/s9dZGeo7LugvIMTPJ+kRzd7vBuJU8fdeT15Oed
-	 VhVXh6wgFppxpKlXJyp69mdQqCC9O9TDs8wn+v9Q=
-Date: Sat, 23 Sep 2023 10:28:19 +0200
+	b=ASEhycr2FAMdWrL/OB4mh3/h0p+L6i4+5LKvAnpuQz27PcVDgubdC5KgU2vI+psv5
+	 Ysx1hX+tPcroZK2hrCo6gwJgUuKG0ADca/2U7gDYEqCGKPeSEeVlqetEubaBkM5Zyp
+	 YiILXRIcPgVC4Pm9zFCDcFKnF0FsZoxosDQDYHZY=
+Date: Sat, 23 Sep 2023 10:30:48 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>, Sasha Levin <sashal@kernel.org>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>
-Subject: Re: [PATCH 5.4 296/367] clk: imx: pll14xx: dynamically configure PLL
- for 393216000/361267200Hz
-Message-ID: <2023092310-shuffle-wildlife-0784@gregkh>
+To: Sui Jingfeng <suijingfeng@loongson.cn>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 5.4 000/367] 5.4.257-rc1 review
+Message-ID: <2023092342-shading-wrongful-84de@gregkh>
 References: <20230920112858.471730572@linuxfoundation.org>
- <20230920112906.208711780@linuxfoundation.org>
- <6e3ad25c-1042-f786-6f0e-f71ae85aed6b@pengutronix.de>
+ <CA+G9fYsM0Lr8TNQJxsZFDZwcH-rEzkVV+y+x5FX18oH5wm5dRg@mail.gmail.com>
+ <cab7d157-946e-6b8f-1b29-5618a0ac0da6@loongson.cn>
+ <741fb6da-3a77-84de-0f03-b925defd7f52@loongson.cn>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,21 +38,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6e3ad25c-1042-f786-6f0e-f71ae85aed6b@pengutronix.de>
+In-Reply-To: <741fb6da-3a77-84de-0f03-b925defd7f52@loongson.cn>
 
-On Thu, Sep 21, 2023 at 09:03:09AM +0200, Ahmad Fatoum wrote:
-> On 20.09.23 13:31, Greg Kroah-Hartman wrote:
-> > 5.4-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Sep 21, 2023 at 09:16:57PM +0800, Sui Jingfeng wrote:
+> Hi,
 > 
-> [snip]
 > 
-> > Cc: stable@vger.kernel.org # v5.18+
+> On 2023/9/21 21:10, Sui Jingfeng wrote:
+> > return -ERR_PTR(-ENOMEM)
 > 
-> Objection: This fix is only applicable starting with v5.18, as before
-> commit b09c68dc57c9 ("clk: imx: pll14xx: Support dynamic rates"), there
-> was no dynamic rate calculation that would substitute the hardcoded
-> parameters removed by my patch.
+> 
+> return ERR_PTR(-ENOMEM);
 
-Ok, thanks, now dropped.
+Thanks, now fixed up.
 
 greg k-h
