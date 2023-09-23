@@ -1,94 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE39163B9
-	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:25:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2E0C433C8;
-	Sat, 23 Sep 2023 08:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD2E63B9
+	for <patches@lists.linux.dev>; Sat, 23 Sep 2023 08:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2971C433C7;
+	Sat, 23 Sep 2023 08:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1695457512;
-	bh=Bs7Fw0q6rolAT4THIz/C5APhEhLEGgSsQjNskd5c+QQ=;
+	s=korg; t=1695457572;
+	bh=QfSZi3CcaKcDGUu3aI1sCsbgvUsfgPydkTm/hs5D/r0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=t+dAaj8x9X4YxMC3dlT0lUPRkO7w7nobFsxmUAs9WiIAAwm3lxoEFQu48mx3g30RF
-	 cxNEJG+FFbY+9JFLONb4SU+4XvAXsAvisg0BS8/DF8Sxoh464B06XvKxINlixmDjPr
-	 YCakWi7jWcbKufH3lrjqxOFDUG1rHHnWTlvKRgH8=
-Date: Sat, 23 Sep 2023 10:25:09 +0200
+	b=Ddt1VQNlnRJdg8YQ+u3H8AkGQb/Ge7s36yp6VVg4ovf1KPSUm2QxzplMpZEg1W34E
+	 ZgG9t6eCpLmYzO8E7fO/YVTZra3cFrUWeNTx6GA3MLf/YSXTBhoIJ8XUzmNat2RB20
+	 4UptXhhTuAFgl3hpaoH+/shMbQ+eQcXn3IcIYOZA=
+Date: Sat, 23 Sep 2023 10:26:09 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: stable@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
-	patches@lists.linux.dev, Hao Luo <haoluo@google.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 5.4 326/367] libbpf: Free btf_vmlinux when closing
- bpf_object
-Message-ID: <2023092303-rotting-strum-1509@gregkh>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Florian Fainelli <f.fainelli@gmail.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 5.4 000/367] 5.4.257-rc1 review
+Message-ID: <2023092300-sturdily-monastery-b1f0@gregkh>
 References: <20230920112858.471730572@linuxfoundation.org>
- <20230920112906.975001366@linuxfoundation.org>
- <e7e9df6b-d3c1-0fad-1cea-94dc74dbf281@oracle.com>
+ <166b5b43-adab-7d00-e3f6-c9a1dfd29f52@gmail.com>
+ <1885150a-6caa-8d92-f893-02bdb5ee508d@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <e7e9df6b-d3c1-0fad-1cea-94dc74dbf281@oracle.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1885150a-6caa-8d92-f893-02bdb5ee508d@roeck-us.net>
 
-On Wed, Sep 20, 2023 at 06:58:45PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg,
-> 
-> On 20/09/23 5:01 pm, Greg Kroah-Hartman wrote:
-> > 5.4-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Sep 21, 2023 at 05:20:17AM -0700, Guenter Roeck wrote:
+> On 9/20/23 10:21, Florian Fainelli wrote:
+> > On 9/20/23 04:26, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 5.4.257 release.
+> > > There are 367 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.257-rc1.gz
+> > > or in the git tree and branch at:
+> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
 > > 
-> > ------------------
+> > perf does not build with:
 > > 
-> > From: Hao Luo <haoluo@google.com>
+> > libbpf.c: In function 'bpf_object__close':
+> > libbpf.c:4205:15: error: 'struct bpf_object' has no member named 'btf_vmlinux'
+> >    btf__free(obj->btf_vmlinux);
+> >                 ^~
 > > 
-> > [ Upstream commit 29d67fdebc42af6466d1909c60fdd1ef4f3e5240 ]
+> > due to 34d66b750e83d49c7d3d33d59e6a1b49e0d5db15 ("libbpf: Free btf_vmlinux when closing bpf_object")
 > > 
-> > I hit a memory leak when testing bpf_program__set_attach_target().
-> > Basically, set_attach_target() may allocate btf_vmlinux, for example,
-> > when setting attach target for bpf_iter programs. But btf_vmlinux
-> > is freed only in bpf_object_load(), which means if we only open
-> > bpf object but not load it, setting attach target may leak
-> > btf_vmlinux.
+> > the btf_vmlinux member was introduced with a6ed02cac690b635dbb938690e795812ce1e14ca ("libbpf: Load btf_vmlinux only once per object.") which is only in >= 5.6.
 > > 
-> > So let's free btf_vmlinux in bpf_object__close() anyway.
-> > 
-> > Signed-off-by: Hao Luo <haoluo@google.com>
-> > Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-> > Link: https://lore.kernel.org/bpf/20230822193840.1509809-1-haoluo@google.com
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >   tools/lib/bpf/libbpf.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-> > index b8849812449c3..343018632d2d1 100644
-> > --- a/tools/lib/bpf/libbpf.c
-> > +++ b/tools/lib/bpf/libbpf.c
-> > @@ -4202,6 +4202,7 @@ void bpf_object__close(struct bpf_object *obj)
-> >   	bpf_object__elf_finish(obj);
-> >   	bpf_object__unload(obj);
-> >   	btf__free(obj->btf);
-> > +	btf__free(obj->btf_vmlinux);
+> > Suggset we drop that commit.
 > 
 > 
-> This patch introduces a build failure.
-> 
-> libbpf.c: In function 'bpf_object__close':
-> libbpf.c:4205:22: error: 'struct bpf_object' has no member named
-> 'btf_vmlinux'
->  4205 |         btf__free(obj->btf_vmlinux);
->       |                      ^~
-> 
-> This struct member "btf_vmlinux" is added in commit a6ed02cac690 ("libbpf:
-> Load btf_vmlinux only once per object.") which is not in 5.4.y
-> 
-> So I think we should drop this patch.
+> This problem affects 5.4, 5.10, and 5.15.
 
-Now dropped, thanks.
+Now dropped from all of those queues, thanks.
 
 greg k-h
