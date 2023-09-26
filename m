@@ -1,170 +1,499 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E89B34CF1
-	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 17:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76B23DE
+	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 18:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695750362; x=1727286362;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=FZjlwzYS4FksiLyZGxoLQMWy8X6T4ER1C6B9V4chblI=;
-  b=PKSBJZrythv5bTZX+DSKYKmikefo35U00XoUR2OntP/82/utzWlhiLn1
-   JIUP7mCparFa117Y7IVhii9dtcO4GGjdIGXFMN2gIO9Q/5YB/Pza2lfcS
-   YcjAvQicdBfufnNKHgSy/JzRrbDAjnCJ2eb1lEiTN1g1vHjJ/1PWW1P9x
-   3nxIjMao3k5IFiugSrESCUwfNAuI//7WyGL9X99iLNchUQXube/VSj0/T
-   woSM/aRtI1kikfaD5QZAQlG+nZQ/ihBA/cDK0Z2u3YAVJ8aN73a2PNLMz
-   +jfmp9LFO1HkSfEJkRDoh1/9OfgWTIcxgDU/7mSV4xyZPhKUugo4LW1Zg
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="371964212"
+  t=1695753995; x=1727289995;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bkdK/ufrIrvdIsgtbXADv2j8UhO0/EL2il7R8RrUpJk=;
+  b=UkjXydXN+g9d9t3RTeQUnap8JOMtTUFKUDClTHtA6HVksvtrwVEaSo5V
+   csxKBCjPXXuK04s75Uq443h2X94lxRDXSgus48Hxzgndbre/Zxqkk4OBE
+   qWBxe31hd0Y+sYr3CjlBZ9j91H1ntvBbtSiTAQvF58YjLT6mNyXBqa/L3
+   EOTbRg5kgwOeDlRpsaavjtEXNmqz0K/i6AnBnOqToMqp4863wnXJ4HnwJ
+   pTTUGcUedDHRAGeJAgW6E37kGhABvDy39dp1eAOaTHuvr0sNse/KHCSOt
+   oH5U6vS5KTN5tgN9Qho7c+Uq8hDfUg8uvXVr2F965E+6J/DrLL+YNX1fm
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="448133540"
 X-IronPort-AV: E=Sophos;i="6.03,178,1694761200"; 
-   d="scan'208";a="371964212"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 10:46:01 -0700
+   d="scan'208";a="448133540"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 11:46:33 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="892285991"
+X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="819131582"
 X-IronPort-AV: E=Sophos;i="6.03,178,1694761200"; 
-   d="scan'208";a="892285991"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmsmga001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 26 Sep 2023 10:44:55 -0700
-Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Tue, 26 Sep 2023 10:45:52 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Tue, 26 Sep 2023 10:45:52 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.103)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Tue, 26 Sep 2023 10:45:52 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RBIq9bL1n5U76bXrUuaReoW6O9hBULerxaygV3NBRRXfu4BZDn59Sily4+AZFgJ0RD8dMZSMLk3mTO2iN1G2dV9QSeKFTb/rfXPqd3DAGZ3mabWbv+90GvOCykOGr6KAM4isZV9qGrLDD+Esb6wgc8S+9kYw8hayab+nqPnh4x6YdNWpWOLvsMiGoWpaf+VkyqVqN44f79DixqhRk73fKTp6QbjAJyuc9CkzmMO8WqWQkkRFQZu38g85kS7BJVEp5Z03+KvRAVjlktB1nggq2CDk+xz9vsV9fIFXIRR1vInXfgB2Txctm0Utr7D6Ho/mVBm4WWyWG3QMZfmG39+4dg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FZjlwzYS4FksiLyZGxoLQMWy8X6T4ER1C6B9V4chblI=;
- b=EX07nKzhvsvlnYAmpWnkExthekzvenCgVwqfRZAknsolledXnCkSxhVJuaJZozoan5dP2+IIXqlyXG48N6qMfI+K4uJNI+eTZfFq8UHWuuN5VRBbR6jOpIrRMbs/x+Yl+nz07z17IJPDmmqrt3buO20PxxskDTuTx3DhGLh3VmZWytv4eidDQhJdmE0KvY6JuqKB5R1IPSY7BSvLQCb6yrVPQw4Bb1eRBJhvCinEfJvDoS7GZuolLhwHi45LXfeS5NYyiVleY0QhImXLNTGwoMZcKiice7PNvCz9Y3n6Tvz9vzA8GIZ91jYF5XQkXtZ8nCTTf0D+WKCLZQGS1q0iAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SJ0PR11MB5215.namprd11.prod.outlook.com (2603:10b6:a03:2d9::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.20; Tue, 26 Sep
- 2023 17:45:50 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4%7]) with mapi id 15.20.6792.026; Tue, 26 Sep 2023
- 17:45:50 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "babu.moger@amd.com" <babu.moger@amd.com>, "Yu, Fenghua"
-	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>, Peter
- Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
-	<skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
-CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
-	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap
-	<rdunlap@infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH v5 2/8] x86/resctrl: Prepare for different scope for
- control/monitor operations
-Thread-Topic: [PATCH v5 2/8] x86/resctrl: Prepare for different scope for
- control/monitor operations
-Thread-Index: AQHZ2tLLm4WAqdn+YE6NPkv7LaqVMLAtfoaAgAANXaA=
-Date: Tue, 26 Sep 2023 17:45:50 +0000
-Message-ID: <SJ1PR11MB608392F4682FE9EA0EC618C8FCC3A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+   d="scan'208";a="819131582"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 11:46:33 -0700
+Date: Tue, 26 Sep 2023 11:46:32 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 3/8] x86/resctrl: Split the rdt_domain structure
+Message-ID: <ZRMnCFWzcxa6Qa4E@agluck-desk3>
 References: <20230722190740.326190-1-tony.luck@intel.com>
  <20230829234426.64421-1-tony.luck@intel.com>
- <20230829234426.64421-3-tony.luck@intel.com>
- <ce890031-2478-ad40-a016-03657bc5f0e3@amd.com>
-In-Reply-To: <ce890031-2478-ad40-a016-03657bc5f0e3@amd.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SJ0PR11MB5215:EE_
-x-ms-office365-filtering-correlation-id: b1a819f5-eec4-4a1c-9220-08dbbeb86c73
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: pF9X5TxVbo5btjmiJuAsFIoj34+lC1wAY8tGlNiB9yFDYDhlvKs+zSuiNzaCiytVrfJHMLPvQTH0+PegC1+RzIwObYHfIvCTcAg/E4DHkd5EuXw72kPftxXiQHpHNPrR0jQzBmZpLsRQhCSeOxnclkR8buaxNGfJQHzAuI9dHx8ftrXG4peFNgc1BybwmfnGOXsspac14CHw6XshOFT09PXeXTz2x/sKFZ5yBSxWKa9H2YkMEGLpowIXHNTuD+F+8HY1R7aNSZC2AsKkyMPQh16M5Oz/BFQxBPEPXB5VwLm7koBPEYThEeYXZhfsDg3v1OgTeKPNL9+N5BDsxPMKt567l07qpHFfBCRtWmu2ucC53NK+6pZ/wMUPrGyYjl0UGgUPE+TOWM2Syy/CBq6yNjau5RFBp5CNJ7sGLA/g7Q2fxlbhTjvot0Zmn0dE/p9iLqVo20MT6IavjYURrVY2Sw0w4WzCEJNLICJYGhkGDCqueehjLQvn3JlrkidSAbyDIP3wdxJaNhbj+2eg7l4rOyM7NwbA9pNqTifFP1+k4GUMVcWkcRMMMd8USSH6JrLPbSJorO0stUOt3rkzysr/rytTg247YvE2VP5TcZKADkDcmsNC+MC+ozbxBIzjXb7L
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(136003)(346002)(376002)(39860400002)(230922051799003)(186009)(1800799009)(451199024)(33656002)(82960400001)(2906002)(86362001)(38070700005)(26005)(7696005)(71200400001)(6506007)(478600001)(122000001)(38100700002)(9686003)(4744005)(55016003)(41300700001)(5660300002)(7416002)(4326008)(52536014)(316002)(76116006)(110136005)(54906003)(66476007)(66946007)(66446008)(66556008)(8676002)(8936002)(64756008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bTllL1p1QW9uWFlmSi9oVDFsNDRDV2VndUZvZ0ZrZEVxalFjc1pSWlp5TFVR?=
- =?utf-8?B?UWcrc0VnRnJjRDNJV05ZL1k1VlNnQVpGaHV3eHpkTnZLR21FaEZ1c2Q5Njdh?=
- =?utf-8?B?TFI4b1JQQU9HcW5RL216YW9HSllFaDZ1aU9laHJVMnpVZzRkKzJOSytJcG4z?=
- =?utf-8?B?MVNRSnhBTWQzSm42ZEg3MGFtOGg5a2NqZ0RPOEt5OXdzTEhwZTYyaHRZc2RE?=
- =?utf-8?B?Yk05VjQ1SHBZS2Q4eVp0clFTRURLUDdGaFJiQjkzdVVXd3JyT1JIM0E3bTRq?=
- =?utf-8?B?akNSOXZwd0JQWDdlUE9MNTY3UCtIVE1wb3YwM2tsZjM2cGNhM0wxelNBQVFn?=
- =?utf-8?B?N1AwbWFUMDhJVVBXbUU3b0ZnSzV2MXZ6V2wvTS9veVJWeGIxT1dLNTdPdit0?=
- =?utf-8?B?UFJEdTNLYmdFRW1hMkhpOXF6VENzd0JHdVZQRFVmSkRBYVRKcGtwV1ZtTlA5?=
- =?utf-8?B?eHZJRmZRdWgvNis0RHh4TmpBc1JJTWVyZm9nRDNUK1BLS1NnQXFXZFpONzY0?=
- =?utf-8?B?VGFjdWpHV1pkUGtQUDE4R3JDMkRERjkzOG1ObHZxNkNBZ0lQbHVscS8wd3Zu?=
- =?utf-8?B?RVZqTmYvd3Nrd0x5YnlaRzgxamRUTXJ5L3pvQ0xGbEhsdHFVQ2RnckZsMTBQ?=
- =?utf-8?B?UHYvZUh3bzNOUFZXTld2czF4U0VTVVZheEc3a0VoRkVQa21hZXRJaXhBM0hz?=
- =?utf-8?B?bmNDZDBOM2Y4QmxKanR4dUZaSzNqT3ZpLys4ZGhNYlJzN3h1ZUxnWTY5dVNk?=
- =?utf-8?B?aDVwR1g2SUZ6TTNlK3pTTGVFYnZYeVQ2Zjl6cU1QR2xEWkpCOFdZb245NkJG?=
- =?utf-8?B?MlVnM2FZSURYSnlsekZNNmpDMmJTL0V1Q3lqTW1uS3RRRjRvY0RzWDlGK2Ri?=
- =?utf-8?B?TXBaTDduTFBWSWJ0TmhXSmtOT3NtN0wraERDNG1GTENwU0RIenBRMHBNVnUx?=
- =?utf-8?B?L2FsbndZS2pLWEtySWpiaSswVU9LbGdOMytwaWhoNlc5WmJ1OElUem5mNlJG?=
- =?utf-8?B?bDd5aXFnb2VvN256UHNSV2FlSXNhMTB1WDhWMFpYSjF0L2VpbW9pdXJibWhq?=
- =?utf-8?B?TlR3YjZsTHpZWXo2MTlIZFdFVVB2d1QrOXp5T3p1dEpxc3J4djBWYyswbUFm?=
- =?utf-8?B?VmlyNVU0YU1UemR2REplZDVjSW9hRm1jcnV5NldDWEJ2TmZOTGJ4WnErY1hq?=
- =?utf-8?B?YS9ZSzFXTTlBWi8ycmIrWmI4RUZqZkFvZmpzL0lUR0RuaGNlbnNwUXF3OHQ1?=
- =?utf-8?B?eCtEZVR6a29JeGhRdGMyQnNOamtXM2V1Qlc1NW5ZTUtyZk5lU2d1QWJzTm13?=
- =?utf-8?B?NWp0UWx0eEUyMmo5aVZvZVIzOUNLY2wybXRoWHR1MUxMQkJ5Qk80bFlrbUh1?=
- =?utf-8?B?OFlKYUZLRVVuTmYyTjBCblVlZms0dDhjeXVua21sK0xjSXpuNHMvdW9sMnY2?=
- =?utf-8?B?dzhLS2FaQjVxVzVTR0VSZE9lNUV0NTQvNDk0ZVdUOGVVR3BOSzAzVlZabkhJ?=
- =?utf-8?B?V1N6QUFNVTJ5YSswRnpWVXBMUFRDcDNWVS9GZm9qTDRoZUxVNmlva25ETXEz?=
- =?utf-8?B?TnF1UUlhRks4VndzbjhBZzE2Y2htVytrWEdORERjY0FnK0NubGdVazdudExO?=
- =?utf-8?B?SGNRWlRCVjRxMXBKOXNmT3dQclF6Z0JZY1piT2FjeFpWaFBZVjFMR3h6RmVy?=
- =?utf-8?B?ZXJJckpXVVBBRVdDUDhkbjVUWjdTZjZvN3dyNkQ3OFIvYTdvdkIzTWxqYzhX?=
- =?utf-8?B?QVcvOEpjYjRpTCtCNmg4STE5YWwwSUxhUjhRc2FhRXYyTXhEUWlVRDlIY3Rx?=
- =?utf-8?B?VmR6OXZFZWRBckdscTl1azJnTHVVZElTblNXalJDYnd5aXVxUE1LemRSUnVV?=
- =?utf-8?B?Qm5zZWlhUlpWNUkvTmZkS1FQOGRBTk01d3ZZa2JsYllsTFNaS1VTSk8wQkky?=
- =?utf-8?B?MkczSjg4ZnQzSXZrbU5DY01xaE95cm1Pc2FnZzk2NWJhRUtHTGdlbjVnWjhE?=
- =?utf-8?B?WmtYN1ZudGNYVEpFdjVDR2hwQndOOHNCTzM1QVhnWmdyOGsyaTVhM21UR2RI?=
- =?utf-8?B?WjBSa29nZWRHNjBraytlUTR3TnFDWmVJQjNCeVJEZjMxWTRNN3ZzRENEMFdh?=
- =?utf-8?Q?f/AKuVsZ//vwzPGrJIwwslncU?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <20230829234426.64421-4-tony.luck@intel.com>
+ <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b1a819f5-eec4-4a1c-9220-08dbbeb86c73
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Sep 2023 17:45:50.5741
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: aARbI5HQsRYyHKLScyao41zUnVq44o97ecpdhaiFcisZ2EzBWu1HSC1bJmxe6aZx41IQI3Nb+VFp7kOo8ZNpSw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5215
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
 
-Pj4gQ3JlYXRlIHNlcGFyYXRlIGRvbWFpbiBsaXN0cyBmb3IgY29udHJvbCBhbmQgbW9uaXRvciBv
-cGVyYXRpb25zLg0KPj4gDQo+PiBObyBpbXBvcnRhbnQgZnVuY3Rpb25hbCBjaGFuZ2UuIEJ1dCBu
-b3RlIHRoYXQgZXJyb3JzIGR1cmluZw0KPg0KPiBJdHMgYmV0dGVyIHRvIHJlbW92ZSB0aGUgbGlu
-ZSAiTm8gaW1wb3J0YW50IGZ1bmN0aW9uYWwgY2hhbmdlLiINCg0KV2lsbCBkcm9wIGl0Lg0KDQo+
-PiAgCXN0cnVjdCBsaXN0X2hlYWQJZG9tYWluczsNCj4+ICsJc3RydWN0IGxpc3RfaGVhZAltb25k
-b21haW5zOw0KPg0KPiBGb3IgY29uc2lzdGFuY3ksIGl0cyBiZXR0ZXIgdG8gcmVuYW1lIGl0IHRv
-IG1vbl9kb21haW5zKHRvIGJlIGlubGluZSB3aXRoDQo+IG1vbl9zY29wZSwgbW9uX2NhcGFibGUp
-Lg0KDQpBZ2FpbiwgeW91IGFyZSB0aGlua2luZyBsaWtlIFJlaW5ldHRlISBZb3UnbGwgYmUgYSBy
-ZXNjdHJsIG1haW50YWluZXIgc29vbi4NCg0KPj4gK3N0cnVjdCByZHRfZG9tYWluICpyZHRfZmlu
-ZF9jdHJsZG9tYWluKHN0cnVjdCBsaXN0X2hlYWQgKmgsIGludCBpZCwNCj4+ICsJCQkJICAgICAg
-IHN0cnVjdCBsaXN0X2hlYWQgKipwb3MpOw0KPj4gK3N0cnVjdCByZHRfZG9tYWluICpyZHRfZmlu
-ZF9tb25kb21haW4oc3RydWN0IGxpc3RfaGVhZCAqaCwgaW50IGlkLA0KPj4gKwkJCQkgICAgICBz
-dHJ1Y3QgbGlzdF9oZWFkICoqcG9zKTsNCj4NCj4gRm9yIGNvbnNpc3RhbmN5LCBpdCBpcyBiZXR0
-ZXIgdG8gcmVuYW1lIHRvIHJkdF9maW5kX2N0cmxfZG9tYWluIGFuZA0KPiByZHRfZmluZF9tb25f
-ZG9tYWluIHJlc3BlY3RpdmVseS4NCg0KQWdyZWVkLg0KDQpUaGFua3MgZm9yIHRoZSByZXZpZXcu
-DQoNCi1Ub255DQo=
+On Mon, Sep 25, 2023 at 04:25:15PM -0700, Reinette Chatre wrote:
+> > +struct rdt_domain {
+> > +	// First three fields must match struct rdt_mondomain below.
+> 
+> Please avoid comments within declarations. Even so, could you please
+> elaborate what the above means? Why do the first three fields have to
+> match? I understand there is common code, for example, __rdt_find_domain()
+> that operated on the same members of the two structs but does that
+> require the members be in the same position in the struct?
+> I understand that a comment may be required if position in the struct
+> is important but I cannot see that it is.
+
+[Just replying to this one point in your message to get guidance. I'll
+address all the rest in other replies]
+
+I'm wrong about the first *three* fields ... but the first *two* fields
+(the "list" and the "id") do need to be at the same offsets in different
+structures if a common routine is going to be used to access those
+fields.
+
+If the "id" were at offset 0x10 in the control version of the domain
+structure, and at offset 0x20 in the monitor version of the domain
+structure, there would be no hope for a common routine to access the
+"id" field when searching a list that could be either control or
+monitor domains.
+
+I'm looking at making this far more explicit with a new patch between
+0001 and 0002 that pulls the two fields into a common substructure that
+will be included in each of the control and monitor versions of the
+structure.
+
+Patch included below.
+
+But this seems like it is a lot of churn to avoid having separate
+functions to search control and monitor lists. Each a clone of
+the existing ~24 line rdt_find_domain() with just the type changed
+for the return value and the list travsersal.
+
+What do you think?
+
+-Tony
+
+commit 08992b4be1f53a3144f8aadd821f815a40a05e75
+Author: Tony Luck <tony.luck@intel.com>
+Date:   Tue Sep 26 11:07:12 2023 -0700
+
+    x86/resctrl: Prepare to split rdt_domain structure
+    
+    The rdt_domain structure is used for both control and monitor features.
+    It is about to be split into separate structures for these two usages
+    because the scope for control and monitoring features for a resource
+    will be different for future resources.
+    
+    To allow for common code that scans a list of domains looking for a
+    specific domain id, move the "list" and "id" fields into their own
+    structure within the rdt_domain structure.
+    
+    Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 618735e396cb..a583fa88ea5a 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -53,9 +53,18 @@ struct resctrl_staged_config {
+ };
+ 
+ /**
+- * struct rdt_domain - group of CPUs sharing a resctrl resource
++ * struct rdt_domain_hdr - common header for different domain types
+  * @list:		all instances of this resource
+  * @id:			unique id for this instance
++ */
++struct rdt_domain_hdr {
++	struct list_head		list;
++	int				id;
++};
++
++/**
++ * struct rdt_domain - group of CPUs sharing a resctrl resource
++ * @hdr:		common header for different domain types
+  * @cpu_mask:		which CPUs share this resource
+  * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
+  * @mbm_total:		saved state for MBM total bandwidth
+@@ -71,8 +80,7 @@ struct resctrl_staged_config {
+  *			by closid
+  */
+ struct rdt_domain {
+-	struct list_head		list;
+-	int				id;
++	struct rdt_domain_hdr		hdr;
+ 	struct cpumask			cpu_mask;
+ 	unsigned long			*rmid_busy_llc;
+ 	struct mbm_state		*mbm_total;
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 3b1837e1fb6b..05369add4578 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -352,7 +352,7 @@ struct rdt_domain *get_domain_from_cpu(int cpu, struct rdt_resource *r)
+ {
+ 	struct rdt_domain *d;
+ 
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		/* Find the domain that contains this CPU */
+ 		if (cpumask_test_cpu(cpu, &d->cpu_mask))
+ 			return d;
+@@ -401,12 +401,12 @@ struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+ 		return ERR_PTR(-ENODEV);
+ 
+ 	list_for_each(l, &r->domains) {
+-		d = list_entry(l, struct rdt_domain, list);
++		d = list_entry(l, struct rdt_domain, hdr.list);
+ 		/* When id is found, return its domain. */
+-		if (id == d->id)
++		if (id == d->hdr.id)
+ 			return d;
+ 		/* Stop searching when finding id's position in sorted list. */
+-		if (id < d->id)
++		if (id < d->hdr.id)
+ 			break;
+ 	}
+ 
+@@ -544,7 +544,7 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ 		return;
+ 
+ 	d = &hw_dom->d_resctrl;
+-	d->id = id;
++	d->hdr.id = id;
+ 	cpumask_set_cpu(cpu, &d->cpu_mask);
+ 
+ 	rdt_domain_reconfigure_cdp(r);
+@@ -559,11 +559,11 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ 		return;
+ 	}
+ 
+-	list_add_tail(&d->list, add_pos);
++	list_add_tail(&d->hdr.list, add_pos);
+ 
+ 	err = resctrl_online_domain(r, d);
+ 	if (err) {
+-		list_del(&d->list);
++		list_del(&d->hdr.list);
+ 		domain_free(hw_dom);
+ 	}
+ }
+@@ -587,7 +587,7 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+ 	cpumask_clear_cpu(cpu, &d->cpu_mask);
+ 	if (cpumask_empty(&d->cpu_mask)) {
+ 		resctrl_offline_domain(r, d);
+-		list_del(&d->list);
++		list_del(&d->hdr.list);
+ 
+ 		/*
+ 		 * rdt_domain "d" is going to be freed below, so clear
+diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+index b44c487727d4..8bce591a1018 100644
+--- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
++++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+@@ -67,7 +67,7 @@ int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
+ 
+ 	cfg = &d->staged_config[s->conf_type];
+ 	if (cfg->have_new_ctrl) {
+-		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
++		rdt_last_cmd_printf("Duplicate domain %d\n", d->hdr.id);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -144,7 +144,7 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
+ 
+ 	cfg = &d->staged_config[s->conf_type];
+ 	if (cfg->have_new_ctrl) {
+-		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
++		rdt_last_cmd_printf("Duplicate domain %d\n", d->hdr.id);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -224,8 +224,8 @@ static int parse_line(char *line, struct resctrl_schema *s,
+ 		return -EINVAL;
+ 	}
+ 	dom = strim(dom);
+-	list_for_each_entry(d, &r->domains, list) {
+-		if (d->id == dom_id) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
++		if (d->hdr.id == dom_id) {
+ 			data.buf = dom;
+ 			data.rdtgrp = rdtgrp;
+ 			if (r->parse_ctrlval(&data, s, d))
+@@ -316,7 +316,7 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
+ 		return -ENOMEM;
+ 
+ 	msr_param.res = NULL;
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		hw_dom = resctrl_to_arch_dom(d);
+ 		for (t = 0; t < CDP_NUM_TYPES; t++) {
+ 			cfg = &hw_dom->d_resctrl.staged_config[t];
+@@ -464,7 +464,7 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int clo
+ 	u32 ctrl_val;
+ 
+ 	seq_printf(s, "%*s:", max_name_width, schema->name);
+-	list_for_each_entry(dom, &r->domains, list) {
++	list_for_each_entry(dom, &r->domains, hdr.list) {
+ 		if (sep)
+ 			seq_puts(s, ";");
+ 
+@@ -474,7 +474,7 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int clo
+ 			ctrl_val = resctrl_arch_get_config(r, dom, closid,
+ 							   schema->conf_type);
+ 
+-		seq_printf(s, r->format_str, dom->id, max_data_width,
++		seq_printf(s, r->format_str, dom->hdr.id, max_data_width,
+ 			   ctrl_val);
+ 		sep = true;
+ 	}
+@@ -503,7 +503,7 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
+ 			} else {
+ 				seq_printf(s, "%s:%d=%x\n",
+ 					   rdtgrp->plr->s->res->name,
+-					   rdtgrp->plr->d->id,
++					   rdtgrp->plr->d->hdr.id,
+ 					   rdtgrp->plr->cbm);
+ 			}
+ 		} else {
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index ded1fc7cb7cb..27cda5988d7f 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -340,7 +340,7 @@ static void add_rmid_to_limbo(struct rmid_entry *entry)
+ 
+ 	entry->busy = 0;
+ 	cpu = get_cpu();
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		if (cpumask_test_cpu(cpu, &d->cpu_mask)) {
+ 			err = resctrl_arch_rmid_read(r, d, entry->rmid,
+ 						     QOS_L3_OCCUP_EVENT_ID,
+diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+index 8c5f932bc00b..18b6183a1b48 100644
+--- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
++++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+@@ -856,7 +856,7 @@ bool rdtgroup_pseudo_locked_in_hierarchy(struct rdt_domain *d)
+ 	 * associated with them.
+ 	 */
+ 	for_each_alloc_capable_rdt_resource(r) {
+-		list_for_each_entry(d_i, &r->domains, list) {
++		list_for_each_entry(d_i, &r->domains, hdr.list) {
+ 			if (d_i->plr)
+ 				cpumask_or(cpu_with_psl, cpu_with_psl,
+ 					   &d_i->cpu_mask);
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 1cf2b36f5bf8..42adf17ea6fa 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -86,7 +86,7 @@ void rdt_staged_configs_clear(void)
+ 	lockdep_assert_held(&rdtgroup_mutex);
+ 
+ 	for_each_alloc_capable_rdt_resource(r) {
+-		list_for_each_entry(dom, &r->domains, list)
++		list_for_each_entry(dom, &r->domains, hdr.list)
+ 			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+ 	}
+ }
+@@ -928,12 +928,12 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
+ 
+ 	mutex_lock(&rdtgroup_mutex);
+ 	hw_shareable = r->cache.shareable_bits;
+-	list_for_each_entry(dom, &r->domains, list) {
++	list_for_each_entry(dom, &r->domains, hdr.list) {
+ 		if (sep)
+ 			seq_putc(seq, ';');
+ 		sw_shareable = 0;
+ 		exclusive = 0;
+-		seq_printf(seq, "%d=", dom->id);
++		seq_printf(seq, "%d=", dom->hdr.id);
+ 		for (i = 0; i < closids_supported(); i++) {
+ 			if (!closid_allocated(i))
+ 				continue;
+@@ -1233,7 +1233,7 @@ static bool rdtgroup_mode_test_exclusive(struct rdtgroup *rdtgrp)
+ 		if (r->rid == RDT_RESOURCE_MBA || r->rid == RDT_RESOURCE_SMBA)
+ 			continue;
+ 		has_cache = true;
+-		list_for_each_entry(d, &r->domains, list) {
++		list_for_each_entry(d, &r->domains, hdr.list) {
+ 			ctrl = resctrl_arch_get_config(r, d, closid,
+ 						       s->conf_type);
+ 			if (rdtgroup_cbm_overlaps(s, d, ctrl, closid, false)) {
+@@ -1398,7 +1398,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
+ 			size = rdtgroup_cbm_to_size(rdtgrp->plr->s->res,
+ 						    rdtgrp->plr->d,
+ 						    rdtgrp->plr->cbm);
+-			seq_printf(s, "%d=%u\n", rdtgrp->plr->d->id, size);
++			seq_printf(s, "%d=%u\n", rdtgrp->plr->d->hdr.id, size);
+ 		}
+ 		goto out;
+ 	}
+@@ -1410,7 +1410,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
+ 		type = schema->conf_type;
+ 		sep = false;
+ 		seq_printf(s, "%*s:", max_name_width, schema->name);
+-		list_for_each_entry(d, &r->domains, list) {
++		list_for_each_entry(d, &r->domains, hdr.list) {
+ 			if (sep)
+ 				seq_putc(s, ';');
+ 			if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+@@ -1428,7 +1428,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
+ 				else
+ 					size = rdtgroup_cbm_to_size(r, d, ctrl);
+ 			}
+-			seq_printf(s, "%d=%u", d->id, size);
++			seq_printf(s, "%d=%u", d->hdr.id, size);
+ 			sep = true;
+ 		}
+ 		seq_putc(s, '\n');
+@@ -1499,7 +1499,7 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
+ 
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+-	list_for_each_entry(dom, &r->domains, list) {
++	list_for_each_entry(dom, &r->domains, hdr.list) {
+ 		if (sep)
+ 			seq_puts(s, ";");
+ 
+@@ -1507,7 +1507,7 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
+ 		mon_info.evtid = evtid;
+ 		mondata_config_read(dom, &mon_info);
+ 
+-		seq_printf(s, "%d=0x%02x", dom->id, mon_info.mon_config);
++		seq_printf(s, "%d=0x%02x", dom->hdr.id, mon_info.mon_config);
+ 		sep = true;
+ 	}
+ 	seq_puts(s, "\n");
+@@ -1622,8 +1622,8 @@ static int mon_config_write(struct rdt_resource *r, char *tok, u32 evtid)
+ 		return -EINVAL;
+ 	}
+ 
+-	list_for_each_entry(d, &r->domains, list) {
+-		if (d->id == dom_id) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
++		if (d->hdr.id == dom_id) {
+ 			ret = mbm_config_write_domain(r, d, evtid, val);
+ 			if (ret)
+ 				return -EINVAL;
+@@ -2141,7 +2141,7 @@ static int set_cache_qos_cfg(int level, bool enable)
+ 		return -ENOMEM;
+ 
+ 	r_l = &rdt_resources_all[level].r_resctrl;
+-	list_for_each_entry(d, &r_l->domains, list) {
++	list_for_each_entry(d, &r_l->domains, hdr.list) {
+ 		if (r_l->cache.arch_has_per_cpu_cfg)
+ 			/* Pick all the CPUs in the domain instance */
+ 			for_each_cpu(cpu, &d->cpu_mask)
+@@ -2226,7 +2226,7 @@ static int set_mba_sc(bool mba_sc)
+ 
+ 	r->membw.mba_sc = mba_sc;
+ 
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		for (i = 0; i < num_closid; i++)
+ 			d->mbps_val[i] = MBA_MAX_MBPS;
+ 	}
+@@ -2528,7 +2528,7 @@ static int rdt_get_tree(struct fs_context *fc)
+ 
+ 	if (is_mbm_enabled()) {
+ 		r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+-		list_for_each_entry(dom, &r->domains, list)
++		list_for_each_entry(dom, &r->domains, hdr.list)
+ 			mbm_setup_overflow_handler(dom, MBM_OVERFLOW_INTERVAL);
+ 	}
+ 
+@@ -2652,7 +2652,7 @@ static int reset_all_ctrls(struct rdt_resource *r)
+ 	 * CBMs in all domains to the maximum mask value. Pick one CPU
+ 	 * from each domain to update the MSRs below.
+ 	 */
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		hw_dom = resctrl_to_arch_dom(d);
+ 		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
+ 
+@@ -2858,7 +2858,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+ 	char name[32];
+ 	int ret;
+ 
+-	sprintf(name, "mon_%s_%02d", r->name, d->id);
++	sprintf(name, "mon_%s_%02d", r->name, d->hdr.id);
+ 	/* create the directory */
+ 	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
+ 	if (IS_ERR(kn))
+@@ -2874,7 +2874,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+ 	}
+ 
+ 	priv.u.rid = r->rid;
+-	priv.u.domid = d->id;
++	priv.u.domid = d->hdr.id;
+ 	list_for_each_entry(mevt, &r->evt_list, list) {
+ 		priv.u.evtid = mevt->evtid;
+ 		ret = mon_addfile(kn, mevt->name, priv.priv);
+@@ -2922,7 +2922,7 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
+ 	struct rdt_domain *dom;
+ 	int ret;
+ 
+-	list_for_each_entry(dom, &r->domains, list) {
++	list_for_each_entry(dom, &r->domains, hdr.list) {
+ 		ret = mkdir_mondata_subdir(parent_kn, dom, r, prgrp);
+ 		if (ret)
+ 			return ret;
+@@ -3081,7 +3081,7 @@ static int __init_one_rdt_domain(struct rdt_domain *d, struct resctrl_schema *s,
+ 	 */
+ 	tmp_cbm = cfg->new_ctrl;
+ 	if (bitmap_weight(&tmp_cbm, r->cache.cbm_len) < r->cache.min_cbm_bits) {
+-		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->id);
++		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->hdr.id);
+ 		return -ENOSPC;
+ 	}
+ 	cfg->have_new_ctrl = true;
+@@ -3104,7 +3104,7 @@ static int rdtgroup_init_cat(struct resctrl_schema *s, u32 closid)
+ 	struct rdt_domain *d;
+ 	int ret;
+ 
+-	list_for_each_entry(d, &s->res->domains, list) {
++	list_for_each_entry(d, &s->res->domains, hdr.list) {
+ 		ret = __init_one_rdt_domain(d, s, closid);
+ 		if (ret < 0)
+ 			return ret;
+@@ -3119,7 +3119,7 @@ static void rdtgroup_init_mba(struct rdt_resource *r, u32 closid)
+ 	struct resctrl_staged_config *cfg;
+ 	struct rdt_domain *d;
+ 
+-	list_for_each_entry(d, &r->domains, list) {
++	list_for_each_entry(d, &r->domains, hdr.list) {
+ 		if (is_mba_sc(r)) {
+ 			d->mbps_val[closid] = MBA_MAX_MBPS;
+ 			continue;
+@@ -3726,7 +3726,7 @@ void resctrl_offline_domain(struct rdt_resource *r, struct rdt_domain *d)
+ 	 * per domain monitor data directories.
+ 	 */
+ 	if (static_branch_unlikely(&rdt_mon_enable_key))
+-		rmdir_mondata_subdir_allrdtgrp(r, d->id);
++		rmdir_mondata_subdir_allrdtgrp(r, d->hdr.id);
+ 
+ 	if (is_mbm_enabled())
+ 		cancel_delayed_work(&d->mbm_over);
