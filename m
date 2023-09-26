@@ -1,96 +1,153 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843D31D526
-	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 10:20:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695723646; x=1727259646;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=IdqZHPJOPwcVDTSKXmZ43RFoTiFmfhgBH2q0cF9aCoU=;
-  b=m9L26JFNt3m/Z6ZH0970wt8iXqg/fHvdlnKCaim2HYEJLCGS7NrVOVM3
-   3P0FVQpiY8+XwK3HDJSnI0tCNZGVLSYVS8VCHJ9JrlcSBQ5vLktGYRnaF
-   H+VEsA9xcHiWiIaSSAWtDgdNYlpf6DSUscto0v0p/mPeiz6ffkVHjt03n
-   5F+u7wLjSVP8Ezsv5mlR8fxHqNi9sT353u/nBYebFugVdVwOxOpTqaHr0
-   zHk7SIVQj0pbP0UbiAkfMGkzkZQ5y4V3f8zH6Wz5mQiW6Hl1D4DY7LyXq
-   Ar7ArsZO7Cv+wiR2wFG6ukWvPoPyQmuXUKwjAvoWnc/Epw/Sf9lTsF64T
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="380401634"
-X-IronPort-AV: E=Sophos;i="6.03,177,1694761200"; 
-   d="scan'208";a="380401634"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 03:20:45 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="778087554"
-X-IronPort-AV: E=Sophos;i="6.03,177,1694761200"; 
-   d="scan'208";a="778087554"
-Received: from hhalmen-mobl.ger.corp.intel.com ([10.251.219.207])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 03:20:40 -0700
-Date: Tue, 26 Sep 2023 13:20:34 +0300 (EEST)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: "Joseph, Jithu" <jithu.joseph@intel.com>
-cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
-    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
-    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
-    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH v2 4/9] platform/x86/intel/ifs: Gen2 Scan test support
-In-Reply-To: <89f48b0a-a6b6-2204-7d96-28ebbe96b18a@intel.com>
-Message-ID: <e22bf1b7-48c1-39e8-f0d3-636a6a61bc48@linux.intel.com>
-References: <20230913183348.1349409-1-jithu.joseph@intel.com> <20230922232606.1928026-1-jithu.joseph@intel.com> <20230922232606.1928026-5-jithu.joseph@intel.com> <c390bdaf-ab5c-bf1f-bd64-29e2827d01f@linux.intel.com>
- <89f48b0a-a6b6-2204-7d96-28ebbe96b18a@intel.com>
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97BFD2869D
+	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 12:33:36 +0000 (UTC)
+Received: by linux.microsoft.com (Postfix, from userid 1127)
+	id 1318520B74C0; Tue, 26 Sep 2023 05:33:36 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1318520B74C0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1695731616;
+	bh=eorYgxmtB2WEDhSzSXglOLVbIYf2lmcE5SfGSmPo5ys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lBKDsWur+Azdt3wFsEq+NVIYYXomnLJSmI+9ykR00PihrafadUM1BDJrS6LBkr0IB
+	 VrduIN2jMFUPr2Q1R5ZNzFivvc+C7lQqYcg1bW/tfADL0tL51W+FJIdA8NSRFi1//e
+	 FNVzOhYT/BUX7jKP2bGXB+cMXVgf/Kzrs9L8ZrpI=
+Date: Tue, 26 Sep 2023 05:33:36 -0700
+From: Saurabh Singh Sengar <ssengar@linux.microsoft.com>
+To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>, linux-hyperv@vger.kernel.org,
+	linux-kernel@vger.kernel.org, x86@kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arch@vger.kernel.org,
+	patches@lists.linux.dev, mikelley@microsoft.com, kys@microsoft.com,
+	wei.liu@kernel.org, haiyangz@microsoft.com, decui@microsoft.com,
+	apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
+	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
+	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
+	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
+	catalin.marinas@arm.com
+Subject: Re: [PATCH v3 15/15] Drivers: hv: Add modules to expose /dev/mshv to
+ VMMs running on Hyper-V
+Message-ID: <20230926123336.GA9863@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1695407915-12216-16-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023092342-staunch-chafe-1598@gregkh>
+ <e235025e-abfa-4b31-8b83-416ec8ec4f72@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1786874099-1695723644=:1894"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e235025e-abfa-4b31-8b83-416ec8ec4f72@linux.microsoft.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1786874099-1695723644=:1894
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 25 Sep 2023, Joseph, Jithu wrote:
-> On 9/25/2023 8:39 AM, Ilpo Järvinen wrote:
-> > On Fri, 22 Sep 2023, Jithu Joseph wrote:
-> > 
+On Mon, Sep 25, 2023 at 05:07:24PM -0700, Nuno Das Neves wrote:
+> Resend in plain text instead of HTML - oops!
 > 
-> ...
+> On 9/23/2023 12:58 AM, Greg KH wrote:
+> >On Fri, Sep 22, 2023 at 11:38:35AM -0700, Nuno Das Neves wrote:
+> >>+static int mshv_vtl_get_vsm_regs(void)
+> >>+{
+> >>+	struct hv_register_assoc registers[2];
+> >>+	union hv_input_vtl input_vtl;
+> >>+	int ret, count = 2;
+> >>+
+> >>+	input_vtl.as_uint8 = 0;
+> >>+	registers[0].name = HV_REGISTER_VSM_CODE_PAGE_OFFSETS;
+> >>+	registers[1].name = HV_REGISTER_VSM_CAPABILITIES;
+> >>+
+> >>+	ret = hv_call_get_vp_registers(HV_VP_INDEX_SELF, HV_PARTITION_ID_SELF,
+> >>+				       count, input_vtl, registers);
+> >>+	if (ret)
+> >>+		return ret;
+> >>+
+> >>+	mshv_vsm_page_offsets.as_uint64 = registers[0].value.reg64;
+> >>+	mshv_vsm_capabilities.as_uint64 = registers[1].value.reg64;
+> >>+
+> >>+	pr_debug("%s: VSM code page offsets: %#016llx\n", __func__,
+> >>+		 mshv_vsm_page_offsets.as_uint64);
+> >>+	pr_info("%s: VSM capabilities: %#016llx\n", __func__,
+> >>+		mshv_vsm_capabilities.as_uint64);
+> >
+> >When drivers are working properly, they are quiet.  This is very noisy
+> >and probably is leaking memory addresses to userspace?
+> >
 > 
-> >>  
-> >> -	activate.rsvd = 0;
-> >>  	activate.delay = IFS_THREAD_WAIT;
-> >>  	activate.sigmce = 0;
-> >> -	activate.start = 0;
-> >> -	activate.stop = ifsd->valid_chunks - 1;
-> >> +	to_start = 0;
-> >> +	to_stop = ifsd->valid_chunks - 1;
-> >> +
-> >> +	if (ifsd->generation) {
-> >> +		activate.gen2.start = to_start;
-> >> +		activate.gen2.stop = to_stop;
-> >> +	} else {
-> >> +		activate.gen0.start = to_start;
-> >> +		activate.gen0.stop = to_stop;
-> >> +	}
-> > 
-> > Is it okay to not do activate.gen0.rsvd = 0 anymore? If you know it is, it 
-> > would be nice to record that fact into the changelog so that it can be 
-> > found in the history.
+> I will remove these, thanks.
 > 
-> I did test on a gen0 to check if there is a problem due to this (and it seemed fine).
-> I will make a note in changelog as you suggest
+> >Also, there is NEVER a need for __func__ in a pr_debug() line, it has
+> >that for you automatically.
+> >
+> 
+> Thank you, I didn't know this.
+> 
+> >Also, drivers should never call pr_*() calls, always use the proper
+> >dev_*() calls instead.
+> >
+> 
+> We only use struct device in one place in this driver, I think that
+> is the only place it makes sense to use dev_*() over pr_*() calls.
+> >
+> >
+> >>+
+> >>+	return ret;
+> >>+}
+> >>+
+> >>+static int mshv_vtl_configure_vsm_partition(void)
+> >>+{
+> >>+	union hv_register_vsm_partition_config config;
+> >>+	struct hv_register_assoc reg_assoc;
+> >>+	union hv_input_vtl input_vtl;
+> >>+
+> >>+	config.as_u64 = 0;
+> >>+	config.default_vtl_protection_mask = HV_MAP_GPA_PERMISSIONS_MASK;
+> >>+	config.enable_vtl_protection = 1;
+> >>+	config.zero_memory_on_reset = 1;
+> >>+	config.intercept_vp_startup = 1;
+> >>+	config.intercept_cpuid_unimplemented = 1;
+> >>+
+> >>+	if (mshv_vsm_capabilities.intercept_page_available) {
+> >>+		pr_debug("%s: using intercept page", __func__);
+> >
+> >Again, __func__ is not needed, you are providing it twice here for no
+> >real reason except to waste storage space :)
+> >
+> 
+> Thanks, I will review all the uses of pr_debug().
+> 
+> >>+		config.intercept_page = 1;
+> >>+	}
+> >>+
+> >>+	reg_assoc.name = HV_REGISTER_VSM_PARTITION_CONFIG;
+> >>+	reg_assoc.value.reg64 = config.as_u64;
+> >>+	input_vtl.as_uint8 = 0;
+> >>+
+> >>+	return hv_call_set_vp_registers(HV_VP_INDEX_SELF, HV_PARTITION_ID_SELF,
+> >>+				       1, input_vtl, &reg_assoc);
+> >
+> >
+> >None of this needs to be unwound if initialization fails later on?
+> >
+> 
+> I think unwinding this is not needed, not 100% sure.
+> Saurabh, can you comment?
 
-Actually, I realized activate is a variable in stack and those bits are
-uninitilized without that assignment so don't remove it.
+Yes unwinding is not useful here, as these are synthetic register
+and there is no other use case of VSM supporting platforms other
+than VSM configuration.
 
--- 
- i.
+In a non VSM supported platform hv_call_set_vp_registers itself will
+fail for HV_REGISTER_VSM_PARTITION_CONFIG.
 
---8323329-1786874099-1695723644=:1894--
+- Saurabh
+
+> 
+> Thanks,
+> Nuno
+> 
+> >thanks,
+> >
+> >greg k-h
+> 
