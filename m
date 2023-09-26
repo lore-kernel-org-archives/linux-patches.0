@@ -1,113 +1,207 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD6C2405F6
-	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 21:52:30 +0000 (UTC)
-Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 8203520B74C0;
-	Tue, 26 Sep 2023 14:52:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8203520B74C0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695765150;
-	bh=lBG32VN1WPmUQfi9u2u2mI5suzZ9jPlIJsDL8oCoWFk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RUOHflWoCL1yJo7QG8SpRsR0JvJ63uqX6NBElJV56MVeITu5dsEGJsz3hwa2VuaUa
-	 InGza+C1Ui7v+F6YyVYOVwSOwcC5HN47dcLP61XUtdTvTrZBi8YIFNNoGJ1XXkBNgX
-	 615SLGTwD3n9Y+JYCaIz0XsLp7lT6Lhb/0bwl0R4=
-Message-ID: <05119cbc-155d-47c5-ab21-e6a08eba5dc4@linux.microsoft.com>
-Date: Tue, 26 Sep 2023 14:52:36 -0700
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D432E624
+	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 22:01:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695765677; x=1727301677;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=caz7/tC7rOobkBGGqDTpY/LDudW6QnKOwHJ6w5igPnY=;
+  b=mhWNOOYRlwdxF3CL8q08awCBwWqlVkpsqH0ucia9KO6ldEelwSYGmC/x
+   xAsLn4892t2NZCPkHUSXdbVsH7eOnO7zvADlQccSME13WVUzVPN7FKAh9
+   VJo5pZfhSR0jX8vECbyPWD6HZ0Xc9PzulNgfKBn7OqBZgcAh2XDB1gNC+
+   q43lV4WG4lQXh9rELn7Os/FY3DMQGqlDYotM8P0Bw+po1kbUA0LrDkZ25
+   vLlt6GJHSGaaEsbCzLS9frhV34oD7mn2qwLQn+9iT8hGmC+tk/hoCXsox
+   IOfqi/wNSFQeZulKoZNXBwm4E7c6IDGXtJRc8i98cRsisjOQqmJJ79U8k
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="385530719"
+X-IronPort-AV: E=Sophos;i="6.03,179,1694761200"; 
+   d="scan'208";a="385530719"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 15:01:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="778298823"
+X-IronPort-AV: E=Sophos;i="6.03,179,1694761200"; 
+   d="scan'208";a="778298823"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by orsmga008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 26 Sep 2023 15:01:06 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Tue, 26 Sep 2023 15:01:05 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Tue, 26 Sep 2023 15:01:05 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.107)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Tue, 26 Sep 2023 15:01:05 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WV62Xu2kkz3Rww13R9byIK42teBVltobAygS2GEHA8mCn9XhW0XQFZFhEWlr/8qX1ap6vW7i4sAp9GmXQNBZ0V4ijnif4Put+gucCv9aEZ43hwfIPcrTeZZ1iiJAZaE1X8g5SH2rbQF/gbDzJqVi0Ns+l4bXKylP+EwFRFQ8fsEYWXX5QPmD2DxpvcdVEO0WgWlGcrDGCFrKqafFGoE08M4g0Ss9DX1gz3mLJ7DoqY3QfonnxSXw0zUkViVTqc98Bzha1FXASo65PkfRJ+rCgFDkECRc+zJf6v1rMgE0mou/zf2u69VxPxJPw7ctyR7d911XyR/Xqi9L/bec6YCL2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=M4G7+LQRPzqu4vqk8t16CjMbJJin8N4ios/K6vPLFyQ=;
+ b=H/PwRbbyOJF+HWm0PRk8esygBaESdCw3uzVQhrhk+//DgI84kIe3aRsJgUq0J0CF5//5CAGtURti90c41e57X1El6KK+ePiK98a8Jkd2b69SvkS856AYpVLYn+fTZXLBUcWk83XesFVYeE27EE0V532vwss0hE2EjpgrudbR9TQKLmbM7hkorhWE5Ldh7nABed0gUovqu3Lx4ePGkol2mE+U3xm0q/2xYayI978kTln0P99h1bksspuSrXSN5qADIumgqHXdhFn5g23Ve61K1ixIlweFgc/wzyCUAq11dV6b3EBdXZEX/6XMVAQYZgwSzjGjozdGERYkwBA+6BFXBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by CH0PR11MB5538.namprd11.prod.outlook.com (2603:10b6:610:d5::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.23; Tue, 26 Sep
+ 2023 22:01:02 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bd70:f215:4a97:c84e]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bd70:f215:4a97:c84e%6]) with mapi id 15.20.6813.017; Tue, 26 Sep 2023
+ 22:01:01 +0000
+Message-ID: <5b2fd31e-3cef-3c35-7d17-411cea27502a@intel.com>
+Date: Tue, 26 Sep 2023 15:00:39 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.15.1
+Subject: Re: [PATCH v5 3/8] x86/resctrl: Split the rdt_domain structure
+Content-Language: en-US
+To: Tony Luck <tony.luck@intel.com>
+CC: Fenghua Yu <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+	<x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
+	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<patches@lists.linux.dev>
+References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
+ <20230829234426.64421-4-tony.luck@intel.com>
+ <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
+ <ZRMnCFWzcxa6Qa4E@agluck-desk3>
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <ZRMnCFWzcxa6Qa4E@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4P222CA0021.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:303:114::26) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>, Wei Liu <wei.liu@kernel.org>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
- kys@microsoft.com, haiyangz@microsoft.com, decui@microsoft.com,
- apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
- ssengar@linux.microsoft.com, mukeshrathor@microsoft.com,
- stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com,
- vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
- catalin.marinas@arm.com
-References: <1695407915-12216-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1695407915-12216-16-git-send-email-nunodasneves@linux.microsoft.com>
- <2023092342-staunch-chafe-1598@gregkh>
- <e235025e-abfa-4b31-8b83-416ec8ec4f72@linux.microsoft.com>
- <2023092630-masculine-clinic-19b6@gregkh>
- <ZRJyGrm4ufNZvN04@liuwe-devbox-debian-v2>
- <2023092614-tummy-dwelling-7063@gregkh>
- <ZRKBo5Nbw+exPkAj@liuwe-devbox-debian-v2>
- <2023092646-version-series-a7b5@gregkh>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <2023092646-version-series-a7b5@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CH0PR11MB5538:EE_
+X-MS-Office365-Filtering-Correlation-Id: 67ec9a39-530f-483d-97b1-08dbbedc06a9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: LYjdCB4QeBM+8i4KZK6KSQFrOnA6kLPxRAi3QbGsCbNN574O0Bi+BLGss141G4GnX3YYGCaH29UMF9MIMbYv38l50qzQaXWl9uC8RQrVRP3+FJK76Ljvo+0FAUyhAsc6k2WCM/8DtgexQvq0R+9rlEEl7kj5tOb0gmhEE4q3cClN4HMLE48JsS/FsjZ9zjLw1Uf4hoBC7VuoheMiD5pPIbc5jIgpLRTpwsjtsn5SGmpOLfcSC9bW0oUWt0lG/1m6XYTwnL6nljMtdA+nP6J08JKocqqypzsOKALEzIsMIbK6WUZhxrwAhvenlVPPYNVLEnnbitwW2APuCSvYM+RiopQVmdY+qnV7+jmioOTBWJ/j1bWYeguAFQhvxISzBe7HS/JgNU2Q7LSYjxe4i8FZZAM8S+N5L6aMRoV2lHyL/xzx5Am7TvBwy6ajryzFIwsSgM2sFez2becIVfjSeAVHAHWcOqO+hn+NF7N1ZRLSBL+4luSBuZvd135CdVd9JMX5uO4ir5jvr5ymYDqi40KGi1VRdpeqLuih2KbIGEUKgrl2xlYuZ+8O/krvA+ZgZQFPkfqVkgXfLsm4vrL3VLdxluOI0PS89LuJ4PZAlekd9MBePKkOS/+IIcltWPtyThO+1O53GCWKvdSZsHDhJ4ZZAA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(39860400002)(346002)(376002)(136003)(230922051799003)(186009)(451199024)(1800799009)(7416002)(31686004)(2906002)(5660300002)(6862004)(8936002)(44832011)(8676002)(4326008)(66946007)(66556008)(66476007)(478600001)(6666004)(6506007)(86362001)(6486002)(53546011)(2616005)(6512007)(31696002)(316002)(6636002)(26005)(38100700002)(41300700001)(36756003)(83380400001)(37006003)(54906003)(82960400001)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UjZKWVlnMzY1dmdxRHUxOXNpYUxra2lzS0pnaTEvYUZ0d2ZpUHNHa1l4QzEy?=
+ =?utf-8?B?TktlRUFMK2Vjb1BHM2JhUDlzKzJlNm5UMGdXd1hPTmRSTmNGT2tJZXk5Rldh?=
+ =?utf-8?B?ODhEQUtNazFobFhQcDRvakJQRVZqRHBVL1I3Mzc4cUJwb0JOZkRKS3BSdzcx?=
+ =?utf-8?B?U1VEd1FlNnQ1b3lQelBjOHd6V01kOFdCUWFER1JadE5pb1Y1VmdDbTdrR09q?=
+ =?utf-8?B?MjIwd3J5YkJRdFNPL0FlOVIyZk1yVWZPUGRQMmhHREVONEZJNmFYcU41MXhB?=
+ =?utf-8?B?UTk2aWE4TWhEakhIN1dUM3hSWDJQcHpuUVRBVzJaNExEd0xhUkZkTGo0NE1y?=
+ =?utf-8?B?L25UR2wrUlNUVmxRWVFpUDRPdHhmYUtwN2FtSnpibUJLYURUTXZaSjBPLzE5?=
+ =?utf-8?B?eDFsVHkyaDVQWlNvNDhGUnRibXd5YnQ5YXlYUzQ4YVdBL1JHdWdiZCtKV055?=
+ =?utf-8?B?UGRUSkVYaUF3OWFvZml4TlZ0L1c1SWFXbEdjZW4yTk4wVnFCeHREK0ZPN0Uz?=
+ =?utf-8?B?NzZKUWg3clh4ZGNYd0ZKUm1lcUNSMVFicVVpdm1SQjYyOUkzK3NLYmc4VWd2?=
+ =?utf-8?B?Z0JTZ2ZLWVpqQ05NNGw2czR2b2wwbnhlL3JDNmJ5RjJHWnAzaWUwMUx6VXJs?=
+ =?utf-8?B?NFhRUnA3eGtJaFZrUFc0MlNMYXlqNFFmeHVtS3k1WG1yeXRHU3FsWFlBNm5z?=
+ =?utf-8?B?SURTSXA4bnJIU3F0SzF4em42aDE1cU5QL0RXdXJ5bnh4cXVGQnZCLzhKWFo2?=
+ =?utf-8?B?Wkh2TFl3eFJTVTRqOXdIZW84b0RWZHlkUHhqcVo0cTRRT2N1MzQ4Wnc2Q3Zm?=
+ =?utf-8?B?Rm9uaTc5K1Z6Y003dU1XMjFld0lQQ1pDYWI1UEpXTDgvbmYzWWhkM3lYNDl4?=
+ =?utf-8?B?N01VRDcrUERmcnJIRFZuLzc1S01IcHJaMTJLMm1iRGE0NnVEd1Z3TkJLRkZE?=
+ =?utf-8?B?eUZ0OGlWN3VhUmVUcndjQ09OQ3FLVitqU2pkTXN0ZHE5N0VlR2lKem9NeW5v?=
+ =?utf-8?B?eFFzTU5ObUw2MVo1aDg2OWpSQjRrTmovbllGK2Zrb2JkOVpGT2JmSVdJM1Ja?=
+ =?utf-8?B?WFVPbHVoTzRsK3c4OXVlQ3lJSUFLL3pEc2tGSitHTE1xa0RIYWVQNTZBM2ZH?=
+ =?utf-8?B?a2pySndJaElyMFk3MDM2YncrTDhRUXJOaHpvUVB5RW1XT3lXYjJOcWZYVHhx?=
+ =?utf-8?B?ZE9yUlBLM0Y0QWZFWEhXTTZwWDZ0eHBjR3JWbm9iY1JQTEtGQjMxK2lMUmlo?=
+ =?utf-8?B?aUI2R0dsei95KzJGQkJ4bmk0ME15QW4yRTV6bmFmTUQ3L0JoMVNZdlE1cXV3?=
+ =?utf-8?B?dVd4a1BNWkVGalUrNml2ajdWNk05YUZJZGpJU01mTGZvZWF1R2VQZVFhUUww?=
+ =?utf-8?B?OHBwZEdsaFBqV2M0L0dhMnRVZ3JjL1JmU0R1Q2R5VnFiLzZJVjdpSmRzdjlC?=
+ =?utf-8?B?cDREVjVqaXdWRW11RGMxVng0dDh2UlZOZ2RJdmNWQzRDaHlJV2JnQTU1eC9J?=
+ =?utf-8?B?Nlo2T2ZtR2VVQVVSWXc3dmFqVVJSYkpiOUdCMG5HYUVuRFJxZWVSdXQya3h0?=
+ =?utf-8?B?ZUJrRDNtQ3VuWXJYL1AzTnB4cHZIR2xOaHhKcC84dk1xc29nMjNydXl5eVhS?=
+ =?utf-8?B?dVBoZDBQTFlJbzQrcktla1M1SWlGTGNSSmNsVjhvUFZMTlBHaWpDY09sMy93?=
+ =?utf-8?B?Z1h1cWJCSWppWUZHeHVNcnhLYnc2bktiZ0Z4OXA4dkFFUC85cnJIRHI2amZX?=
+ =?utf-8?B?ZlBTMGw4NU5VeXdzRjFYY3o0QmpGenR2WmtlbGRnd2lpN2NsempTaWVRTGxX?=
+ =?utf-8?B?RzRYSExqM1BncU15K3hSTGpsZEhpNVV0cFZIdndUcEpoNUk4eHJzYTN5WnNH?=
+ =?utf-8?B?UFFWRm1BdVJwMjk1dlBpbWVPQW9qYy9VMytaRlJMN3VSMWNBNUlhZjJ2dDFV?=
+ =?utf-8?B?WGhNb1JzdFFQVDZtUkpsbmFUdGxZYWRXZmpFYXp6RlR4bHliUU0vTENWUzY4?=
+ =?utf-8?B?d2pJU2Q5VWZ5OFE5SlpmSUZYaDlGM0RXcjdrNjdFdXRpZTdBck53Q2t4anBh?=
+ =?utf-8?B?aUxwRWpCbXE4M2hQV0J5TTRUUkdURHpoa2hQbjVIWElveW1ocXk2aER3djIw?=
+ =?utf-8?B?L0FBK2ZSakkrRVVLMHVLVXRsTEtKMmJwMXdISy9EVVNQR0lRSkphQWo4QkdO?=
+ =?utf-8?B?NGc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67ec9a39-530f-483d-97b1-08dbbedc06a9
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2023 22:01:01.1332
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: L/VQaGwDFAfaD0jZtbJaHloMYmvUkHsDAT0La064o3WZVErRc97HXenNaiodP/GOt4FVOEoRiBf4ckbbpmT+f3tXhYCtoPuQzeL9kYYGSy4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR11MB5538
+X-OriginatorOrg: intel.com
 
-On 9/26/2023 1:03 AM, Greg KH wrote:
-> On Tue, Sep 26, 2023 at 07:00:51AM +0000, Wei Liu wrote:
->> On Tue, Sep 26, 2023 at 08:31:03AM +0200, Greg KH wrote:
->>> On Tue, Sep 26, 2023 at 05:54:34AM +0000, Wei Liu wrote:
->>>> On Tue, Sep 26, 2023 at 06:52:46AM +0200, Greg KH wrote:
->>>>> On Mon, Sep 25, 2023 at 05:07:24PM -0700, Nuno Das Neves wrote:
->>>>>> On 9/23/2023 12:58 AM, Greg KH wrote:
->>>>>>> Also, drivers should never call pr_*() calls, always use the proper
->>>>>>> dev_*() calls instead.
->>>>>>>
->>>>>>
->>>>>> We only use struct device in one place in this driver, I think that is the
->>>>>> only place it makes sense to use dev_*() over pr_*() calls.
->>>>>
->>>>> Then the driver needs to be fixed to use struct device properly so that
->>>>> you do have access to it when you want to print messages.  That's a
->>>>> valid reason to pass around your device structure when needed.
->>>>
+Hi Tony,
 
-What is the tangible benefit of using dev_*() over pr_*()? As I said,
-our use of struct device is very limited compared to all the places we
-may need to log errors.
-
-pr_*() is used by many, many drivers; it seems to be the norm. We can
-certainly add a pr_fmt to improve the logging.
-
->>>> Greg, ACRN and Nitro drivers do not pass around the device structure.
->>>> Instead, they rely on a global struct device. We can follow the same.
->>>
->>> A single global struct device is wrong, please don't do that.
->>>
->>> Don't copy bad design patterns from other drivers, be better :)
->>>
-
-What makes it a bad pattern? It seems to be well-established, and is
-also used by KVM which this driver is loosely modeled after:
-https://elixir.bootlin.com/linux/v6.5.5/source/virt/kvm/kvm_main.c#L5128
-
+On 9/26/2023 11:46 AM, Tony Luck wrote:
+> On Mon, Sep 25, 2023 at 04:25:15PM -0700, Reinette Chatre wrote:
+>>> +struct rdt_domain {
+>>> +	// First three fields must match struct rdt_mondomain below.
 >>
->> If we're working with real devices like network cards or graphics cards
->> I would agree -- it is easy to imagine that we have several cards of the
->> same model in the system -- but in real world there won't be two
->> hypervisor instances running on the same hardware.
->>
->> We can stash the struct device inside some private data fields, but that
->> doesn't change the fact that we're still having one instance of the
->> structure. Is this what you want? Or do you have something else in mind?
+>> Please avoid comments within declarations. Even so, could you please
+>> elaborate what the above means? Why do the first three fields have to
+>> match? I understand there is common code, for example, __rdt_find_domain()
+>> that operated on the same members of the two structs but does that
+>> require the members be in the same position in the struct?
+>> I understand that a comment may be required if position in the struct
+>> is important but I cannot see that it is.
 > 
-> You have a real device, it's how userspace interacts with your
-> subsystem.  Please use that, it is dynamically created and handled and
-> is the correct representation here.
+> [Just replying to this one point in your message to get guidance. I'll
+> address all the rest in other replies]
+> 
+> I'm wrong about the first *three* fields ... but the first *two* fields
+> (the "list" and the "id") do need to be at the same offsets in different
+> structures if a common routine is going to be used to access those
+> fields.
+> 
+> If the "id" were at offset 0x10 in the control version of the domain
+> structure, and at offset 0x20 in the monitor version of the domain
+> structure, there would be no hope for a common routine to access the
+> "id" field when searching a list that could be either control or
+> monitor domains.
+> 
+> I'm looking at making this far more explicit with a new patch between
+> 0001 and 0002 that pulls the two fields into a common substructure that
+> will be included in each of the control and monitor versions of the
+> structure.
+> 
+> Patch included below.
+> 
+> But this seems like it is a lot of churn to avoid having separate
+> functions to search control and monitor lists. Each a clone of
+> the existing ~24 line rdt_find_domain() with just the type changed
+> for the return value and the list travsersal.
+
+Yes. Sorry, I did not realize this implication during the earlier
+discussions.
+
+> 
+> What do you think?
 > 
 
-Are you referring to the struct device we get from calling
-misc_register? If not, please be more specific.
+It sounds to me as though you are advocating for open coding 
+rdt_find_ctrl_domain() and rdt_find_mon_domain()? That sounds good
+to me.
 
-How would you suggest we get a reference to that device via e.g. open()
-or ioctl() without keeping a global reference to it?
+Sorry for the noise.
 
-
-Thanks,
-Nuno
+Reinette
