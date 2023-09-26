@@ -1,113 +1,356 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC59366
-	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 00:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D62AC433C7;
-	Tue, 26 Sep 2023 00:20:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695687635;
-	bh=e3Yoq9pOLHOvljpOv+ix7wrGoqb64GYOUno0SrLgHPA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hIGlYoo/q44hoAwjR1Aux0HDlWYTPdNwBSFKBGCPSIoX9kEVVU2hmyChA7N9dYcDz
-	 ODnctHmhKndFZcpKA+0zX5k2sBv5aGMhnoXkqQA9wy9IbIpvtJcG5qnu2Fl1QwjFIg
-	 InpcRinxeduXnYkLMwE2GvadD7r5pUtGcxJ33ugDqljrHdEMFrsP7ucvnVktNX+aIR
-	 rfuU9EUA6x2fFwblj5aygUw3IdCjaLwpd+ONI3IgZcOQ0iPj5c+82JYRsw48Nzu5XI
-	 8xM5hlwYm/MHRQ24vTUMXxEqmf3DzkzQqXmva2YYp8pcBwjAeYAFi9hh2h77mMoiH0
-	 UaFHCoIwluBbA==
-Date: Tue, 26 Sep 2023 02:20:30 +0200
-From: Alejandro Colomar <alx@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: linux-man@vger.kernel.org, linux-api@vger.kernel.org, hughd@google.com, 
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com, 
-	rpuri.linux@gmail.com, a.manzanares@samsung.com, dave@stgolabs.net, 
-	yosryahmed@google.com, keescook@chromium.org, patches@lists.linux.dev, 
-	linux-fsdevel@vger.kernel.org, linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] tmpfs.5: extend with new noswap documentation
-Message-ID: <klaavttirlzwac4ztov777srbgmxngi7uc6jngoctvceatmjxh@tt4cgqnwnu5f>
-References: <20230920235022.1070752-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E6E637
+	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 00:57:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695689825; x=1727225825;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=kWOrB4zO64UWmGfTlry+4aeq1uRND9+gyWJsQM/JdDc=;
+  b=hsC578LhZssFl9eHd0PUwD3I4c0cXOztP2w9bmAzlcy7qUhXW19WmW0b
+   C0PAfXRzietx1yxqzrTlk2eEOGBP0zMNPomZ/5myGxf/JS5HsGki438+B
+   54VbrrgjU3LxhWOk05NYL7hWlv63TN3ufkck9v1Eadq/7j6G4Fwg/U5+g
+   br2xNitOnoaAkaDU7ujqhPMnQDBRb8BxnMm9hD32CHJwnK8lrS5lwTk0D
+   /qbMw5fYLJIMBcySfkgbfneSvk3DDx/YOq1141A1w/6jlA1bepfvBpQgj
+   puYqnrl129qeNXo7sgAAzY22/KfOVFVXnpsIVhvFCeHvTEWjK7VTujiCA
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="366510609"
+X-IronPort-AV: E=Sophos;i="6.03,176,1694761200"; 
+   d="scan'208";a="366510609"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2023 17:57:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="838807135"
+X-IronPort-AV: E=Sophos;i="6.03,176,1694761200"; 
+   d="scan'208";a="838807135"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2023 17:56:59 -0700
+Date: Mon, 25 Sep 2023 17:56:58 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 1/8] x86/resctrl: Prepare for new domain scope
+Message-ID: <ZRIsWmIiL8O57c9w@agluck-desk3>
+References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
+ <20230829234426.64421-2-tony.luck@intel.com>
+ <25dae76d-9e8e-9381-066f-7eaeadb85dc7@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ezffmyq2fe7k4oep"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230920235022.1070752-1-mcgrof@kernel.org>
+In-Reply-To: <25dae76d-9e8e-9381-066f-7eaeadb85dc7@intel.com>
 
+On Mon, Sep 25, 2023 at 04:22:29PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 8/29/2023 4:44 PM, Tony Luck wrote:
+> > Legacy resctrl features operated on subsets of CPUs in the system with
+> 
+> What is a "legacy" resctrl feature? I am not aware of anything in resctrl
+> that distinguishes a feature as legacy. Could "resctrl resource" be more
+> appropriate to match the resctrl implementation? 
 
---ezffmyq2fe7k4oep
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2] tmpfs.5: extend with new noswap documentation
-MIME-Version: 1.0
+Ok. Will change.
 
-Hi Luis,
+> 
+> Please use "operate on" instead of "operated on".
 
-On Wed, Sep 20, 2023 at 04:50:22PM -0700, Luis Chamberlain wrote:
-> Linux commit 2c6efe9cf2d7 ("shmem: add support to ignore swap")
-> merged as of v6.4 added support to disable swap for tmpfs mounts.
->=20
-> This extends the man page to document that.
->=20
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Ditto.
 
-Patch applied.
+> 
+> > the defining attribute of each subset being an instance of a particular
+> > level of cache. E.g. all CPUs sharing an L3 cache would be part of the
+> > same domain.
+> > 
+> > In preparation for features that are scoped at the NUMA node level
+> > change the code from explicit references to "cache_level" to a more
+> > generic scope. At this point the only options for this scope are groups
+> > of CPUs that share an L2 cache or L3 cache.
+> > 
+> > No functional change.
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >  include/linux/resctrl.h                   |  9 ++++++--
+> >  arch/x86/kernel/cpu/resctrl/core.c        | 27 ++++++++++++++++++-----
+> >  arch/x86/kernel/cpu/resctrl/pseudo_lock.c | 15 ++++++++++++-
+> >  arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 15 ++++++++++++-
+> >  4 files changed, 56 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index 8334eeacfec5..2db1244ae642 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -144,13 +144,18 @@ struct resctrl_membw {
+> >  struct rdt_parse_data;
+> >  struct resctrl_schema;
+> >  
+> > +enum resctrl_scope {
+> > +	RESCTRL_L3_CACHE,
+> > +	RESCTRL_L2_CACHE,
+> > +};
+> 
+> I'm curious why L3 appears before L2? This is not a big deal but
+> I think the additional indirection that this introduces is
+> not necessary. As you had in an earlier version this could be
+> RESCTRL_L2_CACHE = 2 and then the value can just be used directly
+> (after ensuring it is used in a valid context).
 
-Thanks,
-Alex
+I appear to have misundertood your earlier comments. I thought you
+didn't like my use of RESCTRL_L2_CACHE = 2, and RESCTRL_L3_CACHE = 3
+so that the could be passed directly to get_cpu_cacheinfo_id().
 
-> ---
->=20
-> changes on v2:
->=20
->  - Use semantic newlines
->=20
->  man5/tmpfs.5 | 6 ++++++
->  1 file changed, 6 insertions(+)
->=20
-> diff --git a/man5/tmpfs.5 b/man5/tmpfs.5
-> index 5274e632d6fd..047a17a78ee0 100644
-> --- a/man5/tmpfs.5
-> +++ b/man5/tmpfs.5
-> @@ -103,6 +103,12 @@ suffixes like
->  .BR size ,
->  but not a % suffix.
->  .TP
-> +.BR noswap "(since Linux 6.4)"
-> +.\" commit 2c6efe9cf2d7841b75fe38ed1adbd41a90f51ba0
-> +Disables swap.
-> +Remounts must respect the original settings.
-> +By default swap is enabled.
-> +.TP
->  .BR mode "=3D\fImode\fP"
->  Set initial permissions of the root directory.
->  .TP
-> --=20
-> 2.39.2
->=20
+But I see now the issue was "after ensuring it is used in a valid
+context". Are you looking for something like this:
 
---ezffmyq2fe7k4oep
-Content-Type: application/pgp-signature; name="signature.asc"
+enum resctrl_scope {
+	RESCTRL_UNINITIALIZED_SCOPE = 0,
+	RESCTRL_L2_CACHE = 2,
+	RESCTRL_L3_CACHE = 3,
+	RESCTRL_L3_NODE = 4,
+};
 
------BEGIN PGP SIGNATURE-----
+static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+{
+	switch (scope) {
+	case RESCTRL_L2_CACHE:
+	case RESCTRL_L3_CACHE:
+		return get_cpu_cacheinfo_id(cpu, scope);
+	case RESCTRL_NODE:
+		return cpu_to_node(cpu);
+	default:
+	case RESCTRL_UNINITIALIZED_SCOPE:
+		WARN_ON_ONCE(1);
+		return -1;
+	}
 
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmUSI84ACgkQnowa+77/
-2zJtahAAqgPqzQ/Py592AplsMuBWu30BMai3jki60tNkEL0DjUP0aVYdRag0H8ja
-q7nKAC/Biqw+poS4EGFeZoaa0WqKfi6kVJhDKhlFXVa0l37l78CfJ38ldJDuENA2
-+hkW531e1HBtz4xKPAJ56zRsbecmbIcc70FOHcE6k6rHTI3oy/WZ8MFVHKy1lALb
-KwkTM9v/DmM2MdgWX5TFugZRP2X+gWG+AZYsO6nF7NgOI2/BSAw8FhrKeE9d/IG8
-cO1iKXo3mecz86WRlbc72Flo4PnKezGVNJCddcV6gu6yD/Oy2nvFtV6Ni+WbVTU1
-qMmfR5sLyKMUcY1kMMTdRhjHwu1B0wk9i/0bK2bGbrAmjo/pvsHlPBssRqXjWAib
-Gdj+eCMqo81kV6bZwOHqYdVKZYrTy83Ou6Gn7x3KhMhubayrvkaHKOBgT4q15V97
-B7dk7Zqh/zdPHyXap0CjYfIH20B1xMr7bblI1dIJsHbLAx0RtPue67/sK0F6ZiWn
-tjdjcQ+EgvpQJVQqUpKGMQeR4450Dfd2thcWtFfRAzmoP+dCnmyxBAb2IEDj8WiZ
-Q2kWzVG2++EWGCDKSltiAylNGKqZSzyWYgCr5K5CYDX1X2GOmo12MoFdi1mAovEt
-ByI4/w92XL0glZCrsQQGRtE4bVeD/qMKVe/HPKVIUMm0yGiMkwQ=
-=6UrE
------END PGP SIGNATURE-----
+	return -1;
+}
 
---ezffmyq2fe7k4oep--
+> 
+> > +
+> >  /**
+> >   * struct rdt_resource - attributes of a resctrl resource
+> >   * @rid:		The index of the resource
+> >   * @alloc_capable:	Is allocation available on this machine
+> >   * @mon_capable:	Is monitor feature available on this machine
+> >   * @num_rmid:		Number of RMIDs available
+> > - * @cache_level:	Which cache level defines scope of this resource
+> > + * @scope:		Scope of this resource
+> >   * @cache:		Cache allocation related data
+> >   * @membw:		If the component has bandwidth controls, their properties.
+> >   * @domains:		All domains for this resource
+> > @@ -168,7 +173,7 @@ struct rdt_resource {
+> >  	bool			alloc_capable;
+> >  	bool			mon_capable;
+> >  	int			num_rmid;
+> > -	int			cache_level;
+> > +	enum resctrl_scope	scope;
+> >  	struct resctrl_cache	cache;
+> >  	struct resctrl_membw	membw;
+> >  	struct list_head	domains;
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index 030d3b409768..0d3bae523ecb 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -65,7 +65,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_L3,
+> >  			.name			= "L3",
+> > -			.cache_level		= 3,
+> > +			.scope			= RESCTRL_L3_CACHE,
+> >  			.domains		= domain_init(RDT_RESOURCE_L3),
+> >  			.parse_ctrlval		= parse_cbm,
+> >  			.format_str		= "%d=%0*x",
+> > @@ -79,7 +79,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_L2,
+> >  			.name			= "L2",
+> > -			.cache_level		= 2,
+> > +			.scope			= RESCTRL_L2_CACHE,
+> >  			.domains		= domain_init(RDT_RESOURCE_L2),
+> >  			.parse_ctrlval		= parse_cbm,
+> >  			.format_str		= "%d=%0*x",
+> > @@ -93,7 +93,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_MBA,
+> >  			.name			= "MB",
+> > -			.cache_level		= 3,
+> > +			.scope			= RESCTRL_L3_CACHE,
+> >  			.domains		= domain_init(RDT_RESOURCE_MBA),
+> >  			.parse_ctrlval		= parse_bw,
+> >  			.format_str		= "%d=%*u",
+> > @@ -105,7 +105,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_SMBA,
+> >  			.name			= "SMBA",
+> > -			.cache_level		= 3,
+> > +			.scope			= RESCTRL_L3_CACHE,
+> >  			.domains		= domain_init(RDT_RESOURCE_SMBA),
+> >  			.parse_ctrlval		= parse_bw,
+> >  			.format_str		= "%d=%*u",
+> > @@ -487,6 +487,21 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+> >  	return 0;
+> >  }
+> >  
+> > +static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+> > +{
+> > +	switch (scope) {
+> > +	case RESCTRL_L3_CACHE:
+> > +		return get_cpu_cacheinfo_id(cpu, 3);
+> > +	case RESCTRL_L2_CACHE:
+> > +		return get_cpu_cacheinfo_id(cpu, 2);
+> > +	default:
+> > +		WARN_ON_ONCE(1);
+> > +		break;
+> > +	}
+> > +
+> > +	return -1;
+> > +}
+> 
+> Looking ahead at the next patch some members of rdt_resources_all[]
+> are left with a default "0" initialization of mon_scope that is a
+> valid scope of RESCTRL_L3_CACHE in this implementation that would
+> not be caught with defensive code like above. For the above to catch
+> a case like this I think that there should be some default
+> initialization - but if you do move to something like you
+> had in v3 then this may not be necessary. If the L2 scope is 2,
+> L3 scope is 3, node scope is 4, then no initialization will be zero
+> and the above default can more accurately catch failure cases.
+
+See above (with a defensive enum constant that has the value 0).
+
+> 
+> > +
+> >  /*
+> >   * domain_add_cpu - Add a cpu to a resource's domain list.
+> >   *
+> > @@ -502,7 +517,7 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+> >   */
+> >  static void domain_add_cpu(int cpu, struct rdt_resource *r)
+> >  {
+> > -	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+> > +	int id = get_domain_id_from_scope(cpu, r->scope);
+> >  	struct list_head *add_pos = NULL;
+> >  	struct rdt_hw_domain *hw_dom;
+> >  	struct rdt_domain *d;
+> > @@ -552,7 +567,7 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+> >  
+> >  static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+> >  {
+> > -	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+> > +	int id = get_domain_id_from_scope(cpu, r->scope);
+> >  	struct rdt_hw_domain *hw_dom;
+> >  	struct rdt_domain *d;
+> >  
+> > diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+> > index 458cb7419502..e79324676f57 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+> > @@ -279,6 +279,7 @@ static void pseudo_lock_region_clear(struct pseudo_lock_region *plr)
+> >  static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
+> >  {
+> >  	struct cpu_cacheinfo *ci;
+> > +	int cache_level;
+> >  	int ret;
+> >  	int i;
+> >  
+> > @@ -296,8 +297,20 @@ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
+> >  
+> >  	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
+> >  
+> > +	switch (plr->s->res->scope) {
+> > +	case RESCTRL_L3_CACHE:
+> > +		cache_level = 3;
+> > +		break;
+> > +	case RESCTRL_L2_CACHE:
+> > +		cache_level = 2;
+> > +		break;
+> > +	default:
+> > +		WARN_ON_ONCE(1);
+> > +		return -ENODEV;
+> > +	}
+> 
+> I think this can be simplified without the indirection - a simplified
+> WARN can just test for valid values of plr->s->res->scope directly
+> (exit on failure) and then it can be used directly in the code below
+> when the enum value corresponds to a cache level.
+
+Is this what you want here?
+
+	if (plr->s->res->scope != RESCTRL_L2_CACHE &&
+	    plr->s->res->scope != RESCTRL_L3_CACHE) {
+	    	WARN_ON_ONCE(1);
+		return -ENODEV;
+	}
+
+> 
+> > +
+> >  	for (i = 0; i < ci->num_leaves; i++) {
+> > -		if (ci->info_list[i].level == plr->s->res->cache_level) {
+> > +		if (ci->info_list[i].level == cache_level) {
+
+then drop this change to keep using plr->s->res->cache_level (and
+delete the now unused local variable cache_level).
+
+> >  			plr->line_size = ci->info_list[i].coherency_line_size;
+> >  			return 0;
+> >  		}
+> > diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > index 725344048f85..f510414bf6ce 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> > @@ -1343,12 +1343,25 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
+> >  {
+> >  	struct cpu_cacheinfo *ci;
+> >  	unsigned int size = 0;
+> > +	int cache_level;
+> >  	int num_b, i;
+> >  
+> > +	switch (r->scope) {
+> > +	case RESCTRL_L3_CACHE:
+> > +		cache_level = 3;
+> > +		break;
+> > +	case RESCTRL_L2_CACHE:
+> > +		cache_level = 2;
+> > +		break;
+> > +	default:
+> > +		WARN_ON_ONCE(1);
+> > +		return size;
+> > +	}
+> > +
+> 
+> Same here.
+
+If above it what you want, will do it here too.
+
+> 
+> >  	num_b = bitmap_weight(&cbm, r->cache.cbm_len);
+> >  	ci = get_cpu_cacheinfo(cpumask_any(&d->cpu_mask));
+> >  	for (i = 0; i < ci->num_leaves; i++) {
+> > -		if (ci->info_list[i].level == r->cache_level) {
+> > +		if (ci->info_list[i].level == cache_level) {
+> >  			size = ci->info_list[i].size / r->cache.cbm_len * num_b;
+> >  			break;
+> >  		}
+> 
+> 
+> Reinette
+
+-Tony
