@@ -1,499 +1,196 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2088.outbound.protection.outlook.com [40.107.237.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76B23DE
-	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 18:46:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695753995; x=1727289995;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bkdK/ufrIrvdIsgtbXADv2j8UhO0/EL2il7R8RrUpJk=;
-  b=UkjXydXN+g9d9t3RTeQUnap8JOMtTUFKUDClTHtA6HVksvtrwVEaSo5V
-   csxKBCjPXXuK04s75Uq443h2X94lxRDXSgus48Hxzgndbre/Zxqkk4OBE
-   qWBxe31hd0Y+sYr3CjlBZ9j91H1ntvBbtSiTAQvF58YjLT6mNyXBqa/L3
-   EOTbRg5kgwOeDlRpsaavjtEXNmqz0K/i6AnBnOqToMqp4863wnXJ4HnwJ
-   pTTUGcUedDHRAGeJAgW6E37kGhABvDy39dp1eAOaTHuvr0sNse/KHCSOt
-   oH5U6vS5KTN5tgN9Qho7c+Uq8hDfUg8uvXVr2F965E+6J/DrLL+YNX1fm
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="448133540"
-X-IronPort-AV: E=Sophos;i="6.03,178,1694761200"; 
-   d="scan'208";a="448133540"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 11:46:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10845"; a="819131582"
-X-IronPort-AV: E=Sophos;i="6.03,178,1694761200"; 
-   d="scan'208";a="819131582"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2023 11:46:33 -0700
-Date: Tue, 26 Sep 2023 11:46:32 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 3/8] x86/resctrl: Split the rdt_domain structure
-Message-ID: <ZRMnCFWzcxa6Qa4E@agluck-desk3>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0750547C94
+	for <patches@lists.linux.dev>; Tue, 26 Sep 2023 19:00:43 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gyHAu7WGqo7voAo5L3p0BepWQnNMs3XFQeyP5lpQI/aiGDPPj2RaipCicbScl1G/SUqaXWPilpswMuCTXxRd1q/xNHUdOCCa6ewxsCc7aCwkwfrBhrHoLhI1U/7YDYCnrd8cfcwSP6ok+nuMPsJbqXd7n7Bt4z1FdTWMmxf7DVuIr4ftiKUiAMXeoGsIQIqE+NgSssYibbZN/SJasIbV1y4piq0aQIbAB0PmBJQrhZgq8k9WuamFh5VDonXhGjlrAaYp0w5/rnvWrNqNaLDmzMkXZiXawouEvpMxjpEM/SIMxt03Y4ChR8XWHp+6u7kOW18LN8vmo2RuZCRbM9hQQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=45xN5Yc0dAF2ZBr/OuYxk3vWhTTQUeXWCctLvwfycOM=;
+ b=OVJm59Yzxl7wEwSenJDDhy+Z1M0QbISd2PEtHEgf5TPR3pPPQLVenJKMcKUgOOe7ko6mneT9vz0V9iDEhIiWg8Qp9i67bZVcE5T89hxVZjOu1MHB8l2a0jJ2U3zahsy5GzUh9Iko+FbInZUjGx0lFamuPdcqxQm6wPm4nxrMqM8QkAfzwzIOccfIVv14TEJEkDwwJoi2HJSsG6H/09fXI7VJGwcb2ff/8/8LyU6uvu7hTs/4ZpZd/Xda4bw26wlKdSMPFy6AyPmtYpJSPir4NglwRceoGoYQzDvnRp/l2P/pmYxsvExGzeeIbP8RTUEEgvl2bhlR3UBq5inn8lXXMw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=45xN5Yc0dAF2ZBr/OuYxk3vWhTTQUeXWCctLvwfycOM=;
+ b=Jn6AggZlSdtRYK4bNhRXRkbTO7zsI3EmYGWMvrDzfX1i78Ffc2OmmMMmon7mRl2wX4GJy6v5Cjvm8HKPlabg2BhrX265flRzfR8u1A0BCROdZPrtN3+gtUjh3wkqRJrTB1dOzg+a2eUeHDOKrpC1/mktmS2DH8QRauRXZofgZIY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by CY5PR12MB6431.namprd12.prod.outlook.com (2603:10b6:930:39::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.21; Tue, 26 Sep
+ 2023 19:00:40 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::fbfe:ec9c:b106:437e]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::fbfe:ec9c:b106:437e%5]) with mapi id 15.20.6838.016; Tue, 26 Sep 2023
+ 19:00:40 +0000
+Message-ID: <560710e3-ce47-db07-e81e-3abd61e6ffbe@amd.com>
+Date: Tue, 26 Sep 2023 14:00:38 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Reply-To: babu.moger@amd.com
+Subject: Re: [PATCH v5 7/8] x86/resctrl: Update documentation with Sub-NUMA
+ cluster changes
+Content-Language: en-US
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+ <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, patches@lists.linux.dev
 References: <20230722190740.326190-1-tony.luck@intel.com>
  <20230829234426.64421-1-tony.luck@intel.com>
- <20230829234426.64421-4-tony.luck@intel.com>
- <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
+ <20230829234426.64421-8-tony.luck@intel.com>
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <20230829234426.64421-8-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DM6PR06CA0023.namprd06.prod.outlook.com
+ (2603:10b6:5:120::36) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|CY5PR12MB6431:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8837658b-2004-4743-66be-08dbbec2e0b6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	lG3Nr3IHVSGVI7PKMVSZvn98+1c/R0XCjpj5vAkk/Hb8QjSLMkuYSjCP9Pwqe9c9EEgsMlarWhc6DVqIv8xnt42VwKrs9cHvVC5dTSL5MENJC0yQJZ3E6v7InfHbZhrOjDEqzbnTnYMoq3qVUf0g9U/633HW+Nybm6Qrw35TlRHbzJO12Lp/U8RJFcwaWWdGhp4rfGfgbVgREqsv7jDoyuWOlhaqbobFQNoXjYDZqWIhHHeJYd0pgAdV3WdNcuOnc9LsPWBD/ajJ23OIvWIexfoDFiFRXCpnEtWpVBKl5PdDOmK0G5nItJBPldDCEzM1in3BILrIJMXlgURNDJhfalY+1b4YZr74qztvCrRrREdFMeC6vbatOFw/XNPiYmC/dCicuBmu+zg/5eBGFam1DDwrZHTT2XveTapxd+oHTqFp1VvR9ZFHdJIhXllImJzYLFXL3DibowqITCa5KdtKd8gyVIZYwr1GxUs9npsl7IMEByruJGGiPEBFCVsLMzX1hzoM0jpInyFSXM42p3rHiUVFTcBrUmlHRMLnY438W/4HNK+rxN6qc7rhmum3cUEkkaDZWfY1BdUBGArkMYMMVONWICgwoo7+9corW6RWknnQjQzplQiKXX/0w1rkJAeK3A0m9rDewIJVdmZXvOBAGg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(136003)(39860400002)(396003)(366004)(230922051799003)(451199024)(1800799009)(186009)(31686004)(83380400001)(6506007)(6512007)(53546011)(2616005)(7416002)(2906002)(5660300002)(3450700001)(316002)(31696002)(8676002)(36756003)(41300700001)(8936002)(38100700002)(54906003)(4326008)(110136005)(478600001)(26005)(6486002)(66946007)(86362001)(66556008)(66476007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YkxRd0Y2aXd6ZTBwL0l0aUNWQVFyL0toaGU2NE9pSmw0NitYRUpCeVg1Nm9C?=
+ =?utf-8?B?QWVPRHc4N3o2UHE5ZUYvZWNyaVlpWVNHby9HblpFVHVBQ2RsbXlKYzF5aWNi?=
+ =?utf-8?B?c09JbkRBclQyTno0L2p6ZklNOWg1azRYZGlRdXh1dUJrSjJud3dENWRMSUNQ?=
+ =?utf-8?B?dW03VTlJWi9lWDB6N0J5OEdPNlBpNGVEQXhhaFJaNFU5elBMTXA1a08vbkZL?=
+ =?utf-8?B?WWV3TEFmZkw2bFdBUTJkR09SUVBwZm9ld1IxK1N5Y09MdFpVL1JNYy9wazF1?=
+ =?utf-8?B?ZTMzbGl1SkJRSWwyOFpYbjZrMEFjTno2R0t6aktNdlhjd1BMcjlmZXlDT1BU?=
+ =?utf-8?B?Qy9zWjYyZmJ2T3NreWhwYVU3cmVUdkFwTDNEVHVzUnhNL2RwZmR2eXNqZE9o?=
+ =?utf-8?B?dlRVMkRiMkQrZys3WHFXTWV5TVloajArM25aaGdlN2Voem15bHFLUHRMUm03?=
+ =?utf-8?B?aXpXcDdxWWdOeUU5T0JHMWQrYU9xOXY1L0ZYaUF0YU1uVnZ4bDFCTGZZQ2xs?=
+ =?utf-8?B?TEJMZGNEdW9jUjU5QzU5STN1R3F5S3RnZUdEZzNXR0xSS0xCWXRVNW5pU0tk?=
+ =?utf-8?B?SmM0SmlhemExZkkyQ0FUNjNWUFdEUENHNDBnbjBsRldpbnU4Z3BaNTNrU3hO?=
+ =?utf-8?B?L0dBbnRTaGxlNnR6THQ3U3Y0bVc5M0NzeDFkMHBqbEpTNEdLNERGcjFmeHky?=
+ =?utf-8?B?NG1zUHlhdTRib0ZnSXN5ZVk3RTBabnVSU2xEUXA5aWp4WDVuM2xEQWNGZ0V1?=
+ =?utf-8?B?KzdhbGd4ZFFzZEV1Si9sSmhjVjBDOStrWkFYaUZxcC9RUllBN3VFT2NUNkI3?=
+ =?utf-8?B?U2plUFgxd0ljcUFvS2NkK2JIMWo0aDhvcUJMaEV1Y0FRTjR4b2tGWC9zZG1Q?=
+ =?utf-8?B?NlhVd01uTDR5T2xlcFNNZjZXMjhPU0ttTnZtUkJndXROakJEYU44SjQrQVZ4?=
+ =?utf-8?B?NDk5NzdTbHNSWW9GWDJBNGlicTU4bFh1V21XWkJsaUM3QUlFUFZQZjJVd0RK?=
+ =?utf-8?B?K2lFWnFaTXp1aUJVblA3SEdVbFBvZ1k3TlZDU0ZWY0FpdkxxV1drcktPaWRB?=
+ =?utf-8?B?T3M4S3IveWhscDVVMlFibHBVQk1JVVg4Q3hING1GWlZyN0FCS0gzWnJTYkti?=
+ =?utf-8?B?d2h4RVpWOVpUVjJrNnRIWEo5RmJ2NjR6NXZOV3B1WXBCUEFXUTBXcVB6Z09t?=
+ =?utf-8?B?NUlHZkROaFRiZVpQV1h0ZHFacXBPUG5Va1ZLTm1TaGViQjNxRTRHajVjMGFI?=
+ =?utf-8?B?bHI2RDl6NUJmQUFYdW1RREVpMXNOak42d05DZDA2TmcxTGRpOVpjY2k2aXhW?=
+ =?utf-8?B?NHEwM3ZwM1ZIUzA0bGEvL2dVbVR3akR6RUF0enRaZFFCSjFHeVhJcXJiWmJj?=
+ =?utf-8?B?UjRNdk95bEk1eUw2b0lxU25IQ2w2WjRUVlBEbWcyeTIzNVdwZGxsWXE4cFJm?=
+ =?utf-8?B?SW5nblhLS0x6SWQrRTY3eUF6eGVJUlZvelArMzB5eFdUelRJRXJYYzF1aUVV?=
+ =?utf-8?B?VVJDYjh3ODRjR1F1VENiSjdNMEczaDROS2gvWDBkTERDZzMvU0VrdW9sT0xD?=
+ =?utf-8?B?QzhRcEpKa09BMjRZTFNKS3NRdGtEZ3ZkV2ZVcGRSc2drVm1XOVNBTHFqS2xS?=
+ =?utf-8?B?bzlGNm5lS3VNV09zejkxWTRYQ0NYSGEzM0NYa2x3YzJvK1lEWTJqdTE2YVFl?=
+ =?utf-8?B?MzBmUEk4UXVHNTJtMW0yaGtocGhLSlBwTlJHRVdVZ2pmMzR4V0VhdjQxYStk?=
+ =?utf-8?B?Szc5SEFFSFF1S1FEejZxaVQ0UFBjMTFaZWJyczM4OW5QWGlBOWxsRE03OVZn?=
+ =?utf-8?B?aHJORk90Y29zdTh2ZVhTakFzN2w2cm1lWUVUZ0pFbTVrWHc1NkRnVDg1ZjF1?=
+ =?utf-8?B?czF5VDkvYWlsMC9TY09SSW56VTFiR3FzRTNNaDB2K3BvaHlraEtkUlNZa3d4?=
+ =?utf-8?B?UEtlaCt5WjB0Ylg5NHZ1bEpIUmZTcDBHUUo0YVZXMSt3bUhRRnFTK2htcUg3?=
+ =?utf-8?B?ZTdhR0wvZGY3dGkvZkVzNTE4N21BbHBpLzdMWEZCZ1R0MVlIVDNTZmtPaHI5?=
+ =?utf-8?B?VG54Y3JDWTNjUTY1NDBnWkdBemRjbmpzNmlVTE44TnZTVG5ESGQ4OUR6WjJI?=
+ =?utf-8?Q?L+Yg=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8837658b-2004-4743-66be-08dbbec2e0b6
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2023 19:00:40.7624
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: p228UbHsR2sAcM8Pa7TmdC/j7riGI/czKym2IxESbGY+o1cIsDFWQLGgqb2je0VE
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6431
 
-On Mon, Sep 25, 2023 at 04:25:15PM -0700, Reinette Chatre wrote:
-> > +struct rdt_domain {
-> > +	// First three fields must match struct rdt_mondomain below.
+Hi Tony,
+
+How does user know Sub-NUMA Cluster mode is being enabled on the system?
+
+Do you have any information in /sys/fs/resctrl/info?
+
+Below documentation does not have any info about it.
+Would it be better to add that in "info" directory?
+
+Thanks
+Babu
+
+
+
+On 8/29/23 18:44, Tony Luck wrote:
+> With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
+> per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
+> their name refer to Sub-NUMA nodes instead of L3 cache ids.
 > 
-> Please avoid comments within declarations. Even so, could you please
-> elaborate what the above means? Why do the first three fields have to
-> match? I understand there is common code, for example, __rdt_find_domain()
-> that operated on the same members of the two structs but does that
-> require the members be in the same position in the struct?
-> I understand that a comment may be required if position in the struct
-> is important but I cannot see that it is.
+> Users should be aware that SNC mode also affects the amount of L3 cache
+> available for allocation within each SNC node.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  Documentation/arch/x86/resctrl.rst | 25 ++++++++++++++++++++++---
+>  1 file changed, 22 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+> index cb05d90111b4..407764f43f25 100644
+> --- a/Documentation/arch/x86/resctrl.rst
+> +++ b/Documentation/arch/x86/resctrl.rst
+> @@ -345,9 +345,15 @@ When control is enabled all CTRL_MON groups will also contain:
+>  When monitoring is enabled all MON groups will also contain:
+>  
+>  "mon_data":
+> -	This contains a set of files organized by L3 domain and by
+> -	RDT event. E.g. on a system with two L3 domains there will
+> -	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
+> +	This contains a set of files organized by L3 domain or by NUMA
+> +	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
+> +	or enabled respectively) and by RDT event. E.g. on a system with
+> +	SNC mode disabled with two L3 domains there will be subdirectories
+> +	"mon_L3_00" and "mon_L3_01". The numerical suffix refers to the
+> +	L3 cache id.  With SNC enabled the directory names are the same,
+> +	but the numerical suffix refers to the node id.
+> +        Mappings from node ids to CPUs are available in the
+> +        /sys/devices/system/node/node*/cpulist files. Each of these
+>  	directories have one file per event (e.g. "llc_occupancy",
+>  	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+>  	files provide a read out of the current value of the event for
+> @@ -452,6 +458,19 @@ and 0xA are not.  On a system with a 20-bit mask each bit represents 5%
+>  of the capacity of the cache. You could partition the cache into four
+>  equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
+>  
+> +Notes on Sub-NUMA Cluster mode
+> +==============================
+> +When SNC mode is enabled the "llc_occupancy", "mbm_total_bytes", and
+> +"mbm_local_bytes" will only give accurate results for well behaved NUMA
+> +applications. I.e. those that perform the majority of memory accesses
+> +to memory on the local NUMA node to the CPU where the task is executing.
+> +
+> +The cache allocation feature still provides the same number of
+> +bits in a mask to control allocation into the L3 cache. But each
+> +of those ways has its capacity reduced because the cache is divided
+> +between the SNC nodes. The values reported in the resctrl
+> +"size" files are adjusted accordingly.
+> +
+>  Memory bandwidth Allocation and monitoring
+>  ==========================================
+>  
 
-[Just replying to this one point in your message to get guidance. I'll
-address all the rest in other replies]
-
-I'm wrong about the first *three* fields ... but the first *two* fields
-(the "list" and the "id") do need to be at the same offsets in different
-structures if a common routine is going to be used to access those
-fields.
-
-If the "id" were at offset 0x10 in the control version of the domain
-structure, and at offset 0x20 in the monitor version of the domain
-structure, there would be no hope for a common routine to access the
-"id" field when searching a list that could be either control or
-monitor domains.
-
-I'm looking at making this far more explicit with a new patch between
-0001 and 0002 that pulls the two fields into a common substructure that
-will be included in each of the control and monitor versions of the
-structure.
-
-Patch included below.
-
-But this seems like it is a lot of churn to avoid having separate
-functions to search control and monitor lists. Each a clone of
-the existing ~24 line rdt_find_domain() with just the type changed
-for the return value and the list travsersal.
-
-What do you think?
-
--Tony
-
-commit 08992b4be1f53a3144f8aadd821f815a40a05e75
-Author: Tony Luck <tony.luck@intel.com>
-Date:   Tue Sep 26 11:07:12 2023 -0700
-
-    x86/resctrl: Prepare to split rdt_domain structure
-    
-    The rdt_domain structure is used for both control and monitor features.
-    It is about to be split into separate structures for these two usages
-    because the scope for control and monitoring features for a resource
-    will be different for future resources.
-    
-    To allow for common code that scans a list of domains looking for a
-    specific domain id, move the "list" and "id" fields into their own
-    structure within the rdt_domain structure.
-    
-    Signed-off-by: Tony Luck <tony.luck@intel.com>
-
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 618735e396cb..a583fa88ea5a 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -53,9 +53,18 @@ struct resctrl_staged_config {
- };
- 
- /**
-- * struct rdt_domain - group of CPUs sharing a resctrl resource
-+ * struct rdt_domain_hdr - common header for different domain types
-  * @list:		all instances of this resource
-  * @id:			unique id for this instance
-+ */
-+struct rdt_domain_hdr {
-+	struct list_head		list;
-+	int				id;
-+};
-+
-+/**
-+ * struct rdt_domain - group of CPUs sharing a resctrl resource
-+ * @hdr:		common header for different domain types
-  * @cpu_mask:		which CPUs share this resource
-  * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
-  * @mbm_total:		saved state for MBM total bandwidth
-@@ -71,8 +80,7 @@ struct resctrl_staged_config {
-  *			by closid
-  */
- struct rdt_domain {
--	struct list_head		list;
--	int				id;
-+	struct rdt_domain_hdr		hdr;
- 	struct cpumask			cpu_mask;
- 	unsigned long			*rmid_busy_llc;
- 	struct mbm_state		*mbm_total;
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 3b1837e1fb6b..05369add4578 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -352,7 +352,7 @@ struct rdt_domain *get_domain_from_cpu(int cpu, struct rdt_resource *r)
- {
- 	struct rdt_domain *d;
- 
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		/* Find the domain that contains this CPU */
- 		if (cpumask_test_cpu(cpu, &d->cpu_mask))
- 			return d;
-@@ -401,12 +401,12 @@ struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
- 		return ERR_PTR(-ENODEV);
- 
- 	list_for_each(l, &r->domains) {
--		d = list_entry(l, struct rdt_domain, list);
-+		d = list_entry(l, struct rdt_domain, hdr.list);
- 		/* When id is found, return its domain. */
--		if (id == d->id)
-+		if (id == d->hdr.id)
- 			return d;
- 		/* Stop searching when finding id's position in sorted list. */
--		if (id < d->id)
-+		if (id < d->hdr.id)
- 			break;
- 	}
- 
-@@ -544,7 +544,7 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		return;
- 
- 	d = &hw_dom->d_resctrl;
--	d->id = id;
-+	d->hdr.id = id;
- 	cpumask_set_cpu(cpu, &d->cpu_mask);
- 
- 	rdt_domain_reconfigure_cdp(r);
-@@ -559,11 +559,11 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		return;
- 	}
- 
--	list_add_tail(&d->list, add_pos);
-+	list_add_tail(&d->hdr.list, add_pos);
- 
- 	err = resctrl_online_domain(r, d);
- 	if (err) {
--		list_del(&d->list);
-+		list_del(&d->hdr.list);
- 		domain_free(hw_dom);
- 	}
- }
-@@ -587,7 +587,7 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
- 	cpumask_clear_cpu(cpu, &d->cpu_mask);
- 	if (cpumask_empty(&d->cpu_mask)) {
- 		resctrl_offline_domain(r, d);
--		list_del(&d->list);
-+		list_del(&d->hdr.list);
- 
- 		/*
- 		 * rdt_domain "d" is going to be freed below, so clear
-diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-index b44c487727d4..8bce591a1018 100644
---- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-+++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-@@ -67,7 +67,7 @@ int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
- 
- 	cfg = &d->staged_config[s->conf_type];
- 	if (cfg->have_new_ctrl) {
--		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
-+		rdt_last_cmd_printf("Duplicate domain %d\n", d->hdr.id);
- 		return -EINVAL;
- 	}
- 
-@@ -144,7 +144,7 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
- 
- 	cfg = &d->staged_config[s->conf_type];
- 	if (cfg->have_new_ctrl) {
--		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
-+		rdt_last_cmd_printf("Duplicate domain %d\n", d->hdr.id);
- 		return -EINVAL;
- 	}
- 
-@@ -224,8 +224,8 @@ static int parse_line(char *line, struct resctrl_schema *s,
- 		return -EINVAL;
- 	}
- 	dom = strim(dom);
--	list_for_each_entry(d, &r->domains, list) {
--		if (d->id == dom_id) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
-+		if (d->hdr.id == dom_id) {
- 			data.buf = dom;
- 			data.rdtgrp = rdtgrp;
- 			if (r->parse_ctrlval(&data, s, d))
-@@ -316,7 +316,7 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
- 		return -ENOMEM;
- 
- 	msr_param.res = NULL;
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		hw_dom = resctrl_to_arch_dom(d);
- 		for (t = 0; t < CDP_NUM_TYPES; t++) {
- 			cfg = &hw_dom->d_resctrl.staged_config[t];
-@@ -464,7 +464,7 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int clo
- 	u32 ctrl_val;
- 
- 	seq_printf(s, "%*s:", max_name_width, schema->name);
--	list_for_each_entry(dom, &r->domains, list) {
-+	list_for_each_entry(dom, &r->domains, hdr.list) {
- 		if (sep)
- 			seq_puts(s, ";");
- 
-@@ -474,7 +474,7 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int clo
- 			ctrl_val = resctrl_arch_get_config(r, dom, closid,
- 							   schema->conf_type);
- 
--		seq_printf(s, r->format_str, dom->id, max_data_width,
-+		seq_printf(s, r->format_str, dom->hdr.id, max_data_width,
- 			   ctrl_val);
- 		sep = true;
- 	}
-@@ -503,7 +503,7 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
- 			} else {
- 				seq_printf(s, "%s:%d=%x\n",
- 					   rdtgrp->plr->s->res->name,
--					   rdtgrp->plr->d->id,
-+					   rdtgrp->plr->d->hdr.id,
- 					   rdtgrp->plr->cbm);
- 			}
- 		} else {
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index ded1fc7cb7cb..27cda5988d7f 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -340,7 +340,7 @@ static void add_rmid_to_limbo(struct rmid_entry *entry)
- 
- 	entry->busy = 0;
- 	cpu = get_cpu();
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		if (cpumask_test_cpu(cpu, &d->cpu_mask)) {
- 			err = resctrl_arch_rmid_read(r, d, entry->rmid,
- 						     QOS_L3_OCCUP_EVENT_ID,
-diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-index 8c5f932bc00b..18b6183a1b48 100644
---- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-+++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-@@ -856,7 +856,7 @@ bool rdtgroup_pseudo_locked_in_hierarchy(struct rdt_domain *d)
- 	 * associated with them.
- 	 */
- 	for_each_alloc_capable_rdt_resource(r) {
--		list_for_each_entry(d_i, &r->domains, list) {
-+		list_for_each_entry(d_i, &r->domains, hdr.list) {
- 			if (d_i->plr)
- 				cpumask_or(cpu_with_psl, cpu_with_psl,
- 					   &d_i->cpu_mask);
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 1cf2b36f5bf8..42adf17ea6fa 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -86,7 +86,7 @@ void rdt_staged_configs_clear(void)
- 	lockdep_assert_held(&rdtgroup_mutex);
- 
- 	for_each_alloc_capable_rdt_resource(r) {
--		list_for_each_entry(dom, &r->domains, list)
-+		list_for_each_entry(dom, &r->domains, hdr.list)
- 			memset(dom->staged_config, 0, sizeof(dom->staged_config));
- 	}
- }
-@@ -928,12 +928,12 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
- 
- 	mutex_lock(&rdtgroup_mutex);
- 	hw_shareable = r->cache.shareable_bits;
--	list_for_each_entry(dom, &r->domains, list) {
-+	list_for_each_entry(dom, &r->domains, hdr.list) {
- 		if (sep)
- 			seq_putc(seq, ';');
- 		sw_shareable = 0;
- 		exclusive = 0;
--		seq_printf(seq, "%d=", dom->id);
-+		seq_printf(seq, "%d=", dom->hdr.id);
- 		for (i = 0; i < closids_supported(); i++) {
- 			if (!closid_allocated(i))
- 				continue;
-@@ -1233,7 +1233,7 @@ static bool rdtgroup_mode_test_exclusive(struct rdtgroup *rdtgrp)
- 		if (r->rid == RDT_RESOURCE_MBA || r->rid == RDT_RESOURCE_SMBA)
- 			continue;
- 		has_cache = true;
--		list_for_each_entry(d, &r->domains, list) {
-+		list_for_each_entry(d, &r->domains, hdr.list) {
- 			ctrl = resctrl_arch_get_config(r, d, closid,
- 						       s->conf_type);
- 			if (rdtgroup_cbm_overlaps(s, d, ctrl, closid, false)) {
-@@ -1398,7 +1398,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
- 			size = rdtgroup_cbm_to_size(rdtgrp->plr->s->res,
- 						    rdtgrp->plr->d,
- 						    rdtgrp->plr->cbm);
--			seq_printf(s, "%d=%u\n", rdtgrp->plr->d->id, size);
-+			seq_printf(s, "%d=%u\n", rdtgrp->plr->d->hdr.id, size);
- 		}
- 		goto out;
- 	}
-@@ -1410,7 +1410,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
- 		type = schema->conf_type;
- 		sep = false;
- 		seq_printf(s, "%*s:", max_name_width, schema->name);
--		list_for_each_entry(d, &r->domains, list) {
-+		list_for_each_entry(d, &r->domains, hdr.list) {
- 			if (sep)
- 				seq_putc(s, ';');
- 			if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
-@@ -1428,7 +1428,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
- 				else
- 					size = rdtgroup_cbm_to_size(r, d, ctrl);
- 			}
--			seq_printf(s, "%d=%u", d->id, size);
-+			seq_printf(s, "%d=%u", d->hdr.id, size);
- 			sep = true;
- 		}
- 		seq_putc(s, '\n');
-@@ -1499,7 +1499,7 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 
- 	mutex_lock(&rdtgroup_mutex);
- 
--	list_for_each_entry(dom, &r->domains, list) {
-+	list_for_each_entry(dom, &r->domains, hdr.list) {
- 		if (sep)
- 			seq_puts(s, ";");
- 
-@@ -1507,7 +1507,7 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 		mon_info.evtid = evtid;
- 		mondata_config_read(dom, &mon_info);
- 
--		seq_printf(s, "%d=0x%02x", dom->id, mon_info.mon_config);
-+		seq_printf(s, "%d=0x%02x", dom->hdr.id, mon_info.mon_config);
- 		sep = true;
- 	}
- 	seq_puts(s, "\n");
-@@ -1622,8 +1622,8 @@ static int mon_config_write(struct rdt_resource *r, char *tok, u32 evtid)
- 		return -EINVAL;
- 	}
- 
--	list_for_each_entry(d, &r->domains, list) {
--		if (d->id == dom_id) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
-+		if (d->hdr.id == dom_id) {
- 			ret = mbm_config_write_domain(r, d, evtid, val);
- 			if (ret)
- 				return -EINVAL;
-@@ -2141,7 +2141,7 @@ static int set_cache_qos_cfg(int level, bool enable)
- 		return -ENOMEM;
- 
- 	r_l = &rdt_resources_all[level].r_resctrl;
--	list_for_each_entry(d, &r_l->domains, list) {
-+	list_for_each_entry(d, &r_l->domains, hdr.list) {
- 		if (r_l->cache.arch_has_per_cpu_cfg)
- 			/* Pick all the CPUs in the domain instance */
- 			for_each_cpu(cpu, &d->cpu_mask)
-@@ -2226,7 +2226,7 @@ static int set_mba_sc(bool mba_sc)
- 
- 	r->membw.mba_sc = mba_sc;
- 
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		for (i = 0; i < num_closid; i++)
- 			d->mbps_val[i] = MBA_MAX_MBPS;
- 	}
-@@ -2528,7 +2528,7 @@ static int rdt_get_tree(struct fs_context *fc)
- 
- 	if (is_mbm_enabled()) {
- 		r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
--		list_for_each_entry(dom, &r->domains, list)
-+		list_for_each_entry(dom, &r->domains, hdr.list)
- 			mbm_setup_overflow_handler(dom, MBM_OVERFLOW_INTERVAL);
- 	}
- 
-@@ -2652,7 +2652,7 @@ static int reset_all_ctrls(struct rdt_resource *r)
- 	 * CBMs in all domains to the maximum mask value. Pick one CPU
- 	 * from each domain to update the MSRs below.
- 	 */
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		hw_dom = resctrl_to_arch_dom(d);
- 		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
- 
-@@ -2858,7 +2858,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 	char name[32];
- 	int ret;
- 
--	sprintf(name, "mon_%s_%02d", r->name, d->id);
-+	sprintf(name, "mon_%s_%02d", r->name, d->hdr.id);
- 	/* create the directory */
- 	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
- 	if (IS_ERR(kn))
-@@ -2874,7 +2874,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 	}
- 
- 	priv.u.rid = r->rid;
--	priv.u.domid = d->id;
-+	priv.u.domid = d->hdr.id;
- 	list_for_each_entry(mevt, &r->evt_list, list) {
- 		priv.u.evtid = mevt->evtid;
- 		ret = mon_addfile(kn, mevt->name, priv.priv);
-@@ -2922,7 +2922,7 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
- 	struct rdt_domain *dom;
- 	int ret;
- 
--	list_for_each_entry(dom, &r->domains, list) {
-+	list_for_each_entry(dom, &r->domains, hdr.list) {
- 		ret = mkdir_mondata_subdir(parent_kn, dom, r, prgrp);
- 		if (ret)
- 			return ret;
-@@ -3081,7 +3081,7 @@ static int __init_one_rdt_domain(struct rdt_domain *d, struct resctrl_schema *s,
- 	 */
- 	tmp_cbm = cfg->new_ctrl;
- 	if (bitmap_weight(&tmp_cbm, r->cache.cbm_len) < r->cache.min_cbm_bits) {
--		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->id);
-+		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->hdr.id);
- 		return -ENOSPC;
- 	}
- 	cfg->have_new_ctrl = true;
-@@ -3104,7 +3104,7 @@ static int rdtgroup_init_cat(struct resctrl_schema *s, u32 closid)
- 	struct rdt_domain *d;
- 	int ret;
- 
--	list_for_each_entry(d, &s->res->domains, list) {
-+	list_for_each_entry(d, &s->res->domains, hdr.list) {
- 		ret = __init_one_rdt_domain(d, s, closid);
- 		if (ret < 0)
- 			return ret;
-@@ -3119,7 +3119,7 @@ static void rdtgroup_init_mba(struct rdt_resource *r, u32 closid)
- 	struct resctrl_staged_config *cfg;
- 	struct rdt_domain *d;
- 
--	list_for_each_entry(d, &r->domains, list) {
-+	list_for_each_entry(d, &r->domains, hdr.list) {
- 		if (is_mba_sc(r)) {
- 			d->mbps_val[closid] = MBA_MAX_MBPS;
- 			continue;
-@@ -3726,7 +3726,7 @@ void resctrl_offline_domain(struct rdt_resource *r, struct rdt_domain *d)
- 	 * per domain monitor data directories.
- 	 */
- 	if (static_branch_unlikely(&rdt_mon_enable_key))
--		rmdir_mondata_subdir_allrdtgrp(r, d->id);
-+		rmdir_mondata_subdir_allrdtgrp(r, d->hdr.id);
- 
- 	if (is_mbm_enabled())
- 		cancel_delayed_work(&d->mbm_over);
+-- 
+Thanks
+Babu Moger
