@@ -1,77 +1,160 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C3A9370
-	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 00:18:02 +0000 (UTC)
-Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
-	by linux.microsoft.com (Postfix) with ESMTPSA id C798520B74C0;
-	Wed, 27 Sep 2023 17:17:55 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C798520B74C0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1695860276;
-	bh=apiqyVomDl3eH58Vs8mK0hqcp1k7lISOy2zAU3jCyNU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=V8yNq7vak/Kr3K00IoP6fpQzGDvLsvy4Ezk9uAHfe4/mS3eMbtM8AOjTFUAcUd+m8
-	 Uy7bPwEC59miyqW9bO1K2C0BHSiD0UJAdT4igjnaL80svRDmpqu5ZuDj+DfThLWX/d
-	 EzQskjEpeqCkesXIudWToBYAWfoOBMOwhSz/l9+M=
-Message-ID: <fda2a3dd-b325-4780-bd02-d1fedcaec260@linux.microsoft.com>
-Date: Wed, 27 Sep 2023 17:17:54 -0700
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C945D749B
+	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 04:47:20 +0000 (UTC)
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38S3ZvBl016763;
+	Thu, 28 Sep 2023 04:47:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : reply-to : to : cc : date : in-reply-to : references : content-type
+ : mime-version : content-transfer-encoding; s=pp1;
+ bh=/p6uaCgkwiyGbZEhvNiURzs31q+CpDrmch4m+ytv3vM=;
+ b=XCvvcJs6E3wUyFbBkYc13AeA3EKFqIJnzJN8ceYGII2XMBIYzuwaTTdfB/3je7L836By
+ aqtDCQoN8SaJnW/eo5O45CZBgmOIFfvMqqENOLDmKElwNgfqrtFhniodUXhQpnoCquqr
+ OuyrrZdEEA47QVe9sMXMecV9FYkP4FLnpqNwJJmlWAEg1SQrzKEP6ea1UDjSMgdVNFGd
+ DN2cEo/heFvbaVqg7fJzH/iLwaM2lvMnWawO4jjo4cWrJzh576i1RFOl0x+ezrTw+DXy
+ y0CiebuYiN2+rt1XHcqADR53trgqQx/jYyhBMboTeM2CSLEKdi5OuChikDmr7sy1sQDZ 4w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcw4cqb99-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Sep 2023 04:47:00 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38S4aLRM010520;
+	Thu, 28 Sep 2023 04:46:59 GMT
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcw4cqb8w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Sep 2023 04:46:59 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 38S31U5C008399;
+	Thu, 28 Sep 2023 04:46:59 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3taabt1s1q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Sep 2023 04:46:59 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 38S4kw0w3146366
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 28 Sep 2023 04:46:58 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9D0BE5805A;
+	Thu, 28 Sep 2023 04:46:58 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1A3F958051;
+	Thu, 28 Sep 2023 04:46:55 +0000 (GMT)
+Received: from patel.in.ibm.com (unknown [9.109.195.211])
+	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 28 Sep 2023 04:46:54 +0000 (GMT)
+Message-ID: <5c933e2b06ab9090d9190bac41ebbc175b0a9357.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/4] SLUB: calculate_order() cleanups
+From: Jay Patel <jaypatel@linux.ibm.com>
+Reply-To: jaypatel@linux.ibm.com
+To: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
+        Christoph Lameter
+	 <cl@linux.com>,
+        Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>,
+        Pekka Enberg
+ <penberg@kernel.org>,
+        Joonsoo Kim <iamjoonsoo.kim@lge.com>, linux-mm@kvack.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Date: Thu, 28 Sep 2023 10:16:53 +0530
+In-Reply-To: <20230908145302.30320-6-vbabka@suse.cz>
+References: <20230908145302.30320-6-vbabka@suse.cz>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>, Wei Liu <wei.liu@kernel.org>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
- kys@microsoft.com, haiyangz@microsoft.com, decui@microsoft.com,
- apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
- ssengar@linux.microsoft.com, mukeshrathor@microsoft.com,
- stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com,
- vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
- catalin.marinas@arm.com
-References: <2023092342-staunch-chafe-1598@gregkh>
- <e235025e-abfa-4b31-8b83-416ec8ec4f72@linux.microsoft.com>
- <2023092630-masculine-clinic-19b6@gregkh>
- <ZRJyGrm4ufNZvN04@liuwe-devbox-debian-v2>
- <2023092614-tummy-dwelling-7063@gregkh>
- <ZRKBo5Nbw+exPkAj@liuwe-devbox-debian-v2>
- <2023092646-version-series-a7b5@gregkh>
- <05119cbc-155d-47c5-ab21-e6a08eba5dc4@linux.microsoft.com>
- <2023092737-daily-humility-f01c@gregkh>
- <ZRPiGk9M3aQr99Y5@liuwe-devbox-debian-v2>
- <2023092757-cupbearer-cancel-b314@gregkh>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <2023092757-cupbearer-cancel-b314@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -iGIWfAupp86IGjW8KxcKyb_CRtjO41T
+X-Proofpoint-GUID: 8JsgIpeAPJ3moOntpi6WmNbi8DUmBC9R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-28_01,2023-09-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=929 priorityscore=1501 clxscore=1011 phishscore=0 adultscore=0
+ impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309280039
 
-On 9/27/2023 1:33 AM, Greg KH wrote:
-> On Wed, Sep 27, 2023 at 08:04:42AM +0000, Wei Liu wrote:
->> So, the driver is supposed to stash a pointer to struct device in
->> private_data. That's what I alluded to in my previous reply. The core
->> driver framework or the VFS doesn't give us a reference to struct
->> device. We have to do it ourselves.
+On Fri, 2023-09-08 at 16:53 +0200, Vlastimil Babka wrote:
+> Since reviewing recent patches made me finally dig into these
+> functions
+> in details for the first time, I've also noticed some opportunities
+> for
+> cleanups that should make them simpler and also deliver more
+> consistent
+> results for some corner case object sizes (probably not seen in
+> practice). Thus patch 3 can increase slab orders somewhere, but only
+> in
+> the way that was already intended. Otherwise it's almost no
+> functional
+> changes.
 > 
-> Please read Linux Device Drivers, 3rd edition, chapter 3, for how to do
-> this properly.  The book is free online.
+Hi Vlastimil,
+
+This cleanup patchset looks promising.
+I've conducted test
+on PowerPC with 16 CPUs and a 64K page size, and here are the results.
+
+S
+lub Memory Usage
+
++-------------------+--------+------------+
+|                   | Normal | With Patch |
++-------------------+--------+------------+
+| Total Slub Memory | 476992 | 478464     |
+| Wastage           | 431    | 451        |
++-------------------+--------+------------+
+
+Also, I have not detected any changes in the page order for slub caches
+across all objects with 64K page size.
+
+Hackbench Results
+
++-------+----+---------+------------+----------+
+|     
+  |    | Normal  | With Patch |          |
++-------+----+---------+-----
+-------+----------+
+| Amean | 1  | 1.1530  | 1.1347     | ( 1.59%) |
+|
+Amean | 4  | 3.9220  | 3.8240     | ( 2.50%) |
+| Amean | 7  | 6.7943  |
+6.6300     | ( 2.42%) |
+| Amean | 12 | 11.7067 | 11.4423    | ( 2.26%) |
+| Amean | 21 | 20.6617 | 20.1680    | ( 2.39%) |
+| Amean | 30 | 29.4200
+| 28.6460    | ( 2.63%) |
+| Amean | 48 | 47.2797 | 46.2820    | ( 2.11%)
+|
+| Amean | 64 | 63.4680 | 62.1813    | ( 2.03%) |
++-------+----+------
+---+------------+----------+  
+
+
+Reviewed-by: Jay Patel
+<jaypatel@linux.ibm.com>
+Tested-by: Jay Patel <jaypatel@linux.ibm.com>
+
+Th
+ank You 
+Jay Patel
+> Vlastimil Babka (4):
+>   mm/slub: simplify the last resort slab order calculation
+>   mm/slub: remove min_objects loop from calculate_order()
+>   mm/slub: attempt to find layouts up to 1/2 waste in
+> calculate_order()
+>   mm/slub: refactor calculate_order() and calc_slab_order()
+> 
+>  mm/slub.c | 63 ++++++++++++++++++++++++-----------------------------
+> --
+>  1 file changed, 27 insertions(+), 36 deletions(-)
 > 
 
-Thanks, the issue that confused us was how to get the miscdevice.
-I eventually found the answer in the misc_register() documentation:
-
-"By default, an open() syscall to the device sets file->private_data to
-point to the structure."
-
-That's good - when we create a guest, we will have the miscdevice
-in private_data already. Then we can just put it in our per-guest data
-structure. That will let us retrieve the device in the other ioctls so 
-we can call dev_*().
-
-Thanks,
-Nuno
