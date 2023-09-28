@@ -1,135 +1,192 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F250B4F15D
-	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 18:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039CA182C7
+	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 18:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695924948; x=1727460948;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qNscsCJUQoTmnFHvelDXIPIY/YE9vRQaq9zmrsSCgHg=;
-  b=mEdlujH/JgBX44B/5hyqe3G5wWFVvI7Ev4zT8395OPgY1bqK4aDf7QFf
-   E5JRUpGy20EyvX+RBb019yJup/0MDGjninTRXDm7/89Gv3bgsdgBLKAi7
-   UbkUNa9NYcnir0cuESIWZZGrkIZRORoUiM9kohirxAnEuc2mv1ulLgeiP
-   drGtXOXR4QsHMLeYkvhgaOy56fmh4LIrbtZqMtFVHlB6RFD0IpYzEtqiN
-   ItU/g1qM7AI6OVNgDb3OXK/Ztp4TCC2SpQYt7fP8RTMLjsDQ6wUq0b1Cc
-   gmlOho3jUCb0NSPdMKwzb8J0gBCK+HOO0MtLI2EiA/Dhk7uw2FaBEPMUa
+  t=1695927068; x=1727463068;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=UZj2Eyco4UYWB9SDQSm1Zkh14YAV6VrPoanYVhMf73c=;
+  b=Ct4CHuFqdcsxuupbdBYKVz84Xw8X+8IJKB93knV2J4rsI4gaTP1K5GSD
+   vkKLJXBMLln6RJQ5F0shW4Q2Bec3JoFSA6Q2R1/m+5jGYG1eualdDTxSJ
+   YTdlub63UlzkXAPYXgFKWAbNN+0+Mt8/kaHIg8PLK1lHFo6kJlTACiAZU
+   CLnBgs7XGJICE/a9ojSVi2UEIcmpoFKLlYgl5RyNB3VJZch0RrhMYtFAF
+   53HrTg7ujgO+POX5vUkKD9LXyMfRxJO6PHE1RpLnt/QkQ6WYquXiAWgOl
+   dARXT4TJ1dFzOPfnCHyflqjd7DTb0MWWhFHMivp2TQoQEntcFwWFh5hlU
    w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="379409051"
+X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="362393567"
 X-IronPort-AV: E=Sophos;i="6.03,184,1694761200"; 
-   d="scan'208";a="379409051"
+   d="scan'208";a="362393567"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 11:15:45 -0700
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 11:42:38 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="1080660230"
+X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="1080664763"
 X-IronPort-AV: E=Sophos;i="6.03,184,1694761200"; 
-   d="scan'208";a="1080660230"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 11:15:45 -0700
-Date: Thu, 28 Sep 2023 11:15:44 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 7/8] x86/resctrl: Update documentation with Sub-NUMA
- cluster changes
-Message-ID: <ZRXC0LyXhNXquKSZ@agluck-desk3>
+   d="scan'208";a="1080664763"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmsmga005.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Sep 2023 11:42:38 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Thu, 28 Sep 2023 11:42:37 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Thu, 28 Sep 2023 11:42:37 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Thu, 28 Sep 2023 11:42:37 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.174)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Thu, 28 Sep 2023 11:42:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fdPUzfwBw5Pdw0EtUKWSoY9fX1YMET4c2vTkLFDlCk1R3/wAJOWYETrAlLco9Tnrspmn3khvkCPEWbrGNWYhOMAnQQbzmIK+L1XP8CorbKspkSW/+2meVRlI2FpjfVHSceLdM1PF1x5nFReALCEfeWHYw1ZOJfJI3Y0NeUHcFZuZa1NmdeuXikEGNBC+pshoXmL4cBYRAL4xOCT5JEMMQcfjx38fjhHVFPhex0bu8RZITE8M7xUbWADlPpfy1tDUzxBiMUI9In4Q4msYE3ElGx3NFIj/9EWq/JH6NWr74IvlogGOW/VcbQG2A2RlhlpgmD1hHxUPWu/p6pnMMmCtcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=88izL3flPAuKEVxRAc7AewVAkYr+qcQC2FFQW2i6h2o=;
+ b=Dy/AQkIuZDarViE7NbInUgWA0HkTFjS1MM9uehqhcydDfc4chNcUG2hjuSOvE0Gc8W6iT4tw6Szqyuhn3GOzTxeis4tCH2iqhQZIsyAcQTAB9aF+S2NTnKTw2dD5UYbvp2sc78bNRquVnICdRF0vMQ27tdYmgXKf3yeQ3IczJvntGgZ17U8X14LRRc8o6gt+QkLE4WNsQoHl8BVmbllh+q9sn0lenYhq7fQrsvjDIIAckDGWLILUpgldApjtKR7fx+BOEYcq5KbXj+EvEIf3BuvhTnlR7+WD0JUjx8lBPE7A7Yus52cuEgh/AfNzLFdyfOOI8ayjiVjXlz8H5ES3Ag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by MW4PR11MB7056.namprd11.prod.outlook.com (2603:10b6:303:21a::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.28; Thu, 28 Sep
+ 2023 18:42:35 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bd70:f215:4a97:c84e]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bd70:f215:4a97:c84e%6]) with mapi id 15.20.6813.017; Thu, 28 Sep 2023
+ 18:42:35 +0000
+Message-ID: <4b906b98-b535-e203-ffa7-6f6a34d6c54e@intel.com>
+Date: Thu, 28 Sep 2023 11:42:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.15.1
+Subject: Re: [PATCH v5 3/8] x86/resctrl: Split the rdt_domain structure
+Content-Language: en-US
+To: Tony Luck <tony.luck@intel.com>
+CC: Fenghua Yu <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+	<x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
+	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<patches@lists.linux.dev>
 References: <20230722190740.326190-1-tony.luck@intel.com>
  <20230829234426.64421-1-tony.luck@intel.com>
- <20230829234426.64421-8-tony.luck@intel.com>
- <2da0c9a0-ebb4-f7fa-89f6-d32ce558fa00@intel.com>
+ <20230829234426.64421-4-tony.luck@intel.com>
+ <5f1256d3-737e-a447-abbe-f541767b2c8f@intel.com>
+ <ZRW4zRZtgZ0cdzqC@agluck-desk3>
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <ZRW4zRZtgZ0cdzqC@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0241.namprd04.prod.outlook.com
+ (2603:10b6:303:88::6) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2da0c9a0-ebb4-f7fa-89f6-d32ce558fa00@intel.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MW4PR11MB7056:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52357b31-e592-42d2-cb86-08dbc052ae84
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ta7XKeE3gp5F03bUvMrUuMBaFBAjqUxpoYqr05/ASw/5lK7HsmCuNvGc3syYfo7zTb4HTDYgBn7CFC+R0ZyayIEoLcl7SKaUMHKITfhGD0u6GV3S40S9zPc9DjGinfMr1nsiMo37+Fh8RwzDH4j2oxd79SgJowLU2gftZMsfGhaRKiS1kd41Vk1QjrVbruwmxd3SgLdkcwgL1w4PPfOUs7XA3MudoIDikPKqDStTCcAcPNM8Hh5S9IfkbHiRxqKrTkWLUJLiJixQOkOCuErpNluvL6IAbGTQtd7Fnid6UJvO+OTYuXfA0X+yNwTX+SxCRJUeSMwf1zaw2737sv3xEmDS6jr4ivemKOjDrOo+LGmy5xppXGuok1G93qdjw3Mn5lBUnA6PiSzwaHU+3Y9qQQZeHztiI0SM2e2LPgTeBUGuOom/9Cj4osKpIqGq35vDQT5h4svE2WFFFmKjsDq+wTKUrE5N2XgGSvoRCThRJzjkWjUQvpbP5sTInYFYq2WtXOem7ym0jnKTfNkycsCGILE4fySFGHLKvwVjZ+QxGfDpZwrNjfSnOwWsWA4aa2nl8MvCtAl/EQ7h8WvA41xRwrSFa3OQrZnrYK0lpDRbHl3rDqI0piKoHlD6Qszk0hid7W9NYUm05zKnoG4FUWgF8A==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(39860400002)(396003)(366004)(376002)(136003)(230922051799003)(64100799003)(186009)(451199024)(1800799009)(2906002)(82960400001)(53546011)(2616005)(26005)(36756003)(6486002)(6666004)(6506007)(83380400001)(31696002)(6512007)(478600001)(86362001)(7416002)(38100700002)(37006003)(66476007)(5660300002)(66946007)(66556008)(54906003)(6636002)(4326008)(8936002)(316002)(44832011)(31686004)(8676002)(6862004)(41300700001)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VzdXakhZZ3ZYc0lOM2w0R3hTU2RNQU9RWHpkbEtpWEFDT0xDL2k2WlhHaVhm?=
+ =?utf-8?B?SVE1NEluSEowV1RVemg0NXZ1TjZrMlRYK2VlSU1GNVo3QlA3eXBKQ2NoQVF4?=
+ =?utf-8?B?a2ZXZ3RMUnNVVzhCVUc1TUVGVlJPM0tyTzNVdWpGVGF0NDhBRzhDNDNDN1pM?=
+ =?utf-8?B?SHczM0xSRlhlV014SGJScVFnVXRrY01rbnlWV1hLL0tZWXdSdi9YQ3ZRY2xr?=
+ =?utf-8?B?UDdueE5IMnBEaktrTG1Yb1lLdEFZdXhtVEU5dTgxVmlaUVo3Tm95ay9RM2dp?=
+ =?utf-8?B?WU5iWEZkVFpYWXh6d3k0NkdNdVlMeEptRTNkQWIySW9kSmh1ZEZYWDh2VVlO?=
+ =?utf-8?B?Rm1DZkdmOFo1Q3l1QlZ2aXE5RGltczYzY3FDQ2dMRC9WWEJvaFVNK0ZGcXlH?=
+ =?utf-8?B?SnlBYmdBR3kxaFZuZitwSTNzNjZTbVBmZDB0ZWk2MHR1V2hqM0QxdG44Qkp0?=
+ =?utf-8?B?dWljWm1TUjVXZ1Z5dXRzSG5RbTV4TDBNRUttOXNhcHkyUGxRR04zM3BlZFY0?=
+ =?utf-8?B?b1g4Y1hldlRJWVpPbjh0bkFjRWFDMC9BOFovSW5OOEFiWndaL09Ud3BGdEhY?=
+ =?utf-8?B?VnVQZTdzelJGZkNKT1YyWTh4UG15dVFXV0Z2aytiU01rOTlVS3A0K3hhNTIr?=
+ =?utf-8?B?V1NnUTlCY2VOU3J2TXBpZldWazR6RndVRlNVaTk3RUg5SXE0amZWNmRpRnJD?=
+ =?utf-8?B?cldmVmN0MUZtMkRpb0tqVWtEWnVoVG16cHhsL1dwUjJTODdOL05pY0R0ZHNj?=
+ =?utf-8?B?U0tLSU9sUWxEbXZpN3RKa0RHNk5HVjZlSFBwME9UUjhRNmFBY25TakZEYUg2?=
+ =?utf-8?B?ZFhYUHhLL0xNbTl5aWFpaVZub0JjUmk2bkR6WlF0dUo3MmM4NU01dUN3MkdR?=
+ =?utf-8?B?RzdYTDR5bTNuUlYxUlFLOHIySzdjcWowTHlrVUcvSDFvTHBrN053RGMyKzZ4?=
+ =?utf-8?B?NXdaWGFIUm4vSk8wakJyazcvUlN2clpFazlQb2s5NGFjY05pb0VkVFlHZkYx?=
+ =?utf-8?B?VEViZmRTcXhDbk9pckw2eUh5cDhkS1UrUzVCdWhZTVMrNjhNRi9xaSthU0pz?=
+ =?utf-8?B?UVhuc29raHZKUWtLNDZkalRtTEh0S2xBMDduaU1KdEVuSVcrRGlMRTNDRHg5?=
+ =?utf-8?B?Q3NXK3ZaVWR4ek92elY2USt2RG51eXU3eENBTFVPOERBZngxdGMwcTRDWHg2?=
+ =?utf-8?B?Mm45YkUyNmk0OExDVm1pR1hBeE9hVURWckxZRXFtOVpGV2psRDZsYlNqZnJC?=
+ =?utf-8?B?ekxRbDRrODBGUFE0LzIxMmE1Q2lndmdmN2ozSEVSOGRvV3RWamh6bnA2bXE3?=
+ =?utf-8?B?eElvS29xaGhtKzdnODNCN0VlTmN0dlAwZzVkUXlMSmttM0p6VmhGYkVVV1V3?=
+ =?utf-8?B?T1pxMDZrajRQSUFOOHZZc3hFY3VPVThtVFJpbzJ2NGE4YWdzZzBiRTcvRW9V?=
+ =?utf-8?B?MTlWQXRBWERDZjYyaE1lOUhKRmJKYTJJcDBBSytlb3dieGFDTlhuUWt4R1NU?=
+ =?utf-8?B?bmtKdTR5UlVLbEVaaTdWOFRiVUNQTTNyUXdTUzRDWHFFa3dJWFhaVFJJb05a?=
+ =?utf-8?B?SmdrY01yc1g0UnRmTmRBSkRZYXI3dFlhUmxvYTdUdEFWYmIvK2NTQkY0NTln?=
+ =?utf-8?B?bnJzeGxsTUFvbExrTXdabHA4UmFzaWovM3k2SHc2ZDEzaWJiVGlGdHJETlQv?=
+ =?utf-8?B?UFFSb2pBOHJsMnhaUEduVWVLZ3ZycGJpd3RhU2x5UlpnWEtRUXYxWWhEdU9h?=
+ =?utf-8?B?MW1VTC9uRUQxOFoxVXREbzFMRkd1SEZmQVFSY1Q2c1VodHlwM0ZzdDJSbElB?=
+ =?utf-8?B?c1czdEcrdThEZXpLY09iT1JHY3M3OGNLOHBsR01jNkkvQ0N6NUJvT2pqTVVw?=
+ =?utf-8?B?SzBuMXhCcm1La2J3TEUyNzQxd0lKVFJHMTJZdzZzMjNaMlBwR2J0eHB2T1JI?=
+ =?utf-8?B?S21vVmk5aFdKOWRxWmtna3kvRmpkWXozRXV5TExDMmlDRHM5Yjc4VWg0VFB6?=
+ =?utf-8?B?VHdXMkhyM3M5Vjh4bnhCb25IWWFpa0xEaXZxQTdRLzhzZG0xNkYrUjBRZHJ4?=
+ =?utf-8?B?dzVoWG5BOGFGcktVU09mcVlXQ2liWFJNaERROGN3WThlZU5WSm41c3UxZUo3?=
+ =?utf-8?B?L3lNQy9zZmZha3dWOG05ei9nbUF1R0d6WURmVlJRNHpCNG1Xa0VnTmlZQ0ZK?=
+ =?utf-8?B?Unc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52357b31-e592-42d2-cb86-08dbc052ae84
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2023 18:42:35.2239
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7oRJXQ5pJkY82rUqDJ8IvTnYfQfE93YwEhFIQHQ6CcpvSAr5g70Br9VHa4UO2WJTSZTPRT612aT1O+ItV/DfmdFxRGLo2y7bb6oVMf26W4E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB7056
+X-OriginatorOrg: intel.com
 
-On Mon, Sep 25, 2023 at 04:30:22PM -0700, Reinette Chatre wrote:
-> Hi Tony,
-> 
-> On 8/29/2023 4:44 PM, Tony Luck wrote:
-> > With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
-> > per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
-> > their name refer to Sub-NUMA nodes instead of L3 cache ids.
-> > 
-> > Users should be aware that SNC mode also affects the amount of L3 cache
-> > available for allocation within each SNC node.
-> > 
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> >  Documentation/arch/x86/resctrl.rst | 25 ++++++++++++++++++++++---
-> >  1 file changed, 22 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-> > index cb05d90111b4..407764f43f25 100644
-> > --- a/Documentation/arch/x86/resctrl.rst
-> > +++ b/Documentation/arch/x86/resctrl.rst
-> > @@ -345,9 +345,15 @@ When control is enabled all CTRL_MON groups will also contain:
-> >  When monitoring is enabled all MON groups will also contain:
-> >  
-> >  "mon_data":
-> > -	This contains a set of files organized by L3 domain and by
-> > -	RDT event. E.g. on a system with two L3 domains there will
-> > -	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
-> > +	This contains a set of files organized by L3 domain or by NUMA
-> > +	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
-> > +	or enabled respectively) and by RDT event. E.g. on a system with
-> > +	SNC mode disabled with two L3 domains there will be subdirectories
-> > +	"mon_L3_00" and "mon_L3_01". The numerical suffix refers to the
-> > +	L3 cache id.  With SNC enabled the directory names are the same,
-> > +	but the numerical suffix refers to the node id.
-> > +        Mappings from node ids to CPUs are available in the
-> > +        /sys/devices/system/node/node*/cpulist files. Each of these
-> 
-> Please be consistent with tabs vs spaces.
+Hi Tony,
 
-I blame "vim" for this one. Typing <TAB> while working on a .rst file
-throws in 8 spaces. Maybe there's a vim setting to stop this annoying
-behaviour (set syntax=off didn't help). Had to use CTRL(V)<TAB> to make
-it work.
+On 9/28/2023 10:33 AM, Tony Luck wrote:
+> On Mon, Sep 25, 2023 at 04:25:15PM -0700, Reinette Chatre wrote:
+>>
+>> On 8/29/2023 4:44 PM, Tony Luck wrote:
 
+>>> Similar breakout of struct rdt_hw_mondomain from struct rdt_hw_domain.
+>>
+>> rdt_hw_mondomain and rdt_hw_ctrldomain?
 > 
-> >  	directories have one file per event (e.g. "llc_occupancy",
-> >  	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
-> >  	files provide a read out of the current value of the event for
-> > @@ -452,6 +458,19 @@ and 0xA are not.  On a system with a 20-bit mask each bit represents 5%
-> >  of the capacity of the cache. You could partition the cache into four
-> >  equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
-> >  
-> > +Notes on Sub-NUMA Cluster mode
-> > +==============================
-> > +When SNC mode is enabled the "llc_occupancy", "mbm_total_bytes", and
-> > +"mbm_local_bytes" will only give accurate results for well behaved NUMA
-> > +applications. I.e. those that perform the majority of memory accesses
-> > +to memory on the local NUMA node to the CPU where the task is executing.
-> > +
-> 
-> Following our discussion of the cover letter I believe this will change to
-> be specific about what user space can expect and what is actually "accurate".
+> Yes. rdt_hw_domain is split two ways and each gets an appropriate name.
+> I added an extra "_" to match shape of other names. So these are now
+> "rdt_hw_ctrl_domain" and "rdt_hw_mon_domain"
 
-I added more text about the importance of binding tasks to SNC nodes.
+Thank you for adding the extra "_", it looks good.
+
+...
+
+>>> @@ -641,12 +641,12 @@ void cqm_handle_limbo(struct work_struct *work)
+>>>  	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+>>>  	int cpu = smp_processor_id();
+>>>  	struct rdt_resource *r;
+>>> -	struct rdt_domain *d;
+>>> +	struct rdt_mondomain *d;
+>>
+>> Reverse fir (Please check all code).
 > 
-> > +The cache allocation feature still provides the same number of
-> > +bits in a mask to control allocation into the L3 cache. But each
-> > +of those ways has its capacity reduced because the cache is divided
-> > +between the SNC nodes. The values reported in the resctrl
-> > +"size" files are adjusted accordingly.
-> > +
-> >  Memory bandwidth Allocation and monitoring
-> >  ==========================================
-> >  
-> 
-> Reinette
+> Fixed. (I wrote a simple awk script to find these (as I'm
+> obviously bad at noticing them). Included at end of this
+> message).
+
+Thank you very much for sharing your script. 
+
+
+Reinette
