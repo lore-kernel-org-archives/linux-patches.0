@@ -1,160 +1,560 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C945D749B
-	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 04:47:20 +0000 (UTC)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38S3ZvBl016763;
-	Thu, 28 Sep 2023 04:47:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : reply-to : to : cc : date : in-reply-to : references : content-type
- : mime-version : content-transfer-encoding; s=pp1;
- bh=/p6uaCgkwiyGbZEhvNiURzs31q+CpDrmch4m+ytv3vM=;
- b=XCvvcJs6E3wUyFbBkYc13AeA3EKFqIJnzJN8ceYGII2XMBIYzuwaTTdfB/3je7L836By
- aqtDCQoN8SaJnW/eo5O45CZBgmOIFfvMqqENOLDmKElwNgfqrtFhniodUXhQpnoCquqr
- OuyrrZdEEA47QVe9sMXMecV9FYkP4FLnpqNwJJmlWAEg1SQrzKEP6ea1UDjSMgdVNFGd
- DN2cEo/heFvbaVqg7fJzH/iLwaM2lvMnWawO4jjo4cWrJzh576i1RFOl0x+ezrTw+DXy
- y0CiebuYiN2+rt1XHcqADR53trgqQx/jYyhBMboTeM2CSLEKdi5OuChikDmr7sy1sQDZ 4w== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcw4cqb99-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Sep 2023 04:47:00 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38S4aLRM010520;
-	Thu, 28 Sep 2023 04:46:59 GMT
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcw4cqb8w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Sep 2023 04:46:59 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 38S31U5C008399;
-	Thu, 28 Sep 2023 04:46:59 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3taabt1s1q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Sep 2023 04:46:59 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 38S4kw0w3146366
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 28 Sep 2023 04:46:58 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9D0BE5805A;
-	Thu, 28 Sep 2023 04:46:58 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1A3F958051;
-	Thu, 28 Sep 2023 04:46:55 +0000 (GMT)
-Received: from patel.in.ibm.com (unknown [9.109.195.211])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 28 Sep 2023 04:46:54 +0000 (GMT)
-Message-ID: <5c933e2b06ab9090d9190bac41ebbc175b0a9357.camel@linux.ibm.com>
-Subject: Re: [PATCH 0/4] SLUB: calculate_order() cleanups
-From: Jay Patel <jaypatel@linux.ibm.com>
-Reply-To: jaypatel@linux.ibm.com
-To: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
-        Christoph Lameter
-	 <cl@linux.com>,
-        Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>,
-        Pekka Enberg
- <penberg@kernel.org>,
-        Joonsoo Kim <iamjoonsoo.kim@lge.com>, linux-mm@kvack.org,
-        patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Date: Thu, 28 Sep 2023 10:16:53 +0530
-In-Reply-To: <20230908145302.30320-6-vbabka@suse.cz>
-References: <20230908145302.30320-6-vbabka@suse.cz>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C125122D
+	for <patches@lists.linux.dev>; Thu, 28 Sep 2023 17:21:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695921713; x=1727457713;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=tiJWSSw+ZoRVQ306E03/wwzW11SO7i0xyWFwnoHn3JM=;
+  b=ZV9jh2jWL6Bk+OtaCcOu4G9b0N6JKMN9te5qOrwU5uXJeJVRB0YJX2HZ
+   1h9c0SCenlD44vC3VK3A+5ud/TDXULmK6clhM5znM/nnDIIhziZFVTFkt
+   bHm/zYXMn4d/Juy2caC/8kkRZ5W/OTVTsNKyU50ZbGUN8RxRXd6UZApm3
+   BZbNsimHbFKIfPwCgcGIoGP0q1MUQ84/MhQLHUeOLctHlybiLbE1vMDD+
+   xbUxEJQCc0361hgN+24IUMQT16ZJz65oKCGSBuvuXY3XIvJRMhVgPE6ee
+   gHdm86YpL5/yE/N4a5uFHhajFaIh7UPPTIZ8eP9BTNseZZhOhSS7mwdgk
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="384938210"
+X-IronPort-AV: E=Sophos;i="6.03,184,1694761200"; 
+   d="scan'208";a="384938210"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 10:21:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="743146986"
+X-IronPort-AV: E=Sophos;i="6.03,184,1694761200"; 
+   d="scan'208";a="743146986"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 10:21:52 -0700
+Date: Thu, 28 Sep 2023 10:21:50 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 2/8] x86/resctrl: Prepare for different scope for
+ control/monitor operations
+Message-ID: <ZRW2Lu6RxRPY/Yad@agluck-desk3>
+References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
+ <20230829234426.64421-3-tony.luck@intel.com>
+ <34671424-8dc5-3937-3779-8a8e52f47904@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -iGIWfAupp86IGjW8KxcKyb_CRtjO41T
-X-Proofpoint-GUID: 8JsgIpeAPJ3moOntpi6WmNbi8DUmBC9R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_01,2023-09-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=929 priorityscore=1501 clxscore=1011 phishscore=0 adultscore=0
- impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280039
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <34671424-8dc5-3937-3779-8a8e52f47904@intel.com>
 
-On Fri, 2023-09-08 at 16:53 +0200, Vlastimil Babka wrote:
-> Since reviewing recent patches made me finally dig into these
-> functions
-> in details for the first time, I've also noticed some opportunities
-> for
-> cleanups that should make them simpler and also deliver more
-> consistent
-> results for some corner case object sizes (probably not seen in
-> practice). Thus patch 3 can increase slab orders somewhere, but only
-> in
-> the way that was already intended. Otherwise it's almost no
-> functional
-> changes.
+On Mon, Sep 25, 2023 at 04:24:10PM -0700, Reinette Chatre wrote:
+> Hi Tony,
 > 
-Hi Vlastimil,
-
-This cleanup patchset looks promising.
-I've conducted test
-on PowerPC with 16 CPUs and a 64K page size, and here are the results.
-
-S
-lub Memory Usage
-
-+-------------------+--------+------------+
-|                   | Normal | With Patch |
-+-------------------+--------+------------+
-| Total Slub Memory | 476992 | 478464     |
-| Wastage           | 431    | 451        |
-+-------------------+--------+------------+
-
-Also, I have not detected any changes in the page order for slub caches
-across all objects with 64K page size.
-
-Hackbench Results
-
-+-------+----+---------+------------+----------+
-|     
-  |    | Normal  | With Patch |          |
-+-------+----+---------+-----
--------+----------+
-| Amean | 1  | 1.1530  | 1.1347     | ( 1.59%) |
-|
-Amean | 4  | 3.9220  | 3.8240     | ( 2.50%) |
-| Amean | 7  | 6.7943  |
-6.6300     | ( 2.42%) |
-| Amean | 12 | 11.7067 | 11.4423    | ( 2.26%) |
-| Amean | 21 | 20.6617 | 20.1680    | ( 2.39%) |
-| Amean | 30 | 29.4200
-| 28.6460    | ( 2.63%) |
-| Amean | 48 | 47.2797 | 46.2820    | ( 2.11%)
-|
-| Amean | 64 | 63.4680 | 62.1813    | ( 2.03%) |
-+-------+----+------
----+------------+----------+  
-
-
-Reviewed-by: Jay Patel
-<jaypatel@linux.ibm.com>
-Tested-by: Jay Patel <jaypatel@linux.ibm.com>
-
-Th
-ank You 
-Jay Patel
-> Vlastimil Babka (4):
->   mm/slub: simplify the last resort slab order calculation
->   mm/slub: remove min_objects loop from calculate_order()
->   mm/slub: attempt to find layouts up to 1/2 waste in
-> calculate_order()
->   mm/slub: refactor calculate_order() and calc_slab_order()
+> On 8/29/2023 4:44 PM, Tony Luck wrote:
+> > Existing resctrl assumes that control and monitor operations on a
 > 
->  mm/slub.c | 63 ++++++++++++++++++++++++-----------------------------
-> --
->  1 file changed, 27 insertions(+), 36 deletions(-)
-> 
+> Please remove "Existing", it can just be "resctrl assumes ..."
 
+Will do.
+
+> 
+> > resource are performed at the same scope.
+> > 
+> > Prepare for systems that use different scope (specifically L3 scope
+> > for cache control and NODE scope for cache occupancy and memory
+> > bandwidth monitoring).
+> > 
+> > Create separate domain lists for control and monitor operations.
+> > 
+> > No important functional change. But note that errors during
+> > initialization of either control or monitor functions on a domain would
+> > previously result in that domain being excluded from both control and
+> > monitor operations. Now the domains are allocated independently it is
+> > no longer required to disable both control and monitor operations if
+> > either fail.
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >  include/linux/resctrl.h                   |  16 +-
+> >  arch/x86/kernel/cpu/resctrl/internal.h    |   6 +-
+> >  arch/x86/kernel/cpu/resctrl/core.c        | 227 +++++++++++++++-------
+> >  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   2 +-
+> >  arch/x86/kernel/cpu/resctrl/monitor.c     |   2 +-
+> >  arch/x86/kernel/cpu/resctrl/pseudo_lock.c |   2 +-
+> >  arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  32 +--
+> >  7 files changed, 199 insertions(+), 88 deletions(-)
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index 2db1244ae642..33856943a787 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -155,10 +155,12 @@ enum resctrl_scope {
+> >   * @alloc_capable:	Is allocation available on this machine
+> >   * @mon_capable:	Is monitor feature available on this machine
+> >   * @num_rmid:		Number of RMIDs available
+> > - * @scope:		Scope of this resource
+> > + * @ctrl_scope:		Scope of this resource for control functions
+> > + * @mon_scope:		Scope of this resource for monitor functions
+> >   * @cache:		Cache allocation related data
+> >   * @membw:		If the component has bandwidth controls, their properties.
+> > - * @domains:		All domains for this resource
+> > + * @domains:		Control domains for this resource
+> > + * @mon_domains:	Monitor domains for this resource
+> >   * @name:		Name to use in "schemata" file.
+> >   * @data_width:		Character width of data when displaying
+> >   * @default_ctrl:	Specifies default cache cbm or memory B/W percent.
+> > @@ -173,10 +175,12 @@ struct rdt_resource {
+> >  	bool			alloc_capable;
+> >  	bool			mon_capable;
+> >  	int			num_rmid;
+> > -	enum resctrl_scope	scope;
+> > +	enum resctrl_scope	ctrl_scope;
+> > +	enum resctrl_scope	mon_scope;
+> >  	struct resctrl_cache	cache;
+> >  	struct resctrl_membw	membw;
+> >  	struct list_head	domains;
+> > +	struct list_head	mondomains;
+> 
+> kerneldoc is "mon_domains" while member is "mondomains".
+> I do think to be consistent with other members that "mon_domains"
+> would be appropriate. I also think it will be very helpful it
+> domains is renamed to "ctrl_domains" to more accurately match
+> "ctrl_scope" and what it represents.
+
+Next version will use "mon_domains" (and "mon_" in all the associated
+functions and macros). I'm also changing to "ctrl_" as suggested.
+
+> >  	char			*name;
+> >  	int			data_width;
+> >  	u32			default_ctrl;
+> > @@ -222,8 +226,10 @@ int resctrl_arch_update_one(struct rdt_resource *r, struct rdt_domain *d,
+> >  
+> >  u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_domain *d,
+> >  			    u32 closid, enum resctrl_conf_type type);
+> > -int resctrl_online_domain(struct rdt_resource *r, struct rdt_domain *d);
+> > -void resctrl_offline_domain(struct rdt_resource *r, struct rdt_domain *d);
+> > +int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_domain *d);
+> > +int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain *d);
+> > +void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_domain *d);
+> > +void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain *d);
+> >  
+> >  /**
+> >   * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
+> > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> > index 85ceaf9a31ac..31a5fc3b717f 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> > @@ -511,8 +511,10 @@ void rdtgroup_kn_unlock(struct kernfs_node *kn);
+> >  int rdtgroup_kn_mode_restrict(struct rdtgroup *r, const char *name);
+> >  int rdtgroup_kn_mode_restore(struct rdtgroup *r, const char *name,
+> >  			     umode_t mask);
+> > -struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+> > -				   struct list_head **pos);
+> > +struct rdt_domain *rdt_find_ctrldomain(struct list_head *h, int id,
+> > +				       struct list_head **pos);
+> > +struct rdt_domain *rdt_find_mondomain(struct list_head *h, int id,
+> > +				      struct list_head **pos);
+> 
+> This is not what I expected after our previous discussion. It
+> should not be necessary for caller to be aware of the different
+> lists. It looks to me like the original parameters of (struct rdt_resource *r,
+> int id, struct list_head **pos) can be maintained.
+
+Discussed in other e-mail. There is now a "struct rdt_domain_hdr"
+embedded in the control and monitor versions of the domain structure.
+rdt_find_domain() operates on that, and callers user container_of() to
+get to the enclosing structure.
+
+> 
+> >  ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+> >  				char *buf, size_t nbytes, loff_t off);
+> >  int rdtgroup_schemata_show(struct kernfs_open_file *of,
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index 0d3bae523ecb..97f6f9715fdb 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -57,7 +57,7 @@ static void
+> >  mba_wrmsr_amd(struct rdt_domain *d, struct msr_param *m,
+> >  	      struct rdt_resource *r);
+> >  
+> > -#define domain_init(id) LIST_HEAD_INIT(rdt_resources_all[id].r_resctrl.domains)
+> > +#define domain_init(id, field) LIST_HEAD_INIT(rdt_resources_all[id].r_resctrl.field)
+> >  
+> 
+> It may make the code easier to read if this is split into
+> a "mon_domain_init()" and "ctrl_domain_init()"
+
+Done
+
+> 
+> >  struct rdt_hw_resource rdt_resources_all[] = {
+> >  	[RDT_RESOURCE_L3] =
+> > @@ -65,8 +65,10 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_L3,
+> >  			.name			= "L3",
+> > -			.scope			= RESCTRL_L3_CACHE,
+> > -			.domains		= domain_init(RDT_RESOURCE_L3),
+> > +			.ctrl_scope		= RESCTRL_L3_CACHE,
+> > +			.mon_scope		= RESCTRL_L3_CACHE,
+> > +			.domains		= domain_init(RDT_RESOURCE_L3, domains),
+> > +			.mondomains		= domain_init(RDT_RESOURCE_L3, mondomains),
+> >  			.parse_ctrlval		= parse_cbm,
+> >  			.format_str		= "%d=%0*x",
+> >  			.fflags			= RFTYPE_RES_CACHE,
+> > @@ -79,8 +81,8 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_L2,
+> >  			.name			= "L2",
+> > -			.scope			= RESCTRL_L2_CACHE,
+> > -			.domains		= domain_init(RDT_RESOURCE_L2),
+> > +			.ctrl_scope		= RESCTRL_L2_CACHE,
+> > +			.domains		= domain_init(RDT_RESOURCE_L2, domains),
+> >  			.parse_ctrlval		= parse_cbm,
+> >  			.format_str		= "%d=%0*x",
+> >  			.fflags			= RFTYPE_RES_CACHE,
+> > @@ -93,8 +95,8 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_MBA,
+> >  			.name			= "MB",
+> > -			.scope			= RESCTRL_L3_CACHE,
+> > -			.domains		= domain_init(RDT_RESOURCE_MBA),
+> > +			.ctrl_scope		= RESCTRL_L3_CACHE,
+> > +			.domains		= domain_init(RDT_RESOURCE_MBA, domains),
+> >  			.parse_ctrlval		= parse_bw,
+> >  			.format_str		= "%d=%*u",
+> >  			.fflags			= RFTYPE_RES_MB,
+> > @@ -105,8 +107,8 @@ struct rdt_hw_resource rdt_resources_all[] = {
+> >  		.r_resctrl = {
+> >  			.rid			= RDT_RESOURCE_SMBA,
+> >  			.name			= "SMBA",
+> > -			.scope			= RESCTRL_L3_CACHE,
+> > -			.domains		= domain_init(RDT_RESOURCE_SMBA),
+> > +			.ctrl_scope		= RESCTRL_L3_CACHE,
+> > +			.domains		= domain_init(RDT_RESOURCE_SMBA, domains),
+> >  			.parse_ctrlval		= parse_bw,
+> >  			.format_str		= "%d=%*u",
+> >  			.fflags			= RFTYPE_RES_MB,
+> > @@ -384,15 +386,16 @@ void rdt_ctrl_update(void *arg)
+> >  }
+> >  
+> >  /*
+> > - * rdt_find_domain - Find a domain in a resource that matches input resource id
+> > + * __rdt_find_domain - Find a domain in either the list of control or
+> > + * monitor domains that matches input resource id
+> >   *
+> >   * Search resource r's domain list to find the resource id. If the resource
+> >   * id is found in a domain, return the domain. Otherwise, if requested by
+> >   * caller, return the first domain whose id is bigger than the input id.
+> >   * The domain list is sorted by id in ascending order.
+> >   */
+> > -struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+> > -				   struct list_head **pos)
+> > +static void *__rdt_find_domain(struct list_head *h, int id,
+> > +			       struct list_head **pos)
+> >  {
+> >  	struct rdt_domain *d;
+> >  	struct list_head *l;
+> > @@ -400,7 +403,7 @@ struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+> >  	if (id < 0)
+> >  		return ERR_PTR(-ENODEV);
+> >  
+> > -	list_for_each(l, &r->domains) {
+> > +	list_for_each(l, h) {
+> >  		d = list_entry(l, struct rdt_domain, list);
+> >  		/* When id is found, return its domain. */
+> >  		if (id == d->id)
+> > @@ -416,6 +419,18 @@ struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+> >  	return NULL;
+> >  }
+> >  
+> > +struct rdt_domain *rdt_find_ctrldomain(struct list_head *h, int id,
+> > +				       struct list_head **pos)
+> > +{
+> > +	return __rdt_find_domain(h, id, pos);
+> > +}
+> > +
+> > +struct rdt_domain *rdt_find_mondomain(struct list_head *h, int id,
+> > +				      struct list_head **pos)
+> > +{
+> > +	return __rdt_find_domain(h, id, pos);
+> > +}
+> > +
+> >  static void setup_default_ctrlval(struct rdt_resource *r, u32 *dc)
+> >  {
+> >  	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+> > @@ -431,10 +446,15 @@ static void setup_default_ctrlval(struct rdt_resource *r, u32 *dc)
+> >  }
+> >  
+> >  static void domain_free(struct rdt_hw_domain *hw_dom)
+> > +{
+> > +	kfree(hw_dom->ctrl_val);
+> > +	kfree(hw_dom);
+> > +}
+> > +
+> > +static void mondomain_free(struct rdt_hw_domain *hw_dom)
+> >  {
+> >  	kfree(hw_dom->arch_mbm_total);
+> >  	kfree(hw_dom->arch_mbm_local);
+> > -	kfree(hw_dom->ctrl_val);
+> >  	kfree(hw_dom);
+> >  }
+> >  
+> > @@ -502,6 +522,93 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+> >  	return -1;
+> >  }
+> >  
+> > +static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+> > +{
+> > +	int id = get_domain_id_from_scope(cpu, r->ctrl_scope);
+> > +	struct list_head *add_pos = NULL;
+> > +	struct rdt_hw_domain *hw_dom;
+> > +	struct rdt_domain *d;
+> > +	int err;
+> > +
+> > +	d = rdt_find_ctrldomain(&r->domains, id, &add_pos);
+> > +	if (IS_ERR(d)) {
+> > +		pr_warn("Couldn't find scope id=%d for CPU %d\n", id, cpu);
+> 
+> I am not sure here ... this generates identical error messages
+> for control and monitor domain. How will the user know what failed?
+> Also, how does printing id help? If I understand correctly it can
+> only be -1 when the above prints.
+
+Improved error messages in next version. Separate ones for failure in
+get_domain_id_from_scope() and rdt_find_domain(). Each have "control"
+or "monitor" in the message to help the user pinpoint exactly what
+went wrong.
+
+> > +		return;
+> > +	}
+> > +
+> > +	if (d) {
+> > +		cpumask_set_cpu(cpu, &d->cpu_mask);
+> > +		if (r->cache.arch_has_per_cpu_cfg)
+> > +			rdt_domain_reconfigure_cdp(r);
+> > +		return;
+> > +	}
+> > +
+> > +	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
+> > +	if (!hw_dom)
+> > +		return;
+> > +
+> > +	d = &hw_dom->d_resctrl;
+> > +	d->id = id;
+> > +	cpumask_set_cpu(cpu, &d->cpu_mask);
+> > +
+> > +	rdt_domain_reconfigure_cdp(r);
+> > +
+> > +	if (domain_setup_ctrlval(r, d)) {
+> > +		domain_free(hw_dom);
+> > +		return;
+> > +	}
+> > +
+> > +	list_add_tail(&d->list, add_pos);
+> > +
+> > +	err = resctrl_online_ctrl_domain(r, d);
+> > +	if (err) {
+> > +		list_del(&d->list);
+> > +		domain_free(hw_dom);
+> > +	}
+> > +}
+> > +
+> > +static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+> > +{
+> > +	int id = get_domain_id_from_scope(cpu, r->mon_scope);
+> > +	struct rdt_hw_domain *hw_mondom;
+> > +	struct list_head *add_pos = NULL;
+> 
+> Please maintain reverse fir ordering. Please check all code.
+
+I believe I got them all (for functions that are touched by this
+series - there are a handful of places in resctrl code that don't
+have reverse fir ordering - I didn't touch those).
+
+> > +	struct rdt_domain *d;
+> > +	int err;
+> > +
+> > +	d = rdt_find_mondomain(&r->mondomains, id, &add_pos);
+> > +	if (IS_ERR(d)) {
+> > +		pr_warn("Couldn't find scope id=%d for CPU %d\n", id, cpu);
+> > +		return;
+> > +	}
+> > +
+> > +	if (d) {
+> > +		cpumask_set_cpu(cpu, &d->cpu_mask);
+> > +
+> 
+> This is an unnecessary empty line that distracts from how the rest
+> of the function looks.
+
+Deleted it.
+
+> 
+> > +		return;
+> > +	}
+> > +
+> > +	hw_mondom = kzalloc_node(sizeof(*hw_mondom), GFP_KERNEL, cpu_to_node(cpu));
+> > +	if (!hw_mondom)
+> > +		return;
+> > +
+> > +	d = &hw_mondom->d_resctrl;
+> > +	d->id = id;
+> > +	cpumask_set_cpu(cpu, &d->cpu_mask);
+> > +
+> > +	if (arch_domain_mbm_alloc(r->num_rmid, hw_mondom)) {
+> > +		mondomain_free(hw_mondom);
+> > +		return;
+> > +	}
+> > +
+> > +	list_add_tail(&d->list, add_pos);
+> > +
+> > +	err = resctrl_online_mon_domain(r, d);
+> > +	if (err) {
+> > +		list_del(&d->list);
+> > +		mondomain_free(hw_mondom);
+> > +	}
+> > +}
+> > +
+> >  /*
+> >   * domain_add_cpu - Add a cpu to a resource's domain list.
+> >   *
+> 
+> Note that this leaves the comments about list management here while all
+> the list management code is moved away.
+
+Moved the comment in front of rdt_find_domain() which does most of the
+work. Small edit in the comment to say that callers do the rest.
+
+> 
+> > @@ -517,70 +624,28 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+> >   */
+> >  static void domain_add_cpu(int cpu, struct rdt_resource *r)
+> >  {
+> > -	int id = get_domain_id_from_scope(cpu, r->scope);
+> > -	struct list_head *add_pos = NULL;
+> > -	struct rdt_hw_domain *hw_dom;
+> > -	struct rdt_domain *d;
+> > -	int err;
+> > -
+> > -	d = rdt_find_domain(r, id, &add_pos);
+> > -	if (IS_ERR(d)) {
+> > -		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+> > -		return;
+> > -	}
+> > -
+> > -	if (d) {
+> > -		cpumask_set_cpu(cpu, &d->cpu_mask);
+> > -		if (r->cache.arch_has_per_cpu_cfg)
+> > -			rdt_domain_reconfigure_cdp(r);
+> > -		return;
+> > -	}
+> > -
+> > -	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
+> > -	if (!hw_dom)
+> > -		return;
+> > -
+> > -	d = &hw_dom->d_resctrl;
+> > -	d->id = id;
+> > -	cpumask_set_cpu(cpu, &d->cpu_mask);
+> > -
+> > -	rdt_domain_reconfigure_cdp(r);
+> > -
+> > -	if (r->alloc_capable && domain_setup_ctrlval(r, d)) {
+> > -		domain_free(hw_dom);
+> > -		return;
+> > -	}
+> > -
+> > -	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
+> > -		domain_free(hw_dom);
+> > -		return;
+> > -	}
+> > -
+> > -	list_add_tail(&d->list, add_pos);
+> > -
+> > -	err = resctrl_online_domain(r, d);
+> > -	if (err) {
+> > -		list_del(&d->list);
+> > -		domain_free(hw_dom);
+> > -	}
+> > +	if (r->alloc_capable)
+> > +		domain_add_cpu_ctrl(cpu, r);
+> > +	if (r->mon_capable)
+> > +		domain_add_cpu_mon(cpu, r);
+> >  }
+> >  
+> > -static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+> > +static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+> >  {
+> > -	int id = get_domain_id_from_scope(cpu, r->scope);
+> > +	int id = get_domain_id_from_scope(cpu, r->ctrl_scope);
+> >  	struct rdt_hw_domain *hw_dom;
+> >  	struct rdt_domain *d;
+> >  
+> > -	d = rdt_find_domain(r, id, NULL);
+> > +	d = rdt_find_ctrldomain(&r->domains, id, NULL);
+> >  	if (IS_ERR_OR_NULL(d)) {
+> > -		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+> > +		pr_warn("Couldn't find scope id=%d for CPU %d\n", id, cpu);
+> >  		return;
+> >  	}
+> >  	hw_dom = resctrl_to_arch_dom(d);
+> >  
+> >  	cpumask_clear_cpu(cpu, &d->cpu_mask);
+> >  	if (cpumask_empty(&d->cpu_mask)) {
+> > -		resctrl_offline_domain(r, d);
+> > +		resctrl_offline_ctrl_domain(r, d);
+> >  		list_del(&d->list);
+> >  
+> >  		/*
+> > @@ -593,6 +658,30 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+> >  
+> >  		return;
+> >  	}
+> > +}
+> > +
+> > +static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+> > +{
+> > +	int id = get_domain_id_from_scope(cpu, r->mon_scope);
+> > +	struct rdt_hw_domain *hw_mondom;
+> > +	struct rdt_domain *d;
+> > +
+> > +	d = rdt_find_mondomain(&r->mondomains, id, NULL);
+> > +	if (IS_ERR_OR_NULL(d)) {
+> > +		pr_warn("Couldn't find scope id=%d for CPU %d\n", id, cpu);
+> > +		return;
+> > +	}
+> > +	hw_mondom = resctrl_to_arch_dom(d);
+> > +
+> > +	cpumask_clear_cpu(cpu, &d->cpu_mask);
+> > +	if (cpumask_empty(&d->cpu_mask)) {
+> > +		resctrl_offline_mon_domain(r, d);
+> > +		list_del(&d->list);
+> > +
+> 
+> This is an awkward empty line.
+
+Deleted it.
+
+> 
+> > +		mondomain_free(hw_mondom);
+> > +
+> > +		return;
+> > +	}
+> >  
+> >  	if (r == &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl) {
+> >  		if (is_mbm_enabled() && cpu == d->mbm_work_cpu) {
+> 
+> ...
+> 
+> Reinette
