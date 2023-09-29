@@ -1,14 +1,14 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996BB20F9
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 19:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ACF20F9
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 19:58:00 +0000 (UTC)
 Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
 	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
 	(envelope-from <a.fatoum@pengutronix.de>)
-	id 1qmJbL-00056x-Gl; Fri, 29 Sep 2023 21:56:39 +0200
-Message-ID: <e85da95c-5451-31ea-cae9-76d697fb548f@pengutronix.de>
-Date: Fri, 29 Sep 2023 21:56:39 +0200
+	id 1qmJcb-0005KL-TK; Fri, 29 Sep 2023 21:57:57 +0200
+Message-ID: <7df69de2-1b3a-5226-7dc2-d1489e48f6a2@pengutronix.de>
+Date: Fri, 29 Sep 2023 21:57:58 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -17,16 +17,16 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 5.10 329/406] clk: imx: pll14xx: dynamically configure PLL
+Subject: Re: [PATCH 5.15 399/511] clk: imx: pll14xx: dynamically configure PLL
  for 393216000/361267200Hz
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, Marco Felsch <m.felsch@pengutronix.de>,
  Abel Vesa <abel.vesa@linaro.org>
-References: <20230917191101.035638219@linuxfoundation.org>
- <20230917191109.976825265@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
+ <20230917191123.425955062@linuxfoundation.org>
 From: Ahmad Fatoum <a.fatoum@pengutronix.de>
-In-Reply-To: <20230917191109.976825265@linuxfoundation.org>
+In-Reply-To: <20230917191123.425955062@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
@@ -34,10 +34,10 @@ X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: patches@lists.linux.dev
 
-Hi,
+Hi Greg,
 
 On 17.09.23 21:13, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
+> 5.15-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
@@ -89,7 +89,10 @@ On 17.09.23 21:13, Greg Kroah-Hartman wrote:
 > Fixes: 053a4ffe2988 ("clk: imx: imx8mm: fix audio pll setting")
 > Cc: stable@vger.kernel.org # v5.18+
 
-Patch is only correct for v5.18 onward. Please drop for v5.10.
+Patch is only correct for v5.18 onward. Please drop for v5.15.
+
+Is there another syntax that we should've used instead that your tools
+pick up?
 
 Thanks,
 Ahmad
