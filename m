@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D3DE66674
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EE516667B
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:04 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 7B99420B74C4;
+	by linux.microsoft.com (Postfix) with ESMTPSA id EBCA420B74CB;
 	Fri, 29 Sep 2023 11:01:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7B99420B74C4
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EBCA420B74CB
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1696010516;
-	bh=/7m+y8jCPpzPX/lKoISXVPs2wgZhEYzypUg762MOLQ4=;
+	s=default; t=1696010517;
+	bh=gkVIO25U3NH7SaMSYevd28ShnlaNfK6ODnBOcUlDit4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSsvhPR7/qyaL67JMveYeSAuUeHhFMzs9Vf1cjwydXBUyiRjs+AnatVUCokAYomRA
-	 Eqljn3TmtoPzmJkEz46RKZ+DEnp4k2DoOp1dLUZunEjSbukuLwjE3DeRpJh2ACvFjl
-	 Jj1giraKEJfWvBwafjRmYxqEQaC38ALuDr6FAKYg=
+	b=h/e7m+TA7g1CPuC7RvdI1YbZVL3PRtortKLWBDqkEf+r8AtuNKYn4Q0yNT7wM2Ddg
+	 mIijGxvjkmghbsjmlbTqvLPmIPyOFE+d4i89hNJuopPamvW66s94BA9LUJVHrq0NDM
+	 c/rDP6mLOZsvb8jTujUDpOpRsBIGXxA17hBxGCzA=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v4 02/15] mshyperv: Introduce hv_get_hypervisor_version function
-Date: Fri, 29 Sep 2023 11:01:28 -0700
-Message-Id: <1696010501-24584-3-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v4 06/15] hyperv-tlfs: Introduce hv_status_to_string and hv_status_to_errno
+Date: Fri, 29 Sep 2023 11:01:32 -0700
+Message-Id: <1696010501-24584-7-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,169 +51,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-x86_64 and arm64 implementations to get the hypervisor version
-information. Store these in hv_hypervisor_version_info structure to
-simplify parsing the fields.
+hv_status_to_errno translates hyperv statuses to linux error codes.
+This is useful for returning something linux-friendly from a hypercall
+helper function.
 
-Replace the existing parsing when printing the version numbers at boot.
+hv_status_to_string improves clarity of error messages.
 
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- arch/arm64/hyperv/mshyperv.c      | 23 +++++++++++++-------
- arch/x86/kernel/cpu/mshyperv.c    | 36 +++++++++++++++++++------------
- include/asm-generic/hyperv-tlfs.h | 23 ++++++++++++++++++++
- include/asm-generic/mshyperv.h    |  2 ++
- 4 files changed, 62 insertions(+), 22 deletions(-)
+ arch/x86/hyperv/hv_init.c         |  2 +-
+ arch/x86/hyperv/hv_proc.c         |  6 ++--
+ include/asm-generic/hyperv-tlfs.h | 47 ++++++++++++++++++++++---------
+ include/asm-generic/mshyperv.h    | 33 ++++++++++++++++++++++
+ 4 files changed, 71 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/hyperv/mshyperv.c b/arch/arm64/hyperv/mshyperv.c
-index f1b8a04ee9f2..53bdd3bc81ac 100644
---- a/arch/arm64/hyperv/mshyperv.c
-+++ b/arch/arm64/hyperv/mshyperv.c
-@@ -19,10 +19,19 @@
- 
- static bool hyperv_initialized;
- 
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
-+{
-+	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION,
-+			 (struct hv_get_vp_registers_output *)info);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
-+
- static int __init hyperv_init(void)
- {
--	struct hv_get_vp_registers_output	result;
--	u32	a, b, c, d;
-+	struct hv_get_vp_registers_output result;
-+	union hv_hypervisor_version_info version;
- 	u64	guest_id;
- 	int	ret;
- 
-@@ -55,13 +64,11 @@ static int __init hyperv_init(void)
- 		ms_hyperv.misc_features);
- 
- 	/* Get information about the Hyper-V host version */
--	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION, &result);
--	a = result.as32.a;
--	b = result.as32.b;
--	c = result.as32.c;
--	d = result.as32.d;
-+	hv_get_hypervisor_version(&version);
- 	pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
--		b >> 16, b & 0xFFFF, a,	d & 0xFFFFFF, c, d >> 24);
-+		version.major_version, version.minor_version,
-+		version.build_number, version.service_number,
-+		version.service_pack, version.service_branch);
- 
- 	ret = hv_common_init();
- 	if (ret)
-diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index d85a8e2a10c9..9b898b65a013 100644
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -347,13 +347,26 @@ static void __init reduced_hw_init(void)
- 	x86_init.irqs.pre_vector_init	= x86_init_noop;
- }
- 
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
-+{
-+	unsigned int hv_max_functions;
-+
-+	hv_max_functions = cpuid_eax(HYPERV_CPUID_VENDOR_AND_MAX_FUNCTIONS);
-+	if (hv_max_functions < HYPERV_CPUID_VERSION) {
-+		pr_err("%s: Could not detect Hyper-V version\n", __func__);
-+		return -ENODEV;
-+	}
-+
-+	cpuid(HYPERV_CPUID_VERSION, &info->eax, &info->ebx, &info->ecx, &info->edx);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
-+
- static void __init ms_hyperv_init_platform(void)
- {
- 	int hv_max_functions_eax;
--	int hv_host_info_eax;
--	int hv_host_info_ebx;
--	int hv_host_info_ecx;
--	int hv_host_info_edx;
-+	union hv_hypervisor_version_info version;
- 
- #ifdef CONFIG_PARAVIRT
- 	pv_info.name = "Hyper-V";
-@@ -407,16 +420,11 @@ static void __init ms_hyperv_init_platform(void)
- 	/*
- 	 * Extract host information.
- 	 */
--	if (hv_max_functions_eax >= HYPERV_CPUID_VERSION) {
--		hv_host_info_eax = cpuid_eax(HYPERV_CPUID_VERSION);
--		hv_host_info_ebx = cpuid_ebx(HYPERV_CPUID_VERSION);
--		hv_host_info_ecx = cpuid_ecx(HYPERV_CPUID_VERSION);
--		hv_host_info_edx = cpuid_edx(HYPERV_CPUID_VERSION);
--
--		pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
--			hv_host_info_ebx >> 16, hv_host_info_ebx & 0xFFFF,
--			hv_host_info_eax, hv_host_info_edx & 0xFFFFFF,
--			hv_host_info_ecx, hv_host_info_edx >> 24);
-+	if (hv_get_hypervisor_version(&version) == 0) {
-+		pr_info("Hyper-V Host Build:%d-%d.%d-%d-%d.%d\n",
-+			version.build_number, version.major_version,
-+			version.minor_version, version.service_pack,
-+			version.service_branch, version.service_number);
+diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
+index 783ed339f341..515ca168748d 100644
+--- a/arch/x86/hyperv/hv_init.c
++++ b/arch/x86/hyperv/hv_init.c
+@@ -387,7 +387,7 @@ static void __init hv_get_partition_id(void)
+ 	status = hv_do_hypercall(HVCALL_GET_PARTITION_ID, NULL, output_page);
+ 	if (!hv_result_success(status)) {
+ 		/* No point in proceeding if this failed */
+-		pr_err("Failed to get partition ID: %lld\n", status);
++		pr_err("Failed to get partition ID: %s\n", hv_status_to_string(status));
+ 		BUG();
  	}
+ 	hv_current_partition_id = output_page->partition_id;
+diff --git a/arch/x86/hyperv/hv_proc.c b/arch/x86/hyperv/hv_proc.c
+index 5ba5ca1b2089..ed80da64649e 100644
+--- a/arch/x86/hyperv/hv_proc.c
++++ b/arch/x86/hyperv/hv_proc.c
+@@ -144,9 +144,9 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
  
- 	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
+ 		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY) {
+ 			if (!hv_result_success(status)) {
+-				pr_err("%s: cpu %u apic ID %u, %lld\n", __func__,
+-				       lp_index, apic_id, status);
+-				ret = hv_result(status);
++				pr_err("%s: cpu %u apic ID %u, %s\n", __func__,
++				       lp_index, apic_id, hv_status_to_string(status));
++				ret = hv_status_to_errno(status);
+ 			}
+ 			break;
+ 		}
 diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
-index fdac4a1714ec..f63b3704d89e 100644
+index 1316584983c1..8d76661a8c9f 100644
 --- a/include/asm-generic/hyperv-tlfs.h
 +++ b/include/asm-generic/hyperv-tlfs.h
-@@ -787,6 +787,29 @@ struct hv_input_unmap_device_interrupt {
- #define HV_SOURCE_SHADOW_NONE               0x0
- #define HV_SOURCE_SHADOW_BRIDGE_BUS_RANGE   0x1
+@@ -212,19 +212,40 @@ enum HV_GENERIC_SET_FORMAT {
+ 					 HV_HYPERCALL_RSVD2_MASK)
  
-+/*
-+ * Version info reported by hypervisor
-+ */
-+union hv_hypervisor_version_info {
-+	struct {
-+		u32 build_number;
+ /* hypercall status code */
+-#define HV_STATUS_SUCCESS			0
+-#define HV_STATUS_INVALID_HYPERCALL_CODE	2
+-#define HV_STATUS_INVALID_HYPERCALL_INPUT	3
+-#define HV_STATUS_INVALID_ALIGNMENT		4
+-#define HV_STATUS_INVALID_PARAMETER		5
+-#define HV_STATUS_ACCESS_DENIED			6
+-#define HV_STATUS_OPERATION_DENIED		8
+-#define HV_STATUS_INSUFFICIENT_MEMORY		11
+-#define HV_STATUS_INVALID_PORT_ID		17
+-#define HV_STATUS_INVALID_CONNECTION_ID		18
+-#define HV_STATUS_INSUFFICIENT_BUFFERS		19
+-#define HV_STATUS_TIME_OUT                      120
+-#define HV_STATUS_VTL_ALREADY_ENABLED		134
++#define __HV_STATUS_DEF(OP) \
++	OP(HV_STATUS_SUCCESS,				0x0) \
++	OP(HV_STATUS_INVALID_HYPERCALL_CODE,		0x2) \
++	OP(HV_STATUS_INVALID_HYPERCALL_INPUT,		0x3) \
++	OP(HV_STATUS_INVALID_ALIGNMENT,			0x4) \
++	OP(HV_STATUS_INVALID_PARAMETER,			0x5) \
++	OP(HV_STATUS_ACCESS_DENIED,			0x6) \
++	OP(HV_STATUS_INVALID_PARTITION_STATE,		0x7) \
++	OP(HV_STATUS_OPERATION_DENIED,			0x8) \
++	OP(HV_STATUS_UNKNOWN_PROPERTY,			0x9) \
++	OP(HV_STATUS_PROPERTY_VALUE_OUT_OF_RANGE,	0xA) \
++	OP(HV_STATUS_INSUFFICIENT_MEMORY,		0xB) \
++	OP(HV_STATUS_INVALID_PARTITION_ID,		0xD) \
++	OP(HV_STATUS_INVALID_VP_INDEX,			0xE) \
++	OP(HV_STATUS_NOT_FOUND,				0x10) \
++	OP(HV_STATUS_INVALID_PORT_ID,			0x11) \
++	OP(HV_STATUS_INVALID_CONNECTION_ID,		0x12) \
++	OP(HV_STATUS_INSUFFICIENT_BUFFERS,		0x13) \
++	OP(HV_STATUS_NOT_ACKNOWLEDGED,			0x14) \
++	OP(HV_STATUS_INVALID_VP_STATE,			0x15) \
++	OP(HV_STATUS_NO_RESOURCES,			0x1D) \
++	OP(HV_STATUS_PROCESSOR_FEATURE_NOT_SUPPORTED,	0x20) \
++	OP(HV_STATUS_INVALID_LP_INDEX,			0x41) \
++	OP(HV_STATUS_INVALID_REGISTER_VALUE,		0x50) \
++	OP(HV_STATUS_TIME_OUT,				0x78) \
++	OP(HV_STATUS_CALL_PENDING,			0x79) \
++	OP(HV_STATUS_VTL_ALREADY_ENABLED,		0x86)
 +
-+		u32 minor_version : 16;
-+		u32 major_version : 16;
++#define __HV_MAKE_HV_STATUS_ENUM(NAME, VAL) NAME = (VAL),
++#define __HV_MAKE_HV_STATUS_CASE(NAME, VAL) case (NAME): return (#NAME);
 +
-+		u32 service_pack;
-+
-+		u32 service_number : 24;
-+		u32 service_branch : 8;
-+	};
-+	struct {
-+		u32 eax;
-+		u32 ebx;
-+		u32 ecx;
-+		u32 edx;
-+	};
++enum hv_status {
++	__HV_STATUS_DEF(__HV_MAKE_HV_STATUS_ENUM)
 +};
-+
+ 
  /*
-  * The whole argument should fit in a page to be able to pass to the hypervisor
-  * in one hypercall.
+  * The Hyper-V TimeRefCount register and the TSC
 diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index 56f4a447a178..9f2c06c9d5d1 100644
+index 3e715aa114da..d6310a40fbde 100644
 --- a/include/asm-generic/mshyperv.h
 +++ b/include/asm-generic/mshyperv.h
-@@ -161,6 +161,8 @@ static inline void vmbus_signal_eom(struct hv_message *msg, u32 old_msg_type)
- 	}
+@@ -305,6 +305,39 @@ static inline int cpumask_to_vpset_skip(struct hv_vpset *vpset,
+ 	return __cpumask_to_vpset(vpset, cpus, func);
  }
  
-+int hv_get_hypervisor_version(union hv_hypervisor_version_info *info);
 +
- void hv_setup_vmbus_handler(void (*handler)(void));
- void hv_remove_vmbus_handler(void);
- void hv_setup_stimer0_handler(void (*handler)(void));
++static inline int hv_status_to_errno(u64 hv_status)
++{
++	switch (hv_result(hv_status)) {
++	case HV_STATUS_SUCCESS:
++		return 0;
++	case HV_STATUS_INVALID_PARAMETER:
++	case HV_STATUS_UNKNOWN_PROPERTY:
++	case HV_STATUS_PROPERTY_VALUE_OUT_OF_RANGE:
++	case HV_STATUS_INVALID_VP_INDEX:
++	case HV_STATUS_INVALID_REGISTER_VALUE:
++	case HV_STATUS_INVALID_LP_INDEX:
++	case HV_STATUS_PROCESSOR_FEATURE_NOT_SUPPORTED:
++		return -EINVAL;
++	case HV_STATUS_ACCESS_DENIED:
++	case HV_STATUS_OPERATION_DENIED:
++		return -EACCES;
++	case HV_STATUS_NOT_ACKNOWLEDGED:
++	case HV_STATUS_INVALID_VP_STATE:
++	case HV_STATUS_INVALID_PARTITION_STATE:
++		return -EBADFD;
++	}
++	return -ENOTRECOVERABLE;
++}
++
++static inline const char *hv_status_to_string(u64 hv_status)
++{
++	switch (hv_result(hv_status)) {
++	__HV_STATUS_DEF(__HV_MAKE_HV_STATUS_CASE)
++	default : return "Unknown";
++	}
++}
++
+ void hyperv_report_panic(struct pt_regs *regs, long err, bool in_die);
+ bool hv_is_hyperv_initialized(void);
+ bool hv_is_hibernation_supported(void);
 -- 
 2.25.1
 
