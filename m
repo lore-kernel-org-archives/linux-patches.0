@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EE516667B
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88FB166677
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:02 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id EBCA420B74CB;
+	by linux.microsoft.com (Postfix) with ESMTPSA id B34DE20B74C7;
 	Fri, 29 Sep 2023 11:01:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EBCA420B74CB
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B34DE20B74C7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1696010517;
-	bh=gkVIO25U3NH7SaMSYevd28ShnlaNfK6ODnBOcUlDit4=;
+	s=default; t=1696010516;
+	bh=mZwLSbCtRB1ZVGaw+v19Hz/DrAEqrivEKsuObnviiIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/e7m+TA7g1CPuC7RvdI1YbZVL3PRtortKLWBDqkEf+r8AtuNKYn4Q0yNT7wM2Ddg
-	 mIijGxvjkmghbsjmlbTqvLPmIPyOFE+d4i89hNJuopPamvW66s94BA9LUJVHrq0NDM
-	 c/rDP6mLOZsvb8jTujUDpOpRsBIGXxA17hBxGCzA=
+	b=O0XGRVMMXkFI3fCV0Bztc7nO0xVF4U46C3syNqi/O1mdSlpp0Ho3tb1cBuMOBrzSk
+	 3kcyWVa98z6DNGGSkUWgTuRvoZ/0RpN7nXHteHIlX4ehvvOJ86OH1mxsyRXFUgryFu
+	 DntgIgf4DPROf0Lx/YNIjmwKqvpn3H7Zq/ktvWuM=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v4 06/15] hyperv-tlfs: Introduce hv_status_to_string and hv_status_to_errno
-Date: Fri, 29 Sep 2023 11:01:32 -0700
-Message-Id: <1696010501-24584-7-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v4 04/15] asm-generic/mshyperv: Introduce hv_recommend_using_aeoi()
+Date: Fri, 29 Sep 2023 11:01:30 -0700
+Message-Id: <1696010501-24584-5-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,153 +51,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-hv_status_to_errno translates hyperv statuses to linux error codes.
-This is useful for returning something linux-friendly from a hypercall
-helper function.
-
-hv_status_to_string improves clarity of error messages.
+Factor out logic for determining if we should set the auto eoi flag in SINT
+register.
 
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
 ---
- arch/x86/hyperv/hv_init.c         |  2 +-
- arch/x86/hyperv/hv_proc.c         |  6 ++--
- include/asm-generic/hyperv-tlfs.h | 47 ++++++++++++++++++++++---------
- include/asm-generic/mshyperv.h    | 33 ++++++++++++++++++++++
- 4 files changed, 71 insertions(+), 17 deletions(-)
+ drivers/hv/hv.c                | 12 +-----------
+ include/asm-generic/mshyperv.h | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
-index 783ed339f341..515ca168748d 100644
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -387,7 +387,7 @@ static void __init hv_get_partition_id(void)
- 	status = hv_do_hypercall(HVCALL_GET_PARTITION_ID, NULL, output_page);
- 	if (!hv_result_success(status)) {
- 		/* No point in proceeding if this failed */
--		pr_err("Failed to get partition ID: %lld\n", status);
-+		pr_err("Failed to get partition ID: %s\n", hv_status_to_string(status));
- 		BUG();
- 	}
- 	hv_current_partition_id = output_page->partition_id;
-diff --git a/arch/x86/hyperv/hv_proc.c b/arch/x86/hyperv/hv_proc.c
-index 5ba5ca1b2089..ed80da64649e 100644
---- a/arch/x86/hyperv/hv_proc.c
-+++ b/arch/x86/hyperv/hv_proc.c
-@@ -144,9 +144,9 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
+diff --git a/drivers/hv/hv.c b/drivers/hv/hv.c
+index 5ea104c61fa7..d7869205dcbe 100644
+--- a/drivers/hv/hv.c
++++ b/drivers/hv/hv.c
+@@ -315,17 +315,7 @@ void hv_synic_enable_regs(unsigned int cpu)
  
- 		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY) {
- 			if (!hv_result_success(status)) {
--				pr_err("%s: cpu %u apic ID %u, %lld\n", __func__,
--				       lp_index, apic_id, status);
--				ret = hv_result(status);
-+				pr_err("%s: cpu %u apic ID %u, %s\n", __func__,
-+				       lp_index, apic_id, hv_status_to_string(status));
-+				ret = hv_status_to_errno(status);
- 			}
- 			break;
- 		}
-diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
-index 1316584983c1..8d76661a8c9f 100644
---- a/include/asm-generic/hyperv-tlfs.h
-+++ b/include/asm-generic/hyperv-tlfs.h
-@@ -212,19 +212,40 @@ enum HV_GENERIC_SET_FORMAT {
- 					 HV_HYPERCALL_RSVD2_MASK)
+ 	shared_sint.vector = vmbus_interrupt;
+ 	shared_sint.masked = false;
+-
+-	/*
+-	 * On architectures where Hyper-V doesn't support AEOI (e.g., ARM64),
+-	 * it doesn't provide a recommendation flag and AEOI must be disabled.
+-	 */
+-#ifdef HV_DEPRECATING_AEOI_RECOMMENDED
+-	shared_sint.auto_eoi =
+-			!(ms_hyperv.hints & HV_DEPRECATING_AEOI_RECOMMENDED);
+-#else
+-	shared_sint.auto_eoi = 0;
+-#endif
++	shared_sint.auto_eoi = hv_recommend_using_aeoi();
+ 	hv_set_register(HV_MSR_SINT0 + VMBUS_MESSAGE_SINT,
+ 			shared_sint.as_uint64);
  
- /* hypercall status code */
--#define HV_STATUS_SUCCESS			0
--#define HV_STATUS_INVALID_HYPERCALL_CODE	2
--#define HV_STATUS_INVALID_HYPERCALL_INPUT	3
--#define HV_STATUS_INVALID_ALIGNMENT		4
--#define HV_STATUS_INVALID_PARAMETER		5
--#define HV_STATUS_ACCESS_DENIED			6
--#define HV_STATUS_OPERATION_DENIED		8
--#define HV_STATUS_INSUFFICIENT_MEMORY		11
--#define HV_STATUS_INVALID_PORT_ID		17
--#define HV_STATUS_INVALID_CONNECTION_ID		18
--#define HV_STATUS_INSUFFICIENT_BUFFERS		19
--#define HV_STATUS_TIME_OUT                      120
--#define HV_STATUS_VTL_ALREADY_ENABLED		134
-+#define __HV_STATUS_DEF(OP) \
-+	OP(HV_STATUS_SUCCESS,				0x0) \
-+	OP(HV_STATUS_INVALID_HYPERCALL_CODE,		0x2) \
-+	OP(HV_STATUS_INVALID_HYPERCALL_INPUT,		0x3) \
-+	OP(HV_STATUS_INVALID_ALIGNMENT,			0x4) \
-+	OP(HV_STATUS_INVALID_PARAMETER,			0x5) \
-+	OP(HV_STATUS_ACCESS_DENIED,			0x6) \
-+	OP(HV_STATUS_INVALID_PARTITION_STATE,		0x7) \
-+	OP(HV_STATUS_OPERATION_DENIED,			0x8) \
-+	OP(HV_STATUS_UNKNOWN_PROPERTY,			0x9) \
-+	OP(HV_STATUS_PROPERTY_VALUE_OUT_OF_RANGE,	0xA) \
-+	OP(HV_STATUS_INSUFFICIENT_MEMORY,		0xB) \
-+	OP(HV_STATUS_INVALID_PARTITION_ID,		0xD) \
-+	OP(HV_STATUS_INVALID_VP_INDEX,			0xE) \
-+	OP(HV_STATUS_NOT_FOUND,				0x10) \
-+	OP(HV_STATUS_INVALID_PORT_ID,			0x11) \
-+	OP(HV_STATUS_INVALID_CONNECTION_ID,		0x12) \
-+	OP(HV_STATUS_INSUFFICIENT_BUFFERS,		0x13) \
-+	OP(HV_STATUS_NOT_ACKNOWLEDGED,			0x14) \
-+	OP(HV_STATUS_INVALID_VP_STATE,			0x15) \
-+	OP(HV_STATUS_NO_RESOURCES,			0x1D) \
-+	OP(HV_STATUS_PROCESSOR_FEATURE_NOT_SUPPORTED,	0x20) \
-+	OP(HV_STATUS_INVALID_LP_INDEX,			0x41) \
-+	OP(HV_STATUS_INVALID_REGISTER_VALUE,		0x50) \
-+	OP(HV_STATUS_TIME_OUT,				0x78) \
-+	OP(HV_STATUS_CALL_PENDING,			0x79) \
-+	OP(HV_STATUS_VTL_ALREADY_ENABLED,		0x86)
-+
-+#define __HV_MAKE_HV_STATUS_ENUM(NAME, VAL) NAME = (VAL),
-+#define __HV_MAKE_HV_STATUS_CASE(NAME, VAL) case (NAME): return (#NAME);
-+
-+enum hv_status {
-+	__HV_STATUS_DEF(__HV_MAKE_HV_STATUS_ENUM)
-+};
- 
- /*
-  * The Hyper-V TimeRefCount register and the TSC
 diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index 3e715aa114da..d6310a40fbde 100644
+index 8cc7b0e316d7..3e715aa114da 100644
 --- a/include/asm-generic/mshyperv.h
 +++ b/include/asm-generic/mshyperv.h
-@@ -305,6 +305,39 @@ static inline int cpumask_to_vpset_skip(struct hv_vpset *vpset,
- 	return __cpumask_to_vpset(vpset, cpus, func);
- }
+@@ -82,6 +82,19 @@ extern u64 hv_do_fast_hypercall8(u16 control, u64 input8);
+ bool hv_isolation_type_snp(void);
+ bool hv_isolation_type_tdx(void);
  
-+
-+static inline int hv_status_to_errno(u64 hv_status)
++/*
++ * On architectures where Hyper-V doesn't support AEOI (e.g., ARM64),
++ * it doesn't provide a recommendation flag and AEOI must be disabled.
++ */
++static inline bool hv_recommend_using_aeoi(void)
 +{
-+	switch (hv_result(hv_status)) {
-+	case HV_STATUS_SUCCESS:
-+		return 0;
-+	case HV_STATUS_INVALID_PARAMETER:
-+	case HV_STATUS_UNKNOWN_PROPERTY:
-+	case HV_STATUS_PROPERTY_VALUE_OUT_OF_RANGE:
-+	case HV_STATUS_INVALID_VP_INDEX:
-+	case HV_STATUS_INVALID_REGISTER_VALUE:
-+	case HV_STATUS_INVALID_LP_INDEX:
-+	case HV_STATUS_PROCESSOR_FEATURE_NOT_SUPPORTED:
-+		return -EINVAL;
-+	case HV_STATUS_ACCESS_DENIED:
-+	case HV_STATUS_OPERATION_DENIED:
-+		return -EACCES;
-+	case HV_STATUS_NOT_ACKNOWLEDGED:
-+	case HV_STATUS_INVALID_VP_STATE:
-+	case HV_STATUS_INVALID_PARTITION_STATE:
-+		return -EBADFD;
-+	}
-+	return -ENOTRECOVERABLE;
++#ifdef HV_DEPRECATING_AEOI_RECOMMENDED
++	return !(ms_hyperv.hints & HV_DEPRECATING_AEOI_RECOMMENDED);
++#else
++	return false;
++#endif
 +}
 +
-+static inline const char *hv_status_to_string(u64 hv_status)
-+{
-+	switch (hv_result(hv_status)) {
-+	__HV_STATUS_DEF(__HV_MAKE_HV_STATUS_CASE)
-+	default : return "Unknown";
-+	}
-+}
-+
- void hyperv_report_panic(struct pt_regs *regs, long err, bool in_die);
- bool hv_is_hyperv_initialized(void);
- bool hv_is_hibernation_supported(void);
+ /* Helper functions that provide a consistent pattern for checking Hyper-V hypercall status. */
+ static inline int hv_result(u64 status)
+ {
 -- 
 2.25.1
 
