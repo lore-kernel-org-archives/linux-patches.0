@@ -1,40 +1,40 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793894123C
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 14:21:22 +0000 (UTC)
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1c60128d3f6so195385ad.0
-        for <patches@lists.linux.dev>; Fri, 29 Sep 2023 07:21:22 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1334B4123C
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 14:22:05 +0000 (UTC)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1c60128d3f6so195595ad.0
+        for <patches@lists.linux.dev>; Fri, 29 Sep 2023 07:22:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695997282; x=1696602082; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1695997325; x=1696602125; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tIjMyRkvD4vXS0iKt2DZ+VffYOy0NMhKbaOoqihxMXc=;
-        b=wH9DDLSg3Cq5skHXNXkcN56fBwGaFCmE/s6xSZ71q5tlzLAYhfqUGYB+fQjMdgkwCd
-         +dJ+GZGlVuwJT9SHsCO+P/0BLXvTOBhw9tL3KDtWmDq6G2PeiY/xURs7bMZEWrTKO0Zx
-         6FlsnKn6Y5nf/9zK5OQeDCRlN4jid5tiYccC8irb6FEImoeVX86nlUmr9/haQR6vtUx8
-         sv014mrmhdiddM8KajvQybp3laynq8sDCRvsgYvAEDh24xstKtLqFSvOBZTcd2ku+DUX
-         9p7hk6Ka1MxZ62Ll++/4Zw8EQbosW4N88df6skEeyy1Ax8QeG4MFltJZ36oZtheKmUOf
-         nyEA==
+        bh=yYEFurrEEC58Pi6MuErcWJ3A1NxFP/ysymFeMwH4+H0=;
+        b=eP+Wn6DIskfx5/oEZfDpyevbuOocpeSaVD7U4KjEzzusf1eXZ0deEBj9ou18KK61rZ
+         eVBafRcxmDV5dHXLYRcK8sdXx5uq6isDcCh3QTeSnH2iPKW52ULa7Q2Arp+rh7sC+50E
+         6odWpELHkQLsbu6zT+ezHitko0MWCzwcishfGXwGC/yba4w8Dj+6yJMKf9X0tItd0n/i
+         gtJ2DOeyB/zpNehQaBn3yeHydAcNx2HDJpHNFImpegpAzDUU1AIQH++Pogg7sFPSWgPa
+         3uhBxVi7AM31q/+ufpfdEIW4uRLrcEpwL40XjiQEt0UmTqid6I7bRbjfvCjfV2RJbHA/
+         eClg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695997282; x=1696602082;
+        d=1e100.net; s=20230601; t=1695997325; x=1696602125;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tIjMyRkvD4vXS0iKt2DZ+VffYOy0NMhKbaOoqihxMXc=;
-        b=O9gzCcDoVQBd/JvN6G74Q3FFPLupjvJ0d2pK0hTzByk/x91bGQLChAlk18I9CgbVHc
-         WTzq15nflPcvlakNKUZ+vdQ2oGOZa2cibQZvjRA6LjPiNFwOHZV3lp17obb2yi5eESgr
-         LDR+p+o6eaqKiTGlKmTCwwPH24NkTtJRYymQBdDIh2PWTD27DkHW6N6c4WS6OEhALWUC
-         GuSsiowQeaGoTFr+lFnicSgkr6wfrVThxky6+rV/Dkyd2ZkG9Gt6WR9qvV0kyP8lo5iI
-         QcbeXW4Z0i6N9qAn8phgSDZFV5MuOf+vg19aj9vqWVQpA+UThKvkp466T6IjjIM2QcLC
-         PwSA==
-X-Gm-Message-State: AOJu0Yz9wi4holq69HyJbpeBdq3ANjAXPmNbXs7z3JpdBbBRQ5jfdsp1
-	KyFktM6DHIRYXRUaUldYzd3RKo+6rB/uyf1duEzUiw==
-X-Google-Smtp-Source: AGHT+IHsG1ktZ0SAurPZ0QFRvK0fU8aHMiW++bixgCyT5nwhEB/N1BLwp8n50oH0IVEBUeadXQvjE9aoL/FG8TN+++0=
-X-Received: by 2002:a17:902:f54f:b0:1c7:1fbc:b9e8 with SMTP id
- h15-20020a170902f54f00b001c71fbcb9e8mr792263plf.10.1695997281453; Fri, 29 Sep
- 2023 07:21:21 -0700 (PDT)
+        bh=yYEFurrEEC58Pi6MuErcWJ3A1NxFP/ysymFeMwH4+H0=;
+        b=MTAbrA45feu2F8eNyG7cfo58t3/D5+Ipg7l7wRaaK/2NWHQmjZ0mgkQP62bCt10KXN
+         BvS7k62aZ1X9j40+v4iCl5sIaJhLSyRZ9G3sPBLHmJheXI8x6YihPJiRNAVv+lP5TCkN
+         s5GJiBtFS+Ca57uQG4YLDA/rtre9Q136o+dxH4358ymkvio6P79geTC6ZwykKZVLlnku
+         puCGKFONFCxdqtLuETfPS3p81BPCUtkP5pQSFvm69u3quR5hqoQQlrQt3hOzvKxlUXbh
+         b+teewFY2GmN7X81LuRZBlEpR4lz/xXs0GwdMwrCaQZq7U4am0VzGkbZW0/G74iHwn3H
+         iI4g==
+X-Gm-Message-State: AOJu0YzPvoQh8ztt2O1Dga52Onuaqlf4slmwXJJ4fA3CioHmV7RSzCHA
+	FOLT+ci6L4pZLGULK/he9DrPcMNzpi6FqzKLLP80cA==
+X-Google-Smtp-Source: AGHT+IHONXaoBfwbXAGD+xhM6NPRFrExlJFSRqqfsw7iuwEyKFEv1rwMEELo7No+ciZsiAeOEkmQIOfvUjDaN2Qc5nA=
+X-Received: by 2002:a17:902:ab18:b0:1c4:21fe:2823 with SMTP id
+ ik24-20020a170902ab1800b001c421fe2823mr930677plb.13.1695997324947; Fri, 29
+ Sep 2023 07:22:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,13 +42,12 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230829234426.64421-1-tony.luck@intel.com> <20230928191350.205703-1-tony.luck@intel.com>
- <20230928191350.205703-6-tony.luck@intel.com>
-In-Reply-To: <20230928191350.205703-6-tony.luck@intel.com>
+ <20230928191350.205703-7-tony.luck@intel.com>
+In-Reply-To: <20230928191350.205703-7-tony.luck@intel.com>
 From: Peter Newman <peternewman@google.com>
-Date: Fri, 29 Sep 2023 16:21:10 +0200
-Message-ID: <CALPaoCgJ2qcwvKOG2aUrkd=dwwPdGGtaJS43Tgs=DwXxMmwUhg@mail.gmail.com>
-Subject: Re: [PATCH v6 5/8] x86/resctrl: Add node-scope to the options for
- feature scope
+Date: Fri, 29 Sep 2023 16:21:54 +0200
+Message-ID: <CALPaoCh0dzx2T8-u5ZQXXM0XqaZgJbUAGnRVBmbzHmQiHjvWTA@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] x86/resctrl: Introduce snc_nodes_per_l3_cache
 To: Tony Luck <tony.luck@intel.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
 	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
@@ -64,56 +63,72 @@ Hi Tony,
 On Thu, Sep 28, 2023 at 9:14=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
 te:
 >
-> Currently supported resctrl features are all domain scoped the same as th=
-e
-> scope of the L2 or L3 caches.
+> Intel Sub-NUMA Cluster (SNC) is a feature that subdivides the CPU cores
+> and memory controllers on a socket into two or more groups. These are
+> presented to the operating system as NUMA nodes.
 >
-> Add RESCTRL_NODE as a new option for features that are scoped at the
-> same granularity as NUMA nodes. This is needed for Intel's Sub-NUMA
-> Cluster (SNC) feature where monitoring features are node scoped.
+> This may enable some workloads to have slightly lower latency to memory
+> as the memory controller(s) in an SNC node are electrically closer to the
+> CPU cores on that SNC node. This cost may be offset by lower bandwidth
+> since the memory accesses for each core can only be interleaved between
+> the memory controllers on the same SNC node.
 >
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
+> Resctrl monitoring on Intel system depends upon attaching RMIDs to tasks
+> to track L3 cache occupancy and memory bandwidth. There is an MSR that
+> controls how the RMIDs are shared between SNC nodes.
 >
-> Changes since v5:
+> The default mode divides them numerically. E.g. when there are two SNC
+> nodes on a socket the lower number half of the RMIDs are given to the
+> first node, the remainder to the second node. This would be difficult
+> to use with the Linux resctrl interface as specific RMID values assigned
+> to resctrl groups are not visible to users.
 >
-> Updates to commit message.
+> The other mode divides the RMIDs and renumbers the ones on the second
+> SNC node to start from zero.
 >
->  include/linux/resctrl.h            | 1 +
->  arch/x86/kernel/cpu/resctrl/core.c | 2 ++
->  2 files changed, 3 insertions(+)
+> Even with this redumbering SNC mode requires several changes in resctrl
+> behavior for correct operation.
+
+redumbering? Harsh.
+
+
+> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu=
+/resctrl/rdtgroup.c
+> index b0901fb95aa9..a5404c412f53 100644
+> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> @@ -1357,7 +1357,7 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resour=
+ce *r,
+>                 }
+>         }
 >
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 1c925e3db2ea..18ed787f9798 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -165,6 +165,7 @@ struct resctrl_schema;
->  enum resctrl_scope {
->         RESCTRL_L2_CACHE =3D 2,
->         RESCTRL_L3_CACHE =3D 3,
-> +       RESCTRL_NODE,
->  };
+> -       return size;
+> +       return size / snc_nodes_per_l3_cache;
+
+To confirm, the size represented by a bit goes down rather than the
+CBM mask shrinking in each sub-NUMA domain?
+
+I would maybe have expected the CBM mask to already be allocating at
+the smallest granularity the hardware supports.
+
+>  }
 >
 >  /**
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/res=
-ctrl/core.c
-> index 726f00c01079..e61bf919ac78 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -511,6 +511,8 @@ static int get_domain_id_from_scope(int cpu, enum res=
-ctrl_scope scope)
->         case RESCTRL_L2_CACHE:
->         case RESCTRL_L3_CACHE:
->                 return get_cpu_cacheinfo_id(cpu, scope);
-> +       case RESCTRL_NODE:
-> +               return cpu_to_node(cpu);
->         default:
->                 break;
->         }
+> @@ -2590,7 +2590,7 @@ static int rdt_parse_param(struct fs_context *fc, s=
+truct fs_parameter *param)
+>                 ctx->enable_cdpl2 =3D true;
+>                 return 0;
+>         case Opt_mba_mbps:
+> -               if (!supports_mba_mbps())
+> +               if (!supports_mba_mbps() || snc_nodes_per_l3_cache > 1)
+
+Factor into supports_mba_mbps()?
+
+>                         return -EINVAL;
+>                 ctx->enable_mba_mbps =3D true;
+>                 return 0;
 > --
 > 2.41.0
 >
-
-Looks fine.
 
 Reviewed-by: Peter Newman <peternewman@google.com>
