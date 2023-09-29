@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8110666685
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D052D66681
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:05 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id D8BA620B74DA;
+	by linux.microsoft.com (Postfix) with ESMTPSA id 6817120B74C3;
 	Fri, 29 Sep 2023 11:01:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D8BA620B74DA
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6817120B74C3
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
 	s=default; t=1696010517;
-	bh=kBs0ffdpHMIIhbU0gkxsqFmjG+eS/wfhbZzz7iGIYls=;
+	bh=+X19D62rwhGltzmqE9hkowrhpuhbGotyJ9cqKAt/I2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epWxzT8nag++BMbDL9pI/Zo3parOf+xcBXotuu+DkNyyS4/fZujZvghn4YS2InzpY
-	 o/6/sS4UO4b41UzIuLpMkfaxbiAhPoxTyUtArwQfhNpfCTjqOY7sNnLOPzrw0XTJXQ
-	 gbjlGc5Hru0bKtywyfyPKO62isHLQRZRfqNB9sJc=
+	b=Svl+o1aPZN9g64ZPJA152dkqcc1Q17nHMqBbccrEeM3HYmsignv9qc56AANMnTh8H
+	 RNJM/3j1pPg738h2nnAcFuizNQyWY+japk5CIpJFbFJ/tWOP6cTK0lAG87BHQG4XfU
+	 Y/nDJ9d1iC+IJvaTfQur/BjzSvGBPS2bOLtYqS2E=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v4 14/15] asm-generic: hyperv: Use new Hyper-V headers conditionally.
-Date: Fri, 29 Sep 2023 11:01:40 -0700
-Message-Id: <1696010501-24584-15-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v4 10/15] x86: hyperv: Add mshv_handler irq handler and setup function
+Date: Fri, 29 Sep 2023 11:01:36 -0700
+Message-Id: <1696010501-24584-11-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,125 +51,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-Add asm-generic/hyperv-defs.h. It includes hyperv-tlfs.h or hvhdk.h
-depending on compile-time constant HV_HYPERV_DEFS which will be defined in
-the mshv driver.
-
-This is needed to keep unstable Hyper-V interfaces independent of
-hyperv-tlfs.h. This ensures hvhdk.h replaces hyperv-tlfs.h in the mshv
-driver, even via indirect includes.
+This will handle SYNIC interrupts such as intercepts, doorbells, and
+scheduling messages intended for the mshv driver.
 
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Tianyu Lan <tiala@microsoft.com>
 ---
- arch/arm64/include/asm/mshyperv.h |  2 +-
- arch/x86/include/asm/mshyperv.h   |  3 +--
- drivers/hv/hyperv_vmbus.h         |  1 -
- include/asm-generic/hyperv-defs.h | 26 ++++++++++++++++++++++++++
- include/asm-generic/mshyperv.h    |  2 +-
- include/linux/hyperv.h            |  2 +-
- 6 files changed, 30 insertions(+), 6 deletions(-)
- create mode 100644 include/asm-generic/hyperv-defs.h
+ arch/x86/kernel/cpu/mshyperv.c | 9 +++++++++
+ drivers/hv/hv_common.c         | 5 +++++
+ include/asm-generic/mshyperv.h | 2 ++
+ 3 files changed, 16 insertions(+)
 
-diff --git a/arch/arm64/include/asm/mshyperv.h b/arch/arm64/include/asm/mshyperv.h
-index 20070a847304..8ec14caf3d4f 100644
---- a/arch/arm64/include/asm/mshyperv.h
-+++ b/arch/arm64/include/asm/mshyperv.h
-@@ -20,7 +20,7 @@
+diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+index 9b898b65a013..06f79963add5 100644
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -110,6 +110,7 @@ void hv_set_register(unsigned int reg, u64 value)
+ }
+ EXPORT_SYMBOL_GPL(hv_set_register);
  
- #include <linux/types.h>
- #include <linux/arm-smccc.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
++static void (*mshv_handler)(void);
+ static void (*vmbus_handler)(void);
+ static void (*hv_stimer0_handler)(void);
+ static void (*hv_kexec_handler)(void);
+@@ -120,6 +121,9 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_hyperv_callback)
+ 	struct pt_regs *old_regs = set_irq_regs(regs);
  
- /*
-  * Declare calls to get and set Hyper-V VP register values on ARM64, which
-diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/mshyperv.h
-index e3768d787065..bb1b97106cd3 100644
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -6,10 +6,9 @@
- #include <linux/nmi.h>
- #include <linux/msi.h>
- #include <linux/io.h>
--#include <asm/hyperv-tlfs.h>
- #include <asm/nospec-branch.h>
- #include <asm/paravirt.h>
--#include <asm/mshyperv.h>
-+#include <asm-generic/hyperv-defs.h>
+ 	inc_irq_stat(irq_hv_callback_count);
++	if (mshv_handler)
++		mshv_handler();
++
+ 	if (vmbus_handler)
+ 		vmbus_handler();
  
- /*
-  * Hyper-V always provides a single IO-APIC at this MMIO address.
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 09792eb4ffed..0e4bc18a13fa 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -15,7 +15,6 @@
- #include <linux/list.h>
- #include <linux/bitops.h>
- #include <asm/sync_bitops.h>
--#include <asm/hyperv-tlfs.h>
- #include <linux/atomic.h>
- #include <linux/hyperv.h>
- #include <linux/interrupt.h>
-diff --git a/include/asm-generic/hyperv-defs.h b/include/asm-generic/hyperv-defs.h
-new file mode 100644
-index 000000000000..ac6fcba35c8c
---- /dev/null
-+++ b/include/asm-generic/hyperv-defs.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _ASM_GENERIC_HYPERV_DEFS_H
-+#define _ASM_GENERIC_HYPERV_DEFS_H
+@@ -129,6 +133,11 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_hyperv_callback)
+ 	set_irq_regs(old_regs);
+ }
+ 
++void hv_setup_mshv_irq(void (*handler)(void))
++{
++	mshv_handler = handler;
++}
 +
-+/*
-+ * There are cases where Microsoft Hypervisor ABIs are needed which may not be
-+ * stable or present in the Hyper-V TLFS document. E.g. the mshv_root driver.
-+ *
-+ * As these interfaces are unstable and may differ from hyperv-tlfs.h, they
-+ * must be kept separate and independent.
-+ *
-+ * However, code from files that depend on hyperv-tlfs.h (such as mshyperv.h)
-+ * is still needed, so work around the issue by conditionally including the
-+ * correct definitions.
-+ *
-+ * Note: Since they are independent of each other, there are many definitions
-+ * duplicated in both hyperv-tlfs.h and uapi/hyperv/hv*.h files.
-+ */
-+#ifdef HV_HYPERV_DEFS
-+#include <uapi/hyperv/hvhdk.h>
-+#else
-+#include <asm/hyperv-tlfs.h>
-+#endif
+ void hv_setup_vmbus_handler(void (*handler)(void))
+ {
+ 	vmbus_handler = handler;
+diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+index 3f6f23e4c579..6ec63502d83d 100644
+--- a/drivers/hv/hv_common.c
++++ b/drivers/hv/hv_common.c
+@@ -585,6 +585,11 @@ void __weak hv_remove_vmbus_handler(void)
+ }
+ EXPORT_SYMBOL_GPL(hv_remove_vmbus_handler);
+ 
++void __weak hv_setup_mshv_irq(void (*handler)(void))
++{
++}
++EXPORT_SYMBOL_GPL(hv_setup_mshv_irq);
 +
-+#endif /* _ASM_GENERIC_HYPERV_DEFS_H */
-+
+ void __weak hv_setup_kexec_handler(void (*handler)(void))
+ {
+ }
 diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index d832852d0ee7..6bef0d59d1b7 100644
+index 4e49fd662b2b..d832852d0ee7 100644
 --- a/include/asm-generic/mshyperv.h
 +++ b/include/asm-generic/mshyperv.h
-@@ -25,7 +25,7 @@
- #include <linux/cpumask.h>
- #include <linux/nmi.h>
- #include <asm/ptrace.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
+@@ -198,6 +198,8 @@ void hv_remove_vmbus_handler(void);
+ void hv_setup_stimer0_handler(void (*handler)(void));
+ void hv_remove_stimer0_handler(void);
  
- #define VTPM_BASE_ADDRESS 0xfed40000
- 
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 4d5a5e39d76c..722a8cf23d87 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -24,7 +24,7 @@
- #include <linux/mod_devicetable.h>
- #include <linux/interrupt.h>
- #include <linux/reciprocal_div.h>
--#include <asm/hyperv-tlfs.h>
-+#include <asm-generic/hyperv-defs.h>
- 
- #define MAX_PAGE_BUFFER_COUNT				32
- #define MAX_MULTIPAGE_BUFFER_COUNT			32 /* 128K */
++void hv_setup_mshv_irq(void (*handler)(void));
++
+ void hv_setup_kexec_handler(void (*handler)(void));
+ void hv_remove_kexec_handler(void);
+ void hv_setup_crash_handler(void (*handler)(struct pt_regs *regs));
 -- 
 2.25.1
 
