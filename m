@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 485A166684
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 065DB66682
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:05 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 9F41B20B74D6;
+	by linux.microsoft.com (Postfix) with ESMTPSA id 4C3E420B74D1;
 	Fri, 29 Sep 2023 11:01:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9F41B20B74D6
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4C3E420B74D1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
 	s=default; t=1696010517;
-	bh=+Kd2ji7ggK79FJHsbxYEN6XfGaKmoyf4F48nH+Wu2TU=;
+	bh=giaPGAUBP/shqQFPfTt6khDXOM7sp4gdgMa7HKBM+B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHOz48j0L6GbRHgcgBXCllXR9p0QbegiDe96O+DS+71FxcQZWK84rbqBjhhOVEzXu
-	 /n/ta+bAyFTitXD5cSD4sOdNIlXdHKufQiqSkkQQ5R17DAOadIeqKz2Sl6tFCYw/v6
-	 FWHjSjEctigzriT5K+2mT4s/nCRVmL/S/T+6lm+Q=
+	b=autZ+nlbio19vV1N44KFuWajdjOGS9q3VtnUPg4ASCsa5i25pCp+uEAnoMopJ1SE5
+	 r2jVHHMGq+bYNvYehiylq7U5ddAroxfI2WdcpqKfoj/8Mx72zzEv+deMGjU5eVV2RS
+	 fO11rlhBrd1OjDxQGe3NUDX/TAJaRCyfSamKsjuY=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v4 12/15] Documentation: Reserve ioctl number for mshv driver
-Date: Fri, 29 Sep 2023 11:01:38 -0700
-Message-Id: <1696010501-24584-13-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
+Date: Fri, 29 Sep 2023 11:01:35 -0700
+Message-Id: <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,26 +51,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
+This is a more flexible approach for determining whether to allocate the
+output page.
+
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Acked-by: Jonathan Corbet <corbet@lwn.net>
 Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- Documentation/userspace-api/ioctl/ioctl-number.rst | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hv/hv_common.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
-index 4ea5b837399a..71e6d23070ca 100644
---- a/Documentation/userspace-api/ioctl/ioctl-number.rst
-+++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
-@@ -355,6 +355,8 @@ Code  Seq#    Include File                                           Comments
- 0xB6  all    linux/fpga-dfl.h
- 0xB7  all    uapi/linux/remoteproc_cdev.h                            <mailto:linux-remoteproc@vger.kernel.org>
- 0xB7  all    uapi/linux/nsfs.h                                       <mailto:Andrei Vagin <avagin@openvz.org>>
-+0xB8  all    uapi/linux/mshv.h                                       Microsoft Hypervisor VM management APIs
-+                                                                     <mailto:linux-hyperv@vger.kernel.org>
- 0xC0  00-0F  linux/usb/iowarrior.h
- 0xCA  00-0F  uapi/misc/cxl.h
- 0xCA  10-2F  uapi/misc/ocxl.h
+diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+index 39077841d518..3f6f23e4c579 100644
+--- a/drivers/hv/hv_common.c
++++ b/drivers/hv/hv_common.c
+@@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
+ void * __percpu *hyperv_pcpu_output_arg;
+ EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+ 
++/*
++ * Determine whether output arg is needed
++ */
++static inline bool hv_output_arg_exists(void)
++{
++	return hv_root_partition ? true : false;
++}
++
+ static void hv_kmsg_dump_unregister(void);
+ 
+ static struct ctl_table_header *hv_ctl_table_hdr;
+@@ -342,10 +350,12 @@ int __init hv_common_init(void)
+ 	hyperv_pcpu_input_arg = alloc_percpu(void  *);
+ 	BUG_ON(!hyperv_pcpu_input_arg);
+ 
+-	/* Allocate the per-CPU state for output arg for root */
+-	if (hv_root_partition) {
++	if (hv_output_arg_exists()) {
+ 		hyperv_pcpu_output_arg = alloc_percpu(void *);
+ 		BUG_ON(!hyperv_pcpu_output_arg);
++	}
++
++	if (hv_root_partition) {
+ 		hv_synic_eventring_tail = alloc_percpu(u8 *);
+ 		BUG_ON(hv_synic_eventring_tail == NULL);
+ 	}
+@@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
+ 	u8 **synic_eventring_tail;
+ 	u64 msr_vp_index;
+ 	gfp_t flags;
+-	int pgcount = hv_root_partition ? 2 : 1;
++	int pgcount = hv_output_arg_exists() ? 2 : 1;
+ 	void *mem;
+ 	int ret;
+ 
+@@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
+ 		if (!mem)
+ 			return -ENOMEM;
+ 
+-		if (hv_root_partition) {
++		if (hv_output_arg_exists()) {
+ 			outputarg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
+ 			*outputarg = (char *)mem + HV_HYP_PAGE_SIZE;
++		}
++
++		if (hv_root_partition) {
+ 			synic_eventring_tail = (u8 **)this_cpu_ptr(hv_synic_eventring_tail);
+ 			*synic_eventring_tail = kcalloc(HV_SYNIC_SINT_COUNT, sizeof(u8),
+ 							flags);
 -- 
 2.25.1
 
