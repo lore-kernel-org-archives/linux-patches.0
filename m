@@ -1,141 +1,180 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795F3516D9
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 14:54:33 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4195fe5cf73so309141cf.1
-        for <patches@lists.linux.dev>; Fri, 29 Sep 2023 07:54:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695999272; x=1696604072; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FBAL4EDpae0eUiRs93XffuRh0a5um0LmWA13bYCfeZo=;
-        b=mPjqpRl/J4T/wi4bN0NzMIMhWa8DE0ryxRjzsk0c2d8DIffhHHudI+THzzlOawYydw
-         LJyqwUNdMlIWIyhKu9wx8mTZY9fAtH2SO0IW8c44hNHjoARmEmoBSCkgyTOqtELYCqws
-         c+8E9YytZ6w33GLGsc8chzYs7NymFdlXEOiy20Wmdk2KqHeXbRp+AtokaNGpGbhjB3io
-         GGKdhORDPOGP2nSgrzXvxpmwGhnCgdoj0X90BSznnOXK1S+kiDuSP7dq/FzxLKgb8s5P
-         czTWN2wQvfwKy4sDdwqS55bfeCrnK+KXHid7TCJp/tjz7F3ZYy3U4vioZLpiJHIRQQgd
-         2j2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695999272; x=1696604072;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FBAL4EDpae0eUiRs93XffuRh0a5um0LmWA13bYCfeZo=;
-        b=DKGA4iQ3Xh3zgfnOHWSPsWbOwgKqyZLknyL0g78Q+F9RPRFkG4+LpF4672wdqW2QmT
-         WT6mZ6SDowYgO1I1lwg34ifIOg51LxbrLX4yn8ZwRfOqiWGAXi8uVuHaEDFI9sK8JGos
-         m6em8S6h9Y6rC+kWgLZIJCUfmiAoDoqnOKV0RN8q+T5qZ5DAWVNZpuxhLhpQ9BQjCFgr
-         CKCjF/vzdcoFtOqz9I+gcDo9I0DTrqBkTvOaxMlzb8KNdm14hB1NPvDMH/ta+sZxxklG
-         +vsKiRsvzcq/tIIgGIwz0jj2Vvu3Q3W5zHxkiMBF+ssOVxwdolDQU62oeV013VA41L1q
-         jjGg==
-X-Gm-Message-State: AOJu0Yz8Wi0B2NywNVtzRbYRSBlv9qoVXmYwRj388wxi0ZMxDGdlUJGA
-	G+TZmf1NsQySQO4Qs1iWcLxNvIhm0hKBgUft8QU9KA==
-X-Google-Smtp-Source: AGHT+IHdknSO/VSzS3NkRmSfc1a0t3O7BBzcNPYBrwXaAE1EUNUzAdWqe3maQyYUj8GbUdaFGM+Ua3YJrM7ZZKjlU7U=
-X-Received: by 2002:ac8:5684:0:b0:419:6cf4:2474 with SMTP id
- h4-20020ac85684000000b004196cf42474mr337653qta.2.1695999272306; Fri, 29 Sep
- 2023 07:54:32 -0700 (PDT)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA2666663
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:02 +0000 (UTC)
+Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 9759C20B74C5;
+	Fri, 29 Sep 2023 11:01:56 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9759C20B74C5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1696010516;
+	bh=3fBbVBD2uKgvoquqz27ACQRB2O2cWkvCr1Y5+xe6PMQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TVzDnXd53dpojCdgNZ5GSAI//ZFMoeAD646kLVWXYHL7HjKqKyHska0roEu9A8e06
+	 48THBjuWo+E3tP8M0Lca97fbz4zZJfSDJeqq+ebFnchVaWQ2KK1Bdbh1NlVkc25n6r
+	 kkk0+eDGORRWw+MIk77oxZqmF5pLRWnzrB45aqAI=
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+To: linux-hyperv@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	x86@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arch@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	mikelley@microsoft.com,
+	kys@microsoft.com,
+	wei.liu@kernel.org,
+	gregkh@linuxfoundation.org,
+	haiyangz@microsoft.com,
+	decui@microsoft.com,
+	apais@linux.microsoft.com,
+	Tianyu.Lan@microsoft.com,
+	ssengar@linux.microsoft.com,
+	mukeshrathor@microsoft.com,
+	stanislav.kinsburskiy@gmail.com,
+	jinankjain@linux.microsoft.com,
+	vkuznets@redhat.com,
+	tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	hpa@zytor.com,
+	will@kernel.org,
+	catalin.marinas@arm.com
+Subject: [PATCH v4 03/15] mshyperv: Introduce numa_node_to_proximity_domain_info
+Date: Fri, 29 Sep 2023 11:01:29 -0700
+Message-Id: <1696010501-24584-4-git-send-email-nunodasneves@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20230829234426.64421-1-tony.luck@intel.com> <20230928191350.205703-1-tony.luck@intel.com>
- <20230928191350.205703-9-tony.luck@intel.com>
-In-Reply-To: <20230928191350.205703-9-tony.luck@intel.com>
-From: Peter Newman <peternewman@google.com>
-Date: Fri, 29 Sep 2023 16:54:21 +0200
-Message-ID: <CALPaoCgPXPF_fn9fh15rW0JWUhxth5wOO51n+oHqibP+a6Qjfg@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] x86/resctrl: Update documentation with Sub-NUMA
- cluster changes
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>, 
-	Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, 
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Tony,
+Factor out logic for converting numa node to proximity domain info into
+a helper function, and export it.
 
-On Thu, Sep 28, 2023 at 9:14=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
-te:
-> diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/=
-resctrl.rst
-> index cb05d90111b4..d6b6a4cfd967 100644
-> --- a/Documentation/arch/x86/resctrl.rst
-> +++ b/Documentation/arch/x86/resctrl.rst
-> @@ -345,9 +345,15 @@ When control is enabled all CTRL_MON groups will als=
-o contain:
->  When monitoring is enabled all MON groups will also contain:
->
->  "mon_data":
-> -       This contains a set of files organized by L3 domain and by
-> -       RDT event. E.g. on a system with two L3 domains there will
-> -       be subdirectories "mon_L3_00" and "mon_L3_01".  Each of these
-> +       This contains a set of files organized by L3 domain or by NUMA
-> +       node (depending on whether Sub-NUMA Cluster (SNC) mode is disable=
-d
-> +       or enabled respectively) and by RDT event. E.g. on a system with
-> +       SNC mode disabled with two L3 domains there will be subdirectorie=
-s
-> +       "mon_L3_00" and "mon_L3_01". The numerical suffix refers to the
-> +       L3 cache id.  With SNC enabled the directory names are the same,
-> +       but the numerical suffix refers to the node id.
-> +       Mappings from node ids to CPUs are available in the
-> +       /sys/devices/system/node/node*/cpulist files. Each of these
+Change hv_proximity_domain_info to a struct to simplify the code.
 
-The explanation of mon_data seems overwhelmingly SNC-centric now.
-Maybe the SNC section should be responsible for explaining its impact
-on the mon_data directory. Mainly by reminding the reader that domain
-ids in the mon_data directory are node ids in SNC mode.
+Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+---
+ arch/x86/hyperv/hv_proc.c         |  8 ++------
+ drivers/acpi/numa/srat.c          |  1 +
+ include/asm-generic/hyperv-tlfs.h | 14 +++++---------
+ include/asm-generic/mshyperv.h    | 15 +++++++++++++++
+ 4 files changed, 23 insertions(+), 15 deletions(-)
 
+diff --git a/arch/x86/hyperv/hv_proc.c b/arch/x86/hyperv/hv_proc.c
+index 68a0843d4750..5ba5ca1b2089 100644
+--- a/arch/x86/hyperv/hv_proc.c
++++ b/arch/x86/hyperv/hv_proc.c
+@@ -121,7 +121,6 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
+ 	u64 status;
+ 	unsigned long flags;
+ 	int ret = HV_STATUS_SUCCESS;
+-	int pxm = node_to_pxm(node);
+ 
+ 	/*
+ 	 * When adding a logical processor, the hypervisor may return
+@@ -137,11 +136,8 @@ int hv_call_add_logical_proc(int node, u32 lp_index, u32 apic_id)
+ 
+ 		input->lp_index = lp_index;
+ 		input->apic_id = apic_id;
+-		input->flags = 0;
+-		input->proximity_domain_info.domain_id = pxm;
+-		input->proximity_domain_info.flags.reserved = 0;
+-		input->proximity_domain_info.flags.proximity_info_valid = 1;
+-		input->proximity_domain_info.flags.proximity_preferred = 1;
++		input->proximity_domain_info =
++			numa_node_to_proximity_domain_info(node);
+ 		status = hv_do_hypercall(HVCALL_ADD_LOGICAL_PROCESSOR,
+ 					 input, output);
+ 		local_irq_restore(flags);
+diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
+index 1f4fc5f8a819..0cf9f0574495 100644
+--- a/drivers/acpi/numa/srat.c
++++ b/drivers/acpi/numa/srat.c
+@@ -48,6 +48,7 @@ int node_to_pxm(int node)
+ 		return PXM_INVAL;
+ 	return node_to_pxm_map[node];
+ }
++EXPORT_SYMBOL(node_to_pxm);
+ 
+ static void __acpi_map_pxm_to_node(int pxm, int node)
+ {
+diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
+index f63b3704d89e..a6dffb346bf2 100644
+--- a/include/asm-generic/hyperv-tlfs.h
++++ b/include/asm-generic/hyperv-tlfs.h
+@@ -512,13 +512,9 @@ struct hv_proximity_domain_flags {
+ 	u32 proximity_info_valid : 1;
+ } __packed;
+ 
+-/* Not a union in windows but useful for zeroing */
+-union hv_proximity_domain_info {
+-	struct {
+-		u32 domain_id;
+-		struct hv_proximity_domain_flags flags;
+-	};
+-	u64 as_uint64;
++struct hv_proximity_domain_info {
++	u32 domain_id;
++	struct hv_proximity_domain_flags flags;
+ } __packed;
+ 
+ struct hv_lp_startup_status {
+@@ -535,7 +531,7 @@ struct hv_lp_startup_status {
+ struct hv_add_logical_processor_in {
+ 	u32 lp_index;
+ 	u32 apic_id;
+-	union hv_proximity_domain_info proximity_domain_info;
++	struct hv_proximity_domain_info proximity_domain_info;
+ 	u64 flags;
+ } __packed;
+ 
+@@ -560,7 +556,7 @@ struct hv_create_vp {
+ 	u8 padding[3];
+ 	u8 subnode_type;
+ 	u64 subnode_id;
+-	union hv_proximity_domain_info proximity_domain_info;
++	struct hv_proximity_domain_info proximity_domain_info;
+ 	u64 flags;
+ } __packed;
+ 
+diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
+index 9f2c06c9d5d1..8cc7b0e316d7 100644
+--- a/include/asm-generic/mshyperv.h
++++ b/include/asm-generic/mshyperv.h
+@@ -21,6 +21,7 @@
+ #include <linux/types.h>
+ #include <linux/atomic.h>
+ #include <linux/bitops.h>
++#include <acpi/acpi_numa.h>
+ #include <linux/cpumask.h>
+ #include <linux/nmi.h>
+ #include <asm/ptrace.h>
+@@ -28,6 +29,20 @@
+ 
+ #define VTPM_BASE_ADDRESS 0xfed40000
+ 
++static inline struct hv_proximity_domain_info
++numa_node_to_proximity_domain_info(int node)
++{
++	struct hv_proximity_domain_info proximity_domain_info = {};
++
++	if (node != NUMA_NO_NODE) {
++		proximity_domain_info.domain_id = node_to_pxm(node);
++		proximity_domain_info.flags.proximity_info_valid = 1;
++		proximity_domain_info.flags.proximity_preferred = 1;
++	}
++
++	return proximity_domain_info;
++}
++
+ struct ms_hyperv_info {
+ 	u32 features;
+ 	u32 priv_high;
+-- 
+2.25.1
 
->         directories have one file per event (e.g. "llc_occupancy",
->         "mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
->         files provide a read out of the current value of the event for
-> @@ -452,6 +458,28 @@ and 0xA are not.  On a system with a 20-bit mask eac=
-h bit represents 5%
->  of the capacity of the cache. You could partition the cache into four
->  equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
->
-> +Notes on Sub-NUMA Cluster mode
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> +When SNC mode is enabled the "llc_occupancy", "mbm_total_bytes", and
-> +"mbm_local_bytes" will only give meaningful results for well behaved NUM=
-A
-> +applications. I.e. those that perform the majority of memory accesses
-> +to memory on the local NUMA node to the CPU where the task is executing.
-
-Not being specific about why the results aren't meaningful, this
-sounds vague and alarming.
-
-> +Note that Linux may load balance tasks between Sub-NUMA nodes much
-> +more readily than between regular NUMA nodes since the CPUs on SNC
-> +share the same L3 cache and the system may report the NUMA distance
-> +between SNC nodes with a lower value than used for regular NUMA nodes.
-> +Tasks that migrate between nodes will have their traffic recorded by the
-> +counters in different SNC nodes so a user will need to read mon_data
-> +files from each node on which the task executed to get the full
-> +view of traffic for which the task was the source.
-> +
-> +
-> +The cache allocation feature still provides the same number of
-> +bits in a mask to control allocation into the L3 cache. But each
-> +of those ways has its capacity reduced because the cache is divided
-> +between the SNC nodes. The values reported in the resctrl
-> +"size" files are adjusted accordingly.
-> +
->  Memory bandwidth Allocation and monitoring
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> --
-> 2.41.0
->
-
-Reviewed-by: Peter Newman <peternewman@google.com>
