@@ -1,17 +1,17 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 065DB66682
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FED366683
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 18:02:06 +0000 (UTC)
 Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 4C3E420B74D1;
+	by linux.microsoft.com (Postfix) with ESMTPSA id 832A120B74D4;
 	Fri, 29 Sep 2023 11:01:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4C3E420B74D1
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 832A120B74D4
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
 	s=default; t=1696010517;
-	bh=giaPGAUBP/shqQFPfTt6khDXOM7sp4gdgMa7HKBM+B4=;
+	bh=HF/7TB3ETksYEB9KlMb0r3JzZFCijaEXdQeCMYRt1dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=autZ+nlbio19vV1N44KFuWajdjOGS9q3VtnUPg4ASCsa5i25pCp+uEAnoMopJ1SE5
-	 r2jVHHMGq+bYNvYehiylq7U5ddAroxfI2WdcpqKfoj/8Mx72zzEv+deMGjU5eVV2RS
-	 fO11rlhBrd1OjDxQGe3NUDX/TAJaRCyfSamKsjuY=
+	b=Glh+75DkolqBQ8RtEtapSaQIo8RtOlXCmgQ9VG7LYu6+d+xpZ9ZjQmGfY7x0FL2nD
+	 cEY35bbIgL1+h9dA1HBB00yEdjoXTRo75+1prMRbfC+93CGSgX+/k6X84pXecN2rho
+	 TlG3SCevISlR8R74cXtULhYbrUn2mc/uhvboA2Dc=
 From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 To: linux-hyperv@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -39,9 +39,9 @@ Cc: patches@lists.linux.dev,
 	hpa@zytor.com,
 	will@kernel.org,
 	catalin.marinas@arm.com
-Subject: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
-Date: Fri, 29 Sep 2023 11:01:35 -0700
-Message-Id: <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
+Subject: [PATCH v4 11/15] Drivers: hv: export vmbus_isr, hv_context and hv_post_message
+Date: Fri, 29 Sep 2023 11:01:37 -0700
+Message-Id: <1696010501-24584-12-git-send-email-nunodasneves@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
@@ -51,72 +51,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-This is a more flexible approach for determining whether to allocate the
-output page.
+These will be used by the mshv_vtl driver.
 
 Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- drivers/hv/hv_common.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/hv/hv.c           | 2 ++
+ drivers/hv/hyperv_vmbus.h | 1 +
+ drivers/hv/vmbus_drv.c    | 3 ++-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
-index 39077841d518..3f6f23e4c579 100644
---- a/drivers/hv/hv_common.c
-+++ b/drivers/hv/hv_common.c
-@@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
- void * __percpu *hyperv_pcpu_output_arg;
- EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+diff --git a/drivers/hv/hv.c b/drivers/hv/hv.c
+index d7869205dcbe..c60a4fb55f3c 100644
+--- a/drivers/hv/hv.c
++++ b/drivers/hv/hv.c
+@@ -25,6 +25,7 @@
  
-+/*
-+ * Determine whether output arg is needed
-+ */
-+static inline bool hv_output_arg_exists(void)
-+{
-+	return hv_root_partition ? true : false;
-+}
-+
- static void hv_kmsg_dump_unregister(void);
+ /* The one and only */
+ struct hv_context hv_context;
++EXPORT_SYMBOL_GPL(hv_context);
  
- static struct ctl_table_header *hv_ctl_table_hdr;
-@@ -342,10 +350,12 @@ int __init hv_common_init(void)
- 	hyperv_pcpu_input_arg = alloc_percpu(void  *);
- 	BUG_ON(!hyperv_pcpu_input_arg);
+ /*
+  * hv_init - Main initialization routine.
+@@ -93,6 +94,7 @@ int hv_post_message(union hv_connection_id connection_id,
  
--	/* Allocate the per-CPU state for output arg for root */
--	if (hv_root_partition) {
-+	if (hv_output_arg_exists()) {
- 		hyperv_pcpu_output_arg = alloc_percpu(void *);
- 		BUG_ON(!hyperv_pcpu_output_arg);
-+	}
-+
-+	if (hv_root_partition) {
- 		hv_synic_eventring_tail = alloc_percpu(u8 *);
- 		BUG_ON(hv_synic_eventring_tail == NULL);
+ 	return hv_result(status);
+ }
++EXPORT_SYMBOL_GPL(hv_post_message);
+ 
+ int hv_synic_alloc(void)
+ {
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index f6b1e710f805..09792eb4ffed 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -32,6 +32,7 @@
+  */
+ #define HV_UTIL_NEGO_TIMEOUT 55
+ 
++void vmbus_isr(void);
+ 
+ /* Definitions for the monitored notification facility */
+ union hv_monitor_trigger_group {
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index edbb38f6956b..6d27597af8bf 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1286,7 +1286,7 @@ static void vmbus_chan_sched(struct hv_per_cpu_context *hv_cpu)
  	}
-@@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
- 	u8 **synic_eventring_tail;
- 	u64 msr_vp_index;
- 	gfp_t flags;
--	int pgcount = hv_root_partition ? 2 : 1;
-+	int pgcount = hv_output_arg_exists() ? 2 : 1;
- 	void *mem;
- 	int ret;
+ }
  
-@@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
- 		if (!mem)
- 			return -ENOMEM;
+-static void vmbus_isr(void)
++void vmbus_isr(void)
+ {
+ 	struct hv_per_cpu_context *hv_cpu
+ 		= this_cpu_ptr(hv_context.cpu_context);
+@@ -1309,6 +1309,7 @@ static void vmbus_isr(void)
  
--		if (hv_root_partition) {
-+		if (hv_output_arg_exists()) {
- 			outputarg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
- 			*outputarg = (char *)mem + HV_HYP_PAGE_SIZE;
-+		}
-+
-+		if (hv_root_partition) {
- 			synic_eventring_tail = (u8 **)this_cpu_ptr(hv_synic_eventring_tail);
- 			*synic_eventring_tail = kcalloc(HV_SYNIC_SINT_COUNT, sizeof(u8),
- 							flags);
+ 	add_interrupt_randomness(vmbus_interrupt);
+ }
++EXPORT_SYMBOL_GPL(vmbus_isr);
+ 
+ static irqreturn_t vmbus_percpu_isr(int irq, void *dev_id)
+ {
 -- 
 2.25.1
 
