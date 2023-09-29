@@ -1,33 +1,33 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5C08F62
-	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 20:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9576669B
+	for <patches@lists.linux.dev>; Fri, 29 Sep 2023 21:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696020887; x=1727556887;
+  t=1696021582; x=1727557582;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:content-transfer-encoding:in-reply-to;
-  bh=oTbiNGIXHhUIMdMlWMW1h6e4WlB0GQpl6q76DSW/M+w=;
-  b=nEuFcYhyuI8KZQSVlHGOqR48ilXpEiKShUsSwFBBgiVas2v5xJsSBJ+S
-   pzWYQ5VOUj8+Jrim7kjs8HMu8fVQ0XlXeSq0QvxXD/VVJChMgTNLnFnRI
-   ArhJBeuiTwBMU4C3BBi5fPIoOzl6gxvgsX+3u1umKGCYEIbzrDNeLYQOT
-   KLfjQwLeG7QggUxCbSDQaFBK4B7UqPwv6jt/KG9veLrdJ2yUGizt6IMLi
-   RS9Kn/CaRo47amSilCFPzJDQR9WiUYB5t33A1bfkBxVqCFDluIQCkCSTG
-   +4/zUfJDnlQo5I6X6o7iLKXyEyrGAEVePnJ1cjtUJdjodTHOJCeaBREiT
+  bh=v9BueRZQjerm83oD7OFPRBkzsAT7x+Db9BsxRYzoMU0=;
+  b=TW5GmCP1ddk76NM8ajsqbPqR+QYaX6Y7PxvMBKCo6pMqqG9lA6HWflVu
+   1IZeKyQUvkVgWOwnbLlA7Km1jukG058ZtOkXfvDThu08BFK6n0zsL1UGX
+   NnBQW3mNmmdbSijG06p8fGpWbszZzs0x02Y2eCiiR6emaMQGUkxxJetpj
+   qE8O78MbR22zmLgRrkBvyeiVeTMsWT7a0XeFjMk4Y8uLXDzAgzDaJlmqG
+   REUkrKECoST+GSnUkdf2Lr4e+MhvMPIu47NCU4xPPfP8TUHSJpC/1vISs
+   88YxAA0dsOk6RPK1tqVZzjNaUXZGSljhX8GLlRfK4g45YrL/pnShj+NlY
    A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="367433107"
+X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="446539374"
 X-IronPort-AV: E=Sophos;i="6.03,188,1694761200"; 
-   d="scan'208";a="367433107"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 13:51:39 -0700
+   d="scan'208";a="446539374"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 14:06:21 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="815704888"
+X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="923694203"
 X-IronPort-AV: E=Sophos;i="6.03,188,1694761200"; 
-   d="scan'208";a="815704888"
+   d="scan'208";a="923694203"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 13:51:39 -0700
-Date: Fri, 29 Sep 2023 13:51:37 -0700
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 14:06:21 -0700
+Date: Fri, 29 Sep 2023 14:06:19 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Peter Newman <peternewman@google.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -40,13 +40,11 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	Babu Moger <babu.moger@amd.com>,
 	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v6 8/8] x86/resctrl: Update documentation with Sub-NUMA
- cluster changes
-Message-ID: <ZRc42bU3urj5wqP/@agluck-desk3>
+Subject: Re: [PATCH v6 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZRc8SzTgLd1dACHy@agluck-desk3>
 References: <20230829234426.64421-1-tony.luck@intel.com>
  <20230928191350.205703-1-tony.luck@intel.com>
- <20230928191350.205703-9-tony.luck@intel.com>
- <CALPaoCgPXPF_fn9fh15rW0JWUhxth5wOO51n+oHqibP+a6Qjfg@mail.gmail.com>
+ <CALPaoCjxW70h=rTNNiShEc8bmgwEaHpFnAHRB-m=ch47WdQsig@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,119 +54,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALPaoCgPXPF_fn9fh15rW0JWUhxth5wOO51n+oHqibP+a6Qjfg@mail.gmail.com>
+In-Reply-To: <CALPaoCjxW70h=rTNNiShEc8bmgwEaHpFnAHRB-m=ch47WdQsig@mail.gmail.com>
 
-On Fri, Sep 29, 2023 at 04:54:21PM +0200, Peter Newman wrote:
+On Fri, Sep 29, 2023 at 04:33:17PM +0200, Peter Newman wrote:
 > Hi Tony,
 > 
 > On Thu, Sep 28, 2023 at 9:14 PM Tony Luck <tony.luck@intel.com> wrote:
-> > diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-> > index cb05d90111b4..d6b6a4cfd967 100644
-> > --- a/Documentation/arch/x86/resctrl.rst
-> > +++ b/Documentation/arch/x86/resctrl.rst
-> > @@ -345,9 +345,15 @@ When control is enabled all CTRL_MON groups will also contain:
-> >  When monitoring is enabled all MON groups will also contain:
 > >
-> >  "mon_data":
-> > -       This contains a set of files organized by L3 domain and by
-> > -       RDT event. E.g. on a system with two L3 domains there will
-> > -       be subdirectories "mon_L3_00" and "mon_L3_01".  Each of these
-> > +       This contains a set of files organized by L3 domain or by NUMA
-> > +       node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
-> > +       or enabled respectively) and by RDT event. E.g. on a system with
-> > +       SNC mode disabled with two L3 domains there will be subdirectories
-> > +       "mon_L3_00" and "mon_L3_01". The numerical suffix refers to the
-> > +       L3 cache id.  With SNC enabled the directory names are the same,
-> > +       but the numerical suffix refers to the node id.
-> > +       Mappings from node ids to CPUs are available in the
-> > +       /sys/devices/system/node/node*/cpulist files. Each of these
-> 
-> The explanation of mon_data seems overwhelmingly SNC-centric now.
-> Maybe the SNC section should be responsible for explaining its impact
-> on the mon_data directory. Mainly by reminding the reader that domain
-> ids in the mon_data directory are node ids in SNC mode.
-
-I cut out all the examples and just note that the numerical suffices
-are nodes instead of cache instances.
-
-This bit of the git diff now reads:
-
--       This contains a set of files organized by L3 domain and by
--       RDT event. E.g. on a system with two L3 domains there will
--       be subdirectories "mon_L3_00" and "mon_L3_01".  Each of these
-+       This contains a set of files organized by L3 domain or by NUMA
-+       node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
-+       or enabled respectively) and by RDT event.  Each of these
-
-
-> 
-> 
-> >         directories have one file per event (e.g. "llc_occupancy",
-> >         "mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
-> >         files provide a read out of the current value of the event for
-> > @@ -452,6 +458,28 @@ and 0xA are not.  On a system with a 20-bit mask each bit represents 5%
-> >  of the capacity of the cache. You could partition the cache into four
-> >  equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
+> > The Sub-NUMA cluster feature on some Intel processors partitions
+> > the CPUs that share an L3 cache into two or more sets. This plays
+> > havoc with the Resource Director Technology (RDT) monitoring features.
+> > Prior to this patch Intel has advised that SNC and RDT are incompatible.
 > >
-> > +Notes on Sub-NUMA Cluster mode
-> > +==============================
-> > +When SNC mode is enabled the "llc_occupancy", "mbm_total_bytes", and
-> > +"mbm_local_bytes" will only give meaningful results for well behaved NUMA
-> > +applications. I.e. those that perform the majority of memory accesses
-> > +to memory on the local NUMA node to the CPU where the task is executing.
+> > Some of these CPU support an MSR that can partition the RMID
+> > counters in the same way. This allows for monitoring features
+> > to be used (with the caveat that memory accesses between different
+> > SNC NUMA nodes may still not be counted accuratlely.
 > 
-> Not being specific about why the results aren't meaningful, this
-> sounds vague and alarming.
+> Is an "SNC NUMA node" a "sub-NUMA node", or a NUMA node on which SNC
+> has been enabled?
 
-Removed the trigger word "meaningful" and re-worded to just explain
-the increased liklihood that tasks will migrate between nodes, so users
-must collect data from all nodes. Technically this has always been true
-on multi-socket systems. But since there is a much higher barrier to
-task migration between sockets, users may find that simple measurements
-that used to work now behave differently.
+It would be architecturally possible to enable SNC mode on
+a subset of CPU sockets. But there isn't a BIOS setup option
+to do that. You either have SNC everywhere, or nowhere.
 
-New version:
+I prefer "SNC NUMA node" == "sub-NUMA node".
 
-+Notes on Sub-NUMA Cluster mode
-+==============================
-+When SNC mode is enabled Linux may load balance tasks between Sub-NUMA
-+nodes much more readily than between regular NUMA nodes since the CPUs
-+on Sub-NUMA nodes share the same L3 cache and the system may report
-+the NUMA distance between Sub-NUMA nodes with a lower value than used
-+for regular NUMA nodes.  Users who do not bind tasks to the CPUs of a
-+specific Sub-NUMA node must read the "llc_occupancy", "mbm_total_bytes",
-+and "mbm_local_bytes" for all Sub-NUMA nodes where the tasks may execute
-+to get the full view of traffic for which the tasks were the source.
-+
-+The cache allocation feature still provides the same number of
-+bits in a mask to control allocation into the L3 cache. But each
-+of those ways has its capacity reduced because the cache is divided
-+between the SNC nodes. The values reported in the resctrl
-+"size" files are adjusted accordingly.
-
-
+This version "NUMA node on which SNC has been enabled"
+makes it sound like there is a control on a NUMA node
+that can be switched.  The control is on the CPU socket.
+That's often equivalent to a NUMA node, but Intel has
+had CPUs in the past where this isn't the case (e.g.
+Cascade Lake -AP and Cooper Lake).
 > 
-> > +Note that Linux may load balance tasks between Sub-NUMA nodes much
-> > +more readily than between regular NUMA nodes since the CPUs on SNC
-> > +share the same L3 cache and the system may report the NUMA distance
-> > +between SNC nodes with a lower value than used for regular NUMA nodes.
-> > +Tasks that migrate between nodes will have their traffic recorded by the
-> > +counters in different SNC nodes so a user will need to read mon_data
-> > +files from each node on which the task executed to get the full
-> > +view of traffic for which the task was the source.
-> > +
-> > +
-> > +The cache allocation feature still provides the same number of
-> > +bits in a mask to control allocation into the L3 cache. But each
-> > +of those ways has its capacity reduced because the cache is divided
-> > +between the SNC nodes. The values reported in the resctrl
-> > +"size" files are adjusted accordingly.
-> > +
-> >  Memory bandwidth Allocation and monitoring
-> >  ==========================================
-> >
-> > --
-> > 2.41.0
-> >
-> 
-> Reviewed-by: Peter Newman <peternewman@google.com>
+> Thanks!
+> -Peter
+
+
+Thanks for the review of the series. I've applied changes
+to my local tree. Will post v7 of the series early next
+week if no other reviews come in.
+
+-Tony
