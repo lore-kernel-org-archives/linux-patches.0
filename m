@@ -1,55 +1,52 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29ED646
-	for <patches@lists.linux.dev>; Sat, 30 Sep 2023 21:13:09 +0000 (UTC)
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-565334377d0so11879099a12.2
-        for <patches@lists.linux.dev>; Sat, 30 Sep 2023 14:13:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B291945A
+	for <patches@lists.linux.dev>; Sat, 30 Sep 2023 22:02:01 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-278f0f565e2so5327685a91.2
+        for <patches@lists.linux.dev>; Sat, 30 Sep 2023 15:02:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696108389; x=1696713189;
+        d=1e100.net; s=20230601; t=1696111321; x=1696716121;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w4/9Jh9erOblVD03PMD3I+nDmotORbmI0YDClcDj3hs=;
-        b=joeYeL4mP1b/ByHtEtcIaCn+jFrU0VAo/XJzyqRDmtG1LVe9FPx+nni4jfm8UU3BHm
-         3/Q8//vfP9G0pTxguXRtxF3Rud1gj9sDEgFmptQf8sfcXMXNEnFQl/ZbaJSjdEbi5eUS
-         mr6ICgQ7DfGlMM6cUYrPXL7oc3RJojRsHhrM7IwxyJSa6Jt9N8SQRnpmoAPwf/G6Qx/2
-         2vbuCGNg2tsNW3lgfZS5fMHeB8kOjnsJjaI4pI+Xuaj7TwlxdD1uJvCqSsmkXI/ueIVZ
-         slywKuQVzN2+XB3680oxcE/OreN1PRPzbFX+WhixgJceLhfhMuZPyZUQJjpj0tCzuJon
-         Nhkw==
-X-Gm-Message-State: AOJu0YzbgtJX4OskxoHoUcPAxgD9vR6ZBcGT5zUCaS+pzWF3H+9WKJ+c
-	LuZKLEHD340k5gSUSLKBtTc=
-X-Google-Smtp-Source: AGHT+IE7H7jSQLljAYdqE3TR+wtXf6R1QTE+Vlo6MOV6oJH9kKG3SYX9PRUPpjfsLTKd+YWkUayYhw==
-X-Received: by 2002:a17:903:120e:b0:1bc:7001:6e5e with SMTP id l14-20020a170903120e00b001bc70016e5emr8963254plh.32.1696108389106;
-        Sat, 30 Sep 2023 14:13:09 -0700 (PDT)
+        bh=FeR5T76ZTZxvMCUfz5YBmfd55MUtP2rm54Tv0PEqVko=;
+        b=nfAkEZN2pD2W20Ji4ig7tG2bZ8VIVBHPD72i5z878zXURTnLrjgBJpN8OWP+CEJNWh
+         eIwnNQUhQ0Pv+xXWdQen6mJBhfBptjq2bUGqc6BBOFYShykP4nDFg1E6PQUX4SOzpsmd
+         2ppXDupY3zVHAJ85RpdCuaZoaBVDQOgOguRhTSEtvW5CHeIyer7opi/J8Qp7XQiRJC1h
+         0ENzI35NeUhzG3vjNyTyEErVON0UZA7uSPmdx9FrG70tybHUd6HhTLTAbk5YJ119UxHD
+         /E+yU4lXa25LyLXZCNCIwTQlwxFhHyV82fdGw5gik3rRLCTjOg1od7RADaOcfRQrUthg
+         ld9A==
+X-Gm-Message-State: AOJu0YwQGY/HItFMc29ALcgPB6Jm38VvSrFpmu2sV9J0Epfz+D6nILcq
+	g7sVlOriSgPy8Nh0i5bXcks=
+X-Google-Smtp-Source: AGHT+IGMvC2zEatQKS7y1gd4yv3/ZntbuZf7hxKHO/sCNP9K7IutMwyZgqQ2h5/QzBmBsl2VNuZdMA==
+X-Received: by 2002:a17:90a:ea86:b0:277:1070:74a2 with SMTP id h6-20020a17090aea8600b00277107074a2mr6924409pjz.23.1696111320973;
+        Sat, 30 Sep 2023 15:02:00 -0700 (PDT)
 Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
-        by smtp.gmail.com with ESMTPSA id iy19-20020a170903131300b001c627413e87sm11023591plb.290.2023.09.30.14.13.08
+        by smtp.gmail.com with ESMTPSA id c3-20020a17090abf0300b0026b70d2a8a2sm3582958pjs.29.2023.09.30.15.01.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Sep 2023 14:13:08 -0700 (PDT)
-Date: Sat, 30 Sep 2023 21:13:07 +0000
+        Sat, 30 Sep 2023 15:02:00 -0700 (PDT)
+Date: Sat, 30 Sep 2023 22:01:58 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Wei Liu <wei.liu@kernel.org>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+Cc: Nuno Das Neves <nunodasneves@linux.microsoft.com>,
 	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
 	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-arch@vger.kernel.org, patches@lists.linux.dev,
-	mikelley@microsoft.com, kys@microsoft.com, haiyangz@microsoft.com,
-	decui@microsoft.com, apais@linux.microsoft.com,
-	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
-	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
-	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
-	catalin.marinas@arm.com
-Subject: Re: [PATCH v4 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Message-ID: <ZRiPY5GzrGvlnPmY@liuwe-devbox-debian-v2>
+	mikelley@microsoft.com, kys@microsoft.com, wei.liu@kernel.org,
+	haiyangz@microsoft.com, decui@microsoft.com,
+	apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
+	ssengar@linux.microsoft.com, mukeshrathor@microsoft.com,
+	stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com,
+	vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com,
+	bp@alien8.de, dave.hansen@linux.intel.com, hpa@zytor.com,
+	will@kernel.org, catalin.marinas@arm.com
+Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
+ hypervisor ABIs
+Message-ID: <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-16-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093004-evoke-snowbird-363b@gregkh>
- <ZRhkxxBbxkeM4whg@liuwe-devbox-debian-v2>
- <2023093002-bonfire-petty-c3ca@gregkh>
+ <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023093057-eggplant-reshoot-8513@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,45 +55,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2023093002-bonfire-petty-c3ca@gregkh>
+In-Reply-To: <2023093057-eggplant-reshoot-8513@gregkh>
 
-On Sat, Sep 30, 2023 at 08:31:13PM +0200, Greg KH wrote:
-> On Sat, Sep 30, 2023 at 06:11:19PM +0000, Wei Liu wrote:
-> > On Sat, Sep 30, 2023 at 08:11:37AM +0200, Greg KH wrote:
-> > > On Fri, Sep 29, 2023 at 11:01:41AM -0700, Nuno Das Neves wrote:
-> > > > --- /dev/null
-> > > > +++ b/include/uapi/linux/mshv.h
-> > > > @@ -0,0 +1,306 @@
-> > > > +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
-> > > 
-> > > Much better.
-> > > 
-> > > > +#ifndef _UAPI_LINUX_MSHV_H
-> > > > +#define _UAPI_LINUX_MSHV_H
-> > > > +
-> > > > +/*
-> > > > + * Userspace interface for /dev/mshv
-> > > > + * Microsoft Hypervisor root partition APIs
-> > > > + * NOTE: This API is not yet stable!
-> > > 
-> > > Sorry, that will not work for obvious reasons.
+On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
+> On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
+> > These must be in uapi because they will be used in the mshv ioctl API.
 > > 
-> > This can be removed. For practical purposes, the API has been stable for
-> > the past three years.
+> > Version numbers for each file:
+> > hvhdk.h		25212
+> > hvhdk_mini.h	25294
+> > hvgdk.h		25125
+> > hvgdk_mini.h	25294
 > 
-> Then who wrote this text?
+> what are version numbers?
 
-I don't think this matter, does it? This patch series had been rewritten
-so many times internally to conform to upstream standard it is very
-difficult to track down who wrote this and when.
+These are internal version numbers for the hypervisor headers. We keep
+track of them so that we can detect if there are any breakages in the
+ABI, and thus either ask them to be fixed or we come up with ways to
+maintain compatibility. People outside of Microsoft don't need to worry
+about this. If you don't think this information belongs in the commit
+message, we can drop it.
 
-If you have concrete concerns about removing the text, please let me
-know.
+> 
+> > These are unstable interfaces and as such must be compiled independently
+> > from published interfaces found in hyperv-tlfs.h.
+> 
+> uapi files can NOT be unstable, that's the opposite of an api :(
+> 
+
+You made a few suggestions in the past. Nuno responded here:
+
+https://lore.kernel.org/linux-hyperv/1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com/T/#m3dd8035e381a1344acd7f570c3f5921b7415bedb
+
+> > Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+> > Acked-by: Wei Liu <wei.liu@kernel.org>
+> > ---
+> >  include/uapi/hyperv/hvgdk.h      |   41 +
+> >  include/uapi/hyperv/hvgdk_mini.h | 1076 ++++++++++++++++++++++++
+> >  include/uapi/hyperv/hvhdk.h      | 1342 ++++++++++++++++++++++++++++++
+> >  include/uapi/hyperv/hvhdk_mini.h |  160 ++++
+> >  4 files changed, 2619 insertions(+)
+> >  create mode 100644 include/uapi/hyperv/hvgdk.h
+> >  create mode 100644 include/uapi/hyperv/hvgdk_mini.h
+> >  create mode 100644 include/uapi/hyperv/hvhdk.h
+> >  create mode 100644 include/uapi/hyperv/hvhdk_mini.h
+> > 
+> > diff --git a/include/uapi/hyperv/hvgdk.h b/include/uapi/hyperv/hvgdk.h
+> > new file mode 100644
+> > index 000000000000..9bcbb7d902b2
+> > --- /dev/null
+> > +++ b/include/uapi/hyperv/hvgdk.h
+> > @@ -0,0 +1,41 @@
+> > +/* SPDX-License-Identifier: MIT */
+> 
+> That's usually not a good license for a new uapi .h file, why did you
+> choose this one?
+> 
+
+This is chosen so that other Microsoft developers who don't normally
+work on Linux can review this code.
+
+> > +/* Define connection identifier type. */
+> > +union hv_connection_id {
+> > +	__u32 asu32;
+> > +	struct {
+> > +		__u32 id:24;
+> > +		__u32 reserved:8;
+> > +	} __packed u;
+> 
+> bitfields will not work properly in uapi .h files, please never do that.
+
+Can you clarify a bit more why it wouldn't work? Endianess? Alignment?
+Or something else?
+
+Just by eyeballing the header files under include/uapi, there are a
+non-trivial number of files that use bitfields.
+
+include/uapi/linux/cdrom.h
+include/uapi/linux/hdreg.h
+include/uapi/linux/if_pppox.h
+include/uapi/linux/adfs_fs.h
+include/uapi/linux/atm.h
+include/uapi/linux/batadv_packet.h
+include/uapi/linux/bpf.h
+include/uapi/linux/cciss_defs.h
+include/uapi/linux/dccp.h
+include/uapi/linux/erspan.h
+include/uapi/linux/i2o-dev.h
+include/uapi/linux/icmp.h
+include/uapi/linux/icmpv6.h
+include/uapi/linux/idxd.h
+include/uapi/linux/if_hippi.h
+include/uapi/linux/igmp.h
+include/uapi/linux/inet_diag.h
+include/uapi/linux/ioam6.h
+include/uapi/linux/ip.h
+include/uapi/linux/netfilter/xt_policy.h
+include/uapi/linux/perf_event.h
+include/uapi/linux/rpl.h
+include/uapi/linux/tcp.h
+include/uapi/linux/usb/raw_gadget.h
+include/uapi/linux/watch_queue.h
+include/uapi/scsi/scsi_bsg_ufs.h
+include/uapi/sound/asound.h
+include/uapi/sound/skl-tplg-interface.h
+
+Also under arch/x86/include/uapi/asm:
+
+arch/x86/include/uapi/asm/kvm.h
+
+Can you help us understand how we can make our code work like the others
+listed above? There must be a way since they are all in the tree. We're
+happy to make adjustments.
 
 Thanks,
 Wei.
 
 > 
-> confused,
+> thanks,
 > 
 > greg k-h
