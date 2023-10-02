@@ -1,92 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F22138D;
-	Sun,  1 Oct 2023 06:20:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D636DC433C7;
-	Sun,  1 Oct 2023 06:20:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696141240;
-	bh=YDUZdeEXU5GQ21bz2RuNAZE9GXbGGebX5Tc6BWPTwnI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cxIF61TJ418ssrowJq9Xysr/+cYheFTlfkvk7x7L34U8POn50VYY4Pppjs6DOl6Bz
-	 tMSnec4n9J+AbAEqJsyDlQybR6Mg3XThRAiZjwahDx4W80WaCAJqQjrWeeA6CjLF+2
-	 9qZLqQMq5yNfixB8i/KhNfWniPxFWqZJ5Fd7JsJ8=
-Date: Sun, 1 Oct 2023 08:20:37 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
-	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arch@vger.kernel.org, patches@lists.linux.dev,
-	mikelley@microsoft.com, kys@microsoft.com, haiyangz@microsoft.com,
-	decui@microsoft.com, apais@linux.microsoft.com,
-	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
-	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
-	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
-	catalin.marinas@arm.com
-Subject: Re: [PATCH v4 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Message-ID: <2023100130-profusely-landside-0f97@gregkh>
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-16-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093004-evoke-snowbird-363b@gregkh>
- <ZRhkxxBbxkeM4whg@liuwe-devbox-debian-v2>
- <2023093002-bonfire-petty-c3ca@gregkh>
- <ZRiPY5GzrGvlnPmY@liuwe-devbox-debian-v2>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177E9EAD4
+	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 11:45:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696247125; x=1727783125;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=9bwHBLFRV4COs3zXIsaJKBDYTiurCzcYr4Weu9R05qE=;
+  b=QfJUA9MYpWtnTUpOzHv+VtElgmQ7aekfOi0AgEaAmAYmvWOVLRkAeKuk
+   4jWngzKHk/vniO9kq96JafyRmgl3viRfr/tGaRVCYuZgJSmuMoRyY5lWB
+   VOCAoVUdiUx9EQQs4Bg+nQLMsv/nSZtiKBx0ZMgJzV+O3bdCm8Akf4cur
+   9LBH2Fk2Mmgnn709Jym21cMFHJpSJqqHJ1eoQaO3qdm55D6/4ikKjYZwu
+   B8+KiU5xvcPn5ygjfGVcx1HLNBVQMM1DrqRLBsiosmtiQ8a1wXBNgAQkx
+   i98JtenGOSNeeVyr6KWWNDBK9YVkMElA5KbspGxcfRi1+ZDKNhRut7TH9
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="381508662"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="381508662"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 04:45:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="754027255"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="754027255"
+Received: from roliveir-mobl1.ger.corp.intel.com ([10.251.222.16])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 04:45:19 -0700
+Date: Mon, 2 Oct 2023 14:45:16 +0300 (EEST)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: Jithu Joseph <jithu.joseph@intel.com>
+cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
+    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
+    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
+    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
+    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
+Subject: Re: [PATCH v3 4/9] platform/x86/intel/ifs: Gen2 Scan test support
+In-Reply-To: <20230929202436.2850388-5-jithu.joseph@intel.com>
+Message-ID: <36a8ca4-50b5-f177-d1c0-5fddaac5041@linux.intel.com>
+References: <20230922232606.1928026-1-jithu.joseph@intel.com> <20230929202436.2850388-1-jithu.joseph@intel.com> <20230929202436.2850388-5-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZRiPY5GzrGvlnPmY@liuwe-devbox-debian-v2>
+Content-Type: multipart/mixed; boundary="8323329-1504648656-1696247123=:2459"
 
-On Sat, Sep 30, 2023 at 09:13:07PM +0000, Wei Liu wrote:
-> On Sat, Sep 30, 2023 at 08:31:13PM +0200, Greg KH wrote:
-> > On Sat, Sep 30, 2023 at 06:11:19PM +0000, Wei Liu wrote:
-> > > On Sat, Sep 30, 2023 at 08:11:37AM +0200, Greg KH wrote:
-> > > > On Fri, Sep 29, 2023 at 11:01:41AM -0700, Nuno Das Neves wrote:
-> > > > > --- /dev/null
-> > > > > +++ b/include/uapi/linux/mshv.h
-> > > > > @@ -0,0 +1,306 @@
-> > > > > +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
-> > > > 
-> > > > Much better.
-> > > > 
-> > > > > +#ifndef _UAPI_LINUX_MSHV_H
-> > > > > +#define _UAPI_LINUX_MSHV_H
-> > > > > +
-> > > > > +/*
-> > > > > + * Userspace interface for /dev/mshv
-> > > > > + * Microsoft Hypervisor root partition APIs
-> > > > > + * NOTE: This API is not yet stable!
-> > > > 
-> > > > Sorry, that will not work for obvious reasons.
-> > > 
-> > > This can be removed. For practical purposes, the API has been stable for
-> > > the past three years.
-> > 
-> > Then who wrote this text?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1504648656-1696247123=:2459
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+
+On Fri, 29 Sep 2023, Jithu Joseph wrote:
+
+> Width of chunk related bitfields is ACTIVATE_SCAN and SCAN_STATUS MSRs
+> are different in newer IFS generation compared to gen0.
 > 
-> I don't think this matter, does it? This patch series had been rewritten
-> so many times internally to conform to upstream standard it is very
-> difficult to track down who wrote this and when.
+> Make changes to scan test flow such that MSRs are populated
+> appropriately based on the generation supported by hardware.
+> 
+> Account for the 8/16 bit MSR bitfield width differences between gen0 and
+> newer generations for the scan test trace event too.
+> 
+> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
 
-The point is someone wrote this for a good reason so figuring out why
-that was done would be good for you all to do as maybe it is true!
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-> If you have concrete concerns about removing the text, please let me
-> know.
 
-You need to verify that the comment is not true before removing it,
-otherwise you all will have a very hard time in the future when things
-change...
+-- 
+ i.
 
-thanks,
-
-greg k-h
+--8323329-1504648656-1696247123=:2459--
