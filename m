@@ -1,96 +1,170 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA561F18C;
-	Mon,  2 Oct 2023 22:19:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168E0C433C7;
-	Mon,  2 Oct 2023 22:19:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696285197;
-	bh=kLSfbQ/G4VTKu5DsncLQOBOXQ4WFOLkQX9VZA8s2B9I=;
-	h=From:Date:Subject:To:Cc:From;
-	b=oCPzesfZBSA1Uf2c3rQEbGgyyEinNWoHXCtPfpGF51Nhg2ueHIfuwIG7cnc52F9mj
-	 oLQe9bT0bwTfydIljzEqN9wEqWmKpmGjDAYope/79r+EZlJNTWuSSoUKt3R67pVPCV
-	 KWz4fBqVF1R1xNQeabmoYlc8GOpw9xxW2ATgQvmKxEUnSgBtTQvo59i0uT81vpIOwp
-	 rOOyozi7b0sf6ATPe/XLcISGXr/u3+a61tq6BC5Soca1/j6LMgxlxUY3jk7h76RbvX
-	 AaA0to6tvbwS/CdQWn2DOz1kGv1on3N1ePAlbgA6eLggK2g7vUsf/rr7ryOcN5Jw52
-	 KXX/VMv6rJlEA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 02 Oct 2023 15:19:46 -0700
-Subject: [PATCH] kbuild: Enable
- -Wincompatible-function-pointer-types-strict in W=1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9D11376
+	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 22:57:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696287428; x=1727823428;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=0RIKQuF7zLm/AOZlkjtaA5vzcF6jcyyV2q248S/XCwQ=;
+  b=ffL+yjwmITyonez+CLY51Ior52u2n3HJdrfJuFhBO/4tmU/N4vg7og1K
+   20fQUtC0ChnEUPjrtMSVUOWyY9sDQsC5It+94xTmUeoc2UxWzP5wOtVVR
+   Yi7y4WoMTTLUBwMIlDd0zvpz9CCsFha/Y/tXauSVYTHJwqjI9k6SHiY8U
+   jIWNGQkNPifRQ9blmrXApXB8U0bz2Quoj4RIzfkfNIv5LPQh/poLJt2ZK
+   2uRomlm2l47PP+/MMPFAYrNmoSRzlj9WW5ebpU8yPoBpgLr6b6RpyP2SD
+   2t7UNz1CP9sMfIRw4C7NWgxTX6JWPWRQhag5C7brxAmsc7uYobl6+O3zl
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="362125145"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="362125145"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 15:57:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="744288095"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="744288095"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orsmga007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 02 Oct 2023 15:57:06 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Mon, 2 Oct 2023 15:57:06 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Mon, 2 Oct 2023 15:57:05 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Mon, 2 Oct 2023 15:57:05 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.173)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Mon, 2 Oct 2023 15:57:05 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fDew9dw0ZqwzhmQf+Pmp5T27UDUMAnywmPY0Rns1dTsEIWZX+eKXaDfVxykNHAb6hXBMBgYspKZr9U+vOefyoowIKajAKeeY4OKkFheDYAyV7StcqOWqprDAjwdwK3Y0aKiibZnFlKtOs4IuQKPAlsObeOOoXwGxMwOJiT5eO2Y5INZLCuVw77mvsFA/CjS0yhYY+g7gA8GaBqRoTwscnY3S7S/aeQR1CjtIUm4a6H3B0EzFw/VC1YVpM2JcbgcTUxEXJyAVq/F4zQSDXXNia39oP/Fmi+MjNT7r2+oERCpt+4YY12DZ8t3upJVq1jRPSTbUL0IracgoCXzO2CL3Eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LwxY/Lpgi/qEbLQ1+/lc1L3WmmHc7DyHU7qmA9ebbWg=;
+ b=kGUcltSDomgF6G3JyIS4AgGIVM/FVWDI9HtM9QnwXtpCVXf/nC8MBnPpIiz4+zFJ5pyyomImOnDO8/A0wOhpVYMAGZrT221ujgELLvYhJ2tDdylqLmeMSI20zMto+SBu9RfN2HENTLImPfdX1QdUDKGdlwNsfPdWwROZChQOl1qtdChUuDTR66DcqCS3VqYpV1f8/bbXqmMe0MfED1niVpOm3BleLgL+WVbw2GYTyxgDNd9ysLuAjXl1tJjJrxoGGrnc8NPB2BC7JZjXeKA+CfCI3jcsXqZy3/4MDDSAxT5AyATWRnWGOhFiK6ZF7LgCYBgdUwD4xAxct7P0YznWOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
+ by DM8PR11MB5592.namprd11.prod.outlook.com (2603:10b6:8:35::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6838.31; Mon, 2 Oct 2023 22:57:04 +0000
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::c438:45ad:1a1c:e168]) by BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::c438:45ad:1a1c:e168%3]) with mapi id 15.20.6838.024; Mon, 2 Oct 2023
+ 22:57:03 +0000
+Message-ID: <62fc008d-ac84-8df8-e379-a6fc9b992d2e@intel.com>
+Date: Mon, 2 Oct 2023 15:56:59 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 5/9] platform/x86/intel/ifs: Validate image size
+Content-Language: en-US
+To: =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
+CC: Hans de Goede <hdegoede@redhat.com>, <markgross@kernel.org>,
+	<tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<rostedt@goodmis.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>, LKML
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>, <pengfei.xu@intel.com>
+References: <20230922232606.1928026-1-jithu.joseph@intel.com>
+ <20230929202436.2850388-1-jithu.joseph@intel.com>
+ <20230929202436.2850388-6-jithu.joseph@intel.com>
+ <f5a560b6-3410-f4bd-479c-c9ebec7fdc63@linux.intel.com>
+ <b3ae7831-9634-ee63-c0a9-baad59b6fabf@linux.intel.com>
+From: "Joseph, Jithu" <jithu.joseph@intel.com>
+In-Reply-To: <b3ae7831-9634-ee63-c0a9-baad59b6fabf@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MW4PR04CA0290.namprd04.prod.outlook.com
+ (2603:10b6:303:89::25) To BYAPR11MB3768.namprd11.prod.outlook.com
+ (2603:10b6:a03:fa::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAFCG2UC/x3NQQ4CIQyF4atMurYJoE4cr2JcABZtooVAdTSTu
- bvo8lv87y3QqDI1OA4LVHpx4ywddjNAvHm5EvKlG5xxW2uMQxIf7oQzS8yP4pV/Sk+J2kssmUW
- pon4KNWxaOSrOaHHn92OYpnCIY4I+Xiolfv+PT+d1/QLUVpXeiAAAAA==
-To: masahiroy@kernel.org
-Cc: ndesaulniers@google.com, keescook@chromium.org, samitolvanen@google.com, 
- nicolas@fjasle.eu, trix@redhat.com, linux-kbuild@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2176; i=nathan@kernel.org;
- h=from:subject:message-id; bh=kLSfbQ/G4VTKu5DsncLQOBOXQ4WFOLkQX9VZA8s2B9I=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKnSTjzuDu/fZ3Wl886bIHuQvT3s3mel/CSF8IeRqrwz+
- aVCA4M7SlkYxDgYZMUUWaofqx43NJxzlvHGqUkwc1iZQIYwcHEKwESePWL4K3RlwvaT7S9/RCkX
- pG6d17V9y4ystOZNQlOWnBfzvqb9ypjhf7w+l8zDbxsvnFwUOUX/TezizrqbDFXRLgJT286t2yJ
- lywkA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|DM8PR11MB5592:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b370cf7-4487-4677-7493-08dbc39ae4ef
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: I0KEvqTZJHJDAL+ZSESdZKWvDa6zePTzDgMzd9/pI1oYBsgSR2y/W6Rmpf7r+c1clNwkQJ59BfjltWufAIp1y+i+V3YafZ3t9d2MdRIU2JWPyy/sgSNnZbKNraEL+ShateLEradg8sBOJhIn5QKxrsDhqz1RsoCi+Y9BKz1EjX6zEGiOsY76LPQds9MM21MdWDCY974YH99K3y+9OW9srT+rXc6MLH3kM85XBQ+zQHjy71UNN+y2ov/E7uModNmvspxg2ERNMriO1B58SKyO4CfLc5/sUUmbmZ+gnOZB+XdJycYDCbl26j4SEa+b4dxxYKTzCbMwDG85AbDWpVx3rYngVWnpKhrexdOsv9stAnNcepXYRUDfPZvBGdTa5Pihd2QE48xgO85uDGbL9xyMtQSQF9hUlDbnW3swx0dNn7drb2qDojkobrpU+CYgCDF8oOSsKfLLc/ya6o0NaAZFaYf+Mkhg9IxquOVMY064kNWilEt88fHRR8pJjeAHK/BCefTz3SRdVVUhm+px8vbx2ZfKz+GLtRPtoUUWJUA7SQpBj8uDf8x517CIjMEEhlj5wMCO7RgqPQbC/a6cPk7bJ+APZwQH/oFhuD8kxxnoBQuaLCqZuRAkTRrzFUotjzrp0bFqTW6coDt3IFDZRUwVEA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(136003)(39860400002)(346002)(396003)(230922051799003)(451199024)(186009)(1800799009)(64100799003)(38100700002)(2906002)(4744005)(7416002)(82960400001)(6512007)(53546011)(6486002)(66556008)(66476007)(478600001)(66946007)(54906003)(6666004)(66574015)(6506007)(4326008)(5660300002)(8936002)(41300700001)(8676002)(2616005)(316002)(6916009)(26005)(86362001)(31696002)(36756003)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGYvcW9QUmNldHB2TjFVWUFuVUZsTFMwQi9QN1o2dXUxMzY3OTZyQ2lXMzBk?=
+ =?utf-8?B?VFI2SW5Vbms5YXdlaHhqWmZpUWZCZ1JqOWEzdUVkMjhhQjlqNlZsTEVRcHE1?=
+ =?utf-8?B?b2lnNkxwTnNwalBBQW1mYnRBZXFTaDUvZHVRL2VSQ0lrdC9xL09kaVRPMlZm?=
+ =?utf-8?B?cGs0ZHpKbENmalovT3Z5RDhWbDJOd3BTV2xBNHl6ZG1ONHJNVXRIcEVXVkxR?=
+ =?utf-8?B?NEtYbnhuMVgzODRKYU5BaEZrWE9ad3U4QnBhYXdaOWtBZHBZR0pIbXJJS2FS?=
+ =?utf-8?B?cTFFUm9IWG93STJpSUVxRzZTVDhtR25VR1NKSy8rSDZ4ZjVqcStFWW80UUtw?=
+ =?utf-8?B?NllDVm5WcVMxUkt1YVU1Y0NodHZBQXhqSW9SZ0txTCt1dGt3LzA3bndrQmxK?=
+ =?utf-8?B?NkxQSzg3WTRkU0FrS3ZRVUl3U3h0b09ocG5NOVJZeThVL0pySnRqZzNqLy9E?=
+ =?utf-8?B?a0NrbXpQOFVkcWNEbTBqZzdXL1JPdnd2UVJUVm9IQnFFRWtzMlJONXREeTdt?=
+ =?utf-8?B?THRVUlVZaENRSlh2U0M5QS9BNGxkdFJPb1dPUGE3bFVZZ3JWUEExR0hFQ3lT?=
+ =?utf-8?B?eGcrbzhPZ045NEd0NGE0S2hDc0VkQ2piY0FvMHpMMkw5aDdjUThQREFTb0ox?=
+ =?utf-8?B?M3Bwb21GNFdKLy81UVVNaWV2RjBpYmtRWVo0KzdEZ2FyRGVrdkZZVDd5NDVu?=
+ =?utf-8?B?V0N3T1BhK05iZ1VqSHRwUXl4MWk0WTdrb2thRWxTaW1NRS9sNUhKK0Y5L1pu?=
+ =?utf-8?B?NERKU3VTVXhJeWw2RWM0TmJEaHlWNnJmcEZ6WUVuOGFIbmpYSUg2dTBmbVFT?=
+ =?utf-8?B?UE1ZOWt1Ulgwby94SVBaaWo3K0VFN2J6RTFHK1VRT05QWmNKQnBMZFFYTjFF?=
+ =?utf-8?B?UnlnSnNpZmgyT2cxMEUybC84Q25ETEFXU09RZDdUc3ZLdEZvelBRbHY4Q3px?=
+ =?utf-8?B?SGZGK2l5VUJrTzdBZnY0L3JhbHlBN0YyOWdjMjFicUNzTUdkWVNUYmdEc3Fw?=
+ =?utf-8?B?Rk02ckVWWHREV3dyaDUxQXVPYXc2YVJpT3owVW1pUU9uTldLYjZ1VXFrQ3Ax?=
+ =?utf-8?B?ckoybFNRT0dmNmpsOWw0eFlRT1M5eU02dkNtVUVwVWJxT1N2bVBmT3FmQWts?=
+ =?utf-8?B?Um5Fd0laaURWYVRBMDNSY1dsMVF2c2NtNzJicGRiYWRzOUhEakhQWlV2OXFV?=
+ =?utf-8?B?bVpFN251MzFabWw2OThCUE55bEhUYUp6NmtnZlEySTNQaDR4anVlYzc5ZE93?=
+ =?utf-8?B?UmZyTWRhODlnSDg0K2ZyTGdrWVZrRmNtWVZJWmlwSUZweTduOXhsdm5uVEF0?=
+ =?utf-8?B?YVhxV0NLUDdOczVHWERjQVBBS09IM0NYdVVvbHMxcitkKzVHMmV3Y2RneDR6?=
+ =?utf-8?B?RnlXWU4wN1ZBRGZ5ZXd3cWx6cGtEYnhjTXh0Q0RnZjhHT2ZldmNRNDMvOWVs?=
+ =?utf-8?B?eHJiR2VrL1VONTFsL1llZWUrLzNiOThVQWNNWlpPRW5mWHJSWm5OQWRuT0or?=
+ =?utf-8?B?N0R6YUFITjg1eFFTOFpYSE1nQjZBVXpWaHlsaXMweEk1Qmk5M3hZSW1UME9o?=
+ =?utf-8?B?SXVrYm1DMmxlTCtlRWVjUlpwd25QUENMWWZiUkJZRGI3OW9VN2ErZVNQdWU4?=
+ =?utf-8?B?VkZneDlDaWxEMnVIbHFDN2orRVhrREtwUnZEUU00UzRVZm54UmhHVktscnVO?=
+ =?utf-8?B?N29EK0s4UGxPbkxGd3ZHK2N6YTFVWnc4ekl2MzJ6Uit6K0hZWW0rcXFZdERo?=
+ =?utf-8?B?L3Q0M25GUndjeEE5WFBFZ2VXaXdGdDZwR3Y0dFc5d3Y2WkxTbUpZYWpSeTk4?=
+ =?utf-8?B?V1FrKzY2SXRnNmFxckx3dGdSMEZ3TFo0MXhYRFhTR09yazZRWkdWMGkwRFA1?=
+ =?utf-8?B?OFp0WHp5OVJkUkRzUTZDU1FGeGFacU42UmNocFVHQ1RMNmJiM1p2N21KTGhS?=
+ =?utf-8?B?MXYrcExRSUNxbUNQd2xnWkI1bXRRZkdoQWkxVUJBSEljQ2s4Q1RvcjkzY1Rj?=
+ =?utf-8?B?QmZBRHdhWm5GRVEwekFlcnhrRFQ5c0hOc1NzSWdLa3JhWkROMlhnUHhLN08v?=
+ =?utf-8?B?SCtnbGk4R2VFU3BJcmxBOVdwQVROSHBOVVVNYlJWMVdib0swSnM2VzZ4V2U3?=
+ =?utf-8?B?VVpMc1lUdmpOOE5KMWoxemJNNGo3YWZQNWp0T0xwNFJvQXhzUmhqRDhRck1W?=
+ =?utf-8?B?Q0E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b370cf7-4487-4677-7493-08dbc39ae4ef
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2023 22:57:03.8477
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MVcE+S1uaXsj+5jskt90wjoWmIrPRNSrs/KKxA3U7RsxF22zTrCk+MmKGgnn2TS6/mvEuzsLKgGbGsAji/rlAg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR11MB5592
+X-OriginatorOrg: intel.com
 
--Wincompatible-function-pointer-types-strict aims to catch clang kernel
-Control Flow Integrity (kCFI) violations at build time (rather than run
-time) by validating function pointer assignments against the expected
-prototype, similar to the existing -Wincompatible-function-pointer-types
-that is considered a hard error in the kernel. The -strict variant
-requires the types to match exactly, as opposed to just matching in
-terms of ABI compatibility. This is primarily visible with int/unsigned
-int in lieu of enum types or vice versa.
 
-The tree is not completely clean, so this warning cannot currently be
-enabled unconditionally. However, there are only warnings in one
-subsystem ('drivers/counter'), so it is really close. In order to
-benefit from CI infrastructure that tests with W=1, enable this warning
-at that level, so that new instances have a chance of being caught and
-fixed during development.
 
-This should eventually be a hard error in a similar manner as
-Wincompatible-function-pointer-types but some subsystems test
-with W=1 + CONFIG_WERROR=n, so it would be rude to break their builds
-when they do not care about warnings outside of their subsystem.
+On 10/2/2023 4:50 AM, Ilpo Järvinen wrote:
+> On Mon, 2 Oct 2023, Ilpo Järvinen wrote:
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- scripts/Makefile.extrawarn | 1 +
- 1 file changed, 1 insertion(+)
+>> Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> 
+> Just after sending the rev-by, I realized this also has %d vs unsigned int
+> problem, and %ld should be using %zu as fw->size of size_t.
+> 
+> Feel free to add my rev-by after those two problems have been fixed.
+> 
 
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 2fe6f2828d37..9662f7fd6e39 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -108,6 +108,7 @@ KBUILD_CFLAGS += $(call cc-option, -Wformat-overflow)
- KBUILD_CFLAGS += $(call cc-option, -Wformat-truncation)
- KBUILD_CFLAGS += $(call cc-option, -Wstringop-overflow)
- KBUILD_CFLAGS += $(call cc-option, -Wstringop-truncation)
-+KBUILD_CFLAGS += $(call cc-option, -Wincompatible-function-pointer-types-strict)
- 
- KBUILD_CPPFLAGS += -Wundef
- KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
+Thanks for the review. I will make this change
 
----
-base-commit: ce9ecca0238b140b88f43859b211c9fdfd8e5b70
-change-id: 20231002-enable-wincompatible-function-pointer-types-strict-w-1-4a56b99b8c6f
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Jithu
