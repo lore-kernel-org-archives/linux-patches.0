@@ -1,128 +1,87 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25611F934
-	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 20:10:49 +0000 (UTC)
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so180536f8f.3
-        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 13:10:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696277448; x=1696882248; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vFOstXEQlXhjDb+N/dzpV+yhV1gDE+Z2FA2nVC44tYo=;
-        b=IdVAPIaHZWCBvnzi51wM3kCkr7mzKeIzW84/0usbc1BCN7O35SJjd7lS2Va6PRUo4/
-         SAOAxiojSyaN/Vo1tcvH0DT+Jzz2cX8JW8lpKjJ7+PlRDMlhz7UNE7wLCuJnvF/Igkjw
-         vb1/0OwA+e6lbOFbjQApwOphRis/U2NzG37qy9v3nNSnsbCUMfKMFFZOgWFaCwTI2JaT
-         Cx0TYQcyeUz7NzgH4xPgPogCG+D9pZyAL3h6touMLm/we+oP2aGXhxfTs18RWvdNG+14
-         sRG8lKUt5/BFY7WRcLQILEnwJvqxuoVmY2VZAQKJn4dGE831fOPphgGnPeMmVFdPutZk
-         3wSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696277448; x=1696882248;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vFOstXEQlXhjDb+N/dzpV+yhV1gDE+Z2FA2nVC44tYo=;
-        b=fj9VKv/CkQyu3nDb02wR/gmkAeUsADtsRgD3PtjipVj2O5oaMJf+EhnTODC52A+o7m
-         qiZkNrDe11eavBQT1NNgFH6A0sqy8DHX28n9+ogyCHlCfD6FR5yN6aeBsFOjFDNbhuh/
-         6Jz53ORT28KUWEeahRfApdZUoJjsTkgjC9S5QXBVr/za3fOmMtoxS2tGdBDKGKsiR5Os
-         PtZCjt6HVpQY88sxPg5DxeFzPWAPRJcLirac/0WPsNPfEFOe51IZZVVogsRfVxCXxn1t
-         /xztVndp6tOD7avoE0UFJjFHlccOq9G6HCL6kthGTFOZZ4GCTgC9M4rrHbPO2/duJBVF
-         42Qg==
-X-Gm-Message-State: AOJu0Yx948w1koyJ+t76LWERpNOkr+FZ0/aZA56qo8O5vFQIU9FbnKiU
-	3zVqTShK2paXYO6tP/VP+MAww/ZECIEQjnYg/jZhmQ==
-X-Google-Smtp-Source: AGHT+IElqfgkTtUO0/BuQ+5/kFgQWb+8Ch4D3J+irZT5GSi7IJL+nl7tY7mlEpmV9MFXsVujdKNzO0SI8enMSxwms7k=
-X-Received: by 2002:a5d:58e1:0:b0:31f:6524:2de1 with SMTP id
- f1-20020a5d58e1000000b0031f65242de1mr10259399wrd.32.1696277447607; Mon, 02
- Oct 2023 13:10:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BEF1D539;
+	Mon,  2 Oct 2023 20:55:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5905AC433C8;
+	Mon,  2 Oct 2023 20:55:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696280148;
+	bh=t4+IE1MpYk7ZH0O/BglLFmWzX8a+Sq8oLP+hPz5YdNk=;
+	h=From:Subject:Date:To:Cc:From;
+	b=mxtX8eOumjYl2VOI4NHMAoRbtGlcIskbqAwOjEvBcznMJJjAupnWDCMvZfLUsMpvE
+	 66YqyaOT1kstxZ3VhWbae8fw8Q8wB+jeDDlM3f8oLZABYzsGsr0c+SAsKxNGJqbZKO
+	 K11IBXfI3lE9hE9SZ6TK/G6yytmKFE6xAEiU1HZLIDZU9piFLz/bmUzrin29FLUxhc
+	 YY2d7HoDXovsEEQ3/jXbPjoAIGbWRftpNBklJLXtKSoFkLtyEZia1NyYHAKDocYJOI
+	 jwJzWzSDa3hTdkLodHWrG86QFD0LJk6lfPAYR+0pPG/RQqWDWX2YvRkqIIkz58fPdJ
+	 Ov/oIHgoAIhiA==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] Fix a couple recent instances of
+ -Wincompatible-function-pointer-types-strict from ->mode_get()
+ implementations
+Date: Mon, 02 Oct 2023 13:55:19 -0700
+Message-Id: <20231002-net-wifpts-dpll_mode_get-v1-0-a356a16413cf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231002-disable-wformat-truncation-overflow-non-kprintf-v1-1-35179205c8d9@kernel.org>
-In-Reply-To: <20231002-disable-wformat-truncation-overflow-non-kprintf-v1-1-35179205c8d9@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 2 Oct 2023 13:10:34 -0700
-Message-ID: <CAKwvOdn-NqEjfteby_9hKBcrC-24P7tRnmGiTpa4fL66eJOZ8w@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Disable clang's -Wformat-{overflow,truncation}-non-kprintf
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, nicolas@fjasle.eu, trix@redhat.com, 
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADcuG2UC/x2M7QpAMBRAX0X3t9U+SngVSWN33GLWJpS8u5uf5
+ 9Q5D2RMhBna4oGEJ2XaA4MqC5gWG2YU5JhBS22UlFoEPMRFPh5ZuLiuw7Y7HGaWuqrRW+O8akb
+ gPCb0dP/rrn/fD0kGTvtqAAAA
+To: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
+ pabeni@redhat.com, vadfed@fb.com
+Cc: arkadiusz.kubalewski@intel.com, jiri@resnulli.us, 
+ netdev@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>, richardcochran@gmail.com, 
+ jonathan.lemon@gmail.com, saeedm@nvidia.com, leon@kernel.org, 
+ linux-rdma@vger.kernel.org
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1208; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=t4+IE1MpYk7ZH0O/BglLFmWzX8a+Sq8oLP+hPz5YdNk=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKnSekH5UvIHjqx4mvOA6dOdOLne7kxO36lhB/N9/NOem
+ NseXfmxo5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEwkQZvhn3FFw96NGQ+ui3Js
+ 36JmUXP/t9qyBq2Nmm95nDN/V8yeK8jw32dhdGzHx7lR6lOCmA8bVZ/ZdEX9Y1bX/0gGxoY5JmV
+ 7GQE=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Mon, Oct 2, 2023 at 12:52=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> Recently, clang added support for -Wformat-overflow and
-> -Wformat-truncation. When building the kernel, it was discovered that
-> clang's implementation of these warnings handles the '%p' specifier,
-> which differs from GCC's implementation. This results in false positive
-> warnings due to the kernel's various '%p' extensions. Fortunately, the
-> clang developers placed this warning difference into a separate flag,
-> allowing the kernel to turn off the warning for '%p' unconditionally.
->
-> This is not currently an issue for a normal build, as -Wformat-overflow
-> and -Wformat-truncation are unconditionally disabled, which includes
-> this sub-warning. However, ever since commit 6d4ab2e97dcf ("extrawarn:
-> enable format and stringop overflow warnings in W=3D1"), these warnings
-> are in W=3D1 and the goal is to enable them in the normal build once they
-> are all eliminated. Disable the warnings for W=3D1 to avoid false
-> positives. This block should move with -Wformat-overflow and
-> -Wformat-truncation when they are enabled for a normal build.
->
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1923
-> Link: https://github.com/llvm/llvm-project/issues/64871
-> Link: https://github.com/llvm/llvm-project/pull/65969
-> Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D111219
-> Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D78512
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi all,
 
-This should be the final piece of the puzzle...a long arduous puzzle.
-Thanks Nathan!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+This series fixes a couple of instances of
+-Wincompatible-function-pointer-types-strict that were introduced by a
+recent series that added a new type of ops, struct dpll_device_ops,
+along with implementations of the callback ->mode_get() that had a
+mismatched mode type.
 
-> ---
->  scripts/Makefile.extrawarn | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-> index 2fe6f2828d37..bad1baa2cfb4 100644
-> --- a/scripts/Makefile.extrawarn
-> +++ b/scripts/Makefile.extrawarn
-> @@ -106,6 +106,13 @@ KBUILD_CFLAGS +=3D $(call cc-option, -Wunused-const-=
-variable)
->  KBUILD_CFLAGS +=3D $(call cc-option, -Wpacked-not-aligned)
->  KBUILD_CFLAGS +=3D $(call cc-option, -Wformat-overflow)
->  KBUILD_CFLAGS +=3D $(call cc-option, -Wformat-truncation)
-> +# Clang checks for overflow/truncation with '%p', while GCC does not:
-> +# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D111219
-> +# The kernel has many extensions to '%p' that clang does not understand,=
- so
-> +# always disable these warnings when '-Wformat-truncation' and
-> +# '-Wformat-overflow' are enabled.
-> +KBUILD_CFLAGS +=3D $(call cc-disable-warning, format-overflow-non-kprint=
-f)
-> +KBUILD_CFLAGS +=3D $(call cc-disable-warning, format-truncation-non-kpri=
-ntf)
->  KBUILD_CFLAGS +=3D $(call cc-option, -Wstringop-overflow)
->  KBUILD_CFLAGS +=3D $(call cc-option, -Wstringop-truncation)
->
->
-> ---
-> base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
-> change-id: 20231002-disable-wformat-truncation-overflow-non-kprintf-033e8=
-d8b4de8
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
->
+This warning is not currently enabled for any build but I am planning on
+submitting a patch to add it to W=1 to prevent new instances of the
+warning from popping up while we try and fix the existing instances in
+other drivers.
 
+This series is based on current net-next but if they need to go into
+individual maintainer trees, please feel free to take the patches
+individually.
 
---=20
-Thanks,
-~Nick Desaulniers
+Cheers,
+Nathan
+
+---
+Nathan Chancellor (2):
+      ptp: Fix type of mode parameter in ptp_ocp_dpll_mode_get()
+      mlx5: Fix type of mode parameter in mlx5_dpll_device_mode_get()
+
+ drivers/net/ethernet/mellanox/mlx5/core/dpll.c | 4 ++--
+ drivers/ptp/ptp_ocp.c                          | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+---
+base-commit: 35766690d675f63c111afa0a2f5286b74a5b5cc2
+change-id: 20231002-net-wifpts-dpll_mode_get-268efa3df19b
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
