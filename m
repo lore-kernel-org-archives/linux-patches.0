@@ -1,194 +1,155 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738051D53B
-	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 19:06:17 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-9b2a3fd5764so7674966b.3
-        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 12:06:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E990615BD
+	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 19:29:23 +0000 (UTC)
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-49059c3e32aso26546e0c.0
+        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 12:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696273575; x=1696878375; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DDwLuB+JnJ/fkY5rfqgAXIgE3qv2mbDu3+kGxrUmSpU=;
-        b=fRkAOLNPC5q6GXSQFizP00iVxE08ZJWiuUUaPifZy/lO1IY8/Ryv5UsOJAtYYydPIV
-         wW/mzZhonOAGpp31joJzLfuKYQTRA6MPmvnloh0ZgF8yc4sl+6tSB5QxSVMRjIHx7k6a
-         49oRXG6cmbvu+9/hzYkXOLGnXh7VCRCMtxEdBeFFpApOFGCRTNyCOzIOuOLg2+RBFCfE
-         uk1GUVE7thL1DlTmxA4e8nVVPm4I46ddO/b6LzwYtBLeVNTq34GA4HHFYn6ZiIVw87og
-         /C0s0/8Xh6sw3/rF7dIQq+zNeoKZ7EQw1O7iovA1uul6QsUShPilve6UI3o6KfaS6cFP
-         SPlA==
+        d=gmail.com; s=20230601; t=1696274963; x=1696879763; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ajjlmKdebxZk7OHm+SN7lonVxoqhP21tLhFjdE+XoAg=;
+        b=f0oznSblW1mc1/rFtjH4AI5CNhK0lGEBJIlsgXscThVygrHO9b7i8hVFB8zeCtHiTb
+         Qeyt9teLBBjeRTdPDRNhFiLoi+94wauCEi1Qd3VXP6mIHXulPu/EryUoj+X+RRYyMC+7
+         fsGx+u9FLSefaBjPVGmk/fnzAh84dkOpuom4jmpxT++FSh958z/WjVND7tUAy/TxV6jN
+         5Saqp95EsPCW0D8MO1C3VEaXF+EjEOHXalb7FjED5Sv9V30O+VEXVfPePq1eIxHnLgPF
+         p5iCui5WeomKPnXNAoh5K4J1snfpJWVcDPDF5n6Q67v9CWetd9VKOYegwfuxBeQ+waWd
+         V1sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696273575; x=1696878375;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1696274963; x=1696879763;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DDwLuB+JnJ/fkY5rfqgAXIgE3qv2mbDu3+kGxrUmSpU=;
-        b=U6LQQKJ8Hr9rfbU/CuqrxY9CDEFMQbpHZoRwNsWTL1O6BUFDDMk6mkwZ46jGQz4ZST
-         W5on1a7r0hZtqzoqcaivw1PJe7DudpldllhCQmmY/GJKqE7h6cor5X6rhdRa0ewT6jxe
-         8z91KPSb62eMmh01uT5xHcVS3VkgqJINoJqvUOVJcVpsazYn46NOskzmJ8x2ebHVDES7
-         NLsT4IJ9BPV/dQQt+oxqsexuIGsLY1g2tf1u5aUdWDfWpWfUUh9Gm3JPViR0206CEYcw
-         4GgEuskjOJ0X7HqiuyCBOvwWZsYg0GC5z9mFPahfg9Jtutq8F3VdnWWqDGAEqNIuqC5f
-         5Hmw==
-X-Gm-Message-State: AOJu0Yza1SXhnu+Ldy4nL6QlUBbUlx9jlT6V+rLSPrhlYl2VTHgyf1ok
-	+yIyjfZj6N1dO1jQwo0x7N4=
-X-Google-Smtp-Source: AGHT+IGGDBhYu3bqdE4ZFZC99FhZEPMVjvtefbcAnOccKKeoYTwgZpOg0wyyLyG9Xe9kRlQLIbTrlA==
-X-Received: by 2002:a17:906:256:b0:9ae:74d1:4b45 with SMTP id 22-20020a170906025600b009ae74d14b45mr12065034ejl.65.1696273575354;
-        Mon, 02 Oct 2023 12:06:15 -0700 (PDT)
-Received: from gmail.com (1F2EF530.nat.pool.telekom.hu. [31.46.245.48])
-        by smtp.gmail.com with ESMTPSA id rp5-20020a170906d96500b0098e78ff1a87sm17405863ejb.120.2023.10.02.12.06.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 12:06:14 -0700 (PDT)
-Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
-Date: Mon, 2 Oct 2023 21:06:12 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: Zhiquan Li <zhiquan1.li@intel.com>
-Cc: x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, bp@alien8.de,
-	tony.luck@intel.com, naoya.horiguchi@nec.com,
-	Youquan Song <youquan.song@intel.com>
-Subject: Re: [PATCH RESEND v2] x86/mce: Set PG_hwpoison page flag to avoid
- the capture kernel panic
-Message-ID: <ZRsUpM/XtPAE50Rm@gmail.com>
-References: <20230914030539.1622477-1-zhiquan1.li@intel.com>
+        bh=ajjlmKdebxZk7OHm+SN7lonVxoqhP21tLhFjdE+XoAg=;
+        b=K8Gveybw2oX5YTseNAmgiwoxaId57zS8wQmY7t++XtnHR1yN+0QFmUk87qUbUhBMRv
+         G7aTSvmuRd2PMjX1ChIq5ydODKwxh2TiU8DrgHeGzHbo1ipiTDTUha+HZKcqr6lUFMDr
+         MxlTyw6mPxVJUimLC/fCjbgN4dKwsZ/Ld/86RFjjWd8RKOQH6bToXUL9OC3zSkz/jMBr
+         GiCDP82GcwTLktzH58MJqiXweTDc9ARePEXxvWM+RFcnD/Fo/6Z4pqZY8CRBMo6KCCJB
+         eQiBl3x7gjm8TGJYh08P3lGQaJzI6jQA7BiAwSEkW81vYME2A/J0ZnBPMkp5Nuvys/HW
+         qQ6Q==
+X-Gm-Message-State: AOJu0Yyw+kODzYp4GzoSvCLMUC4d+mo8D6d5XJGCzVdMEkPMW4O6OJjN
+	IhRAYWb/g6COVcGbYLIgr24zAMYJCmBeZF80Ugs=
+X-Google-Smtp-Source: AGHT+IE49qL31bZrwQMJ0Xfes4Ezx8noj0Ajc/E7xZWoRNGoaK3gWcipOZQfm9J+6RsfmrXvjcIxKo9Ikw11UYOzsZY=
+X-Received: by 2002:a05:6122:60c:b0:49b:9510:1f94 with SMTP id
+ u12-20020a056122060c00b0049b95101f94mr5413861vkp.1.1696274962518; Mon, 02 Oct
+ 2023 12:29:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230914030539.1622477-1-zhiquan1.li@intel.com>
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
+In-Reply-To: <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
+From: Alex Ionescu <aionescu@gmail.com>
+Date: Mon, 2 Oct 2023 15:29:11 -0400
+Message-ID: <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
+Subject: Re: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in hv_common.c
+To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, x86@kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arch@vger.kernel.org, 
+	patches@lists.linux.dev, mikelley@microsoft.com, kys@microsoft.com, 
+	wei.liu@kernel.org, gregkh@linuxfoundation.org, haiyangz@microsoft.com, 
+	decui@microsoft.com, apais@linux.microsoft.com, Tianyu.Lan@microsoft.com, 
+	ssengar@linux.microsoft.com, mukeshrathor@microsoft.com, 
+	stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com, 
+	vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org, 
+	catalin.marinas@arm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Nuno,
+
+Is it possible to simply change to always allocating the output page?
+For example, the output page could be needed in scenarios where Linux
+is not running as the root partition, since certain hypercalls that a
+guest can make will still require one (I realize that's not the case
+_today_, but I don't believe this optimization buys much).
+
+Best regards,
+Alex Ionescu
+
+Best regards,
+Alex Ionescu
 
 
-* Zhiquan Li <zhiquan1.li@intel.com> wrote:
-
-> Kdump can exclude the HWPosion page to avoid touch the error page
-> again, the prerequisite is the PG_hwpoison page flag is set.
-> However, for some MCE fatal error cases, there is no opportunity
-> to queue a task for calling memory_failure(), as a result,
-> the capture kernel touches the error page again and panics.
-> 
-> Add function mce_set_page_hwpoison_now() which marks a page as
-> HWPoison before kernel panic() for MCE error, so that the dump
-> program can check and skip the error page and prevent the capture
-> kernel panic.
-> 
-> [Tony: Changed TestSetPageHWPoison() to SetPageHWPoison()]
-> 
-> Co-developed-by: Youquan Song <youquan.song@intel.com>
-> Signed-off-by: Youquan Song <youquan.song@intel.com>
-> Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-> 
+On Fri, Sep 29, 2023 at 2:02=E2=80=AFPM Nuno Das Neves
+<nunodasneves@linux.microsoft.com> wrote:
+>
+> This is a more flexible approach for determining whether to allocate the
+> output page.
+>
+> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+> Acked-by: Wei Liu <wei.liu@kernel.org>
 > ---
-> V2 RESEND notes:
-> - No changes on this, just rebasing as v6.6-rc1 is out.
-> - Added the tag from Naoya.
->   Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
-> 
-> Changes since V1:
-> - Revised the commit message as per Naoya's suggestion.
-> - Replaced "TODO" comment in code with comments based on mailing list
->   discussion on the lack of value in covering other page types.
->   Link: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
-> ---
->  arch/x86/kernel/cpu/mce/core.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-> index 6f35f724cc14..2725698268f3 100644
-> --- a/arch/x86/kernel/cpu/mce/core.c
-> +++ b/arch/x86/kernel/cpu/mce/core.c
-> @@ -156,6 +156,22 @@ void mce_unregister_decode_chain(struct notifier_block *nb)
->  }
->  EXPORT_SYMBOL_GPL(mce_unregister_decode_chain);
->  
+>  drivers/hv/hv_common.c | 21 +++++++++++++++++----
+>  1 file changed, 17 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+> index 39077841d518..3f6f23e4c579 100644
+> --- a/drivers/hv/hv_common.c
+> +++ b/drivers/hv/hv_common.c
+> @@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
+>  void * __percpu *hyperv_pcpu_output_arg;
+>  EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+>
 > +/*
-> + * Kdump can exclude the HWPosion page to avoid touch the error page again,
-> + * the prerequisite is the PG_hwpoison page flag is set. However, for some
-> + * MCE fatal error cases, there are no opportunity to queue a task
-> + * for calling memory_failure(), as a result, the capture kernel panics.
-> + * This function marks the page as HWPoison before kernel panic() for MCE.
+> + * Determine whether output arg is needed
 > + */
-
-The English in this commit is *atrocious*, both in the changelog and in
-the comments - how on Earth did 'Posion' typo and half a dozen other typos
-and bad grammar survive ~3 iterations and a Reviewed-by tag??
-
-The version below fixes up the worst, but I suspect that's not the only problem
-with this patch...
-
-Thanks,
-
-	Ingo
-
-================>
-From: Zhiquan Li <zhiquan1.li@intel.com>
-Date: Thu, 14 Sep 2023 11:05:39 +0800
-Subject: [PATCH] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
-
-Kdump can exclude the HWPoison page to avoid touching the error page
-again, the prerequisite is the PG_hwpoison page flag is set.
-
-However, for some MCE fatal error cases, there is no opportunity
-to queue a task for calling memory_failure(), and as a result,
-the capture kernel touches the error page again and panics.
-
-Add the mce_set_page_hwpoison_now() function, which marks a page as
-HWPoison before kernel panic() for MCE error, so that the dump
-program can check and skip the error page and prevent the capture
-kernel panic.
-
-[ Tony: Changed TestSetPageHWPoison() to SetPageHWPoison() ]
-[ mingo: Fixed the comments & changelog ]
-
-Co-developed-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
----
- arch/x86/kernel/cpu/mce/core.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 6f35f724cc14..1a14e8233c5a 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -156,6 +156,22 @@ void mce_unregister_decode_chain(struct notifier_block *nb)
- }
- EXPORT_SYMBOL_GPL(mce_unregister_decode_chain);
- 
-+/*
-+ * Kdump can exclude the HWPoison page to avoid touching the error page again,
-+ * the prerequisite is that the PG_hwpoison page flag is set. However, for some
-+ * MCE fatal error cases, there is no opportunity to queue a task
-+ * for calling memory_failure(), and as a result, the capture kernel panics.
-+ * This function marks the page as HWPoison before kernel panic() for MCE.
-+ */
-+static void mce_set_page_hwpoison_now(unsigned long pfn)
-+{
-+	struct page *p;
-+
-+	p = pfn_to_online_page(pfn);
-+	if (p)
-+		SetPageHWPoison(p);
-+}
-+
- static void __print_mce(struct mce *m)
- {
- 	pr_emerg(HW_ERR "CPU %d: Machine Check%s: %Lx Bank %d: %016Lx\n",
-@@ -286,6 +302,8 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	if (!fake_panic) {
- 		if (panic_timeout == 0)
- 			panic_timeout = mca_cfg.panic_timeout;
-+		if (final && (final->status & MCI_STATUS_ADDRV))
-+			mce_set_page_hwpoison_now(final->addr >> PAGE_SHIFT);
- 		panic(msg);
- 	} else
- 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+> +static inline bool hv_output_arg_exists(void)
+> +{
+> +       return hv_root_partition ? true : false;
+> +}
+> +
+>  static void hv_kmsg_dump_unregister(void);
+>
+>  static struct ctl_table_header *hv_ctl_table_hdr;
+> @@ -342,10 +350,12 @@ int __init hv_common_init(void)
+>         hyperv_pcpu_input_arg =3D alloc_percpu(void  *);
+>         BUG_ON(!hyperv_pcpu_input_arg);
+>
+> -       /* Allocate the per-CPU state for output arg for root */
+> -       if (hv_root_partition) {
+> +       if (hv_output_arg_exists()) {
+>                 hyperv_pcpu_output_arg =3D alloc_percpu(void *);
+>                 BUG_ON(!hyperv_pcpu_output_arg);
+> +       }
+> +
+> +       if (hv_root_partition) {
+>                 hv_synic_eventring_tail =3D alloc_percpu(u8 *);
+>                 BUG_ON(hv_synic_eventring_tail =3D=3D NULL);
+>         }
+> @@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
+>         u8 **synic_eventring_tail;
+>         u64 msr_vp_index;
+>         gfp_t flags;
+> -       int pgcount =3D hv_root_partition ? 2 : 1;
+> +       int pgcount =3D hv_output_arg_exists() ? 2 : 1;
+>         void *mem;
+>         int ret;
+>
+> @@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
+>                 if (!mem)
+>                         return -ENOMEM;
+>
+> -               if (hv_root_partition) {
+> +               if (hv_output_arg_exists()) {
+>                         outputarg =3D (void **)this_cpu_ptr(hyperv_pcpu_o=
+utput_arg);
+>                         *outputarg =3D (char *)mem + HV_HYP_PAGE_SIZE;
+> +               }
+> +
+> +               if (hv_root_partition) {
+>                         synic_eventring_tail =3D (u8 **)this_cpu_ptr(hv_s=
+ynic_eventring_tail);
+>                         *synic_eventring_tail =3D kcalloc(HV_SYNIC_SINT_C=
+OUNT, sizeof(u8),
+>                                                         flags);
+> --
+> 2.25.1
+>
+>
