@@ -1,24 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B6F20329;
-	Mon,  2 Oct 2023 20:55:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3243BC43395;
-	Mon,  2 Oct 2023 20:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA561F18C;
+	Mon,  2 Oct 2023 22:19:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168E0C433C7;
+	Mon,  2 Oct 2023 22:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696280149;
-	bh=Y2Lt8qx7KyiKOUPa2We5gWo6fuqgHoG5oG5OZdYy0+M=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=BMcitU6QE707Nv7g6gJ1R/jLsUitQvIalA9QIwaiVjMwAnU8Ia41eo+QMD8akWEAl
-	 /rQliFgY6/UxLd/8l33gzkvrrq8rVoed5MdIoFQmtQJYMIuunpjR91i0cDP842C+QE
-	 jNgE77xRgP4hH6UetsxuZZ8Dqc1wLhUR/tDIgyCn1rVpJOQYudBa+nboicw1ROVuse
-	 8w11v4zCWxtI1xSVl20iV/FBtlRmdodUFTw+0iqrVaRy1xbIsPAPNbIBDo53OLAqM1
-	 dou8zuehhoay/uNea7dGF3y/Fz+oGusWpD0uEcsoWkYhkzhZIXzMS79PH8wTN2ucxX
-	 xgWSZPIE14E0A==
+	s=k20201202; t=1696285197;
+	bh=kLSfbQ/G4VTKu5DsncLQOBOXQ4WFOLkQX9VZA8s2B9I=;
+	h=From:Date:Subject:To:Cc:From;
+	b=oCPzesfZBSA1Uf2c3rQEbGgyyEinNWoHXCtPfpGF51Nhg2ueHIfuwIG7cnc52F9mj
+	 oLQe9bT0bwTfydIljzEqN9wEqWmKpmGjDAYope/79r+EZlJNTWuSSoUKt3R67pVPCV
+	 KWz4fBqVF1R1xNQeabmoYlc8GOpw9xxW2ATgQvmKxEUnSgBtTQvo59i0uT81vpIOwp
+	 rOOyozi7b0sf6ATPe/XLcISGXr/u3+a61tq6BC5Soca1/j6LMgxlxUY3jk7h76RbvX
+	 AaA0to6tvbwS/CdQWn2DOz1kGv1on3N1ePAlbgA6eLggK2g7vUsf/rr7ryOcN5Jw52
+	 KXX/VMv6rJlEA==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 02 Oct 2023 13:55:21 -0700
-Subject: [PATCH 2/2] mlx5: Fix type of mode parameter in
- mlx5_dpll_device_mode_get()
+Date: Mon, 02 Oct 2023 15:19:46 -0700
+Subject: [PATCH] kbuild: Enable
+ -Wincompatible-function-pointer-types-strict in W=1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -27,66 +27,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231002-net-wifpts-dpll_mode_get-v1-2-a356a16413cf@kernel.org>
-References: <20231002-net-wifpts-dpll_mode_get-v1-0-a356a16413cf@kernel.org>
-In-Reply-To: <20231002-net-wifpts-dpll_mode_get-v1-0-a356a16413cf@kernel.org>
-To: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
- pabeni@redhat.com, vadfed@fb.com
-Cc: arkadiusz.kubalewski@intel.com, jiri@resnulli.us, 
- netdev@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>, saeedm@nvidia.com, leon@kernel.org, 
- linux-rdma@vger.kernel.org
+Message-Id: <20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAFCG2UC/x3NQQ4CIQyF4atMurYJoE4cr2JcABZtooVAdTSTu
+ bvo8lv87y3QqDI1OA4LVHpx4ywddjNAvHm5EvKlG5xxW2uMQxIf7oQzS8yP4pV/Sk+J2kssmUW
+ pon4KNWxaOSrOaHHn92OYpnCIY4I+Xiolfv+PT+d1/QLUVpXeiAAAAA==
+To: masahiroy@kernel.org
+Cc: ndesaulniers@google.com, keescook@chromium.org, samitolvanen@google.com, 
+ nicolas@fjasle.eu, trix@redhat.com, linux-kbuild@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2119; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Y2Lt8qx7KyiKOUPa2We5gWo6fuqgHoG5oG5OZdYy0+M=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKnSesEfzOqbj2kfeNXzsH5q96utkjcLLAMNrU23Pf0++
- fiG0E/fOkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEZDMZ/set3+G6yeio7AwL
- m1uCJx+pLzxe/KRJ+/dVSfbY/cxuxwoZ/tkfelJ1K+/oz/9zFlaqLF/VU3vpT25Pic2rvmcv4xr
- OcXIAAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2176; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=kLSfbQ/G4VTKu5DsncLQOBOXQ4WFOLkQX9VZA8s2B9I=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKnSTjzuDu/fZ3Wl886bIHuQvT3s3mel/CSF8IeRqrwz+
+ aVCA4M7SlkYxDgYZMUUWaofqx43NJxzlvHGqUkwc1iZQIYwcHEKwESePWL4K3RlwvaT7S9/RCkX
+ pG6d17V9y4ystOZNQlOWnBfzvqb9ypjhf7w+l8zDbxsvnFwUOUX/TezizrqbDFXRLgJT286t2yJ
+ lywkA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building with -Wincompatible-function-pointer-types-strict, a
-warning designed to catch potential kCFI failures at build time rather
-than run time due to incorrect function pointer types, there is a
-warning due to a mismatch between the type of the mode parameter in
-mlx5_dpll_device_mode_get() vs. what the function pointer prototype for
-->mode_get() in 'struct dpll_device_ops' expects.
+-Wincompatible-function-pointer-types-strict aims to catch clang kernel
+Control Flow Integrity (kCFI) violations at build time (rather than run
+time) by validating function pointer assignments against the expected
+prototype, similar to the existing -Wincompatible-function-pointer-types
+that is considered a hard error in the kernel. The -strict variant
+requires the types to match exactly, as opposed to just matching in
+terms of ABI compatibility. This is primarily visible with int/unsigned
+int in lieu of enum types or vice versa.
 
-  drivers/net/ethernet/mellanox/mlx5/core/dpll.c:141:14: error: incompatible function pointer types initializing 'int (*)(const struct dpll_device *, void *, enum dpll_mode *, struct netlink_ext_ack *)' with an expression of type 'int (const struct dpll_device *, void *, u32 *, struct netlink_ext_ack *)' (aka 'int (const struct dpll_device *, void *, unsigned int *, struct netlink_ext_ack *)') [-Werror,-Wincompatible-function-pointer-types-strict]
-    141 |         .mode_get = mlx5_dpll_device_mode_get,
-        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+The tree is not completely clean, so this warning cannot currently be
+enabled unconditionally. However, there are only warnings in one
+subsystem ('drivers/counter'), so it is really close. In order to
+benefit from CI infrastructure that tests with W=1, enable this warning
+at that level, so that new instances have a chance of being caught and
+fixed during development.
 
-Change the type of the mode parameter in mlx5_dpll_device_mode_get() to
-clear up the warning and avoid kCFI failures at run time.
+This should eventually be a hard error in a similar manner as
+Wincompatible-function-pointer-types but some subsystems test
+with W=1 + CONFIG_WERROR=n, so it would be rude to break their builds
+when they do not care about warnings outside of their subsystem.
 
-Fixes: 496fd0a26bbf ("mlx5: Implement SyncE support using DPLL infrastructure")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-To: saeedm@nvidia.com
-To: leon@kernel.org
-Cc: linux-rdma@vger.kernel.org
----
- drivers/net/ethernet/mellanox/mlx5/core/dpll.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/Makefile.extrawarn | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-index 74f0c7867120..2cd81bb32c66 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-@@ -121,8 +121,8 @@ static int mlx5_dpll_device_lock_status_get(const struct dpll_device *dpll,
- }
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 2fe6f2828d37..9662f7fd6e39 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -108,6 +108,7 @@ KBUILD_CFLAGS += $(call cc-option, -Wformat-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-truncation)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-truncation)
++KBUILD_CFLAGS += $(call cc-option, -Wincompatible-function-pointer-types-strict)
  
- static int mlx5_dpll_device_mode_get(const struct dpll_device *dpll,
--				     void *priv,
--				     u32 *mode, struct netlink_ext_ack *extack)
-+				     void *priv, enum dpll_mode *mode,
-+				     struct netlink_ext_ack *extack)
- {
- 	*mode = DPLL_MODE_MANUAL;
- 	return 0;
+ KBUILD_CPPFLAGS += -Wundef
+ KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 
+---
+base-commit: ce9ecca0238b140b88f43859b211c9fdfd8e5b70
+change-id: 20231002-enable-wincompatible-function-pointer-types-strict-w-1-4a56b99b8c6f
+
+Best regards,
 -- 
-2.42.0
+Nathan Chancellor <nathan@kernel.org>
 
