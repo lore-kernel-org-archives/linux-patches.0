@@ -1,236 +1,101 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789801D53B
-	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 19:35:28 +0000 (UTC)
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-49d0ee68dcaso8686e0c.1
-        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 12:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696275327; x=1696880127; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d/FA2EfCmaMmbb04VxL3iHHe9pNT3SUAkPZRkFN887g=;
-        b=jZOxZ/6nvy+N74wjDcCi+Env5yDWnAAYdSB51zNBHGv5e8+ZmZpLpiH5qruEAr2vf/
-         4lXjZEbp8ac7oChFfcy6nY8SYO58VtDblczwwnK5Awl65gzPIvPkQAHisrFrv8YD03X4
-         HfsB7Xg33CMuPvjdL+C08BQZPu5rv5jmowahkfSrw/vdDXN9OHZwPtYSPs+BRlXxPpFZ
-         yhZKgkmCBm99ZGar3ssSPEtbY/UebXqxfEGykJzRN6vKGWi9g+g2ftA3bD4taeOsuMwG
-         pPNnOOTwubElW5xAKjcIOrsFYzFJO+6PcMO3yNRDsm6ly0W7HAEp7/1jlZDSHlRf63SX
-         0J5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696275327; x=1696880127;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d/FA2EfCmaMmbb04VxL3iHHe9pNT3SUAkPZRkFN887g=;
-        b=sDfoQyda+TbNZaJqaTSPcmQKH/3SOVOalIhIuqOX36Pe/KtMuOO8hxpUBeGyDTogYR
-         iIZgMujOL4igg1029cyinkq1jR+K35yPMrVRvAbpw+GzkcnRh+8qY8RAP8z1jtYvREKY
-         Sc8muwlnEYaOoLnCue+PXnh+9MXo57WlO0UVPC+A9uy6cc/fKe6NjMzuSqe//FcKFBPd
-         Ju1KGQlVpGCPgNWY/5DFhIbBzUjwji9ovCmcriCYJ8BcE9PPlP/pNsPWzyaTLMKdOpe+
-         KcNv6DKYAImtD+d+Z1wheywXhJTEG18CQvzkdwrOtEqwucUxVagTADGX9Akr/ABvxy2O
-         rFsQ==
-X-Gm-Message-State: AOJu0YwtcKhTtPxTsU0A/LcwGQWOUyj7tsELaIq01RKPOvYtcFvoa/S2
-	pEH8pmN22QQCxkAysp5054iWamO6B2UeOEVpOEw=
-X-Google-Smtp-Source: AGHT+IEA8aMHsmzo3NYvS8o7lDTbcS0OB4l0msAePGEiSRo8YgRWW26fxOjCvYo4qoUwF1IxuWJu8xCC3TrKG6DIM9M=
-X-Received: by 2002:a05:6122:4993:b0:499:7af7:207d with SMTP id
- ex19-20020a056122499300b004997af7207dmr5484408vkb.1.1696275327064; Mon, 02
- Oct 2023 12:35:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465BE1F19A;
+	Mon,  2 Oct 2023 19:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F9EC433C8;
+	Mon,  2 Oct 2023 19:52:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696276354;
+	bh=+548pRRoJGnyq+La0+LmV2WoZSprlMO8hwf3zOhMwFk=;
+	h=From:Date:Subject:To:Cc:From;
+	b=EqWiZsTStPaTnLlG9Ln2clf5JhEUOwWSlMzPCtk4SJrcNKfaOPuRDpDojq0zQwdan
+	 nfi4nA+wX8mlV0tc6uwgc4BZB+Xv0terRZxA+2HJF/TUrRkE9tqoWTG2Y71U1x8nNc
+	 QRXdav27RnFhVkZVxyuT3LEutXi6JCYLnV3uo7l03ExaEyihCppDzoD12aDSBbPeTL
+	 wRtGScA8HkXP6Ie9r0rgntcaf5Swu2pgQzzwkaZ7DbQkkjYjPh+Cq9vmEaLZO/b5yN
+	 bo1xyjfX3FkR+SupPk6GkP/51ns2GbgSNebtR/FHYCmIpR7vyEVZ07TZThNxu26BDc
+	 Wo2nHLe24lAfA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 02 Oct 2023 12:52:28 -0700
+Subject: [PATCH] kbuild: Disable clang's
+ -Wformat-{overflow,truncation}-non-kprintf
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-15-git-send-email-nunodasneves@linux.microsoft.com>
-In-Reply-To: <1696010501-24584-15-git-send-email-nunodasneves@linux.microsoft.com>
-From: Alex Ionescu <aionescu@gmail.com>
-Date: Mon, 2 Oct 2023 15:35:16 -0400
-Message-ID: <CAJ-90NKJ=FViuuy2MyA-8S1j9Lsia8bR-ytZuAr=pOPuAiO0VQ@mail.gmail.com>
-Subject: Re: [PATCH v4 14/15] asm-generic: hyperv: Use new Hyper-V headers conditionally.
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, x86@kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arch@vger.kernel.org, 
-	patches@lists.linux.dev, mikelley@microsoft.com, kys@microsoft.com, 
-	wei.liu@kernel.org, gregkh@linuxfoundation.org, haiyangz@microsoft.com, 
-	decui@microsoft.com, apais@linux.microsoft.com, Tianyu.Lan@microsoft.com, 
-	ssengar@linux.microsoft.com, mukeshrathor@microsoft.com, 
-	stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com, 
-	vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org, 
-	catalin.marinas@arm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231002-disable-wformat-truncation-overflow-non-kprintf-v1-1-35179205c8d9@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHsfG2UC/x3NMQ6DMAyF4asgz7UUEoaoV6k6BOJQqzRBToBKi
+ LvX6vgN/3snVBKmCvfuBKGdK5es6G8dTK+QZ0KOarDGut4Yi5FrGBfCIxX5hIZNtjyFphmWnSQ
+ t5cCseK/CuSU0zpGPfhwiedDVVSjx9//4eF7XD8W1K/mBAAAA
+To: masahiroy@kernel.org, ndesaulniers@google.com
+Cc: nicolas@fjasle.eu, trix@redhat.com, linux-kbuild@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2683; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=+548pRRoJGnyq+La0+LmV2WoZSprlMO8hwf3zOhMwFk=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKnS8k3mUdGPhA8usu6/ktx2yOy/1VRpSy/H73UvrP4Fs
+ PrOyPraUcrCIMbBICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACbCy8/IsGnJ821tzOET4noy
+ 45wCVkjkODCXvV/M+C6GY/nyJl8DQYb/rteaSzWrOVLs1MrPsgc4cbTvdll3fIXm7Ed7pFdyK+h
+ xAwA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Nuno,
+Recently, clang added support for -Wformat-overflow and
+-Wformat-truncation. When building the kernel, it was discovered that
+clang's implementation of these warnings handles the '%p' specifier,
+which differs from GCC's implementation. This results in false positive
+warnings due to the kernel's various '%p' extensions. Fortunately, the
+clang developers placed this warning difference into a separate flag,
+allowing the kernel to turn off the warning for '%p' unconditionally.
 
-I understand the requirement to have
-undocumented/non-standard/non-TLFS-published information in the HDK
-headers, however, the current state of this patch is that for any
-other code that's not in the kernel today, or in this upcoming driver,
-the hyperv-tlfs definitions are incomplete, because some *documented*
-TLFS fields are only in HDK headers. Similarly, it is also impossible
-to only use the HDK headers for other use cases, because some basic
-documented, standard defines only exist in hyperv-tlfs. So there is no
-"logical" relationship between the two -- HDK headers are not _just_
-undocumented information, but also documented information, but also
-not complete documented information.
+This is not currently an issue for a normal build, as -Wformat-overflow
+and -Wformat-truncation are unconditionally disabled, which includes
+this sub-warning. However, ever since commit 6d4ab2e97dcf ("extrawarn:
+enable format and stringop overflow warnings in W=1"), these warnings
+are in W=1 and the goal is to enable them in the normal build once they
+are all eliminated. Disable the warnings for W=1 to avoid false
+positives. This block should move with -Wformat-overflow and
+-Wformat-truncation when they are enabled for a normal build.
 
-Would you consider:
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Link: https://github.com/llvm/llvm-project/issues/64871
+Link: https://github.com/llvm/llvm-project/pull/65969
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111219
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=78512
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.extrawarn | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-1) Updating hyperv-tlfs with all newly documented TLFS fields that are
-in the HDK headers?
-OR
-2) Updating the new HDK headers you're adding here to also include
-previously-documented information from hyperv-tlfs? This way, someone
-can include the HDK headers and get everything they need
-OR
-3) Truly making hypertv-tlfs the "documented" header, and then
-removing any duplication from HDK so that it remains the
-"undocumented" header file. In this manner, one would include
-hyperv-tlfs to use the stable ABI, and they would include HDK (which
-would include hyperv-tlfs) to use the unstable+stable ABI.
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 2fe6f2828d37..bad1baa2cfb4 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -106,6 +106,13 @@ KBUILD_CFLAGS += $(call cc-option, -Wunused-const-variable)
+ KBUILD_CFLAGS += $(call cc-option, -Wpacked-not-aligned)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-truncation)
++# Clang checks for overflow/truncation with '%p', while GCC does not:
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111219
++# The kernel has many extensions to '%p' that clang does not understand, so
++# always disable these warnings when '-Wformat-truncation' and
++# '-Wformat-overflow' are enabled.
++KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow-non-kprintf)
++KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation-non-kprintf)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-truncation)
+ 
 
-Thank you for your consideration.
+---
+base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+change-id: 20231002-disable-wformat-truncation-overflow-non-kprintf-033e8d8b4de8
 
 Best regards,
-Alex Ionescu
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-On Fri, Sep 29, 2023 at 2:02=E2=80=AFPM Nuno Das Neves
-<nunodasneves@linux.microsoft.com> wrote:
->
-> Add asm-generic/hyperv-defs.h. It includes hyperv-tlfs.h or hvhdk.h
-> depending on compile-time constant HV_HYPERV_DEFS which will be defined i=
-n
-> the mshv driver.
->
-> This is needed to keep unstable Hyper-V interfaces independent of
-> hyperv-tlfs.h. This ensures hvhdk.h replaces hyperv-tlfs.h in the mshv
-> driver, even via indirect includes.
->
-> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-> Acked-by: Wei Liu <wei.liu@kernel.org>
-> ---
->  arch/arm64/include/asm/mshyperv.h |  2 +-
->  arch/x86/include/asm/mshyperv.h   |  3 +--
->  drivers/hv/hyperv_vmbus.h         |  1 -
->  include/asm-generic/hyperv-defs.h | 26 ++++++++++++++++++++++++++
->  include/asm-generic/mshyperv.h    |  2 +-
->  include/linux/hyperv.h            |  2 +-
->  6 files changed, 30 insertions(+), 6 deletions(-)
->  create mode 100644 include/asm-generic/hyperv-defs.h
->
-> diff --git a/arch/arm64/include/asm/mshyperv.h b/arch/arm64/include/asm/m=
-shyperv.h
-> index 20070a847304..8ec14caf3d4f 100644
-> --- a/arch/arm64/include/asm/mshyperv.h
-> +++ b/arch/arm64/include/asm/mshyperv.h
-> @@ -20,7 +20,7 @@
->
->  #include <linux/types.h>
->  #include <linux/arm-smccc.h>
-> -#include <asm/hyperv-tlfs.h>
-> +#include <asm-generic/hyperv-defs.h>
->
->  /*
->   * Declare calls to get and set Hyper-V VP register values on ARM64, whi=
-ch
-> diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/mshyp=
-erv.h
-> index e3768d787065..bb1b97106cd3 100644
-> --- a/arch/x86/include/asm/mshyperv.h
-> +++ b/arch/x86/include/asm/mshyperv.h
-> @@ -6,10 +6,9 @@
->  #include <linux/nmi.h>
->  #include <linux/msi.h>
->  #include <linux/io.h>
-> -#include <asm/hyperv-tlfs.h>
->  #include <asm/nospec-branch.h>
->  #include <asm/paravirt.h>
-> -#include <asm/mshyperv.h>
-> +#include <asm-generic/hyperv-defs.h>
->
->  /*
->   * Hyper-V always provides a single IO-APIC at this MMIO address.
-> diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-> index 09792eb4ffed..0e4bc18a13fa 100644
-> --- a/drivers/hv/hyperv_vmbus.h
-> +++ b/drivers/hv/hyperv_vmbus.h
-> @@ -15,7 +15,6 @@
->  #include <linux/list.h>
->  #include <linux/bitops.h>
->  #include <asm/sync_bitops.h>
-> -#include <asm/hyperv-tlfs.h>
->  #include <linux/atomic.h>
->  #include <linux/hyperv.h>
->  #include <linux/interrupt.h>
-> diff --git a/include/asm-generic/hyperv-defs.h b/include/asm-generic/hype=
-rv-defs.h
-> new file mode 100644
-> index 000000000000..ac6fcba35c8c
-> --- /dev/null
-> +++ b/include/asm-generic/hyperv-defs.h
-> @@ -0,0 +1,26 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef _ASM_GENERIC_HYPERV_DEFS_H
-> +#define _ASM_GENERIC_HYPERV_DEFS_H
-> +
-> +/*
-> + * There are cases where Microsoft Hypervisor ABIs are needed which may =
-not be
-> + * stable or present in the Hyper-V TLFS document. E.g. the mshv_root dr=
-iver.
-> + *
-> + * As these interfaces are unstable and may differ from hyperv-tlfs.h, t=
-hey
-> + * must be kept separate and independent.
-> + *
-> + * However, code from files that depend on hyperv-tlfs.h (such as mshype=
-rv.h)
-> + * is still needed, so work around the issue by conditionally including =
-the
-> + * correct definitions.
-> + *
-> + * Note: Since they are independent of each other, there are many defini=
-tions
-> + * duplicated in both hyperv-tlfs.h and uapi/hyperv/hv*.h files.
-> + */
-> +#ifdef HV_HYPERV_DEFS
-> +#include <uapi/hyperv/hvhdk.h>
-> +#else
-> +#include <asm/hyperv-tlfs.h>
-> +#endif
-> +
-> +#endif /* _ASM_GENERIC_HYPERV_DEFS_H */
-> +
-> diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyper=
-v.h
-> index d832852d0ee7..6bef0d59d1b7 100644
-> --- a/include/asm-generic/mshyperv.h
-> +++ b/include/asm-generic/mshyperv.h
-> @@ -25,7 +25,7 @@
->  #include <linux/cpumask.h>
->  #include <linux/nmi.h>
->  #include <asm/ptrace.h>
-> -#include <asm/hyperv-tlfs.h>
-> +#include <asm-generic/hyperv-defs.h>
->
->  #define VTPM_BASE_ADDRESS 0xfed40000
->
-> diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-> index 4d5a5e39d76c..722a8cf23d87 100644
-> --- a/include/linux/hyperv.h
-> +++ b/include/linux/hyperv.h
-> @@ -24,7 +24,7 @@
->  #include <linux/mod_devicetable.h>
->  #include <linux/interrupt.h>
->  #include <linux/reciprocal_div.h>
-> -#include <asm/hyperv-tlfs.h>
-> +#include <asm-generic/hyperv-defs.h>
->
->  #define MAX_PAGE_BUFFER_COUNT                          32
->  #define MAX_MULTIPAGE_BUFFER_COUNT                     32 /* 128K */
-> --
-> 2.25.1
->
->
