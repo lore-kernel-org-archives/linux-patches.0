@@ -1,124 +1,177 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8824E6AB4
-	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 07:40:07 +0000 (UTC)
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-313e742a787so295882f8f.1
-        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 00:40:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499332137C
+	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 13:22:22 +0000 (UTC)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-307d20548adso888488f8f.0
+        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 06:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696318805; x=1696923605; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WfwaRtkJhgz1kzbARp9S8/ZcPDCtTZfWdoKPp3HywLc=;
-        b=mXcdTirZjT2vp8xAme856MKmDFocGVA/uKcW/pHs0KjS6GdikCIJgUtj4CUOB003Gf
-         Q8LJ83AWXuFzOcjp33Xwes/XLYuE6/vv9P7DgBIaGALSJaXXWCO2CWlm9TqeotoyywKH
-         Fw5AWCgc1wyUkbyt/vYiaK0E7OJMAoQu0Hy3HG/eGbNPmBaU/XCckKZXp2iwB/cS2Z2/
-         uHCQflEgfTTBCW0xqOWswj6LEhQ/Wwu99FTKVEwdQX5/SduzDmL/9Kq8p1C8R0YTSs9X
-         lRkndtQ1urrGAASvpIvAfK8ewmnTwTHBOQPbo9sPaddSqGcq9cRf3R24zrKc/a+7A9yM
-         cd+A==
+        d=linaro.org; s=google; t=1696339340; x=1696944140; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BPhEMScslRMaYaqRO+dwG2HnFAyJ6EQmjoVhDMsvm2g=;
+        b=P/db8yMIyJRvTgW/AvwFnN8F5e2i58m+1/yO3oYz8ynYyCb3wl7sv27eNtrSGFTDVW
+         NW75xweLdp5XpWVxc9iUaxvSOOwC6/+W4+ugxPWADXpYueJhegvy1YLOes3QQHTpGGiC
+         v4OA+7bzvh2Mo2ndWemLvMD0dNgGYupMKiG4+Y/n2zRI32YmdE9gi30KaUYR+WMToRN1
+         GakP5j6z5W6Vs3wTTehq3qRvWlMnDXT1D/cs0/dI6Di2tDbh7bfSTL01gZbtxfyML3+S
+         XGZsMTqnvP8XWHiRIT3PJkphZuhCDQtCNaKppi6k9UAva5FolRzeUY4wgz+2EW2dKk1t
+         qNQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696318805; x=1696923605;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WfwaRtkJhgz1kzbARp9S8/ZcPDCtTZfWdoKPp3HywLc=;
-        b=u2AL/8uZtcE+IK3M2RezCZGSDs+g+W40DwoHXSda0bQsJvjrmJF3ES7eYd/G6+bL85
-         39/vHn9Z63mNoLR5xXIqHbeKR8ckgQ0Z8xzAK8W3A8hlxWd6zbHwBRJ4Wo+epb5afIpj
-         v5SI239bEYRbWT4bZBIwGxEZslH27acUTV41lMLgYCmr+dm1oV1kXjd8h2j48bKC1GIX
-         rKqvKQj8MGBpnyqvDUzMd+9EWyGCs/rSaxr2BM2NOpHckh0X0p7ISOK/I21xiVepVBO4
-         cmZiJUYy2PKeFhOaGMWCk/RjkXJTuvN/hO72k2RlRUEE6nX2GEKQIvCJ4BuhtbO4aS+4
-         3Jrw==
-X-Gm-Message-State: AOJu0YxgtWaMMpDoXaq886kybgp2MYVXFp7/C5i+ZwwJhJCpBJ6fbB9I
-	Zn86fxWgZyKKxdfGxbuhcuEwCQ==
-X-Google-Smtp-Source: AGHT+IFQumuMjOTW1uKZQSkiTBfGJlr5/807UTqWQzzYkCW1RNhEqi/kZVZ3yktWLc1ySpsCpLVbYw==
-X-Received: by 2002:adf:e806:0:b0:31f:fa48:2056 with SMTP id o6-20020adfe806000000b0031ffa482056mr1239081wrm.27.1696318805632;
-        Tue, 03 Oct 2023 00:40:05 -0700 (PDT)
-Received: from [192.168.69.115] (176-131-222-246.abo.bbox.fr. [176.131.222.246])
-        by smtp.gmail.com with ESMTPSA id x15-20020a5d444f000000b0031c5e9c2ed7sm896779wrr.92.2023.10.03.00.40.03
+        d=1e100.net; s=20230601; t=1696339340; x=1696944140;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=BPhEMScslRMaYaqRO+dwG2HnFAyJ6EQmjoVhDMsvm2g=;
+        b=ClXrS52rovO+FQcPgKDWBGmc8wIY/0q2U503fA7iT1tQkXBUpZajrzxEhSs050EhI6
+         S6FntZ2eYQn+iX+vNTL25xogF3TEf/Rs7di3beOn207L2OdsfgmXM8Z7RBQe8/B6H7Gk
+         p3pXEjXHXtbz1ecbhHnQAOodIRYidIOXQQV0pEAjWUr5QCH3dLbCwuTB92ajvZNoMRbC
+         /RgMeFos6CciQwJ6rMtmayoLFJjvHgm27LBTSMF90u8wo7NjAP3SZVRueoCk8goJgS9G
+         DjPpHElSSfCiHvAU1wKBN6sWDHH0A8BrYHwrTeFQ5tHihmgHE+2IA7pLI3UlSJXSDMv6
+         BpzA==
+X-Gm-Message-State: AOJu0YwVvDkW7B6SHmiw1shST2kez7vNbIZUITyp+WJwoD/t7zXRBEqi
+	H2UhQxB6nN0SUOvguR7F0gGEeQ==
+X-Google-Smtp-Source: AGHT+IFDM9mm4RExiIDQOdgnZFNqOULSOor4UvfTWPqFV+FOp96KsWwjv9wciLPT3qCL81igyWfz8g==
+X-Received: by 2002:adf:eed2:0:b0:31f:fedd:83ad with SMTP id a18-20020adfeed2000000b0031ffedd83admr11897768wrp.4.1696339340083;
+        Tue, 03 Oct 2023 06:22:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e31a:fe1c:e925:9858? ([2a01:e0a:982:cbb0:e31a:fe1c:e925:9858])
+        by smtp.gmail.com with ESMTPSA id f8-20020adfdb48000000b0031ff89af0e4sm1568213wrj.99.2023.10.03.06.22.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 00:40:05 -0700 (PDT)
-Message-ID: <1fbe8877-aaa5-1b6f-e18c-1d231a31d2e7@linaro.org>
-Date: Tue, 3 Oct 2023 09:40:02 +0200
+        Tue, 03 Oct 2023 06:22:19 -0700 (PDT)
+Message-ID: <bd3bc4bc-b684-4bbd-82cf-c59797ba21cf@linaro.org>
+Date: Tue, 3 Oct 2023 15:22:19 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.1
-Subject: Re: [PATCH] vfio/cdx: Add parentheses between bitwise AND expression
- and logical NOT
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, nipun.gupta@amd.com,
- nikhil.agarwal@amd.com, alex.williamson@redhat.com
-Cc: ndesaulniers@google.com, trix@redhat.com, shubham.rohila@amd.com,
- kvm@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-References: <20231002-vfio-cdx-logical-not-parentheses-v1-1-a8846c7adfb6@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-In-Reply-To: <20231002-vfio-cdx-logical-not-parentheses-v1-1-a8846c7adfb6@kernel.org>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
+ with auxiliary device
+Content-Language: en-US, fr
+To: Stephen Boyd <swboyd@chromium.org>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ dri-devel@lists.freedesktop.org, Douglas Anderson <dianders@chromium.org>,
+ Maxime Ripard <maxime@cerno.tech>
+References: <20231002235407.769399-1-swboyd@chromium.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20231002235407.769399-1-swboyd@chromium.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Nathan,
-
-On 2/10/23 19:53, Nathan Chancellor wrote:
-> When building with clang, there is a warning (or error with
-> CONFIG_WERROR=y) due to a bitwise AND and logical NOT in
-> vfio_cdx_bm_ctrl():
+On 03/10/2023 01:54, Stephen Boyd wrote:
+> The kernel produces a warning splat and the DSI device fails to register
+> in this driver if the i2c driver probes, populates child auxiliary
+> devices, and then somewhere in ti_sn_bridge_probe() a function call
+> returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
+> device created by devm_mipi_dsi_device_register_full() is left
+> registered because the devm managed device used to manage the lifetime
+> of the DSI device is the parent i2c device, not the auxiliary device
+> that is being probed.
 > 
->    drivers/vfio/cdx/main.c:77:6: error: logical not is only applied to the left hand side of this bitwise operator [-Werror,-Wlogical-not-parentheses]
->       77 |         if (!vdev->flags & BME_SUPPORT)
->          |             ^            ~
->    drivers/vfio/cdx/main.c:77:6: note: add parentheses after the '!' to evaluate the bitwise operator first
->       77 |         if (!vdev->flags & BME_SUPPORT)
->          |             ^
->          |              (                        )
->    drivers/vfio/cdx/main.c:77:6: note: add parentheses around left hand side expression to silence this warning
->       77 |         if (!vdev->flags & BME_SUPPORT)
->          |             ^
->          |             (           )
->    1 error generated.
+> Associate the DSI device created and managed by this driver to the
+> lifetime of the auxiliary device, not the i2c device, so that the DSI
+> device is removed when the auxiliary driver unbinds. Similarly change
+> the device pointer used for dev_err_probe() so the deferred probe errors
+> are associated with the auxiliary device instead of the parent i2c
+> device so we can narrow down future problems faster.
 > 
-> Add the parentheses as suggested in the first note, which is clearly
-> what was intended here.
-> 
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1939
-> Fixes: 8a97ab9b8b31 ("vfio-cdx: add bus mastering device feature support")
-
-My current /master points to commit ce36c8b14987 which doesn't include
-8a97ab9b8b31, so maybe this can be squashed / reordered in the VFIO tree
-(where I assume this commit is). That said, the fix is correct, so:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Regards,
-
-Phil.
-
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Maxime Ripard <maxime@cerno.tech>
+> Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->   drivers/vfio/cdx/main.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/drivers/vfio/cdx/main.c b/drivers/vfio/cdx/main.c
-> index a437630be354..a63744302b5e 100644
-> --- a/drivers/vfio/cdx/main.c
-> +++ b/drivers/vfio/cdx/main.c
-> @@ -74,7 +74,7 @@ static int vfio_cdx_bm_ctrl(struct vfio_device *core_vdev, u32 flags,
->   	struct vfio_device_feature_bus_master ops;
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index f448b903e190..84148a79414b 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -692,7 +692,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
+>   	return container_of(bridge, struct ti_sn65dsi86, bridge);
+>   }
+>   
+> -static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+> +static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
+>   {
+>   	int val;
+>   	struct mipi_dsi_host *host;
+> @@ -707,7 +707,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+>   	if (!host)
+>   		return -EPROBE_DEFER;
+>   
+> -	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+> +	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
+>   	if (IS_ERR(dsi))
+>   		return PTR_ERR(dsi);
+>   
+> @@ -725,7 +725,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+>   
+>   	pdata->dsi = dsi;
+>   
+> -	return devm_mipi_dsi_attach(dev, dsi);
+> +	return devm_mipi_dsi_attach(&adev->dev, dsi);
+>   }
+>   
+>   static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+> @@ -1298,9 +1298,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+>   	struct device_node *np = pdata->dev->of_node;
 >   	int ret;
 >   
-> -	if (!vdev->flags & BME_SUPPORT)
-> +	if (!(vdev->flags & BME_SUPPORT))
->   		return -ENOTTY;
+> -	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
+> +	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+>   	if (IS_ERR(pdata->next_bridge))
+> -		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
+> +		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
+>   				     "failed to create panel bridge\n");
 >   
->   	ret = vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_SET,
+>   	ti_sn_bridge_parse_lanes(pdata, np);
+> @@ -1319,9 +1319,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+>   
+>   	drm_bridge_add(&pdata->bridge);
+>   
+> -	ret = ti_sn_attach_host(pdata);
+> +	ret = ti_sn_attach_host(adev, pdata);
+>   	if (ret) {
+> -		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
+> +		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
+>   		goto err_remove_bridge;
+>   	}
+>   
 > 
-> ---
-> base-commit: fcb2f2ed4a80cfe383d87da75caba958516507e9
-> change-id: 20231002-vfio-cdx-logical-not-parentheses-aca8fbd6b278
-> 
-> Best regards,
+> base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
 
+This looks reasonable
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
