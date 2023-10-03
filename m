@@ -1,156 +1,124 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F4A3D9E;
-	Tue,  3 Oct 2023 05:53:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696312428; x=1727848428;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4zdrk7J2w1LgYAVJBlEmo1IB0YmGvC2AJqDkd4Nyzq4=;
-  b=k3Yb7KfJchLDpPGuJRl4gUE+rXD9dlK6Aphp5K6RxYF3cxD2oYEZTbh6
-   W7uHKGmRCN88ezFBV4xnFpddO9HfG7ayCPxD82Z9GiRWcrUWJxiaYSYJR
-   JICtBXxn8itVjIrNEwGm1/Hw5H4VzTvNcNKhjJZfyj2ZMS7/FuZWKCG7n
-   6t7cHA5wt4SnsJer3qzyUGZc2rZ67c5WSsBBtkakxUyi+ydasIAPF0VJv
-   VSu5lPLbiCkPBtbZ4EvF5I5fQ1ONwJq8tQBBXCZ7t3C8naB4Rr4eGVogh
-   PJ+2Chv8ZKuuxcTT+lG/N/wZCgqe24eahNHd82J8JSShXiF3OdWXCg0rN
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="469072266"
-X-IronPort-AV: E=Sophos;i="6.03,196,1694761200"; 
-   d="scan'208";a="469072266"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 22:53:47 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="744371160"
-X-IronPort-AV: E=Sophos;i="6.03,196,1694761200"; 
-   d="scan'208";a="744371160"
-Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 02 Oct 2023 22:53:43 -0700
-Received: from kbuild by c3b01524d57c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1qnYLk-0006on-2S;
-	Tue, 03 Oct 2023 05:53:40 +0000
-Date: Tue, 3 Oct 2023 13:53:34 +0800
-From: kernel test robot <lkp@intel.com>
-To: Nathan Chancellor <nathan@kernel.org>, masahiroy@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	ndesaulniers@google.com, keescook@chromium.org,
-	samitolvanen@google.com, nicolas@fjasle.eu, trix@redhat.com,
-	linux-kbuild@vger.kernel.org, patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: Re: [PATCH] kbuild: Enable
- -Wincompatible-function-pointer-types-strict in W=1
-Message-ID: <202310031340.v1vPh207-lkp@intel.com>
-References: <20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8824E6AB4
+	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 07:40:07 +0000 (UTC)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-313e742a787so295882f8f.1
+        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 00:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696318805; x=1696923605; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WfwaRtkJhgz1kzbARp9S8/ZcPDCtTZfWdoKPp3HywLc=;
+        b=mXcdTirZjT2vp8xAme856MKmDFocGVA/uKcW/pHs0KjS6GdikCIJgUtj4CUOB003Gf
+         Q8LJ83AWXuFzOcjp33Xwes/XLYuE6/vv9P7DgBIaGALSJaXXWCO2CWlm9TqeotoyywKH
+         Fw5AWCgc1wyUkbyt/vYiaK0E7OJMAoQu0Hy3HG/eGbNPmBaU/XCckKZXp2iwB/cS2Z2/
+         uHCQflEgfTTBCW0xqOWswj6LEhQ/Wwu99FTKVEwdQX5/SduzDmL/9Kq8p1C8R0YTSs9X
+         lRkndtQ1urrGAASvpIvAfK8ewmnTwTHBOQPbo9sPaddSqGcq9cRf3R24zrKc/a+7A9yM
+         cd+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696318805; x=1696923605;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WfwaRtkJhgz1kzbARp9S8/ZcPDCtTZfWdoKPp3HywLc=;
+        b=u2AL/8uZtcE+IK3M2RezCZGSDs+g+W40DwoHXSda0bQsJvjrmJF3ES7eYd/G6+bL85
+         39/vHn9Z63mNoLR5xXIqHbeKR8ckgQ0Z8xzAK8W3A8hlxWd6zbHwBRJ4Wo+epb5afIpj
+         v5SI239bEYRbWT4bZBIwGxEZslH27acUTV41lMLgYCmr+dm1oV1kXjd8h2j48bKC1GIX
+         rKqvKQj8MGBpnyqvDUzMd+9EWyGCs/rSaxr2BM2NOpHckh0X0p7ISOK/I21xiVepVBO4
+         cmZiJUYy2PKeFhOaGMWCk/RjkXJTuvN/hO72k2RlRUEE6nX2GEKQIvCJ4BuhtbO4aS+4
+         3Jrw==
+X-Gm-Message-State: AOJu0YxgtWaMMpDoXaq886kybgp2MYVXFp7/C5i+ZwwJhJCpBJ6fbB9I
+	Zn86fxWgZyKKxdfGxbuhcuEwCQ==
+X-Google-Smtp-Source: AGHT+IFQumuMjOTW1uKZQSkiTBfGJlr5/807UTqWQzzYkCW1RNhEqi/kZVZ3yktWLc1ySpsCpLVbYw==
+X-Received: by 2002:adf:e806:0:b0:31f:fa48:2056 with SMTP id o6-20020adfe806000000b0031ffa482056mr1239081wrm.27.1696318805632;
+        Tue, 03 Oct 2023 00:40:05 -0700 (PDT)
+Received: from [192.168.69.115] (176-131-222-246.abo.bbox.fr. [176.131.222.246])
+        by smtp.gmail.com with ESMTPSA id x15-20020a5d444f000000b0031c5e9c2ed7sm896779wrr.92.2023.10.03.00.40.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Oct 2023 00:40:05 -0700 (PDT)
+Message-ID: <1fbe8877-aaa5-1b6f-e18c-1d231a31d2e7@linaro.org>
+Date: Tue, 3 Oct 2023 09:40:02 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH] vfio/cdx: Add parentheses between bitwise AND expression
+ and logical NOT
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, nipun.gupta@amd.com,
+ nikhil.agarwal@amd.com, alex.williamson@redhat.com
+Cc: ndesaulniers@google.com, trix@redhat.com, shubham.rohila@amd.com,
+ kvm@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20231002-vfio-cdx-logical-not-parentheses-v1-1-a8846c7adfb6@kernel.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+In-Reply-To: <20231002-vfio-cdx-logical-not-parentheses-v1-1-a8846c7adfb6@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 Hi Nathan,
 
-kernel test robot noticed the following build warnings:
+On 2/10/23 19:53, Nathan Chancellor wrote:
+> When building with clang, there is a warning (or error with
+> CONFIG_WERROR=y) due to a bitwise AND and logical NOT in
+> vfio_cdx_bm_ctrl():
+> 
+>    drivers/vfio/cdx/main.c:77:6: error: logical not is only applied to the left hand side of this bitwise operator [-Werror,-Wlogical-not-parentheses]
+>       77 |         if (!vdev->flags & BME_SUPPORT)
+>          |             ^            ~
+>    drivers/vfio/cdx/main.c:77:6: note: add parentheses after the '!' to evaluate the bitwise operator first
+>       77 |         if (!vdev->flags & BME_SUPPORT)
+>          |             ^
+>          |              (                        )
+>    drivers/vfio/cdx/main.c:77:6: note: add parentheses around left hand side expression to silence this warning
+>       77 |         if (!vdev->flags & BME_SUPPORT)
+>          |             ^
+>          |             (           )
+>    1 error generated.
+> 
+> Add the parentheses as suggested in the first note, which is clearly
+> what was intended here.
+> 
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1939
+> Fixes: 8a97ab9b8b31 ("vfio-cdx: add bus mastering device feature support")
 
-[auto build test WARNING on ce9ecca0238b140b88f43859b211c9fdfd8e5b70]
+My current /master points to commit ce36c8b14987 which doesn't include
+8a97ab9b8b31, so maybe this can be squashed / reordered in the VFIO tree
+(where I assume this commit is). That said, the fix is correct, so:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/kbuild-Enable-Wincompatible-function-pointer-types-strict-in-W-1/20231003-062107
-base:   ce9ecca0238b140b88f43859b211c9fdfd8e5b70
-patch link:    https://lore.kernel.org/r/20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d%40kernel.org
-patch subject: [PATCH] kbuild: Enable -Wincompatible-function-pointer-types-strict in W=1
-config: um-allnoconfig (https://download.01.org/0day-ci/archive/20231003/202310031340.v1vPh207-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231003/202310031340.v1vPh207-lkp@intel.com/reproduce)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310031340.v1vPh207-lkp@intel.com/
+Regards,
 
-All warnings (new ones prefixed by >>):
+Phil.
 
-   In file included from arch/um/drivers/net_kern.c:9:
-   In file included from include/linux/memblock.h:13:
-   In file included from arch/um/include/asm/dma.h:5:
-   In file included from arch/um/include/asm/io.h:24:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     547 |         val = __raw_readb(PCI_IOBASE + addr);
-         |                           ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     560 |         val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-      37 | #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-         |                                                   ^
-   In file included from arch/um/drivers/net_kern.c:9:
-   In file included from include/linux/memblock.h:13:
-   In file included from arch/um/include/asm/dma.h:5:
-   In file included from arch/um/include/asm/io.h:24:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     573 |         val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-         |                                                   ^
-   In file included from arch/um/drivers/net_kern.c:9:
-   In file included from include/linux/memblock.h:13:
-   In file included from arch/um/include/asm/dma.h:5:
-   In file included from arch/um/include/asm/io.h:24:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     584 |         __raw_writeb(value, PCI_IOBASE + addr);
-         |                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     594 |         __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     604 |         __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
-   include/asm-generic/io.h:692:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     692 |         readsb(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:700:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     700 |         readsw(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:708:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     708 |         readsl(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:717:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     717 |         writesb(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
-   include/asm-generic/io.h:726:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     726 |         writesw(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
-   include/asm-generic/io.h:735:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     735 |         writesl(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
->> arch/um/drivers/net_kern.c:353:21: warning: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Wincompatible-function-pointer-types-strict]
-     353 |         .ndo_start_xmit         = uml_net_start_xmit,
-         |                                   ^~~~~~~~~~~~~~~~~~
-   13 warnings generated.
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>   drivers/vfio/cdx/main.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/vfio/cdx/main.c b/drivers/vfio/cdx/main.c
+> index a437630be354..a63744302b5e 100644
+> --- a/drivers/vfio/cdx/main.c
+> +++ b/drivers/vfio/cdx/main.c
+> @@ -74,7 +74,7 @@ static int vfio_cdx_bm_ctrl(struct vfio_device *core_vdev, u32 flags,
+>   	struct vfio_device_feature_bus_master ops;
+>   	int ret;
+>   
+> -	if (!vdev->flags & BME_SUPPORT)
+> +	if (!(vdev->flags & BME_SUPPORT))
+>   		return -ENOTTY;
+>   
+>   	ret = vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_SET,
+> 
+> ---
+> base-commit: fcb2f2ed4a80cfe383d87da75caba958516507e9
+> change-id: 20231002-vfio-cdx-logical-not-parentheses-aca8fbd6b278
+> 
+> Best regards,
 
-
-vim +353 arch/um/drivers/net_kern.c
-
-2e3f5251ac7168 Jeff Dike          2007-05-06  349  
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  350  static const struct net_device_ops uml_netdev_ops = {
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  351  	.ndo_open 		= uml_net_open,
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  352  	.ndo_stop 		= uml_net_close,
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26 @353  	.ndo_start_xmit 	= uml_net_start_xmit,
-afc4b13df14312 Jiri Pirko         2011-08-16  354  	.ndo_set_rx_mode	= uml_net_set_multicast_list,
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  355  	.ndo_tx_timeout 	= uml_net_tx_timeout,
-9337057d433505 Boaz Harrosh       2010-09-29  356  	.ndo_set_mac_address	= eth_mac_addr,
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  357  	.ndo_validate_addr	= eth_validate_addr,
-dd71dc4c335a89 Richard Weinberger 2011-07-25  358  #ifdef CONFIG_NET_POLL_CONTROLLER
-dd71dc4c335a89 Richard Weinberger 2011-07-25  359  	.ndo_poll_controller = uml_net_poll_controller,
-dd71dc4c335a89 Richard Weinberger 2011-07-25  360  #endif
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  361  };
-8bb95b39a16ed5 Stephen Hemminger  2009-03-26  362  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
