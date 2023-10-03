@@ -1,32 +1,32 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82483FB3F
-	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 23:29:45 +0000 (UTC)
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-690b7cb71aeso290475b3a.0
-        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 16:29:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BD23FB3E
+	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 23:35:23 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-68fb85afef4so1260282b3a.1
+        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 16:35:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696375785; x=1696980585;
+        d=1e100.net; s=20230601; t=1696376123; x=1696980923;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pBz0lRi2DC+AHJ394H0d/SpV7ukUS6MAw+MuCkAtqS8=;
-        b=nsRcnKOWLkPzrQnbmGHersC3FMB5NOdJDwtCPJUFDV6JFRfH8sG8EFcn1xJ7uP4H8K
-         IZ5fcMwkBLZACLF4CbqkK8E1ICFbvin+cJuvmjymeknO4KqKDOXoRKyLnu+AHFVjANmk
-         a1+6VfpWgw6AN0VA5v8YRVqsCoHjlwjAozsqhIv1qNCvHKlM8br0q/O+u+NN5kQBPTya
-         iytRiazvcc+4sr5pV8KDUXaxmlOoPzxB/NB+bMix+2OANA/IClXgkbdUCbYnr4Kj0o3v
-         0fwagMVm44uXmhrCv81ICPJWapGsQRWZbf82wyzZNTCwOFOyREDkfc89LrLVEKE6b3f5
-         jXSQ==
-X-Gm-Message-State: AOJu0Yy/ijWwofhGg/ftbYtJcPQudzK8Ng4MefVBSRMlBFxyxe2uYFbK
-	kOZyp9xqV+f1S1Od70L9HB/x4n9fYYE=
-X-Google-Smtp-Source: AGHT+IFDj6feRY+mcyfse2njK81rSw5tfqSmn4MKTfs0z1MOlf+i33E6HbJUJHUY6T5POArEoZjZvQ==
-X-Received: by 2002:a05:6a00:1310:b0:68e:2c2a:5172 with SMTP id j16-20020a056a00131000b0068e2c2a5172mr974254pfu.6.1696375784881;
-        Tue, 03 Oct 2023 16:29:44 -0700 (PDT)
+        bh=UJD24QbXAixuWuUpvUYY/DJkjTh/y9ZMHAxjDwAuOCg=;
+        b=Z1XV+WDiZmrBbe6H9bE9NaBzKTj6ZMjAbL/8JfGfk4Fd1yclTuya5lDy450LVDHyFj
+         EXCI5Lo9PDpwujfsGeVgaTplzZBCezHnfwGH7ONUY5cUwaPZTXMVNLOlgG6Sj17lS1tG
+         +Aqosn0NLkBOKVhWm/o2QEnmWznImutLDLRHjpnaOWGJh3fPy+JcxGKix9tYinbDFhNm
+         b4L00SxLsch0U3W+QVI789iZ5SDAg5IAxpxae130dCVCkispJ4zlNqnU8OYfPzHqeaJQ
+         LlYJrIT6U6f4jMeCkRXl9AQNPu7gqc7bJ01WkEFs7RxhwCcxnG9rSgwWAVUkRUFO+nJ8
+         ZQkA==
+X-Gm-Message-State: AOJu0Yxqmt1r/9lVc+/P/P/kk7GjzidHDRqRJkOyfHxuEvJc+Z6FJKRq
+	Ue66QrzSHUTxFV30SvLxHdY=
+X-Google-Smtp-Source: AGHT+IFygOHV2/FvdD4qmBhjkUVrn/Kq2uyKGkQqrsQf3OvfZZd939O7TMH4i4YP0wgmh5TMOwkkxg==
+X-Received: by 2002:a05:6a00:852:b0:68f:efc2:ba3d with SMTP id q18-20020a056a00085200b0068fefc2ba3dmr1215971pfk.33.1696376123288;
+        Tue, 03 Oct 2023 16:35:23 -0700 (PDT)
 Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
-        by smtp.gmail.com with ESMTPSA id ff23-20020a056a002f5700b006875a366acfsm1925061pfb.8.2023.10.03.16.29.43
+        by smtp.gmail.com with ESMTPSA id w16-20020a639350000000b0057d0a8e634dsm1948102pgm.48.2023.10.03.16.35.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 16:29:44 -0700 (PDT)
-Date: Tue, 3 Oct 2023 23:29:42 +0000
+        Tue, 03 Oct 2023 16:35:22 -0700 (PDT)
+Date: Tue, 3 Oct 2023 23:35:21 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Greg KH <gregkh@linuxfoundation.org>
 Cc: Wei Liu <wei.liu@kernel.org>,
@@ -42,14 +42,16 @@ Cc: Wei Liu <wei.liu@kernel.org>,
 	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
 	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
 	catalin.marinas@arm.com
-Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
- hypervisor ABIs
-Message-ID: <ZRyj5kJJYaBu22O3@liuwe-devbox-debian-v2>
+Subject: Re: [PATCH v4 15/15] Drivers: hv: Add modules to expose /dev/mshv to
+ VMMs running on Hyper-V
+Message-ID: <ZRylORx/KAgJyLgQ@liuwe-devbox-debian-v2>
 References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093057-eggplant-reshoot-8513@gregkh>
- <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
- <2023100154-ferret-rift-acef@gregkh>
+ <1696010501-24584-16-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023093004-evoke-snowbird-363b@gregkh>
+ <ZRhkxxBbxkeM4whg@liuwe-devbox-debian-v2>
+ <2023093002-bonfire-petty-c3ca@gregkh>
+ <ZRiPY5GzrGvlnPmY@liuwe-devbox-debian-v2>
+ <2023100130-profusely-landside-0f97@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,66 +60,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2023100154-ferret-rift-acef@gregkh>
+In-Reply-To: <2023100130-profusely-landside-0f97@gregkh>
 
-On Sun, Oct 01, 2023 at 08:19:27AM +0200, Greg KH wrote:
-> On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
-> > On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
-> > > On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
-> > > > These must be in uapi because they will be used in the mshv ioctl API.
+On Sun, Oct 01, 2023 at 08:20:37AM +0200, Greg KH wrote:
+> On Sat, Sep 30, 2023 at 09:13:07PM +0000, Wei Liu wrote:
+> > On Sat, Sep 30, 2023 at 08:31:13PM +0200, Greg KH wrote:
+> > > On Sat, Sep 30, 2023 at 06:11:19PM +0000, Wei Liu wrote:
+> > > > On Sat, Sep 30, 2023 at 08:11:37AM +0200, Greg KH wrote:
+> > > > > On Fri, Sep 29, 2023 at 11:01:41AM -0700, Nuno Das Neves wrote:
+> > > > > > --- /dev/null
+> > > > > > +++ b/include/uapi/linux/mshv.h
+> > > > > > @@ -0,0 +1,306 @@
+> > > > > > +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+> > > > > 
+> > > > > Much better.
+> > > > > 
+> > > > > > +#ifndef _UAPI_LINUX_MSHV_H
+> > > > > > +#define _UAPI_LINUX_MSHV_H
+> > > > > > +
+> > > > > > +/*
+> > > > > > + * Userspace interface for /dev/mshv
+> > > > > > + * Microsoft Hypervisor root partition APIs
+> > > > > > + * NOTE: This API is not yet stable!
+> > > > > 
+> > > > > Sorry, that will not work for obvious reasons.
 > > > > 
-> > > > Version numbers for each file:
-> > > > hvhdk.h		25212
-> > > > hvhdk_mini.h	25294
-> > > > hvgdk.h		25125
-> > > > hvgdk_mini.h	25294
+> > > > This can be removed. For practical purposes, the API has been stable for
+> > > > the past three years.
 > > > 
-> > > what are version numbers?
+> > > Then who wrote this text?
 > > 
-> > These are internal version numbers for the hypervisor headers. We keep
-> > track of them so that we can detect if there are any breakages in the
-> > ABI, and thus either ask them to be fixed or we come up with ways to
-> > maintain compatibility. People outside of Microsoft don't need to worry
-> > about this. If you don't think this information belongs in the commit
-> > message, we can drop it.
+> > I don't think this matter, does it? This patch series had been rewritten
+> > so many times internally to conform to upstream standard it is very
+> > difficult to track down who wrote this and when.
 > 
-> Internal numbers to a single company that have no relevance to anyone
-> else do not belong in a changelog comment.  Would you want to see this
-> in any other kernel changelog message for any other portion of the
-> kernel?
+> The point is someone wrote this for a good reason so figuring out why
+> that was done would be good for you all to do as maybe it is true!
 > 
+> > If you have concrete concerns about removing the text, please let me
+> > know.
+> 
+> You need to verify that the comment is not true before removing it,
+> otherwise you all will have a very hard time in the future when things
+> change...
 
-Okay. They shall be removed. I agree with you.
-
-> > > > diff --git a/include/uapi/hyperv/hvgdk.h b/include/uapi/hyperv/hvgdk.h
-> > > > new file mode 100644
-> > > > index 000000000000..9bcbb7d902b2
-> > > > --- /dev/null
-> > > > +++ b/include/uapi/hyperv/hvgdk.h
-> > > > @@ -0,0 +1,41 @@
-> > > > +/* SPDX-License-Identifier: MIT */
-> > > 
-> > > That's usually not a good license for a new uapi .h file, why did you
-> > > choose this one?
-> > > 
-> > 
-> > This is chosen so that other Microsoft developers who don't normally
-> > work on Linux can review this code.
-> 
-> Sorry, but that's not how kernel development is done.  Please fix your
-> internal review processes and use the correct uapi header file license.
-> 
-> If your lawyers insist on this license, that's fine, but please have
-> them provide a signed-off-by on the patch that adds it and have it
-> documented why it is this license in the changelog AND in a comment in
-> the file so we can understand what is going on with it.
-> 
-
-We went through an internal review with our legal counsel regarding the
-MIT license. We have an approval from them.
-
-Let me ask if using something like "GPL-2.0 WITH Linux-syscall-note OR
-MIT" is possible.
+I understand your point. Thanks, I will make sure to do that. :-)
 
 Thanks,
 Wei.
+
+> 
+> thanks,
+> 
+> greg k-h
