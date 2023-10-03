@@ -1,185 +1,123 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8FB3D972
-	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 22:29:51 +0000 (UTC)
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-59f4f2a9ef0so21828987b3.2
-        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 15:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696372190; x=1696976990; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAD+NyD8rwm68rv+KcO6kIHA2BI/1BAlT5OkmuE/mvM=;
-        b=XYnyJ2cob9Ya1r2+4s1EUIxdXh6KvDaiSR76QLUEtSk5GuCJeV1CH686yJfjo6ZqtO
-         +SCFLD0imO1qqqDyjQ1QYpHqjgDzRu1h43zyuVAIZPd4KpzJCLwQh7GOQafUD2dW5n0r
-         jQC/JJcmv+xZj8mZH4UgAfwhtxdLVAZgsjCRDhxo/maTzUSKZev0TMgOvG6nyeCfvi12
-         xaNMS5zjRQQ3nCC2yxS5iO55hCfWAEqf2dpcYZakVQWqHrEJLL5SjHXLOlGqVX3YeN3T
-         v07P34rvhNyIrOkY5v2n6wEJ4GjQREPbGkE37Kxbj6dUKmSn/tiBcUqtOmDPxu6vVxfG
-         Ij4Q==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82483FB3F
+	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 23:29:45 +0000 (UTC)
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-690b7cb71aeso290475b3a.0
+        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 16:29:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696372190; x=1696976990;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAD+NyD8rwm68rv+KcO6kIHA2BI/1BAlT5OkmuE/mvM=;
-        b=uioLAnN3+K86gyJd3MjcC9vqSx5vL7RMHnNrnyFbb43VGa08TS1K9rAlI9hnfJPxJ4
-         7y++5uUwOPSglh5aGRkF+irTDwa40YhjNNFeItvRG+ggD+2A+Rk+WE5HYrEonf3D1wkU
-         NcZHOkOZq49jI4D/SSq8aRFLPAD3VlIPkEi3YwO4pL9UAgGarb5UBPYr8Jovc47NR84K
-         wB3QlpX5dkeYedev9Rmf/kB36vEMNe2rgP+MxM2ia332ewXHlIAop4lnvvI/oQOV1hie
-         OETyrSi7Mh/BnbhgIQvZOhc0K3TXJ7tqcy9vP+wD9QZNCMkRKYQbFPxXD7GzIbe8TG8s
-         xufQ==
-X-Gm-Message-State: AOJu0YzdLeQDSHNE5HIxj5Cmln/Ab6XBYOhKQzdVkmFC4EJy9dxTJgW8
-	7vCpY0VXSxDb0ml7pi4L38C2W9TrAcUMG4w=
-X-Google-Smtp-Source: AGHT+IEkB0IrCc6Hhu4Q5FKQXGRZYIEeC/u6PqBK0M9bMkwyR8qfAToV0+g3PXMwAURU6yARQ/hdo4TlOU5ndFY=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:248:0:b0:d8c:cc9b:81cc with SMTP id
- 69-20020a250248000000b00d8ccc9b81ccmr8747ybc.3.1696372190665; Tue, 03 Oct
- 2023 15:29:50 -0700 (PDT)
-Date: Tue,  3 Oct 2023 22:29:47 +0000
-In-Reply-To: <CVZ2KU4KK5YH.2HVL1F6X93YLL@pogg>
+        d=1e100.net; s=20230601; t=1696375785; x=1696980585;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pBz0lRi2DC+AHJ394H0d/SpV7ukUS6MAw+MuCkAtqS8=;
+        b=nsRcnKOWLkPzrQnbmGHersC3FMB5NOdJDwtCPJUFDV6JFRfH8sG8EFcn1xJ7uP4H8K
+         IZ5fcMwkBLZACLF4CbqkK8E1ICFbvin+cJuvmjymeknO4KqKDOXoRKyLnu+AHFVjANmk
+         a1+6VfpWgw6AN0VA5v8YRVqsCoHjlwjAozsqhIv1qNCvHKlM8br0q/O+u+NN5kQBPTya
+         iytRiazvcc+4sr5pV8KDUXaxmlOoPzxB/NB+bMix+2OANA/IClXgkbdUCbYnr4Kj0o3v
+         0fwagMVm44uXmhrCv81ICPJWapGsQRWZbf82wyzZNTCwOFOyREDkfc89LrLVEKE6b3f5
+         jXSQ==
+X-Gm-Message-State: AOJu0Yy/ijWwofhGg/ftbYtJcPQudzK8Ng4MefVBSRMlBFxyxe2uYFbK
+	kOZyp9xqV+f1S1Od70L9HB/x4n9fYYE=
+X-Google-Smtp-Source: AGHT+IFDj6feRY+mcyfse2njK81rSw5tfqSmn4MKTfs0z1MOlf+i33E6HbJUJHUY6T5POArEoZjZvQ==
+X-Received: by 2002:a05:6a00:1310:b0:68e:2c2a:5172 with SMTP id j16-20020a056a00131000b0068e2c2a5172mr974254pfu.6.1696375784881;
+        Tue, 03 Oct 2023 16:29:44 -0700 (PDT)
+Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
+        by smtp.gmail.com with ESMTPSA id ff23-20020a056a002f5700b006875a366acfsm1925061pfb.8.2023.10.03.16.29.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Oct 2023 16:29:44 -0700 (PDT)
+Date: Tue, 3 Oct 2023 23:29:42 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Wei Liu <wei.liu@kernel.org>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arch@vger.kernel.org, patches@lists.linux.dev,
+	mikelley@microsoft.com, kys@microsoft.com, haiyangz@microsoft.com,
+	decui@microsoft.com, apais@linux.microsoft.com,
+	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
+	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
+	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
+	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
+	catalin.marinas@arm.com
+Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
+ hypervisor ABIs
+Message-ID: <ZRyj5kJJYaBu22O3@liuwe-devbox-debian-v2>
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023093057-eggplant-reshoot-8513@gregkh>
+ <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
+ <2023100154-ferret-rift-acef@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <CVZ2KU4KK5YH.2HVL1F6X93YLL@pogg>
-X-Mailer: git-send-email 2.42.0.582.g8ccd20d70d-goog
-Message-ID: <20231003222947.374039-1-aliceryhl@google.com>
-Subject: Re: [PATCH v4 7/7] rust: workqueue: add examples
-From: Alice Ryhl <aliceryhl@google.com>
-To: k.shelekhin@ftml.net
-Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
-	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
-	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, nmi@metaspace.dk, 
-	ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org, 
-	tj@kernel.org, wedsonaf@gmail.com, yakoyoku@gmail.com
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2023100154-ferret-rift-acef@gregkh>
 
-On Tue, Oct 3, 2023 at 10:13PM Konstantin Shelekhin <k.shelekhin@ftml.net> wrote:
-> +//! #[pin_data]
-> +//! struct MyStruct {
-> +//!     value: i32,
-> +//!     #[pin]
-> +//!     work: Work<MyStruct>,
-> +//! }
-> +//!
-> +//! impl_has_work! {
-> +//!     impl HasWork<Self> for MyStruct { self.work }
-> +//! }
-> +//!
-> +//! impl MyStruct {
-> +//!     fn new(value: i32) -> Result<Arc<Self>> {
-> +//!         Arc::pin_init(pin_init!(MyStruct {
-> +//!             value,
-> +//!             work <- new_work!("MyStruct::work"),
-> +//!         }))
-> +//!     }
-> +//! }
-> +//!
-> +//! impl WorkItem for MyStruct {
-> +//!     type Pointer = Arc<MyStruct>;
-> +//!
-> +//!     fn run(this: Arc<MyStruct>) {
-> +//!         pr_info!("The value is: {}", this.value);
-> +//!     }
-> +//! }
-> +//!
-> +//! /// This method will enqueue the struct for execution on the system workqueue, where its value
-> +//! /// will be printed.
-> +//! fn print_later(val: Arc<MyStruct>) {
-> +//!     let _ = workqueue::system().enqueue(val);
-> +//! }
->
-> I understand that this is highly opionated, but is it possible to make
-> the initialization less verbose?
-
-The short answer is yes. There are safe alternatives that are much less
-verbose. Unfortunately, those alternatives give up some of the features
-that this design has. Specifically, they give up the feature that allows
-you to embed the work_struct inside custom structs. I need to be able to
-embed the work_struct inside of custom structs, so I did not go that
-route.
-
-There are also some parts of this (mainly `impl_has_work!`) that I am
-unhappy with. I would be happy to see a solution that doesn't need it,
-but I couldn't figure out how to avoid it.
-
-> Because the C version looks much, much cleaner and easier to grasp:
->
->     struct my_struct {
->         i32 value;
->         struct work_struct work;
->     };
+On Sun, Oct 01, 2023 at 08:19:27AM +0200, Greg KH wrote:
+> On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
+> > On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
+> > > On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
+> > > > These must be in uapi because they will be used in the mshv ioctl API.
+> > > > 
+> > > > Version numbers for each file:
+> > > > hvhdk.h		25212
+> > > > hvhdk_mini.h	25294
+> > > > hvgdk.h		25125
+> > > > hvgdk_mini.h	25294
+> > > 
+> > > what are version numbers?
+> > 
+> > These are internal version numbers for the hypervisor headers. We keep
+> > track of them so that we can detect if there are any breakages in the
+> > ABI, and thus either ask them to be fixed or we come up with ways to
+> > maintain compatibility. People outside of Microsoft don't need to worry
+> > about this. If you don't think this information belongs in the commit
+> > message, we can drop it.
 > 
->     void log_value(struct work_struct *work)
->     {
->         struct my_struct *s = container_of(work, struct my_struct, work);
->         pr_info("The value is: %d\n", s->value);
->     }
+> Internal numbers to a single company that have no relevance to anyone
+> else do not belong in a changelog comment.  Would you want to see this
+> in any other kernel changelog message for any other portion of the
+> kernel?
 > 
->     void print_later(struct my_struct &s)
->     {
->         INIT_WORK(&s->work, log_value);
->         schedule_work(&s->work);
->     }
 
-Although I think that a part of this is just whether you are familiar
-with Rust syntax, there is definitely some truth to this. Your code is a
-lot closer to the machine code of what actually happens here. Perhaps it
-would be interesting to see what you get if you just unsafely do exactly
-the same thing in Rust? It would look something like this:
+Okay. They shall be removed. I agree with you.
 
-    struct MyStruct {
-        value: i32,
-        work: bindings::work_struct,
-    }
+> > > > diff --git a/include/uapi/hyperv/hvgdk.h b/include/uapi/hyperv/hvgdk.h
+> > > > new file mode 100644
+> > > > index 000000000000..9bcbb7d902b2
+> > > > --- /dev/null
+> > > > +++ b/include/uapi/hyperv/hvgdk.h
+> > > > @@ -0,0 +1,41 @@
+> > > > +/* SPDX-License-Identifier: MIT */
+> > > 
+> > > That's usually not a good license for a new uapi .h file, why did you
+> > > choose this one?
+> > > 
+> > 
+> > This is chosen so that other Microsoft developers who don't normally
+> > work on Linux can review this code.
+> 
+> Sorry, but that's not how kernel development is done.  Please fix your
+> internal review processes and use the correct uapi header file license.
+> 
+> If your lawyers insist on this license, that's fine, but please have
+> them provide a signed-off-by on the patch that adds it and have it
+> documented why it is this license in the changelog AND in a comment in
+> the file so we can understand what is going on with it.
+> 
 
-    unsafe fn log_value(work: *mut bindings::work_struct) {
-        unsafe {
-            let s = container_of!(work, MyStruct, work);
-            pr_info!("The value is: {}", (*s).value);
-        }
-    }
+We went through an internal review with our legal counsel regarding the
+MIT license. We have an approval from them.
 
-    unsafe fn print_later(s: *mut bindings::work_struct) {
-        unsafe {
-            bindings::INIT_WORK(&mut (*s).work, log_value);
-            bindings::schedule_work(&mut (*s).work);
-        }
-    }
+Let me ask if using something like "GPL-2.0 WITH Linux-syscall-note OR
+MIT" is possible.
 
-(I didn't try to compile this.)
-
-The problem with this approach is that it uses unsafe in driver code,
-but the goal behind Rust abstractions is to isolate all of the related
-unsafe code. The idea being that drivers using the workqueue do not need
-any unsafe code to use it. This means that, assuming these workqueue
-abstractions are correct, no driver can accidentally cause memory
-unsafety by using the workqueue wrong.
-
-The main difficult part of making this happen is the container_of
-operation. We need to somehow verify *at compile time* that the
-container_of in log_value really is given a pointer to the work field of
-a MyStruct. Other than the things that are just how Rust looks, most of
-the verbosity is necessary to make this compile-time check possible.
-
-Another thing it does is handle proper transfer of ownership. In my
-original example, MyStruct is reference counted (due to the use of Arc),
-so the workqueue passes ownership of one refcount to the workqueue,
-which eventually passes the refcount to run. When `this` goes out of
-scope at the end of `run`, the refcount is decremented and the struct is
-freed if the refcount dropped to zero.
-
-If you wanted to just have exclusive ownership of my_struct, you could
-do that by using Box instead of Arc. In either case, the ownership is
-correctly passed to run, and you cannot accidentally forget to free it
-at the end of log_value.
-
-So, ultimately there's a tradeoff here. The code corresponds less
-directly to what the machine code will be. On the other hand, it will be
-*more* difficult to use incorrectly since incorrect uses will usually
-result in compilation errors. The claim of Rust is that this tradeoff is
-worth it.
-
-Alice
-
+Thanks,
+Wei.
