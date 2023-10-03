@@ -1,141 +1,103 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DE21F952
-	for <patches@lists.linux.dev>; Mon,  2 Oct 2023 23:54:11 +0000 (UTC)
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1c434c33ec0so2583665ad.3
-        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 16:54:11 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA33A362
+	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 00:32:00 +0000 (UTC)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50573e85ee0so349805e87.3
+        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 17:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1696290850; x=1696895650; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ri2H++HoCXFAmUL0q2wpktG5mORN8GB1kk/7QHCMaos=;
-        b=FEewwM+CNhhsDnNzyhkk+pdej4k5TcJxytPLLPOKZLetsaU0TBE0PqYgt0NUxsvTEI
-         XkF0vu/BVoaJTsGRk7p7zRhOQWV8fWmcUE7xHioLlTWCcLZaUnZ+hWSE6EIQLpAlDt6q
-         ECa5znngyl7RSBt7kUj3b4qQ9k5bRx5p9sEik=
+        d=chromium.org; s=google; t=1696293118; x=1696897918; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iO9eQroF7O4wqoRvgq0RaFH1dV9uh3sUuUFRmWyQ7SM=;
+        b=TP7eF2Dr2GTKGvXYuXvkmDRRMXAzOZvuFsEkuAsZkZisLxlbeADB7Igs6mGa+iBhgk
+         1m7b4wgMUMXQ9YIZQKpxeMnmf3HPlbUYrE+sSKmL3zv6TTeUBtRAAyTLbrt5At25i0aj
+         gJKxiSekDvHWJ7KxkfyD2nnRi03KbAbtK/WR4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696290850; x=1696895650;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ri2H++HoCXFAmUL0q2wpktG5mORN8GB1kk/7QHCMaos=;
-        b=HGavQpzoXRgfL2jcOdRmqZeIqS5Pw+1YKNMzFroP/23kpD0bLQ742kURohl4r46235
-         4lmQRhyI37VhWj7uFSBX0umISE+qXkfAKufiTnxHKGSccMe7fa5KNGe2SpFUGBot24eF
-         q2Gy+/vp7uDeccNmYjWG9BZYuwXquTHbBuZkswl+nWyzd8uz/z5t5sbecEoS/548l55K
-         y1drNiqTjiE68m9HSNv3x0Twg6ueS1aVpyC6NccBcubj00bI2VYh0dS71eMlMsZcvEdB
-         GAjZ0w9djNARjpOdICopsSnRsB6V0LpFRxhh65Z6VVn1H3aS3xboMIDzManGZKYFHBn8
-         ZwFw==
-X-Gm-Message-State: AOJu0Yx2tly/k9hNUZmMWA23G+cumO++cKusyZIuGZwW615t4lb7fSbf
-	hNxZ4pm0+FZ04iIYcwcy39PT/0ZZQb7JBtHMhIA=
-X-Google-Smtp-Source: AGHT+IGOU6FXeF+Mqr7pHXMQjIlmKusQnIePSZpUSkDMPro+oP9wmgspqehR3tapjacP7Wamne+/hg==
-X-Received: by 2002:a17:903:48c:b0:1c5:dfe9:b1f3 with SMTP id jj12-20020a170903048c00b001c5dfe9b1f3mr10596391plb.16.1696290850436;
-        Mon, 02 Oct 2023 16:54:10 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:f676:8db:8677:aefe])
-        by smtp.gmail.com with ESMTPSA id 12-20020a170902ee4c00b001c3ea6073e0sm32167plo.37.2023.10.02.16.54.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 16:54:09 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	dri-devel@lists.freedesktop.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime with auxiliary device
-Date: Mon,  2 Oct 2023 16:54:06 -0700
-Message-ID: <20231002235407.769399-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.42.0.582.g8ccd20d70d-goog
+        d=1e100.net; s=20230601; t=1696293118; x=1696897918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iO9eQroF7O4wqoRvgq0RaFH1dV9uh3sUuUFRmWyQ7SM=;
+        b=e6zA9347yIDeITNi6H8CH9RHsuFfbp7w6+gxaFm2u9S4/QBEQ7/LAOj7i9yok8L841
+         oNYV1jnSjCf1z+KTshJZ7UPKxQmynrGlCwowo7GrOACa8Yh38BBLUChBD7F9m5b+8rb1
+         aVXnc1+77aEzbffgFLVzmyoX7RC9u2lc/1XxU6TBJFBNk42tDwfhwrNzwlu8aZCTn6Tg
+         //lYAcTqUtZQ/EOW58g+Thhv65VFlpqkbTopLldsQREtjRge3jsOs70w53qdLZKYIKdt
+         vtAi7yj5YR1ZSAH0DY3LnIU4ClPYNwLJhP8HZqyHRighlCWDrEqXomV1K+Ch0QNvGSbB
+         Xlsw==
+X-Gm-Message-State: AOJu0Yx08FtKYby/KyrOs1QLryUmtrLaAKrriU/gWVrhLXDaNyUkMftx
+	wklAUiXZ7aUY7ry8xSrE3ttK0xdKnm+6YYgLcCVFJI0M
+X-Google-Smtp-Source: AGHT+IF/m2rmL5jynoyRpJgWWzC13ghmecm4zmbm3AiytJAZ1bTpayuNs3AY+awsYaJByVUm61vL1g==
+X-Received: by 2002:a05:6512:ba0:b0:4fd:faa5:64ed with SMTP id b32-20020a0565120ba000b004fdfaa564edmr13942681lfv.11.1696293118372;
+        Mon, 02 Oct 2023 17:31:58 -0700 (PDT)
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
+        by smtp.gmail.com with ESMTPSA id i2-20020a196d02000000b0050567cdb8ffsm1975543lfc.269.2023.10.02.17.31.57
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Oct 2023 17:31:57 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50348c54439so1260e87.1
+        for <patches@lists.linux.dev>; Mon, 02 Oct 2023 17:31:57 -0700 (PDT)
+X-Received: by 2002:a05:6512:3903:b0:504:7b50:ec9a with SMTP id
+ a3-20020a056512390300b005047b50ec9amr25948lfu.1.1696293117450; Mon, 02 Oct
+ 2023 17:31:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231002235407.769399-1-swboyd@chromium.org>
+In-Reply-To: <20231002235407.769399-1-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 2 Oct 2023 17:31:41 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U2dza-rxV=YtcfJwUY-gZw5FrCyn0NahOxvXJW2J2-vg@mail.gmail.com>
+Message-ID: <CAD=FV=U2dza-rxV=YtcfJwUY-gZw5FrCyn0NahOxvXJW2J2-vg@mail.gmail.com>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
+ with auxiliary device
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	dri-devel@lists.freedesktop.org, Maxime Ripard <maxime@cerno.tech>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The kernel produces a warning splat and the DSI device fails to register
-in this driver if the i2c driver probes, populates child auxiliary
-devices, and then somewhere in ti_sn_bridge_probe() a function call
-returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
-device created by devm_mipi_dsi_device_register_full() is left
-registered because the devm managed device used to manage the lifetime
-of the DSI device is the parent i2c device, not the auxiliary device
-that is being probed.
+Hi,
 
-Associate the DSI device created and managed by this driver to the
-lifetime of the auxiliary device, not the i2c device, so that the DSI
-device is removed when the auxiliary driver unbinds. Similarly change
-the device pointer used for dev_err_probe() so the deferred probe errors
-are associated with the auxiliary device instead of the parent i2c
-device so we can narrow down future problems faster.
+On Mon, Oct 2, 2023 at 4:54=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> w=
+rote:
+>
+> The kernel produces a warning splat and the DSI device fails to register
+> in this driver if the i2c driver probes, populates child auxiliary
+> devices, and then somewhere in ti_sn_bridge_probe() a function call
+> returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
+> device created by devm_mipi_dsi_device_register_full() is left
+> registered because the devm managed device used to manage the lifetime
+> of the DSI device is the parent i2c device, not the auxiliary device
+> that is being probed.
+>
+> Associate the DSI device created and managed by this driver to the
+> lifetime of the auxiliary device, not the i2c device, so that the DSI
+> device is removed when the auxiliary driver unbinds. Similarly change
+> the device pointer used for dev_err_probe() so the deferred probe errors
+> are associated with the auxiliary device instead of the parent i2c
+> device so we can narrow down future problems faster.
+>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Maxime Ripard <maxime@cerno.tech>
+> Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI =
+device at probe")
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Maxime Ripard <maxime@cerno.tech>
-Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Even before that commit I think it was using the main "dev" instead of
+the auxiliary device's "dev" for some "devm" stuff. I guess the
+difference is that it wouldn't mess with probe deferral? Searching
+back, I think the first instance of a case that was using "devm_" with
+the wrong device was commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86:
+Wrap panel with panel-bridge")? Would it make sense to use that as a
+Fixes, you think?
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index f448b903e190..84148a79414b 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -692,7 +692,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
- 	return container_of(bridge, struct ti_sn65dsi86, bridge);
- }
- 
--static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
-+static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
- {
- 	int val;
- 	struct mipi_dsi_host *host;
-@@ -707,7 +707,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
- 	if (!host)
- 		return -EPROBE_DEFER;
- 
--	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
-+	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
- 	if (IS_ERR(dsi))
- 		return PTR_ERR(dsi);
- 
-@@ -725,7 +725,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
- 
- 	pdata->dsi = dsi;
- 
--	return devm_mipi_dsi_attach(dev, dsi);
-+	return devm_mipi_dsi_attach(&adev->dev, dsi);
- }
- 
- static int ti_sn_bridge_attach(struct drm_bridge *bridge,
-@@ -1298,9 +1298,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 	struct device_node *np = pdata->dev->of_node;
- 	int ret;
- 
--	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
-+	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
- 	if (IS_ERR(pdata->next_bridge))
--		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
-+		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
- 				     "failed to create panel bridge\n");
- 
- 	ti_sn_bridge_parse_lanes(pdata, np);
-@@ -1319,9 +1319,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 
- 	drm_bridge_add(&pdata->bridge);
- 
--	ret = ti_sn_attach_host(pdata);
-+	ret = ti_sn_attach_host(adev, pdata);
- 	if (ret) {
--		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
-+		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
- 		goto err_remove_bridge;
- 	}
- 
+In any case, this looks reasonable to me:
 
-base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
--- 
-https://chromeos.dev
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+I'll give it a week and then apply to "-fixes" if everything is quiet.
