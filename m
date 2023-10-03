@@ -1,177 +1,71 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499332137C
-	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 13:22:22 +0000 (UTC)
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-307d20548adso888488f8f.0
-        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 06:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696339340; x=1696944140; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BPhEMScslRMaYaqRO+dwG2HnFAyJ6EQmjoVhDMsvm2g=;
-        b=P/db8yMIyJRvTgW/AvwFnN8F5e2i58m+1/yO3oYz8ynYyCb3wl7sv27eNtrSGFTDVW
-         NW75xweLdp5XpWVxc9iUaxvSOOwC6/+W4+ugxPWADXpYueJhegvy1YLOes3QQHTpGGiC
-         v4OA+7bzvh2Mo2ndWemLvMD0dNgGYupMKiG4+Y/n2zRI32YmdE9gi30KaUYR+WMToRN1
-         GakP5j6z5W6Vs3wTTehq3qRvWlMnDXT1D/cs0/dI6Di2tDbh7bfSTL01gZbtxfyML3+S
-         XGZsMTqnvP8XWHiRIT3PJkphZuhCDQtCNaKppi6k9UAva5FolRzeUY4wgz+2EW2dKk1t
-         qNQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696339340; x=1696944140;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BPhEMScslRMaYaqRO+dwG2HnFAyJ6EQmjoVhDMsvm2g=;
-        b=ClXrS52rovO+FQcPgKDWBGmc8wIY/0q2U503fA7iT1tQkXBUpZajrzxEhSs050EhI6
-         S6FntZ2eYQn+iX+vNTL25xogF3TEf/Rs7di3beOn207L2OdsfgmXM8Z7RBQe8/B6H7Gk
-         p3pXEjXHXtbz1ecbhHnQAOodIRYidIOXQQV0pEAjWUr5QCH3dLbCwuTB92ajvZNoMRbC
-         /RgMeFos6CciQwJ6rMtmayoLFJjvHgm27LBTSMF90u8wo7NjAP3SZVRueoCk8goJgS9G
-         DjPpHElSSfCiHvAU1wKBN6sWDHH0A8BrYHwrTeFQ5tHihmgHE+2IA7pLI3UlSJXSDMv6
-         BpzA==
-X-Gm-Message-State: AOJu0YwVvDkW7B6SHmiw1shST2kez7vNbIZUITyp+WJwoD/t7zXRBEqi
-	H2UhQxB6nN0SUOvguR7F0gGEeQ==
-X-Google-Smtp-Source: AGHT+IFDM9mm4RExiIDQOdgnZFNqOULSOor4UvfTWPqFV+FOp96KsWwjv9wciLPT3qCL81igyWfz8g==
-X-Received: by 2002:adf:eed2:0:b0:31f:fedd:83ad with SMTP id a18-20020adfeed2000000b0031ffedd83admr11897768wrp.4.1696339340083;
-        Tue, 03 Oct 2023 06:22:20 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e31a:fe1c:e925:9858? ([2a01:e0a:982:cbb0:e31a:fe1c:e925:9858])
-        by smtp.gmail.com with ESMTPSA id f8-20020adfdb48000000b0031ff89af0e4sm1568213wrj.99.2023.10.03.06.22.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 06:22:19 -0700 (PDT)
-Message-ID: <bd3bc4bc-b684-4bbd-82cf-c59797ba21cf@linaro.org>
-Date: Tue, 3 Oct 2023 15:22:19 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1154F505;
+	Tue,  3 Oct 2023 13:37:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0AEC433C7;
+	Tue,  3 Oct 2023 13:37:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696340262;
+	bh=wlhdhZn1xBJ8gxC+v/rGLHxhYUc11yTLxM1h+HBXGhw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AqvDHUQzpsHAxcB/bWiLH51eHg2YS+4rOc2oXQbpYMRgbl3wZREE0e0B1VxuMf81e
+	 KYvDqa2pHJu1w24fvLwg/PzcXeLT1GsYZVNDV64DNnh3DVcpo2nq8cdDQ7ZwwxLmUC
+	 i+l4eOYymaNe67EceomwyqkFJrlG5+zGBYVFJJdLJaLFxNZY6+2vT/RKc7tgIUtumR
+	 cY9JWvLun6qR5jFKgyyzP53jl2v9Dv3Lwt32q4IFpI48iTZwmDMpr1ZOZ9Oy3i3XLv
+	 lVVTM060WcFPXnYI1AkKFcKJFB+2pHU6YRDpAdmZM/7+zcGfDEPmb7WiAZadB8HU6j
+	 CBfo9dYsctKwA==
+Date: Tue, 3 Oct 2023 15:37:37 +0200
+From: Simon Horman <horms@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, vadfed@fb.com, arkadiusz.kubalewski@intel.com,
+	jiri@resnulli.us, netdev@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, richardcochran@gmail.com,
+	jonathan.lemon@gmail.com, saeedm@nvidia.com, leon@kernel.org,
+	linux-rdma@vger.kernel.org
+Subject: Re: [PATCH 0/2] Fix a couple recent instances of
+ -Wincompatible-function-pointer-types-strict from ->mode_get()
+ implementations
+Message-ID: <ZRwZIXaVS4yxGSQF@kernel.org>
+References: <20231002-net-wifpts-dpll_mode_get-v1-0-a356a16413cf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
- with auxiliary device
-Content-Language: en-US, fr
-To: Stephen Boyd <swboyd@chromium.org>,
- Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- dri-devel@lists.freedesktop.org, Douglas Anderson <dianders@chromium.org>,
- Maxime Ripard <maxime@cerno.tech>
-References: <20231002235407.769399-1-swboyd@chromium.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231002235407.769399-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231002-net-wifpts-dpll_mode_get-v1-0-a356a16413cf@kernel.org>
 
-On 03/10/2023 01:54, Stephen Boyd wrote:
-> The kernel produces a warning splat and the DSI device fails to register
-> in this driver if the i2c driver probes, populates child auxiliary
-> devices, and then somewhere in ti_sn_bridge_probe() a function call
-> returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
-> device created by devm_mipi_dsi_device_register_full() is left
-> registered because the devm managed device used to manage the lifetime
-> of the DSI device is the parent i2c device, not the auxiliary device
-> that is being probed.
+On Mon, Oct 02, 2023 at 01:55:19PM -0700, Nathan Chancellor wrote:
+> Hi all,
 > 
-> Associate the DSI device created and managed by this driver to the
-> lifetime of the auxiliary device, not the i2c device, so that the DSI
-> device is removed when the auxiliary driver unbinds. Similarly change
-> the device pointer used for dev_err_probe() so the deferred probe errors
-> are associated with the auxiliary device instead of the parent i2c
-> device so we can narrow down future problems faster.
+> This series fixes a couple of instances of
+> -Wincompatible-function-pointer-types-strict that were introduced by a
+> recent series that added a new type of ops, struct dpll_device_ops,
+> along with implementations of the callback ->mode_get() that had a
+> mismatched mode type.
 > 
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Maxime Ripard <maxime@cerno.tech>
-> Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> This warning is not currently enabled for any build but I am planning on
+> submitting a patch to add it to W=1 to prevent new instances of the
+> warning from popping up while we try and fix the existing instances in
+> other drivers.
+> 
+> This series is based on current net-next but if they need to go into
+> individual maintainer trees, please feel free to take the patches
+> individually.
+> 
+> Cheers,
+> Nathan
+> 
 > ---
->   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index f448b903e190..84148a79414b 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -692,7 +692,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
->   	return container_of(bridge, struct ti_sn65dsi86, bridge);
->   }
->   
-> -static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
-> +static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
->   {
->   	int val;
->   	struct mipi_dsi_host *host;
-> @@ -707,7 +707,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
->   	if (!host)
->   		return -EPROBE_DEFER;
->   
-> -	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
-> +	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
->   	if (IS_ERR(dsi))
->   		return PTR_ERR(dsi);
->   
-> @@ -725,7 +725,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
->   
->   	pdata->dsi = dsi;
->   
-> -	return devm_mipi_dsi_attach(dev, dsi);
-> +	return devm_mipi_dsi_attach(&adev->dev, dsi);
->   }
->   
->   static int ti_sn_bridge_attach(struct drm_bridge *bridge,
-> @@ -1298,9 +1298,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
->   	struct device_node *np = pdata->dev->of_node;
->   	int ret;
->   
-> -	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
-> +	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
->   	if (IS_ERR(pdata->next_bridge))
-> -		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
-> +		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
->   				     "failed to create panel bridge\n");
->   
->   	ti_sn_bridge_parse_lanes(pdata, np);
-> @@ -1319,9 +1319,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
->   
->   	drm_bridge_add(&pdata->bridge);
->   
-> -	ret = ti_sn_attach_host(pdata);
-> +	ret = ti_sn_attach_host(adev, pdata);
->   	if (ret) {
-> -		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
-> +		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
->   		goto err_remove_bridge;
->   	}
->   
-> 
-> base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+> Nathan Chancellor (2):
+>       ptp: Fix type of mode parameter in ptp_ocp_dpll_mode_get()
+>       mlx5: Fix type of mode parameter in mlx5_dpll_device_mode_get()
 
-This looks reasonable
+For series,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+
