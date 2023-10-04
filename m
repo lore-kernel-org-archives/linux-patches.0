@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2168C1D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7E91D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XC7p6EUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B630C433C8;
-	Wed,  4 Oct 2023 18:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yb8f062D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC66C433CC;
+	Wed,  4 Oct 2023 18:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444016;
-	bh=y40RgDm2GMoUWyzASxqFPvqF12UNhsB761VR1V+U/1U=;
+	s=korg; t=1696444018;
+	bh=8+tG61t4Og3P/xaY/R1aOzVCPQR+P6J6n0XruEYnAek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XC7p6EUtZ0tzQaKK79oTlmHPb27jZvRBzCG1JidCRsXQTZ52qWiuWc7vYC2+qma8h
-	 TREZO1/i420/Ks5B63pWQZPFxqlbhPXy6fJVkR1ukhcsttfN9lGBM9DPtCd89TvuUE
-	 fTzULD9QyDRG2KfKxAI7pxwcmv1ovvCy0sjAU2u0=
+	b=Yb8f062D3TDB/WtXFMXGKbVmapCZL8FEoallO9ewZbLAC94qqPlOjM6go5FwrXC6a
+	 7axGWfCizX9mEdbrug3NXEn1y1L8k7Ft6l0M+n07UZbn2XKNWMh3f3R4NW4K+dnxkw
+	 A9uZObTqfXpgUewq3DOyMSFF5wcOqIbsoBF0mMoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	hariprasad <hkelam@marvell.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 101/321] octeontx2-pf: Do xdp_do_flush() after redirects.
-Date: Wed,  4 Oct 2023 19:54:06 +0200
-Message-ID: <20231004175233.913267086@linuxfoundation.org>
+Subject: [PATCH 6.5 102/321] igc: Expose tx-usecs coalesce setting to user
+Date: Wed,  4 Oct 2023 19:54:07 +0200
+Message-ID: <20231004175233.963959620@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -47,108 +45,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 
-[ Upstream commit 70b2b6892645e58ed6f051dad7f8d1083f0ad553 ]
+[ Upstream commit 1703b2e0de653b459ca6230be32ce7f2ea0ae7ee ]
 
-xdp_do_flush() should be invoked before leaving the NAPI poll function
-if XDP-redirect has been performed.
+When users attempt to obtain the coalesce setting using the
+ethtool command, current code always returns 0 for tx-usecs.
+This is because I225/6 always uses a queue pair setting, hence
+tx_coalesce_usecs does not return a value during the
+igc_ethtool_get_coalesce() callback process. The pair queue
+condition checking in igc_ethtool_get_coalesce() is removed by
+this patch so that the user gets information of the value of tx-usecs.
 
-Invoke xdp_do_flush() before leaving NAPI.
+Even if i225/6 is using queue pair setting, there is no harm in
+notifying the user of the tx-usecs. The implementation of the current
+code may have previously been a copy of the legacy code i210.
+Since I225 has the queue pair setting enabled, tx-usecs will always adhere
+to the user-set rx-usecs value. An error message will appear when the user
+attempts to set the tx-usecs value for the input parameters because,
+by default, they should only set the rx-usecs value.
 
-Cc: Geetha sowjanya <gakula@marvell.com>
-Cc: Subbaraya Sundeep <sbhatta@marvell.com>
-Cc: Sunil Goutham <sgoutham@marvell.com>
-Cc: hariprasad <hkelam@marvell.com>
-Fixes: 06059a1a9a4a5 ("octeontx2-pf: Add XDP support to netdev PF")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Geethasowjanya Akula <gakula@marvell.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+This patch also adds the helper function to get the
+previous rx coalesce value similar to tx coalesce.
+
+How to test:
+User can get the coalesce value using ethtool command.
+
+Example command:
+Get: ethtool -c <interface>
+
+Previous output:
+
+rx-usecs: 3
+rx-frames: n/a
+rx-usecs-irq: n/a
+rx-frames-irq: n/a
+
+tx-usecs: 0
+tx-frames: n/a
+tx-usecs-irq: n/a
+tx-frames-irq: n/a
+
+New output:
+
+rx-usecs: 3
+rx-frames: n/a
+rx-usecs-irq: n/a
+rx-frames-irq: n/a
+
+tx-usecs: 3
+tx-frames: n/a
+tx-usecs-irq: n/a
+tx-frames-irq: n/a
+
+Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230919170331.1581031-1-anthony.l.nguyen@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_txrx.c         | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 31 ++++++++++++--------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-index e77d438489557..53b2a4ef52985 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -29,7 +29,8 @@
- static bool otx2_xdp_rcv_pkt_handler(struct otx2_nic *pfvf,
- 				     struct bpf_prog *prog,
- 				     struct nix_cqe_rx_s *cqe,
--				     struct otx2_cq_queue *cq);
-+				     struct otx2_cq_queue *cq,
-+				     bool *need_xdp_flush);
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index 93bce729be76a..7ab6dd58e4001 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -868,6 +868,18 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
+ 	spin_unlock(&adapter->stats64_lock);
+ }
  
- static int otx2_nix_cq_op_status(struct otx2_nic *pfvf,
- 				 struct otx2_cq_queue *cq)
-@@ -337,7 +338,7 @@ static bool otx2_check_rcv_errors(struct otx2_nic *pfvf,
- static void otx2_rcv_pkt_handler(struct otx2_nic *pfvf,
- 				 struct napi_struct *napi,
- 				 struct otx2_cq_queue *cq,
--				 struct nix_cqe_rx_s *cqe)
-+				 struct nix_cqe_rx_s *cqe, bool *need_xdp_flush)
++static int igc_ethtool_get_previous_rx_coalesce(struct igc_adapter *adapter)
++{
++	return (adapter->rx_itr_setting <= 3) ?
++		adapter->rx_itr_setting : adapter->rx_itr_setting >> 2;
++}
++
++static int igc_ethtool_get_previous_tx_coalesce(struct igc_adapter *adapter)
++{
++	return (adapter->tx_itr_setting <= 3) ?
++		adapter->tx_itr_setting : adapter->tx_itr_setting >> 2;
++}
++
+ static int igc_ethtool_get_coalesce(struct net_device *netdev,
+ 				    struct ethtool_coalesce *ec,
+ 				    struct kernel_ethtool_coalesce *kernel_coal,
+@@ -875,17 +887,8 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
  {
- 	struct nix_rx_parse_s *parse = &cqe->parse;
- 	struct nix_rx_sg_s *sg = &cqe->sg;
-@@ -353,7 +354,7 @@ static void otx2_rcv_pkt_handler(struct otx2_nic *pfvf,
- 	}
+ 	struct igc_adapter *adapter = netdev_priv(netdev);
  
- 	if (pfvf->xdp_prog)
--		if (otx2_xdp_rcv_pkt_handler(pfvf, pfvf->xdp_prog, cqe, cq))
-+		if (otx2_xdp_rcv_pkt_handler(pfvf, pfvf->xdp_prog, cqe, cq, need_xdp_flush))
- 			return;
+-	if (adapter->rx_itr_setting <= 3)
+-		ec->rx_coalesce_usecs = adapter->rx_itr_setting;
+-	else
+-		ec->rx_coalesce_usecs = adapter->rx_itr_setting >> 2;
+-
+-	if (!(adapter->flags & IGC_FLAG_QUEUE_PAIRS)) {
+-		if (adapter->tx_itr_setting <= 3)
+-			ec->tx_coalesce_usecs = adapter->tx_itr_setting;
+-		else
+-			ec->tx_coalesce_usecs = adapter->tx_itr_setting >> 2;
+-	}
++	ec->rx_coalesce_usecs = igc_ethtool_get_previous_rx_coalesce(adapter);
++	ec->tx_coalesce_usecs = igc_ethtool_get_previous_tx_coalesce(adapter);
  
- 	skb = napi_get_frags(napi);
-@@ -388,6 +389,7 @@ static int otx2_rx_napi_handler(struct otx2_nic *pfvf,
- 				struct napi_struct *napi,
- 				struct otx2_cq_queue *cq, int budget)
- {
-+	bool need_xdp_flush = false;
- 	struct nix_cqe_rx_s *cqe;
- 	int processed_cqe = 0;
+ 	return 0;
+ }
+@@ -910,8 +913,12 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
+ 	    ec->tx_coalesce_usecs == 2)
+ 		return -EINVAL;
  
-@@ -409,13 +411,15 @@ static int otx2_rx_napi_handler(struct otx2_nic *pfvf,
- 		cq->cq_head++;
- 		cq->cq_head &= (cq->cqe_cnt - 1);
+-	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) && ec->tx_coalesce_usecs)
++	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) &&
++	    ec->tx_coalesce_usecs != igc_ethtool_get_previous_tx_coalesce(adapter)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Queue Pair mode enabled, both Rx and Tx coalescing controlled by rx-usecs");
+ 		return -EINVAL;
++	}
  
--		otx2_rcv_pkt_handler(pfvf, napi, cq, cqe);
-+		otx2_rcv_pkt_handler(pfvf, napi, cq, cqe, &need_xdp_flush);
- 
- 		cqe->hdr.cqe_type = NIX_XQE_TYPE_INVALID;
- 		cqe->sg.seg_addr = 0x00;
- 		processed_cqe++;
- 		cq->pend_cqe--;
- 	}
-+	if (need_xdp_flush)
-+		xdp_do_flush();
- 
- 	/* Free CQEs to HW */
- 	otx2_write64(pfvf, NIX_LF_CQ_OP_DOOR,
-@@ -1354,7 +1358,8 @@ bool otx2_xdp_sq_append_pkt(struct otx2_nic *pfvf, u64 iova, int len, u16 qidx)
- static bool otx2_xdp_rcv_pkt_handler(struct otx2_nic *pfvf,
- 				     struct bpf_prog *prog,
- 				     struct nix_cqe_rx_s *cqe,
--				     struct otx2_cq_queue *cq)
-+				     struct otx2_cq_queue *cq,
-+				     bool *need_xdp_flush)
- {
- 	unsigned char *hard_start, *data;
- 	int qidx = cq->cq_idx;
-@@ -1391,8 +1396,10 @@ static bool otx2_xdp_rcv_pkt_handler(struct otx2_nic *pfvf,
- 
- 		otx2_dma_unmap_page(pfvf, iova, pfvf->rbsize,
- 				    DMA_FROM_DEVICE);
--		if (!err)
-+		if (!err) {
-+			*need_xdp_flush = true;
- 			return true;
-+		}
- 		put_page(page);
- 		break;
- 	default:
+ 	/* If ITR is disabled, disable DMAC */
+ 	if (ec->rx_coalesce_usecs == 0) {
 -- 
 2.40.1
 
