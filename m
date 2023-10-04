@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABCB1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2065E1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMC3As8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE0BC433C8;
-	Wed,  4 Oct 2023 18:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnzVYbSr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D5CC433C8;
+	Wed,  4 Oct 2023 18:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443455;
-	bh=mtMO8jaOHgoz362NyVv0zTUXf43Vh/tkBTHlLXtIcbU=;
+	s=korg; t=1696443458;
+	bh=veujR2mR8JrqPxGYA6znc38fs1IJ24iXxgooJ5FujLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMC3As8hsLHzyCTHHRs/3O/RYODo4I2Bf+QzOFBNHPLhTKyYCeHx0an45upSB2LAg
-	 Z4mwOSnG2Uk7BpXVV+MkYRBMNclAEoQUBAYXBwzZSFa+Y0bwsPcmE6QbWb7Vi8TWPx
-	 ET1lAmWMmiJmqyETCoU1NMtYM5XcO+rb2Zh1A3l0=
+	b=AnzVYbSrcsqacrlZquL+UrspdSt8WO3vHtFt+78XQHs+QRim3fBkp7oWaWzCoSUUF
+	 Kqe8gkZ3Udso9NUgpNYTNG0RnZMaWIqBqh4tjjsyLQt6y3HFLINQRHUGQZiPq+OXLj
+	 aTv39q4R1NVXJkVYqXaT3dxcRTyu2BWFxLgl3g7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Julia Lawall <Julia.Lawall@inria.fr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/259] selftests/ftrace: Correctly enable event in instance-event.tc
-Date: Wed,  4 Oct 2023 19:55:28 +0200
-Message-ID: <20231004175224.417575019@linuxfoundation.org>
+Subject: [PATCH 6.1 164/259] thermal/of: add missing of_node_put()
+Date: Wed,  4 Oct 2023 19:55:37 +0200
+Message-ID: <20231004175224.814932492@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -44,49 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Julia Lawall <Julia.Lawall@inria.fr>
 
-[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
+[ Upstream commit 8a81cf96f5510aaf9a65d103f7405079a7b0fcc5 ]
 
-Function instance_set() expects to enable event 'sched_switch', so we
-should set 1 to its 'enable' file.
+for_each_child_of_node performs an of_node_get on each
+iteration, so a break out of the loop requires an
+of_node_put.
 
-Testcase passed after this patch:
-  # ./ftracetest test.d/instances/instance-event.tc
-  === Ftrace unit tests ===
-  [1] Test creation and deletion of trace instances while setting an event
-  [PASS]
+This was done using the Coccinelle semantic patch
+iterators/for_each_child.cocci
 
-  # of passed:  1
-  # of failed:  0
-  # of unresolved:  0
-  # of untested:  0
-  # of unsupported:  0
-  # of xfailed:  0
-  # of undefined(test bug):  0
-
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/thermal_of.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-index 0eb47fbb3f44d..42422e4251078 100644
---- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-+++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-@@ -39,7 +39,7 @@ instance_read() {
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index 762d1990180bf..4104743dbc17e 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -149,8 +149,10 @@ static int of_find_trip_id(struct device_node *np, struct device_node *trip)
+ 	 */
+ 	for_each_child_of_node(trips, t) {
  
- instance_set() {
-         while :; do
--                echo 1 > foo/events/sched/sched_switch
-+                echo 1 > foo/events/sched/sched_switch/enable
-         done 2> /dev/null
- }
+-		if (t == trip)
++		if (t == trip) {
++			of_node_put(t);
+ 			goto out;
++		}
+ 		i++;
+ 	}
  
+@@ -519,8 +521,10 @@ static int thermal_of_for_each_cooling_maps(struct thermal_zone_device *tz,
+ 
+ 	for_each_child_of_node(cm_np, child) {
+ 		ret = thermal_of_for_each_cooling_device(tz_np, child, tz, cdev, action);
+-		if (ret)
++		if (ret) {
++			of_node_put(child);
+ 			break;
++		}
+ 	}
+ 
+ 	of_node_put(cm_np);
 -- 
 2.40.1
 
