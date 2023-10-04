@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CEB1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2B8C433C7;
-	Wed,  4 Oct 2023 18:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF651D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2734C433C8;
+	Wed,  4 Oct 2023 18:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443191;
-	bh=lBV9RxDuqFaHx1HMd8Eow6KsG0fFBXTNANswxJ0eqiQ=;
+	s=korg; t=1696443194;
+	bh=K1RfelspRm3VziNrwn3sTyPgYs+rRjjozt7GZeXWwPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vH25V0kRMNgtduqA7WYep5tD+9nSExiU30uhGGDd1yz9s7/fEQ8x7iGS1eCU+0V5L
-	 nI6N7BojJBoaGPQcc7M0Sw0Fz0B+YAH6ikTk3fE9h/TzAaKsOgSe5Wyem5rlaCDP5i
-	 wrUvL8CB7CFG9HjevyaOIIREHbof0lJNP/Ajay2I=
+	b=hIHZLUOO5xUqucFrWR5k9Y8+u5VLgxLilPKxapu8DRANzVqcek5ZgV9T61X8HBOLd
+	 wmScYN58DxoZPlZAHF1Kssa+oIM9PcFuRGl7ayyjYbrXx53fnPxh0suQTFc9wPBBDt
+	 nG/wN9xA1xC3pD5sKxH5EmzlIZAovBWAeKhdAv2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Tristram.Ha@microchip.com,
+	Lukasz Majewski <lukma@denx.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/259] netfilter: nf_tables: defer gc run if previous batch is still pending
-Date: Wed,  4 Oct 2023 19:53:23 +0200
-Message-ID: <20231004175218.828945356@linuxfoundation.org>
+Subject: [PATCH 6.1 062/259] net: hsr: Properly parse HSRv1 supervisor frames.
+Date: Wed,  4 Oct 2023 19:53:55 +0200
+Message-ID: <20231004175220.262200672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -39,78 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Lukasz Majewski <lukma@denx.de>
 
-commit 8e51830e29e12670b4c10df070a4ea4c9593e961 upstream.
+[ Upstream commit 295de650d3aaf9e50258465c5f1c84b465d836f6 ]
 
-Don't queue more gc work, else we may queue the same elements multiple
-times.
+While adding support for parsing the redbox supervision frames, the
+author added `pull_size' and `total_pull_size' to track the amount of
+bytes that were pulled from the skb during while parsing the skb so it
+can be reverted/ pushed back at the end.
+In the process probably copy&paste error occurred and for the HSRv1 case
+the ethhdr was used instead of the hsr_tag. Later the hsr_tag was used
+instead of hsr_sup_tag. The later error didn't matter because both
+structs have the size so HSRv0 was still working. It broke however HSRv1
+parsing because struct ethhdr is larger than struct hsr_tag.
 
-If an element is flagged as dead, this can mean that either the previous
-gc request was invalidated/discarded by a transaction or that the previous
-request is still pending in the system work queue.
+Reinstate the old pulling flow and pull first ethhdr, hsr_tag in v1 case
+followed by hsr_sup_tag.
 
-The latter will happen if the gc interval is set to a very low value,
-e.g. 1ms, and system work queue is backlogged.
+[bigeasy: commit message]
 
-The sets refcount is 1 if no previous gc requeusts are queued, so add
-a helper for this and skip gc run if old requests are pending.
-
-Add a helper for this and skip the gc run in this case.
-
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")'
+Suggested-by: Tristram.Ha@microchip.com
+Signed-off-by: Lukasz Majewski <lukma@denx.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 5 +++++
- net/netfilter/nft_set_hash.c      | 3 +++
- net/netfilter/nft_set_rbtree.c    | 3 +++
- 3 files changed, 11 insertions(+)
+ net/hsr/hsr_framereg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 2d501dd901521..12777a5b60cd0 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -581,6 +581,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
- 	return (void *)set->data;
- }
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index a16f0445023aa..0b01998780952 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -295,13 +295,13 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
  
-+static inline bool nft_set_gc_is_pending(const struct nft_set *s)
-+{
-+	return refcount_read(&s->refs) != 1;
-+}
-+
- static inline struct nft_set *nft_set_container_of(const void *priv)
- {
- 	return (void *)priv - offsetof(struct nft_set, data);
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index cef5df8460009..524763659f251 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -326,6 +326,9 @@ static void nft_rhash_gc(struct work_struct *work)
- 	nft_net = nft_pernet(net);
- 	gc_seq = READ_ONCE(nft_net->gc_seq);
+ 	/* And leave the HSR tag. */
+ 	if (ethhdr->h_proto == htons(ETH_P_HSR)) {
+-		pull_size = sizeof(struct ethhdr);
++		pull_size = sizeof(struct hsr_tag);
+ 		skb_pull(skb, pull_size);
+ 		total_pull_size += pull_size;
+ 	}
  
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index f9d4c8fcbbf82..c6435e7092319 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -611,6 +611,9 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	nft_net = nft_pernet(net);
- 	gc_seq  = READ_ONCE(nft_net->gc_seq);
+ 	/* And leave the HSR sup tag. */
+-	pull_size = sizeof(struct hsr_tag);
++	pull_size = sizeof(struct hsr_sup_tag);
+ 	skb_pull(skb, pull_size);
+ 	total_pull_size += pull_size;
  
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
 -- 
 2.40.1
 
