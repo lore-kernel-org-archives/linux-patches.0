@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0FD1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410D81D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fY/uew50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEC3C433C8;
-	Wed,  4 Oct 2023 18:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mg83j5fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39D8C433C7;
+	Wed,  4 Oct 2023 18:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443860;
-	bh=ml+RbCRW4VYkM/9QbBs2gR2g6YWosBOlVZ6Z+eIjHIE=;
+	s=korg; t=1696443863;
+	bh=lbbOtcJTkNJwKTochjKakW1cOoyXW23q7TlPSHkuclU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fY/uew50PzqNIjBHCSBNK7thDUXPso1u2n1evezMVW0NwbHE+/BrNLFQ+mDTNxV8E
-	 OHLKdtbsWzetNX50trRk8TI2R+gCjXIYK+X8bLDRdEOaCOGudNlaRRmLE0KRAyFzGm
-	 A7+SXn8NTNHIVwxFwRf/E1hEAj7eFwb8+GtuTmfY=
+	b=Mg83j5fhbg1FzT+1inwZdQvZIDae/D50jefsS7KQLTAoDhh+2kl5EkksZvE0ElObQ
+	 Ae28+D9tWkYqhaCCOpcvPG+S+SAYWiInNEv4B5hGh8gdaewTLOODK16DuYwjNz1XQ8
+	 gExI7YXpsPqJz2uELzGH9FNwk0kT5pCSuZEg3nUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Tao <rongtao@cestc.cn>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 045/321] memblock tests: Fix compilation errors.
-Date: Wed,  4 Oct 2023 19:53:10 +0200
-Message-ID: <20231004175231.255463999@linuxfoundation.org>
+Subject: [PATCH 6.5 046/321] ASoC: SOF: ipc4-topology: fix wrong sizeof argument
+Date: Wed,  4 Oct 2023 19:53:11 +0200
+Message-ID: <20231004175231.305595878@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,91 +45,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Tao <rongtao@cestc.cn>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 4b2d631236931550f2ab0abc9a666958853ae846 ]
+[ Upstream commit 6ba59c008f08e84b3c87be10f3391c9735e4f833 ]
 
-This patch fix the follow errors.
+available_fmt is a pointer.
 
-commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()") pass nid
-parameter to reserve_bootmem_region(),
-
-    $ make -C tools/testing/memblock/
-    ...
-    memblock.c: In function ‘memmap_init_reserved_pages’:
-    memblock.c:2111:25: error: too many arguments to function ‘reserve_bootmem_region’
-    2111 |                         reserve_bootmem_region(start, end, nid);
-         |                         ^~~~~~~~~~~~~~~~~~~~~~
-    ../../include/linux/mm.h:32:6: note: declared here
-    32 | void reserve_bootmem_region(phys_addr_t start, phys_addr_t end);
-       |      ^~~~~~~~~~~~~~~~~~~~~~
-    memblock.c:2122:17: error: too many arguments to function ‘reserve_bootmem_region’
-    2122 |                 reserve_bootmem_region(start, end, nid);
-         |                 ^~~~~~~~~~~~~~~~~~~~~~
-
-commit dcdfdd40fa82 ("mm: Add support for unaccepted memory") call
-accept_memory() in memblock.c
-
-    $ make -C tools/testing/memblock/
-    ...
-    cc -fsanitize=address -fsanitize=undefined  main.o memblock.o \
-     lib/slab.o mmzone.o slab.o tests/alloc_nid_api.o \
-     tests/alloc_helpers_api.o tests/alloc_api.o tests/basic_api.o \
-     tests/common.o tests/alloc_exact_nid_api.o   -o main
-    /usr/bin/ld: memblock.o: in function `memblock_alloc_range_nid':
-    memblock.c:(.text+0x7ae4): undefined reference to `accept_memory'
-
-Signed-off-by: Rong Tao <rongtao@cestc.cn>
-Fixes: dcdfdd40fa82 ("mm: Add support for unaccepted memory")
-Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
-Link: https://lore.kernel.org/r/tencent_6F19BC082167F15DF2A8D8BEFE8EF220F60A@qq.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Fixes: 4fdef47a44d6 ("ASoC: SOF: ipc4-topology: Add new tokens for input/output pin format count")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230914132504.18463-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/mm.h          | 2 +-
- tools/testing/memblock/internal.h | 4 ++++
- tools/testing/memblock/mmzone.c   | 2 +-
- 3 files changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/sof/ipc4-topology.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
-index a03d9bba51514..2bc94079d6166 100644
---- a/tools/include/linux/mm.h
-+++ b/tools/include/linux/mm.h
-@@ -29,7 +29,7 @@ static inline void *phys_to_virt(unsigned long address)
- 	return __va(address);
- }
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index 11361e1cd6881..8fb6582e568e7 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -218,7 +218,7 @@ static int sof_ipc4_get_audio_fmt(struct snd_soc_component *scomp,
  
--void reserve_bootmem_region(phys_addr_t start, phys_addr_t end);
-+void reserve_bootmem_region(phys_addr_t start, phys_addr_t end, int nid);
- 
- static inline void totalram_pages_inc(void)
- {
-diff --git a/tools/testing/memblock/internal.h b/tools/testing/memblock/internal.h
-index fdb7f5db73082..f6c6e5474c3af 100644
---- a/tools/testing/memblock/internal.h
-+++ b/tools/testing/memblock/internal.h
-@@ -20,4 +20,8 @@ void memblock_free_pages(struct page *page, unsigned long pfn,
- {
- }
- 
-+static inline void accept_memory(phys_addr_t start, phys_addr_t end)
-+{
-+}
-+
- #endif
-diff --git a/tools/testing/memblock/mmzone.c b/tools/testing/memblock/mmzone.c
-index 7b0909e8b759d..d3d58851864e7 100644
---- a/tools/testing/memblock/mmzone.c
-+++ b/tools/testing/memblock/mmzone.c
-@@ -11,7 +11,7 @@ struct pglist_data *next_online_pgdat(struct pglist_data *pgdat)
- 	return NULL;
- }
- 
--void reserve_bootmem_region(phys_addr_t start, phys_addr_t end)
-+void reserve_bootmem_region(phys_addr_t start, phys_addr_t end, int nid)
- {
- }
- 
+ 	ret = sof_update_ipc_object(scomp, available_fmt,
+ 				    SOF_AUDIO_FMT_NUM_TOKENS, swidget->tuples,
+-				    swidget->num_tuples, sizeof(available_fmt), 1);
++				    swidget->num_tuples, sizeof(*available_fmt), 1);
+ 	if (ret) {
+ 		dev_err(scomp->dev, "Failed to parse audio format token count\n");
+ 		return ret;
 -- 
 2.40.1
 
