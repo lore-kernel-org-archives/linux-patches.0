@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C30A1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1049AC433C7;
-	Wed,  4 Oct 2023 18:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2AD1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0976C433C9;
+	Wed,  4 Oct 2023 18:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442661;
-	bh=J7VIHOsunbwY00r2324pZt9jom+COaMKOQY7D1kiHuE=;
+	s=korg; t=1696442664;
+	bh=Ngzetgr+I0FOLurUn/JV84oMGctTy/HCgAp1C5Cjm6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLfR0USlFRMermd85V7mCf4kBoSZXeeRBw5eFtBLGpaOQmC561uAtmI+JX8TbJsYF
-	 xz2KQXLXuXgjYBXxe7louT79kEKke0YhakzR0eOSfHnQyvSzNF4GbZuhFF4LvYsgXF
-	 1KZD/s9kDgi/ca8axRFJaVnphjK8nmnCXhYUC+YY=
+	b=VDEpxg5ifk50OoGhhrLy5s159rxw4xhYCyaf92z4v++zWAybRXIApVrjbT8IP7zzP
+	 epat5nl3r2OP/D+88SAVIKAXKQIokeFIvhc5X5/lSMEE5IB4G/u1BhlD+DCwnu+wod
+	 nTVz7wXE99XlGooFTw+I3Y5h1wEdr4x5gq7D+bjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/183] bpf: Avoid deadlock when using queue and stack maps from NMI
-Date: Wed,  4 Oct 2023 19:54:27 +0200
-Message-ID: <20231004175205.455250575@linuxfoundation.org>
+Subject: [PATCH 5.15 037/183] selftests: tls: swap the TX and RX sockets in some tests
+Date: Wed,  4 Oct 2023 19:54:28 +0200
+Message-ID: <20231004175205.495908788@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -35,81 +34,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit a34a9f1a19afe9c60ca0ea61dfeee63a1c2baac8 ]
+[ Upstream commit c326ca98446e0ae4fee43a40acf79412b74cfedb ]
 
-Sysbot discovered that the queue and stack maps can deadlock if they are
-being used from a BPF program that can be called from NMI context (such as
-one that is attached to a perf HW counter event). To fix this, add an
-in_nmi() check and use raw_spin_trylock() in NMI context, erroring out if
-grabbing the lock fails.
+tls.sendmsg_large and tls.sendmsg_multiple are trying to send through
+the self->cfd socket (only configured with TLS_RX) and to receive through
+the self->fd socket (only configured with TLS_TX), so they're not using
+kTLS at all. Swap the sockets.
 
-Fixes: f1a2e44a3aec ("bpf: add queue and stack maps")
-Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Tested-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Co-developed-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20230911132815.717240-1-toke@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/queue_stack_maps.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/tls.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
-index f9c734aaa9902..ef95b796a0fa3 100644
---- a/kernel/bpf/queue_stack_maps.c
-+++ b/kernel/bpf/queue_stack_maps.c
-@@ -103,7 +103,12 @@ static int __queue_map_get(struct bpf_map *map, void *value, bool delete)
- 	int err = 0;
- 	void *ptr;
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index 97fceb9be9ed3..3bdb093731358 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -441,11 +441,11 @@ TEST_F(tls, sendmsg_large)
  
--	raw_spin_lock_irqsave(&qs->lock, flags);
-+	if (in_nmi()) {
-+		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
-+			return -EBUSY;
-+	} else {
-+		raw_spin_lock_irqsave(&qs->lock, flags);
-+	}
+ 		msg.msg_iov = &vec;
+ 		msg.msg_iovlen = 1;
+-		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
++		EXPECT_EQ(sendmsg(self->fd, &msg, 0), send_len);
+ 	}
  
- 	if (queue_stack_map_is_empty(qs)) {
- 		memset(value, 0, qs->map.value_size);
-@@ -133,7 +138,12 @@ static int __stack_map_get(struct bpf_map *map, void *value, bool delete)
- 	void *ptr;
- 	u32 index;
+ 	while (recvs++ < sends) {
+-		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
++		EXPECT_NE(recv(self->cfd, mem, send_len, 0), -1);
+ 	}
  
--	raw_spin_lock_irqsave(&qs->lock, flags);
-+	if (in_nmi()) {
-+		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
-+			return -EBUSY;
-+	} else {
-+		raw_spin_lock_irqsave(&qs->lock, flags);
-+	}
+ 	free(mem);
+@@ -474,9 +474,9 @@ TEST_F(tls, sendmsg_multiple)
+ 	msg.msg_iov = vec;
+ 	msg.msg_iovlen = iov_len;
  
- 	if (queue_stack_map_is_empty(qs)) {
- 		memset(value, 0, qs->map.value_size);
-@@ -198,7 +208,12 @@ static int queue_stack_map_push_elem(struct bpf_map *map, void *value,
- 	if (flags & BPF_NOEXIST || flags > BPF_EXIST)
- 		return -EINVAL;
- 
--	raw_spin_lock_irqsave(&qs->lock, irq_flags);
-+	if (in_nmi()) {
-+		if (!raw_spin_trylock_irqsave(&qs->lock, irq_flags))
-+			return -EBUSY;
-+	} else {
-+		raw_spin_lock_irqsave(&qs->lock, irq_flags);
-+	}
- 
- 	if (queue_stack_map_is_full(qs)) {
- 		if (!replace) {
+-	EXPECT_EQ(sendmsg(self->cfd, &msg, 0), total_len);
++	EXPECT_EQ(sendmsg(self->fd, &msg, 0), total_len);
+ 	buf = malloc(total_len);
+-	EXPECT_NE(recv(self->fd, buf, total_len, 0), -1);
++	EXPECT_NE(recv(self->cfd, buf, total_len, 0), -1);
+ 	for (i = 0; i < iov_len; i++) {
+ 		EXPECT_EQ(memcmp(test_strs[i], buf + len_cmp,
+ 				 strlen(test_strs[i])),
 -- 
 2.40.1
 
