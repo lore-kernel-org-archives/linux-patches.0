@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119361D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EA71D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/imHinp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E37C433B7;
-	Wed,  4 Oct 2023 18:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1Y4b0U+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558D9C433C7;
+	Wed,  4 Oct 2023 18:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443831;
-	bh=I2Jk7xwY8UsbvWFFJZfGCRnfYASrip+eFzfaeHBfIVE=;
+	s=korg; t=1696443834;
+	bh=7DDFO70f2tHKJtwbjHe8zezFmT/hWY8HpwpeUQlr5do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/imHinpqQy7b988Bt4L5a9q8JB8P7jk3D+gmPXR1TgesMiUC/Cykt8vRcPydm0VM
-	 I06rewPyYZtEi0m3PCbH+hSV8UWce8BFpPu/D9yvt91hBweLZD9GK+8OTJ5hTyLhwL
-	 AF2tlC/W1+SirJebUDClQvduOfzXTvRvPWY+4gWM=
+	b=B1Y4b0U+zvUr0yCwrzWcsAc3pODLyftx8iNzGjzE2GW4pXGjEX+jWxJum4vy3Pl1e
+	 BhjZmRrOI6Mwkz3+sMpBX+6S7r+keIc0vJOH8TYUIncyaa70aBQZuWw9H/zbRAYhz6
+	 wV2hVMjixyWciCPwObl5u6PAnFhkXEPeR1YKCxig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oder Chiou <oder_chiou@realtek.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 036/321] ASoC: rt5640: Fix IRQ not being free-ed for HDA jack detect mode
-Date: Wed,  4 Oct 2023 19:53:01 +0200
-Message-ID: <20231004175230.833010680@linuxfoundation.org>
+Subject: [PATCH 6.5 037/321] bpf: Fix a erroneous check after snprintf()
+Date: Wed,  4 Oct 2023 19:53:02 +0200
+Message-ID: <20231004175230.880663614@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,38 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 8c8bf3df6b7c0ed1c4dd373b23eb0ce13a63f452 ]
+[ Upstream commit a8f12572860ad8ba659d96eee9cf09e181f6ebcc ]
 
-Set "rt5640->irq_requested = true" after a successful request_irq()
-in rt5640_enable_hda_jack_detect(), so that rt5640_disable_jack_detect()
-properly frees the IRQ.
+snprintf() does not return negative error code on error, it returns the
+number of characters which *would* be generated for the given input.
 
-This fixes the IRQ not being freed on rmmod / driver unbind.
+Fix the error handling check.
 
-Fixes: 2b9c8d2b3c89 ("ASoC: rt5640: Add the HDA header support")
-Cc: Oder Chiou <oder_chiou@realtek.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230912113245.320159-6-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 57539b1c0ac2 ("bpf: Enable annotating trusted nested pointers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/393bdebc87b22563c08ace094defa7160eb7a6c0.1694190795.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5640.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/btf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index 7522a9803d098..a39d556ad1a10 100644
---- a/sound/soc/codecs/rt5640.c
-+++ b/sound/soc/codecs/rt5640.c
-@@ -2626,6 +2626,7 @@ static void rt5640_enable_hda_jack_detect(
- 		rt5640->jack = NULL;
- 		return;
- 	}
-+	rt5640->irq_requested = true;
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 4b38c97990872..197d8252ffc65 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -8498,7 +8498,7 @@ bool btf_nested_type_is_trusted(struct bpf_verifier_log *log,
+ 	tname = btf_name_by_offset(btf, walk_type->name_off);
  
- 	/* sync initial jack state */
- 	queue_delayed_work(system_long_wq, &rt5640->jack_work, 0);
+ 	ret = snprintf(safe_tname, sizeof(safe_tname), "%s%s", tname, suffix);
+-	if (ret < 0)
++	if (ret >= sizeof(safe_tname))
+ 		return false;
+ 
+ 	safe_id = btf_find_by_name_kind(btf, safe_tname, BTF_INFO_KIND(walk_type->info));
 -- 
 2.40.1
 
