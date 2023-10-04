@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E585A210F2
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E6210F2
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKbXxK4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65928C433C7;
-	Wed,  4 Oct 2023 18:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWKz3u8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A674C433CA;
+	Wed,  4 Oct 2023 18:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444340;
-	bh=LJYHAMppZzhhHLbVTcxQaPjF5kpUF47oaxD2UzUOFgo=;
+	s=korg; t=1696444343;
+	bh=kgJ/NTtmMdR3Obiyh/n2fZcVDI92mETIhbA+rKnGixQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKbXxK4T2BMCTriIlf/xWxbWYoE6r30wjXxv/ujt5kag37ec7dDXTtUDKaU/3svCd
-	 BMo1hoTYgwQz947/aB27IekpPAsmMjtWAqt9V/Ew4YkXwR5p3wBfLhHpYMikH30UNe
-	 mDjgoG0H0T92Lxw37wvcxaFznHaUOhaJ6DnmUgq0=
+	b=fWKz3u8llhHxhGwjPfbHG6Z4OsnBP06sqKsnaLWATYpK3TLuLoN5eCIc3b6T3JgBC
+	 ZRoFO85D2ULO2wsJnmIAYT690BrlhR4dgdzNSbaBAVxfxQp32PjUzXNKrgUH8+B1xl
+	 0QSRPNXaj7c1cuFNibLuN+8K14pS9dlMJHmziWhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukul Joshi <mukul.joshi@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Ricardo B. Marliere" <rbmarliere@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 187/321] drm/amdkfd: Update cache info reporting for GFX v9.4.3
-Date: Wed,  4 Oct 2023 19:55:32 +0200
-Message-ID: <20231004175237.906042472@linuxfoundation.org>
+Subject: [PATCH 6.5 178/321] selftests: fix dependency checker script
+Date: Wed,  4 Oct 2023 19:55:23 +0200
+Message-ID: <20231004175237.493121238@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,180 +42,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukul Joshi <mukul.joshi@amd.com>
+From: Ricardo B. Marliere <rbmarliere@gmail.com>
 
-[ Upstream commit 0752e66e91fa86fa5481b04b22053363833ffb85 ]
+[ Upstream commit 5f9dd2e896a91bfca90f8463eb6808c03d535d8a ]
 
-Update cache info reporting in sysfs to report the correct
-number of CUs and associated cache information based on
-different spatial partitioning modes.
+This patch fixes inconsistencies in the parsing rules of the levels 1
+and 2 of the kselftest_deps.sh.  It was added the levels 4 and 5 to
+account for a few edge cases that are present in some tests, also some
+minor identation styling have been fixed (s/    /\t/g).
 
-Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ricardo B. Marliere <rbmarliere@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.h     |  4 ++
- drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 82 +++++++++++++----------
- drivers/gpu/drm/amd/amdkfd/kfd_topology.h |  2 +-
- 3 files changed, 51 insertions(+), 37 deletions(-)
+ tools/testing/selftests/kselftest_deps.sh | 77 +++++++++++++++++++----
+ 1 file changed, 65 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-index fc719389b5d65..4684711aa695a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-@@ -79,6 +79,10 @@ struct crat_header {
- #define CRAT_SUBTYPE_IOLINK_AFFINITY		5
- #define CRAT_SUBTYPE_MAX			6
+diff --git a/tools/testing/selftests/kselftest_deps.sh b/tools/testing/selftests/kselftest_deps.sh
+index 4bc14d9e8ff1d..de59cc8f03c3f 100755
+--- a/tools/testing/selftests/kselftest_deps.sh
++++ b/tools/testing/selftests/kselftest_deps.sh
+@@ -46,11 +46,11 @@ fi
+ print_targets=0
  
-+/*
-+ * Do not change the value of CRAT_SIBLINGMAP_SIZE from 32
-+ * as it breaks the ABI.
-+ */
- #define CRAT_SIBLINGMAP_SIZE	32
+ while getopts "p" arg; do
+-    case $arg in
+-        p)
++	case $arg in
++		p)
+ 		print_targets=1
+ 	shift;;
+-    esac
++	esac
+ done
  
- /*
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-index ea67a353beb00..5582191022106 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-@@ -1650,14 +1650,17 @@ static int fill_in_l1_pcache(struct kfd_cache_properties **props_ext,
- static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
- 				struct kfd_gpu_cache_info *pcache_info,
- 				struct kfd_cu_info *cu_info,
--				int cache_type, unsigned int cu_processor_id)
-+				int cache_type, unsigned int cu_processor_id,
-+				struct kfd_node *knode)
+ if [ $# -eq 0 ]
+@@ -92,6 +92,10 @@ pass_cnt=0
+ # Get all TARGETS from selftests Makefile
+ targets=$(grep -E "^TARGETS +|^TARGETS =" Makefile | cut -d "=" -f2)
+ 
++# Initially, in LDLIBS related lines, the dep checker needs
++# to ignore lines containing the following strings:
++filter="\$(VAR_LDLIBS)\|pkg-config\|PKG_CONFIG\|IOURING_EXTRA_LIBS"
++
+ # Single test case
+ if [ $# -eq 2 ]
+ then
+@@ -100,6 +104,8 @@ then
+ 	l1_test $test
+ 	l2_test $test
+ 	l3_test $test
++	l4_test $test
++	l5_test $test
+ 
+ 	print_results $1 $2
+ 	exit $?
+@@ -113,7 +119,7 @@ fi
+ # Append space at the end of the list to append more tests.
+ 
+ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
+-		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
++		grep -v "$filter" | awk -F: '{print $1}' | uniq)
+ 
+ # Level 2: LDLIBS set dynamically.
+ #
+@@ -126,7 +132,7 @@ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
+ # Append space at the end of the list to append more tests.
+ 
+ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
+-		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
++		grep -v "$filter" | awk -F: '{print $1}' | uniq)
+ 
+ # Level 3
+ # memfd and others use pkg-config to find mount and fuse libs
+@@ -138,11 +144,32 @@ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
+ #	VAR_LDLIBS := $(shell pkg-config fuse --libs 2>/dev/null)
+ 
+ l3_tests=$(grep -r --include=Makefile "^VAR_LDLIBS" | \
+-		grep -v "pkg-config" | awk -F: '{print $1}')
++		grep -v "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
+ 
+-#echo $l1_tests
+-#echo $l2_1_tests
+-#echo $l3_tests
++# Level 4
++# some tests may fall back to default using `|| echo -l<libname>`
++# if pkg-config doesn't find the libs, instead of using VAR_LDLIBS
++# as per level 3 checks.
++# e.g:
++# netfilter/Makefile
++#	LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
++l4_tests=$(grep -r --include=Makefile "^LDLIBS" | \
++		grep "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
++
++# Level 5
++# some tests may use IOURING_EXTRA_LIBS to add extra libs to LDLIBS,
++# which in turn may be defined in a sub-Makefile
++# e.g.:
++# mm/Makefile
++#	$(OUTPUT)/gup_longterm: LDLIBS += $(IOURING_EXTRA_LIBS)
++l5_tests=$(grep -r --include=Makefile "LDLIBS +=.*\$(IOURING_EXTRA_LIBS)" | \
++	awk -F: '{print $1}' | uniq)
++
++#echo l1_tests $l1_tests
++#echo l2_tests $l2_tests
++#echo l3_tests $l3_tests
++#echo l4_tests $l4_tests
++#echo l5_tests $l5_tests
+ 
+ all_tests
+ print_results $1 $2
+@@ -164,24 +191,32 @@ all_tests()
+ 	for test in $l3_tests; do
+ 		l3_test $test
+ 	done
++
++	for test in $l4_tests; do
++		l4_test $test
++	done
++
++	for test in $l5_tests; do
++		l5_test $test
++	done
+ }
+ 
+ # Use same parsing used for l1_tests and pick libraries this time.
+ l1_test()
  {
- 	unsigned int cu_sibling_map_mask;
- 	int first_active_cu;
--	int i, j, k;
-+	int i, j, k, xcc, start, end;
- 	struct kfd_cache_properties *pcache = NULL;
+ 	test_libs=$(grep --include=Makefile "^LDLIBS" $test | \
+-			grep -v "VAR_LDLIBS" | \
++			grep -v "$filter" | \
+ 			sed -e 's/\:/ /' | \
+ 			sed -e 's/+/ /' | cut -d "=" -f 2)
  
--	cu_sibling_map_mask = cu_info->cu_bitmap[0][0][0];
-+	start = ffs(knode->xcc_mask) - 1;
-+	end = start + NUM_XCC(knode->xcc_mask);
-+	cu_sibling_map_mask = cu_info->cu_bitmap[start][0][0];
- 	cu_sibling_map_mask &=
- 		((1 << pcache_info[cache_type].num_cu_shared) - 1);
- 	first_active_cu = ffs(cu_sibling_map_mask);
-@@ -1692,16 +1695,18 @@ static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
- 		cu_sibling_map_mask = cu_sibling_map_mask >> (first_active_cu - 1);
- 		k = 0;
+ 	check_libs $test $test_libs
+ }
  
--		for (i = 0; i < cu_info->num_shader_engines; i++) {
--			for (j = 0; j < cu_info->num_shader_arrays_per_engine; j++) {
--				pcache->sibling_map[k] = (uint8_t)(cu_sibling_map_mask & 0xFF);
--				pcache->sibling_map[k+1] = (uint8_t)((cu_sibling_map_mask >> 8) & 0xFF);
--				pcache->sibling_map[k+2] = (uint8_t)((cu_sibling_map_mask >> 16) & 0xFF);
--				pcache->sibling_map[k+3] = (uint8_t)((cu_sibling_map_mask >> 24) & 0xFF);
--				k += 4;
--
--				cu_sibling_map_mask = cu_info->cu_bitmap[0][i % 4][j + i / 4];
--				cu_sibling_map_mask &= ((1 << pcache_info[cache_type].num_cu_shared) - 1);
-+		for (xcc = start; xcc < end; xcc++) {
-+			for (i = 0; i < cu_info->num_shader_engines; i++) {
-+				for (j = 0; j < cu_info->num_shader_arrays_per_engine; j++) {
-+					pcache->sibling_map[k] = (uint8_t)(cu_sibling_map_mask & 0xFF);
-+					pcache->sibling_map[k+1] = (uint8_t)((cu_sibling_map_mask >> 8) & 0xFF);
-+					pcache->sibling_map[k+2] = (uint8_t)((cu_sibling_map_mask >> 16) & 0xFF);
-+					pcache->sibling_map[k+3] = (uint8_t)((cu_sibling_map_mask >> 24) & 0xFF);
-+					k += 4;
-+
-+					cu_sibling_map_mask = cu_info->cu_bitmap[xcc][i % 4][j + i / 4];
-+					cu_sibling_map_mask &= ((1 << pcache_info[cache_type].num_cu_shared) - 1);
-+				}
- 			}
- 		}
- 		pcache->sibling_map_size = k;
-@@ -1719,7 +1724,7 @@ static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
- static void kfd_fill_cache_non_crat_info(struct kfd_topology_device *dev, struct kfd_node *kdev)
+-# Use same parsing used for l2__tests and pick libraries this time.
++# Use same parsing used for l2_tests and pick libraries this time.
+ l2_test()
  {
- 	struct kfd_gpu_cache_info *pcache_info = NULL;
--	int i, j, k;
-+	int i, j, k, xcc, start, end;
- 	int ct = 0;
- 	unsigned int cu_processor_id;
- 	int ret;
-@@ -1753,37 +1758,42 @@ static void kfd_fill_cache_non_crat_info(struct kfd_topology_device *dev, struct
- 	 *			then it will consider only one CU from
- 	 *			the shared unit
- 	 */
-+	start = ffs(kdev->xcc_mask) - 1;
-+	end = start + NUM_XCC(kdev->xcc_mask);
-+
- 	for (ct = 0; ct < num_of_cache_types; ct++) {
- 		cu_processor_id = gpu_processor_id;
- 		if (pcache_info[ct].cache_level == 1) {
--			for (i = 0; i < pcu_info->num_shader_engines; i++) {
--				for (j = 0; j < pcu_info->num_shader_arrays_per_engine; j++) {
--					for (k = 0; k < pcu_info->num_cu_per_sh; k += pcache_info[ct].num_cu_shared) {
--
--						ret = fill_in_l1_pcache(&props_ext, pcache_info, pcu_info,
--									pcu_info->cu_bitmap[0][i % 4][j + i / 4], ct,
--									cu_processor_id, k);
--
--						if (ret < 0)
--							break;
--
--						if (!ret) {
--							num_of_entries++;
--							list_add_tail(&props_ext->list, &dev->cache_props);
-+			for (xcc = start; xcc < end; xcc++) {
-+				for (i = 0; i < pcu_info->num_shader_engines; i++) {
-+					for (j = 0; j < pcu_info->num_shader_arrays_per_engine; j++) {
-+						for (k = 0; k < pcu_info->num_cu_per_sh; k += pcache_info[ct].num_cu_shared) {
-+
-+							ret = fill_in_l1_pcache(&props_ext, pcache_info, pcu_info,
-+										pcu_info->cu_bitmap[xcc][i % 4][j + i / 4], ct,
-+										cu_processor_id, k);
-+
-+							if (ret < 0)
-+								break;
-+
-+							if (!ret) {
-+								num_of_entries++;
-+								list_add_tail(&props_ext->list, &dev->cache_props);
-+							}
-+
-+							/* Move to next CU block */
-+							num_cu_shared = ((k + pcache_info[ct].num_cu_shared) <=
-+								pcu_info->num_cu_per_sh) ?
-+								pcache_info[ct].num_cu_shared :
-+								(pcu_info->num_cu_per_sh - k);
-+							cu_processor_id += num_cu_shared;
- 						}
--
--						/* Move to next CU block */
--						num_cu_shared = ((k + pcache_info[ct].num_cu_shared) <=
--							pcu_info->num_cu_per_sh) ?
--							pcache_info[ct].num_cu_shared :
--							(pcu_info->num_cu_per_sh - k);
--						cu_processor_id += num_cu_shared;
- 					}
- 				}
- 			}
- 		} else {
- 			ret = fill_in_l2_l3_pcache(&props_ext, pcache_info,
--								pcu_info, ct, cu_processor_id);
-+					pcu_info, ct, cu_processor_id, kdev);
+ 	test_libs=$(grep --include=Makefile ": LDLIBS" $test | \
+-			grep -v "VAR_LDLIBS" | \
++			grep -v "$filter" | \
+ 			sed -e 's/\:/ /' | sed -e 's/+/ /' | \
+ 			cut -d "=" -f 2)
  
- 			if (ret < 0)
- 				break;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-index cba2cd5ed9d19..46927263e014d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-@@ -86,7 +86,7 @@ struct kfd_mem_properties {
- 	struct attribute	attr;
- };
+@@ -197,6 +232,24 @@ l3_test()
+ 	check_libs $test $test_libs
+ }
  
--#define CACHE_SIBLINGMAP_SIZE 64
-+#define CACHE_SIBLINGMAP_SIZE 128
++l4_test()
++{
++	test_libs=$(grep --include=Makefile "^VAR_LDLIBS\|^LDLIBS" $test | \
++			grep "\(pkg-config\|PKG_CONFIG\).*|| echo " | \
++			sed -e 's/.*|| echo //' | sed -e 's/)$//')
++
++	check_libs $test $test_libs
++}
++
++l5_test()
++{
++	tests=$(find $(dirname "$test") -type f -name "*.mk")
++	test_libs=$(grep "^IOURING_EXTRA_LIBS +\?=" $tests | \
++			cut -d "=" -f 2)
++
++	check_libs $test $test_libs
++}
++
+ check_libs()
+ {
  
- struct kfd_cache_properties {
- 	struct list_head	list;
 -- 
 2.40.1
 
