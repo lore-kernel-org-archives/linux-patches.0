@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADACC1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D281D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+nIzeF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD5EC433CA;
-	Wed,  4 Oct 2023 18:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r59cLzvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B07C433C7;
+	Wed,  4 Oct 2023 18:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443820;
-	bh=M5k51TsGe5OcyO3CZ8ssH+vwVxFKVhGsgSznGlIdQlc=;
+	s=korg; t=1696443823;
+	bh=wAkFdlRAphs7S/2vUT1E33CL0mfjbhw/7x6v+MgaN44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+nIzeF0cRVl1vhNwyTmAHoyAgjTlxnVQhCoRqxKVi8DeifepD/qiEaAD/N/DVcZp
-	 ayisBrxpJvLnE5PlsFytsEETJv+AXj2sKYANcUyYLRnsa6+j4T7rQlc/7J0FcY2uLe
-	 8e3p6UWCk5PLJX98fUKU8i1v6lvH14ZsQRR73CeQ=
+	b=r59cLzvpjXeab816NvrDS/K1aCCXXmVKqwCgrpUgzqYQKKXp1u8Hi2rxf+PDPgYp2
+	 5b4Mfu2amX+tfV0Vfcw9oqsnY5tAaH5Qhw1RliKTY5dHgsnMKIxv3mqtyQUpZUUJZO
+	 hHVfYkpWdJNBRInBEjPcpZWCQr2n76mzk+W0nBig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sameer Pujar <spujar@nvidia.com>,
-	Oder Chiou <oder_chiou@realtek.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Senhong Liu <liusenhong2022@email.szu.edu.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 032/321] ASoC: rt5640: Fix sleep in atomic context
-Date: Wed,  4 Oct 2023 19:52:57 +0200
-Message-ID: <20231004175230.650636363@linuxfoundation.org>
+Subject: [PATCH 6.5 033/321] ASoC: rt5640: fix typos
+Date: Wed,  4 Oct 2023 19:52:58 +0200
+Message-ID: <20231004175230.698970303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,61 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Senhong Liu <liusenhong2022@email.szu.edu.cn>
 
-[ Upstream commit df7d595f6bd9dc96cc275cc4b0f313fcfa423c58 ]
+[ Upstream commit 8e6657159131f90b746572f6a5bd622b3ccac82d ]
 
-Following prints are observed while testing audio on Jetson AGX Orin which
-has onboard RT5640 audio codec:
+I noticed typos and i fixed them.
 
-  BUG: sleeping function called from invalid context at kernel/workqueue.c:3027
-  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
-  preempt_count: 10001, expected: 0
-  RCU nest depth: 0, expected: 0
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at kernel/irq/handle.c:159 __handle_irq_event_percpu+0x1e0/0x270
-  ---[ end trace ad1c64905aac14a6 ]-
-
-The IRQ handler rt5640_irq() runs in interrupt context and can sleep
-during cancel_delayed_work_sync().
-
-The only thing which rt5640_irq() does is cancel + (re-)queue
-the jack_work delayed_work. This can be done in a single non sleeping
-call by replacing queue_delayed_work() with mod_delayed_work(),
-avoiding the sleep in atomic context.
-
-Fixes: 051dade34695 ("ASoC: rt5640: Fix the wrong state of JD1 and JD2")
-Reported-by: Sameer Pujar <spujar@nvidia.com>
-Closes: https://lore.kernel.org/r/1688015537-31682-4-git-send-email-spujar@nvidia.com
-Cc: Oder Chiou <oder_chiou@realtek.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230912113245.320159-3-hdegoede@redhat.com
+Signed-off-by: Senhong Liu <liusenhong2022@email.szu.edu.cn>
+Link: https://lore.kernel.org/r/20230819133345.39961-1-liusenhong2022@email.szu.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 786120ebb649 ("ASoC: rt5640: Do not disable/enable IRQ twice on suspend/resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5640.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt5640.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index 7ec930fb9aab5..24c1ed1c40589 100644
+index 24c1ed1c40589..10086755ae82c 100644
 --- a/sound/soc/codecs/rt5640.c
 +++ b/sound/soc/codecs/rt5640.c
-@@ -2404,13 +2404,11 @@ static irqreturn_t rt5640_irq(int irq, void *data)
- 	struct rt5640_priv *rt5640 = data;
- 	int delay = 0;
- 
--	if (rt5640->jd_src == RT5640_JD_SRC_HDA_HEADER) {
--		cancel_delayed_work_sync(&rt5640->jack_work);
-+	if (rt5640->jd_src == RT5640_JD_SRC_HDA_HEADER)
- 		delay = 100;
--	}
- 
- 	if (rt5640->jack)
--		queue_delayed_work(system_long_wq, &rt5640->jack_work, delay);
-+		mod_delayed_work(system_long_wq, &rt5640->jack_work, delay);
- 
- 	return IRQ_HANDLED;
- }
+@@ -2568,7 +2568,7 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
+ 			  IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 			  "rt5640", rt5640);
+ 	if (ret) {
+-		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
++		dev_warn(component->dev, "Failed to request IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640_disable_jack_detect(component);
+ 		return;
+ 	}
+@@ -2622,7 +2622,7 @@ static void rt5640_enable_hda_jack_detect(
+ 	ret = request_irq(rt5640->irq, rt5640_irq,
+ 			  IRQF_TRIGGER_RISING | IRQF_ONESHOT, "rt5640", rt5640);
+ 	if (ret) {
+-		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
++		dev_warn(component->dev, "Failed to request IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640->irq = -ENXIO;
+ 		return;
+ 	}
 -- 
 2.40.1
 
