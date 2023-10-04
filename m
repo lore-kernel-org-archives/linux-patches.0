@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDA31D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0814C433C7;
-	Wed,  4 Oct 2023 18:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39551D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E1FC433C7;
+	Wed,  4 Oct 2023 18:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443068;
-	bh=W3d12rxD6c8kMEmCFLavjSHSa04vxB5av5mjQIW23jE=;
+	s=korg; t=1696443070;
+	bh=BNcmJAgUoit1EaKCjNDYLLtbBTuVh7XQTxPqvUEtDiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vX5HsQjojYweuqXteH+OLIsZl3MmEmOsHMjKiOwKpqc8lvTblnqzVw0seCdBxLcUB
-	 I9uM4v/01kCm7XFymFcrB5WtOdxj0mn0lXx45JNC/2q5iZZ3Y1Xa1YAjvEaAj+eTzs
-	 ui+sFmZTNgE8N5+uT9SGbHU+T/E7VeEyWHcqHuv8=
+	b=hfaUkUUleSlKuWGKB2/8fpQ1TgW1pT/B8tkdW/Y7eN0cP5LBmhvA8qeYe5DHKU6Ht
+	 EPljBI9JStrVKal1vexoDegX4BhcpgkRg4vK32xhO23iTcu2Qiic/sOkRg7E2fZCFP
+	 bvw6X8bacEydRNecWts/VmfupCEAl1vGFpL6AMI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/259] netfilter: nf_tables: remove busy mark and gc batch API
-Date: Wed,  4 Oct 2023 19:53:17 +0200
-Message-ID: <20231004175218.543227232@linuxfoundation.org>
+Subject: [PATCH 6.1 025/259] netfilter: nf_tables: dont fail inserts if duplicate has expired
+Date: Wed,  4 Oct 2023 19:53:18 +0200
+Message-ID: <20231004175218.590804458@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -39,219 +39,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-commit a2dd0233cbc4d8a0abb5f64487487ffc9265beb5 upstream.
+commit 7845914f45f066497ac75b30c50dbc735e84e884 upstream.
 
-Ditch it, it has been replace it by the GC transaction API and it has no
-clients anymore.
+nftables selftests fail:
+run-tests.sh testcases/sets/0044interval_overlap_0
+Expected: 0-2 . 0-3, got:
+W: [FAILED]     ./testcases/sets/0044interval_overlap_0: got 1
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Insertion must ignore duplicate but expired entries.
+
+Moreover, there is a strange asymmetry in nft_pipapo_activate:
+
+It refetches the current element, whereas the other ->activate callbacks
+(bitmap, hash, rhash, rbtree) use elem->priv.
+Same for .remove: other set implementations take elem->priv,
+nft_pipapo_remove fetches elem->priv, then does a relookup,
+remove this.
+
+I suspect this was the reason for the change that prompted the
+removal of the expired check in pipapo_get() in the first place,
+but skipping exired elements there makes no sense to me, this helper
+is used for normal get requests, insertions (duplicate check)
+and deactivate callback.
+
+In first two cases expired elements must be skipped.
+
+For ->deactivate(), this gets called for DELSETELEM, so it
+seems to me that expired elements should be skipped as well, i.e.
+delete request should fail with -ENOENT error.
+
+Fixes: 24138933b97b ("netfilter: nf_tables: don't skip expired elements during walk")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 98 +------------------------------
- net/netfilter/nf_tables_api.c     | 48 +--------------
- 2 files changed, 4 insertions(+), 142 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 3b76370683c82..2d501dd901521 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -594,7 +594,6 @@ struct nft_set *nft_set_lookup_global(const struct net *net,
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index a307a227d28db..58bd514260b90 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -566,6 +566,8 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ 			goto out;
  
- struct nft_set_ext *nft_set_catchall_lookup(const struct net *net,
- 					    const struct nft_set *set);
--void *nft_set_catchall_gc(const struct nft_set *set);
- 
- static inline unsigned long nft_set_gc_interval(const struct nft_set *set)
+ 		if (last) {
++			if (nft_set_elem_expired(&f->mt[b].e->ext))
++				goto next_match;
+ 			if ((genmask &&
+ 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
+ 				goto next_match;
+@@ -600,17 +602,8 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
+ 			    const struct nft_set_elem *elem, unsigned int flags)
  {
-@@ -811,62 +810,6 @@ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
- void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
- 				const struct nft_set *set, void *elem);
+-	struct nft_pipapo_elem *ret;
+-
+-	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
++	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
+ 			 nft_genmask_cur(net));
+-	if (IS_ERR(ret))
+-		return ret;
+-
+-	if (nft_set_elem_expired(&ret->ext))
+-		return ERR_PTR(-ENOENT);
+-
+-	return ret;
+ }
  
--/**
-- *	struct nft_set_gc_batch_head - nf_tables set garbage collection batch
-- *
-- *	@rcu: rcu head
-- *	@set: set the elements belong to
-- *	@cnt: count of elements
-- */
--struct nft_set_gc_batch_head {
--	struct rcu_head			rcu;
--	const struct nft_set		*set;
--	unsigned int			cnt;
--};
--
--#define NFT_SET_GC_BATCH_SIZE	((PAGE_SIZE -				  \
--				  sizeof(struct nft_set_gc_batch_head)) / \
--				 sizeof(void *))
--
--/**
-- *	struct nft_set_gc_batch - nf_tables set garbage collection batch
-- *
-- * 	@head: GC batch head
-- * 	@elems: garbage collection elements
-- */
--struct nft_set_gc_batch {
--	struct nft_set_gc_batch_head	head;
--	void				*elems[NFT_SET_GC_BATCH_SIZE];
--};
--
--struct nft_set_gc_batch *nft_set_gc_batch_alloc(const struct nft_set *set,
--						gfp_t gfp);
--void nft_set_gc_batch_release(struct rcu_head *rcu);
--
--static inline void nft_set_gc_batch_complete(struct nft_set_gc_batch *gcb)
--{
--	if (gcb != NULL)
--		call_rcu(&gcb->head.rcu, nft_set_gc_batch_release);
--}
--
--static inline struct nft_set_gc_batch *
--nft_set_gc_batch_check(const struct nft_set *set, struct nft_set_gc_batch *gcb,
--		       gfp_t gfp)
--{
--	if (gcb != NULL) {
--		if (gcb->head.cnt + 1 < ARRAY_SIZE(gcb->elems))
--			return gcb;
--		nft_set_gc_batch_complete(gcb);
--	}
--	return nft_set_gc_batch_alloc(set, gfp);
--}
--
--static inline void nft_set_gc_batch_add(struct nft_set_gc_batch *gcb,
--					void *elem)
--{
--	gcb->elems[gcb->head.cnt++] = elem;
--}
--
- struct nft_expr_ops;
  /**
-  *	struct nft_expr_type - nf_tables expression type
-@@ -1545,47 +1488,12 @@ static inline void nft_set_elem_change_active(const struct net *net,
+@@ -1751,11 +1744,7 @@ static void nft_pipapo_activate(const struct net *net,
+ 				const struct nft_set *set,
+ 				const struct nft_set_elem *elem)
+ {
+-	struct nft_pipapo_elem *e;
+-
+-	e = pipapo_get(net, set, (const u8 *)elem->key.val.data, 0);
+-	if (IS_ERR(e))
+-		return;
++	struct nft_pipapo_elem *e = elem->priv;
  
- #endif /* IS_ENABLED(CONFIG_NF_TABLES) */
- 
--/*
-- * We use a free bit in the genmask field to indicate the element
-- * is busy, meaning it is currently being processed either by
-- * the netlink API or GC.
-- *
-- * Even though the genmask is only a single byte wide, this works
-- * because the extension structure if fully constant once initialized,
-- * so there are no non-atomic write accesses unless it is already
-- * marked busy.
-- */
--#define NFT_SET_ELEM_BUSY_MASK	(1 << 2)
--
--#if defined(__LITTLE_ENDIAN_BITFIELD)
--#define NFT_SET_ELEM_BUSY_BIT	2
--#elif defined(__BIG_ENDIAN_BITFIELD)
--#define NFT_SET_ELEM_BUSY_BIT	(BITS_PER_LONG - BITS_PER_BYTE + 2)
--#else
--#error
--#endif
--
--static inline int nft_set_elem_mark_busy(struct nft_set_ext *ext)
--{
--	unsigned long *word = (unsigned long *)ext;
--
--	BUILD_BUG_ON(offsetof(struct nft_set_ext, genmask) != 0);
--	return test_and_set_bit(NFT_SET_ELEM_BUSY_BIT, word);
--}
--
--static inline void nft_set_elem_clear_busy(struct nft_set_ext *ext)
--{
--	unsigned long *word = (unsigned long *)ext;
--
--	clear_bit(NFT_SET_ELEM_BUSY_BIT, word);
--}
--
--#define NFT_SET_ELEM_DEAD_MASK	(1 << 3)
-+#define NFT_SET_ELEM_DEAD_MASK	(1 << 2)
- 
- #if defined(__LITTLE_ENDIAN_BITFIELD)
--#define NFT_SET_ELEM_DEAD_BIT	3
-+#define NFT_SET_ELEM_DEAD_BIT	2
- #elif defined(__BIG_ENDIAN_BITFIELD)
--#define NFT_SET_ELEM_DEAD_BIT	(BITS_PER_LONG - BITS_PER_BYTE + 3)
-+#define NFT_SET_ELEM_DEAD_BIT	(BITS_PER_LONG - BITS_PER_BYTE + 2)
- #else
- #error
- #endif
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e179d1132f2fb..a38d87256b8fb 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6069,29 +6069,6 @@ struct nft_set_ext *nft_set_catchall_lookup(const struct net *net,
+ 	nft_set_elem_change_active(net, set, &e->ext);
  }
- EXPORT_SYMBOL_GPL(nft_set_catchall_lookup);
+@@ -1969,10 +1958,6 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
  
--void *nft_set_catchall_gc(const struct nft_set *set)
--{
--	struct nft_set_elem_catchall *catchall, *next;
--	struct nft_set_ext *ext;
--	void *elem = NULL;
--
--	list_for_each_entry_safe(catchall, next, &set->catchall_list, list) {
--		ext = nft_set_elem_ext(set, catchall->elem);
--
--		if (!nft_set_elem_expired(ext) ||
--		    nft_set_elem_mark_busy(ext))
--			continue;
--
--		elem = catchall->elem;
--		list_del_rcu(&catchall->list);
--		kfree_rcu(catchall, rcu);
--		break;
--	}
--
--	return elem;
--}
--EXPORT_SYMBOL_GPL(nft_set_catchall_gc);
--
- static int nft_setelem_catchall_insert(const struct net *net,
- 				       struct nft_set *set,
- 				       const struct nft_set_elem *elem,
-@@ -6562,7 +6539,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		goto err_elem_free;
- 	}
+ 	data = (const u8 *)nft_set_ext_key(&e->ext);
  
--	ext->genmask = nft_genmask_cur(ctx->net) | NFT_SET_ELEM_BUSY_MASK;
-+	ext->genmask = nft_genmask_cur(ctx->net);
- 
- 	err = nft_setelem_insert(ctx->net, set, &elem, &ext2, flags);
- 	if (err) {
-@@ -6949,29 +6926,6 @@ static int nf_tables_delsetelem(struct sk_buff *skb,
- 	return err;
- }
- 
--void nft_set_gc_batch_release(struct rcu_head *rcu)
--{
--	struct nft_set_gc_batch *gcb;
--	unsigned int i;
+-	e = pipapo_get(net, set, data, 0);
+-	if (IS_ERR(e))
+-		return;
 -
--	gcb = container_of(rcu, struct nft_set_gc_batch, head.rcu);
--	for (i = 0; i < gcb->head.cnt; i++)
--		nft_set_elem_destroy(gcb->head.set, gcb->elems[i], true);
--	kfree(gcb);
--}
--
--struct nft_set_gc_batch *nft_set_gc_batch_alloc(const struct nft_set *set,
--						gfp_t gfp)
--{
--	struct nft_set_gc_batch *gcb;
--
--	gcb = kzalloc(sizeof(*gcb), gfp);
--	if (gcb == NULL)
--		return gcb;
--	gcb->head.set = set;
--	return gcb;
--}
--
- /*
-  * Stateful objects
-  */
+ 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
+ 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
+ 		const u8 *match_start, *match_end;
 -- 
 2.40.1
 
