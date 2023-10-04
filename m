@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C3D1B29D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AE81D6BA
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yw1vDTeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFEAC433C9;
-	Wed,  4 Oct 2023 18:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOkz73cx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97466C433C9;
+	Wed,  4 Oct 2023 18:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444236;
-	bh=Fv3DodC9OEDU9AdXPJaSOnhRLShBb1oBzc3Y4u1VrBY=;
+	s=korg; t=1696444239;
+	bh=uTI89RvTb44+XuGm2pkIGJG7TBEfIWUo/gRlKcEIZOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yw1vDTeu/0kjER+xtzYpO+PiBjPw7E3VqaYgBOL9RsE9GHfW1K3bmhZxB62iHUm6s
-	 AvmPBocXcACkhgODGY4LVL3+FccqEcWoOWJS+PNZAg3ek2f9oS2+S7c9P9Ca/Pa5rG
-	 b0axdKqoZ01F2/i0TZpMm7JuOxhZQ6ynAcAuLvx0=
+	b=uOkz73cxBse4aHHxR0F/p3Ppn0Smy4E3km5UgnSSfBHHs38q6ZEVKoiDkKavGukdp
+	 VEU8+HvJCTF3qMXqavC1mOma8N+48IO1mGNuI+hWrcm/IGR4o2aW7yAh1E0VMiVXae
+	 RQoHuCYgLRqvHy4n2AJRqMsSrg8q6TSYH3uGWzuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Joao Alves <joao.alves@arm.com>,
+	Olivier Deprez <olivier.deprez@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 177/321] btrfs: assert delayed node locked when removing delayed item
-Date: Wed,  4 Oct 2023 19:55:22 +0200
-Message-ID: <20231004175237.445745432@linuxfoundation.org>
+Subject: [PATCH 6.5 151/321] firmware: arm_ffa: Dont set the memory region attributes for MEM_LEND
+Date: Wed,  4 Oct 2023 19:54:56 +0200
+Message-ID: <20231004175236.253605204@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,70 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit a57c2d4e46f519b24558ae0752c17eec416ac72a ]
+[ Upstream commit 9dda1178479aa0a73fe0eaabfe2d9a1c603cfeed ]
 
-When removing a delayed item, or releasing which will remove it as well,
-we will modify one of the delayed node's rbtrees and item counter if the
-delayed item is in one of the rbtrees. This require having the delayed
-node's mutex locked, otherwise we will race with other tasks modifying
-the rbtrees and the counter.
+As per the FF-A specification: section "Usage of other memory region
+attributes", in a transaction to donate memory or lend memory to a single
+borrower, if the receiver is a PE or Proxy endpoint, the owner must not
+specify the attributes and the relayer will return INVALID_PARAMETERS
+if the attributes are set.
 
-This is motivated by a previous version of another patch actually calling
-btrfs_release_delayed_item() after unlocking the delayed node's mutex and
-against a delayed item that is in a rbtree.
+Let us not set the memory region attributes for MEM_LEND.
 
-So assert at __btrfs_remove_delayed_item() that the delayed node's mutex
-is locked.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 82a8daaecfd9 ("firmware: arm_ffa: Add support for MEM_LEND")
+Reported-by: Joao Alves <joao.alves@arm.com>
+Reported-by: Olivier Deprez <olivier.deprez@arm.com>
+Link: https://lore.kernel.org/r/20230919-ffa_v1-1_notif-v2-13-6f3a3ca3923c@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-inode.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
-index b5f684cb4e749..142e0a0f6a9fe 100644
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -412,6 +412,7 @@ static void finish_one_item(struct btrfs_delayed_root *delayed_root)
- 
- static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
- {
-+	struct btrfs_delayed_node *delayed_node = delayed_item->delayed_node;
- 	struct rb_root_cached *root;
- 	struct btrfs_delayed_root *delayed_root;
- 
-@@ -419,18 +420,21 @@ static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
- 	if (RB_EMPTY_NODE(&delayed_item->rb_node))
- 		return;
- 
--	delayed_root = delayed_item->delayed_node->root->fs_info->delayed_root;
-+	/* If it's in a rbtree, then we need to have delayed node locked. */
-+	lockdep_assert_held(&delayed_node->mutex);
-+
-+	delayed_root = delayed_node->root->fs_info->delayed_root;
- 
- 	BUG_ON(!delayed_root);
- 
- 	if (delayed_item->type == BTRFS_DELAYED_INSERTION_ITEM)
--		root = &delayed_item->delayed_node->ins_root;
-+		root = &delayed_node->ins_root;
- 	else
--		root = &delayed_item->delayed_node->del_root;
-+		root = &delayed_node->del_root;
- 
- 	rb_erase_cached(&delayed_item->rb_node, root);
- 	RB_CLEAR_NODE(&delayed_item->rb_node);
--	delayed_item->delayed_node->count--;
-+	delayed_node->count--;
- 
- 	finish_one_item(delayed_root);
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 2109cd178ff70..121f4fc903cd5 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -397,6 +397,19 @@ static u32 ffa_get_num_pages_sg(struct scatterlist *sg)
+ 	return num_pages;
  }
+ 
++static u8 ffa_memory_attributes_get(u32 func_id)
++{
++	/*
++	 * For the memory lend or donate operation, if the receiver is a PE or
++	 * a proxy endpoint, the owner/sender must not specify the attributes
++	 */
++	if (func_id == FFA_FN_NATIVE(MEM_LEND) ||
++	    func_id == FFA_MEM_LEND)
++		return 0;
++
++	return FFA_MEM_NORMAL | FFA_MEM_WRITE_BACK | FFA_MEM_INNER_SHAREABLE;
++}
++
+ static int
+ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 		       struct ffa_mem_ops_args *args)
+@@ -413,8 +426,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 	mem_region->tag = args->tag;
+ 	mem_region->flags = args->flags;
+ 	mem_region->sender_id = drv_info->vm_id;
+-	mem_region->attributes = FFA_MEM_NORMAL | FFA_MEM_WRITE_BACK |
+-				 FFA_MEM_INNER_SHAREABLE;
++	mem_region->attributes = ffa_memory_attributes_get(func_id);
+ 	ep_mem_access = &mem_region->ep_mem_access[0];
+ 
+ 	for (idx = 0; idx < args->nattrs; idx++, ep_mem_access++) {
 -- 
 2.40.1
 
