@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE721D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D677FC433CA;
-	Wed,  4 Oct 2023 18:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2471D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A83C433C8;
+	Wed,  4 Oct 2023 18:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443037;
-	bh=vxSk/3LlMePbksZ50w1RdAKtzdU8M11F5nrBLfyQnAc=;
+	s=korg; t=1696443040;
+	bh=AU3YEf5FAn9ClojwdDTWH11yMdRnUZ+Qs0BFJW2AwIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GcdYHbJnIHih/vJ6Ixl2mCxdoC+0A8N6cl+1GQHSMFydms1BCbHMQGl38ZZUUx44Y
-	 h9EbWhQGHfQNmn/t2PRcssLUM8uhx8AUzGSMkdyXGEAUBrj9YkhuTTwvT51gZHPzuq
-	 IZY831QVY234IsopvxhS8MIa88dlp/8HP3jL/0Dg=
+	b=GxvvvgLziexbmRehn4gYGdeOfjYm19uW1z9rGduzm7xKRTsJ+lWHdP5zSgZ5K+pXO
+	 SQIfgMGDKOhNwiZ1kRZW8iLl6Imnc7dwrdDYlSG39cgPKJ08AFWlJn6BfvMhn8vsjE
+	 5pHUYPTMOeGsxVf3Y76t6q/LtA+NgyLrwt0IH4VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/259] dm: fix a race condition in retrieve_deps
-Date: Wed,  4 Oct 2023 19:53:07 +0200
-Message-ID: <20231004175218.082931098@linuxfoundation.org>
+Subject: [PATCH 6.1 015/259] btrfs: improve error message after failure to add delayed dir index item
+Date: Wed,  4 Oct 2023 19:53:08 +0200
+Message-ID: <20231004175218.123414102@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,169 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit f6007dce0cd35d634d9be91ef3515a6385dcee16 ]
+[ Upstream commit 91bfe3104b8db0310f76f2dcb6aacef24c889366 ]
 
-There's a race condition in the multipath target when retrieve_deps
-races with multipath_message calling dm_get_device and dm_put_device.
-retrieve_deps walks the list of open devices without holding any lock
-but multipath may add or remove devices to the list while it is
-running. The end result may be memory corruption or use-after-free
-memory access.
+If we fail to add a delayed dir index item because there's already another
+item with the same index number, we print an error message (and then BUG).
+However that message isn't very helpful to debug anything because we don't
+know what's the index number and what are the values of index counters in
+the inode and its delayed inode (index_cnt fields of struct btrfs_inode
+and struct btrfs_delayed_node).
 
-See this description of a UAF with multipath_message():
-https://listman.redhat.com/archives/dm-devel/2022-October/052373.html
+So update the error message to include the index number and counters.
 
-Fix this bug by introducing a new rw semaphore "devices_lock". We grab
-devices_lock for read in retrieve_deps and we grab it for write in
-dm_get_device and dm_put_device.
+We actually had a recent case where this issue was hit by a syzbot report
+(see the link below).
 
-Reported-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/linux-btrfs/00000000000036e1290603e097e0@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 2c58c3931ede ("btrfs: remove BUG() after failure to insert delayed dir index item")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-core.h  |  1 +
- drivers/md/dm-ioctl.c |  7 ++++++-
- drivers/md/dm-table.c | 32 ++++++++++++++++++++++++--------
- 3 files changed, 31 insertions(+), 9 deletions(-)
+ fs/btrfs/delayed-inode.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/dm-core.h b/drivers/md/dm-core.h
-index 28c641352de9b..71dcd8fd4050a 100644
---- a/drivers/md/dm-core.h
-+++ b/drivers/md/dm-core.h
-@@ -214,6 +214,7 @@ struct dm_table {
- 
- 	/* a list of devices used by this table */
- 	struct list_head devices;
-+	struct rw_semaphore devices_lock;
- 
- 	/* events get handed up using this callback */
- 	void (*event_fn)(void *);
-diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
-index 2afd2d2a0f407..206e6ce554dc7 100644
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1566,6 +1566,8 @@ static void retrieve_deps(struct dm_table *table,
- 	struct dm_dev_internal *dd;
- 	struct dm_target_deps *deps;
- 
-+	down_read(&table->devices_lock);
-+
- 	deps = get_result_buffer(param, param_size, &len);
- 
- 	/*
-@@ -1580,7 +1582,7 @@ static void retrieve_deps(struct dm_table *table,
- 	needed = struct_size(deps, dev, count);
- 	if (len < needed) {
- 		param->flags |= DM_BUFFER_FULL_FLAG;
--		return;
-+		goto out;
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index d2cbb7733c7d6..34e843460e4db 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1506,9 +1506,10 @@ int btrfs_insert_delayed_dir_index(struct btrfs_trans_handle *trans,
+ 	ret = __btrfs_add_delayed_item(delayed_node, delayed_item);
+ 	if (unlikely(ret)) {
+ 		btrfs_err(trans->fs_info,
+-			  "err add delayed dir index item(name: %.*s) into the insertion tree of the delayed node(root id: %llu, inode id: %llu, errno: %d)",
+-			  name_len, name, delayed_node->root->root_key.objectid,
+-			  delayed_node->inode_id, ret);
++"error adding delayed dir index item, name: %.*s, index: %llu, root: %llu, dir: %llu, dir->index_cnt: %llu, delayed_node->index_cnt: %llu, error: %d",
++			  name_len, name, index, btrfs_root_id(delayed_node->root),
++			  delayed_node->inode_id, dir->index_cnt,
++			  delayed_node->index_cnt, ret);
+ 		BUG();
  	}
- 
- 	/*
-@@ -1592,6 +1594,9 @@ static void retrieve_deps(struct dm_table *table,
- 		deps->dev[count++] = huge_encode_dev(dd->dm_dev->bdev->bd_dev);
- 
- 	param->data_size = param->data_start + needed;
-+
-+out:
-+	up_read(&table->devices_lock);
- }
- 
- static int table_deps(struct file *filp, struct dm_ioctl *param, size_t param_size)
-diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
-index 288f600ee56dc..dac6a5f25f2be 100644
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -134,6 +134,7 @@ int dm_table_create(struct dm_table **result, fmode_t mode,
- 		return -ENOMEM;
- 
- 	INIT_LIST_HEAD(&t->devices);
-+	init_rwsem(&t->devices_lock);
- 
- 	if (!num_targets)
- 		num_targets = KEYS_PER_NODE;
-@@ -362,15 +363,19 @@ int dm_get_device(struct dm_target *ti, const char *path, fmode_t mode,
- 			return -ENODEV;
- 	}
- 
-+	down_write(&t->devices_lock);
-+
- 	dd = find_device(&t->devices, dev);
- 	if (!dd) {
- 		dd = kmalloc(sizeof(*dd), GFP_KERNEL);
--		if (!dd)
--			return -ENOMEM;
-+		if (!dd) {
-+			r = -ENOMEM;
-+			goto unlock_ret_r;
-+		}
- 
- 		if ((r = dm_get_table_device(t->md, dev, mode, &dd->dm_dev))) {
- 			kfree(dd);
--			return r;
-+			goto unlock_ret_r;
- 		}
- 
- 		refcount_set(&dd->count, 1);
-@@ -380,12 +385,17 @@ int dm_get_device(struct dm_target *ti, const char *path, fmode_t mode,
- 	} else if (dd->dm_dev->mode != (mode | dd->dm_dev->mode)) {
- 		r = upgrade_mode(dd, mode, t->md);
- 		if (r)
--			return r;
-+			goto unlock_ret_r;
- 	}
- 	refcount_inc(&dd->count);
- out:
-+	up_write(&t->devices_lock);
- 	*result = dd->dm_dev;
- 	return 0;
-+
-+unlock_ret_r:
-+	up_write(&t->devices_lock);
-+	return r;
- }
- EXPORT_SYMBOL(dm_get_device);
- 
-@@ -421,9 +431,12 @@ static int dm_set_device_limits(struct dm_target *ti, struct dm_dev *dev,
- void dm_put_device(struct dm_target *ti, struct dm_dev *d)
- {
- 	int found = 0;
--	struct list_head *devices = &ti->table->devices;
-+	struct dm_table *t = ti->table;
-+	struct list_head *devices = &t->devices;
- 	struct dm_dev_internal *dd;
- 
-+	down_write(&t->devices_lock);
-+
- 	list_for_each_entry(dd, devices, list) {
- 		if (dd->dm_dev == d) {
- 			found = 1;
-@@ -432,14 +445,17 @@ void dm_put_device(struct dm_target *ti, struct dm_dev *d)
- 	}
- 	if (!found) {
- 		DMERR("%s: device %s not in table devices list",
--		      dm_device_name(ti->table->md), d->name);
--		return;
-+		      dm_device_name(t->md), d->name);
-+		goto unlock_ret;
- 	}
- 	if (refcount_dec_and_test(&dd->count)) {
--		dm_put_table_device(ti->table->md, d);
-+		dm_put_table_device(t->md, d);
- 		list_del(&dd->list);
- 		kfree(dd);
- 	}
-+
-+unlock_ret:
-+	up_write(&t->devices_lock);
- }
- EXPORT_SYMBOL(dm_put_device);
- 
+ 	mutex_unlock(&delayed_node->mutex);
 -- 
 2.40.1
 
