@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A56D1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F921D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AExg7wNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2DBC433C7;
-	Wed,  4 Oct 2023 18:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpkvEMx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681FBC433CA;
+	Wed,  4 Oct 2023 18:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443362;
-	bh=xeqXZBhkU0rOLYeiuXw2fLbVPGLK4GjG7t3cSL5AqTA=;
+	s=korg; t=1696443364;
+	bh=FiryUqGOkGl0lR4tdUeVjKMLlsvX42tVriU8K+rdXlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AExg7wNip12+CEIaCtftBQT2yjS5L+awJgL6Y4lzH5WXqcKwx+aoeCyX0Aft7gMca
-	 eV9CS+LOfRg+krj357KkpzbdToYwPvCUW7Nr4goJBrN8UyPtrTy0YXo7sfqBp1yGC7
-	 Qe0sdZDGd8njK05pLW9FC3cAZpih9FtYUaJ9xCOQ=
+	b=tpkvEMx4DygXRqcS8EcEtHp3k91Ul7VgIWMKIzRxscqUqtCoUSh/0P0YsEGVngQwt
+	 5c++/bQP0jmsPNlV8K5vv0k8mlxhXvvDemB8UE3dflbt/Rg7wdk4tnamjLYNFxgwNE
+	 ZtHcqfShLPFec4bvltT3ZbJWYGfuF9CHNEFzofC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Aleksey Nasibulin <alealexpro100@ya.ru>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/259] wifi: ath11k: fix tx status reporting in encap offload mode
-Date: Wed,  4 Oct 2023 19:54:34 +0200
-Message-ID: <20231004175221.987489708@linuxfoundation.org>
+Subject: [PATCH 6.1 092/259] ARM: dts: BCM5301X: Extend RAM to full 256MB for Linksys EA6500 V2
+Date: Wed,  4 Oct 2023 19:54:25 +0200
+Message-ID: <20231004175221.582176110@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -36,138 +38,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>
+From: Aleksey Nasibulin <alealexpro100@ya.ru>
 
-[ Upstream commit 6257c702264c44d74c6b71f0c62a7665da2dc356 ]
+[ Upstream commit 91994e59079dcb455783d3f9ea338eea6f671af3 ]
 
-ieee80211_tx_status() treats packets in 802.11 frame format and
-tries to extract sta address from packet header. When tx encap
-offload is enabled, this becomes invalid operation. Hence, switch
-to using ieee80211_tx_status_ext() after filling in station
-address for handling both 802.11 and 802.3 frames.
+Linksys ea6500-v2 have 256MB of ram. Currently we only use 128MB.
+Expand the definition to use all the available RAM.
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230403195738.25367-2-quic_pradeepc@quicinc.com
-Stable-dep-of: 29d15589f084 ("wifi: ath11k: Cleanup mac80211 references on failure during tx_complete")
+Fixes: 03e96644d7a8 ("ARM: dts: BCM5301X: Add basic DT for Linksys EA6500 V2")
+Signed-off-by: Aleksey Nasibulin <alealexpro100@ya.ru>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org
+Acked-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230712014017.28123-1-ansuelsmth@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp.h    |  4 +++
- drivers/net/wireless/ath/ath11k/dp_tx.c | 33 ++++++++++++++++++++++++-
- drivers/net/wireless/ath/ath11k/dp_tx.h |  1 +
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp.h b/drivers/net/wireless/ath/ath11k/dp.h
-index be9eafc872b3b..232fd2e638bf6 100644
---- a/drivers/net/wireless/ath/ath11k/dp.h
-+++ b/drivers/net/wireless/ath/ath11k/dp.h
-@@ -303,12 +303,16 @@ struct ath11k_dp {
+diff --git a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
+index f1412ba83defb..0454423fe166c 100644
+--- a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
++++ b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
+@@ -19,7 +19,8 @@
  
- #define HTT_TX_WBM_COMP_STATUS_OFFSET 8
+ 	memory@0 {
+ 		device_type = "memory";
+-		reg = <0x00000000 0x08000000>;
++		reg = <0x00000000 0x08000000>,
++		      <0x88000000 0x08000000>;
+ 	};
  
-+#define HTT_INVALID_PEER_ID	0xffff
-+
- /* HTT tx completion is overlaid in wbm_release_ring */
- #define HTT_TX_WBM_COMP_INFO0_STATUS		GENMASK(12, 9)
- #define HTT_TX_WBM_COMP_INFO0_REINJECT_REASON	GENMASK(16, 13)
- #define HTT_TX_WBM_COMP_INFO0_REINJECT_REASON	GENMASK(16, 13)
- 
- #define HTT_TX_WBM_COMP_INFO1_ACK_RSSI		GENMASK(31, 24)
-+#define HTT_TX_WBM_COMP_INFO2_SW_PEER_ID	GENMASK(15, 0)
-+#define HTT_TX_WBM_COMP_INFO2_VALID		BIT(21)
- 
- struct htt_tx_wbm_completion {
- 	u32 info0;
-diff --git a/drivers/net/wireless/ath/ath11k/dp_tx.c b/drivers/net/wireless/ath/ath11k/dp_tx.c
-index 8afbba2369354..08a28464eb7a9 100644
---- a/drivers/net/wireless/ath/ath11k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_tx.c
-@@ -316,10 +316,12 @@ ath11k_dp_tx_htt_tx_complete_buf(struct ath11k_base *ab,
- 				 struct dp_tx_ring *tx_ring,
- 				 struct ath11k_dp_htt_wbm_tx_status *ts)
- {
-+	struct ieee80211_tx_status status = { 0 };
- 	struct sk_buff *msdu;
- 	struct ieee80211_tx_info *info;
- 	struct ath11k_skb_cb *skb_cb;
- 	struct ath11k *ar;
-+	struct ath11k_peer *peer;
- 
- 	spin_lock(&tx_ring->tx_idr_lock);
- 	msdu = idr_remove(&tx_ring->txbuf_idr, ts->msdu_id);
-@@ -341,6 +343,11 @@ ath11k_dp_tx_htt_tx_complete_buf(struct ath11k_base *ab,
- 
- 	dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
- 
-+	if (!skb_cb->vif) {
-+		dev_kfree_skb_any(msdu);
-+		return;
-+	}
-+
- 	memset(&info->status, 0, sizeof(info->status));
- 
- 	if (ts->acked) {
-@@ -355,7 +362,23 @@ ath11k_dp_tx_htt_tx_complete_buf(struct ath11k_base *ab,
- 		}
- 	}
- 
--	ieee80211_tx_status(ar->hw, msdu);
-+	spin_lock_bh(&ab->base_lock);
-+	peer = ath11k_peer_find_by_id(ab, ts->peer_id);
-+	if (!peer || !peer->sta) {
-+		ath11k_dbg(ab, ATH11K_DBG_DATA,
-+			   "dp_tx: failed to find the peer with peer_id %d\n",
-+			    ts->peer_id);
-+		spin_unlock_bh(&ab->base_lock);
-+		dev_kfree_skb_any(msdu);
-+		return;
-+	}
-+	spin_unlock_bh(&ab->base_lock);
-+
-+	status.sta = peer->sta;
-+	status.info = info;
-+	status.skb = msdu;
-+
-+	ieee80211_tx_status_ext(ar->hw, &status);
- }
- 
- static void
-@@ -379,7 +402,15 @@ ath11k_dp_tx_process_htt_tx_complete(struct ath11k_base *ab,
- 		ts.msdu_id = msdu_id;
- 		ts.ack_rssi = FIELD_GET(HTT_TX_WBM_COMP_INFO1_ACK_RSSI,
- 					status_desc->info1);
-+
-+		if (FIELD_GET(HTT_TX_WBM_COMP_INFO2_VALID, status_desc->info2))
-+			ts.peer_id = FIELD_GET(HTT_TX_WBM_COMP_INFO2_SW_PEER_ID,
-+					       status_desc->info2);
-+		else
-+			ts.peer_id = HTT_INVALID_PEER_ID;
-+
- 		ath11k_dp_tx_htt_tx_complete_buf(ab, tx_ring, &ts);
-+
- 		break;
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_REINJ:
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_INSPECT:
-diff --git a/drivers/net/wireless/ath/ath11k/dp_tx.h b/drivers/net/wireless/ath/ath11k/dp_tx.h
-index e87d65bfbf06e..68a21ea9b9346 100644
---- a/drivers/net/wireless/ath/ath11k/dp_tx.h
-+++ b/drivers/net/wireless/ath/ath11k/dp_tx.h
-@@ -13,6 +13,7 @@ struct ath11k_dp_htt_wbm_tx_status {
- 	u32 msdu_id;
- 	bool acked;
- 	int ack_rssi;
-+	u16 peer_id;
- };
- 
- void ath11k_dp_tx_update_txcompl(struct ath11k *ar, struct hal_tx_status *ts);
+ 	gpio-keys {
 -- 
 2.40.1
 
