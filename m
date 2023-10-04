@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5311DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102FA1DA3D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B01DC433C7;
-	Wed,  4 Oct 2023 18:09:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38111C433C8;
+	Wed,  4 Oct 2023 18:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442941;
-	bh=1RliCn/3wdHUvLANhXsLyhWlHcTrcKAjfkDArJuK1Gc=;
+	s=korg; t=1696442944;
+	bh=j5VYygMeyjvVyTY86HZkv0UNYIce+DChBKL9eNtt11U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCI8rRBrpVYY8YXvmwij6NUs2OiS/p77KFXekFpvo3v3dJwdqpjjbwlL23zHvTqQZ
-	 49yOV3oU8DPzKlqOGczcDStCyYaosL7Olh0/8kZ6xUknBzjdlaYWhrC8jx0kTBQugJ
-	 gdg4DoTbJsJQ3O89WUIyDS4/jsHTYFfRc0r7fv3E=
+	b=xRaaDbP6Fr1QxbU+LeMp/9v1W3pZIKLssZf8Esu0ndMJ8SSkP55zY4SLVyKnZLFVP
+	 xRNd/cry0Vmo5/54diQItqwExvV8u2rtA72hndUW0q00rRS22N28wXH3uYAwlsIUUa
+	 wjOY2vI/nyMjQmDygKYaIV1pfxP/9xYpKckk4nDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 164/183] ALSA: hda: Disable power save for solving pop issue on Lenovo ThinkCentre M70q
-Date: Wed,  4 Oct 2023 19:56:35 +0200
-Message-ID: <20231004175210.894569696@linuxfoundation.org>
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 5.15 165/183] ata: libata-scsi: ignore reserved bits for REPORT SUPPORTED OPERATION CODES
+Date: Wed,  4 Oct 2023 19:56:36 +0200
+Message-ID: <20231004175210.938460726@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,31 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Niklas Cassel <niklas.cassel@wdc.com>
 
-commit 057a28ef93bdbe84326d34cdb5543afdaab49fe1 upstream.
+commit 3ef600923521616ebe192c893468ad0424de2afb upstream.
 
-Lenovo ThinkCentre M70q had boot up pop noise.
-Disable power save will solve pop issue.
+For REPORT SUPPORTED OPERATION CODES command, the service action field is
+defined as bits 0-4 in the second byte in the CDB. Bits 5-7 in the second
+byte are reserved.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/315900e2efef42fd9855eacfeb443abd@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Only look at the service action field in the second byte when determining
+if the MAINTENANCE IN opcode is a REPORT SUPPORTED OPERATION CODES command.
+
+This matches how we only look at the service action field in the second
+byte when determining if the SERVICE ACTION IN(16) opcode is a READ
+CAPACITY(16) command (reserved bits 5-7 in the second byte are ignored).
+
+Fixes: 7b2030942859 ("libata: Add support for SCT Write Same")
+Cc: stable@vger.kernel.org
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/libata-scsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2203,6 +2203,7 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x8086, 0x2068, "Intel NUC7i3BNB", 0),
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=198611 */
- 	SND_PCI_QUIRK(0x17aa, 0x2227, "Lenovo X1 Carbon 3rd Gen", 0),
-+	SND_PCI_QUIRK(0x17aa, 0x316e, "Lenovo ThinkCentre M70q", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1689623 */
- 	SND_PCI_QUIRK(0x17aa, 0x367b, "Lenovo IdeaCentre B550", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1572975 */
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4214,7 +4214,7 @@ void ata_scsi_simulate(struct ata_device
+ 		break;
+ 
+ 	case MAINTENANCE_IN:
+-		if (scsicmd[1] == MI_REPORT_SUPPORTED_OPERATION_CODES)
++		if ((scsicmd[1] & 0x1f) == MI_REPORT_SUPPORTED_OPERATION_CODES)
+ 			ata_scsi_rbuf_fill(&args, ata_scsiop_maint_in);
+ 		else
+ 			ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
 
 
