@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC0B1DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AA11DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AorJGrG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714D3C433C7;
-	Wed,  4 Oct 2023 18:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXf1V6t3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275C2C433C8;
+	Wed,  4 Oct 2023 18:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444148;
-	bh=NC6pol2o82ph7Q470HTYvitiyyj9G0750UQjKqcbogo=;
+	s=korg; t=1696444151;
+	bh=jyjnMfeb+L9MsdZoD6/YGI/mTQplUxCKJEMSNEc+wjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AorJGrG54dH2vdyPoVyuQ+FtdcF6et4FlOVJvwFTihXM89Lli5rWFQmJpopWutPU+
-	 k5/CapvlDdLyC5hTzU/lXTY9DWl0zHJZ5oGEt5kzTTsif8jrNXwoKMWilJzK4+tjUG
-	 A6UqmOAd2K6oTQr8fgx3FG2mh/DqF022rgk/CctM=
+	b=zXf1V6t3W3QSnAO+n+D5pWmTKc1JcpT8Z6pU0PZqWueK4REV/84BwRuSkFlwOfoGm
+	 Pt+G5x0SPqHqGDR3mSXlHV5Jui3jRS362v+XMKKCarzwjurX0loeSAMnC2vuLgdYX3
+	 stzljKF6V5cYpBKVzV5FOjRfxZrHC7R5L3z4zBjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 146/321] arm64: dts: imx8mp: Fix SDMA2/3 clocks
-Date: Wed,  4 Oct 2023 19:54:51 +0200
-Message-ID: <20231004175236.008367507@linuxfoundation.org>
+Subject: [PATCH 6.5 119/321] MIPS: Alchemy: only build mmc support helpers if au1xmmc is enabled
+Date: Wed,  4 Oct 2023 19:54:24 +0200
+Message-ID: <20231004175234.748484199@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,59 +44,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b739681b3f8b2a7a684a71ddd048b9b6b5400011 ]
+[ Upstream commit ef8f8f04a0b25e8f294b24350e8463a8d6a9ba0b ]
 
-Commit 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks
-from CCM node") removed the Audio clocks from the main clock node, because
-the intent is to force people to setup the audio PLL clocks per board
-instead of having a common set of rates, since not all boards may use
-the various audio PLL clocks in the same way.
+While commit d4a5c59a955b ("mmc: au1xmmc: force non-modular build and
+remove symbol_get usage") to be built in, it can still build a kernel
+without MMC support and thuse no mmc_detect_change symbol at all.
 
-Unfortunately, with this parenting removed, the SDMA2 and SDMA3
-clocks were slowed to 24MHz because the SDMA2/3 clocks are controlled
-via the audio_blk_ctrl which is clocked from IMX8MP_CLK_AUDIO_ROOT,
-and that clock is enabled by pgc_audio.
+Add ifdefs to build the mmc support code in the alchemy arch code
+conditional on mmc support.
 
-Per the TRM, "The SDMA2/3 target frequency is 400MHz IPG and 400MHz
-AHB, always 1:1 mode, to make sure there is enough throughput for all
-the audio use cases."
-
-Instead of cluttering the clock node, place the clock rate and parent
-information into the pgc_audio node.
-
-With the parenting and clock rates restored for  IMX8MP_CLK_AUDIO_AHB,
-and IMX8MP_CLK_AUDIO_AXI_SRC, it appears the SDMA2 and SDMA3 run at
-400MHz again.
-
-Fixes: 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks from CCM node")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: d4a5c59a955b ("mmc: au1xmmc: force non-modular build and remove symbol_get usage")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/mips/alchemy/devboards/db1000.c | 4 ++++
+ arch/mips/alchemy/devboards/db1200.c | 6 ++++++
+ arch/mips/alchemy/devboards/db1300.c | 4 ++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index cc406bb338feb..587265395a9b4 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -794,6 +794,12 @@
- 						reg = <IMX8MP_POWER_DOMAIN_AUDIOMIX>;
- 						clocks = <&clk IMX8MP_CLK_AUDIO_ROOT>,
- 							 <&clk IMX8MP_CLK_AUDIO_AXI>;
-+						assigned-clocks = <&clk IMX8MP_CLK_AUDIO_AHB>,
-+								  <&clk IMX8MP_CLK_AUDIO_AXI_SRC>;
-+						assigned-clock-parents =  <&clk IMX8MP_SYS_PLL1_800M>,
-+									  <&clk IMX8MP_SYS_PLL1_800M>;
-+						assigned-clock-rates = <400000000>,
-+								       <600000000>;
- 					};
+diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
+index 012da042d0a4f..7b9f91db227f2 100644
+--- a/arch/mips/alchemy/devboards/db1000.c
++++ b/arch/mips/alchemy/devboards/db1000.c
+@@ -164,6 +164,7 @@ static struct platform_device db1x00_audio_dev = {
  
- 					pgc_gpu2d: power-domain@6 {
+ /******************************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
+ {
+ 	mmc_detect_change(ptr, msecs_to_jiffies(500));
+@@ -369,6 +370,7 @@ static struct platform_device db1100_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1100_mmc1_res),
+ 	.resource	= au1100_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /******************************************************************************/
+ 
+@@ -440,8 +442,10 @@ static struct platform_device *db1x00_devs[] = {
+ 
+ static struct platform_device *db1100_devs[] = {
+ 	&au1100_lcd_device,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1100_mmc0_dev,
+ 	&db1100_mmc1_dev,
++#endif
+ };
+ 
+ int __init db1000_dev_setup(void)
+diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
+index 76080c71a2a7b..f521874ebb07b 100644
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -326,6 +326,7 @@ static struct platform_device db1200_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ /* SD carddetects:  they're supposed to be edge-triggered, but ack
+  * doesn't seem to work (CPLD Rev 2).  Instead, the screaming one
+  * is disabled and its counterpart enabled.  The 200ms timeout is
+@@ -584,6 +585,7 @@ static struct platform_device pb1200_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1200_mmc1_res),
+ 	.resource	= au1200_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -751,7 +753,9 @@ static struct platform_device db1200_audiodma_dev = {
+ static struct platform_device *db1200_devs[] __initdata = {
+ 	NULL,		/* PSC0, selected by S6.8 */
+ 	&db1200_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1200_mmc0_dev,
++#endif
+ 	&au1200_lcd_dev,
+ 	&db1200_eth_dev,
+ 	&db1200_nand_dev,
+@@ -762,7 +766,9 @@ static struct platform_device *db1200_devs[] __initdata = {
+ };
+ 
+ static struct platform_device *pb1200_devs[] __initdata = {
++#ifdef CONFIG_MMC_AU1X
+ 	&pb1200_mmc1_dev,
++#endif
+ };
+ 
+ /* Some peripheral base addresses differ on the PB1200 */
+diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
+index ff61901329c62..d377e043b49f8 100644
+--- a/arch/mips/alchemy/devboards/db1300.c
++++ b/arch/mips/alchemy/devboards/db1300.c
+@@ -450,6 +450,7 @@ static struct platform_device db1300_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
+ {
+ 	disable_irq_nosync(irq);
+@@ -632,6 +633,7 @@ static struct platform_device db1300_sd0_dev = {
+ 	.resource	= au1300_sd0_res,
+ 	.num_resources	= ARRAY_SIZE(au1300_sd0_res),
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -767,8 +769,10 @@ static struct platform_device *db1300_dev[] __initdata = {
+ 	&db1300_5waysw_dev,
+ 	&db1300_nand_dev,
+ 	&db1300_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1300_sd0_dev,
+ 	&db1300_sd1_dev,
++#endif
+ 	&db1300_lcd_dev,
+ 	&db1300_ac97_dev,
+ 	&db1300_i2s_dev,
 -- 
 2.40.1
 
