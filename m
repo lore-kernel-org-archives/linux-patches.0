@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63E81D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3674C433C8;
-	Wed,  4 Oct 2023 18:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F3D1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1D5C433C8;
+	Wed,  4 Oct 2023 18:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443222;
-	bh=heSel1K3MXLrWOifxDd12lcx6fbJdCUClwsOzOxJyqA=;
+	s=korg; t=1696443225;
+	bh=tntzU62UfUfFtl74txsYSdO0dodZJ/ZNSyzwtEHDPg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sBwck/njPfzF2It6MllMxRFuC3JF1441C5qBkVbk3LGZLji0PA/gVgLQCQS0Vydv
-	 XI906o7B9DfV97Wcw9uqBdHoGj3JQSn9DDeDfkFWKw2ZSx4PbP0e5l3yWdrhYFK3wt
-	 mZMRHbsvWmrzcNtlduZJQofb+z+xcyxcwOPjIo7o=
+	b=NTDv6/5LDVihnKXGRr8c2teMaYRBIoa/IZYikphVHREPz10XscuNuzGW4pc5Svw0U
+	 TZGvRavFpwPhpcr4wYOw8/ibHo9Sv37hKXhYwG96KuhV4j/cAPJYe57Twmuf9ZOdzr
+	 +RfwntCyegt3bJzY01Uo2uvHSZQC1OD4NZRr71Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/259] locking/seqlock: Do the lockdep annotation before locking in do_write_seqcount_begin_nested()
-Date: Wed,  4 Oct 2023 19:54:13 +0200
-Message-ID: <20231004175221.043937326@linuxfoundation.org>
+Subject: [PATCH 6.1 063/259] platform/x86: intel_scu_ipc: Check status after timeout in busy_loop()
+Date: Wed,  4 Oct 2023 19:53:56 +0200
+Message-ID: <20231004175220.312525930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -35,62 +39,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 41b43b6c6e30a832c790b010a06772e793bca193 ]
+[ Upstream commit e0b4ab3bb92bda8d12f55842614362989d5b2cb3 ]
 
-It was brought up by Tetsuo that the following sequence:
+It's possible for the polling loop in busy_loop() to get scheduled away
+for a long time.
 
-   write_seqlock_irqsave()
-   printk_deferred_enter()
+  status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+  <long time scheduled away>
+  if (!(status & IPC_STATUS_BUSY))
 
-could lead to a deadlock if the lockdep annotation within
-write_seqlock_irqsave() triggers.
+If this happens, then the status bit could change while the task is
+scheduled away and this function would never read the status again after
+timing out. Instead, the function will return -ETIMEDOUT when it's
+possible that scheduling didn't work out and the status bit was cleared.
+Bit polling code should always check the bit being polled one more time
+after the timeout in case this happens.
 
-The problem is that the sequence counter is incremented before the lockdep
-annotation is performed. The lockdep splat would then attempt to invoke
-printk() but the reader side, of the same seqcount, could have a
-tty_port::lock acquired waiting for the sequence number to become even again.
+Fix this by reading the status once more after the while loop breaks.
+The readl_poll_timeout() macro implements all of this, and it is
+shorter, so use that macro here to consolidate code and fix this.
 
-The other lockdep annotations come before the actual locking because "we
-want to see the locking error before it happens". There is no reason why
-seqcount should be different here.
+There were some concerns with using readl_poll_timeout() because it uses
+timekeeping, and timekeeping isn't running early on or during the late
+stages of system suspend or early stages of system resume, but an audit
+of the code concluded that this code isn't called during those times so
+it is safe to use the macro.
 
-Do the lockdep annotation first then perform the locking operation (the
-sequence increment).
-
-Fixes: 1ca7d67cf5d5a ("seqcount: Add lockdep functionality to seqcount/seqlock structures")
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230920104627._DTHgPyA@linutronix.de
-
-Closes: https://lore.kernel.org/20230621130641.-5iueY1I@linutronix.de
+Cc: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230913212723.3055315-2-swboyd@chromium.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index 3926e90279477..d778af83c8f36 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -512,8 +512,8 @@ do {									\
+diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+index e7a3e34028178..96675bea88b10 100644
+--- a/drivers/platform/x86/intel_scu_ipc.c
++++ b/drivers/platform/x86/intel_scu_ipc.c
+@@ -19,6 +19,7 @@
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
  
- static inline void do_write_seqcount_begin_nested(seqcount_t *s, int subclass)
+@@ -232,19 +233,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
+ /* Wait till scu status is busy */
+ static inline int busy_loop(struct intel_scu_ipc_dev *scu)
  {
--	do_raw_write_seqcount_begin(s);
- 	seqcount_acquire(&s->dep_map, subclass, 0, _RET_IP_);
-+	do_raw_write_seqcount_begin(s);
+-	unsigned long end = jiffies + IPC_TIMEOUT;
+-
+-	do {
+-		u32 status;
+-
+-		status = ipc_read_status(scu);
+-		if (!(status & IPC_STATUS_BUSY))
+-			return (status & IPC_STATUS_ERR) ? -EIO : 0;
++	u8 status;
++	int err;
+ 
+-		usleep_range(50, 100);
+-	} while (time_before(jiffies, end));
++	err = readx_poll_timeout(ipc_read_status, scu, status, !(status & IPC_STATUS_BUSY),
++				 100, jiffies_to_usecs(IPC_TIMEOUT));
++	if (err)
++		return err;
+ 
+-	return -ETIMEDOUT;
++	return (status & IPC_STATUS_ERR) ? -EIO : 0;
  }
  
- /**
+ /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
 -- 
 2.40.1
 
