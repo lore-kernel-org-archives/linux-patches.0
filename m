@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7A71D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27B9C433C8;
-	Wed,  4 Oct 2023 18:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B441D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82E2C433C7;
+	Wed,  4 Oct 2023 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443250;
-	bh=J2VKG8KDKIseZxHnxgPyzT+tv70JUlv1T8xtTi6Q4A8=;
+	s=korg; t=1696443253;
+	bh=JQN0ZMM7fJEBDs8zFvKhxOogVV9OW9IxjgV75q4nQNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tE+PRgUT8u7q0gUDI+y0CZHzLLM2dEOi7uZigq1tQvhLD+aPGld2bkjYsn3DUHcPm
-	 6CEdpBGsP9gTovF+dNptGJlIiXYoaffSNR2DDOU46agMZdx1PtShaejKl/pxExwCoH
-	 Jr1LyJ1Ls1rDZD5FzLqe+Gus9qIYmQHZYVMAmReU=
+	b=ENACl3opfnxo2L2ggT/AGXa3qFNLPedQ0Pjw4f1vaGnG3vA3G76Ge/tB3pTaAZo/H
+	 qpJpL7Kejl0QYM6uyO5zrmmgWZBVMGbdrOjq57K6MYVGWHhYHr79tt/JNHsT5HXIId
+	 h7H1ws2fxz4kHFdl4cE0lYRQZhzOgnioZBYvk17o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
+	Liang He <windhl@126.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/259] i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()
-Date: Wed,  4 Oct 2023 19:54:22 +0200
-Message-ID: <20231004175221.437049588@linuxfoundation.org>
+Subject: [PATCH 6.1 090/259] i2c: mux: gpio: Add missing fwnode_handle_put()
+Date: Wed,  4 Oct 2023 19:54:23 +0200
+Message-ID: <20231004175221.488627758@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,36 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoke Wang <xkernel.wang@foxmail.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 7c0195fa9a9e263df204963f88a22b21688ffb66 ]
+[ Upstream commit db6aee6083a56ac4a6cd1b08fff7938072bcd0a3 ]
 
-devm_kstrdup() returns pointer to allocated string on success,
-NULL on failure. So it is better to check the return value of it.
+In i2c_mux_gpio_probe_fw(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-Fixes: e35478eac030 ("i2c: mux: demux-pinctrl: run properly with multiple instances")
-Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
+Fixes: 98b2b712bc85 ("i2c: i2c-mux-gpio: Enable this driver in ACPI land")
+Signed-off-by: Liang He <windhl@126.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-demux-pinctrl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/muxes/i2c-mux-gpio.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/muxes/i2c-demux-pinctrl.c b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-index f7a7405d4350a..8e8688e8de0fb 100644
---- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-@@ -243,6 +243,10 @@ static int i2c_demux_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/i2c/muxes/i2c-mux-gpio.c b/drivers/i2c/muxes/i2c-mux-gpio.c
+index 73a23e117ebec..0930a51c8c7c0 100644
+--- a/drivers/i2c/muxes/i2c-mux-gpio.c
++++ b/drivers/i2c/muxes/i2c-mux-gpio.c
+@@ -105,8 +105,10 @@ static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
  
- 		props[i].name = devm_kstrdup(&pdev->dev, "status", GFP_KERNEL);
- 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
-+		if (!props[i].name || !props[i].value) {
-+			err = -ENOMEM;
-+			goto err_rollback;
-+		}
- 		props[i].length = 3;
+ 		} else if (is_acpi_node(child)) {
+ 			rc = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), values + i);
+-			if (rc)
++			if (rc) {
++				fwnode_handle_put(child);
+ 				return dev_err_probe(dev, rc, "Cannot get address\n");
++			}
+ 		}
  
- 		of_changeset_init(&priv->chan[i].chgset);
+ 		i++;
 -- 
 2.40.1
 
