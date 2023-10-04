@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41EC1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553F1C433C8;
-	Wed,  4 Oct 2023 18:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DC51D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE95C433CB;
+	Wed,  4 Oct 2023 18:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442632;
-	bh=Li3LCANAp8Hj82ObapAe3vySnXeyqfEWrq3xt8lOoNE=;
+	s=korg; t=1696442635;
+	bh=Gorh+SRJK2qI6O6e/cGQhNzrswoRvVCqRpKKcuprfZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2L9WZRY3OZL7KLzaXfMYrvEp2x3YxjXKAdBt1R0E5E/DxNkXJfyjbXHBuklsQRlO
-	 D5jBG/KFxrBfMMRUMKRFuN0ij5qk9VOdem4RdjKNc3dt8PyWOOiPBw0TlJEOWYK2+f
-	 rAOcNam9tjjtsezYrCRfs84EjVmJa1pcdCAdUKno=
+	b=njqK60IUAWBLsWDkbtdjKlMhPqs2PClgOQ76SBki6D9ozSAzgzdQAwJ5brqheFjLL
+	 euZQKTn2kyg5vsR/Pc1yWaQ7EDkNPHsF+3MQ055JFLQ/qfWuFq0R3AxkMCByzJBXRG
+	 UUNPnya8rwd8N+M/nSG7IczazVMmVIKQVdVgAjTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
+	Jian Shen <shenjian15@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/183] net: hns3: fix GRE checksum offload issue
-Date: Wed,  4 Oct 2023 19:54:45 +0200
-Message-ID: <20231004175206.208408040@linuxfoundation.org>
+Subject: [PATCH 5.15 055/183] net: hns3: only enable unicast promisc when mac table full
+Date: Wed,  4 Oct 2023 19:54:46 +0200
+Message-ID: <20231004175206.237832289@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,44 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit f9f651261130cdcb7adc9a3e365b356bc2749ab3 ]
+[ Upstream commit f2ed304922a55690529bcca59678dd92d7466ce8 ]
 
-The device_version V3 hardware can't offload the checksum for IP in GRE
-packets, but can do it for NvGRE. So default to disable the checksum and
-GSO offload for GRE, but keep the ability to enable it when only using
-NvGRE.
+Currently, the driver will enable unicast promisc for the function
+once configure mac address fail. It's unreasonable when the failure
+is caused by using same mac address with other functions. So only
+enable unicast promisc when mac table full.
 
-Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Fixes: c631c696823c ("net: hns3: refactor the promisc mode setting")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 3693ff55197dd..fde1ff3580458 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3156,6 +3156,15 @@ static void hns3_set_default_feature(struct net_device *netdev)
- 		  NETIF_F_HW_TC);
- 
- 	netdev->hw_enc_features |= netdev->vlan_features | NETIF_F_TSO_MANGLEID;
-+
-+	/* The device_version V3 hardware can't offload the checksum for IP in
-+	 * GRE packets, but can do it for NvGRE. So default to disable the
-+	 * checksum and GSO offload for GRE.
-+	 */
-+	if (ae_dev->dev_version > HNAE3_DEVICE_VERSION_V2) {
-+		netdev->features &= ~NETIF_F_GSO_GRE;
-+		netdev->features &= ~NETIF_F_GSO_GRE_CSUM;
-+	}
- }
- 
- static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index a415760505ab4..998ee681b1171 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -8967,7 +8967,7 @@ static void hclge_update_overflow_flags(struct hclge_vport *vport,
+ 	if (mac_type == HCLGE_MAC_ADDR_UC) {
+ 		if (is_all_added)
+ 			vport->overflow_promisc_flags &= ~HNAE3_OVERFLOW_UPE;
+-		else
++		else if (hclge_is_umv_space_full(vport, true))
+ 			vport->overflow_promisc_flags |= HNAE3_OVERFLOW_UPE;
+ 	} else {
+ 		if (is_all_added)
 -- 
 2.40.1
 
