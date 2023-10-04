@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632421BDEC
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEE01BDEC
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzcDqrQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94E8C433C7;
-	Wed,  4 Oct 2023 18:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eot9scf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52F9C433C7;
+	Wed,  4 Oct 2023 18:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444574;
-	bh=o7aLzCENgyKJyC0HSOZ2UP3c9ykjiKkTMcdaZvD6yIU=;
+	s=korg; t=1696444577;
+	bh=4+315nHMhNHun87aio1ilpOBxWkhdZwMyvNdIqMSA6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzcDqrQ+FbFArqQys1wdcgZ2tGau5qQ6UeV+xqg/U1vTH1lw+Ks989VJQq417fhS/
-	 5PPsVBe6p5ueolA1O8K8xAE6EWdEdlqNyO+7aHYqVGBewQ5IlrDAj7KMK8tG+mExty
-	 g0/xNd2RTVRMr8DcnNYXOwBgfhXfVoHuSiljn/Uw=
+	b=Eot9scf4wypbNXjjEu+i1iIHhby9Y07Mjbq7zJzW0P1encrQd3uzYMaqre1HL45Kr
+	 7rCrJ6Ghxfb9XzRE56MYLSAgMxe+i7b3FxCnJuPZRIInYinNv6Ac5eAfgrXK6PcdTQ
+	 FBaqNHj7aANYU3F7O+NlAv7EUNSa9a+afNn1uj1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Marcus Seyfarth <m.seyfarth@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>
-Subject: [PATCH 6.5 298/321] bpf: Fix BTF_ID symbol generation collision in tools/
-Date: Wed,  4 Oct 2023 19:57:23 +0200
-Message-ID: <20231004175243.093818025@linuxfoundation.org>
+	Alex Balcanquall <alex@alexbal.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 299/321] net: thunderbolt: Fix TCPv6 GSO checksum calculation
+Date: Wed,  4 Oct 2023 19:57:24 +0200
+Message-ID: <20231004175243.144047112@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,49 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit c0bb9fb0e52a64601d38b3739b729d9138d4c8a1 upstream.
+commit e0b65f9b81fef180cf5f103adecbe5505c961153 upstream.
 
-Marcus and Satya reported an issue where BTF_ID macro generates same
-symbol in separate objects and that breaks final vmlinux link.
+Alex reported that running ssh over IPv6 does not work with
+Thunderbolt/USB4 networking driver. The reason for that is that driver
+should call skb_is_gso() before calling skb_is_gso_v6(), and it should
+not return false after calculates the checksum successfully. This probably
+was a copy paste error from the original driver where it was done properly.
 
-  ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
-  '__BTF_ID__struct__cgroup__624' is already defined
-
-This can be triggered under specific configs when __COUNTER__ happens to
-be the same for the same symbol in two different translation units,
-which is already quite unlikely to happen.
-
-Add __LINE__ number suffix to make BTF_ID symbol more unique, which is
-not a complete fix, but it would help for now and meanwhile we can work
-on better solution as suggested by Andrii.
-
+Reported-by: Alex Balcanquall <alex@alexbal.com>
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
 Cc: stable@vger.kernel.org
-Reported-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1913
-Debugged-by: Nathan Chancellor <nathan@kernel.org>
-Co-developed-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/CAEf4Bzb5KQ2_LmhN769ifMeSJaWfebccUasQOfQKaOd0nQ51tw@mail.gmail.com/
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-2-263fc519c21f@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/btf_ids.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/thunderbolt/main.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/tools/include/linux/btf_ids.h
-+++ b/tools/include/linux/btf_ids.h
-@@ -38,7 +38,7 @@ asm(							\
- 	____BTF_ID(symbol)
- 
- #define __ID(prefix) \
--	__PASTE(prefix, __COUNTER__)
-+	__PASTE(__PASTE(prefix, __COUNTER__), __LINE__)
- 
- /*
-  * The BTF_ID defines unique symbol for each ID pointing
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -1049,12 +1049,11 @@ static bool tbnet_xmit_csum_and_map(stru
+ 		*tucso = ~csum_tcpudp_magic(ip_hdr(skb)->saddr,
+ 					    ip_hdr(skb)->daddr, 0,
+ 					    ip_hdr(skb)->protocol, 0);
+-	} else if (skb_is_gso_v6(skb)) {
++	} else if (skb_is_gso(skb) && skb_is_gso_v6(skb)) {
+ 		tucso = dest + ((void *)&(tcp_hdr(skb)->check) - data);
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					  &ipv6_hdr(skb)->daddr, 0,
+ 					  IPPROTO_TCP, 0);
+-		return false;
+ 	} else if (protocol == htons(ETH_P_IPV6)) {
+ 		tucso = dest + skb_checksum_start_offset(skb) + skb->csum_offset;
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
 
 
