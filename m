@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926B31C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A071C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czO6jOJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCB5C433C9;
-	Wed,  4 Oct 2023 18:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6uNjIv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E9DC433C7;
+	Wed,  4 Oct 2023 18:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444546;
-	bh=EU0j7n7PIA9dp+MxOBzYRSgJDa4ooGbEjxHbOMSdaTU=;
+	s=korg; t=1696444549;
+	bh=ZSbQsrOAUSlWugdnDlfv2VRMTGU5z1Jr+IQXQy8s/v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czO6jOJI5vQZjmyQBhbqkk9jF8BVzjP4smfO9pX0k/jy4fbceyHEc6fGdA4Z+sWQm
-	 t4zPRUWuywsP/b1H+760j0St8Qpw87A9WvcZiOx7w1uZX66QkSvqKrh72m5ZtROECA
-	 BEiIVW35kqQ06ZPZdvrewT3/TzCYMnFsGEjoodlw=
+	b=G6uNjIv/ZsxK9kCCsh9v1LdmQukBdp/sEayXpTBedndDI0di0b16tl1UB+VqcbhsX
+	 yCpipXUE0u69Klcjs0IwY390FP06kde3Fthn3k1xQDVytFQHs/RUGUTHktkFloSXNj
+	 NcI7uEW5bujGaTQVUHjzhoOEE0mdCDgxffZSqv54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 289/321] ring-buffer: Update "shortest_full" in polling
-Date: Wed,  4 Oct 2023 19:57:14 +0200
-Message-ID: <20231004175242.665601367@linuxfoundation.org>
+	Ian Johnson <ian@ianjohnson.dev>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.5 290/321] btrfs: refresh dir last index during a rewinddir(3) call
+Date: Wed,  4 Oct 2023 19:57:15 +0200
+Message-ID: <20231004175242.714063936@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,66 +42,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 1e0cb399c7653462d9dadf8ab9425337c355d358 upstream.
+commit e60aa5da14d01fed8411202dbe4adf6c44bd2a57 upstream.
 
-It was discovered that the ring buffer polling was incorrectly stating
-that read would not block, but that's because polling did not take into
-account that reads will block if the "buffer-percent" was set. Instead,
-the ring buffer polling would say reads would not block if there was any
-data in the ring buffer. This was incorrect behavior from a user space
-point of view. This was fixed by commit 42fb0a1e84ff by having the polling
-code check if the ring buffer had more data than what the user specified
-"buffer percent" had.
+When opening a directory we find what's the index of its last entry and
+then store it in the directory's file handle private data (struct
+btrfs_file_private::last_index), so that in the case new directory entries
+are added to a directory after an opendir(3) call we don't end up in an
+infinite loop (see commit 9b378f6ad48c ("btrfs: fix infinite directory
+reads")) when calling readdir(3).
 
-The problem now is that the polling code did not register itself to the
-writer that it wanted to wait for a specific "full" value of the ring
-buffer. The result was that the writer would wake the polling waiter
-whenever there was a new event. The polling waiter would then wake up, see
-that there's not enough data in the ring buffer to notify user space and
-then go back to sleep. The next event would wake it up again.
+However once rewinddir(3) is called, POSIX states [1] that any new
+directory entries added after the previous opendir(3) call, must be
+returned by subsequent calls to readdir(3):
 
-Before the polling fix was added, the code would wake up around 100 times
-for a hackbench 30 benchmark. After the "fix", due to the constant waking
-of the writer, it would wake up over 11,0000 times! It would never leave
-the kernel, so the user space behavior was still "correct", but this
-definitely is not the desired effect.
+  "The rewinddir() function shall reset the position of the directory
+   stream to which dirp refers to the beginning of the directory.
+   It shall also cause the directory stream to refer to the current
+   state of the corresponding directory, as a call to opendir() would
+   have done."
 
-To fix this, have the polling code add what it's waiting for to the
-"shortest_full" variable, to tell the writer not to wake it up if the
-buffer is not as full as it expects to be.
+We currently don't refresh the last_index field of the struct
+btrfs_file_private associated to the directory, so after a rewinddir(3)
+we are not returning any new entries added after the opendir(3) call.
 
-Note, after this fix, it appears that the waiter is now woken up around 2x
-the times it was before (~200). This is a tremendous improvement from the
-11,000 times, but I will need to spend some time to see why polling is
-more aggressive in its wakeups than the read blocking code.
+Fix this by finding the current last index of the directory when llseek
+is called against the directory.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230929180113.01c2cae3@rorschach.local.home
+This can be reproduced by the following C program provided by Ian Johnson:
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: 42fb0a1e84ff ("tracing/ring-buffer: Have polling block on watermark")
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Tested-by: Julia Lawall <julia.lawall@inria.fr>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+   #include <dirent.h>
+   #include <stdio.h>
+
+   int main(void) {
+     DIR *dir = opendir("test");
+
+     FILE *file;
+     file = fopen("test/1", "w");
+     fwrite("1", 1, 1, file);
+     fclose(file);
+
+     file = fopen("test/2", "w");
+     fwrite("2", 1, 1, file);
+     fclose(file);
+
+     rewinddir(dir);
+
+     struct dirent *entry;
+     while ((entry = readdir(dir))) {
+        printf("%s\n", entry->d_name);
+     }
+     closedir(dir);
+     return 0;
+   }
+
+Reported-by: Ian Johnson <ian@ianjohnson.dev>
+Link: https://lore.kernel.org/linux-btrfs/YR1P0S.NGASEG570GJ8@ianjohnson.dev/
+Fixes: 9b378f6ad48c ("btrfs: fix infinite directory reads")
+CC: stable@vger.kernel.org # 6.5+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/inode.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1142,6 +1142,9 @@ __poll_t ring_buffer_poll_wait(struct tr
- 	if (full) {
- 		poll_wait(filp, &work->full_waiters, poll_table);
- 		work->full_waiters_pending = true;
-+		if (!cpu_buffer->shortest_full ||
-+		    cpu_buffer->shortest_full > full)
-+			cpu_buffer->shortest_full = full;
- 	} else {
- 		poll_wait(filp, &work->waiters, poll_table);
- 		work->waiters_pending = true;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -5979,6 +5979,19 @@ static int btrfs_opendir(struct inode *i
+ 	return 0;
+ }
+ 
++static loff_t btrfs_dir_llseek(struct file *file, loff_t offset, int whence)
++{
++	struct btrfs_file_private *private = file->private_data;
++	int ret;
++
++	ret = btrfs_get_dir_last_index(BTRFS_I(file_inode(file)),
++				       &private->last_index);
++	if (ret)
++		return ret;
++
++	return generic_file_llseek(file, offset, whence);
++}
++
+ struct dir_entry {
+ 	u64 ino;
+ 	u64 offset;
+@@ -11059,7 +11072,7 @@ static const struct inode_operations btr
+ };
+ 
+ static const struct file_operations btrfs_dir_file_operations = {
+-	.llseek		= generic_file_llseek,
++	.llseek		= btrfs_dir_llseek,
+ 	.read		= generic_read_dir,
+ 	.iterate_shared	= btrfs_real_readdir,
+ 	.open		= btrfs_opendir,
 
 
