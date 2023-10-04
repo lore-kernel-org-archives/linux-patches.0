@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A9E1D55C
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCFF1D55C
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbgXtyb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C5BC433C7;
-	Wed,  4 Oct 2023 18:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUF0WSdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714E7C433C8;
+	Wed,  4 Oct 2023 18:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443693;
-	bh=rfnUYRuvf81rl6XEDEwc4+7TZ3vTkyNffQ39DEDj37s=;
+	s=korg; t=1696443695;
+	bh=ktIEOo6OZYwdoTeK5dUEekSqkKJ9MI7nBVq3ruzJnPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbgXtyb7/ClbZB6nnOqqWMfnk10F3Ui+Qc7zpMktQnIYACl7/vclNHG8BL4WWxDBM
-	 80KaUXmtv/xTB284DJKtofZ+Q8F671OfK8eEy6gQ2tTcGvTmiP+4OZ9LL2/6HNiSxF
-	 KxqO1GLukDPrDfF+tZE+MdKfp9EZoG0k2IrENYGY=
+	b=tUF0WSdRZ3W7FM2kJiG2bZ3+GU+1ec9CswL6js5Cpc7nbWFzgG6d+BeprBY+kIKdv
+	 tWGokLvMkGmfV6c2q6S/+LgVCMKfBYI80x3tAq/RKI1l3zqJ7yyfyk/NtTADP+qjit
+	 FA1YZBFkZTPv7rhzR4IJLLgM24ggW+cCeuw9ksTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Bian <bianpan2016@163.com>,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 219/259] nilfs2: fix potential use after free in nilfs_gccache_submit_read_data()
-Date: Wed,  4 Oct 2023 19:56:32 +0200
-Message-ID: <20231004175227.370128916@linuxfoundation.org>
+	Willy Tarreau <w@1wt.eu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Quang Le <quanglex97@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 246/259] fs/smb/client: Reset password pointer to NULL
+Date: Wed,  4 Oct 2023 19:56:59 +0200
+Message-ID: <20231004175228.669209221@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,60 +43,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pan Bian <bianpan2016@163.com>
+From: Quang Le <quanglex97@gmail.com>
 
-commit 7ee29facd8a9c5a26079148e36bcf07141b3a6bc upstream.
+commit e6e43b8aa7cd3c3af686caf0c2e11819a886d705 upstream.
 
-In nilfs_gccache_submit_read_data(), brelse(bh) is called to drop the
-reference count of bh when the call to nilfs_dat_translate() fails.  If
-the reference count hits 0 and its owner page gets unlocked, bh may be
-freed.  However, bh->b_page is dereferenced to put the page after that,
-which may result in a use-after-free bug.  This patch moves the release
-operation after unlocking and putting the page.
+Forget to reset ctx->password to NULL will lead to bug like double free
 
-NOTE: The function in question is only called in GC, and in combination
-with current userland tools, address translation using DAT does not occur
-in that function, so the code path that causes this issue will not be
-executed.  However, it is possible to run that code path by intentionally
-modifying the userland GC library or by calling the GC ioctl directly.
-
-[konishi.ryusuke@gmail.com: NOTE added to the commit log]
-Link: https://lkml.kernel.org/r/1543201709-53191-1-git-send-email-bianpan2016@163.com
-Link: https://lkml.kernel.org/r/20230921141731.10073-1-konishi.ryusuke@gmail.com
-Fixes: a3d93f709e89 ("nilfs2: block cache for garbage collection")
-Signed-off-by: Pan Bian <bianpan2016@163.com>
-Reported-by: Ferry Meng <mengferry@linux.alibaba.com>
-Closes: https://lkml.kernel.org/r/20230818092022.111054-1-mengferry@linux.alibaba.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/gcinode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/client/fs_context.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -73,10 +73,8 @@ int nilfs_gccache_submit_read_data(struc
- 		struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1487,6 +1487,7 @@ static int smb3_fs_context_parse_param(s
  
- 		err = nilfs_dat_translate(nilfs->ns_dat, vbn, &pbn);
--		if (unlikely(err)) { /* -EIO, -ENOMEM, -ENOENT */
--			brelse(bh);
-+		if (unlikely(err)) /* -EIO, -ENOMEM, -ENOENT */
- 			goto failed;
--		}
- 	}
- 
- 	lock_buffer(bh);
-@@ -102,6 +100,8 @@ int nilfs_gccache_submit_read_data(struc
-  failed:
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
-+	if (unlikely(err))
-+		brelse(bh);
- 	return err;
+  cifs_parse_mount_err:
+ 	kfree_sensitive(ctx->password);
++	ctx->password = NULL;
+ 	return -EINVAL;
  }
  
 
