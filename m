@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D7C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEC01D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGJIUwgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C721DC433C8;
-	Wed,  4 Oct 2023 18:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kR4L9ciB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8609FC433C8;
+	Wed,  4 Oct 2023 18:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443628;
-	bh=0VYi4uXk1YJ9Cn+ouYKkprl+D/3t4NUsaWj/O/yCdC4=;
+	s=korg; t=1696443630;
+	bh=+g+/Y8bUhwqWUOAsq4aLIISw9veiwxng81GuE1vYuBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGJIUwgG6ZWy52WkrzQ9tcRE8gd6nt9kudJM+1WP76oQHqawbKhIvcWoCXGL0fuAK
-	 48laLrA6/2MdFg5sdHw40VyAViiGTn6AHlBPSrctdvaOF3YdGqfv/haDrBF5b0UrIX
-	 /+AwPkunVTi1mx1oSWevhpTGz/xP3OBPSNWDvpo0=
+	b=kR4L9ciBRIGobMhKfDiDO7i2RIk3cUryE9mCSNF2g/lbEXKzuZC7y3FnNFJqHZ6uq
+	 1rdR9mkfm/g/ivTOULcYQNXZSYO0ynX9lt7n2ooG1RZXtDUzszNMIwj9VDHfJgNa0p
+	 7TIEVfyCWCvrTn2OhBNod58Vqbr9pWsFtgF6AVMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: =?UTF-8?q?=5BPATCH=206=2E1=20185/259=5D=20=3D=3FUTF-8=3Fq=3Fmemblock=3D20tests=3A=3D20fix=3D20warning=3D20=3DE2=3D80=3D98struct=3D20s=3F=3D=20=3D=3FUTF-8=3Fq=3Feq=3D5Ffile=3DE2=3D80=3D99=3D20declared=3D20inside=3D20parameter=3D20list=3F=3D?=
-Date: Wed,  4 Oct 2023 19:55:58 +0200
-Message-ID: <20231004175225.790417253@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 6.1 217/259] Revert "tty: n_gsm: fix UAF in gsm_cleanup_mux"
+Date: Wed,  4 Oct 2023 19:56:30 +0200
+Message-ID: <20231004175227.286633566@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -35,76 +35,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Rapoport (IBM) <rppt@kernel.org>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-[ Upstream commit 55122e0130e51eb71f5ec62d10525db0468f28e8 ]
+commit 29346e217b8ab8a52889b88f00b268278d6b7668 upstream.
 
-Building memblock tests produces the following warning:
+This reverts commit 9b9c8195f3f0d74a826077fc1c01b9ee74907239.
 
-cc -I. -I../../include -Wall -O2 -fsanitize=address -fsanitize=undefined -D CONFIG_PHYS_ADDR_T_64BIT   -c -o main.o main.c
-In file included from tests/common.h:9,
-                 from tests/basic_api.h:5,
-                 from main.c:2:
-./linux/memblock.h:601:50: warning: ‘struct seq_file’ declared inside parameter list will not be visible outside of this definition or declaration
-  601 | static inline void memtest_report_meminfo(struct seq_file *m) { }
-      |                                                  ^~~~~~~~
+The commit above is reverted as it did not solve the original issue.
 
-Add declaration of 'struct seq_file' to tools/include/linux/seq_file.h
-to fix it.
+gsm_cleanup_mux() tries to free up the virtual ttys by calling
+gsm_dlci_release() for each available DLCI. There, dlci_put() is called to
+decrease the reference counter for the DLCI via tty_port_put() which
+finally calls gsm_dlci_free(). This already clears the pointer which is
+being checked in gsm_cleanup_mux() before calling gsm_dlci_release().
+Therefore, it is not necessary to clear this pointer in gsm_cleanup_mux()
+as done in the reverted commit. The commit introduces a null pointer
+dereference:
+ <TASK>
+ ? __die+0x1f/0x70
+ ? page_fault_oops+0x156/0x420
+ ? search_exception_tables+0x37/0x50
+ ? fixup_exception+0x21/0x310
+ ? exc_page_fault+0x69/0x150
+ ? asm_exc_page_fault+0x26/0x30
+ ? tty_port_put+0x19/0xa0
+ gsmtty_cleanup+0x29/0x80 [n_gsm]
+ release_one_tty+0x37/0xe0
+ process_one_work+0x1e6/0x3e0
+ worker_thread+0x4c/0x3d0
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe1/0x110
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2f/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
 
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The actual issue is that nothing guards dlci_put() from being called
+multiple times while the tty driver was triggered but did not yet finished
+calling gsm_dlci_free().
+
+Fixes: 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20230914051507.3240-1-daniel.starke@siemens.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/seq_file.h           | 2 ++
- tools/testing/memblock/tests/basic_api.c | 2 +-
- tools/testing/memblock/tests/common.h    | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/tty/n_gsm.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/include/linux/seq_file.h b/tools/include/linux/seq_file.h
-index 102fd9217f1f9..f6bc226af0c1d 100644
---- a/tools/include/linux/seq_file.h
-+++ b/tools/include/linux/seq_file.h
-@@ -1,4 +1,6 @@
- #ifndef _TOOLS_INCLUDE_LINUX_SEQ_FILE_H
- #define _TOOLS_INCLUDE_LINUX_SEQ_FILE_H
- 
-+struct seq_file;
-+
- #endif /* _TOOLS_INCLUDE_LINUX_SEQ_FILE_H */
-diff --git a/tools/testing/memblock/tests/basic_api.c b/tools/testing/memblock/tests/basic_api.c
-index a13a57ba0815f..7ce628e31a431 100644
---- a/tools/testing/memblock/tests/basic_api.c
-+++ b/tools/testing/memblock/tests/basic_api.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
-+#include "basic_api.h"
- #include <string.h>
- #include <linux/memblock.h>
--#include "basic_api.h"
- 
- #define EXPECTED_MEMBLOCK_REGIONS			128
- #define FUNC_ADD					"memblock_add"
-diff --git a/tools/testing/memblock/tests/common.h b/tools/testing/memblock/tests/common.h
-index d6bbbe63bfc36..4c33ce04c0645 100644
---- a/tools/testing/memblock/tests/common.h
-+++ b/tools/testing/memblock/tests/common.h
-@@ -5,6 +5,7 @@
- #include <stdlib.h>
- #include <assert.h>
- #include <linux/types.h>
-+#include <linux/seq_file.h>
- #include <linux/memblock.h>
- #include <linux/sizes.h>
- #include <linux/printk.h>
--- 
-2.40.1
-
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -2509,10 +2509,8 @@ static void gsm_cleanup_mux(struct gsm_m
+ 		gsm->has_devices = false;
+ 	}
+ 	for (i = NUM_DLCI - 1; i >= 0; i--)
+-		if (gsm->dlci[i]) {
++		if (gsm->dlci[i])
+ 			gsm_dlci_release(gsm->dlci[i]);
+-			gsm->dlci[i] = NULL;
+-		}
+ 	mutex_unlock(&gsm->mutex);
+ 	/* Now wipe the queues */
+ 	tty_ldisc_flush(gsm->tty);
 
 
