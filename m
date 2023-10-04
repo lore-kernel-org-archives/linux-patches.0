@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57291D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFEF1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZIuZYVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B5CC433C7;
-	Wed,  4 Oct 2023 18:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brmAqDWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60ADC433C9;
+	Wed,  4 Oct 2023 18:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443913;
-	bh=v4BrXiLFFKS9ZhU1e7Mc29U11oaavRZNm6bgGDca54s=;
+	s=korg; t=1696443916;
+	bh=xIiC2bA8sgQrcvIAYZ5M6CSu00+eZwnVonsGeStigxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZIuZYVYgAoLfRoziJUKfHrAMSMh/7otLpw8rm8Shd+BX6n7t1Xf9kxjC25H4aF1z
-	 3R0ATLznwfJhnoHX/1tLaIs1quXPWQSwZmLSutsRbraURpoKv4/e8qlBMB1BjPPVjK
-	 cEUcwMdiRltHQo5S32KePwvr2Xh/JoKBBlIdpPD4=
+	b=brmAqDWv/QEyDADbAuJFHtgtWqMY7i0Ppx7/KHlUvNr+dhoQ3hUQNU6kHCLuKMLWQ
+	 9GpZZ8cWOfFILwk5gZw6UEmPsQK9kRUu8B7kR27B0nwKu2QHb5tmBY0JQkv6jfqGVO
+	 ru/9n11olhJcwafoM25/ddVd4FsAVCujz2iMMsGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferenc Fejes <ferenc.fejes@ericsson.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Stephen Suryaputra <ssuryaextr@gmail.com>,
+	Vadim Fedorenko <vfedorenko@novek.ru>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 065/321] igc: Fix infinite initialization loop with early XDP redirect
-Date: Wed,  4 Oct 2023 19:53:30 +0200
-Message-ID: <20231004175232.193074956@linuxfoundation.org>
+Subject: [PATCH 6.5 066/321] ipv4: fix null-deref in ipv4_link_failure
+Date: Wed,  4 Oct 2023 19:53:31 +0200
+Message-ID: <20231004175232.243502862@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -46,53 +45,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Kyle Zeng <zengyhkyle@gmail.com>
 
-[ Upstream commit cb47b1f679c4d83a5fa5f1852e472f844e41a3da ]
+[ Upstream commit 0113d9c9d1ccc07f5a3710dac4aa24b6d711278c ]
 
-When an XDP redirect happens before the link is ready, that
-transmission will not finish and will timeout, causing an adapter
-reset. If the redirects do not stop, the adapter will not stop
-resetting.
+Currently, we assume the skb is associated with a device before calling
+__ip_options_compile, which is not always the case if it is re-routed by
+ipvs.
+When skb->dev is NULL, dev_net(skb->dev) will become null-dereference.
+This patch adds a check for the edge case and switch to use the net_device
+from the rtable when skb->dev is NULL.
 
-Wait for the driver to signal that there's a carrier before allowing
-transmissions to proceed.
-
-Previous code was relying that when __IGC_DOWN is cleared, the NIC is
-ready to transmit as all the queues are ready, what happens is that
-the carrier presence will only be signaled later, after the watchdog
-workqueue has a chance to run. And during this interval (between
-clearing __IGC_DOWN and the watchdog running) if any transmission
-happens the timeout is emitted (detected by igc_tx_timeout()) which
-causes the reset, with the potential for the infinite loop.
-
-Fixes: 4ff320361092 ("igc: Add support for XDP_REDIRECT action")
-Reported-by: Ferenc Fejes <ferenc.fejes@ericsson.com>
-Closes: https://lore.kernel.org/netdev/0caf33cf6adb3a5bf137eeaa20e89b167c9986d5.camel@ericsson.com/
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Ferenc Fejes <ferenc.fejes@ericsson.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: ed0de45a1008 ("ipv4: recompile ip options in ipv4_link_failure")
+Suggested-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Kyle Zeng <zengyhkyle@gmail.com>
+Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
+Cc: Vadim Fedorenko <vfedorenko@novek.ru>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 6f557e843e495..4e23b821c39ba 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6433,7 +6433,7 @@ static int igc_xdp_xmit(struct net_device *dev, int num_frames,
- 	struct igc_ring *ring;
- 	int i, drops;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 33626619aee79..0a53ca6ebb0d5 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1213,6 +1213,7 @@ EXPORT_INDIRECT_CALLABLE(ipv4_dst_check);
  
--	if (unlikely(test_bit(__IGC_DOWN, &adapter->state)))
-+	if (unlikely(!netif_carrier_ok(dev)))
- 		return -ENETDOWN;
+ static void ipv4_send_dest_unreach(struct sk_buff *skb)
+ {
++	struct net_device *dev;
+ 	struct ip_options opt;
+ 	int res;
  
- 	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK))
+@@ -1230,7 +1231,8 @@ static void ipv4_send_dest_unreach(struct sk_buff *skb)
+ 		opt.optlen = ip_hdr(skb)->ihl * 4 - sizeof(struct iphdr);
+ 
+ 		rcu_read_lock();
+-		res = __ip_options_compile(dev_net(skb->dev), &opt, skb, NULL);
++		dev = skb->dev ? skb->dev : skb_rtable(skb)->dst.dev;
++		res = __ip_options_compile(dev_net(dev), &opt, skb, NULL);
+ 		rcu_read_unlock();
+ 
+ 		if (res)
 -- 
 2.40.1
 
