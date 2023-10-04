@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3921D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ABF1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfOd1elC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF99C433C9;
-	Wed,  4 Oct 2023 18:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zr08fuO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81221C433C7;
+	Wed,  4 Oct 2023 18:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443571;
-	bh=oGQfJZF6BOaEaHSKwbte1gWDP9+Px8R9yR+YcliWUKA=;
+	s=korg; t=1696443573;
+	bh=NuzMWFZtWS4oLMBDYh2qP6SBbjdHG+vG1mtIwzPsIbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfOd1elCKP1FXMJh6C/kAQYlLd6BZ1fogq0TS5vAj8KD4X/iXQLEuvXJYi8oUOtAy
-	 RnuvLazm45DlywNYvgk3+6R7fR9lrmDGe5xO5OKYgMt3UZ8+ezsVhNBWH8BLc0IRUp
-	 QN7DqSkLZi9YaErm4OiRbeVoj3JHn6XYd4EDpHME=
+	b=zr08fuO4E5B5b2W3l7Q0RkusebF6CTHZ+YZIEBWo3tx/U+WydFKdmYCz9IVB+28f5
+	 Qlz3e3BprMGax4fctQPle6a6yscyH1I1zE6D1htsQAd5IuUnM5/WIsu6IjYN7DveO9
+	 6DAIHT5oPfsSyRr4S1QPQzTrqDjZZJvC4syv3I1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Chesnokov <gleb.chesnokov@scst.dev>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	David Hildenbrand <david@redhat.com>,
+	Yikebaer Aizezi <yikebaer61@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/259] scsi: qla2xxx: Fix NULL pointer dereference in target mode
-Date: Wed,  4 Oct 2023 19:56:17 +0200
-Message-ID: <20231004175226.633032261@linuxfoundation.org>
+Subject: [PATCH 6.1 187/259] media: vb2: frame_vector.c: replace WARN_ONCE with a comment
+Date: Wed,  4 Oct 2023 19:56:00 +0200
+Message-ID: <20231004175225.875791462@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,92 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gleb Chesnokov <gleb.chesnokov@scst.dev>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit d54820b22e404b06b2b65877ff802cc7b31688bc ]
+[ Upstream commit 735de5caf79e06cc9fb96b1b4f4974674ae3e917 ]
 
-When target mode is enabled, the pci_irq_get_affinity() function may return
-a NULL value in qla_mapq_init_qp_cpu_map() due to the qla24xx_enable_msix()
-code that handles IRQ settings for target mode. This leads to a crash due
-to a NULL pointer dereference.
+The WARN_ONCE was issued also in cases that had nothing to do with VM_IO
+(e.g. if the start address was just a random value and uaccess fails with
+-EFAULT).
 
-This patch fixes the issue by adding a check for the NULL value returned by
-pci_irq_get_affinity() and introducing a 'cpu_mapped' boolean flag to the
-qla_qpair structure, ensuring that the qpair's CPU affinity is updated when
-it has not been mapped to a CPU.
+There are no reports of WARN_ONCE being issued for actual VM_IO cases, so
+just drop it and instead add a note to the comment before the function.
 
-Fixes: 1d201c81d4cc ("scsi: qla2xxx: Select qpair depending on which CPU post_cmd() gets called")
-Signed-off-by: Gleb Chesnokov <gleb.chesnokov@scst.dev>
-Link: https://lore.kernel.org/r/56b416f2-4e0f-b6cf-d6d5-b7c372e3c6a2@scst.dev
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reported-by: Yikebaer Aizezi <yikebaer61@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h    | 1 +
- drivers/scsi/qla2xxx/qla_init.c   | 3 +++
- drivers/scsi/qla2xxx/qla_inline.h | 3 +++
- drivers/scsi/qla2xxx/qla_isr.c    | 3 +++
- 4 files changed, 10 insertions(+)
+ drivers/media/common/videobuf2/frame_vector.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
-index 817efdd32ad63..1713588f671f3 100644
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -3805,6 +3805,7 @@ struct qla_qpair {
- 	uint64_t retry_term_jiff;
- 	struct qla_tgt_counters tgt_counters;
- 	uint16_t cpuid;
-+	bool cpu_mapped;
- 	struct qla_fw_resources fwres ____cacheline_aligned;
- 	u32	cmd_cnt;
- 	u32	cmd_completion_cnt;
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 79de31e7e8b2a..884ed77259f85 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -9759,6 +9759,9 @@ struct qla_qpair *qla2xxx_create_qpair(struct scsi_qla_host *vha, int qos,
- 		qpair->rsp->req = qpair->req;
- 		qpair->rsp->qpair = qpair;
+diff --git a/drivers/media/common/videobuf2/frame_vector.c b/drivers/media/common/videobuf2/frame_vector.c
+index 144027035892a..07ebe4424df3a 100644
+--- a/drivers/media/common/videobuf2/frame_vector.c
++++ b/drivers/media/common/videobuf2/frame_vector.c
+@@ -30,6 +30,10 @@
+  * different type underlying the specified range of virtual addresses.
+  * When the function isn't able to map a single page, it returns error.
+  *
++ * Note that get_vaddr_frames() cannot follow VM_IO mappings. It used
++ * to be able to do that, but that could (racily) return non-refcounted
++ * pfns.
++ *
+  * This function takes care of grabbing mmap_lock as necessary.
+  */
+ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
+@@ -55,8 +59,6 @@ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
+ 	if (likely(ret > 0))
+ 		return ret;
  
-+		if (!qpair->cpu_mapped)
-+			qla_cpu_update(qpair, raw_smp_processor_id());
-+
- 		if (IS_T10_PI_CAPABLE(ha) && ql2xenabledif) {
- 			if (ha->fw_attributes & BIT_4)
- 				qpair->difdix_supported = 1;
-diff --git a/drivers/scsi/qla2xxx/qla_inline.h b/drivers/scsi/qla2xxx/qla_inline.h
-index e66441355f7ae..a4a56ab0ba747 100644
---- a/drivers/scsi/qla2xxx/qla_inline.h
-+++ b/drivers/scsi/qla2xxx/qla_inline.h
-@@ -597,11 +597,14 @@ qla_mapq_init_qp_cpu_map(struct qla_hw_data *ha,
- 	if (!ha->qp_cpu_map)
- 		return;
- 	mask = pci_irq_get_affinity(ha->pdev, msix->vector_base0);
-+	if (!mask)
-+		return;
- 	qpair->cpuid = cpumask_first(mask);
- 	for_each_cpu(cpu, mask) {
- 		ha->qp_cpu_map[cpu] = qpair;
- 	}
- 	msix->cpuid = qpair->cpuid;
-+	qpair->cpu_mapped = true;
+-	/* This used to (racily) return non-refcounted pfns. Let people know */
+-	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
+ 	vec->nr_frames = 0;
+ 	return ret ? ret : -EFAULT;
  }
- 
- static inline void
-diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
-index cf1025c917267..db65dbab3a9fa 100644
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -3819,6 +3819,9 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
- 
- 	if (rsp->qpair->cpuid != raw_smp_processor_id() || !rsp->qpair->rcv_intr) {
- 		rsp->qpair->rcv_intr = 1;
-+
-+		if (!rsp->qpair->cpu_mapped)
-+			qla_cpu_update(rsp->qpair, raw_smp_processor_id());
- 	}
- 
- #define __update_rsp_in(_is_shadow_hba, _rsp, _rsp_in)			\
 -- 
 2.40.1
 
