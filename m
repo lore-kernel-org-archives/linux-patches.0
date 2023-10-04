@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9391D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5503FC433C8;
-	Wed,  4 Oct 2023 18:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97B81D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A66FC433C7;
+	Wed,  4 Oct 2023 18:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442744;
-	bh=1353e5wBrFiCtZQzqQoqS5XC6HURudgldN+GGyx/3h4=;
+	s=korg; t=1696442747;
+	bh=Wxa5SbyvzM4aqoIrT+W4jk1eoX8DEEtGSlO6Q+ZkzI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYaR5VW4CHoUPdsRN6gFpWs2M5pHvKUivOwrBvFVbgNoUZ22cYwy6BSCtKxtPmHIl
-	 TpQ6EfS9PVy7gy59VRDgG3cwDhTGDpDoV+4Jenv5GhskH1Wyl5XiQUk80nHBMNGSdU
-	 cdc0PGAEk9laW9rnvQM0UiuhYIIBkz5OkXlR07AE=
+	b=oM3R8YGICpvURm0IOWGQlmPWkNLw1NFSVSLudN+VCWNb/I/vir4PapJSExTi4tPWt
+	 VdaUw+Bhk0ZPOzGfrjUzZRcAO9ArgERkzix9mrPTP4HY6bHAamYPHiHgRGbwZULIvH
+	 e2rN1pz7fBhNyRwqv366S6oBgdJRAHz+/qeHJcv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/183] igc: Expose tx-usecs coalesce setting to user
-Date: Wed,  4 Oct 2023 19:54:57 +0200
-Message-ID: <20231004175206.627008691@linuxfoundation.org>
+Subject: [PATCH 5.15 067/183] Fix up backport of 136191703038 ("interconnect: Teach lockdep about icc_bw_lock order")
+Date: Wed,  4 Oct 2023 19:54:58 +0200
+Message-ID: <20231004175206.667866923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,128 +38,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Add a missing include to fix the following build error:
 
-[ Upstream commit 1703b2e0de653b459ca6230be32ce7f2ea0ae7ee ]
+drivers/interconnect/core.c: In function 'icc_init':
+drivers/interconnect/core.c:1148:9: error: implicit declaration of function 'fs_reclaim_acquire' [-Werror=implicit-function-declaration]
+ 1148 |         fs_reclaim_acquire(GFP_KERNEL);
+      |         ^~~~~~~~~~~~~~~~~~
+drivers/interconnect/core.c:1150:9: error: implicit declaration of function 'fs_reclaim_release' [-Werror=implicit-function-declaration]
+ 1150 |         fs_reclaim_release(GFP_KERNEL);
+      |         ^~~~~~~~~~~~~~~~~~
 
-When users attempt to obtain the coalesce setting using the
-ethtool command, current code always returns 0 for tx-usecs.
-This is because I225/6 always uses a queue pair setting, hence
-tx_coalesce_usecs does not return a value during the
-igc_ethtool_get_coalesce() callback process. The pair queue
-condition checking in igc_ethtool_get_coalesce() is removed by
-this patch so that the user gets information of the value of tx-usecs.
-
-Even if i225/6 is using queue pair setting, there is no harm in
-notifying the user of the tx-usecs. The implementation of the current
-code may have previously been a copy of the legacy code i210.
-Since I225 has the queue pair setting enabled, tx-usecs will always adhere
-to the user-set rx-usecs value. An error message will appear when the user
-attempts to set the tx-usecs value for the input parameters because,
-by default, they should only set the rx-usecs value.
-
-This patch also adds the helper function to get the
-previous rx coalesce value similar to tx coalesce.
-
-How to test:
-User can get the coalesce value using ethtool command.
-
-Example command:
-Get: ethtool -c <interface>
-
-Previous output:
-
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
-
-tx-usecs: 0
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
-
-New output:
-
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
-
-tx-usecs: 3
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
-
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230919170331.1581031-1-anthony.l.nguyen@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 31 ++++++++++++--------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/interconnect/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 859ddc07fbbfe..17cb4c13d0020 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -861,6 +861,18 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
- 	spin_unlock(&adapter->stats64_lock);
- }
- 
-+static int igc_ethtool_get_previous_rx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->rx_itr_setting <= 3) ?
-+		adapter->rx_itr_setting : adapter->rx_itr_setting >> 2;
-+}
-+
-+static int igc_ethtool_get_previous_tx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->tx_itr_setting <= 3) ?
-+		adapter->tx_itr_setting : adapter->tx_itr_setting >> 2;
-+}
-+
- static int igc_ethtool_get_coalesce(struct net_device *netdev,
- 				    struct ethtool_coalesce *ec,
- 				    struct kernel_ethtool_coalesce *kernel_coal,
-@@ -868,17 +880,8 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
- {
- 	struct igc_adapter *adapter = netdev_priv(netdev);
- 
--	if (adapter->rx_itr_setting <= 3)
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting;
--	else
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting >> 2;
--
--	if (!(adapter->flags & IGC_FLAG_QUEUE_PAIRS)) {
--		if (adapter->tx_itr_setting <= 3)
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting;
--		else
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting >> 2;
--	}
-+	ec->rx_coalesce_usecs = igc_ethtool_get_previous_rx_coalesce(adapter);
-+	ec->tx_coalesce_usecs = igc_ethtool_get_previous_tx_coalesce(adapter);
- 
- 	return 0;
- }
-@@ -903,8 +906,12 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
- 	    ec->tx_coalesce_usecs == 2)
- 		return -EINVAL;
- 
--	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) && ec->tx_coalesce_usecs)
-+	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) &&
-+	    ec->tx_coalesce_usecs != igc_ethtool_get_previous_tx_coalesce(adapter)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Queue Pair mode enabled, both Rx and Tx coalescing controlled by rx-usecs");
- 		return -EINVAL;
-+	}
- 
- 	/* If ITR is disabled, disable DMAC */
- 	if (ec->rx_coalesce_usecs == 0) {
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index ab654b33f5d24..b7c41bd7409cd 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -13,6 +13,7 @@
+ #include <linux/interconnect.h>
+ #include <linux/interconnect-provider.h>
+ #include <linux/list.h>
++#include <linux/sched/mm.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/slab.h>
 -- 
 2.40.1
 
