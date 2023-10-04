@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF721D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0081D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pX5KgJYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE53FC433C9;
-	Wed,  4 Oct 2023 18:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4DGxL3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951A1C433C7;
+	Wed,  4 Oct 2023 18:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443597;
-	bh=Om87EzMQELKtESL6rYP5slJobiYoTCqbUugAIIe8m08=;
+	s=korg; t=1696443600;
+	bh=z9jwem9ccYVcaCeAUf7t9zxsw/mb1pCirmVuvSrHrX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pX5KgJYHCCLsplqrVKC/Pdqfa7irwBanXtnRGNDY1pXjkkGaqY11YQvkOjcn9X93m
-	 tgNc5QzePKBf1wtM+Z7mcUFP/EuSYGh315mSLNYWoYyAJpIldo5JAhMzJfrbjvImji
-	 0MCSW1sQG3wE2Wyn0uwIl95x3GhF5rXIKspOWWP8=
+	b=A4DGxL3f6UzY01HoNGgwtuwzZNmMOiQFA5NyFFsZXzsv/0p2ZM8/J7hPW5i/VH5Oy
+	 PnwRzkYiGy+ZV1/07m9y6CxHlgyhtdWw3fU0cBuNuUHpdMd2IeDIhHMovM4T6hMbX9
+	 8RvX0ZxjqBcOO/z0h7s0tVtqzbgVvqngA+WrGtA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 212/259] KVM: SVM: Fix TSC_AUX virtualization setup
-Date: Wed,  4 Oct 2023 19:56:25 +0200
-Message-ID: <20231004175227.031365206@linuxfoundation.org>
+Subject: [PATCH 6.1 213/259] KVM: x86/mmu: Open code leaf invalidation from mmu_notifier
+Date: Wed,  4 Oct 2023 19:56:26 +0200
+Message-ID: <20231004175227.083169052@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,124 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit e0096d01c4fcb8c96c05643cfc2c20ab78eae4da upstream.
+commit 50107e8b2a8a59d8cec7e8454e27c1f8e365acdb upstream.
 
-The checks for virtualizing TSC_AUX occur during the vCPU reset processing
-path. However, at the time of initial vCPU reset processing, when the vCPU
-is first created, not all of the guest CPUID information has been set. In
-this case the RDTSCP and RDPID feature support for the guest is not in
-place and so TSC_AUX virtualization is not established.
+The mmu_notifier path is a bit of a special snowflake, e.g. it zaps only a
+single address space (because it's per-slot), and can't always yield.
+Because of this, it calls kvm_tdp_mmu_zap_leafs() in ways that no one
+else does.
 
-This continues for each vCPU created for the guest. On the first boot of
-an AP, vCPU reset processing is executed as a result of an APIC INIT
-event, this time with all of the guest CPUID information set, resulting
-in TSC_AUX virtualization being enabled, but only for the APs. The BSP
-always sees a TSC_AUX value of 0 which probably went unnoticed because,
-at least for Linux, the BSP TSC_AUX value is 0.
+Iterate manually over the leafs in response to an mmu_notifier
+invalidation, instead of invoking kvm_tdp_mmu_zap_leafs().  Drop the
+@can_yield param from kvm_tdp_mmu_zap_leafs() as its sole remaining
+caller unconditionally passes "true".
 
-Move the TSC_AUX virtualization enablement out of the init_vmcb() path and
-into the vcpu_after_set_cpuid() path to allow for proper initialization of
-the support after the guest CPUID information has been set.
-
-With the TSC_AUX virtualization support now in the vcpu_set_after_cpuid()
-path, the intercepts must be either cleared or set based on the guest
-CPUID input.
-
-Fixes: 296d5a17e793 ("KVM: SEV-ES: Use V_TSC_AUX if available instead of RDTSC/MSR_TSC_AUX intercepts")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Message-Id: <4137fbcb9008951ab5f0befa74a0399d2cce809a.1694811272.git.thomas.lendacky@amd.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230916003916.2545000-2-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   31 ++++++++++++++++++++++++++-----
- arch/x86/kvm/svm/svm.c |    9 ++-------
- arch/x86/kvm/svm/svm.h |    1 +
- 3 files changed, 29 insertions(+), 12 deletions(-)
+ arch/x86/kvm/mmu/mmu.c     |    2 +-
+ arch/x86/kvm/mmu/tdp_mmu.c |   13 +++++++++----
+ arch/x86/kvm/mmu/tdp_mmu.h |    4 ++--
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2941,6 +2941,32 @@ int sev_es_string_io(struct vcpu_svm *sv
- 				    count, in);
- }
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -6093,7 +6093,7 @@ void kvm_zap_gfn_range(struct kvm *kvm,
+ 	if (is_tdp_mmu_enabled(kvm)) {
+ 		for (i = 0; i < KVM_ADDRESS_SPACE_NUM; i++)
+ 			flush = kvm_tdp_mmu_zap_leafs(kvm, i, gfn_start,
+-						      gfn_end, true, flush);
++						      gfn_end, flush);
+ 	}
  
-+static void sev_es_vcpu_after_set_cpuid(struct vcpu_svm *svm)
-+{
-+	struct kvm_vcpu *vcpu = &svm->vcpu;
-+
-+	if (boot_cpu_has(X86_FEATURE_V_TSC_AUX)) {
-+		bool v_tsc_aux = guest_cpuid_has(vcpu, X86_FEATURE_RDTSCP) ||
-+				 guest_cpuid_has(vcpu, X86_FEATURE_RDPID);
-+
-+		set_msr_interception(vcpu, svm->msrpm, MSR_TSC_AUX, v_tsc_aux, v_tsc_aux);
-+	}
-+}
-+
-+void sev_vcpu_after_set_cpuid(struct vcpu_svm *svm)
-+{
-+	struct kvm_vcpu *vcpu = &svm->vcpu;
-+	struct kvm_cpuid_entry2 *best;
-+
-+	/* For sev guests, the memory encryption bit is not reserved in CR3.  */
-+	best = kvm_find_cpuid_entry(vcpu, 0x8000001F);
-+	if (best)
-+		vcpu->arch.reserved_gpa_bits &= ~(1UL << (best->ebx & 0x3f));
-+
-+	if (sev_es_guest(svm->vcpu.kvm))
-+		sev_es_vcpu_after_set_cpuid(svm);
-+}
-+
- static void sev_es_init_vmcb(struct vcpu_svm *svm)
+ 	if (flush)
+--- a/arch/x86/kvm/mmu/tdp_mmu.c
++++ b/arch/x86/kvm/mmu/tdp_mmu.c
+@@ -956,12 +956,12 @@ static bool tdp_mmu_zap_leafs(struct kvm
+  * more SPTEs were zapped since the MMU lock was last acquired.
+  */
+ bool kvm_tdp_mmu_zap_leafs(struct kvm *kvm, int as_id, gfn_t start, gfn_t end,
+-			   bool can_yield, bool flush)
++			   bool flush)
  {
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
-@@ -2987,11 +3013,6 @@ static void sev_es_init_vmcb(struct vcpu
- 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 1, 1);
- 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 1, 1);
- 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
--
--	if (boot_cpu_has(X86_FEATURE_V_TSC_AUX) &&
--	    (guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDTSCP) ||
--	     guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDPID)))
--		set_msr_interception(vcpu, svm->msrpm, MSR_TSC_AUX, 1, 1);
- }
+ 	struct kvm_mmu_page *root;
  
- void sev_init_vmcb(struct vcpu_svm *svm)
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4173,7 +4173,6 @@ static bool svm_has_emulated_msr(struct
- static void svm_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 	for_each_tdp_mmu_root_yield_safe(kvm, root, as_id)
+-		flush = tdp_mmu_zap_leafs(kvm, root, start, end, can_yield, flush);
++		flush = tdp_mmu_zap_leafs(kvm, root, start, end, true, flush);
+ 
+ 	return flush;
+ }
+@@ -1221,8 +1221,13 @@ int kvm_tdp_mmu_map(struct kvm_vcpu *vcp
+ bool kvm_tdp_mmu_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range,
+ 				 bool flush)
  {
- 	struct vcpu_svm *svm = to_svm(vcpu);
--	struct kvm_cpuid_entry2 *best;
- 
- 	vcpu->arch.xsaves_enabled = guest_cpuid_has(vcpu, X86_FEATURE_XSAVE) &&
- 				    boot_cpu_has(X86_FEATURE_XSAVE) &&
-@@ -4198,12 +4197,8 @@ static void svm_vcpu_after_set_cpuid(str
- 
- 	svm_recalc_instruction_intercepts(vcpu, svm);
- 
--	/* For sev guests, the memory encryption bit is not reserved in CR3.  */
--	if (sev_guest(vcpu->kvm)) {
--		best = kvm_find_cpuid_entry(vcpu, 0x8000001F);
--		if (best)
--			vcpu->arch.reserved_gpa_bits &= ~(1UL << (best->ebx & 0x3f));
--	}
-+	if (sev_guest(vcpu->kvm))
-+		sev_vcpu_after_set_cpuid(svm);
- 
- 	init_vmcb_after_set_cpuid(vcpu);
+-	return kvm_tdp_mmu_zap_leafs(kvm, range->slot->as_id, range->start,
+-				     range->end, range->may_block, flush);
++	struct kvm_mmu_page *root;
++
++	for_each_tdp_mmu_root_yield_safe(kvm, root, range->slot->as_id)
++		flush = tdp_mmu_zap_leafs(kvm, root, range->start, range->end,
++					  range->may_block, flush);
++
++	return flush;
  }
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -677,6 +677,7 @@ void __init sev_hardware_setup(void);
- void sev_hardware_unsetup(void);
- int sev_cpu_init(struct svm_cpu_data *sd);
- void sev_init_vmcb(struct vcpu_svm *svm);
-+void sev_vcpu_after_set_cpuid(struct vcpu_svm *svm);
- void sev_free_vcpu(struct kvm_vcpu *vcpu);
- int sev_handle_vmgexit(struct kvm_vcpu *vcpu);
- int sev_es_string_io(struct vcpu_svm *svm, int size, unsigned int port, int in);
+ 
+ typedef bool (*tdp_handler_t)(struct kvm *kvm, struct tdp_iter *iter,
+--- a/arch/x86/kvm/mmu/tdp_mmu.h
++++ b/arch/x86/kvm/mmu/tdp_mmu.h
+@@ -15,8 +15,8 @@ __must_check static inline bool kvm_tdp_
+ void kvm_tdp_mmu_put_root(struct kvm *kvm, struct kvm_mmu_page *root,
+ 			  bool shared);
+ 
+-bool kvm_tdp_mmu_zap_leafs(struct kvm *kvm, int as_id, gfn_t start,
+-				 gfn_t end, bool can_yield, bool flush);
++bool kvm_tdp_mmu_zap_leafs(struct kvm *kvm, int as_id, gfn_t start, gfn_t end,
++			   bool flush);
+ bool kvm_tdp_mmu_zap_sp(struct kvm *kvm, struct kvm_mmu_page *sp);
+ void kvm_tdp_mmu_zap_all(struct kvm *kvm);
+ void kvm_tdp_mmu_invalidate_all_roots(struct kvm *kvm);
 
 
