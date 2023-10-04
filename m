@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9085A1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AEFC433C8;
-	Wed,  4 Oct 2023 18:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3681D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B963C433CA;
+	Wed,  4 Oct 2023 18:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443211;
-	bh=z/5CKU1M4u4ZozEKHKTydAYFB83lP1uwfJhhQZsQgLY=;
+	s=korg; t=1696443213;
+	bh=1JcdUqcdrg+Btaxs6nnfe0UoBUWjzfs2PHtFxWml1eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztNg1Yu5jAdV2Lv2m+FA+MB6dD3ZzS73RU9aVWQeQnHnRdkIkSqHnmCit0pvPyLCD
-	 A7kD+w58HypYySWBfq5xiVJPXLvwe4tRhwE0cfy4rpy5HZ3yjcF537sSclX9anWQ9B
-	 tClcL2xb/6vlwbLWvKseWNc7dPlWGvIqRb0/+a3g=
+	b=HnHU6GZ2dUVeiw0sENI4AfVUfILQvBlLLoD8Sg9i0cGNEsq4uGO2cEWS6AJm3Fru7
+	 mN4ev3ht/L8GPudPStrvuIGc7sA3vyMTnrlKZ0QEtjp+tDzcyME2ATOEX0UKJMHhPW
+	 ADHNkf9Iox54sgNYk6Na5hkGnEdLDRhpsW9cgfTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Lee, Cherie-Anne" <cherie.lee@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	info@starlabs.sg,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/259] net: rds: Fix possible NULL-pointer dereference
-Date: Wed,  4 Oct 2023 19:54:09 +0200
-Message-ID: <20231004175220.870807046@linuxfoundation.org>
+Subject: [PATCH 6.1 077/259] netfilter: nf_tables: disable toggling dormant table state more than once
+Date: Wed,  4 Oct 2023 19:54:10 +0200
+Message-ID: <20231004175220.911829777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,46 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f1d95df0f31048f1c59092648997686e3f7d9478 ]
+[ Upstream commit c9bd26513b3a11b3adb3c2ed8a31a01a87173ff1 ]
 
-In rds_rdma_cm_event_handler_cmn() check, if conn pointer exists
-before dereferencing it as rdma_set_service_type() argument
+nft -f -<<EOF
+add table ip t
+add table ip t { flags dormant; }
+add chain ip t c { type filter hook input priority 0; }
+add table ip t
+EOF
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Triggers a splat from nf core on next table delete because we lose
+track of right hook register state:
 
-Fixes: fd261ce6a30e ("rds: rdma: update rdma transport for tos")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+WARNING: CPU: 2 PID: 1597 at net/netfilter/core.c:501 __nf_unregister_net_hook
+RIP: 0010:__nf_unregister_net_hook+0x41b/0x570
+ nf_unregister_net_hook+0xb4/0xf0
+ __nf_tables_unregister_hook+0x160/0x1d0
+[..]
+
+The above should have table in *active* state, but in fact no
+hooks were registered.
+
+Reject on/off/on games rather than attempting to fix this.
+
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Reported-by: "Lee, Cherie-Anne" <cherie.lee@starlabs.sg>
+Cc: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Cc: info@starlabs.sg
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/netfilter/nf_tables_api.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index d36f3f6b43510..b15cf316b23a2 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -86,11 +86,13 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
- 		break;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 521f8c3cb6987..1d6a37430ff6b 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1211,6 +1211,10 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
+ 	     flags & NFT_TABLE_F_OWNER))
+ 		return -EOPNOTSUPP;
  
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
--		rdma_set_service_type(cm_id, conn->c_tos);
--		rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
--		/* XXX do we need to clean up if this fails? */
--		ret = rdma_resolve_route(cm_id,
--					 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+		if (conn) {
-+			rdma_set_service_type(cm_id, conn->c_tos);
-+			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
-+			/* XXX do we need to clean up if this fails? */
-+			ret = rdma_resolve_route(cm_id,
-+						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+		}
- 		break;
- 
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
++	/* No dormant off/on/off/on games in single transaction */
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return -EINVAL;
++
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWTABLE,
+ 				sizeof(struct nft_trans_table));
+ 	if (trans == NULL)
 -- 
 2.40.1
 
