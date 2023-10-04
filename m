@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263A61D55D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E254E1D55D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/PJxouO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE4CC433C8;
-	Wed,  4 Oct 2023 18:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHDM5Slj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B57C433C7;
+	Wed,  4 Oct 2023 18:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443376;
-	bh=S8625Jfh+whD7EHW/llD7JLIZosvzs2Ju86wJiC34IU=;
+	s=korg; t=1696443378;
+	bh=Xj97FjSrHGtCGpfsa0E9lfi9e/GRS6embV3jee5alWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/PJxouOGuLNH5Qp4tquGvMxreADL2JQyb7IXR1yij5Zvpw5iYroeaEAU+raqjIUu
-	 W79ArF7RFpWSIFOS86npGQbLJrFvPOeA9YV7tzCzevEIzx0vbcfcoBKiJ20kBkEJVc
-	 qEDyNw7aWJhxjjuqQygNA5z4ZELKnpkh3Zw4GMAE=
+	b=sHDM5SljoR8Cg6SBYztEzmFYaiPiipJqvmp+Fa5M7GPHbYfDdrmM1+6cuOAMZR9CG
+	 m/u16iy8Gpmbr69lqKU4X7E8fjRwI/GJyNqnGBf4aRKHMUG/RGch2LjRCb6Oa64zv/
+	 +xdgCk++c+jSyOGoMDZb8Q3aTGfPrLtjocTn/RJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Rossi <nathan.rossi@digi.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/259] selftests/powerpc: Fix emit_tests to work with run_kselftest.sh
-Date: Wed,  4 Oct 2023 19:55:08 +0200
-Message-ID: <20231004175223.546065118@linuxfoundation.org>
+Subject: [PATCH 6.1 136/259] soc: imx8m: Enable OCOTP clock for imx8mm before reading registers
+Date: Wed,  4 Oct 2023 19:55:09 +0200
+Message-ID: <20231004175223.585466590@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,95 +43,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Nathan Rossi <nathan.rossi@digi.com>
 
-[ Upstream commit 58b33e78a31782ffe25d404d5eba9a45fe636e27 ]
+[ Upstream commit 9d1e8275a28f51599d754ce661c91e0a689c0234 ]
 
-In order to use run_kselftest.sh the list of tests must be emitted to
-populate kselftest-list.txt.
+Commit 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the
+register") added configuration to enable the OCOTP clock before
+attempting to read from the associated registers.
 
-The powerpc Makefile is written to use EMIT_TESTS. But support for
-EMIT_TESTS was dropped in commit d4e59a536f50 ("selftests: Use runner.sh
-for emit targets"). Although prior to that commit a548de0fe8e1
-("selftests: lib.mk: add test execute bit check to EMIT_TESTS") had
-already broken run_kselftest.sh for powerpc due to the executable check
-using the wrong path.
+This same kexec issue is present with the imx8m SoCs that use the
+imx8mm_soc_uid function (e.g. imx8mp). This requires the imx8mm_soc_uid
+function to configure the OCOTP clock before accessing the associated
+registers. This change implements the same clock enable functionality
+that is present in the imx8mq_soc_revision function for the
+imx8mm_soc_uid function.
 
-It can be fixed by replacing the EMIT_TESTS definitions with actual
-emit_tests rules in the powerpc Makefiles. This makes run_kselftest.sh
-able to run powerpc tests:
-
-  $ cd linux
-  $ export ARCH=powerpc
-  $ export CROSS_COMPILE=powerpc64le-linux-gnu-
-  $ make headers
-  $ make -j -C tools/testing/selftests install
-  $ grep -c "^powerpc" tools/testing/selftests/kselftest_install/kselftest-list.txt
-  182
-
-Fixes: d4e59a536f50 ("selftests: Use runner.sh for emit targets")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230921072623.828772-1-mpe@ellerman.id.au
+Signed-off-by: Nathan Rossi <nathan.rossi@digi.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/Makefile     |  7 +++----
- tools/testing/selftests/powerpc/pmu/Makefile | 11 ++++++-----
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/soc/imx/soc-imx8m.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/testing/selftests/powerpc/Makefile b/tools/testing/selftests/powerpc/Makefile
-index ae2bfc0d822f2..c8c085fa05b05 100644
---- a/tools/testing/selftests/powerpc/Makefile
-+++ b/tools/testing/selftests/powerpc/Makefile
-@@ -58,12 +58,11 @@ override define INSTALL_RULE
- 	done;
- endef
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index 32ed9dc88e455..08197b03955dd 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -100,6 +100,7 @@ static void __init imx8mm_soc_uid(void)
+ {
+ 	void __iomem *ocotp_base;
+ 	struct device_node *np;
++	struct clk *clk;
+ 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
+ 		     IMX8MP_OCOTP_UID_OFFSET : 0;
  
--override define EMIT_TESTS
-+emit_tests:
- 	+@for TARGET in $(SUB_DIRS); do \
- 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
--		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests;\
-+		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET $@;\
- 	done;
--endef
+@@ -109,11 +110,20 @@ static void __init imx8mm_soc_uid(void)
  
- override define CLEAN
- 	+@for TARGET in $(SUB_DIRS); do \
-@@ -76,4 +75,4 @@ endef
- tags:
- 	find . -name '*.c' -o -name '*.h' | xargs ctags
+ 	ocotp_base = of_iomap(np, 0);
+ 	WARN_ON(!ocotp_base);
++	clk = of_clk_get_by_name(np, NULL);
++	if (IS_ERR(clk)) {
++		WARN_ON(IS_ERR(clk));
++		return;
++	}
++
++	clk_prepare_enable(clk);
  
--.PHONY: tags $(SUB_DIRS)
-+.PHONY: tags $(SUB_DIRS) emit_tests
-diff --git a/tools/testing/selftests/powerpc/pmu/Makefile b/tools/testing/selftests/powerpc/pmu/Makefile
-index 2b95e44d20ff9..a284fa874a9f1 100644
---- a/tools/testing/selftests/powerpc/pmu/Makefile
-+++ b/tools/testing/selftests/powerpc/pmu/Makefile
-@@ -30,13 +30,14 @@ override define RUN_TESTS
- 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
- endef
+ 	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
+ 	soc_uid <<= 32;
+ 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
  
--DEFAULT_EMIT_TESTS := $(EMIT_TESTS)
--override define EMIT_TESTS
--	$(DEFAULT_EMIT_TESTS)
-+emit_tests:
-+	for TEST in $(TEST_GEN_PROGS); do \
-+		BASENAME_TEST=`basename $$TEST`;	\
-+		echo "$(COLLECTION):$$BASENAME_TEST";	\
-+	done
- 	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
- 	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
- 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
--endef
- 
- DEFAULT_INSTALL_RULE := $(INSTALL_RULE)
- override define INSTALL_RULE
-@@ -64,4 +65,4 @@ sampling_tests:
- event_code_tests:
- 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
- 
--.PHONY: all run_tests ebb sampling_tests event_code_tests
-+.PHONY: all run_tests ebb sampling_tests event_code_tests emit_tests
++	clk_disable_unprepare(clk);
++	clk_put(clk);
+ 	iounmap(ocotp_base);
+ 	of_node_put(np);
+ }
 -- 
 2.40.1
 
