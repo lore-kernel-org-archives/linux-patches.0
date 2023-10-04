@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2161C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2CB1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTrQNhkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6E6C433C7;
-	Wed,  4 Oct 2023 18:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18vjFPAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2801C433C9;
+	Wed,  4 Oct 2023 18:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444515;
-	bh=Rp3ubGkb9cHy1ZXmwvkSMZz2PcJvXmsaKLueSAmOEPc=;
+	s=korg; t=1696444518;
+	bh=mk0ODCAWRYfqHlYm6zW1OWjleAD80o+WcN/1mXcQiAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eTrQNhkXw3TVClIQun3jAdl7FtWezJYvq8tqupIrbFdzRUyMtoCweMOnyAo4K8i5J
-	 GWPqMvYHAAxPN2LzWSpMQ45nBRnNKSCQp6D7LjpfDr/j3xbtZs21Ib0VULYfnUxn2P
-	 joRbc+2ozY+eba0jky31m1zuNNGdPfxAfxS4AnoE=
+	b=18vjFPABS33YT8go3VRv5i0SvWpNxu6dgIEFl/M0d1qJ14HeXip+Q6zCVGsy3n6Ub
+	 i/nGXdPCEieJWwqD0R0MW11NP5i0sT5Xgqu/fgPsxehWB/rAacg9t89MPKj4g7dT7o
+	 zTScYeqYq876Zzc4To228bDGDMHeBo/gsiiguotg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.5 249/321] mptcp: move __mptcp_error_report in protocol.c
-Date: Wed,  4 Oct 2023 19:56:34 +0200
-Message-ID: <20231004175240.806253795@linuxfoundation.org>
+	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 240/321] spi: zynqmp-gqspi: fix clock imbalance on probe failure
+Date: Wed,  4 Oct 2023 19:56:25 +0200
+Message-ID: <20231004175240.366714254@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,115 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit d5fbeff1ab812b6c473b6924bee8748469462e2c upstream.
+commit 1527b076ae2cb6a9c590a02725ed39399fcad1cf upstream.
 
-This will simplify the next patch ("mptcp: process pending subflow error
-on close").
+Make sure that the device is not runtime suspended before explicitly
+disabling the clocks on probe failure and on driver unbind to avoid a
+clock enable-count imbalance.
 
-No functional change intended.
-
-Cc: stable@vger.kernel.org # v5.12+
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9e3a000362ae ("spi: zynqmp: Add pm runtime support")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/Message-Id: <20230622082435.7873-1-johan+linaro@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   36 ++++++++++++++++++++++++++++++++++++
- net/mptcp/subflow.c  |   36 ------------------------------------
- 2 files changed, 36 insertions(+), 36 deletions(-)
+ drivers/spi/spi-zynqmp-gqspi.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -772,6 +772,42 @@ static bool __mptcp_ofo_queue(struct mpt
- 	return moved;
- }
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1342,9 +1342,9 @@ static int zynqmp_qspi_probe(struct plat
+ 	return 0;
  
-+void __mptcp_error_report(struct sock *sk)
-+{
-+	struct mptcp_subflow_context *subflow;
-+	struct mptcp_sock *msk = mptcp_sk(sk);
-+
-+	mptcp_for_each_subflow(msk, subflow) {
-+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		int err = sock_error(ssk);
-+		int ssk_state;
-+
-+		if (!err)
-+			continue;
-+
-+		/* only propagate errors on fallen-back sockets or
-+		 * on MPC connect
-+		 */
-+		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
-+			continue;
-+
-+		/* We need to propagate only transition to CLOSE state.
-+		 * Orphaned socket will see such state change via
-+		 * subflow_sched_work_if_closed() and that path will properly
-+		 * destroy the msk as needed.
-+		 */
-+		ssk_state = inet_sk_state_load(ssk);
-+		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
-+			inet_sk_state_store(sk, ssk_state);
-+		WRITE_ONCE(sk->sk_err, -err);
-+
-+		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
-+		smp_wmb();
-+		sk_error_report(sk);
-+		break;
-+	}
-+}
-+
- /* In most cases we will be able to lock the mptcp socket.  If its already
-  * owned, we need to defer to the work queue to avoid ABBA deadlock.
-  */
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1362,42 +1362,6 @@ void mptcp_space(const struct sock *ssk,
- 	*full_space = tcp_full_space(sk);
- }
- 
--void __mptcp_error_report(struct sock *sk)
--{
--	struct mptcp_subflow_context *subflow;
--	struct mptcp_sock *msk = mptcp_sk(sk);
--
--	mptcp_for_each_subflow(msk, subflow) {
--		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		int err = sock_error(ssk);
--		int ssk_state;
--
--		if (!err)
--			continue;
--
--		/* only propagate errors on fallen-back sockets or
--		 * on MPC connect
--		 */
--		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
--			continue;
--
--		/* We need to propagate only transition to CLOSE state.
--		 * Orphaned socket will see such state change via
--		 * subflow_sched_work_if_closed() and that path will properly
--		 * destroy the msk as needed.
--		 */
--		ssk_state = inet_sk_state_load(ssk);
--		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
--			inet_sk_state_store(sk, ssk_state);
--		WRITE_ONCE(sk->sk_err, -err);
--
--		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
--		smp_wmb();
--		sk_error_report(sk);
--		break;
--	}
--}
--
- static void subflow_error_report(struct sock *ssk)
+ clk_dis_all:
+-	pm_runtime_put_sync(&pdev->dev);
+-	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+ clk_dis_pclk:
+ 	clk_disable_unprepare(xqspi->pclk);
+@@ -1368,11 +1368,15 @@ static void zynqmp_qspi_remove(struct pl
  {
- 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
+ 	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
+ 
++	pm_runtime_get_sync(&pdev->dev);
++
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+ 	clk_disable_unprepare(xqspi->pclk);
+-	pm_runtime_set_suspended(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
+ }
+ 
+ MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
 
 
