@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A411D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9F61D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaEqpqU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12F2C433C9;
-	Wed,  4 Oct 2023 18:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQLpOcqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDCBC433C9;
+	Wed,  4 Oct 2023 18:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443942;
-	bh=B1C8ErroQWswcGvww9iM+7pF7H6DFo7mP0Lb7DgLEmc=;
+	s=korg; t=1696443944;
+	bh=ZGriupF7eVJODJXhP7X/FLQXhcTGFiXt/mU5kjSW9mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaEqpqU2P2zjqzQ3n0GmZ9flmbhBzLMqIT8oJpHCQTeEJztRyU9ZVweV6BCP4JboD
-	 Z6pGf5Vlt8TxSFO1GXrxmkest+3AIbRJ3cYc+R3sDYeew9k35KDCLROIy2wCNcSMTf
-	 mpaHIXrOZ9ENv5udch17CIaG9SuecoVKi5tZSTf8=
+	b=GQLpOcqy5v02XlkV/A3s2wRxff+oDVMmRqiq4/r1JvDTS64GcGE7WgJ6x7RC+XEc6
+	 MauI2s5YoRb+L42jMi3EU9GTjtHD6GIlzfHY28nlk1hM/9jKnPT0rpjKft8t6giMn/
+	 soqRYkRZgYY+y+7PCFVChZQI2D5mdmFsrunr3ja0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Malani <pmalani@chromium.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Stephen Boyd <swboyd@chromium.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 074/321] platform/x86: intel_scu_ipc: Check status upon timeout in ipc_wait_for_interrupt()
-Date: Wed,  4 Oct 2023 19:53:39 +0200
-Message-ID: <20231004175232.633775631@linuxfoundation.org>
+Subject: [PATCH 6.5 075/321] platform/x86: intel_scu_ipc: Dont override scu in intel_scu_ipc_dev_simple_command()
+Date: Wed,  4 Oct 2023 19:53:40 +0200
+Message-ID: <20231004175232.686448281@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -40,6 +40,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
@@ -48,59 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 427fada620733e6474d783ae6037a66eae42bf8c ]
+[ Upstream commit efce78584e583226e9a1f6cb2fb555d6ff47c3e7 ]
 
-It's possible for the completion in ipc_wait_for_interrupt() to timeout,
-simply because the interrupt was delayed in being processed. A timeout
-in itself is not an error. This driver should check the status register
-upon a timeout to ensure that scheduling or interrupt processing delays
-don't affect the outcome of the IPC return value.
+Andy discovered this bug during patch review. The 'scu' argument to this
+function shouldn't be overridden by the function itself. It doesn't make
+any sense. Looking at the commit history, we see that commit
+f57fa18583f5 ("platform/x86: intel_scu_ipc: Introduce new SCU IPC API")
+removed the setting of the scu to ipcdev in other functions, but not
+this one. That was an oversight. Remove this line so that we stop
+overriding the scu instance that is used by this function.
 
- CPU0                                                   SCU
- ----                                                   ---
- ipc_wait_for_interrupt()
-  wait_for_completion_timeout(&scu->cmd_complete)
-  [TIMEOUT]                                             status[IPC_STATUS_BUSY]=0
-
-Fix this problem by reading the status bit in all cases, regardless of
-the timeout. If the completion times out, we'll assume the problem was
-that the IPC_STATUS_BUSY bit was still set, but if the status bit is
-cleared in the meantime we know that we hit some scheduling delay and we
-should just check the error bit.
-
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/r/ZPjdZ3xNmBEBvNiS@smile.fi.intel.com
 Cc: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
+Fixes: f57fa18583f5 ("platform/x86: intel_scu_ipc: Introduce new SCU IPC API")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230913212723.3055315-3-swboyd@chromium.org
+Link: https://lore.kernel.org/r/20230913212723.3055315-4-swboyd@chromium.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_scu_ipc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel_scu_ipc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-index 4c774ee8bb1bb..299c15312acb8 100644
+index 299c15312acb8..3271f81a9c007 100644
 --- a/drivers/platform/x86/intel_scu_ipc.c
 +++ b/drivers/platform/x86/intel_scu_ipc.c
-@@ -248,10 +248,12 @@ static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
- {
- 	int status;
- 
--	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
--		return -ETIMEDOUT;
-+	wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT);
- 
- 	status = ipc_read_status(scu);
-+	if (status & IPC_STATUS_BUSY)
-+		return -ETIMEDOUT;
-+
- 	if (status & IPC_STATUS_ERR)
- 		return -EIO;
- 
+@@ -443,7 +443,6 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
+ 		mutex_unlock(&ipclock);
+ 		return -ENODEV;
+ 	}
+-	scu = ipcdev;
+ 	cmdval = sub << 12 | cmd;
+ 	ipc_command(scu, cmdval);
+ 	err = intel_scu_ipc_check_status(scu);
 -- 
 2.40.1
 
