@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963701D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC4DC433CA;
-	Wed,  4 Oct 2023 18:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F0C1D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7772FC433C7;
+	Wed,  4 Oct 2023 18:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443127;
-	bh=WKIG0RgnjzfpU+uSw7Ob/TuBHkHC7+D7G79s+Y0yqoM=;
+	s=korg; t=1696443129;
+	bh=w9b0s4nAkfI1peRCPGVU+qxkqOoqQTo4aFrtexdu4H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZuyYdgQB+jKNbPZfY2nitof9VZvbPeaOrGecu6tBwlvyO67extf6N0nYYyqLZ74g
-	 goM0VbWeYLXivju0wezayPv3a+aZJutuxGmN4plFBaASJaMillGxihrD4wRxvEO3c8
-	 O1B5ffeNcA8Nh+c1mYfkQEO6aHpvxJIHFnWnQKDs=
+	b=ANYZ/WNr/mnRLyoGsdrLlCEqLL7m1zKsCbqaRTEiI7QOwRxQqvDoxTQHQRXlYFY6a
+	 wJTjOrENVplQFXQT3z8eg8G0iYauPvOYxYMrPFlTKJFXmtFMGtbPuNJh+LE8UyTFJp
+	 CWjkjygGBamskXxTtfCgjPiNPuZd2Be+/tKP66Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/259] ASoC: hdaudio.c: Add missing check for devm_kstrdup
-Date: Wed,  4 Oct 2023 19:53:39 +0200
-Message-ID: <20231004175219.563677061@linuxfoundation.org>
+Subject: [PATCH 6.1 047/259] ASoC: imx-audmix: Fix return error with devm_clk_get()
+Date: Wed,  4 Oct 2023 19:53:40 +0200
+Message-ID: <20231004175219.603563260@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -35,46 +35,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit c04efbfd76d23157e64e6d6147518c187ab4233a ]
+[ Upstream commit b19a5733de255cabba5feecabf6e900638b582d1 ]
 
-Because of the potential failure of the devm_kstrdup(), the
-dl[i].codecs->name could be NULL.
-Therefore, we need to check it and return -ENOMEM in order to transfer
-the error.
+The devm_clk_get() can return -EPROBE_DEFER error,
+modify the error code to be -EINVAL is not correct, which
+cause the -EPROBE_DEFER error is not correctly handled.
 
-Fixes: 97030a43371e ("ASoC: Intel: avs: Add HDAudio machine board")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915021344.3078-1-nichen@iscas.ac.cn
+This patch is to fix the return error code.
+
+Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/1694757731-18308-1-git-send-email-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/hdaudio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/fsl/imx-audmix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/boards/hdaudio.c b/sound/soc/intel/avs/boards/hdaudio.c
-index 073663ba140d0..a65939f30ac47 100644
---- a/sound/soc/intel/avs/boards/hdaudio.c
-+++ b/sound/soc/intel/avs/boards/hdaudio.c
-@@ -54,6 +54,9 @@ static int avs_create_dai_links(struct device *dev, struct hda_codec *codec, int
- 			return -ENOMEM;
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index d8e99b263ab21..cbe24d5b4e46a 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -320,7 +320,7 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->cpu_mclk)) {
+ 		ret = PTR_ERR(priv->cpu_mclk);
+ 		dev_err(&cpu_pdev->dev, "failed to get DAI mclk1: %d\n", ret);
+-		return -EINVAL;
++		return ret;
+ 	}
  
- 		dl[i].codecs->name = devm_kstrdup(dev, cname, GFP_KERNEL);
-+		if (!dl[i].codecs->name)
-+			return -ENOMEM;
-+
- 		dl[i].codecs->dai_name = pcm->name;
- 		dl[i].num_codecs = 1;
- 		dl[i].num_cpus = 1;
+ 	priv->audmix_pdev = audmix_pdev;
 -- 
 2.40.1
 
