@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AF71D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE601D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148C0C433C7;
-	Wed,  4 Oct 2023 18:07:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D140BC433C7;
+	Wed,  4 Oct 2023 18:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442874;
-	bh=+5ebbVmJ+WwEVSUgG4dPBRD4y+jpkGpNoBR2w4WnWG0=;
+	s=korg; t=1696442877;
+	bh=rmCea8LePp2aflmpsGKWa8jlWYDgfXdrpf9x9PaICUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXLACPGVnMASSR0mCHYtUDiziQakv2uy94jDJH81cHaD/wQR+3pyvDQV/Pi3Y0Qe7
-	 ST6VF30MOrV6nr2Aat1IFKRmCQfKePVKoOoodpdDiDRTQyIRUsL63KjB9G28AOxkfA
-	 JrgC9mk9LRQC407uDlkYdcCxs7qGgOceAQrVSsPI=
+	b=ln27Rs0L+pRQdzXyckkdPxPo1DjBu47IIuKOCJTZ+BsZ2SjNkFTM7v6OSLly/9AHG
+	 TsbCmb6BhMMyscaTJc8CYDM7+krotCrPwqjVHbCkNUbMpwr/xQNiqNOf9xG9TenjaC
+	 Hw9dUaJjDQotbTb5Wya0qUWI2avdLnrW4rcqzYAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <rbmarliere@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Johnathan Mantey <johnathanx.mantey@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/183] selftests: fix dependency checker script
-Date: Wed,  4 Oct 2023 19:55:53 +0200
-Message-ID: <20231004175209.063043872@linuxfoundation.org>
+Subject: [PATCH 5.15 140/183] ncsi: Propagate carrier gain/loss events to the NCSI controller
+Date: Wed,  4 Oct 2023 19:56:11 +0200
+Message-ID: <20231004175209.842896994@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,177 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <rbmarliere@gmail.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
 
-[ Upstream commit 5f9dd2e896a91bfca90f8463eb6808c03d535d8a ]
+[ Upstream commit 3780bb29311eccb7a1c9641032a112eed237f7e3 ]
 
-This patch fixes inconsistencies in the parsing rules of the levels 1
-and 2 of the kselftest_deps.sh.  It was added the levels 4 and 5 to
-account for a few edge cases that are present in some tests, also some
-minor identation styling have been fixed (s/    /\t/g).
+Report the carrier/no-carrier state for the network interface
+shared between the BMC and the passthrough channel. Without this
+functionality the BMC is unable to reconfigure the NIC in the event
+of a re-cabling to a different subnet.
 
-Signed-off-by: Ricardo B. Marliere <rbmarliere@gmail.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Johnathan Mantey <johnathanx.mantey@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_deps.sh | 77 +++++++++++++++++++----
- 1 file changed, 65 insertions(+), 12 deletions(-)
+ net/ncsi/ncsi-aen.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/kselftest_deps.sh b/tools/testing/selftests/kselftest_deps.sh
-index 00e60d6eb16bc..7e51f4a373d35 100755
---- a/tools/testing/selftests/kselftest_deps.sh
-+++ b/tools/testing/selftests/kselftest_deps.sh
-@@ -46,11 +46,11 @@ fi
- print_targets=0
+diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
+index 62fb1031763d1..f8854bff286cb 100644
+--- a/net/ncsi/ncsi-aen.c
++++ b/net/ncsi/ncsi-aen.c
+@@ -89,6 +89,11 @@ static int ncsi_aen_handler_lsc(struct ncsi_dev_priv *ndp,
+ 	if ((had_link == has_link) || chained)
+ 		return 0;
  
- while getopts "p" arg; do
--    case $arg in
--        p)
-+	case $arg in
-+		p)
- 		print_targets=1
- 	shift;;
--    esac
-+	esac
- done
- 
- if [ $# -eq 0 ]
-@@ -92,6 +92,10 @@ pass_cnt=0
- # Get all TARGETS from selftests Makefile
- targets=$(egrep "^TARGETS +|^TARGETS =" Makefile | cut -d "=" -f2)
- 
-+# Initially, in LDLIBS related lines, the dep checker needs
-+# to ignore lines containing the following strings:
-+filter="\$(VAR_LDLIBS)\|pkg-config\|PKG_CONFIG\|IOURING_EXTRA_LIBS"
++	if (had_link)
++		netif_carrier_off(ndp->ndev.dev);
++	else
++		netif_carrier_on(ndp->ndev.dev);
 +
- # Single test case
- if [ $# -eq 2 ]
- then
-@@ -100,6 +104,8 @@ then
- 	l1_test $test
- 	l2_test $test
- 	l3_test $test
-+	l4_test $test
-+	l5_test $test
- 
- 	print_results $1 $2
- 	exit $?
-@@ -113,7 +119,7 @@ fi
- # Append space at the end of the list to append more tests.
- 
- l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 2: LDLIBS set dynamically.
- #
-@@ -126,7 +132,7 @@ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
- # Append space at the end of the list to append more tests.
- 
- l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 3
- # memfd and others use pkg-config to find mount and fuse libs
-@@ -138,11 +144,32 @@ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
- #	VAR_LDLIBS := $(shell pkg-config fuse --libs 2>/dev/null)
- 
- l3_tests=$(grep -r --include=Makefile "^VAR_LDLIBS" | \
--		grep -v "pkg-config" | awk -F: '{print $1}')
-+		grep -v "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
- 
--#echo $l1_tests
--#echo $l2_1_tests
--#echo $l3_tests
-+# Level 4
-+# some tests may fall back to default using `|| echo -l<libname>`
-+# if pkg-config doesn't find the libs, instead of using VAR_LDLIBS
-+# as per level 3 checks.
-+# e.g:
-+# netfilter/Makefile
-+#	LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
-+l4_tests=$(grep -r --include=Makefile "^LDLIBS" | \
-+		grep "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
-+
-+# Level 5
-+# some tests may use IOURING_EXTRA_LIBS to add extra libs to LDLIBS,
-+# which in turn may be defined in a sub-Makefile
-+# e.g.:
-+# mm/Makefile
-+#	$(OUTPUT)/gup_longterm: LDLIBS += $(IOURING_EXTRA_LIBS)
-+l5_tests=$(grep -r --include=Makefile "LDLIBS +=.*\$(IOURING_EXTRA_LIBS)" | \
-+	awk -F: '{print $1}' | uniq)
-+
-+#echo l1_tests $l1_tests
-+#echo l2_tests $l2_tests
-+#echo l3_tests $l3_tests
-+#echo l4_tests $l4_tests
-+#echo l5_tests $l5_tests
- 
- all_tests
- print_results $1 $2
-@@ -164,24 +191,32 @@ all_tests()
- 	for test in $l3_tests; do
- 		l3_test $test
- 	done
-+
-+	for test in $l4_tests; do
-+		l4_test $test
-+	done
-+
-+	for test in $l5_tests; do
-+		l5_test $test
-+	done
- }
- 
- # Use same parsing used for l1_tests and pick libraries this time.
- l1_test()
- {
- 	test_libs=$(grep --include=Makefile "^LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | \
- 			sed -e 's/+/ /' | cut -d "=" -f 2)
- 
- 	check_libs $test $test_libs
- }
- 
--# Use same parsing used for l2__tests and pick libraries this time.
-+# Use same parsing used for l2_tests and pick libraries this time.
- l2_test()
- {
- 	test_libs=$(grep --include=Makefile ": LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | sed -e 's/+/ /' | \
- 			cut -d "=" -f 2)
- 
-@@ -197,6 +232,24 @@ l3_test()
- 	check_libs $test $test_libs
- }
- 
-+l4_test()
-+{
-+	test_libs=$(grep --include=Makefile "^VAR_LDLIBS\|^LDLIBS" $test | \
-+			grep "\(pkg-config\|PKG_CONFIG\).*|| echo " | \
-+			sed -e 's/.*|| echo //' | sed -e 's/)$//')
-+
-+	check_libs $test $test_libs
-+}
-+
-+l5_test()
-+{
-+	tests=$(find $(dirname "$test") -type f -name "*.mk")
-+	test_libs=$(grep "^IOURING_EXTRA_LIBS +\?=" $tests | \
-+			cut -d "=" -f 2)
-+
-+	check_libs $test $test_libs
-+}
-+
- check_libs()
- {
- 
+ 	if (!ndp->multi_package && !nc->package->multi_channel) {
+ 		if (had_link) {
+ 			ndp->flags |= NCSI_DEV_RESHUFFLE;
 -- 
 2.40.1
 
