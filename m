@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC601D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9830C1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDrq7AK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF4FC433C7;
-	Wed,  4 Oct 2023 18:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB5sQW/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB8EC433C7;
+	Wed,  4 Oct 2023 18:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443517;
-	bh=0c8UtNBP5Pw0khjtvPFODBUTIaVprmyjVjV1rLGVmho=;
+	s=korg; t=1696443520;
+	bh=042rId0dKZIb7Eje3+Oo6xSPE4TguqI3MMosyc1oMXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDrq7AK/sMVXryg/oFCQ3MhNqkeazUg2ZrA9guTqyWxEU6ztdH9nPqVhfIqfmaHY2
-	 QgflrPxtTQr//TnUCQ1YpWNqn7racaRWWwgzbPb3Hhlb4SAsAZPkJzI6+n/gaUzzlm
-	 7GSUYs5J/OPU6I/kyNRdGU7L5R70hWiJ9034b8lU=
+	b=uB5sQW/zeqJTqWDZcl4F5sdLOeQ7pmP7SW3/SXcLpOxX+lxyRIqfT/gl8f+DOuJNA
+	 PsczyAeK3FIYxkmgKhPesdb5P4Eb/elqbcHFq6CyK2a/3tR1hAwJIyuum/zTkrCme/
+	 PhJORoKuafXOs2aoR+0xQZ/vcRqARRafNh5JU914=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 157/259] btrfs: assert delayed node locked when removing delayed item
-Date: Wed,  4 Oct 2023 19:55:30 +0200
-Message-ID: <20231004175224.501970475@linuxfoundation.org>
+Subject: [PATCH 6.1 184/259] memblock tests: fix warning: "__ALIGN_KERNEL" redefined
+Date: Wed,  4 Oct 2023 19:55:57 +0200
+Message-ID: <20231004175225.740055447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,70 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Mike Rapoport (IBM) <rppt@kernel.org>
 
-[ Upstream commit a57c2d4e46f519b24558ae0752c17eec416ac72a ]
+[ Upstream commit 5e1bffbdb63baf89f3bf0b6bafb50903432a7434 ]
 
-When removing a delayed item, or releasing which will remove it as well,
-we will modify one of the delayed node's rbtrees and item counter if the
-delayed item is in one of the rbtrees. This require having the delayed
-node's mutex locked, otherwise we will race with other tasks modifying
-the rbtrees and the counter.
+Building memblock tests produces the following warning:
 
-This is motivated by a previous version of another patch actually calling
-btrfs_release_delayed_item() after unlocking the delayed node's mutex and
-against a delayed item that is in a rbtree.
+cc -I. -I../../include -Wall -O2 -fsanitize=address -fsanitize=undefined -D CONFIG_PHYS_ADDR_T_64BIT   -c -o main.o main.c
+In file included from ../../include/linux/pfn.h:5,
+                 from ./linux/memory_hotplug.h:6,
+                 from ./linux/init.h:7,
+                 from ./linux/memblock.h:11,
+                 from tests/common.h:8,
+                 from tests/basic_api.h:5,
+                 from main.c:2:
+../../include/linux/mm.h:14: warning: "__ALIGN_KERNEL" redefined
+   14 | #define __ALIGN_KERNEL(x, a)            __ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
+      |
+In file included from ../../include/linux/mm.h:6,
+                 from ../../include/linux/pfn.h:5,
+                 from ./linux/memory_hotplug.h:6,
+                 from ./linux/init.h:7,
+                 from ./linux/memblock.h:11,
+                 from tests/common.h:8,
+                 from tests/basic_api.h:5,
+                 from main.c:2:
+../../include/uapi/linux/const.h:31: note: this is the location of the previous definition
+   31 | #define __ALIGN_KERNEL(x, a)            __ALIGN_KERNEL_MASK(x, (__typeof__(x))(a) - 1)
+      |
 
-So assert at __btrfs_remove_delayed_item() that the delayed node's mutex
-is locked.
+Remove definitions of __ALIGN_KERNEL and __ALIGN_KERNEL_MASK from
+tools/include/linux/mm.h to fix it.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-inode.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ tools/include/linux/mm.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
-index 9dacf72a75d0e..1331e56e8e84f 100644
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -407,6 +407,7 @@ static void finish_one_item(struct btrfs_delayed_root *delayed_root)
+diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
+index a03d9bba51514..43be27bcc897d 100644
+--- a/tools/include/linux/mm.h
++++ b/tools/include/linux/mm.h
+@@ -11,8 +11,6 @@
  
- static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
- {
-+	struct btrfs_delayed_node *delayed_node = delayed_item->delayed_node;
- 	struct rb_root_cached *root;
- 	struct btrfs_delayed_root *delayed_root;
+ #define PHYS_ADDR_MAX	(~(phys_addr_t)0)
  
-@@ -414,18 +415,21 @@ static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
- 	if (RB_EMPTY_NODE(&delayed_item->rb_node))
- 		return;
+-#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
+-#define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
+ #define ALIGN(x, a)			__ALIGN_KERNEL((x), (a))
+ #define ALIGN_DOWN(x, a)		__ALIGN_KERNEL((x) - ((a) - 1), (a))
  
--	delayed_root = delayed_item->delayed_node->root->fs_info->delayed_root;
-+	/* If it's in a rbtree, then we need to have delayed node locked. */
-+	lockdep_assert_held(&delayed_node->mutex);
-+
-+	delayed_root = delayed_node->root->fs_info->delayed_root;
- 
- 	BUG_ON(!delayed_root);
- 
- 	if (delayed_item->type == BTRFS_DELAYED_INSERTION_ITEM)
--		root = &delayed_item->delayed_node->ins_root;
-+		root = &delayed_node->ins_root;
- 	else
--		root = &delayed_item->delayed_node->del_root;
-+		root = &delayed_node->del_root;
- 
- 	rb_erase_cached(&delayed_item->rb_node, root);
- 	RB_CLEAR_NODE(&delayed_item->rb_node);
--	delayed_item->delayed_node->count--;
-+	delayed_node->count--;
- 
- 	finish_one_item(delayed_root);
- }
 -- 
 2.40.1
 
