@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E081D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356E8C433C9;
-	Wed,  4 Oct 2023 18:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37BB1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005F5C433C7;
+	Wed,  4 Oct 2023 18:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443275;
-	bh=X4iDKUxemuAF5AOtlk0CV26CioeIwuxSt/MD7oc18cY=;
+	s=korg; t=1696443278;
+	bh=cBVKFjnUKC09UEBclA+WGL27oZHQDcKsnVPRsRU7Y78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ui4jsfzoUnnalxvIFhNMMSFG7PSBjk0bWBBJChWge7Lac1C7owzIyUSq5rXLtHRFf
-	 NOgQNvda9MQrKeyQzBQv+ZYzi4saGgQxqDz+rKYf1y0vfKO3vA++iKrXHOR7eX0XVh
-	 qRW3GyZxqwc3DGJM8PpGMUX1PHE5HYeva2+elUcY=
+	b=E6gOxZG8soKoDzUmxr8P2tTRK4IuMvEF+dHYYRoIRB1aNsujebZ+LoZeKw/z5h2oP
+	 4h87CQXAKj3pofXEAHvf56hj8/fUn5s5sP4ZBQl9GlYrUvC3oWTkBlsulL/EC3RSh7
+	 Wzxo2SCjZD5rJje4YGBOSxsby1nJfrGhd9chUIac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mike Rappoport <rppt@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/259] net: hns3: fix GRE checksum offload issue
-Date: Wed,  4 Oct 2023 19:54:03 +0200
-Message-ID: <20231004175220.617501142@linuxfoundation.org>
+Subject: [PATCH 6.1 061/259] x86/mm, kexec, ima: Use memblock_free_late() from ima_free_kexec_buffer()
+Date: Wed,  4 Oct 2023 19:53:54 +0200
+Message-ID: <20231004175220.221224682@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,44 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit f9f651261130cdcb7adc9a3e365b356bc2749ab3 ]
+[ Upstream commit 34cf99c250d5cd2530b93a57b0de31d3aaf8685b ]
 
-The device_version V3 hardware can't offload the checksum for IP in GRE
-packets, but can do it for NvGRE. So default to disable the checksum and
-GSO offload for GRE, but keep the ability to enable it when only using
-NvGRE.
+The code calling ima_free_kexec_buffer() runs long after the memblock
+allocator has already been torn down, potentially resulting in a use
+after free in memblock_isolate_range().
 
-Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+With KASAN or KFENCE, this use after free will result in a BUG
+from the idle task, and a subsequent kernel panic.
+
+Switch ima_free_kexec_buffer() over to memblock_free_late() to avoid
+that bug.
+
+Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
+Suggested-by: Mike Rappoport <rppt@kernel.org>
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230817135558.67274c83@imladris.surriel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/kernel/setup.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 8aae179554a81..04c9baca1b0f8 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3352,6 +3352,15 @@ static void hns3_set_default_feature(struct net_device *netdev)
- 		  NETIF_F_HW_TC);
+diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+index 892609cde4a20..804a252382da7 100644
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -363,15 +363,11 @@ static void __init add_early_ima_buffer(u64 phys_addr)
+ #if defined(CONFIG_HAVE_IMA_KEXEC) && !defined(CONFIG_OF_FLATTREE)
+ int __init ima_free_kexec_buffer(void)
+ {
+-	int rc;
+-
+ 	if (!ima_kexec_buffer_size)
+ 		return -ENOENT;
  
- 	netdev->hw_enc_features |= netdev->vlan_features | NETIF_F_TSO_MANGLEID;
-+
-+	/* The device_version V3 hardware can't offload the checksum for IP in
-+	 * GRE packets, but can do it for NvGRE. So default to disable the
-+	 * checksum and GSO offload for GRE.
-+	 */
-+	if (ae_dev->dev_version > HNAE3_DEVICE_VERSION_V2) {
-+		netdev->features &= ~NETIF_F_GSO_GRE;
-+		netdev->features &= ~NETIF_F_GSO_GRE_CSUM;
-+	}
- }
+-	rc = memblock_phys_free(ima_kexec_buffer_phys,
+-				ima_kexec_buffer_size);
+-	if (rc)
+-		return rc;
++	memblock_free_late(ima_kexec_buffer_phys,
++			   ima_kexec_buffer_size);
  
- static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
+ 	ima_kexec_buffer_phys = 0;
+ 	ima_kexec_buffer_size = 0;
 -- 
 2.40.1
 
