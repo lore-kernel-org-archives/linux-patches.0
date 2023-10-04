@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447EE136C
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAEA1DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDv4nXyV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96F6C433C8;
-	Wed,  4 Oct 2023 18:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2X35KA1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8283AC433C8;
+	Wed,  4 Oct 2023 18:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444208;
-	bh=HmZft+h2vyo78N5b3gkszDY+CSGJ5eOIWVNovvxxRj0=;
+	s=korg; t=1696444210;
+	bh=x1get3cokCt1FnkEf27Wbc5ot7WeNJJlOl9awTEl5wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDv4nXyVJ+sl+zMtZWHbwAaAX7iJqG/jU0ssRh60yGsY5HcQlb4IGpNfrWBPvThJO
-	 DptdWYva+JdjVBO8G/a5Ms5CJVSS/y159X65PFp6fIn3sxeL2h63nV1o2PBB5UvQDq
-	 ain2zGmmH75ELPKdnW1DSUz1K0+5dpVvRqdyzhJM=
+	b=2X35KA1QW3jCgZQKLBnl4d3h468EsiR5Ji0Uuwj+Z4VVv03LawSEsttuOfSuizlfy
+	 eT6HyCbwlmpW2tC9YuKuePmAI7SgfxTDRWykDbbC8MCCBR6Zj5nv6E6suzuf4JWPT8
+	 IQptPR0Lf0/69ZlfpAo9KxOfTPbPu3N6T/dJK1TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 168/321] parisc: ccio-dma: Fix sparse warnings
-Date: Wed,  4 Oct 2023 19:55:13 +0200
-Message-ID: <20231004175237.040787965@linuxfoundation.org>
+Subject: [PATCH 6.5 169/321] parisc: iosapic.c: Fix sparse warnings
+Date: Wed,  4 Oct 2023 19:55:14 +0200
+Message-ID: <20231004175237.087334376@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,108 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 9a47a710cf517801a8b4fff9949c4cecb5fd019a ]
+[ Upstream commit 927c6c8aa27c284a799b8c18784e37d3373af908 ]
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parisc/ccio-dma.c      | 18 +++++++++---------
- drivers/parisc/iommu-helpers.h |  4 ++--
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/parisc/iosapic.c         | 4 ++--
+ drivers/parisc/iosapic_private.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/parisc/ccio-dma.c b/drivers/parisc/ccio-dma.c
-index 10e846286f4ef..623707fc6ff1c 100644
---- a/drivers/parisc/ccio-dma.c
-+++ b/drivers/parisc/ccio-dma.c
-@@ -222,7 +222,7 @@ struct ioa_registers {
- struct ioc {
- 	struct ioa_registers __iomem *ioc_regs;  /* I/O MMU base address */
- 	u8  *res_map;	                /* resource map, bit == pdir entry */
--	u64 *pdir_base;	                /* physical base address */
-+	__le64 *pdir_base;		/* physical base address */
- 	u32 pdir_size;			/* bytes, function of IOV Space size */
- 	u32 res_hint;			/* next available IOVP -
- 					   circular search */
-@@ -347,7 +347,7 @@ ccio_alloc_range(struct ioc *ioc, struct device *dev, size_t size)
- 	BUG_ON(pages_needed == 0);
- 	BUG_ON((pages_needed * IOVP_SIZE) > DMA_CHUNK_SIZE);
+diff --git a/drivers/parisc/iosapic.c b/drivers/parisc/iosapic.c
+index bcc1dae007803..890c3c0f3d140 100644
+--- a/drivers/parisc/iosapic.c
++++ b/drivers/parisc/iosapic.c
+@@ -202,9 +202,9 @@ static inline void iosapic_write(void __iomem *iosapic, unsigned int reg, u32 va
  
--	DBG_RES("%s() size: %d pages_needed %d\n",
-+	DBG_RES("%s() size: %zu pages_needed %d\n",
- 			__func__, size, pages_needed);
+ static DEFINE_SPINLOCK(iosapic_lock);
  
- 	/*
-@@ -435,7 +435,7 @@ ccio_free_range(struct ioc *ioc, dma_addr_t iova, unsigned long pages_mapped)
- 	BUG_ON((pages_mapped * IOVP_SIZE) > DMA_CHUNK_SIZE);
- 	BUG_ON(pages_mapped > BITS_PER_LONG);
- 
--	DBG_RES("%s():  res_idx: %d pages_mapped %d\n", 
-+	DBG_RES("%s():  res_idx: %d pages_mapped %lu\n",
- 		__func__, res_idx, pages_mapped);
- 
- #ifdef CCIO_COLLECT_STATS
-@@ -551,7 +551,7 @@ static u32 hint_lookup[] = {
-  * index are bits 12:19 of the value returned by LCI.
-  */ 
- static void
--ccio_io_pdir_entry(u64 *pdir_ptr, space_t sid, unsigned long vba,
-+ccio_io_pdir_entry(__le64 *pdir_ptr, space_t sid, unsigned long vba,
- 		   unsigned long hints)
+-static inline void iosapic_eoi(void __iomem *addr, unsigned int data)
++static inline void iosapic_eoi(__le32 __iomem *addr, __le32 data)
  {
- 	register unsigned long pa;
-@@ -727,7 +727,7 @@ ccio_map_single(struct device *dev, void *addr, size_t size,
- 	unsigned long flags;
- 	dma_addr_t iovp;
- 	dma_addr_t offset;
--	u64 *pdir_start;
-+	__le64 *pdir_start;
- 	unsigned long hint = hint_lookup[(int)direction];
+-	__raw_writel(data, addr);
++	__raw_writel((__force u32)data, addr);
+ }
  
- 	BUG_ON(!dev);
-@@ -754,8 +754,8 @@ ccio_map_single(struct device *dev, void *addr, size_t size,
- 
- 	pdir_start = &(ioc->pdir_base[idx]);
- 
--	DBG_RUN("%s() 0x%p -> 0x%lx size: %0x%x\n",
--		__func__, addr, (long)iovp | offset, size);
-+	DBG_RUN("%s() %px -> %#lx size: %zu\n",
-+		__func__, addr, (long)(iovp | offset), size);
- 
- 	/* If not cacheline aligned, force SAFE_DMA on the whole mess */
- 	if((size % L1_CACHE_BYTES) || ((unsigned long)addr % L1_CACHE_BYTES))
-@@ -813,7 +813,7 @@ ccio_unmap_page(struct device *dev, dma_addr_t iova, size_t size,
- 		return;
- 	}
- 
--	DBG_RUN("%s() iovp 0x%lx/%x\n",
-+	DBG_RUN("%s() iovp %#lx/%zx\n",
- 		__func__, (long)iova, size);
- 
- 	iova ^= offset;        /* clear offset bits */
-@@ -1291,7 +1291,7 @@ ccio_ioc_init(struct ioc *ioc)
- 			iova_space_size>>20,
- 			iov_order + PAGE_SHIFT);
- 
--	ioc->pdir_base = (u64 *)__get_free_pages(GFP_KERNEL, 
-+	ioc->pdir_base = (__le64 *)__get_free_pages(GFP_KERNEL,
- 						 get_order(ioc->pdir_size));
- 	if(NULL == ioc->pdir_base) {
- 		panic("%s() could not allocate I/O Page Table\n", __func__);
-diff --git a/drivers/parisc/iommu-helpers.h b/drivers/parisc/iommu-helpers.h
-index a00c38b6224ab..c43f1a212a5c8 100644
---- a/drivers/parisc/iommu-helpers.h
-+++ b/drivers/parisc/iommu-helpers.h
-@@ -31,8 +31,8 @@ iommu_fill_pdir(struct ioc *ioc, struct scatterlist *startsg, int nents,
- 		unsigned long vaddr;
- 		long size;
- 
--		DBG_RUN_SG(" %d : %08lx/%05x %p/%05x\n", nents,
--			   (unsigned long)sg_dma_address(startsg), cnt,
-+		DBG_RUN_SG(" %d : %08lx %p/%05x\n", nents,
-+			   (unsigned long)sg_dma_address(startsg),
- 			   sg_virt(startsg), startsg->length
- 		);
- 
+ /*
+diff --git a/drivers/parisc/iosapic_private.h b/drivers/parisc/iosapic_private.h
+index 73ecc657ad954..bd8ff40162b4b 100644
+--- a/drivers/parisc/iosapic_private.h
++++ b/drivers/parisc/iosapic_private.h
+@@ -118,8 +118,8 @@ struct iosapic_irt {
+ struct vector_info {
+ 	struct iosapic_info *iosapic;	/* I/O SAPIC this vector is on */
+ 	struct irt_entry *irte;		/* IRT entry */
+-	u32 __iomem *eoi_addr;		/* precalculate EOI reg address */
+-	u32	eoi_data;		/* IA64: ?       PA: swapped txn_data */
++	__le32 __iomem *eoi_addr;	/* precalculate EOI reg address */
++	__le32	eoi_data;		/* IA64: ?       PA: swapped txn_data */
+ 	int	txn_irq;		/* virtual IRQ number for processor */
+ 	ulong	txn_addr;		/* IA64: id_eid  PA: partial HPA */
+ 	u32	txn_data;		/* CPU interrupt bit */
 -- 
 2.40.1
 
