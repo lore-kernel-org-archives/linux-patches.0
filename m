@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4731D6A2
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AF31EA7C
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDHDQHKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92408C433C8;
-	Wed,  4 Oct 2023 18:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rc7q63Gr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674B1C433C8;
+	Wed,  4 Oct 2023 18:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444224;
-	bh=nSFdjdJiZEeIVS6T7nkPKUMoaElqLPN/+ODy1MwlXP8=;
+	s=korg; t=1696444227;
+	bh=ntLT8B/4JIxTmmRNJJ/Ke6Z5kJLEVcqCZGr7Yk7VYkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDHDQHKJtt/SQhVWXctZ/VUBs6z1YR8qEGHDc/zq613fd3SfxWCLC6vavGOufAvaV
-	 qXhSQOZGISHg8jOZClvTXIh+x6FiC7IpqCQQPX9b8zRWhjU0rALDycKro9U8RWbqZO
-	 DN9mGM1aldFbN4nSPrSnIHzutbqOJVjydv5x4gpc=
+	b=Rc7q63GrvqbDuvCltZoq6ibktOhg/twVQy2/YqZox0yuc65K9AjzfFQLFFlEd9A3w
+	 fg3IbEZcvwNIS8VTQB+qrwSfS4pAp3JcxJwkfpTAEzbHa6nEmj+/HzMJEZ/ufj6rEu
+	 Z2PSm5IqE7kxE3O3WG4Vy/eBEin7HxtDhYVEcxQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiwoong Kim <kwmad.kim@samsung.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Chanwoo Lee <cw9316.lee@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 174/321] scsi: ufs: core: Poll HCS.UCRDY before issuing a UIC command
-Date: Wed,  4 Oct 2023 19:55:19 +0200
-Message-ID: <20231004175237.308551378@linuxfoundation.org>
+Subject: [PATCH 6.5 175/321] selftests/ftrace: Correctly enable event in instance-event.tc
+Date: Wed,  4 Oct 2023 19:55:20 +0200
+Message-ID: <20231004175237.348497115@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,56 +44,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiwoong Kim <kwmad.kim@samsung.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit d32533d30e2119b0c0aa17596734f1f842f750df ]
+[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
 
-With auto hibern8 enabled, UIC could be busy processing a hibern8 operation
-and the HCI would reports UIC not ready for a short while through
-HCS.UCRDY. The UFS driver doesn't currently handle this situation. The
-UFSHCI spec specifies UCRDY like this: whether the host controller is ready
-to process UIC COMMAND
+Function instance_set() expects to enable event 'sched_switch', so we
+should set 1 to its 'enable' file.
 
-The 'ready' could be seen as many different meanings. If the meaning
-includes not processing any request from HCI, processing a hibern8
-operation can be 'not ready'. In this situation, the driver needs to wait
-until the operations is completed.
+Testcase passed after this patch:
+  # ./ftracetest test.d/instances/instance-event.tc
+  === Ftrace unit tests ===
+  [1] Test creation and deletion of trace instances while setting an event
+  [PASS]
 
-Signed-off-by: Kiwoong Kim <kwmad.kim@samsung.com>
-Link: https://lore.kernel.org/r/550484ffb66300bdcec63d3e304dfd55cb432f1f.1693790060.git.kwmad.kim@samsung.com
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Chanwoo Lee <cw9316.lee@samsung.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  # of passed:  1
+  # of failed:  0
+  # of unresolved:  0
+  # of untested:  0
+  # of unsupported:  0
+  # of xfailed:  0
+  # of undefined(test bug):  0
+
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 75c6628af2c0e..80c48eb6bf85c 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -22,6 +22,7 @@
- #include <linux/module.h>
- #include <linux/regulator/consumer.h>
- #include <linux/sched/clock.h>
-+#include <linux/iopoll.h>
- #include <scsi/scsi_cmnd.h>
- #include <scsi/scsi_dbg.h>
- #include <scsi/scsi_driver.h>
-@@ -2324,7 +2325,11 @@ static inline int ufshcd_hba_capabilities(struct ufs_hba *hba)
-  */
- static inline bool ufshcd_ready_for_uic_cmd(struct ufs_hba *hba)
- {
--	return ufshcd_readl(hba, REG_CONTROLLER_STATUS) & UIC_COMMAND_READY;
-+	u32 val;
-+	int ret = read_poll_timeout(ufshcd_readl, val, val & UIC_COMMAND_READY,
-+				    500, UIC_CMD_TIMEOUT * 1000, false, hba,
-+				    REG_CONTROLLER_STATUS);
-+	return ret == 0 ? true : false;
+diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+index 0eb47fbb3f44d..42422e4251078 100644
+--- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
++++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+@@ -39,7 +39,7 @@ instance_read() {
+ 
+ instance_set() {
+         while :; do
+-                echo 1 > foo/events/sched/sched_switch
++                echo 1 > foo/events/sched/sched_switch/enable
+         done 2> /dev/null
  }
  
- /**
 -- 
 2.40.1
 
