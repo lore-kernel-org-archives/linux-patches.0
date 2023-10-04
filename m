@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7561D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7CDC433C8;
-	Wed,  4 Oct 2023 18:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D87E1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD3DC433C9;
+	Wed,  4 Oct 2023 18:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443216;
-	bh=moR8PEaHRPG05oB7OZEhCMdtpDd948WXkdLx1iIRLHw=;
+	s=korg; t=1696443219;
+	bh=8So0780sD1MHZa3cSCKgXRo6FO8Mj6el8NKJ6xZhGyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yD95XSqlbhnARbKSD5Iu3bXXeloJZo7czmLueRvZUkTWngnSqxZKDZnEKkhZVI082
-	 GKk5Fv5YOqboVC/7HDRcB3mKBL20geIPpDUtQpvfoWc3GEJGf/VamtFbM7TV8PC4Bk
-	 P1xNbmViRuPlKJClVr/qVnhqG496zgo4r2VzO2Zg=
+	b=T1FuHcB+o/agfcmYMwgnj1qZF7BOybjIiNTVfcy1ZnGhtDv4hnYh7SlvKdFJSI/7P
+	 YM1nxi3mer5Rx1wjvgGUzFYno5zMcmHG8hV3eMXA7bCO6eKmcVi0Cb0pgkMdfuh9BT
+	 eCIaXUAR3iUB8YAyPgOiSlKIq/9eoh9LkRC7qUdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/259] netfilter: ipset: Fix race between IPSET_CMD_CREATE and IPSET_CMD_SWAP
-Date: Wed,  4 Oct 2023 19:54:11 +0200
-Message-ID: <20231004175220.953374234@linuxfoundation.org>
+Subject: [PATCH 6.1 079/259] i915/pmu: Move execlist stats initialization to execlist specific setup
+Date: Wed,  4 Oct 2023 19:54:12 +0200
+Message-ID: <20231004175221.003613161@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,61 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-[ Upstream commit 7433b6d2afd512d04398c73aa984d1e285be125b ]
+[ Upstream commit c524cd40e8a2a1a36f4898eaf2024beefeb815f3 ]
 
-Kyle Zeng reported that there is a race between IPSET_CMD_ADD and IPSET_CMD_SWAP
-in netfilter/ip_set, which can lead to the invocation of `__ip_set_put` on a
-wrong `set`, triggering the `BUG_ON(set->ref == 0);` check in it.
+engine->stats is a union of execlist and guc stat objects. When execlist
+specific fields are initialized, the initial state of guc stats is
+affected. This results in bad busyness values when using GuC mode. Move
+the execlist initialization from common code to execlist specific code.
 
-The race is caused by using the wrong reference counter, i.e. the ref counter instead
-of ref_netlink.
-
-Fixes: 24e227896bbf ("netfilter: ipset: Add schedule point in call_ad().")
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/ZPZqetxOmH+w%2Fmyc@westworld/#r
-Tested-by: Kyle Zeng <zengyhkyle@gmail.com>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 77cdd054dd2c ("drm/i915/pmu: Connect engine busyness stats from GuC to pmu")
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230912212247.1828681-1-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit 4485bd519f5d6d620a29d0547ff3c982bdeeb468)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c            | 1 -
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c | 2 ++
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 9a6b64779e644..20eede37d5228 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -682,6 +682,14 @@ __ip_set_put(struct ip_set *set)
- /* set->ref can be swapped out by ip_set_swap, netlink events (like dump) need
-  * a separate reference counter
-  */
-+static void
-+__ip_set_get_netlink(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	set->ref_netlink++;
-+	write_unlock_bh(&ip_set_ref_lock);
-+}
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index b458547e1fc6e..07967adce16aa 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -541,7 +541,6 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 		DRIVER_CAPS(i915)->has_logical_contexts = true;
+ 
+ 	ewma__engine_latency_init(&engine->latency);
+-	seqcount_init(&engine->stats.execlists.lock);
+ 
+ 	ATOMIC_INIT_NOTIFIER_HEAD(&engine->context_status_notifier);
+ 
+diff --git a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+index fc4a846289855..f903ee1ce06e7 100644
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3546,6 +3546,8 @@ int intel_execlists_submission_setup(struct intel_engine_cs *engine)
+ 	logical_ring_default_vfuncs(engine);
+ 	logical_ring_default_irqs(engine);
+ 
++	seqcount_init(&engine->stats.execlists.lock);
 +
- static void
- __ip_set_put_netlink(struct ip_set *set)
- {
-@@ -1695,11 +1703,11 @@ call_ad(struct net *net, struct sock *ctnl, struct sk_buff *skb,
+ 	if (engine->flags & I915_ENGINE_HAS_RCS_REG_STATE)
+ 		rcs_submission_override(engine);
  
- 	do {
- 		if (retried) {
--			__ip_set_get(set);
-+			__ip_set_get_netlink(set);
- 			nfnl_unlock(NFNL_SUBSYS_IPSET);
- 			cond_resched();
- 			nfnl_lock(NFNL_SUBSYS_IPSET);
--			__ip_set_put(set);
-+			__ip_set_put_netlink(set);
- 		}
- 
- 		ip_set_lock(set);
 -- 
 2.40.1
 
