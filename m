@@ -1,30 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D6C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368A71D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuJkRpif"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC603C433C7;
-	Wed,  4 Oct 2023 18:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNeyaLKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8E1C433C9;
+	Wed,  4 Oct 2023 18:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444647;
-	bh=XWedYxNZ2aBZq2rjpxEn4K+p2nD8XMnGX9IaUkOwZ4g=;
+	s=korg; t=1696444650;
+	bh=53Kj0TDrY1dIUMThVJxLB8dUhQ27mbJxaen1nbfVHOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MuJkRpifnCE4NYwcHj7pP61ioDadVS/58YOSBY1/QMngsLCYy4yqyWjW71kA2S9+E
-	 EmtMps11R8ET0HZb+Hb5iC7PJ4iwSnwL8se5oop6E2eDXQXO+slLVrP3WsznGE6aW8
-	 9S+SeVJPA4FhS8cyRki6oK043QSnDQGafmv4pjzM=
+	b=yNeyaLKs0GfsoqJU995+Uny1j6QNj7C60QpU4JNPxAojW3tXWRca+7WsgtAw64o/E
+	 qBw99GHnbijaFPksp8GMyIdVFozw0sajtQ0yC4xmbsc5pPC76xsa7vjhaW7zjJGWST
+	 BT+0WPM0/GDIe8PG4/rzh54uTJUlJM8Xy1DR0ivE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.5 307/321] i915: Limit the length of an sg list to the requested length
-Date: Wed,  4 Oct 2023 19:57:32 +0200
-Message-ID: <20231004175243.523582072@linuxfoundation.org>
+	Javier Pello <devel@otheo.eu>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Fernando Pacheco <fernando.pacheco@intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	John Harrison <John.C.Harrison@Intel.com>
+Subject: [PATCH 6.5 308/321] drm/i915/gt: Fix reservation address in ggtt_reserve_guc_top
+Date: Wed,  4 Oct 2023 19:57:33 +0200
+Message-ID: <20231004175243.562777225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,77 +49,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Javier Pello <devel@otheo.eu>
 
-commit 863a8eb3f27098b42772f668e3977ff4cae10b04 upstream.
+commit b7599d241778d0b10cdf7a5c755aa7db9b83250c upstream.
 
-The folio conversion changed the behaviour of shmem_sg_alloc_table() to
-put the entire length of the last folio into the sg list, even if the sg
-list should have been shorter.  gen8_ggtt_insert_entries() relied on the
-list being the right length and would overrun the end of the page tables.
-Other functions may also have been affected.
+There is an assertion in ggtt_reserve_guc_top that the global GTT
+is of size at least GUC_GGTT_TOP, which is not the case on a 32-bit
+platform; see commit 562d55d991b39ce376c492df2f7890fd6a541ffc
+("drm/i915/bdw: Only use 2g GGTT for 32b platforms"). If GEM_BUG_ON
+is enabled, this triggers a BUG(); if GEM_BUG_ON is disabled, the
+subsequent reservation fails and the driver fails to initialise
+the device:
 
-Clamp the length of the last entry in the sg list to be the expected
-length.
+i915 0000:00:02.0: [drm:i915_init_ggtt [i915]] Failed to reserve top of GGTT for GuC
+i915 0000:00:02.0: Device initialization failed (-28)
+i915 0000:00:02.0: Please file a bug on drm/i915; see https://gitlab.freedesktop.org/drm/intel/-/wikis/How-to-file-i915-bugs for details.
+i915: probe of 0000:00:02.0 failed with error -28
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 0b62af28f249 ("i915: convert shmem_sg_free_table() to use a folio_batch")
-Cc: stable@vger.kernel.org # 6.5.x
-Link: https://gitlab.freedesktop.org/drm/intel/-/issues/9256
-Link: https://lore.kernel.org/lkml/6287208.lOV4Wx5bFT@natalenko.name/
-Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230919194855.347582-1-willy@infradead.org
-(cherry picked from commit 26a8e32e6d77900819c0c730fbfb393692dbbeea)
+Make the reservation at the top of the available space, whatever
+that is, instead of assuming that the top will be GUC_GGTT_TOP.
+
+Fixes: 911800765ef6 ("drm/i915/uc: Reserve upper range of GGTT")
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/9080
+Signed-off-by: Javier Pello <devel@otheo.eu>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Fernando Pacheco <fernando.pacheco@intel.com>
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230902171039.2229126186d697dbcf62d6d8@otheo.eu
+(cherry picked from commit 0f3fa942d91165c2702577e9274d2ee1c7212afc)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ggtt.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-index 8f1633c3fb93..73a4a4eb29e0 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -100,6 +100,7 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
- 	st->nents = 0;
- 	for (i = 0; i < page_count; i++) {
- 		struct folio *folio;
-+		unsigned long nr_pages;
- 		const unsigned int shrink[] = {
- 			I915_SHRINK_BOUND | I915_SHRINK_UNBOUND,
- 			0,
-@@ -150,6 +151,8 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
- 			}
- 		} while (1);
+--- a/drivers/gpu/drm/i915/gt/intel_ggtt.c
++++ b/drivers/gpu/drm/i915/gt/intel_ggtt.c
+@@ -511,20 +511,31 @@ void intel_ggtt_unbind_vma(struct i915_a
+ 	vm->clear_range(vm, vma_res->start, vma_res->vma_size);
+ }
  
-+		nr_pages = min_t(unsigned long,
-+				folio_nr_pages(folio), page_count - i);
- 		if (!i ||
- 		    sg->length >= max_segment ||
- 		    folio_pfn(folio) != next_pfn) {
-@@ -157,13 +160,13 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
- 				sg = sg_next(sg);
++/*
++ * Reserve the top of the GuC address space for firmware images. Addresses
++ * beyond GUC_GGTT_TOP in the GuC address space are inaccessible by GuC,
++ * which makes for a suitable range to hold GuC/HuC firmware images if the
++ * size of the GGTT is 4G. However, on a 32-bit platform the size of the GGTT
++ * is limited to 2G, which is less than GUC_GGTT_TOP, but we reserve a chunk
++ * of the same size anyway, which is far more than needed, to keep the logic
++ * in uc_fw_ggtt_offset() simple.
++ */
++#define GUC_TOP_RESERVE_SIZE (SZ_4G - GUC_GGTT_TOP)
++
+ static int ggtt_reserve_guc_top(struct i915_ggtt *ggtt)
+ {
+-	u64 size;
++	u64 offset;
+ 	int ret;
  
- 			st->nents++;
--			sg_set_folio(sg, folio, folio_size(folio), 0);
-+			sg_set_folio(sg, folio, nr_pages * PAGE_SIZE, 0);
- 		} else {
- 			/* XXX: could overflow? */
--			sg->length += folio_size(folio);
-+			sg->length += nr_pages * PAGE_SIZE;
- 		}
--		next_pfn = folio_pfn(folio) + folio_nr_pages(folio);
--		i += folio_nr_pages(folio) - 1;
-+		next_pfn = folio_pfn(folio) + nr_pages;
-+		i += nr_pages - 1;
+ 	if (!intel_uc_uses_guc(&ggtt->vm.gt->uc))
+ 		return 0;
  
- 		/* Check that the i965g/gm workaround works. */
- 		GEM_BUG_ON(gfp & __GFP_DMA32 && next_pfn >= 0x00100000UL);
--- 
-2.42.0
-
+-	GEM_BUG_ON(ggtt->vm.total <= GUC_GGTT_TOP);
+-	size = ggtt->vm.total - GUC_GGTT_TOP;
++	GEM_BUG_ON(ggtt->vm.total <= GUC_TOP_RESERVE_SIZE);
++	offset = ggtt->vm.total - GUC_TOP_RESERVE_SIZE;
+ 
+-	ret = i915_gem_gtt_reserve(&ggtt->vm, NULL, &ggtt->uc_fw, size,
+-				   GUC_GGTT_TOP, I915_COLOR_UNEVICTABLE,
+-				   PIN_NOEVICT);
++	ret = i915_gem_gtt_reserve(&ggtt->vm, NULL, &ggtt->uc_fw,
++				   GUC_TOP_RESERVE_SIZE, offset,
++				   I915_COLOR_UNEVICTABLE, PIN_NOEVICT);
+ 	if (ret)
+ 		drm_dbg(&ggtt->vm.i915->drm,
+ 			"Failed to reserve top of GGTT for GuC\n");
 
 
