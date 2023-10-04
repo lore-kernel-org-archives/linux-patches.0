@@ -1,123 +1,166 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E136139
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 06:48:26 +0000 (UTC)
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3247cefa13aso1614871f8f.1
-        for <patches@lists.linux.dev>; Tue, 03 Oct 2023 23:48:26 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E61E748A;
+	Wed,  4 Oct 2023 07:33:23 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-68fb85afef4so1490504b3a.1;
+        Wed, 04 Oct 2023 00:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696402105; x=1697006905; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rJxg0M3WdQV8DRsY/XpYTUYKJ5cnIxzPlIh2CYSgvzE=;
-        b=qg82GlXMJUKyrvHA49Y+g/36bLeHWx/r42nqD3qnUooCWCW634ykd1XNkMmHcgWeZl
-         3vcm6WBj/HuM7LcPCkmbD2GaSbE+Lj77rnbeSCaolzWJd1pdgsrwBwOZ13mKUBzCnxRM
-         uAWsmgc1R/d2b+RVpuZpHOfoLnjUWeuVcdyvco+dzaWpQkkx6ipYGlEcHoYI2IHVUM62
-         OLDRxIZs4fxZRQKncNLjMVCgyDhOFJbwnOZlNkQgWfcc821IL4TU9hHZP2x6fBk11fZJ
-         tUMOcRojcawZEHAK5V/VkchgJx5yA3nfwtZp0uGhc/wP+HWGiL1LqT3Ki9Z/m2wKTxN3
-         /+ew==
+        d=gmail.com; s=20230601; t=1696404803; x=1697009603; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VkowXdKDAV9ozSJhzTKuFpAPuWb2aX6v74W5qb0n/iQ=;
+        b=bl96DO99PLYE6tb/PydkYjhSUYCHm8wIW4x+PTTlOqWujUwWIiz3piwl/tOfr77PFc
+         y7ex21dRKlCdtiObKE5sQte3iakrmcrmY9C62aLn/dBVJl0qsVnn7HwbMvOIm1U6HcHf
+         MNfzdSBM501PxZnt5fnmbxU5YPV5EhGhe82O9DlPXa6nkk+9uknsKaUdOByYFdEVBzRV
+         YuWgi0SbbXEw9xx0azZ1sTF/q4578VKiQlnOz3JI3aF9+R7HZsJ8Aif6k169+bbi+zrN
+         NG1b9fXd4VE60s/Zt/233KFrRrK6b86hKdTySbXM07dcnz740kdKsLm3MpmVuKErC5dd
+         fOLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696402105; x=1697006905;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rJxg0M3WdQV8DRsY/XpYTUYKJ5cnIxzPlIh2CYSgvzE=;
-        b=U5uX8vybQhcsJvf4fGAU5gB4ErrydMaVT6n0lA/QmC9o1tKaa8N77b0Bpv6BlHwi5Z
-         q2DpcdZbIday3lnCs6qxt7xPJKTa6RmGLhlvMKN5KK+vLSMuVnSQ8Tj6Dp5lQIF+n9pB
-         kmU86D2wIRKpSIKniij3QnkrIx1hPIOlchwzsSLrIII1XaXXVgjhVNuZW+DhSm/lQnhR
-         zVBRWUq1TLF0SfxUpeb1LiBS5VRVugV02fG8BsR3JSb0IHdt243QoIRCFIZS0TJVvx1a
-         KB+nRgc5ZncBAR/oj6n8/kb34UbpFOh0YkhFJNmrEK5dpcEkOLxLEJExAJzIyYBbBt5V
-         G0IQ==
-X-Gm-Message-State: AOJu0YzW4bIgp6c9vm4F6u0fgtnOWRVozlJteeMecDpG4md6QCeVMq45
-	pOsYVufsQD0lH9mBHFCksZgNxQ==
-X-Google-Smtp-Source: AGHT+IFUmt3HWnnTYOHABmKze1NdpfjpgP9hX5YANf/U6PnLFZWFCEBuSoYXEZ5Y7iaRfk7e5Q5YNw==
-X-Received: by 2002:a05:6000:10c2:b0:321:68af:947 with SMTP id b2-20020a05600010c200b0032168af0947mr1245444wrx.8.1696402105249;
-        Tue, 03 Oct 2023 23:48:25 -0700 (PDT)
-Received: from [192.168.69.115] (5ep85-h01-176-173-163-52.dslam.bbox.fr. [176.173.163.52])
-        by smtp.gmail.com with ESMTPSA id h14-20020adff18e000000b00323293bd023sm3253682wro.6.2023.10.03.23.48.23
+        d=1e100.net; s=20230601; t=1696404803; x=1697009603;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VkowXdKDAV9ozSJhzTKuFpAPuWb2aX6v74W5qb0n/iQ=;
+        b=MOhZEs3wosiGG/Rv26Bzh7smzaGqff9yA+vb8JYXfco/18fpA6urlFGYOCFjJb2BNb
+         ZudJpF/dYF8LKu8kFyqQQKNpsMqZWYJEoq4h1rZXjoItVqHojwpBVYfXRCPYzKx7UKlg
+         sZ2i3y5wbMNr8J1QkP+YbAE5+GVY/A9UHVKK4wkpcVAqXnKMXB8Bju3OuaUiZ+MmHIjP
+         8wJSLMpGLhyV8EMEnQfxsfWM6oX/hMcAmREy123sc9xGK7gkLRFz9OPXzuMZoPEcLuHe
+         OT1IWBcxP7cmNp62oZp2EswHWBCRV5cj9tczgMHMfXJiDpGqC1ayoW7h/pCC5FKvc1SJ
+         lq1w==
+X-Gm-Message-State: AOJu0YyuOF/IGmVuMvMKdwng1EfTzQcECR9/47dKGW6ASyno0zbn7e/C
+	7cNt4VkuoA6IhWb9OcbRT/qBCzzQxC+0uiSJ
+X-Google-Smtp-Source: AGHT+IGFzGzCltUfrIGUGcXUyq5vEJqw+HItJlIOKOpSPzrlh/tt33vv6HuiosGbPT75UF1nyaQUkQ==
+X-Received: by 2002:a05:6a00:1911:b0:68f:f650:3035 with SMTP id y17-20020a056a00191100b0068ff6503035mr1823127pfi.12.1696404802783;
+        Wed, 04 Oct 2023 00:33:22 -0700 (PDT)
+Received: from [0.0.0.0] (jp.bgp.twd2.net. [2a0c:b641:571::1])
+        by smtp.gmail.com with ESMTPSA id z17-20020aa785d1000000b00690c7552098sm2546024pfn.44.2023.10.04.00.33.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 23:48:24 -0700 (PDT)
-Message-ID: <9e054aa1-c06d-7ec4-7ca4-c99b4f64e412@linaro.org>
-Date: Wed, 4 Oct 2023 08:48:22 +0200
+        Wed, 04 Oct 2023 00:33:22 -0700 (PDT)
+Message-ID: <a337bd2b-34f1-4316-a0d5-18ba295badb3@gmail.com>
+Date: Wed, 4 Oct 2023 15:33:15 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.1
-Subject: Re: [PATCH] vfio/cdx: Add parentheses between bitwise AND expression
- and logical NOT
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>,
- Nathan Chancellor <nathan@kernel.org>
-Cc: nipun.gupta@amd.com, nikhil.agarwal@amd.com, ndesaulniers@google.com,
- trix@redhat.com, shubham.rohila@amd.com, kvm@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
-References: <20231002-vfio-cdx-logical-not-parentheses-v1-1-a8846c7adfb6@kernel.org>
- <1fbe8877-aaa5-1b6f-e18c-1d231a31d2e7@linaro.org>
- <20231003152739.GB63187@dev-arch.thelio-3990X>
- <20231003112019.4b067e45.alex.williamson@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-In-Reply-To: <20231003112019.4b067e45.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] RISC-V: build: Allow LTO to be selected
+To: Nathan Chancellor <nathan@kernel.org>, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, conor@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com,
+ linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev, =?UTF-8?B?RsSBbmctcnXDrCBTw7JuZw==?=
+ <maskray@google.com>
+References: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
+From: twd2 <twd2.me@gmail.com>
+In-Reply-To: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 3/10/23 19:20, Alex Williamson wrote:
-> On Tue, 3 Oct 2023 08:27:39 -0700
-> Nathan Chancellor <nathan@kernel.org> wrote:
-> 
->> On Tue, Oct 03, 2023 at 09:40:02AM +0200, Philippe Mathieu-Daudé wrote:
->>> Hi Nathan,
->>>
->>> On 2/10/23 19:53, Nathan Chancellor wrote:
->>>> When building with clang, there is a warning (or error with
->>>> CONFIG_WERROR=y) due to a bitwise AND and logical NOT in
->>>> vfio_cdx_bm_ctrl():
->>>>
->>>>     drivers/vfio/cdx/main.c:77:6: error: logical not is only applied to the left hand side of this bitwise operator [-Werror,-Wlogical-not-parentheses]
->>>>        77 |         if (!vdev->flags & BME_SUPPORT)
->>>>           |             ^            ~
->>>>     drivers/vfio/cdx/main.c:77:6: note: add parentheses after the '!' to evaluate the bitwise operator first
->>>>        77 |         if (!vdev->flags & BME_SUPPORT)
->>>>           |             ^
->>>>           |              (                        )
->>>>     drivers/vfio/cdx/main.c:77:6: note: add parentheses around left hand side expression to silence this warning
->>>>        77 |         if (!vdev->flags & BME_SUPPORT)
->>>>           |             ^
->>>>           |             (           )
->>>>     1 error generated.
->>>>
->>>> Add the parentheses as suggested in the first note, which is clearly
->>>> what was intended here.
->>>>
->>>> Closes: https://github.com/ClangBuiltLinux/linux/issues/1939
->>>> Fixes: 8a97ab9b8b31 ("vfio-cdx: add bus mastering device feature support")
->>>
->>> My current /master points to commit ce36c8b14987 which doesn't include
->>> 8a97ab9b8b31, so maybe this can be squashed / reordered in the VFIO tree
->>> (where I assume this commit is). That said, the fix is correct, so:
->>
->> Yes, this is a -next only issue at the moment and I don't mind this
->> change being squashed into the original if Alex rebases his tree (some
->> maintainers don't).
-> 
-> Right, where practical we try not to change commit hashes once
-> something has been included into linux-next, preferring to layer fixes
-> or even reverts, but occasionally something will come up where it makes
-> sense to rebase.  This is not such a case :)  Thanks,
++CC MaskRay
 
-Got it, thanks!
+Thanks!
+Wende
 
-> 
-> Alex
-> 
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> Thanks a lot for taking a look!
->>
->> Cheers,
->> Nathan
+On 2023/10/4 3:16, Nathan Chancellor wrote:
+> From: Wende Tan <twd2.me@gmail.com>
+>
+> Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is an
+> issue [1] in prior LLD versions that prevents LLD to generate proper
+> machine code for RISC-V when writing `nop`s.
+>
+> I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
+> on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
+> can boot to shell using an archriscv rootfs on QEMU.
+>
+> I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
+> KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
+> successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
+> image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
+> `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
+> separate patch further.
+>
+> Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
+> object file when manipulating the files in that subfolder, rather than
+> LLVM bitcode.
+>
+> [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
+>     commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
+>
+> Tested-by: Wende Tan <twd2.me@gmail.com>
+> Signed-off-by: Wende Tan <twd2.me@gmail.com>
+> Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> NOTE: I tested LLVM 14 through 18 with defconfig + full/thin LTO and
+> allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
+> shows
+>
+>   ld.lld: error: section size decrease is too large
+>
+> when linking vmlinux. This appears to be resolved in LLVM 17 with
+> https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
+> (I did not bisect but the commit message lines up with the issue). I
+> kept the existing version check because defconfig worked fine but we may
+> want to bump it to 17.0.0 if randconfigs trip over this.
+>
+> Changes in v3:
+> - Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
+>   kernel after the submission of v2. This change matches arm64.
+> - Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
+>
+> Changes in v2:
+> - Some textual changes suggested by Nick.
+> - Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
+>   filed and resolved.
+> - Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
+> - Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
+> ---
+>  arch/riscv/Kconfig            | 3 +++
+>  arch/riscv/kernel/pi/Makefile | 3 +++
+>  2 files changed, 6 insertions(+)
+>
+> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+> index d607ab0f7c6d..523640f7441e 100644
+> --- a/arch/riscv/Kconfig
+> +++ b/arch/riscv/Kconfig
+> @@ -46,6 +46,9 @@ config RISCV
+>  	select ARCH_SUPPORTS_CFI_CLANG
+>  	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+>  	select ARCH_SUPPORTS_HUGETLBFS if MMU
+> +	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
+> +	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
+> +	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+>  	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+>  	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
+>  	select ARCH_USE_MEMTEST
+> diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
+> index 07915dc9279e..b75f150b923d 100644
+> --- a/arch/riscv/kernel/pi/Makefile
+> +++ b/arch/riscv/kernel/pi/Makefile
+> @@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
+>  		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
+>  		   $(call cc-option,-fno-addrsig)
+>  
+> +# Disable LTO
+> +KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+> +
+>  KBUILD_CFLAGS	+= -mcmodel=medany
+>  
+>  CFLAGS_cmdline_early.o += -D__NO_FORTIFY
+>
+> ---
+> base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+> change-id: 20231003-riscv-lto-f013beed8587
+>
+> Best regards,
+
+-- 
+Best wishes!
+Sincerely,
+twd2
+https://twd2.me
 
