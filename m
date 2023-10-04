@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777461D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCDF1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fecDCqPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E6C433C8;
-	Wed,  4 Oct 2023 18:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJXLukqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78F0C433C8;
+	Wed,  4 Oct 2023 18:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443877;
-	bh=qJMefuaV4J3Dv2BJ1ns09N/pb/5z5CgccdFmLDCJrlo=;
+	s=korg; t=1696443880;
+	bh=Xy8M4TeuKFC5ImkMOg3mnL+EQalI6kiBgpFuUlBI6vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fecDCqPBg/wdfQiGleuYpm4ddL8HC/SfGSQU44nuBBXoag9KEphfEdKl7qBlGMrqc
-	 v8K7IY1TPUTWJMiQeMulsvR9N4FbmOq++ToxJRP3OnaMiERNSoUkwcDa5KqwmzwfXh
-	 xm+Fc76UerY9VVAvk3IwFzbURq3fTSvkN//EI44o=
+	b=KJXLukqpFLT6HmNhujYnj+XSiJYDHfo2zk93CxnDSHMEuFnldJHDN8cjb+s4lu8YD
+	 fTNF28M323u8mjLrUw7ICjDfroGQDCMkVfyRV+lSAqzNZocS/qNNNlo6iVKbUOGoOP
+	 adRWEJkRihIQ+EI8aOhSTfBuCIfc5f2rD8bF/WDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 051/321] net: microchip: sparx5: Fix possible memory leaks in vcap_api_kunit
-Date: Wed,  4 Oct 2023 19:53:16 +0200
-Message-ID: <20231004175231.525169131@linuxfoundation.org>
+Subject: [PATCH 6.5 025/321] ASoC: meson: spdifin: start hw on dai probe
+Date: Wed,  4 Oct 2023 19:52:50 +0200
+Message-ID: <20231004175230.335241964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,232 +42,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 2a2dffd911d4139258b828b9c5056cb64b826758 ]
+[ Upstream commit aedf323b66b2b875137422ecb7d2525179759076 ]
 
-Inject fault while probing kunit-example-test.ko, the duprule which
-is allocated by kzalloc in vcap_dup_rule() of
-test_vcap_xn_rule_creator() is not freed, and it cause the memory leaks
-below. Use vcap_del_rule() to free them as other functions do it.
+For spdif input to report the locked rate correctly, even when no capture
+is running, the HW and reference clock must be started as soon as
+the dai is probed.
 
-unreferenced object 0xffff6eb4846f6180 (size 192):
-  comm "kunit_try_catch", pid 405, jiffies 4294895522 (age 880.004s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 0a 00 00 00 f4 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 98 61 6f 84 b4 6e ff ff  .........ao..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000d2ac4ccb>] vcap_api_rule_insert_in_order_test+0xa4/0x114
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4846f6240 (size 192):
-  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 879.996s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 14 00 00 00 90 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 58 62 6f 84 b4 6e ff ff  ........Xbo..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<0000000052e6ad35>] vcap_api_rule_insert_in_order_test+0xbc/0x114
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4846f6300 (size 192):
-  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 879.996s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
-    00 00 00 00 00 00 00 00 18 63 6f 84 b4 6e ff ff  .........co..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<000000001b0895d4>] vcap_api_rule_insert_in_order_test+0xd4/0x114
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4846f63c0 (size 192):
-  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 880.012s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 28 00 00 00 c8 00 00 00  .'......(.......
-    00 00 00 00 00 00 00 00 d8 63 6f 84 b4 6e ff ff  .........co..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000134c151f>] vcap_api_rule_insert_in_order_test+0xec/0x114
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4845fc180 (size 192):
-  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 14 00 00 00 c8 00 00 00  .'..............
-    00 00 00 00 00 00 00 00 98 c1 5f 84 b4 6e ff ff  .........._..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000fa5f64d3>] vcap_api_rule_insert_reverse_order_test+0xc8/0x600
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4845fc240 (size 192):
-  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
-    00 00 00 00 00 00 00 00 58 c2 5f 84 b4 6e ff ff  ........X._..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000a7db42de>] vcap_api_rule_insert_reverse_order_test+0x108/0x600
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4845fc300 (size 192):
-  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 28 00 00 00 90 01 00 00  .'......(.......
-    00 00 00 00 00 00 00 00 18 c3 5f 84 b4 6e ff ff  .........._..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000ea416c94>] vcap_api_rule_insert_reverse_order_test+0x150/0x600
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb4845fc3c0 (size 192):
-  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.020s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 32 00 00 00 f4 01 00 00  .'......2.......
-    00 00 00 00 00 00 00 00 d8 c3 5f 84 b4 6e ff ff  .........._..n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<00000000764a39b4>] vcap_api_rule_insert_reverse_order_test+0x198/0x600
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb484cd4240 (size 192):
-  comm "kunit_try_catch", pid 413, jiffies 4294895543 (age 879.956s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
-    00 00 00 00 00 00 00 00 58 42 cd 84 b4 6e ff ff  ........XB...n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<0000000023976dd4>] vcap_api_rule_remove_in_front_test+0x158/0x658
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff6eb484cd4300 (size 192):
-  comm "kunit_try_catch", pid 413, jiffies 4294895543 (age 879.956s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 28 00 00 00 c8 00 00 00  .'......(.......
-    00 00 00 00 00 00 00 00 18 43 cd 84 b4 6e ff ff  .........C...n..
-  backtrace:
-    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
-    [<000000008565145b>] vcap_dup_rule+0x38/0x210
-    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
-    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
-    [<000000000b4760ff>] vcap_api_rule_remove_in_front_test+0x170/0x658
-    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
-    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<0000000058a88b6b>] kthread+0x124/0x130
-    [<00000000891cf28a>] ret_from_fork+0x10/0x20
-
-Fixes: dccc30cc4906 ("net: microchip: sparx5: Add KUNIT test of counters and sorted rules")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5ce5658375e6 ("ASoC: meson: add axg spdif input")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20230907090504.12700-1-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/vcap/vcap_api_kunit.c    | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ sound/soc/meson/axg-spdifin.c | 49 ++++++++++++-----------------------
+ 1 file changed, 17 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-index 99f04a53a442b..fe4e166de8a04 100644
---- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-@@ -1597,6 +1597,11 @@ static void vcap_api_rule_insert_in_order_test(struct kunit *test)
- 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 20, 400, 6, 774);
- 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 30, 300, 3, 771);
- 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 40, 200, 2, 768);
-+
-+	vcap_del_rule(&test_vctrl, &test_netdev, 200);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 300);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 400);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 500);
+diff --git a/sound/soc/meson/axg-spdifin.c b/sound/soc/meson/axg-spdifin.c
+index e2cc4c4be7586..97e81ec4a78ce 100644
+--- a/sound/soc/meson/axg-spdifin.c
++++ b/sound/soc/meson/axg-spdifin.c
+@@ -112,34 +112,6 @@ static int axg_spdifin_prepare(struct snd_pcm_substream *substream,
+ 	return 0;
  }
  
- static void vcap_api_rule_insert_reverse_order_test(struct kunit *test)
-@@ -1655,6 +1660,11 @@ static void vcap_api_rule_insert_reverse_order_test(struct kunit *test)
- 		++idx;
+-static int axg_spdifin_startup(struct snd_pcm_substream *substream,
+-			       struct snd_soc_dai *dai)
+-{
+-	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+-	int ret;
+-
+-	ret = clk_prepare_enable(priv->refclk);
+-	if (ret) {
+-		dev_err(dai->dev,
+-			"failed to enable spdifin reference clock\n");
+-		return ret;
+-	}
+-
+-	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
+-			   SPDIFIN_CTRL0_EN);
+-
+-	return 0;
+-}
+-
+-static void axg_spdifin_shutdown(struct snd_pcm_substream *substream,
+-				 struct snd_soc_dai *dai)
+-{
+-	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+-
+-	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
+-	clk_disable_unprepare(priv->refclk);
+-}
+-
+ static void axg_spdifin_write_mode_param(struct regmap *map, int mode,
+ 					 unsigned int val,
+ 					 unsigned int num_per_reg,
+@@ -251,25 +223,38 @@ static int axg_spdifin_dai_probe(struct snd_soc_dai *dai)
+ 	ret = axg_spdifin_sample_mode_config(dai, priv);
+ 	if (ret) {
+ 		dev_err(dai->dev, "mode configuration failed\n");
+-		clk_disable_unprepare(priv->pclk);
+-		return ret;
++		goto pclk_err;
  	}
- 	KUNIT_EXPECT_EQ(test, 768, admin.last_used_addr);
+ 
++	ret = clk_prepare_enable(priv->refclk);
++	if (ret) {
++		dev_err(dai->dev,
++			"failed to enable spdifin reference clock\n");
++		goto pclk_err;
++	}
 +
-+	vcap_del_rule(&test_vctrl, &test_netdev, 500);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 400);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 300);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 200);
++	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
++			   SPDIFIN_CTRL0_EN);
++
+ 	return 0;
++
++pclk_err:
++	clk_disable_unprepare(priv->pclk);
++	return ret;
  }
  
- static void vcap_api_rule_remove_at_end_test(struct kunit *test)
-@@ -1855,6 +1865,9 @@ static void vcap_api_rule_remove_in_front_test(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, 786, test_init_start);
- 	KUNIT_EXPECT_EQ(test, 8, test_init_count);
- 	KUNIT_EXPECT_EQ(test, 794, admin.last_used_addr);
-+
-+	vcap_del_rule(&test_vctrl, &test_netdev, 200);
-+	vcap_del_rule(&test_vctrl, &test_netdev, 300);
+ static int axg_spdifin_dai_remove(struct snd_soc_dai *dai)
+ {
+ 	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+ 
++	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
++	clk_disable_unprepare(priv->refclk);
+ 	clk_disable_unprepare(priv->pclk);
+ 	return 0;
  }
  
- static struct kunit_case vcap_api_rule_remove_test_cases[] = {
+ static const struct snd_soc_dai_ops axg_spdifin_ops = {
+ 	.prepare	= axg_spdifin_prepare,
+-	.startup	= axg_spdifin_startup,
+-	.shutdown	= axg_spdifin_shutdown,
+ };
+ 
+ static int axg_spdifin_iec958_info(struct snd_kcontrol *kcontrol,
 -- 
 2.40.1
 
