@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9CA18E2A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B37C433C7;
-	Wed,  4 Oct 2023 18:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759C518E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AD0C433C8;
+	Wed,  4 Oct 2023 18:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443149;
-	bh=9V/mYjvCrmQPSpUMZ3taKn0q99p8mtXydZd4mXrNbo0=;
+	s=korg; t=1696443152;
+	bh=o5Od8cWQ0fYLVxfSZeCGK9uP4HxEo1TLsPeTMmu37yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JdpKkSGk7OobF9faD+CINwKPC8WzicOt9cjfePXJiypNbavWv7iqkyHve8+B+Z/m
-	 eYGHm38S3oCsGTBqn9xx7mx0s33izWank/f2oD13vAvKyOxJ8o3ws+Q7TZiog7lI/j
-	 Yr1oKODqqRMZnREGrPS/ypx9FussFcSzJ5w3Abss=
+	b=ofOEjmSeEKJ0Y3wKEFaGw8IncywF0F/hy9geK6CU64YKibJwnadvrsD+GPifPUWhV
+	 Txfaja5Ft7p17R8NYrKW9v54nY+F+SJA3lkze8CUMA/wGPVIaotRcfk5NELTFIx4ql
+	 UnNwCTp0CflQ+20N36YYOZ6kbbf1KnT+lLWSDnHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Florian Westphal <fw@strlen.de>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/259] i40e: Fix VF VLAN offloading when port VLAN is configured
-Date: Wed,  4 Oct 2023 19:53:46 +0200
-Message-ID: <20231004175219.877184725@linuxfoundation.org>
+Subject: [PATCH 6.1 054/259] netfilter, bpf: Adjust timeouts of non-confirmed CTs in bpf_ct_insert_entry()
+Date: Wed,  4 Oct 2023 19:53:47 +0200
+Message-ID: <20231004175219.918331695@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,87 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit d0d362ffa33da4acdcf7aee2116ceef8c8fef658 ]
+[ Upstream commit 837723b22a63cfbff584655b009b9d488d0e9087 ]
 
-If port VLAN is configured on a VF then any other VLANs on top of this VF
-are broken.
+bpf_nf testcase fails on s390x: bpf_skb_ct_lookup() cannot find the entry
+that was added by bpf_ct_insert_entry() within the same BPF function.
 
-During i40e_ndo_set_vf_port_vlan() call the i40e driver reset the VF and
-iavf driver asks PF (using VIRTCHNL_OP_GET_VF_RESOURCES) for VF capabilities
-but this reset occurs too early, prior setting of vf->info.pvid field
-and because this field can be zero during i40e_vc_get_vf_resources_msg()
-then VIRTCHNL_VF_OFFLOAD_VLAN capability is reported to iavf driver.
+The reason is that this entry is deleted by nf_ct_gc_expired().
 
-This is wrong because iavf driver should not report VLAN offloading
-capability when port VLAN is configured as i40e does not support QinQ
-offloading.
+The CT timeout starts ticking after the CT confirmation; therefore
+nf_conn.timeout is initially set to the timeout value, and
+__nf_conntrack_confirm() sets it to the deadline value.
 
-Fix the issue by moving VF reset after setting of vf->port_vlan_id
-field.
+bpf_ct_insert_entry() sets IPS_CONFIRMED_BIT, but does not adjust the
+timeout, making its value meaningless and causing false positives.
 
-Without this patch:
-$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-$ ip link set enp2s0f0 vf 0 vlan 3
-$ ip link set enp2s0f0v0 up
-$ ip link add link enp2s0f0v0 name vlan4 type vlan id 4
-$ ip link set vlan4 up
-...
-$ ethtool -k enp2s0f0v0 | grep vlan-offload
-rx-vlan-offload: on
-tx-vlan-offload: on
-$ dmesg -l err | grep iavf
-[1292500.742914] iavf 0000:02:02.0: Failed to add VLAN filter, error IAVF_ERR_INVALID_QP_ID
+Fix the problem by making bpf_ct_insert_entry() adjust the timeout,
+like __nf_conntrack_confirm().
 
-With this patch:
-$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-$ ip link set enp2s0f0 vf 0 vlan 3
-$ ip link set enp2s0f0v0 up
-$ ip link add link enp2s0f0v0 name vlan4 type vlan id 4
-$ ip link set vlan4 up
-...
-$ ethtool -k enp2s0f0v0 | grep vlan-offload
-rx-vlan-offload: off [requested on]
-tx-vlan-offload: off [requested on]
-$ dmesg -l err | grep iavf
-
-Fixes: f9b4b6278d51 ("i40e: Reset the VF upon conflicting VLAN configuration")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 2cdaa3eefed8 ("netfilter: conntrack: restore IPS_CONFIRMED out of nf_conntrack_hash_check_insert()")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/bpf/20230830011128.1415752-3-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_bpf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index cb7cf672f6971..547e67d9470b7 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -4397,9 +4397,7 @@ int i40e_ndo_set_vf_port_vlan(struct net_device *netdev, int vf_id,
- 		goto error_pvid;
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index 8639e7efd0e22..816283f0aa593 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -384,6 +384,8 @@ struct nf_conn *bpf_ct_insert_entry(struct nf_conn___init *nfct_i)
+ 	struct nf_conn *nfct = (struct nf_conn *)nfct_i;
+ 	int err;
  
- 	i40e_vlan_stripping_enable(vsi);
--	i40e_vc_reset_vf(vf, true);
--	/* During reset the VF got a new VSI, so refresh a pointer. */
--	vsi = pf->vsi[vf->lan_vsi_idx];
-+
- 	/* Locked once because multiple functions below iterate list */
- 	spin_lock_bh(&vsi->mac_filter_hash_lock);
- 
-@@ -4485,6 +4483,10 @@ int i40e_ndo_set_vf_port_vlan(struct net_device *netdev, int vf_id,
- 	 */
- 	vf->port_vlan_id = le16_to_cpu(vsi->info.pvid);
- 
-+	i40e_vc_reset_vf(vf, true);
-+	/* During reset the VF got a new VSI, so refresh a pointer. */
-+	vsi = pf->vsi[vf->lan_vsi_idx];
-+
- 	ret = i40e_config_vf_promiscuous_mode(vf, vsi->id, allmulti, alluni);
- 	if (ret) {
- 		dev_err(&pf->pdev->dev, "Unable to config vf promiscuous mode\n");
++	if (!nf_ct_is_confirmed(nfct))
++		nfct->timeout += nfct_time_stamp;
+ 	nfct->status |= IPS_CONFIRMED;
+ 	err = nf_conntrack_hash_check_insert(nfct);
+ 	if (err < 0) {
 -- 
 2.40.1
 
