@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2101CF8E
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA70A1D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6zapxMR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837A5C433C8;
-	Wed,  4 Oct 2023 18:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1CQeMPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49561C433C8;
+	Wed,  4 Oct 2023 18:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444638;
-	bh=vMaFqrf74YGEctJx9V23KLcJ1iKOtmlG/qi50ut5PkQ=;
+	s=korg; t=1696444641;
+	bh=rSb2y//9mlAAfnFhpZI6PL4Qz4SpRx7O8kIon6ytwZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6zapxMRVaEu7we+bvL9vXVCdWG6fVT18BTEbN4KaOGReYpp92CEE5s/VoW4a7F0x
-	 ownbpx489NJrd6zQqa1rYvPy0yDEtJ3mRfyN28IWvFDyCzsxwc+Acu4YKZcprAxPxU
-	 5esqPOkRP2OQWUeemVP6/B4br1K2mKUvt0YlKzKY=
+	b=N1CQeMPybLXRwm+D8WHrai8yN798aZjToohiG+UMfR1mm8kCV4lbPbkPe83Murh+q
+	 g9Y17E+CQQpRuDPaLV8mq42Se+zfYcetp6ZDwdiP5YSvra+IURN6kiGR3YuDrEHFM4
+	 rb5njxOUAbOPIPb9ExV1n90CMYGukW2s0mAXVN+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
 	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Garry <john.g.garry@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 304/321] ata: libata-core: Fix port and device removal
-Date: Wed,  4 Oct 2023 19:57:29 +0200
-Message-ID: <20231004175243.378369593@linuxfoundation.org>
+Subject: [PATCH 6.5 305/321] ata: libata-core: Do not register PM operations for SAS ports
+Date: Wed,  4 Oct 2023 19:57:30 +0200
+Message-ID: <20231004175243.427125600@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -47,79 +47,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 84d76529c650f887f1e18caee72d6f0589e1baf9 upstream.
+commit 75e2bd5f1ede42a2bc88aa34b431e1ace8e0bea0 upstream.
 
-Whenever an ATA adapter driver is removed (e.g. rmmod),
-ata_port_detach() is called repeatedly for all the adapter ports to
-remove (unload) the devices attached to the port and delete the port
-device itself. Removing of devices is done using libata EH with the
-ATA_PFLAG_UNLOADING port flag set. This causes libata EH to execute
-ata_eh_unload() which disables all devices attached to the port.
+libsas does its own domain based power management of ports. For such
+ports, libata should not use a device type defining power management
+operations as executing these operations for suspend/resume in addition
+to libsas calls to ata_sas_port_suspend() and ata_sas_port_resume() is
+not necessary (and likely dangerous to do, even though problems are not
+seen currently).
 
-ata_port_detach() finishes by calling scsi_remove_host() to remove the
-scsi host associated with the port. This function will trigger the
-removal of all scsi devices attached to the host and in the case of
-disks, calls to sd_shutdown() which will flush the device write cache
-and stop the device. However, given that the devices were already
-disabled by ata_eh_unload(), the synchronize write cache command and
-start stop unit commands fail. E.g. running "rmmod ahci" with first
-removing sd_mod results in error messages like:
+Introduce the new ata_port_sas_type device_type for ports managed by
+libsas. This new device type is used in ata_tport_add() and is defined
+without power management operations.
 
-ata13.00: disable device
-sd 0:0:0:0: [sda] Synchronizing SCSI cache
-sd 0:0:0:0: [sda] Synchronize Cache(10) failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
-sd 0:0:0:0: [sda] Stopping disk
-sd 0:0:0:0: [sda] Start/Stop Unit failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
-
-Fix this by removing all scsi devices of the ata devices connected to
-the port before scheduling libata EH to disable the ATA devices.
-
-Fixes: 720ba12620ee ("[PATCH] libata-hp: update unload-unplug")
+Fixes: 2fcbdcb4c802 ("[SCSI] libata: export ata_port suspend/resume infrastructure for sas")
 Cc: stable@vger.kernel.org
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
 Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/ata/libata-core.c      |    2 +-
+ drivers/ata/libata-transport.c |    9 ++++++++-
+ drivers/ata/libata.h           |    2 ++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
-@@ -6130,11 +6130,30 @@ static void ata_port_detach(struct ata_p
- 	if (!ap->ops->error_handler)
- 		goto skip_eh;
+@@ -5396,7 +5396,7 @@ EXPORT_SYMBOL_GPL(ata_host_resume);
+ #endif
  
--	/* tell EH we're leaving & flush EH */
-+	/* Wait for any ongoing EH */
-+	ata_port_wait_eh(ap);
-+
-+	mutex_lock(&ap->scsi_scan_mutex);
- 	spin_lock_irqsave(ap->lock, flags);
-+
-+	/* Remove scsi devices */
-+	ata_for_each_link(link, ap, HOST_FIRST) {
-+		ata_for_each_dev(dev, link, ALL) {
-+			if (dev->sdev) {
-+				spin_unlock_irqrestore(ap->lock, flags);
-+				scsi_remove_device(dev->sdev);
-+				spin_lock_irqsave(ap->lock, flags);
-+				dev->sdev = NULL;
-+			}
-+		}
-+	}
-+
-+	/* Tell EH to disable all devices */
- 	ap->pflags |= ATA_PFLAG_UNLOADING;
- 	ata_port_schedule_eh(ap);
-+
- 	spin_unlock_irqrestore(ap->lock, flags);
-+	mutex_unlock(&ap->scsi_scan_mutex);
+ const struct device_type ata_port_type = {
+-	.name = "ata_port",
++	.name = ATA_PORT_TYPE_NAME,
+ #ifdef CONFIG_PM
+ 	.pm = &ata_port_pm_ops,
+ #endif
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -266,6 +266,10 @@ void ata_tport_delete(struct ata_port *a
+ 	put_device(dev);
+ }
  
- 	/* wait till EH commits suicide */
- 	ata_port_wait_eh(ap);
++static const struct device_type ata_port_sas_type = {
++	.name = ATA_PORT_TYPE_NAME,
++};
++
+ /** ata_tport_add - initialize a transport ATA port structure
+  *
+  * @parent:	parent device
+@@ -283,7 +287,10 @@ int ata_tport_add(struct device *parent,
+ 	struct device *dev = &ap->tdev;
+ 
+ 	device_initialize(dev);
+-	dev->type = &ata_port_type;
++	if (ap->flags & ATA_FLAG_SAS_HOST)
++		dev->type = &ata_port_sas_type;
++	else
++		dev->type = &ata_port_type;
+ 
+ 	dev->parent = parent;
+ 	ata_host_get(ap->host);
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -30,6 +30,8 @@ enum {
+ 	ATA_DNXFER_QUIET	= (1 << 31),
+ };
+ 
++#define ATA_PORT_TYPE_NAME	"ata_port"
++
+ extern atomic_t ata_print_id;
+ extern int atapi_passthru16;
+ extern int libata_fua;
 
 
