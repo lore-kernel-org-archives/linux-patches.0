@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF6D1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A631D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n65QLA/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3D7C433C8;
-	Wed,  4 Oct 2023 18:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7rbW550"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36434C433C9;
+	Wed,  4 Oct 2023 18:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443633;
-	bh=9jaluEczDjdhsa1kr2CYofKkK74yGoeH8HmSHE1ZWJ4=;
+	s=korg; t=1696443636;
+	bh=DZToq7SM9arp5nvAqBqMxlRLkqMNZ98L7amOcqwJm0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n65QLA/ZQLVIhRSi0U3FzZOroFb7brd8zhkl5McfwoGbk7xuFnoGgNZYx+SL/qMhE
-	 4jGuPYIOcZs6ey6AzSr5xjJMzD3r6cPF5Ce5I3z6lLERsxlGCa1SZo98uGCZ4Y/Ow6
-	 zAjEfFIPtJ7gOjVB+uuVDji0nM7W66BzmNdBot9k=
+	b=r7rbW550WGBTNvsi7Rj8qGcvIGweATorVLGnpln4gOUjO1j/8nZAV+mQBZ/OljWJ0
+	 myawSZUhvqvt7C2bUdm7axFx9J104yjdG8jbQeCn4AArUKhEFtSneDxIvNeU0pGe1V
+	 BshtIZvsSeeV6L/DmNkMEe2TH1Qh1SxiSC+PEVCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Leonard <talex5@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 226/259] io_uring/fs: remove sqe->rw_flags checking from LINKAT
-Date: Wed,  4 Oct 2023 19:56:39 +0200
-Message-ID: <20231004175227.720245270@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.1 227/259] i2c: i801: unregister tco_pdev in i801_probe() error path
+Date: Wed,  4 Oct 2023 19:56:40 +0200
+Message-ID: <20231004175227.771810429@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,34 +43,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit a52d4f657568d6458e873f74a9602e022afe666f upstream.
+commit 3914784553f68c931fc666dbe7e86fe881aada38 upstream.
 
-This is unionized with the actual link flags, so they can of course be
-set and they will be evaluated further down. If not we fail any LINKAT
-that has to set option flags.
+We have to unregister tco_pdev also if i2c_add_adapter() fails.
 
-Fixes: cf30da90bc3a ("io_uring: add support for IORING_OP_LINKAT")
+Fixes: 9424693035a5 ("i2c: i801: Create iTCO device on newer Intel PCHs")
 Cc: stable@vger.kernel.org
-Reported-by: Thomas Leonard <talex5@gmail.com>
-Link: https://github.com/axboe/liburing/issues/955
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-i801.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/fs.c
-+++ b/io_uring/fs.c
-@@ -243,7 +243,7 @@ int io_linkat_prep(struct io_kiocb *req,
- 	struct io_link *lnk = io_kiocb_to_cmd(req, struct io_link);
- 	const char __user *oldf, *newf;
- 
--	if (sqe->rw_flags || sqe->buf_index || sqe->splice_fd_in)
-+	if (sqe->buf_index || sqe->splice_fd_in)
- 		return -EINVAL;
- 	if (unlikely(req->flags & REQ_F_FIXED_FILE))
- 		return -EBADF;
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -1754,6 +1754,7 @@ static int i801_probe(struct pci_dev *de
+ 		"SMBus I801 adapter at %04lx", priv->smba);
+ 	err = i2c_add_adapter(&priv->adapter);
+ 	if (err) {
++		platform_device_unregister(priv->tco_pdev);
+ 		i801_acpi_remove(priv);
+ 		return err;
+ 	}
 
 
