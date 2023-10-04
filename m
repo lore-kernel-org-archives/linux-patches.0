@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410AA1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8534C433C9;
-	Wed,  4 Oct 2023 18:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655371D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADC2C433C7;
+	Wed,  4 Oct 2023 18:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442667;
-	bh=Yrdvh45jvHb8nlqnc1stXGzZUgBiLpU7j1IiPxRtHAE=;
+	s=korg; t=1696442670;
+	bh=FABeDLnSMJrQzz4od+8oRc+HbfJ1Ix4bih0ryybpJxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdR8mYLklplWZId4d7T1YNo/7Xw4nEuhibF3+l5p6Uvx/cpfhb9uu0yfrvuNXMgUM
-	 fDwKgkEsVgLTxatGlBNdMtPH4ADV5mBaiD8jD4xIc/9G6VFIdcRqmogDBLVMHDLq46
-	 nAhcWL1tPjp/s7Rd7j+PAd88IWudOvBV+85+hQt4=
+	b=lmmsAJ1gcBY50Lks+Kykkwt8Df4GRfPO4Pb/lPkyCUsjsMnnn1JdykhejiZ4N3DnI
+	 FSRBoS9LKCANP9AZBH7ZwBJ+oNrkU6gc8N03oy7ygC+b2y1zLdWuL5T1xqjiKSxSEa
+	 Vl184YFWZe9N2pYqcQQ9KHsYQXcjsxXerTI3Q1xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/183] netfilter: nft_set_rbtree: skip sync GC for new elements in this transaction
-Date: Wed,  4 Oct 2023 19:54:19 +0200
-Message-ID: <20231004175205.143585335@linuxfoundation.org>
+Subject: [PATCH 5.15 060/183] net: rds: Fix possible NULL-pointer dereference
+Date: Wed,  4 Oct 2023 19:54:51 +0200
+Message-ID: <20231004175206.402452169@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,50 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-commit 2ee52ae94baabf7ee09cf2a8d854b990dac5d0e4 upstream.
+[ Upstream commit f1d95df0f31048f1c59092648997686e3f7d9478 ]
 
-New elements in this transaction might expired before such transaction
-ends. Skip sync GC for such elements otherwise commit path might walk
-over an already released object. Once transaction is finished, async GC
-will collect such expired element.
+In rds_rdma_cm_event_handler_cmn() check, if conn pointer exists
+before dereferencing it as rdma_set_service_type() argument
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: fd261ce6a30e ("rds: rdma: update rdma transport for tos")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/rds/rdma_transport.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index c6435e7092319..f250b5399344a 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -312,6 +312,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
- 	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
-+	u8 cur_genmask = nft_genmask_cur(net);
- 	u8 genmask = nft_genmask_next(net);
- 	int d, err;
+diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
+index a9e4ff948a7d6..f71f073fd27ac 100644
+--- a/net/rds/rdma_transport.c
++++ b/net/rds/rdma_transport.c
+@@ -86,11 +86,13 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
+ 		break;
  
-@@ -357,8 +358,11 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		if (!nft_set_elem_active(&rbe->ext, genmask))
- 			continue;
+ 	case RDMA_CM_EVENT_ADDR_RESOLVED:
+-		rdma_set_service_type(cm_id, conn->c_tos);
+-		rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
+-		/* XXX do we need to clean up if this fails? */
+-		ret = rdma_resolve_route(cm_id,
+-					 RDS_RDMA_RESOLVE_TIMEOUT_MS);
++		if (conn) {
++			rdma_set_service_type(cm_id, conn->c_tos);
++			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
++			/* XXX do we need to clean up if this fails? */
++			ret = rdma_resolve_route(cm_id,
++						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
++		}
+ 		break;
  
--		/* perform garbage collection to avoid bogus overlap reports. */
--		if (nft_set_elem_expired(&rbe->ext)) {
-+		/* perform garbage collection to avoid bogus overlap reports
-+		 * but skip new elements in this transaction.
-+		 */
-+		if (nft_set_elem_expired(&rbe->ext) &&
-+		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
- 			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
- 			if (err < 0)
- 				return err;
+ 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
 -- 
 2.40.1
 
