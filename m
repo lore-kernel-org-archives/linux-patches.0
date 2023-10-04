@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336FA1D55D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D821D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C0kji8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D78C433C7;
-	Wed,  4 Oct 2023 18:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKVe51+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A45C433C9;
+	Wed,  4 Oct 2023 18:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443387;
-	bh=Nh5LvujZEFBJG7eO0d0Kc+BB2FAsDelbOSkQvDGyVkI=;
+	s=korg; t=1696443389;
+	bh=/IrOULaRNJk+sIpZBFXIHBteb0Ljj0p42aQeIDmcIvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2C0kji8eFNocHx+JAAvmQ+9VG+wcg6SrWmoCbqMN9C69paQYNQ4VSvw+wLPLut+xr
-	 cRGM0fCvsNr60QP5V0eI0ZANFAAGJh4afej2oZWYkMh9SerYgLkOJIPVsult1onqxD
-	 6ZMX1taMkUOog23ecCXeNNU9DmN3Q5qyK7ko+EqQ=
+	b=SKVe51+kw9YKkKfwVJi7X2nk9dPAugz9OuWGB/1AtOwz0RhWSCx3xOlXS2g1WfLml
+	 p36kz6+6uD6tfanrcTvfFYyjxOAEwITfiDTX3CZ/WeA3pZGarl3A5E5lGVS3fIJMQX
+	 6IzL5IAJ968s3MqY/4j5CQyWJlivcaM/BAFdIEUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	"William A. Kennington III" <william@wkennington.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/259] gpio: pmic-eic-sprd: Add can_sleep flag for PMIC EIC chip
-Date: Wed,  4 Oct 2023 19:55:12 +0200
-Message-ID: <20231004175223.698950197@linuxfoundation.org>
+Subject: [PATCH 6.1 140/259] i2c: npcm7xx: Fix callback completion ordering
+Date: Wed,  4 Oct 2023 19:55:13 +0200
+Message-ID: <20231004175223.744034979@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,37 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: William A. Kennington III <william@wkennington.com>
 
-[ Upstream commit 26d9e5640d2130ee16df7b1fb6a908f460ab004c ]
+[ Upstream commit 92e73d807b68b2214fcafca4e130b5300a9d4b3c ]
 
-The drivers uses a mutex and I2C bus access in its PMIC EIC chip
-get implementation. This means these functions can sleep and the PMIC EIC
-chip should set the can_sleep property to true.
+Sometimes, our completions race with new master transfers and override
+the bus->operation and bus->master_or_slave variables. This causes
+transactions to timeout and kernel crashes less frequently.
 
-This will ensure that a warning is printed when trying to get the
-value from a context that potentially can't sleep.
+To remedy this, we re-order all completions to the very end of the
+function.
 
-Fixes: 348f3cde84ab ("gpio: Add Spreadtrum PMIC EIC driver support")
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+Signed-off-by: William A. Kennington III <william@wkennington.com>
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pmic-eic-sprd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-npcm7xx.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pmic-eic-sprd.c b/drivers/gpio/gpio-pmic-eic-sprd.c
-index e518490c4b681..ebbbcb54270d1 100644
---- a/drivers/gpio/gpio-pmic-eic-sprd.c
-+++ b/drivers/gpio/gpio-pmic-eic-sprd.c
-@@ -337,6 +337,7 @@ static int sprd_pmic_eic_probe(struct platform_device *pdev)
- 	pmic_eic->chip.set_config = sprd_pmic_eic_set_config;
- 	pmic_eic->chip.set = sprd_pmic_eic_set;
- 	pmic_eic->chip.get = sprd_pmic_eic_get;
-+	pmic_eic->chip.can_sleep = true;
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 83457359ec450..767dd15b3c881 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -696,6 +696,7 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ {
+ 	struct i2c_msg *msgs;
+ 	int msgs_num;
++	bool do_complete = false;
  
- 	pmic_eic->intc.name = dev_name(&pdev->dev);
- 	pmic_eic->intc.irq_mask = sprd_pmic_eic_irq_mask;
+ 	msgs = bus->msgs;
+ 	msgs_num = bus->msgs_num;
+@@ -724,23 +725,17 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ 				 msgs[1].flags & I2C_M_RD)
+ 				msgs[1].len = info;
+ 		}
+-		if (completion_done(&bus->cmd_complete) == false)
+-			complete(&bus->cmd_complete);
+-	break;
+-
++		do_complete = true;
++		break;
+ 	case I2C_NACK_IND:
+ 		/* MASTER transmit got a NACK before tx all bytes */
+ 		bus->cmd_err = -ENXIO;
+-		if (bus->master_or_slave == I2C_MASTER)
+-			complete(&bus->cmd_complete);
+-
++		do_complete = true;
+ 		break;
+ 	case I2C_BUS_ERR_IND:
+ 		/* Bus error */
+ 		bus->cmd_err = -EAGAIN;
+-		if (bus->master_or_slave == I2C_MASTER)
+-			complete(&bus->cmd_complete);
+-
++		do_complete = true;
+ 		break;
+ 	case I2C_WAKE_UP_IND:
+ 		/* I2C wake up */
+@@ -754,6 +749,8 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ 	if (bus->slave)
+ 		bus->master_or_slave = I2C_SLAVE;
+ #endif
++	if (do_complete)
++		complete(&bus->cmd_complete);
+ }
+ 
+ static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
 -- 
 2.40.1
 
