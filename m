@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7E91D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97691D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yb8f062D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC66C433CC;
-	Wed,  4 Oct 2023 18:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0a3UiQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAEDC433CA;
+	Wed,  4 Oct 2023 18:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444018;
-	bh=8+tG61t4Og3P/xaY/R1aOzVCPQR+P6J6n0XruEYnAek=;
+	s=korg; t=1696444021;
+	bh=BG/xKnCfzv5AvKnwbqJmC1pqIsOdgYyTJZllz4hHlpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yb8f062D3TDB/WtXFMXGKbVmapCZL8FEoallO9ewZbLAC94qqPlOjM6go5FwrXC6a
-	 7axGWfCizX9mEdbrug3NXEn1y1L8k7Ft6l0M+n07UZbn2XKNWMh3f3R4NW4K+dnxkw
-	 A9uZObTqfXpgUewq3DOyMSFF5wcOqIbsoBF0mMoc=
+	b=G0a3UiQWrQOi5ihTQm4RX1Z9UXmCj1VEqgsqyhg3x6jOSyAWl5mb1mj6RY7AafW/s
+	 1isaXu2xp/e4BUZ39pDz7c9z2+kGqLhQz+NSOcajDdyT0Xm6mxscSYpNTzo58UO10a
+	 PBng3xZX8bviIxqmZjW4G0UzU24ouVGoAyjZkVn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 102/321] igc: Expose tx-usecs coalesce setting to user
-Date: Wed,  4 Oct 2023 19:54:07 +0200
-Message-ID: <20231004175233.963959620@linuxfoundation.org>
+Subject: [PATCH 6.5 103/321] cxl/region: Match auto-discovered region decoders by HPA range
+Date: Wed,  4 Oct 2023 19:54:08 +0200
+Message-ID: <20231004175234.017234356@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,128 +45,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 1703b2e0de653b459ca6230be32ce7f2ea0ae7ee ]
+[ Upstream commit 9e4edf1a2196fa4bea6e8201f166785bd066446a ]
 
-When users attempt to obtain the coalesce setting using the
-ethtool command, current code always returns 0 for tx-usecs.
-This is because I225/6 always uses a queue pair setting, hence
-tx_coalesce_usecs does not return a value during the
-igc_ethtool_get_coalesce() callback process. The pair queue
-condition checking in igc_ethtool_get_coalesce() is removed by
-this patch so that the user gets information of the value of tx-usecs.
+Currently, when the region driver attaches a region to a port, it
+selects the ports next available decoder to program.
 
-Even if i225/6 is using queue pair setting, there is no harm in
-notifying the user of the tx-usecs. The implementation of the current
-code may have previously been a copy of the legacy code i210.
-Since I225 has the queue pair setting enabled, tx-usecs will always adhere
-to the user-set rx-usecs value. An error message will appear when the user
-attempts to set the tx-usecs value for the input parameters because,
-by default, they should only set the rx-usecs value.
+With the addition of auto-discovered regions, a port decoder has
+already been programmed so grabbing the next available decoder can
+be a mismatch when there is more than one region using the port.
 
-This patch also adds the helper function to get the
-previous rx coalesce value similar to tx coalesce.
+The failure appears like this with CXL DEBUG enabled:
 
-How to test:
-User can get the coalesce value using ethtool command.
+[] cxl_core:alloc_region_ref:754: cxl region0: endpoint9: HPA order violation region0:[mem 0x14780000000-0x1478fffffff flags 0x200] vs [mem 0x880000000-0x185fffffff flags 0x200]
+[] cxl_core:cxl_port_attach_region:972: cxl region0: endpoint9: failed to allocate region reference
 
-Example command:
-Get: ethtool -c <interface>
+When CXL DEBUG is not enabled, there is no failure message. The region
+just never materializes. Users can suspect this issue if they know their
+firmware has programmed decoders so that more than one region is using
+a port. Note that the problem may appear intermittently, ie not on
+every reboot.
 
-Previous output:
+Add a matching method for auto-discovered regions that finds a decoder
+based on an HPA range. The decoder range must exactly match the region
+resource parameter.
 
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
-
-tx-usecs: 0
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
-
-New output:
-
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
-
-tx-usecs: 3
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
-
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230919170331.1581031-1-anthony.l.nguyen@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a32320b71f08 ("cxl/region: Add region autodiscovery")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20230905211007.256385-1-alison.schofield@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 31 ++++++++++++--------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/cxl/core/region.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 93bce729be76a..7ab6dd58e4001 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -868,6 +868,18 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
- 	spin_unlock(&adapter->stats64_lock);
- }
- 
-+static int igc_ethtool_get_previous_rx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->rx_itr_setting <= 3) ?
-+		adapter->rx_itr_setting : adapter->rx_itr_setting >> 2;
-+}
-+
-+static int igc_ethtool_get_previous_tx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->tx_itr_setting <= 3) ?
-+		adapter->tx_itr_setting : adapter->tx_itr_setting >> 2;
-+}
-+
- static int igc_ethtool_get_coalesce(struct net_device *netdev,
- 				    struct ethtool_coalesce *ec,
- 				    struct kernel_ethtool_coalesce *kernel_coal,
-@@ -875,17 +887,8 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
- {
- 	struct igc_adapter *adapter = netdev_priv(netdev);
- 
--	if (adapter->rx_itr_setting <= 3)
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting;
--	else
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting >> 2;
--
--	if (!(adapter->flags & IGC_FLAG_QUEUE_PAIRS)) {
--		if (adapter->tx_itr_setting <= 3)
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting;
--		else
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting >> 2;
--	}
-+	ec->rx_coalesce_usecs = igc_ethtool_get_previous_rx_coalesce(adapter);
-+	ec->tx_coalesce_usecs = igc_ethtool_get_previous_tx_coalesce(adapter);
- 
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index e115ba382e044..b4c6a749406f1 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -717,13 +717,35 @@ static int match_free_decoder(struct device *dev, void *data)
  	return 0;
  }
-@@ -910,8 +913,12 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
- 	    ec->tx_coalesce_usecs == 2)
- 		return -EINVAL;
  
--	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) && ec->tx_coalesce_usecs)
-+	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) &&
-+	    ec->tx_coalesce_usecs != igc_ethtool_get_previous_tx_coalesce(adapter)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Queue Pair mode enabled, both Rx and Tx coalescing controlled by rx-usecs");
- 		return -EINVAL;
-+	}
++static int match_auto_decoder(struct device *dev, void *data)
++{
++	struct cxl_region_params *p = data;
++	struct cxl_decoder *cxld;
++	struct range *r;
++
++	if (!is_switch_decoder(dev))
++		return 0;
++
++	cxld = to_cxl_decoder(dev);
++	r = &cxld->hpa_range;
++
++	if (p->res && p->res->start == r->start && p->res->end == r->end)
++		return 1;
++
++	return 0;
++}
++
+ static struct cxl_decoder *cxl_region_find_decoder(struct cxl_port *port,
+ 						   struct cxl_region *cxlr)
+ {
+ 	struct device *dev;
+ 	int id = 0;
  
- 	/* If ITR is disabled, disable DMAC */
- 	if (ec->rx_coalesce_usecs == 0) {
+-	dev = device_find_child(&port->dev, &id, match_free_decoder);
++	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags))
++		dev = device_find_child(&port->dev, &cxlr->params,
++					match_auto_decoder);
++	else
++		dev = device_find_child(&port->dev, &id, match_free_decoder);
+ 	if (!dev)
+ 		return NULL;
+ 	/*
 -- 
 2.40.1
 
