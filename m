@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDA01C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2590C1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRoqZhpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B526BC433C7;
-	Wed,  4 Oct 2023 18:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkKTSgZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D02C433C7;
+	Wed,  4 Oct 2023 18:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444487;
-	bh=lfIvUnRve0SIsbzuGhZB0RU/uHyJR/GPq3TI/hUojcU=;
+	s=korg; t=1696444490;
+	bh=I0wf1u+VDpu1NHdo4aZGIx71fTcTzkie8TXmW5N4BwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRoqZhpFiyUZeZvzAbNnjhBSjSMYf14YLmjZVncTwsnBaBCGuD/XCkuqWp2RzajKP
-	 I8z/imj64rHySRfa+HQoiFXQo8+PmOUVtOLT8zUhffq6dVdWMwoTckLa4RHYMWFWUM
-	 Qj9kotzySddKXzOjPrebPQC7G0yJVxIZvc6kdmKs=
+	b=nkKTSgZYTaSNzRItG5sAjnlmkSMwumJAk6/3xexQvt30/NHO5B/TNEMV3xPso238R
+	 wGt2ThQ+VULLsUglrHSHM3e+GG2/tvPkdtWv1kiH+QE3bCmbkuhVxbfe6mvBI8Aj+N
+	 9JmBFdqa/xY7bLQ7l6zxAsi0k0tesLILj3KuxZz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.5 267/321] ata: libata-scsi: ignore reserved bits for REPORT SUPPORTED OPERATION CODES
-Date: Wed,  4 Oct 2023 19:56:52 +0200
-Message-ID: <20231004175241.643188114@linuxfoundation.org>
+	Thomas Leonard <talex5@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 268/321] io_uring/fs: remove sqe->rw_flags checking from LINKAT
+Date: Wed,  4 Oct 2023 19:56:53 +0200
+Message-ID: <20231004175241.696860128@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,40 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 3ef600923521616ebe192c893468ad0424de2afb upstream.
+commit a52d4f657568d6458e873f74a9602e022afe666f upstream.
 
-For REPORT SUPPORTED OPERATION CODES command, the service action field is
-defined as bits 0-4 in the second byte in the CDB. Bits 5-7 in the second
-byte are reserved.
+This is unionized with the actual link flags, so they can of course be
+set and they will be evaluated further down. If not we fail any LINKAT
+that has to set option flags.
 
-Only look at the service action field in the second byte when determining
-if the MAINTENANCE IN opcode is a REPORT SUPPORTED OPERATION CODES command.
-
-This matches how we only look at the service action field in the second
-byte when determining if the SERVICE ACTION IN(16) opcode is a READ
-CAPACITY(16) command (reserved bits 5-7 in the second byte are ignored).
-
-Fixes: 7b2030942859 ("libata: Add support for SCT Write Same")
+Fixes: cf30da90bc3a ("io_uring: add support for IORING_OP_LINKAT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reported-by: Thomas Leonard <talex5@gmail.com>
+Link: https://github.com/axboe/liburing/issues/955
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |    2 +-
+ io_uring/fs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4487,7 +4487,7 @@ void ata_scsi_simulate(struct ata_device
- 		break;
+--- a/io_uring/fs.c
++++ b/io_uring/fs.c
+@@ -243,7 +243,7 @@ int io_linkat_prep(struct io_kiocb *req,
+ 	struct io_link *lnk = io_kiocb_to_cmd(req, struct io_link);
+ 	const char __user *oldf, *newf;
  
- 	case MAINTENANCE_IN:
--		if (scsicmd[1] == MI_REPORT_SUPPORTED_OPERATION_CODES)
-+		if ((scsicmd[1] & 0x1f) == MI_REPORT_SUPPORTED_OPERATION_CODES)
- 			ata_scsi_rbuf_fill(&args, ata_scsiop_maint_in);
- 		else
- 			ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
+-	if (sqe->rw_flags || sqe->buf_index || sqe->splice_fd_in)
++	if (sqe->buf_index || sqe->splice_fd_in)
+ 		return -EINVAL;
+ 	if (unlikely(req->flags & REQ_F_FIXED_FILE))
+ 		return -EBADF;
 
 
