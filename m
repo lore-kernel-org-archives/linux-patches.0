@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4F21C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66621C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvIFf9q5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A096EC433CA;
-	Wed,  4 Oct 2023 18:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shTLQrYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57469C433C9;
+	Wed,  4 Oct 2023 18:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444552;
-	bh=LJwVglDeo6WfpF5eA09q7ezGqT7zegP2580iyixY46I=;
+	s=korg; t=1696444554;
+	bh=Znwu/vqcd9l/Y56R0dpQyfqY/smlUU24ySWPOQLwXDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvIFf9q5SdjQQD1ZcR/lZrPb3vfiUmQrVawTcssIu4N9cbN4+CtzsJDS1zOM259op
-	 6K/k0RB+zGMvROi77BZvy1fUENl30H2iMpDfEsbv3Uv+CLWAI6hiG6qxvctil7BFef
-	 jpfUy831jJf0DRFdllJTxQ3vFNFp8eQY6hKWsxcs=
+	b=shTLQrYuf0gYNQjV+B+srX758rTg0vNqmt4UgX6S979qgKeHaooT+fQLSDGNYgGL0
+	 ajER+dQgGzgDiEY10QkUzVUhE+BIN1M5fH4Km69HAlvQvng/MbA6yQelmQ52LOxVU8
+	 sKIYvADTdS8lVMl+mGDyIEnagWDg2CBfiCaCJcEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.5 273/321] Revert "SUNRPC dont update timeout value on connection reset"
-Date: Wed,  4 Oct 2023 19:56:58 +0200
-Message-ID: <20231004175241.933028147@linuxfoundation.org>
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Christoph Hellwig <hch@lst.de>,
+	Bernd Schubert <bschubert@ddn.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.5 291/321] btrfs: file_remove_privs needs an exclusive lock in direct io write
+Date: Wed,  4 Oct 2023 19:57:16 +0200
+Message-ID: <20231004175242.755083607@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,39 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Bernd Schubert <bschubert@ddn.com>
 
-commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
+commit 9af86694fd5d387992699ec99007ed374966ce9a upstream.
 
-This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
+This was noticed by Miklos that file_remove_privs might call into
+notify_change(), which requires to hold an exclusive lock. The problem
+exists in FUSE and btrfs. We can fix it without any additional helpers
+from VFS, in case the privileges would need to be dropped, change the
+lock type to be exclusive and redo the loop.
 
-The problem this commit is intended to fix was comprehensively fixed
-in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
-reset").
-Since then, this commit has been preventing the correct timeout of soft
-mounted requests.
-
-Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
-Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
-Cc: stable@vger.kernel.org # 5.9.x
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: e9adabb9712e ("btrfs: use shared lock for direct writes within EOF")
+CC: Miklos Szeredi <miklos@szeredi.hu>
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/file.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2474,8 +2474,7 @@ call_status(struct rpc_task *task)
- 		goto out_exit;
- 	}
- 	task->tk_action = call_encode;
--	if (status != -ECONNRESET && status != -ECONNABORTED)
--		rpc_check_timeout(task);
-+	rpc_check_timeout(task);
- 	return;
- out_exit:
- 	rpc_call_rpcerror(task, status);
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1466,8 +1466,13 @@ static ssize_t btrfs_direct_write(struct
+ 	if (iocb->ki_flags & IOCB_NOWAIT)
+ 		ilock_flags |= BTRFS_ILOCK_TRY;
+ 
+-	/* If the write DIO is within EOF, use a shared lock */
+-	if (iocb->ki_pos + iov_iter_count(from) <= i_size_read(inode))
++	/*
++	 * If the write DIO is within EOF, use a shared lock and also only if
++	 * security bits will likely not be dropped by file_remove_privs() called
++	 * from btrfs_write_check(). Either will need to be rechecked after the
++	 * lock was acquired.
++	 */
++	if (iocb->ki_pos + iov_iter_count(from) <= i_size_read(inode) && IS_NOSEC(inode))
+ 		ilock_flags |= BTRFS_ILOCK_SHARED;
+ 
+ relock:
+@@ -1475,6 +1480,13 @@ relock:
+ 	if (err < 0)
+ 		return err;
+ 
++	/* Shared lock cannot be used with security bits set. */
++	if ((ilock_flags & BTRFS_ILOCK_SHARED) && !IS_NOSEC(inode)) {
++		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
++		ilock_flags &= ~BTRFS_ILOCK_SHARED;
++		goto relock;
++	}
++
+ 	err = generic_write_checks(iocb, from);
+ 	if (err <= 0) {
+ 		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
 
 
