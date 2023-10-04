@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBA1210ED
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F1E210E8
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUeXtg66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F30C433C8;
-	Wed,  4 Oct 2023 18:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq6kKdRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA64C433C9;
+	Wed,  4 Oct 2023 18:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444335;
-	bh=qwSHBLVHGysUxDFLdkdtnFAjEqOOitIJ9SqcAcnW7Zc=;
+	s=korg; t=1696444338;
+	bh=2vpwpM+LZZr9TNZNXUJ2MbQHAFmLy2iKCALfGIaW/Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUeXtg66jQ9icJgEp9jicF5u402+rrN1Bu+OjCWWqJdYiQlIAqtQ8t8Kz/lMCWQMN
-	 Iuxpeo5TVa5lKnifX7X+RnT/uYgeZHpYeR4u5kcrJl7uZPGBFWEgC85figs6A6YmwM
-	 YR2XyV36JzWHHAs4fnWCUtQkyRTzKV6gmTKrumIM=
+	b=Bq6kKdRwdQGc0o04k0hf/uxs9NRkpagNMmJhxhx9i5tzxQ4Z79EVocNF2evBK9WtF
+	 OMyDzg7LaKD084fkBSQRH9VghqdE4NLiH/jvbCNrv6HNhTyCznfhsxV552USf6+pky
+	 V1BjeZdv+C+UvABHiAk1q2ee7f79A7LMcDYMSGqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julia Lawall <Julia.Lawall@inria.fr>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mukul Joshi <mukul.joshi@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 185/321] thermal/of: add missing of_node_put()
-Date: Wed,  4 Oct 2023 19:55:30 +0200
-Message-ID: <20231004175237.816635201@linuxfoundation.org>
+Subject: [PATCH 6.5 186/321] drm/amdgpu: Store CU info from all XCCs for GFX v9.4.3
+Date: Wed,  4 Oct 2023 19:55:31 +0200
+Message-ID: <20231004175237.865542708@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,52 +43,401 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julia Lawall <Julia.Lawall@inria.fr>
+From: Mukul Joshi <mukul.joshi@amd.com>
 
-[ Upstream commit 8a81cf96f5510aaf9a65d103f7405079a7b0fcc5 ]
+[ Upstream commit 97e3c6a853f2af9145daf0c6ca25bcdf55c759d4 ]
 
-for_each_child_of_node performs an of_node_get on each
-iteration, so a break out of the loop requires an
-of_node_put.
+Currently, we store CU info only for a single XCC assuming
+that it is the same for all XCCs. However, that may not be
+true. As a result, store CU info for all XCCs. This info is
+later used for CU masking.
 
-This was done using the Coccinelle semantic patch
-iterators/for_each_child.cocci
-
-Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_of.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h       |  3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c       |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c        |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c        |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c         |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c         |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c         |  2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c         |  4 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c       | 76 +++++++++----------
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c         |  3 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c  |  8 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c     | 11 ++-
+ .../gpu/drm/amd/include/kgd_kfd_interface.h   |  6 +-
+ 14 files changed, 60 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
-index 22272f9c5934a..e615f735f4c03 100644
---- a/drivers/thermal/thermal_of.c
-+++ b/drivers/thermal/thermal_of.c
-@@ -38,8 +38,10 @@ static int of_find_trip_id(struct device_node *np, struct device_node *trip)
- 	 */
- 	for_each_child_of_node(trips, t) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index b4fcad0e62f7e..a7c8beff1647c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -492,7 +492,7 @@ void amdgpu_amdkfd_get_cu_info(struct amdgpu_device *adev, struct kfd_cu_info *c
+ 	cu_info->cu_active_number = acu_info.number;
+ 	cu_info->cu_ao_mask = acu_info.ao_cu_mask;
+ 	memcpy(&cu_info->cu_bitmap[0], &acu_info.bitmap[0],
+-	       sizeof(acu_info.bitmap));
++	       sizeof(cu_info->cu_bitmap));
+ 	cu_info->num_shader_engines = adev->gfx.config.max_shader_engines;
+ 	cu_info->num_shader_arrays_per_engine = adev->gfx.config.max_sh_per_se;
+ 	cu_info->num_cu_per_sh = adev->gfx.config.max_cu_per_sh;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+index a4ff515ce8966..59ba03d387fcc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+@@ -43,6 +43,7 @@
+ #define AMDGPU_GFX_LBPW_DISABLED_MODE		0x00000008L
  
--		if (t == trip)
-+		if (t == trip) {
-+			of_node_put(t);
- 			goto out;
-+		}
- 		i++;
+ #define AMDGPU_MAX_GC_INSTANCES		8
++#define KGD_MAX_QUEUES			128
+ 
+ #define AMDGPU_MAX_GFX_QUEUES KGD_MAX_QUEUES
+ #define AMDGPU_MAX_COMPUTE_QUEUES KGD_MAX_QUEUES
+@@ -254,7 +255,7 @@ struct amdgpu_cu_info {
+ 	uint32_t number;
+ 	uint32_t ao_cu_mask;
+ 	uint32_t ao_cu_bitmap[4][4];
+-	uint32_t bitmap[4][4];
++	uint32_t bitmap[AMDGPU_MAX_GC_INSTANCES][4][4];
+ };
+ 
+ struct amdgpu_gfx_ras {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index d4ca19ba5a289..f678bdd5f353d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -839,7 +839,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 		memcpy(&dev_info->cu_ao_bitmap[0], &adev->gfx.cu_info.ao_cu_bitmap[0],
+ 		       sizeof(adev->gfx.cu_info.ao_cu_bitmap));
+ 		memcpy(&dev_info->cu_bitmap[0], &adev->gfx.cu_info.bitmap[0],
+-		       sizeof(adev->gfx.cu_info.bitmap));
++		       sizeof(dev_info->cu_bitmap));
+ 		dev_info->vram_type = adev->gmc.vram_type;
+ 		dev_info->vram_bit_width = adev->gmc.vram_width;
+ 		dev_info->vce_harvest_config = adev->vce.harvest_config;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+index 44af8022b89fa..f743bf2c92877 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -9448,7 +9448,7 @@ static int gfx_v10_0_get_cu_info(struct amdgpu_device *adev,
+ 				gfx_v10_0_set_user_wgp_inactive_bitmap_per_sh(
+ 					adev, disable_masks[i * 2 + j]);
+ 			bitmap = gfx_v10_0_get_cu_active_bitmap_per_sh(adev);
+-			cu_info->bitmap[i][j] = bitmap;
++			cu_info->bitmap[0][i][j] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k++) {
+ 				if (bitmap & mask) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 0451533ddde41..a82cba884c48f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -6394,7 +6394,7 @@ static int gfx_v11_0_get_cu_info(struct amdgpu_device *adev,
+ 			 *    SE6: {SH0,SH1} --> {bitmap[2][2], bitmap[2][3]}
+ 			 *    SE7: {SH0,SH1} --> {bitmap[3][2], bitmap[3][3]}
+ 			 */
+-			cu_info->bitmap[i % 4][j + (i / 4) * 2] = bitmap;
++			cu_info->bitmap[0][i % 4][j + (i / 4) * 2] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k++) {
+ 				if (bitmap & mask)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index da6caff78c22b..34f9211b26793 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -3577,7 +3577,7 @@ static void gfx_v6_0_get_cu_info(struct amdgpu_device *adev)
+ 				gfx_v6_0_set_user_cu_inactive_bitmap(
+ 					adev, disable_masks[i * 2 + j]);
+ 			bitmap = gfx_v6_0_get_cu_enabled(adev);
+-			cu_info->bitmap[i][j] = bitmap;
++			cu_info->bitmap[0][i][j] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k++) {
+ 				if (bitmap & mask) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+index 8c174c11eaee0..6feae2548e8ee 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+@@ -5122,7 +5122,7 @@ static void gfx_v7_0_get_cu_info(struct amdgpu_device *adev)
+ 				gfx_v7_0_set_user_cu_inactive_bitmap(
+ 					adev, disable_masks[i * 2 + j]);
+ 			bitmap = gfx_v7_0_get_cu_active_bitmap(adev);
+-			cu_info->bitmap[i][j] = bitmap;
++			cu_info->bitmap[0][i][j] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k ++) {
+ 				if (bitmap & mask) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+index 51c1745c83697..885ebd703260f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -7121,7 +7121,7 @@ static void gfx_v8_0_get_cu_info(struct amdgpu_device *adev)
+ 				gfx_v8_0_set_user_cu_inactive_bitmap(
+ 					adev, disable_masks[i * 2 + j]);
+ 			bitmap = gfx_v8_0_get_cu_active_bitmap(adev);
+-			cu_info->bitmap[i][j] = bitmap;
++			cu_info->bitmap[0][i][j] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k ++) {
+ 				if (bitmap & mask) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 372ae2fc42e0c..602d74023b0b9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1497,7 +1497,7 @@ static void gfx_v9_0_init_always_on_cu_mask(struct amdgpu_device *adev)
+ 			amdgpu_gfx_select_se_sh(adev, i, j, 0xffffffff, 0);
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k ++) {
+-				if (cu_info->bitmap[i][j] & mask) {
++				if (cu_info->bitmap[0][i][j] & mask) {
+ 					if (counter == pg_always_on_cu_num)
+ 						WREG32_SOC15(GC, 0, mmRLC_PG_ALWAYS_ON_CU_MASK, cu_bitmap);
+ 					if (counter < always_on_cu_num)
+@@ -7237,7 +7237,7 @@ static int gfx_v9_0_get_cu_info(struct amdgpu_device *adev,
+ 			 *    SE6,SH0 --> bitmap[2][1]
+ 			 *    SE7,SH0 --> bitmap[3][1]
+ 			 */
+-			cu_info->bitmap[i % 4][j + i / 4] = bitmap;
++			cu_info->bitmap[0][i % 4][j + i / 4] = bitmap;
+ 
+ 			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k ++) {
+ 				if (bitmap & mask) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+index 4f883b94f98ef..84a74a6c6b2de 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+@@ -4228,7 +4228,7 @@ static void gfx_v9_4_3_set_gds_init(struct amdgpu_device *adev)
+ }
+ 
+ static void gfx_v9_4_3_set_user_cu_inactive_bitmap(struct amdgpu_device *adev,
+-						 u32 bitmap)
++						 u32 bitmap, int xcc_id)
+ {
+ 	u32 data;
+ 
+@@ -4238,15 +4238,15 @@ static void gfx_v9_4_3_set_user_cu_inactive_bitmap(struct amdgpu_device *adev,
+ 	data = bitmap << GC_USER_SHADER_ARRAY_CONFIG__INACTIVE_CUS__SHIFT;
+ 	data &= GC_USER_SHADER_ARRAY_CONFIG__INACTIVE_CUS_MASK;
+ 
+-	WREG32_SOC15(GC, GET_INST(GC, 0), regGC_USER_SHADER_ARRAY_CONFIG, data);
++	WREG32_SOC15(GC, GET_INST(GC, xcc_id), regGC_USER_SHADER_ARRAY_CONFIG, data);
+ }
+ 
+-static u32 gfx_v9_4_3_get_cu_active_bitmap(struct amdgpu_device *adev)
++static u32 gfx_v9_4_3_get_cu_active_bitmap(struct amdgpu_device *adev, int xcc_id)
+ {
+ 	u32 data, mask;
+ 
+-	data = RREG32_SOC15(GC, GET_INST(GC, 0), regCC_GC_SHADER_ARRAY_CONFIG);
+-	data |= RREG32_SOC15(GC, GET_INST(GC, 0), regGC_USER_SHADER_ARRAY_CONFIG);
++	data = RREG32_SOC15(GC, GET_INST(GC, xcc_id), regCC_GC_SHADER_ARRAY_CONFIG);
++	data |= RREG32_SOC15(GC, GET_INST(GC, xcc_id), regGC_USER_SHADER_ARRAY_CONFIG);
+ 
+ 	data &= CC_GC_SHADER_ARRAY_CONFIG__INACTIVE_CUS_MASK;
+ 	data >>= CC_GC_SHADER_ARRAY_CONFIG__INACTIVE_CUS__SHIFT;
+@@ -4259,7 +4259,7 @@ static u32 gfx_v9_4_3_get_cu_active_bitmap(struct amdgpu_device *adev)
+ static int gfx_v9_4_3_get_cu_info(struct amdgpu_device *adev,
+ 				 struct amdgpu_cu_info *cu_info)
+ {
+-	int i, j, k, counter, active_cu_number = 0;
++	int i, j, k, counter, xcc_id, active_cu_number = 0;
+ 	u32 mask, bitmap, ao_bitmap, ao_cu_mask = 0;
+ 	unsigned disable_masks[4 * 4];
+ 
+@@ -4278,46 +4278,38 @@ static int gfx_v9_4_3_get_cu_info(struct amdgpu_device *adev,
+ 				    adev->gfx.config.max_sh_per_se);
+ 
+ 	mutex_lock(&adev->grbm_idx_mutex);
+-	for (i = 0; i < adev->gfx.config.max_shader_engines; i++) {
+-		for (j = 0; j < adev->gfx.config.max_sh_per_se; j++) {
+-			mask = 1;
+-			ao_bitmap = 0;
+-			counter = 0;
+-			gfx_v9_4_3_xcc_select_se_sh(adev, i, j, 0xffffffff, 0);
+-			gfx_v9_4_3_set_user_cu_inactive_bitmap(
+-				adev, disable_masks[i * adev->gfx.config.max_sh_per_se + j]);
+-			bitmap = gfx_v9_4_3_get_cu_active_bitmap(adev);
+-
+-			/*
+-			 * The bitmap(and ao_cu_bitmap) in cu_info structure is
+-			 * 4x4 size array, and it's usually suitable for Vega
+-			 * ASICs which has 4*2 SE/SH layout.
+-			 * But for Arcturus, SE/SH layout is changed to 8*1.
+-			 * To mostly reduce the impact, we make it compatible
+-			 * with current bitmap array as below:
+-			 *    SE4,SH0 --> bitmap[0][1]
+-			 *    SE5,SH0 --> bitmap[1][1]
+-			 *    SE6,SH0 --> bitmap[2][1]
+-			 *    SE7,SH0 --> bitmap[3][1]
+-			 */
+-			cu_info->bitmap[i % 4][j + i / 4] = bitmap;
+-
+-			for (k = 0; k < adev->gfx.config.max_cu_per_sh; k++) {
+-				if (bitmap & mask) {
+-					if (counter < adev->gfx.config.max_cu_per_sh)
+-						ao_bitmap |= mask;
+-					counter++;
++	for (xcc_id = 0; xcc_id < NUM_XCC(adev->gfx.xcc_mask); xcc_id++) {
++		for (i = 0; i < adev->gfx.config.max_shader_engines; i++) {
++			for (j = 0; j < adev->gfx.config.max_sh_per_se; j++) {
++				mask = 1;
++				ao_bitmap = 0;
++				counter = 0;
++				gfx_v9_4_3_xcc_select_se_sh(adev, i, j, 0xffffffff, xcc_id);
++				gfx_v9_4_3_set_user_cu_inactive_bitmap(
++					adev,
++					disable_masks[i * adev->gfx.config.max_sh_per_se + j],
++					xcc_id);
++				bitmap = gfx_v9_4_3_get_cu_active_bitmap(adev, xcc_id);
++
++				cu_info->bitmap[xcc_id][i][j] = bitmap;
++
++				for (k = 0; k < adev->gfx.config.max_cu_per_sh; k++) {
++					if (bitmap & mask) {
++						if (counter < adev->gfx.config.max_cu_per_sh)
++							ao_bitmap |= mask;
++						counter++;
++					}
++					mask <<= 1;
+ 				}
+-				mask <<= 1;
++				active_cu_number += counter;
++				if (i < 2 && j < 2)
++					ao_cu_mask |= (ao_bitmap << (i * 16 + j * 8));
++				cu_info->ao_cu_bitmap[i][j] = ao_bitmap;
+ 			}
+-			active_cu_number += counter;
+-			if (i < 2 && j < 2)
+-				ao_cu_mask |= (ao_bitmap << (i * 16 + j * 8));
+-			cu_info->ao_cu_bitmap[i % 4][j + i / 4] = ao_bitmap;
+ 		}
++		gfx_v9_4_3_xcc_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff,
++					    xcc_id);
  	}
+-	gfx_v9_4_3_xcc_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff,
+-				    0);
+ 	mutex_unlock(&adev->grbm_idx_mutex);
  
-@@ -402,8 +404,10 @@ static int thermal_of_for_each_cooling_maps(struct thermal_zone_device *tz,
+ 	cu_info->number = active_cu_number;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+index f5a6f562e2a80..11b9837292536 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+@@ -2154,7 +2154,8 @@ static int kfd_create_vcrat_image_gpu(void *pcrat_image,
  
- 	for_each_child_of_node(cm_np, child) {
- 		ret = thermal_of_for_each_cooling_device(tz_np, child, tz, cdev, action);
--		if (ret)
-+		if (ret) {
-+			of_node_put(child);
- 			break;
-+		}
- 	}
+ 	amdgpu_amdkfd_get_cu_info(kdev->adev, &cu_info);
+ 	cu->num_simd_per_cu = cu_info.simd_per_cu;
+-	cu->num_simd_cores = cu_info.simd_per_cu * cu_info.cu_active_number;
++	cu->num_simd_cores = cu_info.simd_per_cu *
++			(cu_info.cu_active_number / kdev->kfd->num_nodes);
+ 	cu->max_waves_simd = cu_info.max_waves_per_simd;
  
- 	of_node_put(cm_np);
+ 	cu->wave_front_size = cu_info.wave_front_size;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+index 863cf060af484..35e05ee89eac5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+@@ -104,11 +104,13 @@ void mqd_symmetrically_map_cu_mask(struct mqd_manager *mm,
+ 	bool wgp_mode_req = KFD_GC_VERSION(mm->dev) >= IP_VERSION(10, 0, 0);
+ 	uint32_t en_mask = wgp_mode_req ? 0x3 : 0x1;
+ 	int i, se, sh, cu, cu_bitmap_sh_mul, inc = wgp_mode_req ? 2 : 1;
++	uint32_t cu_active_per_node;
+ 
+ 	amdgpu_amdkfd_get_cu_info(mm->dev->adev, &cu_info);
+ 
+-	if (cu_mask_count > cu_info.cu_active_number)
+-		cu_mask_count = cu_info.cu_active_number;
++	cu_active_per_node = cu_info.cu_active_number / mm->dev->kfd->num_nodes;
++	if (cu_mask_count > cu_active_per_node)
++		cu_mask_count = cu_active_per_node;
+ 
+ 	/* Exceeding these bounds corrupts the stack and indicates a coding error.
+ 	 * Returning with no CU's enabled will hang the queue, which should be
+@@ -141,7 +143,7 @@ void mqd_symmetrically_map_cu_mask(struct mqd_manager *mm,
+ 	for (se = 0; se < cu_info.num_shader_engines; se++)
+ 		for (sh = 0; sh < cu_info.num_shader_arrays_per_engine; sh++)
+ 			cu_per_sh[se][sh] = hweight32(
+-				cu_info.cu_bitmap[se % 4][sh + (se / 4) * cu_bitmap_sh_mul]);
++				cu_info.cu_bitmap[0][se % 4][sh + (se / 4) * cu_bitmap_sh_mul]);
+ 
+ 	/* Symmetrically map cu_mask to all SEs & SHs:
+ 	 * se_mask programs up to 2 SH in the upper and lower 16 bits.
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index 4a17bb7c7b27d..ea67a353beb00 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -450,8 +450,7 @@ static ssize_t node_show(struct kobject *kobj, struct attribute *attr,
+ 	sysfs_show_32bit_prop(buffer, offs, "cpu_cores_count",
+ 			      dev->node_props.cpu_cores_count);
+ 	sysfs_show_32bit_prop(buffer, offs, "simd_count",
+-			      dev->gpu ? (dev->node_props.simd_count *
+-					  NUM_XCC(dev->gpu->xcc_mask)) : 0);
++			      dev->gpu ? dev->node_props.simd_count : 0);
+ 	sysfs_show_32bit_prop(buffer, offs, "mem_banks_count",
+ 			      dev->node_props.mem_banks_count);
+ 	sysfs_show_32bit_prop(buffer, offs, "caches_count",
+@@ -1658,7 +1657,7 @@ static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
+ 	int i, j, k;
+ 	struct kfd_cache_properties *pcache = NULL;
+ 
+-	cu_sibling_map_mask = cu_info->cu_bitmap[0][0];
++	cu_sibling_map_mask = cu_info->cu_bitmap[0][0][0];
+ 	cu_sibling_map_mask &=
+ 		((1 << pcache_info[cache_type].num_cu_shared) - 1);
+ 	first_active_cu = ffs(cu_sibling_map_mask);
+@@ -1701,7 +1700,7 @@ static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
+ 				pcache->sibling_map[k+3] = (uint8_t)((cu_sibling_map_mask >> 24) & 0xFF);
+ 				k += 4;
+ 
+-				cu_sibling_map_mask = cu_info->cu_bitmap[i % 4][j + i / 4];
++				cu_sibling_map_mask = cu_info->cu_bitmap[0][i % 4][j + i / 4];
+ 				cu_sibling_map_mask &= ((1 << pcache_info[cache_type].num_cu_shared) - 1);
+ 			}
+ 		}
+@@ -1762,8 +1761,8 @@ static void kfd_fill_cache_non_crat_info(struct kfd_topology_device *dev, struct
+ 					for (k = 0; k < pcu_info->num_cu_per_sh; k += pcache_info[ct].num_cu_shared) {
+ 
+ 						ret = fill_in_l1_pcache(&props_ext, pcache_info, pcu_info,
+-										pcu_info->cu_bitmap[i % 4][j + i / 4], ct,
+-										cu_processor_id, k);
++									pcu_info->cu_bitmap[0][i % 4][j + i / 4], ct,
++									cu_processor_id, k);
+ 
+ 						if (ret < 0)
+ 							break;
+diff --git a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
+index d0df3381539f0..74cc545085a02 100644
+--- a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
+@@ -31,12 +31,12 @@
+ #include <linux/types.h>
+ #include <linux/bitmap.h>
+ #include <linux/dma-fence.h>
++#include "amdgpu_irq.h"
++#include "amdgpu_gfx.h"
+ 
+ struct pci_dev;
+ struct amdgpu_device;
+ 
+-#define KGD_MAX_QUEUES 128
+-
+ struct kfd_dev;
+ struct kgd_mem;
+ 
+@@ -68,7 +68,7 @@ struct kfd_cu_info {
+ 	uint32_t wave_front_size;
+ 	uint32_t max_scratch_slots_per_cu;
+ 	uint32_t lds_size;
+-	uint32_t cu_bitmap[4][4];
++	uint32_t cu_bitmap[AMDGPU_MAX_GC_INSTANCES][4][4];
+ };
+ 
+ /* For getting GPU local memory information from KGD */
 -- 
 2.40.1
 
