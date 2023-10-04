@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E6210F2
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEB6210E4
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWKz3u8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A674C433CA;
-	Wed,  4 Oct 2023 18:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKVbagOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101EEC433C7;
+	Wed,  4 Oct 2023 18:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444343;
-	bh=kgJ/NTtmMdR3Obiyh/n2fZcVDI92mETIhbA+rKnGixQ=;
+	s=korg; t=1696444346;
+	bh=GE9NsKgEIY8bmWkn0EfsVEl25R83Zj7DdtIxTClD3jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWKz3u8llhHxhGwjPfbHG6Z4OsnBP06sqKsnaLWATYpK3TLuLoN5eCIc3b6T3JgBC
-	 ZRoFO85D2ULO2wsJnmIAYT690BrlhR4dgdzNSbaBAVxfxQp32PjUzXNKrgUH8+B1xl
-	 0QSRPNXaj7c1cuFNibLuN+8K14pS9dlMJHmziWhg=
+	b=AKVbagOuMXyVx7+VKy3cLZq8JP7IUd4Z7YLbeIHoV9PScMegIssP9JP57VouG6aqw
+	 MYMDXIBUAL9QewOQ4Va7y1mraqOkytx7FlcBgYnxVLU+VAo9Pjyb+/gOtNqptAR5j+
+	 OCc5I9liBhbSmhYx8yqA4CsT717BUt82Y072a2YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <rbmarliere@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 178/321] selftests: fix dependency checker script
-Date: Wed,  4 Oct 2023 19:55:23 +0200
-Message-ID: <20231004175237.493121238@linuxfoundation.org>
+Subject: [PATCH 6.5 210/321] ASoC: rt5640: Only cancel jack-detect work on suspend if active
+Date: Wed,  4 Oct 2023 19:55:55 +0200
+Message-ID: <20231004175238.980513162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,177 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <rbmarliere@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5f9dd2e896a91bfca90f8463eb6808c03d535d8a ]
+[ Upstream commit 8fc7cc507d61fc655172836c74fb7fcc8b7a978b ]
 
-This patch fixes inconsistencies in the parsing rules of the levels 1
-and 2 of the kselftest_deps.sh.  It was added the levels 4 and 5 to
-account for a few edge cases that are present in some tests, also some
-minor identation styling have been fixed (s/    /\t/g).
+If jack-detection is not used; or has already been disabled then
+there is no need to call rt5640_cancel_work().
 
-Signed-off-by: Ricardo B. Marliere <rbmarliere@gmail.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Move the rt5640_cancel_work() inside the "if (rt5640->jack) {}" block,
+grouping it together with the disabling of the IRQ which queues the work
+in the first place.
+
+This also makes suspend() symetrical with resume() which re-queues the work
+in an "if (rt5640->jack) {}" block.
+
+Cc: Oder Chiou <oder_chiou@realtek.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230912113245.320159-7-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_deps.sh | 77 +++++++++++++++++++----
- 1 file changed, 65 insertions(+), 12 deletions(-)
+ sound/soc/codecs/rt5640.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/kselftest_deps.sh b/tools/testing/selftests/kselftest_deps.sh
-index 4bc14d9e8ff1d..de59cc8f03c3f 100755
---- a/tools/testing/selftests/kselftest_deps.sh
-+++ b/tools/testing/selftests/kselftest_deps.sh
-@@ -46,11 +46,11 @@ fi
- print_targets=0
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index a39d556ad1a10..0a05554da3739 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2802,9 +2802,9 @@ static int rt5640_suspend(struct snd_soc_component *component)
+ 	if (rt5640->jack) {
+ 		/* disable jack interrupts during system suspend */
+ 		disable_irq(rt5640->irq);
++		rt5640_cancel_work(rt5640);
+ 	}
  
- while getopts "p" arg; do
--    case $arg in
--        p)
-+	case $arg in
-+		p)
- 		print_targets=1
- 	shift;;
--    esac
-+	esac
- done
- 
- if [ $# -eq 0 ]
-@@ -92,6 +92,10 @@ pass_cnt=0
- # Get all TARGETS from selftests Makefile
- targets=$(grep -E "^TARGETS +|^TARGETS =" Makefile | cut -d "=" -f2)
- 
-+# Initially, in LDLIBS related lines, the dep checker needs
-+# to ignore lines containing the following strings:
-+filter="\$(VAR_LDLIBS)\|pkg-config\|PKG_CONFIG\|IOURING_EXTRA_LIBS"
-+
- # Single test case
- if [ $# -eq 2 ]
- then
-@@ -100,6 +104,8 @@ then
- 	l1_test $test
- 	l2_test $test
- 	l3_test $test
-+	l4_test $test
-+	l5_test $test
- 
- 	print_results $1 $2
- 	exit $?
-@@ -113,7 +119,7 @@ fi
- # Append space at the end of the list to append more tests.
- 
- l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 2: LDLIBS set dynamically.
- #
-@@ -126,7 +132,7 @@ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
- # Append space at the end of the list to append more tests.
- 
- l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 3
- # memfd and others use pkg-config to find mount and fuse libs
-@@ -138,11 +144,32 @@ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
- #	VAR_LDLIBS := $(shell pkg-config fuse --libs 2>/dev/null)
- 
- l3_tests=$(grep -r --include=Makefile "^VAR_LDLIBS" | \
--		grep -v "pkg-config" | awk -F: '{print $1}')
-+		grep -v "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
- 
--#echo $l1_tests
--#echo $l2_1_tests
--#echo $l3_tests
-+# Level 4
-+# some tests may fall back to default using `|| echo -l<libname>`
-+# if pkg-config doesn't find the libs, instead of using VAR_LDLIBS
-+# as per level 3 checks.
-+# e.g:
-+# netfilter/Makefile
-+#	LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
-+l4_tests=$(grep -r --include=Makefile "^LDLIBS" | \
-+		grep "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
-+
-+# Level 5
-+# some tests may use IOURING_EXTRA_LIBS to add extra libs to LDLIBS,
-+# which in turn may be defined in a sub-Makefile
-+# e.g.:
-+# mm/Makefile
-+#	$(OUTPUT)/gup_longterm: LDLIBS += $(IOURING_EXTRA_LIBS)
-+l5_tests=$(grep -r --include=Makefile "LDLIBS +=.*\$(IOURING_EXTRA_LIBS)" | \
-+	awk -F: '{print $1}' | uniq)
-+
-+#echo l1_tests $l1_tests
-+#echo l2_tests $l2_tests
-+#echo l3_tests $l3_tests
-+#echo l4_tests $l4_tests
-+#echo l5_tests $l5_tests
- 
- all_tests
- print_results $1 $2
-@@ -164,24 +191,32 @@ all_tests()
- 	for test in $l3_tests; do
- 		l3_test $test
- 	done
-+
-+	for test in $l4_tests; do
-+		l4_test $test
-+	done
-+
-+	for test in $l5_tests; do
-+		l5_test $test
-+	done
- }
- 
- # Use same parsing used for l1_tests and pick libraries this time.
- l1_test()
- {
- 	test_libs=$(grep --include=Makefile "^LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | \
- 			sed -e 's/+/ /' | cut -d "=" -f 2)
- 
- 	check_libs $test $test_libs
- }
- 
--# Use same parsing used for l2__tests and pick libraries this time.
-+# Use same parsing used for l2_tests and pick libraries this time.
- l2_test()
- {
- 	test_libs=$(grep --include=Makefile ": LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | sed -e 's/+/ /' | \
- 			cut -d "=" -f 2)
- 
-@@ -197,6 +232,24 @@ l3_test()
- 	check_libs $test $test_libs
- }
- 
-+l4_test()
-+{
-+	test_libs=$(grep --include=Makefile "^VAR_LDLIBS\|^LDLIBS" $test | \
-+			grep "\(pkg-config\|PKG_CONFIG\).*|| echo " | \
-+			sed -e 's/.*|| echo //' | sed -e 's/)$//')
-+
-+	check_libs $test $test_libs
-+}
-+
-+l5_test()
-+{
-+	tests=$(find $(dirname "$test") -type f -name "*.mk")
-+	test_libs=$(grep "^IOURING_EXTRA_LIBS +\?=" $tests | \
-+			cut -d "=" -f 2)
-+
-+	check_libs $test $test_libs
-+}
-+
- check_libs()
- {
- 
+-	rt5640_cancel_work(rt5640);
+ 	snd_soc_component_force_bias_level(component, SND_SOC_BIAS_OFF);
+ 	rt5640_reset(component);
+ 	regcache_cache_only(rt5640->regmap, true);
 -- 
 2.40.1
 
