@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D5B1C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173711C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1xdOqj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73485C433C7;
-	Wed,  4 Oct 2023 18:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIfVJ8sJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86176C433C8;
+	Wed,  4 Oct 2023 18:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444493;
-	bh=MudhFSa2MnjPFbNsOOIIBJpT0reh4DMUI3DFH8vQyoc=;
+	s=korg; t=1696444495;
+	bh=wEDAUdfXAxQ4wP4qSZHxi9IAacO9he0B63JgHHAEvoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1xdOqj9NeFwF9EN2lDGjHTBYKegnXGDzf17nOR4uBp5sVn0twz+TL4wqeMw7wMQ8
-	 p8TealH69Lpfcn3ZrYsor8mtQKEiEEpZ38fPgbGFBrvzekiZgWW9BAT3n4IMUWE/9R
-	 vy8EBV5HLXWpKSpl6BQt950F7MREJjUUloE6yEx8=
+	b=SIfVJ8sJuFNssEZ6A617tEBOHRZEOS85mH2VtRsdfXQuMt/jA45xSUSTWhT5EM2wI
+	 kiTK/QHHE4HSdFqFbMl3Qsn5MhkJBwsEAag1JK8wSLt4SvdcZ2Ep5wNKCMXbPcNacC
+	 QURUEl1SMkuapUX5mljM6ftSlj+G+fbI1q7LAqgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.5 269/321] i2c: i801: unregister tco_pdev in i801_probe() error path
-Date: Wed,  4 Oct 2023 19:56:54 +0200
-Message-ID: <20231004175241.745149288@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.5 243/321] KVM: SVM: INTERCEPT_RDTSCP is never intercepted anyway
+Date: Wed,  4 Oct 2023 19:56:28 +0200
+Message-ID: <20231004175240.508281098@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,32 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 3914784553f68c931fc666dbe7e86fe881aada38 upstream.
+commit e8d93d5d93f85949e7299be289c6e7e1154b2f78 upstream.
 
-We have to unregister tco_pdev also if i2c_add_adapter() fails.
+svm_recalc_instruction_intercepts() is always called at least once
+before the vCPU is started, so the setting or clearing of the RDTSCP
+intercept can be dropped from the TSC_AUX virtualization support.
 
-Fixes: 9424693035a5 ("i2c: i801: Create iTCO device on newer Intel PCHs")
+Extracted from a patch by Tom Lendacky.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 296d5a17e793 ("KVM: SEV-ES: Use V_TSC_AUX if available instead of RDTSC/MSR_TSC_AUX intercepts")
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/svm/sev.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1754,6 +1754,7 @@ static int i801_probe(struct pci_dev *de
- 		"SMBus I801 adapter at %04lx", priv->smba);
- 	err = i2c_add_adapter(&priv->adapter);
- 	if (err) {
-+		platform_device_unregister(priv->tco_pdev);
- 		i801_acpi_remove(priv);
- 		return err;
- 	}
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2994,11 +2994,8 @@ static void sev_es_init_vmcb(struct vcpu
+ 
+ 	if (boot_cpu_has(X86_FEATURE_V_TSC_AUX) &&
+ 	    (guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDTSCP) ||
+-	     guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDPID))) {
++	     guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDPID)))
+ 		set_msr_interception(vcpu, svm->msrpm, MSR_TSC_AUX, 1, 1);
+-		if (guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDTSCP))
+-			svm_clr_intercept(svm, INTERCEPT_RDTSCP);
+-	}
+ }
+ 
+ void sev_init_vmcb(struct vcpu_svm *svm)
 
 
