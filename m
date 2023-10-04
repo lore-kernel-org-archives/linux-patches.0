@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37BB1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005F5C433C7;
-	Wed,  4 Oct 2023 18:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9A41D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA1FC433C9;
+	Wed,  4 Oct 2023 18:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443278;
-	bh=cBVKFjnUKC09UEBclA+WGL27oZHQDcKsnVPRsRU7Y78=;
+	s=korg; t=1696443281;
+	bh=MiSeYcgXiAv0EVdWX0HvTi972lu1t1lnKWJS2kqPIH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6gOxZG8soKoDzUmxr8P2tTRK4IuMvEF+dHYYRoIRB1aNsujebZ+LoZeKw/z5h2oP
-	 4h87CQXAKj3pofXEAHvf56hj8/fUn5s5sP4ZBQl9GlYrUvC3oWTkBlsulL/EC3RSh7
-	 Wzxo2SCjZD5rJje4YGBOSxsby1nJfrGhd9chUIac=
+	b=vMCyBYIvAyUzOEnBp/wkcS5TKiOx3eZRA4SpnhilNOxCLiIQBRUyTsZDam4TVWnkp
+	 ow53ME04qVePQvzgZl6Wxal5UhxZVOBJPncX9eCZi0iiOV4gYubEF/LUHVhwNCNa0+
+	 0KZqNqPk0m+2/b3mq321w8Mv6WC+un43fEixVmL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rappoport <rppt@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/259] x86/mm, kexec, ima: Use memblock_free_late() from ima_free_kexec_buffer()
-Date: Wed,  4 Oct 2023 19:53:54 +0200
-Message-ID: <20231004175220.221224682@linuxfoundation.org>
+Subject: [PATCH 6.1 093/259] ARM: dts: samsung: exynos4210-i9100: Fix LCD screens physical size
+Date: Wed,  4 Oct 2023 19:54:26 +0200
+Message-ID: <20231004175221.621417693@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,52 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 34cf99c250d5cd2530b93a57b0de31d3aaf8685b ]
+[ Upstream commit b3f3fc32e5ff1e848555af8616318cc667457f90 ]
 
-The code calling ima_free_kexec_buffer() runs long after the memblock
-allocator has already been torn down, potentially resulting in a use
-after free in memblock_isolate_range().
+The previous values were completely bogus, and resulted in the computed
+DPI ratio being much lower than reality, causing applications and UIs to
+misbehave.
 
-With KASAN or KFENCE, this use after free will result in a BUG
-from the idle task, and a subsequent kernel panic.
+The new values were measured by myself with a ruler.
 
-Switch ima_free_kexec_buffer() over to memblock_free_late() to avoid
-that bug.
-
-Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
-Suggested-by: Mike Rappoport <rppt@kernel.org>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230817135558.67274c83@imladris.surriel.com
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
+Cc: <stable@vger.kernel.org> # v5.8+
+Link: https://lore.kernel.org/r/20230714153720.336990-1-paul@crapouillou.net
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/setup.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/exynos4210-i9100.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 892609cde4a20..804a252382da7 100644
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -363,15 +363,11 @@ static void __init add_early_ima_buffer(u64 phys_addr)
- #if defined(CONFIG_HAVE_IMA_KEXEC) && !defined(CONFIG_OF_FLATTREE)
- int __init ima_free_kexec_buffer(void)
- {
--	int rc;
--
- 	if (!ima_kexec_buffer_size)
- 		return -ENOENT;
+diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exynos4210-i9100.dts
+index bba85011ecc93..53e023fc1cacf 100644
+--- a/arch/arm/boot/dts/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/exynos4210-i9100.dts
+@@ -201,8 +201,8 @@
+ 			power-on-delay = <10>;
+ 			reset-delay = <10>;
  
--	rc = memblock_phys_free(ima_kexec_buffer_phys,
--				ima_kexec_buffer_size);
--	if (rc)
--		return rc;
-+	memblock_free_late(ima_kexec_buffer_phys,
-+			   ima_kexec_buffer_size);
+-			panel-width-mm = <90>;
+-			panel-height-mm = <154>;
++			panel-width-mm = <56>;
++			panel-height-mm = <93>;
  
- 	ima_kexec_buffer_phys = 0;
- 	ima_kexec_buffer_size = 0;
+ 			display-timings {
+ 				timing {
 -- 
 2.40.1
 
