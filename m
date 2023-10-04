@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A655B1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613B81D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X62i1GOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F89C433C8;
-	Wed,  4 Oct 2023 18:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGUjjpnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BA1C433C8;
+	Wed,  4 Oct 2023 18:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443605;
-	bh=+OEil9h1mk16yEmoO5qaqn+syNQSFW54It4/PdfuJTI=;
+	s=korg; t=1696443608;
+	bh=dLqSnKyXXc4x0M6ayJ4x1qhVW/mVr81Hfgb2yi6Rg48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X62i1GOE3IFGhev9z/q/j8BC8Mp5UvFOjWBM6Nz+S3zJPiQu3K2D8fIzWeIANWfZV
-	 p3KYwL4HjZnU4mN0XNIoYa5ybb64S5fa9xwARRQz3HuvpLaJBKU/FgsVNZU9rzhD+2
-	 TuABAdd4NsuqdV7Zoj+NSIEKM352vXWQeA7+Z9Nk=
+	b=FGUjjpnBUrXyKtgt4/OtkkKs/WxbpeNJBytAC5Yt/cxv1EVmlcw3Bu+jFhiAAi4HL
+	 r1Ic7R6yXDKnZ7pgLkn9k3AmCuoENcmBwwo7XzrOiTFecGAZYkbMWmvEMTnVw3s7EA
+	 dFww5uPFBGfhucgkbvIaFgV1EOnIHZcxunEap/mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/259] NFSv4.1: fix zero value filehandle in post open getattr
-Date: Wed,  4 Oct 2023 19:56:01 +0200
-Message-ID: <20231004175225.914937675@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 215/259] mptcp: fix bogus receive window shrinkage with multiple subflows
+Date: Wed,  4 Oct 2023 19:56:28 +0200
+Message-ID: <20231004175227.189337069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,48 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 4506f23e117161a20104c8fa04f33e1ca63c26af ]
+commit 6bec041147a2a64a490d1f813e8a004443061b38 upstream.
 
-Currently, if the OPEN compound experiencing an error and needs to
-get the file attributes separately, it will send a stand alone
-GETATTR but it would use the filehandle from the results of
-the OPEN compound. In case of the CLAIM_FH OPEN, nfs_openres's fh
-is zero value. That generate a GETATTR that's sent with a zero
-value filehandle, and results in the server returning an error.
+In case multiple subflows race to update the mptcp-level receive
+window, the subflow losing the race should use the window value
+provided by the "winning" subflow to update it's own tcp-level
+rcv_wnd.
 
-Instead, for the CLAIM_FH OPEN, take the filehandle that was used
-in the PUTFH of the OPEN compound.
+To such goal, the current code bogusly uses the mptcp-level rcv_wnd
+value as observed before the update attempt. On unlucky circumstances
+that may lead to TCP-level window shrinkage, and stall the other end.
 
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Address the issue feeding to the rcv wnd update the correct value.
+
+Fixes: f3589be0c420 ("mptcp: never shrink offered window")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/427
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mptcp/options.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index acb1346da13e9..be570c65ae154 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2708,8 +2708,12 @@ static int _nfs4_proc_open(struct nfs4_opendata *data,
- 			return status;
- 	}
- 	if (!(o_res->f_attr->valid & NFS_ATTR_FATTR)) {
-+		struct nfs_fh *fh = &o_res->fh;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -1248,12 +1248,13 @@ static void mptcp_set_rwin(struct tcp_so
+ 
+ 			if (rcv_wnd == rcv_wnd_old)
+ 				break;
+-			if (before64(rcv_wnd_new, rcv_wnd)) {
 +
- 		nfs4_sequence_free_slot(&o_res->seq_res);
--		nfs4_proc_getattr(server, &o_res->fh, o_res->f_attr, NULL);
-+		if (o_arg->claim == NFS4_OPEN_CLAIM_FH)
-+			fh = NFS_FH(d_inode(data->dentry));
-+		nfs4_proc_getattr(server, fh, o_res->f_attr, NULL);
++			rcv_wnd_old = rcv_wnd;
++			if (before64(rcv_wnd_new, rcv_wnd_old)) {
+ 				MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_RCVWNDCONFLICTUPDATE);
+ 				goto raise_win;
+ 			}
+ 			MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_RCVWNDCONFLICT);
+-			rcv_wnd_old = rcv_wnd;
+ 		}
+ 		return;
  	}
- 	return 0;
- }
--- 
-2.40.1
-
 
 
