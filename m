@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DB71DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EC01DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DScGSeC4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7574EC433C8;
-	Wed,  4 Oct 2023 18:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCuP823T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CD0C433C8;
+	Wed,  4 Oct 2023 18:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444162;
-	bh=ssFiXoLaWnwWkpwUF5uEi4/24IwfXuqw05OFp2dzthM=;
+	s=korg; t=1696444165;
+	bh=dLCh2yCMAJuO2uWN+TQk2HE9DmuaQJk2Xmm470CJ1EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DScGSeC46PdpvQEj65YGbLeP+K2hEYIL3E91hWGd8UsOq+c472dohY3vtrSa0O3uU
-	 l5JGTLSwWmmgm52G7f9qQ4YrztxrluKp+349xVIA9tih2Rj8bzFqkKmF09uxe1OM4U
-	 HsKR7m3SeeeLBgn4GS0kagSAoiNb3SM1KOgXydyc=
+	b=oCuP823Tx28n2qyhToT4nAHUx/2QcOy6zsy38aQVQBSPKCtZF+782uagmjjcQfCRk
+	 ZRCVaRFZzlN2zyhj9y+yIsILiwFP83g+KqxYxr8yKFeZfnCFZVgtiJjUTT/3VFXRZu
+	 2t5VRfan0vmoihee1BIaT+ZGAGwDPhRGvEx7bWhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
 	Cristian Marussi <cristian.marussi@arm.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 123/321] firmware: arm_scmi: Harden perf domain info access
-Date: Wed,  4 Oct 2023 19:54:28 +0200
-Message-ID: <20231004175234.932365455@linuxfoundation.org>
+Subject: [PATCH 6.5 124/321] firmware: arm_scmi: Fixup perf power-cost/microwatt support
+Date: Wed,  4 Oct 2023 19:54:29 +0200
+Message-ID: <20231004175234.983273048@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,213 +44,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-[ Upstream commit 3da82112355bba263597fcbb24d275fc57e69e7e ]
+[ Upstream commit c3638b851bc1ca0022dca9d6ca4beaa6ef03a216 ]
 
-Harden internal accesses to domain info in the SCMI perf protocol.
+The perf power scale value would currently be reported as bogowatts if the
+platform firmware supports microwatt power scale and meets the perf major
+version requirements. Fix this by populating version information in the
+driver private data before the call to protocol attributes is made.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230717161246.1761777-2-cristian.marussi@arm.com
+CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20230811204818.30928-1-quic_sibis@quicinc.com
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: c3638b851bc1 ("firmware: arm_scmi: Fixup perf power-cost/microwatt support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 89 +++++++++++++++++++++++---------
- 1 file changed, 64 insertions(+), 25 deletions(-)
+ drivers/firmware/arm_scmi/perf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index ecf5c4de851b7..43dd242ecc49c 100644
+index 43dd242ecc49c..431bda9165c3d 100644
 --- a/drivers/firmware/arm_scmi/perf.c
 +++ b/drivers/firmware/arm_scmi/perf.c
-@@ -139,7 +139,7 @@ struct perf_dom_info {
+@@ -858,6 +858,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
+ 	if (!pinfo)
+ 		return -ENOMEM;
  
- struct scmi_perf_info {
- 	u32 version;
--	int num_domains;
-+	u16 num_domains;
- 	enum scmi_power_scale power_scale;
- 	u64 stats_addr;
- 	u32 stats_size;
-@@ -356,11 +356,26 @@ static int scmi_perf_mb_limits_set(const struct scmi_protocol_handle *ph,
- 	return ret;
++	pinfo->version = version;
++
+ 	ret = scmi_perf_attributes_get(ph, pinfo);
+ 	if (ret)
+ 		return ret;
+@@ -877,8 +879,6 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
+ 			scmi_perf_domain_init_fc(ph, domain, &dom->fc_info);
+ 	}
+ 
+-	pinfo->version = version;
+-
+ 	return ph->set_priv(ph, pinfo);
  }
  
-+static inline struct perf_dom_info *
-+scmi_perf_domain_lookup(const struct scmi_protocol_handle *ph, u32 domain)
-+{
-+	struct scmi_perf_info *pi = ph->get_priv(ph);
-+
-+	if (domain >= pi->num_domains)
-+		return ERR_PTR(-EINVAL);
-+
-+	return pi->dom_info + domain;
-+}
-+
- static int scmi_perf_limits_set(const struct scmi_protocol_handle *ph,
- 				u32 domain, u32 max_perf, u32 min_perf)
- {
- 	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
-+	struct perf_dom_info *dom;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	if (PROTOCOL_REV_MAJOR(pi->version) >= 0x3 && !max_perf && !min_perf)
- 		return -EINVAL;
-@@ -408,8 +423,11 @@ static int scmi_perf_mb_limits_get(const struct scmi_protocol_handle *ph,
- static int scmi_perf_limits_get(const struct scmi_protocol_handle *ph,
- 				u32 domain, u32 *max_perf, u32 *min_perf)
- {
--	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
-+	struct perf_dom_info *dom;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	if (dom->fc_info && dom->fc_info[PERF_FC_LIMIT].get_addr) {
- 		struct scmi_fc_info *fci = &dom->fc_info[PERF_FC_LIMIT];
-@@ -449,8 +467,11 @@ static int scmi_perf_mb_level_set(const struct scmi_protocol_handle *ph,
- static int scmi_perf_level_set(const struct scmi_protocol_handle *ph,
- 			       u32 domain, u32 level, bool poll)
- {
--	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
-+	struct perf_dom_info *dom;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	if (dom->fc_info && dom->fc_info[PERF_FC_LEVEL].set_addr) {
- 		struct scmi_fc_info *fci = &dom->fc_info[PERF_FC_LEVEL];
-@@ -490,8 +511,11 @@ static int scmi_perf_mb_level_get(const struct scmi_protocol_handle *ph,
- static int scmi_perf_level_get(const struct scmi_protocol_handle *ph,
- 			       u32 domain, u32 *level, bool poll)
- {
--	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
-+	struct perf_dom_info *dom;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	if (dom->fc_info && dom->fc_info[PERF_FC_LEVEL].get_addr) {
- 		*level = ioread32(dom->fc_info[PERF_FC_LEVEL].get_addr);
-@@ -574,13 +598,14 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
- 	unsigned long freq;
- 	struct scmi_opp *opp;
- 	struct perf_dom_info *dom;
--	struct scmi_perf_info *pi = ph->get_priv(ph);
- 
- 	domain = scmi_dev_domain_id(dev);
- 	if (domain < 0)
--		return domain;
-+		return -EINVAL;
- 
--	dom = pi->dom_info + domain;
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	for (opp = dom->opp, idx = 0; idx < dom->opp_count; idx++, opp++) {
- 		freq = opp->perf * dom->mult_factor;
-@@ -603,14 +628,17 @@ static int
- scmi_dvfs_transition_latency_get(const struct scmi_protocol_handle *ph,
- 				 struct device *dev)
- {
-+	int domain;
- 	struct perf_dom_info *dom;
--	struct scmi_perf_info *pi = ph->get_priv(ph);
--	int domain = scmi_dev_domain_id(dev);
- 
-+	domain = scmi_dev_domain_id(dev);
- 	if (domain < 0)
--		return domain;
-+		return -EINVAL;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
--	dom = pi->dom_info + domain;
- 	/* uS to nS */
- 	return dom->opp[dom->opp_count - 1].trans_latency_us * 1000;
- }
-@@ -618,8 +646,11 @@ scmi_dvfs_transition_latency_get(const struct scmi_protocol_handle *ph,
- static int scmi_dvfs_freq_set(const struct scmi_protocol_handle *ph, u32 domain,
- 			      unsigned long freq, bool poll)
- {
--	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
-+	struct perf_dom_info *dom;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	return scmi_perf_level_set(ph, domain, freq / dom->mult_factor, poll);
- }
-@@ -630,11 +661,14 @@ static int scmi_dvfs_freq_get(const struct scmi_protocol_handle *ph, u32 domain,
- 	int ret;
- 	u32 level;
- 	struct scmi_perf_info *pi = ph->get_priv(ph);
--	struct perf_dom_info *dom = pi->dom_info + domain;
- 
- 	ret = scmi_perf_level_get(ph, domain, &level, poll);
--	if (!ret)
-+	if (!ret) {
-+		struct perf_dom_info *dom = pi->dom_info + domain;
-+
-+		/* Note domain is validated implicitly by scmi_perf_level_get */
- 		*freq = level * dom->mult_factor;
-+	}
- 
- 	return ret;
- }
-@@ -643,15 +677,14 @@ static int scmi_dvfs_est_power_get(const struct scmi_protocol_handle *ph,
- 				   u32 domain, unsigned long *freq,
- 				   unsigned long *power)
- {
--	struct scmi_perf_info *pi = ph->get_priv(ph);
- 	struct perf_dom_info *dom;
- 	unsigned long opp_freq;
- 	int idx, ret = -EINVAL;
- 	struct scmi_opp *opp;
- 
--	dom = pi->dom_info + domain;
--	if (!dom)
--		return -EIO;
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return PTR_ERR(dom);
- 
- 	for (opp = dom->opp, idx = 0; idx < dom->opp_count; idx++, opp++) {
- 		opp_freq = opp->perf * dom->mult_factor;
-@@ -670,10 +703,16 @@ static int scmi_dvfs_est_power_get(const struct scmi_protocol_handle *ph,
- static bool scmi_fast_switch_possible(const struct scmi_protocol_handle *ph,
- 				      struct device *dev)
- {
-+	int domain;
- 	struct perf_dom_info *dom;
--	struct scmi_perf_info *pi = ph->get_priv(ph);
- 
--	dom = pi->dom_info + scmi_dev_domain_id(dev);
-+	domain = scmi_dev_domain_id(dev);
-+	if (domain < 0)
-+		return false;
-+
-+	dom = scmi_perf_domain_lookup(ph, domain);
-+	if (IS_ERR(dom))
-+		return false;
- 
- 	return dom->fc_info && dom->fc_info[PERF_FC_LEVEL].set_addr;
- }
 -- 
 2.40.1
 
