@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E081D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3970C433CA;
-	Wed,  4 Oct 2023 18:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D6B1D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0DAC433C8;
+	Wed,  4 Oct 2023 18:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443107;
-	bh=ZWkzNQd5gmT2yQcdLUCAyENIb47UYyiYU090hdj1UnQ=;
+	s=korg; t=1696443110;
+	bh=pWohnJrcG5dRTg00Kja7DdXx0JKt5O1p4euJAhd1rEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6klAl2yqp3aRCxRRF9phkaN+n7qQy8dfMD/JYlfXgDoqsn0Nx0fYdNKO8XYQ7k6U
-	 yhaiNFIVrtJPbRNxHAJUTVy6zbvktp8VjfUets9CSfLr6+T5FMlhtl8h8Yt0vLuTPM
-	 Oep0Slb0z7g/w7hc7Gv/C1U5BCgNYrAY9EXBmweE=
+	b=UvS36/TIEM6Q5/dRcOnQ39kuMaj8pLX/Fp8kTlNx3NQzrfRjSZ2RB71OeUzmMjN1i
+	 MOXDoSL4IYqdcwughmN0LCImrShs1XYLL5PdcndIPRmhZhQjOqrZsFj8QW7hO6BxhE
+	 hoLKZXmKnHQKgVK8XpktLIcdS/sX2bCDjqfSy9Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/259] netfilter: nft_set_rbtree: skip sync GC for new elements in this transaction
-Date: Wed,  4 Oct 2023 19:53:24 +0200
-Message-ID: <20231004175218.868970893@linuxfoundation.org>
+Subject: [PATCH 6.1 040/259] ASoC: rt5640: Revert "Fix sleep in atomic context"
+Date: Wed,  4 Oct 2023 19:53:33 +0200
+Message-ID: <20231004175219.281855231@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,50 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 2ee52ae94baabf7ee09cf2a8d854b990dac5d0e4 upstream.
+[ Upstream commit fa6a0c0c1dd53b3949ca56bf7213648dfd6a62ee ]
 
-New elements in this transaction might expired before such transaction
-ends. Skip sync GC for such elements otherwise commit path might walk
-over an already released object. Once transaction is finished, async GC
-will collect such expired element.
+Commit 70a6404ff610 ("ASoC: rt5640: Fix sleep in atomic context")
+not only switched from request_irq() to request_threaded_irq(),
+to fix the sleep in atomic context issue, but it also added
+devm management of the IRQ by actually switching to
+devm_request_threaded_irq() (without any explanation in the commit
+message for this change).
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This is wrong since the IRQ was already explicitly managed by
+the driver. On unbind the ASoC core will call rt5640_set_jack(NULL)
+which in turn will call rt5640_disable_jack_detect() which
+frees the IRQ already. So now we have a double free.
+
+Besides the unexplained switch to devm being wrong, the actual fix
+for the sleep in atomic context issue also is not the best solution.
+
+The only thing which rt5640_irq() does is cancel + (re-)queue
+the jack_work delayed_work. This can be done in a single non sleeping
+call by replacing queue_delayed_work() with mod_delayed_work(),
+which does not sleep. Using mod_delayed_work() is a much better fix
+then adding a thread which does nothing other then queuing a work-item.
+
+This patch is a straight revert of the troublesome changes, the switch
+to mod_delayed_work() is done in a separate follow-up patch.
+
+Fixes: 70a6404ff610 ("ASoC: rt5640: Fix sleep in atomic context")
+Cc: Sameer Pujar <spujar@nvidia.com>
+Cc: Oder Chiou <oder_chiou@realtek.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230912113245.320159-2-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt5640.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index c6435e7092319..f250b5399344a 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -312,6 +312,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
- 	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
-+	u8 cur_genmask = nft_genmask_cur(net);
- 	u8 genmask = nft_genmask_next(net);
- 	int d, err;
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index a7071d0a2562f..0f8e6dd214b0d 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2562,10 +2562,9 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
+ 	if (jack_data && jack_data->use_platform_clock)
+ 		rt5640->use_platform_clock = jack_data->use_platform_clock;
  
-@@ -357,8 +358,11 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		if (!nft_set_elem_active(&rbe->ext, genmask))
- 			continue;
+-	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
+-					NULL, rt5640_irq,
+-					IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+-					"rt5640", rt5640);
++	ret = request_irq(rt5640->irq, rt5640_irq,
++			  IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++			  "rt5640", rt5640);
+ 	if (ret) {
+ 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640_disable_jack_detect(component);
+@@ -2618,9 +2617,8 @@ static void rt5640_enable_hda_jack_detect(
  
--		/* perform garbage collection to avoid bogus overlap reports. */
--		if (nft_set_elem_expired(&rbe->ext)) {
-+		/* perform garbage collection to avoid bogus overlap reports
-+		 * but skip new elements in this transaction.
-+		 */
-+		if (nft_set_elem_expired(&rbe->ext) &&
-+		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
- 			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
- 			if (err < 0)
- 				return err;
+ 	rt5640->jack = jack;
+ 
+-	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
+-					NULL, rt5640_irq, IRQF_TRIGGER_RISING | IRQF_ONESHOT,
+-					"rt5640", rt5640);
++	ret = request_irq(rt5640->irq, rt5640_irq,
++			  IRQF_TRIGGER_RISING | IRQF_ONESHOT, "rt5640", rt5640);
+ 	if (ret) {
+ 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640->irq = -ENXIO;
 -- 
 2.40.1
 
