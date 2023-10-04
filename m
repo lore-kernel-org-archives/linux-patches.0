@@ -1,171 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C323018E21;
-	Wed,  4 Oct 2023 15:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDD3C433C7;
-	Wed,  4 Oct 2023 15:21:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696432879;
-	bh=E7cZ/FlLXrub42neFGaJKxogpVkDZQoCdql2oG03Dhs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MK9P99jugfqTT2rLKg5PKvwR+LsClUy/rZn7V3D7wcvxx2LGbRO/hcO7GGdi7358G
-	 qJSAVGul9GQMP89EIogrSM3x5w87pGv9vNfib+zvLmMZWb1Y55iN2Ex8DesdLHEonA
-	 LFLbzu65qk9y+6Mr8n6RoKpMYcssjEJpP4RcFlS57t7bxax+/CLuTcZZl1OmhBBcxx
-	 FjyG7YtZ0LaVLyuQUZOPiriSWWmD/GqDR44CJAIFgJ1Ke4WNPDCMcM8xwCkG5V30yy
-	 QstugLNfTtMUZhafP8J7jb/z1Fv5Ri3K8nO6tZUaosbbOuDCE3RFTf5kEhF+Z7v3DE
-	 /jFzs8J+6N22Q==
-Date: Wed, 4 Oct 2023 08:21:16 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Alexandre Ghiti <alex@ghiti.fr>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	conor@kernel.org, ndesaulniers@google.com, trix@redhat.com,
-	samitolvanen@google.com, twd2.me@gmail.com,
-	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v3] RISC-V: build: Allow LTO to be selected
-Message-ID: <20231004152116.GB2580510@dev-arch.thelio-3990X>
-References: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
- <f3e904ff-3ae1-b8ad-c400-7961f97b2b40@ghiti.fr>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99271B266
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 15:53:05 +0000 (UTC)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso433275466b.1
+        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 08:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=metaspace-dk.20230601.gappssmtp.com; s=20230601; t=1696434784; x=1697039584; darn=lists.linux.dev;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=hZDNFZC6WiTT02ULBJ6jIt5/1FUgLgt3WVljz4aDHFY=;
+        b=fvtnk2pCdvKIGnkJq9i7dUQu4btl6IJZ7T557uIjRIq9h82XhvRiee9lpnyhqPgKUX
+         VsyK/Ho1WC13U5RQQLpq7cLuP+Hj39NDAYjjo+Slujk3xWyg5u8v23pZD5hKrS5oFbFx
+         1+2AYX8Rgt3kVEnUVxRrzs876azpBdceIYgn4JI4jhjIvXp8wjIAT3s62acdiSOvaymJ
+         yCKwqzX4nKuGjdjScnI34ZMKAh19Nh1I3ovQlu0xivLpVbC2+00w8h1QHJfPdJ+0BrkN
+         E2KeVlPb4FjxEzmZWYgu1fnWCDLjb8OJSz4DY6HR5zdBAR+6xTwo/KYZR68h80cD2vSp
+         fzgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696434784; x=1697039584;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hZDNFZC6WiTT02ULBJ6jIt5/1FUgLgt3WVljz4aDHFY=;
+        b=AulYL8Ze504hkf2KIe/ImO5jx7hiiHB5Bt81vAYON+bksVWW+d4hu/jo9EY+ukZ7Gx
+         DJpZEE/eM1U1vn3tH1n+Kb03JnNFALrR2LyH6Je+QP1ijFu3/6lHnaqYmfpB+aGiZ1Yk
+         MuGyK8fAIp7F31iVamibwqySeQiXySdHJ3+ri3G4nLe1GFq/bGAOxukVh5d32sMOMkwD
+         z7ttckexKxwuokpXWXxwM/h2F+bWvrfI640CeM7vMdLsxiXa+8/DYXV+1cWuFT4uWhGq
+         C6E9+uxCthO7btMO4hVfAGDMHYfGroSF7YOwePXXLs7Zytx+VHCHsuvH2WPsZsIq8lSK
+         ZT+g==
+X-Gm-Message-State: AOJu0YzK8wceSgiSakhkuc7cLRrTEVqJbAuJlqUTOs9LCgISqxohNYcF
+	HAXRz/urUYwcr32zVTeApCtUcQ==
+X-Google-Smtp-Source: AGHT+IHyhGmibidLlX+i+h3CeE+RkyvRJ1BmsD82yqONASQWydT4Q9HuIszDXGT+fFfHOEohePFpdQ==
+X-Received: by 2002:a17:906:538f:b0:9a2:1ce5:1243 with SMTP id g15-20020a170906538f00b009a21ce51243mr2663645ejo.60.1696434783543;
+        Wed, 04 Oct 2023 08:53:03 -0700 (PDT)
+Received: from localhost ([79.142.230.34])
+        by smtp.gmail.com with ESMTPSA id gh18-20020a170906e09200b009b27d4153cfsm3034424ejb.176.2023.10.04.08.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Oct 2023 08:53:03 -0700 (PDT)
+References: <CVZ2KU4KK5YH.2HVL1F6X93YLL@pogg>
+ <20231003222947.374039-1-aliceryhl@google.com>
+ <CVZLU74VWMKA.GQXYH7WUNPS4@pogg> <ZR144pugIJQRAFjj@boqun-archlinux>
+ <CVZQQCDA444R.KWA6OPEZRIBG@ftml.net>
+User-agent: mu4e 1.10.7; emacs 28.2.50
+From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
+To: Konstantin Shelekhin <k.shelekhin@ftml.net>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Alice Ryhl <aliceryhl@google.com>,
+ alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
+ gary@garyguo.net, jiangshanlai@gmail.com, linux-kernel@vger.kernel.org,
+ ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org,
+ tj@kernel.org, wedsonaf@gmail.com, yakoyoku@gmail.com
+Subject: Re: [PATCH v4 7/7] rust: workqueue: add examples
+Date: Wed, 04 Oct 2023 17:49:30 +0200
+In-reply-to: <CVZQQCDA444R.KWA6OPEZRIBG@ftml.net>
+Message-ID: <87v8bm5qqp.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f3e904ff-3ae1-b8ad-c400-7961f97b2b40@ghiti.fr>
+Content-Type: text/plain
 
-Hi Alex,
 
-On Wed, Oct 04, 2023 at 11:51:26AM +0200, Alexandre Ghiti wrote:
-> Hi Nathan,
-> 
-> On 03/10/2023 21:16, Nathan Chancellor wrote:
-> > From: Wende Tan <twd2.me@gmail.com>
-> > 
-> > Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is an
-> > issue [1] in prior LLD versions that prevents LLD to generate proper
-> > machine code for RISC-V when writing `nop`s.
-> > 
-> > I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
-> > on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
-> > can boot to shell using an archriscv rootfs on QEMU.
-> > 
-> > I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
-> > KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
-> > successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
-> > image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
-> > `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
-> > separate patch further.
-> 
-> 
-> Yes, I see 2 solutions:
-> 
-> - either use PUD mappings, which is not that easy because we'd need the
-> physical and virtual addresses to both be aligned on 1GB, which is very
-> unlikely (the kernel is generally loaded at 0x8020_0000). We could use a
-> relocatable kernel to offset the virtual kernel address though.
-> 
-> - or use a second early_pmd, which would make sense as we reserve 2GB for
-> the kernel mapping anyway, but I'm not sure it would work without a bunch of
-> modifications.
-> 
-> Let me know if that would help and I'll give it a try (unless you want to
-> take care of that of course!).
+Hi,
 
-Wende was the one who made that comment in the commit message, not me,
-so I won't be looking into this further, as I have little skin in this
-game :)
+"Konstantin Shelekhin" <k.shelekhin@ftml.net> writes:
 
-In my humble opinion, allyesconfig is not indicative of any real world
-scenario when it comes to kernel configuration or size, so when things
-don't work with it, I tend to think more along the lines of "don't do
-that then". A distributor is generally either going to distribute a
-kernel for one device (in which case, they may build every driver that
-they need for that platform into the kernel and turn every other driver
-off, which won't result in a large kernel size) or for multiple devices
-(in which case, they would want to want to build with modules as much as
-possible, which also won't result in a large kernel size). Neither of
-those scenarios is really represented by allyesconfig.
+>> This is not a problem until nvmet actually uses/switches to Rust, right?
+>> ;-) We can certainly improve the API when a real user needs something.
+>> Or you know someone is already working on this?
+>
+> Nope, not at this moment. I have an itch to experiment with Rust and
+> iSCSI, but that's my personal toy without any plans to at least propose
+> it to the subsystem maintainers yet.
 
-Furthermore, I am not sure that is really an LTO specific problem, it
-sounds like a generic "kernel is larger than 1GB" problem to me, which
-LTO could potentially show easier due to more inlining and such.
+If you are so inclined, I would suggest you take a look at the blk-mq
+bindings and the nvme (pci) [1] and null_blk [2] Rust drivers. I am
+available if you have any questions!
 
-Cheers,
-Nathan
+BR Andreas
 
-> > Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
-> > object file when manipulating the files in that subfolder, rather than
-> > LLVM bitcode.
-> > 
-> > [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
-> >      commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
-> > 
-> > Tested-by: Wende Tan <twd2.me@gmail.com>
-> > Signed-off-by: Wende Tan <twd2.me@gmail.com>
-> > Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> > NOTE: I tested LLVM 14 through 18 with defconfig + full/thin LTO and
-> > allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
-> > shows
-> > 
-> >    ld.lld: error: section size decrease is too large
-> > 
-> > when linking vmlinux. This appears to be resolved in LLVM 17 with
-> > https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
-> > (I did not bisect but the commit message lines up with the issue). I
-> > kept the existing version check because defconfig worked fine but we may
-> > want to bump it to 17.0.0 if randconfigs trip over this.
-> > 
-> > Changes in v3:
-> > - Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
-> >    kernel after the submission of v2. This change matches arm64.
-> > - Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
-> > 
-> > Changes in v2:
-> > - Some textual changes suggested by Nick.
-> > - Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
-> >    filed and resolved.
-> > - Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
-> > - Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
-> > ---
-> >   arch/riscv/Kconfig            | 3 +++
-> >   arch/riscv/kernel/pi/Makefile | 3 +++
-> >   2 files changed, 6 insertions(+)
-> > 
-> > diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> > index d607ab0f7c6d..523640f7441e 100644
-> > --- a/arch/riscv/Kconfig
-> > +++ b/arch/riscv/Kconfig
-> > @@ -46,6 +46,9 @@ config RISCV
-> >   	select ARCH_SUPPORTS_CFI_CLANG
-> >   	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
-> >   	select ARCH_SUPPORTS_HUGETLBFS if MMU
-> > +	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
-> > +	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
-> > +	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
-> >   	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
-> >   	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
-> >   	select ARCH_USE_MEMTEST
-> > diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
-> > index 07915dc9279e..b75f150b923d 100644
-> > --- a/arch/riscv/kernel/pi/Makefile
-> > +++ b/arch/riscv/kernel/pi/Makefile
-> > @@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
-> >   		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
-> >   		   $(call cc-option,-fno-addrsig)
-> > +# Disable LTO
-> > +KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
-> > +
-> >   KBUILD_CFLAGS	+= -mcmodel=medany
-> >   CFLAGS_cmdline_early.o += -D__NO_FORTIFY
-> > 
-> > ---
-> > base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
-> > change-id: 20231003-riscv-lto-f013beed8587
-> > 
-> > Best regards,
+[1] https://github.com/metaspace/linux/tree/nvme-next-for-6.6
+[2] https://github.com/metaspace/linux/tree/null_blk-next-for-6.6
