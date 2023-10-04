@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D541D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A31D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C77BC433CA;
-	Wed,  4 Oct 2023 18:07:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AEACC433C7;
+	Wed,  4 Oct 2023 18:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442820;
-	bh=0MdgHK/w45eZT0wKTKP2+bkfDzzkg8H1jfhBp8940yQ=;
+	s=korg; t=1696442823;
+	bh=7wrCc1L429Nm5i+Ty3Y2Wjb0JAkwd9SufH44hrM+cy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mm7qKpRNWlhojT79BSrCOGsDDa300fNhLoji9qonpDuJ8ewbB+sl8Ckk2V3YLAN+C
-	 gDEVWr6QuQkgHFz2OovW6xiuVGN4PWBsbwrk5crYEYYMSvyt7/Ygg91eqGa04U948D
-	 Qg86YwNgU7OSUvous3n0ggu0/X3aAnMkonfSiZxU=
+	b=gR8MXqOyTWnF68cqeUal8sBzaMTkOYEDx1m//zuSXFZ9sY+S1DNrLlWd2Me3AAVc6
+	 icY7bD+UqtMXLpvh2zFbXFlUntlANtn/vQaQc4SjDPWeKvJxqnmaBT6XtT8Nok0igN
+	 0UPhspeg3yDCm++fkH85WF1HnnaUEz/+KjNvNr3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Julien Panis <jpanis@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/183] selftests/ftrace: Correctly enable event in instance-event.tc
-Date: Wed,  4 Oct 2023 19:55:50 +0200
-Message-ID: <20231004175208.930105407@linuxfoundation.org>
+Subject: [PATCH 5.15 093/183] bus: ti-sysc: Use fsleep() instead of usleep_range() in sysc_reset()
+Date: Wed,  4 Oct 2023 19:55:24 +0200
+Message-ID: <20231004175207.806727403@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -44,49 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Julien Panis <jpanis@baylibre.com>
 
-[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
+[ Upstream commit d929b2b7464f95ec01e47f560b1e687482ba8929 ]
 
-Function instance_set() expects to enable event 'sched_switch', so we
-should set 1 to its 'enable' file.
+The am335x-evm started producing boot errors because of subtle timing
+changes:
 
-Testcase passed after this patch:
-  # ./ftracetest test.d/instances/instance-event.tc
-  === Ftrace unit tests ===
-  [1] Test creation and deletion of trace instances while setting an event
-  [PASS]
+Unhandled fault: external abort on non-linefetch (0x1008) at 0xf03c1010
+...
+sysc_reset from sysc_probe+0xf60/0x1514
+sysc_probe from platform_probe+0x5c/0xbc
+...
 
-  # of passed:  1
-  # of failed:  0
-  # of unresolved:  0
-  # of untested:  0
-  # of unsupported:  0
-  # of xfailed:  0
-  # of undefined(test bug):  0
+The fix consists in using the appropriate sleep function in sysc reset.
+For flexible sleeping, fsleep is recommended. Here, sysc delay parameter
+can take any value in [0 - 255] us range. As a result, fsleep() should
+be used, calling udelay() for a sysc delay lower than 10 us.
 
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Julien Panis <jpanis@baylibre.com>
+Fixes: e709ed70d122 ("bus: ti-sysc: Fix missing reset delay handling")
+Message-ID: <20230821-fix-ti-sysc-reset-v1-1-5a0a5d8fae55@baylibre.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/ti-sysc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-index 0eb47fbb3f44d..42422e4251078 100644
---- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-+++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-@@ -39,7 +39,7 @@ instance_read() {
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 74ab6cf031ce0..dacda1eb140cf 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2096,8 +2096,7 @@ static int sysc_reset(struct sysc *ddata)
+ 	}
  
- instance_set() {
-         while :; do
--                echo 1 > foo/events/sched/sched_switch
-+                echo 1 > foo/events/sched/sched_switch/enable
-         done 2> /dev/null
- }
+ 	if (ddata->cfg.srst_udelay)
+-		usleep_range(ddata->cfg.srst_udelay,
+-			     ddata->cfg.srst_udelay * 2);
++		fsleep(ddata->cfg.srst_udelay);
  
+ 	if (ddata->post_reset_quirk)
+ 		ddata->post_reset_quirk(ddata);
 -- 
 2.40.1
 
