@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8751D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0FD1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdcrP1Yy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28197C433CA;
-	Wed,  4 Oct 2023 18:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fY/uew50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEC3C433C8;
+	Wed,  4 Oct 2023 18:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443857;
-	bh=Oy9DM5uBD3yP8eWGAuGeh203mOkDYvN2ojHksSipIac=;
+	s=korg; t=1696443860;
+	bh=ml+RbCRW4VYkM/9QbBs2gR2g6YWosBOlVZ6Z+eIjHIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdcrP1YypI0pzeaFKgD2kSaH37NHJYH+jYT7M4CkcmHWlYyOYJ9yIZ9PQkeAtYhCT
-	 4oOS94pf6Chwwwo6EYysXNH/H3cehqP4gNIMl1AuKddObSZROOA9zVoG/xwA9cCUVF
-	 +T4AeYkRb+8bNZ2wy9X3+/VwryXw+WsUYoKMEQkA=
+	b=fY/uew50PzqNIjBHCSBNK7thDUXPso1u2n1evezMVW0NwbHE+/BrNLFQ+mDTNxV8E
+	 OHLKdtbsWzetNX50trRk8TI2R+gCjXIYK+X8bLDRdEOaCOGudNlaRRmLE0KRAyFzGm
+	 A7+SXn8NTNHIVwxFwRf/E1hEAj7eFwb8+GtuTmfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
+	Rong Tao <rongtao@cestc.cn>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 044/321] uapi: stddef.h: Fix __DECLARE_FLEX_ARRAY for C++
-Date: Wed,  4 Oct 2023 19:53:09 +0200
-Message-ID: <20231004175231.205660239@linuxfoundation.org>
+Subject: [PATCH 6.5 045/321] memblock tests: Fix compilation errors.
+Date: Wed,  4 Oct 2023 19:53:10 +0200
+Message-ID: <20231004175231.255463999@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -36,82 +36,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Rong Tao <rongtao@cestc.cn>
 
-[ Upstream commit 32a4ec211d4164e667d9d0b807fadf02053cd2e9 ]
+[ Upstream commit 4b2d631236931550f2ab0abc9a666958853ae846 ]
 
-__DECLARE_FLEX_ARRAY(T, member) macro expands to
+This patch fix the follow errors.
 
-	struct {
-		struct {} __empty_member;
-		T member[];
-	};
+commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()") pass nid
+parameter to reserve_bootmem_region(),
 
-which is subtly wrong in C++ because sizeof(struct{}) is 1 not 0,
-changing UAPI structures layouts.
+    $ make -C tools/testing/memblock/
+    ...
+    memblock.c: In function ‘memmap_init_reserved_pages’:
+    memblock.c:2111:25: error: too many arguments to function ‘reserve_bootmem_region’
+    2111 |                         reserve_bootmem_region(start, end, nid);
+         |                         ^~~~~~~~~~~~~~~~~~~~~~
+    ../../include/linux/mm.h:32:6: note: declared here
+    32 | void reserve_bootmem_region(phys_addr_t start, phys_addr_t end);
+       |      ^~~~~~~~~~~~~~~~~~~~~~
+    memblock.c:2122:17: error: too many arguments to function ‘reserve_bootmem_region’
+    2122 |                 reserve_bootmem_region(start, end, nid);
+         |                 ^~~~~~~~~~~~~~~~~~~~~~
 
-This can be fixed by expanding to
+commit dcdfdd40fa82 ("mm: Add support for unaccepted memory") call
+accept_memory() in memblock.c
 
-	T member[];
+    $ make -C tools/testing/memblock/
+    ...
+    cc -fsanitize=address -fsanitize=undefined  main.o memblock.o \
+     lib/slab.o mmzone.o slab.o tests/alloc_nid_api.o \
+     tests/alloc_helpers_api.o tests/alloc_api.o tests/basic_api.o \
+     tests/common.o tests/alloc_exact_nid_api.o   -o main
+    /usr/bin/ld: memblock.o: in function `memblock_alloc_range_nid':
+    memblock.c:(.text+0x7ae4): undefined reference to `accept_memory'
 
-Now g++ doesn't like "T member[]" either, throwing errors on
-the following code:
-
-	struct S {
-		union {
-			T1 member1[];
-			T2 member2[];
-		};
-	};
-
-or
-
-	struct S {
-		T member[];
-	};
-
-Use "T member[0];" which seems to work and does the right thing wrt
-structure layout.
-
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Fixes: 3080ea5553cc ("stddef: Introduce DECLARE_FLEX_ARRAY() helper")
-Link: https://lore.kernel.org/r/97242381-f1ec-4a4a-9472-1a464f575657@p183
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Rong Tao <rongtao@cestc.cn>
+Fixes: dcdfdd40fa82 ("mm: Add support for unaccepted memory")
+Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
+Link: https://lore.kernel.org/r/tencent_6F19BC082167F15DF2A8D8BEFE8EF220F60A@qq.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/stddef.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/include/linux/mm.h          | 2 +-
+ tools/testing/memblock/internal.h | 4 ++++
+ tools/testing/memblock/mmzone.c   | 2 +-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
-index c027b2070d790..5c6c4269f7efe 100644
---- a/include/uapi/linux/stddef.h
-+++ b/include/uapi/linux/stddef.h
-@@ -29,6 +29,11 @@
- 		struct TAG { MEMBERS } ATTRS NAME; \
- 	}
+diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
+index a03d9bba51514..2bc94079d6166 100644
+--- a/tools/include/linux/mm.h
++++ b/tools/include/linux/mm.h
+@@ -29,7 +29,7 @@ static inline void *phys_to_virt(unsigned long address)
+ 	return __va(address);
+ }
  
-+#ifdef __cplusplus
-+/* sizeof(struct{}) is 1 in C++, not 0, can't use C version of the macro. */
-+#define __DECLARE_FLEX_ARRAY(T, member)	\
-+	T member[0]
-+#else
- /**
-  * __DECLARE_FLEX_ARRAY() - Declare a flexible array usable in a union
-  *
-@@ -44,6 +49,7 @@
- 		struct { } __empty_ ## NAME; \
- 		TYPE NAME[]; \
- 	}
-+#endif
+-void reserve_bootmem_region(phys_addr_t start, phys_addr_t end);
++void reserve_bootmem_region(phys_addr_t start, phys_addr_t end, int nid);
  
- #ifndef __counted_by
- #define __counted_by(m)
+ static inline void totalram_pages_inc(void)
+ {
+diff --git a/tools/testing/memblock/internal.h b/tools/testing/memblock/internal.h
+index fdb7f5db73082..f6c6e5474c3af 100644
+--- a/tools/testing/memblock/internal.h
++++ b/tools/testing/memblock/internal.h
+@@ -20,4 +20,8 @@ void memblock_free_pages(struct page *page, unsigned long pfn,
+ {
+ }
+ 
++static inline void accept_memory(phys_addr_t start, phys_addr_t end)
++{
++}
++
+ #endif
+diff --git a/tools/testing/memblock/mmzone.c b/tools/testing/memblock/mmzone.c
+index 7b0909e8b759d..d3d58851864e7 100644
+--- a/tools/testing/memblock/mmzone.c
++++ b/tools/testing/memblock/mmzone.c
+@@ -11,7 +11,7 @@ struct pglist_data *next_online_pgdat(struct pglist_data *pgdat)
+ 	return NULL;
+ }
+ 
+-void reserve_bootmem_region(phys_addr_t start, phys_addr_t end)
++void reserve_bootmem_region(phys_addr_t start, phys_addr_t end, int nid)
+ {
+ }
+ 
 -- 
 2.40.1
 
