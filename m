@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C195D1F617
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E51D1F617
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jX4b+vSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93BCC433CA;
-	Wed,  4 Oct 2023 18:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQT2cF5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B7FC433C7;
+	Wed,  4 Oct 2023 18:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444267;
-	bh=Ifnhx01Ulu+l2AR3Gh9a9W5duLXd3uIOcxANodGt2+k=;
+	s=korg; t=1696444270;
+	bh=QxKG1J4XoefLLRkG0s7JNoW66uWnDBON0GTrUtUhafI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jX4b+vSgQsenjZBhIOjIF+QduvNHbmxNfoE2/YKMlTBJt/9R2fsJtCFpu1ltYZmjW
-	 M6S1QVwvVSpmBT0AU0S9ly/bHiPYYngpklW4o20ND+R5oXZoDCdrBtK2ZcV9HihFp6
-	 QL1vWarx54+HF4KW9+FbEEAiK3C188Z70cPjtBEI=
+	b=pQT2cF5gFULW28hmsXnxRKchvXisM4vGaoZqLOjTV5ZjdrGOMrvRj/CYB5zKJ/TiI
+	 RL6tJ3Cc1YDslB8PwXyPvjLZUp1abi0BRMpdf4oH4Xs84237UxMANux5MBPHsoKBGj
+	 GHgS1JOHu76d+q5WBiwMH+TIFopXH6cYTYjlvGTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Timmy Tsai <timmtsai@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 190/321] drm/amdgpu/soc21: dont remap HDP registers for SR-IOV
-Date: Wed,  4 Oct 2023 19:55:35 +0200
-Message-ID: <20231004175238.033750131@linuxfoundation.org>
+Subject: [PATCH 6.5 191/321] drm/amdgpu/nbio4.3: set proper rmmio_remap.reg_offset for SR-IOV
+Date: Wed,  4 Oct 2023 19:55:36 +0200
+Message-ID: <20231004175238.083135514@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -37,7 +36,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
@@ -46,31 +44,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 1832403cd41ca6b19b24e9d64f79cb08d920ca44 ]
+[ Upstream commit ab43213e7afd08ac68d4282060bacf309e70fd14 ]
 
-This matches the behavior for soc15 and nv.
+Needed for HDP flush to work correctly.
 
-Acked-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Timmy Tsai <timmtsai@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v4_3.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
-index e5e5d68a4d702..1a5ffbf884891 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -786,7 +786,7 @@ static int soc21_common_hw_init(void *handle)
- 	 * for the purpose of expose those registers
- 	 * to process space
- 	 */
--	if (adev->nbio.funcs->remap_hdp_registers)
-+	if (adev->nbio.funcs->remap_hdp_registers && !amdgpu_sriov_vf(adev))
- 		adev->nbio.funcs->remap_hdp_registers(adev);
- 	/* enable the doorbell aperture */
- 	adev->nbio.funcs->enable_doorbell_aperture(adev, true);
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v4_3.c b/drivers/gpu/drm/amd/amdgpu/nbio_v4_3.c
+index d5ed9e0e1a5f1..e5b5b0f4940f4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v4_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v4_3.c
+@@ -345,6 +345,9 @@ static void nbio_v4_3_init_registers(struct amdgpu_device *adev)
+ 		data &= ~RCC_DEV0_EPF2_STRAP2__STRAP_NO_SOFT_RESET_DEV0_F2_MASK;
+ 		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF2_STRAP2, data);
+ 	}
++	if (amdgpu_sriov_vf(adev))
++		adev->rmmio_remap.reg_offset = SOC15_REG_OFFSET(NBIO, 0,
++			regBIF_BX_DEV0_EPF0_VF0_HDP_MEM_COHERENCY_FLUSH_CNTL) << 2;
+ }
+ 
+ static u32 nbio_v4_3_get_rom_offset(struct amdgpu_device *adev)
 -- 
 2.40.1
 
