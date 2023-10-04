@@ -1,101 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503011D6A1
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvLqNZn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D77C433CA;
-	Wed,  4 Oct 2023 18:14:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443283;
-	bh=F0ibeR8ECU0J0WFVN7V0331aJS63tTJeff99TEjkskA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvLqNZn7tqU9TdIEdgyRz6VdBqVWR8oNq0omJN8RVbBRGbdYZj0/pmssAvGSM3BqW
-	 ErEV1fkHh7Dhtsa/HTZfO9OLJHQoRSXAP034F021wiO8202Y8g6MD3DN/F0ZhJGS3e
-	 wQvFSYZIfeuLM10KVoE+vhpG/JzwAdATOL0N14PA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/259] wifi: ath11k: Cleanup mac80211 references on failure during tx_complete
-Date: Wed,  4 Oct 2023 19:54:35 +0200
-Message-ID: <20231004175222.028578328@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
-References: <20231004175217.404851126@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D7F1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-57ba2cd3507so48372eaf.2
+        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 11:14:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696443282; x=1697048082;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6nCGy29qXBi+ptXe1DWiTKziKMJYl0S7yqrhbrtMgRk=;
+        b=YXEkNd86SkkPldBpH3sSf3s51B9IT8uI3xVFjab7Mmt8bPxdr4LJ35lGup9g5J0jNv
+         OzYvr0h5FdYC8+5GQ3Op6rJRuoUIY6Wr+2+TUXkbZCbdz30xpqgPwq3wn46knoDctIqR
+         cDgMaiQkx4EjpLspv2tthFLHU8HJ1vFdeH6R1XnaEePbY+gA3OKrys4KPf/6dYl68q6f
+         2GxNz627KNMJn8EzYIn2L8xKyc3vloxG462zsEbU3GpozwBbSbdl+SYQCu2dQuTQ9vGT
+         IVpBc76Px16sZ2XAjJ7l2ASNT/Thb872C9R4HugoVvCjwHAeVTzFybdaiCs8kJ00bd5d
+         aqwA==
+X-Gm-Message-State: AOJu0YwCfNC8K/nloB1UiOtUonajEZBTn79HC6+PXsh4gsO2bnJdaTcN
+	wUQIlW8NBm4TajL+pwpvH/k=
+X-Google-Smtp-Source: AGHT+IG7EHbaeeYSQWuYVxJewBVTKh+hSRaSfAIMnjP6jTwYH5NMi2y1YeijxB0WtRbsPtXrqTnwuw==
+X-Received: by 2002:a05:6358:5e12:b0:139:d5b9:87d3 with SMTP id q18-20020a0563585e1200b00139d5b987d3mr2311233rwn.5.1696443282278;
+        Wed, 04 Oct 2023 11:14:42 -0700 (PDT)
+Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
+        by smtp.gmail.com with ESMTPSA id v7-20020a170902b7c700b001c627413e87sm4013296plz.290.2023.10.04.11.14.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Oct 2023 11:14:41 -0700 (PDT)
+Date: Wed, 4 Oct 2023 18:14:40 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Wei Liu <wei.liu@kernel.org>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arch@vger.kernel.org, patches@lists.linux.dev,
+	mikelley@microsoft.com, kys@microsoft.com, haiyangz@microsoft.com,
+	decui@microsoft.com, apais@linux.microsoft.com,
+	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
+	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
+	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
+	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
+	catalin.marinas@arm.com
+Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
+ hypervisor ABIs
+Message-ID: <ZR2rkNYnQds1MGZ0@liuwe-devbox-debian-v2>
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023093057-eggplant-reshoot-8513@gregkh>
+ <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
+ <2023100154-ferret-rift-acef@gregkh>
+ <ZRyj5kJJYaBu22O3@liuwe-devbox-debian-v2>
+ <2023100458-confusing-carton-3302@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2023100458-confusing-carton-3302@gregkh>
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg
 
-------------------
+On Wed, Oct 04, 2023 at 08:11:13AM +0200, Greg KH wrote:
+> On Tue, Oct 03, 2023 at 11:29:42PM +0000, Wei Liu wrote:
+> > > > > > diff --git a/include/uapi/hyperv/hvgdk.h b/include/uapi/hyperv/hvgdk.h
+> > > > > > new file mode 100644
+> > > > > > index 000000000000..9bcbb7d902b2
+> > > > > > --- /dev/null
+> > > > > > +++ b/include/uapi/hyperv/hvgdk.h
+> > > > > > @@ -0,0 +1,41 @@
+> > > > > > +/* SPDX-License-Identifier: MIT */
+> > > > > 
+> > > > > That's usually not a good license for a new uapi .h file, why did you
+> > > > > choose this one?
+> > > > > 
+> > > > 
+> > > > This is chosen so that other Microsoft developers who don't normally
+> > > > work on Linux can review this code.
+> > > 
+> > > Sorry, but that's not how kernel development is done.  Please fix your
+> > > internal review processes and use the correct uapi header file license.
+> > > 
+> > > If your lawyers insist on this license, that's fine, but please have
+> > > them provide a signed-off-by on the patch that adds it and have it
+> > > documented why it is this license in the changelog AND in a comment in
+> > > the file so we can understand what is going on with it.
+> > > 
+> > 
+> > We went through an internal review with our legal counsel regarding the
+> > MIT license. We have an approval from them.
+> > 
+> > Let me ask if using something like "GPL-2.0 WITH Linux-syscall-note OR
+> > MIT" is possible.
+> 
+> That marking makes no sense from a legal point of view, please work with
+> your lawyers as it seems they do not understand license descriptions
+> very well :(
+> 
 
-From: Sven Eckelmann <sven@narfation.org>
+Do you mean "GPL-2.0 WITH Linux-syscall-note OR MIT" doesn't make sense?
 
-[ Upstream commit 29d15589f084d71a4ea8c544039c5839db0236e2 ]
+Why is that? I see that in various UAPI headers.
 
-When a function is using functions from mac80211 to free an skb then it
-should do it consistently and not switch to the generic dev_kfree_skb_any
-(or similar functions). Otherwise (like in the error handlers), mac80211
-will will not be aware of the freed skb and thus not clean up related
-information in its internal data structures.
+include/uapi/drm/lima_drm.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+include/uapi/linux/io_uring.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+include/uapi/linux/kfd_sysfs.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+include/uapi/linux/rkisp1-config.h:1:/* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR MIT) */
+include/uapi/linux/wireguard.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+include/uapi/xen/evtchn.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
+include/uapi/xen/gntdev.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
+include/uapi/xen/privcmd.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
 
-Not doing so lead in the past to filled up structure which then prevented
-new clients to connect.
+Thanks,
+Wei.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Fixes: 6257c702264c ("wifi: ath11k: fix tx status reporting in encap offload mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230802-ath11k-ack_status_leak-v2-2-c0af729d6229@narfation.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/ath/ath11k/dp_tx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath11k/dp_tx.c b/drivers/net/wireless/ath/ath11k/dp_tx.c
-index 08a28464eb7a9..64c8ccac22d27 100644
---- a/drivers/net/wireless/ath/ath11k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_tx.c
-@@ -344,7 +344,7 @@ ath11k_dp_tx_htt_tx_complete_buf(struct ath11k_base *ab,
- 	dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
- 
- 	if (!skb_cb->vif) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
- 	}
- 
-@@ -566,12 +566,12 @@ static void ath11k_dp_tx_complete_msdu(struct ath11k *ar,
- 	dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
- 
- 	if (unlikely(!rcu_access_pointer(ab->pdevs_active[ar->pdev_idx]))) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
- 	}
- 
- 	if (unlikely(!skb_cb->vif)) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
- 	}
- 
--- 
-2.40.1
-
-
-
+> thanks,
+> 
+> greg k-h
