@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614861D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6F4C433CB;
-	Wed,  4 Oct 2023 18:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FAD1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA82C433C9;
+	Wed,  4 Oct 2023 18:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443239;
-	bh=XGYerxCja5vRRscmvujkaznUXZjL67D6/vtsmm/rFVk=;
+	s=korg; t=1696443242;
+	bh=WEgdjAAPWr9+3uCeuZOtsT6Oa+NJP1Y6kitxFpZTEwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8cdLKMi3JzgtJrDIHjy4U4h6vk3KTr6BZFQmA6t071T8IMdaf79dMHld2P12DuJc
-	 pTlTrb8dBYN56Cnseq6SLE029ibekhCW3AUw4p1UTrpQdcEdLhYqknvCsCIzt6nh9e
-	 ei5v43yCqgWAevq4l64GsNecXSULVfMoZJEsgSDo=
+	b=yRwjEdpwQQDPL3zAyyk4HNFxX9ncPrr6zpHbfEeYpbQDnWyWgMOyCDYsfT7b/3MF0
+	 gApimScBk8wNmVrZS3GIu2UW/zkHDSgvUIlT+cGgQKZSBqJtARB8vQ7ADp61MGOfjl
+	 vAtDA35jeN6aeRONhGLPDXBa+/RuJ0mrbxxAzE/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
 	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Greg Ungerer <gerg@uclinux.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/259] proc: nommu: /proc/<pid>/maps: release mmap read lock
-Date: Wed,  4 Oct 2023 19:54:18 +0200
-Message-ID: <20231004175221.265987714@linuxfoundation.org>
+Subject: [PATCH 6.1 086/259] proc: nommu: fix empty /proc/<pid>/maps
+Date: Wed,  4 Oct 2023 19:54:19 +0200
+Message-ID: <20231004175221.314595783@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,117 +46,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Wolsieffer <Ben.Wolsieffer@hefring.com>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-[ Upstream commit 578d7699e5c2add8c2e9549d9d75dfb56c460cb3 ]
+[ Upstream commit fe4419801617514765974f3e796269bc512ad146 ]
 
-The no-MMU implementation of /proc/<pid>/map doesn't normally release
-the mmap read lock, because it uses !IS_ERR_OR_NULL(_vml) to determine
-whether to release the lock.  Since _vml is NULL when the end of the
-mappings is reached, the lock is not released.
+On no-MMU, /proc/<pid>/maps reads as an empty file.  This happens because
+find_vma(mm, 0) always returns NULL (assuming no vma actually contains the
+zero address, which is normally the case).
 
-Reading /proc/1/maps twice doesn't cause a hang because it only
-takes the read lock, which can be taken multiple times and therefore
-doesn't show any problem if the lock isn't released. Instead, you need
-to perform some operation that attempts to take the write lock after
-reading /proc/<pid>/maps. To actually reproduce the bug, compile the
-following code as 'proc_maps_bug':
+To fix this bug and improve the maintainability in the future, this patch
+makes the no-MMU implementation as similar as possible to the MMU
+implementation.
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/mman.h>
+The only remaining differences are the lack of hold/release_task_mempolicy
+and the extra code to shoehorn the gate vma into the iterator.
 
-int main(int argc, char *argv[]) {
-        void *buf;
-        sleep(1);
-        buf = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-        puts("mmap returned");
-        return 0;
-}
+This has been tested on top of 6.5.3 on an STM32F746.
 
-Then, run:
-
-  ./proc_maps_bug &; cat /proc/$!/maps; fg
-
-Without this patch, mmap() will hang and the command will never
-complete.
-
-This code was incorrectly adapted from the MMU implementation, which at
-the time released the lock in m_next() before returning the last entry.
-
-The MMU implementation has diverged further from the no-MMU version since
-then, so this patch brings their locking and error handling into sync,
-fixing the bug and hopefully avoiding similar issues in the future.
-
-Link: https://lkml.kernel.org/r/20230914163019.4050530-2-ben.wolsieffer@hefring.com
-Fixes: 47fecca15c09 ("fs/proc/task_nommu.c: don't use priv->task->mm")
+Link: https://lkml.kernel.org/r/20230915160055.971059-2-ben.wolsieffer@hefring.com
+Fixes: 0c563f148043 ("proc: remove VMA rbtree use from nommu")
 Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
 Cc: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Cc: Greg Ungerer <gerg@uclinux.org>
-Cc: <stable@vger.kernel.org>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: fe4419801617 ("proc: nommu: fix empty /proc/<pid>/maps")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_nommu.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ fs/proc/internal.h   |  2 --
+ fs/proc/task_nommu.c | 37 ++++++++++++++++++++++---------------
+ 2 files changed, 22 insertions(+), 17 deletions(-)
 
+diff --git a/fs/proc/internal.h b/fs/proc/internal.h
+index b701d0207edf0..6b921826d85b6 100644
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -289,9 +289,7 @@ struct proc_maps_private {
+ 	struct inode *inode;
+ 	struct task_struct *task;
+ 	struct mm_struct *mm;
+-#ifdef CONFIG_MMU
+ 	struct vma_iterator iter;
+-#endif
+ #ifdef CONFIG_NUMA
+ 	struct mempolicy *task_mempolicy;
+ #endif
 diff --git a/fs/proc/task_nommu.c b/fs/proc/task_nommu.c
-index 2fd06f52b6a44..bfcf17f75ed50 100644
+index bfcf17f75ed50..dc05780f93e13 100644
 --- a/fs/proc/task_nommu.c
 +++ b/fs/proc/task_nommu.c
-@@ -205,11 +205,16 @@ static void *m_start(struct seq_file *m, loff_t *pos)
- 		return ERR_PTR(-ESRCH);
+@@ -188,15 +188,28 @@ static int show_map(struct seq_file *m, void *_p)
+ 	return nommu_vma_show(m, _p);
+ }
  
- 	mm = priv->mm;
--	if (!mm || !mmget_not_zero(mm))
-+	if (!mm || !mmget_not_zero(mm)) {
-+		put_task_struct(priv->task);
-+		priv->task = NULL;
- 		return NULL;
+-static void *m_start(struct seq_file *m, loff_t *pos)
++static struct vm_area_struct *proc_get_vma(struct proc_maps_private *priv,
++						loff_t *ppos)
++{
++	struct vm_area_struct *vma = vma_next(&priv->iter);
++
++	if (vma) {
++		*ppos = vma->vm_start;
++	} else {
++		*ppos = -1UL;
 +	}
++
++	return vma;
++}
++
++static void *m_start(struct seq_file *m, loff_t *ppos)
+ {
+ 	struct proc_maps_private *priv = m->private;
++	unsigned long last_addr = *ppos;
+ 	struct mm_struct *mm;
+-	struct vm_area_struct *vma;
+-	unsigned long addr = *pos;
  
- 	if (mmap_read_lock_killable(mm)) {
- 		mmput(mm);
-+		put_task_struct(priv->task);
-+		priv->task = NULL;
+-	/* See m_next(). Zero at the start or after lseek. */
+-	if (addr == -1UL)
++	/* See proc_get_vma(). Zero at the start or after lseek. */
++	if (last_addr == -1UL)
+ 		return NULL;
+ 
+ 	/* pin the task and mm whilst we play with them */
+@@ -218,12 +231,9 @@ static void *m_start(struct seq_file *m, loff_t *pos)
  		return ERR_PTR(-EINTR);
  	}
  
-@@ -218,23 +223,21 @@ static void *m_start(struct seq_file *m, loff_t *pos)
- 	if (vma)
- 		return vma;
+-	/* start the next element from addr */
+-	vma = find_vma(mm, addr);
+-	if (vma)
+-		return vma;
++	vma_iter_init(&priv->iter, mm, last_addr);
  
--	mmap_read_unlock(mm);
--	mmput(mm);
- 	return NULL;
+-	return NULL;
++	return proc_get_vma(priv, ppos);
  }
  
--static void m_stop(struct seq_file *m, void *_vml)
-+static void m_stop(struct seq_file *m, void *v)
+ static void m_stop(struct seq_file *m, void *v)
+@@ -240,12 +250,9 @@ static void m_stop(struct seq_file *m, void *v)
+ 	priv->task = NULL;
+ }
+ 
+-static void *m_next(struct seq_file *m, void *_p, loff_t *pos)
++static void *m_next(struct seq_file *m, void *_p, loff_t *ppos)
  {
- 	struct proc_maps_private *priv = m->private;
-+	struct mm_struct *mm = priv->mm;
- 
--	if (!IS_ERR_OR_NULL(_vml)) {
--		mmap_read_unlock(priv->mm);
--		mmput(priv->mm);
--	}
--	if (priv->task) {
--		put_task_struct(priv->task);
--		priv->task = NULL;
--	}
-+	if (!priv->task)
-+		return;
-+
-+	mmap_read_unlock(mm);
-+	mmput(mm);
-+	put_task_struct(priv->task);
-+	priv->task = NULL;
+-	struct vm_area_struct *vma = _p;
+-
+-	*pos = vma->vm_end;
+-	return find_vma(vma->vm_mm, vma->vm_end);
++	return proc_get_vma(m->private, ppos);
  }
  
- static void *m_next(struct seq_file *m, void *_p, loff_t *pos)
+ static const struct seq_operations proc_pid_maps_ops = {
 -- 
 2.40.1
 
