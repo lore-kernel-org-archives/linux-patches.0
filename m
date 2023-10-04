@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C0A1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61F81D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMhM+aEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72992C433C7;
-	Wed,  4 Oct 2023 18:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwBQCY/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37366C433CA;
+	Wed,  4 Oct 2023 18:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443896;
-	bh=YmVeb47MENJWXzyHnXR2li77b8dTzJgouek2K9x76LI=;
+	s=korg; t=1696443899;
+	bh=YgPdYLd3FY2rhclfg+XsFvwkTWMPOAFynDa4/PKkrUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMhM+aEdlcJIjUhFuwt1gs1l9Yr8DOIcuJviHmMLyjWajPMVKhXh+5tY649+OwotY
-	 tmAFI5DmqP7o1x3De51EYLZbWQsV7dssBKj5yPNI0W2d7Atw4FiFOB5DHWOhfBD2by
-	 wSIVPmHs/uqIIMNs++MeqsyIrxNlVE/tS9Rp8vuA=
+	b=CwBQCY/epe1FKzS3IoCNruvuGK5d/ydBm7Gc7YpEye2kv2MINO2v3iw1IFInYx/6m
+	 FK4XlhGBi+fimyMxNrbaNX99uDSZunWSNdvceKED+Ngq84zCad0yYM8zV1aTmYjXzY
+	 oXddHKGwJ4+uASs1aO77cgIsJTib0N0opLUUcrVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 030/321] ALSA: seq: Avoid delivery of events for disabled UMP groups
-Date: Wed,  4 Oct 2023 19:52:55 +0200
-Message-ID: <20231004175230.561888119@linuxfoundation.org>
+Subject: [PATCH 6.5 031/321] ASoC: rt5640: Revert "Fix sleep in atomic context"
+Date: Wed,  4 Oct 2023 19:52:56 +0200
+Message-ID: <20231004175230.601206439@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,92 +44,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 22eefaeab03fe968ab7786fb3d5c5abd203a8bab ]
+[ Upstream commit fa6a0c0c1dd53b3949ca56bf7213648dfd6a62ee ]
 
-ALSA sequencer core still delivers events to the disabled UMP Group,
-leaving this handling to the device.  But it's rather risky and it's
-easy to imagine that such an unexpected event may screw up the device
-firmware.
+Commit 70a6404ff610 ("ASoC: rt5640: Fix sleep in atomic context")
+not only switched from request_irq() to request_threaded_irq(),
+to fix the sleep in atomic context issue, but it also added
+devm management of the IRQ by actually switching to
+devm_request_threaded_irq() (without any explanation in the commit
+message for this change).
 
-This patch avoids the superfluous event deliveries by setting the
-group_filter of the UMP client as default, and evaluate the
-group_filter properly at delivery from non-UMP clients.
+This is wrong since the IRQ was already explicitly managed by
+the driver. On unbind the ASoC core will call rt5640_set_jack(NULL)
+which in turn will call rt5640_disable_jack_detect() which
+frees the IRQ already. So now we have a double free.
 
-The grouop_filter is updated upon the dynamic UMP Function Block
-updates, so that it follows the change of the disabled UMP Groups,
-too.
+Besides the unexplained switch to devm being wrong, the actual fix
+for the sleep in atomic context issue also is not the best solution.
 
-Fixes: d2b706077792 ("ALSA: seq: Add UMP group filter")
-Link: https://lore.kernel.org/r/20230912085144.32534-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The only thing which rt5640_irq() does is cancel + (re-)queue
+the jack_work delayed_work. This can be done in a single non sleeping
+call by replacing queue_delayed_work() with mod_delayed_work(),
+which does not sleep. Using mod_delayed_work() is a much better fix
+then adding a thread which does nothing other then queuing a work-item.
+
+This patch is a straight revert of the troublesome changes, the switch
+to mod_delayed_work() is done in a separate follow-up patch.
+
+Fixes: 70a6404ff610 ("ASoC: rt5640: Fix sleep in atomic context")
+Cc: Sameer Pujar <spujar@nvidia.com>
+Cc: Oder Chiou <oder_chiou@realtek.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230912113245.320159-2-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_client.c  | 22 ++++++++++++++++++++++
- sound/core/seq/seq_ump_convert.c |  2 ++
- 2 files changed, 24 insertions(+)
+ sound/soc/codecs/rt5640.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index f26a1812dfa73..a60e3f069a80f 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -416,6 +416,25 @@ static void setup_client_midi_version(struct seq_ump_client *client)
- 	snd_seq_kernel_client_put(cptr);
- }
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index eceed82097877..7ec930fb9aab5 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2566,10 +2566,9 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
+ 	if (jack_data && jack_data->use_platform_clock)
+ 		rt5640->use_platform_clock = jack_data->use_platform_clock;
  
-+/* set up client's group_filter bitmap */
-+static void setup_client_group_filter(struct seq_ump_client *client)
-+{
-+	struct snd_seq_client *cptr;
-+	unsigned int filter;
-+	int p;
-+
-+	cptr = snd_seq_kernel_client_get(client->seq_client);
-+	if (!cptr)
-+		return;
-+	filter = ~(1U << 0); /* always allow groupless messages */
-+	for (p = 0; p < SNDRV_UMP_MAX_GROUPS; p++) {
-+		if (client->groups[p].active)
-+			filter &= ~(1U << (p + 1));
-+	}
-+	cptr->group_filter = filter;
-+	snd_seq_kernel_client_put(cptr);
-+}
-+
- /* UMP group change notification */
- static void handle_group_notify(struct work_struct *work)
- {
-@@ -424,6 +443,7 @@ static void handle_group_notify(struct work_struct *work)
+-	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
+-					NULL, rt5640_irq,
+-					IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+-					"rt5640", rt5640);
++	ret = request_irq(rt5640->irq, rt5640_irq,
++			  IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++			  "rt5640", rt5640);
+ 	if (ret) {
+ 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640_disable_jack_detect(component);
+@@ -2622,9 +2621,8 @@ static void rt5640_enable_hda_jack_detect(
  
- 	update_group_attrs(client);
- 	update_port_infos(client);
-+	setup_client_group_filter(client);
- }
+ 	rt5640->jack = jack;
  
- /* UMP FB change notification */
-@@ -492,6 +512,8 @@ static int snd_seq_ump_probe(struct device *_dev)
- 			goto error;
- 	}
- 
-+	setup_client_group_filter(client);
-+
- 	err = create_ump_endpoint_port(client);
- 	if (err < 0)
- 		goto error;
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index 7cc84e137999c..b141024830ecc 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -1197,6 +1197,8 @@ int snd_seq_deliver_to_ump(struct snd_seq_client *source,
- 			   struct snd_seq_event *event,
- 			   int atomic, int hop)
- {
-+	if (dest->group_filter & (1U << dest_port->ump_group))
-+		return 0; /* group filtered - skip the event */
- 	if (event->type == SNDRV_SEQ_EVENT_SYSEX)
- 		return cvt_sysex_to_ump(dest, dest_port, event, atomic, hop);
- 	else if (snd_seq_client_is_midi2(dest))
+-	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
+-					NULL, rt5640_irq, IRQF_TRIGGER_RISING | IRQF_ONESHOT,
+-					"rt5640", rt5640);
++	ret = request_irq(rt5640->irq, rt5640_irq,
++			  IRQF_TRIGGER_RISING | IRQF_ONESHOT, "rt5640", rt5640);
+ 	if (ret) {
+ 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
+ 		rt5640->irq = -ENXIO;
 -- 
 2.40.1
 
