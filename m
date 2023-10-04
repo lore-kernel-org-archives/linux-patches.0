@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAE51D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2494C433C9;
-	Wed,  4 Oct 2023 18:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346291D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE29C433CB;
+	Wed,  4 Oct 2023 18:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443166;
-	bh=CW5WqI1TmI19W4kaKPMZ0B9Y4hs3GkYkfmb9pPu3MOQ=;
+	s=korg; t=1696443169;
+	bh=vMphxwI+REvpBYSo4fhl+j8OZuBvLcr8WFOH0JQB+oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQtaop2DXxF9SFS0WYmHD4UpBiJqqxgGJXTwUC4MosJNBkvOQZhtNxFDJ2SfP67WF
-	 MYz7Z3PAGQZWfS3cUlc43C+joHA1C9ysztennEEAijlLyE49ESnf05OGErB0XxxBZ5
-	 kG0V8oWD8u+Y/N7LnBxFmTFN8WkjfC08PYDGYOEs=
+	b=gSNq/kP4ErM2b3Nud4KqS1jv+2LmTmnfWJGBPlCLR36eLh/UI5S3wwYmY+in3c+A0
+	 K3jS8tQ6yHpt3XvtANPwNrpN3CD4VZXNDvFlJux/G0fGZcn1JPgA9QBvpf1qcBhSOl
+	 cfiDQZaf4u8W+pJJdbGQAHDMuM6QyyvLa3FkFHG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/259] powerpc/perf/hv-24x7: Update domain value check
-Date: Wed,  4 Oct 2023 19:53:52 +0200
-Message-ID: <20231004175220.123856515@linuxfoundation.org>
+Subject: [PATCH 6.1 033/259] netfilter: nft_set_pipapo: call nft_trans_gc_queue_sync() in catchall GC
+Date: Wed,  4 Oct 2023 19:53:26 +0200
+Message-ID: <20231004175218.957871878@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,61 +39,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
+commit 4a9e12ea7e70223555ec010bec9f711089ce96f6 upstream.
 
-Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
-check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
-the check for domain value 0 is missing.
+pipapo needs to enqueue GC transactions for catchall elements through
+nft_trans_gc_queue_sync(). Add nft_trans_gc_catchall_sync() and
+nft_trans_gc_catchall_async() to handle GC transaction queueing
+accordingly.
 
-Fix this issue by adding check for domain value 0.
-
-Before:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Error:
-  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
-  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
-  /bin/dmesg | grep -i perf may provide additional information.
-
-  Result from dmesg:
-  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
-  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
-
-After:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Warning:
-  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
-  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
-
-Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
-Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/hv-24x7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |  5 +++--
+ net/netfilter/nf_tables_api.c     | 22 +++++++++++++++++++---
+ net/netfilter/nft_set_hash.c      |  2 +-
+ net/netfilter/nft_set_pipapo.c    |  2 +-
+ net/netfilter/nft_set_rbtree.c    |  2 +-
+ 5 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
-index 33c23225fd545..7dda59923ed6a 100644
---- a/arch/powerpc/perf/hv-24x7.c
-+++ b/arch/powerpc/perf/hv-24x7.c
-@@ -1431,7 +1431,7 @@ static int h_24x7_event_init(struct perf_event *event)
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 12777a5b60cd0..eb2103a9a7dd9 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1675,8 +1675,9 @@ void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans);
+ 
+ void nft_trans_gc_elem_add(struct nft_trans_gc *gc, void *priv);
+ 
+-struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
+-					   unsigned int gc_seq);
++struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
++						 unsigned int gc_seq);
++struct nft_trans_gc *nft_trans_gc_catchall_sync(struct nft_trans_gc *gc);
+ 
+ void nft_setelem_data_deactivate(const struct net *net,
+ 				 const struct nft_set *set,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 47f3632c78bfb..6e67fb999a256 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9233,8 +9233,9 @@ void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
+ 	call_rcu(&trans->rcu, nft_trans_gc_trans_free);
+ }
+ 
+-struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
+-					   unsigned int gc_seq)
++static struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
++						  unsigned int gc_seq,
++						  bool sync)
+ {
+ 	struct nft_set_elem_catchall *catchall;
+ 	const struct nft_set *set = gc->set;
+@@ -9250,7 +9251,11 @@ struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
+ 
+ 		nft_set_elem_dead(ext);
+ dead_elem:
+-		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
++		if (sync)
++			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
++		else
++			gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
++
+ 		if (!gc)
+ 			return NULL;
+ 
+@@ -9260,6 +9265,17 @@ struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
+ 	return gc;
+ }
+ 
++struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
++						 unsigned int gc_seq)
++{
++	return nft_trans_gc_catchall(gc, gc_seq, false);
++}
++
++struct nft_trans_gc *nft_trans_gc_catchall_sync(struct nft_trans_gc *gc)
++{
++	return nft_trans_gc_catchall(gc, 0, true);
++}
++
+ static void nf_tables_module_autoload_cleanup(struct net *net)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 524763659f251..eca20dc601384 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -372,7 +372,7 @@ static void nft_rhash_gc(struct work_struct *work)
+ 		nft_trans_gc_elem_add(gc, he);
  	}
  
- 	domain = event_get_domain(event);
--	if (domain >= HV_PERF_DOMAIN_MAX) {
-+	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
- 		pr_devel("invalid domain %d\n", domain);
- 		return -EINVAL;
+-	gc = nft_trans_gc_catchall(gc, gc_seq);
++	gc = nft_trans_gc_catchall_async(gc, gc_seq);
+ 
+ try_later:
+ 	/* catchall list iteration requires rcu read side lock. */
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 58bd514260b90..7248a1737ee14 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1611,7 +1611,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+ 		}
  	}
+ 
+-	gc = nft_trans_gc_catchall(gc, 0);
++	gc = nft_trans_gc_catchall_sync(gc);
+ 	if (gc) {
+ 		nft_trans_gc_queue_sync_done(gc);
+ 		priv->last_gc = jiffies;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 70491ba98decb..487572dcd6144 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -669,7 +669,7 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 		nft_trans_gc_elem_add(gc, rbe);
+ 	}
+ 
+-	gc = nft_trans_gc_catchall(gc, gc_seq);
++	gc = nft_trans_gc_catchall_async(gc, gc_seq);
+ 
+ try_later:
+ 	read_unlock_bh(&priv->lock);
 -- 
 2.40.1
 
