@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E3E210E4
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251B1210ED
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO6vUvrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B93C433C8;
-	Wed,  4 Oct 2023 18:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/tS9ZzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9993FC433C7;
+	Wed,  4 Oct 2023 18:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444352;
-	bh=pyzqGPDu5SuEgWdy1QLEDdGJHR/p+EpUaBGCqBv+sQc=;
+	s=korg; t=1696444355;
+	bh=WbyUb9hQSP+KvgTHuICnKU8XUshq9I99ixAO++GGUeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CO6vUvrUN9Jp0R+SEBd8/VbhPpNUtK1uFZWhT1goqLTcfeCCvTJTCU7gFssSv4tfL
-	 4gmDnYejxPPc0l+NXXncYoipU4pN2nknSWD/TzoPAbm86/3sn1Ywh3NniR8HKEucgX
-	 iDY0msWzzlJAjZQdjOktiEzdLOPKaDtk1cMb+8iw=
+	b=G/tS9ZzDT0DumkC86E+QsKIYEP1HWorcbei8haXQHBU1vkR+y9QKwLlt0BjSe4gRJ
+	 LQr+sKC/4909Jn2KH0JlW5HP0bWgp32P5mZHNix7Zkt+W7zKX2c7hHWoDsOzA0AXvH
+	 C7W5c+jp34xtJO8/npgo4yXsrjnEHWH1EGl7GqyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	David Hildenbrand <david@redhat.com>,
+	Yikebaer Aizezi <yikebaer61@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 220/321] ASoC: SOF: sof-audio: Fix DSP core put imbalance on widget setup failure
-Date: Wed,  4 Oct 2023 19:56:05 +0200
-Message-ID: <20231004175239.417778889@linuxfoundation.org>
+Subject: [PATCH 6.5 221/321] media: vb2: frame_vector.c: replace WARN_ONCE with a comment
+Date: Wed,  4 Oct 2023 19:56:06 +0200
+Message-ID: <20231004175239.451828296@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,42 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit bb0216d4db9ecaa51af45d8504757becbe5c050d ]
+[ Upstream commit 735de5caf79e06cc9fb96b1b4f4974674ae3e917 ]
 
-In case the widget setup fails we should only decrement the core usage
-count if the sof_widget_free_unlocked() has not been called as part of
-the error handling.
-sof_widget_free_unlocked() calls snd_sof_dsp_core_put() and the additional
-core_put will cause imbalance in core usage count.
-Use the existing use_count_decremented to handle this issue.
+The WARN_ONCE was issued also in cases that had nothing to do with VM_IO
+(e.g. if the start address was just a random value and uaccess fails with
+-EFAULT).
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230914124725.17397-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+There are no reports of WARN_ONCE being issued for actual VM_IO cases, so
+just drop it and instead add a note to the comment before the function.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reported-by: Yikebaer Aizezi <yikebaer61@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-audio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/common/videobuf2/frame_vector.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/sof-audio.c b/sound/soc/sof/sof-audio.c
-index e7ef77012c358..e5405f854a910 100644
---- a/sound/soc/sof/sof-audio.c
-+++ b/sound/soc/sof/sof-audio.c
-@@ -212,7 +212,8 @@ static int sof_widget_setup_unlocked(struct snd_sof_dev *sdev,
- 	sof_widget_free_unlocked(sdev, swidget);
- 	use_count_decremented = true;
- core_put:
--	snd_sof_dsp_core_put(sdev, swidget->core);
-+	if (!use_count_decremented)
-+		snd_sof_dsp_core_put(sdev, swidget->core);
- pipe_widget_free:
- 	if (swidget->id != snd_soc_dapm_scheduler)
- 		sof_widget_free_unlocked(sdev, swidget->spipe->pipe_widget);
+diff --git a/drivers/media/common/videobuf2/frame_vector.c b/drivers/media/common/videobuf2/frame_vector.c
+index 0f430ddc1f670..fd87747be9b17 100644
+--- a/drivers/media/common/videobuf2/frame_vector.c
++++ b/drivers/media/common/videobuf2/frame_vector.c
+@@ -31,6 +31,10 @@
+  * different type underlying the specified range of virtual addresses.
+  * When the function isn't able to map a single page, it returns error.
+  *
++ * Note that get_vaddr_frames() cannot follow VM_IO mappings. It used
++ * to be able to do that, but that could (racily) return non-refcounted
++ * pfns.
++ *
+  * This function takes care of grabbing mmap_lock as necessary.
+  */
+ int get_vaddr_frames(unsigned long start, unsigned int nr_frames, bool write,
+@@ -59,8 +63,6 @@ int get_vaddr_frames(unsigned long start, unsigned int nr_frames, bool write,
+ 	if (likely(ret > 0))
+ 		return ret;
+ 
+-	/* This used to (racily) return non-refcounted pfns. Let people know */
+-	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
+ 	vec->nr_frames = 0;
+ 	return ret ? ret : -EFAULT;
+ }
 -- 
 2.40.1
 
