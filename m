@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447CE1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE09C433C9;
-	Wed,  4 Oct 2023 18:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FC51D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74882C433C7;
+	Wed,  4 Oct 2023 18:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442613;
-	bh=hc0BgQVcIj/G6gaTswwP4vOjWp16ACgEQHr3vBBPSs0=;
+	s=korg; t=1696442615;
+	bh=skz9xfT9EN94jVUpughBOxcLZLhGhKxTtYDgWdzWLNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh9cNiwkSZwKtqsSQZic7Sd1Mu8AkYm3FT/UAeeOZILoco/zRga39wvRcOuM5NOC7
-	 3/xpKfP0t8DrgU02+DN8YCVDgDraCmqMrQtuoK9MEDrKgkkKkuK+y4LWMLGksWiRFF
-	 qHihKGrIbMYFF3HFMkdoOUMChZFjTrwdfvmrJ07E=
+	b=nXlRGZGjqKBL1V6dBc+cT1/mQN97mvdTFP17l5QcrzHMew7rwRTO3d2moWv1WeEGM
+	 vzvr6wOMILwIIM/MzlhsU4rCcbn26vtcV9VP+4Vhf7vX4alEuQbVk7Jt7BSZsCqfG1
+	 FmBbf7dYiHum+2RnzdwPYWaIq3FQgObEedHE+rUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/183] netfilter: nft_set_pipapo: call nft_trans_gc_queue_sync() in catchall GC
-Date: Wed,  4 Oct 2023 19:54:21 +0200
-Message-ID: <20231004175205.230486964@linuxfoundation.org>
+Subject: [PATCH 5.15 048/183] platform/x86: intel_scu_ipc: Check status after timeout in busy_loop()
+Date: Wed,  4 Oct 2023 19:54:39 +0200
+Message-ID: <20231004175205.979922304@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -33,135 +39,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Stephen Boyd <swboyd@chromium.org>
 
-commit 4a9e12ea7e70223555ec010bec9f711089ce96f6 upstream.
+[ Upstream commit e0b4ab3bb92bda8d12f55842614362989d5b2cb3 ]
 
-pipapo needs to enqueue GC transactions for catchall elements through
-nft_trans_gc_queue_sync(). Add nft_trans_gc_catchall_sync() and
-nft_trans_gc_catchall_async() to handle GC transaction queueing
-accordingly.
+It's possible for the polling loop in busy_loop() to get scheduled away
+for a long time.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+  <long time scheduled away>
+  if (!(status & IPC_STATUS_BUSY))
+
+If this happens, then the status bit could change while the task is
+scheduled away and this function would never read the status again after
+timing out. Instead, the function will return -ETIMEDOUT when it's
+possible that scheduling didn't work out and the status bit was cleared.
+Bit polling code should always check the bit being polled one more time
+after the timeout in case this happens.
+
+Fix this by reading the status once more after the while loop breaks.
+The readl_poll_timeout() macro implements all of this, and it is
+shorter, so use that macro here to consolidate code and fix this.
+
+There were some concerns with using readl_poll_timeout() because it uses
+timekeeping, and timekeeping isn't running early on or during the late
+stages of system suspend or early stages of system resume, but an audit
+of the code concluded that this code isn't called during those times so
+it is safe to use the macro.
+
+Cc: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230913212723.3055315-2-swboyd@chromium.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  5 +++--
- net/netfilter/nf_tables_api.c     | 22 +++++++++++++++++++---
- net/netfilter/nft_set_hash.c      |  2 +-
- net/netfilter/nft_set_pipapo.c    |  2 +-
- net/netfilter/nft_set_rbtree.c    |  2 +-
- 5 files changed, 25 insertions(+), 8 deletions(-)
+ drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index af703d295f0cd..d543078c43f95 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1623,8 +1623,9 @@ void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans);
+diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+index e7a3e34028178..96675bea88b10 100644
+--- a/drivers/platform/x86/intel_scu_ipc.c
++++ b/drivers/platform/x86/intel_scu_ipc.c
+@@ -19,6 +19,7 @@
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
  
- void nft_trans_gc_elem_add(struct nft_trans_gc *gc, void *priv);
+@@ -232,19 +233,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
+ /* Wait till scu status is busy */
+ static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+ {
+-	unsigned long end = jiffies + IPC_TIMEOUT;
+-
+-	do {
+-		u32 status;
+-
+-		status = ipc_read_status(scu);
+-		if (!(status & IPC_STATUS_BUSY))
+-			return (status & IPC_STATUS_ERR) ? -EIO : 0;
++	u8 status;
++	int err;
  
--struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
--					   unsigned int gc_seq);
-+struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
-+						 unsigned int gc_seq);
-+struct nft_trans_gc *nft_trans_gc_catchall_sync(struct nft_trans_gc *gc);
+-		usleep_range(50, 100);
+-	} while (time_before(jiffies, end));
++	err = readx_poll_timeout(ipc_read_status, scu, status, !(status & IPC_STATUS_BUSY),
++				 100, jiffies_to_usecs(IPC_TIMEOUT));
++	if (err)
++		return err;
  
- void nft_setelem_data_deactivate(const struct net *net,
- 				 const struct nft_set *set,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index ac266dc2c31b7..58fec8806ec53 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9027,8 +9027,9 @@ void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
- 	call_rcu(&trans->rcu, nft_trans_gc_trans_free);
+-	return -ETIMEDOUT;
++	return (status & IPC_STATUS_ERR) ? -EIO : 0;
  }
  
--struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
--					   unsigned int gc_seq)
-+static struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
-+						  unsigned int gc_seq,
-+						  bool sync)
- {
- 	struct nft_set_elem_catchall *catchall;
- 	const struct nft_set *set = gc->set;
-@@ -9044,7 +9045,11 @@ struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
- 
- 		nft_set_elem_dead(ext);
- dead_elem:
--		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		if (sync)
-+			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
-+		else
-+			gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+
- 		if (!gc)
- 			return NULL;
- 
-@@ -9054,6 +9059,17 @@ struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
- 	return gc;
- }
- 
-+struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
-+						 unsigned int gc_seq)
-+{
-+	return nft_trans_gc_catchall(gc, gc_seq, false);
-+}
-+
-+struct nft_trans_gc *nft_trans_gc_catchall_sync(struct nft_trans_gc *gc)
-+{
-+	return nft_trans_gc_catchall(gc, 0, true);
-+}
-+
- static void nf_tables_module_autoload_cleanup(struct net *net)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 524763659f251..eca20dc601384 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -372,7 +372,7 @@ static void nft_rhash_gc(struct work_struct *work)
- 		nft_trans_gc_elem_add(gc, he);
- 	}
- 
--	gc = nft_trans_gc_catchall(gc, gc_seq);
-+	gc = nft_trans_gc_catchall_async(gc, gc_seq);
- 
- try_later:
- 	/* catchall list iteration requires rcu read side lock. */
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 58bd514260b90..7248a1737ee14 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1611,7 +1611,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
- 		}
- 	}
- 
--	gc = nft_trans_gc_catchall(gc, 0);
-+	gc = nft_trans_gc_catchall_sync(gc);
- 	if (gc) {
- 		nft_trans_gc_queue_sync_done(gc);
- 		priv->last_gc = jiffies;
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 70491ba98decb..487572dcd6144 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -669,7 +669,7 @@ static void nft_rbtree_gc(struct work_struct *work)
- 		nft_trans_gc_elem_add(gc, rbe);
- 	}
- 
--	gc = nft_trans_gc_catchall(gc, gc_seq);
-+	gc = nft_trans_gc_catchall_async(gc, gc_seq);
- 
- try_later:
- 	read_unlock_bh(&priv->lock);
+ /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
 -- 
 2.40.1
 
