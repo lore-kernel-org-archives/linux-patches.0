@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAD220B02
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447EE136C
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtVwUIFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB70C433C8;
-	Wed,  4 Oct 2023 18:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDv4nXyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96F6C433C8;
+	Wed,  4 Oct 2023 18:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444205;
-	bh=IgEx5HamdR60w5BstmZ6AGr/LgHCJ0N9E6JMcy2JMOI=;
+	s=korg; t=1696444208;
+	bh=HmZft+h2vyo78N5b3gkszDY+CSGJ5eOIWVNovvxxRj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtVwUIFhHu5RlDq96YviJszKiwCJRxz5GWIHE8/pdte4G5hO98/eFVK1r0Qn0mxr5
-	 iRHSfYVqd6tfIFXdGjVpM5YppLNyR1+lQ5TXx/N6bRhE2v3GrubTgRsXZlgo7J9iJV
-	 MHAjG4mYT+ZjyeVrvzZJF9xX+2I5Xt/gdurE8vHM=
+	b=NDv4nXyVJ+sl+zMtZWHbwAaAX7iJqG/jU0ssRh60yGsY5HcQlb4IGpNfrWBPvThJO
+	 DptdWYva+JdjVBO8G/a5Ms5CJVSS/y159X65PFp6fIn3sxeL2h63nV1o2PBB5UvQDq
+	 ain2zGmmH75ELPKdnW1DSUz1K0+5dpVvRqdyzhJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 167/321] parisc: sba-iommu: Fix sparse warnigs
-Date: Wed,  4 Oct 2023 19:55:12 +0200
-Message-ID: <20231004175237.001743290@linuxfoundation.org>
+Subject: [PATCH 6.5 168/321] parisc: ccio-dma: Fix sparse warnings
+Date: Wed,  4 Oct 2023 19:55:13 +0200
+Message-ID: <20231004175237.040787965@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,157 +43,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit c1ebb94071cb4455177bafa619423acb3494d15d ]
-
-Fix sparse warnings, as pdir is __le64 *.
+[ Upstream commit 9a47a710cf517801a8b4fff9949c4cecb5fd019a ]
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/ropes.h |  4 ++--
- drivers/parisc/iommu-helpers.h  |  4 ++--
- drivers/parisc/sba_iommu.c      | 28 ++++++++++++++--------------
- 3 files changed, 18 insertions(+), 18 deletions(-)
+ drivers/parisc/ccio-dma.c      | 18 +++++++++---------
+ drivers/parisc/iommu-helpers.h |  4 ++--
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/parisc/include/asm/ropes.h b/arch/parisc/include/asm/ropes.h
-index 62399c7ea94a1..c46ad399a74f2 100644
---- a/arch/parisc/include/asm/ropes.h
-+++ b/arch/parisc/include/asm/ropes.h
-@@ -29,7 +29,7 @@
+diff --git a/drivers/parisc/ccio-dma.c b/drivers/parisc/ccio-dma.c
+index 10e846286f4ef..623707fc6ff1c 100644
+--- a/drivers/parisc/ccio-dma.c
++++ b/drivers/parisc/ccio-dma.c
+@@ -222,7 +222,7 @@ struct ioa_registers {
  struct ioc {
- 	void __iomem	*ioc_hpa;	/* I/O MMU base address */
- 	char		*res_map;	/* resource map, bit == pdir entry */
--	u64		*pdir_base;	/* physical base address */
-+	__le64		*pdir_base;	/* physical base address */
- 	unsigned long	ibase;		/* pdir IOV Space base - shared w/lba_pci */
- 	unsigned long	imask;		/* pdir IOV Space mask - shared w/lba_pci */
- #ifdef ZX1_SUPPORT
-@@ -113,7 +113,7 @@ static inline int IS_PLUTO(struct parisc_device *d) {
+ 	struct ioa_registers __iomem *ioc_regs;  /* I/O MMU base address */
+ 	u8  *res_map;	                /* resource map, bit == pdir entry */
+-	u64 *pdir_base;	                /* physical base address */
++	__le64 *pdir_base;		/* physical base address */
+ 	u32 pdir_size;			/* bytes, function of IOV Space size */
+ 	u32 res_hint;			/* next available IOVP -
+ 					   circular search */
+@@ -347,7 +347,7 @@ ccio_alloc_range(struct ioc *ioc, struct device *dev, size_t size)
+ 	BUG_ON(pages_needed == 0);
+ 	BUG_ON((pages_needed * IOVP_SIZE) > DMA_CHUNK_SIZE);
  
- #define SBA_PDIR_VALID_BIT	0x8000000000000000ULL
+-	DBG_RES("%s() size: %d pages_needed %d\n",
++	DBG_RES("%s() size: %zu pages_needed %d\n",
+ 			__func__, size, pages_needed);
  
--#define SBA_AGPGART_COOKIE	0x0000badbadc0ffeeULL
-+#define SBA_AGPGART_COOKIE	(__force __le64) 0x0000badbadc0ffeeULL
+ 	/*
+@@ -435,7 +435,7 @@ ccio_free_range(struct ioc *ioc, dma_addr_t iova, unsigned long pages_mapped)
+ 	BUG_ON((pages_mapped * IOVP_SIZE) > DMA_CHUNK_SIZE);
+ 	BUG_ON(pages_mapped > BITS_PER_LONG);
  
- #define SBA_FUNC_ID	0x0000	/* function id */
- #define SBA_FCLASS	0x0008	/* function class, bist, header, rev... */
-diff --git a/drivers/parisc/iommu-helpers.h b/drivers/parisc/iommu-helpers.h
-index 0905be256de08..a00c38b6224ab 100644
---- a/drivers/parisc/iommu-helpers.h
-+++ b/drivers/parisc/iommu-helpers.h
-@@ -14,13 +14,13 @@
- static inline unsigned int
- iommu_fill_pdir(struct ioc *ioc, struct scatterlist *startsg, int nents, 
- 		unsigned long hint,
--		void (*iommu_io_pdir_entry)(u64 *, space_t, unsigned long,
-+		void (*iommu_io_pdir_entry)(__le64 *, space_t, unsigned long,
- 					    unsigned long))
- {
- 	struct scatterlist *dma_sg = startsg;	/* pointer to current DMA */
- 	unsigned int n_mappings = 0;
- 	unsigned long dma_offset = 0, dma_len = 0;
--	u64 *pdirp = NULL;
-+	__le64 *pdirp = NULL;
+-	DBG_RES("%s():  res_idx: %d pages_mapped %d\n", 
++	DBG_RES("%s():  res_idx: %d pages_mapped %lu\n",
+ 		__func__, res_idx, pages_mapped);
  
- 	/* Horrible hack.  For efficiency's sake, dma_sg starts one 
- 	 * entry below the true start (it is immediately incremented
-diff --git a/drivers/parisc/sba_iommu.c b/drivers/parisc/sba_iommu.c
-index b8e91cbb60567..780ea219cd8d4 100644
---- a/drivers/parisc/sba_iommu.c
-+++ b/drivers/parisc/sba_iommu.c
-@@ -202,7 +202,7 @@ static void
- sba_dump_pdir_entry(struct ioc *ioc, char *msg, uint pide)
- {
- 	/* start printing from lowest pde in rval */
--	u64 *ptr = &(ioc->pdir_base[pide & (~0U * BITS_PER_LONG)]);
-+	__le64 *ptr = &(ioc->pdir_base[pide & (~0U * BITS_PER_LONG)]);
- 	unsigned long *rptr = (unsigned long *) &(ioc->res_map[(pide >>3) & ~(sizeof(unsigned long) - 1)]);
- 	uint rcnt;
- 
-@@ -569,7 +569,7 @@ typedef unsigned long space_t;
-  */
- 
+ #ifdef CCIO_COLLECT_STATS
+@@ -551,7 +551,7 @@ static u32 hint_lookup[] = {
+  * index are bits 12:19 of the value returned by LCI.
+  */ 
  static void
--sba_io_pdir_entry(u64 *pdir_ptr, space_t sid, unsigned long vba,
-+sba_io_pdir_entry(__le64 *pdir_ptr, space_t sid, unsigned long vba,
- 		  unsigned long hint)
+-ccio_io_pdir_entry(u64 *pdir_ptr, space_t sid, unsigned long vba,
++ccio_io_pdir_entry(__le64 *pdir_ptr, space_t sid, unsigned long vba,
+ 		   unsigned long hints)
  {
- 	u64 pa; /* physical address */
-@@ -613,7 +613,7 @@ static void
- sba_mark_invalid(struct ioc *ioc, dma_addr_t iova, size_t byte_cnt)
- {
- 	u32 iovp = (u32) SBA_IOVP(ioc,iova);
--	u64 *pdir_ptr = &ioc->pdir_base[PDIR_INDEX(iovp)];
-+	__le64 *pdir_ptr = &ioc->pdir_base[PDIR_INDEX(iovp)];
- 
- #ifdef ASSERT_PDIR_SANITY
- 	/* Assert first pdir entry is set.
-@@ -714,7 +714,7 @@ sba_map_single(struct device *dev, void *addr, size_t size,
- 	unsigned long flags; 
+ 	register unsigned long pa;
+@@ -727,7 +727,7 @@ ccio_map_single(struct device *dev, void *addr, size_t size,
+ 	unsigned long flags;
  	dma_addr_t iovp;
  	dma_addr_t offset;
 -	u64 *pdir_start;
 +	__le64 *pdir_start;
- 	int pide;
+ 	unsigned long hint = hint_lookup[(int)direction];
  
- 	ioc = GET_IOC(dev);
-@@ -1432,7 +1432,7 @@ sba_ioc_init(struct parisc_device *sba, struct ioc *ioc, int ioc_num)
+ 	BUG_ON(!dev);
+@@ -754,8 +754,8 @@ ccio_map_single(struct device *dev, void *addr, size_t size,
  
- 	ioc->pdir_size = pdir_size = (iova_space_size/IOVP_SIZE) * sizeof(u64);
+ 	pdir_start = &(ioc->pdir_base[idx]);
  
--	DBG_INIT("%s() hpa 0x%lx mem %ldMB IOV %dMB (%d bits)\n",
-+	DBG_INIT("%s() hpa %px mem %ldMB IOV %dMB (%d bits)\n",
- 			__func__,
- 			ioc->ioc_hpa,
- 			(unsigned long) totalram_pages() >> (20 - PAGE_SHIFT),
-@@ -1469,7 +1469,7 @@ sba_ioc_init(struct parisc_device *sba, struct ioc *ioc, int ioc_num)
- 	ioc->iovp_mask = ~(iova_space_mask + PAGE_SIZE - 1);
- #endif
+-	DBG_RUN("%s() 0x%p -> 0x%lx size: %0x%x\n",
+-		__func__, addr, (long)iovp | offset, size);
++	DBG_RUN("%s() %px -> %#lx size: %zu\n",
++		__func__, addr, (long)(iovp | offset), size);
  
--	DBG_INIT("%s() IOV base 0x%lx mask 0x%0lx\n",
-+	DBG_INIT("%s() IOV base %#lx mask %#0lx\n",
- 		__func__, ioc->ibase, ioc->imask);
+ 	/* If not cacheline aligned, force SAFE_DMA on the whole mess */
+ 	if((size % L1_CACHE_BYTES) || ((unsigned long)addr % L1_CACHE_BYTES))
+@@ -813,7 +813,7 @@ ccio_unmap_page(struct device *dev, dma_addr_t iova, size_t size,
+ 		return;
+ 	}
  
- 	/*
-@@ -1581,7 +1581,7 @@ printk("sba_hw_init(): mem_boot 0x%x 0x%x 0x%x 0x%x\n", PAGE0->mem_boot.hpa,
+-	DBG_RUN("%s() iovp 0x%lx/%x\n",
++	DBG_RUN("%s() iovp %#lx/%zx\n",
+ 		__func__, (long)iova, size);
  
- 	if (!IS_PLUTO(sba_dev->dev)) {
- 		ioc_ctl = READ_REG(sba_dev->sba_hpa+IOC_CTRL);
--		DBG_INIT("%s() hpa 0x%lx ioc_ctl 0x%Lx ->",
-+		DBG_INIT("%s() hpa %px ioc_ctl 0x%Lx ->",
- 			__func__, sba_dev->sba_hpa, ioc_ctl);
- 		ioc_ctl &= ~(IOC_CTRL_RM | IOC_CTRL_NC | IOC_CTRL_CE);
- 		ioc_ctl |= IOC_CTRL_DD | IOC_CTRL_D4 | IOC_CTRL_TC;
-@@ -1666,14 +1666,14 @@ printk("sba_hw_init(): mem_boot 0x%x 0x%x 0x%x 0x%x\n", PAGE0->mem_boot.hpa,
- 		/* flush out the last writes */
- 		READ_REG(sba_dev->ioc[i].ioc_hpa + ROPE7_CTL);
+ 	iova ^= offset;        /* clear offset bits */
+@@ -1291,7 +1291,7 @@ ccio_ioc_init(struct ioc *ioc)
+ 			iova_space_size>>20,
+ 			iov_order + PAGE_SHIFT);
  
--		DBG_INIT("	ioc[%d] ROPE_CFG 0x%Lx  ROPE_DBG 0x%Lx\n",
-+		DBG_INIT("	ioc[%d] ROPE_CFG %#lx  ROPE_DBG %lx\n",
- 				i,
--				READ_REG(sba_dev->ioc[i].ioc_hpa + 0x40),
--				READ_REG(sba_dev->ioc[i].ioc_hpa + 0x50)
-+				(unsigned long) READ_REG(sba_dev->ioc[i].ioc_hpa + 0x40),
-+				(unsigned long) READ_REG(sba_dev->ioc[i].ioc_hpa + 0x50)
- 			);
--		DBG_INIT("	STATUS_CONTROL 0x%Lx  FLUSH_CTRL 0x%Lx\n",
--				READ_REG(sba_dev->ioc[i].ioc_hpa + 0x108),
--				READ_REG(sba_dev->ioc[i].ioc_hpa + 0x400)
-+		DBG_INIT("	STATUS_CONTROL %#lx  FLUSH_CTRL %#lx\n",
-+				(unsigned long) READ_REG(sba_dev->ioc[i].ioc_hpa + 0x108),
-+				(unsigned long) READ_REG(sba_dev->ioc[i].ioc_hpa + 0x400)
- 			);
+-	ioc->pdir_base = (u64 *)__get_free_pages(GFP_KERNEL, 
++	ioc->pdir_base = (__le64 *)__get_free_pages(GFP_KERNEL,
+ 						 get_order(ioc->pdir_size));
+ 	if(NULL == ioc->pdir_base) {
+ 		panic("%s() could not allocate I/O Page Table\n", __func__);
+diff --git a/drivers/parisc/iommu-helpers.h b/drivers/parisc/iommu-helpers.h
+index a00c38b6224ab..c43f1a212a5c8 100644
+--- a/drivers/parisc/iommu-helpers.h
++++ b/drivers/parisc/iommu-helpers.h
+@@ -31,8 +31,8 @@ iommu_fill_pdir(struct ioc *ioc, struct scatterlist *startsg, int nents,
+ 		unsigned long vaddr;
+ 		long size;
  
- 		if (IS_PLUTO(sba_dev->dev)) {
-@@ -1737,7 +1737,7 @@ sba_common_init(struct sba_device *sba_dev)
- #ifdef ASSERT_PDIR_SANITY
- 		/* Mark first bit busy - ie no IOVA 0 */
- 		sba_dev->ioc[i].res_map[0] = 0x80;
--		sba_dev->ioc[i].pdir_base[0] = 0xeeffc0addbba0080ULL;
-+		sba_dev->ioc[i].pdir_base[0] = (__force __le64) 0xeeffc0addbba0080ULL;
- #endif
+-		DBG_RUN_SG(" %d : %08lx/%05x %p/%05x\n", nents,
+-			   (unsigned long)sg_dma_address(startsg), cnt,
++		DBG_RUN_SG(" %d : %08lx %p/%05x\n", nents,
++			   (unsigned long)sg_dma_address(startsg),
+ 			   sg_virt(startsg), startsg->length
+ 		);
  
- 		/* Third (and last) part of PIRANHA BUG */
 -- 
 2.40.1
 
