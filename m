@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED1B1D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CEB1D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1570CP0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CA7C433C8;
-	Wed,  4 Oct 2023 18:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUrChtYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16350C433CA;
+	Wed,  4 Oct 2023 18:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444052;
-	bh=m31jh0cq+nbz9IARiKi/Qg0ABVGqXBgI/JO3nZn0d5M=;
+	s=korg; t=1696444055;
+	bh=vAm6fDH+6Nq9KjMdGGQfis/8R1nPViYVsc2UaBvWWTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1570CP0Dm+uPb4fA9oAwSFoYV65/mzrsIAVnITMfn5g0+hB0PXCjs7EhYwHKYfkKF
-	 Vz61RXIf67Rxb772NF+/MI0Du7PTI+2lDcidLmImes+noN0oZOA18yyRoq3UsLxNah
-	 1VbfKOMFag9z8UBcNAvK9YEdz578l1Pd+5MQ/b94=
+	b=xUrChtYjEyNe2ZRcNGmWwPLI5/qN8aYMKMzHXgmvlCmxmmKi3KeMhxJdO4lUqnu3M
+	 NGsx/2dz02HofzakGT7SJGRecrdkou/4ZiZFF8Cyl/WO3w4+coCvvUz9Etc14HNTSn
+	 jFIH/oO/rip2l0S5JvCTjbm7CzeOXUhR7gFjqflE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Park <chris.park@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Roopa Prabhu <roopa@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	bridge@lists.linux-foundation.org,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 113/321] drm/amd/display: Update DPG test pattern programming
-Date: Wed,  4 Oct 2023 19:54:18 +0200
-Message-ID: <20231004175234.470233927@linuxfoundation.org>
+Subject: [PATCH 6.5 087/321] net: bridge: use DEV_STATS_INC()
+Date: Wed,  4 Oct 2023 19:53:52 +0200
+Message-ID: <20231004175233.241968684@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,279 +46,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ad4455c614b27e6b24a4e6bd70114545c1660ff9 ]
+[ Upstream commit 44bdb313da57322c9b3c108eb66981c6ec6509f4 ]
 
-[Why]
-Last ODM slice could be slightly larger than other slice because it can be
-including the residual.
+syzbot/KCSAN reported data-races in br_handle_frame_finish() [1]
+This function can run from multiple cpus without mutual exclusion.
 
-[How]
-Update DPG pattern programming sequence to use a different width for
-last odm slice.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-Reviewed-by: Chris Park <chris.park@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: f77d1a49902b ("drm/amd/display: fix a regression in blank pixel data caused by coding mistake")
+Handles updates to dev->stats.tx_dropped while we are at it.
+
+[1]
+BUG: KCSAN: data-race in br_handle_frame_finish / br_handle_frame_finish
+
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 1:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 0:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+do_softirq+0x5e/0x90 kernel/softirq.c:454
+__local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
+__raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+_raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
+spin_unlock_bh include/linux/spinlock.h:396 [inline]
+batadv_tt_local_purge+0x1a8/0x1f0 net/batman-adv/translation-table.c:1356
+batadv_tt_purge+0x2b/0x630 net/batman-adv/translation-table.c:3560
+process_one_work kernel/workqueue.c:2630 [inline]
+process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
+worker_thread+0x525/0x730 kernel/workqueue.c:2784
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+value changed: 0x00000000000d7190 -> 0x00000000000d7191
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 14848 Comm: kworker/u4:11 Not tainted 6.6.0-rc1-syzkaller-00236-gad8a69f361b9 #0
+
+Fixes: 1c29fc4989bc ("[BRIDGE]: keep track of received multicast packets")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Roopa Prabhu <roopa@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: bridge@lists.linux-foundation.org
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230918091351.1356153-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    |  45 ++++----
- .../display/dc/link/accessories/link_dp_cts.c | 107 +++++++++---------
- 2 files changed, 78 insertions(+), 74 deletions(-)
+ net/bridge/br_forward.c | 4 ++--
+ net/bridge/br_input.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 7c344132a0072..704d02d89fb34 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1054,9 +1054,9 @@ void dcn20_blank_pixel_data(
- 	enum controller_dp_color_space test_pattern_color_space = CONTROLLER_DP_COLOR_SPACE_UDEFINED;
- 	struct pipe_ctx *odm_pipe;
- 	int odm_cnt = 1;
--
--	int width = stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right;
--	int height = stream->timing.v_addressable + stream->timing.v_border_bottom + stream->timing.v_border_top;
-+	int h_active = stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right;
-+	int v_active = stream->timing.v_addressable + stream->timing.v_border_bottom + stream->timing.v_border_top;
-+	int odm_slice_width, last_odm_slice_width, offset = 0;
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 6116eba1bd891..bb1ab53e54e03 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -124,7 +124,7 @@ static int deliver_clone(const struct net_bridge_port *prev,
  
- 	if (stream->link->test_pattern_enabled)
+ 	skb = skb_clone(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -267,7 +267,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
+ 
+ 	skb = skb_copy(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
  		return;
-@@ -1066,8 +1066,8 @@ void dcn20_blank_pixel_data(
- 
- 	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe)
- 		odm_cnt++;
--
--	width = width / odm_cnt;
-+	odm_slice_width = h_active / odm_cnt;
-+	last_odm_slice_width = h_active - odm_slice_width * (odm_cnt - 1);
- 
- 	if (blank) {
- 		dc->hwss.set_abm_immediate_disable(pipe_ctx);
-@@ -1080,29 +1080,32 @@ void dcn20_blank_pixel_data(
- 		test_pattern = CONTROLLER_DP_TEST_PATTERN_VIDEOMODE;
  	}
  
--	dc->hwss.set_disp_pattern_generator(dc,
--			pipe_ctx,
--			test_pattern,
--			test_pattern_color_space,
--			stream->timing.display_color_depth,
--			&black_color,
--			width,
--			height,
--			0);
-+	odm_pipe = pipe_ctx;
- 
--	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
-+	while (odm_pipe->next_odm_pipe) {
- 		dc->hwss.set_disp_pattern_generator(dc,
--				odm_pipe,
--				dc->debug.visual_confirm != VISUAL_CONFIRM_DISABLE && blank ?
--						CONTROLLER_DP_TEST_PATTERN_COLORRAMP : test_pattern,
-+				pipe_ctx,
-+				test_pattern,
- 				test_pattern_color_space,
- 				stream->timing.display_color_depth,
- 				&black_color,
--				width,
--				height,
--				0);
-+				odm_slice_width,
-+				v_active,
-+				offset);
-+		offset += odm_slice_width;
-+		odm_pipe = odm_pipe->next_odm_pipe;
- 	}
- 
-+	dc->hwss.set_disp_pattern_generator(dc,
-+			odm_pipe,
-+			test_pattern,
-+			test_pattern_color_space,
-+			stream->timing.display_color_depth,
-+			&black_color,
-+			last_odm_slice_width,
-+			v_active,
-+			offset);
-+
- 	if (!blank && dc->debug.enable_single_display_2to1_odm_policy) {
- 		/* when exiting dynamic ODM need to reinit DPG state for unused pipes */
- 		struct pipe_ctx *old_odm_pipe = dc->current_state->res_ctx.pipe_ctx[pipe_ctx->pipe_idx].next_odm_pipe;
-diff --git a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-index db9f1baa27e5e..bce0428ad6123 100644
---- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-@@ -428,15 +428,24 @@ static void set_crtc_test_pattern(struct dc_link *link,
- 		stream->timing.display_color_depth;
- 	struct bit_depth_reduction_params params;
- 	struct output_pixel_processor *opp = pipe_ctx->stream_res.opp;
--	int width = pipe_ctx->stream->timing.h_addressable +
-+	struct pipe_ctx *odm_pipe;
-+	int odm_cnt = 1;
-+	int h_active = pipe_ctx->stream->timing.h_addressable +
- 		pipe_ctx->stream->timing.h_border_left +
- 		pipe_ctx->stream->timing.h_border_right;
--	int height = pipe_ctx->stream->timing.v_addressable +
-+	int v_active = pipe_ctx->stream->timing.v_addressable +
- 		pipe_ctx->stream->timing.v_border_bottom +
- 		pipe_ctx->stream->timing.v_border_top;
-+	int odm_slice_width, last_odm_slice_width, offset = 0;
- 
- 	memset(&params, 0, sizeof(params));
- 
-+	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe)
-+		odm_cnt++;
-+
-+	odm_slice_width = h_active / odm_cnt;
-+	last_odm_slice_width = h_active - odm_slice_width * (odm_cnt - 1);
-+
- 	switch (test_pattern) {
- 	case DP_TEST_PATTERN_COLOR_SQUARES:
- 		controller_test_pattern =
-@@ -473,16 +482,13 @@ static void set_crtc_test_pattern(struct dc_link *link,
- 	{
- 		/* disable bit depth reduction */
- 		pipe_ctx->stream->bit_depth_params = params;
--		opp->funcs->opp_program_bit_depth_reduction(opp, &params);
--		if (pipe_ctx->stream_res.tg->funcs->set_test_pattern)
-+		if (pipe_ctx->stream_res.tg->funcs->set_test_pattern) {
-+			opp->funcs->opp_program_bit_depth_reduction(opp, &params);
- 			pipe_ctx->stream_res.tg->funcs->set_test_pattern(pipe_ctx->stream_res.tg,
- 				controller_test_pattern, color_depth);
--		else if (link->dc->hwss.set_disp_pattern_generator) {
--			struct pipe_ctx *odm_pipe;
-+		} else if (link->dc->hwss.set_disp_pattern_generator) {
- 			enum controller_dp_color_space controller_color_space;
--			int opp_cnt = 1;
--			int offset = 0;
--			int dpg_width = width;
-+			struct output_pixel_processor *odm_opp;
- 
- 			switch (test_pattern_color_space) {
- 			case DP_TEST_PATTERN_COLOR_SPACE_RGB:
-@@ -502,36 +508,33 @@ static void set_crtc_test_pattern(struct dc_link *link,
- 				break;
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index c34a0b0901b07..c729528b5e85f 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -181,12 +181,12 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 			if ((mdst && mdst->host_joined) ||
+ 			    br_multicast_is_router(brmctx, skb)) {
+ 				local_rcv = true;
+-				br->dev->stats.multicast++;
++				DEV_STATS_INC(br->dev, multicast);
  			}
- 
--			for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe)
--				opp_cnt++;
--			dpg_width = width / opp_cnt;
--			offset = dpg_width;
--
--			link->dc->hwss.set_disp_pattern_generator(link->dc,
--					pipe_ctx,
--					controller_test_pattern,
--					controller_color_space,
--					color_depth,
--					NULL,
--					dpg_width,
--					height,
--					0);
--
--			for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
--				struct output_pixel_processor *odm_opp = odm_pipe->stream_res.opp;
--
-+			odm_pipe = pipe_ctx;
-+			while (odm_pipe->next_odm_pipe) {
-+				odm_opp = odm_pipe->stream_res.opp;
- 				odm_opp->funcs->opp_program_bit_depth_reduction(odm_opp, &params);
- 				link->dc->hwss.set_disp_pattern_generator(link->dc,
--						odm_pipe,
-+						pipe_ctx,
- 						controller_test_pattern,
- 						controller_color_space,
- 						color_depth,
- 						NULL,
--						dpg_width,
--						height,
-+						odm_slice_width,
-+						v_active,
- 						offset);
--				offset += offset;
-+				offset += odm_slice_width;
-+				odm_pipe = odm_pipe->next_odm_pipe;
- 			}
-+			odm_opp = odm_pipe->stream_res.opp;
-+			odm_opp->funcs->opp_program_bit_depth_reduction(odm_opp, &params);
-+			link->dc->hwss.set_disp_pattern_generator(link->dc,
-+					odm_pipe,
-+					controller_test_pattern,
-+					controller_color_space,
-+					color_depth,
-+					NULL,
-+					last_odm_slice_width,
-+					v_active,
-+					offset);
+ 			mcast_hit = true;
+ 		} else {
+ 			local_rcv = true;
+-			br->dev->stats.multicast++;
++			DEV_STATS_INC(br->dev, multicast);
  		}
- 	}
- 	break;
-@@ -540,23 +543,17 @@ static void set_crtc_test_pattern(struct dc_link *link,
- 		/* restore bitdepth reduction */
- 		resource_build_bit_depth_reduction_params(pipe_ctx->stream, &params);
- 		pipe_ctx->stream->bit_depth_params = params;
--		opp->funcs->opp_program_bit_depth_reduction(opp, &params);
--		if (pipe_ctx->stream_res.tg->funcs->set_test_pattern)
-+		if (pipe_ctx->stream_res.tg->funcs->set_test_pattern) {
-+			opp->funcs->opp_program_bit_depth_reduction(opp, &params);
- 			pipe_ctx->stream_res.tg->funcs->set_test_pattern(pipe_ctx->stream_res.tg,
--				CONTROLLER_DP_TEST_PATTERN_VIDEOMODE,
--				color_depth);
--		else if (link->dc->hwss.set_disp_pattern_generator) {
--			struct pipe_ctx *odm_pipe;
--			int opp_cnt = 1;
--			int dpg_width;
--
--			for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe)
--				opp_cnt++;
--
--			dpg_width = width / opp_cnt;
--			for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
--				struct output_pixel_processor *odm_opp = odm_pipe->stream_res.opp;
-+					CONTROLLER_DP_TEST_PATTERN_VIDEOMODE,
-+					color_depth);
-+		} else if (link->dc->hwss.set_disp_pattern_generator) {
-+			struct output_pixel_processor *odm_opp;
- 
-+			odm_pipe = pipe_ctx;
-+			while (odm_pipe->next_odm_pipe) {
-+				odm_opp = odm_pipe->stream_res.opp;
- 				odm_opp->funcs->opp_program_bit_depth_reduction(odm_opp, &params);
- 				link->dc->hwss.set_disp_pattern_generator(link->dc,
- 						odm_pipe,
-@@ -564,19 +561,23 @@ static void set_crtc_test_pattern(struct dc_link *link,
- 						CONTROLLER_DP_COLOR_SPACE_UDEFINED,
- 						color_depth,
- 						NULL,
--						dpg_width,
--						height,
--						0);
-+						odm_slice_width,
-+						v_active,
-+						offset);
-+				offset += odm_slice_width;
-+				odm_pipe = odm_pipe->next_odm_pipe;
- 			}
-+			odm_opp = odm_pipe->stream_res.opp;
-+			odm_opp->funcs->opp_program_bit_depth_reduction(odm_opp, &params);
- 			link->dc->hwss.set_disp_pattern_generator(link->dc,
--					pipe_ctx,
-+					odm_pipe,
- 					CONTROLLER_DP_TEST_PATTERN_VIDEOMODE,
- 					CONTROLLER_DP_COLOR_SPACE_UDEFINED,
- 					color_depth,
- 					NULL,
--					dpg_width,
--					height,
--					0);
-+					last_odm_slice_width,
-+					v_active,
-+					offset);
- 		}
- 	}
- 	break;
+ 		break;
+ 	case BR_PKT_UNICAST:
 -- 
 2.40.1
 
