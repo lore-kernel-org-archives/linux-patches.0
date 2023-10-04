@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526ED1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B8E1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWhGdoYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B93C433C8;
-	Wed,  4 Oct 2023 18:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryIbgI7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC88C433C7;
+	Wed,  4 Oct 2023 18:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443849;
-	bh=LXo/pn2aA1d9APUtcM3+dyn+TQ3zZIli4Zd1g8+3lPE=;
+	s=korg; t=1696443852;
+	bh=YBkHCkh3OvDwbjio3b0hGaTK6nEPYK3LFbgQjK4VlYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWhGdoYr0SQyXWlEYVMO+OJml4R/nqCsXdkaHjyn0NXrxTFHvpXQxdx4UKVkp3qFZ
-	 cbxyZcsTP1l1iUmecwEyZ3X6K95o5mRj1pYM/pnvjESr1AYUnDFZGww5TflX7umTPl
-	 GNcA/xOyxOY8k8KUAbNeho0whLN7ojYYf2xzoGGU=
+	b=ryIbgI7hINA3Mg0jPak7IeI/qsGq5o+3DepvBkVuBWv7dVj0Kx39+WxlPi20mYOGY
+	 WCFOxyaHihP5TOWwklmZqJuaTk8Vv7RV/hmRfGytRXosn7y9i4sFtO4uzDqRmO/TPj
+	 o25On0Gp1wjWAJ4tNH36YnBQRx5byEJ9Px2JA3oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Rich <kevinrich1337@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 024/321] netfilter: nf_tables: disallow rule removal from chain binding
-Date: Wed,  4 Oct 2023 19:52:49 +0200
-Message-ID: <20231004175230.286705894@linuxfoundation.org>
+Subject: [PATCH 6.5 042/321] Compiler Attributes: counted_by: Adjust name and identifier expansion
+Date: Wed,  4 Oct 2023 19:53:07 +0200
+Message-ID: <20231004175231.118137546@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,100 +44,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit f15f29fd4779be8a418b66e9d52979bb6d6c2325 ]
+[ Upstream commit c8248faf3ca276ebdf60f003b3e04bf764daba91 ]
 
-Chain binding only requires the rule addition/insertion command within
-the same transaction. Removal of rules from chain bindings within the
-same transaction makes no sense, userspace does not utilize this
-feature. Replace nft_chain_is_bound() check to nft_chain_binding() in
-rule deletion commands. Replace command implies a rule deletion, reject
-this command too.
+GCC and Clang's current RFCs name this attribute "counted_by", and have
+moved away from using a string for the member name. Update the kernel's
+macros to match. Additionally provide a UAPI no-op macro for UAPI structs
+that will gain annotations.
 
-Rule flush command can also safely rely on this nft_chain_binding()
-check because unbound chains are not allowed since 62e1e94b246e
-("netfilter: nf_tables: reject unbound chain set before commit phase").
-
-Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
-Reported-by: Kevin Rich <kevinrich1337@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Fixes: dd06e72e68bc ("Compiler Attributes: Add __counted_by macro")
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230817200558.never.077-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Stable-dep-of: 32a4ec211d41 ("uapi: stddef.h: Fix __DECLARE_FLEX_ARRAY for C++")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ include/linux/compiler_attributes.h | 26 +++++++++++++-------------
+ include/uapi/linux/stddef.h         |  4 ++++
+ 2 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 1c2fb32bfa5f6..db0a56b2da705 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1432,7 +1432,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
- 		if (!nft_is_active_next(ctx->net, chain))
- 			continue;
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 00efa35c350f6..28566624f008f 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -94,6 +94,19 @@
+ # define __copy(symbol)
+ #endif
  
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
- 
- 		ctx->chain = chain;
-@@ -1477,7 +1477,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
- 		if (!nft_is_active_next(ctx->net, chain))
- 			continue;
- 
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
- 
- 		ctx->chain = chain;
-@@ -2910,6 +2910,9 @@ static int nf_tables_delchain(struct sk_buff *skb, const struct nfnl_info *info,
- 		return PTR_ERR(chain);
- 	}
- 
-+	if (nft_chain_binding(chain))
-+		return -EOPNOTSUPP;
++/*
++ * Optional: only supported since gcc >= 14
++ * Optional: only supported since clang >= 18
++ *
++ *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
++ * clang: https://reviews.llvm.org/D148381
++ */
++#if __has_attribute(__counted_by__)
++# define __counted_by(member)		__attribute__((__counted_by__(member)))
++#else
++# define __counted_by(member)
++#endif
 +
- 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, chain, nla);
+ /*
+  * Optional: not supported by gcc
+  * Optional: only supported since clang >= 14.0
+@@ -129,19 +142,6 @@
+ # define __designated_init
+ #endif
  
- 	if (nla[NFTA_CHAIN_HOOK]) {
-@@ -3968,6 +3971,11 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+-/*
+- * Optional: only supported since gcc >= 14
+- * Optional: only supported since clang >= 17
+- *
+- *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
+- * clang: https://reviews.llvm.org/D148381
+- */
+-#if __has_attribute(__element_count__)
+-# define __counted_by(member)		__attribute__((__element_count__(#member)))
+-#else
+-# define __counted_by(member)
+-#endif
+-
+ /*
+  * Optional: only supported since clang >= 14.0
+  *
+diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
+index 7837ba4fe7289..7c3fc39808811 100644
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -45,3 +45,7 @@
+ 		TYPE NAME[]; \
  	}
- 
- 	if (info->nlh->nlmsg_flags & NLM_F_REPLACE) {
-+		if (nft_chain_binding(chain)) {
-+			err = -EOPNOTSUPP;
-+			goto err_destroy_flow_rule;
-+		}
+ #endif
 +
- 		err = nft_delrule(&ctx, old_rule);
- 		if (err < 0)
- 			goto err_destroy_flow_rule;
-@@ -4075,7 +4083,7 @@ static int nf_tables_delrule(struct sk_buff *skb, const struct nfnl_info *info,
- 			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN]);
- 			return PTR_ERR(chain);
- 		}
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			return -EOPNOTSUPP;
- 	}
- 
-@@ -4109,7 +4117,7 @@ static int nf_tables_delrule(struct sk_buff *skb, const struct nfnl_info *info,
- 		list_for_each_entry(chain, &table->chains, list) {
- 			if (!nft_is_active_next(net, chain))
- 				continue;
--			if (nft_chain_is_bound(chain))
-+			if (nft_chain_binding(chain))
- 				continue;
- 
- 			ctx.chain = chain;
-@@ -11070,7 +11078,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
- 	ctx.family = table->family;
- 	ctx.table = table;
- 	list_for_each_entry(chain, &table->chains, list) {
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
- 
- 		ctx.chain = chain;
++#ifndef __counted_by
++#define __counted_by(m)
++#endif
 -- 
 2.40.1
 
