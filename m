@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A071C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4F21C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6uNjIv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E9DC433C7;
-	Wed,  4 Oct 2023 18:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvIFf9q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A096EC433CA;
+	Wed,  4 Oct 2023 18:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444549;
-	bh=ZSbQsrOAUSlWugdnDlfv2VRMTGU5z1Jr+IQXQy8s/v4=;
+	s=korg; t=1696444552;
+	bh=LJwVglDeo6WfpF5eA09q7ezGqT7zegP2580iyixY46I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6uNjIv/ZsxK9kCCsh9v1LdmQukBdp/sEayXpTBedndDI0di0b16tl1UB+VqcbhsX
-	 yCpipXUE0u69Klcjs0IwY390FP06kde3Fthn3k1xQDVytFQHs/RUGUTHktkFloSXNj
-	 NcI7uEW5bujGaTQVUHjzhoOEE0mdCDgxffZSqv54=
+	b=gvIFf9q5SdjQQD1ZcR/lZrPb3vfiUmQrVawTcssIu4N9cbN4+CtzsJDS1zOM259op
+	 6K/k0RB+zGMvROi77BZvy1fUENl30H2iMpDfEsbv3Uv+CLWAI6hiG6qxvctil7BFef
+	 jpfUy831jJf0DRFdllJTxQ3vFNFp8eQY6hKWsxcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Johnson <ian@ianjohnson.dev>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 290/321] btrfs: refresh dir last index during a rewinddir(3) call
-Date: Wed,  4 Oct 2023 19:57:15 +0200
-Message-ID: <20231004175242.714063936@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.5 273/321] Revert "SUNRPC dont update timeout value on connection reset"
+Date: Wed,  4 Oct 2023 19:56:58 +0200
+Message-ID: <20231004175241.933028147@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,102 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit e60aa5da14d01fed8411202dbe4adf6c44bd2a57 upstream.
+commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
 
-When opening a directory we find what's the index of its last entry and
-then store it in the directory's file handle private data (struct
-btrfs_file_private::last_index), so that in the case new directory entries
-are added to a directory after an opendir(3) call we don't end up in an
-infinite loop (see commit 9b378f6ad48c ("btrfs: fix infinite directory
-reads")) when calling readdir(3).
+This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
 
-However once rewinddir(3) is called, POSIX states [1] that any new
-directory entries added after the previous opendir(3) call, must be
-returned by subsequent calls to readdir(3):
+The problem this commit is intended to fix was comprehensively fixed
+in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
+reset").
+Since then, this commit has been preventing the correct timeout of soft
+mounted requests.
 
-  "The rewinddir() function shall reset the position of the directory
-   stream to which dirp refers to the beginning of the directory.
-   It shall also cause the directory stream to refer to the current
-   state of the corresponding directory, as a call to opendir() would
-   have done."
-
-We currently don't refresh the last_index field of the struct
-btrfs_file_private associated to the directory, so after a rewinddir(3)
-we are not returning any new entries added after the opendir(3) call.
-
-Fix this by finding the current last index of the directory when llseek
-is called against the directory.
-
-This can be reproduced by the following C program provided by Ian Johnson:
-
-   #include <dirent.h>
-   #include <stdio.h>
-
-   int main(void) {
-     DIR *dir = opendir("test");
-
-     FILE *file;
-     file = fopen("test/1", "w");
-     fwrite("1", 1, 1, file);
-     fclose(file);
-
-     file = fopen("test/2", "w");
-     fwrite("2", 1, 1, file);
-     fclose(file);
-
-     rewinddir(dir);
-
-     struct dirent *entry;
-     while ((entry = readdir(dir))) {
-        printf("%s\n", entry->d_name);
-     }
-     closedir(dir);
-     return 0;
-   }
-
-Reported-by: Ian Johnson <ian@ianjohnson.dev>
-Link: https://lore.kernel.org/linux-btrfs/YR1P0S.NGASEG570GJ8@ianjohnson.dev/
-Fixes: 9b378f6ad48c ("btrfs: fix infinite directory reads")
-CC: stable@vger.kernel.org # 6.5+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
+Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
+Cc: stable@vger.kernel.org # 5.9.x
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -5979,6 +5979,19 @@ static int btrfs_opendir(struct inode *i
- 	return 0;
- }
- 
-+static loff_t btrfs_dir_llseek(struct file *file, loff_t offset, int whence)
-+{
-+	struct btrfs_file_private *private = file->private_data;
-+	int ret;
-+
-+	ret = btrfs_get_dir_last_index(BTRFS_I(file_inode(file)),
-+				       &private->last_index);
-+	if (ret)
-+		return ret;
-+
-+	return generic_file_llseek(file, offset, whence);
-+}
-+
- struct dir_entry {
- 	u64 ino;
- 	u64 offset;
-@@ -11059,7 +11072,7 @@ static const struct inode_operations btr
- };
- 
- static const struct file_operations btrfs_dir_file_operations = {
--	.llseek		= generic_file_llseek,
-+	.llseek		= btrfs_dir_llseek,
- 	.read		= generic_read_dir,
- 	.iterate_shared	= btrfs_real_readdir,
- 	.open		= btrfs_opendir,
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2474,8 +2474,7 @@ call_status(struct rpc_task *task)
+ 		goto out_exit;
+ 	}
+ 	task->tk_action = call_encode;
+-	if (status != -ECONNRESET && status != -ECONNABORTED)
+-		rpc_check_timeout(task);
++	rpc_check_timeout(task);
+ 	return;
+ out_exit:
+ 	rpc_call_rpcerror(task, status);
 
 
