@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84BC1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF4F1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50702C433C9;
-	Wed,  4 Oct 2023 18:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD69C433C7;
+	Wed,  4 Oct 2023 18:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442778;
-	bh=Vj12gS9AdPZMpKG7evveiNOKblEwt6HRSZ9yYzJZLFI=;
+	s=korg; t=1696442781;
+	bh=SmGB1ffLIyz4J5PzOgQ3QPpMC+81jSd1NQcs7FHHmuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBAvkytNlgW+Yha1XFHHz4tmJ5Me565NyVNkLw6EGvnsIvJ86WWTlf4Q5Faxq/jR9
-	 XXRFk5/OcwQc+ksqiSqw04sLGLJZJx8vBAUD5CP52H+9889lhWw/hZC/idWIgcVNGR
-	 lrJmJ5Wnu+o52JKaAFrobgoaiZQelvPKIMEADD+8=
+	b=Ts90ENR1hqGCCu6/+wSCDVI+jXJRn8253OpoE1ytVy3xhzlZW6MPq5aESzbvIAbnV
+	 JXs4dXPfQ2Vz0UkG40xwwkPxExQcmvYtoODMYVyrwp0mKOx/+qmktYfabxGfb8R+ZF
+	 gzJogL1StEShJC+plksTtCe2cq5J5QKDieBkKH3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
+	Nathan Rossi <nathan.rossi@digi.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/183] xtensa: boot/lib: fix function prototypes
-Date: Wed,  4 Oct 2023 19:55:37 +0200
-Message-ID: <20231004175208.329578945@linuxfoundation.org>
+Subject: [PATCH 5.15 107/183] soc: imx8m: Enable OCOTP clock for imx8mm before reading registers
+Date: Wed,  4 Oct 2023 19:55:38 +0200
+Message-ID: <20231004175208.380610877@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,50 +43,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Nathan Rossi <nathan.rossi@digi.com>
 
-[ Upstream commit f54d02c8f2cc4b46ba2a3bd8252a6750453b6f2b ]
+[ Upstream commit 9d1e8275a28f51599d754ce661c91e0a689c0234 ]
 
-Add function prototype for gunzip() to the boot library code and make
-exit() and zalloc() static.
+Commit 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the
+register") added configuration to enable the OCOTP clock before
+attempting to read from the associated registers.
 
-arch/xtensa/boot/lib/zmem.c:8:6: warning: no previous prototype for 'exit' [-Wmissing-prototypes]
-    8 | void exit (void)
-arch/xtensa/boot/lib/zmem.c:13:7: warning: no previous prototype for 'zalloc' [-Wmissing-prototypes]
-   13 | void *zalloc(unsigned size)
-arch/xtensa/boot/lib/zmem.c:35:6: warning: no previous prototype for 'gunzip' [-Wmissing-prototypes]
-   35 | void gunzip (void *dst, int dstlen, unsigned char *src, int *lenp)
+This same kexec issue is present with the imx8m SoCs that use the
+imx8mm_soc_uid function (e.g. imx8mp). This requires the imx8mm_soc_uid
+function to configure the OCOTP clock before accessing the associated
+registers. This change implements the same clock enable functionality
+that is present in the imx8mq_soc_revision function for the
+imx8mm_soc_uid function.
 
-Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
-Fixes: e7d163f76665 ("xtensa: Removed local copy of zlib and fixed O= support")
-Suggested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Nathan Rossi <nathan.rossi@digi.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/boot/lib/zmem.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/soc/imx/soc-imx8m.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/xtensa/boot/lib/zmem.c b/arch/xtensa/boot/lib/zmem.c
-index e3ecd743c5153..b89189355122a 100644
---- a/arch/xtensa/boot/lib/zmem.c
-+++ b/arch/xtensa/boot/lib/zmem.c
-@@ -4,13 +4,14 @@
- /* bits taken from ppc */
- 
- extern void *avail_ram, *end_avail;
-+void gunzip(void *dst, int dstlen, unsigned char *src, int *lenp);
- 
--void exit (void)
-+static void exit(void)
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index 32ed9dc88e455..08197b03955dd 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -100,6 +100,7 @@ static void __init imx8mm_soc_uid(void)
  {
-   for (;;);
+ 	void __iomem *ocotp_base;
+ 	struct device_node *np;
++	struct clk *clk;
+ 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
+ 		     IMX8MP_OCOTP_UID_OFFSET : 0;
+ 
+@@ -109,11 +110,20 @@ static void __init imx8mm_soc_uid(void)
+ 
+ 	ocotp_base = of_iomap(np, 0);
+ 	WARN_ON(!ocotp_base);
++	clk = of_clk_get_by_name(np, NULL);
++	if (IS_ERR(clk)) {
++		WARN_ON(IS_ERR(clk));
++		return;
++	}
++
++	clk_prepare_enable(clk);
+ 
+ 	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
+ 	soc_uid <<= 32;
+ 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
+ 
++	clk_disable_unprepare(clk);
++	clk_put(clk);
+ 	iounmap(ocotp_base);
+ 	of_node_put(np);
  }
- 
--void *zalloc(unsigned size)
-+static void *zalloc(unsigned int size)
- {
-         void *p = avail_ram;
- 
 -- 
 2.40.1
 
