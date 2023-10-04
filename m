@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCDF1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081261D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJXLukqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78F0C433C8;
-	Wed,  4 Oct 2023 18:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbESpDGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F95AC433C9;
+	Wed,  4 Oct 2023 18:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443880;
-	bh=Xy8M4TeuKFC5ImkMOg3mnL+EQalI6kiBgpFuUlBI6vc=;
+	s=korg; t=1696443882;
+	bh=KD0Q+xv6n38kIh/3n5w05WkHGBYGP7u6I4koN/i9N7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJXLukqpFLT6HmNhujYnj+XSiJYDHfo2zk93CxnDSHMEuFnldJHDN8cjb+s4lu8YD
-	 fTNF28M323u8mjLrUw7ICjDfroGQDCMkVfyRV+lSAqzNZocS/qNNNlo6iVKbUOGoOP
-	 adRWEJkRihIQ+EI8aOhSTfBuCIfc5f2rD8bF/WDI=
+	b=CbESpDGOdZs1dOiEk+mlRV/Fg/TyY1ONZkz8ejblWVnAItBTwiTq0FTDG/pETFras
+	 HcWEmD1RWMY1NxKNfzX8CnAvS1V1ElwGvrxUjqwvrxZwYKL+SMZvkdDumNXwAzQ6Qf
+	 IHlQMTie89FRtCk2BW4jwTkUyq98UG7LKN3QzlbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 025/321] ASoC: meson: spdifin: start hw on dai probe
-Date: Wed,  4 Oct 2023 19:52:50 +0200
-Message-ID: <20231004175230.335241964@linuxfoundation.org>
+Subject: [PATCH 6.5 052/321] selftests: tls: swap the TX and RX sockets in some tests
+Date: Wed,  4 Oct 2023 19:53:17 +0200
+Message-ID: <20231004175231.577070306@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,105 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit aedf323b66b2b875137422ecb7d2525179759076 ]
+[ Upstream commit c326ca98446e0ae4fee43a40acf79412b74cfedb ]
 
-For spdif input to report the locked rate correctly, even when no capture
-is running, the HW and reference clock must be started as soon as
-the dai is probed.
+tls.sendmsg_large and tls.sendmsg_multiple are trying to send through
+the self->cfd socket (only configured with TLS_RX) and to receive through
+the self->fd socket (only configured with TLS_TX), so they're not using
+kTLS at all. Swap the sockets.
 
-Fixes: 5ce5658375e6 ("ASoC: meson: add axg spdif input")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20230907090504.12700-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-spdifin.c | 49 ++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 32 deletions(-)
+ tools/testing/selftests/net/tls.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/meson/axg-spdifin.c b/sound/soc/meson/axg-spdifin.c
-index e2cc4c4be7586..97e81ec4a78ce 100644
---- a/sound/soc/meson/axg-spdifin.c
-+++ b/sound/soc/meson/axg-spdifin.c
-@@ -112,34 +112,6 @@ static int axg_spdifin_prepare(struct snd_pcm_substream *substream,
- 	return 0;
- }
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index a3c57004344c6..6ec8b8335bdbf 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -552,11 +552,11 @@ TEST_F(tls, sendmsg_large)
  
--static int axg_spdifin_startup(struct snd_pcm_substream *substream,
--			       struct snd_soc_dai *dai)
--{
--	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
--	int ret;
--
--	ret = clk_prepare_enable(priv->refclk);
--	if (ret) {
--		dev_err(dai->dev,
--			"failed to enable spdifin reference clock\n");
--		return ret;
--	}
--
--	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
--			   SPDIFIN_CTRL0_EN);
--
--	return 0;
--}
--
--static void axg_spdifin_shutdown(struct snd_pcm_substream *substream,
--				 struct snd_soc_dai *dai)
--{
--	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
--
--	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
--	clk_disable_unprepare(priv->refclk);
--}
--
- static void axg_spdifin_write_mode_param(struct regmap *map, int mode,
- 					 unsigned int val,
- 					 unsigned int num_per_reg,
-@@ -251,25 +223,38 @@ static int axg_spdifin_dai_probe(struct snd_soc_dai *dai)
- 	ret = axg_spdifin_sample_mode_config(dai, priv);
- 	if (ret) {
- 		dev_err(dai->dev, "mode configuration failed\n");
--		clk_disable_unprepare(priv->pclk);
--		return ret;
-+		goto pclk_err;
+ 		msg.msg_iov = &vec;
+ 		msg.msg_iovlen = 1;
+-		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
++		EXPECT_EQ(sendmsg(self->fd, &msg, 0), send_len);
  	}
  
-+	ret = clk_prepare_enable(priv->refclk);
-+	if (ret) {
-+		dev_err(dai->dev,
-+			"failed to enable spdifin reference clock\n");
-+		goto pclk_err;
-+	}
-+
-+	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
-+			   SPDIFIN_CTRL0_EN);
-+
- 	return 0;
-+
-+pclk_err:
-+	clk_disable_unprepare(priv->pclk);
-+	return ret;
- }
+ 	while (recvs++ < sends) {
+-		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
++		EXPECT_NE(recv(self->cfd, mem, send_len, 0), -1);
+ 	}
  
- static int axg_spdifin_dai_remove(struct snd_soc_dai *dai)
- {
- 	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+ 	free(mem);
+@@ -585,9 +585,9 @@ TEST_F(tls, sendmsg_multiple)
+ 	msg.msg_iov = vec;
+ 	msg.msg_iovlen = iov_len;
  
-+	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
-+	clk_disable_unprepare(priv->refclk);
- 	clk_disable_unprepare(priv->pclk);
- 	return 0;
- }
- 
- static const struct snd_soc_dai_ops axg_spdifin_ops = {
- 	.prepare	= axg_spdifin_prepare,
--	.startup	= axg_spdifin_startup,
--	.shutdown	= axg_spdifin_shutdown,
- };
- 
- static int axg_spdifin_iec958_info(struct snd_kcontrol *kcontrol,
+-	EXPECT_EQ(sendmsg(self->cfd, &msg, 0), total_len);
++	EXPECT_EQ(sendmsg(self->fd, &msg, 0), total_len);
+ 	buf = malloc(total_len);
+-	EXPECT_NE(recv(self->fd, buf, total_len, 0), -1);
++	EXPECT_NE(recv(self->cfd, buf, total_len, 0), -1);
+ 	for (i = 0; i < iov_len; i++) {
+ 		EXPECT_EQ(memcmp(test_strs[i], buf + len_cmp,
+ 				 strlen(test_strs[i])),
 -- 
 2.40.1
 
