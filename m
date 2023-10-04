@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AE61D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51821D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dpgd8rxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5FAC433CB;
-	Wed,  4 Oct 2023 18:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iubew5KB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FC9C433C7;
+	Wed,  4 Oct 2023 18:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443297;
-	bh=FyZj0n81H9coh+j1Qj0ouB53EfsHbZPEXfnbo0eTrug=;
+	s=korg; t=1696443300;
+	bh=hVqhJGjC6oOI2jYNz3tpt2GGBvCbctVlQjCDnUP2Me0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dpgd8rxuFXeaEqRuqzxW1r4vjZTUfLwy8LaBmBpGRAqJG+oG12IBClYzdIkBfYR1P
-	 BrwjRk9/hsC9iIB7rhhCkT2Kn2SouQiKdf4BtJHlFphMmV+15i27Vbmh5EOBFSRUr8
-	 +eYC1hsb3kRsX/9gjy/T1o/zdIOaYO10bNPXa1SE=
+	b=iubew5KBbwwiP6FW/dlNq0i+YSjMsFgZEpW1377XOXK+IwUZjtEBqcjnYKaK9lWL2
+	 PWpfeINIBC3QqDkRJet5lebjgM/kuOj0c1oFTj2X/OSnVFtujRDEebzMRyWIRA9wbC
+	 BaAepBbXBhSQm5j+JbJ7R9xE6nkrZup+rt4hWJFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/259] btrfs: reset destination buffer when read_extent_buffer() gets invalid range
-Date: Wed,  4 Oct 2023 19:54:40 +0200
-Message-ID: <20231004175222.254848557@linuxfoundation.org>
+Subject: [PATCH 6.1 108/259] vfio/mdev: Fix a null-ptr-deref bug for mdev_unregister_parent()
+Date: Wed,  4 Oct 2023 19:54:41 +0200
+Message-ID: <20231004175222.304389209@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,60 +44,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 74ee79142c0a344d4eae2eb7012ebc4e82254109 ]
+[ Upstream commit c777b11d34e0f47dbbc4b018ef65ad030f2b283a ]
 
-Commit f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer
-read write functions") changed how we handle invalid extent buffer range
-for read_extent_buffer().
+Inject fault while probing mdpy.ko, if kstrdup() of create_dir() fails in
+kobject_add_internal() in kobject_init_and_add() in mdev_type_add()
+in parent_create_sysfs_files(), it will return 0 and probe successfully.
+And when rmmod mdpy.ko, the mdpy_dev_exit() will call
+mdev_unregister_parent(), the mdev_type_remove() may traverse uninitialized
+parent->types[i] in parent_remove_sysfs_files(), and it will cause
+below null-ptr-deref.
 
-Previously if the range is invalid we just set the destination to zero,
-but after the patch we do nothing and error out.
+If mdev_type_add() fails, return the error code and kset_unregister()
+to fix the issue.
 
-This can lead to smatch static checker errors like:
+ general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN
+ KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+ CPU: 2 PID: 10215 Comm: rmmod Tainted: G        W        N 6.6.0-rc2+ #20
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+ RIP: 0010:__kobject_del+0x62/0x1c0
+ Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 51 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 28 48 8d 7d 10 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 24 01 00 00 48 8b 75 10 48 89 df 48 8d 6b 3c e8
+ RSP: 0018:ffff88810695fd30 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffffa0270268 RCX: 0000000000000000
+ RDX: 0000000000000002 RSI: 0000000000000004 RDI: 0000000000000010
+ RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed10233a4ef1
+ R10: ffff888119d2778b R11: 0000000063666572 R12: 0000000000000000
+ R13: fffffbfff404e2d4 R14: dffffc0000000000 R15: ffffffffa0271660
+ FS:  00007fbc81981540(0000) GS:ffff888119d00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fc14a142dc0 CR3: 0000000110a62003 CR4: 0000000000770ee0
+ DR0: ffffffff8fb0bce8 DR1: ffffffff8fb0bce9 DR2: ffffffff8fb0bcea
+ DR3: ffffffff8fb0bceb DR6: 00000000fffe0ff0 DR7: 0000000000000600
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  ? die_addr+0x3d/0xa0
+  ? exc_general_protection+0x144/0x220
+  ? asm_exc_general_protection+0x22/0x30
+  ? __kobject_del+0x62/0x1c0
+  kobject_del+0x32/0x50
+  parent_remove_sysfs_files+0xd6/0x170 [mdev]
+  mdev_unregister_parent+0xfb/0x190 [mdev]
+  ? mdev_register_parent+0x270/0x270 [mdev]
+  ? find_module_all+0x9d/0xe0
+  mdpy_dev_exit+0x17/0x63 [mdpy]
+  __do_sys_delete_module.constprop.0+0x2fa/0x4b0
+  ? module_flags+0x300/0x300
+  ? __fput+0x4e7/0xa00
+  do_syscall_64+0x35/0x80
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ RIP: 0033:0x7fbc813221b7
+ Code: 73 01 c3 48 8b 0d d1 8c 2c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 b0 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a1 8c 2c 00 f7 d8 64 89 01 48
+ RSP: 002b:00007ffe780e0648 EFLAGS: 00000206 ORIG_RAX: 00000000000000b0
+ RAX: ffffffffffffffda RBX: 00007ffe780e06a8 RCX: 00007fbc813221b7
+ RDX: 000000000000000a RSI: 0000000000000800 RDI: 000055e214df9b58
+ RBP: 000055e214df9af0 R08: 00007ffe780df5c1 R09: 0000000000000000
+ R10: 00007fbc8139ecc0 R11: 0000000000000206 R12: 00007ffe780e0870
+ R13: 00007ffe780e0ed0 R14: 000055e214df9260 R15: 000055e214df9af0
+  </TASK>
+ Modules linked in: mdpy(-) mdev vfio_iommu_type1 vfio [last unloaded: mdpy]
+ Dumping ftrace buffer:
+    (ftrace buffer empty)
+ ---[ end trace 0000000000000000 ]---
+ RIP: 0010:__kobject_del+0x62/0x1c0
+ Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 51 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 28 48 8d 7d 10 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 24 01 00 00 48 8b 75 10 48 89 df 48 8d 6b 3c e8
+ RSP: 0018:ffff88810695fd30 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffffa0270268 RCX: 0000000000000000
+ RDX: 0000000000000002 RSI: 0000000000000004 RDI: 0000000000000010
+ RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed10233a4ef1
+ R10: ffff888119d2778b R11: 0000000063666572 R12: 0000000000000000
+ R13: fffffbfff404e2d4 R14: dffffc0000000000 R15: ffffffffa0271660
+ FS:  00007fbc81981540(0000) GS:ffff888119d00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fc14a142dc0 CR3: 0000000110a62003 CR4: 0000000000770ee0
+ DR0: ffffffff8fb0bce8 DR1: ffffffff8fb0bce9 DR2: ffffffff8fb0bcea
+ DR3: ffffffff8fb0bceb DR6: 00000000fffe0ff0 DR7: 0000000000000600
+ PKRU: 55555554
+ Kernel panic - not syncing: Fatal exception
+ Dumping ftrace buffer:
+    (ftrace buffer empty)
+ Kernel Offset: disabled
+ Rebooting in 1 seconds..
 
-  fs/btrfs/print-tree.c:186 print_uuid_item() error: uninitialized symbol 'subvol_id'.
-  fs/btrfs/tests/extent-io-tests.c:338 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/tests/extent-io-tests.c:353 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/uuid-tree.c:203 btrfs_uuid_tree_remove() error: uninitialized symbol 'read_subid'.
-  fs/btrfs/uuid-tree.c:353 btrfs_uuid_tree_iterate() error: uninitialized symbol 'subid_le'.
-  fs/btrfs/uuid-tree.c:72 btrfs_uuid_tree_lookup() error: uninitialized symbol 'data'.
-  fs/btrfs/volumes.c:7415 btrfs_dev_stats_value() error: uninitialized symbol 'val'.
-
-Fix those warnings by reverting back to the old memset() behavior.
-By this we keep the static checker happy and would still make a lot of
-noise when such invalid ranges are passed in.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer read write functions")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: da44c340c4fe ("vfio/mdev: simplify mdev_type handling")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20230918115551.1423193-1-ruanjinjie@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/vfio/mdev/mdev_sysfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 0ad69041954ff..afcc96a1f4276 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -5184,8 +5184,14 @@ void read_extent_buffer(const struct extent_buffer *eb, void *dstv,
- 	char *dst = (char *)dstv;
- 	unsigned long i = get_eb_page_index(start);
+diff --git a/drivers/vfio/mdev/mdev_sysfs.c b/drivers/vfio/mdev/mdev_sysfs.c
+index abe3359dd477f..16b007c6bbb56 100644
+--- a/drivers/vfio/mdev/mdev_sysfs.c
++++ b/drivers/vfio/mdev/mdev_sysfs.c
+@@ -233,7 +233,8 @@ int parent_create_sysfs_files(struct mdev_parent *parent)
+ out_err:
+ 	while (--i >= 0)
+ 		mdev_type_remove(parent->types[i]);
+-	return 0;
++	kset_unregister(parent->mdev_types_kset);
++	return ret;
+ }
  
--	if (check_eb_range(eb, start, len))
-+	if (check_eb_range(eb, start, len)) {
-+		/*
-+		 * Invalid range hit, reset the memory, so callers won't get
-+		 * some random garbage for their uninitialzed memory.
-+		 */
-+		memset(dstv, 0, len);
- 		return;
-+	}
- 
- 	offset = get_eb_offset_in_page(eb, start);
- 
+ static ssize_t remove_store(struct device *dev, struct device_attribute *attr,
 -- 
 2.40.1
 
