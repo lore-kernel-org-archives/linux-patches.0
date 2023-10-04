@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AEC210E8
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E3E210E4
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqaEmQS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA4EC433C9;
-	Wed,  4 Oct 2023 18:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO6vUvrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B93C433C8;
+	Wed,  4 Oct 2023 18:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444349;
-	bh=qfonXRgdqqJAQeC6EAbLypPSqIF6qrkzv44gXPatvr4=;
+	s=korg; t=1696444352;
+	bh=pyzqGPDu5SuEgWdy1QLEDdGJHR/p+EpUaBGCqBv+sQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqaEmQS5rR9wMAZ5OE6tBKapCHTz0JzlU+VRijgcDHhRGaNnaMaPlFoP3ytmZyjxQ
-	 6Ez5a/86qEqeL5NzecWQXaFYP3M1JWfUF5BCDHLMcTxnsxolYPzPesgvL2eR7tfEHJ
-	 Ol1hvXWjgc8SfLRRTou5ylct/3M35/q3xuRk2nTc=
+	b=CO6vUvrUN9Jp0R+SEBd8/VbhPpNUtK1uFZWhT1goqLTcfeCCvTJTCU7gFssSv4tfL
+	 4gmDnYejxPPc0l+NXXncYoipU4pN2nknSWD/TzoPAbm86/3sn1Ywh3NniR8HKEucgX
+	 iDY0msWzzlJAjZQdjOktiEzdLOPKaDtk1cMb+8iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 219/321] ASoC: imx-rpmsg: Set ignore_pmdown_time for dai_link
-Date: Wed,  4 Oct 2023 19:56:04 +0200
-Message-ID: <20231004175239.385683118@linuxfoundation.org>
+Subject: [PATCH 6.5 220/321] ASoC: SOF: sof-audio: Fix DSP core put imbalance on widget setup failure
+Date: Wed,  4 Oct 2023 19:56:05 +0200
+Message-ID: <20231004175239.417778889@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,47 +45,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit fac58baf8fcfcd7481e8f6d60206ce2a47c1476c ]
+[ Upstream commit bb0216d4db9ecaa51af45d8504757becbe5c050d ]
 
-i.MX rpmsg sound cards work on codec slave mode. MCLK will be disabled
-by CPU DAI driver in hw_free(). Some codec requires MCLK present at
-power up/down sequence. So need to set ignore_pmdown_time to power down
-codec immediately before MCLK is turned off.
+In case the widget setup fails we should only decrement the core usage
+count if the sof_widget_free_unlocked() has not been called as part of
+the error handling.
+sof_widget_free_unlocked() calls snd_sof_dsp_core_put() and the additional
+core_put will cause imbalance in core usage count.
+Use the existing use_count_decremented to handle this issue.
 
-Take WM8962 as an example, if MCLK is disabled before DAPM power down
-playback stream, FIFO error will arise in WM8962 which will have bad
-impact on playback next.
-
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://lore.kernel.org/r/20230913102656.2966757-1-chancel.liu@nxp.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230914124725.17397-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-rpmsg.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/sof/sof-audio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/imx-rpmsg.c b/sound/soc/fsl/imx-rpmsg.c
-index 3c7b95db2eacc..b578f9a32d7f1 100644
---- a/sound/soc/fsl/imx-rpmsg.c
-+++ b/sound/soc/fsl/imx-rpmsg.c
-@@ -89,6 +89,14 @@ static int imx_rpmsg_probe(struct platform_device *pdev)
- 			    SND_SOC_DAIFMT_NB_NF |
- 			    SND_SOC_DAIFMT_CBC_CFC;
- 
-+	/*
-+	 * i.MX rpmsg sound cards work on codec slave mode. MCLK will be
-+	 * disabled by CPU DAI driver in hw_free(). Some codec requires MCLK
-+	 * present at power up/down sequence. So need to set ignore_pmdown_time
-+	 * to power down codec immediately before MCLK is turned off.
-+	 */
-+	data->dai.ignore_pmdown_time = 1;
-+
- 	/* Optional codec node */
- 	ret = of_parse_phandle_with_fixed_args(np, "audio-codec", 0, 0, &args);
- 	if (ret) {
+diff --git a/sound/soc/sof/sof-audio.c b/sound/soc/sof/sof-audio.c
+index e7ef77012c358..e5405f854a910 100644
+--- a/sound/soc/sof/sof-audio.c
++++ b/sound/soc/sof/sof-audio.c
+@@ -212,7 +212,8 @@ static int sof_widget_setup_unlocked(struct snd_sof_dev *sdev,
+ 	sof_widget_free_unlocked(sdev, swidget);
+ 	use_count_decremented = true;
+ core_put:
+-	snd_sof_dsp_core_put(sdev, swidget->core);
++	if (!use_count_decremented)
++		snd_sof_dsp_core_put(sdev, swidget->core);
+ pipe_widget_free:
+ 	if (swidget->id != snd_soc_dapm_scheduler)
+ 		sof_widget_free_unlocked(sdev, swidget->spipe->pipe_widget);
 -- 
 2.40.1
 
