@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262D1D559
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5333918E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01408C433C9;
-	Wed,  4 Oct 2023 18:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC065C433C7;
+	Wed,  4 Oct 2023 18:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442958;
-	bh=bQO3Vm81eSP7aCCrA25Qo0cDe/DpHaSzjbz67KVPtRA=;
+	s=korg; t=1696442961;
+	bh=pFMhO7DTS2A3Cm/0/l5hAh6womCS9Lt8jjCkj5nbqxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJ0kMRD1pIY4q2KGMaq3gJ7uusiLpakgGZbmQLLxVO1NmuHGrNbwf1Ah/Es7Y27SJ
-	 dh+shgxRPEafMcUg5j1ypojeGDUa4V0Cx819y22d+VRGjLAjRxtgJs2ju3Sg4veF0B
-	 0qBzQfRsiD5BvcbY3DQlJyYndlJzpYKvw9MHBjoQ=
+	b=szqX+Mj1Ux2JZlAwiGAabjhmFHen0ublKj5PNib41tqFEv1nieO0uZM2zpQWb4+OE
+	 +9zr9rlAfAqCVqxfSQeM5fg//12KG1p+V2VySVWriuXyuCZqyffypWKYvjrNFfCkAc
+	 8s8hovsysyTage5M+zJiMw2laTAxVmnMfhYO3d24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.15 170/183] Revert "SUNRPC dont update timeout value on connection reset"
-Date: Wed,  4 Oct 2023 19:56:41 +0200
-Message-ID: <20231004175211.168570961@linuxfoundation.org>
+	Irvin Cote <irvin.cote@insa-lyon.fr>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 153/183] nvme-pci: always return an ERR_PTR from nvme_pci_alloc_dev
+Date: Wed,  4 Oct 2023 19:56:24 +0200
+Message-ID: <20231004175210.427857493@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,39 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Irvin Cote <irvin.cote@insa-lyon.fr>
 
-commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
+[ Upstream commit dc785d69d753a3894c93afc23b91404652382ead ]
 
-This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
+Don't mix NULL and ERR_PTR returns.
 
-The problem this commit is intended to fix was comprehensively fixed
-in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
-reset").
-Since then, this commit has been preventing the correct timeout of soft
-mounted requests.
-
-Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
-Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
-Cc: stable@vger.kernel.org # 5.9.x
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2e87570be9d2 ("nvme-pci: factor out a nvme_pci_alloc_dev helper")
+Signed-off-by: Irvin Cote <irvin.cote@insa-lyon.fr>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvme/host/pci.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2392,8 +2392,7 @@ call_status(struct rpc_task *task)
- 		goto out_exit;
- 	}
- 	task->tk_action = call_encode;
--	if (status != -ECONNRESET && status != -ECONNABORTED)
--		rpc_check_timeout(task);
-+	rpc_check_timeout(task);
- 	return;
- out_exit:
- 	rpc_call_rpcerror(task, status);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index e5980df2094ad..65172a654a198 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2977,7 +2977,7 @@ static struct nvme_dev *nvme_pci_alloc_dev(struct pci_dev *pdev,
+ 
+ 	dev = kzalloc_node(sizeof(*dev), GFP_KERNEL, node);
+ 	if (!dev)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 	INIT_WORK(&dev->ctrl.reset_work, nvme_reset_work);
+ 	INIT_WORK(&dev->remove_work, nvme_remove_dead_ctrl_work);
+ 	mutex_init(&dev->shutdown_lock);
+@@ -3022,8 +3022,8 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	int result = -ENOMEM;
+ 
+ 	dev = nvme_pci_alloc_dev(pdev, id);
+-	if (!dev)
+-		return -ENOMEM;
++	if (IS_ERR(dev))
++		return PTR_ERR(dev);
+ 
+ 	result = nvme_dev_map(dev);
+ 	if (result)
+-- 
+2.40.1
+
 
 
