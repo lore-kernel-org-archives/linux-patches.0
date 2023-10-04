@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844FD1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064D3C433C8;
-	Wed,  4 Oct 2023 18:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614861D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6F4C433CB;
+	Wed,  4 Oct 2023 18:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443236;
-	bh=j9j4Ygh11fpUMYrJ1BJO3fH6P27yvByK5s7nRPfPoGM=;
+	s=korg; t=1696443239;
+	bh=XGYerxCja5vRRscmvujkaznUXZjL67D6/vtsmm/rFVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ0wrsGY7M4dZG/qJeAV+LCQGgFz3tkRVfG1A8J/AsRlXxtmcquak6/AUODFNBCYf
-	 WU0pIuHrHw/mCsngdhg/UobMQPzMOuWlm/54mmpxa6e3BW64ENLnkIUUHN3fmBEeip
-	 oSQrTilDm9VYWqwnUKZJNH8V04MCUYh6CckdcMbA=
+	b=O8cdLKMi3JzgtJrDIHjy4U4h6vk3KTr6BZFQmA6t071T8IMdaf79dMHld2P12DuJc
+	 pTlTrb8dBYN56Cnseq6SLE029ibekhCW3AUw4p1UTrpQdcEdLhYqknvCsCIzt6nh9e
+	 ei5v43yCqgWAevq4l64GsNecXSULVfMoZJEsgSDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Giulio Benetti <giulio.benetti@benettiengineering.com>,
+	Greg Ungerer <gerg@uclinux.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/259] igc: Expose tx-usecs coalesce setting to user
-Date: Wed,  4 Oct 2023 19:54:17 +0200
-Message-ID: <20231004175221.218283399@linuxfoundation.org>
+Subject: [PATCH 6.1 085/259] proc: nommu: /proc/<pid>/maps: release mmap read lock
+Date: Wed,  4 Oct 2023 19:54:18 +0200
+Message-ID: <20231004175221.265987714@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,128 +43,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Ben Wolsieffer <Ben.Wolsieffer@hefring.com>
 
-[ Upstream commit 1703b2e0de653b459ca6230be32ce7f2ea0ae7ee ]
+[ Upstream commit 578d7699e5c2add8c2e9549d9d75dfb56c460cb3 ]
 
-When users attempt to obtain the coalesce setting using the
-ethtool command, current code always returns 0 for tx-usecs.
-This is because I225/6 always uses a queue pair setting, hence
-tx_coalesce_usecs does not return a value during the
-igc_ethtool_get_coalesce() callback process. The pair queue
-condition checking in igc_ethtool_get_coalesce() is removed by
-this patch so that the user gets information of the value of tx-usecs.
+The no-MMU implementation of /proc/<pid>/map doesn't normally release
+the mmap read lock, because it uses !IS_ERR_OR_NULL(_vml) to determine
+whether to release the lock.  Since _vml is NULL when the end of the
+mappings is reached, the lock is not released.
 
-Even if i225/6 is using queue pair setting, there is no harm in
-notifying the user of the tx-usecs. The implementation of the current
-code may have previously been a copy of the legacy code i210.
-Since I225 has the queue pair setting enabled, tx-usecs will always adhere
-to the user-set rx-usecs value. An error message will appear when the user
-attempts to set the tx-usecs value for the input parameters because,
-by default, they should only set the rx-usecs value.
+Reading /proc/1/maps twice doesn't cause a hang because it only
+takes the read lock, which can be taken multiple times and therefore
+doesn't show any problem if the lock isn't released. Instead, you need
+to perform some operation that attempts to take the write lock after
+reading /proc/<pid>/maps. To actually reproduce the bug, compile the
+following code as 'proc_maps_bug':
 
-This patch also adds the helper function to get the
-previous rx coalesce value similar to tx coalesce.
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/mman.h>
 
-How to test:
-User can get the coalesce value using ethtool command.
+int main(int argc, char *argv[]) {
+        void *buf;
+        sleep(1);
+        buf = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        puts("mmap returned");
+        return 0;
+}
 
-Example command:
-Get: ethtool -c <interface>
+Then, run:
 
-Previous output:
+  ./proc_maps_bug &; cat /proc/$!/maps; fg
 
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
+Without this patch, mmap() will hang and the command will never
+complete.
 
-tx-usecs: 0
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
+This code was incorrectly adapted from the MMU implementation, which at
+the time released the lock in m_next() before returning the last entry.
 
-New output:
+The MMU implementation has diverged further from the no-MMU version since
+then, so this patch brings their locking and error handling into sync,
+fixing the bug and hopefully avoiding similar issues in the future.
 
-rx-usecs: 3
-rx-frames: n/a
-rx-usecs-irq: n/a
-rx-frames-irq: n/a
-
-tx-usecs: 3
-tx-frames: n/a
-tx-usecs-irq: n/a
-tx-frames-irq: n/a
-
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230919170331.1581031-1-anthony.l.nguyen@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20230914163019.4050530-2-ben.wolsieffer@hefring.com
+Fixes: 47fecca15c09 ("fs/proc/task_nommu.c: don't use priv->task->mm")
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Giulio Benetti <giulio.benetti@benettiengineering.com>
+Cc: Greg Ungerer <gerg@uclinux.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: fe4419801617 ("proc: nommu: fix empty /proc/<pid>/maps")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 31 ++++++++++++--------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ fs/proc/task_nommu.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 511fc3f412087..9166fde40c772 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -867,6 +867,18 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
- 	spin_unlock(&adapter->stats64_lock);
- }
+diff --git a/fs/proc/task_nommu.c b/fs/proc/task_nommu.c
+index 2fd06f52b6a44..bfcf17f75ed50 100644
+--- a/fs/proc/task_nommu.c
++++ b/fs/proc/task_nommu.c
+@@ -205,11 +205,16 @@ static void *m_start(struct seq_file *m, loff_t *pos)
+ 		return ERR_PTR(-ESRCH);
  
-+static int igc_ethtool_get_previous_rx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->rx_itr_setting <= 3) ?
-+		adapter->rx_itr_setting : adapter->rx_itr_setting >> 2;
-+}
-+
-+static int igc_ethtool_get_previous_tx_coalesce(struct igc_adapter *adapter)
-+{
-+	return (adapter->tx_itr_setting <= 3) ?
-+		adapter->tx_itr_setting : adapter->tx_itr_setting >> 2;
-+}
-+
- static int igc_ethtool_get_coalesce(struct net_device *netdev,
- 				    struct ethtool_coalesce *ec,
- 				    struct kernel_ethtool_coalesce *kernel_coal,
-@@ -874,17 +886,8 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
- {
- 	struct igc_adapter *adapter = netdev_priv(netdev);
- 
--	if (adapter->rx_itr_setting <= 3)
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting;
--	else
--		ec->rx_coalesce_usecs = adapter->rx_itr_setting >> 2;
--
--	if (!(adapter->flags & IGC_FLAG_QUEUE_PAIRS)) {
--		if (adapter->tx_itr_setting <= 3)
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting;
--		else
--			ec->tx_coalesce_usecs = adapter->tx_itr_setting >> 2;
--	}
-+	ec->rx_coalesce_usecs = igc_ethtool_get_previous_rx_coalesce(adapter);
-+	ec->tx_coalesce_usecs = igc_ethtool_get_previous_tx_coalesce(adapter);
- 
- 	return 0;
- }
-@@ -909,8 +912,12 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
- 	    ec->tx_coalesce_usecs == 2)
- 		return -EINVAL;
- 
--	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) && ec->tx_coalesce_usecs)
-+	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) &&
-+	    ec->tx_coalesce_usecs != igc_ethtool_get_previous_tx_coalesce(adapter)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Queue Pair mode enabled, both Rx and Tx coalescing controlled by rx-usecs");
- 		return -EINVAL;
+ 	mm = priv->mm;
+-	if (!mm || !mmget_not_zero(mm))
++	if (!mm || !mmget_not_zero(mm)) {
++		put_task_struct(priv->task);
++		priv->task = NULL;
+ 		return NULL;
 +	}
  
- 	/* If ITR is disabled, disable DMAC */
- 	if (ec->rx_coalesce_usecs == 0) {
+ 	if (mmap_read_lock_killable(mm)) {
+ 		mmput(mm);
++		put_task_struct(priv->task);
++		priv->task = NULL;
+ 		return ERR_PTR(-EINTR);
+ 	}
+ 
+@@ -218,23 +223,21 @@ static void *m_start(struct seq_file *m, loff_t *pos)
+ 	if (vma)
+ 		return vma;
+ 
+-	mmap_read_unlock(mm);
+-	mmput(mm);
+ 	return NULL;
+ }
+ 
+-static void m_stop(struct seq_file *m, void *_vml)
++static void m_stop(struct seq_file *m, void *v)
+ {
+ 	struct proc_maps_private *priv = m->private;
++	struct mm_struct *mm = priv->mm;
+ 
+-	if (!IS_ERR_OR_NULL(_vml)) {
+-		mmap_read_unlock(priv->mm);
+-		mmput(priv->mm);
+-	}
+-	if (priv->task) {
+-		put_task_struct(priv->task);
+-		priv->task = NULL;
+-	}
++	if (!priv->task)
++		return;
++
++	mmap_read_unlock(mm);
++	mmput(mm);
++	put_task_struct(priv->task);
++	priv->task = NULL;
+ }
+ 
+ static void *m_next(struct seq_file *m, void *_p, loff_t *pos)
 -- 
 2.40.1
 
