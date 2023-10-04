@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77F61D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E91D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dg3kSvJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A3DC433C8;
-	Wed,  4 Oct 2023 18:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3sMhW/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11354C433C7;
+	Wed,  4 Oct 2023 18:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444658;
-	bh=lI8pw8dW0vlY5+5oRGmTbtoJTqU3qD50chjzfo0tshk=;
+	s=korg; t=1696444661;
+	bh=lWwWEAilsB78iis0cKeanWgnwg7kLnd9V1E7t53EZX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dg3kSvJiY4WVX1iUFCL0VypZkm+2e4AWGABTHRwpxw/yDPCQgVvHZDQ3de0KxZkGa
-	 zNMl+A3BxfSg6jkMfALnYaYV5GWz2fkIoglgNxKVcdVFq7yu24EO9+/QDYqP/SV0VG
-	 sKes0rAgrfnWie4CENmyLnGuDSABH3l5pmCo8LDU=
+	b=w3sMhW/2MgHD0NegJDnszuxIN4KymdF941lPbArWz7W/Js55S77+HB3YGFsbaaIUn
+	 5JjdBKz5kA3bN8IhBjfqUjbZ+kztaQxJISXczwg8ZykqI1AX1Sb7Q9qVUX4acHuAhK
+	 QbRSARAzvszYfpNRA8xdcb6fzMNZ2+m5nrWad+xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Ungerer <gerg@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 311/321] fs: binfmt_elf_efpic: fix personality for ELF-FDPIC
-Date: Wed,  4 Oct 2023 19:57:36 +0200
-Message-ID: <20231004175243.697741564@linuxfoundation.org>
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.5 302/321] tracing/user_events: Align set_bit() address for all archs
+Date: Wed,  4 Oct 2023 19:57:27 +0200
+Message-ID: <20231004175243.279188840@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -39,69 +36,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Ungerer <gerg@kernel.org>
+From: Beau Belgrave <beaub@linux.microsoft.com>
 
-commit 7c3151585730b7095287be8162b846d31e6eee61 upstream.
+commit 2de9ee94054263940122aee8720e902b30c27930 upstream.
 
-The elf-fdpic loader hard sets the process personality to either
-PER_LINUX_FDPIC for true elf-fdpic binaries or to PER_LINUX for normal ELF
-binaries (in this case they would be constant displacement compiled with
--pie for example).  The problem with that is that it will lose any other
-bits that may be in the ELF header personality (such as the "bug
-emulation" bits).
+All architectures should use a long aligned address passed to set_bit().
+User processes can pass either a 32-bit or 64-bit sized value to be
+updated when tracing is enabled when on a 64-bit kernel. Both cases are
+ensured to be naturally aligned, however, that is not enough. The
+address must be long aligned without affecting checks on the value
+within the user process which require different adjustments for the bit
+for little and big endian CPUs.
 
-On the ARM architecture the ADDR_LIMIT_32BIT flag is used to signify a
-normal 32bit binary - as opposed to a legacy 26bit address binary.  This
-matters since start_thread() will set the ARM CPSR register as required
-based on this flag.  If the elf-fdpic loader loses this bit the process
-will be mis-configured and crash out pretty quickly.
+Add a compat flag to user_event_enabler that indicates when a 32-bit
+value is being used on a 64-bit kernel. Long align addresses and correct
+the bit to be used by set_bit() to account for this alignment. Ensure
+compat flags are copied during forks and used during deletion clears.
 
-Modify elf-fdpic loader personality setting so that it preserves the upper
-three bytes by using the SET_PERSONALITY macro to set it.  This macro in
-the generic case sets PER_LINUX and preserves the upper bytes.
-Architectures can override this for their specific use case, and ARM does
-exactly this.
+Link: https://lore.kernel.org/linux-trace-kernel/20230925230829.341-2-beaub@linux.microsoft.com
+Link: https://lore.kernel.org/linux-trace-kernel/20230914131102.179100-1-cleger@rivosinc.com/
 
-The problem shows up quite easily running under qemu using the ARM
-architecture, but not necessarily on all types of real ARM hardware.  If
-the underlying ARM processor does not support the legacy 26-bit addressing
-mode then everything will work as expected.
-
-Link: https://lkml.kernel.org/r/20230907011808.2985083-1-gerg@kernel.org
-Fixes: 1bde925d23547 ("fs/binfmt_elf_fdpic.c: provide NOMMU loader for regular ELF binaries")
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Greg Ungerer <gerg@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 7235759084a4 ("tracing/user_events: Use remote writes for event enablement")
+Reported-by: Clément Léger <cleger@rivosinc.com>
+Suggested-by: Clément Léger <cleger@rivosinc.com>
+Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf_fdpic.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_user.c |   58 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 51 insertions(+), 7 deletions(-)
 
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -345,10 +345,9 @@ static int load_elf_fdpic_binary(struct
- 	/* there's now no turning back... the old userspace image is dead,
- 	 * defunct, deceased, etc.
- 	 */
-+	SET_PERSONALITY(exec_params.hdr);
- 	if (elf_check_fdpic(&exec_params.hdr))
--		set_personality(PER_LINUX_FDPIC);
--	else
--		set_personality(PER_LINUX);
-+		current->personality |= PER_LINUX_FDPIC;
- 	if (elf_read_implies_exec(&exec_params.hdr, executable_stack))
- 		current->personality |= READ_IMPLIES_EXEC;
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -127,8 +127,13 @@ struct user_event_enabler {
+ /* Bit 7 is for freeing status of enablement */
+ #define ENABLE_VAL_FREEING_BIT 7
  
+-/* Only duplicate the bit value */
+-#define ENABLE_VAL_DUP_MASK ENABLE_VAL_BIT_MASK
++/* Bit 8 is for marking 32-bit on 64-bit */
++#define ENABLE_VAL_32_ON_64_BIT 8
++
++#define ENABLE_VAL_COMPAT_MASK (1 << ENABLE_VAL_32_ON_64_BIT)
++
++/* Only duplicate the bit and compat values */
++#define ENABLE_VAL_DUP_MASK (ENABLE_VAL_BIT_MASK | ENABLE_VAL_COMPAT_MASK)
+ 
+ #define ENABLE_BITOPS(e) (&(e)->values)
+ 
+@@ -174,6 +179,30 @@ struct user_event_validator {
+ 	int			flags;
+ };
+ 
++static inline void align_addr_bit(unsigned long *addr, int *bit,
++				  unsigned long *flags)
++{
++	if (IS_ALIGNED(*addr, sizeof(long))) {
++#ifdef __BIG_ENDIAN
++		/* 32 bit on BE 64 bit requires a 32 bit offset when aligned. */
++		if (test_bit(ENABLE_VAL_32_ON_64_BIT, flags))
++			*bit += 32;
++#endif
++		return;
++	}
++
++	*addr = ALIGN_DOWN(*addr, sizeof(long));
++
++	/*
++	 * We only support 32 and 64 bit values. The only time we need
++	 * to align is a 32 bit value on a 64 bit kernel, which on LE
++	 * is always 32 bits, and on BE requires no change when unaligned.
++	 */
++#ifdef __LITTLE_ENDIAN
++	*bit += 32;
++#endif
++}
++
+ typedef void (*user_event_func_t) (struct user_event *user, struct iov_iter *i,
+ 				   void *tpdata, bool *faulted);
+ 
+@@ -482,6 +511,7 @@ static int user_event_enabler_write(stru
+ 	unsigned long *ptr;
+ 	struct page *page;
+ 	void *kaddr;
++	int bit = ENABLE_BIT(enabler);
+ 	int ret;
+ 
+ 	lockdep_assert_held(&event_mutex);
+@@ -497,6 +527,8 @@ static int user_event_enabler_write(stru
+ 		     test_bit(ENABLE_VAL_FREEING_BIT, ENABLE_BITOPS(enabler))))
+ 		return -EBUSY;
+ 
++	align_addr_bit(&uaddr, &bit, ENABLE_BITOPS(enabler));
++
+ 	ret = pin_user_pages_remote(mm->mm, uaddr, 1, FOLL_WRITE | FOLL_NOFAULT,
+ 				    &page, NULL);
+ 
+@@ -515,9 +547,9 @@ static int user_event_enabler_write(stru
+ 
+ 	/* Update bit atomically, user tracers must be atomic as well */
+ 	if (enabler->event && enabler->event->status)
+-		set_bit(ENABLE_BIT(enabler), ptr);
++		set_bit(bit, ptr);
+ 	else
+-		clear_bit(ENABLE_BIT(enabler), ptr);
++		clear_bit(bit, ptr);
+ 
+ 	kunmap_local(kaddr);
+ 	unpin_user_pages_dirty_lock(&page, 1, true);
+@@ -849,6 +881,12 @@ static struct user_event_enabler
+ 	enabler->event = user;
+ 	enabler->addr = uaddr;
+ 	enabler->values = reg->enable_bit;
++
++#if BITS_PER_LONG >= 64
++	if (reg->enable_size == 4)
++		set_bit(ENABLE_VAL_32_ON_64_BIT, ENABLE_BITOPS(enabler));
++#endif
++
+ retry:
+ 	/* Prevents state changes from racing with new enablers */
+ 	mutex_lock(&event_mutex);
+@@ -2376,7 +2414,8 @@ static long user_unreg_get(struct user_u
+ }
+ 
+ static int user_event_mm_clear_bit(struct user_event_mm *user_mm,
+-				   unsigned long uaddr, unsigned char bit)
++				   unsigned long uaddr, unsigned char bit,
++				   unsigned long flags)
+ {
+ 	struct user_event_enabler enabler;
+ 	int result;
+@@ -2384,7 +2423,7 @@ static int user_event_mm_clear_bit(struc
+ 
+ 	memset(&enabler, 0, sizeof(enabler));
+ 	enabler.addr = uaddr;
+-	enabler.values = bit;
++	enabler.values = bit | flags;
+ retry:
+ 	/* Prevents state changes from racing with new enablers */
+ 	mutex_lock(&event_mutex);
+@@ -2414,6 +2453,7 @@ static long user_events_ioctl_unreg(unsi
+ 	struct user_event_mm *mm = current->user_event_mm;
+ 	struct user_event_enabler *enabler, *next;
+ 	struct user_unreg reg;
++	unsigned long flags;
+ 	long ret;
+ 
+ 	ret = user_unreg_get(ureg, &reg);
+@@ -2424,6 +2464,7 @@ static long user_events_ioctl_unreg(unsi
+ 	if (!mm)
+ 		return -ENOENT;
+ 
++	flags = 0;
+ 	ret = -ENOENT;
+ 
+ 	/*
+@@ -2440,6 +2481,9 @@ static long user_events_ioctl_unreg(unsi
+ 		    ENABLE_BIT(enabler) == reg.disable_bit) {
+ 			set_bit(ENABLE_VAL_FREEING_BIT, ENABLE_BITOPS(enabler));
+ 
++			/* We must keep compat flags for the clear */
++			flags |= enabler->values & ENABLE_VAL_COMPAT_MASK;
++
+ 			if (!test_bit(ENABLE_VAL_FAULTING_BIT, ENABLE_BITOPS(enabler)))
+ 				user_event_enabler_destroy(enabler, true);
+ 
+@@ -2453,7 +2497,7 @@ static long user_events_ioctl_unreg(unsi
+ 	/* Ensure bit is now cleared for user, regardless of event status */
+ 	if (!ret)
+ 		ret = user_event_mm_clear_bit(mm, reg.disable_addr,
+-					      reg.disable_bit);
++					      reg.disable_bit, flags);
+ 
+ 	return ret;
+ }
 
 
