@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9AD1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DAE1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt6D3aym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F710C433CB;
-	Wed,  4 Oct 2023 18:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QI4VQK7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CCAC433C7;
+	Wed,  4 Oct 2023 18:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443933;
-	bh=jOxXXQB9DYKjCCfYHYPzLlKlga9562K50EzfhU9hP7U=;
+	s=korg; t=1696443936;
+	bh=ZPKqTnYuHKC94BhXGn0SsZP4PsK2Zc/rFpnxIb3acfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qt6D3aymmghRaNjUAmvA+KXrMS3Efa8X6Sd9ItwwoNmWvH8q4zzkbVRjGQxtaXGgR
-	 6yL835c6cqNh4fMLk8HTIUT5aiEB8yiHUEAKwYIKzsV3m9PdijUC7E7Vr6g56mN/jV
-	 N3Lg4HOjel46HpsP6yCSsO+KovG485i7GpCbGLQE=
+	b=QI4VQK7ces5IZaBjC+bWmUahsPG/phYyJ9SWIa5mi9st8SwGINZcwCvxBqAI8iiG4
+	 G6y6k2k7Ownt+3eSNjumx3yHvPCLGVngnLDZTZc2tb4JOU/TSpOXM45ZuyQvs7yXPo
+	 YA1TpjnpDX01jG8kgpNojhtW9x7sTmLgQveBhjI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram.Ha@microchip.com,
-	Lukasz Majewski <lukma@denx.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 072/321] net: hsr: Properly parse HSRv1 supervisor frames.
-Date: Wed,  4 Oct 2023 19:53:37 +0200
-Message-ID: <20231004175232.546351307@linuxfoundation.org>
+Subject: [PATCH 6.5 055/321] ASoC: hdaudio.c: Add missing check for devm_kstrdup
+Date: Wed,  4 Oct 2023 19:53:20 +0200
+Message-ID: <20231004175231.709533393@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -38,62 +37,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 295de650d3aaf9e50258465c5f1c84b465d836f6 ]
+[ Upstream commit c04efbfd76d23157e64e6d6147518c187ab4233a ]
 
-While adding support for parsing the redbox supervision frames, the
-author added `pull_size' and `total_pull_size' to track the amount of
-bytes that were pulled from the skb during while parsing the skb so it
-can be reverted/ pushed back at the end.
-In the process probably copy&paste error occurred and for the HSRv1 case
-the ethhdr was used instead of the hsr_tag. Later the hsr_tag was used
-instead of hsr_sup_tag. The later error didn't matter because both
-structs have the size so HSRv0 was still working. It broke however HSRv1
-parsing because struct ethhdr is larger than struct hsr_tag.
+Because of the potential failure of the devm_kstrdup(), the
+dl[i].codecs->name could be NULL.
+Therefore, we need to check it and return -ENOMEM in order to transfer
+the error.
 
-Reinstate the old pulling flow and pull first ethhdr, hsr_tag in v1 case
-followed by hsr_sup_tag.
-
-[bigeasy: commit message]
-
-Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")'
-Suggested-by: Tristram.Ha@microchip.com
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 97030a43371e ("ASoC: Intel: avs: Add HDAudio machine board")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915021344.3078-1-nichen@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/avs/boards/hdaudio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index b77f1189d19d1..6d14d935ee828 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -288,13 +288,13 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+diff --git a/sound/soc/intel/avs/boards/hdaudio.c b/sound/soc/intel/avs/boards/hdaudio.c
+index cb00bc86ac949..8876558f19a1b 100644
+--- a/sound/soc/intel/avs/boards/hdaudio.c
++++ b/sound/soc/intel/avs/boards/hdaudio.c
+@@ -55,6 +55,9 @@ static int avs_create_dai_links(struct device *dev, struct hda_codec *codec, int
+ 			return -ENOMEM;
  
- 	/* And leave the HSR tag. */
- 	if (ethhdr->h_proto == htons(ETH_P_HSR)) {
--		pull_size = sizeof(struct ethhdr);
-+		pull_size = sizeof(struct hsr_tag);
- 		skb_pull(skb, pull_size);
- 		total_pull_size += pull_size;
- 	}
- 
- 	/* And leave the HSR sup tag. */
--	pull_size = sizeof(struct hsr_tag);
-+	pull_size = sizeof(struct hsr_sup_tag);
- 	skb_pull(skb, pull_size);
- 	total_pull_size += pull_size;
- 
+ 		dl[i].codecs->name = devm_kstrdup(dev, cname, GFP_KERNEL);
++		if (!dl[i].codecs->name)
++			return -ENOMEM;
++
+ 		dl[i].codecs->dai_name = pcm->name;
+ 		dl[i].num_codecs = 1;
+ 		dl[i].num_cpus = 1;
 -- 
 2.40.1
 
