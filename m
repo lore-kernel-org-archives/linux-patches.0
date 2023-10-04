@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6701D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951631D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0965C433C8;
-	Wed,  4 Oct 2023 18:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CDCC433C7;
+	Wed,  4 Oct 2023 18:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442815;
-	bh=ZjZBj3GUN46kwT3WBH7ahzDxx4Vg+M3QD4xhV3agzL4=;
+	s=korg; t=1696442818;
+	bh=pxlr8ktdXJtspFf9McbGWW+J+CNtJxRSoXPsdUuGfnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcwk5gBpG75uqLMYJpoVbzu8TE6CCzth/0tIPNAAWLouKLQU3pJd8r1xP+qJg4tbI
-	 Gc6rLnyot2WoCigNn45px9WA5i4Va74t9tQZ6kWjXjl+JCGmk5bQV6oU5P7t6hn3Mu
-	 srorGuvSGq75rUY/mZYwJuWRwn9Hvp7+rGOzxBUo=
+	b=vErLcjQ3epI6iA8mY5rRlH19dRLjtkfgdya4A9cLZJzNkpz0UHDO4nuybgjOz31LS
+	 rWPpjb4QJ+ZL3tgP6mKDw1hBIr4v2aWhCq9JfMhtlfM/KGhqid9/bIB2SBXjXMd+XM
+	 +Qmj61b/iOBAoVvoNtqSI9uKZx6BYmnkrfTLMxQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiwoong Kim <kwmad.kim@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Chanwoo Lee <cw9316.lee@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marek Vasut <marex@denx.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/183] scsi: ufs: core: Move __ufshcd_send_uic_cmd() outside host_lock
-Date: Wed,  4 Oct 2023 19:55:49 +0200
-Message-ID: <20231004175208.878304970@linuxfoundation.org>
+Subject: [PATCH 5.15 092/183] drm/bridge: ti-sn65dsi83: Do not generate HFP/HBP/HSA and EOT packet
+Date: Wed,  4 Oct 2023 19:55:23 +0200
+Message-ID: <20231004175207.755906289@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -44,62 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiwoong Kim <kwmad.kim@samsung.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 2d3f59cf868b4a2dd678a96cd49bdd91411bd59f ]
+[ Upstream commit f4d324fb5628773907dd90342d18f978bd9a6d09 ]
 
-__ufshcd_send_uic_cmd() is wrapped by uic_cmd_mutex and its related
-contexts are accessed within the section wrapped by uic_cmd_mutex. Thus,
-wrapping with host_lock is redundant.
+[ Upstream commit ca161b259cc84fe1f4a2ce4c73c3832cf6f713f1 ]
 
-Signed-off-by: Kiwoong Kim <kwmad.kim@samsung.com>
-Link: https://lore.kernel.org/r/782ba5f26f0a96e58d85dff50751787d2d2a6b2b.1693790060.git.kwmad.kim@samsung.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Chanwoo Lee <cw9316.lee@samsung.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Do not generate the HS front and back porch gaps, the HSA gap and
+EOT packet, as per "SN65DSI83 datasheet SLLSEC1I - SEPTEMBER 2012
+- REVISED OCTOBER 2020", page 22, these packets are not required.
+This makes the TI SN65DSI83 bridge work with Samsung DSIM on i.MX8MN.
+
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230403190242.224490-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index d00d263705e15..f48036f09eab5 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -2309,7 +2309,6 @@ __ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
- 		      bool completion)
- {
- 	lockdep_assert_held(&hba->uic_cmd_mutex);
--	lockdep_assert_held(hba->host->host_lock);
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index b3cb910b30852..f96c0a89854b8 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -272,7 +272,9 @@ static int sn65dsi83_attach(struct drm_bridge *bridge,
  
- 	if (!ufshcd_ready_for_uic_cmd(hba)) {
- 		dev_err(hba->dev,
-@@ -2336,15 +2335,12 @@ __ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
- int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
- {
- 	int ret;
--	unsigned long flags;
+ 	dsi->lanes = ctx->dsi_lanes;
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+-	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST;
++	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
++			  MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
++			  MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET;
  
- 	ufshcd_hold(hba, false);
- 	mutex_lock(&hba->uic_cmd_mutex);
- 	ufshcd_add_delay_before_dme_cmd(hba);
- 
--	spin_lock_irqsave(hba->host->host_lock, flags);
- 	ret = __ufshcd_send_uic_cmd(hba, uic_cmd, true);
--	spin_unlock_irqrestore(hba->host->host_lock, flags);
- 	if (!ret)
- 		ret = ufshcd_wait_for_uic_cmd(hba, uic_cmd);
- 
-@@ -3967,8 +3963,8 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 		wmb();
- 		reenable_intr = true;
- 	}
--	ret = __ufshcd_send_uic_cmd(hba, cmd, false);
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
-+	ret = __ufshcd_send_uic_cmd(hba, cmd, false);
- 	if (ret) {
- 		dev_err(hba->dev,
- 			"pwr ctrl cmd 0x%x with mode 0x%x uic error %d\n",
+ 	ret = mipi_dsi_attach(dsi);
+ 	if (ret < 0) {
 -- 
 2.40.1
 
