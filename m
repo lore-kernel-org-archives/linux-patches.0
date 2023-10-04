@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F801D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F561D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BABC433C7;
-	Wed,  4 Oct 2023 18:05:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D32C433C9;
+	Wed,  4 Oct 2023 18:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442756;
-	bh=iDL2b2gx1KRz0McPMyUnQh+1EMysc9N7tNDk8ZY2KrI=;
+	s=korg; t=1696442759;
+	bh=F9MeQ5wPI6YaUGhfdMkqT8ed0MhcZa4LnPKss0EFKIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXFWtE8shxhIzfAOkv/VSTU8YguQovNqiJmOltzLSlWi7GuLq3mo11BjGumqND7ok
-	 8wF6tcKT3ZNT49eMyoDSTa+XlvLqg5jsFglkJnWACC+tqER82XF9M0aceHohB4xyWF
-	 SNCi9SCLsBwtkKJNwDOCQW5rKV8c+3JAXQOs+egI=
+	b=X+sBwctqyPuR5qcwpSObRhjTdBSm93pn80mLgzG+WL5BfBXQSHvcPnQyVcpsy8+eM
+	 UzyXaG9pFhGk2slN5mLwP7Y9fGzewz6oCplhjWFU0G+VfCWaP9ukm8MQtLOOh7turX
+	 UdQ4Utkvcj6WKBaU1V4d2+wWXTUfWl5MMgNohmPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Carl Philipp Klemm <philipp@uvos.xyz>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/183] btrfs: reset destination buffer when read_extent_buffer() gets invalid range
-Date: Wed,  4 Oct 2023 19:55:21 +0200
-Message-ID: <20231004175207.651789157@linuxfoundation.org>
+Subject: [PATCH 5.15 099/183] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+Date: Wed,  4 Oct 2023 19:55:30 +0200
+Message-ID: <20231004175208.028225546@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,60 +46,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 74ee79142c0a344d4eae2eb7012ebc4e82254109 ]
+[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
 
-Commit f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer
-read write functions") changed how we handle invalid extent buffer range
-for read_extent_buffer().
+Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+attempted to fix the PWM settings but ended up causin an additional clock
+reparenting error:
 
-Previously if the range is invalid we just set the destination to zero,
-but after the patch we do nothing and error out.
+clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
 
-This can lead to smatch static checker errors like:
+Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
+For timer8, the there is no sys_clkin_ck available as it's in the ABE
+domain, instead it should use syc_clk_div_ck. However, for power
+management, we want to use the always on sys_32k_ck instead.
 
-  fs/btrfs/print-tree.c:186 print_uuid_item() error: uninitialized symbol 'subvol_id'.
-  fs/btrfs/tests/extent-io-tests.c:338 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/tests/extent-io-tests.c:353 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/uuid-tree.c:203 btrfs_uuid_tree_remove() error: uninitialized symbol 'read_subid'.
-  fs/btrfs/uuid-tree.c:353 btrfs_uuid_tree_iterate() error: uninitialized symbol 'subid_le'.
-  fs/btrfs/uuid-tree.c:72 btrfs_uuid_tree_lookup() error: uninitialized symbol 'data'.
-  fs/btrfs/volumes.c:7415 btrfs_dev_stats_value() error: uninitialized symbol 'val'.
-
-Fix those warnings by reverting back to the old memset() behavior.
-By this we keep the static checker happy and would still make a lot of
-noise when such invalid ranges are passed in.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer read write functions")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Carl Philipp Klemm <philipp@uvos.xyz>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/motorola-mapphone-common.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index f9f6dfbc86bcd..346fc46d019bf 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -6722,8 +6722,14 @@ void read_extent_buffer(const struct extent_buffer *eb, void *dstv,
- 	char *dst = (char *)dstv;
- 	unsigned long i = get_eb_page_index(start);
+diff --git a/arch/arm/boot/dts/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+index a4423ff0df392..67c68c61ae029 100644
+--- a/arch/arm/boot/dts/motorola-mapphone-common.dtsi
++++ b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+@@ -614,12 +614,12 @@
+ /* Configure pwm clock source for timers 8 & 9 */
+ &timer8 {
+ 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
--	if (check_eb_range(eb, start, len))
-+	if (check_eb_range(eb, start, len)) {
-+		/*
-+		 * Invalid range hit, reset the memory, so callers won't get
-+		 * some random garbage for their uninitialzed memory.
-+		 */
-+		memset(dstv, 0, len);
- 		return;
-+	}
+ &timer9 {
+ 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
- 	offset = get_eb_offset_in_page(eb, start);
- 
+ /*
 -- 
 2.40.1
 
