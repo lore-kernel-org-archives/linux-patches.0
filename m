@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0618A1D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50434C433C8;
-	Wed,  4 Oct 2023 18:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F761D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444D7C433C7;
+	Wed,  4 Oct 2023 18:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443014;
-	bh=szF38sJ8ljkXEhACc1bIr1v2OqJ1kRgEa2xGx3RjokY=;
+	s=korg; t=1696443017;
+	bh=iPyd+QGTst2Bp04nDqw0saU9WFtnNZTnH9InVLDmYDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1klw3XgaVrlEegycUzRLR8HRr4HaRENNuVdjF8HRoQ1zwuXAJIrHFIRnnjMQ+mBE
-	 oot0x1HAfiRuBB6/8EkQHFCLM0JiN+6fS9f/uD2sGY+ipNV6yOYL+RHPWL2vvgh1nx
-	 l+BTQnb2p8E/tIGd8/pFA/MB+nb5oCS2/jIoZ0+c=
+	b=o1SRJ0XJPBKkEYTu3d2kBO2WC0QhZdAEgap7uYKB+SP004yTdZXhtUCcYGkqhHbCY
+	 tcdDyYc8yMwcs/WJgK75XZiSbRZVBdAkMCyNVf0AefaYB9rQsKLd4NAKMsGpJbxbht
+	 0ON18s4vFT2mZPUoGAiOyT9xqm5YMVmRNmHxSzc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <narmstrong@baylibre.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.15 182/183] drm/meson: fix memory leak on ->hpd_notify callback
-Date: Wed,  4 Oct 2023 19:56:53 +0200
-Message-ID: <20231004175211.713122603@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.15 183/183] netfilter: nf_tables: fix kdoc warnings after gc rework
+Date: Wed,  4 Oct 2023 19:56:54 +0200
+Message-ID: <20231004175211.764403224@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -47,42 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 099f0af9d98231bb74956ce92508e87cbcb896be upstream.
+commit 08713cb006b6f07434f276c5ee214fb20c7fd965 upstream.
 
-The EDID returned by drm_bridge_get_edid() needs to be freed.
+Jakub Kicinski says:
+  We've got some new kdoc warnings here:
+  net/netfilter/nft_set_pipapo.c:1557: warning: Function parameter or member '_set' not described in 'pipapo_gc'
+  net/netfilter/nft_set_pipapo.c:1557: warning: Excess function parameter 'set' description in 'pipapo_gc'
+  include/net/netfilter/nf_tables.h:577: warning: Function parameter or member 'dead' not described in 'nft_set'
 
-Fixes: 0af5e0b41110 ("drm/meson: encoder_hdmi: switch to bridge DRM_BRIDGE_ATTACH_NO_CONNECTOR")
-Cc: Neil Armstrong <narmstrong@baylibre.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Kevin Hilman <khilman@baylibre.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-amlogic@lists.infradead.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: stable@vger.kernel.org # v5.17+
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230914131015.2472029-1-jani.nikula@intel.com
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20230810104638.746e46f1@kernel.org/
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_hdmi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/net/netfilter/nf_tables.h |    1 +
+ net/netfilter/nft_set_pipapo.c    |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-@@ -326,6 +326,8 @@ static void meson_encoder_hdmi_hpd_notif
- 			return;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -499,6 +499,7 @@ struct nft_set_elem_expr {
+  *	@expr: stateful expression
+  * 	@ops: set ops
+  * 	@flags: set flags
++ *	@dead: set will be freed, never cleared
+  *	@genmask: generation mask
+  * 	@klen: key length
+  * 	@dlen: data length
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1550,7 +1550,7 @@ static void nft_pipapo_gc_deactivate(str
  
- 		cec_notifier_set_phys_addr_from_edid(encoder_hdmi->cec_notifier, edid);
-+
-+		kfree(edid);
- 	} else
- 		cec_notifier_phys_addr_invalidate(encoder_hdmi->cec_notifier);
- }
+ /**
+  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
+- * @set:	nftables API set representation
++ * @_set:	nftables API set representation
+  * @m:		Matching data
+  */
+ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
 
 
