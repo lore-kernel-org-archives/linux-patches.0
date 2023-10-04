@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1171D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886151D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuhtDghd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F0CC433C7;
-	Wed,  4 Oct 2023 18:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzYCV/OH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ADBC433C9;
+	Wed,  4 Oct 2023 18:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443353;
-	bh=qtLvpfoXZJff4yTr17Uq5ukIl/0Ako8U7c0D6dlT2d4=;
+	s=korg; t=1696443356;
+	bh=1on+3l+rkZASYtO/imaOSesseVsvxDFz0MCo/MmR6V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuhtDghdlfvHQ/rxuckvZZAXYEXCaiXMOQoLgm4KZr8jY4Dtbo+uBXajN1CapfJlk
-	 iisE5n7vSQlnnbW5414aT7cpm6KLtRlxaGlBp2ufkPfDavQ/r6kfLkPeE7uA+ptHjU
-	 9N1rtrmKfoQDOtSXWU+tzXQJ+SHAc4XuNEcfsWeg=
+	b=TzYCV/OHOlK/WSbSty4wiPVrMd6UkkO598aPx1Dq5B9xWd35S7kwolsbwlpq+3rd/
+	 1Lk7zDkwlhR/vA3JmF+XIQg04/xoJvsJdCJSX7iGgWG5Nwy63jfeQuA/xyOv6emKf8
+	 DeWJKsQNCfAHUL5qso3YAIfhGNex1eNVVrcFKaWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/259] f2fs: get out of a repeat loop when getting a locked data page
-Date: Wed,  4 Oct 2023 19:54:31 +0200
-Message-ID: <20231004175221.842823873@linuxfoundation.org>
+Subject: [PATCH 6.1 099/259] s390/pkey: fix PKEY_TYPE_EP11_AES handling in PKEY_CLR2SECK2 IOCTL
+Date: Wed,  4 Oct 2023 19:54:32 +0200
+Message-ID: <20231004175221.887137512@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,47 +43,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit d2d9bb3b6d2fbccb5b33d3a85a2830971625a4ea ]
+[ Upstream commit da2863f15945de100b95c72d5656541d30956c5d ]
 
-https://bugzilla.kernel.org/show_bug.cgi?id=216050
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES for the PKEY_CLR2SECK2
+IOCTL to convert an AES clearkey into a securekey of this type.
+Unfortunately, all PKEY_CLR2SECK2 IOCTL requests with type
+PKEY_TYPE_EP11_AES return with an error (-EINVAL). Fix the handling
+for PKEY_TYPE_EP11_AES in PKEY_CLR2SECK2 IOCTL, so that userspace can
+convert clearkey blobs into PKEY_TYPE_EP11_AES securekey blobs.
 
-Somehow we're getting a page which has a different mapping.
-Let's avoid the infinite loop.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/s390/crypto/pkey_api.c        | 16 +++++--
+ drivers/s390/crypto/zcrypt_ep11misc.c | 61 ++++++++++++++++++++-------
+ drivers/s390/crypto/zcrypt_ep11misc.h |  3 +-
+ 3 files changed, 60 insertions(+), 20 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 0faed0575f8aa..a982f91b71eb2 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1329,18 +1329,14 @@ struct page *f2fs_get_lock_data_page(struct inode *inode, pgoff_t index,
- {
- 	struct address_space *mapping = inode->i_mapping;
- 	struct page *page;
--repeat:
-+
- 	page = f2fs_get_read_data_page(inode, index, 0, for_write, NULL);
- 	if (IS_ERR(page))
- 		return page;
- 
- 	/* wait for read completion */
- 	lock_page(page);
--	if (unlikely(page->mapping != mapping)) {
--		f2fs_put_page(page, 1);
--		goto repeat;
--	}
--	if (unlikely(!PageUptodate(page))) {
-+	if (unlikely(page->mapping != mapping || !PageUptodate(page))) {
- 		f2fs_put_page(page, 1);
- 		return ERR_PTR(-EIO);
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 2b92ec20ed68e..df0f19e6d9235 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -212,7 +212,8 @@ static int pkey_clr2ep11key(const u8 *clrkey, size_t clrkeylen,
+ 		card = apqns[i] >> 16;
+ 		dom = apqns[i] & 0xFFFF;
+ 		rc = ep11_clr2keyblob(card, dom, clrkeylen * 8,
+-				      0, clrkey, keybuf, keybuflen);
++				      0, clrkey, keybuf, keybuflen,
++				      PKEY_TYPE_EP11);
+ 		if (rc == 0)
+ 			break;
  	}
+@@ -627,6 +628,11 @@ static int pkey_clr2seckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 		if (*keybufsize < MINEP11AESKEYBLOBSIZE)
+ 			return -EINVAL;
+ 		break;
++	case PKEY_TYPE_EP11_AES:
++		if (*keybufsize < (sizeof(struct ep11kblob_header) +
++				   MINEP11AESKEYBLOBSIZE))
++			return -EINVAL;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -645,9 +651,11 @@ static int pkey_clr2seckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 	for (i = 0, rc = -ENODEV; i < nr_apqns; i++) {
+ 		card = apqns[i].card;
+ 		dom = apqns[i].domain;
+-		if (ktype == PKEY_TYPE_EP11) {
++		if (ktype == PKEY_TYPE_EP11 ||
++		    ktype == PKEY_TYPE_EP11_AES) {
+ 			rc = ep11_clr2keyblob(card, dom, ksize, kflags,
+-					      clrkey, keybuf, keybufsize);
++					      clrkey, keybuf, keybufsize,
++					      ktype);
+ 		} else if (ktype == PKEY_TYPE_CCA_DATA) {
+ 			rc = cca_clr2seckey(card, dom, ksize,
+ 					    clrkey, keybuf);
+@@ -1361,7 +1369,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		apqns = _copy_apqns_from_user(kcs.apqns, kcs.apqn_entries);
+ 		if (IS_ERR(apqns))
+ 			return PTR_ERR(apqns);
+-		kkey = kmalloc(klen, GFP_KERNEL);
++		kkey = kzalloc(klen, GFP_KERNEL);
+ 		if (!kkey) {
+ 			kfree(apqns);
+ 			return -ENOMEM;
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 20bbeec1a1a22..77e1ffaafaea1 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -1000,12 +1000,12 @@ static int ep11_cryptsingle(u16 card, u16 domain,
+ 	return rc;
+ }
+ 
+-static int ep11_unwrapkey(u16 card, u16 domain,
+-			  const u8 *kek, size_t keksize,
+-			  const u8 *enckey, size_t enckeysize,
+-			  u32 mech, const u8 *iv,
+-			  u32 keybitsize, u32 keygenflags,
+-			  u8 *keybuf, size_t *keybufsize)
++static int _ep11_unwrapkey(u16 card, u16 domain,
++			   const u8 *kek, size_t keksize,
++			   const u8 *enckey, size_t enckeysize,
++			   u32 mech, const u8 *iv,
++			   u32 keybitsize, u32 keygenflags,
++			   u8 *keybuf, size_t *keybufsize)
+ {
+ 	struct uw_req_pl {
+ 		struct pl_head head;
+@@ -1042,7 +1042,6 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	struct ep11_cprb *req = NULL, *rep = NULL;
+ 	struct ep11_target_dev target;
+ 	struct ep11_urb *urb = NULL;
+-	struct ep11keyblob *kb;
+ 	size_t req_pl_size;
+ 	int api, rc = -ENOMEM;
+ 	u8 *p;
+@@ -1124,14 +1123,9 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 		goto out;
+ 	}
+ 
+-	/* copy key blob and set header values */
++	/* copy key blob */
+ 	memcpy(keybuf, rep_pl->data, rep_pl->data_len);
+ 	*keybufsize = rep_pl->data_len;
+-	kb = (struct ep11keyblob *)keybuf;
+-	kb->head.type = TOKTYPE_NON_CCA;
+-	kb->head.len = rep_pl->data_len;
+-	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.bitlen = keybitsize;
+ 
+ out:
+ 	kfree(req);
+@@ -1140,6 +1134,42 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	return rc;
+ }
+ 
++static int ep11_unwrapkey(u16 card, u16 domain,
++			  const u8 *kek, size_t keksize,
++			  const u8 *enckey, size_t enckeysize,
++			  u32 mech, const u8 *iv,
++			  u32 keybitsize, u32 keygenflags,
++			  u8 *keybuf, size_t *keybufsize,
++			  u8 keybufver)
++{
++	struct ep11kblob_header *hdr;
++	size_t hdr_size, pl_size;
++	u8 *pl;
++	int rc;
++
++	rc = ep11_kb_split(keybuf, *keybufsize, keybufver,
++			   &hdr, &hdr_size, &pl, &pl_size);
++	if (rc)
++		return rc;
++
++	rc = _ep11_unwrapkey(card, domain, kek, keksize, enckey, enckeysize,
++			     mech, iv, keybitsize, keygenflags,
++			     pl, &pl_size);
++	if (rc)
++		return rc;
++
++	*keybufsize = hdr_size + pl_size;
++
++	/* update header information */
++	hdr = (struct ep11kblob_header *)keybuf;
++	hdr->type = TOKTYPE_NON_CCA;
++	hdr->len = *keybufsize;
++	hdr->version = keybufver;
++	hdr->bitlen = keybitsize;
++
++	return 0;
++}
++
+ static int ep11_wrapkey(u16 card, u16 domain,
+ 			const u8 *key, size_t keysize,
+ 			u32 mech, const u8 *iv,
+@@ -1274,7 +1304,8 @@ static int ep11_wrapkey(u16 card, u16 domain,
+ }
+ 
+ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+-		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize)
++		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize,
++		     u32 keytype)
+ {
+ 	int rc;
+ 	u8 encbuf[64], *kek = NULL;
+@@ -1321,7 +1352,7 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	/* Step 3: import the encrypted key value as a new key */
+ 	rc = ep11_unwrapkey(card, domain, kek, keklen,
+ 			    encbuf, encbuflen, 0, def_iv,
+-			    keybitsize, 0, keybuf, keybufsize);
++			    keybitsize, 0, keybuf, keybufsize, keytype);
+ 	if (rc) {
+ 		DEBUG_ERR(
+ 			"%s importing key value as new key failed,, rc=%d\n",
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index ed328c354bade..b7f9cbe3d58de 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -113,7 +113,8 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+  * Generate EP11 AES secure key with given clear key value.
+  */
+ int ep11_clr2keyblob(u16 cardnr, u16 domain, u32 keybitsize, u32 keygenflags,
+-		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize);
++		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize,
++		     u32 keytype);
+ 
+ /*
+  * Build a list of ep11 apqns meeting the following constrains:
 -- 
 2.40.1
 
