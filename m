@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D412F1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9Xb3/eB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6F9C433C7;
-	Wed,  4 Oct 2023 18:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZujLSRxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFEBC433C8;
+	Wed,  4 Oct 2023 18:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443542;
-	bh=0QxYENzu4fX5bKSNoJqCfMXQnL1TJg5QfxEMmI52GXk=;
+	s=korg; t=1696443545;
+	bh=M2WZuPYGjG3WzZVCeDmwZ1jg7BhqjUcmOvx7V3Uxus8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9Xb3/eB6Xp6Q+P5g23uHII8BKmdbd7TWRg1rsfnEKjHVZ2X3EW6+rE0EpZaqYecL
-	 doRhWKUSXpbvrWzAdFZTG8GYDKzfeQ5hrOBL76bLRrQpwknZ/f3j7OXij2TWk2+XaZ
-	 yXJbCHjd+6CjatSWMpXqxYhe/p0DTBPKKQHwQ+xs=
+	b=ZujLSRxVfo+325B9Dk+Ev4PAJMYcA10f1l1D0UGfOZI9MacnnRHlp8A3sC7y9LO/1
+	 fSl834VHm47Ej9WOogygeC1UG78WdLhAipYxSainJ4cA/Gt+Idk/dmfGwNQZL7FFz6
+	 g645tFaKjG2MR43lEybjICWVtXRysmZ76uil8gFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/259] ASoC: imx-rpmsg: Set ignore_pmdown_time for dai_link
-Date: Wed,  4 Oct 2023 19:55:59 +0200
-Message-ID: <20231004175225.837539012@linuxfoundation.org>
+Subject: [PATCH 6.1 195/259] tsnep: Fix NAPI scheduling
+Date: Wed,  4 Oct 2023 19:56:08 +0200
+Message-ID: <20231004175226.223958948@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,47 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit fac58baf8fcfcd7481e8f6d60206ce2a47c1476c ]
+[ Upstream commit ea852c17f5382a0a52041cfbd9a4451ae0fa1a38 ]
 
-i.MX rpmsg sound cards work on codec slave mode. MCLK will be disabled
-by CPU DAI driver in hw_free(). Some codec requires MCLK present at
-power up/down sequence. So need to set ignore_pmdown_time to power down
-codec immediately before MCLK is turned off.
+According to the NAPI documentation networking/napi.rst, drivers which
+have to mask interrupts explicitly should use the napi_schedule_prep()
+and __napi_schedule() calls.
 
-Take WM8962 as an example, if MCLK is disabled before DAPM power down
-playback stream, FIFO error will arise in WM8962 which will have bad
-impact on playback next.
+No problem seen so far with current implementation. Nevertheless, let's
+align the implementation with documentation.
 
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://lore.kernel.org/r/20230913102656.2966757-1-chancel.liu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-rpmsg.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/engleder/tsnep_main.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-rpmsg.c b/sound/soc/fsl/imx-rpmsg.c
-index 4d99f4858a14f..76c6febf24990 100644
---- a/sound/soc/fsl/imx-rpmsg.c
-+++ b/sound/soc/fsl/imx-rpmsg.c
-@@ -88,6 +88,14 @@ static int imx_rpmsg_probe(struct platform_device *pdev)
- 			    SND_SOC_DAIFMT_NB_NF |
- 			    SND_SOC_DAIFMT_CBC_CFC;
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index 6bf3cc11d2121..00436a6f785e8 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -65,8 +65,11 @@ static irqreturn_t tsnep_irq(int irq, void *arg)
  
-+	/*
-+	 * i.MX rpmsg sound cards work on codec slave mode. MCLK will be
-+	 * disabled by CPU DAI driver in hw_free(). Some codec requires MCLK
-+	 * present at power up/down sequence. So need to set ignore_pmdown_time
-+	 * to power down codec immediately before MCLK is turned off.
-+	 */
-+	data->dai.ignore_pmdown_time = 1;
-+
- 	/* Optional codec node */
- 	ret = of_parse_phandle_with_fixed_args(np, "audio-codec", 0, 0, &args);
- 	if (ret) {
+ 	/* handle TX/RX queue 0 interrupt */
+ 	if ((active & adapter->queue[0].irq_mask) != 0) {
+-		tsnep_disable_irq(adapter, adapter->queue[0].irq_mask);
+-		napi_schedule(&adapter->queue[0].napi);
++		if (napi_schedule_prep(&adapter->queue[0].napi)) {
++			tsnep_disable_irq(adapter, adapter->queue[0].irq_mask);
++			/* schedule after masking to avoid races */
++			__napi_schedule(&adapter->queue[0].napi);
++		}
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -77,8 +80,11 @@ static irqreturn_t tsnep_irq_txrx(int irq, void *arg)
+ 	struct tsnep_queue *queue = arg;
+ 
+ 	/* handle TX/RX queue interrupt */
+-	tsnep_disable_irq(queue->adapter, queue->irq_mask);
+-	napi_schedule(&queue->napi);
++	if (napi_schedule_prep(&queue->napi)) {
++		tsnep_disable_irq(queue->adapter, queue->irq_mask);
++		/* schedule after masking to avoid races */
++		__napi_schedule(&queue->napi);
++	}
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.40.1
 
