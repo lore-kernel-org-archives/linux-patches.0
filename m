@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D821D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94651D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKVe51+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A45C433C9;
-	Wed,  4 Oct 2023 18:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWudAasr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B22EC433C8;
+	Wed,  4 Oct 2023 18:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443389;
-	bh=/IrOULaRNJk+sIpZBFXIHBteb0Ljj0p42aQeIDmcIvw=;
+	s=korg; t=1696443392;
+	bh=HyUUeHOeh9mZUlb7t6QbDVS2paXGojWkkDbQ/VYCEGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKVe51+kw9YKkKfwVJi7X2nk9dPAugz9OuWGB/1AtOwz0RhWSCx3xOlXS2g1WfLml
-	 p36kz6+6uD6tfanrcTvfFYyjxOAEwITfiDTX3CZ/WeA3pZGarl3A5E5lGVS3fIJMQX
-	 6IzL5IAJ968s3MqY/4j5CQyWJlivcaM/BAFdIEUU=
+	b=eWudAasrQPQgOhRldO+oLfUzY3Mjpq9priDMJfqHQTt2qToHWUHUmPePX+5dOvPE7
+	 grbRHYmzG+ekX1vMf/ympzbCmDvYEcmKpdd+GVNgpONrO9EWz0vff1fF0+iZxbH96Y
+	 V5eT7+BwF8zGPHx184PRE2BdlFHR/VzciBlFfbws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"William A. Kennington III" <william@wkennington.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Andrew Cooper <Andrew.Cooper3@citrix.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/259] i2c: npcm7xx: Fix callback completion ordering
-Date: Wed,  4 Oct 2023 19:55:13 +0200
-Message-ID: <20231004175223.744034979@linuxfoundation.org>
+Subject: [PATCH 6.1 141/259] x86/reboot: VMCLEAR active VMCSes before emergency reboot
+Date: Wed,  4 Oct 2023 19:55:14 +0200
+Message-ID: <20231004175223.785578916@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,75 +42,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William A. Kennington III <william@wkennington.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 92e73d807b68b2214fcafca4e130b5300a9d4b3c ]
+[ Upstream commit b23c83ad2c638420ec0608a9de354507c41bec29 ]
 
-Sometimes, our completions race with new master transfers and override
-the bus->operation and bus->master_or_slave variables. This causes
-transactions to timeout and kernel crashes less frequently.
+VMCLEAR active VMCSes before any emergency reboot, not just if the kernel
+may kexec into a new kernel after a crash.  Per Intel's SDM, the VMX
+architecture doesn't require the CPU to flush the VMCS cache on INIT.  If
+an emergency reboot doesn't RESET CPUs, cached VMCSes could theoretically
+be kept and only be written back to memory after the new kernel is booted,
+i.e. could effectively corrupt memory after reboot.
 
-To remedy this, we re-order all completions to the very end of the
-function.
+Opportunistically remove the setting of the global pointer to NULL to make
+checkpatch happy.
 
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: William A. Kennington III <william@wkennington.com>
-Reviewed-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
+Link: https://lore.kernel.org/r/20230721201859.2307736-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/kexec.h  |  2 --
+ arch/x86/include/asm/reboot.h |  2 ++
+ arch/x86/kernel/crash.c       | 31 -------------------------------
+ arch/x86/kernel/reboot.c      | 22 ++++++++++++++++++++++
+ arch/x86/kvm/vmx/vmx.c        | 10 +++-------
+ 5 files changed, 27 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 83457359ec450..767dd15b3c881 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -696,6 +696,7 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- {
- 	struct i2c_msg *msgs;
- 	int msgs_num;
-+	bool do_complete = false;
- 
- 	msgs = bus->msgs;
- 	msgs_num = bus->msgs_num;
-@@ -724,23 +725,17 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 				 msgs[1].flags & I2C_M_RD)
- 				msgs[1].len = info;
- 		}
--		if (completion_done(&bus->cmd_complete) == false)
--			complete(&bus->cmd_complete);
--	break;
--
-+		do_complete = true;
-+		break;
- 	case I2C_NACK_IND:
- 		/* MASTER transmit got a NACK before tx all bytes */
- 		bus->cmd_err = -ENXIO;
--		if (bus->master_or_slave == I2C_MASTER)
--			complete(&bus->cmd_complete);
--
-+		do_complete = true;
- 		break;
- 	case I2C_BUS_ERR_IND:
- 		/* Bus error */
- 		bus->cmd_err = -EAGAIN;
--		if (bus->master_or_slave == I2C_MASTER)
--			complete(&bus->cmd_complete);
--
-+		do_complete = true;
- 		break;
- 	case I2C_WAKE_UP_IND:
- 		/* I2C wake up */
-@@ -754,6 +749,8 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 	if (bus->slave)
- 		bus->master_or_slave = I2C_SLAVE;
+diff --git a/arch/x86/include/asm/kexec.h b/arch/x86/include/asm/kexec.h
+index a3760ca796aa2..256eee99afc8f 100644
+--- a/arch/x86/include/asm/kexec.h
++++ b/arch/x86/include/asm/kexec.h
+@@ -208,8 +208,6 @@ int arch_kimage_file_post_load_cleanup(struct kimage *image);
  #endif
-+	if (do_complete)
-+		complete(&bus->cmd_complete);
+ #endif
+ 
+-typedef void crash_vmclear_fn(void);
+-extern crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss;
+ extern void kdump_nmi_shootdown_cpus(void);
+ 
+ #endif /* __ASSEMBLY__ */
+diff --git a/arch/x86/include/asm/reboot.h b/arch/x86/include/asm/reboot.h
+index bc5b4d788c08d..2551baec927d2 100644
+--- a/arch/x86/include/asm/reboot.h
++++ b/arch/x86/include/asm/reboot.h
+@@ -25,6 +25,8 @@ void __noreturn machine_real_restart(unsigned int type);
+ #define MRR_BIOS	0
+ #define MRR_APM		1
+ 
++typedef void crash_vmclear_fn(void);
++extern crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss;
+ void cpu_emergency_disable_virtualization(void);
+ 
+ typedef void (*nmi_shootdown_cb)(int, struct pt_regs*);
+diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
+index cdd92ab43cda4..54cd959cb3160 100644
+--- a/arch/x86/kernel/crash.c
++++ b/arch/x86/kernel/crash.c
+@@ -48,38 +48,12 @@ struct crash_memmap_data {
+ 	unsigned int type;
+ };
+ 
+-/*
+- * This is used to VMCLEAR all VMCSs loaded on the
+- * processor. And when loading kvm_intel module, the
+- * callback function pointer will be assigned.
+- *
+- * protected by rcu.
+- */
+-crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss = NULL;
+-EXPORT_SYMBOL_GPL(crash_vmclear_loaded_vmcss);
+-
+-static inline void cpu_crash_vmclear_loaded_vmcss(void)
+-{
+-	crash_vmclear_fn *do_vmclear_operation = NULL;
+-
+-	rcu_read_lock();
+-	do_vmclear_operation = rcu_dereference(crash_vmclear_loaded_vmcss);
+-	if (do_vmclear_operation)
+-		do_vmclear_operation();
+-	rcu_read_unlock();
+-}
+-
+ #if defined(CONFIG_SMP) && defined(CONFIG_X86_LOCAL_APIC)
+ 
+ static void kdump_nmi_callback(int cpu, struct pt_regs *regs)
+ {
+ 	crash_save_cpu(regs, cpu);
+ 
+-	/*
+-	 * VMCLEAR VMCSs loaded on all cpus if needed.
+-	 */
+-	cpu_crash_vmclear_loaded_vmcss();
+-
+ 	/*
+ 	 * Disable Intel PT to stop its logging
+ 	 */
+@@ -133,11 +107,6 @@ void native_machine_crash_shutdown(struct pt_regs *regs)
+ 
+ 	crash_smp_send_stop();
+ 
+-	/*
+-	 * VMCLEAR VMCSs loaded on this cpu if needed.
+-	 */
+-	cpu_crash_vmclear_loaded_vmcss();
+-
+ 	cpu_emergency_disable_virtualization();
+ 
+ 	/*
+diff --git a/arch/x86/kernel/reboot.c b/arch/x86/kernel/reboot.c
+index d03c551defccf..299b970e5f829 100644
+--- a/arch/x86/kernel/reboot.c
++++ b/arch/x86/kernel/reboot.c
+@@ -787,6 +787,26 @@ void machine_crash_shutdown(struct pt_regs *regs)
+ }
+ #endif
+ 
++/*
++ * This is used to VMCLEAR all VMCSs loaded on the
++ * processor. And when loading kvm_intel module, the
++ * callback function pointer will be assigned.
++ *
++ * protected by rcu.
++ */
++crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss;
++EXPORT_SYMBOL_GPL(crash_vmclear_loaded_vmcss);
++
++static inline void cpu_crash_vmclear_loaded_vmcss(void)
++{
++	crash_vmclear_fn *do_vmclear_operation = NULL;
++
++	rcu_read_lock();
++	do_vmclear_operation = rcu_dereference(crash_vmclear_loaded_vmcss);
++	if (do_vmclear_operation)
++		do_vmclear_operation();
++	rcu_read_unlock();
++}
+ 
+ /* This is the CPU performing the emergency shutdown work. */
+ int crashing_cpu = -1;
+@@ -798,6 +818,8 @@ int crashing_cpu = -1;
+  */
+ void cpu_emergency_disable_virtualization(void)
+ {
++	cpu_crash_vmclear_loaded_vmcss();
++
+ 	cpu_emergency_vmxoff();
+ 	cpu_emergency_svm_disable();
+ }
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 4e972b9b68e59..31a10d774df6d 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -40,7 +40,7 @@
+ #include <asm/idtentry.h>
+ #include <asm/io.h>
+ #include <asm/irq_remapping.h>
+-#include <asm/kexec.h>
++#include <asm/reboot.h>
+ #include <asm/perf_event.h>
+ #include <asm/mmu_context.h>
+ #include <asm/mshyperv.h>
+@@ -702,7 +702,6 @@ static int vmx_set_guest_uret_msr(struct vcpu_vmx *vmx,
+ 	return ret;
  }
  
- static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
+-#ifdef CONFIG_KEXEC_CORE
+ static void crash_vmclear_local_loaded_vmcss(void)
+ {
+ 	int cpu = raw_smp_processor_id();
+@@ -712,7 +711,6 @@ static void crash_vmclear_local_loaded_vmcss(void)
+ 			    loaded_vmcss_on_cpu_link)
+ 		vmcs_clear(v->vmcs);
+ }
+-#endif /* CONFIG_KEXEC_CORE */
+ 
+ static void __loaded_vmcs_clear(void *arg)
+ {
+@@ -8522,10 +8520,9 @@ static void __vmx_exit(void)
+ {
+ 	allow_smaller_maxphyaddr = false;
+ 
+-#ifdef CONFIG_KEXEC_CORE
+ 	RCU_INIT_POINTER(crash_vmclear_loaded_vmcss, NULL);
+ 	synchronize_rcu();
+-#endif
++
+ 	vmx_cleanup_l1d_flush();
+ }
+ 
+@@ -8598,10 +8595,9 @@ static int __init vmx_init(void)
+ 		pi_init_cpu(cpu);
+ 	}
+ 
+-#ifdef CONFIG_KEXEC_CORE
+ 	rcu_assign_pointer(crash_vmclear_loaded_vmcss,
+ 			   crash_vmclear_local_loaded_vmcss);
+-#endif
++
+ 	vmx_check_vmcs12_offsets();
+ 
+ 	/*
 -- 
 2.40.1
 
