@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E4C1DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC0B1DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAy/3UEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDBCC433C9;
-	Wed,  4 Oct 2023 18:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AorJGrG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714D3C433C7;
+	Wed,  4 Oct 2023 18:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444146;
-	bh=SxY+RZ/gAqeaYC3xVDJGBjg+aJpqf3pQIPGmzsrFXFY=;
+	s=korg; t=1696444148;
+	bh=NC6pol2o82ph7Q470HTYvitiyyj9G0750UQjKqcbogo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAy/3UEZyOuxe9N50oDiQaKMns0BDAatHS7D+28QRfKS3C4OBu4t9zxcQmfl7yJek
-	 mT+JosMPYHDM78MKzlu7OESb+WEAuy0stAYH/aU7Ne5quw+mqb+yxmuNjGjVQQm9Y6
-	 KbCBpjY49sAWELWUXVWHBbEnC+ESDzLcGMmuzXYE=
+	b=AorJGrG54dH2vdyPoVyuQ+FtdcF6et4FlOVJvwFTihXM89Lli5rWFQmJpopWutPU+
+	 k5/CapvlDdLyC5hTzU/lXTY9DWl0zHJZ5oGEt5kzTTsif8jrNXwoKMWilJzK4+tjUG
+	 A6UqmOAd2K6oTQr8fgx3FG2mh/DqF022rgk/CctM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Adam Ford <aford173@gmail.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 145/321] selftests/powerpc: Fix emit_tests to work with run_kselftest.sh
-Date: Wed,  4 Oct 2023 19:54:50 +0200
-Message-ID: <20231004175235.967961962@linuxfoundation.org>
+Subject: [PATCH 6.5 146/321] arm64: dts: imx8mp: Fix SDMA2/3 clocks
+Date: Wed,  4 Oct 2023 19:54:51 +0200
+Message-ID: <20231004175236.008367507@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,95 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 58b33e78a31782ffe25d404d5eba9a45fe636e27 ]
+[ Upstream commit b739681b3f8b2a7a684a71ddd048b9b6b5400011 ]
 
-In order to use run_kselftest.sh the list of tests must be emitted to
-populate kselftest-list.txt.
+Commit 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks
+from CCM node") removed the Audio clocks from the main clock node, because
+the intent is to force people to setup the audio PLL clocks per board
+instead of having a common set of rates, since not all boards may use
+the various audio PLL clocks in the same way.
 
-The powerpc Makefile is written to use EMIT_TESTS. But support for
-EMIT_TESTS was dropped in commit d4e59a536f50 ("selftests: Use runner.sh
-for emit targets"). Although prior to that commit a548de0fe8e1
-("selftests: lib.mk: add test execute bit check to EMIT_TESTS") had
-already broken run_kselftest.sh for powerpc due to the executable check
-using the wrong path.
+Unfortunately, with this parenting removed, the SDMA2 and SDMA3
+clocks were slowed to 24MHz because the SDMA2/3 clocks are controlled
+via the audio_blk_ctrl which is clocked from IMX8MP_CLK_AUDIO_ROOT,
+and that clock is enabled by pgc_audio.
 
-It can be fixed by replacing the EMIT_TESTS definitions with actual
-emit_tests rules in the powerpc Makefiles. This makes run_kselftest.sh
-able to run powerpc tests:
+Per the TRM, "The SDMA2/3 target frequency is 400MHz IPG and 400MHz
+AHB, always 1:1 mode, to make sure there is enough throughput for all
+the audio use cases."
 
-  $ cd linux
-  $ export ARCH=powerpc
-  $ export CROSS_COMPILE=powerpc64le-linux-gnu-
-  $ make headers
-  $ make -j -C tools/testing/selftests install
-  $ grep -c "^powerpc" tools/testing/selftests/kselftest_install/kselftest-list.txt
-  182
+Instead of cluttering the clock node, place the clock rate and parent
+information into the pgc_audio node.
 
-Fixes: d4e59a536f50 ("selftests: Use runner.sh for emit targets")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230921072623.828772-1-mpe@ellerman.id.au
+With the parenting and clock rates restored for  IMX8MP_CLK_AUDIO_AHB,
+and IMX8MP_CLK_AUDIO_AXI_SRC, it appears the SDMA2 and SDMA3 run at
+400MHz again.
+
+Fixes: 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks from CCM node")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/Makefile     |  7 +++----
- tools/testing/selftests/powerpc/pmu/Makefile | 11 ++++++-----
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/powerpc/Makefile b/tools/testing/selftests/powerpc/Makefile
-index 49f2ad1793fd9..7ea42fa02eabd 100644
---- a/tools/testing/selftests/powerpc/Makefile
-+++ b/tools/testing/selftests/powerpc/Makefile
-@@ -59,12 +59,11 @@ override define INSTALL_RULE
- 	done;
- endef
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+index cc406bb338feb..587265395a9b4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+@@ -794,6 +794,12 @@
+ 						reg = <IMX8MP_POWER_DOMAIN_AUDIOMIX>;
+ 						clocks = <&clk IMX8MP_CLK_AUDIO_ROOT>,
+ 							 <&clk IMX8MP_CLK_AUDIO_AXI>;
++						assigned-clocks = <&clk IMX8MP_CLK_AUDIO_AHB>,
++								  <&clk IMX8MP_CLK_AUDIO_AXI_SRC>;
++						assigned-clock-parents =  <&clk IMX8MP_SYS_PLL1_800M>,
++									  <&clk IMX8MP_SYS_PLL1_800M>;
++						assigned-clock-rates = <400000000>,
++								       <600000000>;
+ 					};
  
--override define EMIT_TESTS
-+emit_tests:
- 	+@for TARGET in $(SUB_DIRS); do \
- 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
--		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests;\
-+		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET $@;\
- 	done;
--endef
- 
- override define CLEAN
- 	+@for TARGET in $(SUB_DIRS); do \
-@@ -77,4 +76,4 @@ endef
- tags:
- 	find . -name '*.c' -o -name '*.h' | xargs ctags
- 
--.PHONY: tags $(SUB_DIRS)
-+.PHONY: tags $(SUB_DIRS) emit_tests
-diff --git a/tools/testing/selftests/powerpc/pmu/Makefile b/tools/testing/selftests/powerpc/pmu/Makefile
-index 2b95e44d20ff9..a284fa874a9f1 100644
---- a/tools/testing/selftests/powerpc/pmu/Makefile
-+++ b/tools/testing/selftests/powerpc/pmu/Makefile
-@@ -30,13 +30,14 @@ override define RUN_TESTS
- 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
- endef
- 
--DEFAULT_EMIT_TESTS := $(EMIT_TESTS)
--override define EMIT_TESTS
--	$(DEFAULT_EMIT_TESTS)
-+emit_tests:
-+	for TEST in $(TEST_GEN_PROGS); do \
-+		BASENAME_TEST=`basename $$TEST`;	\
-+		echo "$(COLLECTION):$$BASENAME_TEST";	\
-+	done
- 	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
- 	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
- 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
--endef
- 
- DEFAULT_INSTALL_RULE := $(INSTALL_RULE)
- override define INSTALL_RULE
-@@ -64,4 +65,4 @@ sampling_tests:
- event_code_tests:
- 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
- 
--.PHONY: all run_tests ebb sampling_tests event_code_tests
-+.PHONY: all run_tests ebb sampling_tests event_code_tests emit_tests
+ 					pgc_gpu2d: power-domain@6 {
 -- 
 2.40.1
 
