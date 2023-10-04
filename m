@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F561D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F8B1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D32C433C9;
-	Wed,  4 Oct 2023 18:05:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C11CC433C8;
+	Wed,  4 Oct 2023 18:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442759;
-	bh=F9MeQ5wPI6YaUGhfdMkqT8ed0MhcZa4LnPKss0EFKIU=;
+	s=korg; t=1696442761;
+	bh=EtkA+TyCyvzyNRW2ot18WIyNQa4PM8brWLOqZm0Q9NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+sBwctqyPuR5qcwpSObRhjTdBSm93pn80mLgzG+WL5BfBXQSHvcPnQyVcpsy8+eM
-	 UzyXaG9pFhGk2slN5mLwP7Y9fGzewz6oCplhjWFU0G+VfCWaP9ukm8MQtLOOh7turX
-	 UdQ4Utkvcj6WKBaU1V4d2+wWXTUfWl5MMgNohmPc=
+	b=ZM2z4Wj/CaSVfcYeTuItuksfOqgZJSgDfVGxnNhohU80c04KSKlsL+AU3eWwGngWz
+	 ngXINjF+fWIWi3Qi32WFbacxysHjwuucce5bvsExBypGNv18Yzd7IR23mLpmCr3nrh
+	 6Qe6yTVTIuVFLmaZyBmoC8QxRepQiCgJxUDyLd0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Carl Philipp Klemm <philipp@uvos.xyz>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/183] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
-Date: Wed,  4 Oct 2023 19:55:30 +0200
-Message-ID: <20231004175208.028225546@linuxfoundation.org>
+Subject: [PATCH 5.15 100/183] bus: ti-sysc: Fix SYSC_QUIRK_SWSUP_SIDLE_ACT handling for uart wake-up
+Date: Wed,  4 Oct 2023 19:55:31 +0200
+Message-ID: <20231004175208.072319446@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -48,51 +45,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
+[ Upstream commit e5deb8f76e64d94ccef715e75ebafffd0c312d80 ]
 
-Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
-attempted to fix the PWM settings but ended up causin an additional clock
-reparenting error:
+The uarts should be tagged with SYSC_QUIRK_SWSUP_SIDLE instead of
+SYSC_QUIRK_SWSUP_SIDLE_ACT. The difference is that SYSC_QUIRK_SWSUP_SIDLE
+is used to force idle target modules rather than block idle during usage.
 
-clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
+The SYSC_QUIRK_SWSUP_SIDLE_ACT should disable autoidle and wake-up when
+a target module is active, and configure autoidle and wake-up when a
+target module is inactive. We are missing configuring the target module
+on sysc_disable_module(), and missing toggling of the wake-up bit.
 
-Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
-For timer8, the there is no sys_clkin_ck available as it's in the ABE
-domain, instead it should use syc_clk_div_ck. However, for power
-management, we want to use the always on sys_32k_ck instead.
+Let's fix the issue to allow uart wake-up to work.
 
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Carl Philipp Klemm <philipp@uvos.xyz>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
-Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
+Fixes: fb685f1c190e ("bus: ti-sysc: Handle swsup idle mode quirks")
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Tested-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/motorola-mapphone-common.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/ti-sysc.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-index a4423ff0df392..67c68c61ae029 100644
---- a/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-+++ b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-@@ -614,12 +614,12 @@
- /* Configure pwm clock source for timers 8 & 9 */
- &timer8 {
- 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
--	assigned-clock-parents = <&sys_clkin_ck>;
-+	assigned-clock-parents = <&sys_32k_ck>;
- };
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 8b0fe4b7b9c19..0a159989c899a 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -1118,6 +1118,11 @@ static int sysc_enable_module(struct device *dev)
+ 	if (ddata->cfg.quirks & (SYSC_QUIRK_SWSUP_SIDLE |
+ 				 SYSC_QUIRK_SWSUP_SIDLE_ACT)) {
+ 		best_mode = SYSC_IDLE_NO;
++
++		/* Clear WAKEUP */
++		if (regbits->enwkup_shift >= 0 &&
++		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
++			reg &= ~BIT(regbits->enwkup_shift);
+ 	} else {
+ 		best_mode = fls(ddata->cfg.sidlemodes) - 1;
+ 		if (best_mode > SYSC_IDLE_MASK) {
+@@ -1238,6 +1243,13 @@ static int sysc_disable_module(struct device *dev)
+ 		}
+ 	}
  
- &timer9 {
- 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
--	assigned-clock-parents = <&sys_clkin_ck>;
-+	assigned-clock-parents = <&sys_32k_ck>;
- };
++	if (ddata->cfg.quirks & SYSC_QUIRK_SWSUP_SIDLE_ACT) {
++		/* Set WAKEUP */
++		if (regbits->enwkup_shift >= 0 &&
++		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
++			reg |= BIT(regbits->enwkup_shift);
++	}
++
+ 	reg &= ~(SYSC_IDLE_MASK << regbits->sidle_shift);
+ 	reg |= best_mode << regbits->sidle_shift;
+ 	if (regbits->autoidle_shift >= 0 &&
+@@ -1497,16 +1509,16 @@ static const struct sysc_revision_quirk sysc_revision_quirks[] = {
+ 	SYSC_QUIRK("sham", 0, 0x100, 0x110, 0x114, 0x40000c03, 0xffffffff,
+ 		   SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000046, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000052, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	/* Uarts on omap4 and later */
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x50411e03, 0xffff00ff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
  
- /*
+ 	/* Quirks that need to be set based on the module address */
+ 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
 -- 
 2.40.1
 
