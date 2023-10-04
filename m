@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8805F1D6B6
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7422D1D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7lytPM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09192C433C9;
-	Wed,  4 Oct 2023 18:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZ6kMn8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96B6C433CA;
+	Wed,  4 Oct 2023 18:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444041;
-	bh=V4i5k4q4ZmPWg7UC8ZouJhlCIufXfVzB8WN1VkpUmbk=;
+	s=korg; t=1696444044;
+	bh=R1mUvpqov8KW19G7tEh6Bw+dLStodwvSEyyH7S4yJDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7lytPM6oLI9v4tw6ycXQyhY99OpgUBUmz/KY2MuGJzu8zQh4F4g0f1Y7ZMqEKqbb
-	 Z+DkmZWCZfT11SaFZEEnShkBPcY8SKrM84LsqdAFUoeepPomgN4kMAPHP3X5e0ysKL
-	 zlw+WXZlx2mroCfG+sktBskW9AWGIVu91jLG651k=
+	b=wZ6kMn8pJ6NmULfGl0ch+2QvaIYeCr9S0AKvacXr9z7ATpsfb4m3WKE8+ncAP7Oum
+	 dzHaTAJd3W+NcA1+IqVhCWvNOg30xdiiSkBmnINndfvIN1pGFVmSugK89Z2NNwBrU3
+	 5YWprWNCcqbCNiM/V41wXK7GsvFxYB1egKc9Zfjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 109/321] i2c: mux: gpio: Add missing fwnode_handle_put()
-Date: Wed,  4 Oct 2023 19:54:14 +0200
-Message-ID: <20231004175234.292242991@linuxfoundation.org>
+Subject: [PATCH 6.5 110/321] i2c: xiic: Correct return value check for xiic_reinit()
+Date: Wed,  4 Oct 2023 19:54:15 +0200
+Message-ID: <20231004175234.327676019@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,38 +44,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang He <windhl@126.com>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-[ Upstream commit db6aee6083a56ac4a6cd1b08fff7938072bcd0a3 ]
+[ Upstream commit 59851fb05d759f13662be143eff0aae605815b0e ]
 
-In i2c_mux_gpio_probe_fw(), we should add fwnode_handle_put()
-when break out of the iteration device_for_each_child_node()
-as it will automatically increase and decrease the refcounter.
+The error paths for xiic_reinit() return negative values on failure
+and 0 on success - this error message therefore is triggered on
+_success_ rather than failure. Correct the condition so it's only
+shown on failure as intended.
 
-Fixes: 98b2b712bc85 ("i2c: i2c-mux-gpio: Enable this driver in ACPI land")
-Signed-off-by: Liang He <windhl@126.com>
+Fixes: 8fa9c9388053 ("i2c: xiic: return value of xiic_reinit")
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-gpio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-gpio.c b/drivers/i2c/muxes/i2c-mux-gpio.c
-index 5d5cbe0130cdf..5ca03bd34c8d1 100644
---- a/drivers/i2c/muxes/i2c-mux-gpio.c
-+++ b/drivers/i2c/muxes/i2c-mux-gpio.c
-@@ -105,8 +105,10 @@ static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index b3bb97762c859..71391b590adae 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -710,7 +710,7 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
+ 		 * reset the IP instead of just flush fifos
+ 		 */
+ 		ret = xiic_reinit(i2c);
+-		if (!ret)
++		if (ret < 0)
+ 			dev_dbg(i2c->adap.dev.parent, "reinit failed\n");
  
- 		} else if (is_acpi_node(child)) {
- 			rc = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), values + i);
--			if (rc)
-+			if (rc) {
-+				fwnode_handle_put(child);
- 				return dev_err_probe(dev, rc, "Cannot get address\n");
-+			}
- 		}
- 
- 		i++;
+ 		if (i2c->rx_msg) {
 -- 
 2.40.1
 
