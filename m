@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD3821360
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B06C21343
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zs98LXXL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A45AC433CD;
-	Wed,  4 Oct 2023 18:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHilURku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D817C433C8;
+	Wed,  4 Oct 2023 18:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444402;
-	bh=3E0KE6SXcb+xDQ0j3J8yAs6FWP8f/HU3ixEcYsz3s/0=;
+	s=korg; t=1696444405;
+	bh=RybLq0S8P7lb2v40qz3UQBS0g52zCFnSvRdMo8ThFvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zs98LXXLTsEaLDq04VsMfnchJHzqzCZ5mvuitUJTLiecDQXxSPw15x6kfJswVns2x
-	 G+cb5h/wcmizjRLAYIHAsAnYnIEs5JjlEi0vYAImA9Y5GU0k5WisGiYGfP94sewxG9
-	 PX8lOr+Prr6ZxbVnb4Kqqpa3AzxYgzGB99S4Tv3w=
+	b=GHilURku1wMBBz2uAGZfScImM+WMcWItYc5POtOBg3oAm9bV9Ldjm0Y8/YfvtN3Ja
+	 kzcgdOfUqPO1b0e/cSA/w/gIayM4oWHoxYtRqDeST3Q9I8j3X0aiGPFirZO5fJdaYj
+	 8iKc9r4lqNTz+UMT7f4JMK5ywERDauhclZb0AY7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 237/321] perf build: Define YYNOMEM as YYNOABORT for bison < 3.81
-Date: Wed,  4 Oct 2023 19:56:22 +0200
-Message-ID: <20231004175240.216337321@linuxfoundation.org>
+Subject: [PATCH 6.5 238/321] ASoC: cs35l56: Call pm_runtime_dont_use_autosuspend()
+Date: Wed,  4 Oct 2023 19:56:23 +0200
+Message-ID: <20231004175240.267986268@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,40 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 88cc47e24597971b05b6e94c28a2fc81d2a8d61a ]
+commit ec03804552e9a723569e14d2512f36a8e70dc640 upstream
 
-YYNOMEM was introduced in bison 3.81, so define it as YYABORT for older
-versions, which should provide the previous perf behaviour.
+Driver remove() must call pm_runtime_dont_use_autosuspend().
 
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Drivers that call pm_runtime_use_autosuspend() must disable
+it in driver remove(). Unfortunately until recently this was
+only mentioned in 1 line in a 900+ line document so most
+people hadn't noticed this. It has only recently been added
+to the kerneldoc of pm_runtime_use_autosuspend().
+
+Backport note: This is the same change as the upstream
+commit but the cs35l56->base.dev argument in the upstream
+code is cs35l56->dev in older releases.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230908101716.2658582-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/Build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/cs35l56.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/Build b/tools/perf/util/Build
-index 96f4ea1d45c56..9c6c4475524b9 100644
---- a/tools/perf/util/Build
-+++ b/tools/perf/util/Build
-@@ -301,6 +301,12 @@ ifeq ($(BISON_GE_35),1)
- else
-   bison_flags += -w
- endif
-+
-+BISON_LT_381 := $(shell expr $(shell $(BISON) --version | grep bison | sed -e 's/.\+ \([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/\1\2\3/g') \< 381)
-+ifeq ($(BISON_LT_381),1)
-+  bison_flags += -DYYNOMEM=YYABORT
-+endif
-+
- CFLAGS_parse-events-bison.o += $(bison_flags)
- CFLAGS_pmu-bison.o          += -DYYLTYPE_IS_TRIVIAL=0 $(bison_flags)
- CFLAGS_expr-bison.o         += -DYYLTYPE_IS_TRIVIAL=0 $(bison_flags)
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index fd06b9f9d496d..7e241908b5f16 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -1594,6 +1594,7 @@ void cs35l56_remove(struct cs35l56_private *cs35l56)
+ 	flush_workqueue(cs35l56->dsp_wq);
+ 	destroy_workqueue(cs35l56->dsp_wq);
+ 
++	pm_runtime_dont_use_autosuspend(cs35l56->dev);
+ 	pm_runtime_suspend(cs35l56->dev);
+ 	pm_runtime_disable(cs35l56->dev);
+ 
 -- 
 2.40.1
 
