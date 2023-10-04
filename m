@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ADC1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9DF1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35CAC433C8;
-	Wed,  4 Oct 2023 18:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EE2C433C7;
+	Wed,  4 Oct 2023 18:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442784;
-	bh=GXBByhq0YBShr1fh1TJSTur68iDnKVQwK3yuLRitksY=;
+	s=korg; t=1696442787;
+	bh=igaaQIJfYdEboBjF3P308XaQYv5I00MEduSxtrV3X0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2Gz3VFjT0DrLX/lKopPGCOUjjVOtQOPY8rZ9f4wfi4Iyjh5zYEnIM4k7noXJY3dj
-	 P33G8q013fxdQ4NBBWa+j1+2fignesMB4Q5KXN0XySnt5IEiS38DgDs0v7V+Mz3Aej
-	 IbwTOENMoqbljjngSfRhZYBJDpm29EWQowiOODRg=
+	b=jJ4b8K2tQHoyIhDsUeVDMeR1lTCsgWsQW2TGzPldWtTvljq2v5p7Cm17iWLGPvxQX
+	 kIM3jxYv8VsehmyvELeHamq108DpF6rGFxxAzdFWYb06Y7BketBxCOjepTSfWSRyz2
+	 ibu9DoJNN/FP2ThDb9lQsvF1/KWMRyrFIq8T1hIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/183] gpio: pmic-eic-sprd: Add can_sleep flag for PMIC EIC chip
-Date: Wed,  4 Oct 2023 19:55:39 +0200
-Message-ID: <20231004175208.431087633@linuxfoundation.org>
+Subject: [PATCH 5.15 091/183] MIPS: Alchemy: only build mmc support helpers if au1xmmc is enabled
+Date: Wed,  4 Oct 2023 19:55:22 +0200
+Message-ID: <20231004175207.701696797@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,37 +44,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 26d9e5640d2130ee16df7b1fb6a908f460ab004c ]
+[ Upstream commit ef8f8f04a0b25e8f294b24350e8463a8d6a9ba0b ]
 
-The drivers uses a mutex and I2C bus access in its PMIC EIC chip
-get implementation. This means these functions can sleep and the PMIC EIC
-chip should set the can_sleep property to true.
+While commit d4a5c59a955b ("mmc: au1xmmc: force non-modular build and
+remove symbol_get usage") to be built in, it can still build a kernel
+without MMC support and thuse no mmc_detect_change symbol at all.
 
-This will ensure that a warning is printed when trying to get the
-value from a context that potentially can't sleep.
+Add ifdefs to build the mmc support code in the alchemy arch code
+conditional on mmc support.
 
-Fixes: 348f3cde84ab ("gpio: Add Spreadtrum PMIC EIC driver support")
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: d4a5c59a955b ("mmc: au1xmmc: force non-modular build and remove symbol_get usage")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pmic-eic-sprd.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/alchemy/devboards/db1000.c | 4 ++++
+ arch/mips/alchemy/devboards/db1200.c | 6 ++++++
+ arch/mips/alchemy/devboards/db1300.c | 4 ++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/gpio/gpio-pmic-eic-sprd.c b/drivers/gpio/gpio-pmic-eic-sprd.c
-index 9382851905662..e969ce9131ddf 100644
---- a/drivers/gpio/gpio-pmic-eic-sprd.c
-+++ b/drivers/gpio/gpio-pmic-eic-sprd.c
-@@ -338,6 +338,7 @@ static int sprd_pmic_eic_probe(struct platform_device *pdev)
- 	pmic_eic->chip.set_config = sprd_pmic_eic_set_config;
- 	pmic_eic->chip.set = sprd_pmic_eic_set;
- 	pmic_eic->chip.get = sprd_pmic_eic_get;
-+	pmic_eic->chip.can_sleep = true;
+diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
+index 50de86eb8784c..3183df60ad337 100644
+--- a/arch/mips/alchemy/devboards/db1000.c
++++ b/arch/mips/alchemy/devboards/db1000.c
+@@ -164,6 +164,7 @@ static struct platform_device db1x00_audio_dev = {
  
- 	pmic_eic->intc.name = dev_name(&pdev->dev);
- 	pmic_eic->intc.irq_mask = sprd_pmic_eic_irq_mask;
+ /******************************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
+ {
+ 	mmc_detect_change(ptr, msecs_to_jiffies(500));
+@@ -369,6 +370,7 @@ static struct platform_device db1100_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1100_mmc1_res),
+ 	.resource	= au1100_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /******************************************************************************/
+ 
+@@ -432,8 +434,10 @@ static struct platform_device *db1x00_devs[] = {
+ 
+ static struct platform_device *db1100_devs[] = {
+ 	&au1100_lcd_device,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1100_mmc0_dev,
+ 	&db1100_mmc1_dev,
++#endif
+ };
+ 
+ int __init db1000_dev_setup(void)
+diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
+index 76080c71a2a7b..f521874ebb07b 100644
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -326,6 +326,7 @@ static struct platform_device db1200_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ /* SD carddetects:  they're supposed to be edge-triggered, but ack
+  * doesn't seem to work (CPLD Rev 2).  Instead, the screaming one
+  * is disabled and its counterpart enabled.  The 200ms timeout is
+@@ -584,6 +585,7 @@ static struct platform_device pb1200_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1200_mmc1_res),
+ 	.resource	= au1200_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -751,7 +753,9 @@ static struct platform_device db1200_audiodma_dev = {
+ static struct platform_device *db1200_devs[] __initdata = {
+ 	NULL,		/* PSC0, selected by S6.8 */
+ 	&db1200_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1200_mmc0_dev,
++#endif
+ 	&au1200_lcd_dev,
+ 	&db1200_eth_dev,
+ 	&db1200_nand_dev,
+@@ -762,7 +766,9 @@ static struct platform_device *db1200_devs[] __initdata = {
+ };
+ 
+ static struct platform_device *pb1200_devs[] __initdata = {
++#ifdef CONFIG_MMC_AU1X
+ 	&pb1200_mmc1_dev,
++#endif
+ };
+ 
+ /* Some peripheral base addresses differ on the PB1200 */
+diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
+index ca71e5ed51abd..c965d00074818 100644
+--- a/arch/mips/alchemy/devboards/db1300.c
++++ b/arch/mips/alchemy/devboards/db1300.c
+@@ -450,6 +450,7 @@ static struct platform_device db1300_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
+ {
+ 	disable_irq_nosync(irq);
+@@ -632,6 +633,7 @@ static struct platform_device db1300_sd0_dev = {
+ 	.resource	= au1300_sd0_res,
+ 	.num_resources	= ARRAY_SIZE(au1300_sd0_res),
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -776,8 +778,10 @@ static struct platform_device *db1300_dev[] __initdata = {
+ 	&db1300_5waysw_dev,
+ 	&db1300_nand_dev,
+ 	&db1300_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1300_sd0_dev,
+ 	&db1300_sd1_dev,
++#endif
+ 	&db1300_lcd_dev,
+ 	&db1300_ac97_dev,
+ 	&db1300_i2s_dev,
 -- 
 2.40.1
 
