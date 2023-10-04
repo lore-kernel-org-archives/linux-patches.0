@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0741D522
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9EA1D68C
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE708C433CA;
-	Wed,  4 Oct 2023 18:09:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D90C433C9;
+	Wed,  4 Oct 2023 18:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442947;
-	bh=9/ccnkcjSSbRoRTyIDD+dK7h2hDx5FUzcGp1G4JqJUc=;
+	s=korg; t=1696442950;
+	bh=Tcwq+xGKcpVCWOPbN8uBW2q2ldL/23NronKrL9DoNek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+m2KHM3y4PSTbOnj2jY+qbWw75c+KmweBQ+rQL+eKQMRU0Cwp4wAvd11u09sy479
-	 wkS06nlalZLHpQ74MgCocXv0IrGw3vNDy9C0HyqM1GD46U+qgw35U0LZiKidLX33Lc
-	 CU35wsDt1Z+Rk5AKuoHxUHcotrjRocHo/TugLHOs=
+	b=c2UM0Gn4nUjEP3bFDtt2oWOT+IzWvnN46vbpUSTgHQtqgn//5f+2MPONu8Cr6gFot
+	 im9Z6xGdi/rM5JbRi8sJZog5lu+Urlumsw2QDvvoUiZcBxY330rrooKfEirftZriVl
+	 WXMMZDar06MeGMW/9pas4N9rKx4Uk1MnLxWb7wTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 166/183] i2c: i801: unregister tco_pdev in i801_probe() error path
-Date: Wed,  4 Oct 2023 19:56:37 +0200
-Message-ID: <20231004175210.987683731@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 167/183] kernel/sched: Modify initial boot task idle setup
+Date: Wed,  4 Oct 2023 19:56:38 +0200
+Message-ID: <20231004175211.028740732@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,32 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit 3914784553f68c931fc666dbe7e86fe881aada38 upstream.
+commit cff9b2332ab762b7e0586c793c431a8f2ea4db04 upstream.
 
-We have to unregister tco_pdev also if i2c_add_adapter() fails.
+Initial booting is setting the task flag to idle (PF_IDLE) by the call
+path sched_init() -> init_idle().  Having the task idle and calling
+call_rcu() in kernel/rcu/tiny.c means that TIF_NEED_RESCHED will be
+set.  Subsequent calls to any cond_resched() will enable IRQs,
+potentially earlier than the IRQ setup has completed.  Recent changes
+have caused just this scenario and IRQs have been enabled early.
 
-Fixes: 9424693035a5 ("i2c: i801: Create iTCO device on newer Intel PCHs")
+This causes a warning later in start_kernel() as interrupts are enabled
+before they are fully set up.
+
+Fix this issue by setting the PF_IDLE flag later in the boot sequence.
+
+Although the boot task was marked as idle since (at least) d80e4fda576d,
+I am not sure that it is wrong to do so.  The forced context-switch on
+idle task was introduced in the tiny_rcu update, so I'm going to claim
+this fixes 5f6130fa52ee.
+
+Fixes: 5f6130fa52ee ("tiny_rcu: Directly force QS when call_rcu_[bh|sched]() on idle_task")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Link: https://lore.kernel.org/linux-mm/CAMuHMdWpvpWoDa=Ox-do92czYRvkok6_x6pYUH+ZouMcJbXy+Q@mail.gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/core.c |    2 +-
+ kernel/sched/idle.c |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1861,6 +1861,7 @@ static int i801_probe(struct pci_dev *de
- 		"SMBus I801 adapter at %04lx", priv->smba);
- 	err = i2c_add_adapter(&priv->adapter);
- 	if (err) {
-+		platform_device_unregister(priv->tco_pdev);
- 		i801_acpi_remove(priv);
- 		return err;
- 	}
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8725,7 +8725,7 @@ void __init init_idle(struct task_struct
+ 	 * PF_KTHREAD should already be set at this point; regardless, make it
+ 	 * look like a proper per-CPU kthread.
+ 	 */
+-	idle->flags |= PF_IDLE | PF_KTHREAD | PF_NO_SETAFFINITY;
++	idle->flags |= PF_KTHREAD | PF_NO_SETAFFINITY;
+ 	kthread_set_per_cpu(idle, cpu);
+ 
+ #ifdef CONFIG_SMP
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -397,6 +397,7 @@ EXPORT_SYMBOL_GPL(play_idle_precise);
+ 
+ void cpu_startup_entry(enum cpuhp_state state)
+ {
++	current->flags |= PF_IDLE;
+ 	arch_cpu_idle_prepare();
+ 	cpuhp_online_idle(state);
+ 	while (1)
 
 
