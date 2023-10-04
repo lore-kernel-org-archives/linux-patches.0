@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936D01D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C81B1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F8BC433C8;
-	Wed,  4 Oct 2023 18:06:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23BBC433C8;
+	Wed,  4 Oct 2023 18:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442767;
-	bh=+Byd9ztfPgP5sCwW3zOBpwuNvn4rmxL+jjKhN4Te4m4=;
+	s=korg; t=1696442770;
+	bh=gLNww7weW5YKyZCSbfQVpVKI3XfNFu6EIq/FnYAcxHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phYc6xf+lJ5A5D6g38Eu0oNT2GeCMCagbUWpa9d56QqEYWdMsAaErvz14KfiXcyFL
-	 ZDCELti6fYO5ZoxaVEd6CDpSHGEdnQaQdmn9x1pTfmOvks2m0wgLYjsPSrLqWDteoF
-	 SUDI3JJOhqNOVpqCszUdFy9Lvh7duLyop6QGE/QE=
+	b=tuBsGGv8a7Aca/FO1I9fXclMk2aq2iBXzj2j/ixqA/BRxLOb59lSfcJk8lJdeJgAe
+	 zBLoDl1TMXhUjZI8Ck+kviylsHOdQR5NilkXdeW1iWy8yD2LsvMYb90UCBwhDSBZZl
+	 AD4fUZ+odfUF/wCuGwWqWg77BFZxUqqAyzF2abww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 102/183] firmware: imx-dsp: Fix an error handling path in imx_dsp_setup_channels()
-Date: Wed,  4 Oct 2023 19:55:33 +0200
-Message-ID: <20231004175208.152913487@linuxfoundation.org>
+Subject: [PATCH 5.15 103/183] xtensa: add default definition for XCHAL_HAVE_DIV32
+Date: Wed,  4 Oct 2023 19:55:34 +0200
+Message-ID: <20231004175208.193509701@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,34 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-[ Upstream commit e527adfb9b7d9d05a4577c116519e59a2bda4b05 ]
+[ Upstream commit 494e87ffa0159b3f879694a9231089707792a44d ]
 
-If mbox_request_channel_byname() fails, the memory allocated a few lines
-above still need to be freed before going to the error handling path.
+When variant FSF is set, XCHAL_HAVE_DIV32 is not defined. Add default
+definition for that macro to prevent build warnings:
 
-Fixes: 046326989a18 ("firmware: imx: Save channel name for further use")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+arch/xtensa/lib/divsi3.S:9:5: warning: "XCHAL_HAVE_DIV32" is not defined, evaluates to 0 [-Wundef]
+    9 | #if XCHAL_HAVE_DIV32
+arch/xtensa/lib/modsi3.S:9:5: warning: "XCHAL_HAVE_DIV32" is not defined, evaluates to 0 [-Wundef]
+    9 | #if XCHAL_HAVE_DIV32
+
+Fixes: 173d6681380a ("xtensa: remove extra header files")
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: lore.kernel.org/r/202309150556.t0yCdv3g-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-dsp.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/xtensa/include/asm/core.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
-index a6c06d7476c32..1f410809d3ee4 100644
---- a/drivers/firmware/imx/imx-dsp.c
-+++ b/drivers/firmware/imx/imx-dsp.c
-@@ -115,6 +115,7 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
- 		dsp_chan->idx = i % 2;
- 		dsp_chan->ch = mbox_request_channel_byname(cl, chan_name);
- 		if (IS_ERR(dsp_chan->ch)) {
-+			kfree(dsp_chan->name);
- 			ret = PTR_ERR(dsp_chan->ch);
- 			if (ret != -EPROBE_DEFER)
- 				dev_err(dev, "Failed to request mbox chan %s ret %d\n",
+diff --git a/arch/xtensa/include/asm/core.h b/arch/xtensa/include/asm/core.h
+index a4e40166ff4bb..0fa3649649e98 100644
+--- a/arch/xtensa/include/asm/core.h
++++ b/arch/xtensa/include/asm/core.h
+@@ -6,6 +6,10 @@
+ 
+ #include <variant/core.h>
+ 
++#ifndef XCHAL_HAVE_DIV32
++#define XCHAL_HAVE_DIV32 0
++#endif
++
+ #ifndef XCHAL_HAVE_EXCLUSIVE
+ #define XCHAL_HAVE_EXCLUSIVE 0
+ #endif
 -- 
 2.40.1
 
