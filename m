@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DDE1D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A91D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar2DIyTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55534C433C9;
-	Wed,  4 Oct 2023 18:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teObhdmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CF5C433C8;
+	Wed,  4 Oct 2023 18:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444066;
-	bh=Nq0wxDHc1DIS+/fazlv3MFBnuCInrBNO2TDflez4HAY=;
+	s=korg; t=1696444069;
+	bh=pQbqH82IjrttBA3sShwG3Xe3kto8wf/YX5WFiuV2Wmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ar2DIyTRqR7lDY/i2VEPw7U1rnaMBOVTz2uMjuSNT3g+KQYf4bkOcaMLmtHtZiDcI
-	 KoqKRfoh1M3UgGzsSgCIlnLFyY/bOcQGP1hnQ2Ojrupo63Pa5h+GA43vIKVCWLkJmr
-	 Sgrf58GzOFTM3g+mHupxbt0tBzjeZnk/HfnkC5yg=
+	b=teObhdmwfcqOW4SB/55sZwRvbDmACHn508GjmPXJCuX1B3S005dlZVcVPcCgGNEPJ
+	 iImVYfuUEnQwzad+YVyyjicKLLQghZNFBPcaYVzeoOhFop3yN+oKx6zZC1d+w0cwt2
+	 nOCsk6HiOGoxMhklDCfE4J9C068L1mTFEPpwV/Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 090/321] net: rds: Fix possible NULL-pointer dereference
-Date: Wed,  4 Oct 2023 19:53:55 +0200
-Message-ID: <20231004175233.378720010@linuxfoundation.org>
+Subject: [PATCH 6.5 091/321] vxlan: Add missing entries to vxlan_get_size()
+Date: Wed,  4 Oct 2023 19:53:56 +0200
+Message-ID: <20231004175233.427111651@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,46 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Benjamin Poirier <bpoirier@nvidia.com>
 
-[ Upstream commit f1d95df0f31048f1c59092648997686e3f7d9478 ]
+[ Upstream commit 4e4b1798cc90e376b8b61d0098b4093898a32227 ]
 
-In rds_rdma_cm_event_handler_cmn() check, if conn pointer exists
-before dereferencing it as rdma_set_service_type() argument
+There are some attributes added by vxlan_fill_info() which are not
+accounted for in vxlan_get_size(). Add them.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+I didn't find a way to trigger an actual problem from this miscalculation
+since there is usually extra space in netlink size calculations like
+if_nlmsg_size(); but maybe I just didn't search long enough.
 
-Fixes: fd261ce6a30e ("rds: rdma: update rdma transport for tos")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Fixes: 3511494ce2f3 ("vxlan: Group Policy extension")
+Fixes: e1e5314de08b ("vxlan: implement GPE")
+Fixes: 0ace2ca89cbd ("vxlan: Use checksum partial with remote checksum offload")
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index d36f3f6b43510..b15cf316b23a2 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -86,11 +86,13 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
- 		break;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index c9a9373733c01..4b2db14472e6c 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4296,6 +4296,10 @@ static size_t vxlan_get_size(const struct net_device *dev)
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_REMCSUM_TX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_REMCSUM_RX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_LOCALBYPASS */
++		nla_total_size(0) + /* IFLA_VXLAN_GBP */
++		nla_total_size(0) + /* IFLA_VXLAN_GPE */
++		nla_total_size(0) + /* IFLA_VXLAN_REMCSUM_NOPARTIAL */
++		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_VNIFILTER */
+ 		0;
+ }
  
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
--		rdma_set_service_type(cm_id, conn->c_tos);
--		rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
--		/* XXX do we need to clean up if this fails? */
--		ret = rdma_resolve_route(cm_id,
--					 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+		if (conn) {
-+			rdma_set_service_type(cm_id, conn->c_tos);
-+			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
-+			/* XXX do we need to clean up if this fails? */
-+			ret = rdma_resolve_route(cm_id,
-+						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+		}
- 		break;
- 
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
 -- 
 2.40.1
 
