@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2CB1C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AD71C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18vjFPAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2801C433C9;
-	Wed,  4 Oct 2023 18:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa/nCHwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79ABC433C9;
+	Wed,  4 Oct 2023 18:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444518;
-	bh=mk0ODCAWRYfqHlYm6zW1OWjleAD80o+WcN/1mXcQiAc=;
+	s=korg; t=1696444521;
+	bh=2yPcKuFpPwq5SchytPF/Wz9Go03K8XHZ2f8A2Z07TEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18vjFPABS33YT8go3VRv5i0SvWpNxu6dgIEFl/M0d1qJ14HeXip+Q6zCVGsy3n6Ub
-	 i/nGXdPCEieJWwqD0R0MW11NP5i0sT5Xgqu/fgPsxehWB/rAacg9t89MPKj4g7dT7o
-	 zTScYeqYq876Zzc4To228bDGDMHeBo/gsiiguotg=
+	b=Qa/nCHwvqQmTBEmWmv1lRpZqXe6+K0XlK/7IW1IfEYpe3zjLP2LsP7DFVOwQ43Ey1
+	 1O8Bp5aTHivk5cZs+CeM/54QuzeMMuutScYmdGwRQ6hOGen/+tuzPLANUWwdfhfFbg
+	 Tl7o5P5y0tQ4InpDJYS75gWWEywuEHJTOfnpsdkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.5 240/321] spi: zynqmp-gqspi: fix clock imbalance on probe failure
-Date: Wed,  4 Oct 2023 19:56:25 +0200
-Message-ID: <20231004175240.366714254@linuxfoundation.org>
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 6.5 272/321] sched/rt: Fix live lock between select_fallback_rq() and RT push
+Date: Wed,  4 Oct 2023 19:56:57 +0200
+Message-ID: <20231004175241.885389061@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,57 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit 1527b076ae2cb6a9c590a02725ed39399fcad1cf upstream.
+commit fc09027786c900368de98d03d40af058bcb01ad9 upstream.
 
-Make sure that the device is not runtime suspended before explicitly
-disabling the clocks on probe failure and on driver unbind to avoid a
-clock enable-count imbalance.
+During RCU-boost testing with the TREE03 rcutorture config, I found that
+after a few hours, the machine locks up.
 
-Fixes: 9e3a000362ae ("spi: zynqmp: Add pm runtime support")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
-Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/Message-Id: <20230622082435.7873-1-johan+linaro@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+On tracing, I found that there is a live lock happening between 2 CPUs.
+One CPU has an RT task running, while another CPU is being offlined
+which also has an RT task running.  During this offlining, all threads
+are migrated. The migration thread is repeatedly scheduled to migrate
+actively running tasks on the CPU being offlined. This results in a live
+lock because select_fallback_rq() keeps picking the CPU that an RT task
+is already running on only to get pushed back to the CPU being offlined.
+
+It is anyway pointless to pick CPUs for pushing tasks to if they are
+being offlined only to get migrated away to somewhere else. This could
+also add unwanted latency to this task.
+
+Fix these issues by not selecting CPUs in RT if they are not 'active'
+for scheduling, using the cpu_active_mask. Other parts in core.c already
+use cpu_active_mask to prevent tasks from being put on CPUs going
+offline.
+
+With this fix I ran the tests for days and could not reproduce the
+hang. Without the patch, I hit it in a few hours.
+
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230923011409.3522762-1-joel@joelfernandes.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/sched/cpupri.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1342,9 +1342,9 @@ static int zynqmp_qspi_probe(struct plat
- 	return 0;
+--- a/kernel/sched/cpupri.c
++++ b/kernel/sched/cpupri.c
+@@ -101,6 +101,7 @@ static inline int __cpupri_find(struct c
  
- clk_dis_all:
--	pm_runtime_put_sync(&pdev->dev);
--	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
- 	clk_disable_unprepare(xqspi->refclk);
- clk_dis_pclk:
- 	clk_disable_unprepare(xqspi->pclk);
-@@ -1368,11 +1368,15 @@ static void zynqmp_qspi_remove(struct pl
- {
- 	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
+ 	if (lowest_mask) {
+ 		cpumask_and(lowest_mask, &p->cpus_mask, vec->mask);
++		cpumask_and(lowest_mask, lowest_mask, cpu_active_mask);
  
-+	pm_runtime_get_sync(&pdev->dev);
-+
- 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
-+
-+	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
- 	clk_disable_unprepare(xqspi->refclk);
- 	clk_disable_unprepare(xqspi->pclk);
--	pm_runtime_set_suspended(&pdev->dev);
--	pm_runtime_disable(&pdev->dev);
- }
- 
- MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+ 		/*
+ 		 * We have to ensure that we have at least one bit
 
 
