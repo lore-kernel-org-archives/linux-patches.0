@@ -1,87 +1,73 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72D93405E9
-	for <patches@lists.linux.dev>; Tue,  3 Oct 2023 23:37:01 +0000 (UTC)
-Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 2294820B74C0;
-	Tue,  3 Oct 2023 16:37:00 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2294820B74C0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1696376220;
-	bh=tsip8nWvlbps3k11kkyVGy2+8yeAGiiGZPurvzAPE14=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=C+EH+ZFfOJLP32l5gUhfgckBSI+ZFNZKDVMrKVnd98UhkWNMSwPGbCF5RRrGmG7Ty
-	 s+2bZf/590Ek6L1hvVy/dIss4fpBiPry8a/1xTDjehOQrpGCdw59aBRvB+l2G5BZVK
-	 17n4LJMibOWB4335M2rEm7WLeM52xH8yTw73kExw=
-Message-ID: <dd5159fe-5337-44ed-bf1b-58220221b597@linux.microsoft.com>
-Date: Tue, 3 Oct 2023 16:37:01 -0700
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E23ECD;
+	Wed,  4 Oct 2023 03:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 14D57C433C9;
+	Wed,  4 Oct 2023 03:50:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696391425;
+	bh=c8Roab6aa9Nae1aAnyEzh4yR/xvaRHrM2IuA1++Ug9o=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=uIvstt6XUR3m9oSUY4AxcHdpgIj1uw08/c9yoRls2YogQAYYdbvS4MLGylbBujL+L
+	 rJsCrtrkrr2cWxSWwvevVHgWK5MI+helumf4ImdML2KRc4WbCLzixKKwds0zTaSjOI
+	 f9ULWVP1kZmts/qUGdx9/C+ZtmMIyKrH1skeQ+vYpuX5H7/uzbYVguk/sv7Cjdrj4+
+	 IuSWEPZ8l2kVkdT/D8ktDFxTjlnx7VMoDRP9FxmXhZxMYu/977eyN8CLW9M0A2w9vt
+	 BCiJIBFvAw8NX1nh1nqOCP5/oT7aflzCocFedJi/kxb8S+J85NemOzoqJumUNzXNzD
+	 EGPsiRppbGJDQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7C3BE632D2;
+	Wed,  4 Oct 2023 03:50:24 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
- hypervisor ABIs
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>, Wei Liu <wei.liu@kernel.org>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
- kys@microsoft.com, haiyangz@microsoft.com, decui@microsoft.com,
- apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
- ssengar@linux.microsoft.com, mukeshrathor@microsoft.com,
- stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com,
- vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
- catalin.marinas@arm.com
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093057-eggplant-reshoot-8513@gregkh>
- <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
- <2023100154-ferret-rift-acef@gregkh>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <2023100154-ferret-rift-acef@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 0/4] platform/chrome: Random driver cleanups
+From: patchwork-bot+chrome-platform@kernel.org
+Message-Id: 
+ <169639142493.18780.17059605384749460756.git-patchwork-notify@kernel.org>
+Date: Wed, 04 Oct 2023 03:50:24 +0000
+References: <20231003003429.1378109-1-swboyd@chromium.org>
+In-Reply-To: <20231003003429.1378109-1-swboyd@chromium.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: bleung@chromium.org, tzungbi@kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, chrome-platform@lists.linux.dev
 
-On 9/30/2023 11:19 PM, Greg KH wrote:
-> On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
->> On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
->>> On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
->>>> +/* Define connection identifier type. */
->>>> +union hv_connection_id {
->>>> +	__u32 asu32;
->>>> +	struct {
->>>> +		__u32 id:24;
->>>> +		__u32 reserved:8;
->>>> +	} __packed u;
->>>
->>> bitfields will not work properly in uapi .h files, please never do that.
->>
->> Can you clarify a bit more why it wouldn't work? Endianess? Alignment?
+Hello:
+
+This series was applied to chrome-platform/linux.git (for-kernelci)
+by Tzung-Bi Shih <tzungbi@kernel.org>:
+
+On Mon,  2 Oct 2023 17:34:24 -0700 you wrote:
+> Here's some random chromeos driver cleanups that have been sitting in my
+> tree. I've noticed them while browsing the code for something I'm
+> working on.
 > 
-> Yes to both.
+> Stephen Boyd (4):
+>   platform/chrome: cros_ec_typec: Use semi-colons instead of commas
+>   platform/chrome: cros_ec_typec: Use dev_err_probe() more
+>   platform/chrome: cros_typec_vdm: Mark port_amode_ops const
+>   platform/chrome: cros_ec_proto: Mark outdata as const
 > 
-> Did you all read the documentation for how to write a kernel api?  If
-> not, please do so.  I think it mentions bitfields, but it not, it really
-> should as of course, this will not work properly with different endian
-> systems or many compilers.
+> [...]
 
-Yes, in https://docs.kernel.org/driver-api/ioctl.html it says that it is
-"better to avoid" bitfields.
+Here is the summary with links:
+  - [1/4] platform/chrome: cros_ec_typec: Use semi-colons instead of commas
+    https://git.kernel.org/chrome-platform/c/a88f6ef67957
+  - [2/4] platform/chrome: cros_ec_typec: Use dev_err_probe() more
+    https://git.kernel.org/chrome-platform/c/2b055bf8ac84
+  - [3/4] platform/chrome: cros_typec_vdm: Mark port_amode_ops const
+    https://git.kernel.org/chrome-platform/c/14e7c01cc349
+  - [4/4] platform/chrome: cros_ec_proto: Mark outdata as const
+    https://git.kernel.org/chrome-platform/c/2f3dd39e2b49
 
-Unfortunately bitfields are used in the definition of the hypervisor
-ABI. We import these definitions directly from the hypervisor code.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-In practice the hypervisor, linux, and VMM compilers all produce the
-same layout for bitfields on the architectures we support.
-
-Thanks,
-Nuno
-
-> 
-> thanks,
-> 
-> greg k-h
 
