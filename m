@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D25221356
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ABA1F5F9
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq9PDavU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0051C433C7;
-	Wed,  4 Oct 2023 18:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOyiodeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D83AC433CA;
+	Wed,  4 Oct 2023 18:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444408;
-	bh=GlOyA4DV6DaLZgzsGgfkotpTtO+FE/MsIqty39FtQNE=;
+	s=korg; t=1696444410;
+	bh=YpY7hhJlIPbx+IJ2qRFGZUD0x2RoCZs1/CC9duaVZc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bq9PDavUyu1H4KNjW9XlIMMfRV7y9cGasIS00+uqkVvPmeNy9yWz2z9nd6v9coLtZ
-	 jS+f25oIuRTxQqyISBdpAZ8woYunpJlsX6ArNSju2gdUoibw1VzqhvUXBL0I9GI9uo
-	 GxphIzATMrOYKWXXLTuoiBV7DbA/XrjE4KA+Vyiw=
+	b=nOyiodeHotSHS/iM5fOsNTU0PjZsMMHvmpN8eTx7mf1d15o4/ygkJ/+KF+LKLmCHJ
+	 Rx+wGcVIPoWiWSyKgiEA2y40jy+H+nkUDZvog2ZKurs/BxMlVmM0yUxcwYAhwqQHoy
+	 P6juqcFHuuRRNrVE56q2BsNd/Axwe0JZjebFoQgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 212/321] ASoC: cs42l42: Ensure a reset pulse meets minimum pulse width.
-Date: Wed,  4 Oct 2023 19:55:57 +0200
-Message-ID: <20231004175239.075709613@linuxfoundation.org>
+Subject: [PATCH 6.5 239/321] iommu/arm-smmu-v3: Fix soft lockup triggered by arm_smmu_mm_invalidate_range
+Date: Wed,  4 Oct 2023 19:56:24 +0200
+Message-ID: <20231004175240.316613346@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,39 +42,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 41dac81b56c82c51a6d00fda5f3af7691ffee2d7 ]
+commit d5afb4b47e13161b3f33904d45110f9e6463bad6 upstream.
 
-The CS42L42 can accept very short reset pulses of a few microseconds
-but there's no reason to force a very short pulse.
-Allow a wide range for the usleep_range() so it can be relaxed about
-the choice of timing source.
+When running an SVA case, the following soft lockup is triggered:
+--------------------------------------------------------------------
+watchdog: BUG: soft lockup - CPU#244 stuck for 26s!
+pstate: 83400009 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+lr : arm_smmu_cmdq_issue_cmdlist+0x150/0xa50
+sp : ffff8000d83ef290
+x29: ffff8000d83ef290 x28: 000000003b9aca00 x27: 0000000000000000
+x26: ffff8000d83ef3c0 x25: da86c0812194a0e8 x24: 0000000000000000
+x23: 0000000000000040 x22: ffff8000d83ef340 x21: ffff0000c63980c0
+x20: 0000000000000001 x19: ffff0000c6398080 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: ffff3000b4a3bbb0
+x14: ffff3000b4a30888 x13: ffff3000b4a3cf60 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc08120e4d6bc
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000048cfa
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : 000000000000000a
+x2 : 0000000080000000 x1 : 0000000000000000 x0 : 0000000000000001
+Call trace:
+ arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+ __arm_smmu_tlb_inv_range+0x118/0x254
+ arm_smmu_tlb_inv_range_asid+0x6c/0x130
+ arm_smmu_mm_invalidate_range+0xa0/0xa4
+ __mmu_notifier_invalidate_range_end+0x88/0x120
+ unmap_vmas+0x194/0x1e0
+ unmap_region+0xb4/0x144
+ do_mas_align_munmap+0x290/0x490
+ do_mas_munmap+0xbc/0x124
+ __vm_munmap+0xa8/0x19c
+ __arm64_sys_munmap+0x28/0x50
+ invoke_syscall+0x78/0x11c
+ el0_svc_common.constprop.0+0x58/0x1c0
+ do_el0_svc+0x34/0x60
+ el0_svc+0x2c/0xd4
+ el0t_64_sync_handler+0x114/0x140
+ el0t_64_sync+0x1a4/0x1a8
+--------------------------------------------------------------------
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230913150012.604775-2-sbinding@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The commit 06ff87bae8d3 ("arm64: mm: remove unused functions and variable
+protoypes") fixed a similar lockup on the CPU MMU side. Yet, it can occur
+to SMMU too since arm_smmu_mm_invalidate_range() is typically called next
+to MMU tlb flush function, e.g.
+	tlb_flush_mmu_tlbonly {
+		tlb_flush {
+			__flush_tlb_range {
+				// check MAX_TLBI_OPS
+			}
+		}
+		mmu_notifier_invalidate_range {
+			arm_smmu_mm_invalidate_range {
+				// does not check MAX_TLBI_OPS
+			}
+		}
+	}
+
+Clone a CMDQ_MAX_TLBI_OPS from the MAX_TLBI_OPS in tlbflush.h, since in an
+SVA case SMMU uses the CPU page table, so it makes sense to align with the
+tlbflush code. Then, replace per-page TLBI commands with a single per-asid
+TLBI command, if the request size hits this threshold.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20230920052257.8615-1-nicolinc@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l42.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 27 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l42.c b/sound/soc/codecs/cs42l42.c
-index a0de0329406a1..56d2857a4f01c 100644
---- a/sound/soc/codecs/cs42l42.c
-+++ b/sound/soc/codecs/cs42l42.c
-@@ -2320,6 +2320,10 @@ int cs42l42_common_probe(struct cs42l42_private *cs42l42,
- 
- 	if (cs42l42->reset_gpio) {
- 		dev_dbg(cs42l42->dev, "Found reset GPIO\n");
-+
-+		/* Ensure minimum reset pulse width */
-+		usleep_range(10, 500);
-+
- 		gpiod_set_value_cansleep(cs42l42->reset_gpio, 1);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index a5a63b1c947eb..98d3ba7f94873 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -186,6 +186,15 @@ static void arm_smmu_free_shared_cd(struct arm_smmu_ctx_desc *cd)
  	}
- 	usleep_range(CS42L42_BOOT_TIME_US, CS42L42_BOOT_TIME_US * 2);
+ }
+ 
++/*
++ * Cloned from the MAX_TLBI_OPS in arch/arm64/include/asm/tlbflush.h, this
++ * is used as a threshold to replace per-page TLBI commands to issue in the
++ * command queue with an address-space TLBI command, when SMMU w/o a range
++ * invalidation feature handles too many per-page TLBI commands, which will
++ * otherwise result in a soft lockup.
++ */
++#define CMDQ_MAX_TLBI_OPS		(1 << (PAGE_SHIFT - 3))
++
+ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 					 struct mm_struct *mm,
+ 					 unsigned long start, unsigned long end)
+@@ -200,10 +209,22 @@ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 	 * range. So do a simple translation here by calculating size correctly.
+ 	 */
+ 	size = end - start;
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_RANGE_INV)) {
++		if (size >= CMDQ_MAX_TLBI_OPS * PAGE_SIZE)
++			size = 0;
++	}
++
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM)) {
++		if (!size)
++			arm_smmu_tlb_inv_asid(smmu_domain->smmu,
++					      smmu_mn->cd->asid);
++		else
++			arm_smmu_tlb_inv_range_asid(start, size,
++						    smmu_mn->cd->asid,
++						    PAGE_SIZE, false,
++						    smmu_domain);
++	}
+ 
+-	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM))
+-		arm_smmu_tlb_inv_range_asid(start, size, smmu_mn->cd->asid,
+-					    PAGE_SIZE, false, smmu_domain);
+ 	arm_smmu_atc_inv_domain(smmu_domain, mm->pasid, start, size);
+ }
+ 
 -- 
 2.40.1
 
