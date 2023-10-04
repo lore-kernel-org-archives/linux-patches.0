@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76941D6A1
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F50A1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5LbNNf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F692C433C8;
-	Wed,  4 Oct 2023 18:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+7fnx8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F372AC433CA;
+	Wed,  4 Oct 2023 18:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443667;
-	bh=YaAm3MmlE6cjj4OvhDvVI41xF5vM/i6JPWwOHcmilp8=;
+	s=korg; t=1696443670;
+	bh=IUYbkKR5wcbX2TGUKCJIP8r0jxNig+lXv5b+tSTihDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5LbNNf7oR1F8NKD4sQut9jp4fvBWCUFN5n5def6uCn0z8OGTnYfUASnUBHw4MgNV
-	 kbU0TtGPvsJUkR4hm/ENt3k1+PNiL73i1BFsaQUVWw2c4yM6z6WrZyAuM00r8r/qD4
-	 4y5nbqlPyDr4N0J9Ea2D+jFdd+n3rXTbjN0sYdEU=
+	b=M+7fnx8zEw0XJRBhFf5ZqsGw45hNCYZRLfw5QVMciC4WsEqhxodRr7B/q4q+Ia7xJ
+	 GP7O+TmYSR+GNWPpmVolMedc3s5n8CzQGFF8Ee+ZLaIej/OdN5Nu+C7BY0eccPEWHW
+	 v91PKDfOSQCYCPyoJ/R4ivbX2EkU/yDR6WTgxZKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Aquini <aquini@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.1 237/259] mm/slab_common: fix slab_caches list corruption after kmem_cache_destroy()
-Date: Wed,  4 Oct 2023 19:56:50 +0200
-Message-ID: <20231004175228.248443969@linuxfoundation.org>
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Breno Leitao <leitao@debian.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 238/259] mm: memcontrol: fix GFP_NOFS recursion in memory.high enforcement
+Date: Wed,  4 Oct 2023 19:56:51 +0200
+Message-ID: <20231004175228.294466676@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,87 +47,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Aquini <aquini@redhat.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 46a9ea6681907a3be6b6b0d43776dccc62cad6cf upstream.
+commit 9ea9cb00a82b53ec39630eac718776d37e41b35a upstream.
 
-After the commit in Fixes:, if a module that created a slab cache does not
-release all of its allocated objects before destroying the cache (at rmmod
-time), we might end up releasing the kmem_cache object without removing it
-from the slab_caches list thus corrupting the list as kmem_cache_destroy()
-ignores the return value from shutdown_cache(), which in turn never removes
-the kmem_cache object from slabs_list in case __kmem_cache_shutdown() fails
-to release all of the cache's slabs.
+Breno and Josef report a deadlock scenario from cgroup reclaim
+re-entering the filesystem:
 
-This is easily observable on a kernel built with CONFIG_DEBUG_LIST=y
-as after that ill release the system will immediately trip on list_add,
-or list_del, assertions similar to the one shown below as soon as another
-kmem_cache gets created, or destroyed:
+[  361.546690] ======================================================
+[  361.559210] WARNING: possible circular locking dependency detected
+[  361.571703] 6.5.0-0_fbk700_debug_rc0_kbuilder_13159_gbf787a128001 #1 Tainted: G S          E
+[  361.589704] ------------------------------------------------------
+[  361.602277] find/9315 is trying to acquire lock:
+[  361.611625] ffff88837ba140c0 (&delayed_node->mutex){+.+.}-{4:4}, at: __btrfs_release_delayed_node+0x68/0x4f0
+[  361.631437]
+[  361.631437] but task is already holding lock:
+[  361.643243] ffff8881765b8678 (btrfs-tree-01){++++}-{4:4}, at: btrfs_tree_read_lock+0x1e/0x40
 
-  [ 1041.213632] list_del corruption. next->prev should be ffff89f596fb5768, but was 52f1e5016aeee75d. (next=ffff89f595a1b268)
-  [ 1041.219165] ------------[ cut here ]------------
-  [ 1041.221517] kernel BUG at lib/list_debug.c:62!
-  [ 1041.223452] invalid opcode: 0000 [#1] PREEMPT SMP PTI
-  [ 1041.225408] CPU: 2 PID: 1852 Comm: rmmod Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
-  [ 1041.228244] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
-  [ 1041.231212] RIP: 0010:__list_del_entry_valid+0xae/0xb0
+[  362.904457]  mutex_lock_nested+0x1c/0x30
+[  362.912414]  __btrfs_release_delayed_node+0x68/0x4f0
+[  362.922460]  btrfs_evict_inode+0x301/0x770
+[  362.982726]  evict+0x17c/0x380
+[  362.988944]  prune_icache_sb+0x100/0x1d0
+[  363.005559]  super_cache_scan+0x1f8/0x260
+[  363.013695]  do_shrink_slab+0x2a2/0x540
+[  363.021489]  shrink_slab_memcg+0x237/0x3d0
+[  363.050606]  shrink_slab+0xa7/0x240
+[  363.083382]  shrink_node_memcgs+0x262/0x3b0
+[  363.091870]  shrink_node+0x1a4/0x720
+[  363.099150]  shrink_zones+0x1f6/0x5d0
+[  363.148798]  do_try_to_free_pages+0x19b/0x5e0
+[  363.157633]  try_to_free_mem_cgroup_pages+0x266/0x370
+[  363.190575]  reclaim_high+0x16f/0x1f0
+[  363.208409]  mem_cgroup_handle_over_high+0x10b/0x270
+[  363.246678]  try_charge_memcg+0xaf2/0xc70
+[  363.304151]  charge_memcg+0xf0/0x350
+[  363.320070]  __mem_cgroup_charge+0x28/0x40
+[  363.328371]  __filemap_add_folio+0x870/0xd50
+[  363.371303]  filemap_add_folio+0xdd/0x310
+[  363.399696]  __filemap_get_folio+0x2fc/0x7d0
+[  363.419086]  pagecache_get_page+0xe/0x30
+[  363.427048]  alloc_extent_buffer+0x1cd/0x6a0
+[  363.435704]  read_tree_block+0x43/0xc0
+[  363.443316]  read_block_for_search+0x361/0x510
+[  363.466690]  btrfs_search_slot+0xc8c/0x1520
 
-Another quick way to trigger this issue, in a kernel with CONFIG_SLUB=y,
-is to set slub_debug to poison the released objects and then just run
-cat /proc/slabinfo after removing the module that leaks slab objects,
-in which case the kernel will panic:
+This is caused by the mem_cgroup_handle_over_high() not respecting the
+gfp_mask of the allocation context.  We used to only call this function on
+resume to userspace, where no locks were held.  But c9afe31ec443 ("memcg:
+synchronously enforce memory.high for large overcharges") added a call
+from the allocation context without considering the gfp.
 
-  [   50.954843] general protection fault, probably for non-canonical address 0xa56b6b6b6b6b6b8b: 0000 [#1] PREEMPT SMP PTI
-  [   50.961545] CPU: 2 PID: 1495 Comm: cat Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
-  [   50.966808] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
-  [   50.972663] RIP: 0010:get_slabinfo+0x42/0xf0
-
-This patch fixes this issue by properly checking shutdown_cache()'s
-return value before taking the kmem_cache_release() branch.
-
-Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
-Signed-off-by: Rafael Aquini <aquini@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lkml.kernel.org/r/20230914152139.100822-1-hannes@cmpxchg.org
+Fixes: c9afe31ec443 ("memcg: synchronously enforce memory.high for large overcharges")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>	[5.17+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab_common.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/linux/memcontrol.h       |    4 ++--
+ include/linux/resume_user_mode.h |    2 +-
+ mm/memcontrol.c                  |    6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -474,7 +474,7 @@ void slab_kmem_cache_release(struct kmem
- 
- void kmem_cache_destroy(struct kmem_cache *s)
- {
--	int refcnt;
-+	int err = -EBUSY;
- 	bool rcu_set;
- 
- 	if (unlikely(!s) || !kasan_check_byte(s))
-@@ -485,17 +485,17 @@ void kmem_cache_destroy(struct kmem_cach
- 
- 	rcu_set = s->flags & SLAB_TYPESAFE_BY_RCU;
- 
--	refcnt = --s->refcount;
--	if (refcnt)
-+	s->refcount--;
-+	if (s->refcount)
- 		goto out_unlock;
- 
--	WARN(shutdown_cache(s),
--	     "%s %s: Slab cache still has objects when called from %pS",
-+	err = shutdown_cache(s);
-+	WARN(err, "%s %s: Slab cache still has objects when called from %pS",
- 	     __func__, s->name, (void *)_RET_IP_);
- out_unlock:
- 	mutex_unlock(&slab_mutex);
- 	cpus_read_unlock();
--	if (!refcnt && !rcu_set)
-+	if (!err && !rcu_set)
- 		kmem_cache_release(s);
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -902,7 +902,7 @@ unsigned long mem_cgroup_get_zone_lru_si
+ 	return READ_ONCE(mz->lru_zone_size[zone_idx][lru]);
  }
- EXPORT_SYMBOL(kmem_cache_destroy);
+ 
+-void mem_cgroup_handle_over_high(void);
++void mem_cgroup_handle_over_high(gfp_t gfp_mask);
+ 
+ unsigned long mem_cgroup_get_max(struct mem_cgroup *memcg);
+ 
+@@ -1437,7 +1437,7 @@ static inline void mem_cgroup_unlock_pag
+ 	rcu_read_unlock();
+ }
+ 
+-static inline void mem_cgroup_handle_over_high(void)
++static inline void mem_cgroup_handle_over_high(gfp_t gfp_mask)
+ {
+ }
+ 
+--- a/include/linux/resume_user_mode.h
++++ b/include/linux/resume_user_mode.h
+@@ -55,7 +55,7 @@ static inline void resume_user_mode_work
+ 	}
+ #endif
+ 
+-	mem_cgroup_handle_over_high();
++	mem_cgroup_handle_over_high(GFP_KERNEL);
+ 	blkcg_maybe_throttle_current();
+ 
+ 	rseq_handle_notify_resume(NULL, regs);
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2545,7 +2545,7 @@ static unsigned long calculate_high_dela
+  * Scheduled by try_charge() to be executed from the userland return path
+  * and reclaims memory over the high limit.
+  */
+-void mem_cgroup_handle_over_high(void)
++void mem_cgroup_handle_over_high(gfp_t gfp_mask)
+ {
+ 	unsigned long penalty_jiffies;
+ 	unsigned long pflags;
+@@ -2573,7 +2573,7 @@ retry_reclaim:
+ 	 */
+ 	nr_reclaimed = reclaim_high(memcg,
+ 				    in_retry ? SWAP_CLUSTER_MAX : nr_pages,
+-				    GFP_KERNEL);
++				    gfp_mask);
+ 
+ 	/*
+ 	 * memory.high is breached and reclaim is unable to keep up. Throttle
+@@ -2809,7 +2809,7 @@ done_restock:
+ 	if (current->memcg_nr_pages_over_high > MEMCG_CHARGE_BATCH &&
+ 	    !(current->flags & PF_MEMALLOC) &&
+ 	    gfpflags_allow_blocking(gfp_mask)) {
+-		mem_cgroup_handle_over_high();
++		mem_cgroup_handle_over_high(gfp_mask);
+ 	}
+ 	return 0;
+ }
 
 
