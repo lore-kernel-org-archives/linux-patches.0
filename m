@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FD91DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C141DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2R2qwZ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E69CC433C7;
-	Wed,  4 Oct 2023 18:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFvAFcmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8D9C433C7;
+	Wed,  4 Oct 2023 18:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444137;
-	bh=GkfID3NuDmMQd6zrhZyl+6eUSMPfzGV8Zwipui1W4HI=;
+	s=korg; t=1696444140;
+	bh=XOklIZq5LB8LR5vhTggytVTp4xqkz63gvVjB/nEubLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2R2qwZ01IFjfqpQddRVntp38ZnZats1ASdlZzBfpqsnU4xdlT4HL1gvZVOqtMB62
-	 g8N6OVAgtArm7Fal57IBUXXKmfmfMen1BQCUf4ysyWBEgV4c+LwvLx5o6IQPt1Gtk9
-	 MkEiGyx14WHCzY9XH/n64JF3XMP53NptNrsaDWsQ=
+	b=SFvAFcmV5Z++LgvprDFyHYAs+e6gSndDzwxJJSINrVLt+jym2QMR0/qq7L1nPzOje
+	 RlJUnpmLF0Mldv8ye8Zx3i/lUTeGiX7dowKpyYSHXW0I8aeUqyFr+JoODdK0ZraMX5
+	 57sPUuay5hHNMpFHirl/QodNCXTAeqkbhIhtq+GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 143/321] power: supply: rk817: Fix node refcount leak
-Date: Wed,  4 Oct 2023 19:54:48 +0200
-Message-ID: <20231004175235.870477367@linuxfoundation.org>
+Subject: [PATCH 6.5 144/321] powerpc/stacktrace: Fix arch_stack_walk_reliable()
+Date: Wed,  4 Oct 2023 19:54:49 +0200
+Message-ID: <20231004175235.919628542@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,62 +43,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 488ef44c068e79752dba8eda0b75f524f111a695 ]
+[ Upstream commit c5cc3ca707bc916a3f326364751a41f25040aef3 ]
 
-Dan Carpenter reports that the Smatch static checker warning has found
-that there is another refcount leak in the probe function. While
-of_node_put() was added in one of the return paths, it should in
-fact be added for ALL return paths that return an error and at driver
-removal time.
+The changes to copy_thread() made in commit eed7c420aac7 ("powerpc:
+copy_thread differentiate kthreads and user mode threads") inadvertently
+broke arch_stack_walk_reliable() because it has knowledge of the stack
+layout.
 
-Fixes: 54c03bfd094f ("power: supply: Fix refcount leak in rk817_charger_probe")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Closes: https://lore.kernel.org/linux-pm/dc0bb0f8-212d-4be7-be69-becd2a3f9a80@kili.mountain/
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://lore.kernel.org/r/20230920145644.57964-1-macroalpha82@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fix it by changing the condition to match the new logic in
+copy_thread(). The changes make the comments about the stack layout
+incorrect, rather than rephrasing them just refer the reader to
+copy_thread().
+
+Also the comment about the stack backchain is no longer true, since
+commit edbd0387f324 ("powerpc: copy_thread add a back chain to the
+switch stack frame"), so remove that as well.
+
+Fixes: eed7c420aac7 ("powerpc: copy_thread differentiate kthreads and user mode threads")
+Reported-by: Joe Lawrence <joe.lawrence@redhat.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230921232441.1181843-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rk817_charger.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/stacktrace.c | 27 +++++----------------------
+ 1 file changed, 5 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/power/supply/rk817_charger.c b/drivers/power/supply/rk817_charger.c
-index 8328bcea1a299..242e158824222 100644
---- a/drivers/power/supply/rk817_charger.c
-+++ b/drivers/power/supply/rk817_charger.c
-@@ -1045,6 +1045,13 @@ static void rk817_charging_monitor(struct work_struct *work)
- 	queue_delayed_work(system_wq, &charger->work, msecs_to_jiffies(8000));
- }
+diff --git a/arch/powerpc/kernel/stacktrace.c b/arch/powerpc/kernel/stacktrace.c
+index b15f15dcacb5c..e6a958a5da276 100644
+--- a/arch/powerpc/kernel/stacktrace.c
++++ b/arch/powerpc/kernel/stacktrace.c
+@@ -73,29 +73,12 @@ int __no_sanitize_address arch_stack_walk_reliable(stack_trace_consume_fn consum
+ 	bool firstframe;
  
-+static void rk817_cleanup_node(void *data)
-+{
-+	struct device_node *node = data;
+ 	stack_end = stack_page + THREAD_SIZE;
+-	if (!is_idle_task(task)) {
+-		/*
+-		 * For user tasks, this is the SP value loaded on
+-		 * kernel entry, see "PACAKSAVE(r13)" in _switch() and
+-		 * system_call_common().
+-		 *
+-		 * Likewise for non-swapper kernel threads,
+-		 * this also happens to be the top of the stack
+-		 * as setup by copy_thread().
+-		 *
+-		 * Note that stack backlinks are not properly setup by
+-		 * copy_thread() and thus, a forked task() will have
+-		 * an unreliable stack trace until it's been
+-		 * _switch()'ed to for the first time.
+-		 */
+-		stack_end -= STACK_USER_INT_FRAME_SIZE;
+-	} else {
+-		/*
+-		 * idle tasks have a custom stack layout,
+-		 * c.f. cpu_idle_thread_init().
+-		 */
 +
-+	of_node_put(node);
-+}
-+
- static int rk817_charger_probe(struct platform_device *pdev)
- {
- 	struct rk808 *rk808 = dev_get_drvdata(pdev->dev.parent);
-@@ -1061,11 +1068,13 @@ static int rk817_charger_probe(struct platform_device *pdev)
- 	if (!node)
- 		return -ENODEV;
- 
-+	ret = devm_add_action_or_reset(&pdev->dev, rk817_cleanup_node, node);
-+	if (ret)
-+		return ret;
-+
- 	charger = devm_kzalloc(&pdev->dev, sizeof(*charger), GFP_KERNEL);
--	if (!charger) {
--		of_node_put(node);
-+	if (!charger)
- 		return -ENOMEM;
++	// See copy_thread() for details.
++	if (task->flags & PF_KTHREAD)
+ 		stack_end -= STACK_FRAME_MIN_SIZE;
 -	}
++	else
++		stack_end -= STACK_USER_INT_FRAME_SIZE;
  
- 	charger->rk808 = rk808;
- 
+ 	if (task == current)
+ 		sp = current_stack_frame();
 -- 
 2.40.1
 
