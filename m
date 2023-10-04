@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9601BDEC
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632421BDEC
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8Cb4+Gx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113FCC433C8;
-	Wed,  4 Oct 2023 18:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzcDqrQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94E8C433C7;
+	Wed,  4 Oct 2023 18:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444571;
-	bh=K6jsXLU+zLNl4JX1kRYFLq9M5BoBjKpyY/jJJR21H+4=;
+	s=korg; t=1696444574;
+	bh=o7aLzCENgyKJyC0HSOZ2UP3c9ykjiKkTMcdaZvD6yIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8Cb4+Gx8qljzncH6jBlWXFYRUh/rngrnKC82tBv7dBNRaSUUC8IKrRzSSVVyVs2P
-	 xw4BB8cYM+RFiUujys8c8ikM4Mk8zrvizDN2ODMgF1tNQdMS5roOEz8TDwHhqnTNaV
-	 OGXxNTGC25Y1wA+8bvf2mSUHdbFLenPajwsBaUL4=
+	b=KzcDqrQ+FbFArqQys1wdcgZ2tGau5qQ6UeV+xqg/U1vTH1lw+Ks989VJQq417fhS/
+	 5PPsVBe6p5ueolA1O8K8xAE6EWdEdlqNyO+7aHYqVGBewQ5IlrDAj7KMK8tG+mExty
+	 g0/xNd2RTVRMr8DcnNYXOwBgfhXfVoHuSiljn/Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
 	Marcus Seyfarth <m.seyfarth@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
 	Nick Desaulniers <ndesaulniers@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.5 297/321] bpf: Fix BTF_ID symbol generation collision
-Date: Wed,  4 Oct 2023 19:57:22 +0200
-Message-ID: <20231004175243.053802278@linuxfoundation.org>
+	Jiri Olsa <jolsa@kernel.org>
+Subject: [PATCH 6.5 298/321] bpf: Fix BTF_ID symbol generation collision in tools/
+Date: Wed,  4 Oct 2023 19:57:23 +0200
+Message-ID: <20231004175243.093818025@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,15 +45,15 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 8f908db77782630c45ba29dac35c434b5ce0b730 upstream.
+commit c0bb9fb0e52a64601d38b3739b729d9138d4c8a1 upstream.
 
 Marcus and Satya reported an issue where BTF_ID macro generates same
 symbol in separate objects and that breaks final vmlinux link.
 
-ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
-'__BTF_ID__struct__cgroup__624' is already defined
+  ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
+  '__BTF_ID__struct__cgroup__624' is already defined
 
 This can be triggered under specific configs when __COUNTER__ happens to
 be the same for the same symbol in two different translation units,
@@ -68,21 +68,20 @@ Reported-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
 Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
 Closes: https://github.com/ClangBuiltLinux/linux/issues/1913
 Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Co-developed-by: Jiri Olsa <jolsa@kernel.org>
 Link: https://lore.kernel.org/bpf/CAEf4Bzb5KQ2_LmhN769ifMeSJaWfebccUasQOfQKaOd0nQ51tw@mail.gmail.com/
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-1-263fc519c21f@google.com
+Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-2-263fc519c21f@google.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/btf_ids.h |    2 +-
+ tools/include/linux/btf_ids.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/btf_ids.h
-+++ b/include/linux/btf_ids.h
-@@ -49,7 +49,7 @@ word							\
- 	____BTF_ID(symbol, word)
+--- a/tools/include/linux/btf_ids.h
++++ b/tools/include/linux/btf_ids.h
+@@ -38,7 +38,7 @@ asm(							\
+ 	____BTF_ID(symbol)
  
  #define __ID(prefix) \
 -	__PASTE(prefix, __COUNTER__)
