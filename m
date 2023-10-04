@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BF71D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44DCC433C9;
-	Wed,  4 Oct 2023 18:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C1D6128
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D58C433C8;
+	Wed,  4 Oct 2023 18:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443051;
-	bh=twpDG6Jk4Br9J4yZyNyOyB28QxQveNjd3mBbBaTGeY0=;
+	s=korg; t=1696443054;
+	bh=FmwJgAGHBiPodnztgzhYuHTr7uRugQuctoAf82kvrw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZMGfR5dmtaF6npR66ueE4ryeAMdhgxYgH5NU5zk8N3Do8QidpuXJDhowDo8T4Tlk
-	 zfDyEAzTYCB56pxFYPrGsMgdVdTZWfhG/VjJ+4Ragha1IBKgP+SrgLTMVD+v6OGyeR
-	 9BG8h0NbAvBDSdRR8JmPQRO3CtToVQb2D3TXfyno=
+	b=cbT1yd4lmHBxIOtakmocwv73cecTOtQbOpM78q3/dK/4YB+79ai/K/qUOorTGcbuJ
+	 hv5SbZs2ctaEIdBcQTZ+gCIn1BG1Abdi6v2+ZbYwGvbmDIsmlbQQsutavNRrkrM+ap
+	 7lR1dGJoUi5mrIEDC1vDzUyRORn+pMIDinw328cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Len Brown <lenb@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/259] ext4: do not let fstrim block system suspend
-Date: Wed,  4 Oct 2023 19:53:12 +0200
-Message-ID: <20231004175218.306215827@linuxfoundation.org>
+Subject: [PATCH 6.1 002/259] NFS: Fix O_DIRECT locking issues
+Date: Wed,  4 Oct 2023 19:52:55 +0200
+Message-ID: <20231004175217.530094213@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,74 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5229a658f6453362fbb9da6bf96872ef25a7097e ]
+[ Upstream commit 7c6339322ce0c6128acbe36aacc1eeb986dd7bf1 ]
 
-Len Brown has reported that system suspend sometimes fail due to
-inability to freeze a task working in ext4_trim_fs() for one minute.
-Trimming a large filesystem on a disk that slowly processes discard
-requests can indeed take a long time. Since discard is just an advisory
-call, it is perfectly fine to interrupt it at any time and the return
-number of discarded blocks until that moment. Do that when we detect the
-task is being frozen.
+The dreq fields are protected by the dreq->lock.
 
-Cc: stable@kernel.org
-Reported-by: Len Brown <lenb@kernel.org>
-Suggested-by: Dave Chinner <david@fromorbit.com>
-References: https://bugzilla.kernel.org/show_bug.cgi?id=216322
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230913150504.9054-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 954998b60caa ("NFS: Fix error handling for O_DIRECT write scheduling")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/nfs/direct.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 41f0385f85d38..3c8300e08f412 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -16,6 +16,7 @@
- #include <linux/slab.h>
- #include <linux/nospec.h>
- #include <linux/backing-dev.h>
-+#include <linux/freezer.h>
- #include <trace/events/ext4.h>
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index d71762f32b6c4..449d248fc1ec7 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -555,7 +555,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 		/* Bump the transmission count */
+ 		req->wb_nio++;
+ 		if (!nfs_pageio_add_request(&desc, req)) {
+-			spin_lock(&cinfo.inode->i_lock);
++			spin_lock(&dreq->lock);
+ 			if (dreq->error < 0) {
+ 				desc.pg_error = dreq->error;
+ 			} else if (desc.pg_error != -EAGAIN) {
+@@ -565,7 +565,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 				dreq->error = desc.pg_error;
+ 			} else
+ 				dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-			spin_unlock(&cinfo.inode->i_lock);
++			spin_unlock(&dreq->lock);
+ 			break;
+ 		}
+ 		nfs_release_request(req);
+@@ -875,9 +875,9 @@ static ssize_t nfs_direct_write_schedule_iovec(struct nfs_direct_req *dreq,
  
- /*
-@@ -6430,6 +6431,11 @@ static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
- 					EXT4_CLUSTER_BITS(sb);
- }
- 
-+static bool ext4_trim_interrupted(void)
-+{
-+	return fatal_signal_pending(current) || freezing(current);
-+}
-+
- static int ext4_try_to_trim_range(struct super_block *sb,
- 		struct ext4_buddy *e4b, ext4_grpblk_t start,
- 		ext4_grpblk_t max, ext4_grpblk_t minblocks)
-@@ -6463,8 +6469,8 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 		free_count += next - start;
- 		start = next + 1;
- 
--		if (fatal_signal_pending(current))
--			return -ERESTARTSYS;
-+		if (ext4_trim_interrupted())
-+			return count;
- 
- 		if (need_resched()) {
- 			ext4_unlock_group(sb, e4b->bd_group);
-@@ -6586,6 +6592,8 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
- 	end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
- 
- 	for (group = first_group; group <= last_group; group++) {
-+		if (ext4_trim_interrupted())
-+			break;
- 		grp = ext4_get_group_info(sb, group);
- 		if (!grp)
- 			continue;
+ 			/* If the error is soft, defer remaining requests */
+ 			nfs_init_cinfo_from_dreq(&cinfo, dreq);
+-			spin_lock(&cinfo.inode->i_lock);
++			spin_lock(&dreq->lock);
+ 			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-			spin_unlock(&cinfo.inode->i_lock);
++			spin_unlock(&dreq->lock);
+ 			nfs_unlock_request(req);
+ 			nfs_mark_request_commit(req, NULL, &cinfo, 0);
+ 			desc.pg_error = 0;
 -- 
 2.40.1
 
