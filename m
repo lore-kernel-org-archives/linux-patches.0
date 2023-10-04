@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B951D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460811D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpulZMCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E843BC433C9;
-	Wed,  4 Oct 2023 18:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZcAN2us"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97F0C433C8;
+	Wed,  4 Oct 2023 18:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443840;
-	bh=QXBRdqeUzNslpdTWBTmM9+QGrwJK7rkcrQsNE3vIMw4=;
+	s=korg; t=1696443843;
+	bh=KXgkQ+Grm7C0UOpKPNTmALIhzAyFUvoTiq3xtk3PeCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpulZMCrSMsHOSrbP7QFsEf+g/BA4QNt+mgaZJ4seI3UdMbHXS2zFlZv71CsKcz5T
-	 +eLuRnJJfNqqbBTgZDWRhnbYxtMnnUXWTzH2hBSsrvN8d1nSB0LWz9V9uvmFWDaoNn
-	 zOQYBpSnTIPFgMU0kalb4qQiM+T+MrsfnNNZA+0A=
+	b=dZcAN2usKZjKnbycEUpV/P52YGus1w17xbcH2vklfgKPiCKj6Rzh31C0CtVPUM2gP
+	 pqOS/OJdOg/Ykz61cXBLJ/q8uaEEeq+zDcdnQl1Ce/OZHg5TMBBdVzMnC2FvoyVPXH
+	 nCdMczdSdlivcxf+CTiWubAmviWdF+0RgyNh0ePw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Knyazev Arseniy <poseaydone@ya.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 039/321] ALSA: hda/realtek: Splitting the UX3402 into two separate models
-Date: Wed,  4 Oct 2023 19:53:04 +0200
-Message-ID: <20231004175230.975450068@linuxfoundation.org>
+Subject: [PATCH 6.5 040/321] netfilter: conntrack: fix extension size table
+Date: Wed,  4 Oct 2023 19:53:05 +0200
+Message-ID: <20231004175231.019892435@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,36 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Knyazev Arseniy <poseaydone@ya.ru>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 07058dceb038a4b0dd49af07118b6b2a685bb4a6 ]
+[ Upstream commit 4908d5af16676b9d2901830551c2af911e452524 ]
 
-UX3402VA and UX3402ZA models require different hex values, so comibining
-them into one model is incorrect.
+The size table is incorrect due to copypaste error,
+this reserves more size than needed.
 
-Fixes: 491a4ccd8a02 ("ALSA: hda/realtek: Add quirk for ASUS Zenbook using CS35L41")
-Signed-off-by: Knyazev Arseniy <poseaydone@ya.ru>
-Link: https://lore.kernel.org/r/20230913053343.119798-1-poseaydone@ya.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+TSTAMP reserved 32 instead of 16 bytes.
+TIMEOUT reserved 16 instead of 8 bytes.
+
+Fixes: 5f31edc0676b ("netfilter: conntrack: move extension sizes into core")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_extend.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index dc7b7a407638a..4a13747b2b0f3 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9680,7 +9680,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1d1f, "ASUS ROG Strix G17 2023 (G713PV)", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1d42, "ASUS Zephyrus G14 2022", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x1d4e, "ASUS TM420", ALC256_FIXUP_ASUS_HPE),
--	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
+diff --git a/net/netfilter/nf_conntrack_extend.c b/net/netfilter/nf_conntrack_extend.c
+index 0b513f7bf9f39..dd62cc12e7750 100644
+--- a/net/netfilter/nf_conntrack_extend.c
++++ b/net/netfilter/nf_conntrack_extend.c
+@@ -40,10 +40,10 @@ static const u8 nf_ct_ext_type_len[NF_CT_EXT_NUM] = {
+ 	[NF_CT_EXT_ECACHE] = sizeof(struct nf_conntrack_ecache),
+ #endif
+ #ifdef CONFIG_NF_CONNTRACK_TIMESTAMP
+-	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_acct),
++	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_tstamp),
+ #endif
+ #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
+-	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_tstamp),
++	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_timeout),
+ #endif
+ #ifdef CONFIG_NF_CONNTRACK_LABELS
+ 	[NF_CT_EXT_LABELS] = sizeof(struct nf_conn_labels),
 -- 
 2.40.1
 
