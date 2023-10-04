@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976F214273
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C2514273
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXrzT5lJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B103C433C8;
-	Wed,  4 Oct 2023 18:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+FEnwYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9F4C433C7;
+	Wed,  4 Oct 2023 18:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444467;
-	bh=jYVPHaBHKAhtJNSmXtfYPhckC5HORPuJPMovxDkdLyw=;
+	s=korg; t=1696444470;
+	bh=Y3YZpOqClP48uKhu7HzHVi1Q/19yLoRxUDopOUGnCmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXrzT5lJVznpO5iHAPyVzNSVDtBV+OhHqBsllOVABDReokKlyThd2kHXGALCUeTBM
-	 rwSUuE0li6hg7F1lynkTwWOQcxtS7/cj9jXQ/iLd7FxkuolXWbt03kVPBocs8mntu8
-	 33ujoXLCgITCDDImeYWUQyRqjz52VfPVynkVrQ4U=
+	b=E+FEnwYfk7PjhdWdWw0K1/v0HPr7xxnCyM/BqCceGrsFRYwiW0UO7m4/0B6lxW8M6
+	 ddTXT5JCPtH8GgYmSzeEKODUYlb57uHm/OmrOkUiKrJgYD2SMsfM60WBScdK2cdVbU
+	 gJQ9vpPtusgtDQiSFoFfsVtOXhpVqRrBEW+/h+JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Chong Qiao <qiaochong@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.5 260/321] LoongArch: Define relocation types for ABI v2.10
-Date: Wed,  4 Oct 2023 19:56:45 +0200
-Message-ID: <20231004175241.307982642@linuxfoundation.org>
+Subject: [PATCH 6.5 261/321] LoongArch: numa: Fix high_memory calculation
+Date: Wed,  4 Oct 2023 19:56:46 +0200
+Message-ID: <20231004175241.347006666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,51 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 2761498876adebff77a43574639005b29e912c43 upstream.
+commit 1943feecf80e73ecc03ce40271f29c6cea142bac upstream.
 
-The relocation types from 101 to 109 are used by GNU binutils >= 2.41,
-add their definitions to use them in later patches.
+For 64bit kernel without HIGHMEM, high_memory is the virtual address of
+the highest physical address in the system. But __va(get_num_physpages()
+<< PAGE_SHIFT) is not what we want for high_memory because there may be
+holes in the physical address space. On the other hand, max_low_pfn is
+calculated from memblock_end_of_DRAM(), which is exactly corresponding
+to the highest physical address, so use it for high_memory calculation.
 
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=include/elf/loongarch.h#l230
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Fixes: d4b6f1562a3c3284adce ("LoongArch: Add Non-Uniform Memory Access (NUMA) support")
+Signed-off-by: Chong Qiao <qiaochong@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/elf.h |    9 +++++++++
- arch/loongarch/kernel/module.c   |    2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/numa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/include/asm/elf.h
-+++ b/arch/loongarch/include/asm/elf.h
-@@ -111,6 +111,15 @@
- #define R_LARCH_TLS_GD_HI20			98
- #define R_LARCH_32_PCREL			99
- #define R_LARCH_RELAX				100
-+#define R_LARCH_DELETE				101
-+#define R_LARCH_ALIGN				102
-+#define R_LARCH_PCREL20_S2			103
-+#define R_LARCH_CFA				104
-+#define R_LARCH_ADD6				105
-+#define R_LARCH_SUB6				106
-+#define R_LARCH_ADD_ULEB128			107
-+#define R_LARCH_SUB_ULEB128			108
-+#define R_LARCH_64_PCREL			109
+--- a/arch/loongarch/kernel/numa.c
++++ b/arch/loongarch/kernel/numa.c
+@@ -468,7 +468,7 @@ void __init paging_init(void)
  
- #ifndef ELF_ARCH
- 
---- a/arch/loongarch/kernel/module.c
-+++ b/arch/loongarch/kernel/module.c
-@@ -382,7 +382,7 @@ typedef int (*reloc_rela_handler)(struct
- 
- /* The handlers for known reloc types */
- static reloc_rela_handler reloc_rela_handlers[] = {
--	[R_LARCH_NONE ... R_LARCH_RELAX]		     = apply_r_larch_error,
-+	[R_LARCH_NONE ... R_LARCH_64_PCREL]		     = apply_r_larch_error,
- 
- 	[R_LARCH_NONE]					     = apply_r_larch_none,
- 	[R_LARCH_32]					     = apply_r_larch_32,
+ void __init mem_init(void)
+ {
+-	high_memory = (void *) __va(get_num_physpages() << PAGE_SHIFT);
++	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
+ 	memblock_free_all();
+ 	setup_zero_pages();	/* This comes from node 0 */
+ }
 
 
