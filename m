@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FD81BDEC
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1138A14273
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbQHpZQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5B2C433C8;
-	Wed,  4 Oct 2023 18:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nZilS/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76093C433C8;
+	Wed,  4 Oct 2023 18:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444459;
-	bh=FhlYNP8s0C2GPD77lu3sMT418PsrvcWJjaNCrXLFbBs=;
+	s=korg; t=1696444461;
+	bh=YVmJfIgdq84eZHefxVy0TLvGxPdjIDGk0XMdWUpcZhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbQHpZQzj1wjO0l6SVrIrV9hpGZjFhGZOhIupwNSwre8v8gt/xfmLrw82SM67YE5W
-	 /+Qir+v7L33rs9ByZHChp7yscU+zsO5/xvKDz//GXcFIb0Ld8WWWyNDA8wChFs0j8T
-	 Y/WpUBHGzmERMT885NXZm/fkn7EtI+/dHf8W3LM8=
+	b=1nZilS/xKbVVJ9Y7DzRivk+SQdpUbFXZEGa7X9AAC25GV3lnbEnXeLOygxC/tX/fD
+	 6q5PehaZLvL/xXxWRe9YT3wIKuNq1lGGNb/yNPenm/RXNgH4fG5YMK8d1gYp2t4RGc
+	 Cacbh64zsZbn7QC4NyQfo+BfqBS1e3hAuCeNS33o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 258/321] ALSA: hda: Disable power save for solving pop issue on Lenovo ThinkCentre M70q
-Date: Wed,  4 Oct 2023 19:56:43 +0200
-Message-ID: <20231004175241.207265789@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Helge Deller <deller@gmx.de>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.5 259/321] LoongArch: Fix lockdep static memory detection
+Date: Wed,  4 Oct 2023 19:56:44 +0200
+Message-ID: <20231004175241.256973790@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,31 +43,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 057a28ef93bdbe84326d34cdb5543afdaab49fe1 upstream.
+commit 68ffa230daa0d35b7cce476098433d763d5fd42f upstream.
 
-Lenovo ThinkCentre M70q had boot up pop noise.
-Disable power save will solve pop issue.
+Since commit 0a6b58c5cd0d ("lockdep: fix static memory detection even
+more") the lockdep code uses is_kernel_core_data(), is_kernel_rodata()
+and init_section_contains() to verify if a lock is located inside a
+kernel static data section.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/315900e2efef42fd9855eacfeb443abd@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This change triggers a failure on LoongArch, for which the vmlinux.lds.S
+script misses to put the locks (as part of in the .data.rel symbols)
+into the Linux data section.
+
+This patch fixes the lockdep problem by moving *(.data.rel*) symbols
+into the kernel data section (from _sdata to _edata).
+
+Additionally, move other wrongly assigned symbols too:
+- altinstructions into the _initdata section,
+- PLT symbols behind the read-only section, and
+- *(.la_abs) into the data section.
+
+Cc: stable <stable@kernel.org> # v6.4+
+Fixes: 0a6b58c5cd0d ("lockdep: fix static memory detection even more")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/kernel/vmlinux.lds.S |   55 ++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2223,6 +2223,7 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x8086, 0x2068, "Intel NUC7i3BNB", 0),
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=198611 */
- 	SND_PCI_QUIRK(0x17aa, 0x2227, "Lenovo X1 Carbon 3rd Gen", 0),
-+	SND_PCI_QUIRK(0x17aa, 0x316e, "Lenovo ThinkCentre M70q", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1689623 */
- 	SND_PCI_QUIRK(0x17aa, 0x367b, "Lenovo IdeaCentre B550", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1572975 */
+--- a/arch/loongarch/kernel/vmlinux.lds.S
++++ b/arch/loongarch/kernel/vmlinux.lds.S
+@@ -53,33 +53,6 @@ SECTIONS
+ 	. = ALIGN(PECOFF_SEGMENT_ALIGN);
+ 	_etext = .;
+ 
+-	/*
+-	 * struct alt_inst entries. From the header (alternative.h):
+-	 * "Alternative instructions for different CPU types or capabilities"
+-	 * Think locking instructions on spinlocks.
+-	 */
+-	. = ALIGN(4);
+-	.altinstructions : AT(ADDR(.altinstructions) - LOAD_OFFSET) {
+-		__alt_instructions = .;
+-		*(.altinstructions)
+-		__alt_instructions_end = .;
+-	}
+-
+-#ifdef CONFIG_RELOCATABLE
+-	. = ALIGN(8);
+-	.la_abs : AT(ADDR(.la_abs) - LOAD_OFFSET) {
+-		__la_abs_begin = .;
+-		*(.la_abs)
+-		__la_abs_end = .;
+-	}
+-#endif
+-
+-	.got : ALIGN(16) { *(.got) }
+-	.plt : ALIGN(16) { *(.plt) }
+-	.got.plt : ALIGN(16) { *(.got.plt) }
+-
+-	.data.rel : { *(.data.rel*) }
+-
+ 	. = ALIGN(PECOFF_SEGMENT_ALIGN);
+ 	__init_begin = .;
+ 	__inittext_begin = .;
+@@ -94,6 +67,18 @@ SECTIONS
+ 
+ 	__initdata_begin = .;
+ 
++	/*
++	 * struct alt_inst entries. From the header (alternative.h):
++	 * "Alternative instructions for different CPU types or capabilities"
++	 * Think locking instructions on spinlocks.
++	 */
++	. = ALIGN(4);
++	.altinstructions : AT(ADDR(.altinstructions) - LOAD_OFFSET) {
++		__alt_instructions = .;
++		*(.altinstructions)
++		__alt_instructions_end = .;
++	}
++
+ 	INIT_DATA_SECTION(16)
+ 	.exit.data : {
+ 		EXIT_DATA
+@@ -113,6 +98,11 @@ SECTIONS
+ 
+ 	_sdata = .;
+ 	RO_DATA(4096)
++
++	.got : ALIGN(16) { *(.got) }
++	.plt : ALIGN(16) { *(.plt) }
++	.got.plt : ALIGN(16) { *(.got.plt) }
++
+ 	RW_DATA(1 << CONFIG_L1_CACHE_SHIFT, PAGE_SIZE, THREAD_SIZE)
+ 
+ 	.rela.dyn : ALIGN(8) {
+@@ -121,6 +111,17 @@ SECTIONS
+ 		__rela_dyn_end = .;
+ 	}
+ 
++	.data.rel : { *(.data.rel*) }
++
++#ifdef CONFIG_RELOCATABLE
++	. = ALIGN(8);
++	.la_abs : AT(ADDR(.la_abs) - LOAD_OFFSET) {
++		__la_abs_begin = .;
++		*(.la_abs)
++		__la_abs_end = .;
++	}
++#endif
++
+ 	.sdata : {
+ 		*(.sdata)
+ 	}
 
 
