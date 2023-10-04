@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E07B1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFBF1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKSp9hEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0642C433C7;
-	Wed,  4 Oct 2023 18:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaIscHFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1632C433C7;
+	Wed,  4 Oct 2023 18:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443962;
-	bh=EJenV4cXGsfpuygNJf19F3ytNVE/LWjb7Mv/LYKHCoU=;
+	s=korg; t=1696443965;
+	bh=8tBnaWAjBSyNSviA+5S+5s81kWgl+X86cxAoM+LVKoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKSp9hEv4lwtGrNHVc0Exwaw+f5urlIpr2NncZpCni9Qi9BpnO8EGCK6PkT25VrHB
-	 B4+dYXUeCTd/KJsoRPmmB7tbMC6OnfVb3D0DNFXrNg85SwHu16VRnZ1LiDNn0j6RQm
-	 FSK/Oa3xx0YMWkKZQHYxlnEQ3ERCbq7Ix9mUgbMc=
+	b=GaIscHFpDyO4zMGKWWaWNfFvceCeTMOmXHA/uRKEvzZF0k5FlOFWFiBqP9xFvee+g
+	 XDQtr2l+1meFGM5N8S6IaBQL6Wr/IYdbExOdHRWVG8ORdl/ADAIGOjir4UqL8K0mf4
+	 Kq6oQBQqr3FkktF0BWQ+GlfAHV0gpnZOgFxL+sBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 081/321] x86/srso: Fix SBPB enablement for spec_rstack_overflow=off
-Date: Wed,  4 Oct 2023 19:53:46 +0200
-Message-ID: <20231004175232.961205608@linuxfoundation.org>
+Subject: [PATCH 6.5 082/321] net: hns3: add cmdq check for vf periodic service task
+Date: Wed,  4 Oct 2023 19:53:47 +0200
+Message-ID: <20231004175233.011608794@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,37 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 01b057b2f4cc2d905a0bd92195657dbd9a7005ab ]
+[ Upstream commit bd3caddf299a640efb66c6022efed7fe744db626 ]
 
-If the user has requested no SRSO mitigation, other mitigations can use
-the lighter-weight SBPB instead of IBPB.
+When the vf cmdq is disabled, there is no need to keep these task running.
+So this patch skip these task when the cmdq is disabled.
 
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/b20820c3cfd1003171135ec8d762a0b957348497.1693889988.git.jpoimboe@kernel.org
+Fixes: ff200099d271 ("net: hns3: remove unnecessary work in hclgevf_main")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index b0ae985aa6a4a..10499bcd4e396 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2433,7 +2433,7 @@ static void __init srso_select_mitigation(void)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 7a2f9233d6954..a4d68fb216fb9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1855,7 +1855,8 @@ static void hclgevf_periodic_service_task(struct hclgevf_dev *hdev)
+ 	unsigned long delta = round_jiffies_relative(HZ);
+ 	struct hnae3_handle *handle = &hdev->nic;
  
- 	switch (srso_cmd) {
- 	case SRSO_CMD_OFF:
--		return;
-+		goto pred_cmd;
+-	if (test_bit(HCLGEVF_STATE_RST_FAIL, &hdev->state))
++	if (test_bit(HCLGEVF_STATE_RST_FAIL, &hdev->state) ||
++	    test_bit(HCLGE_COMM_STATE_CMD_DISABLE, &hdev->hw.hw.comm_state))
+ 		return;
  
- 	case SRSO_CMD_MICROCODE:
- 		if (has_microcode) {
+ 	if (time_is_after_jiffies(hdev->last_serv_processed + HZ)) {
 -- 
 2.40.1
 
