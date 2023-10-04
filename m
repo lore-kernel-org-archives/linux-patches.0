@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C6F1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0524C433C8;
-	Wed,  4 Oct 2023 18:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE3C1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3610C433C9;
+	Wed,  4 Oct 2023 18:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442713;
-	bh=WBY/crvimllwAjbY3wh3mjIAyjLwwoPjkSz9Ar4mlOg=;
+	s=korg; t=1696442716;
+	bh=HQmp+zOFs0s8wjnbNfe5f2r2B/PfuPZHaJoa3Cje10I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecuj+8pT1g5znn7nX77iXCinQXbqu992XxAyYSVuNqfyUokMVkoegylrnFRUXqv2M
-	 omGOLpd+wSZPmbhKM5zCSFH8Hb9W8ENo0zAYo0pZpM/nzjjHjWv6pLyAcb2Q5eGHoP
-	 e5AOTR9cd4QHFsDIN+3n5T6q5lep1Ccfusju5MeE=
+	b=ketICBeOr+6Ji2mOQpzxN7tjMv4mZWTvAoxxKKXf8PAxUEmgUmROcgNOFoGXhbkJw
+	 0MVT5hxTtuCDJuhJ4bazq2vh8J2synUPsvxWXUH5LdSPW3AQz3Fe3xylZQWwf9UzeB
+	 TVnEe9C7j3+7cxXwoqcwNwCBv65Q94xupkbdgVY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Xiao Liang <shaw.leon@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/183] netfilter: exthdr: add support for tcp option removal
-Date: Wed,  4 Oct 2023 19:55:13 +0200
-Message-ID: <20231004175207.290102989@linuxfoundation.org>
+Subject: [PATCH 5.15 083/183] netfilter: nft_exthdr: Fix non-linear header modification
+Date: Wed,  4 Oct 2023 19:55:14 +0200
+Message-ID: <20231004175207.337269578@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,169 +40,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-[ Upstream commit 7890cbea66e78a3a6037b2a12827118d7243270b ]
+[ Upstream commit 28427f368f0e08d504ed06e74bc7cc79d6d06511 ]
 
-This allows to replace a tcp option with nop padding to selectively disable
-a particular tcp option.
+Fix skb_ensure_writable() size. Don't use nft_tcp_header_pointer() to
+make it explicit that pointers point to the packet (not local buffer).
 
-Optstrip mode is chosen when userspace passes the exthdr expression with
-neither a source nor a destination register attribute.
-
-This is identical to xtables TCPOPTSTRIP extension.
-The only difference is that TCPOPTSTRIP allows to pass in a bitmap
-of options to remove rather than a single number.
-
-Unlike TCPOPTSTRIP this expression can be used multiple times
-in the same rule to get the same effect.
-
-We could add a new nested attribute later on in case there is a
-use case for single-expression-multi-remove.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 99d1712bc41c ("netfilter: exthdr: tcp option set support")
+Fixes: 7890cbea66e7 ("netfilter: exthdr: add support for tcp option removal")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 28427f368f0e ("netfilter: nft_exthdr: Fix non-linear header modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 96 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 95 insertions(+), 1 deletion(-)
+ net/netfilter/nft_exthdr.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index 3609680831a14..58f205531b961 100644
+index 58f205531b961..daee46cf62abb 100644
 --- a/net/netfilter/nft_exthdr.c
 +++ b/net/netfilter/nft_exthdr.c
-@@ -315,6 +315,63 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
- 	regs->verdict.code = NFT_BREAK;
- }
+@@ -245,7 +245,12 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
+ 	if (!tcph)
+ 		goto err;
  
-+static void nft_exthdr_tcp_strip_eval(const struct nft_expr *expr,
-+				      struct nft_regs *regs,
-+				      const struct nft_pktinfo *pkt)
-+{
-+	u8 buff[sizeof(struct tcphdr) + MAX_TCP_OPTION_SPACE];
-+	struct nft_exthdr *priv = nft_expr_priv(expr);
-+	unsigned int i, tcphdr_len, optl;
-+	struct tcphdr *tcph;
-+	u8 *opt;
-+
-+	tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
-+	if (!tcph)
-+		goto err;
-+
 +	if (skb_ensure_writable(pkt->skb, nft_thoff(pkt) + tcphdr_len))
-+		goto drop;
-+
-+	opt = (u8 *)nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
-+	if (!opt)
 +		goto err;
-+	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
-+		unsigned int j;
 +
-+		optl = optlen(opt, i);
-+		if (priv->type != opt[i])
-+			continue;
++	tcph = (struct tcphdr *)(pkt->skb->data + nft_thoff(pkt));
+ 	opt = (u8 *)tcph;
 +
-+		if (i + optl > tcphdr_len)
-+			goto drop;
-+
-+		for (j = 0; j < optl; ++j) {
-+			u16 n = TCPOPT_NOP;
-+			u16 o = opt[i+j];
-+
-+			if ((i + j) % 2 == 0) {
-+				o <<= 8;
-+				n <<= 8;
-+			}
-+			inet_proto_csum_replace2(&tcph->check, pkt->skb, htons(o),
-+						 htons(n), false);
-+		}
-+		memset(opt + i, TCPOPT_NOP, optl);
-+		return;
-+	}
-+
-+	/* option not found, continue. This allows to do multiple
-+	 * option removals per rule.
-+	 */
-+	return;
-+err:
-+	regs->verdict.code = NFT_BREAK;
-+	return;
-+drop:
-+	/* can't remove, no choice but to drop */
-+	regs->verdict.code = NF_DROP;
-+}
-+
- static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
- 				 struct nft_regs *regs,
- 				 const struct nft_pktinfo *pkt)
-@@ -463,6 +520,28 @@ static int nft_exthdr_tcp_set_init(const struct nft_ctx *ctx,
- 				       priv->len);
- }
+ 	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
+ 		union {
+ 			__be16 v16;
+@@ -260,15 +265,6 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
+ 		if (i + optl > tcphdr_len || priv->len + priv->offset > optl)
+ 			goto err;
  
-+static int nft_exthdr_tcp_strip_init(const struct nft_ctx *ctx,
-+				     const struct nft_expr *expr,
-+				     const struct nlattr * const tb[])
-+{
-+	struct nft_exthdr *priv = nft_expr_priv(expr);
-+
-+	if (tb[NFTA_EXTHDR_SREG] ||
-+	    tb[NFTA_EXTHDR_DREG] ||
-+	    tb[NFTA_EXTHDR_FLAGS] ||
-+	    tb[NFTA_EXTHDR_OFFSET] ||
-+	    tb[NFTA_EXTHDR_LEN])
-+		return -EINVAL;
-+
-+	if (!tb[NFTA_EXTHDR_TYPE])
-+		return -EINVAL;
-+
-+	priv->type = nla_get_u8(tb[NFTA_EXTHDR_TYPE]);
-+	priv->op = NFT_EXTHDR_OP_TCPOPT;
-+
-+	return 0;
-+}
-+
- static int nft_exthdr_ipv4_init(const struct nft_ctx *ctx,
- 				const struct nft_expr *expr,
- 				const struct nlattr * const tb[])
-@@ -523,6 +602,13 @@ static int nft_exthdr_dump_set(struct sk_buff *skb, const struct nft_expr *expr)
- 	return nft_exthdr_dump_common(skb, priv);
- }
+-		if (skb_ensure_writable(pkt->skb,
+-					nft_thoff(pkt) + i + priv->len))
+-			goto err;
+-
+-		tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff,
+-					      &tcphdr_len);
+-		if (!tcph)
+-			goto err;
+-
+ 		offset = i + priv->offset;
  
-+static int nft_exthdr_dump_strip(struct sk_buff *skb, const struct nft_expr *expr)
-+{
-+	const struct nft_exthdr *priv = nft_expr_priv(expr);
-+
-+	return nft_exthdr_dump_common(skb, priv);
-+}
-+
- static const struct nft_expr_ops nft_exthdr_ipv6_ops = {
- 	.type		= &nft_exthdr_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
-@@ -555,6 +641,14 @@ static const struct nft_expr_ops nft_exthdr_tcp_set_ops = {
- 	.dump		= nft_exthdr_dump_set,
- };
+ 		switch (priv->len) {
+@@ -332,9 +328,9 @@ static void nft_exthdr_tcp_strip_eval(const struct nft_expr *expr,
+ 	if (skb_ensure_writable(pkt->skb, nft_thoff(pkt) + tcphdr_len))
+ 		goto drop;
  
-+static const struct nft_expr_ops nft_exthdr_tcp_strip_ops = {
-+	.type		= &nft_exthdr_type,
-+	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
-+	.eval		= nft_exthdr_tcp_strip_eval,
-+	.init		= nft_exthdr_tcp_strip_init,
-+	.dump		= nft_exthdr_dump_strip,
-+};
+-	opt = (u8 *)nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
+-	if (!opt)
+-		goto err;
++	tcph = (struct tcphdr *)(pkt->skb->data + nft_thoff(pkt));
++	opt = (u8 *)tcph;
 +
- static const struct nft_expr_ops nft_exthdr_sctp_ops = {
- 	.type		= &nft_exthdr_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
-@@ -582,7 +676,7 @@ nft_exthdr_select_ops(const struct nft_ctx *ctx,
- 			return &nft_exthdr_tcp_set_ops;
- 		if (tb[NFTA_EXTHDR_DREG])
- 			return &nft_exthdr_tcp_ops;
--		break;
-+		return &nft_exthdr_tcp_strip_ops;
- 	case NFT_EXTHDR_OP_IPV6:
- 		if (tb[NFTA_EXTHDR_DREG])
- 			return &nft_exthdr_ipv6_ops;
+ 	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
+ 		unsigned int j;
+ 
 -- 
 2.40.1
 
