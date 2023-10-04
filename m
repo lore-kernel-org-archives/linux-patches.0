@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173711C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06801C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIfVJ8sJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86176C433C8;
-	Wed,  4 Oct 2023 18:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6ey2lCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62829C433C7;
+	Wed,  4 Oct 2023 18:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444495;
-	bh=wEDAUdfXAxQ4wP4qSZHxi9IAacO9he0B63JgHHAEvoE=;
+	s=korg; t=1696444498;
+	bh=N7oQPsSYV/uH0Ii2tSEf6s63iSwEZPxcJ5n2JWfcu5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIfVJ8sJuFNssEZ6A617tEBOHRZEOS85mH2VtRsdfXQuMt/jA45xSUSTWhT5EM2wI
-	 kiTK/QHHE4HSdFqFbMl3Qsn5MhkJBwsEAag1JK8wSLt4SvdcZ2Ep5wNKCMXbPcNacC
-	 QURUEl1SMkuapUX5mljM6ftSlj+G+fbI1q7LAqgc=
+	b=Y6ey2lCS8puRKFx4CW3L/d8h85z1ZbzIkkCX/L3GHowEBd0UN2AayLkxZmdJgmStq
+	 zH8FfvuSvpLTjonGNA9qIJFUaszoG4QwZAx9BvzMG5I1b37bmPHFrfcR4UBPlX7UEz
+	 1Ddef7TWWM40NeS2Lvx2evpqucUbVWMW56LTTcsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.5 243/321] KVM: SVM: INTERCEPT_RDTSCP is never intercepted anyway
-Date: Wed,  4 Oct 2023 19:56:28 +0200
-Message-ID: <20231004175240.508281098@linuxfoundation.org>
+	August Wikerfors <git@augustwikerfors.se>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 270/321] ASoC: amd: yc: Fix non-functional mic on Lenovo 82QF and 82UG
+Date: Wed,  4 Oct 2023 19:56:55 +0200
+Message-ID: <20231004175241.793912436@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -40,38 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: August Wikerfors <git@augustwikerfors.se>
 
-commit e8d93d5d93f85949e7299be289c6e7e1154b2f78 upstream.
+commit 1263cc0f414d212129c0f1289b49b7df77f92084 upstream.
 
-svm_recalc_instruction_intercepts() is always called at least once
-before the vCPU is started, so the setting or clearing of the RDTSCP
-intercept can be dropped from the TSC_AUX virtualization support.
+Like the Lenovo 82TL and 82V2, the Lenovo 82QF (Yoga 7 14ARB7) and 82UG
+(Legion S7 16ARHA7) both need a quirk entry for the internal microphone to
+function. Commit c008323fe361 ("ASoC: amd: yc: Fix a non-functional mic on
+Lenovo 82SJ") restricted the quirk that previously matched "82" to "82V2",
+breaking microphone functionality on these devices. Fix this by adding
+specific quirks for these models, as was done for the Lenovo 82TL.
 
-Extracted from a patch by Tom Lendacky.
-
+Fixes: c008323fe361 ("ASoC: amd: yc: Fix a non-functional mic on Lenovo 82SJ")
+Closes: https://github.com/tomsom/yoga-linux/issues/51
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=208555#c780
 Cc: stable@vger.kernel.org
-Fixes: 296d5a17e793 ("KVM: SEV-ES: Use V_TSC_AUX if available instead of RDTSC/MSR_TSC_AUX intercepts")
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: August Wikerfors <git@augustwikerfors.se>
+Link: https://lore.kernel.org/r/20230911213409.6106-1-git@augustwikerfors.se
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2994,11 +2994,8 @@ static void sev_es_init_vmcb(struct vcpu
- 
- 	if (boot_cpu_has(X86_FEATURE_V_TSC_AUX) &&
- 	    (guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDTSCP) ||
--	     guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDPID))) {
-+	     guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDPID)))
- 		set_msr_interception(vcpu, svm->msrpm, MSR_TSC_AUX, 1, 1);
--		if (guest_cpuid_has(&svm->vcpu, X86_FEATURE_RDTSCP))
--			svm_clr_intercept(svm, INTERCEPT_RDTSCP);
--	}
- }
- 
- void sev_init_vmcb(struct vcpu_svm *svm)
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -217,10 +217,24 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82QF"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82V2"),
+ 		}
+ 	},
+ 	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82UG"),
++		}
++	},
++	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
 
 
