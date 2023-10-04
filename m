@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66081D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76941D6A1
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOFyXWwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49304C433CA;
-	Wed,  4 Oct 2023 18:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5LbNNf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F692C433C8;
+	Wed,  4 Oct 2023 18:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443664;
-	bh=oGNO3npaFikIZAPFMiSLTQwe3CBCdKXhXJ7k9HskuEE=;
+	s=korg; t=1696443667;
+	bh=YaAm3MmlE6cjj4OvhDvVI41xF5vM/i6JPWwOHcmilp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOFyXWwY1/37elFZICypixs43akL5oMOKGGJ8nq0LfXPEF9hb+hg5Sc/j0Wkj9eIP
-	 7rFKEL7W4hjnPZNsViaAivAOhH0fkg6w5no51mV7e4ofmFXogH/gf4R4bGUIgyJ35j
-	 2NFOx1mQ+W3YdC9NtkQyDnRGTxDGfqDTrWi38rkc=
+	b=G5LbNNf7oR1F8NKD4sQut9jp4fvBWCUFN5n5def6uCn0z8OGTnYfUASnUBHw4MgNV
+	 kbU0TtGPvsJUkR4hm/ENt3k1+PNiL73i1BFsaQUVWw2c4yM6z6WrZyAuM00r8r/qD4
+	 4y5nbqlPyDr4N0J9Ea2D+jFdd+n3rXTbjN0sYdEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 236/259] mm/damon/vaddr-test: fix memory leak in damon_do_test_apply_three_regions()
-Date: Wed,  4 Oct 2023 19:56:49 +0200
-Message-ID: <20231004175228.208352872@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.1 237/259] mm/slab_common: fix slab_caches list corruption after kmem_cache_destroy()
+Date: Wed,  4 Oct 2023 19:56:50 +0200
+Message-ID: <20231004175228.248443969@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,168 +42,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Rafael Aquini <aquini@redhat.com>
 
-commit 45120b15743fa7c0aa53d5db6dfb4c8f87be4abd upstream.
+commit 46a9ea6681907a3be6b6b0d43776dccc62cad6cf upstream.
 
-When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
-and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
+After the commit in Fixes:, if a module that created a slab cache does not
+release all of its allocated objects before destroying the cache (at rmmod
+time), we might end up releasing the kmem_cache object without removing it
+from the slab_caches list thus corrupting the list as kmem_cache_destroy()
+ignores the return value from shutdown_cache(), which in turn never removes
+the kmem_cache object from slabs_list in case __kmem_cache_shutdown() fails
+to release all of the cache's slabs.
 
-Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
-variables"), the damon_destroy_ctx() is removed, but still call
-damon_new_target() and damon_new_region(), the damon_region which is
-allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
-which is allocated by kmalloc in damon_new_target() are not freed.  And
-the damon_region which is allocated in damon_new_region() in
-damon_set_regions() is also not freed.
+This is easily observable on a kernel built with CONFIG_DEBUG_LIST=y
+as after that ill release the system will immediately trip on list_add,
+or list_del, assertions similar to the one shown below as soon as another
+kmem_cache gets created, or destroyed:
 
-So use damon_destroy_target to free all the damon_regions and damon_target.
+  [ 1041.213632] list_del corruption. next->prev should be ffff89f596fb5768, but was 52f1e5016aeee75d. (next=ffff89f595a1b268)
+  [ 1041.219165] ------------[ cut here ]------------
+  [ 1041.221517] kernel BUG at lib/list_debug.c:62!
+  [ 1041.223452] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  [ 1041.225408] CPU: 2 PID: 1852 Comm: rmmod Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
+  [ 1041.228244] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
+  [ 1041.231212] RIP: 0010:__list_del_entry_valid+0xae/0xb0
 
-    unreferenced object 0xffff888107c9a940 (size 64):
-      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        60 c7 9c 07 81 88 ff ff f8 cb 9c 07 81 88 ff ff  `...............
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff8881079cc740 (size 56):
-      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888107c9ac40 (size 64):
-      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        a0 cc 9c 07 81 88 ff ff 78 a1 76 07 81 88 ff ff  ........x.v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff8881079ccc80 (size 56):
-      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888107c9af40 (size 64):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        20 a2 76 07 81 88 ff ff b8 a6 76 07 81 88 ff ff   .v.......v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776a200 (size 56):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776a740 (size 56):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.025s)
-      hex dump (first 32 bytes):
-        3d 00 00 00 00 00 00 00 3f 00 00 00 00 00 00 00  =.......?.......
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
-        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888108038240 (size 64):
-      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 03 00 00 00 6b 6b 6b 6b  ............kkkk
-        48 ad 76 07 81 88 ff ff 98 ae 76 07 81 88 ff ff  H.v.......v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776ad28 (size 56):
-      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
-        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
-        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+Another quick way to trigger this issue, in a kernel with CONFIG_SLUB=y,
+is to set slub_debug to poison the released objects and then just run
+cat /proc/slabinfo after removing the module that leaks slab objects,
+in which case the kernel will panic:
 
-Link: https://lkml.kernel.org/r/20230925072100.3725620-1-ruanjinjie@huawei.com
-Fixes: 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  [   50.954843] general protection fault, probably for non-canonical address 0xa56b6b6b6b6b6b8b: 0000 [#1] PREEMPT SMP PTI
+  [   50.961545] CPU: 2 PID: 1495 Comm: cat Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
+  [   50.966808] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
+  [   50.972663] RIP: 0010:get_slabinfo+0x42/0xf0
+
+This patch fixes this issue by properly checking shutdown_cache()'s
+return value before taking the kmem_cache_release() branch.
+
+Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr-test.h |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/slab_common.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/damon/vaddr-test.h
-+++ b/mm/damon/vaddr-test.h
-@@ -140,6 +140,8 @@ static void damon_do_test_apply_three_re
- 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
- 	}
-+
-+	damon_destroy_target(t);
- }
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -474,7 +474,7 @@ void slab_kmem_cache_release(struct kmem
  
- /*
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
+-	int refcnt;
++	int err = -EBUSY;
+ 	bool rcu_set;
+ 
+ 	if (unlikely(!s) || !kasan_check_byte(s))
+@@ -485,17 +485,17 @@ void kmem_cache_destroy(struct kmem_cach
+ 
+ 	rcu_set = s->flags & SLAB_TYPESAFE_BY_RCU;
+ 
+-	refcnt = --s->refcount;
+-	if (refcnt)
++	s->refcount--;
++	if (s->refcount)
+ 		goto out_unlock;
+ 
+-	WARN(shutdown_cache(s),
+-	     "%s %s: Slab cache still has objects when called from %pS",
++	err = shutdown_cache(s);
++	WARN(err, "%s %s: Slab cache still has objects when called from %pS",
+ 	     __func__, s->name, (void *)_RET_IP_);
+ out_unlock:
+ 	mutex_unlock(&slab_mutex);
+ 	cpus_read_unlock();
+-	if (!refcnt && !rcu_set)
++	if (!err && !rcu_set)
+ 		kmem_cache_release(s);
+ }
+ EXPORT_SYMBOL(kmem_cache_destroy);
 
 
