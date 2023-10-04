@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D3F1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589A5C433C7;
-	Wed,  4 Oct 2023 18:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D17A1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF0EC433C8;
+	Wed,  4 Oct 2023 18:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442523;
-	bh=+ZkB3rhePt7Y0cQPxw6a3dC5USsWL4B8ykqBsHTVOiM=;
+	s=korg; t=1696442526;
+	bh=fPsy/RXqV7G2qY3bwoQaO+CJq7V1Oq+XIHNEBANtBeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oInoLOEJ1b/TdZBe1ySuJ369hs2WctcrA8y7FAZltk25RmGZWpLrVyYraAe89bdqS
-	 Zz0ZBZun5uFPOtjLVhlMMieTSn2OwxZ/ZIS9yu3NAU+3N3Vr6IrmeLC02p6OjsyI+Z
-	 FJhrBp7kkWk8LhldgPfgjFGybLqV9VOh5lGHxQn4=
+	b=vwg95SCpYiiu5QON+JSJ1QEKZjrg/eOtRJpZRWvSFgFgN1U7VhGz9XSA1mMndQn5T
+	 klM+TI846MWrdfnKgQmQdch1kLg9WNs9lEDM3yxs+oq6gsSs8CGhBjyGCNsCe5w5v5
+	 oDBHrOqjUB9TmughB9GioRezNeHRu9Ti0Fph3U4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/183] tracing: Have event inject files inc the trace array ref count
-Date: Wed,  4 Oct 2023 19:54:07 +0200
-Message-ID: <20231004175204.661985402@linuxfoundation.org>
+Subject: [PATCH 5.15 017/183] netfilter: nf_tables: dont skip expired elements during walk
+Date: Wed,  4 Oct 2023 19:54:08 +0200
+Message-ID: <20231004175204.697326902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -45,47 +40,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e5c624f027ac74f97e97c8f36c69228ac9f1102d ]
+commit 24138933b97b055d486e8064b4a1721702442a9b upstream.
 
-The event inject files add events for a specific trace array. For an
-instance, if the file is opened and the instance is deleted, reading or
-writing to the file will cause a use after free.
+There is an asymmetry between commit/abort and preparation phase if the
+following conditions are met:
 
-Up the ref count of the trace_array when a event inject file is opened.
+1. set is a verdict map ("1.2.3.4 : jump foo")
+2. timeouts are enabled
 
-Link: https://lkml.kernel.org/r/20230907024804.292337868@goodmis.org
-Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
+In this case, following sequence is problematic:
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Fixes: 6c3edaf9fd6a ("tracing: Introduce trace event injection")
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+1. element E in set S refers to chain C
+2. userspace requests removal of set S
+3. kernel does a set walk to decrement chain->use count for all elements
+   from preparation phase
+4. kernel does another set walk to remove elements from the commit phase
+   (or another walk to do a chain->use increment for all elements from
+    abort phase)
+
+If E has already expired in 1), it will be ignored during list walk, so its use count
+won't have been changed.
+
+Then, when set is culled, ->destroy callback will zap the element via
+nf_tables_set_elem_destroy(), but this function is only safe for
+elements that have been deactivated earlier from the preparation phase:
+lack of earlier deactivate removes the element but leaks the chain use
+count, which results in a WARN splat when the chain gets removed later,
+plus a leak of the nft_chain structure.
+
+Update pipapo_get() not to skip expired elements, otherwise flush
+command reports bogus ENOENT errors.
+
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
+Fixes: 9d0982927e79 ("netfilter: nft_hash: add support for timeouts")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_inject.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c  |  4 ++++
+ net/netfilter/nft_set_hash.c   |  2 --
+ net/netfilter/nft_set_pipapo.c | 18 ++++++++++++------
+ net/netfilter/nft_set_rbtree.c |  2 --
+ 4 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/trace/trace_events_inject.c b/kernel/trace/trace_events_inject.c
-index c188045c5f976..b1fce64e126c0 100644
---- a/kernel/trace/trace_events_inject.c
-+++ b/kernel/trace/trace_events_inject.c
-@@ -321,7 +321,8 @@ event_inject_read(struct file *file, char __user *buf, size_t size,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index d84da11aaee5c..9ac8b83b4a458 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5289,8 +5289,12 @@ static int nf_tables_dump_setelem(const struct nft_ctx *ctx,
+ 				  const struct nft_set_iter *iter,
+ 				  struct nft_set_elem *elem)
+ {
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 	struct nft_set_dump_args *args;
+ 
++	if (nft_set_elem_expired(ext))
++		return 0;
++
+ 	args = container_of(iter, struct nft_set_dump_args, iter);
+ 	return nf_tables_fill_setelem(args->skb, set, elem);
+ }
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 0b73cb0e752f7..24caa31fa2310 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -278,8 +278,6 @@ static void nft_rhash_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ 
+ 		if (iter->count < iter->skip)
+ 			goto cont;
+-		if (nft_set_elem_expired(&he->ext))
+-			goto cont;
+ 		if (!nft_set_elem_active(&he->ext, iter->genmask))
+ 			goto cont;
+ 
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 8c16681884b7e..b6a994ba72f31 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -566,8 +566,7 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ 			goto out;
+ 
+ 		if (last) {
+-			if (nft_set_elem_expired(&f->mt[b].e->ext) ||
+-			    (genmask &&
++			if ((genmask &&
+ 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
+ 				goto next_match;
+ 
+@@ -601,8 +600,17 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
+ 			    const struct nft_set_elem *elem, unsigned int flags)
+ {
+-	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
+-			  nft_genmask_cur(net));
++	struct nft_pipapo_elem *ret;
++
++	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
++			 nft_genmask_cur(net));
++	if (IS_ERR(ret))
++		return ret;
++
++	if (nft_set_elem_expired(&ret->ext))
++		return ERR_PTR(-ENOENT);
++
++	return ret;
  }
  
- const struct file_operations event_inject_fops = {
--	.open = tracing_open_generic,
-+	.open = tracing_open_file_tr,
- 	.read = event_inject_read,
- 	.write = event_inject_write,
-+	.release = tracing_release_file_tr,
- };
+ /**
+@@ -2024,8 +2032,6 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ 			goto cont;
+ 
+ 		e = f->mt[r].e;
+-		if (nft_set_elem_expired(&e->ext))
+-			goto cont;
+ 
+ 		elem.priv = e;
+ 
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 8d73fffd2d09d..39956e5341c9e 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -552,8 +552,6 @@ static void nft_rbtree_walk(const struct nft_ctx *ctx,
+ 
+ 		if (iter->count < iter->skip)
+ 			goto cont;
+-		if (nft_set_elem_expired(&rbe->ext))
+-			goto cont;
+ 		if (!nft_set_elem_active(&rbe->ext, iter->genmask))
+ 			goto cont;
+ 
 -- 
 2.40.1
 
