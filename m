@@ -1,215 +1,114 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F961F61F
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 19:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA511B29D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 19:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dYCw69ZJ"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696446516; x=1727982516;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=kWf97kMoKdrkVJpwjQMu+QVoyLKkxZoWflLolvd5MLk=;
-  b=dYCw69ZJdA35dJUmshcyiaHzvWcdNzImHtjn1mUs3x4+GM3Zena2T41A
-   Sc+Mh1dKefY5qXdbELx0cKd0FfMYwr7GUQgv15Mj2c8CA19D3J+aT0kd5
-   usgJ5UVr0hlYKl1r7zVa5cIlUG/aZJdDthLT9AzFZXW37Wn/KmhzqpMwk
-   37vETq3oR3puTAd/y3+UtrxgtIFmXJwIyHT8e2tjWbB2I8HmHXft8jzun
-   JYzjgbsrqmKCjfjTLHMRGRmkpYpO8OfkmW2YRM5U+AnZl8nBDqV5WRYB/
-   gMWB9daSARn8eCkExJWUnhJVlBTnax7RuCv1nXfW4hq6pEDJOFvA4Ha21
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="362630001"
-X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="362630001"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:08:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="867528566"
-X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="867528566"
-Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:08:35 -0700
-From: Jithu Joseph <jithu.joseph@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: tglx@linutronix.de,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com,
-	rostedt@goodmis.org,
-	jithu.joseph@intel.com,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	ravi.v.shankar@intel.com,
-	pengfei.xu@intel.com,
-	ilpo.jarvinen@linux.intel.com
-Subject: [PATCH v3 9/9] platform/x86/intel/ifs: ARRAY BIST for Sierra Forest
-Date: Wed,  4 Oct 2023 12:04:32 -0700
-Message-Id: <20231004190432.3028599-1-jithu.joseph@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <b92b44ed-19a7-aec2-615b-1b1755dafdac@linux.intel.com>
-References: <b92b44ed-19a7-aec2-615b-1b1755dafdac@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feMI0Vzn"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3ae2ec1a222so124076b6e.2
+        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 12:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696447992; x=1697052792; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SemCWQzXcuF1OTgzS/LJmmq/aml5vJHjFSPL+GSAbeg=;
+        b=feMI0Vzn7X7Xey0wC/lhVQHRrnU5gC6nFd8JbijWlnvRDSfFCUbAAlSLuF38CTQjvG
+         mNot+tYzo0CPKlBkkBkEgxQStd/jigMmXEjq3JErQxA53oLyI1XUyN3GdKqYLLFHuURI
+         pAJ8C499N68UOWdV/Dnug+ut50E59CbtKqQixw2+eF+O35T+VY7GWgkjAgKC7JNQOLdF
+         FCh4SC7hHx9FmoGfdmwJ+XQSBbYOHjNYNU9itnWcLDQfpg6xl8ky9Vm/GcznQvkfVogW
+         bIpNTishXI/7Oa+XyaOy7SwMcq5O4HpgVNlTS1LOSCi6AIFbBbbZpZNQ8plUU8FleJ7b
+         Sk+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696447992; x=1697052792;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SemCWQzXcuF1OTgzS/LJmmq/aml5vJHjFSPL+GSAbeg=;
+        b=wyzg0YbC9qifiiN428RCRF/ev1yoLc3h8rZUEauRj2LqPZpAoGslZDav6aev+VaJbz
+         SU5gcNRQSYvj5PEfNc4d1ucF0PY19nZpUYYvCerfGhcQCkUFS3263dyL47AN9ILK9mGx
+         10kkEBoW7JSZPEGOocO1khKYTf9YKTMZI7zpqqNSQKgSHrWClk07utfX7OcsOQ9O9n5Z
+         MYDWaZuz0CWGZB7i+OkIC0E8Rig9zzT2KW3vEsBUZYIxBFKJ0c8Mmgm0YC2qjLPqOwMH
+         Pdq+DZ2YAJInullAdhBJQIIzEZqHzFpZ2foXTEOAXj0rv1ZTpeUDtzYVbkC3v78kO3lt
+         6mRg==
+X-Gm-Message-State: AOJu0Yyt1kwfT/UFCy0SRAhC3vuxdMqzM61yaUb/mgPyPhbC9ugyoN9l
+	T4571uZIkFHm2Up0bTXuo7g=
+X-Google-Smtp-Source: AGHT+IEr82quBQXlc35fnQUjfi5Zei6SuX0j4dlPLgb+UF7tcqeF6Yik5FgXSIaDBuC6YBa8szmBKw==
+X-Received: by 2002:a05:6808:1484:b0:3af:6c30:f206 with SMTP id e4-20020a056808148400b003af6c30f206mr4188489oiw.10.1696447991649;
+        Wed, 04 Oct 2023 12:33:11 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id b10-20020ac86bca000000b00417fa7d33dbsm1416420qtt.93.2023.10.04.12.33.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Oct 2023 12:33:11 -0700 (PDT)
+Message-ID: <f0115175-975e-4fde-aa69-666568ce5c6a@gmail.com>
+Date: Wed, 4 Oct 2023 12:33:08 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231004175217.404851126@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Array BIST MSR addresses, bit definition and semantics are different for
-Sierra Forest. Branch into a separate Array BIST flow on Sierra Forest
-when user invokes Array Test.
++Namhyung, Ian,
 
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Pengfei Xu <pengfei.xu@intel.com>
----
- - Add #define for Array generation (Ilpo Järvinen)
+On 10/4/23 10:52, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.56 release.
+> There are 259 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
- drivers/platform/x86/intel/ifs/ifs.h     |  7 +++++
- drivers/platform/x86/intel/ifs/core.c    | 15 +++++-----
- drivers/platform/x86/intel/ifs/runtest.c | 37 +++++++++++++++++++++++-
- 3 files changed, 51 insertions(+), 8 deletions(-)
+perf fails to build with:
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index f0dd849b3400..2dd5e3406dac 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -137,6 +137,8 @@
- #define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
- #define MSR_ACTIVATE_SCAN			0x000002c6
- #define MSR_SCAN_STATUS				0x000002c7
-+#define MSR_ARRAY_TRIGGER			0x000002d6
-+#define MSR_ARRAY_STATUS			0x000002d7
- #define MSR_SAF_CTRL				0x000004f0
- 
- #define SCAN_NOT_TESTED				0
-@@ -146,6 +148,9 @@
- #define IFS_TYPE_SAF			0
- #define IFS_TYPE_ARRAY_BIST		1
- 
-+#define ARRAY_GEN_0			0
-+#define ARRAY_GEN_1			1
-+
- /* MSR_SCAN_HASHES_STATUS bit fields */
- union ifs_scan_hashes_status {
- 	u64	data;
-@@ -272,6 +277,7 @@ struct ifs_test_caps {
-  * @cur_batch: number indicating the currently loaded test file
-  * @generation: IFS test generation enumerated by hardware
-  * @chunk_size: size of a test chunk
-+ * @array_gen: test generation of array test
-  */
- struct ifs_data {
- 	int	loaded_version;
-@@ -283,6 +289,7 @@ struct ifs_data {
- 	u32	cur_batch;
- 	u32	generation;
- 	u32	chunk_size;
-+	u32	array_gen;
- };
- 
- struct ifs_work {
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index 0c8927916373..0a872b874af8 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -11,16 +11,16 @@
- 
- #include "ifs.h"
- 
--#define X86_MATCH(model)				\
-+#define X86_MATCH(model, array_gen)				\
- 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
--		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
-+		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, array_gen)
- 
- static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
--	X86_MATCH(SAPPHIRERAPIDS_X),
--	X86_MATCH(EMERALDRAPIDS_X),
--	X86_MATCH(GRANITERAPIDS_X),
--	X86_MATCH(GRANITERAPIDS_D),
--	X86_MATCH(ATOM_CRESTMONT_X),
-+	X86_MATCH(SAPPHIRERAPIDS_X, ARRAY_GEN_0),
-+	X86_MATCH(EMERALDRAPIDS_X, ARRAY_GEN_0),
-+	X86_MATCH(GRANITERAPIDS_X, ARRAY_GEN_0),
-+	X86_MATCH(GRANITERAPIDS_D, ARRAY_GEN_0),
-+	X86_MATCH(ATOM_CRESTMONT_X, ARRAY_GEN_1),
- 	{}
- };
- MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
-@@ -100,6 +100,7 @@ static int __init ifs_init(void)
- 			continue;
- 		ifs_devices[i].rw_data.generation = FIELD_GET(MSR_INTEGRITY_CAPS_SAF_GEN_MASK,
- 							      msrval);
-+		ifs_devices[i].rw_data.array_gen = (u32)m->driver_data;
- 		ret = misc_register(&ifs_devices[i].misc);
- 		if (ret)
- 			goto err_exit;
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index 4fe544d79946..9ac75420c15e 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -329,6 +329,38 @@ static void ifs_array_test_core(int cpu, struct device *dev)
- 		ifsd->status = SCAN_TEST_PASS;
- }
- 
-+#define ARRAY_GEN1_TEST_ALL_ARRAYS	0x0ULL
-+#define ARRAY_GEN1_STATUS_FAIL		0x1ULL
-+
-+static int do_array_test_gen1(void *status)
-+{
-+	int cpu = smp_processor_id();
-+	int first;
-+
-+	first = cpumask_first(cpu_smt_mask(cpu));
-+
-+	if (cpu == first) {
-+		wrmsrl(MSR_ARRAY_TRIGGER, ARRAY_GEN1_TEST_ALL_ARRAYS);
-+		rdmsrl(MSR_ARRAY_STATUS, *((u64 *)status));
-+	}
-+
-+	return 0;
-+}
-+
-+static void ifs_array_test_gen1(int cpu, struct device *dev)
-+{
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+	u64 status = 0;
-+
-+	stop_core_cpuslocked(cpu, do_array_test_gen1, &status);
-+	ifsd->scan_details = status;
-+
-+	if (status & ARRAY_GEN1_STATUS_FAIL)
-+		ifsd->status = SCAN_TEST_FAIL;
-+	else
-+		ifsd->status = SCAN_TEST_PASS;
-+}
-+
- /*
-  * Initiate per core test. It wakes up work queue threads on the target cpu and
-  * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
-@@ -356,7 +388,10 @@ int do_core_test(int cpu, struct device *dev)
- 		ifs_test_core(cpu, dev);
- 		break;
- 	case IFS_TYPE_ARRAY_BIST:
--		ifs_array_test_core(cpu, dev);
-+		if (ifsd->array_gen == ARRAY_GEN_0)
-+			ifs_array_test_core(cpu, dev);
-+		else
-+			ifs_array_test_gen1(cpu, dev);
- 		break;
- 	default:
- 		return -EINVAL;
+fixdep: error opening depfile: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/.pmu-events.o.d: 
+No such file or directory
+make[5]: *** [pmu-events/Build:33: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events.o] 
+Error 2
+make[4]: *** [Makefile.perf:672: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events-in.o] 
+Error 2
+make[3]: *** [Makefile.perf:240: sub-make] Error 2
+make[2]: *** [Makefile:70: all] Error 2
+make[1]: *** [package/pkg-generic.mk:294: 
+/local/users/fainelli/buildroot/output/arm/build/linux-tools/.stamp_built] 
+Error 2
+make: *** [Makefile:27: _all] Error 2
+
+due a80fd00cb1a7793ead4d7c3fa7d3f1e898231c27 ("perf build: Update build 
+rule for generated files"). Reverting that commit fixes the build for me 
+and then all is good in terms of testing.
 -- 
-2.25.1
+Florian
 
