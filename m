@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368A71D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129BA1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNeyaLKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8E1C433C9;
-	Wed,  4 Oct 2023 18:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDwomz5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D72C433C9;
+	Wed,  4 Oct 2023 18:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444650;
-	bh=53Kj0TDrY1dIUMThVJxLB8dUhQ27mbJxaen1nbfVHOQ=;
+	s=korg; t=1696444652;
+	bh=Zo4cmD3ih1B1T8xMqpKc3BAbTUA7+zW7oqmdbfwN72w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNeyaLKs0GfsoqJU995+Uny1j6QNj7C60QpU4JNPxAojW3tXWRca+7WsgtAw64o/E
-	 qBw99GHnbijaFPksp8GMyIdVFozw0sajtQ0yC4xmbsc5pPC76xsa7vjhaW7zjJGWST
-	 BT+0WPM0/GDIe8PG4/rzh54uTJUlJM8Xy1DR0ivE=
+	b=WDwomz5pju1nfDpOMO33hV8/3+pBo8UQIkaKjgGnVk4Yn6JAiezLzMM7nCS2PQZ4H
+	 ugIWXCKfL6Cles9sFwFtyCGrq7wvcWZb4b5cJbxbLJtg0SY7udtZx5KM4iPbvC71o0
+	 jOVRUQDnPpyHAYhDEeL663q7PQJ/8asBgLIjw9mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Pello <devel@otheo.eu>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Fernando Pacheco <fernando.pacheco@intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	John Harrison <John.C.Harrison@Intel.com>
-Subject: [PATCH 6.5 308/321] drm/i915/gt: Fix reservation address in ggtt_reserve_guc_top
-Date: Wed,  4 Oct 2023 19:57:33 +0200
-Message-ID: <20231004175243.562777225@linuxfoundation.org>
+	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.5 309/321] power: supply: rk817: Add missing module alias
+Date: Wed,  4 Oct 2023 19:57:34 +0200
+Message-ID: <20231004175243.611245994@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -49,86 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Pello <devel@otheo.eu>
+From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 
-commit b7599d241778d0b10cdf7a5c755aa7db9b83250c upstream.
+commit cbcdfbf5a6cd66e47e5ee5d49c4c5a27a07ba082 upstream.
 
-There is an assertion in ggtt_reserve_guc_top that the global GTT
-is of size at least GUC_GGTT_TOP, which is not the case on a 32-bit
-platform; see commit 562d55d991b39ce376c492df2f7890fd6a541ffc
-("drm/i915/bdw: Only use 2g GGTT for 32b platforms"). If GEM_BUG_ON
-is enabled, this triggers a BUG(); if GEM_BUG_ON is disabled, the
-subsequent reservation fails and the driver fails to initialise
-the device:
+Similar to the rk817 codec alias that was missing, the rk817 charger
+driver is missing a module alias as well. This absence prevents the
+driver from autoprobing on OF systems when it is built as a module.
 
-i915 0000:00:02.0: [drm:i915_init_ggtt [i915]] Failed to reserve top of GGTT for GuC
-i915 0000:00:02.0: Device initialization failed (-28)
-i915 0000:00:02.0: Please file a bug on drm/i915; see https://gitlab.freedesktop.org/drm/intel/-/wikis/How-to-file-i915-bugs for details.
-i915: probe of 0000:00:02.0 failed with error -28
+Add the right MODULE_ALIAS to fix this.
 
-Make the reservation at the top of the available space, whatever
-that is, instead of assuming that the top will be GUC_GGTT_TOP.
-
-Fixes: 911800765ef6 ("drm/i915/uc: Reserve upper range of GGTT")
-Link: https://gitlab.freedesktop.org/drm/intel/-/issues/9080
-Signed-off-by: Javier Pello <devel@otheo.eu>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Fernando Pacheco <fernando.pacheco@intel.com>
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: stable@vger.kernel.org # v5.3+
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230902171039.2229126186d697dbcf62d6d8@otheo.eu
-(cherry picked from commit 0f3fa942d91165c2702577e9274d2ee1c7212afc)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 11cb8da0189b ("power: supply: Add charger driver for Rockchip RK817")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
+Reviewed-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://lore.kernel.org/r/20230612143651.959646-2-frattaroli.nicolas@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_ggtt.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/power/supply/rk817_charger.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_ggtt.c
-+++ b/drivers/gpu/drm/i915/gt/intel_ggtt.c
-@@ -511,20 +511,31 @@ void intel_ggtt_unbind_vma(struct i915_a
- 	vm->clear_range(vm, vma_res->start, vma_res->vma_size);
- }
- 
-+/*
-+ * Reserve the top of the GuC address space for firmware images. Addresses
-+ * beyond GUC_GGTT_TOP in the GuC address space are inaccessible by GuC,
-+ * which makes for a suitable range to hold GuC/HuC firmware images if the
-+ * size of the GGTT is 4G. However, on a 32-bit platform the size of the GGTT
-+ * is limited to 2G, which is less than GUC_GGTT_TOP, but we reserve a chunk
-+ * of the same size anyway, which is far more than needed, to keep the logic
-+ * in uc_fw_ggtt_offset() simple.
-+ */
-+#define GUC_TOP_RESERVE_SIZE (SZ_4G - GUC_GGTT_TOP)
-+
- static int ggtt_reserve_guc_top(struct i915_ggtt *ggtt)
- {
--	u64 size;
-+	u64 offset;
- 	int ret;
- 
- 	if (!intel_uc_uses_guc(&ggtt->vm.gt->uc))
- 		return 0;
- 
--	GEM_BUG_ON(ggtt->vm.total <= GUC_GGTT_TOP);
--	size = ggtt->vm.total - GUC_GGTT_TOP;
-+	GEM_BUG_ON(ggtt->vm.total <= GUC_TOP_RESERVE_SIZE);
-+	offset = ggtt->vm.total - GUC_TOP_RESERVE_SIZE;
- 
--	ret = i915_gem_gtt_reserve(&ggtt->vm, NULL, &ggtt->uc_fw, size,
--				   GUC_GGTT_TOP, I915_COLOR_UNEVICTABLE,
--				   PIN_NOEVICT);
-+	ret = i915_gem_gtt_reserve(&ggtt->vm, NULL, &ggtt->uc_fw,
-+				   GUC_TOP_RESERVE_SIZE, offset,
-+				   I915_COLOR_UNEVICTABLE, PIN_NOEVICT);
- 	if (ret)
- 		drm_dbg(&ggtt->vm.i915->drm,
- 			"Failed to reserve top of GGTT for GuC\n");
+--- a/drivers/power/supply/rk817_charger.c
++++ b/drivers/power/supply/rk817_charger.c
+@@ -1220,3 +1220,4 @@ MODULE_DESCRIPTION("Battery power supply
+ MODULE_AUTHOR("Maya Matuszczyk <maccraft123mc@gmail.com>");
+ MODULE_AUTHOR("Chris Morgan <macromorgan@hotmail.com>");
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:rk817-charger");
 
 
