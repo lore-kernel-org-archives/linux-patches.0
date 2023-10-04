@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2923E1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A631D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue84HxIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B002C433C7;
-	Wed,  4 Oct 2023 18:25:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioVmor1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A5FC433C8;
+	Wed,  4 Oct 2023 18:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443908;
-	bh=k+bsq5049TarUxRba2rBF9u2mHlX7U4FgXtfxxMqaGM=;
+	s=korg; t=1696443910;
+	bh=V6phDsTMkiZ6GSNfOl4lSbPzN38ZcU7mhvQYEvFI6xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ue84HxIKQSYTVBGuP52IsYNN7a3sWy8nvfpx+slQHoAg3N+RHc5kCuw7OQpEkb/A/
-	 yPQduvhaDmqmICt3vuB/AZGdxzE61wGgsGUUIl/XrHTc2Q3RB854+03KYwcKWGi9vE
-	 HXrwQPKsH3foZ8A2SQp96UWiEfb+hAyY0c5nkcsg=
+	b=ioVmor1JNEMfs1TXGjJ3U825VuGyT7fgJHb4IAzLBcHeU4L/mc0XmX4V9NF/5y5eE
+	 xNL0pBFQrP89MuaxV5Jlujw7R0ADXDtotSi7Rcr2Njb/vSc93uwwmBWh2hfCbqvtZC
+	 IhZ6dZUS0fBIHhmfz2GjdZUKKKuu1eQ4hr5Hu360=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Florian Westphal <fw@strlen.de>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 063/321] netfilter, bpf: Adjust timeouts of non-confirmed CTs in bpf_ct_insert_entry()
-Date: Wed,  4 Oct 2023 19:53:28 +0200
-Message-ID: <20231004175232.095008544@linuxfoundation.org>
+Subject: [PATCH 6.5 064/321] ionic: fix 16bit math issue when PAGE_SIZE >= 64KB
+Date: Wed,  4 Oct 2023 19:53:29 +0200
+Message-ID: <20231004175232.142436522@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,49 +43,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: David Christensen <drc@linux.vnet.ibm.com>
 
-[ Upstream commit 837723b22a63cfbff584655b009b9d488d0e9087 ]
+[ Upstream commit 8f6b846b0a86c3cbae8a25b772651cfc2270ad0a ]
 
-bpf_nf testcase fails on s390x: bpf_skb_ct_lookup() cannot find the entry
-that was added by bpf_ct_insert_entry() within the same BPF function.
+The ionic device supports a maximum buffer length of 16 bits (see
+ionic_rxq_desc or ionic_rxq_sg_elem).  When adding new buffers to
+the receive rings, the function ionic_rx_fill() uses 16bit math when
+calculating the number of pages to allocate for an RX descriptor,
+given the interface's MTU setting. If the system PAGE_SIZE >= 64KB,
+and the buf_info->page_offset is 0, the remain_len value will never
+decrement from the original MTU value and the frag_len value will
+always be 0, causing additional pages to be allocated as scatter-
+gather elements unnecessarily.
 
-The reason is that this entry is deleted by nf_ct_gc_expired().
+A similar math issue exists in ionic_rx_frags(), but no failures
+have been observed here since a 64KB page should not normally
+require any scatter-gather elements at any legal Ethernet MTU size.
 
-The CT timeout starts ticking after the CT confirmation; therefore
-nf_conn.timeout is initially set to the timeout value, and
-__nf_conntrack_confirm() sets it to the deadline value.
-
-bpf_ct_insert_entry() sets IPS_CONFIRMED_BIT, but does not adjust the
-timeout, making its value meaningless and causing false positives.
-
-Fix the problem by making bpf_ct_insert_entry() adjust the timeout,
-like __nf_conntrack_confirm().
-
-Fixes: 2cdaa3eefed8 ("netfilter: conntrack: restore IPS_CONFIRMED out of nf_conntrack_hash_check_insert()")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/bpf/20230830011128.1415752-3-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4b0a7539a372 ("ionic: implement Rx page reuse")
+Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_bpf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.h  |  1 +
+ drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 10 +++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
-index 0d36d7285e3f0..747dc22655018 100644
---- a/net/netfilter/nf_conntrack_bpf.c
-+++ b/net/netfilter/nf_conntrack_bpf.c
-@@ -380,6 +380,8 @@ __bpf_kfunc struct nf_conn *bpf_ct_insert_entry(struct nf_conn___init *nfct_i)
- 	struct nf_conn *nfct = (struct nf_conn *)nfct_i;
- 	int err;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+index 0bea208bfba2f..43ce0aac6a94c 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+@@ -187,6 +187,7 @@ typedef void (*ionic_desc_cb)(struct ionic_queue *q,
+ 			      struct ionic_desc_info *desc_info,
+ 			      struct ionic_cq_info *cq_info, void *cb_arg);
  
-+	if (!nf_ct_is_confirmed(nfct))
-+		nfct->timeout += nfct_time_stamp;
- 	nfct->status |= IPS_CONFIRMED;
- 	err = nf_conntrack_hash_check_insert(nfct);
- 	if (err < 0) {
++#define IONIC_MAX_BUF_LEN			((u16)-1)
+ #define IONIC_PAGE_SIZE				PAGE_SIZE
+ #define IONIC_PAGE_SPLIT_SZ			(PAGE_SIZE / 2)
+ #define IONIC_PAGE_GFP_MASK			(GFP_ATOMIC | __GFP_NOWARN |\
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+index 26798fc635dbd..44466e8c5d77b 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+@@ -207,7 +207,8 @@ static struct sk_buff *ionic_rx_frags(struct ionic_queue *q,
+ 			return NULL;
+ 		}
+ 
+-		frag_len = min_t(u16, len, IONIC_PAGE_SIZE - buf_info->page_offset);
++		frag_len = min_t(u16, len, min_t(u32, IONIC_MAX_BUF_LEN,
++						 IONIC_PAGE_SIZE - buf_info->page_offset));
+ 		len -= frag_len;
+ 
+ 		dma_sync_single_for_cpu(dev,
+@@ -452,7 +453,8 @@ void ionic_rx_fill(struct ionic_queue *q)
+ 
+ 		/* fill main descriptor - buf[0] */
+ 		desc->addr = cpu_to_le64(buf_info->dma_addr + buf_info->page_offset);
+-		frag_len = min_t(u16, len, IONIC_PAGE_SIZE - buf_info->page_offset);
++		frag_len = min_t(u16, len, min_t(u32, IONIC_MAX_BUF_LEN,
++						 IONIC_PAGE_SIZE - buf_info->page_offset));
+ 		desc->len = cpu_to_le16(frag_len);
+ 		remain_len -= frag_len;
+ 		buf_info++;
+@@ -471,7 +473,9 @@ void ionic_rx_fill(struct ionic_queue *q)
+ 			}
+ 
+ 			sg_elem->addr = cpu_to_le64(buf_info->dma_addr + buf_info->page_offset);
+-			frag_len = min_t(u16, remain_len, IONIC_PAGE_SIZE - buf_info->page_offset);
++			frag_len = min_t(u16, remain_len, min_t(u32, IONIC_MAX_BUF_LEN,
++								IONIC_PAGE_SIZE -
++								buf_info->page_offset));
+ 			sg_elem->len = cpu_to_le16(frag_len);
+ 			remain_len -= frag_len;
+ 			buf_info++;
 -- 
 2.40.1
 
