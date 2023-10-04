@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E0B2134D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC05421360
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCcQZLSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8375FC433C9;
-	Wed,  4 Oct 2023 18:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJaTTJMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCD0C433C7;
+	Wed,  4 Oct 2023 18:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444371;
-	bh=VWWsOP8IBuf2196vs1WcLZew4VLo2m7GxUsBfNO6H4M=;
+	s=korg; t=1696444374;
+	bh=tSqybAFkyAMBncEXFniNdOmclOJPYxM+mHdwHwNavSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCcQZLSUOkqFfTL5drhCSV5/+8dmtvUrR9fMubhmgW2DHldgtyfiV0sr3lNkLI529
-	 GzYBjnsWaG6KYHS4SzsU5l+OBGwE+fqRAiWbeLZQZKxqSDP1TXJJLXZAlONAhXDyx9
-	 HMVCz9v+tO/UmvLOBhSG/UtA7bL4y8hj84AhZK9w=
+	b=iJaTTJMwI9RaHLimfRInAmIqSViUePAX/SVW2K6mHk9Z4edRpKsh+FCpRU9O+1Sh6
+	 znpP21+z7HiRmFDpbkgekudO9qUjS17yGSyEcuLjDg6zyq2WxGrr+9CyebybRycTB7
+	 yMDw0wbwqyBJFGewp+0asOa5LKPHiU5A9cWSK1Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johnathan Mantey <johnathanx.mantey@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 227/321] ncsi: Propagate carrier gain/loss events to the NCSI controller
-Date: Wed,  4 Oct 2023 19:56:12 +0200
-Message-ID: <20231004175239.735005014@linuxfoundation.org>
+Subject: [PATCH 6.5 228/321] net: hsr: Add __packed to struct hsr_sup_tlv.
+Date: Wed,  4 Oct 2023 19:56:13 +0200
+Message-ID: <20231004175239.781379738@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,38 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 3780bb29311eccb7a1c9641032a112eed237f7e3 ]
+[ Upstream commit fbd825fcd7dd4c11d4c48c3d0adc248a4a0ce90b ]
 
-Report the carrier/no-carrier state for the network interface
-shared between the BMC and the passthrough channel. Without this
-functionality the BMC is unable to reconfigure the NIC in the event
-of a re-cabling to a different subnet.
+Struct hsr_sup_tlv describes HW layout and therefore it needs a __packed
+attribute to ensure the compiler does not add any padding.
+Due to the size and __packed attribute of the structs that use
+hsr_sup_tlv it has no functional impact.
 
-Signed-off-by: Johnathan Mantey <johnathanx.mantey@intel.com>
+Add __packed to struct hsr_sup_tlv.
+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-aen.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/hsr/hsr_main.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
-index 62fb1031763d1..f8854bff286cb 100644
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -89,6 +89,11 @@ static int ncsi_aen_handler_lsc(struct ncsi_dev_priv *ndp,
- 	if ((had_link == has_link) || chained)
- 		return 0;
+diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
+index 6851e33df7d14..18e01791ad799 100644
+--- a/net/hsr/hsr_main.h
++++ b/net/hsr/hsr_main.h
+@@ -83,7 +83,7 @@ struct hsr_vlan_ethhdr {
+ struct hsr_sup_tlv {
+ 	u8		HSR_TLV_type;
+ 	u8		HSR_TLV_length;
+-};
++} __packed;
  
-+	if (had_link)
-+		netif_carrier_off(ndp->ndev.dev);
-+	else
-+		netif_carrier_on(ndp->ndev.dev);
-+
- 	if (!ndp->multi_package && !nc->package->multi_channel) {
- 		if (had_link) {
- 			ndp->flags |= NCSI_DEV_RESHUFFLE;
+ /* HSR/PRP Supervision Frame data types.
+  * Field names as defined in the IEC:2010 standard for HSR.
 -- 
 2.40.1
 
