@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7628A1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC589C433C7;
-	Wed,  4 Oct 2023 18:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C6F1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0524C433C8;
+	Wed,  4 Oct 2023 18:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442710;
-	bh=kIiKeF+E5fD4yJigkmLFPkBLRoEyawjehTIZ6JBYwSg=;
+	s=korg; t=1696442713;
+	bh=WBY/crvimllwAjbY3wh3mjIAyjLwwoPjkSz9Ar4mlOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPGAScXjEgdIDIzWeRnG2SQc0jWHAaQe9TGgBOa371JNZLsPxObrFFm20uDIYYrLf
-	 R2kUuc4A2qoR/TCvfwlnJJKhau3KDMdyyYok4silv7uOQlFc+rdznttGO/SZdTZA8D
-	 3WPI6750E1y9GnT+KHa4zte6AubnrSlSrPcDcVmQ=
+	b=ecuj+8pT1g5znn7nX77iXCinQXbqu992XxAyYSVuNqfyUokMVkoegylrnFRUXqv2M
+	 omGOLpd+wSZPmbhKM5zCSFH8Hb9W8ENo0zAYo0pZpM/nzjjHjWv6pLyAcb2Q5eGHoP
+	 e5AOTR9cd4QHFsDIN+3n5T6q5lep1Ccfusju5MeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anup Sharma <anupnewsmail@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/183] perf build: Update build rule for generated files
-Date: Wed,  4 Oct 2023 19:55:12 +0200
-Message-ID: <20231004175207.249172778@linuxfoundation.org>
+Subject: [PATCH 5.15 082/183] netfilter: exthdr: add support for tcp option removal
+Date: Wed,  4 Oct 2023 19:55:13 +0200
+Message-ID: <20231004175207.290102989@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -47,85 +40,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 7822a8913f4c51c7d1aff793b525d60c3384fb5b ]
+[ Upstream commit 7890cbea66e78a3a6037b2a12827118d7243270b ]
 
-The bison and flex generate C files from the source (.y and .l)
-files.  When O= option is used, they are saved in a separate directory
-but the default build rule assumes the .C files are in the source
-directory.  So it might read invalid file if there are generated files
-from an old version.  The same is true for the pmu-events files.
+This allows to replace a tcp option with nop padding to selectively disable
+a particular tcp option.
 
-For example, the following command would cause a build failure:
+Optstrip mode is chosen when userspace passes the exthdr expression with
+neither a source nor a destination register attribute.
 
-  $ git checkout v6.3
-  $ make -C tools/perf  # build in the same directory
+This is identical to xtables TCPOPTSTRIP extension.
+The only difference is that TCPOPTSTRIP allows to pass in a bitmap
+of options to remove rather than a single number.
 
-  $ git checkout v6.5-rc2
-  $ mkdir build  # create a build directory
-  $ make -C tools/perf O=build  # build in a different directory but it
-                                # refers files in the source directory
+Unlike TCPOPTSTRIP this expression can be used multiple times
+in the same rule to get the same effect.
 
-Let's update the build rule to specify those cases explicitly to depend
-on the files in the output directory.
+We could add a new nested attribute later on in case there is a
+use case for single-expression-multi-remove.
 
-Note that it's not a complete fix and it needs the next patch for the
-include path too.
-
-Fixes: 80eeb67fe577aa76 ("perf jevents: Program to convert JSON file")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anup Sharma <anupnewsmail@gmail.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230728022447.1323563-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 28427f368f0e ("netfilter: nft_exthdr: Fix non-linear header modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.build  | 10 ++++++++++
- tools/perf/pmu-events/Build |  6 ++++++
- 2 files changed, 16 insertions(+)
+ net/netfilter/nft_exthdr.c | 96 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 95 insertions(+), 1 deletion(-)
 
-diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
-index 715092fc6a239..0f0aba16bdee7 100644
---- a/tools/build/Makefile.build
-+++ b/tools/build/Makefile.build
-@@ -116,6 +116,16 @@ $(OUTPUT)%.s: %.c FORCE
- 	$(call rule_mkdir)
- 	$(call if_changed_dep,cc_s_c)
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index 3609680831a14..58f205531b961 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -315,6 +315,63 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
+ 	regs->verdict.code = NFT_BREAK;
+ }
  
-+# bison and flex files are generated in the OUTPUT directory
-+# so it needs a separate rule to depend on them properly
-+$(OUTPUT)%-bison.o: $(OUTPUT)%-bison.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
++static void nft_exthdr_tcp_strip_eval(const struct nft_expr *expr,
++				      struct nft_regs *regs,
++				      const struct nft_pktinfo *pkt)
++{
++	u8 buff[sizeof(struct tcphdr) + MAX_TCP_OPTION_SPACE];
++	struct nft_exthdr *priv = nft_expr_priv(expr);
++	unsigned int i, tcphdr_len, optl;
++	struct tcphdr *tcph;
++	u8 *opt;
 +
-+$(OUTPUT)%-flex.o: $(OUTPUT)%-flex.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
++	tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
++	if (!tcph)
++		goto err;
 +
- # Gather build data:
- #   obj-y        - list of build objects
- #   subdir-y     - list of directories to nest
-diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
-index 5ec5ce8c31bab..ea8c41f9c7398 100644
---- a/tools/perf/pmu-events/Build
-+++ b/tools/perf/pmu-events/Build
-@@ -25,3 +25,9 @@ $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
- 	$(call rule_mkdir)
- 	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(SRCARCH) pmu-events/arch $@
- endif
++	if (skb_ensure_writable(pkt->skb, nft_thoff(pkt) + tcphdr_len))
++		goto drop;
 +
-+# pmu-events.c file is generated in the OUTPUT directory so it needs a
-+# separate rule to depend on it properly
-+$(OUTPUT)pmu-events/pmu-events.o: $(PMU_EVENTS_C)
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,cc_o_c)
++	opt = (u8 *)nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
++	if (!opt)
++		goto err;
++	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
++		unsigned int j;
++
++		optl = optlen(opt, i);
++		if (priv->type != opt[i])
++			continue;
++
++		if (i + optl > tcphdr_len)
++			goto drop;
++
++		for (j = 0; j < optl; ++j) {
++			u16 n = TCPOPT_NOP;
++			u16 o = opt[i+j];
++
++			if ((i + j) % 2 == 0) {
++				o <<= 8;
++				n <<= 8;
++			}
++			inet_proto_csum_replace2(&tcph->check, pkt->skb, htons(o),
++						 htons(n), false);
++		}
++		memset(opt + i, TCPOPT_NOP, optl);
++		return;
++	}
++
++	/* option not found, continue. This allows to do multiple
++	 * option removals per rule.
++	 */
++	return;
++err:
++	regs->verdict.code = NFT_BREAK;
++	return;
++drop:
++	/* can't remove, no choice but to drop */
++	regs->verdict.code = NF_DROP;
++}
++
+ static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
+ 				 struct nft_regs *regs,
+ 				 const struct nft_pktinfo *pkt)
+@@ -463,6 +520,28 @@ static int nft_exthdr_tcp_set_init(const struct nft_ctx *ctx,
+ 				       priv->len);
+ }
+ 
++static int nft_exthdr_tcp_strip_init(const struct nft_ctx *ctx,
++				     const struct nft_expr *expr,
++				     const struct nlattr * const tb[])
++{
++	struct nft_exthdr *priv = nft_expr_priv(expr);
++
++	if (tb[NFTA_EXTHDR_SREG] ||
++	    tb[NFTA_EXTHDR_DREG] ||
++	    tb[NFTA_EXTHDR_FLAGS] ||
++	    tb[NFTA_EXTHDR_OFFSET] ||
++	    tb[NFTA_EXTHDR_LEN])
++		return -EINVAL;
++
++	if (!tb[NFTA_EXTHDR_TYPE])
++		return -EINVAL;
++
++	priv->type = nla_get_u8(tb[NFTA_EXTHDR_TYPE]);
++	priv->op = NFT_EXTHDR_OP_TCPOPT;
++
++	return 0;
++}
++
+ static int nft_exthdr_ipv4_init(const struct nft_ctx *ctx,
+ 				const struct nft_expr *expr,
+ 				const struct nlattr * const tb[])
+@@ -523,6 +602,13 @@ static int nft_exthdr_dump_set(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return nft_exthdr_dump_common(skb, priv);
+ }
+ 
++static int nft_exthdr_dump_strip(struct sk_buff *skb, const struct nft_expr *expr)
++{
++	const struct nft_exthdr *priv = nft_expr_priv(expr);
++
++	return nft_exthdr_dump_common(skb, priv);
++}
++
+ static const struct nft_expr_ops nft_exthdr_ipv6_ops = {
+ 	.type		= &nft_exthdr_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
+@@ -555,6 +641,14 @@ static const struct nft_expr_ops nft_exthdr_tcp_set_ops = {
+ 	.dump		= nft_exthdr_dump_set,
+ };
+ 
++static const struct nft_expr_ops nft_exthdr_tcp_strip_ops = {
++	.type		= &nft_exthdr_type,
++	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
++	.eval		= nft_exthdr_tcp_strip_eval,
++	.init		= nft_exthdr_tcp_strip_init,
++	.dump		= nft_exthdr_dump_strip,
++};
++
+ static const struct nft_expr_ops nft_exthdr_sctp_ops = {
+ 	.type		= &nft_exthdr_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
+@@ -582,7 +676,7 @@ nft_exthdr_select_ops(const struct nft_ctx *ctx,
+ 			return &nft_exthdr_tcp_set_ops;
+ 		if (tb[NFTA_EXTHDR_DREG])
+ 			return &nft_exthdr_tcp_ops;
+-		break;
++		return &nft_exthdr_tcp_strip_ops;
+ 	case NFT_EXTHDR_OP_IPV6:
+ 		if (tb[NFTA_EXTHDR_DREG])
+ 			return &nft_exthdr_ipv6_ops;
 -- 
 2.40.1
 
