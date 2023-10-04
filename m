@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6510F1D55D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263A61D55D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmni5ohu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC835C433C9;
-	Wed,  4 Oct 2023 18:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/PJxouO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE4CC433C8;
+	Wed,  4 Oct 2023 18:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443373;
-	bh=U4iseO2tHrScxBWHyCUihBZVNGdDc2lYcvkeaHVOvTU=;
+	s=korg; t=1696443376;
+	bh=S8625Jfh+whD7EHW/llD7JLIZosvzs2Ju86wJiC34IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qmni5ohudxwPcz8y5Rrx1MAgkL3un4VkO7ITfqhYEHQ+QZt3D/BtZ84wNS8QsVJZD
-	 4Z2VdA/OvXbtjguLnlUGGbezps/WQvMM+CJMqhnJ0FI8NxGGdNCxM3F8tW2kkNeW17
-	 61fH1VP8EeJc9Noh2lA1DMhBMnh+P8AQEg3CgA0c=
+	b=p/PJxouOGuLNH5Qp4tquGvMxreADL2JQyb7IXR1yij5Zvpw5iYroeaEAU+raqjIUu
+	 W79ArF7RFpWSIFOS86npGQbLJrFvPOeA9YV7tzCzevEIzx0vbcfcoBKiJ20kBkEJVc
+	 qEDyNw7aWJhxjjuqQygNA5z4ZELKnpkh3Zw4GMAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/259] selftests/powerpc: Pass make context to children
-Date: Wed,  4 Oct 2023 19:55:07 +0200
-Message-ID: <20231004175223.509617717@linuxfoundation.org>
+Subject: [PATCH 6.1 135/259] selftests/powerpc: Fix emit_tests to work with run_kselftest.sh
+Date: Wed,  4 Oct 2023 19:55:08 +0200
+Message-ID: <20231004175223.546065118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,120 +41,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 4ecd0868c5138238dec8a1549bb6ff8e5b48208b ]
+[ Upstream commit 58b33e78a31782ffe25d404d5eba9a45fe636e27 ]
 
-Make supports passing the 'jobserver' (parallel make support) to child
-invocations of make when either
-	1. The target command uses $(MAKE) directly
-	2. The command starts with '+'
+In order to use run_kselftest.sh the list of tests must be emitted to
+populate kselftest-list.txt.
 
-This context is not passed through expansions that result in $(MAKE), so
-the macros used in several places fail to pass on the jobserver context.
-Warnings are also raised by the child mentioning this.
+The powerpc Makefile is written to use EMIT_TESTS. But support for
+EMIT_TESTS was dropped in commit d4e59a536f50 ("selftests: Use runner.sh
+for emit targets"). Although prior to that commit a548de0fe8e1
+("selftests: lib.mk: add test execute bit check to EMIT_TESTS") had
+already broken run_kselftest.sh for powerpc due to the executable check
+using the wrong path.
 
-Prepend macros lines that invoke $(MAKE) with '+' to allow passing the
-jobserver context to these children.
+It can be fixed by replacing the EMIT_TESTS definitions with actual
+emit_tests rules in the powerpc Makefiles. This makes run_kselftest.sh
+able to run powerpc tests:
 
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+  $ cd linux
+  $ export ARCH=powerpc
+  $ export CROSS_COMPILE=powerpc64le-linux-gnu-
+  $ make headers
+  $ make -j -C tools/testing/selftests install
+  $ grep -c "^powerpc" tools/testing/selftests/kselftest_install/kselftest-list.txt
+  182
+
+Fixes: d4e59a536f50 ("selftests: Use runner.sh for emit targets")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230228000709.124727-3-bgray@linux.ibm.com
-Stable-dep-of: 58b33e78a317 ("selftests/powerpc: Fix emit_tests to work with run_kselftest.sh")
+Link: https://msgid.link/20230921072623.828772-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/Makefile     |  8 +++----
- tools/testing/selftests/powerpc/pmu/Makefile | 24 ++++++++++----------
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ tools/testing/selftests/powerpc/Makefile     |  7 +++----
+ tools/testing/selftests/powerpc/pmu/Makefile | 11 ++++++-----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/tools/testing/selftests/powerpc/Makefile b/tools/testing/selftests/powerpc/Makefile
-index 6ba95cd19e423..ae2bfc0d822f2 100644
+index ae2bfc0d822f2..c8c085fa05b05 100644
 --- a/tools/testing/selftests/powerpc/Makefile
 +++ b/tools/testing/selftests/powerpc/Makefile
-@@ -45,28 +45,28 @@ $(SUB_DIRS):
- include ../lib.mk
- 
- override define RUN_TESTS
--	@for TARGET in $(SUB_DIRS); do \
-+	+@for TARGET in $(SUB_DIRS); do \
- 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests;\
+@@ -58,12 +58,11 @@ override define INSTALL_RULE
  	done;
  endef
  
- override define INSTALL_RULE
--	@for TARGET in $(SUB_DIRS); do \
-+	+@for TARGET in $(SUB_DIRS); do \
+-override define EMIT_TESTS
++emit_tests:
+ 	+@for TARGET in $(SUB_DIRS); do \
  		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install;\
+-		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests;\
++		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET $@;\
  	done;
- endef
- 
- override define EMIT_TESTS
--	@for TARGET in $(SUB_DIRS); do \
-+	+@for TARGET in $(SUB_DIRS); do \
- 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests;\
- 	done;
- endef
+-endef
  
  override define CLEAN
--	@for TARGET in $(SUB_DIRS); do \
-+	+@for TARGET in $(SUB_DIRS); do \
- 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean; \
- 	done;
+ 	+@for TARGET in $(SUB_DIRS); do \
+@@ -76,4 +75,4 @@ endef
+ tags:
+ 	find . -name '*.c' -o -name '*.h' | xargs ctags
+ 
+-.PHONY: tags $(SUB_DIRS)
++.PHONY: tags $(SUB_DIRS) emit_tests
 diff --git a/tools/testing/selftests/powerpc/pmu/Makefile b/tools/testing/selftests/powerpc/pmu/Makefile
-index d2c1accc2e69c..2b95e44d20ff9 100644
+index 2b95e44d20ff9..a284fa874a9f1 100644
 --- a/tools/testing/selftests/powerpc/pmu/Makefile
 +++ b/tools/testing/selftests/powerpc/pmu/Makefile
-@@ -25,34 +25,34 @@ $(OUTPUT)/per_event_excludes: ../utils.c
- DEFAULT_RUN_TESTS := $(RUN_TESTS)
- override define RUN_TESTS
- 	$(DEFAULT_RUN_TESTS)
--	TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
--	TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
--	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
-+	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
-+	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
-+	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
+@@ -30,13 +30,14 @@ override define RUN_TESTS
+ 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
  endef
  
- DEFAULT_EMIT_TESTS := $(EMIT_TESTS)
- override define EMIT_TESTS
- 	$(DEFAULT_EMIT_TESTS)
--	TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
--	TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
--	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
-+	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
-+	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
-+	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
- endef
+-DEFAULT_EMIT_TESTS := $(EMIT_TESTS)
+-override define EMIT_TESTS
+-	$(DEFAULT_EMIT_TESTS)
++emit_tests:
++	for TEST in $(TEST_GEN_PROGS); do \
++		BASENAME_TEST=`basename $$TEST`;	\
++		echo "$(COLLECTION):$$BASENAME_TEST";	\
++	done
+ 	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+ 	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+ 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+-endef
  
  DEFAULT_INSTALL_RULE := $(INSTALL_RULE)
  override define INSTALL_RULE
- 	$(DEFAULT_INSTALL_RULE)
--	TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
--	TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
--	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
-+	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
-+	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
-+	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
- endef
+@@ -64,4 +65,4 @@ sampling_tests:
+ event_code_tests:
+ 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
  
- DEFAULT_CLEAN := $(CLEAN)
- override define CLEAN
- 	$(DEFAULT_CLEAN)
- 	$(RM) $(TEST_GEN_PROGS) $(OUTPUT)/loop.o
--	TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
--	TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
--	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
-+	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
-+	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
-+	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
- endef
- 
- ebb:
+-.PHONY: all run_tests ebb sampling_tests event_code_tests
++.PHONY: all run_tests ebb sampling_tests event_code_tests emit_tests
 -- 
 2.40.1
 
