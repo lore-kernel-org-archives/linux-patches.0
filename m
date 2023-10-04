@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCBC1C295
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A5F1D6BA
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOllZANE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE6EC433CA;
-	Wed,  4 Oct 2023 18:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ays9UR7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B142C433CA;
+	Wed,  4 Oct 2023 18:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444450;
-	bh=yG8UkNoYGrOBm3sCAH2yCSqfMO5sMoP9tkvXiWJIvpw=;
+	s=korg; t=1696444453;
+	bh=ZGkzdKJ65adkR+pcci+EKjRxW7o0SS9LPgaMeBSvru4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOllZANEpxjFKDBXm7sBG+ESMHEYa6OiTYAumLSG0/rdTAfiaMA+yUt+tSFuMvsNP
-	 ktxOnVUFYnFn8sqoJR+lpinTbhAdytR0WnIyMFS+WMDHydifGE1GBjeuZGDdMnWglK
-	 JIUUyXWAtY+Vf/yFAwQo8IIBtVQ59E7LBYt2UDCM=
+	b=Ays9UR7A9Y3YTnHQ4P58Gi7Lny0HnwJtE16y16bYeN+rEFlsZ+Xiokv06R1amfJBe
+	 kzOgszQ77A23GxQ9OW08mj5FPDzqQPi53/xz5JMBZCnhNUUFscDvyu17mXZV8du44N
+	 cnTW7X5Btu/JZi6h/RCFZbUY6BZBXCV0WrWo/IFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Bian <bianpan2016@163.com>,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 255/321] nilfs2: fix potential use after free in nilfs_gccache_submit_read_data()
-Date: Wed,  4 Oct 2023 19:56:40 +0200
-Message-ID: <20231004175241.082564220@linuxfoundation.org>
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.5 256/321] crypto: sm2 - Fix crash caused by uninitialized context
+Date: Wed,  4 Oct 2023 19:56:41 +0200
+Message-ID: <20231004175241.126277021@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,61 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pan Bian <bianpan2016@163.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit 7ee29facd8a9c5a26079148e36bcf07141b3a6bc upstream.
+commit 21155620fbf2edbb071144894ff9d67ba9a1faa0 upstream.
 
-In nilfs_gccache_submit_read_data(), brelse(bh) is called to drop the
-reference count of bh when the call to nilfs_dat_translate() fails.  If
-the reference count hits 0 and its owner page gets unlocked, bh may be
-freed.  However, bh->b_page is dereferenced to put the page after that,
-which may result in a use-after-free bug.  This patch moves the release
-operation after unlocking and putting the page.
+In sm2_compute_z_digest() function, the newly allocated structure
+mpi_ec_ctx is used, but forget to initialize it, which will cause
+a crash when performing subsequent operations.
 
-NOTE: The function in question is only called in GC, and in combination
-with current userland tools, address translation using DAT does not occur
-in that function, so the code path that causes this issue will not be
-executed.  However, it is possible to run that code path by intentionally
-modifying the userland GC library or by calling the GC ioctl directly.
-
-[konishi.ryusuke@gmail.com: NOTE added to the commit log]
-Link: https://lkml.kernel.org/r/1543201709-53191-1-git-send-email-bianpan2016@163.com
-Link: https://lkml.kernel.org/r/20230921141731.10073-1-konishi.ryusuke@gmail.com
-Fixes: a3d93f709e89 ("nilfs2: block cache for garbage collection")
-Signed-off-by: Pan Bian <bianpan2016@163.com>
-Reported-by: Ferry Meng <mengferry@linux.alibaba.com>
-Closes: https://lkml.kernel.org/r/20230818092022.111054-1-mengferry@linux.alibaba.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e5221fa6a355 ("KEYS: asymmetric: Move sm2 code into x509_public_key")
+Cc: stable@vger.kernel.org # v6.5
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/gcinode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ crypto/sm2.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -73,10 +73,8 @@ int nilfs_gccache_submit_read_data(struc
- 		struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
+diff --git a/crypto/sm2.c b/crypto/sm2.c
+index 285b3cb7c0bc..5ab120d74c59 100644
+--- a/crypto/sm2.c
++++ b/crypto/sm2.c
+@@ -278,10 +278,14 @@ int sm2_compute_z_digest(struct shash_desc *desc,
+ 	if (!ec)
+ 		return -ENOMEM;
  
- 		err = nilfs_dat_translate(nilfs->ns_dat, vbn, &pbn);
--		if (unlikely(err)) { /* -EIO, -ENOMEM, -ENOENT */
--			brelse(bh);
-+		if (unlikely(err)) /* -EIO, -ENOMEM, -ENOENT */
- 			goto failed;
--		}
- 	}
+-	err = __sm2_set_pub_key(ec, key, keylen);
++	err = sm2_ec_ctx_init(ec);
+ 	if (err)
+ 		goto out_free_ec;
  
- 	lock_buffer(bh);
-@@ -102,6 +100,8 @@ int nilfs_gccache_submit_read_data(struc
-  failed:
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
-+	if (unlikely(err))
-+		brelse(bh);
- 	return err;
- }
- 
++	err = __sm2_set_pub_key(ec, key, keylen);
++	if (err)
++		goto out_deinit_ec;
++
+ 	bits_len = SM2_DEFAULT_USERID_LEN * 8;
+ 	entl[0] = bits_len >> 8;
+ 	entl[1] = bits_len & 0xff;
+-- 
+2.42.0
+
 
 
