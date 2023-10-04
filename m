@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883271D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F1A1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZrbjuHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06774C433CA;
-	Wed,  4 Oct 2023 18:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3nEftNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F5DC433C8;
+	Wed,  4 Oct 2023 18:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443653;
-	bh=2c0vTsofcm/wKTxRTJxpx7RHfabH/v2d/sb+tGgwrkI=;
+	s=korg; t=1696443656;
+	bh=hMCRyYnux5tRpLIiu4cDzdnfDopQyeSlantIUFJ9Az8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZrbjuHOZs+nc2YsReuPAdZ9JI7oNGt+hiVlQJegHxF3H2LenK8GZhIt0ZuwRyLQA
-	 2LVH5o7YGpeAZ+5r2kXSrbrDHaqJaA7r1/29CZ4FVmnfpq4L/wh/9qn7ZGK8kCmSh2
-	 KY1yI/+0AG6jvd9nG7MJoUUJdt5WpQOJxu0RDme8=
+	b=N3nEftNkQG9Hb7AGlT7wFpOiCB5ZTEpaFbxhj+MjChyo8C3OHNRFYhyvH1HKbGpbX
+	 Y0xai8/XrYXMWyG9xp5Qsc4SJ2T11VTP1ffFr+b8ifulSpcNFM1m0J/UsTNn2Xov/s
+	 o0fctJ5gc7cMR7jkKHd46lvlGBXnSWiXw0AZGHoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>
-Subject: [PATCH 6.1 233/259] timers: Tag (hr)timer softirq as hotplug safe
-Date: Wed,  4 Oct 2023 19:56:46 +0200
-Message-ID: <20231004175228.060555400@linuxfoundation.org>
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	Arthur Grillo <arthurgrillo@riseup.net>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Daniel Latypov <dlatypov@google.com>
+Subject: [PATCH 6.1 234/259] drm/tests: Fix incorrect argument in drm_test_mm_insert_range
+Date: Wed,  4 Oct 2023 19:56:47 +0200
+Message-ID: <20231004175228.109836365@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -36,66 +38,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit 1a6a464774947920dcedcf7409be62495c7cedd0 upstream.
+commit 2ba157983974ae1b6aaef7d4953812020d6f1eb5 upstream.
 
-Specific stress involving frequent CPU-hotplug operations, such as
-running rcutorture for example, may trigger the following message:
+While drm_mm test was converted form igt selftest to kunit, unexpected
+value of "end" argument equal "start" was introduced to one of calls to a
+function that executes the drm_test_mm_insert_range for specific start/end
+pair of arguments.  As a consequence, DRM_MM_BUG_ON(end <= start) is
+triggered.  Fix it by restoring the original value.
 
-  NOHZ tick-stop error: local softirq work is pending, handler #02!!!"
-
-This happens in the CPU-down hotplug process, after
-CPUHP_AP_SMPBOOT_THREADS whose teardown callback parks ksoftirqd, and
-before the target CPU shuts down through CPUHP_AP_IDLE_DEAD. In this
-fragile intermediate state, softirqs waiting for threaded handling may be
-forever ignored and eventually reported by the idle task as in the above
-example.
-
-However some vectors are known to be safe as long as the corresponding
-subsystems have teardown callbacks handling the migration of their
-events. The above error message reports pending timers softirq although
-this vector can be considered as hotplug safe because the
-CPUHP_TIMERS_PREPARE teardown callback performs the necessary migration
-of timers after the death of the CPU. Hrtimers also have a similar
-hotplug handling.
-
-Therefore this error message, as far as (hr-)timers are concerned, can
-be considered spurious and the relevant softirq vectors can be marked as
-hotplug safe.
-
-Fixes: 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230912104406.312185-6-frederic@kernel.org
+Fixes: fc8d29e298cf ("drm: selftest: convert drm_mm selftest to KUnit")
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: "Maíra Canal" <mairacanal@riseup.net>
+Cc: Arthur Grillo <arthurgrillo@riseup.net>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Daniel Latypov <dlatypov@google.com>
+Cc: stable@vger.kernel.org # v6.1+
+Reviewed-by: Maíra Canal <mairacanal@riseup.net>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230911130323.7037-2-janusz.krzysztofik@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/interrupt.h |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tests/drm_mm_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -569,8 +569,12 @@ enum
-  * 	2) rcu_report_dead() reports the final quiescent states.
-  *
-  * _ IRQ_POLL: irq_poll_cpu_dead() migrates the queue
-+ *
-+ * _ (HR)TIMER_SOFTIRQ: (hr)timers_dead_cpu() migrates the queue
-  */
--#define SOFTIRQ_HOTPLUG_SAFE_MASK (BIT(RCU_SOFTIRQ) | BIT(IRQ_POLL_SOFTIRQ))
-+#define SOFTIRQ_HOTPLUG_SAFE_MASK (BIT(TIMER_SOFTIRQ) | BIT(IRQ_POLL_SOFTIRQ) |\
-+				   BIT(HRTIMER_SOFTIRQ) | BIT(RCU_SOFTIRQ))
-+
+diff --git a/drivers/gpu/drm/tests/drm_mm_test.c b/drivers/gpu/drm/tests/drm_mm_test.c
+index 186b28dc7038..05d5e7af6d25 100644
+--- a/drivers/gpu/drm/tests/drm_mm_test.c
++++ b/drivers/gpu/drm/tests/drm_mm_test.c
+@@ -939,7 +939,7 @@ static void drm_test_mm_insert_range(struct kunit *test)
+ 		KUNIT_ASSERT_FALSE(test, __drm_test_mm_insert_range(test, count, size, 0, max - 1));
+ 		KUNIT_ASSERT_FALSE(test, __drm_test_mm_insert_range(test, count, size, 0, max / 2));
+ 		KUNIT_ASSERT_FALSE(test, __drm_test_mm_insert_range(test, count, size,
+-								    max / 2, max / 2));
++								    max / 2, max));
+ 		KUNIT_ASSERT_FALSE(test, __drm_test_mm_insert_range(test, count, size,
+ 								    max / 4 + 1, 3 * max / 4 - 1));
  
- /* map softirq index to softirq name. update 'softirq_to_name' in
-  * kernel/softirq.c when adding a new softirq.
+-- 
+2.42.0
+
 
 
