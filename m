@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DA21D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FC4C433C7;
-	Wed,  4 Oct 2023 18:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171551D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C451C433C9;
+	Wed,  4 Oct 2023 18:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442699;
-	bh=8Pairt1UJXwm9I5cx1nIXXHIcNKpD3vtEWJyIat1Oso=;
+	s=korg; t=1696442701;
+	bh=z+dc6jfqZMBNzCItdnMPkGlvlb8oHP0B1o/OSZknElA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCQZrl2/zZQ0rP8m+uncM7ZFnup+gBaLkHpBxWqVIm/+6HzplmXLKpAzgRUh1fBcC
-	 EMcsHgcxNkwbrpBKRLEiukf0utRJE7yVLcGAJ4int7puiPcDCRal6CGQGageKmCNH6
-	 LxvxDKVPdHniA0eQOgKPY0BbPEuMrv2cJiRg2B3o=
+	b=NcjeRfS3d0RCpzzn0W0/zfv+odQJpTzZZmqGidJnXLk+ZexEXxWs+GHddpIMSCojA
+	 kYj80iYN9t7b1aU2H2ltCkD/1x/KNvr3V+WoBR6KkjWga7lrnyd03HNqm9uRpa8xWP
+	 RZYGNJUyfICXouZvkpbSXIsPV9SaoUwk0AjhL0Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	"Lee, Cherie-Anne" <cherie.lee@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	info@starlabs.sg,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/183] Input: i8042 - rename i8042-x86ia64io.h to i8042-acpipnpio.h
-Date: Wed,  4 Oct 2023 19:55:09 +0200
-Message-ID: <20231004175207.146349497@linuxfoundation.org>
+Subject: [PATCH 5.15 061/183] netfilter: nf_tables: disable toggling dormant table state more than once
+Date: Wed,  4 Oct 2023 19:54:52 +0200
+Message-ID: <20231004175206.447092155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,62 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8761b9b580d53162cca7868385069c0d4354c9e0 ]
+[ Upstream commit c9bd26513b3a11b3adb3c2ed8a31a01a87173ff1 ]
 
-Now i8042-x86ia64io.h is shared by X86 and IA64, but it can be shared
-by more platforms (such as LoongArch) with ACPI firmware on which PNP
-typed keyboard and mouse is configured in DSDT. So rename it to i8042-
-acpipnpio.h.
+nft -f -<<EOF
+add table ip t
+add table ip t { flags dormant; }
+add chain ip t c { type filter hook input priority 0; }
+add table ip t
+EOF
 
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Link: https://lore.kernel.org/r/20220917064020.1639709-1-chenhuacai@loongson.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: eb09074bdb05 ("Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN")
+Triggers a splat from nf core on next table delete because we lose
+track of right hook register state:
+
+WARNING: CPU: 2 PID: 1597 at net/netfilter/core.c:501 __nf_unregister_net_hook
+RIP: 0010:__nf_unregister_net_hook+0x41b/0x570
+ nf_unregister_net_hook+0xb4/0xf0
+ __nf_tables_unregister_hook+0x160/0x1d0
+[..]
+
+The above should have table in *active* state, but in fact no
+hooks were registered.
+
+Reject on/off/on games rather than attempting to fix this.
+
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Reported-by: "Lee, Cherie-Anne" <cherie.lee@starlabs.sg>
+Cc: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Cc: info@starlabs.sg
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../input/serio/{i8042-x86ia64io.h => i8042-acpipnpio.h}    | 6 +++---
- drivers/input/serio/i8042.h                                 | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
- rename drivers/input/serio/{i8042-x86ia64io.h => i8042-acpipnpio.h} (99%)
+ net/netfilter/nf_tables_api.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-acpipnpio.h
-similarity index 99%
-rename from drivers/input/serio/i8042-x86ia64io.h
-rename to drivers/input/serio/i8042-acpipnpio.h
-index 339e765bcf5ae..ce8ec35e8e06d 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
--#ifndef _I8042_X86IA64IO_H
--#define _I8042_X86IA64IO_H
-+#ifndef _I8042_ACPIPNPIO_H
-+#define _I8042_ACPIPNPIO_H
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 56098859d5b44..2f7d8e0e47de8 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1159,6 +1159,10 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
+ 	     flags & NFT_TABLE_F_OWNER))
+ 		return -EOPNOTSUPP;
  
- 
- #ifdef CONFIG_X86
-@@ -1647,4 +1647,4 @@ static inline void i8042_platform_exit(void)
- 	i8042_pnp_exit();
- }
- 
--#endif /* _I8042_X86IA64IO_H */
-+#endif /* _I8042_ACPIPNPIO_H */
-diff --git a/drivers/input/serio/i8042.h b/drivers/input/serio/i8042.h
-index 55381783dc82d..bf2592fa9a783 100644
---- a/drivers/input/serio/i8042.h
-+++ b/drivers/input/serio/i8042.h
-@@ -20,7 +20,7 @@
- #elif defined(CONFIG_SPARC)
- #include "i8042-sparcio.h"
- #elif defined(CONFIG_X86) || defined(CONFIG_IA64)
--#include "i8042-x86ia64io.h"
-+#include "i8042-acpipnpio.h"
- #else
- #include "i8042-io.h"
- #endif
++	/* No dormant off/on/off/on games in single transaction */
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return -EINVAL;
++
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWTABLE,
+ 				sizeof(struct nft_trans_table));
+ 	if (trans == NULL)
 -- 
 2.40.1
 
