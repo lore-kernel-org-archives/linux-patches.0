@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E301D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551181DA39
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1kryrkg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4014C433C8;
-	Wed,  4 Oct 2023 18:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/D4oK0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF199C433C7;
+	Wed,  4 Oct 2023 18:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444253;
-	bh=ZXJM0ydznAKgZEbvewQcFVVKElR1AF+dJNjY5UnnX8Y=;
+	s=korg; t=1696444256;
+	bh=0d/6Zln3n5ov0VC2+PiqklSJjNgpP4mCClwFRQuvRpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1kryrkgEkcGOv1bGRw1GCRJqZzOpGohGvQ+V+Y++uqnJU+YymK73dstP3MA8D09J
-	 MzI95TJY7Xcgd8q0AQZdzNRcTvWxZxWsxM3hEeqdwD5vyJYIMkZNwPuJttXb8qP9yu
-	 EZsXVDbz1X4vjcq53W53awRmy10WEYDGHN8y9Mww=
+	b=H/D4oK0LBGK9DdLZ3hiV4diL2HOxNnwYgCS/0gEgTCqGVVPAxHwR13L8dzet/AdD+
+	 YDgILVov0Uz6vfGOfSgtZhoDPdM27XeREa0/kYcPrO651o0JE9wW5jePC2X6/bCidY
+	 VoOU+fKHvcbCKjf07dM0hWAnXhuEqujmnH1xlzwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"William A. Kennington III" <william@wkennington.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 156/321] i2c: npcm7xx: Fix callback completion ordering
-Date: Wed,  4 Oct 2023 19:55:01 +0200
-Message-ID: <20231004175236.473967190@linuxfoundation.org>
+Subject: [PATCH 6.5 147/321] arm64: dts: imx8mp-beacon-kit: Fix audio_pll2 clock
+Date: Wed,  4 Oct 2023 19:54:52 +0200
+Message-ID: <20231004175236.057756159@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,75 +44,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William A. Kennington III <william@wkennington.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 92e73d807b68b2214fcafca4e130b5300a9d4b3c ]
+[ Upstream commit 161af16c18f3e10d81870328928e5fff3a7d47bb ]
 
-Sometimes, our completions race with new master transfers and override
-the bus->operation and bus->master_or_slave variables. This causes
-transactions to timeout and kernel crashes less frequently.
+Commit 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks
+from CCM node") removed the Audio clocks from the main clock node, because
+the intent is to force people to setup the audio PLL clocks per board
+instead of having a common set of rates since not all boards may use
+the various audio PLL clocks for audio devices.
 
-To remedy this, we re-order all completions to the very end of the
-function.
+This resulted in an incorrect clock rate when attempting to playback
+audio, since the AUDIO_PLL2 wasn't set any longer. Fix this by
+setting the AUDIO_PLL2 rate inside the SAI3 node since it's the SAI3
+that needs it.
 
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: William A. Kennington III <william@wkennington.com>
-Reviewed-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks from CCM node")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 53b65ffb6a647..bf9dbab52d228 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -695,6 +695,7 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- {
- 	struct i2c_msg *msgs;
- 	int msgs_num;
-+	bool do_complete = false;
- 
- 	msgs = bus->msgs;
- 	msgs_num = bus->msgs_num;
-@@ -723,23 +724,17 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 				 msgs[1].flags & I2C_M_RD)
- 				msgs[1].len = info;
- 		}
--		if (completion_done(&bus->cmd_complete) == false)
--			complete(&bus->cmd_complete);
--	break;
--
-+		do_complete = true;
-+		break;
- 	case I2C_NACK_IND:
- 		/* MASTER transmit got a NACK before tx all bytes */
- 		bus->cmd_err = -ENXIO;
--		if (bus->master_or_slave == I2C_MASTER)
--			complete(&bus->cmd_complete);
--
-+		do_complete = true;
- 		break;
- 	case I2C_BUS_ERR_IND:
- 		/* Bus error */
- 		bus->cmd_err = -EAGAIN;
--		if (bus->master_or_slave == I2C_MASTER)
--			complete(&bus->cmd_complete);
--
-+		do_complete = true;
- 		break;
- 	case I2C_WAKE_UP_IND:
- 		/* I2C wake up */
-@@ -753,6 +748,8 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 	if (bus->slave)
- 		bus->master_or_slave = I2C_SLAVE;
- #endif
-+	if (do_complete)
-+		complete(&bus->cmd_complete);
- }
- 
- static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
+index 06e91297fb163..acd265d8b58ed 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
+@@ -381,9 +381,10 @@
+ &sai3 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_sai3>;
+-	assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
++	assigned-clocks = <&clk IMX8MP_CLK_SAI3>,
++			  <&clk IMX8MP_AUDIO_PLL2> ;
+ 	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
+-	assigned-clock-rates = <12288000>;
++	assigned-clock-rates = <12288000>, <361267200>;
+ 	fsl,sai-mclk-direction-output;
+ 	status = "okay";
+ };
 -- 
 2.40.1
 
