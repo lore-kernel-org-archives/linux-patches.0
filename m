@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5A91D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00F6C433C9;
-	Wed,  4 Oct 2023 18:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467D31D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEC0C433C7;
+	Wed,  4 Oct 2023 18:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442554;
-	bh=Cm6L9Onu2fhkg9aLVEQlXSWgiIitT8ku9LJAJHFygF8=;
+	s=korg; t=1696442557;
+	bh=hH1E0nWUysXPcsOQX9QT9+sHxAa0FJI4MeB4kfHXi4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGktT7lKmxzAEzWuyXXLzilHhZFTEHr8ko+zegSgvPKHqOfelkj58836aX1aVTtnW
-	 RcrqURqfLTHldOedZrn8mhZ1jXdH+46NvJtD6KAI4ixuWdyicPn7+mF8fGIN5dFfKI
-	 EaBZYV6lRtQr1ZS0cgpP4JrSElUSfXUSJ6Gpboxk=
+	b=tjAdaPySX3xLsL2jxLwHzaoAJ7y8wob2S5gLg3lnYTtifSrPzkej7zj2paIkNX0he
+	 UYYYA2ei47I2jRMBZ30ADpNPKgthhdWscZQX1rlVlsCuUVD4eEPCBNUj6L+6MoHKJg
+	 Wcgpnvnoq5b167C5LdAm91oKWQn5zESHlL62D4Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/183] netfilter: nf_tables: use correct lock to protect gc_list
-Date: Wed,  4 Oct 2023 19:54:17 +0200
-Message-ID: <20231004175205.049462196@linuxfoundation.org>
+Subject: [PATCH 5.15 027/183] netfilter: nf_tables: defer gc run if previous batch is still pending
+Date: Wed,  4 Oct 2023 19:54:18 +0200
+Message-ID: <20231004175205.093726974@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -39,36 +39,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-commit 8357bc946a2abc2a10ca40e5a2105d2b4c57515e upstream.
+commit 8e51830e29e12670b4c10df070a4ea4c9593e961 upstream.
 
-Use nf_tables_gc_list_lock spinlock, not nf_tables_destroy_list_lock to
-protect the gc_list.
+Don't queue more gc work, else we may queue the same elements multiple
+times.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+If an element is flagged as dead, this can mean that either the previous
+gc request was invalidated/discarded by a transaction or that the previous
+request is still pending in the system work queue.
+
+The latter will happen if the gc interval is set to a very low value,
+e.g. 1ms, and system work queue is backlogged.
+
+The sets refcount is 1 if no previous gc requeusts are queued, so add
+a helper for this and skip gc run if old requests are pending.
+
+Add a helper for this and skip the gc run in this case.
+
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h | 5 +++++
+ net/netfilter/nft_set_hash.c      | 3 +++
+ net/netfilter/nft_set_rbtree.c    | 3 +++
+ 3 files changed, 11 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index c9a3a692879a8..ac266dc2c31b7 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8925,9 +8925,9 @@ static void nft_trans_gc_work(struct work_struct *work)
- 	struct nft_trans_gc *trans, *next;
- 	LIST_HEAD(trans_gc_list);
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 5a0c854e9dc6e..af703d295f0cd 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -551,6 +551,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
+ 	return (void *)set->data;
+ }
  
--	spin_lock(&nf_tables_destroy_list_lock);
-+	spin_lock(&nf_tables_gc_list_lock);
- 	list_splice_init(&nf_tables_gc_list, &trans_gc_list);
--	spin_unlock(&nf_tables_destroy_list_lock);
-+	spin_unlock(&nf_tables_gc_list_lock);
++static inline bool nft_set_gc_is_pending(const struct nft_set *s)
++{
++	return refcount_read(&s->refs) != 1;
++}
++
+ static inline struct nft_set *nft_set_container_of(const void *priv)
+ {
+ 	return (void *)priv - offsetof(struct nft_set, data);
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index cef5df8460009..524763659f251 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -326,6 +326,9 @@ static void nft_rhash_gc(struct work_struct *work)
+ 	nft_net = nft_pernet(net);
+ 	gc_seq = READ_ONCE(nft_net->gc_seq);
  
- 	list_for_each_entry_safe(trans, next, &trans_gc_list, list) {
- 		list_del(&trans->list);
++	if (nft_set_gc_is_pending(set))
++		goto done;
++
+ 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
+ 	if (!gc)
+ 		goto done;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index f9d4c8fcbbf82..c6435e7092319 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -611,6 +611,9 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	nft_net = nft_pernet(net);
+ 	gc_seq  = READ_ONCE(nft_net->gc_seq);
+ 
++	if (nft_set_gc_is_pending(set))
++		goto done;
++
+ 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
+ 	if (!gc)
+ 		goto done;
 -- 
 2.40.1
 
