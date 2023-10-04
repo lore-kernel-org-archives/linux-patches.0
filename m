@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8711D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F801D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E459DC433C8;
-	Wed,  4 Oct 2023 18:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BABC433C7;
+	Wed,  4 Oct 2023 18:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442753;
-	bh=uZBW+yV/9KdYaLzoPVbAP68MSK/UGlaFaS94kLz4j18=;
+	s=korg; t=1696442756;
+	bh=iDL2b2gx1KRz0McPMyUnQh+1EMysc9N7tNDk8ZY2KrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8Gl0hHpji9u2kookZ4JFGA3S0ZBxPuJIsNuQhbqOIv9iyqRu53OpfTuBR4+kA568
-	 aJgjaCgAGhmAdwxss0l/hJ9CLYKqjfX7c7xzvk2gaF8p+1P+BgfSbsytfQP1hHLX92
-	 ycZXRZ8vWmz6oVW++xtMEDGPsCPzdY+B+zysSXFY=
+	b=pXFWtE8shxhIzfAOkv/VSTU8YguQovNqiJmOltzLSlWi7GuLq3mo11BjGumqND7ok
+	 8wF6tcKT3ZNT49eMyoDSTa+XlvLqg5jsFglkJnWACC+tqER82XF9M0aceHohB4xyWF
+	 SNCi9SCLsBwtkKJNwDOCQW5rKV8c+3JAXQOs+egI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/183] team: fix null-ptr-deref when team device type is changed
-Date: Wed,  4 Oct 2023 19:54:50 +0200
-Message-ID: <20231004175206.372338324@linuxfoundation.org>
+Subject: [PATCH 5.15 090/183] btrfs: reset destination buffer when read_extent_buffer() gets invalid range
+Date: Wed,  4 Oct 2023 19:55:21 +0200
+Message-ID: <20231004175207.651789157@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -45,119 +43,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 492032760127251e5540a5716a70996bacf2a3fd ]
+[ Upstream commit 74ee79142c0a344d4eae2eb7012ebc4e82254109 ]
 
-Get a null-ptr-deref bug as follows with reproducer [1].
+Commit f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer
+read write functions") changed how we handle invalid extent buffer range
+for read_extent_buffer().
 
-BUG: kernel NULL pointer dereference, address: 0000000000000228
-...
-RIP: 0010:vlan_dev_hard_header+0x35/0x140 [8021q]
-...
-Call Trace:
- <TASK>
- ? __die+0x24/0x70
- ? page_fault_oops+0x82/0x150
- ? exc_page_fault+0x69/0x150
- ? asm_exc_page_fault+0x26/0x30
- ? vlan_dev_hard_header+0x35/0x140 [8021q]
- ? vlan_dev_hard_header+0x8e/0x140 [8021q]
- neigh_connected_output+0xb2/0x100
- ip6_finish_output2+0x1cb/0x520
- ? nf_hook_slow+0x43/0xc0
- ? ip6_mtu+0x46/0x80
- ip6_finish_output+0x2a/0xb0
- mld_sendpack+0x18f/0x250
- mld_ifc_work+0x39/0x160
- process_one_work+0x1e6/0x3f0
- worker_thread+0x4d/0x2f0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe5/0x120
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
+Previously if the range is invalid we just set the destination to zero,
+but after the patch we do nothing and error out.
 
-[1]
-$ teamd -t team0 -d -c '{"runner": {"name": "loadbalance"}}'
-$ ip link add name t-dummy type dummy
-$ ip link add link t-dummy name t-dummy.100 type vlan id 100
-$ ip link add name t-nlmon type nlmon
-$ ip link set t-nlmon master team0
-$ ip link set t-nlmon nomaster
-$ ip link set t-dummy up
-$ ip link set team0 up
-$ ip link set t-dummy.100 down
-$ ip link set t-dummy.100 master team0
+This can lead to smatch static checker errors like:
 
-When enslave a vlan device to team device and team device type is changed
-from non-ether to ether, header_ops of team device is changed to
-vlan_header_ops. That is incorrect and will trigger null-ptr-deref
-for vlan->real_dev in vlan_dev_hard_header() because team device is not
-a vlan device.
+  fs/btrfs/print-tree.c:186 print_uuid_item() error: uninitialized symbol 'subvol_id'.
+  fs/btrfs/tests/extent-io-tests.c:338 check_eb_bitmap() error: uninitialized symbol 'has'.
+  fs/btrfs/tests/extent-io-tests.c:353 check_eb_bitmap() error: uninitialized symbol 'has'.
+  fs/btrfs/uuid-tree.c:203 btrfs_uuid_tree_remove() error: uninitialized symbol 'read_subid'.
+  fs/btrfs/uuid-tree.c:353 btrfs_uuid_tree_iterate() error: uninitialized symbol 'subid_le'.
+  fs/btrfs/uuid-tree.c:72 btrfs_uuid_tree_lookup() error: uninitialized symbol 'data'.
+  fs/btrfs/volumes.c:7415 btrfs_dev_stats_value() error: uninitialized symbol 'val'.
 
-Cache eth_header_ops in team_setup(), then assign cached header_ops to
-header_ops of team net device when its type is changed from non-ether
-to ether to fix the bug.
+Fix those warnings by reverting back to the old memset() behavior.
+By this we keep the static checker happy and would still make a lot of
+noise when such invalid ranges are passed in.
 
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Suggested-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230918123011.1884401-1-william.xuanziyang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer read write functions")
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 10 +++++++++-
- include/linux/if_team.h |  2 ++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ fs/btrfs/extent_io.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index f99df92d211e2..44275094906c0 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2122,7 +2122,12 @@ static const struct ethtool_ops team_ethtool_ops = {
- static void team_setup_by_port(struct net_device *dev,
- 			       struct net_device *port_dev)
- {
--	dev->header_ops	= port_dev->header_ops;
-+	struct team *team = netdev_priv(dev);
-+
-+	if (port_dev->type == ARPHRD_ETHER)
-+		dev->header_ops	= team->header_ops_cache;
-+	else
-+		dev->header_ops	= port_dev->header_ops;
- 	dev->type = port_dev->type;
- 	dev->hard_header_len = port_dev->hard_header_len;
- 	dev->needed_headroom = port_dev->needed_headroom;
-@@ -2169,8 +2174,11 @@ static int team_dev_type_check_change(struct net_device *dev,
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index f9f6dfbc86bcd..346fc46d019bf 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -6722,8 +6722,14 @@ void read_extent_buffer(const struct extent_buffer *eb, void *dstv,
+ 	char *dst = (char *)dstv;
+ 	unsigned long i = get_eb_page_index(start);
  
- static void team_setup(struct net_device *dev)
- {
-+	struct team *team = netdev_priv(dev);
-+
- 	ether_setup(dev);
- 	dev->max_mtu = ETH_MAX_MTU;
-+	team->header_ops_cache = dev->header_ops;
+-	if (check_eb_range(eb, start, len))
++	if (check_eb_range(eb, start, len)) {
++		/*
++		 * Invalid range hit, reset the memory, so callers won't get
++		 * some random garbage for their uninitialzed memory.
++		 */
++		memset(dstv, 0, len);
+ 		return;
++	}
  
- 	dev->netdev_ops = &team_netdev_ops;
- 	dev->ethtool_ops = &team_ethtool_ops;
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index 5dd1657947b75..762c77d13e7dd 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -189,6 +189,8 @@ struct team {
- 	struct net_device *dev; /* associated netdevice */
- 	struct team_pcpu_stats __percpu *pcpu_stats;
+ 	offset = get_eb_offset_in_page(eb, start);
  
-+	const struct header_ops *header_ops_cache;
-+
- 	struct mutex lock; /* used for overall locking, e.g. port lists write */
- 
- 	/*
 -- 
 2.40.1
 
