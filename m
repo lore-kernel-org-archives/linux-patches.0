@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F871D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883271D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6llhECk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31326C433C8;
-	Wed,  4 Oct 2023 18:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZrbjuHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06774C433CA;
+	Wed,  4 Oct 2023 18:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443650;
-	bh=Aov6PEk+zngv7WOH1GyuFn3/GrMKndA1nS+0iqWm/ns=;
+	s=korg; t=1696443653;
+	bh=2c0vTsofcm/wKTxRTJxpx7RHfabH/v2d/sb+tGgwrkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6llhECkVPsD2IurzKhrrEe8F9Mzetcukn8l9Nvty/bqz6q223xqDN7hCex8NaoNL
-	 r4hELgVZou3Rvp1ZRaV2ekFtaYLJggbID6kN2RcV1rWej0FddPI3b50ZEQPCkcCI9+
-	 d+rTolNEhDsIlnDrDc1m5Y6mHrxH8LErpg0w97vs=
+	b=DZrbjuHOZs+nc2YsReuPAdZ9JI7oNGt+hiVlQJegHxF3H2LenK8GZhIt0ZuwRyLQA
+	 2LVH5o7YGpeAZ+5r2kXSrbrDHaqJaA7r1/29CZ4FVmnfpq4L/wh/9qn7ZGK8kCmSh2
+	 KY1yI/+0AG6jvd9nG7MJoUUJdt5WpQOJxu0RDme8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.1 232/259] Revert "SUNRPC dont update timeout value on connection reset"
-Date: Wed,  4 Oct 2023 19:56:45 +0200
-Message-ID: <20231004175228.005357407@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 6.1 233/259] timers: Tag (hr)timer softirq as hotplug safe
+Date: Wed,  4 Oct 2023 19:56:46 +0200
+Message-ID: <20231004175228.060555400@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,39 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
+commit 1a6a464774947920dcedcf7409be62495c7cedd0 upstream.
 
-This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
+Specific stress involving frequent CPU-hotplug operations, such as
+running rcutorture for example, may trigger the following message:
 
-The problem this commit is intended to fix was comprehensively fixed
-in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
-reset").
-Since then, this commit has been preventing the correct timeout of soft
-mounted requests.
+  NOHZ tick-stop error: local softirq work is pending, handler #02!!!"
 
-Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
-Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
-Cc: stable@vger.kernel.org # 5.9.x
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+This happens in the CPU-down hotplug process, after
+CPUHP_AP_SMPBOOT_THREADS whose teardown callback parks ksoftirqd, and
+before the target CPU shuts down through CPUHP_AP_IDLE_DEAD. In this
+fragile intermediate state, softirqs waiting for threaded handling may be
+forever ignored and eventually reported by the idle task as in the above
+example.
+
+However some vectors are known to be safe as long as the corresponding
+subsystems have teardown callbacks handling the migration of their
+events. The above error message reports pending timers softirq although
+this vector can be considered as hotplug safe because the
+CPUHP_TIMERS_PREPARE teardown callback performs the necessary migration
+of timers after the death of the CPU. Hrtimers also have a similar
+hotplug handling.
+
+Therefore this error message, as far as (hr-)timers are concerned, can
+be considered spurious and the relevant softirq vectors can be marked as
+hotplug safe.
+
+Fixes: 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230912104406.312185-6-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/interrupt.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2462,8 +2462,7 @@ call_status(struct rpc_task *task)
- 		goto out_exit;
- 	}
- 	task->tk_action = call_encode;
--	if (status != -ECONNRESET && status != -ECONNABORTED)
--		rpc_check_timeout(task);
-+	rpc_check_timeout(task);
- 	return;
- out_exit:
- 	rpc_call_rpcerror(task, status);
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -569,8 +569,12 @@ enum
+  * 	2) rcu_report_dead() reports the final quiescent states.
+  *
+  * _ IRQ_POLL: irq_poll_cpu_dead() migrates the queue
++ *
++ * _ (HR)TIMER_SOFTIRQ: (hr)timers_dead_cpu() migrates the queue
+  */
+-#define SOFTIRQ_HOTPLUG_SAFE_MASK (BIT(RCU_SOFTIRQ) | BIT(IRQ_POLL_SOFTIRQ))
++#define SOFTIRQ_HOTPLUG_SAFE_MASK (BIT(TIMER_SOFTIRQ) | BIT(IRQ_POLL_SOFTIRQ) |\
++				   BIT(HRTIMER_SOFTIRQ) | BIT(RCU_SOFTIRQ))
++
+ 
+ /* map softirq index to softirq name. update 'softirq_to_name' in
+  * kernel/softirq.c when adding a new softirq.
 
 
