@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B141D55C
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0422AC433C8;
-	Wed,  4 Oct 2023 18:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529B418E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C773AC433C7;
+	Wed,  4 Oct 2023 18:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443135;
-	bh=8P3ORhQJwTxclQC49SC2WPr9cqHURnn3tulNauFoayk=;
+	s=korg; t=1696443138;
+	bh=+LMlbiPIT/Y1JBLR6yfXbbW0oIx78S6kIIzrK27IqXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOMa27GB6f0qMM2n6sX0ILjdpXUTZfleWBuTBHBDu6d+BIhQd6xNaZcFocz0gGcNg
-	 EJr2GRlCIwRqUHScy8kdTqFcBGGO8qwMMidhSadoMmTSWOivcJFPx2vkJO7rxTnd6u
-	 hTJiW9DkKBgQCT845OL0gr7DgN9BUE9EA/y3lFnQ=
+	b=IMEpY6Xd68PJiCkK1oYaZ8bUMLQebF9kGHESlrVThZy+UOY+j2d+ied26X1GAMDQb
+	 cmGgMXzO7FkmnOPGfJGLjEyzWKhnFLftYX+qhLQh2ZUG+kB2igr6lDFUEDgIZABKCD
+	 /06mvp7pjVdmjXK8tIDYVDFxs9Zg2IJCvrHhq6HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radoslaw Tyl <radoslawx.tyl@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/259] iavf: do not process adminq tasks when __IAVF_IN_REMOVE_TASK is set
-Date: Wed,  4 Oct 2023 19:53:42 +0200
-Message-ID: <20231004175219.696287467@linuxfoundation.org>
+Subject: [PATCH 6.1 032/259] netfilter: nft_set_rbtree: use read spinlock to avoid datapath contention
+Date: Wed,  4 Oct 2023 19:53:25 +0200
+Message-ID: <20231004175218.908102117@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,81 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radoslaw Tyl <radoslawx.tyl@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c8de44b577eb540e8bfea55afe1d0904bb571b7a ]
+commit 96b33300fba880ec0eafcf3d82486f3463b4b6da upstream.
 
-Prevent schedule operations for adminq during device remove and when
-__IAVF_IN_REMOVE_TASK flag is set. Currently, the iavf_down function
-adds operations for adminq that shouldn't be processed when the device
-is in the __IAVF_REMOVE state.
+rbtree GC does not modify the datastructure, instead it collects expired
+elements and it enqueues a GC transaction. Use a read spinlock instead
+to avoid data contention while GC worker is running.
 
-Reproduction:
-
-echo 4 > /sys/bus/pci/devices/0000:17:00.0/sriov_numvfs
-ip link set dev ens1f0 vf 0 trust on
-ip link set dev ens1f0 vf 1 trust on
-ip link set dev ens1f0 vf 2 trust on
-ip link set dev ens1f0 vf 3 trust on
-
-ip link set dev ens1f0 vf 0 mac 00:22:33:44:55:66
-ip link set dev ens1f0 vf 1 mac 00:22:33:44:55:67
-ip link set dev ens1f0 vf 2 mac 00:22:33:44:55:68
-ip link set dev ens1f0 vf 3 mac 00:22:33:44:55:69
-
-echo 0000:17:02.0 > /sys/bus/pci/devices/0000\:17\:02.0/driver/unbind
-echo 0000:17:02.1 > /sys/bus/pci/devices/0000\:17\:02.1/driver/unbind
-echo 0000:17:02.2 > /sys/bus/pci/devices/0000\:17\:02.2/driver/unbind
-echo 0000:17:02.3 > /sys/bus/pci/devices/0000\:17\:02.3/driver/unbind
-sleep 10
-echo 0000:17:02.0 > /sys/bus/pci/drivers/iavf/bind
-echo 0000:17:02.1 > /sys/bus/pci/drivers/iavf/bind
-echo 0000:17:02.2 > /sys/bus/pci/drivers/iavf/bind
-echo 0000:17:02.3 > /sys/bus/pci/drivers/iavf/bind
-
-modprobe vfio-pci
-echo 8086 154c > /sys/bus/pci/drivers/vfio-pci/new_id
-
-qemu-system-x86_64 -accel kvm -m 4096 -cpu host \
--drive file=centos9.qcow2,if=none,id=virtio-disk0 \
--device virtio-blk-pci,drive=virtio-disk0,bootindex=0 -smp 4 \
--device vfio-pci,host=17:02.0 -net none \
--device vfio-pci,host=17:02.1 -net none \
--device vfio-pci,host=17:02.2 -net none \
--device vfio-pci,host=17:02.3 -net none \
--daemonize -vnc :5
-
-Current result:
-There is a probability that the mac of VF in guest is inconsistent with
-it in host
-
-Expected result:
-When passthrough NIC VF to guest, the VF in guest should always get
-the same mac as it in host.
-
-Fixes: 14756b2ae265 ("iavf: Fix __IAVF_RESETTING state usage")
-Signed-off-by: Radoslaw Tyl <radoslawx.tyl@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nft_set_rbtree.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 22bc57ee24228..a02e8d6a4d1d6 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1433,7 +1433,8 @@ void iavf_down(struct iavf_adapter *adapter)
- 	iavf_clear_fdir_filters(adapter);
- 	iavf_clear_adv_rss_conf(adapter);
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index f250b5399344a..70491ba98decb 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -622,8 +622,7 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	if (!gc)
+ 		goto done;
  
--	if (!(adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)) {
-+	if (!(adapter->flags & IAVF_FLAG_PF_COMMS_FAILED) &&
-+	    !(test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section))) {
- 		/* cancel any current operation */
- 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
- 		/* Schedule operations to close down the HW. Don't wait
+-	write_lock_bh(&priv->lock);
+-	write_seqcount_begin(&priv->count);
++	read_lock_bh(&priv->lock);
+ 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
+ 
+ 		/* Ruleset has been updated, try later. */
+@@ -673,8 +672,7 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	gc = nft_trans_gc_catchall(gc, gc_seq);
+ 
+ try_later:
+-	write_seqcount_end(&priv->count);
+-	write_unlock_bh(&priv->lock);
++	read_unlock_bh(&priv->lock);
+ 
+ 	if (gc)
+ 		nft_trans_gc_queue_async_done(gc);
 -- 
 2.40.1
 
