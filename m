@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AE81D6BA
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FF619BD6
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOkz73cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97466C433C9;
-	Wed,  4 Oct 2023 18:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJDLozYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A13C433C7;
+	Wed,  4 Oct 2023 18:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444239;
-	bh=uTI89RvTb44+XuGm2pkIGJG7TBEfIWUo/gRlKcEIZOM=;
+	s=korg; t=1696444241;
+	bh=Hf/b0rlHO/SI2/19bQPtCZ4B22zCCQuSVdfnnxF0Ilw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOkz73cxBse4aHHxR0F/p3Ppn0Smy4E3km5UgnSSfBHHs38q6ZEVKoiDkKavGukdp
-	 VEU8+HvJCTF3qMXqavC1mOma8N+48IO1mGNuI+hWrcm/IGR4o2aW7yAh1E0VMiVXae
-	 RQoHuCYgLRqvHy4n2AJRqMsSrg8q6TSYH3uGWzuU=
+	b=HJDLozYZxrSd661rQWgDqu9xf4JS3HP4OUBOCjPUiQyrvSiJGr3KGP2Yj3GmVZxI0
+	 4V75seuV62JiqEGHUn1iQx35jrVEFFKMd6JVwIw4D/vtJkVBG3SxweA5AUR4ZtTKiU
+	 JXFAs5OGpjKt81uFPP7GTLmX8kNpQDoFRoe2aVS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Alves <joao.alves@arm.com>,
-	Olivier Deprez <olivier.deprez@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 151/321] firmware: arm_ffa: Dont set the memory region attributes for MEM_LEND
-Date: Wed,  4 Oct 2023 19:54:56 +0200
-Message-ID: <20231004175236.253605204@linuxfoundation.org>
+Subject: [PATCH 6.5 152/321] i915/guc: Get runtime pm in busyness worker only if already active
+Date: Wed,  4 Oct 2023 19:54:57 +0200
+Message-ID: <20231004175236.305884247@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,62 +43,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-[ Upstream commit 9dda1178479aa0a73fe0eaabfe2d9a1c603cfeed ]
+[ Upstream commit 907ef0398c938be8232b77c61cfcf50fbfd95554 ]
 
-As per the FF-A specification: section "Usage of other memory region
-attributes", in a transaction to donate memory or lend memory to a single
-borrower, if the receiver is a PE or Proxy endpoint, the owner must not
-specify the attributes and the relayer will return INVALID_PARAMETERS
-if the attributes are set.
+Ideally the busyness worker should take a gt pm wakeref because the
+worker only needs to be active while gt is awake. However, the gt_park
+path cancels the worker synchronously and this complicates the flow if
+the worker is also running at the same time. The cancel waits for the
+worker and when the worker releases the wakeref, that would call gt_park
+and would lead to a deadlock.
 
-Let us not set the memory region attributes for MEM_LEND.
+The resolution is to take the global pm wakeref if runtime pm is already
+active. If not, we don't need to update the busyness stats as the stats
+would already be updated when the gt was parked.
 
-Fixes: 82a8daaecfd9 ("firmware: arm_ffa: Add support for MEM_LEND")
-Reported-by: Joao Alves <joao.alves@arm.com>
-Reported-by: Olivier Deprez <olivier.deprez@arm.com>
-Link: https://lore.kernel.org/r/20230919-ffa_v1-1_notif-v2-13-6f3a3ca3923c@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Note:
+- We do not requeue the worker if we cannot take a reference to runtime
+  pm since intel_guc_busyness_unpark would requeue the worker in the
+  resume path.
+
+- If the gt was parked longer than time taken for GT timestamp to roll
+  over, we ignore those rollovers since we don't care about tracking the
+  exact GT time. We only care about roll overs when the gt is active and
+  running workloads.
+
+- There is a window of time between gt_park and runtime suspend, where
+  the worker may run. This is acceptable since the worker will not find
+  any new data to update busyness.
+
+v2: (Daniele)
+- Edit commit message and code comment
+- Use runtime pm in the worker
+- Put runtime pm after enabling the worker
+- Use Link tag and add Fixes tag
+
+v3: (Daniele)
+- Reword commit and comments and add details
+
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/7077
+Fixes: 77cdd054dd2c ("drm/i915/pmu: Connect engine busyness stats from GuC to pmu")
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230925192117.2497058-1-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit e2f99b79d4c594cdf7ab449e338d4947f5ea8903)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ .../gpu/drm/i915/gt/uc/intel_guc_submission.c | 38 +++++++++++++++++--
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 2109cd178ff70..121f4fc903cd5 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -397,6 +397,19 @@ static u32 ffa_get_num_pages_sg(struct scatterlist *sg)
- 	return num_pages;
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+index b5b7f2fe8c78e..dc7b40e06e38a 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -1432,6 +1432,36 @@ static void guc_timestamp_ping(struct work_struct *wrk)
+ 	unsigned long index;
+ 	int srcu, ret;
+ 
++	/*
++	 * Ideally the busyness worker should take a gt pm wakeref because the
++	 * worker only needs to be active while gt is awake. However, the
++	 * gt_park path cancels the worker synchronously and this complicates
++	 * the flow if the worker is also running at the same time. The cancel
++	 * waits for the worker and when the worker releases the wakeref, that
++	 * would call gt_park and would lead to a deadlock.
++	 *
++	 * The resolution is to take the global pm wakeref if runtime pm is
++	 * already active. If not, we don't need to update the busyness stats as
++	 * the stats would already be updated when the gt was parked.
++	 *
++	 * Note:
++	 * - We do not requeue the worker if we cannot take a reference to runtime
++	 *   pm since intel_guc_busyness_unpark would requeue the worker in the
++	 *   resume path.
++	 *
++	 * - If the gt was parked longer than time taken for GT timestamp to roll
++	 *   over, we ignore those rollovers since we don't care about tracking
++	 *   the exact GT time. We only care about roll overs when the gt is
++	 *   active and running workloads.
++	 *
++	 * - There is a window of time between gt_park and runtime suspend,
++	 *   where the worker may run. This is acceptable since the worker will
++	 *   not find any new data to update busyness.
++	 */
++	wakeref = intel_runtime_pm_get_if_active(&gt->i915->runtime_pm);
++	if (!wakeref)
++		return;
++
+ 	/*
+ 	 * Synchronize with gt reset to make sure the worker does not
+ 	 * corrupt the engine/guc stats. NB: can't actually block waiting
+@@ -1440,10 +1470,9 @@ static void guc_timestamp_ping(struct work_struct *wrk)
+ 	 */
+ 	ret = intel_gt_reset_trylock(gt, &srcu);
+ 	if (ret)
+-		return;
++		goto err_trylock;
+ 
+-	with_intel_runtime_pm(&gt->i915->runtime_pm, wakeref)
+-		__update_guc_busyness_stats(guc);
++	__update_guc_busyness_stats(guc);
+ 
+ 	/* adjust context stats for overflow */
+ 	xa_for_each(&guc->context_lookup, index, ce)
+@@ -1452,6 +1481,9 @@ static void guc_timestamp_ping(struct work_struct *wrk)
+ 	intel_gt_reset_unlock(gt, srcu);
+ 
+ 	guc_enable_busyness_worker(guc);
++
++err_trylock:
++	intel_runtime_pm_put(&gt->i915->runtime_pm, wakeref);
  }
  
-+static u8 ffa_memory_attributes_get(u32 func_id)
-+{
-+	/*
-+	 * For the memory lend or donate operation, if the receiver is a PE or
-+	 * a proxy endpoint, the owner/sender must not specify the attributes
-+	 */
-+	if (func_id == FFA_FN_NATIVE(MEM_LEND) ||
-+	    func_id == FFA_MEM_LEND)
-+		return 0;
-+
-+	return FFA_MEM_NORMAL | FFA_MEM_WRITE_BACK | FFA_MEM_INNER_SHAREABLE;
-+}
-+
- static int
- ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 		       struct ffa_mem_ops_args *args)
-@@ -413,8 +426,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 	mem_region->tag = args->tag;
- 	mem_region->flags = args->flags;
- 	mem_region->sender_id = drv_info->vm_id;
--	mem_region->attributes = FFA_MEM_NORMAL | FFA_MEM_WRITE_BACK |
--				 FFA_MEM_INNER_SHAREABLE;
-+	mem_region->attributes = ffa_memory_attributes_get(func_id);
- 	ep_mem_access = &mem_region->ep_mem_access[0];
- 
- 	for (idx = 0; idx < args->nattrs; idx++, ep_mem_access++) {
+ static int guc_action_enable_usage_stats(struct intel_guc *guc)
 -- 
 2.40.1
 
