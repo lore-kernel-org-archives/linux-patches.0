@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69ECA208DA
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3318020B05
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlU4BNQd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B8EC433C7;
-	Wed,  4 Oct 2023 18:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/D/aLdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4ACC433C8;
+	Wed,  4 Oct 2023 18:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444287;
-	bh=yh5Emd1foADr9nuw1nTau1boqHBh0xXEwBXH1LSTRIM=;
+	s=korg; t=1696444290;
+	bh=usAGUsLsxfsN3jIj+F3SXhU0YYNVq13JX1dONzMfRW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlU4BNQdzvRKoeDRw/v+6ghYRLyFRu0cxf/fpibEhtInjIxn1AvvmFDmmbkmBPAjm
-	 TbgZAcQscDykhCnsODcjJ3C6wJiTB9KZICnVe/nsTpIwvFm913jLs0PCNmA3zcRz0a
-	 SprXSV7JfOYD2PuG+kFvIZYN1rjqvUzAJEplC4p0=
+	b=w/D/aLdqXDVblG7+15n4xovhrklpfFWlE7U+arnvUttoWGHK3mXaFfU854Y81j4te
+	 +khiMlH9KnlqnsrYHvYUJcqQiaEGF3bDGiaqQLWYWYDj2bJJzktIQmbQ7M28wiGh4z
+	 xkKcgnwBNC9TJZIcbaVdOm4ex3tN890VEI5YhFn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Guo Ren <guoren@kernel.org>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 197/321] riscv: errata: fix T-Head dcache.cva encoding
-Date: Wed,  4 Oct 2023 19:55:42 +0200
-Message-ID: <20231004175238.360582680@linuxfoundation.org>
+Subject: [PATCH 6.5 180/321] net/smc: bugfix for smcr v2 server connect success statistic
+Date: Wed,  4 Oct 2023 19:55:25 +0200
+Message-ID: <20231004175237.578859333@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -46,49 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 8eb8fe67e2c84324398f5983c41b4f831d0705b3 ]
+[ Upstream commit 6912e724832c47bb381eb1bd1e483ec8df0d0f0f ]
 
-The dcache.cva encoding shown in the comments are wrong, it's for
-dcache.cval1 (which is restricted to L1) instead.
+In the macro SMC_STAT_SERV_SUCC_INC, the smcd_version is used
+to determin whether to increase the v1 statistic or the v2
+statistic. It is correct for SMCD. But for SMCR, smcr_version
+should be used.
 
-Fix this in the comment and in the hardcoded instruction.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Tested-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Tested-by: Drew Fustini <dfustini@baylibre.com>
-Link: https://lore.kernel.org/r/20230912072410.2481-1-jszhang@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/errata_list.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/smc/smc_stats.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
-index fb1a810f3d8ce..feab334dd8329 100644
---- a/arch/riscv/include/asm/errata_list.h
-+++ b/arch/riscv/include/asm/errata_list.h
-@@ -100,7 +100,7 @@ asm volatile(ALTERNATIVE(						\
-  * | 31 - 25 | 24 - 20 | 19 - 15 | 14 - 12 | 11 - 7 | 6 - 0 |
-  *   0000001    01001      rs1       000      00000  0001011
-  * dcache.cva rs1 (clean, virtual address)
-- *   0000001    00100      rs1       000      00000  0001011
-+ *   0000001    00101      rs1       000      00000  0001011
-  *
-  * dcache.cipa rs1 (clean then invalidate, physical address)
-  * | 31 - 25 | 24 - 20 | 19 - 15 | 14 - 12 | 11 - 7 | 6 - 0 |
-@@ -113,7 +113,7 @@ asm volatile(ALTERNATIVE(						\
-  *   0000000    11001     00000      000      00000  0001011
-  */
- #define THEAD_inval_A0	".long 0x0265000b"
--#define THEAD_clean_A0	".long 0x0245000b"
-+#define THEAD_clean_A0	".long 0x0255000b"
- #define THEAD_flush_A0	".long 0x0275000b"
- #define THEAD_SYNC_S	".long 0x0190000b"
- 
+diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
+index b60fe1eb37ab6..aa8928975cc63 100644
+--- a/net/smc/smc_stats.h
++++ b/net/smc/smc_stats.h
+@@ -243,8 +243,9 @@ while (0)
+ #define SMC_STAT_SERV_SUCC_INC(net, _ini) \
+ do { \
+ 	typeof(_ini) i = (_ini); \
+-	bool is_v2 = (i->smcd_version & SMC_V2); \
+ 	bool is_smcd = (i->is_smcd); \
++	u8 version = is_smcd ? i->smcd_version : i->smcr_version; \
++	bool is_v2 = (version & SMC_V2); \
+ 	typeof(net->smc.smc_stats) smc_stats = (net)->smc.smc_stats; \
+ 	if (is_v2 && is_smcd) \
+ 		this_cpu_inc(smc_stats->smc[SMC_TYPE_D].srv_v2_succ_cnt); \
 -- 
 2.40.1
 
