@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452881DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FB51DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvLK5tH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5282C433C8;
-	Wed,  4 Oct 2023 18:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx9DtbLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEFBC433C8;
+	Wed,  4 Oct 2023 18:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444103;
-	bh=O4LO/nFypCQIteAlN6GOiYD1lgWrpbC23MqEOUzTGz0=;
+	s=korg; t=1696444106;
+	bh=Aq9gmMySOJ7iOV1eQy/YJjJ2h+G2oH1kQQ466eE85Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvLK5tH9RHKzXH7GPCl0zJiK5FNFiQ7HqyWF7X1BopSjePQ34WlqWiTUgZj6K9CPa
-	 9iMvyKHUHZUADQD8eQoykVeSks5NnDOS1TszWheq8c60kb8LO2R/reDQALjYjSVTO0
-	 ycF2ohrSLn4XHCjVWLHqPVRh+fM6EMjgXeOII6I0=
+	b=bx9DtbLoz0aUIDRVUzMN5PtCWV7L3waLrSgcwCIxyKKe0IDl0yX0HI46fyrEeA3pe
+	 SxtsbClDf8E+QQfkPZssItWy/sQ2X2Vbg9kvewqRI1uHrYClVnoyng1TNHpMwz711m
+	 c3DvlDT98VNK97apLFvRWYjCagxSuYFRfwjnz0po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 132/321] bus: ti-sysc: Fix SYSC_QUIRK_SWSUP_SIDLE_ACT handling for uart wake-up
-Date: Wed,  4 Oct 2023 19:54:37 +0200
-Message-ID: <20231004175235.346912668@linuxfoundation.org>
+Subject: [PATCH 6.5 133/321] swiotlb: use the calculated number of areas
+Date: Wed,  4 Oct 2023 19:54:38 +0200
+Message-ID: <20231004175235.399448039@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,82 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit e5deb8f76e64d94ccef715e75ebafffd0c312d80 ]
+[ Upstream commit a6a241764f69c62d23fc6960920cc662ae4069e9 ]
 
-The uarts should be tagged with SYSC_QUIRK_SWSUP_SIDLE instead of
-SYSC_QUIRK_SWSUP_SIDLE_ACT. The difference is that SYSC_QUIRK_SWSUP_SIDLE
-is used to force idle target modules rather than block idle during usage.
+Commit 8ac04063354a ("swiotlb: reduce the number of areas to match
+actual memory pool size") calculated the reduced number of areas in
+swiotlb_init_remap() but didn't actually use the value. Replace usage of
+default_nareas accordingly.
 
-The SYSC_QUIRK_SWSUP_SIDLE_ACT should disable autoidle and wake-up when
-a target module is active, and configure autoidle and wake-up when a
-target module is inactive. We are missing configuring the target module
-on sysc_disable_module(), and missing toggling of the wake-up bit.
-
-Let's fix the issue to allow uart wake-up to work.
-
-Fixes: fb685f1c190e ("bus: ti-sysc: Handle swsup idle mode quirks")
-Tested-by: Dhruva Gole <d-gole@ti.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fixes: 8ac04063354a ("swiotlb: reduce the number of areas to match actual memory pool size")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ kernel/dma/swiotlb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 00ee7cc8248af..27c5bae85adc2 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -1097,6 +1097,11 @@ static int sysc_enable_module(struct device *dev)
- 	if (ddata->cfg.quirks & (SYSC_QUIRK_SWSUP_SIDLE |
- 				 SYSC_QUIRK_SWSUP_SIDLE_ACT)) {
- 		best_mode = SYSC_IDLE_NO;
-+
-+		/* Clear WAKEUP */
-+		if (regbits->enwkup_shift >= 0 &&
-+		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
-+			reg &= ~BIT(regbits->enwkup_shift);
- 	} else {
- 		best_mode = fls(ddata->cfg.sidlemodes) - 1;
- 		if (best_mode > SYSC_IDLE_MASK) {
-@@ -1224,6 +1229,13 @@ static int sysc_disable_module(struct device *dev)
- 		}
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 2b83e3ad9dca1..aa0a4a220719a 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -350,14 +350,14 @@ void __init swiotlb_init_remap(bool addressing_limit, unsigned int flags,
  	}
  
-+	if (ddata->cfg.quirks & SYSC_QUIRK_SWSUP_SIDLE_ACT) {
-+		/* Set WAKEUP */
-+		if (regbits->enwkup_shift >= 0 &&
-+		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
-+			reg |= BIT(regbits->enwkup_shift);
-+	}
-+
- 	reg &= ~(SYSC_IDLE_MASK << regbits->sidle_shift);
- 	reg |= best_mode << regbits->sidle_shift;
- 	if (regbits->autoidle_shift >= 0 &&
-@@ -1518,16 +1530,16 @@ struct sysc_revision_quirk {
- static const struct sysc_revision_quirk sysc_revision_quirks[] = {
- 	/* These drivers need to be fixed to not use pm_runtime_irq_safe() */
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000046, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000052, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	/* Uarts on omap4 and later */
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x50411e03, 0xffff00ff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	mem->areas = memblock_alloc(array_size(sizeof(struct io_tlb_area),
+-		default_nareas), SMP_CACHE_BYTES);
++		nareas), SMP_CACHE_BYTES);
+ 	if (!mem->areas) {
+ 		pr_warn("%s: Failed to allocate mem->areas.\n", __func__);
+ 		return;
+ 	}
  
- 	/* Quirks that need to be set based on the module address */
- 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
+ 	swiotlb_init_io_tlb_mem(mem, __pa(tlb), nslabs, flags, false,
+-				default_nareas);
++				nareas);
+ 
+ 	if (flags & SWIOTLB_VERBOSE)
+ 		swiotlb_print_info();
 -- 
 2.40.1
 
