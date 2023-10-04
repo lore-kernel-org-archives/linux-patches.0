@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FAD1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA82C433C9;
-	Wed,  4 Oct 2023 18:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99F61D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3E0C433C9;
+	Wed,  4 Oct 2023 18:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443242;
-	bh=WEgdjAAPWr9+3uCeuZOtsT6Oa+NJP1Y6kitxFpZTEwc=;
+	s=korg; t=1696443244;
+	bh=DdiGLHPFbdl0QrcErkUiywYLBob4L+ZwiS2EuxDyDs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yRwjEdpwQQDPL3zAyyk4HNFxX9ncPrr6zpHbfEeYpbQDnWyWgMOyCDYsfT7b/3MF0
-	 gApimScBk8wNmVrZS3GIu2UW/zkHDSgvUIlT+cGgQKZSBqJtARB8vQ7ADp61MGOfjl
-	 vAtDA35jeN6aeRONhGLPDXBa+/RuJ0mrbxxAzE/g=
+	b=PW1jvlmYSPvB3HCcOj//znuHhtblM9Tc9RZw8iOZ5zuMsK92DRyJztvaQmq7v0N1E
+	 0+v+vEo7VblzCydbaUfaYwT/reEVJbMQvgVcZYzFkNioKs4s0UO4ScqstmpAJAeNQj
+	 EkwftxX1VIxCU7F5K1ji95Mknkll+/D+YeWF9ESU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/259] proc: nommu: fix empty /proc/<pid>/maps
-Date: Wed,  4 Oct 2023 19:54:19 +0200
-Message-ID: <20231004175221.314595783@linuxfoundation.org>
+Subject: [PATCH 6.1 087/259] cifs: Fix UAF in cifs_demultiplex_thread()
+Date: Wed,  4 Oct 2023 19:54:20 +0200
+Message-ID: <20231004175221.364418553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -46,121 +41,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit fe4419801617514765974f3e796269bc512ad146 ]
+[ Upstream commit d527f51331cace562393a8038d870b3e9916686f ]
 
-On no-MMU, /proc/<pid>/maps reads as an empty file.  This happens because
-find_vma(mm, 0) always returns NULL (assuming no vma actually contains the
-zero address, which is normally the case).
+There is a UAF when xfstests on cifs:
 
-To fix this bug and improve the maintainability in the future, this patch
-makes the no-MMU implementation as similar as possible to the MMU
-implementation.
+  BUG: KASAN: use-after-free in smb2_is_network_name_deleted+0x27/0x160
+  Read of size 4 at addr ffff88810103fc08 by task cifsd/923
 
-The only remaining differences are the lack of hold/release_task_mempolicy
-and the extra code to shoehorn the gate vma into the iterator.
+  CPU: 1 PID: 923 Comm: cifsd Not tainted 6.1.0-rc4+ #45
+  ...
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   kasan_check_range+0x145/0x1a0
+   smb2_is_network_name_deleted+0x27/0x160
+   cifs_demultiplex_thread.cold+0x172/0x5a4
+   kthread+0x165/0x1a0
+   ret_from_fork+0x1f/0x30
+   </TASK>
 
-This has been tested on top of 6.5.3 on an STM32F746.
+  Allocated by task 923:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_slab_alloc+0x54/0x60
+   kmem_cache_alloc+0x147/0x320
+   mempool_alloc+0xe1/0x260
+   cifs_small_buf_get+0x24/0x60
+   allocate_buffers+0xa1/0x1c0
+   cifs_demultiplex_thread+0x199/0x10d0
+   kthread+0x165/0x1a0
+   ret_from_fork+0x1f/0x30
 
-Link: https://lkml.kernel.org/r/20230915160055.971059-2-ben.wolsieffer@hefring.com
-Fixes: 0c563f148043 ("proc: remove VMA rbtree use from nommu")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  Freed by task 921:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x40
+   ____kasan_slab_free+0x143/0x1b0
+   kmem_cache_free+0xe3/0x4d0
+   cifs_small_buf_release+0x29/0x90
+   SMB2_negotiate+0x8b7/0x1c60
+   smb2_negotiate+0x51/0x70
+   cifs_negotiate_protocol+0xf0/0x160
+   cifs_get_smb_ses+0x5fa/0x13c0
+   mount_get_conns+0x7a/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+The UAF is because:
+
+ mount(pid: 921)               | cifsd(pid: 923)
+-------------------------------|-------------------------------
+                               | cifs_demultiplex_thread
+SMB2_negotiate                 |
+ cifs_send_recv                |
+  compound_send_recv           |
+   smb_send_rqst               |
+    wait_for_response          |
+     wait_event_state      [1] |
+                               |  standard_receive3
+                               |   cifs_handle_standard
+                               |    handle_mid
+                               |     mid->resp_buf = buf;  [2]
+                               |     dequeue_mid           [3]
+     KILL the process      [4] |
+    resp_iov[i].iov_base = buf |
+ free_rsp_buf              [5] |
+                               |   is_network_name_deleted [6]
+                               |   callback
+
+1. After send request to server, wait the response until
+    mid->mid_state != SUBMITTED;
+2. Receive response from server, and set it to mid;
+3. Set the mid state to RECEIVED;
+4. Kill the process, the mid state already RECEIVED, get 0;
+5. Handle and release the negotiate response;
+6. UAF.
+
+It can be easily reproduce with add some delay in [3] - [6].
+
+Only sync call has the problem since async call's callback is
+executed in cifsd process.
+
+Add an extra state to mark the mid state to READY before wakeup the
+waitter, then it can get the resp safely.
+
+Fixes: ec637e3ffb6b ("[CIFS] Avoid extra large buffer allocation (and memcpy) in cifs_readpages")
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/internal.h   |  2 --
- fs/proc/task_nommu.c | 37 ++++++++++++++++++++++---------------
- 2 files changed, 22 insertions(+), 17 deletions(-)
+ fs/smb/client/cifsglob.h  |  1 +
+ fs/smb/client/transport.c | 34 +++++++++++++++++++++++-----------
+ 2 files changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index b701d0207edf0..6b921826d85b6 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -289,9 +289,7 @@ struct proc_maps_private {
- 	struct inode *inode;
- 	struct task_struct *task;
- 	struct mm_struct *mm;
--#ifdef CONFIG_MMU
- 	struct vma_iterator iter;
--#endif
- #ifdef CONFIG_NUMA
- 	struct mempolicy *task_mempolicy;
- #endif
-diff --git a/fs/proc/task_nommu.c b/fs/proc/task_nommu.c
-index bfcf17f75ed50..dc05780f93e13 100644
---- a/fs/proc/task_nommu.c
-+++ b/fs/proc/task_nommu.c
-@@ -188,15 +188,28 @@ static int show_map(struct seq_file *m, void *_p)
- 	return nommu_vma_show(m, _p);
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 03f34ec63e10d..39602f39aea8f 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1776,6 +1776,7 @@ static inline bool is_retryable_error(int error)
+ #define   MID_RETRY_NEEDED      8 /* session closed while this request out */
+ #define   MID_RESPONSE_MALFORMED 0x10
+ #define   MID_SHUTDOWN		 0x20
++#define   MID_RESPONSE_READY 0x40 /* ready for other process handle the rsp */
+ 
+ /* Flags */
+ #define   MID_WAIT_CANCELLED	 1 /* Cancelled while waiting for response */
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index e03ffcf7e201c..87aea456ee903 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -35,6 +35,8 @@
+ void
+ cifs_wake_up_task(struct mid_q_entry *mid)
+ {
++	if (mid->mid_state == MID_RESPONSE_RECEIVED)
++		mid->mid_state = MID_RESPONSE_READY;
+ 	wake_up_process(mid->callback_data);
  }
  
--static void *m_start(struct seq_file *m, loff_t *pos)
-+static struct vm_area_struct *proc_get_vma(struct proc_maps_private *priv,
-+						loff_t *ppos)
-+{
-+	struct vm_area_struct *vma = vma_next(&priv->iter);
-+
-+	if (vma) {
-+		*ppos = vma->vm_start;
-+	} else {
-+		*ppos = -1UL;
-+	}
-+
-+	return vma;
-+}
-+
-+static void *m_start(struct seq_file *m, loff_t *ppos)
- {
- 	struct proc_maps_private *priv = m->private;
-+	unsigned long last_addr = *ppos;
- 	struct mm_struct *mm;
--	struct vm_area_struct *vma;
--	unsigned long addr = *pos;
+@@ -87,7 +89,8 @@ static void __release_mid(struct kref *refcount)
+ 	struct TCP_Server_Info *server = midEntry->server;
  
--	/* See m_next(). Zero at the start or after lseek. */
--	if (addr == -1UL)
-+	/* See proc_get_vma(). Zero at the start or after lseek. */
-+	if (last_addr == -1UL)
- 		return NULL;
+ 	if (midEntry->resp_buf && (midEntry->mid_flags & MID_WAIT_CANCELLED) &&
+-	    midEntry->mid_state == MID_RESPONSE_RECEIVED &&
++	    (midEntry->mid_state == MID_RESPONSE_RECEIVED ||
++	     midEntry->mid_state == MID_RESPONSE_READY) &&
+ 	    server->ops->handle_cancelled_mid)
+ 		server->ops->handle_cancelled_mid(midEntry, server);
  
- 	/* pin the task and mm whilst we play with them */
-@@ -218,12 +231,9 @@ static void *m_start(struct seq_file *m, loff_t *pos)
- 		return ERR_PTR(-EINTR);
+@@ -759,7 +762,8 @@ wait_for_response(struct TCP_Server_Info *server, struct mid_q_entry *midQ)
+ 	int error;
+ 
+ 	error = wait_event_state(server->response_q,
+-				 midQ->mid_state != MID_REQUEST_SUBMITTED,
++				 midQ->mid_state != MID_REQUEST_SUBMITTED &&
++				 midQ->mid_state != MID_RESPONSE_RECEIVED,
+ 				 (TASK_KILLABLE|TASK_FREEZABLE_UNSAFE));
+ 	if (error < 0)
+ 		return -ERESTARTSYS;
+@@ -912,7 +916,7 @@ cifs_sync_mid_result(struct mid_q_entry *mid, struct TCP_Server_Info *server)
+ 
+ 	spin_lock(&server->mid_lock);
+ 	switch (mid->mid_state) {
+-	case MID_RESPONSE_RECEIVED:
++	case MID_RESPONSE_READY:
+ 		spin_unlock(&server->mid_lock);
+ 		return rc;
+ 	case MID_RETRY_NEEDED:
+@@ -1011,6 +1015,9 @@ cifs_compound_callback(struct mid_q_entry *mid)
+ 	credits.instance = server->reconnect_instance;
+ 
+ 	add_credits(server, &credits, mid->optype);
++
++	if (mid->mid_state == MID_RESPONSE_RECEIVED)
++		mid->mid_state = MID_RESPONSE_READY;
+ }
+ 
+ static void
+@@ -1206,7 +1213,8 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 			send_cancel(server, &rqst[i], midQ[i]);
+ 			spin_lock(&server->mid_lock);
+ 			midQ[i]->mid_flags |= MID_WAIT_CANCELLED;
+-			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED) {
++			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED ||
++			    midQ[i]->mid_state == MID_RESPONSE_RECEIVED) {
+ 				midQ[i]->callback = cifs_cancelled_callback;
+ 				cancelled_mid[i] = true;
+ 				credits[i].value = 0;
+@@ -1227,7 +1235,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		}
+ 
+ 		if (!midQ[i]->resp_buf ||
+-		    midQ[i]->mid_state != MID_RESPONSE_RECEIVED) {
++		    midQ[i]->mid_state != MID_RESPONSE_READY) {
+ 			rc = -EIO;
+ 			cifs_dbg(FYI, "Bad MID state?\n");
+ 			goto out;
+@@ -1414,7 +1422,8 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
+ 	if (rc != 0) {
+ 		send_cancel(server, &rqst, midQ);
+ 		spin_lock(&server->mid_lock);
+-		if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
++		if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		    midQ->mid_state == MID_RESPONSE_RECEIVED) {
+ 			/* no longer considered to be "in-flight" */
+ 			midQ->callback = release_mid;
+ 			spin_unlock(&server->mid_lock);
+@@ -1431,7 +1440,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
  	}
  
--	/* start the next element from addr */
--	vma = find_vma(mm, addr);
--	if (vma)
--		return vma;
-+	vma_iter_init(&priv->iter, mm, last_addr);
+ 	if (!midQ->resp_buf || !out_buf ||
+-	    midQ->mid_state != MID_RESPONSE_RECEIVED) {
++	    midQ->mid_state != MID_RESPONSE_READY) {
+ 		rc = -EIO;
+ 		cifs_server_dbg(VFS, "Bad MID state?\n");
+ 		goto out;
+@@ -1555,14 +1564,16 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
  
--	return NULL;
-+	return proc_get_vma(priv, ppos);
- }
+ 	/* Wait for a reply - allow signals to interrupt. */
+ 	rc = wait_event_interruptible(server->response_q,
+-		(!(midQ->mid_state == MID_REQUEST_SUBMITTED)) ||
++		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
+ 		((server->tcpStatus != CifsGood) &&
+ 		 (server->tcpStatus != CifsNew)));
  
- static void m_stop(struct seq_file *m, void *v)
-@@ -240,12 +250,9 @@ static void m_stop(struct seq_file *m, void *v)
- 	priv->task = NULL;
- }
+ 	/* Were we interrupted by a signal ? */
+ 	spin_lock(&server->srv_lock);
+ 	if ((rc == -ERESTARTSYS) &&
+-		(midQ->mid_state == MID_REQUEST_SUBMITTED) &&
++		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
+ 		((server->tcpStatus == CifsGood) ||
+ 		 (server->tcpStatus == CifsNew))) {
+ 		spin_unlock(&server->srv_lock);
+@@ -1593,7 +1604,8 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 		if (rc) {
+ 			send_cancel(server, &rqst, midQ);
+ 			spin_lock(&server->mid_lock);
+-			if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
++			if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
++			    midQ->mid_state == MID_RESPONSE_RECEIVED) {
+ 				/* no longer considered to be "in-flight" */
+ 				midQ->callback = release_mid;
+ 				spin_unlock(&server->mid_lock);
+@@ -1613,7 +1625,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 		return rc;
  
--static void *m_next(struct seq_file *m, void *_p, loff_t *pos)
-+static void *m_next(struct seq_file *m, void *_p, loff_t *ppos)
- {
--	struct vm_area_struct *vma = _p;
--
--	*pos = vma->vm_end;
--	return find_vma(vma->vm_mm, vma->vm_end);
-+	return proc_get_vma(m->private, ppos);
- }
- 
- static const struct seq_operations proc_pid_maps_ops = {
+ 	/* rcvd frame is ok */
+-	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_RECEIVED) {
++	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
+ 		rc = -EIO;
+ 		cifs_tcon_dbg(VFS, "Bad MID state?\n");
+ 		goto out;
 -- 
 2.40.1
 
