@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F991D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D6C1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfgJwU/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B13C433C9;
-	Wed,  4 Oct 2023 18:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuJkRpif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC603C433C7;
+	Wed,  4 Oct 2023 18:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444644;
-	bh=SzMRiEvnnuvkCXTCIkfiW1Esi73xt9Yw0NvDsO/E3OQ=;
+	s=korg; t=1696444647;
+	bh=XWedYxNZ2aBZq2rjpxEn4K+p2nD8XMnGX9IaUkOwZ4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfgJwU/GEK1fHAq32I00+ATaRH90r3G8PZzGxbWPCr/12CfoKdIjSAz1cucQEhCG/
-	 zUE1Ti8ACXDHMBphH4NfIIeg9QRQ1QQaZhHtXaJt8Jf7tafgFaULHNQyF1IG4KF1Ur
-	 sQMcwmZGL7lvnnn/yrRG5OQxyscOIMcI1HQAkBW4=
+	b=MuJkRpifnCE4NYwcHj7pP61ioDadVS/58YOSBY1/QMngsLCYy4yqyWjW71kA2S9+E
+	 EmtMps11R8ET0HZb+Hb5iC7PJ4iwSnwL8se5oop6E2eDXQXO+slLVrP3WsznGE6aW8
+	 9S+SeVJPA4FhS8cyRki6oK043QSnDQGafmv4pjzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <mschiffer@universe-factory.net>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.5 306/321] ata: libata-sata: increase PMP SRST timeout to 10s
-Date: Wed,  4 Oct 2023 19:57:31 +0200
-Message-ID: <20231004175243.476609273@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.5 307/321] i915: Limit the length of an sg list to the requested length
+Date: Wed,  4 Oct 2023 19:57:32 +0200
+Message-ID: <20231004175243.523582072@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,50 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <mschiffer@universe-factory.net>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 753a4d531bc518633ea88ac0ed02b25a16823d51 upstream.
+commit 863a8eb3f27098b42772f668e3977ff4cae10b04 upstream.
 
-On certain SATA controllers, softreset fails after wakeup from S2RAM with
-the message "softreset failed (1st FIS failed)", sometimes resulting in
-drives not being detected again. With the increased timeout, this issue
-is avoided. Instead, "softreset failed (device not ready)" is now
-logged 1-2 times; this later failure seems to cause fewer problems
-however, and the drives are detected reliably once they've spun up and
-the probe is retried.
+The folio conversion changed the behaviour of shmem_sg_alloc_table() to
+put the entire length of the last folio into the sg list, even if the sg
+list should have been shorter.  gen8_ggtt_insert_entries() relied on the
+list being the right length and would overrun the end of the page tables.
+Other functions may also have been affected.
 
-The issue was observed with the primary SATA controller of the QNAP
-TS-453B, which is an "Intel Corporation Celeron/Pentium Silver Processor
-SATA Controller [8086:31e3] (rev 06)" integrated in the Celeron J4125 CPU,
-and the following drives:
+Clamp the length of the last entry in the sg list to be the expected
+length.
 
-- Seagate IronWolf ST12000VN0008
-- Seagate IronWolf ST8000NE0004
-
-The SATA controller seems to be more relevant to this issue than the
-drives, as the same drives are always detected reliably on the secondary
-SATA controller on the same board (an ASMedia 106x) without any "softreset
-failed" errors even without the increased timeout.
-
-Fixes: e7d3ef13d52a ("libata: change drive ready wait after hard reset to 5s")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Schiffer <mschiffer@universe-factory.net>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 0b62af28f249 ("i915: convert shmem_sg_free_table() to use a folio_batch")
+Cc: stable@vger.kernel.org # 6.5.x
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/9256
+Link: https://lore.kernel.org/lkml/6287208.lOV4Wx5bFT@natalenko.name/
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230919194855.347582-1-willy@infradead.org
+(cherry picked from commit 26a8e32e6d77900819c0c730fbfb393692dbbeea)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/libata.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -259,7 +259,7 @@ enum {
- 	 * advised to wait only for the following duration before
- 	 * doing SRST.
- 	 */
--	ATA_TMOUT_PMP_SRST_WAIT	= 5000,
-+	ATA_TMOUT_PMP_SRST_WAIT	= 10000,
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+index 8f1633c3fb93..73a4a4eb29e0 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+@@ -100,6 +100,7 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
+ 	st->nents = 0;
+ 	for (i = 0; i < page_count; i++) {
+ 		struct folio *folio;
++		unsigned long nr_pages;
+ 		const unsigned int shrink[] = {
+ 			I915_SHRINK_BOUND | I915_SHRINK_UNBOUND,
+ 			0,
+@@ -150,6 +151,8 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
+ 			}
+ 		} while (1);
  
- 	/* When the LPM policy is set to ATA_LPM_MAX_POWER, there might
- 	 * be a spurious PHY event, so ignore the first PHY event that
++		nr_pages = min_t(unsigned long,
++				folio_nr_pages(folio), page_count - i);
+ 		if (!i ||
+ 		    sg->length >= max_segment ||
+ 		    folio_pfn(folio) != next_pfn) {
+@@ -157,13 +160,13 @@ int shmem_sg_alloc_table(struct drm_i915_private *i915, struct sg_table *st,
+ 				sg = sg_next(sg);
+ 
+ 			st->nents++;
+-			sg_set_folio(sg, folio, folio_size(folio), 0);
++			sg_set_folio(sg, folio, nr_pages * PAGE_SIZE, 0);
+ 		} else {
+ 			/* XXX: could overflow? */
+-			sg->length += folio_size(folio);
++			sg->length += nr_pages * PAGE_SIZE;
+ 		}
+-		next_pfn = folio_pfn(folio) + folio_nr_pages(folio);
+-		i += folio_nr_pages(folio) - 1;
++		next_pfn = folio_pfn(folio) + nr_pages;
++		i += nr_pages - 1;
+ 
+ 		/* Check that the i965g/gm workaround works. */
+ 		GEM_BUG_ON(gfp & __GFP_DMA32 && next_pfn >= 0x00100000UL);
+-- 
+2.42.0
+
 
 
