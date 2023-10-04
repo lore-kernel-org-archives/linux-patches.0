@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3766E1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F871D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuxTZLST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D53C433C8;
-	Wed,  4 Oct 2023 18:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6llhECk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31326C433C8;
+	Wed,  4 Oct 2023 18:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443647;
-	bh=8ll9amaR68Q4L69JOIP7eJroORqxon+dSSHdKux+H6U=;
+	s=korg; t=1696443650;
+	bh=Aov6PEk+zngv7WOH1GyuFn3/GrMKndA1nS+0iqWm/ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IuxTZLSTou/IdOEV8tx26Ll4T33gKcwSt6e6vkakNlTE89i5WSaxYCLOJhXV+TG8Q
-	 vWjzMiXtG1cChUL8WZZVdIeqnAVggxh8RvEBl3D8IUvItFDjhLIbkbwdu5NJJG2zUd
-	 HYM4rk3hegeuUDxkhc+OqYYCigmj9qZAzcF4FBxs=
+	b=W6llhECkVPsD2IurzKhrrEe8F9Mzetcukn8l9Nvty/bqz6q223xqDN7hCex8NaoNL
+	 r4hELgVZou3Rvp1ZRaV2ekFtaYLJggbID6kN2RcV1rWej0FddPI3b50ZEQPCkcCI9+
+	 d+rTolNEhDsIlnDrDc1m5Y6mHrxH8LErpg0w97vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 231/259] netfilter: nf_tables: fix kdoc warnings after gc rework
-Date: Wed,  4 Oct 2023 19:56:44 +0200
-Message-ID: <20231004175227.952503046@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.1 232/259] Revert "SUNRPC dont update timeout value on connection reset"
+Date: Wed,  4 Oct 2023 19:56:45 +0200
+Message-ID: <20231004175228.005357407@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,47 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 08713cb006b6f07434f276c5ee214fb20c7fd965 upstream.
+commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
 
-Jakub Kicinski says:
-  We've got some new kdoc warnings here:
-  net/netfilter/nft_set_pipapo.c:1557: warning: Function parameter or member '_set' not described in 'pipapo_gc'
-  net/netfilter/nft_set_pipapo.c:1557: warning: Excess function parameter 'set' description in 'pipapo_gc'
-  include/net/netfilter/nf_tables.h:577: warning: Function parameter or member 'dead' not described in 'nft_set'
+This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20230810104638.746e46f1@kernel.org/
-Signed-off-by: Florian Westphal <fw@strlen.de>
+The problem this commit is intended to fix was comprehensively fixed
+in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
+reset").
+Since then, this commit has been preventing the correct timeout of soft
+mounted requests.
+
+Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
+Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
+Cc: stable@vger.kernel.org # 5.9.x
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    1 +
- net/netfilter/nft_set_pipapo.c    |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -529,6 +529,7 @@ struct nft_set_elem_expr {
-  *	@expr: stateful expression
-  * 	@ops: set ops
-  * 	@flags: set flags
-+ *	@dead: set will be freed, never cleared
-  *	@genmask: generation mask
-  * 	@klen: key length
-  * 	@dlen: data length
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1550,7 +1550,7 @@ static void nft_pipapo_gc_deactivate(str
- 
- /**
-  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
-- * @set:	nftables API set representation
-+ * @_set:	nftables API set representation
-  * @m:		Matching data
-  */
- static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2462,8 +2462,7 @@ call_status(struct rpc_task *task)
+ 		goto out_exit;
+ 	}
+ 	task->tk_action = call_encode;
+-	if (status != -ECONNRESET && status != -ECONNABORTED)
+-		rpc_check_timeout(task);
++	rpc_check_timeout(task);
+ 	return;
+ out_exit:
+ 	rpc_call_rpcerror(task, status);
 
 
