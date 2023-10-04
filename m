@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AECE1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5316C433C7;
-	Wed,  4 Oct 2023 18:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7773F1CABC
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E255C433C9;
+	Wed,  4 Oct 2023 18:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442504;
-	bh=C5giSE+b8BGO3t3LZSdujQv138aJM2RZ9BODUj1MwX8=;
+	s=korg; t=1696442506;
+	bh=AnY9hY0RwJeKisjdB1ShyhhCFh0OftLMWn/USj1FVbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJqo7x2XySDebcvU//DUDGWkd7ysEy7j5KBpZRmcbqIvPOrfWPMgq3QNJrznPm2Yc
-	 WLKnHE1VpN+hUryYpFf/+203wq6sYtrcNgvDNmwjNgk/ZNYzI4bB3bwtXxLi/xoT06
-	 2DhRPNN0e8lEp3I65Tjp/yw/uQS4duEER+WfYTbA=
+	b=x3hixIjTbcjhR0xLwHm0gv2R2Tq9R21Bj1z5IPA5ezpLQGMvDUsa3mPoV3BULpqyV
+	 BbI8hS2b6e1Se0e84rNSXMg+7HYnM1Wd3GOdgnj6Jyc02kIVv+2iLwqneqckwPUK0h
+	 C00ctFRa50/YMuPktsgF7Ww/De0GR6wsURHATGHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Szuying Chen <Chloe_Chen@asmedia.com.tw>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/183] NFS: Use the correct commit info in nfs_join_page_group()
-Date: Wed,  4 Oct 2023 19:53:52 +0200
-Message-ID: <20231004175204.021573439@linuxfoundation.org>
+Subject: [PATCH 5.15 010/183] ata: libahci: clear pending interrupt status
+Date: Wed,  4 Oct 2023 19:54:01 +0200
+Message-ID: <20231004175204.422224593@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,148 +41,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Szuying Chen <chensiying21@gmail.com>
 
-[ Upstream commit b193a78ddb5ee7dba074d3f28dc050069ba083c0 ]
+[ Upstream commit 737dd811a3dbfd7edd4ad2ba5152e93d99074f83 ]
 
-Ensure that nfs_clear_request_commit() updates the correct counters when
-it removes them from the commit list.
+When a CRC error occurs, the HBA asserts an interrupt to indicate an
+interface fatal error (PxIS.IFS). The ISR clears PxIE and PxIS, then
+does error recovery. If the adapter receives another SDB FIS
+with an error (PxIS.TFES) from the device before the start of the EH
+recovery process, the interrupt signaling the new SDB cannot be
+serviced as PxIE was cleared already. This in turn results in the HBA
+inability to issue any command during the error recovery process after
+setting PxCMD.ST to 1 because PxIS.TFES is still set.
 
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+According to AHCI 1.3.1 specifications section 6.2.2, fatal errors
+notified by setting PxIS.HBFS, PxIS.HBDS, PxIS.IFS or PxIS.TFES will
+cause the HBA to enter the ERR:Fatal state. In this state, the HBA
+shall not issue any new commands.
+
+To avoid this situation, introduce the function
+ahci_port_clear_pending_irq() to clear pending interrupts before
+executing a COMRESET. This follows the AHCI 1.3.1 - section 6.2.2.2
+specification.
+
+Signed-off-by: Szuying Chen <Chloe_Chen@asmedia.com.tw>
+Fixes: e0bfd149973d ("[PATCH] ahci: stop engine during hard reset")
+Cc: stable@vger.kernel.org
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c          |  8 +++++---
- fs/nfs/write.c           | 23 ++++++++++++-----------
- include/linux/nfs_page.h |  4 +++-
- 3 files changed, 20 insertions(+), 15 deletions(-)
+ drivers/ata/libahci.c | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 018af6ec97b40..5d86ffa72ceab 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -525,7 +525,9 @@ static void nfs_direct_add_page_head(struct list_head *list,
- 	kref_get(&head->wb_kref);
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index b591a05768744..e22d45fb8ebdc 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -1200,6 +1200,26 @@ static ssize_t ahci_activity_show(struct ata_device *dev, char *buf)
+ 	return sprintf(buf, "%d\n", emp->blink_policy);
  }
  
--static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
-+static void nfs_direct_join_group(struct list_head *list,
-+				  struct nfs_commit_info *cinfo,
-+				  struct inode *inode)
- {
- 	struct nfs_page *req, *subreq;
++static void ahci_port_clear_pending_irq(struct ata_port *ap)
++{
++	struct ahci_host_priv *hpriv = ap->host->private_data;
++	void __iomem *port_mmio = ahci_port_base(ap);
++	u32 tmp;
++
++	/* clear SError */
++	tmp = readl(port_mmio + PORT_SCR_ERR);
++	dev_dbg(ap->host->dev, "PORT_SCR_ERR 0x%x\n", tmp);
++	writel(tmp, port_mmio + PORT_SCR_ERR);
++
++	/* clear port IRQ */
++	tmp = readl(port_mmio + PORT_IRQ_STAT);
++	dev_dbg(ap->host->dev, "PORT_IRQ_STAT 0x%x\n", tmp);
++	if (tmp)
++		writel(tmp, port_mmio + PORT_IRQ_STAT);
++
++	writel(1 << ap->port_no, hpriv->mmio + HOST_IRQ_STAT);
++}
++
+ static void ahci_port_init(struct device *dev, struct ata_port *ap,
+ 			   int port_no, void __iomem *mmio,
+ 			   void __iomem *port_mmio)
+@@ -1214,18 +1234,7 @@ static void ahci_port_init(struct device *dev, struct ata_port *ap,
+ 	if (rc)
+ 		dev_warn(dev, "%s (%d)\n", emsg, rc);
  
-@@ -547,7 +549,7 @@ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- 				nfs_release_request(subreq);
- 			}
- 		} while ((subreq = subreq->wb_this_page) != req);
--		nfs_join_page_group(req, inode);
-+		nfs_join_page_group(req, cinfo, inode);
- 	}
- }
+-	/* clear SError */
+-	tmp = readl(port_mmio + PORT_SCR_ERR);
+-	dev_dbg(dev, "PORT_SCR_ERR 0x%x\n", tmp);
+-	writel(tmp, port_mmio + PORT_SCR_ERR);
+-
+-	/* clear port IRQ */
+-	tmp = readl(port_mmio + PORT_IRQ_STAT);
+-	dev_dbg(dev, "PORT_IRQ_STAT 0x%x\n", tmp);
+-	if (tmp)
+-		writel(tmp, port_mmio + PORT_IRQ_STAT);
+-
+-	writel(1 << port_no, mmio + HOST_IRQ_STAT);
++	ahci_port_clear_pending_irq(ap);
  
-@@ -573,7 +575,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
- 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
+ 	/* mark esata ports */
+ 	tmp = readl(port_mmio + PORT_CMD);
+@@ -1555,6 +1564,8 @@ int ahci_do_hardreset(struct ata_link *link, unsigned int *class,
+ 	tf.status = ATA_BUSY;
+ 	ata_tf_to_fis(&tf, 0, 0, d2h_fis);
  
--	nfs_direct_join_group(&reqs, dreq->inode);
-+	nfs_direct_join_group(&reqs, &cinfo, dreq->inode);
++	ahci_port_clear_pending_irq(ap);
++
+ 	rc = sata_link_hardreset(link, timing, deadline, online,
+ 				 ahci_check_ready);
  
- 	dreq->count = 0;
- 	dreq->max_count = 0;
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index be70874bc3292..4231d51fc1add 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -58,7 +58,8 @@ static const struct nfs_pgio_completion_ops nfs_async_write_completion_ops;
- static const struct nfs_commit_completion_ops nfs_commit_completion_ops;
- static const struct nfs_rw_ops nfs_rw_write_ops;
- static void nfs_inode_remove_request(struct nfs_page *req);
--static void nfs_clear_request_commit(struct nfs_page *req);
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req);
- static void nfs_init_cinfo_from_inode(struct nfs_commit_info *cinfo,
- 				      struct inode *inode);
- static struct nfs_page *
-@@ -500,8 +501,8 @@ nfs_destroy_unlinked_subrequests(struct nfs_page *destroy_list,
-  * the (former) group.  All subrequests are removed from any write or commit
-  * lists, unlinked from the group and destroyed.
-  */
--void
--nfs_join_page_group(struct nfs_page *head, struct inode *inode)
-+void nfs_join_page_group(struct nfs_page *head, struct nfs_commit_info *cinfo,
-+			 struct inode *inode)
- {
- 	struct nfs_page *subreq;
- 	struct nfs_page *destroy_list = NULL;
-@@ -531,7 +532,7 @@ nfs_join_page_group(struct nfs_page *head, struct inode *inode)
- 	 * Commit list removal accounting is done after locks are dropped */
- 	subreq = head;
- 	do {
--		nfs_clear_request_commit(subreq);
-+		nfs_clear_request_commit(cinfo, subreq);
- 		subreq = subreq->wb_this_page;
- 	} while (subreq != head);
- 
-@@ -565,8 +566,10 @@ nfs_lock_and_join_requests(struct page *page)
- {
- 	struct inode *inode = page_file_mapping(page)->host;
- 	struct nfs_page *head;
-+	struct nfs_commit_info cinfo;
- 	int ret;
- 
-+	nfs_init_cinfo_from_inode(&cinfo, inode);
- 	/*
- 	 * A reference is taken only on the head request which acts as a
- 	 * reference to the whole page group - the group will not be destroyed
-@@ -583,7 +586,7 @@ nfs_lock_and_join_requests(struct page *page)
- 		return ERR_PTR(ret);
- 	}
- 
--	nfs_join_page_group(head, inode);
-+	nfs_join_page_group(head, &cinfo, inode);
- 
- 	return head;
- }
-@@ -945,18 +948,16 @@ nfs_clear_page_commit(struct page *page)
- }
- 
- /* Called holding the request lock on @req */
--static void
--nfs_clear_request_commit(struct nfs_page *req)
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req)
- {
- 	if (test_bit(PG_CLEAN, &req->wb_flags)) {
- 		struct nfs_open_context *ctx = nfs_req_openctx(req);
- 		struct inode *inode = d_inode(ctx->dentry);
--		struct nfs_commit_info cinfo;
- 
--		nfs_init_cinfo_from_inode(&cinfo, inode);
- 		mutex_lock(&NFS_I(inode)->commit_mutex);
--		if (!pnfs_clear_request_commit(req, &cinfo)) {
--			nfs_request_remove_commit_list(req, &cinfo);
-+		if (!pnfs_clear_request_commit(req, cinfo)) {
-+			nfs_request_remove_commit_list(req, cinfo);
- 		}
- 		mutex_unlock(&NFS_I(inode)->commit_mutex);
- 		nfs_clear_page_commit(req->wb_page);
-diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
-index f0373a6cb5fb6..40aa09a21f75d 100644
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -145,7 +145,9 @@ extern	void nfs_unlock_request(struct nfs_page *req);
- extern	void nfs_unlock_and_release_request(struct nfs_page *);
- extern	struct nfs_page *nfs_page_group_lock_head(struct nfs_page *req);
- extern	int nfs_page_group_lock_subrequests(struct nfs_page *head);
--extern	void nfs_join_page_group(struct nfs_page *head, struct inode *inode);
-+extern void nfs_join_page_group(struct nfs_page *head,
-+				struct nfs_commit_info *cinfo,
-+				struct inode *inode);
- extern int nfs_page_group_lock(struct nfs_page *);
- extern void nfs_page_group_unlock(struct nfs_page *);
- extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
 -- 
 2.40.1
 
