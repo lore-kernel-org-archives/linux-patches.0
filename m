@@ -1,146 +1,80 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 084151D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9F01D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="E2F9qALp"
-Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
-	by linux.microsoft.com (Postfix) with ESMTPSA id CA79020B74C0;
-	Wed,  4 Oct 2023 11:27:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CA79020B74C0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1696444077;
-	bh=H3hpMWGvjGtlXIXotdjlxYcAB+MUrjLHbNTb9FjcgmM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=E2F9qALpVjKLHPt1qgbv6o+F2urPzDJk9C0SK7tHGJgziy2Xd+HvQ7t2Fz4EUlsOI
-	 /I01+rs+iUyXP9YNe6t2U0mQTx3zz0+vNEaFzjubblqGCdCOOn3JmzAiqzHzoLEcrX
-	 Ha+iNvKWADExxT2I7VlTuwbBJkw9wzTIoNOJUw2E=
-Message-ID: <c79ee00f-253d-40d5-9ed6-0f156dc4ebb1@linux.microsoft.com>
-Date: Wed, 4 Oct 2023 11:27:56 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPaVAX/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B75EC433C7;
+	Wed,  4 Oct 2023 18:28:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696444080;
+	bh=MBZyKVU761WTgHRtp6DaWG8R1Peu8kRgNfgiBYSUqNg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aPaVAX/Dfm4X01jdsRZZIU3U4bQc1q6uLH0uVOIsuEPkWDFsmwvFQRomUyhncX0xx
+	 fknTAF1Q6TRD/Va/EnwJI1j0lBdCI25x4sJ4PL/zN2fMmbQmny4iDvp+UkEGbaR0e+
+	 yAvoQsFZyJeRtgxoWQTzss9Bmp5GQeLZ2JJSJCaE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 116/321] direct_write_fallback(): on error revert the ->ki_pos update from buffered write
+Date: Wed,  4 Oct 2023 19:54:21 +0200
+Message-ID: <20231004175234.607370122@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
+References: <20231004175229.211487444@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in
- hv_common.c
-Content-Language: en-US
-To: Alex Ionescu <aionescu@gmail.com>, Dexuan Cui <decui@microsoft.com>,
- longli@microsoft.com, "Michael Kelley (LINUX)" <mikelley@microsoft.com>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
- kys@microsoft.com, wei.liu@kernel.org, gregkh@linuxfoundation.org,
- haiyangz@microsoft.com, decui@microsoft.com, apais@linux.microsoft.com,
- Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
- mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
- jinankjain@linux.microsoft.com, vkuznets@redhat.com, tglx@linutronix.de,
- mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, hpa@zytor.com,
- will@kernel.org, catalin.marinas@arm.com
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
- <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 10/2/2023 12:29 PM, Alex Ionescu wrote:
-> Hi Nuno,
-> 
-> Is it possible to simply change to always allocating the output page?
-> For example, the output page could be needed in scenarios where Linux
-> is not running as the root partition, since certain hypercalls that a
-> guest can make will still require one (I realize that's not the case
-> _today_, but I don't believe this optimization buys much).
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
-I agree - it would indeed simplify the code, and guests will probably
-make use of it sooner or later.
+------------------
 
-Happy to make that change if Hyper-V guest maintainers agree.
-Long, Dexuan, Michael, what do you think?
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-Thanks,
-Nuno
+[ Upstream commit 8287474aa5ffb41df52552c4ae4748e791d2faf2 ]
 
-> Best regards,
-> Alex Ionescu
-> 
-> 
-> On Fri, Sep 29, 2023 at 2:02 PM Nuno Das Neves
-> <nunodasneves@linux.microsoft.com> wrote:
->>
->> This is a more flexible approach for determining whether to allocate the
->> output page.
->>
->> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
->> Acked-by: Wei Liu <wei.liu@kernel.org>
->> ---
->>   drivers/hv/hv_common.c | 21 +++++++++++++++++----
->>   1 file changed, 17 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
->> index 39077841d518..3f6f23e4c579 100644
->> --- a/drivers/hv/hv_common.c
->> +++ b/drivers/hv/hv_common.c
->> @@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
->>   void * __percpu *hyperv_pcpu_output_arg;
->>   EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
->>
->> +/*
->> + * Determine whether output arg is needed
->> + */
->> +static inline bool hv_output_arg_exists(void)
->> +{
->> +       return hv_root_partition ? true : false;
->> +}
->> +
->>   static void hv_kmsg_dump_unregister(void);
->>
->>   static struct ctl_table_header *hv_ctl_table_hdr;
->> @@ -342,10 +350,12 @@ int __init hv_common_init(void)
->>          hyperv_pcpu_input_arg = alloc_percpu(void  *);
->>          BUG_ON(!hyperv_pcpu_input_arg);
->>
->> -       /* Allocate the per-CPU state for output arg for root */
->> -       if (hv_root_partition) {
->> +       if (hv_output_arg_exists()) {
->>                  hyperv_pcpu_output_arg = alloc_percpu(void *);
->>                  BUG_ON(!hyperv_pcpu_output_arg);
->> +       }
->> +
->> +       if (hv_root_partition) {
->>                  hv_synic_eventring_tail = alloc_percpu(u8 *);
->>                  BUG_ON(hv_synic_eventring_tail == NULL);
->>          }
->> @@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
->>          u8 **synic_eventring_tail;
->>          u64 msr_vp_index;
->>          gfp_t flags;
->> -       int pgcount = hv_root_partition ? 2 : 1;
->> +       int pgcount = hv_output_arg_exists() ? 2 : 1;
->>          void *mem;
->>          int ret;
->>
->> @@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
->>                  if (!mem)
->>                          return -ENOMEM;
->>
->> -               if (hv_root_partition) {
->> +               if (hv_output_arg_exists()) {
->>                          outputarg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
->>                          *outputarg = (char *)mem + HV_HYP_PAGE_SIZE;
->> +               }
->> +
->> +               if (hv_root_partition) {
->>                          synic_eventring_tail = (u8 **)this_cpu_ptr(hv_synic_eventring_tail);
->>                          *synic_eventring_tail = kcalloc(HV_SYNIC_SINT_COUNT, sizeof(u8),
->>                                                          flags);
->> --
->> 2.25.1
->>
->>
+If we fail filemap_write_and_wait_range() on the range the buffered write went
+into, we only report the "number of bytes which we direct-written", to quote
+the comment in there.  Which is fine, but buffered write has already advanced
+iocb->ki_pos, so we need to roll that back.  Otherwise we end up with e.g.
+write(2) advancing position by more than the amount it reports having written.
+
+Fixes: 182c25e9c157 "filemap: update ki_pos in generic_perform_write"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Message-Id: <20230827214518.GU3390869@ZenIV>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/libfs.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 5b851315eeed0..712c57828c0e4 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -1646,6 +1646,7 @@ ssize_t direct_write_fallback(struct kiocb *iocb, struct iov_iter *iter,
+ 		 * We don't know how much we wrote, so just return the number of
+ 		 * bytes which were direct-written
+ 		 */
++		iocb->ki_pos -= buffered_written;
+ 		if (direct_written)
+ 			return direct_written;
+ 		return err;
+-- 
+2.40.1
+
+
 
