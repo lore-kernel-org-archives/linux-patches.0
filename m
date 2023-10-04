@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551181DA39
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C891EA87
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/D4oK0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF199C433C7;
-	Wed,  4 Oct 2023 18:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUZPeC0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC2AC433C7;
+	Wed,  4 Oct 2023 18:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444256;
-	bh=0d/6Zln3n5ov0VC2+PiqklSJjNgpP4mCClwFRQuvRpI=;
+	s=korg; t=1696444259;
+	bh=Nlgc39g8FnFopCrJBLAGtARTXof6k1Msh+sM6qRTDdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/D4oK0LBGK9DdLZ3hiV4diL2HOxNnwYgCS/0gEgTCqGVVPAxHwR13L8dzet/AdD+
-	 YDgILVov0Uz6vfGOfSgtZhoDPdM27XeREa0/kYcPrO651o0JE9wW5jePC2X6/bCidY
-	 VoOU+fKHvcbCKjf07dM0hWAnXhuEqujmnH1xlzwA=
+	b=WUZPeC0RAvgsQGjg1bGr9NHqQCBF3NDaQGt/2tjxi+Nr6RCYtyw0Q56CxECzvOmRh
+	 d2PIev3KddY3WmbLcqiwVCXLpSwOSKqAxq4MdI0yxCzSfoczA5i1pEGLQaC/s3Zf7g
+	 jocUe/fVNGZxOMZ3Pm/LcuryXFUgRFnxKGwa/joY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 147/321] arm64: dts: imx8mp-beacon-kit: Fix audio_pll2 clock
-Date: Wed,  4 Oct 2023 19:54:52 +0200
-Message-ID: <20231004175236.057756159@linuxfoundation.org>
+Subject: [PATCH 6.5 179/321] ring-buffer: Do not attempt to read past "commit"
+Date: Wed,  4 Oct 2023 19:55:24 +0200
+Message-ID: <20231004175237.530901951@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,48 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 161af16c18f3e10d81870328928e5fff3a7d47bb ]
+[ Upstream commit 95a404bd60af6c4d9d8db01ad14fe8957ece31ca ]
 
-Commit 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks
-from CCM node") removed the Audio clocks from the main clock node, because
-the intent is to force people to setup the audio PLL clocks per board
-instead of having a common set of rates since not all boards may use
-the various audio PLL clocks for audio devices.
+When iterating over the ring buffer while the ring buffer is active, the
+writer can corrupt the reader. There's barriers to help detect this and
+handle it, but that code missed the case where the last event was at the
+very end of the page and has only 4 bytes left.
 
-This resulted in an incorrect clock rate when attempting to playback
-audio, since the AUDIO_PLL2 wasn't set any longer. Fix this by
-setting the AUDIO_PLL2 rate inside the SAI3 node since it's the SAI3
-that needs it.
+The checks to detect the corruption by the writer to reads needs to see the
+length of the event. If the length in the first 4 bytes is zero then the
+length is stored in the second 4 bytes. But if the writer is in the process
+of updating that code, there's a small window where the length in the first
+4 bytes could be zero even though the length is only 4 bytes. That will
+cause rb_event_length() to read the next 4 bytes which could happen to be off the
+allocated page.
 
-Fixes: 16c984524862 ("arm64: dts: imx8mp: don't initialize audio clocks from CCM node")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+To protect against this, fail immediately if the next event pointer is
+less than 8 bytes from the end of the commit (last byte of data), as all
+events must be a minimum of 8 bytes anyway.
+
+Link: https://lore.kernel.org/all/20230905141245.26470-1-Tze-nan.Wu@mediatek.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20230907122820.0899019c@gandalf.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Reported-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-index 06e91297fb163..acd265d8b58ed 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-@@ -381,9 +381,10 @@
- &sai3 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sai3>;
--	assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
-+	assigned-clocks = <&clk IMX8MP_CLK_SAI3>,
-+			  <&clk IMX8MP_AUDIO_PLL2> ;
- 	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
--	assigned-clock-rates = <12288000>;
-+	assigned-clock-rates = <12288000>, <361267200>;
- 	fsl,sai-mclk-direction-output;
- 	status = "okay";
- };
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 1267e1016ab5c..53b73b85cf737 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2398,6 +2398,11 @@ rb_iter_head_event(struct ring_buffer_iter *iter)
+ 	 */
+ 	commit = rb_page_commit(iter_head_page);
+ 	smp_rmb();
++
++	/* An event needs to be at least 8 bytes in size */
++	if (iter->head > commit - 8)
++		goto reset;
++
+ 	event = __rb_page_index(iter_head_page, iter->head);
+ 	length = rb_event_length(event);
+ 
 -- 
 2.40.1
 
