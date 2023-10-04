@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183C21C29E
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11661C29E
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+X2tCZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882CDC433C7;
-	Wed,  4 Oct 2023 18:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsGViOWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51481C433C8;
+	Wed,  4 Oct 2023 18:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444607;
-	bh=+pXJawke7ynaEItYv8gzjuxaMG+A2pEGHuea0bIhEqU=;
+	s=korg; t=1696444610;
+	bh=rUEORMoJQaTfrUd8oQTfIOHZXD9e0tH9+Ivt7gkeI0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+X2tCZD/y9XL36+3LjmWkgG+/GH11TQ2EdMu99yTMOs9sN22iDRt5vUjiAi0Gnwh
-	 4qwwfw+tSipDuM/rDtCh6jmwB/S+izNHzSbP8gcxFPqN5d2UnFDXbIRZa8Y9J4kHHT
-	 hWlBRjxiSPGJiyeLk9L0Z93zd8Nv9GeCFk4HC3Wc=
+	b=hsGViOWnEmtBdPhbV0L7RzyEwwyjeRPhe3ex244bL0McUlDApjvCmM0cq+J0lYBUQ
+	 Qn4lOZ7sQa35N1M5YeG+KCEqz1xUHR4xySjCjp48Aw0g0hkGLckqpQTEc4lAGxVTk7
+	 VfommeZx9JlPu4083TETviIUaPjam04XHktVZI78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.5 303/321] ata: libata-core: Fix ata_port_request_pm() locking
-Date: Wed,  4 Oct 2023 19:57:28 +0200
-Message-ID: <20231004175243.328024956@linuxfoundation.org>
+	YuBiao Wang <YuBiao.Wang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.5 312/321] drm/amdkfd: Use gpu_offset for user queues wptr
+Date: Wed,  4 Oct 2023 19:57:37 +0200
+Message-ID: <20231004175243.741903022@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -40,81 +36,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-commit 3b8e0af4a7a331d1510e963b8fd77e2fca0a77f1 upstream.
+commit cc39f9ccb82426e576734b493e1777ea01b144a8 upstream.
 
-The function ata_port_request_pm() checks the port flag
-ATA_PFLAG_PM_PENDING and calls ata_port_wait_eh() if this flag is set to
-ensure that power management operations for a port are not scheduled
-simultaneously. However, this flag check is done without holding the
-port lock.
+Directly use tbo's start address will miss the domain start offset. Need
+to use gpu_offset instead.
 
-Fix this by taking the port lock on entry to the function and checking
-the flag under this lock. The lock is released and re-taken if
-ata_port_wait_eh() needs to be called. The two WARN_ON() macros checking
-that the ATA_PFLAG_PM_PENDING flag was cleared are removed as the first
-call is racy and the second one done without holding the port lock.
-
-Fixes: 5ef41082912b ("ata: add ata port system PM callbacks")
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5204,17 +5204,19 @@ static void ata_port_request_pm(struct a
- 	struct ata_link *link;
- 	unsigned long flags;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -216,7 +216,7 @@ static int add_queue_mes(struct device_q
  
--	/* Previous resume operation might still be in
--	 * progress.  Wait for PM_PENDING to clear.
-+	spin_lock_irqsave(ap->lock, flags);
-+
-+	/*
-+	 * A previous PM operation might still be in progress. Wait for
-+	 * ATA_PFLAG_PM_PENDING to clear.
- 	 */
- 	if (ap->pflags & ATA_PFLAG_PM_PENDING) {
-+		spin_unlock_irqrestore(ap->lock, flags);
- 		ata_port_wait_eh(ap);
--		WARN_ON(ap->pflags & ATA_PFLAG_PM_PENDING);
-+		spin_lock_irqsave(ap->lock, flags);
+ 	if (q->wptr_bo) {
+ 		wptr_addr_off = (uint64_t)q->properties.write_ptr & (PAGE_SIZE - 1);
+-		queue_input.wptr_mc_addr = ((uint64_t)q->wptr_bo->tbo.resource->start << PAGE_SHIFT) + wptr_addr_off;
++		queue_input.wptr_mc_addr = amdgpu_bo_gpu_offset(q->wptr_bo) + wptr_addr_off;
  	}
  
--	/* request PM ops to EH */
--	spin_lock_irqsave(ap->lock, flags);
--
-+	/* Request PM operation to EH */
- 	ap->pm_mesg = mesg;
- 	ap->pflags |= ATA_PFLAG_PM_PENDING;
- 	ata_for_each_link(link, ap, HOST_FIRST) {
-@@ -5226,10 +5228,8 @@ static void ata_port_request_pm(struct a
- 
- 	spin_unlock_irqrestore(ap->lock, flags);
- 
--	if (!async) {
-+	if (!async)
- 		ata_port_wait_eh(ap);
--		WARN_ON(ap->pflags & ATA_PFLAG_PM_PENDING);
--	}
- }
- 
- /*
+ 	queue_input.is_kfd_process = 1;
 
 
