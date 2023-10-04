@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86531D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A449C433CA;
-	Wed,  4 Oct 2023 18:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E941D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D3FC433C7;
+	Wed,  4 Oct 2023 18:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442548;
-	bh=QK8Z6jHgI/QOMSZy8hv7DNSi73yxidy3MXIiieybFMw=;
+	s=korg; t=1696442551;
+	bh=G5XcXIjSY9p49gkEq18qignOOUX8M+LmrrXFT0YEsEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2o1kXbYCmpgOmCM3apr0ic4mlA6RJGB7D8XyBjKPF/tchQ1jjQ6TyNSW3S3X7AwFN
-	 LCCkEXWMAtjU8saZKlyHoplawxaw6MDSq4T6BK/1E3h6XCYC1bcit7lPkv8YKsZX9c
-	 H/zj1QPHQ0jF6KB5FxIZXgUU4TEFW+D96Ef8W7eg=
+	b=EU1tV/ZcGteVKN92VmreFcN2yvVCCz7F7oaoAZTBmRUTYINcoK75JWr75bLImJ0VE
+	 6KouPM0S7pIRu/dSZGinUThkzbQMhc1NoqpdiqNy0VZpn4XYJHn1DcJrEYe+/ve7Tn
+	 IbSGOe8anktZ5xpHzyhuwAs6UplbwOzdrfI9VYVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/183] netfilter: nf_tables: GC transaction race with netns dismantle
-Date: Wed,  4 Oct 2023 19:54:15 +0200
-Message-ID: <20231004175204.961206646@linuxfoundation.org>
+Subject: [PATCH 5.15 025/183] netfilter: nf_tables: GC transaction race with abort path
+Date: Wed,  4 Oct 2023 19:54:16 +0200
+Message-ID: <20231004175205.010968378@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,38 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 02c6c24402bf1c1e986899c14ba22a10b510916b upstream.
+commit 720344340fb9be2765bbaab7b292ece0a4570eae upstream.
 
-Use maybe_get_net() since GC workqueue might race with netns exit path.
+Abort path is missing a synchronization point with GC transactions. Add
+GC sequence number hence any GC transaction losing race will be
+discarded.
 
 Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  net/netfilter/nf_tables_api.c | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index aadcb2a5dc816..a2543db74cf65 100644
+index a2543db74cf65..c9a3a692879a8 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -8949,9 +8949,14 @@ struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
- 	if (!trans)
- 		return NULL;
- 
-+	trans->net = maybe_get_net(net);
-+	if (!trans->net) {
-+		kfree(trans);
-+		return NULL;
-+	}
+@@ -9763,7 +9763,12 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 			   enum nfnl_abort_action action)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+-	int ret = __nf_tables_abort(net, action);
++	unsigned int gc_seq;
++	int ret;
 +
- 	refcount_inc(&set->refs);
- 	trans->set = set;
--	trans->net = get_net(net);
- 	trans->seq = gc_seq;
++	gc_seq = nft_gc_seq_begin(nft_net);
++	ret = __nf_tables_abort(net, action);
++	nft_gc_seq_end(nft_net, gc_seq);
  
- 	return trans;
+ 	mutex_unlock(&nft_net->commit_mutex);
+ 
 -- 
 2.40.1
 
