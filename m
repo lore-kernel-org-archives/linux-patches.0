@@ -1,27 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4ED81D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6723FC433C7;
-	Wed,  4 Oct 2023 18:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71351D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA34C433C9;
+	Wed,  4 Oct 2023 18:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442704;
-	bh=sQppTmUnaTmOtyEvGMZ6dq4OGjR2tbCePM4r/44VbCk=;
+	s=korg; t=1696442707;
+	bh=bwmSVeVpTrBQxzs5bqjJfJoDpD7pEnmS0H8Bf20zJVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AS7aXK+oJNbpGeNU21i8ZM/44kbOMA4EMGE0zlTNcedx/OYQQypkL+Ml/zBm69nXS
-	 DHPGJtTI7m4e4QlntInEGtbUGwq4wjZjv9jQgQkuoKd1AN98PmCmGYeNgZVsMT9L9M
-	 oQSbPqq3pgqirB9OTqGATqrPRrmVRgBzA6bJtHKM=
+	b=zUqmRjJ799OMnK+aXDv7Z7IthRly0kbMyNr1w8Mam4n8ZYRvKM/XyB1gKSpBw0G/n
+	 J0ZdYQWTbVaIOe9nKhE5XlclarqeSwF+TBRhrVnkXPASCxgL7Vttagq3FXlTVyyFoO
+	 7e70elmuybIIzMtxaS0NjU1Kl9LthZfzzqWcatQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	John Garry <john.garry@huawei.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ananth Narayan <ananth.narayan@amd.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Andrew Kilroy <andrew.kilroy@arm.com>,
+	Caleb Biggers <caleb.biggers@intel.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Ian Rogers <rogers.email@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Kshipra Bopardikar <kshipra.bopardikar@intel.com>,
+	Like Xu <likexu@tencent.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nick Forrington <nick.forrington@arm.com>,
+	Paul Clarke <pc@us.ibm.com>,
+	Perry Taylor <perry.taylor@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Qi Liu <liuqi115@huawei.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Santosh Shukla <santosh.shukla@amd.com>,
+	Stephane Eranian <eranian@google.com>,
+	Will Deacon <will@kernel.org>,
+	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/183] Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN
-Date: Wed,  4 Oct 2023 19:55:10 +0200
-Message-ID: <20231004175207.181351439@linuxfoundation.org>
+Subject: [PATCH 5.15 080/183] perf jevents: Switch build to use jevents.py
+Date: Wed,  4 Oct 2023 19:55:11 +0200
+Message-ID: <20231004175207.212094500@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,48 +69,293 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Ian Rogers <rogers.email@gmail.com>
 
-[ Upstream commit eb09074bdb05ffd6bfe77f8b4a41b76ef78c997b ]
+[ Upstream commit 00facc760903be6675870c2749e2cd72140e396e ]
 
-The touchpad of this device is both connected via PS/2 and i2c. This causes
-strange behavior when both driver fight for control. The easy fix is to
-prevent the PS/2 driver from accessing the mouse port as the full feature
-set of the touchpad is only supported in the i2c interface anyway.
+Generate pmu-events.c using jevents.py rather than the binary built from
+jevents.c.
 
-The strange behavior in this case is, that when an external screen is
-connected and the notebook is closed, the pointer on the external screen is
-moving to the lower right corner. When the notebook is opened again, this
-movement stops, but the touchpad clicks are unresponsive afterwards until
-reboot.
+Add a new config variable NO_JEVENTS that is set when there is no
+architecture json or an appropriate python interpreter isn't present.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230607173331.851192-1-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+When NO_JEVENTS is defined the file pmu-events/empty-pmu-events.c is
+copied and used as the pmu-events.c file.
+
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: John Garry <john.garry@huawei.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ananth Narayan <ananth.narayan@amd.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Andrew Kilroy <andrew.kilroy@arm.com>
+Cc: Caleb Biggers <caleb.biggers@intel.com>
+Cc: Felix Fietkau <nbd@nbd.name>
+Cc: Ian Rogers <rogers.email@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Kshipra Bopardikar <kshipra.bopardikar@intel.com>
+Cc: Like Xu <likexu@tencent.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nick Forrington <nick.forrington@arm.com>
+Cc: Paul Clarke <pc@us.ibm.com>
+Cc: Perry Taylor <perry.taylor@intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Qi Liu <liuqi115@huawei.com>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Santosh Shukla <santosh.shukla@amd.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
+Link: https://lore.kernel.org/r/20220629182505.406269-4-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 7822a8913f4c ("perf build: Update build rule for generated files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/Makefile.config               |  19 +++
+ tools/perf/Makefile.perf                 |   1 +
+ tools/perf/pmu-events/Build              |  13 +-
+ tools/perf/pmu-events/empty-pmu-events.c | 158 +++++++++++++++++++++++
+ 4 files changed, 189 insertions(+), 2 deletions(-)
+ create mode 100644 tools/perf/pmu-events/empty-pmu-events.c
 
-diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
-index ce8ec35e8e06d..a0d8528685fe3 100644
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1244,6 +1244,13 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
- 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
- 	},
-+	/* See comment on TUXEDO InfinityBook S17 Gen6 / Clevo NS70MU above */
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 973c0d5ed8d8b..e1077c4d30fff 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -857,6 +857,25 @@ else
+   endif
+ endif
+ 
++ifneq ($(NO_JEVENTS),1)
++  ifeq ($(wildcard pmu-events/arch/$(SRCARCH)/mapfile.csv),)
++    NO_JEVENTS := 1
++  endif
++endif
++ifneq ($(NO_JEVENTS),1)
++  NO_JEVENTS := 0
++  ifndef PYTHON
++    $(warning No python interpreter disabling jevent generation)
++    NO_JEVENTS := 1
++  else
++    # jevents.py uses f-strings present in Python 3.6 released in Dec. 2016.
++    JEVENTS_PYTHON_GOOD := $(shell $(PYTHON) -c 'import sys;print("1" if(sys.version_info.major >= 3 and sys.version_info.minor >= 6) else "0")' 2> /dev/null)
++    ifneq ($(JEVENTS_PYTHON_GOOD), 1)
++      $(warning Python interpreter too old (older than 3.6) disabling jevent generation)
++      NO_JEVENTS := 1
++    endif
++  endif
++endif
+ 
+ ifndef NO_LIBBFD
+   ifeq ($(feature-libbfd), 1)
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index b856afa6eb52e..b82f2d89d74c4 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -649,6 +649,7 @@ JEVENTS       := $(OUTPUT)pmu-events/jevents
+ JEVENTS_IN    := $(OUTPUT)pmu-events/jevents-in.o
+ 
+ PMU_EVENTS_IN := $(OUTPUT)pmu-events/pmu-events-in.o
++export NO_JEVENTS
+ 
+ export JEVENTS
+ 
+diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
+index a055dee6a46af..5ec5ce8c31bab 100644
+--- a/tools/perf/pmu-events/Build
++++ b/tools/perf/pmu-events/Build
+@@ -9,10 +9,19 @@ JSON		=  $(shell [ -d $(JDIR) ] &&				\
+ JDIR_TEST	=  pmu-events/arch/test
+ JSON_TEST	=  $(shell [ -d $(JDIR_TEST) ] &&			\
+ 			find $(JDIR_TEST) -name '*.json')
++JEVENTS_PY	=  pmu-events/jevents.py
+ 
+ #
+ # Locate/process JSON files in pmu-events/arch/
+ # directory and create tables in pmu-events.c.
+ #
+-$(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS)
+-	$(Q)$(call echo-cmd,gen)$(JEVENTS) $(SRCARCH) pmu-events/arch $(OUTPUT)pmu-events/pmu-events.c $(V)
++
++ifeq ($(NO_JEVENTS),1)
++$(OUTPUT)pmu-events/pmu-events.c: pmu-events/empty-pmu-events.c
++	$(call rule_mkdir)
++	$(Q)$(call echo-cmd,gen)cp $< $@
++else
++$(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
++	$(call rule_mkdir)
++	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(SRCARCH) pmu-events/arch $@
++endif
+diff --git a/tools/perf/pmu-events/empty-pmu-events.c b/tools/perf/pmu-events/empty-pmu-events.c
+new file mode 100644
+index 0000000000000..77e655c6f1162
+--- /dev/null
++++ b/tools/perf/pmu-events/empty-pmu-events.c
+@@ -0,0 +1,158 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * An empty pmu-events.c file used when there is no architecture json files in
++ * arch or when the jevents.py script cannot be run.
++ *
++ * The test cpu/soc is provided for testing.
++ */
++#include "pmu-events/pmu-events.h"
++
++static const struct pmu_event pme_test_soc_cpu[] = {
 +	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "PD5x_7xPNP_PNR_PNN_PNT"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
++		.name = "l3_cache_rd",
++		.event = "event=0x40",
++		.desc = "L3 cache access, read",
++		.topic = "cache",
++		.long_desc = "Attributable Level 3 cache access, read",
 +	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "X170SM"),
++	{
++		.name = "segment_reg_loads.any",
++		.event = "event=0x6,period=200000,umask=0x80",
++		.desc = "Number of segment register loads",
++		.topic = "other",
++	},
++	{
++		.name = "dispatch_blocked.any",
++		.event = "event=0x9,period=200000,umask=0x20",
++		.desc = "Memory cluster signals to block micro-op dispatch for any reason",
++		.topic = "other",
++	},
++	{
++		.name = "eist_trans",
++		.event = "event=0x3a,period=200000,umask=0x0",
++		.desc = "Number of Enhanced Intel SpeedStep(R) Technology (EIST) transitions",
++		.topic = "other",
++	},
++	{
++		.name = "uncore_hisi_ddrc.flux_wcmd",
++		.event = "event=0x2",
++		.desc = "DDRC write commands. Unit: hisi_sccl,ddrc ",
++		.topic = "uncore",
++		.long_desc = "DDRC write commands",
++		.pmu = "hisi_sccl,ddrc",
++	},
++	{
++		.name = "unc_cbo_xsnp_response.miss_eviction",
++		.event = "event=0x22,umask=0x81",
++		.desc = "A cross-core snoop resulted from L3 Eviction which misses in some processor core. Unit: uncore_cbox ",
++		.topic = "uncore",
++		.long_desc = "A cross-core snoop resulted from L3 Eviction which misses in some processor core",
++		.pmu = "uncore_cbox",
++	},
++	{
++		.name = "event-hyphen",
++		.event = "event=0xe0,umask=0x00",
++		.desc = "UNC_CBO_HYPHEN. Unit: uncore_cbox ",
++		.topic = "uncore",
++		.long_desc = "UNC_CBO_HYPHEN",
++		.pmu = "uncore_cbox",
++	},
++	{
++		.name = "event-two-hyph",
++		.event = "event=0xc0,umask=0x00",
++		.desc = "UNC_CBO_TWO_HYPH. Unit: uncore_cbox ",
++		.topic = "uncore",
++		.long_desc = "UNC_CBO_TWO_HYPH",
++		.pmu = "uncore_cbox",
++	},
++	{
++		.name = "uncore_hisi_l3c.rd_hit_cpipe",
++		.event = "event=0x7",
++		.desc = "Total read hits. Unit: hisi_sccl,l3c ",
++		.topic = "uncore",
++		.long_desc = "Total read hits",
++		.pmu = "hisi_sccl,l3c",
++	},
++	{
++		.name = "uncore_imc_free_running.cache_miss",
++		.event = "event=0x12",
++		.desc = "Total cache misses. Unit: uncore_imc_free_running ",
++		.topic = "uncore",
++		.long_desc = "Total cache misses",
++		.pmu = "uncore_imc_free_running",
++	},
++	{
++		.name = "uncore_imc.cache_hits",
++		.event = "event=0x34",
++		.desc = "Total cache hits. Unit: uncore_imc ",
++		.topic = "uncore",
++		.long_desc = "Total cache hits",
++		.pmu = "uncore_imc",
++	},
++	{
++		.name = "bp_l1_btb_correct",
++		.event = "event=0x8a",
++		.desc = "L1 BTB Correction",
++		.topic = "branch",
++	},
++	{
++		.name = "bp_l2_btb_correct",
++		.event = "event=0x8b",
++		.desc = "L2 BTB Correction",
++		.topic = "branch",
++	},
++	{
++		.name = 0,
++		.event = 0,
++		.desc = 0,
++	},
++};
++
++const struct pmu_events_map pmu_events_map[] = {
++	{
++		.cpuid = "testcpu",
++		.version = "v1",
++		.type = "core",
++		.table = pme_test_soc_cpu,
++	},
++	{
++		.cpuid = 0,
++		.version = 0,
++		.type = 0,
++		.table = 0,
++	},
++};
++
++static const struct pmu_event pme_test_soc_sys[] = {
++	{
++		.name = "sys_ddr_pmu.write_cycles",
++		.event = "event=0x2b",
++		.desc = "ddr write-cycles event. Unit: uncore_sys_ddr_pmu ",
++		.compat = "v8",
++		.topic = "uncore",
++		.pmu = "uncore_sys_ddr_pmu",
++	},
++	{
++		.name = "sys_ccn_pmu.read_cycles",
++		.event = "config=0x2c",
++		.desc = "ccn read-cycles event. Unit: uncore_sys_ccn_pmu ",
++		.compat = "0x01",
++		.topic = "uncore",
++		.pmu = "uncore_sys_ccn_pmu",
++	},
++	{
++		.name = 0,
++		.event = 0,
++		.desc = 0,
++	},
++};
++
++const struct pmu_sys_events pmu_sys_event_tables[] = {
++	{
++		.table = pme_test_soc_sys,
++		.name = "pme_test_soc_sys",
++	},
++	{
++		.table = 0
++	},
++};
 -- 
 2.40.1
 
