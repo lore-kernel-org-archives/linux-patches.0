@@ -1,51 +1,15 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A40911190
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 09:56:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1696413381;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=t3llrRzvIKILbc5TgXedn7Q8bVVVp8C9PO7vaMagqQM=;
-	b=WZxiRwem8+qZph8AgfBCOg7mnyt+jGZU4aOHstuuci/DB00y/XKtWsYTokXvCFsl1/q1ih
-	V4NmxfGhF8UWvl2p32ylXLsU25W46qk8pBTA3q5rUo7ReKCDsXOrfWwbTKHYA42OLaDabB
-	WenkZ3YksMM7NyYt2AciMb9jM5xTtfQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-TmDzBwYdNRaxoEooIfG85g-1; Wed, 04 Oct 2023 05:55:58 -0400
-X-MC-Unique: TmDzBwYdNRaxoEooIfG85g-1
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-533ca50404bso1607339a12.2
-        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 02:55:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696413357; x=1697018157;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t3llrRzvIKILbc5TgXedn7Q8bVVVp8C9PO7vaMagqQM=;
-        b=PpvIhdhbREXqQphhVMPCwPOGsTAUS6ExIPMx5J6pI/abOODr30OimTX0Lz+FKEtq7o
-         YkhAegb1/70oVlK+ZvA4hurAg4GNpU6EA8pBuifusTsJ7+8embfbGNQOM6gvLiqAf3HD
-         ZnRZHOu5kJYKXPRHp43RDpCEwLyguBB9g/IQMSIY+QHc1lO9T9O2kn0yG+dfab0fsRQv
-         aNtT4hv3ijc5WNRNtP41VyV9yzDqWwSPMgvjcmXZetyzY6BAPJrb5WLOEzr4imNiqSIj
-         mwJt2rNVUnI9aZVT9mXWElnLtLaFuGmVSdv4I00D2ZENe4kQR+imJvrilRdoiuiKjiog
-         wIEw==
-X-Gm-Message-State: AOJu0YyyuJiNKunPmsCryyQtutDuGEz7HVWY8h4UlsrWBYWYhERlsSsj
-	0WuAgg14qK4mYEcJoa2a9DndpgBtR4NVTcYGOmUswWDzyFonE/ihUghTQvRkyzUubGbud5JKpTs
-	njAzmUkqpOf42ecJ+bQ==
-X-Received: by 2002:a50:fb12:0:b0:536:e03f:62b6 with SMTP id d18-20020a50fb12000000b00536e03f62b6mr1522886edq.30.1696413357192;
-        Wed, 04 Oct 2023 02:55:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9V7fiXYUDKWE6UMTUNBgtOKzLLtTO5ZqS9lXx9adtCMpIzRBwm8IhSJIk/MU1t/HJfHyOtg==
-X-Received: by 2002:a50:fb12:0:b0:536:e03f:62b6 with SMTP id d18-20020a50fb12000000b00536e03f62b6mr1522871edq.30.1696413356839;
-        Wed, 04 Oct 2023 02:55:56 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id dy26-20020a05640231fa00b005256771db39sm2170533edb.58.2023.10.04.02.55.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Oct 2023 02:55:56 -0700 (PDT)
-Message-ID: <bce65f65-66d9-3242-4656-7b2266a0e010@redhat.com>
-Date: Wed, 4 Oct 2023 11:55:55 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5681097E;
+	Wed,  4 Oct 2023 10:01:26 +0000 (UTC)
+Received: from relay3-d.mail.gandi.net (unknown [217.70.183.195])
+	by mslow1.mail.gandi.net (Postfix) with ESMTP id C78C9CFBC3;
+	Wed,  4 Oct 2023 09:51:40 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id EF6906000B;
+	Wed,  4 Oct 2023 09:51:26 +0000 (UTC)
+Message-ID: <f3e904ff-3ae1-b8ad-c400-7961f97b2b40@ghiti.fr>
+Date: Wed, 4 Oct 2023 11:51:26 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,90 +17,131 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/1] platform/x86/intel/ifs: release cpus_read_lock()
-To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
-Cc: ashok.raj@intel.com, tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev
-References: <20230927184824.2566086-1-jithu.joseph@intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20230927184824.2566086-1-jithu.joseph@intel.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3] RISC-V: build: Allow LTO to be selected
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, conor@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com,
+ twd2.me@gmail.com, linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev
+References: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
+From: Alexandre Ghiti <alex@ghiti.fr>
+In-Reply-To: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-GND-Sasl: alex@ghiti.fr
 
-Hi,
+Hi Nathan,
 
-On 9/27/23 20:48, Jithu Joseph wrote:
-> Couple of error paths in do_core_test() was returning directly without
-> doing a necessary cpus_read_unlock().
-> 
-> Following lockdep warning was observed when exercising these scenarios
-> with PROVE_RAW_LOCK_NESTING enabled:
-> 
-> [  139.304775] ================================================
-> [  139.311185] WARNING: lock held when returning to user space!
-> [  139.317593] 6.6.0-rc2ifs01+ #11 Tainted: G S      W I
-> [  139.324499] ------------------------------------------------
-> [  139.330908] bash/11476 is leaving the kernel with locks still held!
-> [  139.338000] 1 lock held by bash/11476:
-> [  139.342262]  #0: ffffffffaa26c930 (cpu_hotplug_lock){++++}-{0:0}, at:
-> do_core_test+0x35/0x1c0 [intel_ifs]
-> 
-> Fix the flow so that all scenarios release the lock prior to returning
-> from the function.
-> 
-> Fixes: 5210fb4e1880 ("platform/x86/intel/ifs: Sysfs interface for Array BIST")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-
-Thank you for your patch/series, I've applied this patch
-(series) to the pdx86 fixes branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=fixes
-
-Note it will show up in the pdx86 fixes branch once I've pushed
-my local branch there, which might take a while.
-
-I will include this patch in my next fixes pull-req to Linus
-for the current kernel development cycle.
-
-Regards,
-
-Hans
+On 03/10/2023 21:16, Nathan Chancellor wrote:
+> From: Wende Tan <twd2.me@gmail.com>
+>
+> Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is an
+> issue [1] in prior LLD versions that prevents LLD to generate proper
+> machine code for RISC-V when writing `nop`s.
+>
+> I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
+> on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
+> can boot to shell using an archriscv rootfs on QEMU.
+>
+> I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
+> KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
+> successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
+> image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
+> `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
+> separate patch further.
 
 
+Yes, I see 2 solutions:
+
+- either use PUD mappings, which is not that easy because we'd need the 
+physical and virtual addresses to both be aligned on 1GB, which is very 
+unlikely (the kernel is generally loaded at 0x8020_0000). We could use a 
+relocatable kernel to offset the virtual kernel address though.
+
+- or use a second early_pmd, which would make sense as we reserve 2GB 
+for the kernel mapping anyway, but I'm not sure it would work without a 
+bunch of modifications.
+
+Let me know if that would help and I'll give it a try (unless you want 
+to take care of that of course!).
+
+Alex
 
 
-
+>
+> Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
+> object file when manipulating the files in that subfolder, rather than
+> LLVM bitcode.
+>
+> [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
+>      commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
+>
+> Tested-by: Wende Tan <twd2.me@gmail.com>
+> Signed-off-by: Wende Tan <twd2.me@gmail.com>
+> Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->  drivers/platform/x86/intel/ifs/runtest.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-> index 1061eb7ec399..43c864add778 100644
-> --- a/drivers/platform/x86/intel/ifs/runtest.c
-> +++ b/drivers/platform/x86/intel/ifs/runtest.c
-> @@ -331,14 +331,15 @@ int do_core_test(int cpu, struct device *dev)
->  	switch (test->test_num) {
->  	case IFS_TYPE_SAF:
->  		if (!ifsd->loaded)
-> -			return -EPERM;
-> -		ifs_test_core(cpu, dev);
-> +			ret = -EPERM;
-> +		else
-> +			ifs_test_core(cpu, dev);
->  		break;
->  	case IFS_TYPE_ARRAY_BIST:
->  		ifs_array_test_core(cpu, dev);
->  		break;
->  	default:
-> -		return -EINVAL;
-> +		ret = -EINVAL;
->  	}
->  out:
->  	cpus_read_unlock();
-> 
-> base-commit: 6465e260f48790807eef06b583b38ca9789b6072
-
+> NOTE: I tested LLVM 14 through 18 with defconfig + full/thin LTO and
+> allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
+> shows
+>
+>    ld.lld: error: section size decrease is too large
+>
+> when linking vmlinux. This appears to be resolved in LLVM 17 with
+> https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
+> (I did not bisect but the commit message lines up with the issue). I
+> kept the existing version check because defconfig worked fine but we may
+> want to bump it to 17.0.0 if randconfigs trip over this.
+>
+> Changes in v3:
+> - Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
+>    kernel after the submission of v2. This change matches arm64.
+> - Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
+>
+> Changes in v2:
+> - Some textual changes suggested by Nick.
+> - Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
+>    filed and resolved.
+> - Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
+> - Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
+> ---
+>   arch/riscv/Kconfig            | 3 +++
+>   arch/riscv/kernel/pi/Makefile | 3 +++
+>   2 files changed, 6 insertions(+)
+>
+> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+> index d607ab0f7c6d..523640f7441e 100644
+> --- a/arch/riscv/Kconfig
+> +++ b/arch/riscv/Kconfig
+> @@ -46,6 +46,9 @@ config RISCV
+>   	select ARCH_SUPPORTS_CFI_CLANG
+>   	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+>   	select ARCH_SUPPORTS_HUGETLBFS if MMU
+> +	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
+> +	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
+> +	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+>   	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+>   	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
+>   	select ARCH_USE_MEMTEST
+> diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
+> index 07915dc9279e..b75f150b923d 100644
+> --- a/arch/riscv/kernel/pi/Makefile
+> +++ b/arch/riscv/kernel/pi/Makefile
+> @@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
+>   		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
+>   		   $(call cc-option,-fno-addrsig)
+>   
+> +# Disable LTO
+> +KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+> +
+>   KBUILD_CFLAGS	+= -mcmodel=medany
+>   
+>   CFLAGS_cmdline_early.o += -D__NO_FORTIFY
+>
+> ---
+> base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+> change-id: 20231003-riscv-lto-f013beed8587
+>
+> Best regards,
