@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A87B1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631661D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHNB0QV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C35C433C7;
-	Wed,  4 Oct 2023 18:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI42vi0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D835EC433CB;
+	Wed,  4 Oct 2023 18:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443472;
-	bh=noCEahlCuQdE46oCy/jwi5CS9pdId4l8S+yt3xxMGSA=;
+	s=korg; t=1696443475;
+	bh=oDrUo6r2bBpBujwxlZAO597nNxGcPfR1HZEPmkSgVpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHNB0QV1JJtG/irmoA2gYD/CkC0KjkgziBWfkgEspBZqfiIqLBtu7Nzi76PGXw9dn
-	 GgkyKL+tKsQ9EWqDP9e/susulH7MYtrPDhhjYAmpA58zBSsyaex9Wjb7UvqK2w2uQ3
-	 Ijmb3XWZ+gMxrFXGq0nJB0w9NvqZNCyHQOTbOLC8=
+	b=mI42vi0/4uFA4BnJoKQVdmw2FgmB2EbGH6eni9nT/lKhl80CNA4IcoXO1VNVCO1Rj
+	 YCsD4+rjSa7amumus9yVD/mezd6DR/X1oPyQYwh2Idk9u7HyICAQ/FhH5FCo+SmHMM
+	 AYlBQoVSiz0OUAAD7tVEopNkDQut/mm1GENT+Q58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Guo Ren <guoren@kernel.org>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Michal Grzedzicki <mge@meta.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/259] riscv: errata: fix T-Head dcache.cva encoding
-Date: Wed,  4 Oct 2023 19:55:42 +0200
-Message-ID: <20231004175225.035925326@linuxfoundation.org>
+Subject: [PATCH 6.1 170/259] scsi: pm80xx: Use phy-specific SAS address when sending PHY_START command
+Date: Wed,  4 Oct 2023 19:55:43 +0200
+Message-ID: <20231004175225.085994155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -46,49 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Michal Grzedzicki <mge@meta.com>
 
-[ Upstream commit 8eb8fe67e2c84324398f5983c41b4f831d0705b3 ]
+[ Upstream commit 71996bb835aed58c7ec4967be1d05190a27339ec ]
 
-The dcache.cva encoding shown in the comments are wrong, it's for
-dcache.cval1 (which is restricted to L1) instead.
+Some cards have more than one SAS address. Using an incorrect address
+causes communication issues with some devices like expanders.
 
-Fix this in the comment and in the hardcoded instruction.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Tested-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Tested-by: Drew Fustini <dfustini@baylibre.com>
-Link: https://lore.kernel.org/r/20230912072410.2481-1-jszhang@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Closes: https://lore.kernel.org/linux-kernel/A57AEA84-5CA0-403E-8053-106033C73C70@fb.com/
+Signed-off-by: Michal Grzedzicki <mge@meta.com>
+Link: https://lore.kernel.org/r/20230913155611.3183612-1-mge@meta.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/errata_list.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/pm8001/pm8001_hwi.c | 2 +-
+ drivers/scsi/pm8001/pm80xx_hwi.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
-index 19a771085781a..7d2675bb71611 100644
---- a/arch/riscv/include/asm/errata_list.h
-+++ b/arch/riscv/include/asm/errata_list.h
-@@ -100,7 +100,7 @@ asm volatile(ALTERNATIVE(						\
-  * | 31 - 25 | 24 - 20 | 19 - 15 | 14 - 12 | 11 - 7 | 6 - 0 |
-  *   0000001    01001      rs1       000      00000  0001011
-  * dcache.cva rs1 (clean, virtual address)
-- *   0000001    00100      rs1       000      00000  0001011
-+ *   0000001    00101      rs1       000      00000  0001011
-  *
-  * dcache.cipa rs1 (clean then invalidate, physical address)
-  * | 31 - 25 | 24 - 20 | 19 - 15 | 14 - 12 | 11 - 7 | 6 - 0 |
-@@ -113,7 +113,7 @@ asm volatile(ALTERNATIVE(						\
-  *   0000000    11001     00000      000      00000  0001011
-  */
- #define THEAD_inval_A0	".long 0x0265000b"
--#define THEAD_clean_A0	".long 0x0245000b"
-+#define THEAD_clean_A0	".long 0x0255000b"
- #define THEAD_flush_A0	".long 0x0275000b"
- #define THEAD_SYNC_S	".long 0x0190000b"
+diff --git a/drivers/scsi/pm8001/pm8001_hwi.c b/drivers/scsi/pm8001/pm8001_hwi.c
+index 628b08ba6770b..e2c52c2d00b33 100644
+--- a/drivers/scsi/pm8001/pm8001_hwi.c
++++ b/drivers/scsi/pm8001/pm8001_hwi.c
+@@ -4313,7 +4313,7 @@ pm8001_chip_phy_start_req(struct pm8001_hba_info *pm8001_ha, u8 phy_id)
+ 	payload.sas_identify.dev_type = SAS_END_DEVICE;
+ 	payload.sas_identify.initiator_bits = SAS_PROTOCOL_ALL;
+ 	memcpy(payload.sas_identify.sas_addr,
+-		pm8001_ha->sas_addr, SAS_ADDR_SIZE);
++		&pm8001_ha->phy[phy_id].dev_sas_addr, SAS_ADDR_SIZE);
+ 	payload.sas_identify.phy_id = phy_id;
  
+ 	return pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index f8b8624458f73..bcccea7c1244a 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -4803,7 +4803,7 @@ pm80xx_chip_phy_start_req(struct pm8001_hba_info *pm8001_ha, u8 phy_id)
+ 	payload.sas_identify.dev_type = SAS_END_DEVICE;
+ 	payload.sas_identify.initiator_bits = SAS_PROTOCOL_ALL;
+ 	memcpy(payload.sas_identify.sas_addr,
+-	  &pm8001_ha->sas_addr, SAS_ADDR_SIZE);
++		&pm8001_ha->phy[phy_id].dev_sas_addr, SAS_ADDR_SIZE);
+ 	payload.sas_identify.phy_id = phy_id;
+ 
+ 	return pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
 -- 
 2.40.1
 
