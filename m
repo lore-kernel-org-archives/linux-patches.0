@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFB81D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914E21D55D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD//kve9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCF6C433C9;
-	Wed,  4 Oct 2023 18:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5eHLMhn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DA1C433C7;
+	Wed,  4 Oct 2023 18:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443367;
-	bh=oOGT5E66VL/vdSzJ3cpvnAdqr3YOtYiowM2dZl9BBMo=;
+	s=korg; t=1696443370;
+	bh=BOlXeeQUPbbpE8AA4LAzi83cYGui+cbvR/SKjpGHclM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JD//kve9ZHMyLKQETE9xx5LRx7qkY+UsCc5vznevov+XgRD779tppEVJfHdJXVbbw
-	 9rZBSrI4Q1VjZ0pD7O9utLKgwgQtRiRThzQ8XXug5TBuzbOxZ7xaRdRhkEkTsMuGyk
-	 AN1nSbMLUf/+EvMXJToH768Zq+edq3UhGS8Hkcwo=
+	b=G5eHLMhniTyHaLthyyoFuNfHuYGY7rtCVHQobS6Xp8mrpZ4vsRNhz0K1Gdb09sn13
+	 CsmfePQBynewD9tyZbPUnvqXoY6EsGlZOUsxvVNynKgI+5kxXhjEt1w9ieTUIyEU3B
+	 XJtvkRbn5YhHyBkFcw6LYKG9Pji5GnWpbHhXwOTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/259] bus: ti-sysc: Fix SYSC_QUIRK_SWSUP_SIDLE_ACT handling for uart wake-up
-Date: Wed,  4 Oct 2023 19:54:57 +0200
-Message-ID: <20231004175223.056154536@linuxfoundation.org>
+Subject: [PATCH 6.1 133/259] selftests/powerpc: Use CLEAN macro to fix make warning
+Date: Wed,  4 Oct 2023 19:55:06 +0200
+Message-ID: <20231004175223.469082323@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,82 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Benjamin Gray <bgray@linux.ibm.com>
 
-[ Upstream commit e5deb8f76e64d94ccef715e75ebafffd0c312d80 ]
+[ Upstream commit 69608683a65be5322ef44091eaeb9890472b2eea ]
 
-The uarts should be tagged with SYSC_QUIRK_SWSUP_SIDLE instead of
-SYSC_QUIRK_SWSUP_SIDLE_ACT. The difference is that SYSC_QUIRK_SWSUP_SIDLE
-is used to force idle target modules rather than block idle during usage.
+The CLEAN macro was added in 337f1e36 to prevent the
 
-The SYSC_QUIRK_SWSUP_SIDLE_ACT should disable autoidle and wake-up when
-a target module is active, and configure autoidle and wake-up when a
-target module is inactive. We are missing configuring the target module
-on sysc_disable_module(), and missing toggling of the wake-up bit.
+    Makefile:50: warning: overriding recipe for target 'clean'
+    ../../lib.mk:124: warning: ignoring old recipe for target 'clean'
 
-Let's fix the issue to allow uart wake-up to work.
+style warnings. Expand it's use to fix another case of redefining a
+target directly.
 
-Fixes: fb685f1c190e ("bus: ti-sysc: Handle swsup idle mode quirks")
-Tested-by: Dhruva Gole <d-gole@ti.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230228000709.124727-2-bgray@linux.ibm.com
+Stable-dep-of: 58b33e78a317 ("selftests/powerpc: Fix emit_tests to work with run_kselftest.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ tools/testing/selftests/powerpc/pmu/Makefile | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index d56e7b61bb5a9..59a2fe2448f17 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -1120,6 +1120,11 @@ static int sysc_enable_module(struct device *dev)
- 	if (ddata->cfg.quirks & (SYSC_QUIRK_SWSUP_SIDLE |
- 				 SYSC_QUIRK_SWSUP_SIDLE_ACT)) {
- 		best_mode = SYSC_IDLE_NO;
-+
-+		/* Clear WAKEUP */
-+		if (regbits->enwkup_shift >= 0 &&
-+		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
-+			reg &= ~BIT(regbits->enwkup_shift);
- 	} else {
- 		best_mode = fls(ddata->cfg.sidlemodes) - 1;
- 		if (best_mode > SYSC_IDLE_MASK) {
-@@ -1247,6 +1252,13 @@ static int sysc_disable_module(struct device *dev)
- 		}
- 	}
+diff --git a/tools/testing/selftests/powerpc/pmu/Makefile b/tools/testing/selftests/powerpc/pmu/Makefile
+index 30803353bd7cc..d2c1accc2e69c 100644
+--- a/tools/testing/selftests/powerpc/pmu/Makefile
++++ b/tools/testing/selftests/powerpc/pmu/Makefile
+@@ -46,11 +46,14 @@ override define INSTALL_RULE
+ 	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET install
+ endef
  
-+	if (ddata->cfg.quirks & SYSC_QUIRK_SWSUP_SIDLE_ACT) {
-+		/* Set WAKEUP */
-+		if (regbits->enwkup_shift >= 0 &&
-+		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
-+			reg |= BIT(regbits->enwkup_shift);
-+	}
-+
- 	reg &= ~(SYSC_IDLE_MASK << regbits->sidle_shift);
- 	reg |= best_mode << regbits->sidle_shift;
- 	if (regbits->autoidle_shift >= 0 &&
-@@ -1541,16 +1553,16 @@ struct sysc_revision_quirk {
- static const struct sysc_revision_quirk sysc_revision_quirks[] = {
- 	/* These drivers need to be fixed to not use pm_runtime_irq_safe() */
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000046, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000052, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	/* Uarts on omap4 and later */
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x50411e03, 0xffff00ff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
- 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
--		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
-+		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+-clean:
++DEFAULT_CLEAN := $(CLEAN)
++override define CLEAN
++	$(DEFAULT_CLEAN)
+ 	$(RM) $(TEST_GEN_PROGS) $(OUTPUT)/loop.o
+ 	TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
+ 	TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
+ 	TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean
++endef
  
- 	/* Quirks that need to be set based on the module address */
- 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
+ ebb:
+ 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
+@@ -61,4 +64,4 @@ sampling_tests:
+ event_code_tests:
+ 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
+ 
+-.PHONY: all run_tests clean ebb sampling_tests event_code_tests
++.PHONY: all run_tests ebb sampling_tests event_code_tests
 -- 
 2.40.1
 
