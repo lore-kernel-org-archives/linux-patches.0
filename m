@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D031D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7FE1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dE2wT3KC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21431C433C8;
-	Wed,  4 Oct 2023 18:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzEXTMM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C38C433C8;
+	Wed,  4 Oct 2023 18:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443506;
-	bh=6iT368qQvXlNRRqGW6aMjzLdqiVeaD3MLhYzhCFq5VY=;
+	s=korg; t=1696443509;
+	bh=YQ5Llo4HaPgoVNGV8XNfKXYGYBCSVKUxhLDWUsVUgb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dE2wT3KCU8N82F5j/Iiz6Cg0s20axZxacnR6fWJolThoQSxNOhO04ppsJm4gD74uT
-	 GbKoD6WIyOTLBTUoWWYoJXD1IUd79+N8am5E3TOCw6pnyOCFX8ZydwIl5m2xHOY7W5
-	 uoi5LhIKXXMltYSrhDNXrCG17XAosOeJI48LlkdY=
+	b=RzEXTMM85vRG5ielkSRRb9ORjHDAV9N4bAxmqZHSwFbzuja8779cAhEn8isswqrgq
+	 lkPAvSskl4nQdex3vteJcwKMCVOfm91ry9hj2dUorV2OwB+SoOfiezgwIkNrOG7w2W
+	 QBRrLmUm0kp38GMeCAQVORi3RSIEX2F8heJqjAnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/259] ALSA: hda: intel-sdw-acpi: Use u8 type for link index
-Date: Wed,  4 Oct 2023 19:55:53 +0200
-Message-ID: <20231004175225.555749682@linuxfoundation.org>
+Subject: [PATCH 6.1 181/259] ASoC: cs42l42: Ensure a reset pulse meets minimum pulse width.
+Date: Wed,  4 Oct 2023 19:55:54 +0200
+Message-ID: <20231004175225.600855555@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -37,81 +37,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 485ddd519fbd89a9d9ac4b02be489e03cbbeebba ]
+[ Upstream commit 41dac81b56c82c51a6d00fda5f3af7691ffee2d7 ]
 
-Use consistently u8 for sdw link index. The id is limited to 4, u8 is
-adequate in size to store it.
+The CS42L42 can accept very short reset pulses of a few microseconds
+but there's no reason to force a very short pulse.
+Allow a wide range for the usleep_range() so it can be relaxed about
+the choice of timing source.
 
-This change will also fixes the following compiler warning/error (W=1):
-
-sound/hda/intel-sdw-acpi.c: In function ‘sdw_intel_acpi_scan’:
-sound/hda/intel-sdw-acpi.c:34:35: error: ‘-subproperties’ directive output may be truncated writing 14 bytes into a region of size between 7 and 17 [-Werror=format-truncation=]
-   34 |                  "mipi-sdw-link-%d-subproperties", i);
-      |                                   ^~~~~~~~~~~~~~
-In function ‘is_link_enabled’,
-    inlined from ‘sdw_intel_scan_controller’ at sound/hda/intel-sdw-acpi.c:106:8,
-    inlined from ‘sdw_intel_acpi_scan’ at sound/hda/intel-sdw-acpi.c:180:9:
-sound/hda/intel-sdw-acpi.c:33:9: note: ‘snprintf’ output between 30 and 40 bytes into a destination of size 32
-   33 |         snprintf(name, sizeof(name),
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   34 |                  "mipi-sdw-link-%d-subproperties", i);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-
-The warnings got brought to light by a recent patch upstream:
-commit 6d4ab2e97dcf ("extrawarn: enable format and stringop overflow warnings in W=1")
-
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230912162617.29178-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230913150012.604775-2-sbinding@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-sdw-acpi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/cs42l42.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/hda/intel-sdw-acpi.c b/sound/hda/intel-sdw-acpi.c
-index 5cb92f7ccbcac..b57d72ea4503f 100644
---- a/sound/hda/intel-sdw-acpi.c
-+++ b/sound/hda/intel-sdw-acpi.c
-@@ -23,7 +23,7 @@ static int ctrl_link_mask;
- module_param_named(sdw_link_mask, ctrl_link_mask, int, 0444);
- MODULE_PARM_DESC(sdw_link_mask, "Intel link mask (one bit per link)");
+diff --git a/sound/soc/codecs/cs42l42.c b/sound/soc/codecs/cs42l42.c
+index 2fefbcf7bd130..914cdd737fa3b 100644
+--- a/sound/soc/codecs/cs42l42.c
++++ b/sound/soc/codecs/cs42l42.c
+@@ -2280,6 +2280,10 @@ int cs42l42_common_probe(struct cs42l42_private *cs42l42,
  
--static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
-+static bool is_link_enabled(struct fwnode_handle *fw_node, u8 idx)
- {
- 	struct fwnode_handle *link;
- 	char name[32];
-@@ -31,7 +31,7 @@ static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
- 
- 	/* Find master handle */
- 	snprintf(name, sizeof(name),
--		 "mipi-sdw-link-%d-subproperties", i);
-+		 "mipi-sdw-link-%hhu-subproperties", idx);
- 
- 	link = fwnode_get_named_child_node(fw_node, name);
- 	if (!link)
-@@ -51,8 +51,8 @@ static int
- sdw_intel_scan_controller(struct sdw_intel_acpi_info *info)
- {
- 	struct acpi_device *adev = acpi_fetch_acpi_dev(info->handle);
--	int ret, i;
--	u8 count;
-+	u8 count, i;
-+	int ret;
- 
- 	if (!adev)
- 		return -EINVAL;
+ 	if (cs42l42->reset_gpio) {
+ 		dev_dbg(cs42l42->dev, "Found reset GPIO\n");
++
++		/* Ensure minimum reset pulse width */
++		usleep_range(10, 500);
++
+ 		gpiod_set_value_cansleep(cs42l42->reset_gpio, 1);
+ 	}
+ 	usleep_range(CS42L42_BOOT_TIME_US, CS42L42_BOOT_TIME_US * 2);
 -- 
 2.40.1
 
