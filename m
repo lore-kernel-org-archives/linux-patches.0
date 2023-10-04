@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97A31D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A81D6A9
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU8nTQkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487F6C433C8;
-	Wed,  4 Oct 2023 18:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LastduiM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0773AC433C8;
+	Wed,  4 Oct 2023 18:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443780;
-	bh=ROKMq/OHpPe2haozXQIRVShkN456kDqHEHO82uLE+PM=;
+	s=korg; t=1696443783;
+	bh=ZMnRPAaxL6JF1K3DCmMoNPT+CCezP65nY5g5XanbjAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZU8nTQkwwa6l5FU/B0nTr5NYa1u3sNpVuuMFZGzyFwHbw+b9EySB6kTDUGQlrLqyL
-	 wUJqlvoO8z/UwYjWbJFAiFOMXEsepQULNA4Tw50aEK8bLiJSFwzmB37GAAWk/prHlF
-	 wRkhevIh1m4wNTY2xpbIORzXkHsNm50TpUxEsa6I=
+	b=LastduiM9or894GQlT1lgdgCSC35ca5Fh28bFH36DSYYKEispQ2fVfAy/Y5zDgp1X
+	 jqH8aC1X6YAQsduASr9DwgYV/2IOaqvQ/iYOzl4nnhff3TQ9xlC4v3rNSEkFA+SbQR
+	 jDLVuV8qGDetVESKenAr1vCSs7bz63eKRf95FWV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Len Brown <lenb@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 018/321] ext4: do not let fstrim block system suspend
-Date: Wed,  4 Oct 2023 19:52:43 +0200
-Message-ID: <20231004175230.036563569@linuxfoundation.org>
+Subject: [PATCH 6.5 019/321] netfilter: nft_set_rbtree: use read spinlock to avoid datapath contention
+Date: Wed,  4 Oct 2023 19:52:44 +0200
+Message-ID: <20231004175230.080151363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,74 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 5229a658f6453362fbb9da6bf96872ef25a7097e ]
+commit 96b33300fba880ec0eafcf3d82486f3463b4b6da upstream.
 
-Len Brown has reported that system suspend sometimes fail due to
-inability to freeze a task working in ext4_trim_fs() for one minute.
-Trimming a large filesystem on a disk that slowly processes discard
-requests can indeed take a long time. Since discard is just an advisory
-call, it is perfectly fine to interrupt it at any time and the return
-number of discarded blocks until that moment. Do that when we detect the
-task is being frozen.
+rbtree GC does not modify the datastructure, instead it collects expired
+elements and it enqueues a GC transaction. Use a read spinlock instead
+to avoid data contention while GC worker is running.
 
-Cc: stable@kernel.org
-Reported-by: Len Brown <lenb@kernel.org>
-Suggested-by: Dave Chinner <david@fromorbit.com>
-References: https://bugzilla.kernel.org/show_bug.cgi?id=216322
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230913150504.9054-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 63dde4f5f984f..3711be697a0a5 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -16,6 +16,7 @@
- #include <linux/slab.h>
- #include <linux/nospec.h>
- #include <linux/backing-dev.h>
-+#include <linux/freezer.h>
- #include <trace/events/ext4.h>
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index f250b5399344a..70491ba98decb 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -622,8 +622,7 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	if (!gc)
+ 		goto done;
  
- /*
-@@ -6930,6 +6931,11 @@ static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
- 					EXT4_CLUSTER_BITS(sb);
- }
+-	write_lock_bh(&priv->lock);
+-	write_seqcount_begin(&priv->count);
++	read_lock_bh(&priv->lock);
+ 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
  
-+static bool ext4_trim_interrupted(void)
-+{
-+	return fatal_signal_pending(current) || freezing(current);
-+}
-+
- static int ext4_try_to_trim_range(struct super_block *sb,
- 		struct ext4_buddy *e4b, ext4_grpblk_t start,
- 		ext4_grpblk_t max, ext4_grpblk_t minblocks)
-@@ -6963,8 +6969,8 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 		free_count += next - start;
- 		start = next + 1;
+ 		/* Ruleset has been updated, try later. */
+@@ -673,8 +672,7 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	gc = nft_trans_gc_catchall(gc, gc_seq);
  
--		if (fatal_signal_pending(current))
--			return -ERESTARTSYS;
-+		if (ext4_trim_interrupted())
-+			return count;
+ try_later:
+-	write_seqcount_end(&priv->count);
+-	write_unlock_bh(&priv->lock);
++	read_unlock_bh(&priv->lock);
  
- 		if (need_resched()) {
- 			ext4_unlock_group(sb, e4b->bd_group);
-@@ -7086,6 +7092,8 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
- 	end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
- 
- 	for (group = first_group; group <= last_group; group++) {
-+		if (ext4_trim_interrupted())
-+			break;
- 		grp = ext4_get_group_info(sb, group);
- 		if (!grp)
- 			continue;
+ 	if (gc)
+ 		nft_trans_gc_queue_async_done(gc);
 -- 
 2.40.1
 
