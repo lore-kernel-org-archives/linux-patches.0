@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A021D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A5D1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A743FC433C8;
-	Wed,  4 Oct 2023 18:07:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEB1C433C8;
+	Wed,  4 Oct 2023 18:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442866;
-	bh=OqmGTUmvoJXI8DoyVbZJ+cgKU+Kfk2sb644XFJrT5W4=;
+	s=korg; t=1696442868;
+	bh=VDqd4mRNO7qPVQL0tnXoJuX3Exc6XpL5eI/9JmGzjtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZox91ytYfMxes21VgrhqqaWDHD8lcEj9o27XsmYu4cSM33DZqSDIzQcxgC4DNTUf
-	 fZJSVLtt4zFqvBk1aGdo57vhoOjJQaepfckc7k5G03yWgD4hNfkzqo5elEAMjVsc5j
-	 RMmqnwyac3yxv+Z5BflOVaqisiTMSSD2VAhsOhfc=
+	b=YKgCaF70FoYTSHPumM5RNWqBhPkXFol6HLdjXsy/mXiAhbuO/B2kHTboXUly37wJy
+	 sSbKnvKXyWA34XsH0r+l8FasEI32fuUPz/ClIcDG3VqN6mESsQt9L3QYYodjTnK3dP
+	 7N3/6R0Gw+gBogYcQCBroAuwHV8hJ75XYTmdvzpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Gray <bgray@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/183] powerpc/watchpoints: Disable preemption in thread_change_pc()
-Date: Wed,  4 Oct 2023 19:56:08 +0200
-Message-ID: <20231004175209.702314952@linuxfoundation.org>
+Subject: [PATCH 5.15 138/183] powerpc/watchpoint: Disable pagefaults when getting user instruction
+Date: Wed,  4 Oct 2023 19:56:09 +0200
+Message-ID: <20231004175209.749471131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -44,54 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Gray <bgray@linux.ibm.com>
 
-[ Upstream commit cc879ab3ce39bc39f9b1d238b283f43a5f6f957d ]
+[ Upstream commit 3241f260eb830d27d09cc604690ec24533fdb433 ]
 
-thread_change_pc() uses CPU local data, so must be protected from
-swapping CPUs while it is reading the breakpoint struct.
+This is called in an atomic context, so is not allowed to sleep if a
+user page needs to be faulted in and has nowhere it can be deferred to.
+The pagefault_disabled() function is documented as preventing user
+access methods from sleeping.
 
-The error is more noticeable after 1e60f3564bad ("powerpc/watchpoints:
-Track perf single step directly on the breakpoint"), which added an
-unconditional __this_cpu_read() call in thread_change_pc(). However the
-existing __this_cpu_read() that runs if a breakpoint does need to be
-re-inserted has the same issue.
+In practice the page will be mapped in nearly always because we are
+reading the instruction that just triggered the watchpoint trap.
 
 Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230829063457.54157-2-bgray@linux.ibm.com
+Link: https://msgid.link/20230829063457.54157-3-bgray@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/hw_breakpoint.c | 7 ++++++-
+ arch/powerpc/kernel/hw_breakpoint_constraints.c | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/hw_breakpoint.c b/arch/powerpc/kernel/hw_breakpoint.c
-index 91a3be14808b1..63fec0602af22 100644
---- a/arch/powerpc/kernel/hw_breakpoint.c
-+++ b/arch/powerpc/kernel/hw_breakpoint.c
-@@ -478,11 +478,13 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
- 	struct arch_hw_breakpoint *info;
- 	int i;
+diff --git a/arch/powerpc/kernel/hw_breakpoint_constraints.c b/arch/powerpc/kernel/hw_breakpoint_constraints.c
+index 675d1f66ab728..a541e3b755479 100644
+--- a/arch/powerpc/kernel/hw_breakpoint_constraints.c
++++ b/arch/powerpc/kernel/hw_breakpoint_constraints.c
+@@ -140,8 +140,13 @@ void wp_get_instr_detail(struct pt_regs *regs, struct ppc_inst *instr,
+ 			 int *type, int *size, unsigned long *ea)
+ {
+ 	struct instruction_op op;
++	int err;
  
-+	preempt_disable();
+-	if (__get_user_instr(*instr, (void __user *)regs->nip))
++	pagefault_disable();
++	err = __get_user_instr(*instr, (void __user *)regs->nip);
++	pagefault_enable();
 +
- 	for (i = 0; i < nr_wp_slots(); i++) {
- 		if (unlikely(tsk->thread.last_hit_ubp[i]))
- 			goto reset;
- 	}
--	return;
-+	goto out;
++	if (err)
+ 		return;
  
- reset:
- 	regs_set_return_msr(regs, regs->msr & ~MSR_SE);
-@@ -491,6 +493,9 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
- 		__set_breakpoint(i, info);
- 		tsk->thread.last_hit_ubp[i] = NULL;
- 	}
-+
-+out:
-+	preempt_enable();
- }
- 
- static bool is_larx_stcx_instr(int type)
+ 	analyse_instr(&op, regs, *instr);
 -- 
 2.40.1
 
