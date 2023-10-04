@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3659E1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA041D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFvU0ehU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CE9C433C7;
-	Wed,  4 Oct 2023 18:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJqkMkzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBB3C433C7;
+	Wed,  4 Oct 2023 18:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443526;
-	bh=4OJrUy1V6CYpUK6LXnNcSyohvEhXLDH2jI2uherje10=;
+	s=korg; t=1696443528;
+	bh=FoXANqJCifq8jjZn4SnxCeoJFwEuRKqCeP9v7Akueu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFvU0ehUrDmwxtbeolCa6llor/HaMBI0wSxoXpoJssqC/kENoTVoIKFDbfeJD+7Tm
-	 WmDnX5t/F1em3MixJruuQYt2/MbEVhMsyazU29Qbau5FwiCGDBDDd4irPWpY0Ykju3
-	 8x9mRGLK3cPlJBLZsOu35gbxCye0wom6yrz6ORmw=
+	b=vJqkMkzWrL3vSgVjt+yk/YdmjWVky/eDMFOnWtdWfy5KHxek6Mqu1b/wrKn0K+eC2
+	 mNd/WLlrrDDQZI6CSjj7RKYT6BMI9of/bMfMYHPY1lHSjbMISqF7i213kLLCdhxdqy
+	 GLkX19XoL7Cu6DTvR+SDctTkHB9YiMoBywdzCc4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/259] ring-buffer: Do not attempt to read past "commit"
-Date: Wed,  4 Oct 2023 19:55:32 +0200
-Message-ID: <20231004175224.587024854@linuxfoundation.org>
+Subject: [PATCH 6.1 160/259] net/smc: bugfix for smcr v2 server connect success statistic
+Date: Wed,  4 Oct 2023 19:55:33 +0200
+Message-ID: <20231004175224.637538571@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -44,55 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 95a404bd60af6c4d9d8db01ad14fe8957ece31ca ]
+[ Upstream commit 6912e724832c47bb381eb1bd1e483ec8df0d0f0f ]
 
-When iterating over the ring buffer while the ring buffer is active, the
-writer can corrupt the reader. There's barriers to help detect this and
-handle it, but that code missed the case where the last event was at the
-very end of the page and has only 4 bytes left.
+In the macro SMC_STAT_SERV_SUCC_INC, the smcd_version is used
+to determin whether to increase the v1 statistic or the v2
+statistic. It is correct for SMCD. But for SMCR, smcr_version
+should be used.
 
-The checks to detect the corruption by the writer to reads needs to see the
-length of the event. If the length in the first 4 bytes is zero then the
-length is stored in the second 4 bytes. But if the writer is in the process
-of updating that code, there's a small window where the length in the first
-4 bytes could be zero even though the length is only 4 bytes. That will
-cause rb_event_length() to read the next 4 bytes which could happen to be off the
-allocated page.
-
-To protect against this, fail immediately if the next event pointer is
-less than 8 bytes from the end of the commit (last byte of data), as all
-events must be a minimum of 8 bytes anyway.
-
-Link: https://lore.kernel.org/all/20230905141245.26470-1-Tze-nan.Wu@mediatek.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20230907122820.0899019c@gandalf.local.home
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Reported-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/smc/smc_stats.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 42ad59a002365..c0b708b55c3b9 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2388,6 +2388,11 @@ rb_iter_head_event(struct ring_buffer_iter *iter)
- 	 */
- 	commit = rb_page_commit(iter_head_page);
- 	smp_rmb();
-+
-+	/* An event needs to be at least 8 bytes in size */
-+	if (iter->head > commit - 8)
-+		goto reset;
-+
- 	event = __rb_page_index(iter_head_page, iter->head);
- 	length = rb_event_length(event);
- 
+diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
+index 84b7ecd8c05ca..4dbc237b7c19e 100644
+--- a/net/smc/smc_stats.h
++++ b/net/smc/smc_stats.h
+@@ -244,8 +244,9 @@ while (0)
+ #define SMC_STAT_SERV_SUCC_INC(net, _ini) \
+ do { \
+ 	typeof(_ini) i = (_ini); \
+-	bool is_v2 = (i->smcd_version & SMC_V2); \
+ 	bool is_smcd = (i->is_smcd); \
++	u8 version = is_smcd ? i->smcd_version : i->smcr_version; \
++	bool is_v2 = (version & SMC_V2); \
+ 	typeof(net->smc.smc_stats) smc_stats = (net)->smc.smc_stats; \
+ 	if (is_v2 && is_smcd) \
+ 		this_cpu_inc(smc_stats->smc[SMC_TYPE_D].srv_v2_succ_cnt); \
 -- 
 2.40.1
 
