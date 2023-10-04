@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AE81D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986DFC433C7;
-	Wed,  4 Oct 2023 18:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208A01D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D97C433C9;
+	Wed,  4 Oct 2023 18:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442676;
-	bh=e/ZOhKi+uJzwu3s+23MWtiwP84fYqA8U2cWOU/e+nyQ=;
+	s=korg; t=1696442679;
+	bh=BJGvE/yTLa2gtIA3ZYI/jow58/JDjLp+6ugvlzCuQZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygTBQfHwbzwQ/cf3aGwWqvhKm+QzwNneuI+IlArq+m38wS92Ol8MX/AwTX//rU/PH
-	 CanoN5tG8sOKTYJ09zJLbBHACsGmzBvULs65+2dxQvDC0HJJ5iHDPQFV9NW2hB8AgJ
-	 pPlhbcWPzIBWP1lecWlgnQk6e9jRJEnlZBDEVeOw=
+	b=G0ISex+62lZLW+V4FnzKv1dVbUQVP7ZFe2uTnjGWbOlmHn1AaNJbH80qBePjCwPlW
+	 Wz5bTcbWxhQfNc1Hxw/oqyTyWWxPKYUbI4Ffcl2vCdQA57k9CZpjGILxylnnyzPE1N
+	 EuqWcK50BDQ/HeR0/rONO48cJjp+Qg6VHSkzJqw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Evan Green <evgreen@chromium.org>,
-	Peter Rosin <peda@axentia.se>,
+	Liang He <windhl@126.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/183] =?UTF-8?q?i2c:=20mux:=20gpio:=C2=A0Replace=20custom=20acpi=5Fget?= =?UTF-8?q?=5Flocal=5Faddress()?=
-Date: Wed,  4 Oct 2023 19:55:01 +0200
-Message-ID: <20231004175206.811986852@linuxfoundation.org>
+Subject: [PATCH 5.15 071/183] i2c: mux: gpio: Add missing fwnode_handle_put()
+Date: Wed,  4 Oct 2023 19:55:02 +0200
+Message-ID: <20231004175206.851291475@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,82 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 379920f5c013c49e0a740634972faf77e26d4ac3 ]
+[ Upstream commit db6aee6083a56ac4a6cd1b08fff7938072bcd0a3 ]
 
-Recently ACPI gained the acpi_get_local_address() API which may be used
-instead of home grown i2c_mux_gpio_get_acpi_adr().
+In i2c_mux_gpio_probe_fw(), we should add fwnode_handle_put()
+when break out of the iteration device_for_each_child_node()
+as it will automatically increase and decrease the refcounter.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Evan Green <evgreen@chromium.org>
-Acked-by: Peter Rosin <peda@axentia.se>
+Fixes: 98b2b712bc85 ("i2c: i2c-mux-gpio: Enable this driver in ACPI land")
+Signed-off-by: Liang He <windhl@126.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: db6aee6083a5 ("i2c: mux: gpio: Add missing fwnode_handle_put()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-gpio.c | 43 ++------------------------------
- 1 file changed, 2 insertions(+), 41 deletions(-)
+ drivers/i2c/muxes/i2c-mux-gpio.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/i2c/muxes/i2c-mux-gpio.c b/drivers/i2c/muxes/i2c-mux-gpio.c
-index bac415a52b780..31e6eb1591bb9 100644
+index 31e6eb1591bb9..8bad785dce36f 100644
 --- a/drivers/i2c/muxes/i2c-mux-gpio.c
 +++ b/drivers/i2c/muxes/i2c-mux-gpio.c
-@@ -49,45 +49,6 @@ static int i2c_mux_gpio_deselect(struct i2c_mux_core *muxc, u32 chan)
- 	return 0;
- }
- 
--#ifdef CONFIG_ACPI
--
--static int i2c_mux_gpio_get_acpi_adr(struct device *dev,
--				     struct fwnode_handle *fwdev,
--				     unsigned int *adr)
--
--{
--	unsigned long long adr64;
--	acpi_status status;
--
--	status = acpi_evaluate_integer(ACPI_HANDLE_FWNODE(fwdev),
--				       METHOD_NAME__ADR,
--				       NULL, &adr64);
--
--	if (!ACPI_SUCCESS(status)) {
--		dev_err(dev, "Cannot get address\n");
--		return -EINVAL;
--	}
--
--	*adr = adr64;
--	if (*adr != adr64) {
--		dev_err(dev, "Address out of range\n");
--		return -ERANGE;
--	}
--
--	return 0;
--}
--
--#else
--
--static int i2c_mux_gpio_get_acpi_adr(struct device *dev,
--				     struct fwnode_handle *fwdev,
--				     unsigned int *adr)
--{
--	return -EINVAL;
--}
--
--#endif
--
- static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
- 				 struct platform_device *pdev)
- {
-@@ -141,9 +102,9 @@ static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
- 			fwnode_property_read_u32(child, "reg", values + i);
+@@ -103,8 +103,10 @@ static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
  
  		} else if (is_acpi_node(child)) {
--			rc = i2c_mux_gpio_get_acpi_adr(dev, child, values + i);
-+			rc = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), values + i);
- 			if (rc)
--				return rc;
-+				return dev_err_probe(dev, rc, "Cannot get address\n");
+ 			rc = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), values + i);
+-			if (rc)
++			if (rc) {
++				fwnode_handle_put(child);
+ 				return dev_err_probe(dev, rc, "Cannot get address\n");
++			}
  		}
  
  		i++;
