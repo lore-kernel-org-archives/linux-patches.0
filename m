@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEFE2134D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4F2134D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7NPWid3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4538C433C9;
-	Wed,  4 Oct 2023 18:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHdy2wgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAF6C433C7;
+	Wed,  4 Oct 2023 18:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444383;
-	bh=6rd0l23x3+8dIKyn7jH/PqnVEFfELCwhaOIJKmTXCnY=;
+	s=korg; t=1696444385;
+	bh=1QazRjdcQWx8tebmlZPWCiCVZzckXpplEPIWsYnZt/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7NPWid3XtSXrCbCooIVFjAN9a98QRXYdDVCUCMPBHJTLkrrPQj+1rPPhQgwUqBlZ
-	 7XtyO2rZ+d9LbV8KBXdjg+i3rl8twBQx+n8yA4zsg+owsaOIpiFUnGomyv6gfqW76/
-	 B+Qn/dBwFsFe67Lgwcmmqse4jFUDISYQ+MP2NRWg=
+	b=AHdy2wgG8E+4JnxAn0wbmG515Sajr9tynobv0kNOx+o/fCY3SuTxDu3v4LkPjo3Wq
+	 0Dbhz2CqdYRGoHUdnS7lopcoNGhvH1B/xUU0NHFkKj3Yynq/awm0ovsRHGaHD/P4gE
+	 1LgWugevalJY8TASP08mYtkypzFEyt7sk7j9TWGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gerhard Engleder <gerhard@engleder-embedded.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 230/321] tsnep: Fix ethtool channels
-Date: Wed,  4 Oct 2023 19:56:15 +0200
-Message-ID: <20231004175239.880087694@linuxfoundation.org>
+Subject: [PATCH 6.5 231/321] tsnep: Fix NAPI polling with budget 0
+Date: Wed,  4 Oct 2023 19:56:16 +0200
+Message-ID: <20231004175239.933632849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,39 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit a7f991953d73dd50c4c23b5437c0139960e1fad4 ]
+[ Upstream commit 46589db3817bd8b523701274885984b5a5dda7d1 ]
 
-According to the NAPI documentation networking/napi.rst, for the ethtool
-API a channel is a IRQ/NAPI which services queues of a given type.
+According to the NAPI documentation networking/napi.rst, Rx specific
+APIs like page pool and XDP cannot be used at all when budget is 0.
+skb Tx processing should happen regardless of the budget.
 
-tsnep uses a single IRQ/NAPI instance for every TX/RX queue pair.
-Therefore, combined channels shall be returned instead of separate tx/rx
-channels.
+Stop NAPI polling after Tx processing and skip Rx processing if budget
+is 0.
 
 Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/engleder/tsnep_ethtool.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/engleder/tsnep_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep_ethtool.c b/drivers/net/ethernet/engleder/tsnep_ethtool.c
-index 716815dad7d21..65ec1abc94421 100644
---- a/drivers/net/ethernet/engleder/tsnep_ethtool.c
-+++ b/drivers/net/ethernet/engleder/tsnep_ethtool.c
-@@ -300,10 +300,8 @@ static void tsnep_ethtool_get_channels(struct net_device *netdev,
- {
- 	struct tsnep_adapter *adapter = netdev_priv(netdev);
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index a83f8bceadd16..479156576bc8a 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -1733,6 +1733,10 @@ static int tsnep_poll(struct napi_struct *napi, int budget)
+ 	if (queue->tx)
+ 		complete = tsnep_tx_poll(queue->tx, budget);
  
--	ch->max_rx = adapter->num_rx_queues;
--	ch->max_tx = adapter->num_tx_queues;
--	ch->rx_count = adapter->num_rx_queues;
--	ch->tx_count = adapter->num_tx_queues;
-+	ch->max_combined = adapter->num_queues;
-+	ch->combined_count = adapter->num_queues;
- }
- 
- static int tsnep_ethtool_get_ts_info(struct net_device *netdev,
++	/* handle case where we are called by netpoll with a budget of 0 */
++	if (unlikely(budget <= 0))
++		return budget;
++
+ 	if (queue->rx) {
+ 		done = queue->rx->xsk_pool ?
+ 		       tsnep_rx_poll_zc(queue->rx, napi, budget) :
 -- 
 2.40.1
 
