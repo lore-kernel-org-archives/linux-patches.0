@@ -1,30 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9551DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DCE1DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmNdBaId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E14C433C7;
-	Wed,  4 Oct 2023 18:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu4KLe2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAE9C433C8;
+	Wed,  4 Oct 2023 18:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444596;
-	bh=RusuIJ3BUI8e5tu7Ynkc5jug1KrilTlDYwRY4dDK8vY=;
+	s=korg; t=1696444599;
+	bh=d9w+4Bf5hUq1xJerrZiUBWKFxJpO+ZulvELIAYfxqrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmNdBaIde67M7XQzoBR9KWi4TZzz+hT0GnAW4JVA5pRlIB9wO2VQ67D0H98PpdPGe
-	 Mhrg2idJ7/nuPaxbVP0xK32nu0ArPbJJuRQAV7uSlTYT6iQUNl7Br1G6NJTOogYjQA
-	 nCpG/x1sNt5b4VVb8LZ7AGb59KefSCJEKUOGA+pg=
+	b=pu4KLe2Ml5x9CNMBJvzMLtn72mzEi02AzdET/U/cSRpY/fQ/uc+QXO7Z4LM6lnGX2
+	 G9zWOiQiOl3W+xB9mABYlMd6ntlP3czt7Y1yshLOobfMVGD4B8HW9xdNnN+WPxSqaq
+	 d7FKQvbcYB3rM3mBKglDgaP5EIsZk9oMzd6GFh/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.5 278/321] cxl/mbox: Fix CEL logic for poison and security commands
-Date: Wed,  4 Oct 2023 19:57:03 +0200
-Message-ID: <20231004175242.158905375@linuxfoundation.org>
+	stable@kernel.org,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Bruce Ashfield <bruce.ashfield@gmail.com>,
+	Jon Mason <jon.mason@arm.com>,
+	Jon Mason <jdmason@kudzu.us>,
+	Ross Burton <ross@burtonini.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mikko Rapeli <mikko.rapeli@linaro.org>
+Subject: [PATCH 6.5 279/321] arm64: defconfig: remove CONFIG_COMMON_CLK_NPCM8XX=y
+Date: Wed,  4 Oct 2023 19:57:04 +0200
+Message-ID: <20231004175242.209170353@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,76 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Mikko Rapeli <mikko.rapeli@linaro.org>
 
-commit d2f706058826b803f5b9dc3f6d4c213ae0c54eb9 upstream.
+commit 7d3e4e9d3bde9c8bd8914d47ddaa90e0d0ffbcab upstream.
 
-The following debug output was observed while testing CXL
+There is no code for this config option and enabling it in defconfig
+causes warnings from tools which are detecting unused and obsolete
+kernel config flags since the flag will be completely missing from
+effective build config after "make olddefconfig".
 
-cxl_core:cxl_walk_cel:721: cxl_mock_mem cxl_mem.0: Opcode 0x4300 unsupported by driver
+Fixes yocto kernel recipe build time warning:
 
-opcode 0x4300 (Get Poison) is supported by the driver and the mock
-device supports it.  The logic should be checking that the opcode is
-both not poison and not security.
+WARNING: [kernel config]: This BSP contains fragments with warnings:
+...
+[INFO]: the following symbols were not found in the active
+configuration:
+     - CONFIG_COMMON_CLK_NPCM8XX
 
-Fix the logic to allow poison and security commands.
+The flag was added with commit 45472f1e5348c7b755b4912f2f529ec81cea044b
+v5.19-rc4-15-g45472f1e5348 so 6.1 and 6.4 stable kernel trees are
+affected.
 
-Fixes: ad64f5952ce3 ("cxl/memdev: Only show sanitize sysfs files when supported")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20230903-cxl-cel-fix-v1-1-e260c9467be3@intel.com
-[cleanup cxl_walk_cel() to centralized "enabled" checks]
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 45472f1e5348c7b755b4912f2f529ec81cea044b ("arm64: defconfig: Add Nuvoton NPCM family support")
+Cc: stable@kernel.org
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Tomer Maimon <tmaimon77@gmail.com>
+Cc: Bruce Ashfield <bruce.ashfield@gmail.com>
+Cc: Jon Mason <jon.mason@arm.com>
+Cc: Jon Mason <jdmason@kudzu.us>
+Cc: Ross Burton <ross@burtonini.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/mbox.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ arch/arm64/configs/defconfig |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index ca60bb8114f2..4df4f614f490 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -715,24 +715,25 @@ static void cxl_walk_cel(struct cxl_memdev_state *mds, size_t size, u8 *cel)
- 	for (i = 0; i < cel_entries; i++) {
- 		u16 opcode = le16_to_cpu(cel_entry[i].opcode);
- 		struct cxl_mem_command *cmd = cxl_mem_find_command(opcode);
-+		int enabled = 0;
- 
--		if (!cmd && (!cxl_is_poison_command(opcode) ||
--			     !cxl_is_security_command(opcode))) {
--			dev_dbg(dev,
--				"Opcode 0x%04x unsupported by driver\n", opcode);
--			continue;
-+		if (cmd) {
-+			set_bit(cmd->info.id, mds->enabled_cmds);
-+			enabled++;
- 		}
- 
--		if (cmd)
--			set_bit(cmd->info.id, mds->enabled_cmds);
--
--		if (cxl_is_poison_command(opcode))
-+		if (cxl_is_poison_command(opcode)) {
- 			cxl_set_poison_cmd_enabled(&mds->poison, opcode);
-+			enabled++;
-+		}
- 
--		if (cxl_is_security_command(opcode))
-+		if (cxl_is_security_command(opcode)) {
- 			cxl_set_security_cmd_enabled(&mds->security, opcode);
-+			enabled++;
-+		}
- 
--		dev_dbg(dev, "Opcode 0x%04x enabled\n", opcode);
-+		dev_dbg(dev, "Opcode 0x%04x %s\n", opcode,
-+			enabled ? "enabled" : "unsupported by driver");
- 	}
- }
- 
--- 
-2.42.0
-
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1145,7 +1145,6 @@ CONFIG_COMMON_CLK_S2MPS11=y
+ CONFIG_COMMON_CLK_PWM=y
+ CONFIG_COMMON_CLK_RS9_PCIE=y
+ CONFIG_COMMON_CLK_VC5=y
+-CONFIG_COMMON_CLK_NPCM8XX=y
+ CONFIG_COMMON_CLK_BD718XX=m
+ CONFIG_CLK_RASPBERRYPI=m
+ CONFIG_CLK_IMX8MM=y
 
 
