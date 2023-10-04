@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7131D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D6FC433C7;
-	Wed,  4 Oct 2023 18:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086DC1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0FEC433C8;
+	Wed,  4 Oct 2023 18:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442644;
-	bh=1ZbhbPBTAN9bPboNHx0v9QXD5RhbT+Z5gkARVaZyikI=;
+	s=korg; t=1696442646;
+	bh=Xbjj30rsgR61X1ArDeh7+gS3wOBGatK8pgtYoGGMA50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/x8diaFg2Q05ukuaJlqZu6BIEjXmoPpsqS100ymgmjxLMh6qTYtgMWWXy8SNHsKf
-	 ktWGvgx6E/7NtvcoE8q/2T9GcNz4HXtQq/GGzenQplYZS78ppQxlWN0jD/vfjKFmav
-	 ZEP9cgzop42y2HmznYtET2Ya02ajby3MNt71SLDs=
+	b=YLBzcnf5PJ0+IYUw3KAwtljNMo/avABgqx96IDRt5S4PUYdC8Aruko+hLEyVY9PvR
+	 rEFgyau8QgTZXPVvXy8oiUIB4WdkBvgPex79r9ctWZYOSreosmUGuYYw9OuwxNDLrR
+	 ezhqz5Xd7mkB+rMM4GcR9owLnM64LiBhmwlMrrjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Roopa Prabhu <roopa@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	bridge@lists.linux-foundation.org,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/183] netfilter: nft_set_pipapo: stop GC iteration if GC transaction allocation fails
-Date: Wed,  4 Oct 2023 19:54:22 +0200
-Message-ID: <20231004175205.264938759@linuxfoundation.org>
+Subject: [PATCH 5.15 058/183] net: bridge: use DEV_STATS_INC()
+Date: Wed,  4 Oct 2023 19:54:49 +0200
+Message-ID: <20231004175206.335671894@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -39,34 +44,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6d365eabce3c018a80f6e0379b17df2abb17405e upstream.
+[ Upstream commit 44bdb313da57322c9b3c108eb66981c6ec6509f4 ]
 
-nft_trans_gc_queue_sync() enqueues the GC transaction and it allocates a
-new one. If this allocation fails, then stop this GC sync run and retry
-later.
+syzbot/KCSAN reported data-races in br_handle_frame_finish() [1]
+This function can run from multiple cpus without mutual exclusion.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
+
+Handles updates to dev->stats.tx_dropped while we are at it.
+
+[1]
+BUG: KCSAN: data-race in br_handle_frame_finish / br_handle_frame_finish
+
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 1:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 0:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+do_softirq+0x5e/0x90 kernel/softirq.c:454
+__local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
+__raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+_raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
+spin_unlock_bh include/linux/spinlock.h:396 [inline]
+batadv_tt_local_purge+0x1a8/0x1f0 net/batman-adv/translation-table.c:1356
+batadv_tt_purge+0x2b/0x630 net/batman-adv/translation-table.c:3560
+process_one_work kernel/workqueue.c:2630 [inline]
+process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
+worker_thread+0x525/0x730 kernel/workqueue.c:2784
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+
+value changed: 0x00000000000d7190 -> 0x00000000000d7191
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 14848 Comm: kworker/u4:11 Not tainted 6.6.0-rc1-syzkaller-00236-gad8a69f361b9 #0
+
+Fixes: 1c29fc4989bc ("[BRIDGE]: keep track of received multicast packets")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Roopa Prabhu <roopa@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: bridge@lists.linux-foundation.org
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230918091351.1356153-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_forward.c | 4 ++--
+ net/bridge/br_input.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 7248a1737ee14..83f5f276c3bff 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1597,7 +1597,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 3d69ad5463a9f..011bd3c59da19 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -124,7 +124,7 @@ static int deliver_clone(const struct net_bridge_port *prev,
  
- 			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
- 			if (!gc)
--				break;
-+				return;
+ 	skb = skb_clone(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return -ENOMEM;
+ 	}
  
- 			nft_pipapo_gc_deactivate(net, set, e);
- 			pipapo_drop(m, rulemap);
+@@ -263,7 +263,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
+ 
+ 	skb = skb_copy(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return;
+ 	}
+ 
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index 6743c8a0fe8e1..54bfcdf692732 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -146,12 +146,12 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 			if ((mdst && mdst->host_joined) ||
+ 			    br_multicast_is_router(brmctx, skb)) {
+ 				local_rcv = true;
+-				br->dev->stats.multicast++;
++				DEV_STATS_INC(br->dev, multicast);
+ 			}
+ 			mcast_hit = true;
+ 		} else {
+ 			local_rcv = true;
+-			br->dev->stats.multicast++;
++			DEV_STATS_INC(br->dev, multicast);
+ 		}
+ 		break;
+ 	case BR_PKT_UNICAST:
 -- 
 2.40.1
 
