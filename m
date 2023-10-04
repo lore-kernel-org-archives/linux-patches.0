@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529B418E2A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C773AC433C7;
-	Wed,  4 Oct 2023 18:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1264D18E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86313C433C7;
+	Wed,  4 Oct 2023 18:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443138;
-	bh=+LMlbiPIT/Y1JBLR6yfXbbW0oIx78S6kIIzrK27IqXo=;
+	s=korg; t=1696443140;
+	bh=vsM768sn3+IbGOXRh1TX2JLbog5zxqcd7xPmNgCLOwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMEpY6Xd68PJiCkK1oYaZ8bUMLQebF9kGHESlrVThZy+UOY+j2d+ied26X1GAMDQb
-	 cmGgMXzO7FkmnOPGfJGLjEyzWKhnFLftYX+qhLQh2ZUG+kB2igr6lDFUEDgIZABKCD
-	 /06mvp7pjVdmjXK8tIDYVDFxs9Zg2IJCvrHhq6HM=
+	b=tqq3lTfTWxJ6fZMJEB9GGVcDIP/e3CsXCMqs7pFMr3ECUgCB+3wrRYTAIeIRN6RYC
+	 bGlw5gQacwdRYweAPPMvwwityDYprntDzUxLGC0Pgo88QQWRwFd/C91FeNlHqbnTny
+	 Wk6JMnNynTBpU9ETUtG5auvKki8KHPFp/PGy+jYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/259] netfilter: nft_set_rbtree: use read spinlock to avoid datapath contention
-Date: Wed,  4 Oct 2023 19:53:25 +0200
-Message-ID: <20231004175218.908102117@linuxfoundation.org>
+Subject: [PATCH 6.1 050/259] ASoC: SOF: core: Only call sof_ops_free() on remove if the probe was successful
+Date: Wed,  4 Oct 2023 19:53:43 +0200
+Message-ID: <20231004175219.742431894@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -39,45 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 96b33300fba880ec0eafcf3d82486f3463b4b6da upstream.
+[ Upstream commit 31bb7bd9ffee50d09ec931998b823a86132ab807 ]
 
-rbtree GC does not modify the datastructure, instead it collects expired
-elements and it enqueues a GC transaction. Use a read spinlock instead
-to avoid data contention while GC worker is running.
+All the fail paths during probe will free up the ops, on remove we should
+only free it if the probe was successful.
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bc433fd76fae ("ASoC: SOF: Add ops_free")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Link: https://lore.kernel.org/r/20230915124015.19637-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/sof/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index f250b5399344a..70491ba98decb 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -622,8 +622,7 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	if (!gc)
- 		goto done;
+diff --git a/sound/soc/sof/core.c b/sound/soc/sof/core.c
+index 75a1e2c6539f2..eaa16755a2704 100644
+--- a/sound/soc/sof/core.c
++++ b/sound/soc/sof/core.c
+@@ -461,10 +461,9 @@ int snd_sof_device_remove(struct device *dev)
+ 		snd_sof_ipc_free(sdev);
+ 		snd_sof_free_debug(sdev);
+ 		snd_sof_remove(sdev);
++		sof_ops_free(sdev);
+ 	}
  
--	write_lock_bh(&priv->lock);
--	write_seqcount_begin(&priv->count);
-+	read_lock_bh(&priv->lock);
- 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
+-	sof_ops_free(sdev);
+-
+ 	/* release firmware */
+ 	snd_sof_fw_unload(sdev);
  
- 		/* Ruleset has been updated, try later. */
-@@ -673,8 +672,7 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	gc = nft_trans_gc_catchall(gc, gc_seq);
- 
- try_later:
--	write_seqcount_end(&priv->count);
--	write_unlock_bh(&priv->lock);
-+	read_unlock_bh(&priv->lock);
- 
- 	if (gc)
- 		nft_trans_gc_queue_async_done(gc);
 -- 
 2.40.1
 
