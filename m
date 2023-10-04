@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B791D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777461D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IciPyQq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251BAC433CA;
-	Wed,  4 Oct 2023 18:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fecDCqPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E6C433C8;
+	Wed,  4 Oct 2023 18:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443874;
-	bh=+wMOTIqyQqZXDn0dSYv0xA9011NPINVvFfwCzJUFoAA=;
+	s=korg; t=1696443877;
+	bh=qJMefuaV4J3Dv2BJ1ns09N/pb/5z5CgccdFmLDCJrlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IciPyQq7FC3KXZRqmcW4mvzKxDDH4u5aRkI34N9X/NiJZedErGvidrjaj+mJotV4q
-	 p5pPs7eCP7JZfc51XfMPZyEg1gXJ1SDBznxK8CvIJ7NXwJkIirwhCnUA+SVSLUQW9F
-	 G/odS/kvyP/yq5+6u0QB5shLzsqdytcgKyBWYVBw=
+	b=fecDCqPBg/wdfQiGleuYpm4ddL8HC/SfGSQU44nuBBXoag9KEphfEdKl7qBlGMrqc
+	 v8K7IY1TPUTWJMiQeMulsvR9N4FbmOq++ToxJRP3OnaMiERNSoUkwcDa5KqwmzwfXh
+	 xm+Fc76UerY9VVAvk3IwFzbURq3fTSvkN//EI44o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
-	kernel test robot <lkp@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 050/321] net: microchip: sparx5: Fix possible memory leaks in test_vcap_xn_rule_creator()
-Date: Wed,  4 Oct 2023 19:53:15 +0200
-Message-ID: <20231004175231.484213699@linuxfoundation.org>
+Subject: [PATCH 6.5 051/321] net: microchip: sparx5: Fix possible memory leaks in vcap_api_kunit
+Date: Wed,  4 Oct 2023 19:53:16 +0200
+Message-ID: <20231004175231.525169131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,309 +44,230 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 20146fa73ab8db2ab9f4916bbaf4610646787a09 ]
+[ Upstream commit 2a2dffd911d4139258b828b9c5056cb64b826758 ]
 
-Inject fault while probing kunit-example-test.ko, the rule which
-is allocated by kzalloc in vcap_alloc_rule(), the field which is
-allocated by kzalloc in vcap_rule_add_action() and
-vcap_rule_add_key() is not freed, and it cause the memory leaks
-below. Use vcap_free_rule() to free them as other drivers do it.
+Inject fault while probing kunit-example-test.ko, the duprule which
+is allocated by kzalloc in vcap_dup_rule() of
+test_vcap_xn_rule_creator() is not freed, and it cause the memory leaks
+below. Use vcap_del_rule() to free them as other functions do it.
 
-And since the return rule of test_vcap_xn_rule_creator() is not
-used, remove it and switch to void.
-
-unreferenced object 0xffff058383334240 (size 192):
-  comm "kunit_try_catch", pid 309, jiffies 4294894222 (age 639.800s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 14 00 00 00 90 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 00 81 93 84 83 05 ff ff  ................
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000648fefae>] vcap_alloc_rule+0x17c/0x26c
-    [<000000004da16164>] test_vcap_xn_rule_creator.constprop.43+0xac/0x328
-    [<00000000231b1097>] vcap_api_rule_insert_in_order_test+0xcc/0x184
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff0583849380c0 (size 64):
-  comm "kunit_try_catch", pid 309, jiffies 4294894222 (age 639.800s)
-  hex dump (first 32 bytes):
-    40 81 93 84 83 05 ff ff 68 42 33 83 83 05 ff ff  @.......hB3.....
-    22 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  "...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000ee41df9e>] vcap_rule_add_action+0x104/0x178
-    [<000000001cc1bb38>] test_vcap_xn_rule_creator.constprop.43+0xd8/0x328
-    [<00000000231b1097>] vcap_api_rule_insert_in_order_test+0xcc/0x184
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff058384938100 (size 64):
-  comm "kunit_try_catch", pid 309, jiffies 4294894222 (age 639.800s)
-  hex dump (first 32 bytes):
-    80 81 93 84 83 05 ff ff 58 42 33 83 83 05 ff ff  ........XB3.....
-    7d 00 00 00 01 00 00 00 02 00 00 00 ff 00 00 00  }...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<0000000043c78991>] vcap_rule_add_key+0x104/0x180
-    [<00000000ba73cfbe>] vcap_add_type_keyfield+0xfc/0x128
-    [<000000002b00f7df>] vcap_val_rule+0x274/0x3e8
-    [<00000000e67d2ff5>] test_vcap_xn_rule_creator.constprop.43+0xf0/0x328
-    [<00000000231b1097>] vcap_api_rule_insert_in_order_test+0xcc/0x184
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-
-unreferenced object 0xffff0583833b6240 (size 192):
-  comm "kunit_try_catch", pid 311, jiffies 4294894225 (age 639.844s)
-  hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
-    00 00 00 00 00 00 00 00 40 91 8f 84 83 05 ff ff  ........@.......
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000648fefae>] vcap_alloc_rule+0x17c/0x26c
-    [<000000004da16164>] test_vcap_xn_rule_creator.constprop.43+0xac/0x328
-    [<00000000509de3f4>] vcap_api_rule_insert_reverse_order_test+0x10c/0x654
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff0583848f9100 (size 64):
-  comm "kunit_try_catch", pid 311, jiffies 4294894225 (age 639.844s)
-  hex dump (first 32 bytes):
-    80 91 8f 84 83 05 ff ff 68 62 3b 83 83 05 ff ff  ........hb;.....
-    22 00 00 00 01 00 00 00 00 00 00 00 a5 b4 ff ff  "...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000ee41df9e>] vcap_rule_add_action+0x104/0x178
-    [<000000001cc1bb38>] test_vcap_xn_rule_creator.constprop.43+0xd8/0x328
-    [<00000000509de3f4>] vcap_api_rule_insert_reverse_order_test+0x10c/0x654
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff0583848f9140 (size 64):
-  comm "kunit_try_catch", pid 311, jiffies 4294894225 (age 639.844s)
-  hex dump (first 32 bytes):
-    c0 91 8f 84 83 05 ff ff 58 62 3b 83 83 05 ff ff  ........Xb;.....
-    7d 00 00 00 01 00 00 00 02 00 00 00 ff 00 00 00  }...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<0000000043c78991>] vcap_rule_add_key+0x104/0x180
-    [<00000000ba73cfbe>] vcap_add_type_keyfield+0xfc/0x128
-    [<000000002b00f7df>] vcap_val_rule+0x274/0x3e8
-    [<00000000e67d2ff5>] test_vcap_xn_rule_creator.constprop.43+0xf0/0x328
-    [<00000000509de3f4>] vcap_api_rule_insert_reverse_order_test+0x10c/0x654
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-
-unreferenced object 0xffff05838264e0c0 (size 192):
-  comm "kunit_try_catch", pid 313, jiffies 4294894230 (age 639.864s)
+unreferenced object 0xffff6eb4846f6180 (size 192):
+  comm "kunit_try_catch", pid 405, jiffies 4294895522 (age 880.004s)
   hex dump (first 32 bytes):
     10 27 00 00 04 00 00 00 0a 00 00 00 f4 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 40 3a 97 84 83 05 ff ff  ........@:......
+    00 00 00 00 00 00 00 00 98 61 6f 84 b4 6e ff ff  .........ao..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000648fefae>] vcap_alloc_rule+0x17c/0x26c
-    [<000000004da16164>] test_vcap_xn_rule_creator.constprop.43+0xac/0x328
-    [<00000000a29794d8>] vcap_api_rule_remove_at_end_test+0xbc/0xb48
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff058384973a80 (size 64):
-  comm "kunit_try_catch", pid 313, jiffies 4294894230 (age 639.864s)
-  hex dump (first 32 bytes):
-    e8 e0 64 82 83 05 ff ff e8 e0 64 82 83 05 ff ff  ..d.......d.....
-    22 00 00 00 01 00 00 00 00 00 00 00 00 80 ff ff  "...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000ee41df9e>] vcap_rule_add_action+0x104/0x178
-    [<000000001cc1bb38>] test_vcap_xn_rule_creator.constprop.43+0xd8/0x328
-    [<00000000a29794d8>] vcap_api_rule_remove_at_end_test+0xbc/0xb48
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff058384973a40 (size 64):
-  comm "kunit_try_catch", pid 313, jiffies 4294894230 (age 639.880s)
-  hex dump (first 32 bytes):
-    80 39 97 84 83 05 ff ff d8 e0 64 82 83 05 ff ff  .9........d.....
-    7d 00 00 00 00 00 00 00 00 01 00 00 00 00 00 00  }...............
-  backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<0000000043c78991>] vcap_rule_add_key+0x104/0x180
-    [<0000000094335477>] vcap_add_type_keyfield+0xbc/0x128
-    [<000000002b00f7df>] vcap_val_rule+0x274/0x3e8
-    [<00000000e67d2ff5>] test_vcap_xn_rule_creator.constprop.43+0xf0/0x328
-    [<00000000a29794d8>] vcap_api_rule_remove_at_end_test+0xbc/0xb48
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-
-unreferenced object 0xffff0583832fa240 (size 192):
-  comm "kunit_try_catch", pid 315, jiffies 4294894233 (age 639.920s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000d2ac4ccb>] vcap_api_rule_insert_in_order_test+0xa4/0x114
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4846f6240 (size 192):
+  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 879.996s)
   hex dump (first 32 bytes):
     10 27 00 00 04 00 00 00 14 00 00 00 90 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 00 a1 8b 84 83 05 ff ff  ................
+    00 00 00 00 00 00 00 00 58 62 6f 84 b4 6e ff ff  ........Xbo..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000648fefae>] vcap_alloc_rule+0x17c/0x26c
-    [<000000004da16164>] test_vcap_xn_rule_creator.constprop.43+0xac/0x328
-    [<00000000be638a45>] vcap_api_rule_remove_in_middle_test+0xc4/0xb80
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff0583848ba0c0 (size 64):
-  comm "kunit_try_catch", pid 315, jiffies 4294894233 (age 639.920s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<0000000052e6ad35>] vcap_api_rule_insert_in_order_test+0xbc/0x114
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4846f6300 (size 192):
+  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 879.996s)
   hex dump (first 32 bytes):
-    40 a1 8b 84 83 05 ff ff 68 a2 2f 83 83 05 ff ff  @.......h./.....
-    22 00 00 00 01 00 00 00 00 00 00 00 00 80 ff ff  "...............
+    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
+    00 00 00 00 00 00 00 00 18 63 6f 84 b4 6e ff ff  .........co..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000ee41df9e>] vcap_rule_add_action+0x104/0x178
-    [<000000001cc1bb38>] test_vcap_xn_rule_creator.constprop.43+0xd8/0x328
-    [<00000000be638a45>] vcap_api_rule_remove_in_middle_test+0xc4/0xb80
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff0583848ba100 (size 64):
-  comm "kunit_try_catch", pid 315, jiffies 4294894233 (age 639.920s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<000000001b0895d4>] vcap_api_rule_insert_in_order_test+0xd4/0x114
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4846f63c0 (size 192):
+  comm "kunit_try_catch", pid 405, jiffies 4294895524 (age 880.012s)
   hex dump (first 32 bytes):
-    80 a1 8b 84 83 05 ff ff 58 a2 2f 83 83 05 ff ff  ........X./.....
-    7d 00 00 00 01 00 00 00 02 00 00 00 ff 00 00 00  }...............
+    10 27 00 00 04 00 00 00 28 00 00 00 c8 00 00 00  .'......(.......
+    00 00 00 00 00 00 00 00 d8 63 6f 84 b4 6e ff ff  .........co..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<0000000043c78991>] vcap_rule_add_key+0x104/0x180
-    [<00000000ba73cfbe>] vcap_add_type_keyfield+0xfc/0x128
-    [<000000002b00f7df>] vcap_val_rule+0x274/0x3e8
-    [<00000000e67d2ff5>] test_vcap_xn_rule_creator.constprop.43+0xf0/0x328
-    [<00000000be638a45>] vcap_api_rule_remove_in_middle_test+0xc4/0xb80
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-
-unreferenced object 0xffff0583827d2180 (size 192):
-  comm "kunit_try_catch", pid 317, jiffies 4294894238 (age 639.956s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000134c151f>] vcap_api_rule_insert_in_order_test+0xec/0x114
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4845fc180 (size 192):
+  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
   hex dump (first 32 bytes):
-    10 27 00 00 04 00 00 00 14 00 00 00 90 01 00 00  .'..............
-    00 00 00 00 00 00 00 00 00 e1 06 83 83 05 ff ff  ................
+    10 27 00 00 04 00 00 00 14 00 00 00 c8 00 00 00  .'..............
+    00 00 00 00 00 00 00 00 98 c1 5f 84 b4 6e ff ff  .........._..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000648fefae>] vcap_alloc_rule+0x17c/0x26c
-    [<000000004da16164>] test_vcap_xn_rule_creator.constprop.43+0xac/0x328
-    [<00000000e1ed8350>] vcap_api_rule_remove_in_front_test+0x144/0x6c0
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff05838306e0c0 (size 64):
-  comm "kunit_try_catch", pid 317, jiffies 4294894238 (age 639.956s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000fa5f64d3>] vcap_api_rule_insert_reverse_order_test+0xc8/0x600
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4845fc240 (size 192):
+  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
   hex dump (first 32 bytes):
-    40 e1 06 83 83 05 ff ff a8 21 7d 82 83 05 ff ff  @........!}.....
-    22 00 00 00 01 00 00 00 00 00 00 00 00 80 ff ff  "...............
+    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
+    00 00 00 00 00 00 00 00 58 c2 5f 84 b4 6e ff ff  ........X._..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<00000000ee41df9e>] vcap_rule_add_action+0x104/0x178
-    [<000000001cc1bb38>] test_vcap_xn_rule_creator.constprop.43+0xd8/0x328
-    [<00000000e1ed8350>] vcap_api_rule_remove_in_front_test+0x144/0x6c0
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff05838306e180 (size 64):
-  comm "kunit_try_catch", pid 317, jiffies 4294894238 (age 639.968s)
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000a7db42de>] vcap_api_rule_insert_reverse_order_test+0x108/0x600
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4845fc300 (size 192):
+  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.000s)
   hex dump (first 32 bytes):
-    98 21 7d 82 83 05 ff ff 00 e1 06 83 83 05 ff ff  .!}.............
-    67 00 00 00 00 00 00 00 01 01 00 00 ff 00 00 00  g...............
+    10 27 00 00 04 00 00 00 28 00 00 00 90 01 00 00  .'......(.......
+    00 00 00 00 00 00 00 00 18 c3 5f 84 b4 6e ff ff  .........._..n..
   backtrace:
-    [<000000008585a8f7>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000795eba12>] __kmem_cache_alloc_node+0x174/0x290
-    [<0000000061886991>] kmalloc_trace+0x40/0x164
-    [<0000000043c78991>] vcap_rule_add_key+0x104/0x180
-    [<000000006ce4945d>] test_add_def_fields+0x84/0x8c
-    [<00000000507e0ab6>] vcap_val_rule+0x294/0x3e8
-    [<00000000e67d2ff5>] test_vcap_xn_rule_creator.constprop.43+0xf0/0x328
-    [<00000000e1ed8350>] vcap_api_rule_remove_in_front_test+0x144/0x6c0
-    [<00000000548b559e>] kunit_try_run_case+0x50/0xac
-    [<00000000663f0105>] kunit_generic_run_threadfn_adapter+0x20/0x2c
-    [<00000000e646f120>] kthread+0x124/0x130
-    [<000000005257599e>] ret_from_fork+0x10/0x20
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000ea416c94>] vcap_api_rule_insert_reverse_order_test+0x150/0x600
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb4845fc3c0 (size 192):
+  comm "kunit_try_catch", pid 407, jiffies 4294895527 (age 880.020s)
+  hex dump (first 32 bytes):
+    10 27 00 00 04 00 00 00 32 00 00 00 f4 01 00 00  .'......2.......
+    00 00 00 00 00 00 00 00 d8 c3 5f 84 b4 6e ff ff  .........._..n..
+  backtrace:
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000453dcd80>] vcap_add_rule+0x134/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<00000000764a39b4>] vcap_api_rule_insert_reverse_order_test+0x198/0x600
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb484cd4240 (size 192):
+  comm "kunit_try_catch", pid 413, jiffies 4294895543 (age 879.956s)
+  hex dump (first 32 bytes):
+    10 27 00 00 04 00 00 00 1e 00 00 00 2c 01 00 00  .'..........,...
+    00 00 00 00 00 00 00 00 58 42 cd 84 b4 6e ff ff  ........XB...n..
+  backtrace:
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<0000000023976dd4>] vcap_api_rule_remove_in_front_test+0x158/0x658
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff6eb484cd4300 (size 192):
+  comm "kunit_try_catch", pid 413, jiffies 4294895543 (age 879.956s)
+  hex dump (first 32 bytes):
+    10 27 00 00 04 00 00 00 28 00 00 00 c8 00 00 00  .'......(.......
+    00 00 00 00 00 00 00 00 18 43 cd 84 b4 6e ff ff  .........C...n..
+  backtrace:
+    [<00000000f1b5b86e>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000c56cdd9a>] __kmem_cache_alloc_node+0x174/0x290
+    [<0000000046ef1b64>] kmalloc_trace+0x40/0x164
+    [<000000008565145b>] vcap_dup_rule+0x38/0x210
+    [<00000000bd9e1f12>] vcap_add_rule+0x29c/0x32c
+    [<0000000070a539b1>] test_vcap_xn_rule_creator.constprop.43+0x120/0x330
+    [<000000000b4760ff>] vcap_api_rule_remove_in_front_test+0x170/0x658
+    [<000000000f88f9cb>] kunit_try_run_case+0x50/0xac
+    [<00000000e848de5a>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<0000000058a88b6b>] kthread+0x124/0x130
+    [<00000000891cf28a>] ret_from_fork+0x10/0x20
 
 Fixes: dccc30cc4906 ("net: microchip: sparx5: Add KUNIT test of counters and sorted rules")
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309090950.uOTEKQq3-lkp@intel.com/
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ .../net/ethernet/microchip/vcap/vcap_api_kunit.c    | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-index 8c61a5dbce55f..99f04a53a442b 100644
+index 99f04a53a442b..fe4e166de8a04 100644
 --- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
 +++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-@@ -243,10 +243,9 @@ static void vcap_test_api_init(struct vcap_admin *admin)
+@@ -1597,6 +1597,11 @@ static void vcap_api_rule_insert_in_order_test(struct kunit *test)
+ 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 20, 400, 6, 774);
+ 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 30, 300, 3, 771);
+ 	test_vcap_xn_rule_creator(test, 10000, VCAP_USER_QOS, 40, 200, 2, 768);
++
++	vcap_del_rule(&test_vctrl, &test_netdev, 200);
++	vcap_del_rule(&test_vctrl, &test_netdev, 300);
++	vcap_del_rule(&test_vctrl, &test_netdev, 400);
++	vcap_del_rule(&test_vctrl, &test_netdev, 500);
  }
  
- /* Helper function to create a rule of a specific size */
--static struct vcap_rule *
--test_vcap_xn_rule_creator(struct kunit *test, int cid, enum vcap_user user,
--			  u16 priority,
--			  int id, int size, int expected_addr)
-+static void test_vcap_xn_rule_creator(struct kunit *test, int cid,
-+				      enum vcap_user user, u16 priority,
-+				      int id, int size, int expected_addr)
- {
- 	struct vcap_rule *rule;
- 	struct vcap_rule_internal *ri;
-@@ -311,7 +310,7 @@ test_vcap_xn_rule_creator(struct kunit *test, int cid, enum vcap_user user,
- 	ret = vcap_add_rule(rule);
- 	KUNIT_EXPECT_EQ(test, 0, ret);
- 	KUNIT_EXPECT_EQ(test, expected_addr, ri->addr);
--	return rule;
-+	vcap_free_rule(rule);
+ static void vcap_api_rule_insert_reverse_order_test(struct kunit *test)
+@@ -1655,6 +1660,11 @@ static void vcap_api_rule_insert_reverse_order_test(struct kunit *test)
+ 		++idx;
+ 	}
+ 	KUNIT_EXPECT_EQ(test, 768, admin.last_used_addr);
++
++	vcap_del_rule(&test_vctrl, &test_netdev, 500);
++	vcap_del_rule(&test_vctrl, &test_netdev, 400);
++	vcap_del_rule(&test_vctrl, &test_netdev, 300);
++	vcap_del_rule(&test_vctrl, &test_netdev, 200);
  }
  
- /* Prepare testing rule deletion */
+ static void vcap_api_rule_remove_at_end_test(struct kunit *test)
+@@ -1855,6 +1865,9 @@ static void vcap_api_rule_remove_in_front_test(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, 786, test_init_start);
+ 	KUNIT_EXPECT_EQ(test, 8, test_init_count);
+ 	KUNIT_EXPECT_EQ(test, 794, admin.last_used_addr);
++
++	vcap_del_rule(&test_vctrl, &test_netdev, 200);
++	vcap_del_rule(&test_vctrl, &test_netdev, 300);
+ }
+ 
+ static struct kunit_case vcap_api_rule_remove_test_cases[] = {
 -- 
 2.40.1
 
