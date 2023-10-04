@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7AD1D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3F3C433C7;
-	Wed,  4 Oct 2023 18:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25BC1D555
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE63C433C7;
+	Wed,  4 Oct 2023 18:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443118;
-	bh=+EbdwY0676tyVMWyFSwMWq0hLBGrjHtVenbTJSlz/+k=;
+	s=korg; t=1696443121;
+	bh=bPekx4cBz4l7uClHdjhNj4bVm4QVytLnS3jRnjiTyFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVDfuqrh9ouNGF7rlZyuXsFx22O4muMOV2+1vdadZxVMbYjPAj01RWCyru+VXAKTx
-	 LnYYCpo4QaSk6gb/LiLzqudKKJQkcQQAwQCxad7gs8Q/lYJZHjcG6Qehhe2eYJfn/a
-	 4m5kZszTZQHCu6eGAAvtg/RAXSDMUCSnURT3C8b8=
+	b=uw4Nw32M7sa/HBC+G+6CulSaU8Sh/wDXtCOqXelqnWOlv/Ei5H/OCoS2srjYFAId8
+	 Pysy0Wna6HgkTp+xm7YEex4Npwpd/esh8C04GkKCwY0RYT33T4QPbkh1EDQoXE+i/2
+	 /Q41uN71CqAKdfW1YiB7cfqjE9yQCIp3KyQzBGWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/259] netfilter: conntrack: fix extension size table
-Date: Wed,  4 Oct 2023 19:53:36 +0200
-Message-ID: <20231004175219.414222139@linuxfoundation.org>
+Subject: [PATCH 6.1 044/259] selftests: tls: swap the TX and RX sockets in some tests
+Date: Wed,  4 Oct 2023 19:53:37 +0200
+Message-ID: <20231004175219.465027134@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,41 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 4908d5af16676b9d2901830551c2af911e452524 ]
+[ Upstream commit c326ca98446e0ae4fee43a40acf79412b74cfedb ]
 
-The size table is incorrect due to copypaste error,
-this reserves more size than needed.
+tls.sendmsg_large and tls.sendmsg_multiple are trying to send through
+the self->cfd socket (only configured with TLS_RX) and to receive through
+the self->fd socket (only configured with TLS_TX), so they're not using
+kTLS at all. Swap the sockets.
 
-TSTAMP reserved 32 instead of 16 bytes.
-TIMEOUT reserved 16 instead of 8 bytes.
-
-Fixes: 5f31edc0676b ("netfilter: conntrack: move extension sizes into core")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_extend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/tls.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_extend.c b/net/netfilter/nf_conntrack_extend.c
-index 0b513f7bf9f39..dd62cc12e7750 100644
---- a/net/netfilter/nf_conntrack_extend.c
-+++ b/net/netfilter/nf_conntrack_extend.c
-@@ -40,10 +40,10 @@ static const u8 nf_ct_ext_type_len[NF_CT_EXT_NUM] = {
- 	[NF_CT_EXT_ECACHE] = sizeof(struct nf_conntrack_ecache),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_TIMESTAMP
--	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_acct),
-+	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_tstamp),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
--	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_tstamp),
-+	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_timeout),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_LABELS
- 	[NF_CT_EXT_LABELS] = sizeof(struct nf_conn_labels),
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index c0ad8385441f2..5b80fb155d549 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -551,11 +551,11 @@ TEST_F(tls, sendmsg_large)
+ 
+ 		msg.msg_iov = &vec;
+ 		msg.msg_iovlen = 1;
+-		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
++		EXPECT_EQ(sendmsg(self->fd, &msg, 0), send_len);
+ 	}
+ 
+ 	while (recvs++ < sends) {
+-		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
++		EXPECT_NE(recv(self->cfd, mem, send_len, 0), -1);
+ 	}
+ 
+ 	free(mem);
+@@ -584,9 +584,9 @@ TEST_F(tls, sendmsg_multiple)
+ 	msg.msg_iov = vec;
+ 	msg.msg_iovlen = iov_len;
+ 
+-	EXPECT_EQ(sendmsg(self->cfd, &msg, 0), total_len);
++	EXPECT_EQ(sendmsg(self->fd, &msg, 0), total_len);
+ 	buf = malloc(total_len);
+-	EXPECT_NE(recv(self->fd, buf, total_len, 0), -1);
++	EXPECT_NE(recv(self->cfd, buf, total_len, 0), -1);
+ 	for (i = 0; i < iov_len; i++) {
+ 		EXPECT_EQ(memcmp(test_strs[i], buf + len_cmp,
+ 				 strlen(test_strs[i])),
 -- 
 2.40.1
 
