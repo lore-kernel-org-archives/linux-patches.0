@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419EF1DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDC21DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryt6L/aM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB66DC433C8;
-	Wed,  4 Oct 2023 18:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9mL8Gbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F424C433C8;
+	Wed,  4 Oct 2023 18:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444171;
-	bh=V3y9wo0qmFT5yKw8xJksPaTrtgpOa3FR+AP0oMd8oYA=;
+	s=korg; t=1696444174;
+	bh=hiL1y0xd6K+joZaHd5kBRlLSKDWESd+ENz1DXjhWsIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ryt6L/aMaSlzR8mO5ttzi78QxtnPFls/fAgDpVG6Wd8NGYoLF6ykYZEcQNiG+dx03
-	 I6rn5vIqnlOZ5R2Jmoj2n9o1y+RZHX9t0zSuyYH9awrmQ1qP1BkrqhJnXabKe5KmOi
-	 8HkrnwlOI7pOe5zssdp/wdSBL6oss7kLPXuTGbHg=
+	b=o9mL8Gbmcw2eqCcgqmXfDRIjXNrEoxjanuLFXOGvQSX9A0JUxqw/lVo0MaszpGTrm
+	 YyCpd1Bxm972xaQiXyC3+rAr1gjy5REqVJzJ/IRPm+n7WemI0In3zOoLYkdXNv1D8o
+	 wjuoOVeVfegKPLCBjZQo5kNUlyVpVpsKsk8Uo/4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Rossi <nathan.rossi@digi.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	=?UTF-8?q?Mantas=20Mikul=C4=97nas?= <grawity@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 148/321] soc: imx8m: Enable OCOTP clock for imx8mm before reading registers
-Date: Wed,  4 Oct 2023 19:54:53 +0200
-Message-ID: <20231004175236.109686605@linuxfoundation.org>
+Subject: [PATCH 6.5 157/321] NFSD: Fix zero NFSv4 READ results when RQ_SPLICE_OK is not set
+Date: Wed,  4 Oct 2023 19:55:02 +0200
+Message-ID: <20231004175236.514079407@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -37,69 +36,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Rossi <nathan.rossi@digi.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 9d1e8275a28f51599d754ce661c91e0a689c0234 ]
+[ Upstream commit 0d32a6bbb8e7bf503855f2990f1ccce0922db87b ]
 
-Commit 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the
-register") added configuration to enable the OCOTP clock before
-attempting to read from the associated registers.
+nfsd4_encode_readv() uses xdr->buf->page_len as a starting point for
+the nfsd_iter_read() sink buffer -- page_len is going to be offset
+by the parts of the COMPOUND that have already been encoded into
+xdr->buf->pages.
 
-This same kexec issue is present with the imx8m SoCs that use the
-imx8mm_soc_uid function (e.g. imx8mp). This requires the imx8mm_soc_uid
-function to configure the OCOTP clock before accessing the associated
-registers. This change implements the same clock enable functionality
-that is present in the imx8mq_soc_revision function for the
-imx8mm_soc_uid function.
+However, that value must be captured /before/
+xdr_reserve_space_vec() advances page_len by the expected size of
+the read payload. Otherwise, the whole front part of the first
+page of the payload in the reply will be uninitialized.
 
-Signed-off-by: Nathan Rossi <nathan.rossi@digi.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Mantas hit this because sec=krb5i forces RQ_SPLICE_OK off, which
+invokes the readv part of the nfsd4_encode_read() path. Also,
+older Linux NFS clients appear to send shorter READ requests
+for files smaller than a page, whereas newer clients just send
+page-sized requests and let the server send as many bytes as
+are in the file.
+
+Reported-by: Mantas Mikulėnas <grawity@gmail.com>
+Closes: https://lore.kernel.org/linux-nfs/f1d0b234-e650-0f6e-0f5d-126b3d51d1eb@gmail.com/
+Fixes: 703d75215555 ("NFSD: Hoist rq_vec preparation into nfsd_read() [step two]")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/nfsd/nfs4xdr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 1dcd243df5677..ec87d9d878f30 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -100,6 +100,7 @@ static void __init imx8mm_soc_uid(void)
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index be72628b13376..d2588f4ac42be 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -4105,6 +4105,7 @@ static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
+ 				 struct file *file, unsigned long maxcount)
  {
- 	void __iomem *ocotp_base;
- 	struct device_node *np;
-+	struct clk *clk;
- 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
- 		     IMX8MP_OCOTP_UID_OFFSET : 0;
+ 	struct xdr_stream *xdr = resp->xdr;
++	unsigned int base = xdr->buf->page_len & ~PAGE_MASK;
+ 	unsigned int starting_len = xdr->buf->len;
+ 	__be32 zero = xdr_zero;
+ 	__be32 nfserr;
+@@ -4113,8 +4114,7 @@ static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
+ 		return nfserr_resource;
  
-@@ -109,11 +110,20 @@ static void __init imx8mm_soc_uid(void)
- 
- 	ocotp_base = of_iomap(np, 0);
- 	WARN_ON(!ocotp_base);
-+	clk = of_clk_get_by_name(np, NULL);
-+	if (IS_ERR(clk)) {
-+		WARN_ON(IS_ERR(clk));
-+		return;
-+	}
-+
-+	clk_prepare_enable(clk);
- 
- 	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
- 
-+	clk_disable_unprepare(clk);
-+	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
- }
+ 	nfserr = nfsd_iter_read(resp->rqstp, read->rd_fhp, file,
+-				read->rd_offset, &maxcount,
+-				xdr->buf->page_len & ~PAGE_MASK,
++				read->rd_offset, &maxcount, base,
+ 				&read->rd_eof);
+ 	read->rd_length = maxcount;
+ 	if (nfserr)
 -- 
 2.40.1
 
