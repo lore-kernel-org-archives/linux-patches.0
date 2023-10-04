@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E611D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9AD1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAs4yLoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34095C433C8;
-	Wed,  4 Oct 2023 18:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt6D3aym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F710C433CB;
+	Wed,  4 Oct 2023 18:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443930;
-	bh=AwvV22U3Z3aWMKb/qq5jNTioHF6Xqws2wkVflEMRNeE=;
+	s=korg; t=1696443933;
+	bh=jOxXXQB9DYKjCCfYHYPzLlKlga9562K50EzfhU9hP7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAs4yLoehRiVEaHje/ydlaT0NTuvoruHgvFsLERuy1HE3uEcO5pA1Kj/jk1Y+DFTu
-	 qOZVz/bEDqzSnUcCv5no+gRqIu8SQHNDIMMH6ysJTAFoyuc1/Un+Jhto4INa4+F7si
-	 EpX730O1X9K4qimCk3Mn6HMgS2OkCeflxWHlO7Z4=
+	b=qt6D3aymmghRaNjUAmvA+KXrMS3Efa8X6Sd9ItwwoNmWvH8q4zzkbVRjGQxtaXGgR
+	 6yL835c6cqNh4fMLk8HTIUT5aiEB8yiHUEAKwYIKzsV3m9PdijUC7E7Vr6g56mN/jV
+	 N3Lg4HOjel46HpsP6yCSsO+KovG485i7GpCbGLQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rappoport <rppt@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Tristram.Ha@microchip.com,
+	Lukasz Majewski <lukma@denx.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 071/321] x86/mm, kexec, ima: Use memblock_free_late() from ima_free_kexec_buffer()
-Date: Wed,  4 Oct 2023 19:53:36 +0200
-Message-ID: <20231004175232.497291581@linuxfoundation.org>
+Subject: [PATCH 6.5 072/321] net: hsr: Properly parse HSRv1 supervisor frames.
+Date: Wed,  4 Oct 2023 19:53:37 +0200
+Message-ID: <20231004175232.546351307@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,52 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Lukasz Majewski <lukma@denx.de>
 
-[ Upstream commit 34cf99c250d5cd2530b93a57b0de31d3aaf8685b ]
+[ Upstream commit 295de650d3aaf9e50258465c5f1c84b465d836f6 ]
 
-The code calling ima_free_kexec_buffer() runs long after the memblock
-allocator has already been torn down, potentially resulting in a use
-after free in memblock_isolate_range().
+While adding support for parsing the redbox supervision frames, the
+author added `pull_size' and `total_pull_size' to track the amount of
+bytes that were pulled from the skb during while parsing the skb so it
+can be reverted/ pushed back at the end.
+In the process probably copy&paste error occurred and for the HSRv1 case
+the ethhdr was used instead of the hsr_tag. Later the hsr_tag was used
+instead of hsr_sup_tag. The later error didn't matter because both
+structs have the size so HSRv0 was still working. It broke however HSRv1
+parsing because struct ethhdr is larger than struct hsr_tag.
 
-With KASAN or KFENCE, this use after free will result in a BUG
-from the idle task, and a subsequent kernel panic.
+Reinstate the old pulling flow and pull first ethhdr, hsr_tag in v1 case
+followed by hsr_sup_tag.
 
-Switch ima_free_kexec_buffer() over to memblock_free_late() to avoid
-that bug.
+[bigeasy: commit message]
 
-Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
-Suggested-by: Mike Rappoport <rppt@kernel.org>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230817135558.67274c83@imladris.surriel.com
+Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")'
+Suggested-by: Tristram.Ha@microchip.com
+Signed-off-by: Lukasz Majewski <lukma@denx.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/setup.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/hsr/hsr_framereg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index fd975a4a52006..aa0df37c1fe72 100644
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -359,15 +359,11 @@ static void __init add_early_ima_buffer(u64 phys_addr)
- #if defined(CONFIG_HAVE_IMA_KEXEC) && !defined(CONFIG_OF_FLATTREE)
- int __init ima_free_kexec_buffer(void)
- {
--	int rc;
--
- 	if (!ima_kexec_buffer_size)
- 		return -ENOENT;
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index b77f1189d19d1..6d14d935ee828 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -288,13 +288,13 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
  
--	rc = memblock_phys_free(ima_kexec_buffer_phys,
--				ima_kexec_buffer_size);
--	if (rc)
--		return rc;
-+	memblock_free_late(ima_kexec_buffer_phys,
-+			   ima_kexec_buffer_size);
+ 	/* And leave the HSR tag. */
+ 	if (ethhdr->h_proto == htons(ETH_P_HSR)) {
+-		pull_size = sizeof(struct ethhdr);
++		pull_size = sizeof(struct hsr_tag);
+ 		skb_pull(skb, pull_size);
+ 		total_pull_size += pull_size;
+ 	}
  
- 	ima_kexec_buffer_phys = 0;
- 	ima_kexec_buffer_size = 0;
+ 	/* And leave the HSR sup tag. */
+-	pull_size = sizeof(struct hsr_tag);
++	pull_size = sizeof(struct hsr_sup_tag);
+ 	skb_pull(skb, pull_size);
+ 	total_pull_size += pull_size;
+ 
 -- 
 2.40.1
 
