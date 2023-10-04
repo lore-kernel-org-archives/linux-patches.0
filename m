@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38061D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77F61D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpv6vpFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71581C433C7;
-	Wed,  4 Oct 2023 18:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dg3kSvJi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A3DC433C8;
+	Wed,  4 Oct 2023 18:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444655;
-	bh=a7E03Y7soHooSTbwByKqnomtkGOh7ABeEdRyVJhcbDI=;
+	s=korg; t=1696444658;
+	bh=lI8pw8dW0vlY5+5oRGmTbtoJTqU3qD50chjzfo0tshk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpv6vpFq5M3R8YDPJtg0eFnX/XlNGpiXID1jVNruDaPxUzzvNK9KQdEph+3v4pj15
-	 6bAvAfLxhsNY4OljjnKByD1GrJiAg8bRskWa7CW4WImDqOTu6BoY3YMNenjKJFqCYu
-	 WLc7gFO+Z2KV44xawtjBks54M0pqD+QDqpKpgnvk=
+	b=Dg3kSvJiY4WVX1iUFCL0VypZkm+2e4AWGABTHRwpxw/yDPCQgVvHZDQ3de0KxZkGa
+	 zNMl+A3BxfSg6jkMfALnYaYV5GWz2fkIoglgNxKVcdVFq7yu24EO9+/QDYqP/SV0VG
+	 sKes0rAgrfnWie4CENmyLnGuDSABH3l5pmCo8LDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hansson <newbyte@disroot.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.5 310/321] power: supply: ab8500: Set typing and props
-Date: Wed,  4 Oct 2023 19:57:35 +0200
-Message-ID: <20231004175243.659066897@linuxfoundation.org>
+	Greg Ungerer <gerg@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 311/321] fs: binfmt_elf_efpic: fix personality for ELF-FDPIC
+Date: Wed,  4 Oct 2023 19:57:36 +0200
+Message-ID: <20231004175243.697741564@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,85 +45,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Greg Ungerer <gerg@kernel.org>
 
-commit dc77721ea4aa1e8937e2436f230b5a69065cc508 upstream.
+commit 7c3151585730b7095287be8162b846d31e6eee61 upstream.
 
-I had the following weird phenomena on a mobile phone: while
-the capacity in /sys/class/power_supply/ab8500_fg/capacity
-would reflect the actual charge and capacity of the battery,
-only 1/3 of the value was shown on the battery status
-indicator and warnings for low battery appeared.
+The elf-fdpic loader hard sets the process personality to either
+PER_LINUX_FDPIC for true elf-fdpic binaries or to PER_LINUX for normal ELF
+binaries (in this case they would be constant displacement compiled with
+-pie for example).  The problem with that is that it will lose any other
+bits that may be in the ELF header personality (such as the "bug
+emulation" bits).
 
-It turns out that UPower, the Freedesktop power daemon,
-will average all the power supplies of type "battery" in
-/sys/class/power_supply/* if there is more than one battery.
+On the ARM architecture the ADDR_LIMIT_32BIT flag is used to signify a
+normal 32bit binary - as opposed to a legacy 26bit address binary.  This
+matters since start_thread() will set the ARM CPSR register as required
+based on this flag.  If the elf-fdpic loader loses this bit the process
+will be mis-configured and crash out pretty quickly.
 
-For the AB8500, there was "battery" ab8500_fg, ab8500_btemp
-and ab8500_chargalg. The latter two don't know anything
-about the battery, and should not be considered. They were
-however averaged and with the capacity of 0.
+Modify elf-fdpic loader personality setting so that it preserves the upper
+three bytes by using the SET_PERSONALITY macro to set it.  This macro in
+the generic case sets PER_LINUX and preserves the upper bytes.
+Architectures can override this for their specific use case, and ARM does
+exactly this.
 
-Flag ab8500_btemp and ab8500_chargalg with type "unknown"
-so they are not averaged as batteries.
+The problem shows up quite easily running under qemu using the ARM
+architecture, but not necessarily on all types of real ARM hardware.  If
+the underlying ARM processor does not support the legacy 26-bit addressing
+mode then everything will work as expected.
 
-Remove the technology prop from ab8500_btemp as well, all
-it does is snoop in on knowledge from another supply.
-
-After this the battery indicator shows the right value.
-
-Cc: Stefan Hansson <newbyte@disroot.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lkml.kernel.org/r/20230907011808.2985083-1-gerg@kernel.org
+Fixes: 1bde925d23547 ("fs/binfmt_elf_fdpic.c: provide NOMMU loader for regular ELF binaries")
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Greg Ungerer <gerg@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/ab8500_btemp.c    |    9 +--------
- drivers/power/supply/ab8500_chargalg.c |    2 +-
- 2 files changed, 2 insertions(+), 9 deletions(-)
+ fs/binfmt_elf_fdpic.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -115,7 +115,6 @@ struct ab8500_btemp {
- static enum power_supply_property ab8500_btemp_props[] = {
- 	POWER_SUPPLY_PROP_PRESENT,
- 	POWER_SUPPLY_PROP_ONLINE,
--	POWER_SUPPLY_PROP_TECHNOLOGY,
- 	POWER_SUPPLY_PROP_TEMP,
- };
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -345,10 +345,9 @@ static int load_elf_fdpic_binary(struct
+ 	/* there's now no turning back... the old userspace image is dead,
+ 	 * defunct, deceased, etc.
+ 	 */
++	SET_PERSONALITY(exec_params.hdr);
+ 	if (elf_check_fdpic(&exec_params.hdr))
+-		set_personality(PER_LINUX_FDPIC);
+-	else
+-		set_personality(PER_LINUX);
++		current->personality |= PER_LINUX_FDPIC;
+ 	if (elf_read_implies_exec(&exec_params.hdr, executable_stack))
+ 		current->personality |= READ_IMPLIES_EXEC;
  
-@@ -532,12 +531,6 @@ static int ab8500_btemp_get_property(str
- 		else
- 			val->intval = 1;
- 		break;
--	case POWER_SUPPLY_PROP_TECHNOLOGY:
--		if (di->bm->bi)
--			val->intval = di->bm->bi->technology;
--		else
--			val->intval = POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
--		break;
- 	case POWER_SUPPLY_PROP_TEMP:
- 		val->intval = ab8500_btemp_get_temp(di);
- 		break;
-@@ -662,7 +655,7 @@ static char *supply_interface[] = {
- 
- static const struct power_supply_desc ab8500_btemp_desc = {
- 	.name			= "ab8500_btemp",
--	.type			= POWER_SUPPLY_TYPE_BATTERY,
-+	.type			= POWER_SUPPLY_TYPE_UNKNOWN,
- 	.properties		= ab8500_btemp_props,
- 	.num_properties		= ARRAY_SIZE(ab8500_btemp_props),
- 	.get_property		= ab8500_btemp_get_property,
---- a/drivers/power/supply/ab8500_chargalg.c
-+++ b/drivers/power/supply/ab8500_chargalg.c
-@@ -1720,7 +1720,7 @@ static char *supply_interface[] = {
- 
- static const struct power_supply_desc ab8500_chargalg_desc = {
- 	.name			= "ab8500_chargalg",
--	.type			= POWER_SUPPLY_TYPE_BATTERY,
-+	.type			= POWER_SUPPLY_TYPE_UNKNOWN,
- 	.properties		= ab8500_chargalg_props,
- 	.num_properties		= ARRAY_SIZE(ab8500_chargalg_props),
- 	.get_property		= ab8500_chargalg_get_property,
 
 
