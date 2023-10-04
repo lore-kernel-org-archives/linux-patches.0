@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F921D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFB81D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpkvEMx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681FBC433CA;
-	Wed,  4 Oct 2023 18:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD//kve9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCF6C433C9;
+	Wed,  4 Oct 2023 18:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443364;
-	bh=FiryUqGOkGl0lR4tdUeVjKMLlsvX42tVriU8K+rdXlk=;
+	s=korg; t=1696443367;
+	bh=oOGT5E66VL/vdSzJ3cpvnAdqr3YOtYiowM2dZl9BBMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpkvEMx4DygXRqcS8EcEtHp3k91Ul7VgIWMKIzRxscqUqtCoUSh/0P0YsEGVngQwt
-	 5c++/bQP0jmsPNlV8K5vv0k8mlxhXvvDemB8UE3dflbt/Rg7wdk4tnamjLYNFxgwNE
-	 ZtHcqfShLPFec4bvltT3ZbJWYGfuF9CHNEFzofC4=
+	b=JD//kve9ZHMyLKQETE9xx5LRx7qkY+UsCc5vznevov+XgRD779tppEVJfHdJXVbbw
+	 9rZBSrI4Q1VjZ0pD7O9utLKgwgQtRiRThzQ8XXug5TBuzbOxZ7xaRdRhkEkTsMuGyk
+	 AN1nSbMLUf/+EvMXJToH768Zq+edq3UhGS8Hkcwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksey Nasibulin <alealexpro100@ya.ru>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/259] ARM: dts: BCM5301X: Extend RAM to full 256MB for Linksys EA6500 V2
-Date: Wed,  4 Oct 2023 19:54:25 +0200
-Message-ID: <20231004175221.582176110@linuxfoundation.org>
+Subject: [PATCH 6.1 124/259] bus: ti-sysc: Fix SYSC_QUIRK_SWSUP_SIDLE_ACT handling for uart wake-up
+Date: Wed,  4 Oct 2023 19:54:57 +0200
+Message-ID: <20231004175223.056154536@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -38,46 +37,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksey Nasibulin <alealexpro100@ya.ru>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 91994e59079dcb455783d3f9ea338eea6f671af3 ]
+[ Upstream commit e5deb8f76e64d94ccef715e75ebafffd0c312d80 ]
 
-Linksys ea6500-v2 have 256MB of ram. Currently we only use 128MB.
-Expand the definition to use all the available RAM.
+The uarts should be tagged with SYSC_QUIRK_SWSUP_SIDLE instead of
+SYSC_QUIRK_SWSUP_SIDLE_ACT. The difference is that SYSC_QUIRK_SWSUP_SIDLE
+is used to force idle target modules rather than block idle during usage.
 
-Fixes: 03e96644d7a8 ("ARM: dts: BCM5301X: Add basic DT for Linksys EA6500 V2")
-Signed-off-by: Aleksey Nasibulin <alealexpro100@ya.ru>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: stable@vger.kernel.org
-Acked-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230712014017.28123-1-ansuelsmth@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+The SYSC_QUIRK_SWSUP_SIDLE_ACT should disable autoidle and wake-up when
+a target module is active, and configure autoidle and wake-up when a
+target module is inactive. We are missing configuring the target module
+on sysc_disable_module(), and missing toggling of the wake-up bit.
+
+Let's fix the issue to allow uart wake-up to work.
+
+Fixes: fb685f1c190e ("bus: ti-sysc: Handle swsup idle mode quirks")
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Tested-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bus/ti-sysc.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
-index f1412ba83defb..0454423fe166c 100644
---- a/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
-+++ b/arch/arm/boot/dts/bcm4708-linksys-ea6500-v2.dts
-@@ -19,7 +19,8 @@
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index d56e7b61bb5a9..59a2fe2448f17 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -1120,6 +1120,11 @@ static int sysc_enable_module(struct device *dev)
+ 	if (ddata->cfg.quirks & (SYSC_QUIRK_SWSUP_SIDLE |
+ 				 SYSC_QUIRK_SWSUP_SIDLE_ACT)) {
+ 		best_mode = SYSC_IDLE_NO;
++
++		/* Clear WAKEUP */
++		if (regbits->enwkup_shift >= 0 &&
++		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
++			reg &= ~BIT(regbits->enwkup_shift);
+ 	} else {
+ 		best_mode = fls(ddata->cfg.sidlemodes) - 1;
+ 		if (best_mode > SYSC_IDLE_MASK) {
+@@ -1247,6 +1252,13 @@ static int sysc_disable_module(struct device *dev)
+ 		}
+ 	}
  
- 	memory@0 {
- 		device_type = "memory";
--		reg = <0x00000000 0x08000000>;
-+		reg = <0x00000000 0x08000000>,
-+		      <0x88000000 0x08000000>;
- 	};
++	if (ddata->cfg.quirks & SYSC_QUIRK_SWSUP_SIDLE_ACT) {
++		/* Set WAKEUP */
++		if (regbits->enwkup_shift >= 0 &&
++		    ddata->cfg.sysc_val & BIT(regbits->enwkup_shift))
++			reg |= BIT(regbits->enwkup_shift);
++	}
++
+ 	reg &= ~(SYSC_IDLE_MASK << regbits->sidle_shift);
+ 	reg |= best_mode << regbits->sidle_shift;
+ 	if (regbits->autoidle_shift >= 0 &&
+@@ -1541,16 +1553,16 @@ struct sysc_revision_quirk {
+ static const struct sysc_revision_quirk sysc_revision_quirks[] = {
+ 	/* These drivers need to be fixed to not use pm_runtime_irq_safe() */
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000046, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x00000052, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	/* Uarts on omap4 and later */
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x50411e03, 0xffff00ff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47422e03, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
+ 	SYSC_QUIRK("uart", 0, 0x50, 0x54, 0x58, 0x47424e03, 0xffffffff,
+-		   SYSC_QUIRK_SWSUP_SIDLE | SYSC_QUIRK_LEGACY_IDLE),
++		   SYSC_QUIRK_SWSUP_SIDLE_ACT | SYSC_QUIRK_LEGACY_IDLE),
  
- 	gpio-keys {
+ 	/* Quirks that need to be set based on the module address */
+ 	SYSC_QUIRK("mcpdm", 0x40132000, 0, 0x10, -ENODEV, 0x50000800, 0xffffffff,
 -- 
 2.40.1
 
