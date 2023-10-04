@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843F31D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A151D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFiTk19O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E35C433C8;
-	Wed,  4 Oct 2023 18:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrPdsUe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D316CC433C8;
+	Wed,  4 Oct 2023 18:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443303;
-	bh=ruNlalGcE4plYqhmKTWuuiOsEyUn0Fzup0UkbMw8OPY=;
+	s=korg; t=1696443306;
+	bh=aB29Yyg9BmbcULk+av20IdxPCdG+3EoUEG4PDx3SsUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFiTk19OIKqk2qV3Uok8K+Fr133sUF16OzYj7chjM0zTQXg8SufPBlT1m6y2gY+Y0
-	 CH4ZzUAV/cfAGeHbiDj1aDsUzL3iGAhY/SjRzTHWvua6pgxtaCAC0cvBJ+h0zqHPPl
-	 5ACpBaikkiHRt3Dtfp6liECAZj4TZ8wV2gV4XLUs=
+	b=FrPdsUe3Y2r+piFxSGc4AlOrLERuAmzXhuynn9wWtwodxFat8U+J5JneLinYNALgI
+	 LtIfHYrmhsbniAzioYLyFxQxORNFSdKeW4R/G/vLA92FLtGu7lSH0KPpjZ+ufBPL5T
+	 ZXKC1KsCV5jNgWuxBRDcSNRlgRVQFoznO8Te2Kvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Charles Kearney <charles.kearney@hpe.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/259] MIPS: Alchemy: only build mmc support helpers if au1xmmc is enabled
-Date: Wed,  4 Oct 2023 19:54:42 +0200
-Message-ID: <20231004175222.352883179@linuxfoundation.org>
+Subject: [PATCH 6.1 110/259] spi: spi-gxp: BUG: Correct spi write return value
+Date: Wed,  4 Oct 2023 19:54:43 +0200
+Message-ID: <20231004175222.395255171@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -44,132 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Charles Kearney <charles.kearney@hpe.com>
 
-[ Upstream commit ef8f8f04a0b25e8f294b24350e8463a8d6a9ba0b ]
+[ Upstream commit 1a8196a93e493c0a50b800cb09cef60b124eee15 ]
 
-While commit d4a5c59a955b ("mmc: au1xmmc: force non-modular build and
-remove symbol_get usage") to be built in, it can still build a kernel
-without MMC support and thuse no mmc_detect_change symbol at all.
+Bug fix to correct return value of gxp_spi_write function to zero.
+Completion of succesful operation should return zero.
 
-Add ifdefs to build the mmc support code in the alchemy arch code
-conditional on mmc support.
+Fixes: 730bc8ba5e9e spi: spi-gxp: Add support for HPE GXP SoCs
 
-Fixes: d4a5c59a955b ("mmc: au1xmmc: force non-modular build and remove symbol_get usage")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Charles Kearney <charles.kearney@hpe.com>
+Link: https://lore.kernel.org/r/20230920215339.4125856-2-charles.kearney@hpe.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1000.c | 4 ++++
- arch/mips/alchemy/devboards/db1200.c | 6 ++++++
- arch/mips/alchemy/devboards/db1300.c | 4 ++++
- 3 files changed, 14 insertions(+)
+ drivers/spi/spi-gxp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
-index 50de86eb8784c..3183df60ad337 100644
---- a/arch/mips/alchemy/devboards/db1000.c
-+++ b/arch/mips/alchemy/devboards/db1000.c
-@@ -164,6 +164,7 @@ static struct platform_device db1x00_audio_dev = {
+diff --git a/drivers/spi/spi-gxp.c b/drivers/spi/spi-gxp.c
+index c900c2f39b578..21b07e2518513 100644
+--- a/drivers/spi/spi-gxp.c
++++ b/drivers/spi/spi-gxp.c
+@@ -195,7 +195,7 @@ static ssize_t gxp_spi_write(struct gxp_spi_chip *chip, const struct spi_mem_op
+ 		return ret;
+ 	}
  
- /******************************************************************************/
+-	return write_len;
++	return 0;
+ }
  
-+#ifdef CONFIG_MMC_AU1X
- static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
- {
- 	mmc_detect_change(ptr, msecs_to_jiffies(500));
-@@ -369,6 +370,7 @@ static struct platform_device db1100_mmc1_dev = {
- 	.num_resources	= ARRAY_SIZE(au1100_mmc1_res),
- 	.resource	= au1100_mmc1_res,
- };
-+#endif /* CONFIG_MMC_AU1X */
- 
- /******************************************************************************/
- 
-@@ -432,8 +434,10 @@ static struct platform_device *db1x00_devs[] = {
- 
- static struct platform_device *db1100_devs[] = {
- 	&au1100_lcd_device,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1100_mmc0_dev,
- 	&db1100_mmc1_dev,
-+#endif
- };
- 
- int __init db1000_dev_setup(void)
-diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
-index 76080c71a2a7b..f521874ebb07b 100644
---- a/arch/mips/alchemy/devboards/db1200.c
-+++ b/arch/mips/alchemy/devboards/db1200.c
-@@ -326,6 +326,7 @@ static struct platform_device db1200_ide_dev = {
- 
- /**********************************************************************/
- 
-+#ifdef CONFIG_MMC_AU1X
- /* SD carddetects:  they're supposed to be edge-triggered, but ack
-  * doesn't seem to work (CPLD Rev 2).  Instead, the screaming one
-  * is disabled and its counterpart enabled.  The 200ms timeout is
-@@ -584,6 +585,7 @@ static struct platform_device pb1200_mmc1_dev = {
- 	.num_resources	= ARRAY_SIZE(au1200_mmc1_res),
- 	.resource	= au1200_mmc1_res,
- };
-+#endif /* CONFIG_MMC_AU1X */
- 
- /**********************************************************************/
- 
-@@ -751,7 +753,9 @@ static struct platform_device db1200_audiodma_dev = {
- static struct platform_device *db1200_devs[] __initdata = {
- 	NULL,		/* PSC0, selected by S6.8 */
- 	&db1200_ide_dev,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1200_mmc0_dev,
-+#endif
- 	&au1200_lcd_dev,
- 	&db1200_eth_dev,
- 	&db1200_nand_dev,
-@@ -762,7 +766,9 @@ static struct platform_device *db1200_devs[] __initdata = {
- };
- 
- static struct platform_device *pb1200_devs[] __initdata = {
-+#ifdef CONFIG_MMC_AU1X
- 	&pb1200_mmc1_dev,
-+#endif
- };
- 
- /* Some peripheral base addresses differ on the PB1200 */
-diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
-index ff61901329c62..d377e043b49f8 100644
---- a/arch/mips/alchemy/devboards/db1300.c
-+++ b/arch/mips/alchemy/devboards/db1300.c
-@@ -450,6 +450,7 @@ static struct platform_device db1300_ide_dev = {
- 
- /**********************************************************************/
- 
-+#ifdef CONFIG_MMC_AU1X
- static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
- {
- 	disable_irq_nosync(irq);
-@@ -632,6 +633,7 @@ static struct platform_device db1300_sd0_dev = {
- 	.resource	= au1300_sd0_res,
- 	.num_resources	= ARRAY_SIZE(au1300_sd0_res),
- };
-+#endif /* CONFIG_MMC_AU1X */
- 
- /**********************************************************************/
- 
-@@ -767,8 +769,10 @@ static struct platform_device *db1300_dev[] __initdata = {
- 	&db1300_5waysw_dev,
- 	&db1300_nand_dev,
- 	&db1300_ide_dev,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1300_sd0_dev,
- 	&db1300_sd1_dev,
-+#endif
- 	&db1300_lcd_dev,
- 	&db1300_ac97_dev,
- 	&db1300_i2s_dev,
+ static int do_gxp_exec_mem_op(struct spi_mem *mem, const struct spi_mem_op *op)
 -- 
 2.40.1
 
