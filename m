@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D9C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03B31D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLSGFYlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6821EC433C9;
-	Wed,  4 Oct 2023 18:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ+RXXOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3041CC433C7;
+	Wed,  4 Oct 2023 18:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443967;
-	bh=4kvDwAMjY7/XKukOi0tuN0IRTWnIJYfxPWlOR5TErXw=;
+	s=korg; t=1696443970;
+	bh=MQ6whh0BML+60GRE9fE0HcZaNM0LfjERTy99hczOhNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLSGFYlWbjMfV/WKLM+GPZ4qEK73Ckq5TFDNLobBCBRvVFMexRwyG1o546rBGR2i5
-	 Yr/pJzSXaOhjADZ8akEICzXrFI2fJ6KldsMdNXoPcNaCVZeUAmIgzBqFpsKUyjXiIM
-	 wc3JplR5qELWJQmI+FaUasPo/u7lcB0LlgGDFlbY=
+	b=gZ+RXXOyUBaH2ioxpjDBjePQQ1OEL8HzkR5PVN7f3tiCuR5/G77D8+EKK7Fiqs2yB
+	 PXk+66YG5rdLdkYrLul03sRlcC4uXQBiN5G7xBLnz/R4Ov0SYy9NIgbPSEOXrIOvYL
+	 gLNrORWwgZ/eJrhMytNumjFQDEE9qa1MwUdGqBAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 056/321] ASoC: imx-audmix: Fix return error with devm_clk_get()
-Date: Wed,  4 Oct 2023 19:53:21 +0200
-Message-ID: <20231004175231.759289424@linuxfoundation.org>
+Subject: [PATCH 6.5 083/321] net: hns3: fix GRE checksum offload issue
+Date: Wed,  4 Oct 2023 19:53:48 +0200
+Message-ID: <20231004175233.052965922@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,39 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit b19a5733de255cabba5feecabf6e900638b582d1 ]
+[ Upstream commit f9f651261130cdcb7adc9a3e365b356bc2749ab3 ]
 
-The devm_clk_get() can return -EPROBE_DEFER error,
-modify the error code to be -EINVAL is not correct, which
-cause the -EPROBE_DEFER error is not correctly handled.
+The device_version V3 hardware can't offload the checksum for IP in GRE
+packets, but can do it for NvGRE. So default to disable the checksum and
+GSO offload for GRE, but keep the ability to enable it when only using
+NvGRE.
 
-This patch is to fix the return error code.
-
-Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/1694757731-18308-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-audmix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index 0b58df56f4daa..aeb81aa61184f 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -315,7 +315,7 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->cpu_mclk)) {
- 		ret = PTR_ERR(priv->cpu_mclk);
- 		dev_err(&cpu_pdev->dev, "failed to get DAI mclk1: %d\n", ret);
--		return -EINVAL;
-+		return ret;
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 613d0a779cef2..71a2ec03f2b38 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -3352,6 +3352,15 @@ static void hns3_set_default_feature(struct net_device *netdev)
+ 		  NETIF_F_HW_TC);
  
- 	priv->audmix_pdev = audmix_pdev;
+ 	netdev->hw_enc_features |= netdev->vlan_features | NETIF_F_TSO_MANGLEID;
++
++	/* The device_version V3 hardware can't offload the checksum for IP in
++	 * GRE packets, but can do it for NvGRE. So default to disable the
++	 * checksum and GSO offload for GRE.
++	 */
++	if (ae_dev->dev_version > HNAE3_DEVICE_VERSION_V2) {
++		netdev->features &= ~NETIF_F_GSO_GRE;
++		netdev->features &= ~NETIF_F_GSO_GRE_CSUM;
++	}
+ }
+ 
+ static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
 -- 
 2.40.1
 
