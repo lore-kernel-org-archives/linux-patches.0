@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C4F1CF94
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9164A1CF94
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvjUxCgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066BAC433C8;
-	Wed,  4 Oct 2023 18:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeDP9Kef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F7FC433C8;
+	Wed,  4 Oct 2023 18:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443797;
-	bh=Qg7OBuusP8+Ca+OQOLV748MtXK25Mh/n2Bp8S076ZSs=;
+	s=korg; t=1696443800;
+	bh=OInkGBaRO9UjIoIF7Qtcg6jeJj0hB9CX5y2rkxvjUIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvjUxCgAUcXmxl8wlmc3ejfBdAqJ0+UJDFUDwhPMH0Y7TEXOtFgayvBkeGMvZGRHX
-	 Y/NLhPzqqhEGsVeeckp3x8S2c0e6B0TaeUZHthWDGy5eEm3AGJe+mnyqDXGvXt6nNQ
-	 3ZFj/5VoJcLRzWsSt+t4DfidSyUu/jmhRJt3O3o0=
+	b=BeDP9KeffmWM9QPPWdkwgaSTf16qR8FLI0OsvNEOQ7l4nfW6fWhw4Qn11xTK09UtC
+	 raCr4l2ygBzNnuP6ilHPJV70hhxI41anBXRKGvYKYNaa9GtYx6jnG1M0QsfbBNO+Ar
+	 uJz8m8Wm/aza4XdFK6EFdnkVGTAYb2cTLFYjkeZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 004/321] NFS: Use the correct commit info in nfs_join_page_group()
-Date: Wed,  4 Oct 2023 19:52:29 +0200
-Message-ID: <20231004175229.418547823@linuxfoundation.org>
+Subject: [PATCH 6.5 005/321] NFS: More fixes for nfs_direct_write_reschedule_io()
+Date: Wed,  4 Oct 2023 19:52:30 +0200
+Message-ID: <20231004175229.469858383@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,146 +44,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b193a78ddb5ee7dba074d3f28dc050069ba083c0 ]
+[ Upstream commit b11243f720ee5f9376861099019c8542969b6318 ]
 
-Ensure that nfs_clear_request_commit() updates the correct counters when
-it removes them from the commit list.
+Ensure that all requests are put back onto the commit list so that they
+can be rescheduled.
 
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
+Fixes: 4daaeba93822 ("NFS: Fix nfs_direct_write_reschedule_io()")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c          |  8 +++++---
- fs/nfs/write.c           | 23 ++++++++++++-----------
- include/linux/nfs_page.h |  4 +++-
- 3 files changed, 20 insertions(+), 15 deletions(-)
+ fs/nfs/direct.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index a53e501234993..3391c8b97da5e 100644
+index 3391c8b97da5e..f6c74f4246917 100644
 --- a/fs/nfs/direct.c
 +++ b/fs/nfs/direct.c
-@@ -498,7 +498,9 @@ static void nfs_direct_add_page_head(struct list_head *list,
- 	kref_get(&head->wb_kref);
- }
- 
--static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
-+static void nfs_direct_join_group(struct list_head *list,
-+				  struct nfs_commit_info *cinfo,
-+				  struct inode *inode)
+@@ -780,18 +780,23 @@ static void nfs_write_sync_pgio_error(struct list_head *head, int error)
+ static void nfs_direct_write_reschedule_io(struct nfs_pgio_header *hdr)
  {
- 	struct nfs_page *req, *subreq;
- 
-@@ -520,7 +522,7 @@ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- 				nfs_release_request(subreq);
- 			}
- 		} while ((subreq = subreq->wb_this_page) != req);
--		nfs_join_page_group(req, inode);
-+		nfs_join_page_group(req, cinfo, inode);
- 	}
- }
- 
-@@ -545,7 +547,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
- 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
- 
--	nfs_direct_join_group(&reqs, dreq->inode);
-+	nfs_direct_join_group(&reqs, &cinfo, dreq->inode);
- 
- 	nfs_clear_pnfs_ds_commit_verifiers(&dreq->ds_cinfo);
- 	get_dreq(dreq);
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index f4cca8f00c0c2..8c1ee1a1a28f1 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -59,7 +59,8 @@ static const struct nfs_pgio_completion_ops nfs_async_write_completion_ops;
- static const struct nfs_commit_completion_ops nfs_commit_completion_ops;
- static const struct nfs_rw_ops nfs_rw_write_ops;
- static void nfs_inode_remove_request(struct nfs_page *req);
--static void nfs_clear_request_commit(struct nfs_page *req);
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req);
- static void nfs_init_cinfo_from_inode(struct nfs_commit_info *cinfo,
- 				      struct inode *inode);
- static struct nfs_page *
-@@ -502,8 +503,8 @@ nfs_destroy_unlinked_subrequests(struct nfs_page *destroy_list,
-  * the (former) group.  All subrequests are removed from any write or commit
-  * lists, unlinked from the group and destroyed.
-  */
--void
--nfs_join_page_group(struct nfs_page *head, struct inode *inode)
-+void nfs_join_page_group(struct nfs_page *head, struct nfs_commit_info *cinfo,
-+			 struct inode *inode)
- {
- 	struct nfs_page *subreq;
- 	struct nfs_page *destroy_list = NULL;
-@@ -533,7 +534,7 @@ nfs_join_page_group(struct nfs_page *head, struct inode *inode)
- 	 * Commit list removal accounting is done after locks are dropped */
- 	subreq = head;
- 	do {
--		nfs_clear_request_commit(subreq);
-+		nfs_clear_request_commit(cinfo, subreq);
- 		subreq = subreq->wb_this_page;
- 	} while (subreq != head);
- 
-@@ -566,8 +567,10 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- {
- 	struct inode *inode = folio_file_mapping(folio)->host;
- 	struct nfs_page *head;
+ 	struct nfs_direct_req *dreq = hdr->dreq;
++	struct nfs_page *req;
 +	struct nfs_commit_info cinfo;
- 	int ret;
  
-+	nfs_init_cinfo_from_inode(&cinfo, inode);
- 	/*
- 	 * A reference is taken only on the head request which acts as a
- 	 * reference to the whole page group - the group will not be destroyed
-@@ -584,7 +587,7 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
- 		return ERR_PTR(ret);
- 	}
+ 	trace_nfs_direct_write_reschedule_io(dreq);
  
--	nfs_join_page_group(head, inode);
-+	nfs_join_page_group(head, &cinfo, inode);
- 
- 	return head;
++	nfs_init_cinfo_from_dreq(&cinfo, dreq);
+ 	spin_lock(&dreq->lock);
+-	if (dreq->error == 0) {
++	if (dreq->error == 0)
+ 		dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-		/* fake unstable write to let common nfs resend pages */
+-		hdr->verf.committed = NFS_UNSTABLE;
+-		hdr->good_bytes = hdr->args.offset + hdr->args.count -
+-			hdr->io_start;
+-	}
++	set_bit(NFS_IOHDR_REDO, &hdr->flags);
+ 	spin_unlock(&dreq->lock);
++	while (!list_empty(&hdr->pages)) {
++		req = nfs_list_entry(hdr->pages.next);
++		nfs_list_remove_request(req);
++		nfs_unlock_request(req);
++		nfs_mark_request_commit(req, NULL, &cinfo, 0);
++	}
  }
-@@ -955,18 +958,16 @@ static void nfs_folio_clear_commit(struct folio *folio)
- }
  
- /* Called holding the request lock on @req */
--static void
--nfs_clear_request_commit(struct nfs_page *req)
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req)
- {
- 	if (test_bit(PG_CLEAN, &req->wb_flags)) {
- 		struct nfs_open_context *ctx = nfs_req_openctx(req);
- 		struct inode *inode = d_inode(ctx->dentry);
--		struct nfs_commit_info cinfo;
- 
--		nfs_init_cinfo_from_inode(&cinfo, inode);
- 		mutex_lock(&NFS_I(inode)->commit_mutex);
--		if (!pnfs_clear_request_commit(req, &cinfo)) {
--			nfs_request_remove_commit_list(req, &cinfo);
-+		if (!pnfs_clear_request_commit(req, cinfo)) {
-+			nfs_request_remove_commit_list(req, cinfo);
- 		}
- 		mutex_unlock(&NFS_I(inode)->commit_mutex);
- 		nfs_folio_clear_commit(nfs_page_to_folio(req));
-diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
-index aa9f4c6ebe261..1c315f854ea80 100644
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -157,7 +157,9 @@ extern	void nfs_unlock_request(struct nfs_page *req);
- extern	void nfs_unlock_and_release_request(struct nfs_page *);
- extern	struct nfs_page *nfs_page_group_lock_head(struct nfs_page *req);
- extern	int nfs_page_group_lock_subrequests(struct nfs_page *head);
--extern	void nfs_join_page_group(struct nfs_page *head, struct inode *inode);
-+extern void nfs_join_page_group(struct nfs_page *head,
-+				struct nfs_commit_info *cinfo,
-+				struct inode *inode);
- extern int nfs_page_group_lock(struct nfs_page *);
- extern void nfs_page_group_unlock(struct nfs_page *);
- extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
+ static const struct nfs_pgio_completion_ops nfs_direct_write_completion_ops = {
 -- 
 2.40.1
 
