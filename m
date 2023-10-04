@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9EA1D68C
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B09618E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D90C433C9;
-	Wed,  4 Oct 2023 18:09:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8190EC433C7;
+	Wed,  4 Oct 2023 18:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442950;
-	bh=Tcwq+xGKcpVCWOPbN8uBW2q2ldL/23NronKrL9DoNek=;
+	s=korg; t=1696442952;
+	bh=E7QxiAPEeTOF/Ud2NRJpA9LrAt87n0yyKzEFyeQgc7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2UM0Gn4nUjEP3bFDtt2oWOT+IzWvnN46vbpUSTgHQtqgn//5f+2MPONu8Cr6gFot
-	 im9Z6xGdi/rM5JbRi8sJZog5lu+Urlumsw2QDvvoUiZcBxY330rrooKfEirftZriVl
-	 WXMMZDar06MeGMW/9pas4N9rKx4Uk1MnLxWb7wTk=
+	b=WWzKcWb1gEzYV0zts62lGgE4GhebTxrluhSAxhbxCCWfbljFNRBKxg4QpaPnwPlNq
+	 ZGTBpXs0KFQPPj5u7nBNgSpUr0tUW3qcLzOr7C7ShXc7t5qZh8Iq3Nen3H0zsslO/3
+	 CwYSJYNwQkgjCfe10PMfZMI9K+ErYTq7w9I6mkgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 167/183] kernel/sched: Modify initial boot task idle setup
-Date: Wed,  4 Oct 2023 19:56:38 +0200
-Message-ID: <20231004175211.028740732@linuxfoundation.org>
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 5.15 168/183] sched/rt: Fix live lock between select_fallback_rq() and RT push
+Date: Wed,  4 Oct 2023 19:56:39 +0200
+Message-ID: <20231004175211.078918781@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,58 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit cff9b2332ab762b7e0586c793c431a8f2ea4db04 upstream.
+commit fc09027786c900368de98d03d40af058bcb01ad9 upstream.
 
-Initial booting is setting the task flag to idle (PF_IDLE) by the call
-path sched_init() -> init_idle().  Having the task idle and calling
-call_rcu() in kernel/rcu/tiny.c means that TIF_NEED_RESCHED will be
-set.  Subsequent calls to any cond_resched() will enable IRQs,
-potentially earlier than the IRQ setup has completed.  Recent changes
-have caused just this scenario and IRQs have been enabled early.
+During RCU-boost testing with the TREE03 rcutorture config, I found that
+after a few hours, the machine locks up.
 
-This causes a warning later in start_kernel() as interrupts are enabled
-before they are fully set up.
+On tracing, I found that there is a live lock happening between 2 CPUs.
+One CPU has an RT task running, while another CPU is being offlined
+which also has an RT task running.  During this offlining, all threads
+are migrated. The migration thread is repeatedly scheduled to migrate
+actively running tasks on the CPU being offlined. This results in a live
+lock because select_fallback_rq() keeps picking the CPU that an RT task
+is already running on only to get pushed back to the CPU being offlined.
 
-Fix this issue by setting the PF_IDLE flag later in the boot sequence.
+It is anyway pointless to pick CPUs for pushing tasks to if they are
+being offlined only to get migrated away to somewhere else. This could
+also add unwanted latency to this task.
 
-Although the boot task was marked as idle since (at least) d80e4fda576d,
-I am not sure that it is wrong to do so.  The forced context-switch on
-idle task was introduced in the tiny_rcu update, so I'm going to claim
-this fixes 5f6130fa52ee.
+Fix these issues by not selecting CPUs in RT if they are not 'active'
+for scheduling, using the cpu_active_mask. Other parts in core.c already
+use cpu_active_mask to prevent tasks from being put on CPUs going
+offline.
 
-Fixes: 5f6130fa52ee ("tiny_rcu: Directly force QS when call_rcu_[bh|sched]() on idle_task")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+With this fix I ran the tests for days and could not reproduce the
+hang. Without the patch, I hit it in a few hours.
+
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-mm/CAMuHMdWpvpWoDa=Ox-do92czYRvkok6_x6pYUH+ZouMcJbXy+Q@mail.gmail.com/
+Link: https://lore.kernel.org/r/20230923011409.3522762-1-joel@joelfernandes.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- kernel/sched/idle.c |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/cpupri.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8725,7 +8725,7 @@ void __init init_idle(struct task_struct
- 	 * PF_KTHREAD should already be set at this point; regardless, make it
- 	 * look like a proper per-CPU kthread.
- 	 */
--	idle->flags |= PF_IDLE | PF_KTHREAD | PF_NO_SETAFFINITY;
-+	idle->flags |= PF_KTHREAD | PF_NO_SETAFFINITY;
- 	kthread_set_per_cpu(idle, cpu);
+--- a/kernel/sched/cpupri.c
++++ b/kernel/sched/cpupri.c
+@@ -102,6 +102,7 @@ static inline int __cpupri_find(struct c
  
- #ifdef CONFIG_SMP
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -397,6 +397,7 @@ EXPORT_SYMBOL_GPL(play_idle_precise);
+ 	if (lowest_mask) {
+ 		cpumask_and(lowest_mask, &p->cpus_mask, vec->mask);
++		cpumask_and(lowest_mask, lowest_mask, cpu_active_mask);
  
- void cpu_startup_entry(enum cpuhp_state state)
- {
-+	current->flags |= PF_IDLE;
- 	arch_cpu_idle_prepare();
- 	cpuhp_online_idle(state);
- 	while (1)
+ 		/*
+ 		 * We have to ensure that we have at least one bit
 
 
