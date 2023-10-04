@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586632134D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2B421362
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16N9McG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8A4C433C8;
-	Wed,  4 Oct 2023 18:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN+MxKGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A098BC433C9;
+	Wed,  4 Oct 2023 18:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444394;
-	bh=ZW+gEKsriZZ7O4Dv/oaTMPOePvcylIhltJDIHoUgmAw=;
+	s=korg; t=1696444397;
+	bh=oQ7zSYmrDeEQP7gU5lJVqWLAlgRHmjc+WqxQ0BFGLqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16N9McG2yFXmPPSA4Zb2YUgWFzJ7TbC4WuoRFfzja36FpCkCzujDlq1CpmQIHKfep
-	 RXvDdyPKe0XFvrvo/YZ0kMeI1BENMDOrtYR+VA3bOQpp4JkWmK7TECGFBUKEf6XmSy
-	 Oy0Y7n/DuKDtdNCWp/OEyHaw27Zg4xuWOJ2ylAW4=
+	b=MN+MxKGTPKW//V9gi2tDyROVVY2NHGBoWbp3O9+KloR1WqOlcQk0xmrY2gZBYOWxO
+	 1FkvwdXiJKqpeC3Yoj1md+4DUYLYQZggUtiotffXIH0KLYBBsuOFacgl7K3S9CzO8M
+	 E/GTDgsee/EyBN8YBxd6kp57eBdksX5neUOOelKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	WANG Xuerui <git@xen0n.name>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 234/321] LoongArch: Use _UL() and _ULL()
-Date: Wed,  4 Oct 2023 19:56:19 +0200
-Message-ID: <20231004175240.076166667@linuxfoundation.org>
+Subject: [PATCH 6.5 235/321] LoongArch: Set all reserved memblocks on Node#0 at initialization
+Date: Wed,  4 Oct 2023 19:56:20 +0200
+Message-ID: <20231004175240.117656643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,62 +42,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 3563b477ddfe057ff1ef63636cacf198130276cb ]
+[ Upstream commit b795fb9f5861ee256070d59e33130980a01fadd7 ]
 
-Use _UL() and _ULL() that are provided by const.h.
+After commit 61167ad5fecdea ("mm: pass nid to reserve_bootmem_region()")
+we get a panic if DEFERRED_STRUCT_PAGE_INIT is enabled:
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000002b82, era == 90000000040e3f28, ra == 90000000040e3f18
+[    0.000000] Oops[#1]:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.5.0+ #733
+[    0.000000] pc 90000000040e3f28 ra 90000000040e3f18 tp 90000000046f4000 sp 90000000046f7c90
+[    0.000000] a0 0000000000000001 a1 0000000000200000 a2 0000000000000040 a3 90000000046f7ca0
+[    0.000000] a4 90000000046f7ca4 a5 0000000000000000 a6 90000000046f7c38 a7 0000000000000000
+[    0.000000] t0 0000000000000002 t1 9000000004b00ac8 t2 90000000040e3f18 t3 90000000040f0800
+[    0.000000] t4 00000000000f0000 t5 80000000ffffe07e t6 0000000000000003 t7 900000047fff5e20
+[    0.000000] t8 aaaaaaaaaaaaaaab u0 0000000000000018 s9 0000000000000000 s0 fffffefffe000000
+[    0.000000] s1 0000000000000000 s2 0000000000000080 s3 0000000000000040 s4 0000000000000000
+[    0.000000] s5 0000000000000000 s6 fffffefffe000000 s7 900000000470b740 s8 9000000004ad4000
+[    0.000000]    ra: 90000000040e3f18 reserve_bootmem_region+0xec/0x21c
+[    0.000000]   ERA: 90000000040e3f28 reserve_bootmem_region+0xfc/0x21c
+[    0.000000]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+[    0.000000]  PRMD: 00000000 (PPLV0 -PIE -PWE)
+[    0.000000]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+[    0.000000]  ECFG: 00070800 (LIE=11 VS=7)
+[    0.000000] ESTAT: 00010800 [PIL] (IS=11 ECode=1 EsubCode=0)
+[    0.000000]  BADV: 0000000000002b82
+[    0.000000]  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000)
+[    0.000000] Modules linked in:
+[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____))
+[    0.000000] Stack : 0000000000000000 9000000002eb5430 0000003a00000020 90000000045ccd00
+[    0.000000]         900000000470e000 90000000002c1918 0000000000000000 9000000004110780
+[    0.000000]         00000000fe6c0000 0000000480000000 9000000004b4e368 9000000004110748
+[    0.000000]         0000000000000000 900000000421ca84 9000000004620000 9000000004564970
+[    0.000000]         90000000046f7d78 9000000002cc9f70 90000000002c1918 900000000470e000
+[    0.000000]         9000000004564970 90000000040bc0e0 90000000046f7d78 0000000000000000
+[    0.000000]         0000000000004000 90000000045ccd00 0000000000000000 90000000002c1918
+[    0.000000]         90000000002c1900 900000000470b700 9000000004b4df78 9000000004620000
+[    0.000000]         90000000046200a8 90000000046200a8 0000000000000000 9000000004218b2c
+[    0.000000]         9000000004270008 0000000000000001 0000000000000000 90000000045ccd00
+[    0.000000]         ...
+[    0.000000] Call Trace:
+[    0.000000] [<90000000040e3f28>] reserve_bootmem_region+0xfc/0x21c
+[    0.000000] [<900000000421ca84>] memblock_free_all+0x114/0x350
+[    0.000000] [<9000000004218b2c>] mm_core_init+0x138/0x3cc
+[    0.000000] [<9000000004200e38>] start_kernel+0x488/0x7a4
+[    0.000000] [<90000000040df0d8>] kernel_entry+0xd8/0xdc
+[    0.000000]
+[    0.000000] Code: 02eb21ad  00410f4c  380c31ac <262b818d> 6800b70d  02c1c196  0015001c  57fe4bb1  260002cd
+
+The reason is early memblock_reserve() in memblock_init() set node id to
+MAX_NUMNODES, making NODE_DATA(nid) a NULL dereference in the call chain
+reserve_bootmem_region() -> init_reserved_page(). After memblock_init(),
+those late calls of memblock_reserve() operate on subregions of memblock
+.memory regions. As a result, these reserved regions will be set to the
+correct node at the first iteration of memmap_init_reserved_pages().
+
+So set all reserved memblocks on Node#0 at initialization can avoid this
+panic.
+
+Reported-by: WANG Xuerui <git@xen0n.name>
+Tested-by: WANG Xuerui <git@xen0n.name>
+Reviewed-by: WANG Xuerui <git@xen0n.name>  # with nits addressed
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/addrspace.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/loongarch/kernel/mem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/include/asm/addrspace.h b/arch/loongarch/include/asm/addrspace.h
-index 5c9c03bdf9156..b24437e28c6ed 100644
---- a/arch/loongarch/include/asm/addrspace.h
-+++ b/arch/loongarch/include/asm/addrspace.h
-@@ -19,7 +19,7 @@
-  */
- #ifndef __ASSEMBLY__
- #ifndef PHYS_OFFSET
--#define PHYS_OFFSET	_AC(0, UL)
-+#define PHYS_OFFSET	_UL(0)
- #endif
- extern unsigned long vm_map_base;
- #endif /* __ASSEMBLY__ */
-@@ -43,7 +43,7 @@ extern unsigned long vm_map_base;
-  * Memory above this physical address will be considered highmem.
-  */
- #ifndef HIGHMEM_START
--#define HIGHMEM_START		(_AC(1, UL) << _AC(DMW_PABITS, UL))
-+#define HIGHMEM_START		(_UL(1) << _UL(DMW_PABITS))
- #endif
+diff --git a/arch/loongarch/kernel/mem.c b/arch/loongarch/kernel/mem.c
+index 4a4107a6a9651..aed901c57fb43 100644
+--- a/arch/loongarch/kernel/mem.c
++++ b/arch/loongarch/kernel/mem.c
+@@ -50,7 +50,6 @@ void __init memblock_init(void)
+ 	}
  
- #define TO_PHYS(x)		(		((x) & TO_PHYS_MASK))
-@@ -65,16 +65,16 @@ extern unsigned long vm_map_base;
- #define _ATYPE_
- #define _ATYPE32_
- #define _ATYPE64_
--#define _CONST64_(x)	x
- #else
- #define _ATYPE_		__PTRDIFF_TYPE__
- #define _ATYPE32_	int
- #define _ATYPE64_	__s64
-+#endif
+ 	memblock_set_current_limit(PFN_PHYS(max_low_pfn));
+-	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.memory, 0);
+ 
+ 	/* Reserve the first 2MB */
+ 	memblock_reserve(PHYS_OFFSET, 0x200000);
+@@ -58,4 +57,7 @@ void __init memblock_init(void)
+ 	/* Reserve the kernel text/data/bss */
+ 	memblock_reserve(__pa_symbol(&_text),
+ 			 __pa_symbol(&_end) - __pa_symbol(&_text));
 +
- #ifdef CONFIG_64BIT
--#define _CONST64_(x)	x ## UL
-+#define _CONST64_(x)	_UL(x)
- #else
--#define _CONST64_(x)	x ## ULL
--#endif
-+#define _CONST64_(x)	_ULL(x)
- #endif
- 
- /*
++	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.memory, 0);
++	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.reserved, 0);
+ }
 -- 
 2.40.1
 
