@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F041D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA90CC433C8;
-	Wed,  4 Oct 2023 18:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7131D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:04:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D6FC433C7;
+	Wed,  4 Oct 2023 18:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442641;
-	bh=a1/tr3Pk37rvh5cPIeyPtT4+4Q353Sscg8ZpgQMhAGw=;
+	s=korg; t=1696442644;
+	bh=1ZbhbPBTAN9bPboNHx0v9QXD5RhbT+Z5gkARVaZyikI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5U2tZziPuqYOo1mDQPG4LmdIA2Ay48sLWZAXT7+QIP9MqF5O8PRlbGdayLE4S6om
-	 7EMktryv7/wv6Y6GhhxKmd82WlcJX50ruaLU3CWHTc8xFfp0Lh3X1UlBl0bfo0pDkz
-	 WJ1eHzB/ibiNAyL9Nx9TDDnk+uJYhbPd0WvlOXkI=
+	b=R/x8diaFg2Q05ukuaJlqZu6BIEjXmoPpsqS100ymgmjxLMh6qTYtgMWWXy8SNHsKf
+	 ktWGvgx6E/7NtvcoE8q/2T9GcNz4HXtQq/GGzenQplYZS78ppQxlWN0jD/vfjKFmav
+	 ZEP9cgzop42y2HmznYtET2Ya02ajby3MNt71SLDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/183] net: hns3: add 5ms delay before clear firmware reset irq source
-Date: Wed,  4 Oct 2023 19:54:48 +0200
-Message-ID: <20231004175206.306592342@linuxfoundation.org>
+Subject: [PATCH 5.15 031/183] netfilter: nft_set_pipapo: stop GC iteration if GC transaction allocation fails
+Date: Wed,  4 Oct 2023 19:54:22 +0200
+Message-ID: <20231004175205.264938759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,46 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 0770063096d5da4a8e467b6e73c1646a75589628 ]
+commit 6d365eabce3c018a80f6e0379b17df2abb17405e upstream.
 
-Currently the reset process in hns3 and firmware watchdog init process is
-asynchronous. we think firmware watchdog initialization is completed
-before hns3 clear the firmware interrupt source. However, firmware
-initialization may not complete early.
+nft_trans_gc_queue_sync() enqueues the GC transaction and it allocates a
+new one. If this allocation fails, then stop this GC sync run and retry
+later.
 
-so we add delay before hns3 clear firmware interrupt source and 5 ms delay
-is enough to avoid second firmware reset interrupt.
-
-Fixes: c1a81619d73a ("net: hns3: Add mailbox interrupt handling to PF driver")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nft_set_pipapo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 0f522daf8e3ab..ca59e1cd992e5 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3391,9 +3391,14 @@ static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
- static void hclge_clear_event_cause(struct hclge_dev *hdev, u32 event_type,
- 				    u32 regclr)
- {
-+#define HCLGE_IMP_RESET_DELAY		5
-+
- 	switch (event_type) {
- 	case HCLGE_VECTOR0_EVENT_PTP:
- 	case HCLGE_VECTOR0_EVENT_RST:
-+		if (regclr == BIT(HCLGE_VECTOR0_IMPRESET_INT_B))
-+			mdelay(HCLGE_IMP_RESET_DELAY);
-+
- 		hclge_write_dev(&hdev->hw, HCLGE_MISC_RESET_STS_REG, regclr);
- 		break;
- 	case HCLGE_VECTOR0_EVENT_MBX:
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 7248a1737ee14..83f5f276c3bff 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1597,7 +1597,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+ 
+ 			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+ 			if (!gc)
+-				break;
++				return;
+ 
+ 			nft_pipapo_gc_deactivate(net, set, e);
+ 			pipapo_drop(m, rulemap);
 -- 
 2.40.1
 
