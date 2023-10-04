@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B841C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9893C1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSHh7tI+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2613BC433C8;
-	Wed,  4 Oct 2023 18:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lixKfgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1917BC433C8;
+	Wed,  4 Oct 2023 18:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444526;
-	bh=qcGq7FE8j8jXwbeSkbb5pvW39duYzmFd39h3Dsy21hE=;
+	s=korg; t=1696444529;
+	bh=SUN/8AuC+61EsOVe1SUTgyEKj12/nvDCGIZuNjfMpKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSHh7tI+prUqNGOyEKvVcZHq8zCD4DN433fP97bITKmte8Sq5S2I7zE4kP10moxrM
-	 sUT1WD0WqJVfFd7SK4Y6L99BR52A09uCJUboc5/B7tlkUOqgCTQrv2j5ZdPYzWqyRh
-	 ILsYWYfVqkwU9O4b4jeuedMg7cAWkEYS0T9cc24g=
+	b=1lixKfgPOp3mw4yRTrtVH1CJ4IilcJNcVMiZcD6+7oT6naRwFpB55jyKDFQDBQozp
+	 VCgAkMJPBz8lFro2TcTWm2bNBAcpBidi5PXhL6lXp7HRPo2kLD9AMzHUGzj/ZeLNnd
+	 QC0kGmbaf3W7NZc/KLdafdKlcGMQpoF2D7LcxknM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Hugh Dickins <hughd@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Oscar Salvador <osalvador@suse.de>,
 	Rafael Aquini <aquini@redhat.com>,
-	"Kirill A. Shutemov" <kirill@shutemov.name>,
-	David Rientjes <rientjes@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 282/321] mm: mempolicy: keep VMA walk if both MPOL_MF_STRICT and MPOL_MF_MOVE are specified
-Date: Wed,  4 Oct 2023 19:57:07 +0200
-Message-ID: <20231004175242.341407610@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.5 283/321] mm/slab_common: fix slab_caches list corruption after kmem_cache_destroy()
+Date: Wed,  4 Oct 2023 19:57:08 +0200
+Message-ID: <20231004175242.382701667@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -50,185 +42,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Rafael Aquini <aquini@redhat.com>
 
-commit 24526268f4e38c9ec0c4a30de4f37ad2a2a84e47 upstream.
+commit 46a9ea6681907a3be6b6b0d43776dccc62cad6cf upstream.
 
-When calling mbind() with MPOL_MF_{MOVE|MOVEALL} | MPOL_MF_STRICT, kernel
-should attempt to migrate all existing pages, and return -EIO if there is
-misplaced or unmovable page.  Then commit 6f4576e3687b ("mempolicy: apply
-page table walker on queue_pages_range()") messed up the return value and
-didn't break VMA scan early ianymore when MPOL_MF_STRICT alone.  The
-return value problem was fixed by commit a7f40cfe3b7a ("mm: mempolicy:
-make mbind() return -EIO when MPOL_MF_STRICT is specified"), but it broke
-the VMA walk early if unmovable page is met, it may cause some pages are
-not migrated as expected.
+After the commit in Fixes:, if a module that created a slab cache does not
+release all of its allocated objects before destroying the cache (at rmmod
+time), we might end up releasing the kmem_cache object without removing it
+from the slab_caches list thus corrupting the list as kmem_cache_destroy()
+ignores the return value from shutdown_cache(), which in turn never removes
+the kmem_cache object from slabs_list in case __kmem_cache_shutdown() fails
+to release all of the cache's slabs.
 
-The code should conceptually do:
+This is easily observable on a kernel built with CONFIG_DEBUG_LIST=y
+as after that ill release the system will immediately trip on list_add,
+or list_del, assertions similar to the one shown below as soon as another
+kmem_cache gets created, or destroyed:
 
- if (MPOL_MF_MOVE|MOVEALL)
-     scan all vmas
-     try to migrate the existing pages
-     return success
- else if (MPOL_MF_MOVE* | MPOL_MF_STRICT)
-     scan all vmas
-     try to migrate the existing pages
-     return -EIO if unmovable or migration failed
- else /* MPOL_MF_STRICT alone */
-     break early if meets unmovable and don't call mbind_range() at all
- else /* none of those flags */
-     check the ranges in test_walk, EFAULT without mbind_range() if discontig.
+  [ 1041.213632] list_del corruption. next->prev should be ffff89f596fb5768, but was 52f1e5016aeee75d. (next=ffff89f595a1b268)
+  [ 1041.219165] ------------[ cut here ]------------
+  [ 1041.221517] kernel BUG at lib/list_debug.c:62!
+  [ 1041.223452] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  [ 1041.225408] CPU: 2 PID: 1852 Comm: rmmod Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
+  [ 1041.228244] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
+  [ 1041.231212] RIP: 0010:__list_del_entry_valid+0xae/0xb0
 
-Fixed the behavior.
+Another quick way to trigger this issue, in a kernel with CONFIG_SLUB=y,
+is to set slub_debug to poison the released objects and then just run
+cat /proc/slabinfo after removing the module that leaks slab objects,
+in which case the kernel will panic:
 
-Link: https://lkml.kernel.org/r/20230920223242.3425775-1-yang@os.amperecomputing.com
-Fixes: a7f40cfe3b7a ("mm: mempolicy: make mbind() return -EIO when MPOL_MF_STRICT is specified")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael Aquini <aquini@redhat.com>
-Cc: Kirill A. Shutemov <kirill@shutemov.name>
-Cc: David Rientjes <rientjes@google.com>
-Cc: <stable@vger.kernel.org>	[4.9+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  [   50.954843] general protection fault, probably for non-canonical address 0xa56b6b6b6b6b6b8b: 0000 [#1] PREEMPT SMP PTI
+  [   50.961545] CPU: 2 PID: 1495 Comm: cat Kdump: loaded Tainted: G    B   W  OE      6.5.0 #15
+  [   50.966808] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc37 05/24/2023
+  [   50.972663] RIP: 0010:get_slabinfo+0x42/0xf0
+
+This patch fixes this issue by properly checking shutdown_cache()'s
+return value before taking the kmem_cache_release() branch.
+
+Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |   39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ mm/slab_common.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -426,6 +426,7 @@ struct queue_pages {
- 	unsigned long start;
- 	unsigned long end;
- 	struct vm_area_struct *first;
-+	bool has_unmovable;
- };
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -479,7 +479,7 @@ void slab_kmem_cache_release(struct kmem
  
- /*
-@@ -446,9 +447,8 @@ static inline bool queue_folio_required(
- /*
-  * queue_folios_pmd() has three possible return values:
-  * 0 - folios are placed on the right node or queued successfully, or
-- *     special page is met, i.e. huge zero page.
-- * 1 - there is unmovable folio, and MPOL_MF_MOVE* & MPOL_MF_STRICT were
-- *     specified.
-+ *     special page is met, i.e. zero page, or unmovable page is found
-+ *     but continue walking (indicated by queue_pages.has_unmovable).
-  * -EIO - is migration entry or only MPOL_MF_STRICT was specified and an
-  *        existing folio was already on a node that does not follow the
-  *        policy.
-@@ -479,7 +479,7 @@ static int queue_folios_pmd(pmd_t *pmd,
- 	if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) {
- 		if (!vma_migratable(walk->vma) ||
- 		    migrate_folio_add(folio, qp->pagelist, flags)) {
--			ret = 1;
-+			qp->has_unmovable = true;
- 			goto unlock;
- 		}
- 	} else
-@@ -495,9 +495,8 @@ unlock:
-  *
-  * queue_folios_pte_range() has three possible return values:
-  * 0 - folios are placed on the right node or queued successfully, or
-- *     special page is met, i.e. zero page.
-- * 1 - there is unmovable folio, and MPOL_MF_MOVE* & MPOL_MF_STRICT were
-- *     specified.
-+ *     special page is met, i.e. zero page, or unmovable page is found
-+ *     but continue walking (indicated by queue_pages.has_unmovable).
-  * -EIO - only MPOL_MF_STRICT was specified and an existing folio was already
-  *        on a node that does not follow the policy.
-  */
-@@ -508,7 +507,6 @@ static int queue_folios_pte_range(pmd_t
- 	struct folio *folio;
- 	struct queue_pages *qp = walk->private;
- 	unsigned long flags = qp->flags;
--	bool has_unmovable = false;
- 	pte_t *pte, *mapped_pte;
- 	pte_t ptent;
- 	spinlock_t *ptl;
-@@ -538,11 +536,12 @@ static int queue_folios_pte_range(pmd_t
- 		if (!queue_folio_required(folio, qp))
- 			continue;
- 		if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) {
--			/* MPOL_MF_STRICT must be specified if we get here */
--			if (!vma_migratable(vma)) {
--				has_unmovable = true;
--				break;
--			}
-+			/*
-+			 * MPOL_MF_STRICT must be specified if we get here.
-+			 * Continue walking vmas due to MPOL_MF_MOVE* flags.
-+			 */
-+			if (!vma_migratable(vma))
-+				qp->has_unmovable = true;
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
+-	int refcnt;
++	int err = -EBUSY;
+ 	bool rcu_set;
  
- 			/*
- 			 * Do not abort immediately since there may be
-@@ -550,16 +549,13 @@ static int queue_folios_pte_range(pmd_t
- 			 * need migrate other LRU pages.
- 			 */
- 			if (migrate_folio_add(folio, qp->pagelist, flags))
--				has_unmovable = true;
-+				qp->has_unmovable = true;
- 		} else
- 			break;
- 	}
- 	pte_unmap_unlock(mapped_pte, ptl);
- 	cond_resched();
+ 	if (unlikely(!s) || !kasan_check_byte(s))
+@@ -490,17 +490,17 @@ void kmem_cache_destroy(struct kmem_cach
  
--	if (has_unmovable)
--		return 1;
--
- 	return addr != end ? -EIO : 0;
+ 	rcu_set = s->flags & SLAB_TYPESAFE_BY_RCU;
+ 
+-	refcnt = --s->refcount;
+-	if (refcnt)
++	s->refcount--;
++	if (s->refcount)
+ 		goto out_unlock;
+ 
+-	WARN(shutdown_cache(s),
+-	     "%s %s: Slab cache still has objects when called from %pS",
++	err = shutdown_cache(s);
++	WARN(err, "%s %s: Slab cache still has objects when called from %pS",
+ 	     __func__, s->name, (void *)_RET_IP_);
+ out_unlock:
+ 	mutex_unlock(&slab_mutex);
+ 	cpus_read_unlock();
+-	if (!refcnt && !rcu_set)
++	if (!err && !rcu_set)
+ 		kmem_cache_release(s);
  }
- 
-@@ -599,7 +595,7 @@ static int queue_folios_hugetlb(pte_t *p
- 		 * Detecting misplaced folio but allow migrating folios which
- 		 * have been queued.
- 		 */
--		ret = 1;
-+		qp->has_unmovable = true;
- 		goto unlock;
- 	}
- 
-@@ -620,7 +616,7 @@ static int queue_folios_hugetlb(pte_t *p
- 			 * Failed to isolate folio but allow migrating pages
- 			 * which have been queued.
- 			 */
--			ret = 1;
-+			qp->has_unmovable = true;
- 	}
- unlock:
- 	spin_unlock(ptl);
-@@ -756,12 +752,15 @@ queue_pages_range(struct mm_struct *mm,
- 		.start = start,
- 		.end = end,
- 		.first = NULL,
-+		.has_unmovable = false,
- 	};
- 	const struct mm_walk_ops *ops = lock_vma ?
- 			&queue_pages_lock_vma_walk_ops : &queue_pages_walk_ops;
- 
- 	err = walk_page_range(mm, start, end, ops, &qp);
- 
-+	if (qp.has_unmovable)
-+		err = 1;
- 	if (!qp.first)
- 		/* whole range in hole */
- 		err = -EFAULT;
-@@ -1358,7 +1357,7 @@ static long do_mbind(unsigned long start
- 				putback_movable_pages(&pagelist);
- 		}
- 
--		if ((ret > 0) || (nr_failed && (flags & MPOL_MF_STRICT)))
-+		if (((ret > 0) || nr_failed) && (flags & MPOL_MF_STRICT))
- 			err = -EIO;
- 	} else {
- up_out:
+ EXPORT_SYMBOL(kmem_cache_destroy);
 
 
