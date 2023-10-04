@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6150B1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C811D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzHdzHVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBE1C433C7;
-	Wed,  4 Oct 2023 18:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upxjdcaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFAAC433C9;
+	Wed,  4 Oct 2023 18:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443919;
-	bh=ypzltvnii92eYOu5/ITUMYET7remSkAAxBzLEqHitFc=;
+	s=korg; t=1696443922;
+	bh=Hbfspi4dlloi6MzKmfnSheZ8JGaTmUm3xUrPLj19uUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzHdzHVlZqiWDfJRk6uma7NDqd4C1mMitY0CrFYf8cZvXhjZDP4MsmJeVXKUXgdY+
-	 /EYbaxxZoiqT2ip2/mQ1hIBVW7FEetBi4uVE94gFflweurU5nrVbVDb9IMwqZZcPR0
-	 7uvDbThEUjxtWWiIPgkVnfpgHfepyUZ3BnxwNCeM=
+	b=upxjdcaAThHmGPzsAiIfqe+yUSJFniNTJBdQwUKRkfK2UDYSIblw4qnPr3dFMFjMV
+	 i8vCxXx+0uiVdQgAACxeh7Z0sg3YWdEtNXx5FOxRLY2BZTr18BHnhXJngXo/QpxVc3
+	 4UT9+NILTaoTKnNHtQx76U0+hnIr0Y2zqsRz8Kvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lee Duncan <lduncan@suse.com>,
-	Chris Leech <cleech@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	open-iscsi@googlegroups.com,
-	linux-scsi@vger.kernel.org,
-	"David S. Miller" <davem@davemloft.net>,
+	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 067/321] scsi: iscsi_tcp: restrict to TCP sockets
-Date: Wed,  4 Oct 2023 19:53:32 +0200
-Message-ID: <20231004175232.295425568@linuxfoundation.org>
+Subject: [PATCH 6.5 068/321] powerpc/perf/hv-24x7: Update domain value check
+Date: Wed,  4 Oct 2023 19:53:33 +0200
+Message-ID: <20231004175232.347192985@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -49,46 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit f4f82c52a0ead5ab363d207d06f81b967d09ffb8 ]
+[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
 
-Nothing prevents iscsi_sw_tcp_conn_bind() to receive file descriptor
-pointing to non TCP socket (af_unix for example).
+Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
+check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
+the check for domain value 0 is missing.
 
-Return -EINVAL if this is attempted, instead of crashing the kernel.
+Fix this issue by adding check for domain value 0.
 
-Fixes: 7ba247138907 ("[SCSI] open-iscsi/linux-iscsi-5 Initiator: Initiator code")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lee Duncan <lduncan@suse.com>
-Cc: Chris Leech <cleech@redhat.com>
-Cc: Mike Christie <michael.christie@oracle.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: open-iscsi@googlegroups.com
-Cc: linux-scsi@vger.kernel.org
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Before:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Error:
+  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
+  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
+  /bin/dmesg | grep -i perf may provide additional information.
+
+  Result from dmesg:
+  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
+  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
+
+After:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Warning:
+  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
+  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
+
+Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
+Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/iscsi_tcp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/perf/hv-24x7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/iscsi_tcp.c b/drivers/scsi/iscsi_tcp.c
-index 9ab8555180a3a..8e14cea15f980 100644
---- a/drivers/scsi/iscsi_tcp.c
-+++ b/drivers/scsi/iscsi_tcp.c
-@@ -724,6 +724,10 @@ iscsi_sw_tcp_conn_bind(struct iscsi_cls_session *cls_session,
- 		return -EEXIST;
+diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
+index 317175791d23c..3449be7c0d51f 100644
+--- a/arch/powerpc/perf/hv-24x7.c
++++ b/arch/powerpc/perf/hv-24x7.c
+@@ -1418,7 +1418,7 @@ static int h_24x7_event_init(struct perf_event *event)
  	}
  
-+	err = -EINVAL;
-+	if (!sk_is_tcp(sock->sk))
-+		goto free_socket;
-+
- 	err = iscsi_conn_bind(cls_session, cls_conn, is_leading);
- 	if (err)
- 		goto free_socket;
+ 	domain = event_get_domain(event);
+-	if (domain >= HV_PERF_DOMAIN_MAX) {
++	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
+ 		pr_devel("invalid domain %d\n", domain);
+ 		return -EINVAL;
+ 	}
 -- 
 2.40.1
 
