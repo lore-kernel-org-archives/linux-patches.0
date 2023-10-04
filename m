@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194B91D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D1EC433CB;
-	Wed,  4 Oct 2023 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB501D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A7C433C7;
+	Wed,  4 Oct 2023 18:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442997;
-	bh=7xPxOdtwW4a5GPUXT4gswuHz+WyEVZkUlW9Jq6lLpXg=;
+	s=korg; t=1696443000;
+	bh=96A74McbiureFkrk46AHVKzP6dY3Ogu8Ajfch3J3llA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBSlw7EUcChLOzCiczmuhq/0H5IHU9LKdgLQtJJDJSnpcpurN7tliFsxgNzrzS+YE
-	 B+9/f8qfhc95l/U9jMXbMYlh3/un7kgoFQERH2YTaPZpyEdR76q64oFZW53CKmJLth
-	 4Q8M/wCnFYZ/QRmPJEuQaWRca6ZpFLV2p59ut6H8=
+	b=04KwwKLR5eaj+1ivW7Yvce1aDw4EUS+ay8OOcq1++ZqSL4dvFggTp3KBH/4c49Amt
+	 kLoIHKLmrEXP9uIcVlyv1UUWVSnOrWa7G3jZYr4CHTLVjebky65pcEZgd/cI2NFtHM
+	 mL/NT8vy6PXXIZdxzWiEaPcfu+Su/JePu4p9QMes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Goel <vishal.goel@samsung.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 156/183] Smack:- Use overlay inode label in smack_inode_copy_up()
-Date: Wed,  4 Oct 2023 19:56:27 +0200
-Message-ID: <20231004175210.558577723@linuxfoundation.org>
+Subject: [PATCH 5.15 157/183] iommu/arm-smmu-v3: Fix soft lockup triggered by arm_smmu_mm_invalidate_range
+Date: Wed,  4 Oct 2023 19:56:28 +0200
+Message-ID: <20231004175210.599892542@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,39 +40,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Goel <vishal.goel@samsung.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 387ef964460f14fe1c1ea29aba70e22731ea7cf7 ]
+commit d5afb4b47e13161b3f33904d45110f9e6463bad6 upstream.
 
-Currently in "smack_inode_copy_up()" function, process label is
-changed with the label on parent inode. Due to which,
-process is assigned directory label and whatever file or directory
-created by the process are also getting directory label
-which is wrong label.
+When running an SVA case, the following soft lockup is triggered:
+--------------------------------------------------------------------
+watchdog: BUG: soft lockup - CPU#244 stuck for 26s!
+pstate: 83400009 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+lr : arm_smmu_cmdq_issue_cmdlist+0x150/0xa50
+sp : ffff8000d83ef290
+x29: ffff8000d83ef290 x28: 000000003b9aca00 x27: 0000000000000000
+x26: ffff8000d83ef3c0 x25: da86c0812194a0e8 x24: 0000000000000000
+x23: 0000000000000040 x22: ffff8000d83ef340 x21: ffff0000c63980c0
+x20: 0000000000000001 x19: ffff0000c6398080 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: ffff3000b4a3bbb0
+x14: ffff3000b4a30888 x13: ffff3000b4a3cf60 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc08120e4d6bc
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000048cfa
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : 000000000000000a
+x2 : 0000000080000000 x1 : 0000000000000000 x0 : 0000000000000001
+Call trace:
+ arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+ __arm_smmu_tlb_inv_range+0x118/0x254
+ arm_smmu_tlb_inv_range_asid+0x6c/0x130
+ arm_smmu_mm_invalidate_range+0xa0/0xa4
+ __mmu_notifier_invalidate_range_end+0x88/0x120
+ unmap_vmas+0x194/0x1e0
+ unmap_region+0xb4/0x144
+ do_mas_align_munmap+0x290/0x490
+ do_mas_munmap+0xbc/0x124
+ __vm_munmap+0xa8/0x19c
+ __arm64_sys_munmap+0x28/0x50
+ invoke_syscall+0x78/0x11c
+ el0_svc_common.constprop.0+0x58/0x1c0
+ do_el0_svc+0x34/0x60
+ el0_svc+0x2c/0xd4
+ el0t_64_sync_handler+0x114/0x140
+ el0t_64_sync+0x1a4/0x1a8
+--------------------------------------------------------------------
 
-Changes has been done to use label of overlay inode instead
-of parent inode.
+The commit 06ff87bae8d3 ("arm64: mm: remove unused functions and variable
+protoypes") fixed a similar lockup on the CPU MMU side. Yet, it can occur
+to SMMU too since arm_smmu_mm_invalidate_range() is typically called next
+to MMU tlb flush function, e.g.
+	tlb_flush_mmu_tlbonly {
+		tlb_flush {
+			__flush_tlb_range {
+				// check MAX_TLBI_OPS
+			}
+		}
+		mmu_notifier_invalidate_range {
+			arm_smmu_mm_invalidate_range {
+				// does not check MAX_TLBI_OPS
+			}
+		}
+	}
 
-Signed-off-by: Vishal Goel <vishal.goel@samsung.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Clone a CMDQ_MAX_TLBI_OPS from the MAX_TLBI_OPS in tlbflush.h, since in an
+SVA case SMMU uses the CPU page table, so it makes sense to align with the
+tlbflush code. Then, replace per-page TLBI commands with a single per-asid
+TLBI command, if the request size hits this threshold.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20230920052257.8615-1-nicolinc@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 27 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index f8c40c49d860c..39f564f47fea5 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4663,7 +4663,7 @@ static int smack_inode_copy_up(struct dentry *dentry, struct cred **new)
- 	/*
- 	 * Get label from overlay inode and set it in create_sid
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index e2e80eb2840ca..01748742c6842 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -186,6 +186,15 @@ static void arm_smmu_free_shared_cd(struct arm_smmu_ctx_desc *cd)
+ 	}
+ }
+ 
++/*
++ * Cloned from the MAX_TLBI_OPS in arch/arm64/include/asm/tlbflush.h, this
++ * is used as a threshold to replace per-page TLBI commands to issue in the
++ * command queue with an address-space TLBI command, when SMMU w/o a range
++ * invalidation feature handles too many per-page TLBI commands, which will
++ * otherwise result in a soft lockup.
++ */
++#define CMDQ_MAX_TLBI_OPS		(1 << (PAGE_SHIFT - 3))
++
+ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 					 struct mm_struct *mm,
+ 					 unsigned long start, unsigned long end)
+@@ -200,10 +209,22 @@ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 	 * range. So do a simple translation here by calculating size correctly.
  	 */
--	isp = smack_inode(d_inode(dentry->d_parent));
-+	isp = smack_inode(d_inode(dentry));
- 	skp = isp->smk_inode;
- 	tsp->smk_task = skp;
- 	*new = new_creds;
+ 	size = end - start;
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_RANGE_INV)) {
++		if (size >= CMDQ_MAX_TLBI_OPS * PAGE_SIZE)
++			size = 0;
++	}
++
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM)) {
++		if (!size)
++			arm_smmu_tlb_inv_asid(smmu_domain->smmu,
++					      smmu_mn->cd->asid);
++		else
++			arm_smmu_tlb_inv_range_asid(start, size,
++						    smmu_mn->cd->asid,
++						    PAGE_SIZE, false,
++						    smmu_domain);
++	}
+ 
+-	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM))
+-		arm_smmu_tlb_inv_range_asid(start, size, smmu_mn->cd->asid,
+-					    PAGE_SIZE, false, smmu_domain);
+ 	arm_smmu_atc_inv_domain(smmu_domain, mm->pasid, start, size);
+ }
+ 
 -- 
 2.40.1
 
