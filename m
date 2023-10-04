@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0111D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF95E1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpuKBJjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A7FC433C7;
-	Wed,  4 Oct 2023 18:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDMucOnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E859C433CA;
+	Wed,  4 Oct 2023 18:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443406;
-	bh=cbIUqLyonwUpLjy6ZN6dMmtfD7Rn0LYDBmgpt853AT4=;
+	s=korg; t=1696443409;
+	bh=p/VbmaA7YKKb8Ja4l2ZDR97ujRg0jqfzaq43Sze+Vuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpuKBJjI7F27McC80cNkTbT1bV72nWzDmnvr2U3m2sUjo3cEttFgJLO3ShPUCNd9C
-	 OSLZtanAq63BHl+fp5YeRaKsj+UrMshyknfGfa0MV8PAgUVj2kWZ+YsWTgwg66Me1y
-	 8MAXvv7BUZb5XjtkhYZTxvI1IZ6F1hMQRv4Xj6V4=
+	b=FDMucOnV7vM5cXB61izdBBH7+ugqV0dVvVrqG6wcyS9F7FHCX9zvyxkXD38+oFaYk
+	 kGGrQXjaIJws9YS+EmCpm8C/T7ANo4sdDjyD7SNG8x2D/kLGPlBVwMW6Fq6wc2/Iuq
+	 xXPTX8+gGmhvYIujJCZn2SHCkT08tjxdBLhTVoZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tobias Schramm <t.schramm@manjaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/259] spi: sun6i: reduce DMA RX transfer width to single byte
-Date: Wed,  4 Oct 2023 19:55:18 +0200
-Message-ID: <20231004175223.961151610@linuxfoundation.org>
+Subject: [PATCH 6.1 146/259] spi: sun6i: fix race between DMA RX transfer completion and RX FIFO drain
+Date: Wed,  4 Oct 2023 19:55:19 +0200
+Message-ID: <20231004175224.011174818@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -44,39 +44,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Tobias Schramm <t.schramm@manjaro.org>
 
-[ Upstream commit 171f8a49f212e87a8b04087568e1b3d132e36a18 ]
+[ Upstream commit 1f11f4202caf5710204d334fe63392052783876d ]
 
-Through empirical testing it has been determined that sometimes RX SPI
-transfers with DMA enabled return corrupted data. This is down to single
-or even multiple bytes lost during DMA transfer from SPI peripheral to
-memory. It seems the RX FIFO within the SPI peripheral can become
-confused when performing bus read accesses wider than a single byte to it
-during an active SPI transfer.
-
-This patch reduces the width of individual DMA read accesses to the
-RX FIFO to a single byte to mitigate that issue.
+Previously the transfer complete IRQ immediately drained to RX FIFO to
+read any data remaining in FIFO to the RX buffer. This behaviour is
+correct when dealing with SPI in interrupt mode. However in DMA mode the
+transfer complete interrupt still fires as soon as all bytes to be
+transferred have been stored in the FIFO. At that point data in the FIFO
+still needs to be picked up by the DMA engine. Thus the drain procedure
+and DMA engine end up racing to read from RX FIFO, corrupting any data
+read. Additionally the RX buffer pointer is never adjusted according to
+DMA progress in DMA mode, thus calling the RX FIFO drain procedure in DMA
+mode is a bug.
+Fix corruptions in DMA RX mode by draining RX FIFO only in interrupt mode.
+Also wait for completion of RX DMA when in DMA mode before returning to
+ensure all data has been copied to the supplied memory buffer.
 
 Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
-Link: https://lore.kernel.org/r/20230827152558.5368-2-t.schramm@manjaro.org
+Link: https://lore.kernel.org/r/20230827152558.5368-3-t.schramm@manjaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun6i.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sun6i.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/spi/spi-sun6i.c b/drivers/spi/spi-sun6i.c
-index 23ad052528dbe..2bfe87873edb3 100644
+index 2bfe87873edb3..d79853ba7792a 100644
 --- a/drivers/spi/spi-sun6i.c
 +++ b/drivers/spi/spi-sun6i.c
-@@ -200,7 +200,7 @@ static int sun6i_spi_prepare_dma(struct sun6i_spi *sspi,
- 		struct dma_slave_config rxconf = {
- 			.direction = DMA_DEV_TO_MEM,
- 			.src_addr = sspi->dma_addr_rx,
--			.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES,
-+			.src_addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE,
- 			.src_maxburst = 8,
- 		};
+@@ -95,6 +95,7 @@ struct sun6i_spi {
+ 	struct reset_control	*rstc;
  
+ 	struct completion	done;
++	struct completion	dma_rx_done;
+ 
+ 	const u8		*tx_buf;
+ 	u8			*rx_buf;
+@@ -189,6 +190,13 @@ static size_t sun6i_spi_max_transfer_size(struct spi_device *spi)
+ 	return SUN6I_MAX_XFER_SIZE - 1;
+ }
+ 
++static void sun6i_spi_dma_rx_cb(void *param)
++{
++	struct sun6i_spi *sspi = param;
++
++	complete(&sspi->dma_rx_done);
++}
++
+ static int sun6i_spi_prepare_dma(struct sun6i_spi *sspi,
+ 				 struct spi_transfer *tfr)
+ {
+@@ -213,6 +221,8 @@ static int sun6i_spi_prepare_dma(struct sun6i_spi *sspi,
+ 						 DMA_PREP_INTERRUPT);
+ 		if (!rxdesc)
+ 			return -EINVAL;
++		rxdesc->callback_param = sspi;
++		rxdesc->callback = sun6i_spi_dma_rx_cb;
+ 	}
+ 
+ 	txdesc = NULL;
+@@ -268,6 +278,7 @@ static int sun6i_spi_transfer_one(struct spi_master *master,
+ 		return -EINVAL;
+ 
+ 	reinit_completion(&sspi->done);
++	reinit_completion(&sspi->dma_rx_done);
+ 	sspi->tx_buf = tfr->tx_buf;
+ 	sspi->rx_buf = tfr->rx_buf;
+ 	sspi->len = tfr->len;
+@@ -426,6 +437,22 @@ static int sun6i_spi_transfer_one(struct spi_master *master,
+ 	start = jiffies;
+ 	timeout = wait_for_completion_timeout(&sspi->done,
+ 					      msecs_to_jiffies(tx_time));
++
++	if (!use_dma) {
++		sun6i_spi_drain_fifo(sspi);
++	} else {
++		if (timeout && rx_len) {
++			/*
++			 * Even though RX on the peripheral side has finished
++			 * RX DMA might still be in flight
++			 */
++			timeout = wait_for_completion_timeout(&sspi->dma_rx_done,
++							      timeout);
++			if (!timeout)
++				dev_warn(&master->dev, "RX DMA timeout\n");
++		}
++	}
++
+ 	end = jiffies;
+ 	if (!timeout) {
+ 		dev_warn(&master->dev,
+@@ -453,7 +480,6 @@ static irqreturn_t sun6i_spi_handler(int irq, void *dev_id)
+ 	/* Transfer complete */
+ 	if (status & SUN6I_INT_CTL_TC) {
+ 		sun6i_spi_write(sspi, SUN6I_INT_STA_REG, SUN6I_INT_CTL_TC);
+-		sun6i_spi_drain_fifo(sspi);
+ 		complete(&sspi->done);
+ 		return IRQ_HANDLED;
+ 	}
+@@ -611,6 +637,7 @@ static int sun6i_spi_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	init_completion(&sspi->done);
++	init_completion(&sspi->dma_rx_done);
+ 
+ 	sspi->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+ 	if (IS_ERR(sspi->rstc)) {
 -- 
 2.40.1
 
