@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DC51D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE95C433CB;
-	Wed,  4 Oct 2023 18:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5DD1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:03:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F198DC433C7;
+	Wed,  4 Oct 2023 18:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442635;
-	bh=Gorh+SRJK2qI6O6e/cGQhNzrswoRvVCqRpKKcuprfZU=;
+	s=korg; t=1696442638;
+	bh=Abpu5REp4KYZXTajoqG88Fn5gnqEXSF7rJ456mI8CcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njqK60IUAWBLsWDkbtdjKlMhPqs2PClgOQ76SBki6D9ozSAzgzdQAwJ5brqheFjLL
-	 euZQKTn2kyg5vsR/Pc1yWaQ7EDkNPHsF+3MQ055JFLQ/qfWuFq0R3AxkMCByzJBXRG
-	 UUNPnya8rwd8N+M/nSG7IczazVMmVIKQVdVgAjTI=
+	b=MTmUqUm/M7QPdfZHOfuqhapcHjs8aPafBmtITlOrD8oyutkJqQhqzYdI6HO+Cdhx0
+	 sU53+x5qRUcc4S9+ivye9E68RfGNrNW7zf01sFn3lVAerY/G7Ru3m5SHvT86ZjAfJE
+	 DNGfLp4KUzWabfUYlFWfubUoN5zijibG7Rt+ptX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/183] net: hns3: only enable unicast promisc when mac table full
-Date: Wed,  4 Oct 2023 19:54:46 +0200
-Message-ID: <20231004175206.237832289@linuxfoundation.org>
+Subject: [PATCH 5.15 056/183] net: hns3: fix fail to delete tc flower rules during reset issue
+Date: Wed,  4 Oct 2023 19:54:47 +0200
+Message-ID: <20231004175206.277397610@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,37 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit f2ed304922a55690529bcca59678dd92d7466ce8 ]
+[ Upstream commit 1a7be66e4685b8541546222c305cce9710718a88 ]
 
-Currently, the driver will enable unicast promisc for the function
-once configure mac address fail. It's unreasonable when the failure
-is caused by using same mac address with other functions. So only
-enable unicast promisc when mac table full.
+Firmware does not respond driver commands during reset
+Therefore, rule will fail to delete while the firmware is resetting
 
-Fixes: c631c696823c ("net: hns3: refactor the promisc mode setting")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+So, if failed to delete rule, set rule state to TO_DEL,
+and the rule will be deleted when periodic task being scheduled.
+
+Fixes: 0205ec041ec6 ("net: hns3: add support for hw tc offload of tc flower")
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index a415760505ab4..998ee681b1171 100644
+index 998ee681b1171..0f522daf8e3ab 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -8967,7 +8967,7 @@ static void hclge_update_overflow_flags(struct hclge_vport *vport,
- 	if (mac_type == HCLGE_MAC_ADDR_UC) {
- 		if (is_all_added)
- 			vport->overflow_promisc_flags &= ~HNAE3_OVERFLOW_UPE;
--		else
-+		else if (hclge_is_umv_space_full(vport, true))
- 			vport->overflow_promisc_flags |= HNAE3_OVERFLOW_UPE;
- 	} else {
- 		if (is_all_added)
+@@ -7546,6 +7546,12 @@ static int hclge_del_cls_flower(struct hnae3_handle *handle,
+ 	ret = hclge_fd_tcam_config(hdev, HCLGE_FD_STAGE_1, true, rule->location,
+ 				   NULL, false);
+ 	if (ret) {
++		/* if tcam config fail, set rule state to TO_DEL,
++		 * so the rule will be deleted when periodic
++		 * task being scheduled.
++		 */
++		hclge_update_fd_list(hdev, HCLGE_FD_TO_DEL, rule->location, NULL);
++		set_bit(HCLGE_STATE_FD_TBL_CHANGED, &hdev->state);
+ 		spin_unlock_bh(&hdev->fd_rule_lock);
+ 		return ret;
+ 	}
 -- 
 2.40.1
 
