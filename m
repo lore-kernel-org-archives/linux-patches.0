@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17241D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01A71D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/os0lQp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62555C433C8;
-	Wed,  4 Oct 2023 18:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYaYgyPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C02FC433C9;
+	Wed,  4 Oct 2023 18:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443582;
-	bh=d6DBFN7PTpWMTjxi2GnoovjR0fBIsj4QldnkIBps+Vw=;
+	s=korg; t=1696443585;
+	bh=I0tfk7TZ4biX25Jj1lvzp7tqOlzU4YcA7PhR3VQqpBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/os0lQpN8g0crwZJDhum9mYI3HkoljgKCbabR9h0x87631IT1CBPtOGON2sH5xS+
-	 6DSMQbXymMbsAEtvlhC4LCk9EOKn6lwErj21oQh/Wt8M+9jE3a1GIJgXKUKSlt4ub7
-	 GizyQlA6KjUdP+zeNqw2lwjtYqeCCWiAcfVFPzGs=
+	b=yYaYgyPTg3+RS/K9FDyMaKbIvd7U3bSPfh4vaoLxRgAz1cixeS0BP9At4CyfWoQ8S
+	 +8rw36H7DZDq56Caf1nu/8+8vNqgCkd+V9jUPxNiePtUoUZxh+o/OYYNHs+flcL63X
+	 J17IvJ5+ypMaLl1hPpFC0LqSH+YvLDb2Dj9xVg8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/259] smack: Retrieve transmuting information in smack_inode_getsecurity()
-Date: Wed,  4 Oct 2023 19:56:20 +0200
-Message-ID: <20231004175226.793816775@linuxfoundation.org>
+Subject: [PATCH 6.1 208/259] iommu/arm-smmu-v3: Fix soft lockup triggered by arm_smmu_mm_invalidate_range
+Date: Wed,  4 Oct 2023 19:56:21 +0200
+Message-ID: <20231004175226.835819189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,69 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 3a3d8fce31a49363cc31880dce5e3b0617c9c38b ]
+commit d5afb4b47e13161b3f33904d45110f9e6463bad6 upstream.
 
-Enhance smack_inode_getsecurity() to retrieve the value for
-SMACK64TRANSMUTE from the inode security blob, similarly to SMACK64.
+When running an SVA case, the following soft lockup is triggered:
+--------------------------------------------------------------------
+watchdog: BUG: soft lockup - CPU#244 stuck for 26s!
+pstate: 83400009 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+lr : arm_smmu_cmdq_issue_cmdlist+0x150/0xa50
+sp : ffff8000d83ef290
+x29: ffff8000d83ef290 x28: 000000003b9aca00 x27: 0000000000000000
+x26: ffff8000d83ef3c0 x25: da86c0812194a0e8 x24: 0000000000000000
+x23: 0000000000000040 x22: ffff8000d83ef340 x21: ffff0000c63980c0
+x20: 0000000000000001 x19: ffff0000c6398080 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: ffff3000b4a3bbb0
+x14: ffff3000b4a30888 x13: ffff3000b4a3cf60 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc08120e4d6bc
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000048cfa
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : 000000000000000a
+x2 : 0000000080000000 x1 : 0000000000000000 x0 : 0000000000000001
+Call trace:
+ arm_smmu_cmdq_issue_cmdlist+0x178/0xa50
+ __arm_smmu_tlb_inv_range+0x118/0x254
+ arm_smmu_tlb_inv_range_asid+0x6c/0x130
+ arm_smmu_mm_invalidate_range+0xa0/0xa4
+ __mmu_notifier_invalidate_range_end+0x88/0x120
+ unmap_vmas+0x194/0x1e0
+ unmap_region+0xb4/0x144
+ do_mas_align_munmap+0x290/0x490
+ do_mas_munmap+0xbc/0x124
+ __vm_munmap+0xa8/0x19c
+ __arm64_sys_munmap+0x28/0x50
+ invoke_syscall+0x78/0x11c
+ el0_svc_common.constprop.0+0x58/0x1c0
+ do_el0_svc+0x34/0x60
+ el0_svc+0x2c/0xd4
+ el0t_64_sync_handler+0x114/0x140
+ el0t_64_sync+0x1a4/0x1a8
+--------------------------------------------------------------------
 
-This helps to display accurate values in the situation where the security
-labels come from mount options and not from xattrs.
+The commit 06ff87bae8d3 ("arm64: mm: remove unused functions and variable
+protoypes") fixed a similar lockup on the CPU MMU side. Yet, it can occur
+to SMMU too since arm_smmu_mm_invalidate_range() is typically called next
+to MMU tlb flush function, e.g.
+	tlb_flush_mmu_tlbonly {
+		tlb_flush {
+			__flush_tlb_range {
+				// check MAX_TLBI_OPS
+			}
+		}
+		mmu_notifier_invalidate_range {
+			arm_smmu_mm_invalidate_range {
+				// does not check MAX_TLBI_OPS
+			}
+		}
+	}
 
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Clone a CMDQ_MAX_TLBI_OPS from the MAX_TLBI_OPS in tlbflush.h, since in an
+SVA case SMMU uses the CPU page table, so it makes sense to align with the
+tlbflush code. Then, replace per-page TLBI commands with a single per-asid
+TLBI command, if the request size hits this threshold.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20230920052257.8615-1-nicolinc@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 27 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 1232c1d71d9f8..cd6a03e945eb7 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -1476,10 +1476,19 @@ static int smack_inode_getsecurity(struct user_namespace *mnt_userns,
- 	struct super_block *sbp;
- 	struct inode *ip = (struct inode *)inode;
- 	struct smack_known *isp;
-+	struct inode_smack *ispp;
-+	size_t label_len;
-+	char *label = NULL;
- 
--	if (strcmp(name, XATTR_SMACK_SUFFIX) == 0)
-+	if (strcmp(name, XATTR_SMACK_SUFFIX) == 0) {
- 		isp = smk_of_inode(inode);
--	else {
-+	} else if (strcmp(name, XATTR_SMACK_TRANSMUTE) == 0) {
-+		ispp = smack_inode(inode);
-+		if (ispp->smk_flags & SMK_INODE_TRANSMUTE)
-+			label = TRANS_TRUE;
-+		else
-+			label = "";
-+	} else {
- 		/*
- 		 * The rest of the Smack xattrs are only on sockets.
- 		 */
-@@ -1501,13 +1510,18 @@ static int smack_inode_getsecurity(struct user_namespace *mnt_userns,
- 			return -EOPNOTSUPP;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index 5968a568aae2a..ffba8ce93ff88 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -186,6 +186,15 @@ static void arm_smmu_free_shared_cd(struct arm_smmu_ctx_desc *cd)
  	}
- 
-+	if (!label)
-+		label = isp->smk_known;
-+
-+	label_len = strlen(label);
-+
- 	if (alloc) {
--		*buffer = kstrdup(isp->smk_known, GFP_KERNEL);
-+		*buffer = kstrdup(label, GFP_KERNEL);
- 		if (*buffer == NULL)
- 			return -ENOMEM;
- 	}
- 
--	return strlen(isp->smk_known);
-+	return label_len;
  }
  
++/*
++ * Cloned from the MAX_TLBI_OPS in arch/arm64/include/asm/tlbflush.h, this
++ * is used as a threshold to replace per-page TLBI commands to issue in the
++ * command queue with an address-space TLBI command, when SMMU w/o a range
++ * invalidation feature handles too many per-page TLBI commands, which will
++ * otherwise result in a soft lockup.
++ */
++#define CMDQ_MAX_TLBI_OPS		(1 << (PAGE_SHIFT - 3))
++
+ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 					 struct mm_struct *mm,
+ 					 unsigned long start, unsigned long end)
+@@ -200,10 +209,22 @@ static void arm_smmu_mm_invalidate_range(struct mmu_notifier *mn,
+ 	 * range. So do a simple translation here by calculating size correctly.
+ 	 */
+ 	size = end - start;
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_RANGE_INV)) {
++		if (size >= CMDQ_MAX_TLBI_OPS * PAGE_SIZE)
++			size = 0;
++	}
++
++	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM)) {
++		if (!size)
++			arm_smmu_tlb_inv_asid(smmu_domain->smmu,
++					      smmu_mn->cd->asid);
++		else
++			arm_smmu_tlb_inv_range_asid(start, size,
++						    smmu_mn->cd->asid,
++						    PAGE_SIZE, false,
++						    smmu_domain);
++	}
+ 
+-	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_BTM))
+-		arm_smmu_tlb_inv_range_asid(start, size, smmu_mn->cd->asid,
+-					    PAGE_SIZE, false, smmu_domain);
+ 	arm_smmu_atc_inv_domain(smmu_domain, mm->pasid, start, size);
+ }
  
 -- 
 2.40.1
