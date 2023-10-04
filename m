@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BFA1D54A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C79C433C9;
-	Wed,  4 Oct 2023 18:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD6B1D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:11:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3010DC433C7;
+	Wed,  4 Oct 2023 18:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443098;
-	bh=NlH5/DxWnb2ukTtgZ+lEG4L2/p2yvKLQGlF1o8/BIzw=;
+	s=korg; t=1696443101;
+	bh=NPGnZ4qEzao4NyUaALgEGFyQtUhtdYMaUJ1mFMyYDIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1lLHHNB5P6LFas8rzKm4L12M5T9Nypx+Z4ru1DPL4ToswfaLy2UlUIEFTMVzyE6J
-	 wPY/fBcnLBXAGM1D1ImsqDQ6YeeKkYGyrWlYDVXGXc7noP3UsNzgQk4Jho/g4als3x
-	 F8RgOsGPSXSzezAK8coM6vUh/+X011VCA6hYwYfo=
+	b=v5UGpWQ5153a9vwpDjLUXnNZ5PE9zlKiBCfoPKp65HIV7g2Rv2Cyf4BtcdzhZUdrk
+	 iPX+8/8dhJhUaUiERFITmtIRkfi+ibiGOwo6Mygh6t08H+3PD76BiisOy8jHGXZ2aE
+	 LsBSjNU2v9WbYys+G1+YQnb5FwWVYiUEO0f+he70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Olga Kornievskaia <kolga@netapp.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/259] NFSv4.1: use EXCHGID4_FLAG_USE_PNFS_DS for DS server
-Date: Wed,  4 Oct 2023 19:53:01 +0200
-Message-ID: <20231004175217.823543874@linuxfoundation.org>
+Subject: [PATCH 6.1 009/259] NFSv4.1: fix pnfs MDS=DS session trunking
+Date: Wed,  4 Oct 2023 19:53:02 +0200
+Message-ID: <20231004175217.872257372@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,64 +42,130 @@ Content-Transfer-Encoding: 8bit
 
 From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 51d674a5e4889f1c8e223ac131cf218e1631e423 ]
+[ Upstream commit 806a3bc421a115fbb287c1efce63a48c54ee804b ]
 
-After receiving the location(s) of the DS server(s) in the
-GETDEVINCEINFO, create the request for the clientid to such
-server and indicate that the client is connecting to a DS.
+Currently, when GETDEVICEINFO returns multiple locations where each
+is a different IP but the server's identity is same as MDS, then
+nfs4_set_ds_client() finds the existing nfs_client structure which
+has the MDS's max_connect value (and if it's 1), then the 1st IP
+on the DS's list will get dropped due to MDS trunking rules. Other
+IPs would be added as they fall under the pnfs trunking rules.
 
+For the list of IPs the 1st goes thru calling nfs4_set_ds_client()
+which will eventually call nfs4_add_trunk() and call into
+rpc_clnt_test_and_add_xprt() which has the check for MDS trunking.
+The other IPs (after the 1st one), would call rpc_clnt_add_xprt()
+which doesn't go thru that check.
+
+nfs4_add_trunk() is called when MDS trunking is happening and it
+needs to enforce the usage of max_connect mount option of the
+1st mount. However, this shouldn't be applied to pnfs flow.
+
+Instead, this patch proposed to treat MDS=DS as DS trunking and
+make sure that MDS's max_connect limit does not apply to the
+1st IP returned in the GETDEVICEINFO list. It does so by
+marking the newly created client with a new flag NFS_CS_PNFS
+which then used to pass max_connect value to use into the
+rpc_clnt_test_and_add_xprt() instead of the existing rpc
+client's max_connect value set by the MDS connection.
+
+For example, mount was done without max_connect value set
+so MDS's rpc client has cl_max_connect=1. Upon calling into
+rpc_clnt_test_and_add_xprt() and using rpc client's value,
+the caller passes in max_connect value which is previously
+been set in the pnfs path (as a part of handling
+GETDEVICEINFO list of IPs) in nfs4_set_ds_client().
+
+However, when NFS_CS_PNFS flag is not set and we know we
+are doing MDS trunking, comparing a new IP of the same
+server, we then set the max_connect value to the
+existing MDS's value and pass that into
+rpc_clnt_test_and_add_xprt().
+
+Fixes: dc48e0abee24 ("SUNRPC enforce creation of no more than max_connect xprts")
 Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Stable-dep-of: 806a3bc421a1 ("NFSv4.1: fix pnfs MDS=DS session trunking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 3 +++
- fs/nfs/nfs4proc.c   | 4 ++++
- 2 files changed, 7 insertions(+)
+ fs/nfs/nfs4client.c       |  6 +++++-
+ include/linux/nfs_fs_sb.h |  1 +
+ net/sunrpc/clnt.c         | 11 +++++++----
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index d3051b051a564..d3e2b0867dc11 100644
+index d3e2b0867dc11..84b345efcec00 100644
 --- a/fs/nfs/nfs4client.c
 +++ b/fs/nfs/nfs4client.c
-@@ -231,6 +231,8 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
- 	__set_bit(NFS_CS_DISCRTRY, &clp->cl_flags);
- 	__set_bit(NFS_CS_NO_RETRANS_TIMEOUT, &clp->cl_flags);
+@@ -416,6 +416,8 @@ static void nfs4_add_trunk(struct nfs_client *clp, struct nfs_client *old)
+ 		.net = old->cl_net,
+ 		.servername = old->cl_hostname,
+ 	};
++	int max_connect = test_bit(NFS_CS_PNFS, &clp->cl_flags) ?
++		clp->cl_max_connect : old->cl_max_connect;
  
-+	if (test_bit(NFS_CS_DS, &cl_init->init_flags))
-+		__set_bit(NFS_CS_DS, &clp->cl_flags);
- 	/*
- 	 * Set up the connection to the server before we add add to the
- 	 * global list.
-@@ -993,6 +995,7 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
- 	if (mds_srv->flags & NFS_MOUNT_NORESVPORT)
+ 	if (clp->cl_proto != old->cl_proto)
+ 		return;
+@@ -429,7 +431,7 @@ static void nfs4_add_trunk(struct nfs_client *clp, struct nfs_client *old)
+ 	xprt_args.addrlen = clp_salen;
+ 
+ 	rpc_clnt_add_xprt(old->cl_rpcclient, &xprt_args,
+-			  rpc_clnt_test_and_add_xprt, NULL);
++			  rpc_clnt_test_and_add_xprt, &max_connect);
+ }
+ 
+ /**
+@@ -996,6 +998,8 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
  		__set_bit(NFS_CS_NORESVPORT, &cl_init.init_flags);
  
-+	__set_bit(NFS_CS_DS, &cl_init.init_flags);
+ 	__set_bit(NFS_CS_DS, &cl_init.init_flags);
++	__set_bit(NFS_CS_PNFS, &cl_init.init_flags);
++	cl_init.max_connect = NFS_MAX_TRANSPORTS;
  	/*
  	 * Set an authflavor equual to the MDS value. Use the MDS nfs_client
  	 * cl_ipaddr so as to use the same EXCHANGE_ID co_ownerid as the MDS
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 2dec0fed1ba16..acb1346da13e9 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -8794,6 +8794,8 @@ nfs4_run_exchange_id(struct nfs_client *clp, const struct cred *cred,
- #ifdef CONFIG_NFS_V4_1_MIGRATION
- 	calldata->args.flags |= EXCHGID4_FLAG_SUPP_MOVED_MIGR;
- #endif
-+	if (test_bit(NFS_CS_DS, &clp->cl_flags))
-+		calldata->args.flags |= EXCHGID4_FLAG_USE_PNFS_DS;
- 	msg.rpc_argp = &calldata->args;
- 	msg.rpc_resp = &calldata->res;
- 	task_setup_data.callback_data = calldata;
-@@ -8871,6 +8873,8 @@ static int _nfs4_proc_exchange_id(struct nfs_client *clp, const struct cred *cre
- 	/* Save the EXCHANGE_ID verifier session trunk tests */
- 	memcpy(clp->cl_confirm.data, argp->verifier.data,
- 	       sizeof(clp->cl_confirm.data));
-+	if (resp->flags & EXCHGID4_FLAG_USE_PNFS_DS)
-+		set_bit(NFS_CS_DS, &clp->cl_flags);
- out:
- 	trace_nfs4_exchange_id(clp, status);
- 	rpc_put_task(task);
+diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
+index ea2f7e6b1b0b5..ef8ba5fbc6503 100644
+--- a/include/linux/nfs_fs_sb.h
++++ b/include/linux/nfs_fs_sb.h
+@@ -48,6 +48,7 @@ struct nfs_client {
+ #define NFS_CS_NOPING		6		/* - don't ping on connect */
+ #define NFS_CS_DS		7		/* - Server is a DS */
+ #define NFS_CS_REUSEPORT	8		/* - reuse src port on reconnect */
++#define NFS_CS_PNFS		9		/* - Server used for pnfs */
+ 	struct sockaddr_storage	cl_addr;	/* server identifier */
+ 	size_t			cl_addrlen;
+ 	char *			cl_hostname;	/* hostname of server */
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index ff6728e41e044..b3f6f67ed2521 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2890,19 +2890,22 @@ static const struct rpc_call_ops rpc_cb_add_xprt_call_ops = {
+  * @clnt: pointer to struct rpc_clnt
+  * @xps: pointer to struct rpc_xprt_switch,
+  * @xprt: pointer struct rpc_xprt
+- * @dummy: unused
++ * @in_max_connect: pointer to the max_connect value for the passed in xprt transport
+  */
+ int rpc_clnt_test_and_add_xprt(struct rpc_clnt *clnt,
+ 		struct rpc_xprt_switch *xps, struct rpc_xprt *xprt,
+-		void *dummy)
++		void *in_max_connect)
+ {
+ 	struct rpc_cb_add_xprt_calldata *data;
+ 	struct rpc_task *task;
++	int max_connect = clnt->cl_max_connect;
+ 
+-	if (xps->xps_nunique_destaddr_xprts + 1 > clnt->cl_max_connect) {
++	if (in_max_connect)
++		max_connect = *(int *)in_max_connect;
++	if (xps->xps_nunique_destaddr_xprts + 1 > max_connect) {
+ 		rcu_read_lock();
+ 		pr_warn("SUNRPC: reached max allowed number (%d) did not add "
+-			"transport to server: %s\n", clnt->cl_max_connect,
++			"transport to server: %s\n", max_connect,
+ 			rpc_peeraddr2str(clnt, RPC_DISPLAY_ADDR));
+ 		rcu_read_unlock();
+ 		return -EINVAL;
 -- 
 2.40.1
 
