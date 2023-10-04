@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82B1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717121D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22757C433C7;
-	Wed,  4 Oct 2023 18:08:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AE4C433C8;
+	Wed,  4 Oct 2023 18:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442902;
-	bh=K+IhzgOK8EzhXP3FEfsBlBB24zO2fOcIDGj4rohlmBY=;
+	s=korg; t=1696442905;
+	bh=M/V2Tt9af+8Utlv68tTUR3iwA/FIi0LpvX54zB80O30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOv04MEAyfsEVny/H3fHzcrgV1WX3rQRLQ9/r3fqjPr+4yDuYddVowab7apebxl+p
-	 8sfyJohfkMtP8vNU+azY2B2W/9vBxuKuWvyM2oxsZF4ykU0XUrQWrOQpCpRNz3RVGZ
-	 OPg2iJYQT6zwz5ge1IExcu8O9FTHai6awxczpxuI=
+	b=HVC+gUkoU4ZsDlNxbiokwGFAVfZQF8eozkTieyPQSkbedjCLQSPodBQWxB356dQS7
+	 mb2KJIRNedZEeQAVkSczHJk4fKHBSYUWYE/KZbLF9cAtuzOy9DN8btsrcC3GW/dDSL
+	 6gremTlyjRjeRXn54/ZP0IhVA3Gpsfl9BJbbg4MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Daniel=20P . =20Berrang=C3=A9?=" <berrange@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/183] watchdog: iTCO_wdt: Set NO_REBOOT if the watchdog is not already running
-Date: Wed,  4 Oct 2023 19:56:20 +0200
-Message-ID: <20231004175210.247158132@linuxfoundation.org>
+Subject: [PATCH 5.15 123/183] ring-buffer: Do not attempt to read past "commit"
+Date: Wed,  4 Oct 2023 19:55:54 +0200
+Message-ID: <20231004175209.107104053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -38,97 +38,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit ef9b7bf52c2f47f0a9bf988543c577b92c92d15e upstream.
+[ Upstream commit 95a404bd60af6c4d9d8db01ad14fe8957ece31ca ]
 
-Daniel reported that the commit 1ae3e78c0820 ("watchdog: iTCO_wdt: No
-need to stop the timer in probe") makes QEMU implementation of the iTCO
-watchdog not to trigger reboot anymore when NO_REBOOT flag is initially
-cleared using this option (in QEMU command line):
+When iterating over the ring buffer while the ring buffer is active, the
+writer can corrupt the reader. There's barriers to help detect this and
+handle it, but that code missed the case where the last event was at the
+very end of the page and has only 4 bytes left.
 
-  -global ICH9-LPC.noreboot=false
+The checks to detect the corruption by the writer to reads needs to see the
+length of the event. If the length in the first 4 bytes is zero then the
+length is stored in the second 4 bytes. But if the writer is in the process
+of updating that code, there's a small window where the length in the first
+4 bytes could be zero even though the length is only 4 bytes. That will
+cause rb_event_length() to read the next 4 bytes which could happen to be off the
+allocated page.
 
-The problem with the commit is that it left the unconditional setting of
-NO_REBOOT that is not cleared anymore when the kernel keeps pinging the
-watchdog (as opposed to the previous code that called iTCO_wdt_stop()
-that cleared it).
+To protect against this, fail immediately if the next event pointer is
+less than 8 bytes from the end of the commit (last byte of data), as all
+events must be a minimum of 8 bytes anyway.
 
-Fix this so that we only set NO_REBOOT if the watchdog was not initially
-running.
+Link: https://lore.kernel.org/all/20230905141245.26470-1-Tze-nan.Wu@mediatek.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20230907122820.0899019c@gandalf.local.home
 
-Fixes: 1ae3e78c0820 ("watchdog: iTCO_wdt: No need to stop the timer in probe")
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Tested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221028062750.45451-1-mika.westerberg@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Reported-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ kernel/trace/ring_buffer.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 96ff06d7d735d..a8052a3faaabb 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -424,14 +424,18 @@ static unsigned int iTCO_wdt_get_timeleft(struct watchdog_device *wd_dev)
- 	return time_left;
- }
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index b15d72284c7f7..69db849ae7dad 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2352,6 +2352,11 @@ rb_iter_head_event(struct ring_buffer_iter *iter)
+ 	 */
+ 	commit = rb_page_commit(iter_head_page);
+ 	smp_rmb();
++
++	/* An event needs to be at least 8 bytes in size */
++	if (iter->head > commit - 8)
++		goto reset;
++
+ 	event = __rb_page_index(iter_head_page, iter->head);
+ 	length = rb_event_length(event);
  
--static void iTCO_wdt_set_running(struct iTCO_wdt_private *p)
-+/* Returns true if the watchdog was running */
-+static bool iTCO_wdt_set_running(struct iTCO_wdt_private *p)
- {
- 	u16 val;
- 
--	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is * enabled */
-+	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is enabled */
- 	val = inw(TCO1_CNT(p));
--	if (!(val & BIT(11)))
-+	if (!(val & BIT(11))) {
- 		set_bit(WDOG_HW_RUNNING, &p->wddev.status);
-+		return true;
-+	}
-+	return false;
- }
- 
- /*
-@@ -522,9 +526,6 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 		return -ENODEV;	/* Cannot reset NO_REBOOT bit */
- 	}
- 
--	/* Set the NO_REBOOT bit to prevent later reboots, just for sure */
--	p->update_no_reboot_bit(p->no_reboot_priv, true);
--
- 	if (turn_SMI_watchdog_clear_off >= p->iTCO_version) {
- 		/*
- 		 * Bit 13: TCO_EN -> 0
-@@ -576,7 +577,13 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 	watchdog_set_drvdata(&p->wddev, p);
- 	platform_set_drvdata(pdev, p);
- 
--	iTCO_wdt_set_running(p);
-+	if (!iTCO_wdt_set_running(p)) {
-+		/*
-+		 * If the watchdog was not running set NO_REBOOT now to
-+		 * prevent later reboots.
-+		 */
-+		p->update_no_reboot_bit(p->no_reboot_priv, true);
-+	}
- 
- 	/* Check that the heartbeat value is within it's range;
- 	   if not reset to the default */
 -- 
 2.40.1
 
