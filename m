@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98326210F3
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBA1210ED
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZecIiZfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA4DC433C8;
-	Wed,  4 Oct 2023 18:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUeXtg66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F30C433C8;
+	Wed,  4 Oct 2023 18:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444332;
-	bh=qN6XiO3+2agiGLul5tHzqASWPjXrVITTd0uiLc7KH2c=;
+	s=korg; t=1696444335;
+	bh=qwSHBLVHGysUxDFLdkdtnFAjEqOOitIJ9SqcAcnW7Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZecIiZfS79OJxJkRGwNx8X0sC0J03M3URtdCOVFQx+EetfbqPYCCuOmA1FqSWiEFv
-	 RTm/RaXVIHDZpnx1nbTYujfk4qSZ+UW/VqKiFu/GGpGZvP7WX7S+/qI00mz6W4HkBz
-	 zaRt3WVrQvIg725DdhHKOlC3hMSmu7sE6QFoMVGU=
+	b=YUeXtg66jQ9icJgEp9jicF5u402+rrN1Bu+OjCWWqJdYiQlIAqtQ8t8Kz/lMCWQMN
+	 Iuxpeo5TVa5lKnifX7X+RnT/uYgeZHpYeR4u5kcrJl7uZPGBFWEgC85figs6A6YmwM
+	 YR2XyV36JzWHHAs4fnWCUtQkyRTzKV6gmTKrumIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Julia Lawall <Julia.Lawall@inria.fr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 184/321] platform/x86: asus-wmi: Support 2023 ROG X16 tablet mode
-Date: Wed,  4 Oct 2023 19:55:29 +0200
-Message-ID: <20231004175237.766099867@linuxfoundation.org>
+Subject: [PATCH 6.5 185/321] thermal/of: add missing of_node_put()
+Date: Wed,  4 Oct 2023 19:55:30 +0200
+Message-ID: <20231004175237.816635201@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,42 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Julia Lawall <Julia.Lawall@inria.fr>
 
-[ Upstream commit 4106a70ddad57ee6d8f98b81d6f036740c72762b ]
+[ Upstream commit 8a81cf96f5510aaf9a65d103f7405079a7b0fcc5 ]
 
-Add quirk for ASUS ROG X16 (GV601V, 2023 versions) Flow 2-in-1
-to enable tablet mode with lid flip (all screen rotations).
+for_each_child_of_node performs an of_node_get on each
+iteration, so a break out of the loop requires an
+of_node_put.
 
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20230905082813.13470-1-luke@ljones.dev
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+This was done using the Coccinelle semantic patch
+iterators/for_each_child.cocci
+
+Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/thermal/thermal_of.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index fdf7da06af306..d85d895fee894 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -478,6 +478,15 @@ static const struct dmi_system_id asus_quirks[] = {
- 		},
- 		.driver_data = &quirk_asus_tablet_mode,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS ROG FLOW X16",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "GV601V"),
-+		},
-+		.driver_data = &quirk_asus_tablet_mode,
-+	},
- 	{
- 		.callback = dmi_matched,
- 		.ident = "ASUS VivoBook E410MA",
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index 22272f9c5934a..e615f735f4c03 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -38,8 +38,10 @@ static int of_find_trip_id(struct device_node *np, struct device_node *trip)
+ 	 */
+ 	for_each_child_of_node(trips, t) {
+ 
+-		if (t == trip)
++		if (t == trip) {
++			of_node_put(t);
+ 			goto out;
++		}
+ 		i++;
+ 	}
+ 
+@@ -402,8 +404,10 @@ static int thermal_of_for_each_cooling_maps(struct thermal_zone_device *tz,
+ 
+ 	for_each_child_of_node(cm_np, child) {
+ 		ret = thermal_of_for_each_cooling_device(tz_np, child, tz, cdev, action);
+-		if (ret)
++		if (ret) {
++			of_node_put(child);
+ 			break;
++		}
+ 	}
+ 
+ 	of_node_put(cm_np);
 -- 
 2.40.1
 
