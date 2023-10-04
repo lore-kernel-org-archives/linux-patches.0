@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71631D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6D01D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRZ7KK9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29953C433C8;
-	Wed,  4 Oct 2023 18:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brnujv5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD1FC433C7;
+	Wed,  4 Oct 2023 18:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443743;
-	bh=cHmfy+mBpw8TLdBtjWuNeLFC5SGeb3I7ZQkrcMHjOnw=;
+	s=korg; t=1696443746;
+	bh=aB7LZUq+yhgWGntnzpjcbjN+8valPLTAnuzj7iNDKyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRZ7KK9TYtPHJVsAfAZGk4due9I21lI83LjgWhqj3kNiatzNfTeA1PqvJnPcE+5YG
-	 Exj3pfKg8QHgI1Gg6rJXhsYC2TqT1t02Cq8qVsd1vn9RuFJHKOqGkji+ybfSMwId4X
-	 Op30634I0dcGHbzo0ReeGhBVSmKWt3x6FQnHyw1Y=
+	b=brnujv5l9RG0bcZyHdSyZVyzR69Fk7a1GqKO4TDZ8g0Ivnn9usfeY/qjkG9m6RFZm
+	 XjMcoz5G8eDQ8EQ8OC+tvCnnShRPt8oHYqH/iJG8z7Smv+6jH/tAWIPixTZ2BMSRRw
+	 IjEXnBtWV+fkcn5pYAxVw9zwRXNV6kHUBNlGNMQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Ungerer <gerg@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 254/259] fs: binfmt_elf_efpic: fix personality for ELF-FDPIC
-Date: Wed,  4 Oct 2023 19:57:07 +0200
-Message-ID: <20231004175229.068322971@linuxfoundation.org>
+	YuBiao Wang <YuBiao.Wang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 255/259] drm/amdkfd: Use gpu_offset for user queues wptr
+Date: Wed,  4 Oct 2023 19:57:08 +0200
+Message-ID: <20231004175229.123448205@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -39,69 +36,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Ungerer <gerg@kernel.org>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-commit 7c3151585730b7095287be8162b846d31e6eee61 upstream.
+commit cc39f9ccb82426e576734b493e1777ea01b144a8 upstream.
 
-The elf-fdpic loader hard sets the process personality to either
-PER_LINUX_FDPIC for true elf-fdpic binaries or to PER_LINUX for normal ELF
-binaries (in this case they would be constant displacement compiled with
--pie for example).  The problem with that is that it will lose any other
-bits that may be in the ELF header personality (such as the "bug
-emulation" bits).
+Directly use tbo's start address will miss the domain start offset. Need
+to use gpu_offset instead.
 
-On the ARM architecture the ADDR_LIMIT_32BIT flag is used to signify a
-normal 32bit binary - as opposed to a legacy 26bit address binary.  This
-matters since start_thread() will set the ARM CPSR register as required
-based on this flag.  If the elf-fdpic loader loses this bit the process
-will be mis-configured and crash out pretty quickly.
-
-Modify elf-fdpic loader personality setting so that it preserves the upper
-three bytes by using the SET_PERSONALITY macro to set it.  This macro in
-the generic case sets PER_LINUX and preserves the upper bytes.
-Architectures can override this for their specific use case, and ARM does
-exactly this.
-
-The problem shows up quite easily running under qemu using the ARM
-architecture, but not necessarily on all types of real ARM hardware.  If
-the underlying ARM processor does not support the legacy 26-bit addressing
-mode then everything will work as expected.
-
-Link: https://lkml.kernel.org/r/20230907011808.2985083-1-gerg@kernel.org
-Fixes: 1bde925d23547 ("fs/binfmt_elf_fdpic.c: provide NOMMU loader for regular ELF binaries")
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Greg Ungerer <gerg@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf_fdpic.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -345,10 +345,9 @@ static int load_elf_fdpic_binary(struct
- 	/* there's now no turning back... the old userspace image is dead,
- 	 * defunct, deceased, etc.
- 	 */
-+	SET_PERSONALITY(exec_params.hdr);
- 	if (elf_check_fdpic(&exec_params.hdr))
--		set_personality(PER_LINUX_FDPIC);
--	else
--		set_personality(PER_LINUX);
-+		current->personality |= PER_LINUX_FDPIC;
- 	if (elf_read_implies_exec(&exec_params.hdr, executable_stack))
- 		current->personality |= READ_IMPLIES_EXEC;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -201,7 +201,7 @@ static int add_queue_mes(struct device_q
  
+ 	if (q->wptr_bo) {
+ 		wptr_addr_off = (uint64_t)q->properties.write_ptr & (PAGE_SIZE - 1);
+-		queue_input.wptr_mc_addr = ((uint64_t)q->wptr_bo->tbo.resource->start << PAGE_SHIFT) + wptr_addr_off;
++		queue_input.wptr_mc_addr = amdgpu_bo_gpu_offset(q->wptr_bo) + wptr_addr_off;
+ 	}
+ 
+ 	queue_input.is_kfd_process = 1;
 
 
