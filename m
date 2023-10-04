@@ -1,81 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE181D6B6
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:58 +0000 (UTC)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 084151D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TJu49l+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87608C433C8;
-	Wed,  4 Oct 2023 18:27:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444077;
-	bh=m+xpbdA0vjhfe0HDnpF3GTbVHd+aO8wdVxYA53wd4/w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TJu49l++7jB2XjE1Bf3EpIzIxMqUzhRDsSS6U0RSfTrYSlFZlr7E55DVnL04gIZl
-	 /ELXg1Um4p8lMrRwQ0UzJfASKpQDds7PQ3i8z7d0c6exXy0n2p6mPkB0MLrLBbg92u
-	 l297Oi8Qsro1In7OVzlptuJiweh6v+BlqS9m5AFE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 084/321] net: hns3: only enable unicast promisc when mac table full
-Date: Wed,  4 Oct 2023 19:53:49 +0200
-Message-ID: <20231004175233.102256037@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
-References: <20231004175229.211487444@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="E2F9qALp"
+Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
+	by linux.microsoft.com (Postfix) with ESMTPSA id CA79020B74C0;
+	Wed,  4 Oct 2023 11:27:56 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CA79020B74C0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1696444077;
+	bh=H3hpMWGvjGtlXIXotdjlxYcAB+MUrjLHbNTb9FjcgmM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=E2F9qALpVjKLHPt1qgbv6o+F2urPzDJk9C0SK7tHGJgziy2Xd+HvQ7t2Fz4EUlsOI
+	 /I01+rs+iUyXP9YNe6t2U0mQTx3zz0+vNEaFzjubblqGCdCOOn3JmzAiqzHzoLEcrX
+	 Ha+iNvKWADExxT2I7VlTuwbBJkw9wzTIoNOJUw2E=
+Message-ID: <c79ee00f-253d-40d5-9ed6-0f156dc4ebb1@linux.microsoft.com>
+Date: Wed, 4 Oct 2023 11:27:56 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in
+ hv_common.c
+Content-Language: en-US
+To: Alex Ionescu <aionescu@gmail.com>, Dexuan Cui <decui@microsoft.com>,
+ longli@microsoft.com, "Michael Kelley (LINUX)" <mikelley@microsoft.com>
+Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
+ kys@microsoft.com, wei.liu@kernel.org, gregkh@linuxfoundation.org,
+ haiyangz@microsoft.com, decui@microsoft.com, apais@linux.microsoft.com,
+ Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
+ mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
+ jinankjain@linux.microsoft.com, vkuznets@redhat.com, tglx@linutronix.de,
+ mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, hpa@zytor.com,
+ will@kernel.org, catalin.marinas@arm.com
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
+ <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+In-Reply-To: <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+On 10/2/2023 12:29 PM, Alex Ionescu wrote:
+> Hi Nuno,
+> 
+> Is it possible to simply change to always allocating the output page?
+> For example, the output page could be needed in scenarios where Linux
+> is not running as the root partition, since certain hypercalls that a
+> guest can make will still require one (I realize that's not the case
+> _today_, but I don't believe this optimization buys much).
 
-------------------
+I agree - it would indeed simplify the code, and guests will probably
+make use of it sooner or later.
 
-From: Jian Shen <shenjian15@huawei.com>
+Happy to make that change if Hyper-V guest maintainers agree.
+Long, Dexuan, Michael, what do you think?
 
-[ Upstream commit f2ed304922a55690529bcca59678dd92d7466ce8 ]
+Thanks,
+Nuno
 
-Currently, the driver will enable unicast promisc for the function
-once configure mac address fail. It's unreasonable when the failure
-is caused by using same mac address with other functions. So only
-enable unicast promisc when mac table full.
-
-Fixes: c631c696823c ("net: hns3: refactor the promisc mode setting")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index ce6b658a930cc..26e9fa9cc2cd3 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -8824,7 +8824,7 @@ static void hclge_update_overflow_flags(struct hclge_vport *vport,
- 	if (mac_type == HCLGE_MAC_ADDR_UC) {
- 		if (is_all_added)
- 			vport->overflow_promisc_flags &= ~HNAE3_OVERFLOW_UPE;
--		else
-+		else if (hclge_is_umv_space_full(vport, true))
- 			vport->overflow_promisc_flags |= HNAE3_OVERFLOW_UPE;
- 	} else {
- 		if (is_all_added)
--- 
-2.40.1
-
-
+> Best regards,
+> Alex Ionescu
+> 
+> 
+> On Fri, Sep 29, 2023 at 2:02 PM Nuno Das Neves
+> <nunodasneves@linux.microsoft.com> wrote:
+>>
+>> This is a more flexible approach for determining whether to allocate the
+>> output page.
+>>
+>> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+>> Acked-by: Wei Liu <wei.liu@kernel.org>
+>> ---
+>>   drivers/hv/hv_common.c | 21 +++++++++++++++++----
+>>   1 file changed, 17 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+>> index 39077841d518..3f6f23e4c579 100644
+>> --- a/drivers/hv/hv_common.c
+>> +++ b/drivers/hv/hv_common.c
+>> @@ -58,6 +58,14 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
+>>   void * __percpu *hyperv_pcpu_output_arg;
+>>   EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+>>
+>> +/*
+>> + * Determine whether output arg is needed
+>> + */
+>> +static inline bool hv_output_arg_exists(void)
+>> +{
+>> +       return hv_root_partition ? true : false;
+>> +}
+>> +
+>>   static void hv_kmsg_dump_unregister(void);
+>>
+>>   static struct ctl_table_header *hv_ctl_table_hdr;
+>> @@ -342,10 +350,12 @@ int __init hv_common_init(void)
+>>          hyperv_pcpu_input_arg = alloc_percpu(void  *);
+>>          BUG_ON(!hyperv_pcpu_input_arg);
+>>
+>> -       /* Allocate the per-CPU state for output arg for root */
+>> -       if (hv_root_partition) {
+>> +       if (hv_output_arg_exists()) {
+>>                  hyperv_pcpu_output_arg = alloc_percpu(void *);
+>>                  BUG_ON(!hyperv_pcpu_output_arg);
+>> +       }
+>> +
+>> +       if (hv_root_partition) {
+>>                  hv_synic_eventring_tail = alloc_percpu(u8 *);
+>>                  BUG_ON(hv_synic_eventring_tail == NULL);
+>>          }
+>> @@ -375,7 +385,7 @@ int hv_common_cpu_init(unsigned int cpu)
+>>          u8 **synic_eventring_tail;
+>>          u64 msr_vp_index;
+>>          gfp_t flags;
+>> -       int pgcount = hv_root_partition ? 2 : 1;
+>> +       int pgcount = hv_output_arg_exists() ? 2 : 1;
+>>          void *mem;
+>>          int ret;
+>>
+>> @@ -393,9 +403,12 @@ int hv_common_cpu_init(unsigned int cpu)
+>>                  if (!mem)
+>>                          return -ENOMEM;
+>>
+>> -               if (hv_root_partition) {
+>> +               if (hv_output_arg_exists()) {
+>>                          outputarg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
+>>                          *outputarg = (char *)mem + HV_HYP_PAGE_SIZE;
+>> +               }
+>> +
+>> +               if (hv_root_partition) {
+>>                          synic_eventring_tail = (u8 **)this_cpu_ptr(hv_synic_eventring_tail);
+>>                          *synic_eventring_tail = kcalloc(HV_SYNIC_SINT_COUNT, sizeof(u8),
+>>                                                          flags);
+>> --
+>> 2.25.1
+>>
+>>
 
