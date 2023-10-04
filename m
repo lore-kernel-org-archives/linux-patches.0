@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9337D1DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B931DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqe0a6Cj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1227AC433C8;
-	Wed,  4 Oct 2023 18:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQhe4By8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E904BC433CC;
+	Wed,  4 Oct 2023 18:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444154;
-	bh=FMDinPtqb7+KctuzoDP51lE8htaYs12N/yg2HmFppz4=;
+	s=korg; t=1696444157;
+	bh=W93KSp9Qi+uhss7x2bs9FmNp7DHJYMbMNbVs7JM93+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqe0a6CjxMtMsSidZykMmGX/xSxBwwYdFO6Pd5C8FwDqi5aupaCj5pjlJTP3FMZmY
-	 ikL/jZDaxe3Q8Tf/sk//4fom3P/ynrjX2hDDxZh6LhT4AIaU6ctRfrkERoqvqiJc4o
-	 LpVp6zljRo9UqmANXSj13IC4nJhnep1oOVlYP778=
+	b=ZQhe4By8qus8gdUIl8SxqxvJn2gn1eWcL7gQ2VPMkowLhKyxj9DGBIoobt4INyU07
+	 a/b1DwAmzAjuK1LzJoZa2bPhT1xpDZHmjVZ3oRQdIiBGjKlbkastcHqwmuXpYfEvqp
+	 hnEyYbsNdiedIfjnj5BBlnJEedwZRB4iNHUb80rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Kearney <charles.kearney@hpe.com>,
-	Mark Brown <broonie@kernel.org>,
+	Julien Panis <jpanis@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 120/321] spi: spi-gxp: BUG: Correct spi write return value
-Date: Wed,  4 Oct 2023 19:54:25 +0200
-Message-ID: <20231004175234.790194065@linuxfoundation.org>
+Subject: [PATCH 6.5 121/321] bus: ti-sysc: Use fsleep() instead of usleep_range() in sysc_reset()
+Date: Wed,  4 Oct 2023 19:54:26 +0200
+Message-ID: <20231004175234.837508652@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,36 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Kearney <charles.kearney@hpe.com>
+From: Julien Panis <jpanis@baylibre.com>
 
-[ Upstream commit 1a8196a93e493c0a50b800cb09cef60b124eee15 ]
+[ Upstream commit d929b2b7464f95ec01e47f560b1e687482ba8929 ]
 
-Bug fix to correct return value of gxp_spi_write function to zero.
-Completion of succesful operation should return zero.
+The am335x-evm started producing boot errors because of subtle timing
+changes:
 
-Fixes: 730bc8ba5e9e spi: spi-gxp: Add support for HPE GXP SoCs
+Unhandled fault: external abort on non-linefetch (0x1008) at 0xf03c1010
+...
+sysc_reset from sysc_probe+0xf60/0x1514
+sysc_probe from platform_probe+0x5c/0xbc
+...
 
-Signed-off-by: Charles Kearney <charles.kearney@hpe.com>
-Link: https://lore.kernel.org/r/20230920215339.4125856-2-charles.kearney@hpe.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The fix consists in using the appropriate sleep function in sysc reset.
+For flexible sleeping, fsleep is recommended. Here, sysc delay parameter
+can take any value in [0 - 255] us range. As a result, fsleep() should
+be used, calling udelay() for a sysc delay lower than 10 us.
+
+Signed-off-by: Julien Panis <jpanis@baylibre.com>
+Fixes: e709ed70d122 ("bus: ti-sysc: Fix missing reset delay handling")
+Message-ID: <20230821-fix-ti-sysc-reset-v1-1-5a0a5d8fae55@baylibre.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-gxp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/ti-sysc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-gxp.c b/drivers/spi/spi-gxp.c
-index 684d63f402f34..aba08d06c251c 100644
---- a/drivers/spi/spi-gxp.c
-+++ b/drivers/spi/spi-gxp.c
-@@ -195,7 +195,7 @@ static ssize_t gxp_spi_write(struct gxp_spi_chip *chip, const struct spi_mem_op
- 		return ret;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 9766dbf607f97..76116a9f6f87e 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2149,8 +2149,7 @@ static int sysc_reset(struct sysc *ddata)
  	}
  
--	return write_len;
-+	return 0;
- }
+ 	if (ddata->cfg.srst_udelay)
+-		usleep_range(ddata->cfg.srst_udelay,
+-			     ddata->cfg.srst_udelay * 2);
++		fsleep(ddata->cfg.srst_udelay);
  
- static int do_gxp_exec_mem_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 	if (ddata->post_reset_quirk)
+ 		ddata->post_reset_quirk(ddata);
 -- 
 2.40.1
 
