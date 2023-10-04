@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF4F1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ADC1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD69C433C7;
-	Wed,  4 Oct 2023 18:06:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35CAC433C8;
+	Wed,  4 Oct 2023 18:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442781;
-	bh=SmGB1ffLIyz4J5PzOgQ3QPpMC+81jSd1NQcs7FHHmuY=;
+	s=korg; t=1696442784;
+	bh=GXBByhq0YBShr1fh1TJSTur68iDnKVQwK3yuLRitksY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ts90ENR1hqGCCu6/+wSCDVI+jXJRn8253OpoE1ytVy3xhzlZW6MPq5aESzbvIAbnV
-	 JXs4dXPfQ2Vz0UkG40xwwkPxExQcmvYtoODMYVyrwp0mKOx/+qmktYfabxGfb8R+ZF
-	 gzJogL1StEShJC+plksTtCe2cq5J5QKDieBkKH3E=
+	b=j2Gz3VFjT0DrLX/lKopPGCOUjjVOtQOPY8rZ9f4wfi4Iyjh5zYEnIM4k7noXJY3dj
+	 P33G8q013fxdQ4NBBWa+j1+2fignesMB4Q5KXN0XySnt5IEiS38DgDs0v7V+Mz3Aej
+	 IbwTOENMoqbljjngSfRhZYBJDpm29EWQowiOODRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Rossi <nathan.rossi@digi.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Wenhua Lin <Wenhua.Lin@unisoc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/183] soc: imx8m: Enable OCOTP clock for imx8mm before reading registers
-Date: Wed,  4 Oct 2023 19:55:38 +0200
-Message-ID: <20231004175208.380610877@linuxfoundation.org>
+Subject: [PATCH 5.15 108/183] gpio: pmic-eic-sprd: Add can_sleep flag for PMIC EIC chip
+Date: Wed,  4 Oct 2023 19:55:39 +0200
+Message-ID: <20231004175208.431087633@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,63 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Rossi <nathan.rossi@digi.com>
+From: Wenhua Lin <Wenhua.Lin@unisoc.com>
 
-[ Upstream commit 9d1e8275a28f51599d754ce661c91e0a689c0234 ]
+[ Upstream commit 26d9e5640d2130ee16df7b1fb6a908f460ab004c ]
 
-Commit 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the
-register") added configuration to enable the OCOTP clock before
-attempting to read from the associated registers.
+The drivers uses a mutex and I2C bus access in its PMIC EIC chip
+get implementation. This means these functions can sleep and the PMIC EIC
+chip should set the can_sleep property to true.
 
-This same kexec issue is present with the imx8m SoCs that use the
-imx8mm_soc_uid function (e.g. imx8mp). This requires the imx8mm_soc_uid
-function to configure the OCOTP clock before accessing the associated
-registers. This change implements the same clock enable functionality
-that is present in the imx8mq_soc_revision function for the
-imx8mm_soc_uid function.
+This will ensure that a warning is printed when trying to get the
+value from a context that potentially can't sleep.
 
-Signed-off-by: Nathan Rossi <nathan.rossi@digi.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 348f3cde84ab ("gpio: Add Spreadtrum PMIC EIC driver support")
+Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpio/gpio-pmic-eic-sprd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 32ed9dc88e455..08197b03955dd 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -100,6 +100,7 @@ static void __init imx8mm_soc_uid(void)
- {
- 	void __iomem *ocotp_base;
- 	struct device_node *np;
-+	struct clk *clk;
- 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
- 		     IMX8MP_OCOTP_UID_OFFSET : 0;
+diff --git a/drivers/gpio/gpio-pmic-eic-sprd.c b/drivers/gpio/gpio-pmic-eic-sprd.c
+index 9382851905662..e969ce9131ddf 100644
+--- a/drivers/gpio/gpio-pmic-eic-sprd.c
++++ b/drivers/gpio/gpio-pmic-eic-sprd.c
+@@ -338,6 +338,7 @@ static int sprd_pmic_eic_probe(struct platform_device *pdev)
+ 	pmic_eic->chip.set_config = sprd_pmic_eic_set_config;
+ 	pmic_eic->chip.set = sprd_pmic_eic_set;
+ 	pmic_eic->chip.get = sprd_pmic_eic_get;
++	pmic_eic->chip.can_sleep = true;
  
-@@ -109,11 +110,20 @@ static void __init imx8mm_soc_uid(void)
- 
- 	ocotp_base = of_iomap(np, 0);
- 	WARN_ON(!ocotp_base);
-+	clk = of_clk_get_by_name(np, NULL);
-+	if (IS_ERR(clk)) {
-+		WARN_ON(IS_ERR(clk));
-+		return;
-+	}
-+
-+	clk_prepare_enable(clk);
- 
- 	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
- 
-+	clk_disable_unprepare(clk);
-+	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
- }
+ 	pmic_eic->intc.name = dev_name(&pdev->dev);
+ 	pmic_eic->intc.irq_mask = sprd_pmic_eic_irq_mask;
 -- 
 2.40.1
 
