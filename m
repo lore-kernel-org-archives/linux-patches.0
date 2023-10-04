@@ -1,26 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1561D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4063C433C8;
-	Wed,  4 Oct 2023 18:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227031D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65246C433C8;
+	Wed,  4 Oct 2023 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443009;
-	bh=r+slVaWufFnxsSDL/u8ruvVFOiJPnB5iBaayfhK74Io=;
+	s=korg; t=1696443012;
+	bh=2nr6hw1t/kAGiTdEmk2oWVusqtPeuDrJdErtN+GXjjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVc+GJBc97GjBNAbgZzN2/JRuhlrhE+Wx1poaTcvxzHRxygD1gX9bfYcIOEoRkT8G
-	 P11KlrJLe6DeiWxuFnyM63DmQFXRGpkwCiA7yFdt5IzyHkn0YqdA7cI3aJtLoMmxoM
-	 G9d8CIwQWCXHfvpYadHEddv6qNJG0v68AiPHzMII=
+	b=okimJ2MiYdHytQAe9HoQcOGiyriow6qeCI1wMJL/c5Ubqw0qtJUqo5tpLhLzae6YI
+	 qel46SPHfl4B339fxpx/3fPsE6jRWy+HGSOJSHwxS2yilmErtWdiO4zoj1nK/u/NMk
+	 SnZ1bvSB5+zQVDyTsdD/NBuvwmu05+o072lbqFYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 5.15 160/183] Revert "tty: n_gsm: fix UAF in gsm_cleanup_mux"
-Date: Wed,  4 Oct 2023 19:56:31 +0200
-Message-ID: <20231004175210.723955147@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Caleb Biggers <caleb.biggers@intel.com>,
+	Florian Fischer <florian.fischer@muhq.space>,
+	Ian Rogers <rogers.email@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Garry <john.garry@huawei.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Kshipra Bopardikar <kshipra.bopardikar@intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Perry Taylor <perry.taylor@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 151/183] perf metric: Return early if no CPU PMU table exists
+Date: Wed,  4 Oct 2023 19:56:22 +0200
+Message-ID: <20231004175210.345761271@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -39,68 +59,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 29346e217b8ab8a52889b88f00b268278d6b7668 upstream.
+[ Upstream commit 3f5df3ac646e21a79a421ae4037c4ef0632bcaa9 ]
 
-This reverts commit 9b9c8195f3f0d74a826077fc1c01b9ee74907239.
+Previous behavior is to segfault if there is no CPU PMU table and a
+metric is sought. To reproduce compile with NO_JEVENTS=1 then request a
+metric, for example, "perf stat -M IPC true".
 
-The commit above is reverted as it did not solve the original issue.
+Committer testing:
 
-gsm_cleanup_mux() tries to free up the virtual ttys by calling
-gsm_dlci_release() for each available DLCI. There, dlci_put() is called to
-decrease the reference counter for the DLCI via tty_port_put() which
-finally calls gsm_dlci_free(). This already clears the pointer which is
-being checked in gsm_cleanup_mux() before calling gsm_dlci_release().
-Therefore, it is not necessary to clear this pointer in gsm_cleanup_mux()
-as done in the reverted commit. The commit introduces a null pointer
-dereference:
- <TASK>
- ? __die+0x1f/0x70
- ? page_fault_oops+0x156/0x420
- ? search_exception_tables+0x37/0x50
- ? fixup_exception+0x21/0x310
- ? exc_page_fault+0x69/0x150
- ? asm_exc_page_fault+0x26/0x30
- ? tty_port_put+0x19/0xa0
- gsmtty_cleanup+0x29/0x80 [n_gsm]
- release_one_tty+0x37/0xe0
- process_one_work+0x1e6/0x3e0
- worker_thread+0x4c/0x3d0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe1/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2f/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
+Before:
 
-The actual issue is that nothing guards dlci_put() from being called
-multiple times while the tty driver was triggered but did not yet finished
-calling gsm_dlci_free().
+  $ make -k NO_JEVENTS=1 BUILD_BPF_SKEL=1 O=/tmp/build/perf-urgent -C tools/perf install-bin
+  $ perf stat -M IPC true
+  Segmentation fault (core dumped)
+  $
 
-Fixes: 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20230914051507.3240-1-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+After:
+
+  $ perf stat -M IPC true
+
+   Usage: perf stat [<options>] [<command>]
+
+      -M, --metrics <metric/metric group list>
+                            monitor specified metrics or metric groups (separated by ,)
+  $
+
+Fixes: 00facc760903be66 ("perf jevents: Switch build to use jevents.py")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Caleb Biggers <caleb.biggers@intel.com>
+Cc: Florian Fischer <florian.fischer@muhq.space>
+Cc: Ian Rogers <rogers.email@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Garry <john.garry@huawei.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Kshipra Bopardikar <kshipra.bopardikar@intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Perry Taylor <perry.taylor@intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
+Link: https://lore.kernel.org/r/20220830164846.401143-3-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/perf/util/metricgroup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -2412,10 +2412,8 @@ static void gsm_cleanup_mux(struct gsm_m
- 		gsm->has_devices = false;
- 	}
- 	for (i = NUM_DLCI - 1; i >= 0; i--)
--		if (gsm->dlci[i]) {
-+		if (gsm->dlci[i])
- 			gsm_dlci_release(gsm->dlci[i]);
--			gsm->dlci[i] = NULL;
--		}
- 	mutex_unlock(&gsm->mutex);
- 	/* Now wipe the queues */
- 	tty_ldisc_flush(gsm->tty);
+diff --git a/tools/perf/util/metricgroup.c b/tools/perf/util/metricgroup.c
+index 29b747ac31c12..ee6c5582681bd 100644
+--- a/tools/perf/util/metricgroup.c
++++ b/tools/perf/util/metricgroup.c
+@@ -1258,6 +1258,9 @@ int metricgroup__parse_groups(const struct option *opt,
+ 	struct evlist *perf_evlist = *(struct evlist **)opt->value;
+ 	struct pmu_events_map *map = pmu_events_map__find();
+ 
++	if (!table)
++		return -EINVAL;
++
+ 	return parse_groups(perf_evlist, str, metric_no_group,
+ 			    metric_no_merge, NULL, metric_events, map);
+ }
+-- 
+2.40.1
+
 
 
