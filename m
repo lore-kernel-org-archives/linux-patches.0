@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AC91D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B5AC433C9;
-	Wed,  4 Oct 2023 18:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39AA1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:02:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B936C433C9;
+	Wed,  4 Oct 2023 18:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442534;
-	bh=zt0FUyqNz36SniKAJ3MKllIyjiUUxLCuVJFUAftqAXY=;
+	s=korg; t=1696442537;
+	bh=J/dA9Di1OvbhuFh8EDaUpRBftdRhXwatyldbezyqyO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbnUtk/zib05wxiXxlD03e2HJf9rxhxOedPyLIexV6lbH7ZA9XQzjbsbYVhUTzay2
-	 20Xe9H3LsmW9IEYMYsfVK5hVSx4nGXgl/XwqkMVenL3t6rCHffWjzGxOA2SvqXDb2q
-	 MC0iNSAP4DC3B25OBa4fIoXrJGcELpZ0d5Yh7mwk=
+	b=vlKzPuhlT3aeCwEuF8BiZdAFV6SKazUtQZtfYgzSz8ei6uwhg8hPXRXpHno+JDwMm
+	 hw0qA07zWUQl29kNQKFSleK6cXECC9khSnCwCrFv0HlNqPK+rJx1Zn+U9VtP5daF/8
+	 uVhdsAnChmoxf8Pp+lW2SSj8lvdvX96wc0s/QucI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/183] NFS: More fixes for nfs_direct_write_reschedule_io()
-Date: Wed,  4 Oct 2023 19:53:53 +0200
-Message-ID: <20231004175204.072028976@linuxfoundation.org>
+Subject: [PATCH 5.15 020/183] netfilter: nft_set_hash: mark set element as dead when deleting from packet path
+Date: Wed,  4 Oct 2023 19:54:11 +0200
+Message-ID: <20231004175204.811645645@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -40,53 +39,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b11243f720ee5f9376861099019c8542969b6318 ]
+upstream c92db3030492b8ad1d0faace7a93bbcf53850d0c commit.
 
-Ensure that all requests are put back onto the commit list so that they
-can be rescheduled.
+Set on the NFT_SET_ELEM_DEAD_BIT flag on this element, instead of
+performing element removal which might race with an ongoing transaction.
+Enable gc when dynamic flag is set on since dynset deletion requires
+garbage collection after this patch.
 
-Fixes: 4daaeba93822 ("NFS: Fix nfs_direct_write_reschedule_io()")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: d0a8d877da97 ("netfilter: nft_dynset: support for element deletion")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/netfilter/nft_set_hash.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 5d86ffa72ceab..bbe2a5cc49f68 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -786,16 +786,21 @@ static void nfs_write_sync_pgio_error(struct list_head *head, int error)
- static void nfs_direct_write_reschedule_io(struct nfs_pgio_header *hdr)
- {
- 	struct nfs_direct_req *dreq = hdr->dreq;
-+	struct nfs_page *req;
-+	struct nfs_commit_info cinfo;
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 2f067e4596b02..cef5df8460009 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -249,7 +249,9 @@ static bool nft_rhash_delete(const struct nft_set *set,
+ 	if (he == NULL)
+ 		return false;
  
-+	nfs_init_cinfo_from_dreq(&cinfo, dreq);
- 	spin_lock(&dreq->lock);
--	if (dreq->error == 0) {
-+	if (dreq->error == 0)
- 		dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
--		/* fake unstable write to let common nfs resend pages */
--		hdr->verf.committed = NFS_UNSTABLE;
--		hdr->good_bytes = hdr->args.offset + hdr->args.count -
--			hdr->io_start;
--	}
-+	set_bit(NFS_IOHDR_REDO, &hdr->flags);
- 	spin_unlock(&dreq->lock);
-+	while (!list_empty(&hdr->pages)) {
-+		req = nfs_list_entry(hdr->pages.next);
-+		nfs_list_remove_request(req);
-+		nfs_unlock_request(req);
-+		nfs_mark_request_commit(req, NULL, &cinfo, 0);
-+	}
+-	return rhashtable_remove_fast(&priv->ht, &he->node, nft_rhash_params) == 0;
++	nft_set_elem_dead(&he->ext);
++
++	return true;
  }
  
- static const struct nfs_pgio_completion_ops nfs_direct_write_completion_ops = {
+ static void nft_rhash_walk(const struct nft_ctx *ctx, struct nft_set *set,
+@@ -412,7 +414,7 @@ static int nft_rhash_init(const struct nft_set *set,
+ 		return err;
+ 
+ 	INIT_DEFERRABLE_WORK(&priv->gc_work, nft_rhash_gc);
+-	if (set->flags & NFT_SET_TIMEOUT)
++	if (set->flags & (NFT_SET_TIMEOUT | NFT_SET_EVAL))
+ 		nft_rhash_gc_init(set);
+ 
+ 	return 0;
 -- 
 2.40.1
 
