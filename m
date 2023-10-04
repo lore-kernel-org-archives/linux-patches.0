@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66621C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0C1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shTLQrYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57469C433C9;
-	Wed,  4 Oct 2023 18:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpQ6XfZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EA0C433C8;
+	Wed,  4 Oct 2023 18:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444554;
-	bh=Znwu/vqcd9l/Y56R0dpQyfqY/smlUU24ySWPOQLwXDI=;
+	s=korg; t=1696444557;
+	bh=gk5Oz1ODp6hAFbHacPpLpkxkSBPtJ2uyS7V4Et/Uaus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shTLQrYuf0gYNQjV+B+srX758rTg0vNqmt4UgX6S979qgKeHaooT+fQLSDGNYgGL0
-	 ajER+dQgGzgDiEY10QkUzVUhE+BIN1M5fH4Km69HAlvQvng/MbA6yQelmQ52LOxVU8
-	 sKIYvADTdS8lVMl+mGDyIEnagWDg2CBfiCaCJcEk=
+	b=OpQ6XfZg9F22/Ob4Gl0CxThO6Xs/b4rXOiQqFi5KRkNYTI/jAHICWDE0TqjF6PSfF
+	 hpMA0xHETfMX34eYH7hJReNSMPtGlbfTxeXN+0W4TbFD6F3I3wOIvK9Zp/yqwAVsZe
+	 JDw79x5JAq5z+VduZjt8uIpX85nfJtYlnol1igIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Christoph Hellwig <hch@lst.de>,
-	Bernd Schubert <bschubert@ddn.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 291/321] btrfs: file_remove_privs needs an exclusive lock in direct io write
-Date: Wed,  4 Oct 2023 19:57:16 +0200
-Message-ID: <20231004175242.755083607@linuxfoundation.org>
+Subject: [PATCH 6.5 292/321] btrfs: set last dir index to the current last index when opening dir
+Date: Wed,  4 Oct 2023 19:57:17 +0200
+Message-ID: <20231004175242.811533902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,59 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernd Schubert <bschubert@ddn.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 9af86694fd5d387992699ec99007ed374966ce9a upstream.
+commit 357950361cbc6d54fb68ed878265c647384684ae upstream.
 
-This was noticed by Miklos that file_remove_privs might call into
-notify_change(), which requires to hold an exclusive lock. The problem
-exists in FUSE and btrfs. We can fix it without any additional helpers
-from VFS, in case the privileges would need to be dropped, change the
-lock type to be exclusive and redo the loop.
+When opening a directory for reading it, we set the last index where we
+stop iteration to the value in struct btrfs_inode::index_cnt. That value
+does not match the index of the most recently added directory entry but
+it's instead the index number that will be assigned the next directory
+entry.
 
-Fixes: e9adabb9712e ("btrfs: use shared lock for direct writes within EOF")
-CC: Miklos Szeredi <miklos@szeredi.hu>
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Bernd Schubert <bschubert@ddn.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+This means that if after the call to opendir(3) new directory entries are
+added, a readdir(3) call will return the first new directory entry. This
+is fine because POSIX says the following [1]:
+
+  "If a file is removed from or added to the directory after the most
+   recent call to opendir() or rewinddir(), whether a subsequent call to
+   readdir() returns an entry for that file is unspecified."
+
+For example for the test script from commit 9b378f6ad48c ("btrfs: fix
+infinite directory reads"), where we have 2000 files in a directory, ext4
+doesn't return any new directory entry after opendir(3), while xfs returns
+the first 13 new directory entries added after the opendir(3) call.
+
+If we move to a shorter example with an empty directory when opendir(3) is
+called, and 2 files added to the directory after the opendir(3) call, then
+readdir(3) on btrfs will return the first file, ext4 and xfs return the 2
+files (but in a different order). A test program for this, reported by
+Ian Johnson, is the following:
+
+   #include <dirent.h>
+   #include <stdio.h>
+
+   int main(void) {
+     DIR *dir = opendir("test");
+
+     FILE *file;
+     file = fopen("test/1", "w");
+     fwrite("1", 1, 1, file);
+     fclose(file);
+
+     file = fopen("test/2", "w");
+     fwrite("2", 1, 1, file);
+     fclose(file);
+
+     struct dirent *entry;
+     while ((entry = readdir(dir))) {
+        printf("%s\n", entry->d_name);
+     }
+     closedir(dir);
+     return 0;
+   }
+
+To make this less odd, change the behaviour to never return new entries
+that were added after the opendir(3) call. This is done by setting the
+last_index field of the struct btrfs_file_private attached to the
+directory's file handle with a value matching btrfs_inode::index_cnt
+minus 1, since that value always matches the index of the next new
+directory entry and not the index of the most recently added entry.
+
+[1] https://pubs.opengroup.org/onlinepubs/007904875/functions/readdir_r.html
+
+Link: https://lore.kernel.org/linux-btrfs/YR1P0S.NGASEG570GJ8@ianjohnson.dev/
+CC: stable@vger.kernel.org # 6.5+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1466,8 +1466,13 @@ static ssize_t btrfs_direct_write(struct
- 	if (iocb->ki_flags & IOCB_NOWAIT)
- 		ilock_flags |= BTRFS_ILOCK_TRY;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -5942,7 +5942,8 @@ static int btrfs_get_dir_last_index(stru
+ 		}
+ 	}
  
--	/* If the write DIO is within EOF, use a shared lock */
--	if (iocb->ki_pos + iov_iter_count(from) <= i_size_read(inode))
-+	/*
-+	 * If the write DIO is within EOF, use a shared lock and also only if
-+	 * security bits will likely not be dropped by file_remove_privs() called
-+	 * from btrfs_write_check(). Either will need to be rechecked after the
-+	 * lock was acquired.
-+	 */
-+	if (iocb->ki_pos + iov_iter_count(from) <= i_size_read(inode) && IS_NOSEC(inode))
- 		ilock_flags |= BTRFS_ILOCK_SHARED;
+-	*index = dir->index_cnt;
++	/* index_cnt is the index number of next new entry, so decrement it. */
++	*index = dir->index_cnt - 1;
  
- relock:
-@@ -1475,6 +1480,13 @@ relock:
- 	if (err < 0)
- 		return err;
- 
-+	/* Shared lock cannot be used with security bits set. */
-+	if ((ilock_flags & BTRFS_ILOCK_SHARED) && !IS_NOSEC(inode)) {
-+		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
-+		ilock_flags &= ~BTRFS_ILOCK_SHARED;
-+		goto relock;
-+	}
-+
- 	err = generic_write_checks(iocb, from);
- 	if (err <= 0) {
- 		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
+ 	return 0;
+ }
 
 
