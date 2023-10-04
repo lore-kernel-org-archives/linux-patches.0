@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656C21C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8BA1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKx05LN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9748C433C9;
-	Wed,  4 Oct 2023 18:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SG0Cky3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A196DC433C7;
+	Wed,  4 Oct 2023 18:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444532;
-	bh=WB4WvxigOz/70Em9FBW5iFSYdtgAQZyAAaZ7zsCFCe0=;
+	s=korg; t=1696444535;
+	bh=4+egCyYuR4IUipqCIaDW5Wps7mp/K+izVoMt9GxTuY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKx05LN9FEJwvxEzLg0nAYWCUIS4uDoyJ8AlB6kyOcPFZ9SvhDjFwapVYlXM7hH6u
-	 9tnhjBQXMdaLf1rN586X6h2YK9uI38mim9M1o9+N5PAf3CzvNKqVlVws2MvN7j+es/
-	 20W+tPxUxBL3tKb6wA02gtePIUiQKQc55OJ1SgKg=
+	b=SG0Cky3IwXOmsoTahivrpoGVsi4ybD2Fgmq/K+2kjzMVZ+3mRbGWBIgqlldaW7q9r
+	 1hpAHzkQ6oKuTvMPrQcohUpdZJcUmAKkrbsQIB5mQyY8YRAL3uGv3ZLxLPfUqcZRfa
+	 zYTF2WXOhjsx5QA1ZTfSeHZRcQUwNdXfTwOkIdnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Joe Liu <joe.liu@mediatek.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Breno Leitao <leitao@debian.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <songmuchun@bytedance.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 284/321] mm: page_alloc: fix CMA and HIGHATOMIC landing on the wrong buddy list
-Date: Wed,  4 Oct 2023 19:57:09 +0200
-Message-ID: <20231004175242.432811426@linuxfoundation.org>
+Subject: [PATCH 6.5 285/321] mm: memcontrol: fix GFP_NOFS recursion in memory.high enforcement
+Date: Wed,  4 Oct 2023 19:57:10 +0200
+Message-ID: <20231004175242.481996581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -45,86 +49,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 7b086755fb8cdbb6b3e45a1bbddc00e7f9b1dc03 upstream.
+commit 9ea9cb00a82b53ec39630eac718776d37e41b35a upstream.
 
-Commit 4b23a68f9536 ("mm/page_alloc: protect PCP lists with a spinlock")
-bypasses the pcplist on lock contention and returns the page directly to
-the buddy list of the page's migratetype.
+Breno and Josef report a deadlock scenario from cgroup reclaim
+re-entering the filesystem:
 
-For pages that don't have their own pcplist, such as CMA and HIGHATOMIC,
-the migratetype is temporarily updated such that the page can hitch a ride
-on the MOVABLE pcplist.  Their true type is later reassessed when flushing
-in free_pcppages_bulk().  However, when lock contention is detected after
-the type was already overridden, the bypass will then put the page on the
-wrong buddy list.
+[  361.546690] ======================================================
+[  361.559210] WARNING: possible circular locking dependency detected
+[  361.571703] 6.5.0-0_fbk700_debug_rc0_kbuilder_13159_gbf787a128001 #1 Tainted: G S          E
+[  361.589704] ------------------------------------------------------
+[  361.602277] find/9315 is trying to acquire lock:
+[  361.611625] ffff88837ba140c0 (&delayed_node->mutex){+.+.}-{4:4}, at: __btrfs_release_delayed_node+0x68/0x4f0
+[  361.631437]
+[  361.631437] but task is already holding lock:
+[  361.643243] ffff8881765b8678 (btrfs-tree-01){++++}-{4:4}, at: btrfs_tree_read_lock+0x1e/0x40
 
-Once on the MOVABLE buddy list, the page becomes eligible for fallbacks
-and even stealing.  In the case of HIGHATOMIC, otherwise ineligible
-allocations can dip into the highatomic reserves.  In the case of CMA, the
-page can be lost from the CMA region permanently.
+[  362.904457]  mutex_lock_nested+0x1c/0x30
+[  362.912414]  __btrfs_release_delayed_node+0x68/0x4f0
+[  362.922460]  btrfs_evict_inode+0x301/0x770
+[  362.982726]  evict+0x17c/0x380
+[  362.988944]  prune_icache_sb+0x100/0x1d0
+[  363.005559]  super_cache_scan+0x1f8/0x260
+[  363.013695]  do_shrink_slab+0x2a2/0x540
+[  363.021489]  shrink_slab_memcg+0x237/0x3d0
+[  363.050606]  shrink_slab+0xa7/0x240
+[  363.083382]  shrink_node_memcgs+0x262/0x3b0
+[  363.091870]  shrink_node+0x1a4/0x720
+[  363.099150]  shrink_zones+0x1f6/0x5d0
+[  363.148798]  do_try_to_free_pages+0x19b/0x5e0
+[  363.157633]  try_to_free_mem_cgroup_pages+0x266/0x370
+[  363.190575]  reclaim_high+0x16f/0x1f0
+[  363.208409]  mem_cgroup_handle_over_high+0x10b/0x270
+[  363.246678]  try_charge_memcg+0xaf2/0xc70
+[  363.304151]  charge_memcg+0xf0/0x350
+[  363.320070]  __mem_cgroup_charge+0x28/0x40
+[  363.328371]  __filemap_add_folio+0x870/0xd50
+[  363.371303]  filemap_add_folio+0xdd/0x310
+[  363.399696]  __filemap_get_folio+0x2fc/0x7d0
+[  363.419086]  pagecache_get_page+0xe/0x30
+[  363.427048]  alloc_extent_buffer+0x1cd/0x6a0
+[  363.435704]  read_tree_block+0x43/0xc0
+[  363.443316]  read_block_for_search+0x361/0x510
+[  363.466690]  btrfs_search_slot+0xc8c/0x1520
 
-Use a separate pcpmigratetype variable for the pcplist override.  Use the
-original migratetype when going directly to the buddy.  This fixes the bug
-and should make the intentions more obvious in the code.
+This is caused by the mem_cgroup_handle_over_high() not respecting the
+gfp_mask of the allocation context.  We used to only call this function on
+resume to userspace, where no locks were held.  But c9afe31ec443 ("memcg:
+synchronously enforce memory.high for large overcharges") added a call
+from the allocation context without considering the gfp.
 
-Originally sent here to address the HIGHATOMIC case:
-https://lore.kernel.org/lkml/20230821183733.106619-4-hannes@cmpxchg.org/
-
-Changelog updated in response to the CMA-specific bug report.
-
-[mgorman@techsingularity.net: updated changelog]
-Link: https://lkml.kernel.org/r/20230911181108.GA104295@cmpxchg.org
-Fixes: 4b23a68f9536 ("mm/page_alloc: protect PCP lists with a spinlock")
+Link: https://lkml.kernel.org/r/20230914152139.100822-1-hannes@cmpxchg.org
+Fixes: c9afe31ec443 ("memcg: synchronously enforce memory.high for large overcharges")
 Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reported-by: Joe Liu <joe.liu@mediatek.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>	[5.17+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/linux/memcontrol.h       |    4 ++--
+ include/linux/resume_user_mode.h |    2 +-
+ mm/memcontrol.c                  |    6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -2438,7 +2438,7 @@ void free_unref_page(struct page *page,
- 	struct per_cpu_pages *pcp;
- 	struct zone *zone;
- 	unsigned long pfn = page_to_pfn(page);
--	int migratetype;
-+	int migratetype, pcpmigratetype;
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -919,7 +919,7 @@ unsigned long mem_cgroup_get_zone_lru_si
+ 	return READ_ONCE(mz->lru_zone_size[zone_idx][lru]);
+ }
  
- 	if (!free_unref_page_prepare(page, pfn, order))
- 		return;
-@@ -2446,24 +2446,24 @@ void free_unref_page(struct page *page,
- 	/*
- 	 * We only track unmovable, reclaimable and movable on pcp lists.
- 	 * Place ISOLATE pages on the isolated list because they are being
--	 * offlined but treat HIGHATOMIC as movable pages so we can get those
--	 * areas back if necessary. Otherwise, we may have to free
-+	 * offlined but treat HIGHATOMIC and CMA as movable pages so we can
-+	 * get those areas back if necessary. Otherwise, we may have to free
- 	 * excessively into the page allocator
- 	 */
--	migratetype = get_pcppage_migratetype(page);
-+	migratetype = pcpmigratetype = get_pcppage_migratetype(page);
- 	if (unlikely(migratetype >= MIGRATE_PCPTYPES)) {
- 		if (unlikely(is_migrate_isolate(migratetype))) {
- 			free_one_page(page_zone(page), page, pfn, order, migratetype, FPI_NONE);
- 			return;
- 		}
--		migratetype = MIGRATE_MOVABLE;
-+		pcpmigratetype = MIGRATE_MOVABLE;
+-void mem_cgroup_handle_over_high(void);
++void mem_cgroup_handle_over_high(gfp_t gfp_mask);
+ 
+ unsigned long mem_cgroup_get_max(struct mem_cgroup *memcg);
+ 
+@@ -1460,7 +1460,7 @@ static inline void mem_cgroup_unlock_pag
+ 	rcu_read_unlock();
+ }
+ 
+-static inline void mem_cgroup_handle_over_high(void)
++static inline void mem_cgroup_handle_over_high(gfp_t gfp_mask)
+ {
+ }
+ 
+--- a/include/linux/resume_user_mode.h
++++ b/include/linux/resume_user_mode.h
+@@ -55,7 +55,7 @@ static inline void resume_user_mode_work
  	}
+ #endif
  
- 	zone = page_zone(page);
- 	pcp_trylock_prepare(UP_flags);
- 	pcp = pcp_spin_trylock(zone->per_cpu_pageset);
- 	if (pcp) {
--		free_unref_page_commit(zone, pcp, page, migratetype, order);
-+		free_unref_page_commit(zone, pcp, page, pcpmigratetype, order);
- 		pcp_spin_unlock(pcp);
- 	} else {
- 		free_one_page(zone, page, pfn, order, migratetype, FPI_NONE);
+-	mem_cgroup_handle_over_high();
++	mem_cgroup_handle_over_high(GFP_KERNEL);
+ 	blkcg_maybe_throttle_current();
+ 
+ 	rseq_handle_notify_resume(NULL, regs);
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2559,7 +2559,7 @@ static unsigned long calculate_high_dela
+  * Scheduled by try_charge() to be executed from the userland return path
+  * and reclaims memory over the high limit.
+  */
+-void mem_cgroup_handle_over_high(void)
++void mem_cgroup_handle_over_high(gfp_t gfp_mask)
+ {
+ 	unsigned long penalty_jiffies;
+ 	unsigned long pflags;
+@@ -2587,7 +2587,7 @@ retry_reclaim:
+ 	 */
+ 	nr_reclaimed = reclaim_high(memcg,
+ 				    in_retry ? SWAP_CLUSTER_MAX : nr_pages,
+-				    GFP_KERNEL);
++				    gfp_mask);
+ 
+ 	/*
+ 	 * memory.high is breached and reclaim is unable to keep up. Throttle
+@@ -2823,7 +2823,7 @@ done_restock:
+ 	if (current->memcg_nr_pages_over_high > MEMCG_CHARGE_BATCH &&
+ 	    !(current->flags & PF_MEMALLOC) &&
+ 	    gfpflags_allow_blocking(gfp_mask)) {
+-		mem_cgroup_handle_over_high();
++		mem_cgroup_handle_over_high(gfp_mask);
+ 	}
+ 	return 0;
+ }
 
 
