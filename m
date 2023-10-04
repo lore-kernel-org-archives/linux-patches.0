@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC05421360
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F6D21356
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJaTTJMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCD0C433C7;
-	Wed,  4 Oct 2023 18:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nT5Rc0sO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DDCC433C7;
+	Wed,  4 Oct 2023 18:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444374;
-	bh=tSqybAFkyAMBncEXFniNdOmclOJPYxM+mHdwHwNavSU=;
+	s=korg; t=1696444377;
+	bh=uDvMZHUnvrozPEnuZS3iyiT0yo7aZNRlWdRMzIYTEbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJaTTJMwI9RaHLimfRInAmIqSViUePAX/SVW2K6mHk9Z4edRpKsh+FCpRU9O+1Sh6
-	 znpP21+z7HiRmFDpbkgekudO9qUjS17yGSyEcuLjDg6zyq2WxGrr+9CyebybRycTB7
-	 yMDw0wbwqyBJFGewp+0asOa5LKPHiU5A9cWSK1Rg=
+	b=nT5Rc0sO8bHg3WjPcZywdN+379ZYdTvUB0VCCu9ygnGxsYtEUWcRUK7fGy1SXQUN5
+	 McN9A2Qv8H9HKnlG93sB3Yyz8vEeAI4TSRuzoSHZvy5miHd/jQ9p3vUWSEXrTEk1HH
+	 mpNHqpi/9e3O41BdrNe9R57ta/ZhoA+pKOqBIznk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 228/321] net: hsr: Add __packed to struct hsr_sup_tlv.
-Date: Wed,  4 Oct 2023 19:56:13 +0200
-Message-ID: <20231004175239.781379738@linuxfoundation.org>
+Subject: [PATCH 6.5 211/321] ALSA: hda: intel-sdw-acpi: Use u8 type for link index
+Date: Wed,  4 Oct 2023 19:55:56 +0200
+Message-ID: <20231004175239.028920351@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -36,43 +37,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit fbd825fcd7dd4c11d4c48c3d0adc248a4a0ce90b ]
+[ Upstream commit 485ddd519fbd89a9d9ac4b02be489e03cbbeebba ]
 
-Struct hsr_sup_tlv describes HW layout and therefore it needs a __packed
-attribute to ensure the compiler does not add any padding.
-Due to the size and __packed attribute of the structs that use
-hsr_sup_tlv it has no functional impact.
+Use consistently u8 for sdw link index. The id is limited to 4, u8 is
+adequate in size to store it.
 
-Add __packed to struct hsr_sup_tlv.
+This change will also fixes the following compiler warning/error (W=1):
 
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+sound/hda/intel-sdw-acpi.c: In function ‘sdw_intel_acpi_scan’:
+sound/hda/intel-sdw-acpi.c:34:35: error: ‘-subproperties’ directive output may be truncated writing 14 bytes into a region of size between 7 and 17 [-Werror=format-truncation=]
+   34 |                  "mipi-sdw-link-%d-subproperties", i);
+      |                                   ^~~~~~~~~~~~~~
+In function ‘is_link_enabled’,
+    inlined from ‘sdw_intel_scan_controller’ at sound/hda/intel-sdw-acpi.c:106:8,
+    inlined from ‘sdw_intel_acpi_scan’ at sound/hda/intel-sdw-acpi.c:180:9:
+sound/hda/intel-sdw-acpi.c:33:9: note: ‘snprintf’ output between 30 and 40 bytes into a destination of size 32
+   33 |         snprintf(name, sizeof(name),
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   34 |                  "mipi-sdw-link-%d-subproperties", i);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+The warnings got brought to light by a recent patch upstream:
+commit 6d4ab2e97dcf ("extrawarn: enable format and stringop overflow warnings in W=1")
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230912162617.29178-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_main.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/intel-sdw-acpi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
-index 6851e33df7d14..18e01791ad799 100644
---- a/net/hsr/hsr_main.h
-+++ b/net/hsr/hsr_main.h
-@@ -83,7 +83,7 @@ struct hsr_vlan_ethhdr {
- struct hsr_sup_tlv {
- 	u8		HSR_TLV_type;
- 	u8		HSR_TLV_length;
--};
-+} __packed;
+diff --git a/sound/hda/intel-sdw-acpi.c b/sound/hda/intel-sdw-acpi.c
+index 5cb92f7ccbcac..b57d72ea4503f 100644
+--- a/sound/hda/intel-sdw-acpi.c
++++ b/sound/hda/intel-sdw-acpi.c
+@@ -23,7 +23,7 @@ static int ctrl_link_mask;
+ module_param_named(sdw_link_mask, ctrl_link_mask, int, 0444);
+ MODULE_PARM_DESC(sdw_link_mask, "Intel link mask (one bit per link)");
  
- /* HSR/PRP Supervision Frame data types.
-  * Field names as defined in the IEC:2010 standard for HSR.
+-static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
++static bool is_link_enabled(struct fwnode_handle *fw_node, u8 idx)
+ {
+ 	struct fwnode_handle *link;
+ 	char name[32];
+@@ -31,7 +31,7 @@ static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
+ 
+ 	/* Find master handle */
+ 	snprintf(name, sizeof(name),
+-		 "mipi-sdw-link-%d-subproperties", i);
++		 "mipi-sdw-link-%hhu-subproperties", idx);
+ 
+ 	link = fwnode_get_named_child_node(fw_node, name);
+ 	if (!link)
+@@ -51,8 +51,8 @@ static int
+ sdw_intel_scan_controller(struct sdw_intel_acpi_info *info)
+ {
+ 	struct acpi_device *adev = acpi_fetch_acpi_dev(info->handle);
+-	int ret, i;
+-	u8 count;
++	u8 count, i;
++	int ret;
+ 
+ 	if (!adev)
+ 		return -EINVAL;
 -- 
 2.40.1
 
