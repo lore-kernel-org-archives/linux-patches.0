@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCF61D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B951D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXylN54x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBF8C433CC;
-	Wed,  4 Oct 2023 18:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpulZMCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E843BC433C9;
+	Wed,  4 Oct 2023 18:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443837;
-	bh=CxO1MQH/F0AL/ksyccRvd4u6OjccmWJtxgJMyplXb4o=;
+	s=korg; t=1696443840;
+	bh=QXBRdqeUzNslpdTWBTmM9+QGrwJK7rkcrQsNE3vIMw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXylN54xUL1bdwVhR1a8NaN2NBg19s3A73xtTdJEFniJaFkgcmFQUo1DxrHs7X3Lr
-	 stJtiTj3oy+HAVZo02+IUbtW7jAX4XR1uO8gzv0RdW7KZBxQJOE1LVlMa8y3DRB5Pr
-	 g7KrX1z/Oosav4kjD5x5aAK2h6dXdOmUJ6mHu5yk=
+	b=lpulZMCrSMsHOSrbP7QFsEf+g/BA4QNt+mgaZJ4seI3UdMbHXS2zFlZv71CsKcz5T
+	 +eLuRnJJfNqqbBTgZDWRhnbYxtMnnUXWTzH2hBSsrvN8d1nSB0LWz9V9uvmFWDaoNn
+	 zOQYBpSnTIPFgMU0kalb4qQiM+T+MrsfnNNZA+0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Savkov <asavkov@redhat.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Knyazev Arseniy <poseaydone@ya.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 038/321] selftests/bpf: fix unpriv_disabled check in test_verifier
-Date: Wed,  4 Oct 2023 19:53:03 +0200
-Message-ID: <20231004175230.926948469@linuxfoundation.org>
+Subject: [PATCH 6.5 039/321] ALSA: hda/realtek: Splitting the UX3402 into two separate models
+Date: Wed,  4 Oct 2023 19:53:04 +0200
+Message-ID: <20231004175230.975450068@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -43,39 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Savkov <asavkov@redhat.com>
+From: Knyazev Arseniy <poseaydone@ya.ru>
 
-[ Upstream commit d128860dbb29cafc3c65ca2d22082745a32829dd ]
+[ Upstream commit 07058dceb038a4b0dd49af07118b6b2a685bb4a6 ]
 
-Commit 1d56ade032a49 changed the function get_unpriv_disabled() to
-return its results as a bool instead of updating a global variable, but
-test_verifier was not updated to keep in line with these changes. Thus
-unpriv_disabled is always false in test_verifier and unprivileged tests
-are not properly skipped on systems with unprivileged bpf disabled.
+UX3402VA and UX3402ZA models require different hex values, so comibining
+them into one model is incorrect.
 
-Fixes: 1d56ade032a49 ("selftests/bpf: Unprivileged tests for test_loader.c")
-Signed-off-by: Artem Savkov <asavkov@redhat.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20230912120631.213139-1-asavkov@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 491a4ccd8a02 ("ALSA: hda/realtek: Add quirk for ASUS Zenbook using CS35L41")
+Signed-off-by: Knyazev Arseniy <poseaydone@ya.ru>
+Link: https://lore.kernel.org/r/20230913053343.119798-1-poseaydone@ya.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_verifier.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_verifier.c b/tools/testing/selftests/bpf/test_verifier.c
-index 31f1c935cd07d..98107e0452d33 100644
---- a/tools/testing/selftests/bpf/test_verifier.c
-+++ b/tools/testing/selftests/bpf/test_verifier.c
-@@ -1880,7 +1880,7 @@ int main(int argc, char **argv)
- 		}
- 	}
- 
--	get_unpriv_disabled();
-+	unpriv_disabled = get_unpriv_disabled();
- 	if (unpriv && unpriv_disabled) {
- 		printf("Cannot run as unprivileged user with sysctl %s.\n",
- 		       UNPRIV_SYSCTL);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index dc7b7a407638a..4a13747b2b0f3 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9680,7 +9680,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1d1f, "ASUS ROG Strix G17 2023 (G713PV)", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1d42, "ASUS Zephyrus G14 2022", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x1d4e, "ASUS TM420", ALC256_FIXUP_ASUS_HPE),
+-	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
+ 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
 -- 
 2.40.1
 
