@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9DF1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1636B1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EE2C433C7;
-	Wed,  4 Oct 2023 18:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F6EC433C7;
+	Wed,  4 Oct 2023 18:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442787;
-	bh=igaaQIJfYdEboBjF3P308XaQYv5I00MEduSxtrV3X0Q=;
+	s=korg; t=1696442789;
+	bh=JLKDp/fgfQ7p6GsKA6KtC09J1vNXlac6id2dEvO475s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJ4b8K2tQHoyIhDsUeVDMeR1lTCsgWsQW2TGzPldWtTvljq2v5p7Cm17iWLGPvxQX
-	 kIM3jxYv8VsehmyvELeHamq108DpF6rGFxxAzdFWYb06Y7BketBxCOjepTSfWSRyz2
-	 ibu9DoJNN/FP2ThDb9lQsvF1/KWMRyrFIq8T1hIc=
+	b=Oszz9pAv6NSfOvme8VT5DShURQPb5HvxfkUZJ58mUDyggHlNcqy0cYSwLIveVCmta
+	 W9PHBTSlTVHZhJlxQIuoIphKkXLvN6kOEuBMMgjGs+YZ8IzeQUQJIOzCkfWpYUzIRE
+	 vurupbXqMBrK2H5S7wmT/vdAWy8ZJtwGf96cA8Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"William A. Kennington III" <william@wkennington.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/183] MIPS: Alchemy: only build mmc support helpers if au1xmmc is enabled
-Date: Wed,  4 Oct 2023 19:55:22 +0200
-Message-ID: <20231004175207.701696797@linuxfoundation.org>
+Subject: [PATCH 5.15 109/183] i2c: npcm7xx: Fix callback completion ordering
+Date: Wed,  4 Oct 2023 19:55:40 +0200
+Message-ID: <20231004175208.465129652@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -44,132 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: William A. Kennington III <william@wkennington.com>
 
-[ Upstream commit ef8f8f04a0b25e8f294b24350e8463a8d6a9ba0b ]
+[ Upstream commit 92e73d807b68b2214fcafca4e130b5300a9d4b3c ]
 
-While commit d4a5c59a955b ("mmc: au1xmmc: force non-modular build and
-remove symbol_get usage") to be built in, it can still build a kernel
-without MMC support and thuse no mmc_detect_change symbol at all.
+Sometimes, our completions race with new master transfers and override
+the bus->operation and bus->master_or_slave variables. This causes
+transactions to timeout and kernel crashes less frequently.
 
-Add ifdefs to build the mmc support code in the alchemy arch code
-conditional on mmc support.
+To remedy this, we re-order all completions to the very end of the
+function.
 
-Fixes: d4a5c59a955b ("mmc: au1xmmc: force non-modular build and remove symbol_get usage")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+Signed-off-by: William A. Kennington III <william@wkennington.com>
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1000.c | 4 ++++
- arch/mips/alchemy/devboards/db1200.c | 6 ++++++
- arch/mips/alchemy/devboards/db1300.c | 4 ++++
- 3 files changed, 14 insertions(+)
+ drivers/i2c/busses/i2c-npcm7xx.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
-index 50de86eb8784c..3183df60ad337 100644
---- a/arch/mips/alchemy/devboards/db1000.c
-+++ b/arch/mips/alchemy/devboards/db1000.c
-@@ -164,6 +164,7 @@ static struct platform_device db1x00_audio_dev = {
- 
- /******************************************************************************/
- 
-+#ifdef CONFIG_MMC_AU1X
- static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index c1b6797372409..73c808ef1bfe5 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -675,6 +675,7 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
  {
- 	mmc_detect_change(ptr, msecs_to_jiffies(500));
-@@ -369,6 +370,7 @@ static struct platform_device db1100_mmc1_dev = {
- 	.num_resources	= ARRAY_SIZE(au1100_mmc1_res),
- 	.resource	= au1100_mmc1_res,
- };
-+#endif /* CONFIG_MMC_AU1X */
+ 	struct i2c_msg *msgs;
+ 	int msgs_num;
++	bool do_complete = false;
  
- /******************************************************************************/
+ 	msgs = bus->msgs;
+ 	msgs_num = bus->msgs_num;
+@@ -701,23 +702,17 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ 				 msgs[1].flags & I2C_M_RD)
+ 				msgs[1].len = info;
+ 		}
+-		if (completion_done(&bus->cmd_complete) == false)
+-			complete(&bus->cmd_complete);
+-	break;
+-
++		do_complete = true;
++		break;
+ 	case I2C_NACK_IND:
+ 		/* MASTER transmit got a NACK before tx all bytes */
+ 		bus->cmd_err = -ENXIO;
+-		if (bus->master_or_slave == I2C_MASTER)
+-			complete(&bus->cmd_complete);
+-
++		do_complete = true;
+ 		break;
+ 	case I2C_BUS_ERR_IND:
+ 		/* Bus error */
+ 		bus->cmd_err = -EAGAIN;
+-		if (bus->master_or_slave == I2C_MASTER)
+-			complete(&bus->cmd_complete);
+-
++		do_complete = true;
+ 		break;
+ 	case I2C_WAKE_UP_IND:
+ 		/* I2C wake up */
+@@ -731,6 +726,8 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ 	if (bus->slave)
+ 		bus->master_or_slave = I2C_SLAVE;
+ #endif
++	if (do_complete)
++		complete(&bus->cmd_complete);
+ }
  
-@@ -432,8 +434,10 @@ static struct platform_device *db1x00_devs[] = {
- 
- static struct platform_device *db1100_devs[] = {
- 	&au1100_lcd_device,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1100_mmc0_dev,
- 	&db1100_mmc1_dev,
-+#endif
- };
- 
- int __init db1000_dev_setup(void)
-diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
-index 76080c71a2a7b..f521874ebb07b 100644
---- a/arch/mips/alchemy/devboards/db1200.c
-+++ b/arch/mips/alchemy/devboards/db1200.c
-@@ -326,6 +326,7 @@ static struct platform_device db1200_ide_dev = {
- 
- /**********************************************************************/
- 
-+#ifdef CONFIG_MMC_AU1X
- /* SD carddetects:  they're supposed to be edge-triggered, but ack
-  * doesn't seem to work (CPLD Rev 2).  Instead, the screaming one
-  * is disabled and its counterpart enabled.  The 200ms timeout is
-@@ -584,6 +585,7 @@ static struct platform_device pb1200_mmc1_dev = {
- 	.num_resources	= ARRAY_SIZE(au1200_mmc1_res),
- 	.resource	= au1200_mmc1_res,
- };
-+#endif /* CONFIG_MMC_AU1X */
- 
- /**********************************************************************/
- 
-@@ -751,7 +753,9 @@ static struct platform_device db1200_audiodma_dev = {
- static struct platform_device *db1200_devs[] __initdata = {
- 	NULL,		/* PSC0, selected by S6.8 */
- 	&db1200_ide_dev,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1200_mmc0_dev,
-+#endif
- 	&au1200_lcd_dev,
- 	&db1200_eth_dev,
- 	&db1200_nand_dev,
-@@ -762,7 +766,9 @@ static struct platform_device *db1200_devs[] __initdata = {
- };
- 
- static struct platform_device *pb1200_devs[] __initdata = {
-+#ifdef CONFIG_MMC_AU1X
- 	&pb1200_mmc1_dev,
-+#endif
- };
- 
- /* Some peripheral base addresses differ on the PB1200 */
-diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
-index ca71e5ed51abd..c965d00074818 100644
---- a/arch/mips/alchemy/devboards/db1300.c
-+++ b/arch/mips/alchemy/devboards/db1300.c
-@@ -450,6 +450,7 @@ static struct platform_device db1300_ide_dev = {
- 
- /**********************************************************************/
- 
-+#ifdef CONFIG_MMC_AU1X
- static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
- {
- 	disable_irq_nosync(irq);
-@@ -632,6 +633,7 @@ static struct platform_device db1300_sd0_dev = {
- 	.resource	= au1300_sd0_res,
- 	.num_resources	= ARRAY_SIZE(au1300_sd0_res),
- };
-+#endif /* CONFIG_MMC_AU1X */
- 
- /**********************************************************************/
- 
-@@ -776,8 +778,10 @@ static struct platform_device *db1300_dev[] __initdata = {
- 	&db1300_5waysw_dev,
- 	&db1300_nand_dev,
- 	&db1300_ide_dev,
-+#ifdef CONFIG_MMC_AU1X
- 	&db1300_sd0_dev,
- 	&db1300_sd1_dev,
-+#endif
- 	&db1300_lcd_dev,
- 	&db1300_ac97_dev,
- 	&db1300_i2s_dev,
+ static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
 -- 
 2.40.1
 
