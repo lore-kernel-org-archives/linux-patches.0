@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF651D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2734C433C8;
-	Wed,  4 Oct 2023 18:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E16A1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:13:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EEEC433C8;
+	Wed,  4 Oct 2023 18:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443194;
-	bh=K1RfelspRm3VziNrwn3sTyPgYs+rRjjozt7GZeXWwPU=;
+	s=korg; t=1696443197;
+	bh=KKaa0B9Sg+jP1C5zPoHdSm1SLVMAjycVd21VW+2J+EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIHZLUOO5xUqucFrWR5k9Y8+u5VLgxLilPKxapu8DRANzVqcek5ZgV9T61X8HBOLd
-	 wmScYN58DxoZPlZAHF1Kssa+oIM9PcFuRGl7ayyjYbrXx53fnPxh0suQTFc9wPBBDt
-	 nG/wN9xA1xC3pD5sKxH5EmzlIZAovBWAeKhdAv2A=
+	b=TypeIzssE49cnb8USMf9FmhiCGPXslvwWEEt/ieIx3S8yYoge3bGjMg4jfs1ITDcj
+	 KYvZ3IAY9lHCN2sk7etUk03m04oTqUhbR4TEXiqqi51aYKVGYl1V+oD7LrBxb7xXwR
+	 O5ceN96kfhRGps1PEi63+JiePOAjAPqz/3sv8rYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram.Ha@microchip.com,
-	Lukasz Majewski <lukma@denx.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/259] net: hsr: Properly parse HSRv1 supervisor frames.
-Date: Wed,  4 Oct 2023 19:53:55 +0200
-Message-ID: <20231004175220.262200672@linuxfoundation.org>
+Subject: [PATCH 6.1 071/259] net: hns3: only enable unicast promisc when mac table full
+Date: Wed,  4 Oct 2023 19:54:04 +0200
+Message-ID: <20231004175220.664909129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,56 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 295de650d3aaf9e50258465c5f1c84b465d836f6 ]
+[ Upstream commit f2ed304922a55690529bcca59678dd92d7466ce8 ]
 
-While adding support for parsing the redbox supervision frames, the
-author added `pull_size' and `total_pull_size' to track the amount of
-bytes that were pulled from the skb during while parsing the skb so it
-can be reverted/ pushed back at the end.
-In the process probably copy&paste error occurred and for the HSRv1 case
-the ethhdr was used instead of the hsr_tag. Later the hsr_tag was used
-instead of hsr_sup_tag. The later error didn't matter because both
-structs have the size so HSRv0 was still working. It broke however HSRv1
-parsing because struct ethhdr is larger than struct hsr_tag.
+Currently, the driver will enable unicast promisc for the function
+once configure mac address fail. It's unreasonable when the failure
+is caused by using same mac address with other functions. So only
+enable unicast promisc when mac table full.
 
-Reinstate the old pulling flow and pull first ethhdr, hsr_tag in v1 case
-followed by hsr_sup_tag.
-
-[bigeasy: commit message]
-
-Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")'
-Suggested-by: Tristram.Ha@microchip.com
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c631c696823c ("net: hns3: refactor the promisc mode setting")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index a16f0445023aa..0b01998780952 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -295,13 +295,13 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 
- 	/* And leave the HSR tag. */
- 	if (ethhdr->h_proto == htons(ETH_P_HSR)) {
--		pull_size = sizeof(struct ethhdr);
-+		pull_size = sizeof(struct hsr_tag);
- 		skb_pull(skb, pull_size);
- 		total_pull_size += pull_size;
- 	}
- 
- 	/* And leave the HSR sup tag. */
--	pull_size = sizeof(struct hsr_tag);
-+	pull_size = sizeof(struct hsr_sup_tag);
- 	skb_pull(skb, pull_size);
- 	total_pull_size += pull_size;
- 
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 884e45fb6b72e..a8019eac2b33e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -8930,7 +8930,7 @@ static void hclge_update_overflow_flags(struct hclge_vport *vport,
+ 	if (mac_type == HCLGE_MAC_ADDR_UC) {
+ 		if (is_all_added)
+ 			vport->overflow_promisc_flags &= ~HNAE3_OVERFLOW_UPE;
+-		else
++		else if (hclge_is_umv_space_full(vport, true))
+ 			vport->overflow_promisc_flags |= HNAE3_OVERFLOW_UPE;
+ 	} else {
+ 		if (is_all_added)
 -- 
 2.40.1
 
