@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386681D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE671D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVpJvKAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BBFC433CA;
-	Wed,  4 Oct 2023 18:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/q31yZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83370C433C8;
+	Wed,  4 Oct 2023 18:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443309;
-	bh=8v8O5RC3CTmnnogEIhD0NTQYDcEqhVkiQJwPYG620Qc=;
+	s=korg; t=1696443311;
+	bh=OFqpLlgQUQK0vxLrPghQbJpQtwDQ+NX7zP/cTc+v6eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVpJvKAVCMQGsADyJVSXSHHl3L505HfaGDwt/f27mIxV6J6wLG0VFpjG5c/GN0ofJ
-	 RnIPtwVy2CDwVG3OcHsI0v//+uUDifNm+CwVrFPsP1/WDaY0jalkFF1OeCZOj9kSeo
-	 1yp3AwUImXUvPirC6dnt+jZxeeNXLCHjHSeyfCME=
+	b=U/q31yZzUekYgFsOkAoQLbiHKggP12G3oylVokynN06LX6KRM67KY1aqyGa+iFocs
+	 jfhWL4cpdFvHu87KC397vFXwHBRxXyOGvMf35IzL+Wj2++mx472ITnMnY0+u1zT1Me
+	 K5BEdjclYp6Gf+FqPu2sx7K6Vsoct707ke+q10sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/259] drm/bridge: ti-sn65dsi83: Do not generate HFP/HBP/HSA and EOT packet
-Date: Wed,  4 Oct 2023 19:54:44 +0200
-Message-ID: <20231004175222.442987814@linuxfoundation.org>
+Subject: [PATCH 6.1 094/259] ARM: dts: qcom: msm8974pro-castor: correct inverted X of touchscreen
+Date: Wed,  4 Oct 2023 19:54:27 +0200
+Message-ID: <20231004175221.654446728@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,39 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ca161b259cc84fe1f4a2ce4c73c3832cf6f713f1 ]
+[ Upstream commit 43db69268149049540b1d2bbe8a69e59d5cb43b6 ]
 
-Do not generate the HS front and back porch gaps, the HSA gap and
-EOT packet, as per "SN65DSI83 datasheet SLLSEC1I - SEPTEMBER 2012
-- REVISED OCTOBER 2020", page 22, these packets are not required.
-This makes the TI SN65DSI83 bridge work with Samsung DSIM on i.MX8MN.
+There is no syna,f11-flip-x property, so assume intention was to use
+touchscreen-inverted-x.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230403190242.224490-1-marex@denx.de
+Fixes: ab80661883de ("ARM: dts: qcom: msm8974: Add Sony Xperia Z2 Tablet")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230720115335.137354-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-index 55efd3eb66723..3f43b44145a89 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -655,7 +655,9 @@ static int sn65dsi83_host_attach(struct sn65dsi83 *ctx)
+diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+index 3f45f5c5d37b5..4abc85c181690 100644
+--- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
++++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+@@ -131,8 +131,8 @@
  
- 	dsi->lanes = dsi_lanes;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
--	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-+			  MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
-+			  MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET;
- 
- 	ret = devm_mipi_dsi_attach(dev, dsi);
- 	if (ret < 0) {
+ 		rmi-f11@11 {
+ 			reg = <0x11>;
+-			syna,f11-flip-x = <1>;
+ 			syna,sensor-type = <1>;
++			touchscreen-inverted-x;
+ 		};
+ 	};
+ };
 -- 
 2.40.1
 
