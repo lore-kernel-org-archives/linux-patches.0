@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8241D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6CD1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRbm7O67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282A6C433C7;
-	Wed,  4 Oct 2023 18:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N90D9YMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37CCC433C8;
+	Wed,  4 Oct 2023 18:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443449;
-	bh=/tkbAhIUsUricz7Vj9qZqF6sGQOOr5LhHcY4azyu6Yk=;
+	s=korg; t=1696443452;
+	bh=gT61vuhaLsP9lQSykh+/lTTlBYyzrRZwyPPfeeBG12E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRbm7O67XALbNdMikhcwRoZ5RAgTt4YN4UsqJn7HoR/fFMYy8bCO2CzK7XPaXIml4
-	 xDSWFhqr+Qjql1cdBW4cCpYB4OY/huQWq7nNO5j6F1yiFv578IiWmUzD8JSsvxBvqO
-	 5mTTQTvVO192C7HqDK25dxRJX+HFjfal+qSNtsjg=
+	b=N90D9YMrG9GXSyEMqFYcxFb+MzdpNdK4LiVGJZ+Yd54bxC8f9F20/I7FUvS34IYSF
+	 I1FZuV+T555v5zQukhWPSVEb6TKq7TNHkW3Nx1NuGjerlqR/sAsTMgdiVCntL+BCNw
+	 3NgQin2VV/XlmRuqfOvyglm2tvedKy6e6k6N0feY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Carl Philipp Klemm <philipp@uvos.xyz>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Pavel Machek <pavel@ucw.cz>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/259] power: supply: rk817: Fix node refcount leak
-Date: Wed,  4 Oct 2023 19:55:05 +0200
-Message-ID: <20231004175223.428180761@linuxfoundation.org>
+Subject: [PATCH 6.1 123/259] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+Date: Wed,  4 Oct 2023 19:54:56 +0200
+Message-ID: <20231004175223.006613905@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -43,62 +46,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 488ef44c068e79752dba8eda0b75f524f111a695 ]
+[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
 
-Dan Carpenter reports that the Smatch static checker warning has found
-that there is another refcount leak in the probe function. While
-of_node_put() was added in one of the return paths, it should in
-fact be added for ALL return paths that return an error and at driver
-removal time.
+Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+attempted to fix the PWM settings but ended up causin an additional clock
+reparenting error:
 
-Fixes: 54c03bfd094f ("power: supply: Fix refcount leak in rk817_charger_probe")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Closes: https://lore.kernel.org/linux-pm/dc0bb0f8-212d-4be7-be69-becd2a3f9a80@kili.mountain/
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://lore.kernel.org/r/20230920145644.57964-1-macroalpha82@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
+
+Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
+For timer8, the there is no sys_clkin_ck available as it's in the ABE
+domain, instead it should use syc_clk_div_ck. However, for power
+management, we want to use the always on sys_32k_ck instead.
+
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Carl Philipp Klemm <philipp@uvos.xyz>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rk817_charger.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/motorola-mapphone-common.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/rk817_charger.c b/drivers/power/supply/rk817_charger.c
-index f1b431aa0e4f2..e30ef601d91da 100644
---- a/drivers/power/supply/rk817_charger.c
-+++ b/drivers/power/supply/rk817_charger.c
-@@ -1058,6 +1058,13 @@ static void rk817_charging_monitor(struct work_struct *work)
- 	queue_delayed_work(system_wq, &charger->work, msecs_to_jiffies(8000));
- }
+diff --git a/arch/arm/boot/dts/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+index 091ba310053eb..d69f0f4b4990d 100644
+--- a/arch/arm/boot/dts/motorola-mapphone-common.dtsi
++++ b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+@@ -614,12 +614,12 @@
+ /* Configure pwm clock source for timers 8 & 9 */
+ &timer8 {
+ 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
-+static void rk817_cleanup_node(void *data)
-+{
-+	struct device_node *node = data;
-+
-+	of_node_put(node);
-+}
-+
- static int rk817_charger_probe(struct platform_device *pdev)
- {
- 	struct rk808 *rk808 = dev_get_drvdata(pdev->dev.parent);
-@@ -1074,11 +1081,13 @@ static int rk817_charger_probe(struct platform_device *pdev)
- 	if (!node)
- 		return -ENODEV;
+ &timer9 {
+ 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
-+	ret = devm_add_action_or_reset(&pdev->dev, rk817_cleanup_node, node);
-+	if (ret)
-+		return ret;
-+
- 	charger = devm_kzalloc(&pdev->dev, sizeof(*charger), GFP_KERNEL);
--	if (!charger) {
--		of_node_put(node);
-+	if (!charger)
- 		return -ENOMEM;
--	}
- 
- 	charger->rk808 = rk808;
- 
+ /*
 -- 
 2.40.1
 
