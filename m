@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A91D6B0
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9831D6B0
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teObhdmw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CF5C433C8;
-	Wed,  4 Oct 2023 18:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuNrfRyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFCCC433C9;
+	Wed,  4 Oct 2023 18:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444069;
-	bh=pQbqH82IjrttBA3sShwG3Xe3kto8wf/YX5WFiuV2Wmk=;
+	s=korg; t=1696444072;
+	bh=7R0226bYAGWtMYuby3wvApqmDGzlDegbi4xP87X+PUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=teObhdmwfcqOW4SB/55sZwRvbDmACHn508GjmPXJCuX1B3S005dlZVcVPcCgGNEPJ
-	 iImVYfuUEnQwzad+YVyyjicKLLQghZNFBPcaYVzeoOhFop3yN+oKx6zZC1d+w0cwt2
-	 nOCsk6HiOGoxMhklDCfE4J9C068L1mTFEPpwV/Jc=
+	b=CuNrfRyrw2wUCP0y6cWc7iQOO9h1iClh1nx/Uxi8iTPW0WWfySbA7hhAwLjnuA8hk
+	 86uv5U/ApHj2ZvK8PnVhBNj3BtQTvsUgL7pG2F2dUFtrswqwpv019AYy+qZGfRNg1t
+	 EncSB6q+KZI5y4RB3juNj321q/yvpte6GOxPKgGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Lee, Cherie-Anne" <cherie.lee@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	info@starlabs.sg,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 091/321] vxlan: Add missing entries to vxlan_get_size()
-Date: Wed,  4 Oct 2023 19:53:56 +0200
-Message-ID: <20231004175233.427111651@linuxfoundation.org>
+Subject: [PATCH 6.5 092/321] netfilter: nf_tables: disable toggling dormant table state more than once
+Date: Wed,  4 Oct 2023 19:53:57 +0200
+Message-ID: <20231004175233.477884744@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,45 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 4e4b1798cc90e376b8b61d0098b4093898a32227 ]
+[ Upstream commit c9bd26513b3a11b3adb3c2ed8a31a01a87173ff1 ]
 
-There are some attributes added by vxlan_fill_info() which are not
-accounted for in vxlan_get_size(). Add them.
+nft -f -<<EOF
+add table ip t
+add table ip t { flags dormant; }
+add chain ip t c { type filter hook input priority 0; }
+add table ip t
+EOF
 
-I didn't find a way to trigger an actual problem from this miscalculation
-since there is usually extra space in netlink size calculations like
-if_nlmsg_size(); but maybe I just didn't search long enough.
+Triggers a splat from nf core on next table delete because we lose
+track of right hook register state:
 
-Fixes: 3511494ce2f3 ("vxlan: Group Policy extension")
-Fixes: e1e5314de08b ("vxlan: implement GPE")
-Fixes: 0ace2ca89cbd ("vxlan: Use checksum partial with remote checksum offload")
-Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+WARNING: CPU: 2 PID: 1597 at net/netfilter/core.c:501 __nf_unregister_net_hook
+RIP: 0010:__nf_unregister_net_hook+0x41b/0x570
+ nf_unregister_net_hook+0xb4/0xf0
+ __nf_tables_unregister_hook+0x160/0x1d0
+[..]
+
+The above should have table in *active* state, but in fact no
+hooks were registered.
+
+Reject on/off/on games rather than attempting to fix this.
+
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Reported-by: "Lee, Cherie-Anne" <cherie.lee@starlabs.sg>
+Cc: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Cc: info@starlabs.sg
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 4 ++++
+ net/netfilter/nf_tables_api.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index c9a9373733c01..4b2db14472e6c 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -4296,6 +4296,10 @@ static size_t vxlan_get_size(const struct net_device *dev)
- 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_REMCSUM_TX */
- 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_REMCSUM_RX */
- 		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_LOCALBYPASS */
-+		nla_total_size(0) + /* IFLA_VXLAN_GBP */
-+		nla_total_size(0) + /* IFLA_VXLAN_GPE */
-+		nla_total_size(0) + /* IFLA_VXLAN_REMCSUM_NOPARTIAL */
-+		nla_total_size(sizeof(__u8)) + /* IFLA_VXLAN_VNIFILTER */
- 		0;
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3e6839c03bccc..976a9b763b9bb 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1219,6 +1219,10 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
+ 	     flags & NFT_TABLE_F_OWNER))
+ 		return -EOPNOTSUPP;
  
++	/* No dormant off/on/off/on games in single transaction */
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return -EINVAL;
++
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWTABLE,
+ 				sizeof(struct nft_trans_table));
+ 	if (trans == NULL)
 -- 
 2.40.1
 
