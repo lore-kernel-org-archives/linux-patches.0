@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AD71C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A8D1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa/nCHwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79ABC433C9;
-	Wed,  4 Oct 2023 18:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+pzsfYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73661C433C8;
+	Wed,  4 Oct 2023 18:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444521;
-	bh=2yPcKuFpPwq5SchytPF/Wz9Go03K8XHZ2f8A2Z07TEE=;
+	s=korg; t=1696444523;
+	bh=wieVtQ33aZ3Xg0JL2Wtzf1gOqknWM/WKdG7WWHxkT+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qa/nCHwvqQmTBEmWmv1lRpZqXe6+K0XlK/7IW1IfEYpe3zjLP2LsP7DFVOwQ43Ey1
-	 1O8Bp5aTHivk5cZs+CeM/54QuzeMMuutScYmdGwRQ6hOGen/+tuzPLANUWwdfhfFbg
-	 Tl7o5P5y0tQ4InpDJYS75gWWEywuEHJTOfnpsdkU=
+	b=e+pzsfYNndG57MZj0u180xChYPghWGHO5AvaVwx/HzvfDAw8d39Wacs8w8vzt9fuN
+	 4vaKVJKOHqQcj/wm8EQ4Mxghww3oGI1H3uUTxTsSrjC61cZe7QFkNgRGgqJsVffuwO
+	 WbCD1UKM3T/15/Gwbxgw8vRCj4ilh84yWWakiCPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.5 272/321] sched/rt: Fix live lock between select_fallback_rq() and RT push
-Date: Wed,  4 Oct 2023 19:56:57 +0200
-Message-ID: <20231004175241.885389061@linuxfoundation.org>
+	Juntong Deng <juntong.deng@outlook.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 281/321] selftests/mm: fix awk usage in charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh that may cause error
+Date: Wed,  4 Oct 2023 19:57:06 +0200
+Message-ID: <20231004175242.302423515@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,52 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Juntong Deng <juntong.deng@outlook.com>
 
-commit fc09027786c900368de98d03d40af058bcb01ad9 upstream.
+commit bbe246f875d064ecfb872fe4f66152e743dfd22d upstream.
 
-During RCU-boost testing with the TREE03 rcutorture config, I found that
-after a few hours, the machine locks up.
+According to the awk manual, the -e option does not need to be specified
+in front of 'program' (unless you need to mix program-file).
 
-On tracing, I found that there is a live lock happening between 2 CPUs.
-One CPU has an RT task running, while another CPU is being offlined
-which also has an RT task running.  During this offlining, all threads
-are migrated. The migration thread is repeatedly scheduled to migrate
-actively running tasks on the CPU being offlined. This results in a live
-lock because select_fallback_rq() keeps picking the CPU that an RT task
-is already running on only to get pushed back to the CPU being offlined.
+The redundant -e option can cause error when users use awk tools other
+than gawk (for example, mawk does not support the -e option).
 
-It is anyway pointless to pick CPUs for pushing tasks to if they are
-being offlined only to get migrated away to somewhere else. This could
-also add unwanted latency to this task.
+Error Example:
+awk: not an option: -e
 
-Fix these issues by not selecting CPUs in RT if they are not 'active'
-for scheduling, using the cpu_active_mask. Other parts in core.c already
-use cpu_active_mask to prevent tasks from being put on CPUs going
-offline.
-
-With this fix I ran the tests for days and could not reproduce the
-hang. Without the patch, I hit it in a few hours.
-
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230923011409.3522762-1-joel@joelfernandes.org
+Link: https://lkml.kernel.org/r/VI1P193MB075228810591AF2FDD7D42C599C3A@VI1P193MB0752.EURP193.PROD.OUTLOOK.COM
+Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpupri.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh  |    4 ++--
+ tools/testing/selftests/mm/hugetlb_reparenting_test.sh |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/cpupri.c
-+++ b/kernel/sched/cpupri.c
-@@ -101,6 +101,7 @@ static inline int __cpupri_find(struct c
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -25,7 +25,7 @@ if [[ "$1" == "-cgroup-v2" ]]; then
+ fi
  
- 	if (lowest_mask) {
- 		cpumask_and(lowest_mask, &p->cpus_mask, vec->mask);
-+		cpumask_and(lowest_mask, lowest_mask, cpu_active_mask);
+ if [[ $cgroup2 ]]; then
+-  cgroup_path=$(mount -t cgroup2 | head -1 | awk -e '{print $3}')
++  cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+     cgroup_path=/dev/cgroup/memory
+     mount -t cgroup2 none $cgroup_path
+@@ -33,7 +33,7 @@ if [[ $cgroup2 ]]; then
+   fi
+   echo "+hugetlb" >$cgroup_path/cgroup.subtree_control
+ else
+-  cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk -e '{print $3}')
++  cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+     cgroup_path=/dev/cgroup/memory
+     mount -t cgroup memory,hugetlb $cgroup_path
+--- a/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
++++ b/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
+@@ -20,7 +20,7 @@ fi
  
- 		/*
- 		 * We have to ensure that we have at least one bit
+ 
+ if [[ $cgroup2 ]]; then
+-  CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk -e '{print $3}')
++  CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+     CGROUP_ROOT=/dev/cgroup/memory
+     mount -t cgroup2 none $CGROUP_ROOT
+@@ -28,7 +28,7 @@ if [[ $cgroup2 ]]; then
+   fi
+   echo "+hugetlb +memory" >$CGROUP_ROOT/cgroup.subtree_control
+ else
+-  CGROUP_ROOT=$(mount -t cgroup | grep ",hugetlb" | awk -e '{print $3}')
++  CGROUP_ROOT=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+     CGROUP_ROOT=/dev/cgroup/memory
+     mount -t cgroup memory,hugetlb $CGROUP_ROOT
 
 
