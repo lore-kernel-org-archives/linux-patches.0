@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B759C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CD5C433C7;
-	Wed,  4 Oct 2023 18:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAE51D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2494C433C9;
+	Wed,  4 Oct 2023 18:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443163;
-	bh=aHB26Dn9xFMRPa1pgn+27Z4IjU2PMvONyU6bWXS03Pg=;
+	s=korg; t=1696443166;
+	bh=CW5WqI1TmI19W4kaKPMZ0B9Y4hs3GkYkfmb9pPu3MOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBxF066fmZEBZhjq4RpXH41RgpwJFYooSIHh7T9thDRurrFzdhIqcBP/wtFhUiDiv
-	 U63C+Y5OEfCwPyoBw8HIewKyDxNAUdd6yts7n3kRfP5RcSFgXIMiZUu0F6jzPAoSY3
-	 X4rHFMOyZ5HRuiIftgn2o2OOMs5a6N7/3WWKR6/4=
+	b=ZQtaop2DXxF9SFS0WYmHD4UpBiJqqxgGJXTwUC4MosJNBkvOQZhtNxFDJ2SfP67WF
+	 MYz7Z3PAGQZWfS3cUlc43C+joHA1C9ysztennEEAijlLyE49ESnf05OGErB0XxxBZ5
+	 kG0V8oWD8u+Y/N7LnBxFmTFN8WkjfC08PYDGYOEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lee Duncan <lduncan@suse.com>,
-	Chris Leech <cleech@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	open-iscsi@googlegroups.com,
-	linux-scsi@vger.kernel.org,
-	"David S. Miller" <davem@davemloft.net>,
+	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/259] scsi: iscsi_tcp: restrict to TCP sockets
-Date: Wed,  4 Oct 2023 19:53:51 +0200
-Message-ID: <20231004175220.090852970@linuxfoundation.org>
+Subject: [PATCH 6.1 059/259] powerpc/perf/hv-24x7: Update domain value check
+Date: Wed,  4 Oct 2023 19:53:52 +0200
+Message-ID: <20231004175220.123856515@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -47,46 +42,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit f4f82c52a0ead5ab363d207d06f81b967d09ffb8 ]
+[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
 
-Nothing prevents iscsi_sw_tcp_conn_bind() to receive file descriptor
-pointing to non TCP socket (af_unix for example).
+Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
+check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
+the check for domain value 0 is missing.
 
-Return -EINVAL if this is attempted, instead of crashing the kernel.
+Fix this issue by adding check for domain value 0.
 
-Fixes: 7ba247138907 ("[SCSI] open-iscsi/linux-iscsi-5 Initiator: Initiator code")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lee Duncan <lduncan@suse.com>
-Cc: Chris Leech <cleech@redhat.com>
-Cc: Mike Christie <michael.christie@oracle.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: open-iscsi@googlegroups.com
-Cc: linux-scsi@vger.kernel.org
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Before:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Error:
+  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
+  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
+  /bin/dmesg | grep -i perf may provide additional information.
+
+  Result from dmesg:
+  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
+  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
+
+After:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Warning:
+  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
+  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
+
+Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
+Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/iscsi_tcp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/perf/hv-24x7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/iscsi_tcp.c b/drivers/scsi/iscsi_tcp.c
-index 8009eab3b7bee..56ade46309707 100644
---- a/drivers/scsi/iscsi_tcp.c
-+++ b/drivers/scsi/iscsi_tcp.c
-@@ -724,6 +724,10 @@ iscsi_sw_tcp_conn_bind(struct iscsi_cls_session *cls_session,
- 		return -EEXIST;
+diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
+index 33c23225fd545..7dda59923ed6a 100644
+--- a/arch/powerpc/perf/hv-24x7.c
++++ b/arch/powerpc/perf/hv-24x7.c
+@@ -1431,7 +1431,7 @@ static int h_24x7_event_init(struct perf_event *event)
  	}
  
-+	err = -EINVAL;
-+	if (!sk_is_tcp(sock->sk))
-+		goto free_socket;
-+
- 	err = iscsi_conn_bind(cls_session, cls_conn, is_leading);
- 	if (err)
- 		goto free_socket;
+ 	domain = event_get_domain(event);
+-	if (domain >= HV_PERF_DOMAIN_MAX) {
++	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
+ 		pr_devel("invalid domain %d\n", domain);
+ 		return -EINVAL;
+ 	}
 -- 
 2.40.1
 
