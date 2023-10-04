@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675261DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E4C1DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaTMIKmC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1A2C433C8;
-	Wed,  4 Oct 2023 18:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAy/3UEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDBCC433C9;
+	Wed,  4 Oct 2023 18:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444143;
-	bh=WR9HdWHoa4M6CIy3N44I1P8JM0jarvsv3knYd1zCKkI=;
+	s=korg; t=1696444146;
+	bh=SxY+RZ/gAqeaYC3xVDJGBjg+aJpqf3pQIPGmzsrFXFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uaTMIKmC10Gee6ueXj2xMVZ3HA1qXA76TeX/xJIWOgN8rCL5GLYkCajhxM570N4ir
-	 RyLESEVfBiWcvgqLcE6g34r+7tzjQMPhIZDlVvcOPCkAdsUKvF4oPgJarAKA73bDsY
-	 r02XIn6gmAadeFhExUH6iblvkT+0rk5e6fdQDHYU=
+	b=gAy/3UEZyOuxe9N50oDiQaKMns0BDAatHS7D+28QRfKS3C4OBu4t9zxcQmfl7yJek
+	 mT+JosMPYHDM78MKzlu7OESb+WEAuy0stAYH/aU7Ne5quw+mqb+yxmuNjGjVQQm9Y6
+	 KbCBpjY49sAWELWUXVWHBbEnC+ESDzLcGMmuzXYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 118/321] vfio/mdev: Fix a null-ptr-deref bug for mdev_unregister_parent()
-Date: Wed,  4 Oct 2023 19:54:23 +0200
-Message-ID: <20231004175234.700202919@linuxfoundation.org>
+Subject: [PATCH 6.5 145/321] selftests/powerpc: Fix emit_tests to work with run_kselftest.sh
+Date: Wed,  4 Oct 2023 19:54:50 +0200
+Message-ID: <20231004175235.967961962@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,114 +41,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit c777b11d34e0f47dbbc4b018ef65ad030f2b283a ]
+[ Upstream commit 58b33e78a31782ffe25d404d5eba9a45fe636e27 ]
 
-Inject fault while probing mdpy.ko, if kstrdup() of create_dir() fails in
-kobject_add_internal() in kobject_init_and_add() in mdev_type_add()
-in parent_create_sysfs_files(), it will return 0 and probe successfully.
-And when rmmod mdpy.ko, the mdpy_dev_exit() will call
-mdev_unregister_parent(), the mdev_type_remove() may traverse uninitialized
-parent->types[i] in parent_remove_sysfs_files(), and it will cause
-below null-ptr-deref.
+In order to use run_kselftest.sh the list of tests must be emitted to
+populate kselftest-list.txt.
 
-If mdev_type_add() fails, return the error code and kset_unregister()
-to fix the issue.
+The powerpc Makefile is written to use EMIT_TESTS. But support for
+EMIT_TESTS was dropped in commit d4e59a536f50 ("selftests: Use runner.sh
+for emit targets"). Although prior to that commit a548de0fe8e1
+("selftests: lib.mk: add test execute bit check to EMIT_TESTS") had
+already broken run_kselftest.sh for powerpc due to the executable check
+using the wrong path.
 
- general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- CPU: 2 PID: 10215 Comm: rmmod Tainted: G        W        N 6.6.0-rc2+ #20
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
- RIP: 0010:__kobject_del+0x62/0x1c0
- Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 51 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 28 48 8d 7d 10 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 24 01 00 00 48 8b 75 10 48 89 df 48 8d 6b 3c e8
- RSP: 0018:ffff88810695fd30 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: ffffffffa0270268 RCX: 0000000000000000
- RDX: 0000000000000002 RSI: 0000000000000004 RDI: 0000000000000010
- RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed10233a4ef1
- R10: ffff888119d2778b R11: 0000000063666572 R12: 0000000000000000
- R13: fffffbfff404e2d4 R14: dffffc0000000000 R15: ffffffffa0271660
- FS:  00007fbc81981540(0000) GS:ffff888119d00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fc14a142dc0 CR3: 0000000110a62003 CR4: 0000000000770ee0
- DR0: ffffffff8fb0bce8 DR1: ffffffff8fb0bce9 DR2: ffffffff8fb0bcea
- DR3: ffffffff8fb0bceb DR6: 00000000fffe0ff0 DR7: 0000000000000600
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ? die_addr+0x3d/0xa0
-  ? exc_general_protection+0x144/0x220
-  ? asm_exc_general_protection+0x22/0x30
-  ? __kobject_del+0x62/0x1c0
-  kobject_del+0x32/0x50
-  parent_remove_sysfs_files+0xd6/0x170 [mdev]
-  mdev_unregister_parent+0xfb/0x190 [mdev]
-  ? mdev_register_parent+0x270/0x270 [mdev]
-  ? find_module_all+0x9d/0xe0
-  mdpy_dev_exit+0x17/0x63 [mdpy]
-  __do_sys_delete_module.constprop.0+0x2fa/0x4b0
-  ? module_flags+0x300/0x300
-  ? __fput+0x4e7/0xa00
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
- RIP: 0033:0x7fbc813221b7
- Code: 73 01 c3 48 8b 0d d1 8c 2c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 b0 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a1 8c 2c 00 f7 d8 64 89 01 48
- RSP: 002b:00007ffe780e0648 EFLAGS: 00000206 ORIG_RAX: 00000000000000b0
- RAX: ffffffffffffffda RBX: 00007ffe780e06a8 RCX: 00007fbc813221b7
- RDX: 000000000000000a RSI: 0000000000000800 RDI: 000055e214df9b58
- RBP: 000055e214df9af0 R08: 00007ffe780df5c1 R09: 0000000000000000
- R10: 00007fbc8139ecc0 R11: 0000000000000206 R12: 00007ffe780e0870
- R13: 00007ffe780e0ed0 R14: 000055e214df9260 R15: 000055e214df9af0
-  </TASK>
- Modules linked in: mdpy(-) mdev vfio_iommu_type1 vfio [last unloaded: mdpy]
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:__kobject_del+0x62/0x1c0
- Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 51 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 28 48 8d 7d 10 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 24 01 00 00 48 8b 75 10 48 89 df 48 8d 6b 3c e8
- RSP: 0018:ffff88810695fd30 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: ffffffffa0270268 RCX: 0000000000000000
- RDX: 0000000000000002 RSI: 0000000000000004 RDI: 0000000000000010
- RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed10233a4ef1
- R10: ffff888119d2778b R11: 0000000063666572 R12: 0000000000000000
- R13: fffffbfff404e2d4 R14: dffffc0000000000 R15: ffffffffa0271660
- FS:  00007fbc81981540(0000) GS:ffff888119d00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fc14a142dc0 CR3: 0000000110a62003 CR4: 0000000000770ee0
- DR0: ffffffff8fb0bce8 DR1: ffffffff8fb0bce9 DR2: ffffffff8fb0bcea
- DR3: ffffffff8fb0bceb DR6: 00000000fffe0ff0 DR7: 0000000000000600
- PKRU: 55555554
- Kernel panic - not syncing: Fatal exception
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- Kernel Offset: disabled
- Rebooting in 1 seconds..
+It can be fixed by replacing the EMIT_TESTS definitions with actual
+emit_tests rules in the powerpc Makefiles. This makes run_kselftest.sh
+able to run powerpc tests:
 
-Fixes: da44c340c4fe ("vfio/mdev: simplify mdev_type handling")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20230918115551.1423193-1-ruanjinjie@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+  $ cd linux
+  $ export ARCH=powerpc
+  $ export CROSS_COMPILE=powerpc64le-linux-gnu-
+  $ make headers
+  $ make -j -C tools/testing/selftests install
+  $ grep -c "^powerpc" tools/testing/selftests/kselftest_install/kselftest-list.txt
+  182
+
+Fixes: d4e59a536f50 ("selftests: Use runner.sh for emit targets")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230921072623.828772-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/mdev/mdev_sysfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/powerpc/Makefile     |  7 +++----
+ tools/testing/selftests/powerpc/pmu/Makefile | 11 ++++++-----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/vfio/mdev/mdev_sysfs.c b/drivers/vfio/mdev/mdev_sysfs.c
-index e4490639d3833..9d2738e10c0b9 100644
---- a/drivers/vfio/mdev/mdev_sysfs.c
-+++ b/drivers/vfio/mdev/mdev_sysfs.c
-@@ -233,7 +233,8 @@ int parent_create_sysfs_files(struct mdev_parent *parent)
- out_err:
- 	while (--i >= 0)
- 		mdev_type_remove(parent->types[i]);
--	return 0;
-+	kset_unregister(parent->mdev_types_kset);
-+	return ret;
- }
+diff --git a/tools/testing/selftests/powerpc/Makefile b/tools/testing/selftests/powerpc/Makefile
+index 49f2ad1793fd9..7ea42fa02eabd 100644
+--- a/tools/testing/selftests/powerpc/Makefile
++++ b/tools/testing/selftests/powerpc/Makefile
+@@ -59,12 +59,11 @@ override define INSTALL_RULE
+ 	done;
+ endef
  
- static ssize_t remove_store(struct device *dev, struct device_attribute *attr,
+-override define EMIT_TESTS
++emit_tests:
+ 	+@for TARGET in $(SUB_DIRS); do \
+ 		BUILD_TARGET=$(OUTPUT)/$$TARGET;	\
+-		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests;\
++		$(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET $@;\
+ 	done;
+-endef
+ 
+ override define CLEAN
+ 	+@for TARGET in $(SUB_DIRS); do \
+@@ -77,4 +76,4 @@ endef
+ tags:
+ 	find . -name '*.c' -o -name '*.h' | xargs ctags
+ 
+-.PHONY: tags $(SUB_DIRS)
++.PHONY: tags $(SUB_DIRS) emit_tests
+diff --git a/tools/testing/selftests/powerpc/pmu/Makefile b/tools/testing/selftests/powerpc/pmu/Makefile
+index 2b95e44d20ff9..a284fa874a9f1 100644
+--- a/tools/testing/selftests/powerpc/pmu/Makefile
++++ b/tools/testing/selftests/powerpc/pmu/Makefile
+@@ -30,13 +30,14 @@ override define RUN_TESTS
+ 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET run_tests
+ endef
+ 
+-DEFAULT_EMIT_TESTS := $(EMIT_TESTS)
+-override define EMIT_TESTS
+-	$(DEFAULT_EMIT_TESTS)
++emit_tests:
++	for TEST in $(TEST_GEN_PROGS); do \
++		BASENAME_TEST=`basename $$TEST`;	\
++		echo "$(COLLECTION):$$BASENAME_TEST";	\
++	done
+ 	+TARGET=ebb; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+ 	+TARGET=sampling_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+ 	+TARGET=event_code_tests; BUILD_TARGET=$$OUTPUT/$$TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -s -C $$TARGET emit_tests
+-endef
+ 
+ DEFAULT_INSTALL_RULE := $(INSTALL_RULE)
+ override define INSTALL_RULE
+@@ -64,4 +65,4 @@ sampling_tests:
+ event_code_tests:
+ 	TARGET=$@; BUILD_TARGET=$$OUTPUT/$$TARGET; mkdir -p $$BUILD_TARGET; $(MAKE) OUTPUT=$$BUILD_TARGET -k -C $$TARGET all
+ 
+-.PHONY: all run_tests ebb sampling_tests event_code_tests
++.PHONY: all run_tests ebb sampling_tests event_code_tests emit_tests
 -- 
 2.40.1
 
