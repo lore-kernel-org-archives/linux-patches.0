@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE021D55C
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538081D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cb8a0w/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1CFC433C8;
-	Wed,  4 Oct 2023 18:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdgMsoDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C974FC433C8;
+	Wed,  4 Oct 2023 18:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443701;
-	bh=8kWGYi+ME914hc88OxlvJjSo/NEIVWuGtK2NvKYZar0=;
+	s=korg; t=1696443704;
+	bh=NjvsoEfHyWRWtXADrFiZCMWP7gm0+2uljUGK/TOwc7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cb8a0w/A5JVdKPPCnljMyz5UqwEfaLjIQ37TZ4S5ZIuJ9D67RKme0SfGWzVEA8VAq
-	 JLqvIELjTNiSdBmJ4+ChgSfCwaoL49QRADHZvXRpMn7anEkWRnEtMfnMc4uMInay1e
-	 OVEjc2kA+5LVXgTO1TteMKCXXFMZr22UISbNo4IM=
+	b=sdgMsoDHXm08q4+K3tbPigmwK/ET1CHsXZ/ox5PMwBJ/oPKzRdMxdjhzXKMixrT0l
+	 v7F1B5qKSudeFrk6H7c6GnobvDNLgtk31HLwLm0Op/8whGwxc/ONX81Tqj6pnqfg7S
+	 tUVXaPRWKCJavAdsjy0T9t4munjluGSEbo6RU0tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 221/259] ALSA: hda: Disable power save for solving pop issue on Lenovo ThinkCentre M70q
-Date: Wed,  4 Oct 2023 19:56:34 +0200
-Message-ID: <20231004175227.467744321@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 222/259] LoongArch: Define relocation types for ABI v2.10
+Date: Wed,  4 Oct 2023 19:56:35 +0200
+Message-ID: <20231004175227.517640181@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -41,31 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 057a28ef93bdbe84326d34cdb5543afdaab49fe1 upstream.
+commit 2761498876adebff77a43574639005b29e912c43 upstream.
 
-Lenovo ThinkCentre M70q had boot up pop noise.
-Disable power save will solve pop issue.
+The relocation types from 101 to 109 are used by GNU binutils >= 2.41,
+add their definitions to use them in later patches.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=include/elf/loongarch.h#l230
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/315900e2efef42fd9855eacfeb443abd@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/include/asm/elf.h |    9 +++++++++
+ arch/loongarch/kernel/module.c   |    2 +-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2208,6 +2208,7 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x8086, 0x2068, "Intel NUC7i3BNB", 0),
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=198611 */
- 	SND_PCI_QUIRK(0x17aa, 0x2227, "Lenovo X1 Carbon 3rd Gen", 0),
-+	SND_PCI_QUIRK(0x17aa, 0x316e, "Lenovo ThinkCentre M70q", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1689623 */
- 	SND_PCI_QUIRK(0x17aa, 0x367b, "Lenovo IdeaCentre B550", 0),
- 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1572975 */
+--- a/arch/loongarch/include/asm/elf.h
++++ b/arch/loongarch/include/asm/elf.h
+@@ -111,6 +111,15 @@
+ #define R_LARCH_TLS_GD_HI20			98
+ #define R_LARCH_32_PCREL			99
+ #define R_LARCH_RELAX				100
++#define R_LARCH_DELETE				101
++#define R_LARCH_ALIGN				102
++#define R_LARCH_PCREL20_S2			103
++#define R_LARCH_CFA				104
++#define R_LARCH_ADD6				105
++#define R_LARCH_SUB6				106
++#define R_LARCH_ADD_ULEB128			107
++#define R_LARCH_SUB_ULEB128			108
++#define R_LARCH_64_PCREL			109
+ 
+ #ifndef ELF_ARCH
+ 
+--- a/arch/loongarch/kernel/module.c
++++ b/arch/loongarch/kernel/module.c
+@@ -376,7 +376,7 @@ typedef int (*reloc_rela_handler)(struct
+ 
+ /* The handlers for known reloc types */
+ static reloc_rela_handler reloc_rela_handlers[] = {
+-	[R_LARCH_NONE ... R_LARCH_RELAX]		     = apply_r_larch_error,
++	[R_LARCH_NONE ... R_LARCH_64_PCREL]		     = apply_r_larch_error,
+ 
+ 	[R_LARCH_NONE]					     = apply_r_larch_none,
+ 	[R_LARCH_32]					     = apply_r_larch_32,
 
 
