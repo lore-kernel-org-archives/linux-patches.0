@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D77C1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66081D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zT3h/H/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85288C433C8;
-	Wed,  4 Oct 2023 18:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOFyXWwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49304C433CA;
+	Wed,  4 Oct 2023 18:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443661;
-	bh=DGfsvxRTN74dnqX81BjiS8TBez3Hf/5l3SpAW8gDtGA=;
+	s=korg; t=1696443664;
+	bh=oGNO3npaFikIZAPFMiSLTQwe3CBCdKXhXJ7k9HskuEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zT3h/H/I6AC31ZLsDBDA0LNRtKshI/+fMeHEketrFI+ZjlnT1FV4Ci9EvAiorQkkA
-	 BK0HFtjGsSX13CjT0N0v6IN9hOVejzXJjvBJcL7lAHP8rctQVyb/7hYTCr6XiO/BnE
-	 +eKLEyKP/ho+PPifbjcQCIZcyH1uuXkI+9AWniqI=
+	b=cOFyXWwY1/37elFZICypixs43akL5oMOKGGJ8nq0LfXPEF9hb+hg5Sc/j0Wkj9eIP
+	 7rFKEL7W4hjnPZNsViaAivAOhH0fkg6w5no51mV7e4ofmFXogH/gf4R4bGUIgyJ35j
+	 2NFOx1mQ+W3YdC9NtkQyDnRGTxDGfqDTrWi38rkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.1 218/259] serial: 8250_port: Check IRQ data before use
-Date: Wed,  4 Oct 2023 19:56:31 +0200
-Message-ID: <20231004175227.329124087@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 236/259] mm/damon/vaddr-test: fix memory leak in damon_do_test_apply_three_regions()
+Date: Wed,  4 Oct 2023 19:56:49 +0200
+Message-ID: <20231004175228.208352872@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,49 +42,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit cce7fc8b29961b64fadb1ce398dc5ff32a79643b upstream.
+commit 45120b15743fa7c0aa53d5db6dfb4c8f87be4abd upstream.
 
-In case the leaf driver wants to use IRQ polling (irq = 0) and
-IIR register shows that an interrupt happened in the 8250 hardware
-the IRQ data can be NULL. In such a case we need to skip the wake
-event as we came to this path from the timer interrupt and quite
-likely system is already awake.
+When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
+and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
 
-Without this fix we have got an Oops:
+Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
+variables"), the damon_destroy_ctx() is removed, but still call
+damon_new_target() and damon_new_region(), the damon_region which is
+allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
+which is allocated by kmalloc in damon_new_target() are not freed.  And
+the damon_region which is allocated in damon_new_region() in
+damon_set_regions() is also not freed.
 
-    serial8250: ttyS0 at I/O 0x3f8 (irq = 0, base_baud = 115200) is a 16550A
-    ...
-    BUG: kernel NULL pointer dereference, address: 0000000000000010
-    RIP: 0010:serial8250_handle_irq+0x7c/0x240
-    Call Trace:
-     ? serial8250_handle_irq+0x7c/0x240
-     ? __pfx_serial8250_timeout+0x10/0x10
+So use damon_destroy_target to free all the damon_regions and damon_target.
 
-Fixes: 0ba9e3a13c6a ("serial: 8250: Add missing wakeup event reporting")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20230831222555.614426-1-andriy.shevchenko@linux.intel.com
+    unreferenced object 0xffff888107c9a940 (size 64):
+      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        60 c7 9c 07 81 88 ff ff f8 cb 9c 07 81 88 ff ff  `...............
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff8881079cc740 (size 56):
+      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888107c9ac40 (size 64):
+      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        a0 cc 9c 07 81 88 ff ff 78 a1 76 07 81 88 ff ff  ........x.v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff8881079ccc80 (size 56):
+      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888107c9af40 (size 64):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        20 a2 76 07 81 88 ff ff b8 a6 76 07 81 88 ff ff   .v.......v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776a200 (size 56):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776a740 (size 56):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.025s)
+      hex dump (first 32 bytes):
+        3d 00 00 00 00 00 00 00 3f 00 00 00 00 00 00 00  =.......?.......
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888108038240 (size 64):
+      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 03 00 00 00 6b 6b 6b 6b  ............kkkk
+        48 ad 76 07 81 88 ff ff 98 ae 76 07 81 88 ff ff  H.v.......v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776ad28 (size 56):
+      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+
+Link: https://lkml.kernel.org/r/20230925072100.3725620-1-ruanjinjie@huawei.com
+Fixes: 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/damon/vaddr-test.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1953,7 +1953,10 @@ int serial8250_handle_irq(struct uart_po
- 		skip_rx = true;
- 
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
--		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+		struct irq_data *d;
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -140,6 +140,8 @@ static void damon_do_test_apply_three_re
+ 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
+ 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
+ 	}
 +
-+		d = irq_get_irq_data(port->irq);
-+		if (d && irqd_is_wakeup_set(d))
- 			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
++	damon_destroy_target(t);
+ }
+ 
+ /*
 
 
