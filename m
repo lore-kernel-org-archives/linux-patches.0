@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724DE1DDEE
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7C51D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdY+0+JQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47D9C433CD;
-	Wed,  4 Oct 2023 18:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP4VuQg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38DEC433C7;
+	Wed,  4 Oct 2023 18:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443766;
-	bh=lnnL1i9NJdHx8NpcZ4eul6o9oxZ+4nT800giNv7YW2g=;
+	s=korg; t=1696443769;
+	bh=pVdeHo4R3Axb0jU7oL94osvs5tDOw9Y9HLuF7SumVOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdY+0+JQvBr0lvnRLR8Zj/vd1y9MwwAO6b7MgNDpQOAXJI8PpxCGVVPLwHiUJ28xO
-	 rtG/oZ4MbFO8IeTbMtEDbQ9vyWta2t68SAtjVB6iG8GcM2bZPl95zrJKZpCjH+gQFE
-	 lr/+AVMKBok2iG9bKMX9OU8KrPkee7SBxHNud3YU=
+	b=JP4VuQg/MwK0tNB0InFJi1USjA+3H8YZmqtLIxHA7GuMVO72dPkUW3adHLRQM7jlR
+	 VboPFyjnHCB7L8NCt5HQEbKoQwPRS5WJI5Wb1+0R7XM9xHEVhOyFqLiiODdApf9Zh7
+	 QB9hSo6vcjlpmBRxCW7ZXDPpixrGITrF8G1bYQNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Wysochanski <dwysocha@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 013/321] netfs: Only call folio_start_fscache() one time for each folio
-Date: Wed,  4 Oct 2023 19:52:38 +0200
-Message-ID: <20231004175229.814170185@linuxfoundation.org>
+Subject: [PATCH 6.5 014/321] btrfs: improve error message after failure to add delayed dir index item
+Date: Wed,  4 Oct 2023 19:52:39 +0200
+Message-ID: <20231004175229.854367992@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,93 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Wysochanski <dwysocha@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit df1c357f25d808e30b216188330e708e09e1a412 ]
+[ Upstream commit 91bfe3104b8db0310f76f2dcb6aacef24c889366 ]
 
-If a network filesystem using netfs implements a clamp_length()
-function, it can set subrequest lengths smaller than a page size.
+If we fail to add a delayed dir index item because there's already another
+item with the same index number, we print an error message (and then BUG).
+However that message isn't very helpful to debug anything because we don't
+know what's the index number and what are the values of index counters in
+the inode and its delayed inode (index_cnt fields of struct btrfs_inode
+and struct btrfs_delayed_node).
 
-When we loop through the folios in netfs_rreq_unlock_folios() to
-set any folios to be written back, we need to make sure we only
-call folio_start_fscache() once for each folio.
+So update the error message to include the index number and counters.
 
-Otherwise, this simple testcase:
+We actually had a recent case where this issue was hit by a syzbot report
+(see the link below).
 
-  mount -o fsc,rsize=1024,wsize=1024 127.0.0.1:/export /mnt/nfs
-  dd if=/dev/zero of=/mnt/nfs/file.bin bs=4096 count=1
-  1+0 records in
-  1+0 records out
-  4096 bytes (4.1 kB, 4.0 KiB) copied, 0.0126359 s, 324 kB/s
-  echo 3 > /proc/sys/vm/drop_caches
-  cat /mnt/nfs/file.bin > /dev/null
-
-will trigger an oops similar to the following:
-
-  page dumped because: VM_BUG_ON_FOLIO(folio_test_private_2(folio))
-  ------------[ cut here ]------------
-  kernel BUG at include/linux/netfs.h:44!
-  ...
-  CPU: 5 PID: 134 Comm: kworker/u16:5 Kdump: loaded Not tainted 6.4.0-rc5
-  ...
-  RIP: 0010:netfs_rreq_unlock_folios+0x68e/0x730 [netfs]
-  ...
-  Call Trace:
-    netfs_rreq_assess+0x497/0x660 [netfs]
-    netfs_subreq_terminated+0x32b/0x610 [netfs]
-    nfs_netfs_read_completion+0x14e/0x1a0 [nfs]
-    nfs_read_completion+0x2f9/0x330 [nfs]
-    rpc_free_task+0x72/0xa0 [sunrpc]
-    rpc_async_release+0x46/0x70 [sunrpc]
-    process_one_work+0x3bd/0x710
-    worker_thread+0x89/0x610
-    kthread+0x181/0x1c0
-    ret_from_fork+0x29/0x50
-
-Fixes: 3d3c95046742 ("netfs: Provide readahead and readpage netfs helpers"
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2210612
-Signed-off-by: Dave Wysochanski <dwysocha@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20230608214137.856006-1-dwysocha@redhat.com/ # v1
-Link: https://lore.kernel.org/r/20230915185704.1082982-1-dwysocha@redhat.com/ # v2
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/linux-btrfs/00000000000036e1290603e097e0@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 2c58c3931ede ("btrfs: remove BUG() after failure to insert delayed dir index item")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/delayed-inode.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 3404707ddbe73..2cd3ccf4c4399 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -47,12 +47,14 @@ void netfs_rreq_unlock_folios(struct netfs_io_request *rreq)
- 	xas_for_each(&xas, folio, last_page) {
- 		loff_t pg_end;
- 		bool pg_failed = false;
-+		bool folio_started;
- 
- 		if (xas_retry(&xas, folio))
- 			continue;
- 
- 		pg_end = folio_pos(folio) + folio_size(folio) - 1;
- 
-+		folio_started = false;
- 		for (;;) {
- 			loff_t sreq_end;
- 
-@@ -60,8 +62,10 @@ void netfs_rreq_unlock_folios(struct netfs_io_request *rreq)
- 				pg_failed = true;
- 				break;
- 			}
--			if (test_bit(NETFS_SREQ_COPY_TO_CACHE, &subreq->flags))
-+			if (!folio_started && test_bit(NETFS_SREQ_COPY_TO_CACHE, &subreq->flags)) {
- 				folio_start_fscache(folio);
-+				folio_started = true;
-+			}
- 			pg_failed |= subreq_failed;
- 			sreq_end = subreq->start + subreq->len - 1;
- 			if (pg_end < sreq_end)
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index 0f147240ce9b8..1a050e48e0e57 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1511,9 +1511,10 @@ int btrfs_insert_delayed_dir_index(struct btrfs_trans_handle *trans,
+ 	ret = __btrfs_add_delayed_item(delayed_node, delayed_item);
+ 	if (unlikely(ret)) {
+ 		btrfs_err(trans->fs_info,
+-			  "err add delayed dir index item(name: %.*s) into the insertion tree of the delayed node(root id: %llu, inode id: %llu, errno: %d)",
+-			  name_len, name, delayed_node->root->root_key.objectid,
+-			  delayed_node->inode_id, ret);
++"error adding delayed dir index item, name: %.*s, index: %llu, root: %llu, dir: %llu, dir->index_cnt: %llu, delayed_node->index_cnt: %llu, error: %d",
++			  name_len, name, index, btrfs_root_id(delayed_node->root),
++			  delayed_node->inode_id, dir->index_cnt,
++			  delayed_node->index_cnt, ret);
+ 		BUG();
+ 	}
+ 	mutex_unlock(&delayed_node->mutex);
 -- 
 2.40.1
 
