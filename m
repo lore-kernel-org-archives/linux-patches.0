@@ -1,120 +1,189 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07D21C2AB;
-	Wed,  4 Oct 2023 17:50:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EC4C433C7;
-	Wed,  4 Oct 2023 17:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AECE1D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:01:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5316C433C7;
+	Wed,  4 Oct 2023 18:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696441834;
-	bh=zUosDvRHyf5850z577fl4LTHEhb7yQpe48mCNpSn/dc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2WhJHhBMIySUnPBl69ikcW1YP9LVxDdKLskFO0ilfchUa0N62QAKE6YuIQedy7KXD
-	 SxnHr2LcS0FDOOjXfHSyTFyx3IFbO6clRjTbzA+eUie0xc0EVaPHTOXuzUnE9W/an/
-	 Noh3F/uSnPsR43lBo/FgNg2eHFDKe5hpkVGQ9WLI=
-Date: Wed, 4 Oct 2023 19:50:31 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Dexuan Cui <decui@microsoft.com>
-Cc: Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Michael Kelley (LINUX)" <mikelley@microsoft.com>,
-	KY Srinivasan <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"apais@linux.microsoft.com" <apais@linux.microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	"ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
-	MUKESH RATHOR <mukeshrathor@microsoft.com>,
-	"stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
-	"jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
-	vkuznets <vkuznets@redhat.com>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"hpa@zytor.com" <hpa@zytor.com>,
-	"will@kernel.org" <will@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>
-Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
- hypervisor ABIs
-Message-ID: <2023100415-diving-clapper-a2a7@gregkh>
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093057-eggplant-reshoot-8513@gregkh>
- <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
- <2023100154-ferret-rift-acef@gregkh>
- <dd5159fe-5337-44ed-bf1b-58220221b597@linux.microsoft.com>
- <2023100443-wrinkly-romp-79d9@gregkh>
- <SA1PR21MB1335F5145ACB0ED4F378105ABFCBA@SA1PR21MB1335.namprd21.prod.outlook.com>
+	s=korg; t=1696442504;
+	bh=C5giSE+b8BGO3t3LZSdujQv138aJM2RZ9BODUj1MwX8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=wJqo7x2XySDebcvU//DUDGWkd7ysEy7j5KBpZRmcbqIvPOrfWPMgq3QNJrznPm2Yc
+	 WLKnHE1VpN+hUryYpFf/+203wq6sYtrcNgvDNmwjNgk/ZNYzI4bB3bwtXxLi/xoT06
+	 2DhRPNN0e8lEp3I65Tjp/yw/uQS4duEER+WfYTbA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/183] NFS: Use the correct commit info in nfs_join_page_group()
+Date: Wed,  4 Oct 2023 19:53:52 +0200
+Message-ID: <20231004175204.021573439@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
+References: <20231004175203.943277832@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SA1PR21MB1335F5145ACB0ED4F378105ABFCBA@SA1PR21MB1335.namprd21.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 04, 2023 at 05:36:32PM +0000, Dexuan Cui wrote:
-> > From: Greg KH <gregkh@linuxfoundation.org>
-> > Sent: Tuesday, October 3, 2023 11:10 PM
-> > [...]
-> > On Tue, Oct 03, 2023 at 04:37:01PM -0700, Nuno Das Neves wrote:
-> > > On 9/30/2023 11:19 PM, Greg KH wrote:
-> > > > On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
-> > > > > On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
-> > > > > > On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
-> > > > > > > +/* Define connection identifier type. */
-> > > > > > > +union hv_connection_id {
-> > > > > > > +   __u32 asu32;
-> > > > > > > +   struct {
-> > > > > > > +           __u32 id:24;
-> > > > > > > +           __u32 reserved:8;
-> > > > > > > +   } __packed u;
-> 
-> IMO the "__packed" is unnecessary.
-> 
-> > > > > > bitfields will not work properly in uapi .h files, please never do that.
-> > > > >
-> > > > > Can you clarify a bit more why it wouldn't work? Endianess? Alignment?
-> > > >
-> > > > Yes to both.
-> > > >
-> > > > Did you all read the documentation for how to write a kernel api?  If
-> > > > not, please do so.  I think it mentions bitfields, but it not, it really
-> > > > should as of course, this will not work properly with different endian
-> > > > systems or many compilers.
-> > >
-> > > Yes, in
-> > https://docs.k/
-> > ernel.org%2Fdriver-
-> > api%2Fioctl.html&data=05%7C01%7Cdecui%40microsoft.com%7Ce404769e0f
-> > 85493f0aa108dbc4a08a27%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C
-> > 0%7C638319966071263290%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLj
-> > AwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%
-> > 7C%7C&sdata=RiLNA5DRviWBQK6XXhxC4m77raSDBb%2F0BB6BDpFPUJY%3D
-> > &reserved=0 it says that it is
-> > > "better to avoid" bitfields.
-> > >
-> > > Unfortunately bitfields are used in the definition of the hypervisor
-> > > ABI. We import these definitions directly from the hypervisor code.
-> >
-> > So why do you feel you have to use this specific format for your
-> > user/kernel api?  That is not what is going to the hypervisor.
-> 
-> If it's hard to avoid bitfield here, maybe we can refer to the definition of
-> struct iphdr in include/uapi/linux/ip.h
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-It is not hard to avoid using bitfields, just use the proper definitions
-to make this portable for all compilers.  And ick, ip.h is not a good
-thing to follow :)
+------------------
 
-thanks,
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-greg k-h
+[ Upstream commit b193a78ddb5ee7dba074d3f28dc050069ba083c0 ]
+
+Ensure that nfs_clear_request_commit() updates the correct counters when
+it removes them from the commit list.
+
+Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/nfs/direct.c          |  8 +++++---
+ fs/nfs/write.c           | 23 ++++++++++++-----------
+ include/linux/nfs_page.h |  4 +++-
+ 3 files changed, 20 insertions(+), 15 deletions(-)
+
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 018af6ec97b40..5d86ffa72ceab 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -525,7 +525,9 @@ static void nfs_direct_add_page_head(struct list_head *list,
+ 	kref_get(&head->wb_kref);
+ }
+ 
+-static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
++static void nfs_direct_join_group(struct list_head *list,
++				  struct nfs_commit_info *cinfo,
++				  struct inode *inode)
+ {
+ 	struct nfs_page *req, *subreq;
+ 
+@@ -547,7 +549,7 @@ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
+ 				nfs_release_request(subreq);
+ 			}
+ 		} while ((subreq = subreq->wb_this_page) != req);
+-		nfs_join_page_group(req, inode);
++		nfs_join_page_group(req, cinfo, inode);
+ 	}
+ }
+ 
+@@ -573,7 +575,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
+ 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
+ 
+-	nfs_direct_join_group(&reqs, dreq->inode);
++	nfs_direct_join_group(&reqs, &cinfo, dreq->inode);
+ 
+ 	dreq->count = 0;
+ 	dreq->max_count = 0;
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index be70874bc3292..4231d51fc1add 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -58,7 +58,8 @@ static const struct nfs_pgio_completion_ops nfs_async_write_completion_ops;
+ static const struct nfs_commit_completion_ops nfs_commit_completion_ops;
+ static const struct nfs_rw_ops nfs_rw_write_ops;
+ static void nfs_inode_remove_request(struct nfs_page *req);
+-static void nfs_clear_request_commit(struct nfs_page *req);
++static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
++				     struct nfs_page *req);
+ static void nfs_init_cinfo_from_inode(struct nfs_commit_info *cinfo,
+ 				      struct inode *inode);
+ static struct nfs_page *
+@@ -500,8 +501,8 @@ nfs_destroy_unlinked_subrequests(struct nfs_page *destroy_list,
+  * the (former) group.  All subrequests are removed from any write or commit
+  * lists, unlinked from the group and destroyed.
+  */
+-void
+-nfs_join_page_group(struct nfs_page *head, struct inode *inode)
++void nfs_join_page_group(struct nfs_page *head, struct nfs_commit_info *cinfo,
++			 struct inode *inode)
+ {
+ 	struct nfs_page *subreq;
+ 	struct nfs_page *destroy_list = NULL;
+@@ -531,7 +532,7 @@ nfs_join_page_group(struct nfs_page *head, struct inode *inode)
+ 	 * Commit list removal accounting is done after locks are dropped */
+ 	subreq = head;
+ 	do {
+-		nfs_clear_request_commit(subreq);
++		nfs_clear_request_commit(cinfo, subreq);
+ 		subreq = subreq->wb_this_page;
+ 	} while (subreq != head);
+ 
+@@ -565,8 +566,10 @@ nfs_lock_and_join_requests(struct page *page)
+ {
+ 	struct inode *inode = page_file_mapping(page)->host;
+ 	struct nfs_page *head;
++	struct nfs_commit_info cinfo;
+ 	int ret;
+ 
++	nfs_init_cinfo_from_inode(&cinfo, inode);
+ 	/*
+ 	 * A reference is taken only on the head request which acts as a
+ 	 * reference to the whole page group - the group will not be destroyed
+@@ -583,7 +586,7 @@ nfs_lock_and_join_requests(struct page *page)
+ 		return ERR_PTR(ret);
+ 	}
+ 
+-	nfs_join_page_group(head, inode);
++	nfs_join_page_group(head, &cinfo, inode);
+ 
+ 	return head;
+ }
+@@ -945,18 +948,16 @@ nfs_clear_page_commit(struct page *page)
+ }
+ 
+ /* Called holding the request lock on @req */
+-static void
+-nfs_clear_request_commit(struct nfs_page *req)
++static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
++				     struct nfs_page *req)
+ {
+ 	if (test_bit(PG_CLEAN, &req->wb_flags)) {
+ 		struct nfs_open_context *ctx = nfs_req_openctx(req);
+ 		struct inode *inode = d_inode(ctx->dentry);
+-		struct nfs_commit_info cinfo;
+ 
+-		nfs_init_cinfo_from_inode(&cinfo, inode);
+ 		mutex_lock(&NFS_I(inode)->commit_mutex);
+-		if (!pnfs_clear_request_commit(req, &cinfo)) {
+-			nfs_request_remove_commit_list(req, &cinfo);
++		if (!pnfs_clear_request_commit(req, cinfo)) {
++			nfs_request_remove_commit_list(req, cinfo);
+ 		}
+ 		mutex_unlock(&NFS_I(inode)->commit_mutex);
+ 		nfs_clear_page_commit(req->wb_page);
+diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
+index f0373a6cb5fb6..40aa09a21f75d 100644
+--- a/include/linux/nfs_page.h
++++ b/include/linux/nfs_page.h
+@@ -145,7 +145,9 @@ extern	void nfs_unlock_request(struct nfs_page *req);
+ extern	void nfs_unlock_and_release_request(struct nfs_page *);
+ extern	struct nfs_page *nfs_page_group_lock_head(struct nfs_page *req);
+ extern	int nfs_page_group_lock_subrequests(struct nfs_page *head);
+-extern	void nfs_join_page_group(struct nfs_page *head, struct inode *inode);
++extern void nfs_join_page_group(struct nfs_page *head,
++				struct nfs_commit_info *cinfo,
++				struct inode *inode);
+ extern int nfs_page_group_lock(struct nfs_page *);
+ extern void nfs_page_group_unlock(struct nfs_page *);
+ extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
+-- 
+2.40.1
+
+
+
