@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A721D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF565C433C7;
-	Wed,  4 Oct 2023 18:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137541D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A306C433C8;
+	Wed,  4 Oct 2023 18:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443023;
-	bh=DFzt/MZiUBY14IDkdINSUzVti9Y3ZiQLVt+OCgeP7/A=;
+	s=korg; t=1696443025;
+	bh=QJCVhdjgAKA11+KYpiRrIrSHLSZuwELk1JAWxKjjrbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWcBjZwmv9IWMgxyuyFkYsJ+Lo9LV+ZuUOk3GIytzgjbiP5ZtJTl2qp14sdrJMWan
-	 n9CPiMPzR79rhdbY7rqRH4PD3LXPqtaumTlgjv3wKuzWFUPCNLhHK/mnWFYkfGZgRc
-	 5f3uZ1voftwF2QMNjFoDbt55OBkg4V8c047GiQhU=
+	b=Vqsr6Y5bRELkU7K+9nTnYTkS2C8SoxHvLR3+CXmNr2lBhqcXnLU4NnKDCH6OTkybC
+	 aQU40WecDXgx27X0M4Q7fAb1YStC4CLTi2j5gON1ay/eZoInP+H6izmvF1dyXlS+QJ
+	 MBK3AEd+LdW993MCc8rlwAf48U++UZjaOVxRuPnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/259] NFS: Fix error handling for O_DIRECT write scheduling
-Date: Wed,  4 Oct 2023 19:52:54 +0200
-Message-ID: <20231004175217.488223658@linuxfoundation.org>
+Subject: [PATCH 6.1 010/259] media: v4l: Use correct dependency for camera sensor drivers
+Date: Wed,  4 Oct 2023 19:53:03 +0200
+Message-ID: <20231004175217.911280396@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,145 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 954998b60caa8f2a3bf3abe490de6f08d283687a ]
+[ Upstream commit 86e16b87afac20779da1228d690a95c54d7e2ad0 ]
 
-If we fail to schedule a request for transmission, there are 2
-possibilities:
-1) Either we hit a fatal error, and we just want to drop the remaining
-   requests on the floor.
-2) We were asked to try again, in which case we should allow the
-   outstanding RPC calls to complete, so that we can recoalesce requests
-   and try again.
+The Kconfig option that enables compiling camera sensor drivers is
+VIDEO_CAMERA_SENSOR rather than MEDIA_CAMERA_SUPPORT as it was previously.
+Fix this.
 
-Fixes: d600ad1f2bdb ("NFS41: pop some layoutget errors to application")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Also select VIDEO_OV7670 for marvell platform drivers only if
+MEDIA_SUBDRV_AUTOSELECT and VIDEO_CAMERA_SENSOR are enabled.
+
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 7d3c7d2a2914 ("media: i2c: Add a camera sensor top level menu")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c | 62 ++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 46 insertions(+), 16 deletions(-)
+ drivers/media/platform/marvell/Kconfig | 4 ++--
+ drivers/media/usb/em28xx/Kconfig       | 4 ++--
+ drivers/media/usb/go7007/Kconfig       | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 3bb530d4bb5ce..d71762f32b6c4 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -530,10 +530,9 @@ nfs_direct_write_scan_commit_list(struct inode *inode,
- static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
- {
- 	struct nfs_pageio_descriptor desc;
--	struct nfs_page *req, *tmp;
-+	struct nfs_page *req;
- 	LIST_HEAD(reqs);
- 	struct nfs_commit_info cinfo;
--	LIST_HEAD(failed);
+diff --git a/drivers/media/platform/marvell/Kconfig b/drivers/media/platform/marvell/Kconfig
+index ec1a16734a280..d6499ffe30e8b 100644
+--- a/drivers/media/platform/marvell/Kconfig
++++ b/drivers/media/platform/marvell/Kconfig
+@@ -7,7 +7,7 @@ config VIDEO_CAFE_CCIC
+ 	depends on V4L_PLATFORM_DRIVERS
+ 	depends on PCI && I2C && VIDEO_DEV
+ 	depends on COMMON_CLK
+-	select VIDEO_OV7670
++	select VIDEO_OV7670 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
+ 	select VIDEOBUF2_VMALLOC
+ 	select VIDEOBUF2_DMA_CONTIG
+ 	select VIDEOBUF2_DMA_SG
+@@ -22,7 +22,7 @@ config VIDEO_MMP_CAMERA
+ 	depends on I2C && VIDEO_DEV
+ 	depends on ARCH_MMP || COMPILE_TEST
+ 	depends on COMMON_CLK
+-	select VIDEO_OV7670
++	select VIDEO_OV7670 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
+ 	select I2C_GPIO
+ 	select VIDEOBUF2_VMALLOC
+ 	select VIDEOBUF2_DMA_CONTIG
+diff --git a/drivers/media/usb/em28xx/Kconfig b/drivers/media/usb/em28xx/Kconfig
+index b3c472b8c5a96..cb61fd6cc6c61 100644
+--- a/drivers/media/usb/em28xx/Kconfig
++++ b/drivers/media/usb/em28xx/Kconfig
+@@ -12,8 +12,8 @@ config VIDEO_EM28XX_V4L2
+ 	select VIDEO_SAA711X if MEDIA_SUBDRV_AUTOSELECT
+ 	select VIDEO_TVP5150 if MEDIA_SUBDRV_AUTOSELECT
+ 	select VIDEO_MSP3400 if MEDIA_SUBDRV_AUTOSELECT
+-	select VIDEO_MT9V011 if MEDIA_SUBDRV_AUTOSELECT && MEDIA_CAMERA_SUPPORT
+-	select VIDEO_OV2640 if MEDIA_SUBDRV_AUTOSELECT && MEDIA_CAMERA_SUPPORT
++	select VIDEO_MT9V011 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
++	select VIDEO_OV2640 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
+ 	help
+ 	  This is a video4linux driver for Empia 28xx based TV cards.
  
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
- 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
-@@ -551,27 +550,36 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
- 			      &nfs_direct_write_completion_ops);
- 	desc.pg_dreq = dreq;
- 
--	list_for_each_entry_safe(req, tmp, &reqs, wb_list) {
-+	while (!list_empty(&reqs)) {
-+		req = nfs_list_entry(reqs.next);
- 		/* Bump the transmission count */
- 		req->wb_nio++;
- 		if (!nfs_pageio_add_request(&desc, req)) {
--			nfs_list_move_request(req, &failed);
- 			spin_lock(&cinfo.inode->i_lock);
--			dreq->flags = 0;
--			if (desc.pg_error < 0)
-+			if (dreq->error < 0) {
-+				desc.pg_error = dreq->error;
-+			} else if (desc.pg_error != -EAGAIN) {
-+				dreq->flags = 0;
-+				if (!desc.pg_error)
-+					desc.pg_error = -EIO;
- 				dreq->error = desc.pg_error;
--			else
--				dreq->error = -EIO;
-+			} else
-+				dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
- 			spin_unlock(&cinfo.inode->i_lock);
-+			break;
- 		}
- 		nfs_release_request(req);
- 	}
- 	nfs_pageio_complete(&desc);
- 
--	while (!list_empty(&failed)) {
--		req = nfs_list_entry(failed.next);
-+	while (!list_empty(&reqs)) {
-+		req = nfs_list_entry(reqs.next);
- 		nfs_list_remove_request(req);
- 		nfs_unlock_and_release_request(req);
-+		if (desc.pg_error == -EAGAIN)
-+			nfs_mark_request_commit(req, NULL, &cinfo, 0);
-+		else
-+			nfs_release_request(req);
- 	}
- 
- 	if (put_dreq(dreq))
-@@ -796,9 +804,11 @@ static ssize_t nfs_direct_write_schedule_iovec(struct nfs_direct_req *dreq,
- {
- 	struct nfs_pageio_descriptor desc;
- 	struct inode *inode = dreq->inode;
-+	struct nfs_commit_info cinfo;
- 	ssize_t result = 0;
- 	size_t requested_bytes = 0;
- 	size_t wsize = max_t(size_t, NFS_SERVER(inode)->wsize, PAGE_SIZE);
-+	bool defer = false;
- 
- 	trace_nfs_direct_write_schedule_iovec(dreq);
- 
-@@ -839,19 +849,39 @@ static ssize_t nfs_direct_write_schedule_iovec(struct nfs_direct_req *dreq,
- 				break;
- 			}
- 
-+			pgbase = 0;
-+			bytes -= req_len;
-+			requested_bytes += req_len;
-+			pos += req_len;
-+			dreq->bytes_left -= req_len;
-+
-+			if (defer) {
-+				nfs_mark_request_commit(req, NULL, &cinfo, 0);
-+				continue;
-+			}
-+
- 			nfs_lock_request(req);
- 			req->wb_index = pos >> PAGE_SHIFT;
- 			req->wb_offset = pos & ~PAGE_MASK;
--			if (!nfs_pageio_add_request(&desc, req)) {
-+			if (nfs_pageio_add_request(&desc, req))
-+				continue;
-+
-+			/* Exit on hard errors */
-+			if (desc.pg_error < 0 && desc.pg_error != -EAGAIN) {
- 				result = desc.pg_error;
- 				nfs_unlock_and_release_request(req);
- 				break;
- 			}
--			pgbase = 0;
--			bytes -= req_len;
--			requested_bytes += req_len;
--			pos += req_len;
--			dreq->bytes_left -= req_len;
-+
-+			/* If the error is soft, defer remaining requests */
-+			nfs_init_cinfo_from_dreq(&cinfo, dreq);
-+			spin_lock(&cinfo.inode->i_lock);
-+			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
-+			spin_unlock(&cinfo.inode->i_lock);
-+			nfs_unlock_request(req);
-+			nfs_mark_request_commit(req, NULL, &cinfo, 0);
-+			desc.pg_error = 0;
-+			defer = true;
- 		}
- 		nfs_direct_release_pages(pagevec, npages);
- 		kvfree(pagevec);
+diff --git a/drivers/media/usb/go7007/Kconfig b/drivers/media/usb/go7007/Kconfig
+index 4ff79940ad8d4..b2a15d9fb1f33 100644
+--- a/drivers/media/usb/go7007/Kconfig
++++ b/drivers/media/usb/go7007/Kconfig
+@@ -12,8 +12,8 @@ config VIDEO_GO7007
+ 	select VIDEO_TW2804 if MEDIA_SUBDRV_AUTOSELECT
+ 	select VIDEO_TW9903 if MEDIA_SUBDRV_AUTOSELECT
+ 	select VIDEO_TW9906 if MEDIA_SUBDRV_AUTOSELECT
+-	select VIDEO_OV7640 if MEDIA_SUBDRV_AUTOSELECT && MEDIA_CAMERA_SUPPORT
+ 	select VIDEO_UDA1342 if MEDIA_SUBDRV_AUTOSELECT
++	select VIDEO_OV7640 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
+ 	help
+ 	  This is a video4linux driver for the WIS GO7007 MPEG
+ 	  encoder chip.
 -- 
 2.40.1
 
