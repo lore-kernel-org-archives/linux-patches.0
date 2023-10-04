@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B88D1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785ACC433C9;
-	Wed,  4 Oct 2023 18:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9391D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5503FC433C8;
+	Wed,  4 Oct 2023 18:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442741;
-	bh=W/G4wd1dDNO24pYxX920mf3FIPkTIyftqNjA/JthhQw=;
+	s=korg; t=1696442744;
+	bh=1353e5wBrFiCtZQzqQoqS5XC6HURudgldN+GGyx/3h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jGqyq9OdzH/4oU94G5FkiRQRv5JdqF3UUTKd1lqjdKq8qtbFhNUzoBtswWNfFPd29
-	 zhvaDU0OtsJMX4RNvIAwznglI4Kb6kHiK0sAsczFU8Wjlc0/1SlYtwvbL89sPxT26l
-	 IvmzBG21JKuS9847ER1YJLn3Cztl8AwiosBbX3ro=
+	b=kYaR5VW4CHoUPdsRN6gFpWs2M5pHvKUivOwrBvFVbgNoUZ22cYwy6BSCtKxtPmHIl
+	 TpQ6EfS9PVy7gy59VRDgG3cwDhTGDpDoV+4Jenv5GhskH1Wyl5XiQUk80nHBMNGSdU
+	 cdc0PGAEk9laW9rnvQM0UiuhYIIBkz5OkXlR07AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Andy Gospodarek <gospo@broadcom.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/183] bnxt_en: Flush XDP for bnxt_poll_nitroa0()s NAPI
-Date: Wed,  4 Oct 2023 19:54:56 +0200
-Message-ID: <20231004175206.596148911@linuxfoundation.org>
+Subject: [PATCH 5.15 066/183] igc: Expose tx-usecs coalesce setting to user
+Date: Wed,  4 Oct 2023 19:54:57 +0200
+Message-ID: <20231004175206.627008691@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -43,60 +43,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 
-[ Upstream commit edc0140cc3b7b91874ebe70eb7d2a851e8817ccc ]
+[ Upstream commit 1703b2e0de653b459ca6230be32ce7f2ea0ae7ee ]
 
-bnxt_poll_nitroa0() invokes bnxt_rx_pkt() which can run a XDP program
-which in turn can return XDP_REDIRECT. bnxt_rx_pkt() is also used by
-__bnxt_poll_work() which flushes (xdp_do_flush()) the packets after each
-round. bnxt_poll_nitroa0() lacks this feature.
-xdp_do_flush() should be invoked before leaving the NAPI callback.
+When users attempt to obtain the coalesce setting using the
+ethtool command, current code always returns 0 for tx-usecs.
+This is because I225/6 always uses a queue pair setting, hence
+tx_coalesce_usecs does not return a value during the
+igc_ethtool_get_coalesce() callback process. The pair queue
+condition checking in igc_ethtool_get_coalesce() is removed by
+this patch so that the user gets information of the value of tx-usecs.
 
-Invoke xdp_do_flush() after a redirect in bnxt_poll_nitroa0() NAPI.
+Even if i225/6 is using queue pair setting, there is no harm in
+notifying the user of the tx-usecs. The implementation of the current
+code may have previously been a copy of the legacy code i210.
+Since I225 has the queue pair setting enabled, tx-usecs will always adhere
+to the user-set rx-usecs value. An error message will appear when the user
+attempts to set the tx-usecs value for the input parameters because,
+by default, they should only set the rx-usecs value.
 
-Cc: Michael Chan <michael.chan@broadcom.com>
-Fixes: f18c2b77b2e4e ("bnxt_en: optimized XDP_REDIRECT support")
-Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+This patch also adds the helper function to get the
+previous rx coalesce value similar to tx coalesce.
+
+How to test:
+User can get the coalesce value using ethtool command.
+
+Example command:
+Get: ethtool -c <interface>
+
+Previous output:
+
+rx-usecs: 3
+rx-frames: n/a
+rx-usecs-irq: n/a
+rx-frames-irq: n/a
+
+tx-usecs: 0
+tx-frames: n/a
+tx-usecs-irq: n/a
+tx-frames-irq: n/a
+
+New output:
+
+rx-usecs: 3
+rx-frames: n/a
+rx-usecs-irq: n/a
+rx-frames-irq: n/a
+
+tx-usecs: 3
+tx-frames: n/a
+tx-usecs-irq: n/a
+tx-frames-irq: n/a
+
+Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230919170331.1581031-1-anthony.l.nguyen@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 31 ++++++++++++--------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 931bb40ac05b5..4cb22e4060520 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2520,6 +2520,7 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
- 	struct rx_cmp_ext *rxcmp1;
- 	u32 cp_cons, tmp_raw_cons;
- 	u32 raw_cons = cpr->cp_raw_cons;
-+	bool flush_xdp = false;
- 	u32 rx_pkts = 0;
- 	u8 event = 0;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index 859ddc07fbbfe..17cb4c13d0020 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -861,6 +861,18 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
+ 	spin_unlock(&adapter->stats64_lock);
+ }
  
-@@ -2554,6 +2555,8 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
- 				rx_pkts++;
- 			else if (rc == -EBUSY)	/* partial completion */
- 				break;
-+			if (event & BNXT_REDIRECT_EVENT)
-+				flush_xdp = true;
- 		} else if (unlikely(TX_CMP_TYPE(txcmp) ==
- 				    CMPL_BASE_TYPE_HWRM_DONE)) {
- 			bnxt_hwrm_handler(bp, txcmp);
-@@ -2573,6 +2576,8 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
++static int igc_ethtool_get_previous_rx_coalesce(struct igc_adapter *adapter)
++{
++	return (adapter->rx_itr_setting <= 3) ?
++		adapter->rx_itr_setting : adapter->rx_itr_setting >> 2;
++}
++
++static int igc_ethtool_get_previous_tx_coalesce(struct igc_adapter *adapter)
++{
++	return (adapter->tx_itr_setting <= 3) ?
++		adapter->tx_itr_setting : adapter->tx_itr_setting >> 2;
++}
++
+ static int igc_ethtool_get_coalesce(struct net_device *netdev,
+ 				    struct ethtool_coalesce *ec,
+ 				    struct kernel_ethtool_coalesce *kernel_coal,
+@@ -868,17 +880,8 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
+ {
+ 	struct igc_adapter *adapter = netdev_priv(netdev);
  
- 	if (event & BNXT_AGG_EVENT)
- 		bnxt_db_write(bp, &rxr->rx_agg_db, rxr->rx_agg_prod);
-+	if (flush_xdp)
-+		xdp_do_flush();
+-	if (adapter->rx_itr_setting <= 3)
+-		ec->rx_coalesce_usecs = adapter->rx_itr_setting;
+-	else
+-		ec->rx_coalesce_usecs = adapter->rx_itr_setting >> 2;
+-
+-	if (!(adapter->flags & IGC_FLAG_QUEUE_PAIRS)) {
+-		if (adapter->tx_itr_setting <= 3)
+-			ec->tx_coalesce_usecs = adapter->tx_itr_setting;
+-		else
+-			ec->tx_coalesce_usecs = adapter->tx_itr_setting >> 2;
+-	}
++	ec->rx_coalesce_usecs = igc_ethtool_get_previous_rx_coalesce(adapter);
++	ec->tx_coalesce_usecs = igc_ethtool_get_previous_tx_coalesce(adapter);
  
- 	if (!bnxt_has_work(bp, cpr) && rx_pkts < budget) {
- 		napi_complete_done(napi, rx_pkts);
+ 	return 0;
+ }
+@@ -903,8 +906,12 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
+ 	    ec->tx_coalesce_usecs == 2)
+ 		return -EINVAL;
+ 
+-	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) && ec->tx_coalesce_usecs)
++	if ((adapter->flags & IGC_FLAG_QUEUE_PAIRS) &&
++	    ec->tx_coalesce_usecs != igc_ethtool_get_previous_tx_coalesce(adapter)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Queue Pair mode enabled, both Rx and Tx coalescing controlled by rx-usecs");
+ 		return -EINVAL;
++	}
+ 
+ 	/* If ITR is disabled, disable DMAC */
+ 	if (ec->rx_coalesce_usecs == 0) {
 -- 
 2.40.1
 
