@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13B1C29E
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB02A1C29E
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFrDO6Bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0125AC433D9;
-	Wed,  4 Oct 2023 18:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq/tTjsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7F8C433CC;
+	Wed,  4 Oct 2023 18:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444627;
-	bh=IFWljd12NImMrjTDz0g7RYwJPdFWkROyRKkWNvP+qAc=;
+	s=korg; t=1696444630;
+	bh=onHrFRPA+9j6npSpupJvCVNeZcgJ+kGnwq1n47Xgu5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFrDO6BiUgtaFCFXf1JhEwl+bAQ0F6XCLMJTgPpXnOquRCntmZWfoBDhDxfvEqCPa
-	 k9XAyaEWSnqmzok60BuEdOeabq7OektZ/IWK3qGAA7sYh4XqnSBVgLP/yYldPAKdnf
-	 OMWBX1730ecOG5fJU0aOdgAu6h3bC1wgOmAPh9/E=
+	b=cq/tTjsc/NZTpfDurZtBuGnQYNx7qp9X1TSg/NgnOh9ApQweUiAyHS5TTcO7pCJ0/
+	 B3TS6tQ5n+eFNs5apv+agpZodMuLxajWOObuKoZ/waFl/fOOLil8UYkXKfZ6enU81w
+	 G88UXTYl615wCp9zNqk4cVlsrYd9BZ8zoCSpNkPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.5 318/321] rbd: take header_rwsem in rbd_dev_refresh() only when updating
-Date: Wed,  4 Oct 2023 19:57:43 +0200
-Message-ID: <20231004175244.015144337@linuxfoundation.org>
+	Michal Hocko <mhocko@suse.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 319/321] memcg: drop kmem.limit_in_bytes
+Date: Wed,  4 Oct 2023 19:57:44 +0200
+Message-ID: <20231004175244.063443497@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,104 +46,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Michal Hocko <mhocko@suse.com>
 
-commit 0b207d02bd9ab8dcc31b262ca9f60dbc1822500d upstream.
+commit 86327e8eb94c52eca4f93cfece2e29d1bf52acbf upstream.
 
-rbd_dev_refresh() has been holding header_rwsem across header and
-parent info read-in unnecessarily for ages.  With commit 870611e4877e
-("rbd: get snapshot context after exclusive lock is ensured to be
-held"), the potential for deadlocks became much more real owning to
-a) header_rwsem now nesting inside lock_rwsem and b) rw_semaphores
-not allowing new readers after a writer is registered.
+kmem.limit_in_bytes (v1 way to limit kernel memory usage) has been
+deprecated since 58056f77502f ("memcg, kmem: further deprecate
+kmem.limit_in_bytes") merged in 5.16.  We haven't heard about any serious
+users since then but it seems that the mere presence of the file is
+causing more harm thatn good.  We (SUSE) have had several bug reports from
+customers where Docker based containers started to fail because a write to
+kmem.limit_in_bytes has failed.
 
-For example, assuming that I/O request 1, I/O request 2 and header
-read-in request all target the same OSD:
+This was unexpected because runc code only expects ENOENT (kmem disabled)
+or EBUSY (tasks already running within cgroup).  So a new error code was
+unexpected and the whole container startup failed.  This has been later
+addressed by
+https://github.com/opencontainers/runc/commit/52390d68040637dfc77f9fda6bbe70952423d380
+so current Docker runtimes do not suffer from the problem anymore.  There
+are still older version of Docker in use and likely hard to get rid of
+completely.
 
-1. I/O request 1 comes in and gets submitted
-2. watch error occurs
-3. rbd_watch_errcb() takes lock_rwsem for write, clears owner_cid and
-   releases lock_rwsem
-4. after reestablishing the watch, rbd_reregister_watch() calls
-   rbd_dev_refresh() which takes header_rwsem for write and submits
-   a header read-in request
-5. I/O request 2 comes in: after taking lock_rwsem for read in
-   __rbd_img_handle_request(), it blocks trying to take header_rwsem
-   for read in rbd_img_object_requests()
-6. another watch error occurs
-7. rbd_watch_errcb() blocks trying to take lock_rwsem for write
-8. I/O request 1 completion is received by the messenger but can't be
-   processed because lock_rwsem won't be granted anymore
-9. header read-in request completion can't be received, let alone
-   processed, because the messenger is stranded
+Address this by wiping out the file completely and effectively get back to
+pre 4.5 era and CONFIG_MEMCG_KMEM=n configuration.
 
-Change rbd_dev_refresh() to take header_rwsem only for actually
-updating rbd_dev->header.  Header and parent info read-in don't need
-any locking.
+I would recommend backporting to stable trees which have picked up
+58056f77502f ("memcg, kmem: further deprecate kmem.limit_in_bytes").
 
-Cc: stable@vger.kernel.org # 0b035401c570: rbd: move rbd_dev_refresh() definition
-Cc: stable@vger.kernel.org # 510a7330c82a: rbd: decouple header read-in from updating rbd_dev->header
-Cc: stable@vger.kernel.org # c10311776f0a: rbd: decouple parent info read-in from updating rbd_dev
-Cc: stable@vger.kernel.org
-Fixes: 870611e4877e ("rbd: get snapshot context after exclusive lock is ensured to be held")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+[mhocko@suse.com: restore _KMEM switch case]
+  Link: https://lkml.kernel.org/r/ZKe5wxdbvPi5Cwd7@dhcp22.suse.cz
+Link: https://lkml.kernel.org/r/20230704115240.14672-1-mhocko@kernel.org
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ Documentation/admin-guide/cgroup-v1/memory.rst |    2 --
+ mm/memcontrol.c                                |   10 ----------
+ 2 files changed, 12 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -6986,7 +6986,14 @@ static void rbd_dev_update_header(struct
- 	rbd_assert(rbd_image_format_valid(rbd_dev->image_format));
- 	rbd_assert(rbd_dev->header.object_prefix); /* !first_time */
- 
--	rbd_dev->header.image_size = header->image_size;
-+	if (rbd_dev->header.image_size != header->image_size) {
-+		rbd_dev->header.image_size = header->image_size;
-+
-+		if (!rbd_is_snap(rbd_dev)) {
-+			rbd_dev->mapping.size = header->image_size;
-+			rbd_dev_update_size(rbd_dev);
-+		}
-+	}
- 
- 	ceph_put_snap_context(rbd_dev->header.snapc);
- 	rbd_dev->header.snapc = header->snapc;
-@@ -7044,11 +7051,9 @@ static int rbd_dev_refresh(struct rbd_de
- {
- 	struct rbd_image_header	header = { 0 };
- 	struct parent_image_info pii = { 0 };
--	u64 mapping_size;
- 	int ret;
- 
--	down_write(&rbd_dev->header_rwsem);
--	mapping_size = rbd_dev->mapping.size;
-+	dout("%s rbd_dev %p\n", __func__, rbd_dev);
- 
- 	ret = rbd_dev_header_info(rbd_dev, &header, false);
- 	if (ret)
-@@ -7064,18 +7069,13 @@ static int rbd_dev_refresh(struct rbd_de
- 			goto out;
- 	}
- 
-+	down_write(&rbd_dev->header_rwsem);
- 	rbd_dev_update_header(rbd_dev, &header);
- 	if (rbd_dev->parent)
- 		rbd_dev_update_parent(rbd_dev, &pii);
--
--	rbd_assert(!rbd_is_snap(rbd_dev));
--	rbd_dev->mapping.size = rbd_dev->header.image_size;
--
--out:
- 	up_write(&rbd_dev->header_rwsem);
--	if (!ret && mapping_size != rbd_dev->mapping.size)
--		rbd_dev_update_size(rbd_dev);
- 
-+out:
- 	rbd_parent_info_cleanup(&pii);
- 	rbd_image_header_cleanup(&header);
- 	return ret;
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -92,8 +92,6 @@ Brief summary of control files.
+  memory.oom_control		     set/show oom controls.
+  memory.numa_stat		     show the number of memory usage per numa
+ 				     node
+- memory.kmem.limit_in_bytes          This knob is deprecated and writing to
+-                                     it will return -ENOTSUPP.
+  memory.kmem.usage_in_bytes          show current kernel memory allocation
+  memory.kmem.failcnt                 show the number of kernel memory usage
+ 				     hits limits
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3871,10 +3871,6 @@ static ssize_t mem_cgroup_write(struct k
+ 		case _MEMSWAP:
+ 			ret = mem_cgroup_resize_max(memcg, nr_pages, true);
+ 			break;
+-		case _KMEM:
+-			/* kmem.limit_in_bytes is deprecated. */
+-			ret = -EOPNOTSUPP;
+-			break;
+ 		case _TCP:
+ 			ret = memcg_update_tcp_max(memcg, nr_pages);
+ 			break;
+@@ -5086,12 +5082,6 @@ static struct cftype mem_cgroup_legacy_f
+ 	},
+ #endif
+ 	{
+-		.name = "kmem.limit_in_bytes",
+-		.private = MEMFILE_PRIVATE(_KMEM, RES_LIMIT),
+-		.write = mem_cgroup_write,
+-		.read_u64 = mem_cgroup_read_u64,
+-	},
+-	{
+ 		.name = "kmem.usage_in_bytes",
+ 		.private = MEMFILE_PRIVATE(_KMEM, RES_USAGE),
+ 		.read_u64 = mem_cgroup_read_u64,
 
 
