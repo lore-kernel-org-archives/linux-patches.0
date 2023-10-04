@@ -1,324 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAE91D6A9
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4401B27F
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K7l5QCSO"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696444679; x=1727980679;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=3JOcCyKJEBU3Z15X3+uV8egNcpc2HjfwPLBRmA4tnvI=;
-  b=K7l5QCSOA79+cANfmJUBXT+0vamYG1CPQWe/Fj3I5nRtEZ2omxRcSLqp
-   z1+XnH1vjHln8+yNGFAn2Gc7/RxYrPIeipokfgcANLgeJNkCt74bLSglj
-   N6qTBqsEWAVtpC3SRo+ZqySTZ6cawv5ttMByCsGlCeqOuQKTEKUDfDjFs
-   yexpCvyuHCj5VAhYrV4DD3cXX+B7VX0ZFPcaEozLQYu4/ixfzdHElCXXm
-   qGSZU4Y8q3zDlygfZW7vsmePoPV4rn4ffjTaR5+k4GvVHrVu0C+tL3pO6
-   Zvz4qEPVE1VIQObRk0qAMVXpuT2VjM4LtBehdSeSBJ0P/WPRLujC4LnzN
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="387133516"
-X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="387133516"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 11:36:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="701236056"
-X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="701236056"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 11:36:32 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Date: Wed,  4 Oct 2023 11:36:22 -0700
-Message-ID: <20231004183623.17067-3-tony.luck@intel.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231004183623.17067-1-tony.luck@intel.com>
-References: <20230929181626.210782-1-tony.luck@intel.com>
- <20231004183623.17067-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ld/SHPs4"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6910ea9cca1so99686b3a.1
+        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 11:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696445029; x=1697049829; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ooOYlMNzU/nXOVXoJ797h2bTTI8LLLqoLCs+5/x9Ip4=;
+        b=Ld/SHPs4znm7oLBpJMEj32a2nkeAcFjLtiDROvTSZh7gf2Silm7u3fpOkV0j9Z2o1R
+         3m5KRlbdx/G8PME6pgCdRo5nNLeXu0QFi1izXmEqk/J2G+J4HxgWYe48oJ0Kz9Z7aVrc
+         PixVZKwkdlhsRnRqHHhYY8Rpyj32a4k/DI062GY/pQWOL7qDdzB5HYfQ7gZMeI8ifXlL
+         AivcMCGdjdgKyjDHqZ8urkV9D0E5RC5SOFKITRZBxYNIGhsiyTZBtl1iKKxG7Xejz7wb
+         fjQORgjKMpJlNnW5Wi23INMGxqr30qf9K7m5LKAtGGKnSQN8CUgdkXkjQLXiG8yU3kIM
+         twrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696445029; x=1697049829;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ooOYlMNzU/nXOVXoJ797h2bTTI8LLLqoLCs+5/x9Ip4=;
+        b=d06L9/FRVb/HMu3RSeAICMITPMeNdAtwQhlAcxNJsUXRxcd6828RE/kD5jZR2LM/OG
+         Ba7WQtInfy/ayMUD+7CZ8FMwfX/WouwAv6Lg0X7mbgRpGmPBhiNKifDsZv9+2ISBY22A
+         wnZCjNAqly5juBXaUoD3X3pQyx4frQBPeG6I1tQxv4wi8kKpo6oI1eJurA7VJsAXUfzl
+         tAiYquNojVg172v950QHkh/RbeXWkwxpl5MHfbx5ecyP+grkecw2PFXNsDFZrKB/3tlk
+         v5zewHbFAAeUSDq+wbVOATyuNyfr3SxPocfuXL3Jd27UHBvwTNtzkm4HuAbS8QnxAWDO
+         iGSA==
+X-Gm-Message-State: AOJu0YyXMVfZ8bUf96FWoXlAuxK1QO9F4SY+DpI+C8BG2DCmSYQ2Fq1+
+	k2Y90G9pYE5t/7JLCJmqlls=
+X-Google-Smtp-Source: AGHT+IHiU5FJ7NyeBXXTb5/Pd5QfBu0+HGaAapZFd0bSBcl87BGZKPtg+wwrmtSgFOwUq9LSC+Xk2g==
+X-Received: by 2002:a05:6a00:2482:b0:690:4362:7012 with SMTP id c2-20020a056a00248200b0069043627012mr3712536pfv.28.1696445029127;
+        Wed, 04 Oct 2023 11:43:49 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id x7-20020aa79187000000b0064f76992905sm3536129pfa.202.2023.10.04.11.43.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Oct 2023 11:43:48 -0700 (PDT)
+Message-ID: <ec06c2fb-6737-489f-8439-307e0d84687b@gmail.com>
+Date: Wed, 4 Oct 2023 11:43:46 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231004175203.943277832@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This is the core functionality to track CMCI storms at the
-machine check bank granularity. Subsequent patches will add
-the vendor specific hooks to supply input to the storm
-detection and take actions on the start/end of a storm.
+On 10/4/23 10:53, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.134 release.
+> There are 183 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.134-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Maintain a bitmap history for each bank showing whether the bank
-logged an corrected error or not each time it is polled.
+perf fails to build with:
 
-In normal operation the interval between polls of this banks
-determines how far to shift the history. The 64 bit width corresponds
-to about one second.
+   CC 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/metricgroup.o
+util/metricgroup.c: In function 'metricgroup__parse_groups':
+util/metricgroup.c:1261:7: error: 'table' undeclared (first use in this 
+function)
+   if (!table)
+        ^~~~~
+util/metricgroup.c:1261:7: note: each undeclared identifier is reported 
+only once for each function it appears in
+make[6]: *** 
+[/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:97: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/metricgroup.o] 
+Error 1
 
-When a storm is observed a CPU vendor specific action is taken to reduce
-or stop CMCI from the bank that is the source of the storm.  The bank
-is added to the bitmap of banks for this CPU to poll. The polling rate
-is increased to once per second.  During a storm each bit in the history
-indicates the status of the bank each time it is polled. Thus the history
-covers just over a minute.
+caused by c1ef510a0f2a879bf29ddebae766ec9f0790eb8f ("perf metric: Return 
+early if no CPU PMU table exists"). Dropping this commit allows the 
+build to continue.
 
-Declare a storm for that bank if the number of corrected interrupts
-seen in that history is above some threshold (defined as 5 in this
-series, could be tuned later if there is data to suggest a better
-value).
+I had reported in the previous cycle that 00facc760903be66 ("perf 
+jevents: Switch build to use jevents.py") was causing build failures:
 
-A storm on a bank ends if enough consecutive polls of the bank show
-no corrected errors (defined as 30, may also change). That calls the
-CPU vendor specific function to revert to normal operational mode,
-and changes the polling rate back to the default.
+https://lore.kernel.org/all/6a577578-8adb-aa70-1bf8-b1a4573152cf@gmail.com/
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-
----
-v8: Updated with review comments from Yazen.
-    Link: https://lore.kernel.org/r/c76723df-f2f1-4888-9e05-61917145503c@amd.com
-v9: Fix lkp randconfig build issue when neither INTEL nor AMD configured
----
- arch/x86/kernel/cpu/mce/internal.h  |  40 +++++++++-
- arch/x86/kernel/cpu/mce/core.c      |  25 +++++--
- arch/x86/kernel/cpu/mce/threshold.c | 112 ++++++++++++++++++++++++++++
- 3 files changed, 168 insertions(+), 9 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index 616732ec16f7..4aa957442c8d 100644
---- a/arch/x86/kernel/cpu/mce/internal.h
-+++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -54,7 +54,45 @@ static inline void intel_clear_lmce(void) { }
- static inline bool intel_filter_mce(struct mce *m) { return false; }
- #endif
- 
--void mce_timer_kick(unsigned long interval);
-+void mce_timer_kick(bool storm);
-+
-+#ifdef CONFIG_X86_MCE_THRESHOLD
-+void cmci_storm_begin(unsigned int bank);
-+void cmci_storm_end(unsigned int bank);
-+void mce_track_storm(struct mce *mce);
-+void mce_inherit_storm(unsigned int bank);
-+bool mce_is_storm(void);
-+void mce_set_storm(bool storm);
-+#else
-+static inline void cmci_storm_begin(unsigned int bank) {}
-+static inline void cmci_storm_end(unsigned int bank) {}
-+static inline void mce_track_storm(struct mce *mce) {}
-+static inline void mce_inherit_storm(unsigned int bank) {}
-+static inline bool mce_is_storm(void) { return false; }
-+static inline void mce_set_storm(bool storm) {}
-+#endif
-+
-+/*
-+ * history:	bitmask tracking whether errors were seen or not seen in
-+ *		the most recent polls of a bank.
-+ * timestamp:	last time (in jiffies) that the bank was polled
-+ * storm:	Is this bank in storm mode?
-+ */
-+struct storm_bank {
-+	u64 history;
-+	u64 timestamp;
-+	bool storm;
-+};
-+
-+/* How many errors within the history buffer mark the start of a storm. */
-+#define STORM_BEGIN_THRESHOLD	5
-+
-+/*
-+ * How many polls of machine check bank without an error before declaring
-+ * the storm is over. Since it is tracked by the bitmaks in the history
-+ * field of struct storm_bank the mask is 30 bits [0 ... 29].
-+ */
-+#define STORM_END_POLL_THRESHOLD	29
- 
- #ifdef CONFIG_ACPI_APEI
- int apei_write_mce(struct mce *m);
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index f6e87443b37a..7c931f0c9251 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -680,6 +680,8 @@ bool machine_check_poll(enum mcp_flags flags, mce_banks_t *b)
- 		barrier();
- 		m.status = mce_rdmsrl(mca_msr_reg(i, MCA_STATUS));
- 
-+		mce_track_storm(&m);
-+
- 		/* If this entry is not valid, ignore it */
- 		if (!(m.status & MCI_STATUS_VAL))
- 			continue;
-@@ -1652,22 +1654,29 @@ static void mce_timer_fn(struct timer_list *t)
- 	else
- 		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
- 
--	__this_cpu_write(mce_next_interval, iv);
--	__start_timer(t, iv);
-+	if (mce_is_storm()) {
-+		__start_timer(t, HZ);
-+	} else {
-+		__this_cpu_write(mce_next_interval, iv);
-+		__start_timer(t, iv);
-+	}
- }
- 
- /*
-- * Ensure that the timer is firing in @interval from now.
-+ * When a storm starts on any bank on this CPU, switch to polling
-+ * once per second. When the storm ends, revert to the default
-+ * polling interval.
-  */
--void mce_timer_kick(unsigned long interval)
-+void mce_timer_kick(bool storm)
- {
- 	struct timer_list *t = this_cpu_ptr(&mce_timer);
--	unsigned long iv = __this_cpu_read(mce_next_interval);
- 
--	__start_timer(t, interval);
-+	mce_set_storm(storm);
- 
--	if (interval < iv)
--		__this_cpu_write(mce_next_interval, interval);
-+	if (storm)
-+		__start_timer(t, HZ);
-+	else
-+		__this_cpu_write(mce_next_interval, check_interval * HZ);
- }
- 
- /* Must not be called in IRQ context where del_timer_sync() can deadlock */
-diff --git a/arch/x86/kernel/cpu/mce/threshold.c b/arch/x86/kernel/cpu/mce/threshold.c
-index ef4e7bb5fd88..ecdf13f1bb7d 100644
---- a/arch/x86/kernel/cpu/mce/threshold.c
-+++ b/arch/x86/kernel/cpu/mce/threshold.c
-@@ -29,3 +29,115 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_threshold)
- 	trace_threshold_apic_exit(THRESHOLD_APIC_VECTOR);
- 	apic_eoi();
- }
-+
-+/*
-+ * banks:		per-cpu, per-bank details
-+ * stormy_bank_count:	count of MC banks in storm state
-+ * poll_mode:		CPU is in poll mode
-+ */
-+struct mca_storm_desc {
-+	struct storm_bank	banks[MAX_NR_BANKS];
-+	u8			stormy_bank_count;
-+	bool			poll_mode;
-+};
-+
-+static DEFINE_PER_CPU(struct mca_storm_desc, storm_desc);
-+
-+void mce_inherit_storm(unsigned int bank)
-+{
-+	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-+
-+	storm->banks[bank].history = ~0ull;
-+	storm->banks[bank].timestamp = jiffies;
-+}
-+
-+bool mce_is_storm(void)
-+{
-+	return __this_cpu_read(storm_desc.poll_mode);
-+}
-+
-+void mce_set_storm(bool storm)
-+{
-+	__this_cpu_write(storm_desc.poll_mode, storm);
-+}
-+
-+static void mce_handle_storm(unsigned int bank, bool on)
-+{
-+	switch (boot_cpu_data.x86_vendor) {
-+	}
-+}
-+
-+void cmci_storm_begin(unsigned int bank)
-+{
-+	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-+
-+	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
-+	storm->banks[bank].storm = true;
-+
-+	/*
-+	 * If this is the first bank on this CPU to enter storm mode
-+	 * start polling.
-+	 */
-+	if (++storm->stormy_bank_count == 1)
-+		mce_timer_kick(true);
-+}
-+
-+void cmci_storm_end(unsigned int bank)
-+{
-+	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-+
-+	__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
-+	storm->banks[bank].history = 0;
-+	storm->banks[bank].storm = false;
-+
-+	/* If no banks left in storm mode, stop polling. */
-+	if (!this_cpu_dec_return(storm_desc.stormy_bank_count))
-+		mce_timer_kick(false);
-+}
-+
-+void mce_track_storm(struct mce *mce)
-+{
-+	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-+	unsigned long now = jiffies, delta;
-+	unsigned int shift = 1;
-+	u64 history = 0;
-+
-+	/*
-+	 * When a bank is in storm mode it is polled once per second and
-+	 * the history mask will record about the last minute of poll results.
-+	 * If it is not in storm mode, then the bank is only checked when
-+	 * there is a CMCI interrupt. Check how long it has been since
-+	 * this bank was last checked, and adjust the amount of "shift"
-+	 * to apply to history.
-+	 */
-+	if (!storm->banks[mce->bank].storm) {
-+		delta = now - storm->banks[mce->bank].timestamp;
-+		shift = (delta + HZ) / HZ;
-+	}
-+
-+	/* If it has been a long time since the last poll, clear history. */
-+	if (shift < 64)
-+		history = storm->banks[mce->bank].history << shift;
-+
-+	storm->banks[mce->bank].timestamp = now;
-+
-+	/* History keeps track of corrected errors. VAL=1 && UC=0 */
-+	if ((mce->status & MCI_STATUS_VAL) && mce_is_correctable(mce))
-+		history |= 1;
-+
-+	storm->banks[mce->bank].history = history;
-+
-+	if (storm->banks[mce->bank].storm) {
-+		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD, 0))
-+			return;
-+		printk_deferred(KERN_NOTICE "CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), mce->bank);
-+		mce_handle_storm(mce->bank, false);
-+		cmci_storm_end(mce->bank);
-+	} else {
-+		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
-+			return;
-+		printk_deferred(KERN_NOTICE "CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), mce->bank);
-+		mce_handle_storm(mce->bank, true);
-+		cmci_storm_begin(mce->bank);
-+	}
-+}
+do we still want these commits to be included?
 -- 
-2.41.0
+Florian
 
