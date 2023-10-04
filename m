@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EC01DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E7A1DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCuP823T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CD0C433C8;
-	Wed,  4 Oct 2023 18:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xd1mPgyR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF492C433CC;
+	Wed,  4 Oct 2023 18:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444165;
-	bh=dLCh2yCMAJuO2uWN+TQk2HE9DmuaQJk2Xmm470CJ1EY=;
+	s=korg; t=1696444168;
+	bh=71kcmzAXZpFfrzREjqDYmAqBnShEBtOrTvbN8Y09YnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oCuP823Tx28n2qyhToT4nAHUx/2QcOy6zsy38aQVQBSPKCtZF+782uagmjjcQfCRk
-	 ZRCVaRFZzlN2zyhj9y+yIsILiwFP83g+KqxYxr8yKFeZfnCFZVgtiJjUTT/3VFXRZu
-	 2t5VRfan0vmoihee1BIaT+ZGAGwDPhRGvEx7bWhc=
+	b=xd1mPgyRm4h9ECygEJVoiAPnjwWKfTxkVtH3Bb/GZ4Awfn1cRuIHdr57ateFjzKU3
+	 7URuANUm5bcaef9oohb3XIv7FKDTeikZE9uA0Jh3ZPOvGUgbH9HX6fIRnTot4AtJ/R
+	 tW20EXB0YJbpZGoAcCWDdohL+Gx5bNEcfOEWahJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 124/321] firmware: arm_scmi: Fixup perf power-cost/microwatt support
-Date: Wed,  4 Oct 2023 19:54:29 +0200
-Message-ID: <20231004175234.983273048@linuxfoundation.org>
+Subject: [PATCH 6.5 115/321] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
+Date: Wed,  4 Oct 2023 19:54:20 +0200
+Message-ID: <20231004175234.565711846@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,47 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-[ Upstream commit c3638b851bc1ca0022dca9d6ca4beaa6ef03a216 ]
+[ Upstream commit 110e70fccce4f22b53986ae797d665ffb1950aa6 ]
 
-The perf power scale value would currently be reported as bogowatts if the
-platform firmware supports microwatt power scale and meets the perf major
-version requirements. Fix this by populating version information in the
-driver private data before the call to protocol attributes is made.
+Adding a reserved memory region for the framebuffer memory
+(the splash memory region set up by the bootloader).
 
-CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
-Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230811204818.30928-1-quic_sibis@quicinc.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+It fixes a kernel panic (arm-smmu: Unhandled context fault
+at this particular memory region) reported on DB845c running
+v5.10.y.
+
+Cc: stable@vger.kernel.org # v5.10+
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230726132719.2117369-2-amit.pundir@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index 43dd242ecc49c..431bda9165c3d 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -858,6 +858,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
- 	if (!pinfo)
- 		return -ENOMEM;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index d6b464cb61d6f..f546f6f57c1e5 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -101,6 +101,14 @@
+ 		};
+ 	};
  
-+	pinfo->version = version;
++	reserved-memory {
++		/* Cont splash region set up by the bootloader */
++		cont_splash_mem: framebuffer@9d400000 {
++			reg = <0x0 0x9d400000 0x0 0x2400000>;
++			no-map;
++		};
++	};
 +
- 	ret = scmi_perf_attributes_get(ph, pinfo);
- 	if (ret)
- 		return ret;
-@@ -877,8 +879,6 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
- 			scmi_perf_domain_init_fc(ph, domain, &dom->fc_info);
- 	}
+ 	lt9611_1v8: lt9611-vdd18-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "LT9611_1V8";
+@@ -506,6 +514,7 @@
+ };
  
--	pinfo->version = version;
--
- 	return ph->set_priv(ph, pinfo);
- }
+ &mdss {
++	memory-region = <&cont_splash_mem>;
+ 	status = "okay";
+ };
  
 -- 
 2.40.1
