@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1317A1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7371D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869FEC433C7;
-	Wed,  4 Oct 2023 18:07:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AE0C433C8;
+	Wed,  4 Oct 2023 18:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442854;
-	bh=DejkkhDYMMxASA/M30VMM2b+Wb01VCntYvYK1TKecxE=;
+	s=korg; t=1696442857;
+	bh=ZDXBuIFMcRZimpJ6M98K5ZfIuh/R21imaYt+nRXs7+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7VN+mr7MnTE466RXBSJ9sD6Y3MnSLz5K2iYZ+kG0oDZdh9oZ3uH3l2w1R5upLCY+
-	 OSHVyS+ifOjo50SNn1DvgEjejg4Cw8zWedGf9eHnzVF75RGVZFZuMHxXIGW1cfF5HW
-	 RNuok1Q/pZjXXSdXwcHUv7H8R1kmp10m0tUups0k=
+	b=i3CUs3wWs5XmMLEFr6vmBITUEWe1GrE/V/2n2YkXNlqFczMSdTTyqfK+mJgY6SsOG
+	 5S9ovgybawYuAg4ry2eMu98rk4XRISpWXjmpOd48Xk1gHc9AlQtyIXXW+fn07qGfX3
+	 Rbze3LAeE6eQBUahGOfLHaietdBPJ5Om0WEui5To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/183] ASoC: fsl: imx-pcm-rpmsg: Add SNDRV_PCM_INFO_BATCH flag
-Date: Wed,  4 Oct 2023 19:56:04 +0200
-Message-ID: <20231004175209.502156603@linuxfoundation.org>
+Subject: [PATCH 5.15 134/183] bpf: Clarify error expectations from bpf_clone_redirect
+Date: Wed,  4 Oct 2023 19:56:05 +0200
+Message-ID: <20231004175209.551641816@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,46 +42,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 2f9426905a63be7ccf8cd10109caf1848aa0993a ]
+[ Upstream commit 7cb779a6867fea00b4209bcf6de2f178a743247d ]
 
-The rpmsg pcm device is a device which should support
-double buffering.
+Commit 151e887d8ff9 ("veth: Fixing transmit return status for dropped
+packets") exposed the fact that bpf_clone_redirect is capable of
+returning raw NET_XMIT_XXX return codes.
 
-Found this issue with pipewire. When there is no
-SNDRV_PCM_INFO_BATCH flag in driver, the pipewire will
-set headroom to be zero, and because rpmsg pcm device
-don't support residue report, when the latency setting
-is small, the "delay" always larger than "target" in
-alsa-pcm.c, that reading next period data is not
-scheduled on time.
+This is in the conflict with its UAPI doc which says the following:
+"0 on success, or a negative error in case of failure."
 
-With SNDRV_PCM_INFO_BATCH flag in driver, the pipewire
-will select a smaller period size for device, then
-the task of reading next period data will be scheduled
-on time.
+Update the UAPI to reflect the fact that bpf_clone_redirect can
+return positive error numbers, but don't explicitly define
+their meaning.
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://lore.kernel.org/r/1694414287-13291-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230911194731.286342-1-sdf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-pcm-rpmsg.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/linux/bpf.h       | 4 +++-
+ tools/include/uapi/linux/bpf.h | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-pcm-rpmsg.c b/sound/soc/fsl/imx-pcm-rpmsg.c
-index 35049043e5322..933bac7ea1864 100644
---- a/sound/soc/fsl/imx-pcm-rpmsg.c
-+++ b/sound/soc/fsl/imx-pcm-rpmsg.c
-@@ -19,6 +19,7 @@
- static struct snd_pcm_hardware imx_rpmsg_pcm_hardware = {
- 	.info = SNDRV_PCM_INFO_INTERLEAVED |
- 		SNDRV_PCM_INFO_BLOCK_TRANSFER |
-+		SNDRV_PCM_INFO_BATCH |
- 		SNDRV_PCM_INFO_MMAP |
- 		SNDRV_PCM_INFO_MMAP_VALID |
- 		SNDRV_PCM_INFO_NO_PERIOD_WAKEUP |
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index a887e582f0e78..9fb06a511250f 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -1762,7 +1762,9 @@ union bpf_attr {
+  * 		performed again, if the helper is used in combination with
+  * 		direct packet access.
+  * 	Return
+- * 		0 on success, or a negative error in case of failure.
++ * 		0 on success, or a negative error in case of failure. Positive
++ * 		error indicates a potential drop or congestion in the target
++ * 		device. The particular positive error codes are not defined.
+  *
+  * u64 bpf_get_current_pid_tgid(void)
+  * 	Return
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index 8330e3ca8fbfb..1e3e3f16eabcb 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -1762,7 +1762,9 @@ union bpf_attr {
+  * 		performed again, if the helper is used in combination with
+  * 		direct packet access.
+  * 	Return
+- * 		0 on success, or a negative error in case of failure.
++ * 		0 on success, or a negative error in case of failure. Positive
++ * 		error indicates a potential drop or congestion in the target
++ * 		device. The particular positive error codes are not defined.
+  *
+  * u64 bpf_get_current_pid_tgid(void)
+  * 	Return
 -- 
 2.40.1
 
