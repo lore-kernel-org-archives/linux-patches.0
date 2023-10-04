@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A5F1D6BA
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BF71EA96
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ays9UR7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B142C433CA;
-	Wed,  4 Oct 2023 18:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AafG9d2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1D4C433C8;
+	Wed,  4 Oct 2023 18:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444453;
-	bh=ZGkzdKJ65adkR+pcci+EKjRxW7o0SS9LPgaMeBSvru4=;
+	s=korg; t=1696444456;
+	bh=IYwEGCDKxpKaSIthJtW1dM033FHB95zAKc4aXM1PeDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ays9UR7A9Y3YTnHQ4P58Gi7Lny0HnwJtE16y16bYeN+rEFlsZ+Xiokv06R1amfJBe
-	 kzOgszQ77A23GxQ9OW08mj5FPDzqQPi53/xz5JMBZCnhNUUFscDvyu17mXZV8du44N
-	 cnTW7X5Btu/JZi6h/RCFZbUY6BZBXCV0WrWo/IFE=
+	b=AafG9d2I2/gqTNEq3wY0Wu/0Cj1iWtmiL5NS4f1awUceBn8LHWz8JEalPCoyPtO9B
+	 NhSILyAdtoL3tG1FmzNsEBjlfEeR0BAbXdvx/C/CmlpVkOaQKsjg1oBY2Yi13BWX/a
+	 cc+yvgejZQUMXz14UqBTVMWpNScRJIOL1r3pmlaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.5 256/321] crypto: sm2 - Fix crash caused by uninitialized context
-Date: Wed,  4 Oct 2023 19:56:41 +0200
-Message-ID: <20231004175241.126277021@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Hills <mark@xwax.org>
+Subject: [PATCH 6.5 257/321] ALSA: rawmidi: Fix NULL dereference at proc read
+Date: Wed,  4 Oct 2023 19:56:42 +0200
+Message-ID: <20231004175241.170886237@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,43 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 21155620fbf2edbb071144894ff9d67ba9a1faa0 upstream.
+commit b2ce0027d7b2905495021c5208f92043eb493146 upstream.
 
-In sm2_compute_z_digest() function, the newly allocated structure
-mpi_ec_ctx is used, but forget to initialize it, which will cause
-a crash when performing subsequent operations.
+At the implementation of the optional proc fs in rawmidi, I forgot
+that rmidi->ops itself is optional and can be NULL.
+Add the proper NULL check for avoiding the Oops.
 
-Fixes: e5221fa6a355 ("KEYS: asymmetric: Move sm2 code into x509_public_key")
-Cc: stable@vger.kernel.org # v6.5
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: fa030f666d24 ("ALSA: ump: Additional proc output")
+Reported-and-tested-by: Mark Hills <mark@xwax.org>
+Closes: https://lore.kernel.org/r/ef9118c3-a2eb-d0ff-1efa-cc5fb6416bde@xwax.org
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230916060725.11726-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/sm2.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/core/rawmidi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/sm2.c b/crypto/sm2.c
-index 285b3cb7c0bc..5ab120d74c59 100644
---- a/crypto/sm2.c
-+++ b/crypto/sm2.c
-@@ -278,10 +278,14 @@ int sm2_compute_z_digest(struct shash_desc *desc,
- 	if (!ec)
- 		return -ENOMEM;
- 
--	err = __sm2_set_pub_key(ec, key, keylen);
-+	err = sm2_ec_ctx_init(ec);
- 	if (err)
- 		goto out_free_ec;
- 
-+	err = __sm2_set_pub_key(ec, key, keylen);
-+	if (err)
-+		goto out_deinit_ec;
-+
- 	bits_len = SM2_DEFAULT_USERID_LEN * 8;
- 	entl[0] = bits_len >> 8;
- 	entl[1] = bits_len & 0xff;
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index ba06484ac4aa..1431cb997808 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -1770,7 +1770,7 @@ static void snd_rawmidi_proc_info_read(struct snd_info_entry *entry,
+ 	if (IS_ENABLED(CONFIG_SND_UMP))
+ 		snd_iprintf(buffer, "Type: %s\n",
+ 			    rawmidi_is_ump(rmidi) ? "UMP" : "Legacy");
+-	if (rmidi->ops->proc_read)
++	if (rmidi->ops && rmidi->ops->proc_read)
+ 		rmidi->ops->proc_read(entry, buffer);
+ 	mutex_lock(&rmidi->open_mutex);
+ 	if (rmidi->info_flags & SNDRV_RAWMIDI_INFO_OUTPUT) {
 -- 
 2.42.0
 
