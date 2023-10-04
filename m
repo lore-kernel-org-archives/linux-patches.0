@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFE01D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476FF1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHyLkYbp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B41C433C7;
-	Wed,  4 Oct 2023 18:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbi84klc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD315C433C7;
+	Wed,  4 Oct 2023 18:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443317;
-	bh=gbNtPiSXtSOvMIPkGjILcIMQdzmBEp4/uuYMrik4iSs=;
+	s=korg; t=1696443320;
+	bh=Nn1fyVJNAkN7BNf8o9e+T21yo3FjcLkouY2vHK1cG0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHyLkYbpw5XRA5JTMofBV0hvRAdSYmPVh6IwiprZp2mCPIyJjgM3Z9oZ2nmetdVBw
-	 SjJymcZAL5qB2ofh/79LJZ96abeusRau4/gP4XzHBxWdM5wH8kQ7aD8ClcNMNlBAfW
-	 0dqp6bSdED1hM/h5Mst5IJS/6n8hXuf2pK2zfGD0=
+	b=Jbi84klcySezKJfnUHXW2xPBbGW4AWXfxQtdZvvlEvRWVRP+d8dTmIl50NUHC3A5c
+	 3iuJcoPjKRWjcDigU4vtclyp9TxfsbMtgSuhRHQFFBREoH3P6KKzJfNrYvFT+rzVdO
+	 Ee47d1GvXPzS2m9qwHUOO5Qy5FOgEZf2ja0PQxuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/259] bus: ti-sysc: Fix missing AM35xx SoC matching
-Date: Wed,  4 Oct 2023 19:54:46 +0200
-Message-ID: <20231004175222.523869634@linuxfoundation.org>
+Subject: [PATCH 6.1 114/259] firmware: arm_scmi: Harden perf domain info access
+Date: Wed,  4 Oct 2023 19:54:47 +0200
+Message-ID: <20231004175222.573601044@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,81 +42,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 11729caa520950e17cd81bc43ffc477c46cf791e ]
+[ Upstream commit 3da82112355bba263597fcbb24d275fc57e69e7e ]
 
-Commit feaa8baee82a ("bus: ti-sysc: Implement SoC revision handling")
-created a list of SoC types searching for strings based on names
-and wildcards which associates the SoC to different families.
+Harden internal accesses to domain info in the SCMI perf protocol.
 
-The OMAP34xx and OMAP35xx are treated as SOC_3430 while
-OMAP36xx and OMAP37xx are treated as SOC_3630, but the AM35xx
-isn't listed.
-
-The AM35xx is mostly an OMAP3430, and a later commit a12315d6d270
-("bus: ti-sysc: Make omap3 gpt12 quirk handling SoC specific") looks
-for the SOC type and behaves in a certain way if it's SOC_3430.
-
-This caused a regression on the AM3517 causing it to return two
-errors:
-
- ti-sysc: probe of 48318000.target-module failed with error -16
- ti-sysc: probe of 49032000.target-module failed with error -16
-
-Fix this by treating the creating SOC_AM35 and inserting it between
-the SOC_3430 and SOC_3630.  If it is treaed the same way as the
-SOC_3430 when checking the status of sysc_check_active_timer,
-the error conditions will disappear.
-
-Fixes: a12315d6d270 ("bus: ti-sysc: Make omap3 gpt12 quirk handling SoC specific")
-Fixes: feaa8baee82a ("bus: ti-sysc: Implement SoC revision handling")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Message-ID: <20230906233442.270835-1-aford173@gmail.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20230717161246.1761777-2-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Stable-dep-of: c3638b851bc1 ("firmware: arm_scmi: Fixup perf power-cost/microwatt support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/perf.c | 89 +++++++++++++++++++++++---------
+ 1 file changed, 64 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 6ac79417b5120..d56e7b61bb5a9 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -38,6 +38,7 @@ enum sysc_soc {
- 	SOC_2420,
- 	SOC_2430,
- 	SOC_3430,
-+	SOC_AM35,
- 	SOC_3630,
- 	SOC_4430,
- 	SOC_4460,
-@@ -1878,7 +1879,7 @@ static void sysc_pre_reset_quirk_dss(struct sysc *ddata)
- 		dev_warn(ddata->dev, "%s: timed out %08x !+ %08x\n",
- 			 __func__, val, irq_mask);
+diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+index ecf5c4de851b7..43dd242ecc49c 100644
+--- a/drivers/firmware/arm_scmi/perf.c
++++ b/drivers/firmware/arm_scmi/perf.c
+@@ -139,7 +139,7 @@ struct perf_dom_info {
  
--	if (sysc_soc->soc == SOC_3430) {
-+	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35) {
- 		/* Clear DSS_SDI_CONTROL */
- 		sysc_write(ddata, 0x44, 0);
+ struct scmi_perf_info {
+ 	u32 version;
+-	int num_domains;
++	u16 num_domains;
+ 	enum scmi_power_scale power_scale;
+ 	u64 stats_addr;
+ 	u32 stats_size;
+@@ -356,11 +356,26 @@ static int scmi_perf_mb_limits_set(const struct scmi_protocol_handle *ph,
+ 	return ret;
+ }
  
-@@ -3042,6 +3043,7 @@ static void ti_sysc_idle(struct work_struct *work)
- static const struct soc_device_attribute sysc_soc_match[] = {
- 	SOC_FLAG("OMAP242*", SOC_2420),
- 	SOC_FLAG("OMAP243*", SOC_2430),
-+	SOC_FLAG("AM35*", SOC_AM35),
- 	SOC_FLAG("OMAP3[45]*", SOC_3430),
- 	SOC_FLAG("OMAP3[67]*", SOC_3630),
- 	SOC_FLAG("OMAP443*", SOC_4430),
-@@ -3248,7 +3250,7 @@ static int sysc_check_active_timer(struct sysc *ddata)
- 	 * can be dropped if we stop supporting old beagleboard revisions
- 	 * A to B4 at some point.
- 	 */
--	if (sysc_soc->soc == SOC_3430)
-+	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35)
- 		error = -ENXIO;
- 	else
- 		error = -EBUSY;
++static inline struct perf_dom_info *
++scmi_perf_domain_lookup(const struct scmi_protocol_handle *ph, u32 domain)
++{
++	struct scmi_perf_info *pi = ph->get_priv(ph);
++
++	if (domain >= pi->num_domains)
++		return ERR_PTR(-EINVAL);
++
++	return pi->dom_info + domain;
++}
++
+ static int scmi_perf_limits_set(const struct scmi_protocol_handle *ph,
+ 				u32 domain, u32 max_perf, u32 min_perf)
+ {
+ 	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	if (PROTOCOL_REV_MAJOR(pi->version) >= 0x3 && !max_perf && !min_perf)
+ 		return -EINVAL;
+@@ -408,8 +423,11 @@ static int scmi_perf_mb_limits_get(const struct scmi_protocol_handle *ph,
+ static int scmi_perf_limits_get(const struct scmi_protocol_handle *ph,
+ 				u32 domain, u32 *max_perf, u32 *min_perf)
+ {
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	if (dom->fc_info && dom->fc_info[PERF_FC_LIMIT].get_addr) {
+ 		struct scmi_fc_info *fci = &dom->fc_info[PERF_FC_LIMIT];
+@@ -449,8 +467,11 @@ static int scmi_perf_mb_level_set(const struct scmi_protocol_handle *ph,
+ static int scmi_perf_level_set(const struct scmi_protocol_handle *ph,
+ 			       u32 domain, u32 level, bool poll)
+ {
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	if (dom->fc_info && dom->fc_info[PERF_FC_LEVEL].set_addr) {
+ 		struct scmi_fc_info *fci = &dom->fc_info[PERF_FC_LEVEL];
+@@ -490,8 +511,11 @@ static int scmi_perf_mb_level_get(const struct scmi_protocol_handle *ph,
+ static int scmi_perf_level_get(const struct scmi_protocol_handle *ph,
+ 			       u32 domain, u32 *level, bool poll)
+ {
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	if (dom->fc_info && dom->fc_info[PERF_FC_LEVEL].get_addr) {
+ 		*level = ioread32(dom->fc_info[PERF_FC_LEVEL].get_addr);
+@@ -574,13 +598,14 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+ 	unsigned long freq;
+ 	struct scmi_opp *opp;
+ 	struct perf_dom_info *dom;
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+ 
+ 	domain = scmi_dev_domain_id(dev);
+ 	if (domain < 0)
+-		return domain;
++		return -EINVAL;
+ 
+-	dom = pi->dom_info + domain;
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	for (opp = dom->opp, idx = 0; idx < dom->opp_count; idx++, opp++) {
+ 		freq = opp->perf * dom->mult_factor;
+@@ -603,14 +628,17 @@ static int
+ scmi_dvfs_transition_latency_get(const struct scmi_protocol_handle *ph,
+ 				 struct device *dev)
+ {
++	int domain;
+ 	struct perf_dom_info *dom;
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	int domain = scmi_dev_domain_id(dev);
+ 
++	domain = scmi_dev_domain_id(dev);
+ 	if (domain < 0)
+-		return domain;
++		return -EINVAL;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+-	dom = pi->dom_info + domain;
+ 	/* uS to nS */
+ 	return dom->opp[dom->opp_count - 1].trans_latency_us * 1000;
+ }
+@@ -618,8 +646,11 @@ scmi_dvfs_transition_latency_get(const struct scmi_protocol_handle *ph,
+ static int scmi_dvfs_freq_set(const struct scmi_protocol_handle *ph, u32 domain,
+ 			      unsigned long freq, bool poll)
+ {
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	return scmi_perf_level_set(ph, domain, freq / dom->mult_factor, poll);
+ }
+@@ -630,11 +661,14 @@ static int scmi_dvfs_freq_get(const struct scmi_protocol_handle *ph, u32 domain,
+ 	int ret;
+ 	u32 level;
+ 	struct scmi_perf_info *pi = ph->get_priv(ph);
+-	struct perf_dom_info *dom = pi->dom_info + domain;
+ 
+ 	ret = scmi_perf_level_get(ph, domain, &level, poll);
+-	if (!ret)
++	if (!ret) {
++		struct perf_dom_info *dom = pi->dom_info + domain;
++
++		/* Note domain is validated implicitly by scmi_perf_level_get */
+ 		*freq = level * dom->mult_factor;
++	}
+ 
+ 	return ret;
+ }
+@@ -643,15 +677,14 @@ static int scmi_dvfs_est_power_get(const struct scmi_protocol_handle *ph,
+ 				   u32 domain, unsigned long *freq,
+ 				   unsigned long *power)
+ {
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+ 	struct perf_dom_info *dom;
+ 	unsigned long opp_freq;
+ 	int idx, ret = -EINVAL;
+ 	struct scmi_opp *opp;
+ 
+-	dom = pi->dom_info + domain;
+-	if (!dom)
+-		return -EIO;
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return PTR_ERR(dom);
+ 
+ 	for (opp = dom->opp, idx = 0; idx < dom->opp_count; idx++, opp++) {
+ 		opp_freq = opp->perf * dom->mult_factor;
+@@ -670,10 +703,16 @@ static int scmi_dvfs_est_power_get(const struct scmi_protocol_handle *ph,
+ static bool scmi_fast_switch_possible(const struct scmi_protocol_handle *ph,
+ 				      struct device *dev)
+ {
++	int domain;
+ 	struct perf_dom_info *dom;
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+ 
+-	dom = pi->dom_info + scmi_dev_domain_id(dev);
++	domain = scmi_dev_domain_id(dev);
++	if (domain < 0)
++		return false;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return false;
+ 
+ 	return dom->fc_info && dom->fc_info[PERF_FC_LEVEL].set_addr;
+ }
 -- 
 2.40.1
 
