@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34A31C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9601BDEC
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2yfEB6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527DFC433CA;
-	Wed,  4 Oct 2023 18:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8Cb4+Gx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113FCC433C8;
+	Wed,  4 Oct 2023 18:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444568;
-	bh=Y7+vlHR17M3KExVDkgCU/WLIRViTftk9J2NuCkeh4Ig=;
+	s=korg; t=1696444571;
+	bh=K6jsXLU+zLNl4JX1kRYFLq9M5BoBjKpyY/jJJR21H+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2yfEB6GKNGWa0MWoXh4Bam74nqpzt2qg4J3gjnHVJC0Q1vUt/R4qs8NTPaeNzQzv
-	 XZsJANyA98fnY+RTvOSS50MOSUkVKlke4yL77dn4Pn0ZJiicnFI4cRxRmvyShnT0N8
-	 SDbpLJsDL0Hdn0a9GnJM8pH5GkwdGWxP2DgRgLqg=
+	b=y8Cb4+Gx8qljzncH6jBlWXFYRUh/rngrnKC82tBv7dBNRaSUUC8IKrRzSSVVyVs2P
+	 xw4BB8cYM+RFiUujys8c8ikM4Mk8zrvizDN2ODMgF1tNQdMS5roOEz8TDwHhqnTNaV
+	 OGXxNTGC25Y1wA+8bvf2mSUHdbFLenPajwsBaUL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Marcus Seyfarth <m.seyfarth@gmail.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alan Maguire <alan.maguire@oracle.com>
-Subject: [PATCH 6.5 296/321] bpf: Add override check to kprobe multi link attach
-Date: Wed,  4 Oct 2023 19:57:21 +0200
-Message-ID: <20231004175243.006816219@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.5 297/321] bpf: Fix BTF_ID symbol generation collision
+Date: Wed,  4 Oct 2023 19:57:22 +0200
+Message-ID: <20231004175243.053802278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,54 +47,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-commit 41bc46c12a8053a1b3279a379bd6b5e87b045b85 upstream.
+commit 8f908db77782630c45ba29dac35c434b5ce0b730 upstream.
 
-Currently the multi_kprobe link attach does not check error
-injection list for programs with bpf_override_return helper
-and allows them to attach anywhere. Adding the missing check.
+Marcus and Satya reported an issue where BTF_ID macro generates same
+symbol in separate objects and that breaks final vmlinux link.
 
-Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
+ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
+'__BTF_ID__struct__cgroup__624' is already defined
+
+This can be triggered under specific configs when __COUNTER__ happens to
+be the same for the same symbol in two different translation units,
+which is already quite unlikely to happen.
+
+Add __LINE__ number suffix to make BTF_ID symbol more unique, which is
+not a complete fix, but it would help for now and meanwhile we can work
+on better solution as suggested by Andrii.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20230907200652.926951-1-jolsa@kernel.org
+Reported-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1913
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/bpf/CAEf4Bzb5KQ2_LmhN769ifMeSJaWfebccUasQOfQKaOd0nQ51tw@mail.gmail.com/
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-1-263fc519c21f@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ include/linux/btf_ids.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2772,6 +2772,17 @@ static int get_modules_for_addrs(struct
- 	return arr.mods_cnt;
- }
+--- a/include/linux/btf_ids.h
++++ b/include/linux/btf_ids.h
+@@ -49,7 +49,7 @@ word							\
+ 	____BTF_ID(symbol, word)
  
-+static int addrs_check_error_injection_list(unsigned long *addrs, u32 cnt)
-+{
-+	u32 i;
-+
-+	for (i = 0; i < cnt; i++) {
-+		if (!within_error_injection_list(addrs[i]))
-+			return -EINVAL;
-+	}
-+	return 0;
-+}
-+
- int bpf_kprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
- {
- 	struct bpf_kprobe_multi_link *link = NULL;
-@@ -2849,6 +2860,11 @@ int bpf_kprobe_multi_link_attach(const u
- 			goto error;
- 	}
+ #define __ID(prefix) \
+-	__PASTE(prefix, __COUNTER__)
++	__PASTE(__PASTE(prefix, __COUNTER__), __LINE__)
  
-+	if (prog->kprobe_override && addrs_check_error_injection_list(addrs, cnt)) {
-+		err = -EINVAL;
-+		goto error;
-+	}
-+
- 	link = kzalloc(sizeof(*link), GFP_KERNEL);
- 	if (!link) {
- 		err = -ENOMEM;
+ /*
+  * The BTF_ID defines unique symbol for each ID pointing
 
 
