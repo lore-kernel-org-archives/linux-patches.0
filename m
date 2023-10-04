@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C4314273
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69701BDEC
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEHlxq2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A887C433CA;
-	Wed,  4 Oct 2023 18:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYO1rQcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B59C433C8;
+	Wed,  4 Oct 2023 18:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444475;
-	bh=UWdoLL4FDL9sgllCdc6SjV6qklYeQMMCbbFBvQjoh44=;
+	s=korg; t=1696444478;
+	bh=0hpJRq37mFizU9hvXjY+c7manlIZOFv/DcxLgBkexP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEHlxq2q8KNzY61FJUQH5RGKpK7KflmegURiqNJoAX7xJ/E6fuZsLYVSlbCD3Zk2Y
-	 MYJixPah0Crvs7JIOniksmjDJc/ksYaobxrLYgaInszSx7KtlaAbBH1OGDrRMcOLWh
-	 Pzhi0CDdcQtCz0CI1QCp5xP1J3UAnsJFksIucZLY=
+	b=HYO1rQcBFYga58v+EAuQe/hjqU33T1vd8erAixvhTOQWSwdNj41IyEYT01HkZfG6x
+	 pKkWZmmJ+0yLP5WyMFT0VM8eHSSfPVp0NbCI01fsypK84OEGyMYRBIXhShiUxPILEK
+	 MNiCFLXk6AaBqC90lb3q67zjP5xnml8t5tA/HQ0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.5 263/321] LoongArch: Add support for 64_PCREL relocation type
-Date: Wed,  4 Oct 2023 19:56:48 +0200
-Message-ID: <20231004175241.446306828@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>
+Subject: [PATCH 6.5 264/321] ata: libata-scsi: link ata port and scsi device
+Date: Wed,  4 Oct 2023 19:56:49 +0200
+Message-ID: <20231004175241.495357643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,57 +45,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit b1dc55a3d6a86cc2c1ae664ad7280bff4c0fc28f upstream.
+commit fb99ef17865035a6657786d4b2af11a27ba23f9b upstream.
 
-When build and update kernel with the latest upstream binutils and
-loongson3_defconfig, module loader fails with:
+There is no direct device ancestry defined between an ata_device and
+its scsi device which prevents the power management code from correctly
+ordering suspend and resume operations. Create such ancestry with the
+ata device as the parent to ensure that the scsi device (child) is
+suspended before the ata device and that resume handles the ata device
+before the scsi device.
 
-  kmod: zsmalloc: Unknown relocation type 109
-  kmod: fuse: Unknown relocation type 109
-  kmod: fuse: Unknown relocation type 109
-  kmod: radeon: Unknown relocation type 109
-  kmod: nf_tables: Unknown relocation type 109
-  kmod: nf_tables: Unknown relocation type 109
+The parent-child (supplier-consumer) relationship is established between
+the ata_port (parent) and the scsi device (child) with the function
+device_add_link(). The parent used is not the ata_device as the PM
+operations are defined per port and the status of all devices connected
+through that port is controlled from the port operations.
 
-This is because the latest upstream binutils replaces a pair of ADD64
-and SUB64 with 64_PCREL, so add support for 64_PCREL relocation type.
+The device link is established with the new function
+ata_scsi_slave_alloc(), and this function is used to define the
+->slave_alloc callback of the scsi host template of all ata drivers.
 
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=ecb802d02eeb
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: a19a93e4c6a9 ("scsi: core: pm: Rely on the device driver core for async power management")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/module.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ata/libata-scsi.c |   45 ++++++++++++++++++++++++++++++++++++++++-----
+ include/linux/libata.h    |    2 ++
+ 2 files changed, 42 insertions(+), 5 deletions(-)
 
---- a/arch/loongarch/kernel/module.c
-+++ b/arch/loongarch/kernel/module.c
-@@ -376,6 +376,15 @@ static int apply_r_larch_32_pcrel(struct
- 	return 0;
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1140,6 +1140,42 @@ int ata_scsi_dev_config(struct scsi_devi
  }
  
-+static int apply_r_larch_64_pcrel(struct module *mod, u32 *location, Elf_Addr v,
-+				  s64 *rela_stack, size_t *rela_stack_top, unsigned int type)
-+{
-+	ptrdiff_t offset = (void *)v - (void *)location;
+ /**
++ *	ata_scsi_slave_alloc - Early setup of SCSI device
++ *	@sdev: SCSI device to examine
++ *
++ *	This is called from scsi_alloc_sdev() when the scsi device
++ *	associated with an ATA device is scanned on a port.
++ *
++ *	LOCKING:
++ *	Defined by SCSI layer.  We don't really care.
++ */
 +
-+	*(u64 *)location = offset;
++int ata_scsi_slave_alloc(struct scsi_device *sdev)
++{
++	struct ata_port *ap = ata_shost_to_port(sdev->host);
++	struct device_link *link;
++
++	ata_scsi_sdev_config(sdev);
++
++	/*
++	 * Create a link from the ata_port device to the scsi device to ensure
++	 * that PM does suspend/resume in the correct order: the scsi device is
++	 * consumer (child) and the ata port the supplier (parent).
++	 */
++	link = device_link_add(&sdev->sdev_gendev, &ap->tdev,
++			       DL_FLAG_STATELESS |
++			       DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE);
++	if (!link) {
++		ata_port_err(ap, "Failed to create link to scsi device %s\n",
++			     dev_name(&sdev->sdev_gendev));
++		return -ENODEV;
++	}
++
 +	return 0;
 +}
++EXPORT_SYMBOL_GPL(ata_scsi_slave_alloc);
 +
- /*
-  * reloc_handlers_rela() - Apply a particular relocation to a module
-  * @mod: the module to apply the reloc to
-@@ -406,6 +415,7 @@ static reloc_rela_handler reloc_rela_han
- 	[R_LARCH_ADD32 ... R_LARCH_SUB64]		     = apply_r_larch_add_sub,
- 	[R_LARCH_PCALA_HI20...R_LARCH_PCALA64_HI12]	     = apply_r_larch_pcala,
- 	[R_LARCH_32_PCREL]				     = apply_r_larch_32_pcrel,
-+	[R_LARCH_64_PCREL]				     = apply_r_larch_64_pcrel,
- };
++/**
+  *	ata_scsi_slave_config - Set SCSI device attributes
+  *	@sdev: SCSI device to examine
+  *
+@@ -1155,14 +1191,11 @@ int ata_scsi_slave_config(struct scsi_de
+ {
+ 	struct ata_port *ap = ata_shost_to_port(sdev->host);
+ 	struct ata_device *dev = __ata_scsi_find_dev(ap, sdev);
+-	int rc = 0;
+-
+-	ata_scsi_sdev_config(sdev);
  
- int apply_relocate_add(Elf_Shdr *sechdrs, const char *strtab,
+ 	if (dev)
+-		rc = ata_scsi_dev_config(sdev, dev);
++		return ata_scsi_dev_config(sdev, dev);
+ 
+-	return rc;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(ata_scsi_slave_config);
+ 
+@@ -1189,6 +1222,8 @@ void ata_scsi_slave_destroy(struct scsi_
+ 	if (!ap->ops->error_handler)
+ 		return;
+ 
++	device_link_remove(&sdev->sdev_gendev, &ap->tdev);
++
+ 	spin_lock_irqsave(ap->lock, flags);
+ 	dev = __ata_scsi_find_dev(ap, sdev);
+ 	if (dev && dev->sdev) {
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -1155,6 +1155,7 @@ extern int ata_std_bios_param(struct scs
+ 			      struct block_device *bdev,
+ 			      sector_t capacity, int geom[]);
+ extern void ata_scsi_unlock_native_capacity(struct scsi_device *sdev);
++extern int ata_scsi_slave_alloc(struct scsi_device *sdev);
+ extern int ata_scsi_slave_config(struct scsi_device *sdev);
+ extern void ata_scsi_slave_destroy(struct scsi_device *sdev);
+ extern int ata_scsi_change_queue_depth(struct scsi_device *sdev,
+@@ -1408,6 +1409,7 @@ extern const struct attribute_group *ata
+ 	.this_id		= ATA_SHT_THIS_ID,		\
+ 	.emulated		= ATA_SHT_EMULATED,		\
+ 	.proc_name		= drv_name,			\
++	.slave_alloc		= ata_scsi_slave_alloc,		\
+ 	.slave_destroy		= ata_scsi_slave_destroy,	\
+ 	.bios_param		= ata_std_bios_param,		\
+ 	.unlock_native_capacity	= ata_scsi_unlock_native_capacity,\
 
 
