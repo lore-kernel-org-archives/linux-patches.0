@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8F01D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADACC1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+NlEGCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60305C433C8;
-	Wed,  4 Oct 2023 18:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+nIzeF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD5EC433CA;
+	Wed,  4 Oct 2023 18:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443817;
-	bh=EG0Ce1qXW715R6gtHkt3PAg9NGJCnk9MilGOjQcL074=;
+	s=korg; t=1696443820;
+	bh=M5k51TsGe5OcyO3CZ8ssH+vwVxFKVhGsgSznGlIdQlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+NlEGCA467OpvFzeFU7v8aBtQiLMi4whuFDZPEQCSmVv+sCGaxoJXnIS1GKAH2SP
-	 ljV6lNl/JQSTyqMnC6X5JbUEBmwWVwL5/XsNfQaIWfc0D/W40ZLBp0Rssnq3IqzCJb
-	 UBqP+G0jH71cBm+ajxxLTEqwTeHjx6QMlq46/Pbo=
+	b=G+nIzeF0cRVl1vhNwyTmAHoyAgjTlxnVQhCoRqxKVi8DeifepD/qiEaAD/N/DVcZp
+	 ayisBrxpJvLnE5PlsFytsEETJv+AXj2sKYANcUyYLRnsa6+j4T7rQlc/7J0FcY2uLe
+	 8e3p6UWCk5PLJX98fUKU8i1v6lvH14ZsQRR73CeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 023/321] netfilter: nf_tables: fix memleak when more than 255 elements expired
-Date: Wed,  4 Oct 2023 19:52:48 +0200
-Message-ID: <20231004175230.252231379@linuxfoundation.org>
+Subject: [PATCH 6.5 032/321] ASoC: rt5640: Fix sleep in atomic context
+Date: Wed,  4 Oct 2023 19:52:57 +0200
+Message-ID: <20231004175230.650636363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,85 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit cf5000a7787cbc10341091d37245a42c119d26c5 upstream.
+[ Upstream commit df7d595f6bd9dc96cc275cc4b0f313fcfa423c58 ]
 
-When more than 255 elements expired we're supposed to switch to a new gc
-container structure.
+Following prints are observed while testing audio on Jetson AGX Orin which
+has onboard RT5640 audio codec:
 
-This never happens: u8 type will wrap before reaching the boundary
-and nft_trans_gc_space() always returns true.
+  BUG: sleeping function called from invalid context at kernel/workqueue.c:3027
+  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
+  preempt_count: 10001, expected: 0
+  RCU nest depth: 0, expected: 0
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 0 at kernel/irq/handle.c:159 __handle_irq_event_percpu+0x1e0/0x270
+  ---[ end trace ad1c64905aac14a6 ]-
 
-This means we recycle the initial gc container structure and
-lose track of the elements that came before.
+The IRQ handler rt5640_irq() runs in interrupt context and can sleep
+during cancel_delayed_work_sync().
 
-While at it, don't deref 'gc' after we've passed it to call_rcu.
+The only thing which rt5640_irq() does is cancel + (re-)queue
+the jack_work delayed_work. This can be done in a single non sleeping
+call by replacing queue_delayed_work() with mod_delayed_work(),
+avoiding the sleep in atomic context.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 051dade34695 ("ASoC: rt5640: Fix the wrong state of JD1 and JD2")
+Reported-by: Sameer Pujar <spujar@nvidia.com>
+Closes: https://lore.kernel.org/r/1688015537-31682-4-git-send-email-spujar@nvidia.com
+Cc: Oder Chiou <oder_chiou@realtek.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230912113245.320159-3-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 +-
- net/netfilter/nf_tables_api.c     | 10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/codecs/rt5640.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index a4455f4995abf..7c816359d5a98 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1682,7 +1682,7 @@ struct nft_trans_gc {
- 	struct net		*net;
- 	struct nft_set		*set;
- 	u32			seq;
--	u8			count;
-+	u16			count;
- 	void			*priv[NFT_TRANS_GC_BATCHCOUNT];
- 	struct rcu_head		rcu;
- };
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index bba8042f721a5..1c2fb32bfa5f6 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9559,12 +9559,15 @@ static int nft_trans_gc_space(struct nft_trans_gc *trans)
- struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
- 					      unsigned int gc_seq, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (nft_trans_gc_space(gc))
- 		return gc;
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index 7ec930fb9aab5..24c1ed1c40589 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2404,13 +2404,11 @@ static irqreturn_t rt5640_irq(int irq, void *data)
+ 	struct rt5640_priv *rt5640 = data;
+ 	int delay = 0;
  
-+	set = gc->set;
- 	nft_trans_gc_queue_work(gc);
+-	if (rt5640->jd_src == RT5640_JD_SRC_HDA_HEADER) {
+-		cancel_delayed_work_sync(&rt5640->jack_work);
++	if (rt5640->jd_src == RT5640_JD_SRC_HDA_HEADER)
+ 		delay = 100;
+-	}
  
--	return nft_trans_gc_alloc(gc->set, gc_seq, gfp);
-+	return nft_trans_gc_alloc(set, gc_seq, gfp);
+ 	if (rt5640->jack)
+-		queue_delayed_work(system_long_wq, &rt5640->jack_work, delay);
++		mod_delayed_work(system_long_wq, &rt5640->jack_work, delay);
+ 
+ 	return IRQ_HANDLED;
  }
- 
- void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
-@@ -9579,15 +9582,18 @@ void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
- 
- struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net)))
- 		return NULL;
- 
- 	if (nft_trans_gc_space(gc))
- 		return gc;
- 
-+	set = gc->set;
- 	call_rcu(&gc->rcu, nft_trans_gc_trans_free);
- 
--	return nft_trans_gc_alloc(gc->set, 0, gfp);
-+	return nft_trans_gc_alloc(set, 0, gfp);
- }
- 
- void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
 -- 
 2.40.1
 
