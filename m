@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDB120B02
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B601820B0D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pT8yLGLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC0AC433C7;
-	Wed,  4 Oct 2023 18:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbhHYaxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B22C433C7;
+	Wed,  4 Oct 2023 18:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444320;
-	bh=kaPTba2NDkc1pzgOVXQpVUKm2nw7JkFZfQ/ZcEV6R80=;
+	s=korg; t=1696444323;
+	bh=MBl4Y+j+pXWAk+Fb9ZvyvthEvJYmloRCDijp7rIVYvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pT8yLGLdSZjcgXDmqjVvvZYktCRhvt30m5D1txV85W0EDpR3nhopzrBKR+r1zQE2m
-	 wTTU1Nz+bihkh7M1pxWFUBXYZ6QB9VauOOZl5J42Tz7MuCNJsGtWDHcns5duIx1I1U
-	 U+Y+vw2GwOLtcB7j/hSXp/vSml9rOoOMMksw6Hvg=
+	b=CbhHYaxNK4PjOD+0qXrZSF4knAWpiz+RCR0WkLo09QFCD6CS/4FATg9KVbLSwQYKw
+	 u2l7f0aKlGdP4iEzlLAcIDngjkcdai9DmCLF0WPatV2VLFLElCiNpu+0ZtpLDpRIXA
+	 38aj6YsS18nYgerAh6E0MJBDjaf/PiXHpJ4VLE6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 181/321] ata: sata_mv: Fix incorrect string length computation in mv_dump_mem()
-Date: Wed,  4 Oct 2023 19:55:26 +0200
-Message-ID: <20231004175237.614471991@linuxfoundation.org>
+Subject: [PATCH 6.5 208/321] bpf: Ensure unit_size is matched with slab cache object size
+Date: Wed,  4 Oct 2023 19:55:53 +0200
+Message-ID: <20231004175238.880991000@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,41 +42,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit e97eb65dd464e7f118a16a26337322d07eb653e2 ]
+[ Upstream commit c930472552022bd09aab3cd946ba3f243070d5c7 ]
 
-snprintf() returns the "number of characters which *would* be generated for
-the given input", not the size *really* generated.
+Add extra check in bpf_mem_alloc_init() to ensure the unit_size of
+bpf_mem_cache is matched with the object_size of underlying slab cache.
+If these two sizes are unmatched, print a warning once and return
+-EINVAL in bpf_mem_alloc_init(), so the mismatch can be found early and
+the potential issue can be prevented.
 
-In order to avoid too large values for 'o' (and potential negative values
-for "sizeof(linebuf) o") use scnprintf() instead of snprintf().
-
-Note that given the "w < 4" in the for loop, the buffer can NOT
-overflow, but using the *right* function is always better.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20230908133923.2675053-4-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_mv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/memalloc.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
-index d404e631d1527..68e660e4cc410 100644
---- a/drivers/ata/sata_mv.c
-+++ b/drivers/ata/sata_mv.c
-@@ -1255,8 +1255,8 @@ static void mv_dump_mem(struct device *dev, void __iomem *start, unsigned bytes)
+diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+index 0668bcd7c926f..bcf84e71f549c 100644
+--- a/kernel/bpf/memalloc.c
++++ b/kernel/bpf/memalloc.c
+@@ -370,6 +370,24 @@ static void prefill_mem_cache(struct bpf_mem_cache *c, int cpu)
+ 	alloc_bulk(c, c->unit_size <= 256 ? 4 : 1, cpu_to_node(cpu));
+ }
  
- 	for (b = 0; b < bytes; ) {
- 		for (w = 0, o = 0; b < bytes && w < 4; w++) {
--			o += snprintf(linebuf + o, sizeof(linebuf) - o,
--				      "%08x ", readl(start + b));
-+			o += scnprintf(linebuf + o, sizeof(linebuf) - o,
-+				       "%08x ", readl(start + b));
- 			b += sizeof(u32);
++static int check_obj_size(struct bpf_mem_cache *c, unsigned int idx)
++{
++	struct llist_node *first;
++	unsigned int obj_size;
++
++	first = c->free_llist.first;
++	if (!first)
++		return 0;
++
++	obj_size = ksize(first);
++	if (obj_size != c->unit_size) {
++		WARN_ONCE(1, "bpf_mem_cache[%u]: unexpected object size %u, expect %u\n",
++			  idx, obj_size, c->unit_size);
++		return -EINVAL;
++	}
++	return 0;
++}
++
+ /* When size != 0 bpf_mem_cache for each cpu.
+  * This is typical bpf hash map use case when all elements have equal size.
+  *
+@@ -380,10 +398,10 @@ static void prefill_mem_cache(struct bpf_mem_cache *c, int cpu)
+ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ {
+ 	static u16 sizes[NUM_CACHES] = {96, 192, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
++	int cpu, i, err, unit_size, percpu_size = 0;
+ 	struct bpf_mem_caches *cc, __percpu *pcc;
+ 	struct bpf_mem_cache *c, __percpu *pc;
+ 	struct obj_cgroup *objcg = NULL;
+-	int cpu, i, unit_size, percpu_size = 0;
+ 
+ 	if (size) {
+ 		pc = __alloc_percpu_gfp(sizeof(*pc), 8, GFP_KERNEL);
+@@ -419,6 +437,7 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 	pcc = __alloc_percpu_gfp(sizeof(*cc), 8, GFP_KERNEL);
+ 	if (!pcc)
+ 		return -ENOMEM;
++	err = 0;
+ #ifdef CONFIG_MEMCG_KMEM
+ 	objcg = get_obj_cgroup_from_current();
+ #endif
+@@ -429,10 +448,20 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 			c->unit_size = sizes[i];
+ 			c->objcg = objcg;
+ 			prefill_mem_cache(c, cpu);
++			err = check_obj_size(c, i);
++			if (err)
++				goto out;
  		}
- 		dev_dbg(dev, "%s: %p: %s\n",
+ 	}
++
++out:
+ 	ma->caches = pcc;
+-	return 0;
++	/* refill_work is either zeroed or initialized, so it is safe to
++	 * call irq_work_sync().
++	 */
++	if (err)
++		bpf_mem_alloc_destroy(ma);
++	return err;
+ }
+ 
+ static void drain_mem_cache(struct bpf_mem_cache *c)
 -- 
 2.40.1
 
