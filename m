@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D9F1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F40F1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xen0Y6ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC8BC433C7;
-	Wed,  4 Oct 2023 18:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubQJh53D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CEBC433CA;
+	Wed,  4 Oct 2023 18:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443551;
-	bh=XrFUUMWbdS+18imRo1gtru9y2aqOXzy+pkt1+Qr5H3A=;
+	s=korg; t=1696443554;
+	bh=dFmJg+FNiOd2vPkVplrz1A/L5lRXTevnT83f2Bn2SmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xen0Y6qlFp89J51UV9MfBjfJZ2ouoeqUlExIvXhX1EsurfxU7U8HWxZwhgRGny2Ki
-	 IX3MvpRQSgxCPWUxDWmE1FKzwS9wOdHWHn/W/r9xhOqopT3D1XKpr9k4YK34t38NLq
-	 vq61GFQlGkyoRqr68rKrSZI+Mp72Ewyb9o5zw1us=
+	b=ubQJh53DPYTqnI3bYchqtWZU2DPsWPmj2eYhAU9MT/n5SuS3Ld/idHH0WthgOaxSa
+	 7nuUKhp7XsGOAGvIoFEbrqKV26bJxPH7gKZs5I6bdspNyrTaoKLHXSSM+Xa1sKfSJA
+	 H9RG8+hfs5iC5OzdHEihC9NXQXGw1rogQ3LhrVpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/259] LoongArch: Set all reserved memblocks on Node#0 at initialization
-Date: Wed,  4 Oct 2023 19:56:10 +0200
-Message-ID: <20231004175226.316681096@linuxfoundation.org>
+Subject: [PATCH 6.1 198/259] fbdev/sh7760fb: Depend on FB=y
+Date: Wed,  4 Oct 2023 19:56:11 +0200
+Message-ID: <20231004175226.366341418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,94 +45,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit b795fb9f5861ee256070d59e33130980a01fadd7 ]
+[ Upstream commit f75f71b2c418a27a7c05139bb27a0c83adf88d19 ]
 
-After commit 61167ad5fecdea ("mm: pass nid to reserve_bootmem_region()")
-we get a panic if DEFERRED_STRUCT_PAGE_INIT is enabled:
+Fix linker error if FB=m about missing fb_io_read and fb_io_write. The
+linker's error message suggests that this config setting has already
+been broken for other symbols.
 
-[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000002b82, era == 90000000040e3f28, ra == 90000000040e3f18
-[    0.000000] Oops[#1]:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.5.0+ #733
-[    0.000000] pc 90000000040e3f28 ra 90000000040e3f18 tp 90000000046f4000 sp 90000000046f7c90
-[    0.000000] a0 0000000000000001 a1 0000000000200000 a2 0000000000000040 a3 90000000046f7ca0
-[    0.000000] a4 90000000046f7ca4 a5 0000000000000000 a6 90000000046f7c38 a7 0000000000000000
-[    0.000000] t0 0000000000000002 t1 9000000004b00ac8 t2 90000000040e3f18 t3 90000000040f0800
-[    0.000000] t4 00000000000f0000 t5 80000000ffffe07e t6 0000000000000003 t7 900000047fff5e20
-[    0.000000] t8 aaaaaaaaaaaaaaab u0 0000000000000018 s9 0000000000000000 s0 fffffefffe000000
-[    0.000000] s1 0000000000000000 s2 0000000000000080 s3 0000000000000040 s4 0000000000000000
-[    0.000000] s5 0000000000000000 s6 fffffefffe000000 s7 900000000470b740 s8 9000000004ad4000
-[    0.000000]    ra: 90000000040e3f18 reserve_bootmem_region+0xec/0x21c
-[    0.000000]   ERA: 90000000040e3f28 reserve_bootmem_region+0xfc/0x21c
-[    0.000000]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-[    0.000000]  PRMD: 00000000 (PPLV0 -PIE -PWE)
-[    0.000000]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
-[    0.000000]  ECFG: 00070800 (LIE=11 VS=7)
-[    0.000000] ESTAT: 00010800 [PIL] (IS=11 ECode=1 EsubCode=0)
-[    0.000000]  BADV: 0000000000002b82
-[    0.000000]  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000)
-[    0.000000] Modules linked in:
-[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____))
-[    0.000000] Stack : 0000000000000000 9000000002eb5430 0000003a00000020 90000000045ccd00
-[    0.000000]         900000000470e000 90000000002c1918 0000000000000000 9000000004110780
-[    0.000000]         00000000fe6c0000 0000000480000000 9000000004b4e368 9000000004110748
-[    0.000000]         0000000000000000 900000000421ca84 9000000004620000 9000000004564970
-[    0.000000]         90000000046f7d78 9000000002cc9f70 90000000002c1918 900000000470e000
-[    0.000000]         9000000004564970 90000000040bc0e0 90000000046f7d78 0000000000000000
-[    0.000000]         0000000000004000 90000000045ccd00 0000000000000000 90000000002c1918
-[    0.000000]         90000000002c1900 900000000470b700 9000000004b4df78 9000000004620000
-[    0.000000]         90000000046200a8 90000000046200a8 0000000000000000 9000000004218b2c
-[    0.000000]         9000000004270008 0000000000000001 0000000000000000 90000000045ccd00
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<90000000040e3f28>] reserve_bootmem_region+0xfc/0x21c
-[    0.000000] [<900000000421ca84>] memblock_free_all+0x114/0x350
-[    0.000000] [<9000000004218b2c>] mm_core_init+0x138/0x3cc
-[    0.000000] [<9000000004200e38>] start_kernel+0x488/0x7a4
-[    0.000000] [<90000000040df0d8>] kernel_entry+0xd8/0xdc
-[    0.000000]
-[    0.000000] Code: 02eb21ad  00410f4c  380c31ac <262b818d> 6800b70d  02c1c196  0015001c  57fe4bb1  260002cd
+  All errors (new ones prefixed by >>):
 
-The reason is early memblock_reserve() in memblock_init() set node id to
-MAX_NUMNODES, making NODE_DATA(nid) a NULL dereference in the call chain
-reserve_bootmem_region() -> init_reserved_page(). After memblock_init(),
-those late calls of memblock_reserve() operate on subregions of memblock
-.memory regions. As a result, these reserved regions will be set to the
-correct node at the first iteration of memmap_init_reserved_pages().
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_probe':
+     sh7760fb.c:(.text+0x374): undefined reference to `framebuffer_alloc'
+     sh4-linux-ld: sh7760fb.c:(.text+0x394): undefined reference to `fb_videomode_to_var'
+     sh4-linux-ld: sh7760fb.c:(.text+0x39c): undefined reference to `fb_alloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3a4): undefined reference to `register_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3ac): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x434): undefined reference to `framebuffer_release'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_remove':
+     sh7760fb.c:(.text+0x800): undefined reference to `unregister_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x804): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x814): undefined reference to `framebuffer_release'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0xc): undefined reference to `fb_io_read'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x10): undefined reference to `fb_io_write'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x2c): undefined reference to `cfb_fillrect'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x30): undefined reference to `cfb_copyarea'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x34): undefined reference to `cfb_imageblit'
 
-So set all reserved memblocks on Node#0 at initialization can avoid this
-panic.
-
-Reported-by: WANG Xuerui <git@xen0n.name>
-Tested-by: WANG Xuerui <git@xen0n.name>
-Reviewed-by: WANG Xuerui <git@xen0n.name>  # with nits addressed
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309130632.LS04CPWu-lkp@intel.com/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230918090400.13264-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/mem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/mem.c b/arch/loongarch/kernel/mem.c
-index 4a4107a6a9651..aed901c57fb43 100644
---- a/arch/loongarch/kernel/mem.c
-+++ b/arch/loongarch/kernel/mem.c
-@@ -50,7 +50,6 @@ void __init memblock_init(void)
- 	}
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index 974e862cd20d6..ff95f19224901 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2015,7 +2015,7 @@ config FB_COBALT
  
- 	memblock_set_current_limit(PFN_PHYS(max_low_pfn));
--	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.memory, 0);
- 
- 	/* Reserve the first 2MB */
- 	memblock_reserve(PHYS_OFFSET, 0x200000);
-@@ -58,4 +57,7 @@ void __init memblock_init(void)
- 	/* Reserve the kernel text/data/bss */
- 	memblock_reserve(__pa_symbol(&_text),
- 			 __pa_symbol(&_end) - __pa_symbol(&_text));
-+
-+	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.memory, 0);
-+	memblock_set_node(0, PHYS_ADDR_MAX, &memblock.reserved, 0);
- }
+ config FB_SH7760
+ 	bool "SH7760/SH7763/SH7720/SH7721 LCDC support"
+-	depends on FB && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
++	depends on FB=y && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
+ 		|| CPU_SUBTYPE_SH7720 || CPU_SUBTYPE_SH7721)
+ 	select FB_CFB_FILLRECT
+ 	select FB_CFB_COPYAREA
 -- 
 2.40.1
 
