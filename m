@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AF01C291
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2545F1C291
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2Uf/lym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2DCC433C8;
-	Wed,  4 Oct 2023 18:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFcV15nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F55CC433C8;
+	Wed,  4 Oct 2023 18:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444563;
-	bh=RrT5DFrO5mUky3OpoBX4a3uUxW+/8XdTxlFVjMMiXJs=;
+	s=korg; t=1696444566;
+	bh=z0Qgn7IIcJygusKnuVTU7SuyDU2OyGxo+EhYH9QDVWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2Uf/lymp2Lyui8m+slBo+XPYIc7vGN29a0hN8+DcaJadKzHoSvwsNvo+fL+2JFko
-	 6jidEED0wi8YzN+DdHTN2NglCeYYtYu31dODmRLrOEtQKxE7s/mgmtDr0clOxKecan
-	 8inCkU0n3/A7xNOedrCskrl0+GRWZCt82AaS9VY0=
+	b=MFcV15nj84ro+f3wOlvGtCWqh+K1u0IyyUqDZ13g/FJY4TO12ZpcAcI5KyheuEIl7
+	 /mCSW/ZD5UTurmW5u84Ir1dREK0L7Uw6xMQUXPqDa8g0Onrn2HJRdYBN/300bmfx60
+	 n1KuexDpGn0nSxIL/AdJHRtSBNMrY40xnNqOeijM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 294/321] btrfs: properly report 0 avail for very full file systems
-Date: Wed,  4 Oct 2023 19:57:19 +0200
-Message-ID: <20231004175242.914817836@linuxfoundation.org>
+	stable@kernel.org,
+	Zubin Mithra <zsm@chromium.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.5 295/321] media: uvcvideo: Fix OOB read
+Date: Wed,  4 Oct 2023 19:57:20 +0200
+Message-ID: <20231004175242.966021937@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,43 +45,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 58bfe2ccec5f9f137b41dd38f335290dcc13cd5c upstream.
+commit 41ebaa5e0eebea4c3bac96b72f9f8ae0d77c0bdb upstream.
 
-A user reported some issues with smaller file systems that get very
-full.  While investigating this issue I noticed that df wasn't showing
-100% full, despite having 0 chunk space and having < 1MiB of available
-metadata space.
+If the index provided by the user is bigger than the mask size, we might do
+an out of bound read.
 
-This turns out to be an overflow issue, we're doing:
-
-  total_available_metadata_space - SZ_4M < global_block_rsv_size
-
-to determine if there's not enough space to make metadata allocations,
-which overflows if total_available_metadata_space is < 4M.  Fix this by
-checking to see if our available space is greater than the 4M threshold.
-This makes df properly report 100% usage on the file system.
-
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+CC: stable@kernel.org
+Fixes: 40140eda661e ("media: uvcvideo: Implement mask for V4L2_CTRL_TYPE_MENU")
+Reported-by: Zubin Mithra <zsm@chromium.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2111,7 +2111,7 @@ static int btrfs_statfs(struct dentry *d
- 	 * calculated f_bavail.
- 	 */
- 	if (!mixed && block_rsv->space_info->full &&
--	    total_free_meta - thresh < block_rsv->size)
-+	    (total_free_meta < thresh || total_free_meta - thresh < block_rsv->size))
- 		buf->f_bavail = 0;
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1402,6 +1402,9 @@ int uvc_query_v4l2_menu(struct uvc_video
+ 	query_menu->id = id;
+ 	query_menu->index = index;
  
- 	buf->f_type = BTRFS_SUPER_MAGIC;
++	if (index >= BITS_PER_TYPE(mapping->menu_mask))
++		return -EINVAL;
++
+ 	ret = mutex_lock_interruptible(&chain->ctrl_mutex);
+ 	if (ret < 0)
+ 		return -ERESTARTSYS;
 
 
