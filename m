@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090B9210E8
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3B4210E4
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oy2FPjNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78569C433C8;
-	Wed,  4 Oct 2023 18:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhWfzLvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D343C433C7;
+	Wed,  4 Oct 2023 18:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444357;
-	bh=Qsw9FFYaX06WTYXImgxgSLLpXOJwNSYb56sL4szC31M=;
+	s=korg; t=1696444360;
+	bh=qeQrZ/arc7zaxa8io9qyQnbiPXGIWaDsE7E0iUh4K1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oy2FPjNOdOY1kPLZ65z6l7ZbfTbiYVrehUvwdoaOybaf85t2iwHvMMjMW/okgczg/
-	 xbUsJlbJ0DFtMy4fNHprz833gKPfc7V0eidQhv4Wgq+/Nf/I+FYAH23Jv0N2pIJT/S
-	 OZMeLLNuloPCC2SnFqXgZkHB1hVzyXNZI+GUcP9k=
+	b=OhWfzLvJ7i9xoARdzMscXh4izwsoBn5goqQJIV54+lF0fypPskIKRaZTiKfW0Dg4b
+	 IJ4dL2lnNhqgEUGqRj+zyqOaehSMXSWSqFLg/i/xZg0V92EJoyf+EUO9O1zgZEGBN0
+	 5+HvE93J7RB2Y6hxUyBcfyma9EyWm+LzdJ4v++wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 222/321] NFSv4.1: fix zero value filehandle in post open getattr
-Date: Wed,  4 Oct 2023 19:56:07 +0200
-Message-ID: <20231004175239.500617364@linuxfoundation.org>
+Subject: [PATCH 6.5 223/321] ASoC: SOF: Intel: MTL: Reduce the DSP init timeout
+Date: Wed,  4 Oct 2023 19:56:08 +0200
+Message-ID: <20231004175239.549151942@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -37,52 +39,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-[ Upstream commit 4506f23e117161a20104c8fa04f33e1ca63c26af ]
+[ Upstream commit e0f96246c4402514acda040be19ee24c1619e01a ]
 
-Currently, if the OPEN compound experiencing an error and needs to
-get the file attributes separately, it will send a stand alone
-GETATTR but it would use the filehandle from the results of
-the OPEN compound. In case of the CLAIM_FH OPEN, nfs_openres's fh
-is zero value. That generate a GETATTR that's sent with a zero
-value filehandle, and results in the server returning an error.
+20s seems unnecessarily large for the DSP init timeout. This coupled with
+multiple FW boot attempts causes an excessive delay in the error path when
+booting in recovery mode. Reduce it to 0.5s and use the existing
+HDA_DSP_INIT_TIMEOUT_US.
 
-Instead, for the CLAIM_FH OPEN, take the filehandle that was used
-in the PUTFH of the OPEN compound.
-
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Link: https://github.com/thesofproject/linux/issues/4565
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915134153.9688-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/sof/intel/mtl.c | 2 +-
+ sound/soc/sof/intel/mtl.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 3bc6bfdf7b814..890ae26006ee1 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2703,8 +2703,12 @@ static int _nfs4_proc_open(struct nfs4_opendata *data,
- 			return status;
- 	}
- 	if (!(o_res->f_attr->valid & NFS_ATTR_FATTR)) {
-+		struct nfs_fh *fh = &o_res->fh;
-+
- 		nfs4_sequence_free_slot(&o_res->seq_res);
--		nfs4_proc_getattr(server, &o_res->fh, o_res->f_attr, NULL);
-+		if (o_arg->claim == NFS4_OPEN_CLAIM_FH)
-+			fh = NFS_FH(d_inode(data->dentry));
-+		nfs4_proc_getattr(server, fh, o_res->f_attr, NULL);
- 	}
- 	return 0;
- }
+diff --git a/sound/soc/sof/intel/mtl.c b/sound/soc/sof/intel/mtl.c
+index 30fe77fd87bf8..79e9a7ed8feaa 100644
+--- a/sound/soc/sof/intel/mtl.c
++++ b/sound/soc/sof/intel/mtl.c
+@@ -460,7 +460,7 @@ int mtl_dsp_cl_init(struct snd_sof_dev *sdev, int stream_tag, bool imr_boot)
+ 	/* step 3: wait for IPC DONE bit from ROM */
+ 	ret = snd_sof_dsp_read_poll_timeout(sdev, HDA_DSP_BAR, chip->ipc_ack, status,
+ 					    ((status & chip->ipc_ack_mask) == chip->ipc_ack_mask),
+-					    HDA_DSP_REG_POLL_INTERVAL_US, MTL_DSP_PURGE_TIMEOUT_US);
++					    HDA_DSP_REG_POLL_INTERVAL_US, HDA_DSP_INIT_TIMEOUT_US);
+ 	if (ret < 0) {
+ 		if (hda->boot_iteration == HDA_FW_BOOT_ATTEMPTS)
+ 			dev_err(sdev->dev, "timeout waiting for purge IPC done\n");
+diff --git a/sound/soc/sof/intel/mtl.h b/sound/soc/sof/intel/mtl.h
+index 2794fe6e81396..9a0b8b9d8a0c9 100644
+--- a/sound/soc/sof/intel/mtl.h
++++ b/sound/soc/sof/intel/mtl.h
+@@ -62,7 +62,6 @@
+ #define MTL_DSP_IRQSTS_IPC		BIT(0)
+ #define MTL_DSP_IRQSTS_SDW		BIT(6)
+ 
+-#define MTL_DSP_PURGE_TIMEOUT_US	20000000 /* 20s */
+ #define MTL_DSP_REG_POLL_INTERVAL_US	10	/* 10 us */
+ 
+ /* Memory windows */
 -- 
 2.40.1
 
