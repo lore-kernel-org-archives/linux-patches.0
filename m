@@ -1,36 +1,36 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88498219EF
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 19:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F961F61F
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 19:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m67+ql9A"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dYCw69ZJ"
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696446254; x=1727982254;
+  t=1696446516; x=1727982516;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=9rEhsAdm4qprufCY9YFBrMJoK6i9PZwnuJiNdBtxSWU=;
-  b=m67+ql9A/+xqQEzFpZDrCpdf4eH0sSSFaCVTWu1G4V5Yp/wU93QemSmA
-   g5DE9DglETUMPHLkQJypQt9he8rQHFCXKm07gloInEZWUinsHnbhGr3hG
-   A/DXWwtJ/E/37je1ALV2iXv8wqVMo8dFijtVAvEJyiJbUo9E5azlKHNb4
-   P4W/AgQGd4GF3tae/mktarsJcKsHC6zzemEkhUWMS9EoOZcPz3iYFsAlP
-   VE+n0LgN0uOr1pjTi9noODT3epuzI3B6TCsI8TpJ9ZNVSIckmRlylnjqt
-   EHaR98ctJuvBaDtnhA80viMMmFvU8kgXFUWphRi6Aq7cWQoMfjemfu3A6
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="4838620"
+  bh=kWf97kMoKdrkVJpwjQMu+QVoyLKkxZoWflLolvd5MLk=;
+  b=dYCw69ZJdA35dJUmshcyiaHzvWcdNzImHtjn1mUs3x4+GM3Zena2T41A
+   Sc+Mh1dKefY5qXdbELx0cKd0FfMYwr7GUQgv15Mj2c8CA19D3J+aT0kd5
+   usgJ5UVr0hlYKl1r7zVa5cIlUG/aZJdDthLT9AzFZXW37Wn/KmhzqpMwk
+   37vETq3oR3puTAd/y3+UtrxgtIFmXJwIyHT8e2tjWbB2I8HmHXft8jzun
+   JYzjgbsrqmKCjfjTLHMRGRmkpYpO8OfkmW2YRM5U+AnZl8nBDqV5WRYB/
+   gMWB9daSARn8eCkExJWUnhJVlBTnax7RuCv1nXfW4hq6pEDJOFvA4Ha21
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="362630001"
 X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="4838620"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:04:13 -0700
+   d="scan'208";a="362630001"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:08:35 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="745098524"
+X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="867528566"
 X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
-   d="scan'208";a="745098524"
+   d="scan'208";a="867528566"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:04:12 -0700
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 12:08:35 -0700
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -50,12 +50,12 @@ Cc: tglx@linutronix.de,
 	ravi.v.shankar@intel.com,
 	pengfei.xu@intel.com,
 	ilpo.jarvinen@linux.intel.com
-Subject: [PATCH v3 6/9] platform/x86/intel/ifs: Metadata validation for start_chunk
-Date: Wed,  4 Oct 2023 12:00:09 -0700
-Message-Id: <20231004190009.3028495-1-jithu.joseph@intel.com>
+Subject: [PATCH v3 9/9] platform/x86/intel/ifs: ARRAY BIST for Sierra Forest
+Date: Wed,  4 Oct 2023 12:04:32 -0700
+Message-Id: <20231004190432.3028599-1-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <e8bcbdcc-8cba-57ec-b0fc-4d66305d5aed@linux.intel.com>
-References: <e8bcbdcc-8cba-57ec-b0fc-4d66305d5aed@linux.intel.com>
+In-Reply-To: <b92b44ed-19a7-aec2-615b-1b1755dafdac@linux.intel.com>
+References: <b92b44ed-19a7-aec2-615b-1b1755dafdac@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -65,38 +65,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add an additional check to validate IFS image metadata field prior to
-loading the test image.
-
-If start_chunk is not a multiple of chunks_per_stride error out.
+Array BIST MSR addresses, bit definition and semantics are different for
+Sierra Forest. Branch into a separate Array BIST flow on Sierra Forest
+when user invokes Array Test.
 
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Tested-by: Pengfei Xu <pengfei.xu@intel.com>
 ---
- - changed the dev_warn printk format specifiers (Ilpo Järvinen)
+ - Add #define for Array generation (Ilpo Järvinen)
 
- drivers/platform/x86/intel/ifs/load.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/intel/ifs/ifs.h     |  7 +++++
+ drivers/platform/x86/intel/ifs/core.c    | 15 +++++-----
+ drivers/platform/x86/intel/ifs/runtest.c | 37 +++++++++++++++++++++++-
+ 3 files changed, 51 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 582f1801aaaa..959b1878cae6 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -291,6 +291,13 @@ static int validate_ifs_metadata(struct device *dev)
- 		return ret;
- 	}
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index f0dd849b3400..2dd5e3406dac 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -137,6 +137,8 @@
+ #define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
+ #define MSR_ACTIVATE_SCAN			0x000002c6
+ #define MSR_SCAN_STATUS				0x000002c7
++#define MSR_ARRAY_TRIGGER			0x000002d6
++#define MSR_ARRAY_STATUS			0x000002d7
+ #define MSR_SAF_CTRL				0x000004f0
  
-+	if (ifs_meta->chunks_per_stride &&
-+	    (ifs_meta->starting_chunk % ifs_meta->chunks_per_stride != 0)) {
-+		dev_warn(dev, "Starting chunk num %u not a multiple of chunks_per_stride %u\n",
-+			 ifs_meta->starting_chunk, ifs_meta->chunks_per_stride);
-+		return ret;
-+	}
+ #define SCAN_NOT_TESTED				0
+@@ -146,6 +148,9 @@
+ #define IFS_TYPE_SAF			0
+ #define IFS_TYPE_ARRAY_BIST		1
+ 
++#define ARRAY_GEN_0			0
++#define ARRAY_GEN_1			1
 +
- 	return 0;
+ /* MSR_SCAN_HASHES_STATUS bit fields */
+ union ifs_scan_hashes_status {
+ 	u64	data;
+@@ -272,6 +277,7 @@ struct ifs_test_caps {
+  * @cur_batch: number indicating the currently loaded test file
+  * @generation: IFS test generation enumerated by hardware
+  * @chunk_size: size of a test chunk
++ * @array_gen: test generation of array test
+  */
+ struct ifs_data {
+ 	int	loaded_version;
+@@ -283,6 +289,7 @@ struct ifs_data {
+ 	u32	cur_batch;
+ 	u32	generation;
+ 	u32	chunk_size;
++	u32	array_gen;
+ };
+ 
+ struct ifs_work {
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 0c8927916373..0a872b874af8 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -11,16 +11,16 @@
+ 
+ #include "ifs.h"
+ 
+-#define X86_MATCH(model)				\
++#define X86_MATCH(model, array_gen)				\
+ 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
+-		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
++		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, array_gen)
+ 
+ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+-	X86_MATCH(SAPPHIRERAPIDS_X),
+-	X86_MATCH(EMERALDRAPIDS_X),
+-	X86_MATCH(GRANITERAPIDS_X),
+-	X86_MATCH(GRANITERAPIDS_D),
+-	X86_MATCH(ATOM_CRESTMONT_X),
++	X86_MATCH(SAPPHIRERAPIDS_X, ARRAY_GEN_0),
++	X86_MATCH(EMERALDRAPIDS_X, ARRAY_GEN_0),
++	X86_MATCH(GRANITERAPIDS_X, ARRAY_GEN_0),
++	X86_MATCH(GRANITERAPIDS_D, ARRAY_GEN_0),
++	X86_MATCH(ATOM_CRESTMONT_X, ARRAY_GEN_1),
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+@@ -100,6 +100,7 @@ static int __init ifs_init(void)
+ 			continue;
+ 		ifs_devices[i].rw_data.generation = FIELD_GET(MSR_INTEGRITY_CAPS_SAF_GEN_MASK,
+ 							      msrval);
++		ifs_devices[i].rw_data.array_gen = (u32)m->driver_data;
+ 		ret = misc_register(&ifs_devices[i].misc);
+ 		if (ret)
+ 			goto err_exit;
+diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
+index 4fe544d79946..9ac75420c15e 100644
+--- a/drivers/platform/x86/intel/ifs/runtest.c
++++ b/drivers/platform/x86/intel/ifs/runtest.c
+@@ -329,6 +329,38 @@ static void ifs_array_test_core(int cpu, struct device *dev)
+ 		ifsd->status = SCAN_TEST_PASS;
  }
  
++#define ARRAY_GEN1_TEST_ALL_ARRAYS	0x0ULL
++#define ARRAY_GEN1_STATUS_FAIL		0x1ULL
++
++static int do_array_test_gen1(void *status)
++{
++	int cpu = smp_processor_id();
++	int first;
++
++	first = cpumask_first(cpu_smt_mask(cpu));
++
++	if (cpu == first) {
++		wrmsrl(MSR_ARRAY_TRIGGER, ARRAY_GEN1_TEST_ALL_ARRAYS);
++		rdmsrl(MSR_ARRAY_STATUS, *((u64 *)status));
++	}
++
++	return 0;
++}
++
++static void ifs_array_test_gen1(int cpu, struct device *dev)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++	u64 status = 0;
++
++	stop_core_cpuslocked(cpu, do_array_test_gen1, &status);
++	ifsd->scan_details = status;
++
++	if (status & ARRAY_GEN1_STATUS_FAIL)
++		ifsd->status = SCAN_TEST_FAIL;
++	else
++		ifsd->status = SCAN_TEST_PASS;
++}
++
+ /*
+  * Initiate per core test. It wakes up work queue threads on the target cpu and
+  * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
+@@ -356,7 +388,10 @@ int do_core_test(int cpu, struct device *dev)
+ 		ifs_test_core(cpu, dev);
+ 		break;
+ 	case IFS_TYPE_ARRAY_BIST:
+-		ifs_array_test_core(cpu, dev);
++		if (ifsd->array_gen == ARRAY_GEN_0)
++			ifs_array_test_core(cpu, dev);
++		else
++			ifs_array_test_gen1(cpu, dev);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.25.1
 
