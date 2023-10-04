@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076DA1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC601D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmF79D4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA86C433C8;
-	Wed,  4 Oct 2023 18:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDrq7AK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF4FC433C7;
+	Wed,  4 Oct 2023 18:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443514;
-	bh=haZobhCMmNPNuvABAblaq3zKyMuvCOyi8YyCbjuP1r4=;
+	s=korg; t=1696443517;
+	bh=0c8UtNBP5Pw0khjtvPFODBUTIaVprmyjVjV1rLGVmho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmF79D4VPznNh2bzp3Q3uRL6UrPSzqg1mfZVaFELGV7Ic3jjKP2EqEiUxOlOSBqo2
-	 8gA1pZFrcC5n14ZW95bMDKwYjoW3ITjZQ5axNVjByXBQoD2QiKax9PGz4rPJm/JMaW
-	 8DqO40MnwfctqIwpHn5S/xv7N2v9lMNDaq0JDS40=
+	b=uDrq7AK/sMVXryg/oFCQ3MhNqkeazUg2ZrA9guTqyWxEU6ztdH9nPqVhfIqfmaHY2
+	 QgflrPxtTQr//TnUCQ1YpWNqn7racaRWWwgzbPb3Hhlb4SAsAZPkJzI6+n/gaUzzlm
+	 7GSUYs5J/OPU6I/kyNRdGU7L5R70hWiJ9034b8lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/259] firmware: cirrus: cs_dsp: Only log list of algorithms in debug build
-Date: Wed,  4 Oct 2023 19:55:56 +0200
-Message-ID: <20231004175225.699381574@linuxfoundation.org>
+Subject: [PATCH 6.1 157/259] btrfs: assert delayed node locked when removing delayed item
+Date: Wed,  4 Oct 2023 19:55:30 +0200
+Message-ID: <20231004175224.501970475@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,80 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 69343ce91435f222052015c5af86b550391bac85 ]
+[ Upstream commit a57c2d4e46f519b24558ae0752c17eec416ac72a ]
 
-Change the logging of each algorithm from info level to debug level.
+When removing a delayed item, or releasing which will remove it as well,
+we will modify one of the delayed node's rbtrees and item counter if the
+delayed item is in one of the rbtrees. This require having the delayed
+node's mutex locked, otherwise we will race with other tasks modifying
+the rbtrees and the counter.
 
-On the original devices supported by this code there were typically only
-one or two algorithms in a firmware and one or two DSPs so this logging
-only used a small number of log lines.
+This is motivated by a previous version of another patch actually calling
+btrfs_release_delayed_item() after unlocking the delayed node's mutex and
+against a delayed item that is in a rbtree.
 
-However, for the latest devices there could be 30-40 algorithms in a
-firmware and 8 DSPs being loaded in parallel, so using 300+ lines of log
-for information that isn't particularly important to have logged.
+So assert at __btrfs_remove_delayed_item() that the delayed node's mutex
+is locked.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230913160523.3701189-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 34 ++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ fs/btrfs/delayed-inode.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index 81c5f94b1be11..64ed9d3f5d5d8 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -1821,15 +1821,15 @@ static int cs_dsp_adsp2_setup_algs(struct cs_dsp *dsp)
- 		return PTR_ERR(adsp2_alg);
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index 9dacf72a75d0e..1331e56e8e84f 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -407,6 +407,7 @@ static void finish_one_item(struct btrfs_delayed_root *delayed_root)
  
- 	for (i = 0; i < n_algs; i++) {
--		cs_dsp_info(dsp,
--			    "%d: ID %x v%d.%d.%d XM@%x YM@%x ZM@%x\n",
--			    i, be32_to_cpu(adsp2_alg[i].alg.id),
--			    (be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff0000) >> 16,
--			    (be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff00) >> 8,
--			    be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff,
--			    be32_to_cpu(adsp2_alg[i].xm),
--			    be32_to_cpu(adsp2_alg[i].ym),
--			    be32_to_cpu(adsp2_alg[i].zm));
-+		cs_dsp_dbg(dsp,
-+			   "%d: ID %x v%d.%d.%d XM@%x YM@%x ZM@%x\n",
-+			   i, be32_to_cpu(adsp2_alg[i].alg.id),
-+			   (be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff0000) >> 16,
-+			   (be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff00) >> 8,
-+			   be32_to_cpu(adsp2_alg[i].alg.ver) & 0xff,
-+			   be32_to_cpu(adsp2_alg[i].xm),
-+			   be32_to_cpu(adsp2_alg[i].ym),
-+			   be32_to_cpu(adsp2_alg[i].zm));
+ static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
+ {
++	struct btrfs_delayed_node *delayed_node = delayed_item->delayed_node;
+ 	struct rb_root_cached *root;
+ 	struct btrfs_delayed_root *delayed_root;
  
- 		alg_region = cs_dsp_create_region(dsp, WMFW_ADSP2_XM,
- 						  adsp2_alg[i].alg.id,
-@@ -1954,14 +1954,14 @@ static int cs_dsp_halo_setup_algs(struct cs_dsp *dsp)
- 		return PTR_ERR(halo_alg);
+@@ -414,18 +415,21 @@ static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
+ 	if (RB_EMPTY_NODE(&delayed_item->rb_node))
+ 		return;
  
- 	for (i = 0; i < n_algs; i++) {
--		cs_dsp_info(dsp,
--			    "%d: ID %x v%d.%d.%d XM@%x YM@%x\n",
--			    i, be32_to_cpu(halo_alg[i].alg.id),
--			    (be32_to_cpu(halo_alg[i].alg.ver) & 0xff0000) >> 16,
--			    (be32_to_cpu(halo_alg[i].alg.ver) & 0xff00) >> 8,
--			    be32_to_cpu(halo_alg[i].alg.ver) & 0xff,
--			    be32_to_cpu(halo_alg[i].xm_base),
--			    be32_to_cpu(halo_alg[i].ym_base));
-+		cs_dsp_dbg(dsp,
-+			   "%d: ID %x v%d.%d.%d XM@%x YM@%x\n",
-+			   i, be32_to_cpu(halo_alg[i].alg.id),
-+			   (be32_to_cpu(halo_alg[i].alg.ver) & 0xff0000) >> 16,
-+			   (be32_to_cpu(halo_alg[i].alg.ver) & 0xff00) >> 8,
-+			   be32_to_cpu(halo_alg[i].alg.ver) & 0xff,
-+			   be32_to_cpu(halo_alg[i].xm_base),
-+			   be32_to_cpu(halo_alg[i].ym_base));
+-	delayed_root = delayed_item->delayed_node->root->fs_info->delayed_root;
++	/* If it's in a rbtree, then we need to have delayed node locked. */
++	lockdep_assert_held(&delayed_node->mutex);
++
++	delayed_root = delayed_node->root->fs_info->delayed_root;
  
- 		ret = cs_dsp_halo_create_regions(dsp, halo_alg[i].alg.id,
- 						 halo_alg[i].alg.ver,
+ 	BUG_ON(!delayed_root);
+ 
+ 	if (delayed_item->type == BTRFS_DELAYED_INSERTION_ITEM)
+-		root = &delayed_item->delayed_node->ins_root;
++		root = &delayed_node->ins_root;
+ 	else
+-		root = &delayed_item->delayed_node->del_root;
++		root = &delayed_node->del_root;
+ 
+ 	rb_erase_cached(&delayed_item->rb_node, root);
+ 	RB_CLEAR_NODE(&delayed_item->rb_node);
+-	delayed_item->delayed_node->count--;
++	delayed_node->count--;
+ 
+ 	finish_one_item(delayed_root);
+ }
 -- 
 2.40.1
 
