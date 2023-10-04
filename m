@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B06C21343
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D25221356
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHilURku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D817C433C8;
-	Wed,  4 Oct 2023 18:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq9PDavU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0051C433C7;
+	Wed,  4 Oct 2023 18:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444405;
-	bh=RybLq0S8P7lb2v40qz3UQBS0g52zCFnSvRdMo8ThFvA=;
+	s=korg; t=1696444408;
+	bh=GlOyA4DV6DaLZgzsGgfkotpTtO+FE/MsIqty39FtQNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHilURku1wMBBz2uAGZfScImM+WMcWItYc5POtOBg3oAm9bV9Ldjm0Y8/YfvtN3Ja
-	 kzcgdOfUqPO1b0e/cSA/w/gIayM4oWHoxYtRqDeST3Q9I8j3X0aiGPFirZO5fJdaYj
-	 8iKc9r4lqNTz+UMT7f4JMK5ywERDauhclZb0AY7I=
+	b=Bq9PDavUyu1H4KNjW9XlIMMfRV7y9cGasIS00+uqkVvPmeNy9yWz2z9nd6v9coLtZ
+	 jS+f25oIuRTxQqyISBdpAZ8woYunpJlsX6ArNSju2gdUoibw1VzqhvUXBL0I9GI9uo
+	 GxphIzATMrOYKWXXLTuoiBV7DbA/XrjE4KA+Vyiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 238/321] ASoC: cs35l56: Call pm_runtime_dont_use_autosuspend()
-Date: Wed,  4 Oct 2023 19:56:23 +0200
-Message-ID: <20231004175240.267986268@linuxfoundation.org>
+Subject: [PATCH 6.5 212/321] ASoC: cs42l42: Ensure a reset pulse meets minimum pulse width.
+Date: Wed,  4 Oct 2023 19:55:57 +0200
+Message-ID: <20231004175239.075709613@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -44,40 +45,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit ec03804552e9a723569e14d2512f36a8e70dc640 upstream
+[ Upstream commit 41dac81b56c82c51a6d00fda5f3af7691ffee2d7 ]
 
-Driver remove() must call pm_runtime_dont_use_autosuspend().
-
-Drivers that call pm_runtime_use_autosuspend() must disable
-it in driver remove(). Unfortunately until recently this was
-only mentioned in 1 line in a 900+ line document so most
-people hadn't noticed this. It has only recently been added
-to the kerneldoc of pm_runtime_use_autosuspend().
-
-Backport note: This is the same change as the upstream
-commit but the cs35l56->base.dev argument in the upstream
-code is cs35l56->dev in older releases.
+The CS42L42 can accept very short reset pulses of a few microseconds
+but there's no reason to force a very short pulse.
+Allow a wide range for the usleep_range() so it can be relaxed about
+the choice of timing source.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230908101716.2658582-1-rf@opensource.cirrus.com
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230913150012.604775-2-sbinding@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/cs42l42.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index fd06b9f9d496d..7e241908b5f16 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -1594,6 +1594,7 @@ void cs35l56_remove(struct cs35l56_private *cs35l56)
- 	flush_workqueue(cs35l56->dsp_wq);
- 	destroy_workqueue(cs35l56->dsp_wq);
+diff --git a/sound/soc/codecs/cs42l42.c b/sound/soc/codecs/cs42l42.c
+index a0de0329406a1..56d2857a4f01c 100644
+--- a/sound/soc/codecs/cs42l42.c
++++ b/sound/soc/codecs/cs42l42.c
+@@ -2320,6 +2320,10 @@ int cs42l42_common_probe(struct cs42l42_private *cs42l42,
  
-+	pm_runtime_dont_use_autosuspend(cs35l56->dev);
- 	pm_runtime_suspend(cs35l56->dev);
- 	pm_runtime_disable(cs35l56->dev);
- 
+ 	if (cs42l42->reset_gpio) {
+ 		dev_dbg(cs42l42->dev, "Found reset GPIO\n");
++
++		/* Ensure minimum reset pulse width */
++		usleep_range(10, 500);
++
+ 		gpiod_set_value_cansleep(cs42l42->reset_gpio, 1);
+ 	}
+ 	usleep_range(CS42L42_BOOT_TIME_US, CS42L42_BOOT_TIME_US * 2);
 -- 
 2.40.1
 
