@@ -1,223 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E91D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2EA1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3sMhW/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11354C433C7;
-	Wed,  4 Oct 2023 18:37:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444661;
-	bh=lWwWEAilsB78iis0cKeanWgnwg7kLnd9V1E7t53EZX4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3sMhW/2MgHD0NegJDnszuxIN4KymdF941lPbArWz7W/Js55S77+HB3YGFsbaaIUn
-	 5JjdBKz5kA3bN8IhBjfqUjbZ+kztaQxJISXczwg8ZykqI1AX1Sb7Q9qVUX4acHuAhK
-	 QbRSARAzvszYfpNRA8xdcb6fzMNZ2+m5nrWad+xs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="junTONro"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696444676; x=1727980676;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=TTblblbDN1W4j6G8QhSl9EaeyJL5JAlnQkhiVd7lKhg=;
+  b=junTONrorGgzqR5fK9w1JtZaX8G08Oc7AbXM2notOzHJFjzg1Lsl9Koq
+   /RK8RuOdwKLaKEv8tzYWiZEzlcTmHMBIyabFya1vJT6+XpmEbuuwmu0X9
+   FAnX9bmZPdKTsEdHVpSUMQDBXUyyi0n8/PWduwssGYXLUPphhMgIzg/A+
+   YBcLAza5F4fLnvqU6JlQq7pFmB56D7996n1awGEvSrtE65pKPYYHWOIq1
+   HIv0nsmMK5+evA577GHX6DIlfX9uiBJ4nDPvYfpDC7KWtBx3OEHubFSeb
+   S13uRmeeqgV0lK9D635k5KVsBGwjG9c7j2EEfqYmZAokfJEz1e2RHgIfh
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="387133506"
+X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
+   d="scan'208";a="387133506"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 11:36:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="701236050"
+X-IronPort-AV: E=Sophos;i="6.03,201,1694761200"; 
+   d="scan'208";a="701236050"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2023 11:36:32 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 302/321] tracing/user_events: Align set_bit() address for all archs
-Date: Wed,  4 Oct 2023 19:57:27 +0200
-Message-ID: <20231004175243.279188840@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
-References: <20231004175229.211487444@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v9 0/3] Handle corrected machine check interrupt storms
+Date: Wed,  4 Oct 2023 11:36:20 -0700
+Message-ID: <20231004183623.17067-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230929181626.210782-1-tony.luck@intel.com>
+References: <20230929181626.210782-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+Linux CMCI storm mitigation is a big hammer that just disables the CMCI
+interrupt globally and switches to polling all banks.
 
-------------------
+There are two problems with this:
+1) It really is a big hammer. It means that errors reported in other
+banks from different functional units are all subject to the same
+polling delay before being processed.
+2) Intel systems signal some uncorrected errors using CMCI (e.g.
+memory controller patrol scrub on Icelake Xeon and newer). Delaying
+processing these error reports negates some of the benefit of the patrol
+scrubber providing early notice of errors before they are consumed and
+cause a machine check.
 
-From: Beau Belgrave <beaub@linux.microsoft.com>
+This series throws away the old storm implementation and replaces it
+with one that keeps track of the weather on each separate machine check
+bank. When a storm is detected from a bank. On Intel the storm is
+mitigated by setting a very high threshold for corrected errors to
+signal CMCI. This threshold does not affect signaling CMCI for
+uncorrected errors.
 
-commit 2de9ee94054263940122aee8720e902b30c27930 upstream.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-All architectures should use a long aligned address passed to set_bit().
-User processes can pass either a 32-bit or 64-bit sized value to be
-updated when tracing is enabled when on a 64-bit kernel. Both cases are
-ensured to be naturally aligned, however, that is not enough. The
-address must be long aligned without affecting checks on the value
-within the user process which require different adjustments for the bit
-for little and big endian CPUs.
-
-Add a compat flag to user_event_enabler that indicates when a 32-bit
-value is being used on a 64-bit kernel. Long align addresses and correct
-the bit to be used by set_bit() to account for this alignment. Ensure
-compat flags are copied during forks and used during deletion clears.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230925230829.341-2-beaub@linux.microsoft.com
-Link: https://lore.kernel.org/linux-trace-kernel/20230914131102.179100-1-cleger@rivosinc.com/
-
-Cc: stable@vger.kernel.org
-Fixes: 7235759084a4 ("tracing/user_events: Use remote writes for event enablement")
-Reported-by: Clément Léger <cleger@rivosinc.com>
-Suggested-by: Clément Léger <cleger@rivosinc.com>
-Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_user.c |   58 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 51 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace_events_user.c
-+++ b/kernel/trace/trace_events_user.c
-@@ -127,8 +127,13 @@ struct user_event_enabler {
- /* Bit 7 is for freeing status of enablement */
- #define ENABLE_VAL_FREEING_BIT 7
- 
--/* Only duplicate the bit value */
--#define ENABLE_VAL_DUP_MASK ENABLE_VAL_BIT_MASK
-+/* Bit 8 is for marking 32-bit on 64-bit */
-+#define ENABLE_VAL_32_ON_64_BIT 8
-+
-+#define ENABLE_VAL_COMPAT_MASK (1 << ENABLE_VAL_32_ON_64_BIT)
-+
-+/* Only duplicate the bit and compat values */
-+#define ENABLE_VAL_DUP_MASK (ENABLE_VAL_BIT_MASK | ENABLE_VAL_COMPAT_MASK)
- 
- #define ENABLE_BITOPS(e) (&(e)->values)
- 
-@@ -174,6 +179,30 @@ struct user_event_validator {
- 	int			flags;
- };
- 
-+static inline void align_addr_bit(unsigned long *addr, int *bit,
-+				  unsigned long *flags)
-+{
-+	if (IS_ALIGNED(*addr, sizeof(long))) {
-+#ifdef __BIG_ENDIAN
-+		/* 32 bit on BE 64 bit requires a 32 bit offset when aligned. */
-+		if (test_bit(ENABLE_VAL_32_ON_64_BIT, flags))
-+			*bit += 32;
-+#endif
-+		return;
-+	}
-+
-+	*addr = ALIGN_DOWN(*addr, sizeof(long));
-+
-+	/*
-+	 * We only support 32 and 64 bit values. The only time we need
-+	 * to align is a 32 bit value on a 64 bit kernel, which on LE
-+	 * is always 32 bits, and on BE requires no change when unaligned.
-+	 */
-+#ifdef __LITTLE_ENDIAN
-+	*bit += 32;
-+#endif
-+}
-+
- typedef void (*user_event_func_t) (struct user_event *user, struct iov_iter *i,
- 				   void *tpdata, bool *faulted);
- 
-@@ -482,6 +511,7 @@ static int user_event_enabler_write(stru
- 	unsigned long *ptr;
- 	struct page *page;
- 	void *kaddr;
-+	int bit = ENABLE_BIT(enabler);
- 	int ret;
- 
- 	lockdep_assert_held(&event_mutex);
-@@ -497,6 +527,8 @@ static int user_event_enabler_write(stru
- 		     test_bit(ENABLE_VAL_FREEING_BIT, ENABLE_BITOPS(enabler))))
- 		return -EBUSY;
- 
-+	align_addr_bit(&uaddr, &bit, ENABLE_BITOPS(enabler));
-+
- 	ret = pin_user_pages_remote(mm->mm, uaddr, 1, FOLL_WRITE | FOLL_NOFAULT,
- 				    &page, NULL);
- 
-@@ -515,9 +547,9 @@ static int user_event_enabler_write(stru
- 
- 	/* Update bit atomically, user tracers must be atomic as well */
- 	if (enabler->event && enabler->event->status)
--		set_bit(ENABLE_BIT(enabler), ptr);
-+		set_bit(bit, ptr);
- 	else
--		clear_bit(ENABLE_BIT(enabler), ptr);
-+		clear_bit(bit, ptr);
- 
- 	kunmap_local(kaddr);
- 	unpin_user_pages_dirty_lock(&page, 1, true);
-@@ -849,6 +881,12 @@ static struct user_event_enabler
- 	enabler->event = user;
- 	enabler->addr = uaddr;
- 	enabler->values = reg->enable_bit;
-+
-+#if BITS_PER_LONG >= 64
-+	if (reg->enable_size == 4)
-+		set_bit(ENABLE_VAL_32_ON_64_BIT, ENABLE_BITOPS(enabler));
-+#endif
-+
- retry:
- 	/* Prevents state changes from racing with new enablers */
- 	mutex_lock(&event_mutex);
-@@ -2376,7 +2414,8 @@ static long user_unreg_get(struct user_u
- }
- 
- static int user_event_mm_clear_bit(struct user_event_mm *user_mm,
--				   unsigned long uaddr, unsigned char bit)
-+				   unsigned long uaddr, unsigned char bit,
-+				   unsigned long flags)
- {
- 	struct user_event_enabler enabler;
- 	int result;
-@@ -2384,7 +2423,7 @@ static int user_event_mm_clear_bit(struc
- 
- 	memset(&enabler, 0, sizeof(enabler));
- 	enabler.addr = uaddr;
--	enabler.values = bit;
-+	enabler.values = bit | flags;
- retry:
- 	/* Prevents state changes from racing with new enablers */
- 	mutex_lock(&event_mutex);
-@@ -2414,6 +2453,7 @@ static long user_events_ioctl_unreg(unsi
- 	struct user_event_mm *mm = current->user_event_mm;
- 	struct user_event_enabler *enabler, *next;
- 	struct user_unreg reg;
-+	unsigned long flags;
- 	long ret;
- 
- 	ret = user_unreg_get(ureg, &reg);
-@@ -2424,6 +2464,7 @@ static long user_events_ioctl_unreg(unsi
- 	if (!mm)
- 		return -ENOENT;
- 
-+	flags = 0;
- 	ret = -ENOENT;
- 
- 	/*
-@@ -2440,6 +2481,9 @@ static long user_events_ioctl_unreg(unsi
- 		    ENABLE_BIT(enabler) == reg.disable_bit) {
- 			set_bit(ENABLE_VAL_FREEING_BIT, ENABLE_BITOPS(enabler));
- 
-+			/* We must keep compat flags for the clear */
-+			flags |= enabler->values & ENABLE_VAL_COMPAT_MASK;
-+
- 			if (!test_bit(ENABLE_VAL_FAULTING_BIT, ENABLE_BITOPS(enabler)))
- 				user_event_enabler_destroy(enabler, true);
- 
-@@ -2453,7 +2497,7 @@ static long user_events_ioctl_unreg(unsi
- 	/* Ensure bit is now cleared for user, regardless of event status */
- 	if (!ret)
- 		ret = user_event_mm_clear_bit(mm, reg.disable_addr,
--					      reg.disable_bit);
-+					      reg.disable_bit, flags);
- 
- 	return ret;
- }
+Changes since v8:
 
+Fixed issue reported by lkp with randconfig build with neither
+CONFIG_X86_MCE_INTEL not CONFIG_X86_MCE_AMD set by making a
+cleaner division between the storm tracking code in threshold.c
+with the restof the code using more function accessors that can
+be stubbed out.
+
+Tony Luck (3):
+  x86/mce: Remove old CMCI storm mitigation code
+  x86/mce: Add per-bank CMCI storm mitigation
+  x86/mce: Handle Intel threshold interrupt storms
+
+ arch/x86/kernel/cpu/mce/internal.h  |  48 ++++-
+ arch/x86/kernel/cpu/mce/core.c      |  45 ++---
+ arch/x86/kernel/cpu/mce/intel.c     | 303 ++++++++++++----------------
+ arch/x86/kernel/cpu/mce/threshold.c | 115 +++++++++++
+ 4 files changed, 304 insertions(+), 207 deletions(-)
+
+
+base-commit: 6465e260f48790807eef06b583b38ca9789b6072
+-- 
+2.41.0
 
