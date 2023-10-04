@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCAB1D523
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE61FC433C9;
-	Wed,  4 Oct 2023 18:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DE21D523
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:05:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39BCC433C8;
+	Wed,  4 Oct 2023 18:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442733;
-	bh=N361/G+EMtOvXDGykvx2+2hxgOVOqJ45gFh2wIVnoC4=;
+	s=korg; t=1696442736;
+	bh=skqfc3VETUbPS8f8EGvZRFuEDpouwRimtcyOX+dBsRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2P3QAKSAmZVS+PLswUuJ7UxjtEK6rhPN1xx/0SLnY2RmKH8Hxx2OqqV8Sl08cNF2K
-	 27QoaMFotcHv26hX6UrmVcodn+9sH9F4sLoWlhILF2+g78gTqcrZQy50Wf43gh1cVB
-	 Z8D+U0p3DEYQlHPktarkytVgACMINA+p+fosAhAw=
+	b=XbsdzuzR6Y1I+HsjAO8y9gR17nJgi1vnx+4qS8NXZTnOlCTCPVGwGRz80lyipTn6a
+	 7zweiflW9YsNxZHfuCUoI1dv/O0vJU2T3dKcnGzfMxKCf4pu40gYMSg9bB6N1Z0zy7
+	 jD0jAoBXVdFN83UYAIbacauBBEkp1hixePRqDIEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/183] netfilter: ipset: Fix race between IPSET_CMD_CREATE and IPSET_CMD_SWAP
-Date: Wed,  4 Oct 2023 19:54:53 +0200
-Message-ID: <20231004175206.481062025@linuxfoundation.org>
+Subject: [PATCH 5.15 063/183] locking/seqlock: Do the lockdep annotation before locking in do_write_seqcount_begin_nested()
+Date: Wed,  4 Oct 2023 19:54:54 +0200
+Message-ID: <20231004175206.520620226@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -41,61 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 7433b6d2afd512d04398c73aa984d1e285be125b ]
+[ Upstream commit 41b43b6c6e30a832c790b010a06772e793bca193 ]
 
-Kyle Zeng reported that there is a race between IPSET_CMD_ADD and IPSET_CMD_SWAP
-in netfilter/ip_set, which can lead to the invocation of `__ip_set_put` on a
-wrong `set`, triggering the `BUG_ON(set->ref == 0);` check in it.
+It was brought up by Tetsuo that the following sequence:
 
-The race is caused by using the wrong reference counter, i.e. the ref counter instead
-of ref_netlink.
+   write_seqlock_irqsave()
+   printk_deferred_enter()
 
-Fixes: 24e227896bbf ("netfilter: ipset: Add schedule point in call_ad().")
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/ZPZqetxOmH+w%2Fmyc@westworld/#r
-Tested-by: Kyle Zeng <zengyhkyle@gmail.com>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+could lead to a deadlock if the lockdep annotation within
+write_seqlock_irqsave() triggers.
+
+The problem is that the sequence counter is incremented before the lockdep
+annotation is performed. The lockdep splat would then attempt to invoke
+printk() but the reader side, of the same seqcount, could have a
+tty_port::lock acquired waiting for the sequence number to become even again.
+
+The other lockdep annotations come before the actual locking because "we
+want to see the locking error before it happens". There is no reason why
+seqcount should be different here.
+
+Do the lockdep annotation first then perform the locking operation (the
+sequence increment).
+
+Fixes: 1ca7d67cf5d5a ("seqcount: Add lockdep functionality to seqcount/seqlock structures")
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230920104627._DTHgPyA@linutronix.de
+
+Closes: https://lore.kernel.org/20230621130641.-5iueY1I@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ include/linux/seqlock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index c911fc09f363c..33869db42bb6b 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -682,6 +682,14 @@ __ip_set_put(struct ip_set *set)
- /* set->ref can be swapped out by ip_set_swap, netlink events (like dump) need
-  * a separate reference counter
-  */
-+static void
-+__ip_set_get_netlink(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	set->ref_netlink++;
-+	write_unlock_bh(&ip_set_ref_lock);
-+}
-+
- static void
- __ip_set_put_netlink(struct ip_set *set)
+diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
+index 37ded6b8fee61..2c5d0102315d2 100644
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -516,8 +516,8 @@ do {									\
+ 
+ static inline void do_write_seqcount_begin_nested(seqcount_t *s, int subclass)
  {
-@@ -1695,11 +1703,11 @@ call_ad(struct net *net, struct sock *ctnl, struct sk_buff *skb,
+-	do_raw_write_seqcount_begin(s);
+ 	seqcount_acquire(&s->dep_map, subclass, 0, _RET_IP_);
++	do_raw_write_seqcount_begin(s);
+ }
  
- 	do {
- 		if (retried) {
--			__ip_set_get(set);
-+			__ip_set_get_netlink(set);
- 			nfnl_unlock(NFNL_SUBSYS_IPSET);
- 			cond_resched();
- 			nfnl_lock(NFNL_SUBSYS_IPSET);
--			__ip_set_put(set);
-+			__ip_set_put_netlink(set);
- 		}
- 
- 		ip_set_lock(set);
+ /**
 -- 
 2.40.1
 
