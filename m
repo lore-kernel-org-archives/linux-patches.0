@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B441D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82E2C433C7;
-	Wed,  4 Oct 2023 18:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296DC1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0186C433C7;
+	Wed,  4 Oct 2023 18:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443253;
-	bh=JQN0ZMM7fJEBDs8zFvKhxOogVV9OW9IxjgV75q4nQNk=;
+	s=korg; t=1696443256;
+	bh=lqfWaamjUndh33XC+OoWmnXRXdkKYv5for4imysOJIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENACl3opfnxo2L2ggT/AGXa3qFNLPedQ0Pjw4f1vaGnG3vA3G76Ge/tB3pTaAZo/H
-	 qpJpL7Kejl0QYM6uyO5zrmmgWZBVMGbdrOjq57K6MYVGWHhYHr79tt/JNHsT5HXIId
-	 h7H1ws2fxz4kHFdl4cE0lYRQZhzOgnioZBYvk17o=
+	b=m12JZ79LC5p7FxcczUTSs3PZtiww70Yi1TkuCJparJ10CPLcTXyBatQDWjBZUpJqk
+	 M5Vxvu/0T3LDC2zMXJFEE+n1AiDT5QglnWeDwDB+k+fHHmnR9gSvFP4nMcUyLFibn0
+	 Qb4G+imR6KduRKGT53wA47QnURyNs2gbSLQpUNTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/259] i2c: mux: gpio: Add missing fwnode_handle_put()
-Date: Wed,  4 Oct 2023 19:54:23 +0200
-Message-ID: <20231004175221.488627758@linuxfoundation.org>
+Subject: [PATCH 6.1 064/259] platform/x86: intel_scu_ipc: Check status upon timeout in ipc_wait_for_interrupt()
+Date: Wed,  4 Oct 2023 19:53:57 +0200
+Message-ID: <20231004175220.354143787@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -40,38 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang He <windhl@126.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit db6aee6083a56ac4a6cd1b08fff7938072bcd0a3 ]
+[ Upstream commit 427fada620733e6474d783ae6037a66eae42bf8c ]
 
-In i2c_mux_gpio_probe_fw(), we should add fwnode_handle_put()
-when break out of the iteration device_for_each_child_node()
-as it will automatically increase and decrease the refcounter.
+It's possible for the completion in ipc_wait_for_interrupt() to timeout,
+simply because the interrupt was delayed in being processed. A timeout
+in itself is not an error. This driver should check the status register
+upon a timeout to ensure that scheduling or interrupt processing delays
+don't affect the outcome of the IPC return value.
 
-Fixes: 98b2b712bc85 ("i2c: i2c-mux-gpio: Enable this driver in ACPI land")
-Signed-off-by: Liang He <windhl@126.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+ CPU0                                                   SCU
+ ----                                                   ---
+ ipc_wait_for_interrupt()
+  wait_for_completion_timeout(&scu->cmd_complete)
+  [TIMEOUT]                                             status[IPC_STATUS_BUSY]=0
+
+Fix this problem by reading the status bit in all cases, regardless of
+the timeout. If the completion times out, we'll assume the problem was
+that the IPC_STATUS_BUSY bit was still set, but if the status bit is
+cleared in the meantime we know that we hit some scheduling delay and we
+should just check the error bit.
+
+Cc: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230913212723.3055315-3-swboyd@chromium.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-gpio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel_scu_ipc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-gpio.c b/drivers/i2c/muxes/i2c-mux-gpio.c
-index 73a23e117ebec..0930a51c8c7c0 100644
---- a/drivers/i2c/muxes/i2c-mux-gpio.c
-+++ b/drivers/i2c/muxes/i2c-mux-gpio.c
-@@ -105,8 +105,10 @@ static int i2c_mux_gpio_probe_fw(struct gpiomux *mux,
+diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+index 96675bea88b10..be97cfae4b0f3 100644
+--- a/drivers/platform/x86/intel_scu_ipc.c
++++ b/drivers/platform/x86/intel_scu_ipc.c
+@@ -249,10 +249,12 @@ static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
+ {
+ 	int status;
  
- 		} else if (is_acpi_node(child)) {
- 			rc = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), values + i);
--			if (rc)
-+			if (rc) {
-+				fwnode_handle_put(child);
- 				return dev_err_probe(dev, rc, "Cannot get address\n");
-+			}
- 		}
+-	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
+-		return -ETIMEDOUT;
++	wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT);
  
- 		i++;
+ 	status = ipc_read_status(scu);
++	if (status & IPC_STATUS_BUSY)
++		return -ETIMEDOUT;
++
+ 	if (status & IPC_STATUS_ERR)
+ 		return -EIO;
+ 
 -- 
 2.40.1
 
