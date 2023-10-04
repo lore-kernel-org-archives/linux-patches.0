@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7382D13AD4
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E490BC433C7;
-	Wed,  4 Oct 2023 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963701D54A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC4DC433CA;
+	Wed,  4 Oct 2023 18:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443124;
-	bh=nECz94Op1riqfVlGh4H5bYr1SMRQK+319w04RnTrvuY=;
+	s=korg; t=1696443127;
+	bh=WKIG0RgnjzfpU+uSw7Ob/TuBHkHC7+D7G79s+Y0yqoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DO5wbG14KpkjREe0/jnJXTTrxWIzplRG+2ol4KQdlqvHJ1olb4aHE7lFu9t0aeLT0
-	 Ja9aPbbaWpYv2wQjo0J9AKOczW8t5zJu5Rm3DOK79Ppu0G1jCsbSPmnwGNRH+mliUi
-	 cPpINQ4nzAN/kgt2Fm4AZRyr6bx/r21GAVNNpQgg=
+	b=qZuyYdgQB+jKNbPZfY2nitof9VZvbPeaOrGecu6tBwlvyO67extf6N0nYYyqLZ74g
+	 goM0VbWeYLXivju0wezayPv3a+aZJutuxGmN4plFBaASJaMillGxihrD4wRxvEO3c8
+	 O1B5ffeNcA8Nh+c1mYfkQEO6aHpvxJIHFnWnQKDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/259] net/core: Fix ETH_P_1588 flow dissector
-Date: Wed,  4 Oct 2023 19:53:38 +0200
-Message-ID: <20231004175219.513773091@linuxfoundation.org>
+Subject: [PATCH 6.1 046/259] ASoC: hdaudio.c: Add missing check for devm_kstrdup
+Date: Wed,  4 Oct 2023 19:53:39 +0200
+Message-ID: <20231004175219.563677061@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -35,127 +35,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sasha Neftin <sasha.neftin@intel.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 75ad80ed88a182ab2ad5513e448cf07b403af5c3 ]
+[ Upstream commit c04efbfd76d23157e64e6d6147518c187ab4233a ]
 
-When a PTP ethernet raw frame with a size of more than 256 bytes followed
-by a 0xff pattern is sent to __skb_flow_dissect, nhoff value calculation
-is wrong. For example: hdr->message_length takes the wrong value (0xffff)
-and it does not replicate real header length. In this case, 'nhoff' value
-was overridden and the PTP header was badly dissected. This leads to a
-kernel crash.
+Because of the potential failure of the devm_kstrdup(), the
+dl[i].codecs->name could be NULL.
+Therefore, we need to check it and return -ENOMEM in order to transfer
+the error.
 
-net/core: flow_dissector
-net/core flow dissector nhoff = 0x0000000e
-net/core flow dissector hdr->message_length = 0x0000ffff
-net/core flow dissector nhoff = 0x0001000d (u16 overflow)
-...
-skb linear:   00000000: 00 a0 c9 00 00 00 00 a0 c9 00 00 00 88
-skb frag:     00000000: f7 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Using the size of the ptp_header struct will allow the corrected
-calculation of the nhoff value.
-
-net/core flow dissector nhoff = 0x0000000e
-net/core flow dissector nhoff = 0x00000030 (sizeof ptp_header)
-...
-skb linear:   00000000: 00 a0 c9 00 00 00 00 a0 c9 00 00 00 88 f7 ff ff
-skb linear:   00000010: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-skb linear:   00000020: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-skb frag:     00000000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Kernel trace:
-[   74.984279] ------------[ cut here ]------------
-[   74.989471] kernel BUG at include/linux/skbuff.h:2440!
-[   74.995237] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[   75.001098] CPU: 4 PID: 0 Comm: swapper/4 Tainted: G     U            5.15.85-intel-ese-standard-lts #1
-[   75.011629] Hardware name: Intel Corporation A-Island (CPU:AlderLake)/A-Island (ID:06), BIOS SB_ADLP.01.01.00.01.03.008.D-6A9D9E73-dirty Mar 30 2023
-[   75.026507] RIP: 0010:eth_type_trans+0xd0/0x130
-[   75.031594] Code: 03 88 47 78 eb c7 8b 47 68 2b 47 6c 48 8b 97 c0 00 00 00 83 f8 01 7e 1b 48 85 d2 74 06 66 83 3a ff 74 09 b8 00 04 00 00 eb ab <0f> 0b b8 00 01 00 00 eb a2 48 85 ff 74 eb 48 8d 54 24 06 31 f6 b9
-[   75.052612] RSP: 0018:ffff9948c0228de0 EFLAGS: 00010297
-[   75.058473] RAX: 00000000000003f2 RBX: ffff8e47047dc300 RCX: 0000000000001003
-[   75.066462] RDX: ffff8e4e8c9ea040 RSI: ffff8e4704e0a000 RDI: ffff8e47047dc300
-[   75.074458] RBP: ffff8e4704e2acc0 R08: 00000000000003f3 R09: 0000000000000800
-[   75.082466] R10: 000000000000000d R11: ffff9948c0228dec R12: ffff8e4715e4e010
-[   75.090461] R13: ffff9948c0545018 R14: 0000000000000001 R15: 0000000000000800
-[   75.098464] FS:  0000000000000000(0000) GS:ffff8e4e8fb00000(0000) knlGS:0000000000000000
-[   75.107530] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   75.113982] CR2: 00007f5eb35934a0 CR3: 0000000150e0a002 CR4: 0000000000770ee0
-[   75.121980] PKRU: 55555554
-[   75.125035] Call Trace:
-[   75.127792]  <IRQ>
-[   75.130063]  ? eth_get_headlen+0xa4/0xc0
-[   75.134472]  igc_process_skb_fields+0xcd/0x150
-[   75.139461]  igc_poll+0xc80/0x17b0
-[   75.143272]  __napi_poll+0x27/0x170
-[   75.147192]  net_rx_action+0x234/0x280
-[   75.151409]  __do_softirq+0xef/0x2f4
-[   75.155424]  irq_exit_rcu+0xc7/0x110
-[   75.159432]  common_interrupt+0xb8/0xd0
-[   75.163748]  </IRQ>
-[   75.166112]  <TASK>
-[   75.168473]  asm_common_interrupt+0x22/0x40
-[   75.173175] RIP: 0010:cpuidle_enter_state+0xe2/0x350
-[   75.178749] Code: 85 c0 0f 8f 04 02 00 00 31 ff e8 39 6c 67 ff 45 84 ff 74 12 9c 58 f6 c4 02 0f 85 50 02 00 00 31 ff e8 52 b0 6d ff fb 45 85 f6 <0f> 88 b1 00 00 00 49 63 ce 4c 2b 2c 24 48 89 c8 48 6b d1 68 48 c1
-[   75.199757] RSP: 0018:ffff9948c013bea8 EFLAGS: 00000202
-[   75.205614] RAX: ffff8e4e8fb00000 RBX: ffffb948bfd23900 RCX: 000000000000001f
-[   75.213619] RDX: 0000000000000004 RSI: ffffffff94206161 RDI: ffffffff94212e20
-[   75.221620] RBP: 0000000000000004 R08: 000000117568973a R09: 0000000000000001
-[   75.229622] R10: 000000000000afc8 R11: ffff8e4e8fb29ce4 R12: ffffffff945ae980
-[   75.237628] R13: 000000117568973a R14: 0000000000000004 R15: 0000000000000000
-[   75.245635]  ? cpuidle_enter_state+0xc7/0x350
-[   75.250518]  cpuidle_enter+0x29/0x40
-[   75.254539]  do_idle+0x1d9/0x260
-[   75.258166]  cpu_startup_entry+0x19/0x20
-[   75.262582]  secondary_startup_64_no_verify+0xc2/0xcb
-[   75.268259]  </TASK>
-[   75.270721] Modules linked in: 8021q snd_sof_pci_intel_tgl snd_sof_intel_hda_common tpm_crb snd_soc_hdac_hda snd_sof_intel_hda snd_hda_ext_core snd_sof_pci snd_sof snd_sof_xtensa_dsp snd_soc_acpi_intel_match snd_soc_acpi snd_soc_core snd_compress iTCO_wdt ac97_bus intel_pmc_bxt mei_hdcp iTCO_vendor_support snd_hda_codec_hdmi pmt_telemetry intel_pmc_core pmt_class snd_hda_intel x86_pkg_temp_thermal snd_intel_dspcfg snd_hda_codec snd_hda_core kvm_intel snd_pcm snd_timer kvm snd mei_me soundcore tpm_tis irqbypass i2c_i801 mei tpm_tis_core pcspkr intel_rapl_msr tpm i2c_smbus intel_pmt thermal sch_fq_codel uio uhid i915 drm_buddy video drm_display_helper drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys_fops ttm fuse configfs
-[   75.342736] ---[ end trace 3785f9f360400e3a ]---
-[   75.347913] RIP: 0010:eth_type_trans+0xd0/0x130
-[   75.352984] Code: 03 88 47 78 eb c7 8b 47 68 2b 47 6c 48 8b 97 c0 00 00 00 83 f8 01 7e 1b 48 85 d2 74 06 66 83 3a ff 74 09 b8 00 04 00 00 eb ab <0f> 0b b8 00 01 00 00 eb a2 48 85 ff 74 eb 48 8d 54 24 06 31 f6 b9
-[   75.373994] RSP: 0018:ffff9948c0228de0 EFLAGS: 00010297
-[   75.379860] RAX: 00000000000003f2 RBX: ffff8e47047dc300 RCX: 0000000000001003
-[   75.387856] RDX: ffff8e4e8c9ea040 RSI: ffff8e4704e0a000 RDI: ffff8e47047dc300
-[   75.395864] RBP: ffff8e4704e2acc0 R08: 00000000000003f3 R09: 0000000000000800
-[   75.403857] R10: 000000000000000d R11: ffff9948c0228dec R12: ffff8e4715e4e010
-[   75.411863] R13: ffff9948c0545018 R14: 0000000000000001 R15: 0000000000000800
-[   75.419875] FS:  0000000000000000(0000) GS:ffff8e4e8fb00000(0000) knlGS:0000000000000000
-[   75.428946] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   75.435403] CR2: 00007f5eb35934a0 CR3: 0000000150e0a002 CR4: 0000000000770ee0
-[   75.443410] PKRU: 55555554
-[   75.446477] Kernel panic - not syncing: Fatal exception in interrupt
-[   75.453738] Kernel Offset: 0x11c00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-[   75.465794] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
-
-Fixes: 4f1cc51f3488 ("net: flow_dissector: Parse PTP L2 packet header")
-Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 97030a43371e ("ASoC: Intel: avs: Add HDAudio machine board")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915021344.3078-1-nichen@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/avs/boards/hdaudio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 3288490590f27..0c85c8a9e752f 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1366,7 +1366,7 @@ bool __skb_flow_dissect(const struct net *net,
- 			break;
- 		}
+diff --git a/sound/soc/intel/avs/boards/hdaudio.c b/sound/soc/intel/avs/boards/hdaudio.c
+index 073663ba140d0..a65939f30ac47 100644
+--- a/sound/soc/intel/avs/boards/hdaudio.c
++++ b/sound/soc/intel/avs/boards/hdaudio.c
+@@ -54,6 +54,9 @@ static int avs_create_dai_links(struct device *dev, struct hda_codec *codec, int
+ 			return -ENOMEM;
  
--		nhoff += ntohs(hdr->message_length);
-+		nhoff += sizeof(struct ptp_header);
- 		fdret = FLOW_DISSECT_RET_OUT_GOOD;
- 		break;
- 	}
+ 		dl[i].codecs->name = devm_kstrdup(dev, cname, GFP_KERNEL);
++		if (!dl[i].codecs->name)
++			return -ENOMEM;
++
+ 		dl[i].codecs->dai_name = pcm->name;
+ 		dl[i].num_codecs = 1;
+ 		dl[i].num_cpus = 1;
 -- 
 2.40.1
 
