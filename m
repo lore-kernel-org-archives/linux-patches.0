@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A81D6A9
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E411CF94
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LastduiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0773AC433C8;
-	Wed,  4 Oct 2023 18:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjxV7PHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82FBC433C7;
+	Wed,  4 Oct 2023 18:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443783;
-	bh=ZMnRPAaxL6JF1K3DCmMoNPT+CCezP65nY5g5XanbjAs=;
+	s=korg; t=1696443786;
+	bh=eMwMsVwL8thCCDiFrm50QvTmn6rwUwhJ3lG/cNUKOGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LastduiM9or894GQlT1lgdgCSC35ca5Fh28bFH36DSYYKEispQ2fVfAy/Y5zDgp1X
-	 jqH8aC1X6YAQsduASr9DwgYV/2IOaqvQ/iYOzl4nnhff3TQ9xlC4v3rNSEkFA+SbQR
-	 jDLVuV8qGDetVESKenAr1vCSs7bz63eKRf95FWV8=
+	b=sjxV7PHY+dtJuq9UUXT4A2h0rU1fBeX62lHUDKPnufrDtYUjZkWpEZ7NRuuDkOC7q
+	 EQ7XpiwMQc2CcIyLd1Xwi0n8GRsFhPSufpluJhAc9AxbvKaQ0bA+QT0Rzqa/axggXQ
+	 vi9dN5L5hebEE3p8c+Q71i73YEaRORpF0O6kdEdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 019/321] netfilter: nft_set_rbtree: use read spinlock to avoid datapath contention
-Date: Wed,  4 Oct 2023 19:52:44 +0200
-Message-ID: <20231004175230.080151363@linuxfoundation.org>
+Subject: [PATCH 6.5 002/321] NFS: Fix O_DIRECT locking issues
+Date: Wed,  4 Oct 2023 19:52:27 +0200
+Message-ID: <20231004175229.331522056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -41,45 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 96b33300fba880ec0eafcf3d82486f3463b4b6da upstream.
+[ Upstream commit 7c6339322ce0c6128acbe36aacc1eeb986dd7bf1 ]
 
-rbtree GC does not modify the datastructure, instead it collects expired
-elements and it enqueues a GC transaction. Use a read spinlock instead
-to avoid data contention while GC worker is running.
+The dreq fields are protected by the dreq->lock.
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 954998b60caa ("NFS: Fix error handling for O_DIRECT write scheduling")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfs/direct.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index f250b5399344a..70491ba98decb 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -622,8 +622,7 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	if (!gc)
- 		goto done;
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index ee88f0a6e7b81..e8a1645857dd6 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -553,7 +553,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 		/* Bump the transmission count */
+ 		req->wb_nio++;
+ 		if (!nfs_pageio_add_request(&desc, req)) {
+-			spin_lock(&cinfo.inode->i_lock);
++			spin_lock(&dreq->lock);
+ 			if (dreq->error < 0) {
+ 				desc.pg_error = dreq->error;
+ 			} else if (desc.pg_error != -EAGAIN) {
+@@ -563,7 +563,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 				dreq->error = desc.pg_error;
+ 			} else
+ 				dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-			spin_unlock(&cinfo.inode->i_lock);
++			spin_unlock(&dreq->lock);
+ 			break;
+ 		}
+ 		nfs_release_request(req);
+@@ -871,9 +871,9 @@ static ssize_t nfs_direct_write_schedule_iovec(struct nfs_direct_req *dreq,
  
--	write_lock_bh(&priv->lock);
--	write_seqcount_begin(&priv->count);
-+	read_lock_bh(&priv->lock);
- 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
- 
- 		/* Ruleset has been updated, try later. */
-@@ -673,8 +672,7 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	gc = nft_trans_gc_catchall(gc, gc_seq);
- 
- try_later:
--	write_seqcount_end(&priv->count);
--	write_unlock_bh(&priv->lock);
-+	read_unlock_bh(&priv->lock);
- 
- 	if (gc)
- 		nft_trans_gc_queue_async_done(gc);
+ 			/* If the error is soft, defer remaining requests */
+ 			nfs_init_cinfo_from_dreq(&cinfo, dreq);
+-			spin_lock(&cinfo.inode->i_lock);
++			spin_lock(&dreq->lock);
+ 			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-			spin_unlock(&cinfo.inode->i_lock);
++			spin_unlock(&dreq->lock);
+ 			nfs_unlock_request(req);
+ 			nfs_mark_request_commit(req, NULL, &cinfo, 0);
+ 			desc.pg_error = 0;
 -- 
 2.40.1
 
