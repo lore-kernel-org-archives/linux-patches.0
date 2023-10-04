@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78391D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D08C433C7;
-	Wed,  4 Oct 2023 18:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D851A1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4F5C433C8;
+	Wed,  4 Oct 2023 18:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443171;
-	bh=PKdkHiWYUZ/46XN0OrvmU7OgSCwTPCehRKM3JHASOow=;
+	s=korg; t=1696443174;
+	bh=VARRHrheSgAk7Z34Eg1UUyQsnG2a/QfCeQgjuE99Mtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGXuJqMTaD4acFrGXofFmrrqPzEOSVDQ1LpEbGvDUxolG3cuzZD9eVkTaSccUpF5m
-	 zpcTZCzw9Us+WN4aVkNkAXE9V2WHbKalxI++Pw0jF9mJohASXeg71r20rXxsYig39b
-	 QWV+UeoDCyqI1FlEx/TpZkp/YF7efgENciLgMTkQ=
+	b=ZanhV63WzovP2OOIYhetU1SRurPyWLjvTOtC1QMCEjmXp6tm03xZJYDKDGJgvPTQZ
+	 cwxtFnBFdhCcT2Ew/H+ALqTxV5+A3Db/vdxpXK++91W2G54oYcMFZz7vel6EnV7WH1
+	 J7hEPPo8LXQHAKsQ4ruMED/f5Qp3yB1qmxMBMVtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jann Horn <jannh@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/259] dccp: fix dccp_v4_err()/dccp_v6_err() again
-Date: Wed,  4 Oct 2023 19:53:53 +0200
-Message-ID: <20231004175220.173706886@linuxfoundation.org>
+Subject: [PATCH 6.1 034/259] netfilter: nft_set_pipapo: stop GC iteration if GC transaction allocation fails
+Date: Wed,  4 Oct 2023 19:53:27 +0200
+Message-ID: <20231004175219.004954576@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -42,130 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6af289746a636f71f4c0535a9801774118486c7a ]
+commit 6d365eabce3c018a80f6e0379b17df2abb17405e upstream.
 
-dh->dccph_x is the 9th byte (offset 8) in "struct dccp_hdr",
-not in the "byte 7" as Jann claimed.
+nft_trans_gc_queue_sync() enqueues the GC transaction and it allocates a
+new one. If this allocation fails, then stop this GC sync run and retry
+later.
 
-We need to make sure the ICMP messages are big enough,
-using more standard ways (no more assumptions).
-
-syzbot reported:
-BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
-BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2681 [inline]
-BUG: KMSAN: uninit-value in dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
-pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
-pskb_may_pull include/linux/skbuff.h:2681 [inline]
-dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
-icmpv6_notify+0x4c7/0x880 net/ipv6/icmp.c:867
-icmpv6_rcv+0x19d5/0x30d0
-ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
-ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-NF_HOOK include/linux/netfilter.h:304 [inline]
-ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:304 [inline]
-ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
-__netif_receive_skb_one_core net/core/dev.c:5523 [inline]
-__netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
-netif_receive_skb_internal net/core/dev.c:5723 [inline]
-netif_receive_skb+0x58/0x660 net/core/dev.c:5782
-tun_rx_batched+0x83b/0x920
-tun_get_user+0x564c/0x6940 drivers/net/tun.c:2002
-tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-call_write_iter include/linux/fs.h:1985 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x8ef/0x15c0 fs/read_write.c:584
-ksys_write+0x20f/0x4c0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x93/0xd0 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
-slab_alloc_node mm/slub.c:3478 [inline]
-kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
-kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:559
-__alloc_skb+0x318/0x740 net/core/skbuff.c:650
-alloc_skb include/linux/skbuff.h:1286 [inline]
-alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6313
-sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2795
-tun_alloc_skb drivers/net/tun.c:1531 [inline]
-tun_get_user+0x23cf/0x6940 drivers/net/tun.c:1846
-tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-call_write_iter include/linux/fs.h:1985 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x8ef/0x15c0 fs/read_write.c:584
-ksys_write+0x20f/0x4c0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x93/0xd0 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 0 PID: 4995 Comm: syz-executor153 Not tainted 6.6.0-rc1-syzkaller-00014-ga747acc0b752 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
-
-Fixes: 977ad86c2a1b ("dccp: Fix out of bounds access in DCCP error handler")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jann Horn <jannh@google.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv4.c | 9 ++-------
- net/dccp/ipv6.c | 9 ++-------
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index 8f5d3c0881118..247179d4c8865 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -255,13 +255,8 @@ static int dccp_v4_err(struct sk_buff *skb, u32 info)
- 	int err;
- 	struct net *net = dev_net(skb->dev);
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 7248a1737ee14..83f5f276c3bff 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1597,7 +1597,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
  
--	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
--	 * which is in byte 7 of the dccp header.
--	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
--	 *
--	 * Later on, we want to access the sequence number fields, which are
--	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
--	 */
-+	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
-+		return -EINVAL;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
- 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
- 		return -EINVAL;
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 2b09e2644b13f..6fb34eaf1237a 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -83,13 +83,8 @@ static int dccp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	__u64 seq;
- 	struct net *net = dev_net(skb->dev);
+ 			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+ 			if (!gc)
+-				break;
++				return;
  
--	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
--	 * which is in byte 7 of the dccp header.
--	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
--	 *
--	 * Later on, we want to access the sequence number fields, which are
--	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
--	 */
-+	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
-+		return -EINVAL;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
- 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
- 		return -EINVAL;
+ 			nft_pipapo_gc_deactivate(net, set, e);
+ 			pipapo_drop(m, rulemap);
 -- 
 2.40.1
 
