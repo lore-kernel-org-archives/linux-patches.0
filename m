@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0BE1DA24
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E41DA24
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uqfq8ONA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE2CC433C8;
-	Wed,  4 Oct 2023 18:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cnOHMt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA215C433C9;
+	Wed,  4 Oct 2023 18:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444097;
-	bh=MQtxekdWrBzrP1XCgmlMOLjoLLwTC9Lq/ELylKRkAcs=;
+	s=korg; t=1696444100;
+	bh=yIRNO5Xyj3hyNHEs4h2Q/YawwUSTBTxeP08wVmqA7dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uqfq8ONAS/NnARRJaadAc452ESod3OsptrtS0++WX7O7uWRk83AEinv9Z0HKzeH9f
-	 wZ5ldp8NloSJmP+4s+ZlN1nItJsRjcnMuiIekrFC60LOeAW5htcfxenD6jzo5dxmwz
-	 8NePta9nrC1EkryAu7vbUqyxxPEv7aa1kypvxnek=
+	b=0cnOHMt5ugXVjKTiG5QkLFkaaiXP82yEYYGwjkgzjw8PYhfAWInW7K1U/e+zj7BvW
+	 mmn2qXjnEUloomGwL4VCwH6bIZjst6uKexRKcGMCTXHBwK/Q5wNLWGJ1rEFcEmQCfY
+	 zn/OQn2dWeFvTdBZ0wzqBTr9e2ZdthrY5dz2aEaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -25,9 +25,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 130/321] ARM: dts: ti: omap: Fix bandgap thermal cells addressing for omap3/4
-Date: Wed,  4 Oct 2023 19:54:35 +0200
-Message-ID: <20231004175235.268701622@linuxfoundation.org>
+Subject: [PATCH 6.5 131/321] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+Date: Wed,  4 Oct 2023 19:54:36 +0200
+Message-ID: <20231004175235.306369734@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -48,85 +48,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 6469b2feade8fd82d224dd3734e146536f3e9f0e ]
+[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
 
-Fix "thermal_sys: cpu_thermal: Failed to read thermal-sensors cells: -2"
-error on boot for omap3/4. This is caused by wrong addressing in the dts
-for bandgap sensor for single sensor instances.
+Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+attempted to fix the PWM settings but ended up causin an additional clock
+reparenting error:
 
-Note that omap4-cpu-thermal.dtsi is shared across omap4/5 and dra7, so
-we can't just change the addressing in omap4-cpu-thermal.dtsi.
+clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
+
+Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
+For timer8, the there is no sys_clkin_ck available as it's in the ABE
+domain, instead it should use syc_clk_div_ck. However, for power
+management, we want to use the always on sys_32k_ck instead.
 
 Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 Cc: Carl Philipp Klemm <philipp@uvos.xyz>
 Cc: Merlijn Wajer <merlijn@wizzup.org>
 Cc: Pavel Machek <pavel@ucw.cz>
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Fixes: a761d517bbb1 ("ARM: dts: omap3: Add cpu_thermal zone")
-Fixes: 0bbf6c54d100 ("arm: dts: add omap4 CPU thermal data")
+Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
 Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/omap3-cpu-thermal.dtsi | 3 +--
- arch/arm/boot/dts/ti/omap/omap4-cpu-thermal.dtsi | 5 ++++-
- arch/arm/boot/dts/ti/omap/omap443x.dtsi          | 1 +
- arch/arm/boot/dts/ti/omap/omap4460.dtsi          | 1 +
- 4 files changed, 7 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/ti/omap/motorola-mapphone-common.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap3-cpu-thermal.dtsi b/arch/arm/boot/dts/ti/omap/omap3-cpu-thermal.dtsi
-index 0da759f8e2c2d..7dd2340bc5e45 100644
---- a/arch/arm/boot/dts/ti/omap/omap3-cpu-thermal.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap3-cpu-thermal.dtsi
-@@ -12,8 +12,7 @@ cpu_thermal: cpu-thermal {
- 	polling-delay = <1000>; /* milliseconds */
- 	coefficients = <0 20000>;
- 
--			/* sensor       ID */
--	thermal-sensors = <&bandgap     0>;
-+	thermal-sensors = <&bandgap>;
- 
- 	cpu_trips: trips {
- 		cpu_alert0: cpu_alert {
-diff --git a/arch/arm/boot/dts/ti/omap/omap4-cpu-thermal.dtsi b/arch/arm/boot/dts/ti/omap/omap4-cpu-thermal.dtsi
-index 801b4f10350c1..d484ec1e4fd86 100644
---- a/arch/arm/boot/dts/ti/omap/omap4-cpu-thermal.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap4-cpu-thermal.dtsi
-@@ -12,7 +12,10 @@ cpu_thermal: cpu_thermal {
- 	polling-delay-passive = <250>; /* milliseconds */
- 	polling-delay = <1000>; /* milliseconds */
- 
--			/* sensor       ID */
-+	/*
-+	 * See 44xx files for single sensor addressing, omap5 and dra7 need
-+	 * also sensor ID for addressing.
-+	 */
- 	thermal-sensors = <&bandgap     0>;
- 
- 	cpu_trips: trips {
-diff --git a/arch/arm/boot/dts/ti/omap/omap443x.dtsi b/arch/arm/boot/dts/ti/omap/omap443x.dtsi
-index 238aceb799f89..2104170fe2cd7 100644
---- a/arch/arm/boot/dts/ti/omap/omap443x.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap443x.dtsi
-@@ -69,6 +69,7 @@
+diff --git a/arch/arm/boot/dts/ti/omap/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/ti/omap/motorola-mapphone-common.dtsi
+index 091ba310053eb..d69f0f4b4990d 100644
+--- a/arch/arm/boot/dts/ti/omap/motorola-mapphone-common.dtsi
++++ b/arch/arm/boot/dts/ti/omap/motorola-mapphone-common.dtsi
+@@ -614,12 +614,12 @@
+ /* Configure pwm clock source for timers 8 & 9 */
+ &timer8 {
+ 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
  };
  
- &cpu_thermal {
-+	thermal-sensors = <&bandgap>;
- 	coefficients = <0 20000>;
+ &timer9 {
+ 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
  };
  
-diff --git a/arch/arm/boot/dts/ti/omap/omap4460.dtsi b/arch/arm/boot/dts/ti/omap/omap4460.dtsi
-index 1b27a862ae810..a6764750d4476 100644
---- a/arch/arm/boot/dts/ti/omap/omap4460.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap4460.dtsi
-@@ -79,6 +79,7 @@
- };
- 
- &cpu_thermal {
-+	thermal-sensors = <&bandgap>;
- 	coefficients = <348 (-9301)>;
- };
- 
+ /*
 -- 
 2.40.1
 
