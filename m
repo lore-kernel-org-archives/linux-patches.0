@@ -1,124 +1,249 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D7F1D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-57ba2cd3507so48372eaf.2
-        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 11:14:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696443282; x=1697048082;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6nCGy29qXBi+ptXe1DWiTKziKMJYl0S7yqrhbrtMgRk=;
-        b=YXEkNd86SkkPldBpH3sSf3s51B9IT8uI3xVFjab7Mmt8bPxdr4LJ35lGup9g5J0jNv
-         OzYvr0h5FdYC8+5GQ3Op6rJRuoUIY6Wr+2+TUXkbZCbdz30xpqgPwq3wn46knoDctIqR
-         cDgMaiQkx4EjpLspv2tthFLHU8HJ1vFdeH6R1XnaEePbY+gA3OKrys4KPf/6dYl68q6f
-         2GxNz627KNMJn8EzYIn2L8xKyc3vloxG462zsEbU3GpozwBbSbdl+SYQCu2dQuTQ9vGT
-         IVpBc76Px16sZ2XAjJ7l2ASNT/Thb872C9R4HugoVvCjwHAeVTzFybdaiCs8kJ00bd5d
-         aqwA==
-X-Gm-Message-State: AOJu0YwCfNC8K/nloB1UiOtUonajEZBTn79HC6+PXsh4gsO2bnJdaTcN
-	wUQIlW8NBm4TajL+pwpvH/k=
-X-Google-Smtp-Source: AGHT+IG7EHbaeeYSQWuYVxJewBVTKh+hSRaSfAIMnjP6jTwYH5NMi2y1YeijxB0WtRbsPtXrqTnwuw==
-X-Received: by 2002:a05:6358:5e12:b0:139:d5b9:87d3 with SMTP id q18-20020a0563585e1200b00139d5b987d3mr2311233rwn.5.1696443282278;
-        Wed, 04 Oct 2023 11:14:42 -0700 (PDT)
-Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
-        by smtp.gmail.com with ESMTPSA id v7-20020a170902b7c700b001c627413e87sm4013296plz.290.2023.10.04.11.14.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Oct 2023 11:14:41 -0700 (PDT)
-Date: Wed, 4 Oct 2023 18:14:40 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Wei Liu <wei.liu@kernel.org>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
-	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arch@vger.kernel.org, patches@lists.linux.dev,
-	mikelley@microsoft.com, kys@microsoft.com, haiyangz@microsoft.com,
-	decui@microsoft.com, apais@linux.microsoft.com,
-	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
-	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
-	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
-	catalin.marinas@arm.com
-Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
- hypervisor ABIs
-Message-ID: <ZR2rkNYnQds1MGZ0@liuwe-devbox-debian-v2>
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093057-eggplant-reshoot-8513@gregkh>
- <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
- <2023100154-ferret-rift-acef@gregkh>
- <ZRyj5kJJYaBu22O3@liuwe-devbox-debian-v2>
- <2023100458-confusing-carton-3302@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDAC1D6A2
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW75QMUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53371C433C7;
+	Wed,  4 Oct 2023 18:14:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696443286;
+	bh=SSbvqeQQFhnIPlG8LJ4xM+JMUPVwjjUFlagABklbanc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iW75QMUeuBodEcaOPWxlWZGWDrHK/VGCGAQLWnDmQ71j045YMPjAype/KN6JTwv2g
+	 TUKimXbcTDndK0ZxEjT+L8vDp+rYqddUZ0x9ajRsd2KceLkysD1E5JnfbTV17Pg3O/
+	 ddBD+qReMivhP5MfVWR4eZxaXMU+uhusQYUVLxPw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shreyas Deodhar <sdeodhar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 103/259] scsi: qla2xxx: Select qpair depending on which CPU post_cmd() gets called
+Date: Wed,  4 Oct 2023 19:54:36 +0200
+Message-ID: <20231004175222.076546442@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
+References: <20231004175217.404851126@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023100458-confusing-carton-3302@gregkh>
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-On Wed, Oct 04, 2023 at 08:11:13AM +0200, Greg KH wrote:
-> On Tue, Oct 03, 2023 at 11:29:42PM +0000, Wei Liu wrote:
-> > > > > > diff --git a/include/uapi/hyperv/hvgdk.h b/include/uapi/hyperv/hvgdk.h
-> > > > > > new file mode 100644
-> > > > > > index 000000000000..9bcbb7d902b2
-> > > > > > --- /dev/null
-> > > > > > +++ b/include/uapi/hyperv/hvgdk.h
-> > > > > > @@ -0,0 +1,41 @@
-> > > > > > +/* SPDX-License-Identifier: MIT */
-> > > > > 
-> > > > > That's usually not a good license for a new uapi .h file, why did you
-> > > > > choose this one?
-> > > > > 
-> > > > 
-> > > > This is chosen so that other Microsoft developers who don't normally
-> > > > work on Linux can review this code.
-> > > 
-> > > Sorry, but that's not how kernel development is done.  Please fix your
-> > > internal review processes and use the correct uapi header file license.
-> > > 
-> > > If your lawyers insist on this license, that's fine, but please have
-> > > them provide a signed-off-by on the patch that adds it and have it
-> > > documented why it is this license in the changelog AND in a comment in
-> > > the file so we can understand what is going on with it.
-> > > 
-> > 
-> > We went through an internal review with our legal counsel regarding the
-> > MIT license. We have an approval from them.
-> > 
-> > Let me ask if using something like "GPL-2.0 WITH Linux-syscall-note OR
-> > MIT" is possible.
-> 
-> That marking makes no sense from a legal point of view, please work with
-> your lawyers as it seems they do not understand license descriptions
-> very well :(
-> 
+------------------
 
-Do you mean "GPL-2.0 WITH Linux-syscall-note OR MIT" doesn't make sense?
+From: Shreyas Deodhar <sdeodhar@marvell.com>
 
-Why is that? I see that in various UAPI headers.
+[ Upstream commit 1d201c81d4cc6840735bbcc99e6031503e5cf3b8 ]
 
-include/uapi/drm/lima_drm.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
-include/uapi/linux/io_uring.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
-include/uapi/linux/kfd_sysfs.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
-include/uapi/linux/rkisp1-config.h:1:/* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR MIT) */
-include/uapi/linux/wireguard.h:1:/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
-include/uapi/xen/evtchn.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
-include/uapi/xen/gntdev.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
-include/uapi/xen/privcmd.h:1:/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
+In current I/O path, Tx and Rx may not be processed on same CPU. This may
+lead to thrashing and optimum performance may not be achieved.
 
-Thanks,
-Wei.
+Pick qpair such that Tx and Rx are processed on same CPU.
 
-> thanks,
-> 
-> greg k-h
+Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 59f10a05b5c7 ("scsi: qla2xxx: Use raw_smp_processor_id() instead of smp_processor_id()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/scsi/qla2xxx/qla_def.h    |  2 ++
+ drivers/scsi/qla2xxx/qla_init.c   |  2 --
+ drivers/scsi/qla2xxx/qla_inline.h | 55 +++++++++++++++++++++++++++++++
+ drivers/scsi/qla2xxx/qla_isr.c    |  3 +-
+ drivers/scsi/qla2xxx/qla_nvme.c   |  4 +++
+ drivers/scsi/qla2xxx/qla_os.c     |  6 ++++
+ 6 files changed, 69 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
+index 7d282906598f3..817efdd32ad63 100644
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -3475,6 +3475,7 @@ struct qla_msix_entry {
+ 	int have_irq;
+ 	int in_use;
+ 	uint32_t vector;
++	uint32_t vector_base0;
+ 	uint16_t entry;
+ 	char name[30];
+ 	void *handle;
+@@ -4133,6 +4134,7 @@ struct qla_hw_data {
+ 	struct req_que **req_q_map;
+ 	struct rsp_que **rsp_q_map;
+ 	struct qla_qpair **queue_pair_map;
++	struct qla_qpair **qp_cpu_map;
+ 	unsigned long req_qid_map[(QLA_MAX_QUEUES / 8) / sizeof(unsigned long)];
+ 	unsigned long rsp_qid_map[(QLA_MAX_QUEUES / 8) / sizeof(unsigned long)];
+ 	unsigned long qpair_qid_map[(QLA_MAX_QUEUES / 8)
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 36abdb0de1694..79de31e7e8b2a 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -9758,8 +9758,6 @@ struct qla_qpair *qla2xxx_create_qpair(struct scsi_qla_host *vha, int qos,
+ 		qpair->req = ha->req_q_map[req_id];
+ 		qpair->rsp->req = qpair->req;
+ 		qpair->rsp->qpair = qpair;
+-		/* init qpair to this cpu. Will adjust at run time. */
+-		qla_cpu_update(qpair, raw_smp_processor_id());
+ 
+ 		if (IS_T10_PI_CAPABLE(ha) && ql2xenabledif) {
+ 			if (ha->fw_attributes & BIT_4)
+diff --git a/drivers/scsi/qla2xxx/qla_inline.h b/drivers/scsi/qla2xxx/qla_inline.h
+index a7b5d11146827..d5cf9db2a8ea3 100644
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -573,3 +573,58 @@ fcport_is_bigger(fc_port_t *fcport)
+ {
+ 	return !fcport_is_smaller(fcport);
+ }
++
++static inline struct qla_qpair *
++qla_mapq_nvme_select_qpair(struct qla_hw_data *ha, struct qla_qpair *qpair)
++{
++	int cpuid = smp_processor_id();
++
++	if (qpair->cpuid != cpuid &&
++	    ha->qp_cpu_map[cpuid]) {
++		qpair = ha->qp_cpu_map[cpuid];
++	}
++	return qpair;
++}
++
++static inline void
++qla_mapq_init_qp_cpu_map(struct qla_hw_data *ha,
++			 struct qla_msix_entry *msix,
++			 struct qla_qpair *qpair)
++{
++	const struct cpumask *mask;
++	unsigned int cpu;
++
++	if (!ha->qp_cpu_map)
++		return;
++	mask = pci_irq_get_affinity(ha->pdev, msix->vector_base0);
++	qpair->cpuid = cpumask_first(mask);
++	for_each_cpu(cpu, mask) {
++		ha->qp_cpu_map[cpu] = qpair;
++	}
++	msix->cpuid = qpair->cpuid;
++}
++
++static inline void
++qla_mapq_free_qp_cpu_map(struct qla_hw_data *ha)
++{
++	if (ha->qp_cpu_map) {
++		kfree(ha->qp_cpu_map);
++		ha->qp_cpu_map = NULL;
++	}
++}
++
++static inline int qla_mapq_alloc_qp_cpu_map(struct qla_hw_data *ha)
++{
++	scsi_qla_host_t *vha = pci_get_drvdata(ha->pdev);
++
++	if (!ha->qp_cpu_map) {
++		ha->qp_cpu_map = kcalloc(NR_CPUS, sizeof(struct qla_qpair *),
++					 GFP_KERNEL);
++		if (!ha->qp_cpu_map) {
++			ql_log(ql_log_fatal, vha, 0x0180,
++			       "Unable to allocate memory for qp_cpu_map ptrs.\n");
++			return -1;
++		}
++	}
++	return 0;
++}
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 0111249cc8774..a5e6246127ed3 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3819,7 +3819,6 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
+ 
+ 	if (rsp->qpair->cpuid != smp_processor_id() || !rsp->qpair->rcv_intr) {
+ 		rsp->qpair->rcv_intr = 1;
+-		qla_cpu_update(rsp->qpair, smp_processor_id());
+ 	}
+ 
+ #define __update_rsp_in(_is_shadow_hba, _rsp, _rsp_in)			\
+@@ -4425,6 +4424,7 @@ qla24xx_enable_msix(struct qla_hw_data *ha, struct rsp_que *rsp)
+ 	for (i = 0; i < ha->msix_count; i++) {
+ 		qentry = &ha->msix_entries[i];
+ 		qentry->vector = pci_irq_vector(ha->pdev, i);
++		qentry->vector_base0 = i;
+ 		qentry->entry = i;
+ 		qentry->have_irq = 0;
+ 		qentry->in_use = 0;
+@@ -4652,5 +4652,6 @@ int qla25xx_request_irq(struct qla_hw_data *ha, struct qla_qpair *qpair,
+ 	}
+ 	msix->have_irq = 1;
+ 	msix->handle = qpair;
++	qla_mapq_init_qp_cpu_map(ha, msix, qpair);
+ 	return ret;
+ }
+diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
+index c9a6fc882a801..9941b38eac93c 100644
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -609,6 +609,7 @@ static int qla_nvme_post_cmd(struct nvme_fc_local_port *lport,
+ 	fc_port_t *fcport;
+ 	struct srb_iocb *nvme;
+ 	struct scsi_qla_host *vha;
++	struct qla_hw_data *ha;
+ 	int rval;
+ 	srb_t *sp;
+ 	struct qla_qpair *qpair = hw_queue_handle;
+@@ -629,6 +630,7 @@ static int qla_nvme_post_cmd(struct nvme_fc_local_port *lport,
+ 		return -ENODEV;
+ 
+ 	vha = fcport->vha;
++	ha = vha->hw;
+ 
+ 	if (test_bit(ABORT_ISP_ACTIVE, &vha->dpc_flags))
+ 		return -EBUSY;
+@@ -643,6 +645,8 @@ static int qla_nvme_post_cmd(struct nvme_fc_local_port *lport,
+ 	if (fcport->nvme_flag & NVME_FLAG_RESETTING)
+ 		return -EBUSY;
+ 
++	qpair = qla_mapq_nvme_select_qpair(ha, qpair);
++
+ 	/* Alloc SRB structure */
+ 	sp = qla2xxx_get_qpair_sp(vha, qpair, fcport, GFP_ATOMIC);
+ 	if (!sp)
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 78f7cd16967fa..b33ffec1cb75e 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -480,6 +480,11 @@ static int qla2x00_alloc_queues(struct qla_hw_data *ha, struct req_que *req,
+ 			    "Unable to allocate memory for queue pair ptrs.\n");
+ 			goto fail_qpair_map;
+ 		}
++		if (qla_mapq_alloc_qp_cpu_map(ha) != 0) {
++			kfree(ha->queue_pair_map);
++			ha->queue_pair_map = NULL;
++			goto fail_qpair_map;
++		}
+ 	}
+ 
+ 	/*
+@@ -554,6 +559,7 @@ static void qla2x00_free_queues(struct qla_hw_data *ha)
+ 		ha->base_qpair = NULL;
+ 	}
+ 
++	qla_mapq_free_qp_cpu_map(ha);
+ 	spin_lock_irqsave(&ha->hardware_lock, flags);
+ 	for (cnt = 0; cnt < ha->max_req_queues; cnt++) {
+ 		if (!test_bit(cnt, ha->req_qid_map))
+-- 
+2.40.1
+
+
+
