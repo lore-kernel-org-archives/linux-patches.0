@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B09618E2A
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF6818E2A
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=linuxfoundation.org
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8190EC433C7;
-	Wed,  4 Oct 2023 18:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFE9C433C8;
+	Wed,  4 Oct 2023 18:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696442952;
-	bh=E7QxiAPEeTOF/Ud2NRJpA9LrAt87n0yyKzEFyeQgc7o=;
+	s=korg; t=1696442955;
+	bh=IRofGcQLhywcNGP1TyhfFty64M6KwyUFRifPZjmLgOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWzKcWb1gEzYV0zts62lGgE4GhebTxrluhSAxhbxCCWfbljFNRBKxg4QpaPnwPlNq
-	 ZGTBpXs0KFQPPj5u7nBNgSpUr0tUW3qcLzOr7C7ShXc7t5qZh8Iq3Nen3H0zsslO/3
-	 CwYSJYNwQkgjCfe10PMfZMI9K+ErYTq7w9I6mkgo=
+	b=m4Ur+VuNwZtddrkaPAY09fuaHM1vJGCv7dKACbQQFdm7fhd+1nfjgycXl7KbpoNNX
+	 mUe4fmnSN8tZONtxkuwMRoeNM4YvS6cMfEF7H6Bm8nHq039x/7ypj28YfxK8S9bnZO
+	 gbMPv3t6RokxE1fqMksxI4qaJMHbF/GJD2s0URfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 5.15 168/183] sched/rt: Fix live lock between select_fallback_rq() and RT push
-Date: Wed,  4 Oct 2023 19:56:39 +0200
-Message-ID: <20231004175211.078918781@linuxfoundation.org>
+	Thomas Leonard <talex5@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 169/183] io_uring/fs: remove sqe->rw_flags checking from LINKAT
+Date: Wed,  4 Oct 2023 19:56:40 +0200
+Message-ID: <20231004175211.118225963@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175203.943277832@linuxfoundation.org>
 References: <20231004175203.943277832@linuxfoundation.org>
@@ -42,52 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit fc09027786c900368de98d03d40af058bcb01ad9 upstream.
+commit a52d4f657568d6458e873f74a9602e022afe666f upstream.
 
-During RCU-boost testing with the TREE03 rcutorture config, I found that
-after a few hours, the machine locks up.
+This is unionized with the actual link flags, so they can of course be
+set and they will be evaluated further down. If not we fail any LINKAT
+that has to set option flags.
 
-On tracing, I found that there is a live lock happening between 2 CPUs.
-One CPU has an RT task running, while another CPU is being offlined
-which also has an RT task running.  During this offlining, all threads
-are migrated. The migration thread is repeatedly scheduled to migrate
-actively running tasks on the CPU being offlined. This results in a live
-lock because select_fallback_rq() keeps picking the CPU that an RT task
-is already running on only to get pushed back to the CPU being offlined.
-
-It is anyway pointless to pick CPUs for pushing tasks to if they are
-being offlined only to get migrated away to somewhere else. This could
-also add unwanted latency to this task.
-
-Fix these issues by not selecting CPUs in RT if they are not 'active'
-for scheduling, using the cpu_active_mask. Other parts in core.c already
-use cpu_active_mask to prevent tasks from being put on CPUs going
-offline.
-
-With this fix I ran the tests for days and could not reproduce the
-hang. Without the patch, I hit it in a few hours.
-
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: cf30da90bc3a ("io_uring: add support for IORING_OP_LINKAT")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230923011409.3522762-1-joel@joelfernandes.org
+Reported-by: Thomas Leonard <talex5@gmail.com>
+Link: https://github.com/axboe/liburing/issues/955
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpupri.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/cpupri.c
-+++ b/kernel/sched/cpupri.c
-@@ -102,6 +102,7 @@ static inline int __cpupri_find(struct c
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -4038,7 +4038,7 @@ static int io_linkat_prep(struct io_kioc
  
- 	if (lowest_mask) {
- 		cpumask_and(lowest_mask, &p->cpus_mask, vec->mask);
-+		cpumask_and(lowest_mask, lowest_mask, cpu_active_mask);
- 
- 		/*
- 		 * We have to ensure that we have at least one bit
+ 	if (unlikely(req->ctx->flags & IORING_SETUP_IOPOLL))
+ 		return -EINVAL;
+-	if (sqe->ioprio || sqe->rw_flags || sqe->buf_index || sqe->splice_fd_in)
++	if (sqe->ioprio || sqe->buf_index || sqe->splice_fd_in)
+ 		return -EINVAL;
+ 	if (unlikely(req->flags & REQ_F_FIXED_FILE))
+ 		return -EBADF;
 
 
