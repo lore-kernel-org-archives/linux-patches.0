@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9690A1D546
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1609BC433C8;
-	Wed,  4 Oct 2023 18:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE721D546
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:10:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D677FC433CA;
+	Wed,  4 Oct 2023 18:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443034;
-	bh=EBZXQyY6u+g1y20z21v+Ac0LRG4ehXN/xKYPzKyuEGw=;
+	s=korg; t=1696443037;
+	bh=vxSk/3LlMePbksZ50w1RdAKtzdU8M11F5nrBLfyQnAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7YT8J9ZAgCWAZHtUv4KrlaFz0i6hfS7Fp0KSId2EEbS0fAwGU3toW7JxW1qgnYMD
-	 ccNEs039hAFT5PrvqK8AGu1FE2aQNAy5uJRr3xhggz0xI6LXswQxtM54CITNXxTlgt
-	 Nc7VAfpyHj2oHf05oChYyUV7BK6e8ur0uc4ziDfY=
+	b=GcdYHbJnIHih/vJ6Ixl2mCxdoC+0A8N6cl+1GQHSMFydms1BCbHMQGl38ZZUUx44Y
+	 h9EbWhQGHfQNmn/t2PRcssLUM8uhx8AUzGSMkdyXGEAUBrj9YkhuTTwvT51gZHPzuq
+	 IZY831QVY234IsopvxhS8MIa88dlp/8HP3jL/0Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anup Sharma <anupnewsmail@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Luo Meng <luomeng12@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/259] perf build: Update build rule for generated files
-Date: Wed,  4 Oct 2023 19:53:06 +0200
-Message-ID: <20231004175218.042696592@linuxfoundation.org>
+Subject: [PATCH 6.1 014/259] dm: fix a race condition in retrieve_deps
+Date: Wed,  4 Oct 2023 19:53:07 +0200
+Message-ID: <20231004175218.082931098@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
 References: <20231004175217.404851126@linuxfoundation.org>
@@ -47,85 +42,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 7822a8913f4c51c7d1aff793b525d60c3384fb5b ]
+[ Upstream commit f6007dce0cd35d634d9be91ef3515a6385dcee16 ]
 
-The bison and flex generate C files from the source (.y and .l)
-files.  When O= option is used, they are saved in a separate directory
-but the default build rule assumes the .C files are in the source
-directory.  So it might read invalid file if there are generated files
-from an old version.  The same is true for the pmu-events files.
+There's a race condition in the multipath target when retrieve_deps
+races with multipath_message calling dm_get_device and dm_put_device.
+retrieve_deps walks the list of open devices without holding any lock
+but multipath may add or remove devices to the list while it is
+running. The end result may be memory corruption or use-after-free
+memory access.
 
-For example, the following command would cause a build failure:
+See this description of a UAF with multipath_message():
+https://listman.redhat.com/archives/dm-devel/2022-October/052373.html
 
-  $ git checkout v6.3
-  $ make -C tools/perf  # build in the same directory
+Fix this bug by introducing a new rw semaphore "devices_lock". We grab
+devices_lock for read in retrieve_deps and we grab it for write in
+dm_get_device and dm_put_device.
 
-  $ git checkout v6.5-rc2
-  $ mkdir build  # create a build directory
-  $ make -C tools/perf O=build  # build in a different directory but it
-                                # refers files in the source directory
-
-Let's update the build rule to specify those cases explicitly to depend
-on the files in the output directory.
-
-Note that it's not a complete fix and it needs the next patch for the
-include path too.
-
-Fixes: 80eeb67fe577aa76 ("perf jevents: Program to convert JSON file")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anup Sharma <anupnewsmail@gmail.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Reported-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230728022447.1323563-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.build  | 10 ++++++++++
- tools/perf/pmu-events/Build |  6 ++++++
- 2 files changed, 16 insertions(+)
+ drivers/md/dm-core.h  |  1 +
+ drivers/md/dm-ioctl.c |  7 ++++++-
+ drivers/md/dm-table.c | 32 ++++++++++++++++++++++++--------
+ 3 files changed, 31 insertions(+), 9 deletions(-)
 
-diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
-index 715092fc6a239..0f0aba16bdee7 100644
---- a/tools/build/Makefile.build
-+++ b/tools/build/Makefile.build
-@@ -116,6 +116,16 @@ $(OUTPUT)%.s: %.c FORCE
- 	$(call rule_mkdir)
- 	$(call if_changed_dep,cc_s_c)
+diff --git a/drivers/md/dm-core.h b/drivers/md/dm-core.h
+index 28c641352de9b..71dcd8fd4050a 100644
+--- a/drivers/md/dm-core.h
++++ b/drivers/md/dm-core.h
+@@ -214,6 +214,7 @@ struct dm_table {
  
-+# bison and flex files are generated in the OUTPUT directory
-+# so it needs a separate rule to depend on them properly
-+$(OUTPUT)%-bison.o: $(OUTPUT)%-bison.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
+ 	/* a list of devices used by this table */
+ 	struct list_head devices;
++	struct rw_semaphore devices_lock;
+ 
+ 	/* events get handed up using this callback */
+ 	void (*event_fn)(void *);
+diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
+index 2afd2d2a0f407..206e6ce554dc7 100644
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1566,6 +1566,8 @@ static void retrieve_deps(struct dm_table *table,
+ 	struct dm_dev_internal *dd;
+ 	struct dm_target_deps *deps;
+ 
++	down_read(&table->devices_lock);
 +
-+$(OUTPUT)%-flex.o: $(OUTPUT)%-flex.c FORCE
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,$(host)cc_o_c)
+ 	deps = get_result_buffer(param, param_size, &len);
+ 
+ 	/*
+@@ -1580,7 +1582,7 @@ static void retrieve_deps(struct dm_table *table,
+ 	needed = struct_size(deps, dev, count);
+ 	if (len < needed) {
+ 		param->flags |= DM_BUFFER_FULL_FLAG;
+-		return;
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -1592,6 +1594,9 @@ static void retrieve_deps(struct dm_table *table,
+ 		deps->dev[count++] = huge_encode_dev(dd->dm_dev->bdev->bd_dev);
+ 
+ 	param->data_size = param->data_start + needed;
 +
- # Gather build data:
- #   obj-y        - list of build objects
- #   subdir-y     - list of directories to nest
-diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
-index 04ef95174660b..fcb61b94f1306 100644
---- a/tools/perf/pmu-events/Build
-+++ b/tools/perf/pmu-events/Build
-@@ -25,3 +25,9 @@ $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS_PY)
- 	$(call rule_mkdir)
- 	$(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(JEVENTS_ARCH) pmu-events/arch $@
- endif
++out:
++	up_read(&table->devices_lock);
+ }
+ 
+ static int table_deps(struct file *filp, struct dm_ioctl *param, size_t param_size)
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index 288f600ee56dc..dac6a5f25f2be 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -134,6 +134,7 @@ int dm_table_create(struct dm_table **result, fmode_t mode,
+ 		return -ENOMEM;
+ 
+ 	INIT_LIST_HEAD(&t->devices);
++	init_rwsem(&t->devices_lock);
+ 
+ 	if (!num_targets)
+ 		num_targets = KEYS_PER_NODE;
+@@ -362,15 +363,19 @@ int dm_get_device(struct dm_target *ti, const char *path, fmode_t mode,
+ 			return -ENODEV;
+ 	}
+ 
++	down_write(&t->devices_lock);
 +
-+# pmu-events.c file is generated in the OUTPUT directory so it needs a
-+# separate rule to depend on it properly
-+$(OUTPUT)pmu-events/pmu-events.o: $(PMU_EVENTS_C)
-+	$(call rule_mkdir)
-+	$(call if_changed_dep,cc_o_c)
+ 	dd = find_device(&t->devices, dev);
+ 	if (!dd) {
+ 		dd = kmalloc(sizeof(*dd), GFP_KERNEL);
+-		if (!dd)
+-			return -ENOMEM;
++		if (!dd) {
++			r = -ENOMEM;
++			goto unlock_ret_r;
++		}
+ 
+ 		if ((r = dm_get_table_device(t->md, dev, mode, &dd->dm_dev))) {
+ 			kfree(dd);
+-			return r;
++			goto unlock_ret_r;
+ 		}
+ 
+ 		refcount_set(&dd->count, 1);
+@@ -380,12 +385,17 @@ int dm_get_device(struct dm_target *ti, const char *path, fmode_t mode,
+ 	} else if (dd->dm_dev->mode != (mode | dd->dm_dev->mode)) {
+ 		r = upgrade_mode(dd, mode, t->md);
+ 		if (r)
+-			return r;
++			goto unlock_ret_r;
+ 	}
+ 	refcount_inc(&dd->count);
+ out:
++	up_write(&t->devices_lock);
+ 	*result = dd->dm_dev;
+ 	return 0;
++
++unlock_ret_r:
++	up_write(&t->devices_lock);
++	return r;
+ }
+ EXPORT_SYMBOL(dm_get_device);
+ 
+@@ -421,9 +431,12 @@ static int dm_set_device_limits(struct dm_target *ti, struct dm_dev *dev,
+ void dm_put_device(struct dm_target *ti, struct dm_dev *d)
+ {
+ 	int found = 0;
+-	struct list_head *devices = &ti->table->devices;
++	struct dm_table *t = ti->table;
++	struct list_head *devices = &t->devices;
+ 	struct dm_dev_internal *dd;
+ 
++	down_write(&t->devices_lock);
++
+ 	list_for_each_entry(dd, devices, list) {
+ 		if (dd->dm_dev == d) {
+ 			found = 1;
+@@ -432,14 +445,17 @@ void dm_put_device(struct dm_target *ti, struct dm_dev *d)
+ 	}
+ 	if (!found) {
+ 		DMERR("%s: device %s not in table devices list",
+-		      dm_device_name(ti->table->md), d->name);
+-		return;
++		      dm_device_name(t->md), d->name);
++		goto unlock_ret;
+ 	}
+ 	if (refcount_dec_and_test(&dd->count)) {
+-		dm_put_table_device(ti->table->md, d);
++		dm_put_table_device(t->md, d);
+ 		list_del(&dd->list);
+ 		kfree(dd);
+ 	}
++
++unlock_ret:
++	up_write(&t->devices_lock);
+ }
+ EXPORT_SYMBOL(dm_put_device);
+ 
 -- 
 2.40.1
 
