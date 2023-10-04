@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460811D68D
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397AE1D68D
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZcAN2us"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97F0C433C8;
-	Wed,  4 Oct 2023 18:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctQu3tIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B5EC433C8;
+	Wed,  4 Oct 2023 18:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696443843;
-	bh=KXgkQ+Grm7C0UOpKPNTmALIhzAyFUvoTiq3xtk3PeCY=;
+	s=korg; t=1696443846;
+	bh=EuX+YYff5gTgeI9L4hVd5OEqcMjFHB8dZ6VqsK600TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZcAN2usKZjKnbycEUpV/P52YGus1w17xbcH2vklfgKPiCKj6Rzh31C0CtVPUM2gP
-	 pqOS/OJdOg/Ykz61cXBLJ/q8uaEEeq+zDcdnQl1Ce/OZHg5TMBBdVzMnC2FvoyVPXH
-	 nCdMczdSdlivcxf+CTiWubAmviWdF+0RgyNh0ePw=
+	b=ctQu3tIkhLC8mh3eK3HZEBz73JUfBIvdO7t0ISFPZjbL/kvYYE4h3hvwBSOaHDU7T
+	 9uKqT7HXQue7ApYNId6vpeB//MS4WHzH0SFWYMkDxXx3ub93O79FgjE7iu6LNLHsuy
+	 g10gYjKkYhrcfmusTQurtu51EGpHhyrvUlMPViLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Phil Sutter <phil@nwl.cc>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 040/321] netfilter: conntrack: fix extension size table
-Date: Wed,  4 Oct 2023 19:53:05 +0200
-Message-ID: <20231004175231.019892435@linuxfoundation.org>
+Subject: [PATCH 6.5 041/321] netfilter: nf_tables: Fix entries val in rule reset audit log
+Date: Wed,  4 Oct 2023 19:53:06 +0200
+Message-ID: <20231004175231.068831891@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -42,41 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 4908d5af16676b9d2901830551c2af911e452524 ]
+[ Upstream commit 7fb818f248cff996180b7cdcdcb86b6b4f6e44e2 ]
 
-The size table is incorrect due to copypaste error,
-this reserves more size than needed.
+The value in idx and the number of rules handled in that particular
+__nf_tables_dump_rules() call is not identical. The former is a cursor
+to pick up from if multiple netlink messages are needed, so its value is
+ever increasing. Fixing this is not just a matter of subtracting s_idx
+from it, though: When resetting rules in multiple chains,
+__nf_tables_dump_rules() is called for each and cb->args[0] is not
+adjusted in between. Introduce a dedicated counter to record the number
+of rules reset in this call in a less confusing way.
 
-TSTAMP reserved 32 instead of 16 bytes.
-TIMEOUT reserved 16 instead of 8 bytes.
+While being at it, prevent the direct return upon buffer exhaustion: Any
+rules previously dumped into that skb would evade audit logging
+otherwise.
 
-Fixes: 5f31edc0676b ("netfilter: conntrack: move extension sizes into core")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 9b5ba5c9c5109 ("netfilter: nf_tables: Unbreak audit log reset")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_extend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_extend.c b/net/netfilter/nf_conntrack_extend.c
-index 0b513f7bf9f39..dd62cc12e7750 100644
---- a/net/netfilter/nf_conntrack_extend.c
-+++ b/net/netfilter/nf_conntrack_extend.c
-@@ -40,10 +40,10 @@ static const u8 nf_ct_ext_type_len[NF_CT_EXT_NUM] = {
- 	[NF_CT_EXT_ECACHE] = sizeof(struct nf_conntrack_ecache),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_TIMESTAMP
--	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_acct),
-+	[NF_CT_EXT_TSTAMP] = sizeof(struct nf_conn_tstamp),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
--	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_tstamp),
-+	[NF_CT_EXT_TIMEOUT] = sizeof(struct nf_conn_timeout),
- #endif
- #ifdef CONFIG_NF_CONNTRACK_LABELS
- 	[NF_CT_EXT_LABELS] = sizeof(struct nf_conn_labels),
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 018cf368f6a5f..3e6839c03bccc 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3451,6 +3451,8 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
+ 	struct net *net = sock_net(skb->sk);
+ 	const struct nft_rule *rule, *prule;
+ 	unsigned int s_idx = cb->args[0];
++	unsigned int entries = 0;
++	int ret = 0;
+ 	u64 handle;
+ 
+ 	prule = NULL;
+@@ -3473,9 +3475,11 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
+ 					NFT_MSG_NEWRULE,
+ 					NLM_F_MULTI | NLM_F_APPEND,
+ 					table->family,
+-					table, chain, rule, handle, reset) < 0)
+-			return 1;
+-
++					table, chain, rule, handle, reset) < 0) {
++			ret = 1;
++			break;
++		}
++		entries++;
+ 		nl_dump_check_consistent(cb, nlmsg_hdr(skb));
+ cont:
+ 		prule = rule;
+@@ -3483,10 +3487,10 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
+ 		(*idx)++;
+ 	}
+ 
+-	if (reset && *idx)
+-		audit_log_rule_reset(table, cb->seq, *idx);
++	if (reset && entries)
++		audit_log_rule_reset(table, cb->seq, entries);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int nf_tables_dump_rules(struct sk_buff *skb,
 -- 
 2.40.1
 
