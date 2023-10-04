@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3B4210E4
-	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A719C210ED
+	for <patches@lists.linux.dev>; Wed,  4 Oct 2023 18:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhWfzLvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D343C433C7;
-	Wed,  4 Oct 2023 18:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfBE2on6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26982C433C7;
+	Wed,  4 Oct 2023 18:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696444360;
-	bh=qeQrZ/arc7zaxa8io9qyQnbiPXGIWaDsE7E0iUh4K1Y=;
+	s=korg; t=1696444363;
+	bh=z5Kz7K1AyzwkohEm39w18tw938hs9BccqWebgO4vaVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OhWfzLvJ7i9xoARdzMscXh4izwsoBn5goqQJIV54+lF0fypPskIKRaZTiKfW0Dg4b
-	 IJ4dL2lnNhqgEUGqRj+zyqOaehSMXSWSqFLg/i/xZg0V92EJoyf+EUO9O1zgZEGBN0
-	 5+HvE93J7RB2Y6hxUyBcfyma9EyWm+LzdJ4v++wY=
+	b=VfBE2on6YAV7RDAWeVsdUBGG0cddPsqalghIzx22+ozbp4Uc8VGfH1vrUKcYH1jkR
+	 TmNDPnSt55UPgNcF45MNHTOW3TfDs33D9enUTAJdP/bbBrpykCW76KGKy1YCsytoKC
+	 qhAKRrtc15oKjw1vAodAvcsXD0nZp8uzFMqzTsz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 223/321] ASoC: SOF: Intel: MTL: Reduce the DSP init timeout
-Date: Wed,  4 Oct 2023 19:56:08 +0200
-Message-ID: <20231004175239.549151942@linuxfoundation.org>
+Subject: [PATCH 6.5 224/321] powerpc/watchpoints: Disable preemption in thread_change_pc()
+Date: Wed,  4 Oct 2023 19:56:09 +0200
+Message-ID: <20231004175239.598075908@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
 References: <20231004175229.211487444@linuxfoundation.org>
@@ -39,61 +36,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Benjamin Gray <bgray@linux.ibm.com>
 
-[ Upstream commit e0f96246c4402514acda040be19ee24c1619e01a ]
+[ Upstream commit cc879ab3ce39bc39f9b1d238b283f43a5f6f957d ]
 
-20s seems unnecessarily large for the DSP init timeout. This coupled with
-multiple FW boot attempts causes an excessive delay in the error path when
-booting in recovery mode. Reduce it to 0.5s and use the existing
-HDA_DSP_INIT_TIMEOUT_US.
+thread_change_pc() uses CPU local data, so must be protected from
+swapping CPUs while it is reading the breakpoint struct.
 
-Link: https://github.com/thesofproject/linux/issues/4565
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915134153.9688-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The error is more noticeable after 1e60f3564bad ("powerpc/watchpoints:
+Track perf single step directly on the breakpoint"), which added an
+unconditional __this_cpu_read() call in thread_change_pc(). However the
+existing __this_cpu_read() that runs if a breakpoint does need to be
+re-inserted has the same issue.
+
+Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230829063457.54157-2-bgray@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/mtl.c | 2 +-
- sound/soc/sof/intel/mtl.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/kernel/hw_breakpoint.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/mtl.c b/sound/soc/sof/intel/mtl.c
-index 30fe77fd87bf8..79e9a7ed8feaa 100644
---- a/sound/soc/sof/intel/mtl.c
-+++ b/sound/soc/sof/intel/mtl.c
-@@ -460,7 +460,7 @@ int mtl_dsp_cl_init(struct snd_sof_dev *sdev, int stream_tag, bool imr_boot)
- 	/* step 3: wait for IPC DONE bit from ROM */
- 	ret = snd_sof_dsp_read_poll_timeout(sdev, HDA_DSP_BAR, chip->ipc_ack, status,
- 					    ((status & chip->ipc_ack_mask) == chip->ipc_ack_mask),
--					    HDA_DSP_REG_POLL_INTERVAL_US, MTL_DSP_PURGE_TIMEOUT_US);
-+					    HDA_DSP_REG_POLL_INTERVAL_US, HDA_DSP_INIT_TIMEOUT_US);
- 	if (ret < 0) {
- 		if (hda->boot_iteration == HDA_FW_BOOT_ATTEMPTS)
- 			dev_err(sdev->dev, "timeout waiting for purge IPC done\n");
-diff --git a/sound/soc/sof/intel/mtl.h b/sound/soc/sof/intel/mtl.h
-index 2794fe6e81396..9a0b8b9d8a0c9 100644
---- a/sound/soc/sof/intel/mtl.h
-+++ b/sound/soc/sof/intel/mtl.h
-@@ -62,7 +62,6 @@
- #define MTL_DSP_IRQSTS_IPC		BIT(0)
- #define MTL_DSP_IRQSTS_SDW		BIT(6)
+diff --git a/arch/powerpc/kernel/hw_breakpoint.c b/arch/powerpc/kernel/hw_breakpoint.c
+index e1b4e70c8fd0f..0a1e17b334284 100644
+--- a/arch/powerpc/kernel/hw_breakpoint.c
++++ b/arch/powerpc/kernel/hw_breakpoint.c
+@@ -505,11 +505,13 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
+ 	struct arch_hw_breakpoint *info;
+ 	int i;
  
--#define MTL_DSP_PURGE_TIMEOUT_US	20000000 /* 20s */
- #define MTL_DSP_REG_POLL_INTERVAL_US	10	/* 10 us */
++	preempt_disable();
++
+ 	for (i = 0; i < nr_wp_slots(); i++) {
+ 		if (unlikely(tsk->thread.last_hit_ubp[i]))
+ 			goto reset;
+ 	}
+-	return;
++	goto out;
  
- /* Memory windows */
+ reset:
+ 	regs_set_return_msr(regs, regs->msr & ~MSR_SE);
+@@ -518,6 +520,9 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
+ 		__set_breakpoint(i, info);
+ 		tsk->thread.last_hit_ubp[i] = NULL;
+ 	}
++
++out:
++	preempt_enable();
+ }
+ 
+ static bool is_larx_stcx_instr(int type)
 -- 
 2.40.1
 
