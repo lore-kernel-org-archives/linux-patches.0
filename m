@@ -1,327 +1,111 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB96134D6
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 16:40:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFBC37C9D
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 17:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="udRsTH+d"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-452951b27d0so576701137.2
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 09:40:09 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="X+RSKIEV"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so13919281fa.2
+        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 10:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696524009; x=1697128809; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1696526336; x=1697131136; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2thL5ZLQW73WF1UYkoIC5cbGYf0wYlLtd79y60/Ixhs=;
-        b=udRsTH+dCkUaREGamSFI0hJjEo5r/14zCFKGaUHc0Hsp6BLCMGve7fsMXkDyERgqKe
-         vBka+jARoknyR9e4+aoXTXTOBjSaTwpTEpzZ9EgoFjCOVl2Xx2VoqLv7KpiWJ9aiBsyF
-         DbabmuU4bhVq+fvm/WRWwTcRL4JNyGsiGHlm7pfe1HsjxQkN6SWEwrFf8LetDHzc3ebQ
-         7HJysXAgIuC9eOQ1n/aeqFnZRCzCf8q8V9CABwPwuvpzcIblSQ0EeK+o1Z0RS7gRYDX5
-         WhRHs58BpRtVHB8Zul5F/vcayQVhNKQRhb58ylgxinVmkR66QF4ZAir9XDyZ2IgDir63
-         DcUg==
+        bh=K4qtwUC5OWXLWsxsdHc8Vyp8jChtnD5xWpTwtPZAf1Y=;
+        b=X+RSKIEVg+RDdRit+d9sIPX8/92sYOzO0+Gkn9V3z/Cuns2DFbToEXBAstb0UxQ2kO
+         cjV0sv43eZyUQFBnr09spxPgl2eNsoZToTIcL7CM2wVNATF5eVghom4EHj0IPhEvkywI
+         a13MlkGvwR3Ciwpqd9V4S2FJp+oHFQIQ2cvz8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696524009; x=1697128809;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2thL5ZLQW73WF1UYkoIC5cbGYf0wYlLtd79y60/Ixhs=;
-        b=J5Wd/wlSa/7nN7gJDz+mJKjTniLNnsJOspKoLFkGE21RQe3JvG5S+BM6ZsTnk435UJ
-         iyCiaTaOvkif2hyl3n5W2ITQQ+6mIncASoYiRuFfwpb4mfHFjEJif+gNDRD8UkAhceeb
-         5vkcesf76rcQIXu4jo3y3BT74aA2uq+4luHjOsoky2nYjNTID/yJxmSdvYhMpB6PmjnX
-         21ueX2BydEPvjCJhsCsqx/SKBhuWpv61jTEjcV4h7TkgCXqwwLkE6X7QTJLU3RdIa9y3
-         RRkaAhobBWdL7Fl3C6BSf4l/Oz3X4kijeZrcN0a6xe14Kx5u/2H6Cvd8nI0P3933Gs6q
-         I3QQ==
-X-Gm-Message-State: AOJu0YyRduNwuabDPiVaBgGDMBJQ/QPnYH/vd34TxhUMOYh8ZkUKH9wn
-	uYe+0QLh3Bi3wrMoHL5dxER2c71rw0qs+gVMwIc06Q==
-X-Google-Smtp-Source: AGHT+IGp+XVpQcjXnNjDev251fg85e0y40eaefH6LoORjDhsnCDOKiusiRkHPjF3o1dfGTYNLNGXfSFV1bgrV6Sbzd8=
-X-Received: by 2002:a67:ea4f:0:b0:44d:626b:94da with SMTP id
- r15-20020a67ea4f000000b0044d626b94damr4990497vso.32.1696524008739; Thu, 05
- Oct 2023 09:40:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696526336; x=1697131136;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=K4qtwUC5OWXLWsxsdHc8Vyp8jChtnD5xWpTwtPZAf1Y=;
+        b=d+VDPLUS6c7q3j4c5YWEzAT8MAkxo8l/Pyyh+yuWdx+rADxY7HLV+49XUMEcHjVqkf
+         ICo8ZnrmTcPT70QTJhGc+Mxr5NvOHHmMKq9BmoBG+XOfLjc/XiRellQJeKLrbA9KMBH1
+         MwZzlU55BjznNIH/GCFyBWwu7mmNoxpob0+pQY1V8IdicvF1YkvOIAyxLdW1y2jZN4O8
+         LCux+LGzOU1FWWEti4mf7Q7653ccrdw1UA5Kxdql6BKL0e0ejlOLXR6AgAj8xYtSAkpn
+         akDWc4qZX43CizgPOGcGbrmAbYdVRmf84/R7He3rdiW31HkHPZn03MaBr8jK+0V8q6+O
+         YoPQ==
+X-Gm-Message-State: AOJu0YxmUdBMYv5WIr6jYagiPZ8pFVajdlFzqu49cyqNt/CCQsqqtr5z
+	J+HnXUIELLYV4XTpr+w4Y9EZ2155utU6RA/VjTbhWA==
+X-Google-Smtp-Source: AGHT+IGz3dfXxzyBA3mj6bpkuScOj2CsByPZVzGVOuypWZVASQXSq77oLaNIiQZy12jlFuvTXd6MBb+9Nrb2xXw8Z0k=
+X-Received: by 2002:a05:6512:2030:b0:503:258f:fd15 with SMTP id
+ s16-20020a056512203000b00503258ffd15mr4793359lfs.20.1696526335763; Thu, 05
+ Oct 2023 10:18:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 5 Oct 2023 12:18:55 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231004175217.404851126@linuxfoundation.org>
-In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 5 Oct 2023 22:09:57 +0530
-Message-ID: <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-nfs@vger.kernel.org
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Olga Kornievskaia <kolga@netapp.com>, Benjamin Coddington <bcodding@redhat.com>, 
-	Anna Schumaker <Anna.Schumaker@netapp.com>, 
-	Trond Myklebust <trond.myklebust@hammerspace.com>, LTP List <ltp@lists.linux.it>, 
-	Petr Vorel <pvorel@suse.cz>, Richard Palethorpe <rpalethorpe@suse.com>, Eryu Guan <eguan@redhat.com>, 
-	chrubis <chrubis@suse.cz>
+In-Reply-To: <CAD=FV=U2dza-rxV=YtcfJwUY-gZw5FrCyn0NahOxvXJW2J2-vg@mail.gmail.com>
+References: <20231002235407.769399-1-swboyd@chromium.org> <CAD=FV=U2dza-rxV=YtcfJwUY-gZw5FrCyn0NahOxvXJW2J2-vg@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 5 Oct 2023 12:18:55 -0500
+Message-ID: <CAE-0n51LJDgop-Nh+Aq1CTiu7xJZOqOsdSvHMmXzshkRKM3dgg@mail.gmail.com>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
+ with auxiliary device
+To: Doug Anderson <dianders@chromium.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	dri-devel@lists.freedesktop.org, Maxime Ripard <maxime@cerno.tech>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+Quoting Doug Anderson (2023-10-02 17:31:41)
+> Hi,
 >
-> This is the start of the stable review cycle for the 6.1.56 release.
-> There are 259 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> On Mon, Oct 2, 2023 at 4:54=E2=80=AFPM Stephen Boyd <swboyd@chromium.org>=
+ wrote:
+> >
+> > The kernel produces a warning splat and the DSI device fails to registe=
+r
+> > in this driver if the i2c driver probes, populates child auxiliary
+> > devices, and then somewhere in ti_sn_bridge_probe() a function call
+> > returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
+> > device created by devm_mipi_dsi_device_register_full() is left
+> > registered because the devm managed device used to manage the lifetime
+> > of the DSI device is the parent i2c device, not the auxiliary device
+> > that is being probed.
+> >
+> > Associate the DSI device created and managed by this driver to the
+> > lifetime of the auxiliary device, not the i2c device, so that the DSI
+> > device is removed when the auxiliary driver unbinds. Similarly change
+> > the device pointer used for dev_err_probe() so the deferred probe error=
+s
+> > are associated with the auxiliary device instead of the parent i2c
+> > device so we can narrow down future problems faster.
+> >
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Cc: Maxime Ripard <maxime@cerno.tech>
+> > Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DS=
+I device at probe")
 >
-> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> Anything received after that time might be too late.
+> Even before that commit I think it was using the main "dev" instead of
+> the auxiliary device's "dev" for some "devm" stuff. I guess the
+> difference is that it wouldn't mess with probe deferral? Searching
+> back, I think the first instance of a case that was using "devm_" with
+> the wrong device was commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86:
+> Wrap panel with panel-bridge")? Would it make sense to use that as a
+> Fixes, you think?
+
+The problem for me is that the dsi device is registered twice. That
+happens because probe for the auxiliary device happens twice. I was
+cautious about the fixes tag here because it didn't look like probe
+deferral was happening before commit c3b75d4734cb.
+
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.56-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
+> In any case, this looks reasonable to me:
 >
-> thanks,
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 >
-> greg k-h
+> I'll give it a week and then apply to "-fixes" if everything is quiet.
 
-Results from Linaro=E2=80=99s test farm.
-Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
-NFS mounted rootfs.
-and LTP hugetlb hugemmap11 test case failed on x86 and arm64 bcm2711-rpi-4-=
-b.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-LTP hugetlb tests failed log
-  tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
-  tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
-  hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
-
-LTP dio tests failed log
-  compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
-offset 4096: 0x00 .
-  diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
-infile and outfile
-
-## Build
-* kernel: 6.1.56-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.1.y
-* git commit: 0353a7bfd2b60c5e42c8651eb3fa4cc48159db5f
-* git describe: v6.1.55-260-g0353a7bfd2b6
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.5=
-5-260-g0353a7bfd2b6
-
-## Test Regressions (compared to v6.1.55)
-* x86_64-clang, ltp-hugetlb
-* bcm2711-rpi-4-b, ltp-hugetlb
-* bcm2711-rpi-4-b-clang, ltp-hugetlb
-* bcm2711-rpi-4-b-64k_page_size, ltp-hugetlb
-  - hugemmap11
-
-Test log:
---------
-  tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
-  tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
-  hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
-
-Links:
-  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
-.1.55-260-g0353a7bfd2b6/testrun/20259639/suite/ltp-hugetlb/test/hugemmap11/=
-log
-  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
-.1.55-260-g0353a7bfd2b6/testrun/20260457/suite/ltp-hugetlb/test/hugemmap11/=
-history/
-
-* bcm2711-rpi-4-b, ltp-dio
-* bcm2711-rpi-4-b-clang, ltp-dio
-* bcm2711-rpi-4-b-64k_page_size, ltp-dio
-  - dio01
-  - dio02
-  - dio03
-  - dio05
-  - dio06
-  - dio07
-  - dio08
-  - dio09
-  - dio11
-
-Test log:
---------
-  compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
-offset 4096: 0x00 .
-  diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
-infile and outfile
-  bufcmp: offset 0: Expected: 0x1, got 0x0
-  bufcmp: offset 0: Expected: 0x1, got 0x0
-  diotest02    1  TPASS  :  Read with Direct IO, Write without
-  diotest02    2  TFAIL  :  diotest2.c:119: read/write comparision failed
-  diotest02    3  TFAIL  :  diotest2.c:210: Write with Direct IO, Read with=
-out
-  diotest02    4  TFAIL  :  diotest2.c:119: read/write comparision failed
-  diotest02    5  TFAIL  :  diotest2.c:231: Read, Write with Direct IO
-  diotest02    0  TINFO  :  2/3 testblocks failed
-  bufcmp: offset 0: Expected: 0x1, got 0x0
-  diotest03    1  TPASS  :  Read with Direct IO, Write without
-  diotest03    2  TFAIL  :  diotest3.c:136: comparsion failed; child=3D0 of=
-fset=3D0
-  diotest03    3  TFAIL  :  diotest3.c:189: Write Direct-child 0 failed
-  bufcmp: offset 0: Expected: 0x1, got 0x0
-  diotest03    1  TPASS  :  Read with Direct IO, Write without
-  diotest03    2  TFAIL  :  diotest3.c:306: Write with Direct IO, Read with=
-out
-  diotest03    3  TFAIL  :  diotest3.c:136: comparsion failed; child=3D0 of=
-fset=3D0
-  diotest03    4  TFAIL  :  diotest3.c:210: RDWR Direct-child 0 failed
-  diotest03    1  TPASS  :  Read with Direct IO, Write without
-  diotest03    2  TFAIL  :  diotest3.c:306: Write with Direct IO, Read with=
-out
-  diotest03    3  TFAIL  :  diotest3.c:323: Read, Write with Direct IO
-  ...
-  diotest05    1  TPASS  :  Read with Direct IO, Write without
-  diotest05    2  TFAIL  :  diotest5.c:141: readv/writev comparision failed
-  diotest05    3  TFAIL  :  diotest5.c:250: Write with Direct IO, Read with=
-out
-  diotest05    4  TFAIL  :  diotest5.c:141: readv/writev comparision failed
-  diotest05    5  TFAIL  :  diotest5.c:271: Read, Write with Direct IO
-  diotest05    0  TINFO  :  2/3 testblocks failed
-
-Links:
-  - https://lkft.validation.linaro.org/scheduler/job/6842177#L1666
-  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
-.1.55-260-g0353a7bfd2b6/testrun/20260389/suite/ltp-dio/test/dio01/history/
-
-## Metric Regressions (compared to v6.1.55)
-
-## Test Fixes (compared to v6.1.55)
-
-## Metric Fixes (compared to v6.1.55)
-
-## Test result summary
-total: 121166, pass: 102582, fail: 2234, skip: 16177, xfail: 173
-
-## Build Summary
-* arc: 4 total, 4 passed, 0 failed
-* arm: 140 total, 140 passed, 0 failed
-* arm64: 49 total, 49 passed, 0 failed
-* i386: 33 total, 33 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 34 total, 34 passed, 0 failed
-* riscv: 12 total, 12 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 11 total, 11 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 40 total, 40 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-vm
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Thanks!
