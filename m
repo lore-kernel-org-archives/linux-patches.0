@@ -1,113 +1,160 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1B9200AE
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 14:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA3130CE3
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 15:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yZ3dp+bf"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-78f1210e27fso453837241.1
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 07:55:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696517714; x=1697122514; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4sb1q74MArJrmg1EnidKYrw9CtEuXNYc17Dl5pGnnhs=;
-        b=yZ3dp+bfuN9hdjLd5Wc/xCIpeHzH3O6dODFH8eaS1Gm5g58h2ULR67yoA402DHuuPh
-         BXTi+aLAT6rMnRNGuV35Li3r1709H87M164JsO0ZKGlvb5H9qVtCH0Kfj07osav8HIV9
-         8Gm0IWlCXo59J65/f2UJ2dvanVXakfhIqsdvPnHxmBr2VfLw9HhucAie9Xg2HEuGDZy4
-         /xEk/feZzLJ/76qwyKs6YWcgXbnPDiN/L397fTd2n30gJGnkUnkqDdjGL70jioBkNWSk
-         4olFzcHi6qgCn04yCWjpKU2pfhJzZ//Pbss+lR5z4BqtTEOwi5IrPmx8SkIiED+kAy1/
-         GAbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696517714; x=1697122514;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4sb1q74MArJrmg1EnidKYrw9CtEuXNYc17Dl5pGnnhs=;
-        b=s4aMElDD3YHu0zOtZgzBbz5xihN43E7dflSXWb08beTAf6RBYMBuDL/HDv4gwVDWmx
-         in/hx1vOXQlD71WH1OHgMlyIM5TBIA0HtIFsMVFAAHOfTEhjL3ilCVQJgXu26RscanxT
-         wAt0T/rBg0Gj3IPZxFcnyPVXp/+fbe5lm/ftVdwLOfogAiQ+WohnTS/3gDWdmz3645Kk
-         s5tWYJKjYr7sLOkKJidAcdhurQ/5LEAdCHYN+e9jqaXV1622xR1KHdZ09Zkz0lHoTuvz
-         qcLWFhqW3s0kb8Aq5bV5u/D6xVEi9M8AQ5S4ZobI5+8LzTlAbKef0rleyNZKNGEK32eb
-         10AQ==
-X-Gm-Message-State: AOJu0YwX/xhpTkJWZMCE8ortiDBh579+KAlsTdXSTpfEBKrCm/JnYH0P
-	kz2lUbokA5tXjqQKthuGytlOxEfJ/4+JsIuY1Kzw6A==
-X-Google-Smtp-Source: AGHT+IEO+WrPrzg8wdQMFzOvFJCD6a5uz7Ox65W+J3MpViKFb5GfWKQNzse/Kl9U7x+Y2TA3B2fv/zljaBJT0SI57W8=
-X-Received: by 2002:a1f:a9d0:0:b0:49d:92e0:9cd1 with SMTP id
- s199-20020a1fa9d0000000b0049d92e09cd1mr5188264vke.11.1696517713597; Thu, 05
- Oct 2023 07:55:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GZjTvqpv"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696518547; x=1728054547;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=Fuus/tHWV4+TgOmNyzvUvmfA4T3zLpKSVBdG/pzVX7c=;
+  b=GZjTvqpv13Ug3wCo+bnESFS1qYhe2kHkZfLqtiBHlpm6Ef7oCSnlYu3f
+   EmvNRAw4GV+QC9qWxGfs3OsIUdnq9/JHa3npUcelk3wj6juD1c/U32ZKR
+   om6AL4O1Frjo2ZwOiS0CrZvUhSW+SoNxGdOBeNEoJZ1+Qnsb6SDtjKvEP
+   3wUNO/87RRHXkKj6q8dr8aCPMGwNEITzPDD7U0WrpWO2wP8pWwUa+z0H9
+   rIxa1ioE9id6JjbhFKbjwKOaveeC6nYa9Xy1apCzU1q6ERSgr7cwkUKnj
+   Xf22OB0l0YvLRKTIuFdNzmEquDNNw1yfTeU4E/t7bGllxC1xHOiCi/1vW
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="380803443"
+X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
+   d="scan'208";a="380803443"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 08:08:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="781283417"
+X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
+   d="scan'208";a="781283417"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orsmga008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 05 Oct 2023 08:08:28 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Thu, 5 Oct 2023 08:08:28 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Thu, 5 Oct 2023 08:08:28 -0700
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.44) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Thu, 5 Oct 2023 08:08:28 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BjVxeY6Hmqtjyt3CYVrtPSSOOZcBqyqxc7i6puU/AQVbPgDkHUj7qMn5RXFtmlix0GEfAhlNTW6BAQsM582BH5POWSq13EBHPyo55LuYtBruoIsHJN0ZYMw8zggNNpDr+vBxBEc4GwoZf0GMUrwmbnsKBLZKFePD38YcR2HTG/xyRvEQzk+HtVhjJD3viNH8T2bCOQmuL7RoY2vssC0Eh1EadvNbMs6TP4Ej6TMe4MJgb5dnl7VC3NiHM6tbPLaCNklVlgNhnPE7NfTso7V8dTR4xIIwZuApAudSYimwmukn+n/CNreweScrH70m1z1RwINylVk8sn6EAVf8mod3dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Fuus/tHWV4+TgOmNyzvUvmfA4T3zLpKSVBdG/pzVX7c=;
+ b=iS5m+K8mEvILcJ7acsfeq8XkTfdZ96ctI+2HHLH+8/a/BSthk/AyzSyI1leTei1I6VXePbGgFaenUaWHABLle9IBgO0QrJiXFNaZ/d2RlI14086YjlxuSqg1pF0Uqgo2nGGAlQ+a7l0emTGCCUraLqVjUaVph+ZUYO5xArJVeRrrJj2vzQNGCKaUk6kUHr8UjBD44eW+k9qB9lBC+BUC1O8DW3n5PkSOEs6qf/bZSgi5gjwvSMwQ3U5UjjC/p/cclAo5mbtbPjs9gilNoE9QNDuyZOWAvAu0K3Abh8pEAkG/Cp4z+gOstUcDs4USkcBxqqfIzE8oIj7DzS5ZNlal7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by IA0PR11MB8335.namprd11.prod.outlook.com (2603:10b6:208:493::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.21; Thu, 5 Oct
+ 2023 15:08:24 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::7316:13b0:88bc:b3c8]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::7316:13b0:88bc:b3c8%4]) with mapi id 15.20.6838.030; Thu, 5 Oct 2023
+ 15:08:24 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, "Yu, Fenghua"
+	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>, Peter
+ Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
+	<skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
+CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v8 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Thread-Topic: [PATCH v8 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Thread-Index: AQHZ9kDmPMTGRMpqwECfzMNRwN+gxLA62l+AgABzpuA=
+Date: Thu, 5 Oct 2023 15:08:24 +0000
+Message-ID: <SJ1PR11MB6083188C577FD1067B6F7362FCCAA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20230928191350.205703-1-tony.luck@intel.com>
+ <20231003213043.13565-1-tony.luck@intel.com>
+ <TYAPR01MB6330625DB7B68BC63B4F67E38BCAA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
+In-Reply-To: <TYAPR01MB6330625DB7B68BC63B4F67E38BCAA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels: MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_ActionId=8889ef1a-6052-4a21-ba9c-04c4f3fb983c;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_ContentBits=0;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Enabled=true;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Method=Standard;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Name=FUJITSU-RESTRICTED???;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_SetDate=2023-10-05T08:07:28Z;MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_SiteId=a19f121d-81e1-4858-a9d8-736e267fd4c7;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|IA0PR11MB8335:EE_
+x-ms-office365-filtering-correlation-id: 176b9195-2171-4687-059c-08dbc5b4ebe4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: JtevpG/BxeMC8hfMxN5e1TTE+aVrSglKxfiFPD2XzbDP4QQ57DnLZjJkaRH/7csf8Ri+cwrwGcYjHNSW5e/vDcgZD9CRnjINyBZSwKoAXuQorpv6VGn/e6XGAA2BswR99ezUh560Uak+T5XoD+R5tN2uJtwsrQf6FZnz0Hi9SqZ86y3bgHDE9kuHhiDLR2SVHTLoakP/XHkvHuiEj7gwrTAVfESRDhC5i05MPfvJyHQ4yxupKIT+lSc7cdiWsw9or+QtvVGZpBpL1jbplJFo3ZWlwb8wO5gKcNwDk6hOQi9EIEyS1yfsIGrQNC8vfZhc4BwAgdti/WWTBYxe8owzMoJJTSfZ0MuN6INuxNnJ7cTua6q0QXwBRQTpwxftvF1ycoahr9F0JzlLynwwM7QoKpA9zny5kVFnScU5gR1sJ0MBWFkOdZGyN+EA/U7Pod8AshCm/RVKt1BmH/vm0isuaBNj+03bt6gT2rIIIcooJeYNYmqom39cyywplLicLKAgnqgFZoZOOR0bnOL2CVpuLUZY1LFI7W8nzMxl1U7Dn+C3MjCFpiekzlKcpCTiGUQ/rh5q2kYt/95hr3Fv9c02P0Rp7pd8XV2CTE89u5BVhdYFtDIgWbqrOM1X5TsWRhzB
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(136003)(366004)(376002)(230922051799003)(64100799003)(186009)(1800799009)(451199024)(110136005)(8676002)(52536014)(26005)(5660300002)(8936002)(4326008)(76116006)(83380400001)(66946007)(33656002)(4744005)(2906002)(478600001)(66446008)(7696005)(6506007)(66556008)(9686003)(54906003)(64756008)(66476007)(55016003)(316002)(7416002)(38100700002)(86362001)(82960400001)(38070700005)(71200400001)(122000001)(41300700001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7XNflut/yjagPMYZnLBFFgzNRREZ2fbGO2+++mxKC3ubb1K96G5LalVRP1sn?=
+ =?us-ascii?Q?pTML3y9Ra2Q4v8OtuZlEZ8aWTbk3bfwv3yONfPrZTaol9wT7do19fx0ZUsUk?=
+ =?us-ascii?Q?q5LapcdsrnpgdlHyEWBQzjL3y8IsLgvfnI74w3HHuebwDsCWrVd7Nxa6CCUM?=
+ =?us-ascii?Q?s9atknOSHN3vc0pquBTCERCXBA9cUXMBrHvjkyujcmRqqTbPTAWd1JjXveLD?=
+ =?us-ascii?Q?oxhiR2+L9HOJY3qiN3hfO6KBMNHHgb6jCgb522hvnPNaSFA4dZkZu0874P3s?=
+ =?us-ascii?Q?O2U+EHymaYFnMCmnb1XW1SI3jhP18xdZULrZl4IuT96R2tOGKtJ7NJerIxJv?=
+ =?us-ascii?Q?glfIqa3H+LSk+X+6uE0dU1cILKMG+ST8+2kf1WVy/iBC0D4xapwvETYgkjLw?=
+ =?us-ascii?Q?+3fx5uaY6z9FLco8ghhkKF+r5pEA8jfT88DIsmWpzw5ewG6xDf/TTfiULCgO?=
+ =?us-ascii?Q?1scDkZ+UbeWvxNrzIOHbLA6KzyrX3vK3GhtiXLD68NuskKF48rw7IYxTl0Qe?=
+ =?us-ascii?Q?dgxMwW7f7am5+IMqUPKHBOudLr2LtKUmXJWyiaK/TsqFy+sjLZJAxBq4CQnK?=
+ =?us-ascii?Q?K/e29gHy8+uq2MwmCP6oqh6mvXTOUVNgW8KIa6bcn5VJhjX8RWN5SgitfOem?=
+ =?us-ascii?Q?/FUjMAmHKP1oHfGOSjrXBhWwV+YzCuffp1tZBy9F3nWg/hrMmjePNW8XpMLb?=
+ =?us-ascii?Q?YGu12nWyUAio9q8dzLMZfD8Qr//XuDVzxHdcMsgLkT0swL3kGL6sk7PdEsvT?=
+ =?us-ascii?Q?YdpXVb5kEc3LyXABYNdSIK0J1jy5SHDubYK0upGPNaI3FoLwr59cnz5IwU4w?=
+ =?us-ascii?Q?4zqgoyg5UKGtsyDZoNpx1v+Za+W+63SkN5wMXEwM0xhVYjI4NYpIy/OBMuj7?=
+ =?us-ascii?Q?qVRH83vCESc27juZAdVwxooDj5wO2AZpe8H+N6F9LwXrHJodNa9RvQfj3iGQ?=
+ =?us-ascii?Q?7XD71WT2de4QnPgmSTJjwOWNtvFWokmTn5d2Bum9dvMwJq4B9d7VAJQ99N97?=
+ =?us-ascii?Q?xAk41Cm4ihjok4XB6Ea4WG0/4VJsoyJxObmWu8U0ZsAzJgipDmDs7hDTkCRq?=
+ =?us-ascii?Q?uQZVFMpmI9O66eVrHupDkX5OJsZsd5dtf/tHlyEIQosZi/EEpDi9hhxhiLIX?=
+ =?us-ascii?Q?81JFdgof4RIQpH6+C+D+0ApGSD3Rspu05u1tFaEEGvAECz0Pnw2t2hK7CPxq?=
+ =?us-ascii?Q?yViIygLIZHEd4b0o8tmc7yUgVlrbroGezSht1LuxV2AaXLUP9vjnelyjGSz9?=
+ =?us-ascii?Q?27DFqgE6/hQoTgqBPr2n5cRzkRRQQstECQORmN0GK+ef1yXCEk8kfwqOirK2?=
+ =?us-ascii?Q?fHNp3hdTrDVG/Tdff21W9Bun1yqs5t99oDJFgakt8E5VNVxjwkg7Lwkrd/de?=
+ =?us-ascii?Q?pXGUhuJF4tn2Pwwb0JseS6M6wgj9RyrtqKKOa4pumSeSZkwLrYqOJT4deEQA?=
+ =?us-ascii?Q?5rJC2puzljVC9cTVE4wXKkidBgjFb8W/5nsaYE+6lSJ8dsBMdoVhkTowtCpm?=
+ =?us-ascii?Q?IrQAJbT7jtsDkNI6UakDfbxF1iJroK/e4/rjnCK8sa1Nynm2qkBw3tmOMa7G?=
+ =?us-ascii?Q?CYJUUCFKzdNFVeMt077lrIWJyTmwquoCict0noVR?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231004175229.211487444@linuxfoundation.org> <CA+G9fYuE9Pu3QCVDywA8Ss-41jVfiy2e2kpxjhpTe3CRgmZkBw@mail.gmail.com>
-In-Reply-To: <CA+G9fYuE9Pu3QCVDywA8Ss-41jVfiy2e2kpxjhpTe3CRgmZkBw@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 5 Oct 2023 20:25:02 +0530
-Message-ID: <CA+G9fYvHPnba-0=uGS70EjcPgHht13j3s-_fmd2=srL0xyPjNg@mail.gmail.com>
-Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Alexei Starovoitov <ast@kernel.org>, 
-	Hou Tao <houtao1@huawei.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	bpf <bpf@vger.kernel.org>, Anders Roxell <anders.roxell@linaro.org>, 
-	=?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 176b9195-2171-4687-059c-08dbc5b4ebe4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Oct 2023 15:08:24.5329
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xBY2yoyS6pZE2IlFYqrMPUHn1zU4XYdtjh/tmNV9rm8u8ww0yqzve4ata+JP2OTd7Ib46jmYmb/qooLIUeEqSQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB8335
+X-OriginatorOrg: intel.com
 
-On Thu, 5 Oct 2023 at 11:05, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> On Wed, 4 Oct 2023 at 23:53, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.5.6 release.
-> > There are 321 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> The following kernel warning was noticed on qemu-armv7 while booting
-> with kselftest merge configs enabled build on stable-rc 6.5.6-rc1.
->
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> > Hou Tao <houtao1@huawei.com>
-> >     bpf: Ensure unit_size is matched with slab cache object size
->
->
-> bpf: Ensure unit_size is matched with slab cache object size
-> [ Upstream commit c930472552022bd09aab3cd946ba3f243070d5c7 ]
->
-> [    2.525383] ------------[ cut here ]------------
-> [    2.525743] WARNING: CPU: 0 PID: 1 at kernel/bpf/memalloc.c:385
-> bpf_mem_alloc_init+0x3b0/0x3b4
-> [    2.527241] bpf_mem_cache[0]: unexpected object size 128, expect 96
+> I applied this patch series to kernel v6.5 and v6.6-rc4, but the kernel c=
+annot be booted.
+> Could you tell me what kernel version this patch series is based on?
 
+Hi Shaopeng,
 
-Anders investigated this report and picked up the following patches to
-solve the reported problem.
+Patches are based on v6.6-rc3 (see the "base-commit" line at the end of the=
+ cover letter).
 
-d52b59315bf5e bpf: Adjust size_index according to the value of KMALLOC_MIN_SIZE
-b1d53958b6931 bpf: Don't prefill for unused bpf_mem_cache
-c930472552022 bpf: Ensure unit_size is matched with slab cache object size
+Which CPU family/model/stepping & microcode are you testing on?
 
-- Naresh
+Are there error or panic messages when it does not boot?
+
+-Tony
