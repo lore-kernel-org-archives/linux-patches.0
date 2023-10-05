@@ -1,87 +1,83 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403961C3D
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 10:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C0B12B60
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 12:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EQaTSzMh"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696503099; x=1728039099;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=BFr4H6MozJ7QEfc0QO/jO0A3h1tNpq51OwhnmLN17pY=;
-  b=EQaTSzMh/isgoz/ey5KsJ+12OOP7fgotmpBrQqM0dezJyFSLKvwGNl7t
-   YpK492R+YHqg8NugXJ1mZBfoprjqC1JZ1jiKMRCawXPN4Y2sET1bS/xlr
-   X4/3/GeANpVOTDbOjc4JEoj3nIKL70GVKgagm5vxwk5lsrwPy8xUMy4xS
-   l52rmWEOtUq0QefBXp4smgeMuYo4FMQxWshEXw/PaDrdMYdnFcEHK3mqI
-   jz0sIAIDFRjrlDp57REWz/R3FCPC+/CN1AWqh2J7eQz2V5L/8EiRU0lPU
-   uG2af0TR0RC9F2DKTFPqyjtkdbioIbff7shNFxYtKhtvac+Lu2NvkwZxb
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="368538981"
-X-IronPort-AV: E=Sophos;i="6.03,202,1694761200"; 
-   d="scan'208";a="368538981"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 03:51:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10853"; a="781204465"
-X-IronPort-AV: E=Sophos;i="6.03,202,1694761200"; 
-   d="scan'208";a="781204465"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO ijarvine-mobl2.mshome.net) ([10.237.66.45])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 03:51:31 -0700
-Date: Thu, 5 Oct 2023 13:51:29 +0300 (EEST)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: "Joseph, Jithu" <jithu.joseph@intel.com>
-cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
-    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
-    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
-    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH v3 0/9] IFS support for GNR and SRF
-In-Reply-To: <19a7d055-bb19-f3e3-1447-7238d14a2138@intel.com>
-Message-ID: <41f82af1-d08d-8f6-e642-93abf8531fc8@linux.intel.com>
-References: <20230922232606.1928026-1-jithu.joseph@intel.com> <20230929202436.2850388-1-jithu.joseph@intel.com> <19a7d055-bb19-f3e3-1447-7238d14a2138@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GBG3uuFc"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-59f6767a15dso18085137b3.0
+        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 05:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696509111; x=1697113911; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Xn7VVCSDyOglaO22IolgEibFcmi33m0Re01Fsy79xeo=;
+        b=GBG3uuFcO6KqUdhTQWp+enIHQigjPFIL68nd6cKjNltgJ72MgEErI0B9Z91f3D/Mxz
+         KpfGqEedjE0b9rUFqIuAtafC4DogI8DsS8nyYuCvPPlg/XhGvmifMsAl1YNgeKtCn4Sj
+         M1PmE4i8X+Q0cKJL+Fqsp577S6a3d62adn6Pu6nP0FU0jB66ZAi6TXuIycfBy7VuwqQi
+         DiuONtbFHGCZmLmOC0GZDxZ5Ii2uAO/kia7hFpmnLHagywCHO9ztZVNZQr2y0T2GkuY4
+         FXxsAQx0hzo7JOrza6af8QAcPJT0zwQMnUG0BRb0UjEM8zD/dsJQ0QpPoOakOy/H7pqj
+         vJuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696509111; x=1697113911;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Xn7VVCSDyOglaO22IolgEibFcmi33m0Re01Fsy79xeo=;
+        b=EPD/0sILePKqAiy6h4XzJJQ0QEYdcjwdj/VNehRmql5FADsJDIVZiGlcsGxcEUV6Ml
+         +dZkZ5gzyZos9wENmPAwwy/xBLrRARi3SC/ZTuWHuHnC1S0w/HZSTv95ACr5EeM/QlkN
+         Dg19FWZTI+wCi8Op/Y3wzIJL4C2xfRa+WRztMgzz7aRMVVhfD2ImcWQyhyHD9rEUOZYy
+         64cEBEN4LdQRAYhNHgXSXDbqMCLveLAuP6R4JYDI+7SWQJ7gHXzdwzHhvawtXnqH8dfd
+         S2I0UZqfu4iwq0Nr5T0kkCqoZrr6D3ix/dwp57/bfWoYLSM8PXTr3Iozt4NZnGxdTtFS
+         fgMg==
+X-Gm-Message-State: AOJu0YzYwHSxeoJD38suXEexwt5iWRsWvZpGKppOGeBUcNE6sNKauGVw
+	XJmoJ5ptiUjEThV636vDMhZg4GTRLIiFtchiZoA=
+X-Google-Smtp-Source: AGHT+IFJBlZvtG/mUg81VTlKsyGpl8FT/mxlBMcyuccmpQZtTUd9bGVCv1OiYr8WCRX2hzrEA3yQd327RdEJHO9bJQg=
+X-Received: by 2002:a81:6dd1:0:b0:5a5:740:1f8b with SMTP id
+ i200-20020a816dd1000000b005a507401f8bmr2066155ywc.16.1696509111311; Thu, 05
+ Oct 2023 05:31:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+References: <20230823160244.188033-1-ojeda@kernel.org>
+In-Reply-To: <20230823160244.188033-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 5 Oct 2023 14:31:40 +0200
+Message-ID: <CANiq72=XFeyfS11KxVj8hJA80nQJixUm_diMcKAY9i6NBkBVng@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Rust 1.72.0 upgrade
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 4 Oct 2023, Joseph, Jithu wrote:
+On Wed, Aug 23, 2023 at 6:02=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> This is the third upgrade to the Rust toolchain since the initial Rust
+> merge, from 1.71.1 to 1.72.0 (i.e. the latest, to be released tomorrow).
+>
+> Please see the main patch message for a long explanation of the upgrade,
+> the policy for future upgrades and some indications on how to easily
+> review this.
+>
+> The series is based on `rust-next`.
 
-> 
-> 
-> On 9/29/2023 1:24 PM, Jithu Joseph wrote:
-> > Changes in v3
-> >    Ilpo Jarvinen
-> >     - Added Reviewed-by tags wherever provided
-> >     - In function validate_ifs_metadata() (patch 6)
-> >         - Add != 0 to next line for clarity
-> >     - In function ifs_load_firmware() (patch 5)
-> >         - return -EINVAL instead of -BADFD
-> >     - In function ifs_test_core() (patch 4)
-> >         - initialize activate.gen0.rsvd = 0
-> >         - use if instead of conditional operator
-> >     - alignment change in ifs_scan_hashes_status_gen2 (patch 3)
-> > 
-> 
-> Since the suggested changes from v3 are minimal, I am sending just the 3 modified patches
-> in this v3 thread itself.
-> 
-> Hans let me know if you want me to send a v4.
+Applied to `rust-next`, using 1.72.1 instead of .0 (no changes
+otherwise, i.e. in `alloc`) and reworded to mention that we were
+hitting the bug with debug assertions enabled.
 
-I'm taking care of 6.7 cycle (or begun from -rc3 onwards to be precise), 
-not Hans.
+Thanks everyone!
 
-Please send a full v4 please because I want to give lkp an opportunity to 
-test the whole series (even if I think the patches look okay).
-
-
--- 
- i.
-
+Cheers,
+Miguel
