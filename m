@@ -1,48 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8511373;
-	Thu,  5 Oct 2023 01:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA301EC5;
+	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kidvMgua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED54C433C9;
-	Thu,  5 Oct 2023 01:33:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ih6W11r2"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6AD29C433C7;
+	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696469613;
-	bh=vgS1eDWq0tRBo/D0vvFhMTJ0/3CwE7EsqQfxCv2E5Lw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kidvMgua08g8noUY824M6mgW+by00EMwNUvUUzj6nlP1v6+s5HIHbtYQVY/iOlUgE
-	 t/Q1gfVEpvb6OI4R1jxkXuFLKnFsD+wtkf7yZeqOGyZQu5cjwFtj3GW8ckbXMeXm1u
-	 rETNLvyt4h20yJ3pWtpelj2V/vWCi+oHiJryeSrbW/bxNJHdzjh1cf0GgIe1qQFTbu
-	 yjzbynI3Di0BRI4iOg608Ix9iHHvKD6zfXSm/T/KLGB5gUivScC5BJZsJ7A8O+MkKo
-	 5l4uDLXC1HxqeSe+7DdyRYTWYSgMzkdTy5sHkZIL8RfyHfVoVDFHFM3/q9tlSdvQHh
-	 eq04HrjKtsZAw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
-Date: Thu,  5 Oct 2023 01:33:30 +0000
-Message-Id: <20231005013330.6499-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
-References: 
+	s=k20201202; t=1696470968;
+	bh=Ds7/7Qor00gfkfbVsC+TNH+U4huQ8fWDTvRydnVSLO4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Ih6W11r29lo60oH0FY2wh03dJUw9ppcaFMzQIjkjEN3t8PYlWP5a1oQNmf3Uqvl8d
+	 rMYgc3uIC5sSGPDnoASMjCUSF2kxUozoGNV9Fke8KEFsxNjMGBaql090cngq5ma1yA
+	 VQb9AV85DE04nSKD03Xulo+gIP0l/3AUmXrtfP4LnSPrj8d6zD2vUx+Ib7115Yv647
+	 V6Wbda8tXBYr6cri2XjIC4eAqQShPDasCGH5qTEjWfItHkVFv0dzLA2LXQZV9lcmWM
+	 QO8XndgrMAygvr9kuG0ehlNnXCSKO+ThHY77jGL6iGPe867kMOyntElvoJcOSLVIOX
+	 nkgfCQxjJtzuA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5415BE632D6;
+	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,68 +28,48 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 0/4] platform/chrome: Random driver cleanups
+From: patchwork-bot+chrome-platform@kernel.org
+Message-Id: 
+ <169647096834.5479.6608928150859840412.git-patchwork-notify@kernel.org>
+Date: Thu, 05 Oct 2023 01:56:08 +0000
+References: <20231003003429.1378109-1-swboyd@chromium.org>
+In-Reply-To: <20231003003429.1378109-1-swboyd@chromium.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: bleung@chromium.org, tzungbi@kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, chrome-platform@lists.linux.dev
 
-Hello,
+Hello:
 
-On Wed, 4 Oct 2023 19:52:25 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+This series was applied to chrome-platform/linux.git (for-next)
+by Tzung-Bi Shih <tzungbi@kernel.org>:
 
-> This is the start of the stable review cycle for the 6.5.6 release.
-> There are 321 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon,  2 Oct 2023 17:34:24 -0700 you wrote:
+> Here's some random chromeos driver cleanups that have been sitting in my
+> tree. I've noticed them while browsing the code for something I'm
+> working on.
 > 
-> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> Anything received after that time might be too late.
+> Stephen Boyd (4):
+>   platform/chrome: cros_ec_typec: Use semi-colons instead of commas
+>   platform/chrome: cros_ec_typec: Use dev_err_probe() more
+>   platform/chrome: cros_typec_vdm: Mark port_amode_ops const
+>   platform/chrome: cros_ec_proto: Mark outdata as const
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
+> [...]
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Here is the summary with links:
+  - [1/4] platform/chrome: cros_ec_typec: Use semi-colons instead of commas
+    https://git.kernel.org/chrome-platform/c/a88f6ef67957
+  - [2/4] platform/chrome: cros_ec_typec: Use dev_err_probe() more
+    https://git.kernel.org/chrome-platform/c/2b055bf8ac84
+  - [3/4] platform/chrome: cros_typec_vdm: Mark port_amode_ops const
+    https://git.kernel.org/chrome-platform/c/14e7c01cc349
+  - [4/4] platform/chrome: cros_ec_proto: Mark outdata as const
+    https://git.kernel.org/chrome-platform/c/2f3dd39e2b49
 
-Tested-by: SeongJae Park <sj@kernel.org>
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 9327d0db36be ("Linux 6.5.6-rc1")
 
-Thanks,
-SJ
-
-[...]
-
----
-
-# the log is at '/home/sjpark/log'.
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
