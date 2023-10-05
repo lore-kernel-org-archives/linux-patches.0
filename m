@@ -1,146 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884C215C9;
-	Thu,  5 Oct 2023 06:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DB37F
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 06:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLcSNkQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D80EC433AD;
-	Thu,  5 Oct 2023 06:26:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696487200;
-	bh=9xyNVyN7N7MBzA9UwuP9xPWMA9I3taWkS2jqsvKhr3s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jLcSNkQ/LCUGlX23x7bKHMrm6O+lCfLyVyl4lJFpqj9ZiSYYzwxEp9jZma31Pfllr
-	 wdUrN6biBfOS5V6bMBNu6EAM0Sq3HUrUansreS7bmBd3mLFduc2pF/kqcY06+yQC5z
-	 D87SMtm/bM/1USoOdPqeLZaEubagHNYsjEKm7koc=
-Date: Thu, 5 Oct 2023 08:26:38 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Cc: Dexuan Cui <decui@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
-	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Michael Kelley (LINUX)" <mikelley@microsoft.com>,
-	KY Srinivasan <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"apais@linux.microsoft.com" <apais@linux.microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	"ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
-	MUKESH RATHOR <mukeshrathor@microsoft.com>,
-	"stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
-	"jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
-	vkuznets <vkuznets@redhat.com>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"hpa@zytor.com" <hpa@zytor.com>,
-	"will@kernel.org" <will@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>
-Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
- hypervisor ABIs
-Message-ID: <2023100540-linked-remote-3da7@gregkh>
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
- <2023093057-eggplant-reshoot-8513@gregkh>
- <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
- <2023100154-ferret-rift-acef@gregkh>
- <dd5159fe-5337-44ed-bf1b-58220221b597@linux.microsoft.com>
- <2023100443-wrinkly-romp-79d9@gregkh>
- <SA1PR21MB1335F5145ACB0ED4F378105ABFCBA@SA1PR21MB1335.namprd21.prod.outlook.com>
- <2023100415-diving-clapper-a2a7@gregkh>
- <e960ffec-f367-4180-b857-4aceedb7cd89@linux.microsoft.com>
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="JqcXqGtZ"
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-5a4c073cc06so15471777b3.1
+        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 23:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03; t=1696487561; x=1697092361; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pGyR1Zzvv154X8Dccwt7gC98O0K89BtDve6Z1+jKdN4=;
+        b=JqcXqGtZqiE2AECl8SBCmZIu+zyzSrZqdqoC2eU1Ccvb74vrMj5dCnwEzLW4ZqTd1K
+         j+IHCYTubxHiZ3kQu8GU+ablqtf5xdKDTl4fGINjNNSh3m6mBzMAVEbo08ipqvNbgMHl
+         h5IBnjY6iYNNeoVu8tjMfkYcenZrW+PNoYaUg/T1vJqGGvGzTkvYyIf1cGJST46/Ob36
+         GOzjgYchqZyni5er7I8D4+x7CeWR8UhJGAIdiLRvQ7qMhD3rJYZLGQaNhar1EwEHCqL9
+         qgI3p2eguWphT/uj3DRm70m2hY+E6Hgs9mMiFekHBIhfJzNwDoRLJp/ZZnSRUCPHmgba
+         KBkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696487561; x=1697092361;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pGyR1Zzvv154X8Dccwt7gC98O0K89BtDve6Z1+jKdN4=;
+        b=vhjOF7Ytr7xV2trR1G1OwdAaIIRg4MFwZm3IBffd6R8XqGH5M0s+z2TSlsDQiqyeIU
+         HcAspLyHhNvPDizQdsLfPoBwEqqFoG0Sempw3GTprHtB8VBQ8uztfoIBZdaDPXuLbJAE
+         wfGgrLx9tmwCFJIGPXtYhKvlHm1DKZTJZOEf3DZbS4UYvT2h5NwyrVxmkHxz2K5HL2Ym
+         Q2bfHeCtwL+ixlP/wGa8ExMv99Muy4xbMgpTnM9lAI/HsdQUmfBlCu1Ki5y14fhsPiZD
+         +naEZkMYR1rpnxxqY5JeBSSOLZs/RZS45CmYrDKCRMjz9ZVK9C12kvMdPv/E8/0wtYVB
+         vhKw==
+X-Gm-Message-State: AOJu0YzeQnmcqcy7sspJoKgvfLdqZ0hfaD2vmetv5Iuxz9kltvhpOtld
+	2cqPsxvLNBTU6ZiZsWbJcGwwPnkWr5oZWqZkwvIV4Q==
+X-Google-Smtp-Source: AGHT+IHJAdiS+YNWfIdgWHzybEMmyvLq6s23YivEmEYidiPTA9ZiKm3Am2IIYO0pi7fIfuQ1zezOAfQglwsScJWCnr0=
+X-Received: by 2002:a81:6086:0:b0:59f:6440:7eff with SMTP id
+ u128-20020a816086000000b0059f64407effmr1449066ywb.15.1696487560949; Wed, 04
+ Oct 2023 23:32:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e960ffec-f367-4180-b857-4aceedb7cd89@linux.microsoft.com>
+References: <CVZ2KU4KK5YH.2HVL1F6X93YLL@pogg> <20231003222947.374039-1-aliceryhl@google.com>
+In-Reply-To: <20231003222947.374039-1-aliceryhl@google.com>
+From: Trevor Gross <tmgross@umich.edu>
+Date: Thu, 5 Oct 2023 02:32:29 -0400
+Message-ID: <CALNs47s1=fjaXjymDM__G0-Qzv0mkftJ1hzOt4SZJt5Uy0WA1Q@mail.gmail.com>
+Subject: Re: [PATCH v4 7/7] rust: workqueue: add examples
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: k.shelekhin@ftml.net, alex.gaynor@gmail.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
+	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, nmi@metaspace.dk, 
+	ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org, 
+	tj@kernel.org, wedsonaf@gmail.com, yakoyoku@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 04, 2023 at 11:16:46AM -0700, Nuno Das Neves wrote:
-> On 10/4/2023 10:50 AM, Greg KH wrote:
-> > On Wed, Oct 04, 2023 at 05:36:32PM +0000, Dexuan Cui wrote:
-> > > > From: Greg KH <gregkh@linuxfoundation.org>
-> > > > Sent: Tuesday, October 3, 2023 11:10 PM
-> > > > [...]
-> > > > On Tue, Oct 03, 2023 at 04:37:01PM -0700, Nuno Das Neves wrote:
-> > > > > On 9/30/2023 11:19 PM, Greg KH wrote:
-> > > > > > On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
-> > > > > > > On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
-> > > > > > > > On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
-> > > > > > > > > +/* Define connection identifier type. */
-> > > > > > > > > +union hv_connection_id {
-> > > > > > > > > +   __u32 asu32;
-> > > > > > > > > +   struct {
-> > > > > > > > > +           __u32 id:24;
-> > > > > > > > > +           __u32 reserved:8;
-> > > > > > > > > +   } __packed u;
-> > > 
-> > > IMO the "__packed" is unnecessary.
-> > > 
-> > > > > > > > bitfields will not work properly in uapi .h files, please never do that.
-> > > > > > > 
-> > > > > > > Can you clarify a bit more why it wouldn't work? Endianess? Alignment?
-> > > > > > 
-> > > > > > Yes to both.
-> > > > > > 
-> > > > > > Did you all read the documentation for how to write a kernel api?  If
-> > > > > > not, please do so.  I think it mentions bitfields, but it not, it really
-> > > > > > should as of course, this will not work properly with different endian
-> > > > > > systems or many compilers.
-> > > > > 
-> > > > > Yes, in
-> > > > https://docs.k/
-> > > > ernel.org%2Fdriver-
-> > > > api%2Fioctl.html&data=05%7C01%7Cdecui%40microsoft.com%7Ce404769e0f
-> > > > 85493f0aa108dbc4a08a27%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C
-> > > > 0%7C638319966071263290%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLj
-> > > > AwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%
-> > > > 7C%7C&sdata=RiLNA5DRviWBQK6XXhxC4m77raSDBb%2F0BB6BDpFPUJY%3D
-> > > > &reserved=0 it says that it is
-> > > > > "better to avoid" bitfields.
-> > > > > 
-> > > > > Unfortunately bitfields are used in the definition of the hypervisor
-> > > > > ABI. We import these definitions directly from the hypervisor code.
-> > > > 
-> > > > So why do you feel you have to use this specific format for your
-> > > > user/kernel api?  That is not what is going to the hypervisor.
-> > > 
-> These *are* going to the hypervisor - we use these same definitions in
-> our driver for the kernel/hypervisor API. This is so we don't have to
-> maintain two separate definitions for user/kernel and kernel/hypervisor
-> APIs.
+On Tue, Oct 3, 2023 at 6:30=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> wr=
+ote:
+> On Tue, Oct 3, 2023 at 10:13PM Konstantin Shelekhin <k.shelekhin@ftml.net=
+> wrote:
+> > +//! #[pin_data]
+> > +//! struct MyStruct {
+> > +//!     value: i32,
+> > +//!     #[pin]
+> > +//!     work: Work<MyStruct>,
+> > +//! }
+> > +//!
+> > +//! impl_has_work! {
+> > +//!     impl HasWork<Self> for MyStruct { self.work }
+> > +//! }
+> > +//!
+> > +//! impl MyStruct {
+> > +//!     fn new(value: i32) -> Result<Arc<Self>> {
+> > +//!         Arc::pin_init(pin_init!(MyStruct {
+> > +//!             value,
+> > +//!             work <- new_work!("MyStruct::work"),
+> > +//!         }))
+> > +//!     }
+> > +//! }
+> > +//!
 
-So these fields are just pass-through from userspace to the hypervisor
-and are not touched at all by the kernel?  If so, I hope the hypervisor
-is doing some validation of the data :)
+For what it's worth, I think that using a binding for return items
+usually looks ever so slightly more clear than passing a multiline
+argument
 
-> > > If it's hard to avoid bitfield here, maybe we can refer to the definition of
-> > > struct iphdr in include/uapi/linux/ip.h
-> > 
-> > It is not hard to avoid using bitfields, just use the proper definitions
-> > to make this portable for all compilers.  And ick, ip.h is not a good
-> > thing to follow :)
-> > 
-> Greg, there is nothing making us use bitfields. It just makes the work
-> of porting the hypervisor definitions to Linux easier - aided by the
-> fact that in practice, all the compilers in our stack produce the same
-> code for these.
-
-"our stack" is not how Linux works, you have to write files that work
-for all compilers here.
-
-Just use a normal variable and define the bits in them with proper bit
-shifts or masks and that will be portable everywhere.  This isn't rocket
-science...
-
-thanks,
-
-greg k-h
+    fn new(value: i32) -> Result<Arc<Self>> {
+        let tmp =3D pin_init!(MyStruct {
+            value,
+            work <- new_work!("MyStruct::work")
+        });
+        Arc::pin_init(tmp)
+    }
