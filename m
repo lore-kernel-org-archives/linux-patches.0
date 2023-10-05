@@ -1,75 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out198-154.us.a.mail.aliyun.com (out198-154.us.a.mail.aliyun.com [47.90.198.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA301EC5;
-	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ih6W11r2"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6AD29C433C7;
-	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696470968;
-	bh=Ds7/7Qor00gfkfbVsC+TNH+U4huQ8fWDTvRydnVSLO4=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Ih6W11r29lo60oH0FY2wh03dJUw9ppcaFMzQIjkjEN3t8PYlWP5a1oQNmf3Uqvl8d
-	 rMYgc3uIC5sSGPDnoASMjCUSF2kxUozoGNV9Fke8KEFsxNjMGBaql090cngq5ma1yA
-	 VQb9AV85DE04nSKD03Xulo+gIP0l/3AUmXrtfP4LnSPrj8d6zD2vUx+Ib7115Yv647
-	 V6Wbda8tXBYr6cri2XjIC4eAqQShPDasCGH5qTEjWfItHkVFv0dzLA2LXQZV9lcmWM
-	 QO8XndgrMAygvr9kuG0ehlNnXCSKO+ThHY77jGL6iGPe867kMOyntElvoJcOSLVIOX
-	 nkgfCQxjJtzuA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5415BE632D6;
-	Thu,  5 Oct 2023 01:56:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17D215B8
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 02:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.1323387|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.0365959-0.000864689-0.962539;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047201;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=17;RT=17;SR=0;TI=SMTPD_---.UtlC8rI_1696465066;
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.UtlC8rI_1696465066)
+          by smtp.aliyun-inc.com;
+          Thu, 05 Oct 2023 08:17:47 +0800
+Date: Thu, 05 Oct 2023 08:17:48 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+Cc: stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org,
+ akpm@linux-foundation.org,
+ linux@roeck-us.net,
+ shuah@kernel.org,
+ patches@kernelci.org,
+ lkft-triage@lists.linaro.org,
+ pavel@denx.de,
+ jonathanh@nvidia.com,
+ f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net,
+ rwarsow@gmx.de,
+ conor@kernel.org
+In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
+References: <20231004175217.404851126@linuxfoundation.org>
+Message-Id: <20231005081746.D7B7.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/4] platform/chrome: Random driver cleanups
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <169647096834.5479.6608928150859840412.git-patchwork-notify@kernel.org>
-Date: Thu, 05 Oct 2023 01:56:08 +0000
-References: <20231003003429.1378109-1-swboyd@chromium.org>
-In-Reply-To: <20231003003429.1378109-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: bleung@chromium.org, tzungbi@kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, chrome-platform@lists.linux.dev
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Becky! ver. 2.81.04 [en]
 
-Hello:
+Hi,
 
-This series was applied to chrome-platform/linux.git (for-next)
-by Tzung-Bi Shih <tzungbi@kernel.org>:
-
-On Mon,  2 Oct 2023 17:34:24 -0700 you wrote:
-> Here's some random chromeos driver cleanups that have been sitting in my
-> tree. I've noticed them while browsing the code for something I'm
-> working on.
+> This is the start of the stable review cycle for the 6.1.56 release.
+> There are 259 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Stephen Boyd (4):
->   platform/chrome: cros_ec_typec: Use semi-colons instead of commas
->   platform/chrome: cros_ec_typec: Use dev_err_probe() more
->   platform/chrome: cros_typec_vdm: Mark port_amode_ops const
->   platform/chrome: cros_ec_proto: Mark outdata as const
+> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> Anything received after that time might be too late.
 > 
-> [...]
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-Here is the summary with links:
-  - [1/4] platform/chrome: cros_ec_typec: Use semi-colons instead of commas
-    https://git.kernel.org/chrome-platform/c/a88f6ef67957
-  - [2/4] platform/chrome: cros_ec_typec: Use dev_err_probe() more
-    https://git.kernel.org/chrome-platform/c/2b055bf8ac84
-  - [3/4] platform/chrome: cros_typec_vdm: Mark port_amode_ops const
-    https://git.kernel.org/chrome-platform/c/14e7c01cc349
-  - [4/4] platform/chrome: cros_ec_proto: Mark outdata as const
-    https://git.kernel.org/chrome-platform/c/2f3dd39e2b49
+This 6.1.56-rc1 failed to build on rhel7 with dev-tool-set 8, but 6.1.55 works.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Build error message:
+gcc: fatal error: no input files
+make[3]: *** [pmu-events/Build:33: pmu-events/pmu-events.o] Error 1
+
+After the revert of 'perf-build-update-build-rule-for-generated-files.patch'
+the build works again.
+
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2023/10/05
 
 
