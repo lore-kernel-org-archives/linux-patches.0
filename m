@@ -1,327 +1,95 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BA12E62B
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 17:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD1230D05;
+	Thu,  5 Oct 2023 17:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Q2pLlPKo";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="zmllGG7/"
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 804C81F853;
-	Thu,  5 Oct 2023 17:24:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1696526696;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IKAizuYlvOnj5WV3IhJ1fnzYcOePdzxWANDIs7Jk9tY=;
-	b=Q2pLlPKoo6aJzUGmti+EuZrU7zOr8OOCF0LustR22L7yfzTxOagYwMmmDCm7c4XRME1fiR
-	E3XKH4iqtVNr5lk+6yMapTqiFuILwyx1WGPCvABCWqzNHvLhIYcGeOUZyeKaFgUBt1x4V2
-	EqbHMYe2reGJWuI0NRZjycjYFOHnA0M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1696526696;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IKAizuYlvOnj5WV3IhJ1fnzYcOePdzxWANDIs7Jk9tY=;
-	b=zmllGG7/BnQA2rKu+FgfHNjkfZ6a8ZAmlA3H+vA5GABqmxB/1hq2DsySVJGDn31B+m9nT+
-	dxtDnEEMYBbWXxBw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D8A2313438;
-	Thu,  5 Oct 2023 17:24:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id P7mBMWbxHmUzEQAAMHmgww
-	(envelope-from <pvorel@suse.cz>); Thu, 05 Oct 2023 17:24:54 +0000
-Date: Thu, 5 Oct 2023 19:24:48 +0200
-From: Petr Vorel <pvorel@suse.cz>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-nfs@vger.kernel.org, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	LTP List <ltp@lists.linux.it>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Eryu Guan <eguan@redhat.com>, chrubis <chrubis@suse.cz>
-Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
-Message-ID: <20231005172448.GA161140@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20231004175217.404851126@linuxfoundation.org>
- <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XGevS/E1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81773C433CA;
+	Thu,  5 Oct 2023 17:25:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696526748;
+	bh=DYgenNLerdu9RAwVeCgwZpULc3B6FOwx/xoe/GURY58=;
+	h=From:Date:Subject:To:Cc:From;
+	b=XGevS/E1j4f1SvwKHaPpQT3mNwMP3DoLYIqt0uSEhDp490aY/oa2DggwWIiYXil+O
+	 W604m8bTIc3VhAmd8zbU/zTbq2UJKNbIVHC+rVMUIr2NUn0lWK4tpA9ZjSFx7OjeJu
+	 jGmUqRrmD8MA6F4OpcEFqsz+3Cx8p3IAHipsM9f9ll1wlqUv0LeWv+10kblOqKmQIg
+	 kbJTymxtuoXKyagBLjgUutcajutG3NYUX8Z0JogEyZtA3w6P71iRPQSSzy/vg8ff0j
+	 +Dqzb+x08y4a38qnumDC0wGv6N4Sx/J8hJds1kVzC0j13TMQXCM/l8B5Zx7s3Mv6ge
+	 N+35S9yGQxtdg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 05 Oct 2023 10:25:27 -0700
+Subject: [PATCH] OPP: Fix -Wunsequenced in _of_add_opp_table_v1()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231005-opp-of-wunsequenced-v1-1-778815980a8d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIbxHmUC/x3MOw6AIBBF0a2YqZ0EPxS6FWNB4KnTAEL8JMa9S
+ yxPce9DGUmQaaweSjglS/AFTV2R3YxfweKKqVVt1yilOcTIYeHr8Bn7AW/h2Oihh+mt0p2jUsa
+ ERe7/Os3v+wH+JxPgZQAAAA==
+To: vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, ulf.hansson@linaro.org
+Cc: ndesaulniers@google.com, trix@redhat.com, linux-pm@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1709; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=DYgenNLerdu9RAwVeCgwZpULc3B6FOwx/xoe/GURY58=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKlyH2fn1TWnuh2xf6D8Wkc6aX9nz525ukYbuxdN22qxo
+ jBjm+3jjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRRX6MDHd5c8snrbobtC8w
+ WKrr1YopCnwWhiJvj1mLRW8/6r1hrzwjQ3ek1kSDB/886zo/Pp+wgPurfUvmxLwQ8zVpz3ZL307
+ ayAMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Naresh,
+Clang warns (or errors with CONFIG_WERROR=y):
 
-> On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+  drivers/opp/of.c:1081:28: error: multiple unsequenced modifications to 'val' [-Werror,-Wunsequenced]
+   1081 |                         .freq = be32_to_cpup(val++) * 1000,
+        |                                                 ^
+   1082 |                         .u_volt = be32_to_cpup(val++),
+        |                                                   ~~
+  1 error generated.
 
-> > This is the start of the stable review cycle for the 6.1.56 release.
-> > There are 259 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+There is no sequence point in a designated initializer. Move back to
+separate variables for the creation of the values, so that there are
+sequence points between each evaluation and increment of val.
 
-> > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > Anything received after that time might be too late.
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1940
+Fixes: 75bbc92c09d8 ("OPP: Add dev_pm_opp_add_dynamic() to allow more flexibility")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/opp/of.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
+diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+index ade6d42cae46..ae5c405bbf9a 100644
+--- a/drivers/opp/of.c
++++ b/drivers/opp/of.c
+@@ -1077,9 +1077,11 @@ static int _of_add_opp_table_v1(struct device *dev, struct opp_table *opp_table)
+ 
+ 	val = prop->value;
+ 	while (nr) {
++		unsigned long freq = be32_to_cpup(val++) * 1000;
++		unsigned long volt = be32_to_cpup(val++);
+ 		struct dev_pm_opp_data data = {
+-			.freq = be32_to_cpup(val++) * 1000,
+-			.u_volt = be32_to_cpup(val++),
++			.freq = freq,
++			.u_volt = volt,
+ 		};
+ 
+ 		ret = _opp_add_v1(opp_table, dev, &data, false);
 
-> > thanks,
+---
+base-commit: 3c4746e28af13fdd134d3c4312169fda0a8abef0
+change-id: 20231005-opp-of-wunsequenced-a594ea4c053d
 
-> > greg k-h
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-> Results from Linaro’s test farm.
-> Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
-Could you please note in your reports also LTP version?
-FYI the best LTP release is always the latest release or git master branch.
-
-Kind regards,
-Petr
-
-> NFS mounted rootfs.
-> and LTP hugetlb hugemmap11 test case failed on x86 and arm64 bcm2711-rpi-4-b.
-
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-> LTP hugetlb tests failed log
->   tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
->   tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
->   hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
-
-> LTP dio tests failed log
->   compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
-> offset 4096: 0x00 .
->   diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
-> infile and outfile
-
-> ## Build
-> * kernel: 6.1.56-rc1
-> * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-> * git branch: linux-6.1.y
-> * git commit: 0353a7bfd2b60c5e42c8651eb3fa4cc48159db5f
-> * git describe: v6.1.55-260-g0353a7bfd2b6
-> * test details:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.55-260-g0353a7bfd2b6
-
-> ## Test Regressions (compared to v6.1.55)
-> * x86_64-clang, ltp-hugetlb
-> * bcm2711-rpi-4-b, ltp-hugetlb
-> * bcm2711-rpi-4-b-clang, ltp-hugetlb
-> * bcm2711-rpi-4-b-64k_page_size, ltp-hugetlb
->   - hugemmap11
-
-> Test log:
-> --------
->   tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
->   tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
->   hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
-
-> Links:
->   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.55-260-g0353a7bfd2b6/testrun/20259639/suite/ltp-hugetlb/test/hugemmap11/log
->   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.55-260-g0353a7bfd2b6/testrun/20260457/suite/ltp-hugetlb/test/hugemmap11/history/
-
-> * bcm2711-rpi-4-b, ltp-dio
-> * bcm2711-rpi-4-b-clang, ltp-dio
-> * bcm2711-rpi-4-b-64k_page_size, ltp-dio
->   - dio01
->   - dio02
->   - dio03
->   - dio05
->   - dio06
->   - dio07
->   - dio08
->   - dio09
->   - dio11
-
-> Test log:
-> --------
->   compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
-> offset 4096: 0x00 .
->   diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
-> infile and outfile
->   bufcmp: offset 0: Expected: 0x1, got 0x0
->   bufcmp: offset 0: Expected: 0x1, got 0x0
->   diotest02    1  TPASS  :  Read with Direct IO, Write without
->   diotest02    2  TFAIL  :  diotest2.c:119: read/write comparision failed
->   diotest02    3  TFAIL  :  diotest2.c:210: Write with Direct IO, Read without
->   diotest02    4  TFAIL  :  diotest2.c:119: read/write comparision failed
->   diotest02    5  TFAIL  :  diotest2.c:231: Read, Write with Direct IO
->   diotest02    0  TINFO  :  2/3 testblocks failed
->   bufcmp: offset 0: Expected: 0x1, got 0x0
->   diotest03    1  TPASS  :  Read with Direct IO, Write without
->   diotest03    2  TFAIL  :  diotest3.c:136: comparsion failed; child=0 offset=0
->   diotest03    3  TFAIL  :  diotest3.c:189: Write Direct-child 0 failed
->   bufcmp: offset 0: Expected: 0x1, got 0x0
->   diotest03    1  TPASS  :  Read with Direct IO, Write without
->   diotest03    2  TFAIL  :  diotest3.c:306: Write with Direct IO, Read without
->   diotest03    3  TFAIL  :  diotest3.c:136: comparsion failed; child=0 offset=0
->   diotest03    4  TFAIL  :  diotest3.c:210: RDWR Direct-child 0 failed
->   diotest03    1  TPASS  :  Read with Direct IO, Write without
->   diotest03    2  TFAIL  :  diotest3.c:306: Write with Direct IO, Read without
->   diotest03    3  TFAIL  :  diotest3.c:323: Read, Write with Direct IO
->   ...
->   diotest05    1  TPASS  :  Read with Direct IO, Write without
->   diotest05    2  TFAIL  :  diotest5.c:141: readv/writev comparision failed
->   diotest05    3  TFAIL  :  diotest5.c:250: Write with Direct IO, Read without
->   diotest05    4  TFAIL  :  diotest5.c:141: readv/writev comparision failed
->   diotest05    5  TFAIL  :  diotest5.c:271: Read, Write with Direct IO
->   diotest05    0  TINFO  :  2/3 testblocks failed
-
-> Links:
->   - https://lkft.validation.linaro.org/scheduler/job/6842177#L1666
->   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.55-260-g0353a7bfd2b6/testrun/20260389/suite/ltp-dio/test/dio01/history/
-
-> ## Metric Regressions (compared to v6.1.55)
-
-> ## Test Fixes (compared to v6.1.55)
-
-> ## Metric Fixes (compared to v6.1.55)
-
-> ## Test result summary
-> total: 121166, pass: 102582, fail: 2234, skip: 16177, xfail: 173
-
-> ## Build Summary
-> * arc: 4 total, 4 passed, 0 failed
-> * arm: 140 total, 140 passed, 0 failed
-> * arm64: 49 total, 49 passed, 0 failed
-> * i386: 33 total, 33 passed, 0 failed
-> * mips: 24 total, 24 passed, 0 failed
-> * parisc: 3 total, 3 passed, 0 failed
-> * powerpc: 34 total, 34 passed, 0 failed
-> * riscv: 12 total, 12 passed, 0 failed
-> * s390: 12 total, 12 passed, 0 failed
-> * sh: 11 total, 11 passed, 0 failed
-> * sparc: 6 total, 6 passed, 0 failed
-> * x86_64: 40 total, 40 passed, 0 failed
-
-> ## Test suites summary
-> * boot
-> * kselftest-android
-> * kselftest-arm64
-> * kselftest-breakpoints
-> * kselftest-capabilities
-> * kselftest-cgroup
-> * kselftest-clone3
-> * kselftest-core
-> * kselftest-cpu-hotplug
-> * kselftest-cpufreq
-> * kselftest-drivers-dma-buf
-> * kselftest-efivarfs
-> * kselftest-exec
-> * kselftest-filesystems
-> * kselftest-filesystems-binderfs
-> * kselftest-filesystems-epoll
-> * kselftest-firmware
-> * kselftest-fpu
-> * kselftest-ftrace
-> * kselftest-futex
-> * kselftest-gpio
-> * kselftest-intel_pstate
-> * kselftest-ipc
-> * kselftest-ir
-> * kselftest-kcmp
-> * kselftest-kexec
-> * kselftest-kvm
-> * kselftest-lib
-> * kselftest-membarrier
-> * kselftest-memfd
-> * kselftest-memory-hotplug
-> * kselftest-mincore
-> * kselftest-mount
-> * kselftest-mqueue
-> * kselftest-net
-> * kselftest-net-forwarding
-> * kselftest-net-mptcp
-> * kselftest-netfilter
-> * kselftest-nsfs
-> * kselftest-openat2
-> * kselftest-pid_namespace
-> * kselftest-pidfd
-> * kselftest-proc
-> * kselftest-pstore
-> * kselftest-ptrace
-> * kselftest-rseq
-> * kselftest-rtc
-> * kselftest-seccomp
-> * kselftest-sigaltstack
-> * kselftest-size
-> * kselftest-splice
-> * kselftest-static_keys
-> * kselftest-sync
-> * kselftest-sysctl
-> * kselftest-tc-testing
-> * kselftest-timens
-> * kselftest-tmpfs
-> * kselftest-tpm2
-> * kselftest-user
-> * kselftest-user_events
-> * kselftest-vDSO
-> * kselftest-vm
-> * kselftest-watchdog
-> * kselftest-x86
-> * kselftest-zram
-> * kunit
-> * kvm-unit-tests
-> * libgpiod
-> * log-parser-boot
-> * log-parser-test
-> * ltp-cap_bounds
-> * ltp-commands
-> * ltp-containers
-> * ltp-controllers
-> * ltp-cpuhotplug
-> * ltp-crypto
-> * ltp-cve
-> * ltp-dio
-> * ltp-fcntl-locktests
-> * ltp-filecaps
-> * ltp-fs
-> * ltp-fs_bind
-> * ltp-fs_perms_simple
-> * ltp-fsx
-> * ltp-hugetlb
-> * ltp-io
-> * ltp-ipc
-> * ltp-math
-> * ltp-mm
-> * ltp-nptl
-> * ltp-pty
-> * ltp-sched
-> * ltp-securebits
-> * ltp-smoke
-> * ltp-syscalls
-> * ltp-tracing
-> * network-basic-tests
-> * perf
-> * rcutorture
-> * v4l2-compliance
