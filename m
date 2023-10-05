@@ -1,86 +1,98 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9166B30F93
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 16:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F4A347D8
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 16:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HydebVo3"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5a505762c9dso13570327b3.2
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 09:12:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kH4nDNGj"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3ae5ce4a4ceso791426b6e.1
+        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 09:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696522372; x=1697127172; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+qmSzyY+migyqbDuywRVcv9SVkRkaGgH1rCeouBnpl4=;
-        b=HydebVo30xKuIyge3hq3LR0yldRp4C6Ymr5v3cqsulKjzQiLcfk8/nebl/iF4kmty+
-         xKoS5XwUir0wUF6o08rjCQoxsEZXfmQmf8u8S8AT7YqH1h32CXEHdy7U7jWGLR75x40U
-         YwVUjkfter09mJPP+kRopMXpQVtiT9ANjZ/c8HHSVwhs0eq4BAHg+WUyKGg3mZ9yvv7O
-         aIVH/lEsKby1fHy0Ds6I/c+YwvDl1d7kpWOIjX5oAfwmLiPBSEDr357/e1ruXY7R5iTm
-         5iyy3e9dPwndtGwW7JrLb8Sf3VrORvzv2NzVjGp58F8k6tfWRm6vaftd9HIk33QYFopx
-         h0sw==
+        d=gmail.com; s=20230601; t=1696523320; x=1697128120; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LCjL1Nhcx+ZRfFxrSaIUnghupuRDrTl5Dh+1IzKptGc=;
+        b=kH4nDNGjaaIpT3HdaCrACB7H1OIPT9YCjN5eARcLD8/doiwWfyFr2vPG1kTMbJlkRV
+         oXIA+yXtwZ1XjBm5YvsO0UlLNbzrH5YIfVJ5FWpKeZg4trP6iZGjBoHanz6Y4/yQ/r4d
+         y0hnFnU+Z7zxgy3ydqV9ACsaeVV2/Ui0bqMC7OJH0bK/hx79mtvB4X3yuaT3GvHS4d/a
+         YbmqWf4reak5e3IMSkcvXfUQq9zqi3Zx6BatrX3/M1SEt1KJOH16Em/i0PVcLvHKG5YD
+         dlmwt4dlGjJjI+hnnzlX595kDyjFuw934TRieUYs+xVV+8EIPgH6OUnJuNrAyMHnJKkt
+         wfxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696522372; x=1697127172;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+qmSzyY+migyqbDuywRVcv9SVkRkaGgH1rCeouBnpl4=;
-        b=bvN+Cqe5ANvE/vszXyVcpePsYg5c7fGP1tutTKz/aEf+ekXuftaKQn2jhxkgAKK15q
-         7tUKdfTkQerobPbiaXZRir6A91OZoIAi42nLyrJkUTge1r/rbwFpmNZ1YwqVk07hc6XJ
-         2tqrasu2iCE7xFLkLucOcm5C9kLSWdR5FY15CfeTowNrLDxqZPasVjlvFqkxWydecurJ
-         hGXAPR5e1pZ7X6apeg3f+Igm26K+muvLCkJRvSMuabCAw9YRPsljXadf52DTqvJOs/1E
-         9iwH9p05doamtDlbjQVb5ktLpbJpUz8RyOUPs92GYsM5immmptK/OtoY7z22F7D5s62a
-         44dw==
-X-Gm-Message-State: AOJu0Yzbgz4LVellEXROd28jMW2m9fUPV82lC6M36xLC6l1VZpT+3N1Y
-	7GHaQlqKZRCH+8w8ov+cwO2B2+wnlByPcrQeFDI=
-X-Google-Smtp-Source: AGHT+IFyDJEnqRL20o900cgp9GOfXgPyMQ2L6Aqu6Z2jkwZ63XPw2aTYKRO6CldxKTzNI0xpEBmV02zjKYsX4Y67FmI=
-X-Received: by 2002:a81:7c46:0:b0:59f:6766:2c12 with SMTP id
- x67-20020a817c46000000b0059f67662c12mr6423391ywc.39.1696522372498; Thu, 05
- Oct 2023 09:12:52 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696523320; x=1697128120;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LCjL1Nhcx+ZRfFxrSaIUnghupuRDrTl5Dh+1IzKptGc=;
+        b=wWWysJSrtQCcjkwlXHlMKOJa/8YezfOwEucD3/ow3fOh6a/brfxS4YWL7byMnhg2KH
+         yZkYUNraHHB6Re2eDh1x5e3hkFfhMlD1IixpI2Zv1yKPmd/TgCckuYUytdYGAK1bk3mp
+         xZQY+ywSIzWajUK1T+KWHlOZOwxgaEmQ1e55TDny4m/I71itfgL4qexVv8CaJBuLBkTu
+         yF7veG7bwen0X0jhTNvuETCYz49CebvQNuwZAOvgAiMdnViKPSLpNljQnJ5vgTKQQKAd
+         Pp6voVvH897p2Kf9Qa0T6A1fDDbyV2D+7AecqrAP0lqC/gYYPVfIzCKUqlbVV3b1LgmS
+         zEdQ==
+X-Gm-Message-State: AOJu0Yxp3uolXDlCwqXf8xaKfe/8e3azYligIVM9ZznYxogCMvY24bFd
+	Txru8xxBAMHAEPeikCuElCM=
+X-Google-Smtp-Source: AGHT+IGxlPwo0Y0oep9fIBEaUahI/dpFBN6J/y7Ev9r8LwvBmovuSH0MCYGFHfryby1oHxSSBQbKZQ==
+X-Received: by 2002:a05:6808:1306:b0:3ae:1e08:4209 with SMTP id y6-20020a056808130600b003ae1e084209mr7930890oiv.39.1696523319965;
+        Thu, 05 Oct 2023 09:28:39 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id d26-20020a63991a000000b0057a868900a9sm1598513pge.67.2023.10.05.09.28.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Oct 2023 09:28:39 -0700 (PDT)
+Message-ID: <4628ee76-0bbe-48f4-80e0-a6d4a4dc6811@gmail.com>
+Date: Thu, 5 Oct 2023 09:28:37 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230830165949.127475-1-ojeda@kernel.org>
-In-Reply-To: <20230830165949.127475-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 5 Oct 2023 18:12:40 +0200
-Message-ID: <CANiq72kmC1Az=gCMnJ_jcsQHNpbbQn=qUytyFexeg9uPpW=q4Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] MAINTAINERS: update Rust webpage
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
+Content-Language: en-US
+To: Ron Economos <re@w6rz.net>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231004175229.211487444@linuxfoundation.org>
+ <be48ca60-57dd-9bbb-d695-0d9d39e98dae@w6rz.net>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <be48ca60-57dd-9bbb-d695-0d9d39e98dae@w6rz.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 30, 2023 at 7:00=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> A few months ago we started a webpage for the Rust subsystem and
-> the overall Rust for Linux project [1].
->
-> The current `W:` field of the Rust entry points to the GitHub
-> repository, since originally we kept information in a `README.md`
-> file that got rendered by GitHub when visiting that URL.
->
-> That information was moved into the webpage and got expanded.
-> The webpage is also nowadays the entry point to the project,
-> and we pointed the "Website" GitHub metadata field to it.
->
-> Thus update the `W:` field to point to the actual webpage.
->
-> Link: https://rust-for-linux.com [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On 10/5/23 00:24, Ron Economos wrote:
+> On 10/4/23 10:52 AM, Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 6.5.6 release.
+>> There are 321 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+>> Anything received after that time might be too late.
+>>
+>> The whole patch series can be found in one patch at:
+>>     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
+>> or in the git tree and branch at:
+>>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+>> and the diffstat can be found below.
+>>
+>> thanks,
+>>
+>> greg k-h
+>>
+> On RISC-V RV64. Bisecting now.
 
-Series applied to `rust-next`-- thanks everyone!
+Naresh already reported that they have tracked down missing commits, see:
 
-Cheers,
-Miguel
+https://lore.kernel.org/r/CA+G9fYvHPnba-0=uGS70EjcPgHht13j3s-_fmd2=srL0xyPjNg@mail.gmail.com
+-- 
+Florian
+
