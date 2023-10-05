@@ -1,313 +1,141 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2A638F83
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 19:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1D44122E
+	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 19:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KbBEvgZr"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-49d428d89cdso203446e0c.1
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 12:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696535536; x=1697140336; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yFv1W8J14AD3Ise4CiUdt+LAXc2O9NgBdpnS7CF0MOw=;
-        b=KbBEvgZrGTFHidBQ69rCleLQpQo0CjB9YqIgwWa1mSDdHgEf5euZOl1lpF5L2Ahrtd
-         wnd19ST5l7clXa7uvnXqUD4kEQFElxxTASa5owiIqQga0JmNSSqdi8M6cnwAklUhFQRE
-         WA20I7eKwzQCWHxvVL4sgeTAKQCnFJAuXPi33gMvSOzFhaAaKcVMr10rVjqNJAuF8NRn
-         GOqQ3TEac5v7I3Boavq2Ff8mR8NSodlNfTrTtB+1kceuMMai6lmWTVdgkKlYF+bEI51S
-         2FT+zVH2jltM6tAqIr9fG6r4xFfrwvjBFAughe2dMU4ptQCisCVTTFWAUf9PCeQY8hp9
-         UE2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696535536; x=1697140336;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yFv1W8J14AD3Ise4CiUdt+LAXc2O9NgBdpnS7CF0MOw=;
-        b=uIY6ISXkTt5WoE3MI3UOFKmKH8J0ZGmgFR5RkK+o8LcDl82WvpcWxGrcevrO6uzw26
-         3jqY9YzExogwrLejyRV2fThdzcliCedjoTFf4RVdGDplMU8fNtfrcsXC+pMC8JhY8MEZ
-         b+XCdkSOe7IFndVyA+9ZXsGEdofWRIZJbIznNL4ae8ncqLB4A3eYhmy3fCFK1C0rZuHF
-         5tNaJ3xNXoqTNL2iyTOljbiN+vHXbkoogACEtfJ+j487bsS/V2dvxzyQgrTglI5bYcW3
-         NY8dXR4geW0Q+39zoGSj6VoZgXK2HnKb0D7IZT6KQfQ9Ei9swCS92/0hL/C2j//1si+9
-         TgzQ==
-X-Gm-Message-State: AOJu0YzczWvKu7qVFzDOF5zAJTdmVBfLN15UjsW5ZzRjhDpeE+9lDNte
-	xnbkDWAjCf/SZ/gf1yfRw4uHjBixw4JTx3pJTfU=
-X-Google-Smtp-Source: AGHT+IGuTEUd8dTcZeTkWYWW1mW8fz4C0ldWo8Lj3yVO2SdMwh2H3DKmTh7Vq/QEWb3sKS/10VY7YdkhsNuEyc3Q0n4=
-X-Received: by 2002:a1f:6e85:0:b0:49b:9510:1f94 with SMTP id
- j127-20020a1f6e85000000b0049b95101f94mr4097701vkc.1.1696535536308; Thu, 05
- Oct 2023 12:52:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="je1Q6847"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696535746; x=1728071746;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=W0bEWWgNT9CiXugP8M24uRKr5rb4of+/WbVzOiaRxgM=;
+  b=je1Q6847+3x3lOObxBKTVE0XvYv4+09Gie3+jxoJqGg5nkwB8DoHM2Kt
+   pzUrk9l8q8zvd0W7kdhbzGLTQfQ4GcDopBfMf4eM4S9tCF7Nc9FbSwFNz
+   QSu90KfglZUK1eGcdDaxsXNY4vwl7oesOhBeSc+dU+DUuImoEly+Bisv0
+   9JU3Loog7nSK6+SU0YFcKQzaQgXqBRVsYvDspiPBJnj6T3V227dvRXBIQ
+   gHBKZOi0199b5WGTs1hiawgEN2zCBdZuASlDYJmJihdR4sj9XBF2ahHOn
+   eBwDx/jMw8KLdlieqSPCW93Hr1idFVOFw/Ot1GnyHSntXnTxeCtjeT8p5
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="386432540"
+X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
+   d="scan'208";a="386432540"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 12:55:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="755600115"
+X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
+   d="scan'208";a="755600115"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 12:55:43 -0700
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: ilpo.jarvinen@linux.intel.com,
+	hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	rostedt@goodmis.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com,
+	pengfei.xu@intel.com
+Subject: [PATCH v4 1/9] platform/x86/intel/ifs: Store IFS generation number
+Date: Thu,  5 Oct 2023 12:51:29 -0700
+Message-Id: <20231005195137.3117166-2-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231005195137.3117166-1-jithu.joseph@intel.com>
+References: <20230929202436.2850388-1-jithu.joseph@intel.com>
+ <20231005195137.3117166-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-15-git-send-email-nunodasneves@linux.microsoft.com>
- <CAJ-90NKJ=FViuuy2MyA-8S1j9Lsia8bR-ytZuAr=pOPuAiO0VQ@mail.gmail.com> <749f477a-1e7a-495e-bea1-e3abe8da7fb9@linux.microsoft.com>
-In-Reply-To: <749f477a-1e7a-495e-bea1-e3abe8da7fb9@linux.microsoft.com>
-From: Alex Ionescu <aionescu@gmail.com>
-Date: Thu, 5 Oct 2023 15:52:04 -0400
-Message-ID: <CAJ-90NL8S5xnJbiwCHAGs4QeiJ3DHUL0Obi1snqsTDJEpQRnsg@mail.gmail.com>
-Subject: Re: [PATCH v4 14/15] asm-generic: hyperv: Use new Hyper-V headers conditionally.
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, x86@kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arch@vger.kernel.org, 
-	patches@lists.linux.dev, mikelley@microsoft.com, kys@microsoft.com, 
-	wei.liu@kernel.org, gregkh@linuxfoundation.org, haiyangz@microsoft.com, 
-	decui@microsoft.com, apais@linux.microsoft.com, Tianyu.Lan@microsoft.com, 
-	ssengar@linux.microsoft.com, mukeshrathor@microsoft.com, 
-	stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com, 
-	vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org, 
-	catalin.marinas@arm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Nuno,
+IFS generation number is reported via MSR_INTEGRITY_CAPS.  As IFS
+support gets added to newer CPUs, some differences are expected during
+IFS image loading and test flows.
 
-Best regards,
-Alex Ionescu
+Define MSR bitmasks to extract and store the generation in driver data,
+so that driver can modify its MSR interaction appropriately.
 
-On Mon, Oct 2, 2023 at 8:41=E2=80=AFPM Nuno Das Neves
-<nunodasneves@linux.microsoft.com> wrote:
->
-> Hi Alex,
->
-> On 10/2/2023 12:35 PM, Alex Ionescu wrote:
-> > Hi Nuno,
-> >
-> > I understand the requirement to have
-> > undocumented/non-standard/non-TLFS-published information in the HDK
-> > headers, however, the current state of this patch is that for any
-> > other code that's not in the kernel today, or in this upcoming driver,
-> > the hyperv-tlfs definitions are incomplete, because some *documented*
-> > TLFS fields are only in HDK headers. Similarly, it is also impossible
->
-> If I understand correctly, you are saying there are documented
-> definitions (in the TLFS document), which are NOT in hyperv-tlfs.h, but
-> ARE in these new HDK headers, correct?
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+---
+ arch/x86/include/asm/msr-index.h      | 1 +
+ drivers/platform/x86/intel/ifs/ifs.h  | 2 ++
+ drivers/platform/x86/intel/ifs/core.c | 3 +++
+ 3 files changed, 6 insertions(+)
 
-Correct.
+diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+index 1d111350197f..838e5a013a07 100644
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -222,6 +222,7 @@
+ #define MSR_INTEGRITY_CAPS_ARRAY_BIST          BIT(MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT)
+ #define MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT	4
+ #define MSR_INTEGRITY_CAPS_PERIODIC_BIST	BIT(MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT)
++#define MSR_INTEGRITY_CAPS_SAF_GEN_MASK	GENMASK_ULL(10, 9)
+ 
+ #define MSR_LBR_NHM_FROM		0x00000680
+ #define MSR_LBR_NHM_TO			0x000006c0
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index 93191855890f..d666aeed20fc 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -229,6 +229,7 @@ struct ifs_test_caps {
+  * @status: it holds simple status pass/fail/untested
+  * @scan_details: opaque scan status code from h/w
+  * @cur_batch: number indicating the currently loaded test file
++ * @generation: IFS test generation enumerated by hardware
+  */
+ struct ifs_data {
+ 	int	loaded_version;
+@@ -238,6 +239,7 @@ struct ifs_data {
+ 	int	status;
+ 	u64	scan_details;
+ 	u32	cur_batch;
++	u32	generation;
+ };
+ 
+ struct ifs_work {
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 306f886b52d2..4ff2aa4b484b 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright(c) 2022 Intel Corporation. */
+ 
++#include <linux/bitfield.h>
+ #include <linux/module.h>
+ #include <linux/kdev_t.h>
+ #include <linux/semaphore.h>
+@@ -94,6 +95,8 @@ static int __init ifs_init(void)
+ 	for (i = 0; i < IFS_NUMTESTS; i++) {
+ 		if (!(msrval & BIT(ifs_devices[i].test_caps->integrity_cap_bit)))
+ 			continue;
++		ifs_devices[i].rw_data.generation = FIELD_GET(MSR_INTEGRITY_CAPS_SAF_GEN_MASK,
++							      msrval);
+ 		ret = misc_register(&ifs_devices[i].misc);
+ 		if (ret)
+ 			goto err_exit;
+-- 
+2.25.1
 
->
-> If these are needed elsewhere in the kernel, they can just be added to
-> hyperv-tlfs.h.
-
-OK, great, As the need arises I will submit patches here to do so (and
-source the TLFS page/paragraph as needed to help provide they're in
-there). Thank you!
-
->
-> > to only use the HDK headers for other use cases, because some basic
-> > documented, standard defines only exist in hyperv-tlfs. So there is no
-> > "logical" relationship between the two -- HDK headers are not _just_
-> > undocumented information, but also documented information, but also
-> > not complete documented information.
->
-> That is correct - they are meant to be independently compileable.
-> The new HDK headers only serve as a replacement *in our driver* when we
-> need some definitions like do_hypercall() etc in mshyperv.h.
-
-Understood.
-
->
-> >
-> > Would you consider:
-> >
-> > 1) Updating hyperv-tlfs with all newly documented TLFS fields that are
-> > in the HDK headers?
->
-> I think this can be done on an as-needed basis, as I outlined above.
-
-Sounds good.
-
->
-> > OR
-> > 2) Updating the new HDK headers you're adding here to also include
-> > previously-documented information from hyperv-tlfs? This way, someone
-> > can include the HDK headers and get everything they need
->
-> The new HDK headers are only intended for the new mshv driver.
->
-> > OR
-> > 3) Truly making hypertv-tlfs the "documented" header, and then > removi=
-ng any duplication from HDK so that it remains the
-> > "undocumented" header file. In this manner, one would include
-> > hyperv-tlfs to use the stable ABI, and they would include HDK (which
-> > would include hyperv-tlfs) to use the unstable+stable ABI.
->
-> hyperv-tlfs.h is remaining the "documented" header.
->
-> But, we can't make the HDK header depend on hyperv-tlfs.h, for 2 primary
-> reasons:
-> 1. We need to put the new HDK headers in uapi so that we can use them in
-> our IOCTL interface. As a result, we can't include hyperv-tlfs.h (unless
-> we put it in uapi as well).
-> 2. The HDK headers not only duplicate, but also MODIFY some structures
-> in hyperv-tlfs.h. e.g., The struct is in hyperv-tlfs.h, but a particular
-> field or bitfield is not.
-
-#2 was something I was worried about. Do you know if the
-standards/docs team is planning on updating the TLFS at some point
-with updates on their end? At which point I'd assume you'd be OK with
-patches to add them to hyperv-tlfs.h
-
-Thanks a lot!
-
---
-Best regards,
-Alex Ionescu
-
->
-> Thanks,
-> Nuno
->
-> >
-> > Thank you for your consideration.
-> >
-> > Best regards,
-> > Alex Ionescu
-> >
-> > On Fri, Sep 29, 2023 at 2:02=E2=80=AFPM Nuno Das Neves
-> > <nunodasneves@linux.microsoft.com> wrote:
-> >>
-> >> Add asm-generic/hyperv-defs.h. It includes hyperv-tlfs.h or hvhdk.h
-> >> depending on compile-time constant HV_HYPERV_DEFS which will be define=
-d in
-> >> the mshv driver.
-> >>
-> >> This is needed to keep unstable Hyper-V interfaces independent of
-> >> hyperv-tlfs.h. This ensures hvhdk.h replaces hyperv-tlfs.h in the mshv
-> >> driver, even via indirect includes.
-> >>
-> >> Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-> >> Acked-by: Wei Liu <wei.liu@kernel.org>
-> >> ---
-> >>   arch/arm64/include/asm/mshyperv.h |  2 +-
-> >>   arch/x86/include/asm/mshyperv.h   |  3 +--
-> >>   drivers/hv/hyperv_vmbus.h         |  1 -
-> >>   include/asm-generic/hyperv-defs.h | 26 ++++++++++++++++++++++++++
-> >>   include/asm-generic/mshyperv.h    |  2 +-
-> >>   include/linux/hyperv.h            |  2 +-
-> >>   6 files changed, 30 insertions(+), 6 deletions(-)
-> >>   create mode 100644 include/asm-generic/hyperv-defs.h
-> >>
-> >> diff --git a/arch/arm64/include/asm/mshyperv.h b/arch/arm64/include/as=
-m/mshyperv.h
-> >> index 20070a847304..8ec14caf3d4f 100644
-> >> --- a/arch/arm64/include/asm/mshyperv.h
-> >> +++ b/arch/arm64/include/asm/mshyperv.h
-> >> @@ -20,7 +20,7 @@
-> >>
-> >>   #include <linux/types.h>
-> >>   #include <linux/arm-smccc.h>
-> >> -#include <asm/hyperv-tlfs.h>
-> >> +#include <asm-generic/hyperv-defs.h>
-> >>
-> >>   /*
-> >>    * Declare calls to get and set Hyper-V VP register values on ARM64,=
- which
-> >> diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/ms=
-hyperv.h
-> >> index e3768d787065..bb1b97106cd3 100644
-> >> --- a/arch/x86/include/asm/mshyperv.h
-> >> +++ b/arch/x86/include/asm/mshyperv.h
-> >> @@ -6,10 +6,9 @@
-> >>   #include <linux/nmi.h>
-> >>   #include <linux/msi.h>
-> >>   #include <linux/io.h>
-> >> -#include <asm/hyperv-tlfs.h>
-> >>   #include <asm/nospec-branch.h>
-> >>   #include <asm/paravirt.h>
-> >> -#include <asm/mshyperv.h>
-> >> +#include <asm-generic/hyperv-defs.h>
-> >>
-> >>   /*
-> >>    * Hyper-V always provides a single IO-APIC at this MMIO address.
-> >> diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-> >> index 09792eb4ffed..0e4bc18a13fa 100644
-> >> --- a/drivers/hv/hyperv_vmbus.h
-> >> +++ b/drivers/hv/hyperv_vmbus.h
-> >> @@ -15,7 +15,6 @@
-> >>   #include <linux/list.h>
-> >>   #include <linux/bitops.h>
-> >>   #include <asm/sync_bitops.h>
-> >> -#include <asm/hyperv-tlfs.h>
-> >>   #include <linux/atomic.h>
-> >>   #include <linux/hyperv.h>
-> >>   #include <linux/interrupt.h>
-> >> diff --git a/include/asm-generic/hyperv-defs.h b/include/asm-generic/h=
-yperv-defs.h
-> >> new file mode 100644
-> >> index 000000000000..ac6fcba35c8c
-> >> --- /dev/null
-> >> +++ b/include/asm-generic/hyperv-defs.h
-> >> @@ -0,0 +1,26 @@
-> >> +/* SPDX-License-Identifier: GPL-2.0 */
-> >> +#ifndef _ASM_GENERIC_HYPERV_DEFS_H
-> >> +#define _ASM_GENERIC_HYPERV_DEFS_H
-> >> +
-> >> +/*
-> >> + * There are cases where Microsoft Hypervisor ABIs are needed which m=
-ay not be
-> >> + * stable or present in the Hyper-V TLFS document. E.g. the mshv_root=
- driver.
-> >> + *
-> >> + * As these interfaces are unstable and may differ from hyperv-tlfs.h=
-, they
-> >> + * must be kept separate and independent.
-> >> + *
-> >> + * However, code from files that depend on hyperv-tlfs.h (such as msh=
-yperv.h)
-> >> + * is still needed, so work around the issue by conditionally includi=
-ng the
-> >> + * correct definitions.
-> >> + *
-> >> + * Note: Since they are independent of each other, there are many def=
-initions
-> >> + * duplicated in both hyperv-tlfs.h and uapi/hyperv/hv*.h files.
-> >> + */
-> >> +#ifdef HV_HYPERV_DEFS
-> >> +#include <uapi/hyperv/hvhdk.h>
-> >> +#else
-> >> +#include <asm/hyperv-tlfs.h>
-> >> +#endif
-> >> +
-> >> +#endif /* _ASM_GENERIC_HYPERV_DEFS_H */
-> >> +
-> >> diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshy=
-perv.h
-> >> index d832852d0ee7..6bef0d59d1b7 100644
-> >> --- a/include/asm-generic/mshyperv.h
-> >> +++ b/include/asm-generic/mshyperv.h
-> >> @@ -25,7 +25,7 @@
-> >>   #include <linux/cpumask.h>
-> >>   #include <linux/nmi.h>
-> >>   #include <asm/ptrace.h>
-> >> -#include <asm/hyperv-tlfs.h>
-> >> +#include <asm-generic/hyperv-defs.h>
-> >>
-> >>   #define VTPM_BASE_ADDRESS 0xfed40000
-> >>
-> >> diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-> >> index 4d5a5e39d76c..722a8cf23d87 100644
-> >> --- a/include/linux/hyperv.h
-> >> +++ b/include/linux/hyperv.h
-> >> @@ -24,7 +24,7 @@
-> >>   #include <linux/mod_devicetable.h>
-> >>   #include <linux/interrupt.h>
-> >>   #include <linux/reciprocal_div.h>
-> >> -#include <asm/hyperv-tlfs.h>
-> >> +#include <asm-generic/hyperv-defs.h>
-> >>
-> >>   #define MAX_PAGE_BUFFER_COUNT                          32
-> >>   #define MAX_MULTIPAGE_BUFFER_COUNT                     32 /* 128K */
-> >> --
-> >> 2.25.1
-> >>
-> >>
->
