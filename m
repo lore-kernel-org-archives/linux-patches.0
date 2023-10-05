@@ -1,158 +1,146 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBEC7FA
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 05:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884C215C9;
+	Thu,  5 Oct 2023 06:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fxuV+roA"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-452527dded1so320554137.0
-        for <patches@lists.linux.dev>; Wed, 04 Oct 2023 22:55:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696485337; x=1697090137; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8ZcZ92+aK7pFvnYG3Zmua4wSvYZMloUcgVE7tYVuTB8=;
-        b=fxuV+roAsok2l72YnHyGI+Lm7ovdRFgGqeIxp+Js6QLVV/Pt5nPpQ1vWcIPyCC+SCA
-         jUsGT+3D7nFJ38psekonl4PqsNB1225TWFVIGjLSfhlSnKMDLwQEjCdzyf88kk46I7/B
-         DHVzaFSX/IWlrYAFhrd9SoEoODresssKjvSnoxYLC0V9/yewYCF5MvnZ9PMQv+zPQ73u
-         wAKhymTb3QHXp0W2j8rmtY3OoFhJNR1UQ9+I43gMj4v/48/TUqgcDrMtNFchbng5LBc/
-         9UsdUQiEjrP0fPfq8ehmRRxidYMZRONMyIrw+Vd4VUAz9g+XI5whnvkxXIkzFN9inIs1
-         5Mjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696485337; x=1697090137;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8ZcZ92+aK7pFvnYG3Zmua4wSvYZMloUcgVE7tYVuTB8=;
-        b=Y2Nj/MsHcbHVNIueQsyEPJwHNpmFvHnlAphiFY+2Yhud3TzbxAsBFQjS96UgE2bxYA
-         DdmlJDy8D4GXDTTVLV6Lr+hnWF5cmFtm7FkjUUkG5/xro/9jRdBTfsj8WeHWB1KHkZvn
-         pMr4ZJIsbYwhaxfC7Y/DJwDFKqWmBJGNP8ySWxdn+jRgtSb061meLtiZEVFr9blpilXD
-         ag3IAGT7KREh+s2AbIPuRH/w5ADD6buuG7VWVPqpxL2I46zLeQs8TUWOAxRRisn1wwMK
-         oLYOJBK52C69M2kQ8Zko1VSWZBn3iVSPe7ji8y20hHFNHUui/djGgc9KyIJEj1h6Xr4r
-         7ZLQ==
-X-Gm-Message-State: AOJu0Yw6jb2iW1wPIaQq8RNHWWrYokdX8/qZVpjreyV+pTy8JOZNm1ye
-	Xt8hUpMZ4O2G6pxSQibfkXtEe91SJHFn+8m+DC13fg==
-X-Google-Smtp-Source: AGHT+IEfqFq+XiDNz2eIQnSJe4kBwvfbehxMBH2culMzbddsGyBv9EAUAsoMj1f9NVtaqL/bP7MZWcqyYrY+8efqtTY=
-X-Received: by 2002:a67:b34a:0:b0:454:6faf:204d with SMTP id
- b10-20020a67b34a000000b004546faf204dmr4357700vsm.2.1696485335477; Wed, 04 Oct
- 2023 22:55:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLcSNkQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D80EC433AD;
+	Thu,  5 Oct 2023 06:26:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696487200;
+	bh=9xyNVyN7N7MBzA9UwuP9xPWMA9I3taWkS2jqsvKhr3s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jLcSNkQ/LCUGlX23x7bKHMrm6O+lCfLyVyl4lJFpqj9ZiSYYzwxEp9jZma31Pfllr
+	 wdUrN6biBfOS5V6bMBNu6EAM0Sq3HUrUansreS7bmBd3mLFduc2pF/kqcY06+yQC5z
+	 D87SMtm/bM/1USoOdPqeLZaEubagHNYsjEKm7koc=
+Date: Thu, 5 Oct 2023 08:26:38 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Cc: Dexuan Cui <decui@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Michael Kelley (LINUX)" <mikelley@microsoft.com>,
+	KY Srinivasan <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"apais@linux.microsoft.com" <apais@linux.microsoft.com>,
+	Tianyu Lan <Tianyu.Lan@microsoft.com>,
+	"ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
+	MUKESH RATHOR <mukeshrathor@microsoft.com>,
+	"stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
+	"jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
+	vkuznets <vkuznets@redhat.com>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"mingo@redhat.com" <mingo@redhat.com>,
+	"bp@alien8.de" <bp@alien8.de>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"hpa@zytor.com" <hpa@zytor.com>,
+	"will@kernel.org" <will@kernel.org>,
+	"catalin.marinas@arm.com" <catalin.marinas@arm.com>
+Subject: Re: [PATCH v4 13/15] uapi: hyperv: Add mshv driver headers defining
+ hypervisor ABIs
+Message-ID: <2023100540-linked-remote-3da7@gregkh>
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-14-git-send-email-nunodasneves@linux.microsoft.com>
+ <2023093057-eggplant-reshoot-8513@gregkh>
+ <ZRia1uyFfEkSqmXw@liuwe-devbox-debian-v2>
+ <2023100154-ferret-rift-acef@gregkh>
+ <dd5159fe-5337-44ed-bf1b-58220221b597@linux.microsoft.com>
+ <2023100443-wrinkly-romp-79d9@gregkh>
+ <SA1PR21MB1335F5145ACB0ED4F378105ABFCBA@SA1PR21MB1335.namprd21.prod.outlook.com>
+ <2023100415-diving-clapper-a2a7@gregkh>
+ <e960ffec-f367-4180-b857-4aceedb7cd89@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231004175229.211487444@linuxfoundation.org>
-In-Reply-To: <20231004175229.211487444@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 5 Oct 2023 11:25:24 +0530
-Message-ID: <CA+G9fYuH90g8jQ5SZHE98k16iQV5n+d2-G64xT9W9wrVmpt_Dg@mail.gmail.com>
-Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Netdev <netdev@vger.kernel.org>, kunit-dev@googlegroups.com, 
-	Eric Dumazet <edumazet@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e960ffec-f367-4180-b857-4aceedb7cd89@linux.microsoft.com>
 
-On Wed, 4 Oct 2023 at 23:53, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.5.6 release.
-> There are 321 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed, Oct 04, 2023 at 11:16:46AM -0700, Nuno Das Neves wrote:
+> On 10/4/2023 10:50 AM, Greg KH wrote:
+> > On Wed, Oct 04, 2023 at 05:36:32PM +0000, Dexuan Cui wrote:
+> > > > From: Greg KH <gregkh@linuxfoundation.org>
+> > > > Sent: Tuesday, October 3, 2023 11:10 PM
+> > > > [...]
+> > > > On Tue, Oct 03, 2023 at 04:37:01PM -0700, Nuno Das Neves wrote:
+> > > > > On 9/30/2023 11:19 PM, Greg KH wrote:
+> > > > > > On Sat, Sep 30, 2023 at 10:01:58PM +0000, Wei Liu wrote:
+> > > > > > > On Sat, Sep 30, 2023 at 08:09:19AM +0200, Greg KH wrote:
+> > > > > > > > On Fri, Sep 29, 2023 at 11:01:39AM -0700, Nuno Das Neves wrote:
+> > > > > > > > > +/* Define connection identifier type. */
+> > > > > > > > > +union hv_connection_id {
+> > > > > > > > > +   __u32 asu32;
+> > > > > > > > > +   struct {
+> > > > > > > > > +           __u32 id:24;
+> > > > > > > > > +           __u32 reserved:8;
+> > > > > > > > > +   } __packed u;
+> > > 
+> > > IMO the "__packed" is unnecessary.
+> > > 
+> > > > > > > > bitfields will not work properly in uapi .h files, please never do that.
+> > > > > > > 
+> > > > > > > Can you clarify a bit more why it wouldn't work? Endianess? Alignment?
+> > > > > > 
+> > > > > > Yes to both.
+> > > > > > 
+> > > > > > Did you all read the documentation for how to write a kernel api?  If
+> > > > > > not, please do so.  I think it mentions bitfields, but it not, it really
+> > > > > > should as of course, this will not work properly with different endian
+> > > > > > systems or many compilers.
+> > > > > 
+> > > > > Yes, in
+> > > > https://docs.k/
+> > > > ernel.org%2Fdriver-
+> > > > api%2Fioctl.html&data=05%7C01%7Cdecui%40microsoft.com%7Ce404769e0f
+> > > > 85493f0aa108dbc4a08a27%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C
+> > > > 0%7C638319966071263290%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLj
+> > > > AwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%
+> > > > 7C%7C&sdata=RiLNA5DRviWBQK6XXhxC4m77raSDBb%2F0BB6BDpFPUJY%3D
+> > > > &reserved=0 it says that it is
+> > > > > "better to avoid" bitfields.
+> > > > > 
+> > > > > Unfortunately bitfields are used in the definition of the hypervisor
+> > > > > ABI. We import these definitions directly from the hypervisor code.
+> > > > 
+> > > > So why do you feel you have to use this specific format for your
+> > > > user/kernel api?  That is not what is going to the hypervisor.
+> > > 
+> These *are* going to the hypervisor - we use these same definitions in
+> our driver for the kernel/hypervisor API. This is so we don't have to
+> maintain two separate definitions for user/kernel and kernel/hypervisor
+> APIs.
 
-While running kunit testing on qemu-armv7 following test failures noticed
-on stable rc 6.5.6-rc1.
+So these fields are just pass-through from userspace to the hypervisor
+and are not touched at all by the kernel?  If so, I hope the hypervisor
+is doing some validation of the data :)
 
-# req_destroy works: EXPECTATION FAILED at net/handshake/handshake-test.c:477
+> > > If it's hard to avoid bitfield here, maybe we can refer to the definition of
+> > > struct iphdr in include/uapi/linux/ip.h
+> > 
+> > It is not hard to avoid using bitfields, just use the proper definitions
+> > to make this portable for all compilers.  And ick, ip.h is not a good
+> > thing to follow :)
+> > 
+> Greg, there is nothing making us use bitfields. It just makes the work
+> of porting the hypervisor definitions to Linux easier - aided by the
+> fact that in practice, all the compilers in our stack produce the same
+> code for these.
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+"our stack" is not how Linux works, you have to write files that work
+for all compilers here.
 
-Test log:
-----------
-<6>[ 1351.687335]     KTAP version 1
-<6>[ 1351.688300]     # Subtest: Handshake API tests
-<6>[ 1351.688760]     1..11
-<6>[ 1351.689362]         KTAP version 1
-<6>[ 1351.689985]         # Subtest: req_alloc API fuzzing
-<6>[ 1351.694360]         ok 1 handshake_req_alloc NULL proto
-<6>[ 1351.705855]         ok 2 handshake_req_alloc CLASS_NONE
-<6>[ 1351.710878]         ok 3 handshake_req_alloc CLASS_MAX
-<6>[ 1351.715435]         ok 4 handshake_req_alloc no callbacks
-<6>[ 1351.722026]         ok 5 handshake_req_alloc no done callback
-<6>[ 1351.726579]         ok 6 handshake_req_alloc excessive privsize
-<6>[ 1351.732397]         ok 7 handshake_req_alloc all good
-<6>[ 1351.732934]     # req_alloc API fuzzing: pass:7 fail:0 skip:0 total:7
-<6>[ 1351.733586]     ok 1 req_alloc API fuzzing
-<6>[ 1351.741251]     ok 2 req_submit NULL req arg
-<6>[ 1351.745979]     ok 3 req_submit NULL sock arg
-<6>[ 1351.753307]     ok 4 req_submit NULL sock->file
-<6>[ 1351.763090]     ok 5 req_lookup works
-<6>[ 1351.770057]     ok 6 req_submit max pending
-<6>[ 1351.774878]     ok 7 req_submit multiple
-<6>[ 1351.782411]     ok 8 req_cancel before accept
-<6>[ 1351.787423]     ok 9 req_cancel after accept
-<6>[ 1351.795660]     ok 10 req_cancel after done
-<3>[ 1351.799741]     # req_destroy works: EXPECTATION FAILED at
-net/handshake/handshake-test.c:477
-<3>[ 1351.799741]     Expected handshake_req_destroy_test == req, but
-<3>[ 1351.799741]         handshake_req_destroy_test == 00000000
-<3>[ 1351.799741]         req == cae22700
-<6>[ 1351.803368]     not ok 11 req_destroy works
-<6>[ 1351.804539] # Handshake API tests: pass:10 fail:1 skip:0 total:11
-<6>[ 1351.805460] # Totals: pass:16 fail:1 skip:0 total:17
-<6>[ 1351.806276] not ok 95 Handshake API tests
+Just use a normal variable and define the bits in them with proper bit
+shifts or masks and that will be portable everywhere.  This isn't rocket
+science...
 
-Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.5.y/build/v6.5.5-322-g9327d0db36be/testrun/20257175/suite/kunit/test/req_alloc/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.5.y/build/v6.5.5-322-g9327d0db36be/testrun/20257175/suite/kunit/test/req_alloc/details/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/config
+thanks,
 
-Steps to reproduce:
-# To install tuxrun to your home directory at ~/.local/bin:
-# pip3 install -U --user tuxrun==0.49.2
-#
-# Or install a deb/rpm depending on the running distribution
-# See https://tuxmake.org/install-deb/ or
-# https://tuxmake.org/install-rpm/
-#
-# See https://tuxrun.org/ for complete documentation.
-Link to reproducer,
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/tuxmake_reproducer.sh
-
-or
-
-tuxrun --runtime podman --device qemu-armv7 --boot-args rw --kernel
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/zImage
---modules https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/modules.tar.xz
---rootfs https://storage.tuxboot.com/debian/bookworm/armhf/rootfs.ext4.xz
---parameters SKIPFILE=skipfile-lkft.yaml --image
-docker.io/linaro/tuxrun-dispatcher:v0.49.2 --tests kunit --timeouts
-boot=30
-
-
---
-Linaro LKFT
-https://lkft.linaro.org
+greg k-h
