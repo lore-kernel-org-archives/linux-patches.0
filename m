@@ -1,83 +1,146 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABE228E28
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 14:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525B0125DD;
+	Thu,  5 Oct 2023 14:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bswIMH9z"
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-351367c1c24so85925ab.1
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 07:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696516084; x=1697120884; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ybf0NvxyfgOVHv/GEAtcS44ETu+aNcIhjMUXTQXq/oo=;
-        b=bswIMH9zuthiECFYEXVxvGpPaOyh0u+LX9vZlCv9ODCYvV/LCc8nTaeuVCUa7W2VJi
-         hzg+hP5/NYaZN9mTtvzenM0Wq+gkXdV1MtapdfBukIwbmNatZz0s29eA2FyulEJJNXwg
-         ldTanrWxfIIU8mQF6dD5jp4Y5toFZaxEO/SgTwzuwnqTbFtRGE4Tx9XDaDthr96vl3Zt
-         UqIe2U9jncxLVZaACaczWdzkaVB3bPLDgKOkLa5tOarEFA+qn8/aaxKP1zYfeoih+WWh
-         TZldwKkDogz13eULPoHfbfHRehG8NpLungsWwxy9ZeHK1UAt4H1lpAkfzUSjdE85/0bX
-         KkyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696516084; x=1697120884;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ybf0NvxyfgOVHv/GEAtcS44ETu+aNcIhjMUXTQXq/oo=;
-        b=MePbf/cnHNO+OP3lUs5fFGtWdRALtNSL7QisuB8sgEHoGcJ3EpWD+ePyo5jR5B0xCL
-         weKaUQU63tye3CAU4M97D+baQXVoMv1HqT3guOxFUO3Tl+R95WhdLbrO0ZTPf7Omz88E
-         nZIxrn+Y1xav1uP6gdzG+tMucMQPLQLsFxYt8M+5ehBRNPYOE0oSohar3+ks0B17J9Wn
-         WmwXZY9k00b2PGEPMqpTiskhPhdk/PYDyxQt29oaNOeEjqRBiivtg0L/2gPwYMhHv7kt
-         KsrChztRc+4PXvt3lfxsJa+9Ac/Mwpp+yR5b8Y+nHY/ZiJqmi33xYCobFbEDV7E7IhmG
-         B8/Q==
-X-Gm-Message-State: AOJu0Yx1z3cbnhSie/gL2BgxU53lqOJnYsn5I1VCSsiz8Bn6GCylF7Nk
-	Kw0sm4Ab/2jrVQBUVzWT5dd5iU17+g/LXx3Aqi4JCg==
-X-Google-Smtp-Source: AGHT+IFvw6IhRVN0H3jLFsLkccwcXRU0R1gonoMQf+gJvBTEY0T903zokI27tID8lLZZIeAVp3qcWUQFrGbYz0QRbi4=
-X-Received: by 2002:a05:6e02:2141:b0:34d:f90f:d42a with SMTP id
- d1-20020a056e02214100b0034df90fd42amr124815ilv.1.1696516084281; Thu, 05 Oct
- 2023 07:28:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+3sokuc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F308BC433CD;
+	Thu,  5 Oct 2023 14:34:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696516449;
+	bh=5DAflvk7cbMnfEphlkIQb4Pvn2YbEBIrbMQlws3K4as=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=X+3sokucHjrIlIyYRnc9gdfLJNhOAfTzxxTeIfaIREAYKQIme+4rbmr4+YFyClCav
+	 /KlagsUdirWgfwRxhBm89m5fNiQ03SSis3/h5lrr1rz/Rlnpn5Z4S3a0rMIn3urAAk
+	 bTF3R7VyvRQD+0dpnmphvKXxF8hdsy38tL4rfPoESsD8YZfAYa1Qnr0VmHMcKI/Jm9
+	 QZT2zN6z6PWVPHCJsAqD+S5laip19lHiY/cVbHcbGPeuLiu5wM0VP6+wr+OSKd4DEu
+	 qsATEHjkL1VcCJMImzFpf0LDgK9GGSQYOAQDm2bqAXsWOS4mwo00J9ScGKE9wmi/m3
+	 MGtA3lH3OxMDQ==
+Date: Thu, 5 Oct 2023 07:34:08 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jinjie Ruan
+ <ruanjinjie@huawei.com>, stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, Netdev
+ <netdev@vger.kernel.org>, kunit-dev@googlegroups.com, Eric Dumazet
+ <edumazet@google.com>, chuck.lever@oracle.com
+Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
+Message-ID: <20231005073408.6bb52351@kernel.org>
+In-Reply-To: <CA+G9fYuH90g8jQ5SZHE98k16iQV5n+d2-G64xT9W9wrVmpt_Dg@mail.gmail.com>
+References: <20231004175229.211487444@linuxfoundation.org>
+	<CA+G9fYuH90g8jQ5SZHE98k16iQV5n+d2-G64xT9W9wrVmpt_Dg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230928191350.205703-1-tony.luck@intel.com> <20231003213043.13565-1-tony.luck@intel.com>
- <20231003213043.13565-2-tony.luck@intel.com>
-In-Reply-To: <20231003213043.13565-2-tony.luck@intel.com>
-From: Peter Newman <peternewman@google.com>
-Date: Thu, 5 Oct 2023 16:27:53 +0200
-Message-ID: <CALPaoCg7ov97uSKk8K4O5_GFKvnHSCSK79g-boPMQKhziS49hw@mail.gmail.com>
-Subject: Re: [PATCH v8 1/8] x86/resctrl: Prepare for new domain scope
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>, 
-	Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, 
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 3, 2023 at 11:30=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
-te:
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu=
-/resctrl/rdtgroup.c
-> index 725344048f85..04c164f6d39d 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -1345,10 +1345,13 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_reso=
-urce *r,
->         unsigned int size =3D 0;
->         int num_b, i;
->
-> +       if (WARN_ON_ONCE(r->scope !=3D RESCTRL_L2_CACHE && r->scope !=3D =
-RESCTRL_L3_CACHE))
-> +               return size;
+It'd probably make sense to run the path to the test that's failing
+thru get_maintainer and throw the right people on the CC. Adding Chuck.
 
-Thanks!
+On Thu, 5 Oct 2023 11:25:24 +0530 Naresh Kamboju wrote:
+> On Wed, 4 Oct 2023 at 23:53, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.5.6 release.
+> > There are 321 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h  
+> 
+> While running kunit testing on qemu-armv7 following test failures noticed
+> on stable rc 6.5.6-rc1.
+> 
+> # req_destroy works: EXPECTATION FAILED at net/handshake/handshake-test.c:477
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Test log:
+> ----------
+> <6>[ 1351.687335]     KTAP version 1
+> <6>[ 1351.688300]     # Subtest: Handshake API tests
+> <6>[ 1351.688760]     1..11
+> <6>[ 1351.689362]         KTAP version 1
+> <6>[ 1351.689985]         # Subtest: req_alloc API fuzzing
+> <6>[ 1351.694360]         ok 1 handshake_req_alloc NULL proto
+> <6>[ 1351.705855]         ok 2 handshake_req_alloc CLASS_NONE
+> <6>[ 1351.710878]         ok 3 handshake_req_alloc CLASS_MAX
+> <6>[ 1351.715435]         ok 4 handshake_req_alloc no callbacks
+> <6>[ 1351.722026]         ok 5 handshake_req_alloc no done callback
+> <6>[ 1351.726579]         ok 6 handshake_req_alloc excessive privsize
+> <6>[ 1351.732397]         ok 7 handshake_req_alloc all good
+> <6>[ 1351.732934]     # req_alloc API fuzzing: pass:7 fail:0 skip:0 total:7
+> <6>[ 1351.733586]     ok 1 req_alloc API fuzzing
+> <6>[ 1351.741251]     ok 2 req_submit NULL req arg
+> <6>[ 1351.745979]     ok 3 req_submit NULL sock arg
+> <6>[ 1351.753307]     ok 4 req_submit NULL sock->file
+> <6>[ 1351.763090]     ok 5 req_lookup works
+> <6>[ 1351.770057]     ok 6 req_submit max pending
+> <6>[ 1351.774878]     ok 7 req_submit multiple
+> <6>[ 1351.782411]     ok 8 req_cancel before accept
+> <6>[ 1351.787423]     ok 9 req_cancel after accept
+> <6>[ 1351.795660]     ok 10 req_cancel after done
+> <3>[ 1351.799741]     # req_destroy works: EXPECTATION FAILED at
+> net/handshake/handshake-test.c:477
+> <3>[ 1351.799741]     Expected handshake_req_destroy_test == req, but
+> <3>[ 1351.799741]         handshake_req_destroy_test == 00000000
+> <3>[ 1351.799741]         req == cae22700
+> <6>[ 1351.803368]     not ok 11 req_destroy works
+> <6>[ 1351.804539] # Handshake API tests: pass:10 fail:1 skip:0 total:11
+> <6>[ 1351.805460] # Totals: pass:16 fail:1 skip:0 total:17
+> <6>[ 1351.806276] not ok 95 Handshake API tests
+> 
+> Links:
+>  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.5.y/build/v6.5.5-322-g9327d0db36be/testrun/20257175/suite/kunit/test/req_alloc/log
+>  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.5.y/build/v6.5.5-322-g9327d0db36be/testrun/20257175/suite/kunit/test/req_alloc/details/
+>  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/
+>  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/config
+> 
+> Steps to reproduce:
+> # To install tuxrun to your home directory at ~/.local/bin:
+> # pip3 install -U --user tuxrun==0.49.2
+> #
+> # Or install a deb/rpm depending on the running distribution
+> # See https://tuxmake.org/install-deb/ or
+> # https://tuxmake.org/install-rpm/
+> #
+> # See https://tuxrun.org/ for complete documentation.
+> Link to reproducer,
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/tuxmake_reproducer.sh
+> 
+> or
+> 
+> tuxrun --runtime podman --device qemu-armv7 --boot-args rw --kernel
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/zImage
+> --modules https://storage.tuxsuite.com/public/linaro/lkft/builds/2WJGlCUgDzR8asQbd2BxMssFcEc/modules.tar.xz
+> --rootfs https://storage.tuxboot.com/debian/bookworm/armhf/rootfs.ext4.xz
+> --parameters SKIPFILE=skipfile-lkft.yaml --image
+> docker.io/linaro/tuxrun-dispatcher:v0.49.2 --tests kunit --timeouts
+> boot=30
+> 
+> 
+> --
+> Linaro LKFT
+> https://lkft.linaro.org
+> 
 
-Reviewed-by: Peter Newman <peternewman@google.com>
