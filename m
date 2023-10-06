@@ -1,105 +1,137 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD5E15484
-	for <patches@lists.linux.dev>; Thu,  5 Oct 2023 22:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC12317F2
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 06:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yHBnccEt"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50573e85ee0so1847098e87.3
-        for <patches@lists.linux.dev>; Thu, 05 Oct 2023 15:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696545764; x=1697150564; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J55C2DECva8x20ZCPV5VaEapm9sYZn6cEu2d8qLrjfw=;
-        b=yHBnccEt8WWf8ZuF1fxXa4wPPAJ18WtzieZSALXY04sk8oNFzpGqhiPWXXGGoH/0S/
-         hdAYZhmbfUQcMZnyGyXJTATzexUJ1njzfQ2BFqVsMlIjyUfuHOd+o2X1etqtzuoWAdCF
-         QDXjhCar/UBfnZ5s9tO1heQZawhcfFskHojTMlFhQwfxwZqdAvMdBbX3eKfXT+iciSmK
-         aOb/HlxZZ4He0pxFhlL4Uh/O/c+G71GNoy5B63SfisnDKbtkkCxE/WsCWH+nYg9e97gJ
-         uP2mwNJWNitJsFidI/N34or2n880Z/Unl8NwAoQs0pNL9daANPrE9yjzo+ppSAA+dFfh
-         a0pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696545764; x=1697150564;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J55C2DECva8x20ZCPV5VaEapm9sYZn6cEu2d8qLrjfw=;
-        b=KxHhHd13pwUTWCK1cY5mgkAZsjFx988DLN6ml9fG+Kg+CcrHhCE4TrfH0psFNlPeZZ
-         CGceyksPXKktzMDgM++9kGNmkST3RGdam8Xq4KkC1d4vV9+sNQt85GLTjx4TlioxYjtF
-         L9eu94ZKL6iE6JhVVf84G1wZcvDFxcKmDJn1p4Dx2eSjfj89ZcP5eDrr7NxSqBsvm78A
-         /LdmMXeqJOICvneo1/rgz1ZNa5jL5LMm0cnWN0l+30N9mEmmoWEC5KCj50XIIGXnZ/WS
-         64tHsY6yD/3Vi5quxb2/xpXvyWS/FUY4qg/Wil8CeMJh/n9s7XwDbVMvI0cYFqAyTttI
-         9CnQ==
-X-Gm-Message-State: AOJu0YzS41vz1kYPYMHpUOh1Av+Dl7zYuEaMOp1v5iFHgPnEa7G0eTjA
-	Mk+h4TKc4N8WJ87Xk+TtQJJWDw==
-X-Google-Smtp-Source: AGHT+IGEkk1/dB0O8kz/B/IOyEVgYrzdTBNr3I5VSfV7uBhvhWf6AWTlOwegLw3Kr7Ps7P1/Hd7iEA==
-X-Received: by 2002:a05:6512:2512:b0:4fb:740a:81ae with SMTP id be18-20020a056512251200b004fb740a81aemr6924452lfb.16.1696545764617;
-        Thu, 05 Oct 2023 15:42:44 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d24-20020ac25458000000b005009b979e3dsm31121lfn.303.2023.10.05.15.42.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 15:42:44 -0700 (PDT)
-Message-ID: <77b410f5-93a2-48be-a0d4-2053f280bc8b@linaro.org>
-Date: Fri, 6 Oct 2023 01:42:43 +0300
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="RPqzfKv4";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="t5N6hNk5"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B62D51F45F;
+	Fri,  6 Oct 2023 06:41:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1696574503;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AHPegFj7wYRBnWo4iJfVnNBssSPMttVzktBNWxsaxJY=;
+	b=RPqzfKv4gZGmUZdxYmP2RazsngprG/807/v2Of1+KBo5sUqo9JSFupq8mGvNz6LrSpyLHC
+	qoqJVH8IWZF4iVQ7uGKPcp2MOF2HAqeK2AYYUXY0Nn57WS3JfpE/hSCm86/po3CzryejT2
+	7T2n4g1+hMUPCYmGifNU1lOhdwZT6OE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1696574503;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AHPegFj7wYRBnWo4iJfVnNBssSPMttVzktBNWxsaxJY=;
+	b=t5N6hNk50AuI+4qPPg4glFprLLTrJyOMPg25eEz33RGUSTueo0on1yxzZmg9dTdscRqq9O
+	AZRSUM7ZJwsJjfDg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4608913A2E;
+	Fri,  6 Oct 2023 06:41:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 2t+vCCasH2UZWgAAMHmgww
+	(envelope-from <pvorel@suse.cz>); Fri, 06 Oct 2023 06:41:42 +0000
+Date: Fri, 6 Oct 2023 08:41:40 +0200
+From: Petr Vorel <pvorel@suse.cz>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-nfs@vger.kernel.org, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	LTP List <ltp@lists.linux.it>,
+	Richard Palethorpe <rpalethorpe@suse.com>,
+	Eryu Guan <eguan@redhat.com>, chrubis <chrubis@suse.cz>
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+Message-ID: <20231006064140.GA178316@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20231004175217.404851126@linuxfoundation.org>
+ <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
+ <20231005172448.GA161140@pevik>
+ <CA+G9fYuyXgWvsRhznP2x2VE5CvSyCCgcvxPz2J=dbvg6YW2iUA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] drm/msm/dp: Remove error message when downstream port
- not connected
-Content-Language: en-GB
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Vinod Polimera <quic_vpolimer@quicinc.com>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20230906181226.2198441-1-swboyd@chromium.org>
- <20230906181226.2198441-3-swboyd@chromium.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230906181226.2198441-3-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+G9fYuyXgWvsRhznP2x2VE5CvSyCCgcvxPz2J=dbvg6YW2iUA@mail.gmail.com>
 
-On 06/09/2023 21:12, Stephen Boyd wrote:
-> Plugging in an Apple dongle without the HDMI cable attached prints out
-> an error message in the kernel logs when nothing is actually wrong.
-> 
->     no downstream ports connected
-> 
-> This is because the downstream port for the HDMI connector is not
-> connected, so the Apple dongle reports that as a zero sink count device.
-> 
-> Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_panel.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 97ba41593820..ae778e1a6fd0 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -156,7 +156,6 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
->   	if (drm_dp_is_branch(dp_panel->dpcd)) {
->   		count = drm_dp_read_sink_count(panel->aux);
->   		if (!count) {
-> -			DRM_ERROR("no downstream ports connected\n");
+> On Thu, 5 Oct 2023 at 22:54, Petr Vorel <pvorel@suse.cz> wrote:
 
-Maybe this can be converted to drm_dbg_dp?
+> > Hi Naresh,
 
->   			panel->link->sink_count = 0;
->   			return -ENOTCONN;
->   		}
+> > > On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
 
--- 
-With best wishes
-Dmitry
+> > > > This is the start of the stable review cycle for the 6.1.56 release.
+> > > > There are 259 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
 
+> > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > > > Anything received after that time might be too late.
+
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > > and the diffstat can be found below.
+
+> > > > thanks,
+
+> > > > greg k-h
+
+> > > Results from Linaro’s test farm.
+> > > Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
+> > Could you please note in your reports also LTP version?
+
+> Sure.
+> We are running LTP Version: 20230516 for our testing.
+
+> We will update the latest LTP release (20230929) next week.
+
+Great, thank you.
+
+> > FYI the best LTP release is always the latest release or git master branch.
+
+> We have two threads here.
+> 1) LTP release tag testing on all stable-rc branches
+> 2) LTP master testing on a given specific kernel version [a]
+
+Great, this makes sense.
+
+BTW from looking in the log [b] ("INFO: ltp-pan reported some tests FAIL")
+I see you use runltp. We recommend to switch to kirk [c]. And we definitely
+appreciate your feedback from it.
+
+Kind regards,
+Petr
+
+> [a] https://qa-reports.linaro.org/lkft/ltp-master/
+[b] https://qa-reports.linaro.org/lkft/ltp-master/build/v6.5.3_20230929-2-g48a150bfd/testrun/20223790/suite/ltp-cve/test/cve-2017-8890/log
+[c] https://github.com/linux-test-project/kirk/#readme
+
+> - Naresh
