@@ -1,164 +1,186 @@
-Received: from BN3PR00CU001.outbound.protection.outlook.com (mail-eastus2azon11020023.outbound.protection.outlook.com [52.101.56.23])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CA72AB3B
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 18:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D82636B1D
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 18:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="ClfKq0fv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cDvo4Yj4/CdG0nSmduvXZlTyqMqg4J33HnASqmN47dG9V94hqoyh2q/cnxjrjYe35XLuZduuTnXgp26m7r/yr9Dz81NCEmqQkU3b2ztdcc9qTTrfs8zIyUs5inHnuFa8wRUGoNyFDd74YtDf435r44FEWB2E7PEuWnhKgVy+254LavjC66O5N96Bc/7EK7b/CazFJ3T1O8+NHXzSwtUNdLh+NZERKlVLf40O2Zud3/CIomyXlrk4dU0a7GQ3OEorIR9cM2Ebz4Yetq8GgDqBxolFuJMBPew7Kjyxp1YaOOtk39zKMVvVVJx2deRhAtlAIlT9/ArKsqqdRLddVlyf+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QKnM09NBEwlP05TwXlsD+52zOBv6STmUjPPo4vaMuDg=;
- b=XV565Tc8Nku3TGG9kJgQNFNrAtpvaKC5ZeOs0rzUBCUYNoJ8qOAtXIB3Mn//eer+sMwRsJxcUmo/N4IKXWSrwAW6vL7uQz1Hc3gNQOdEQfMaa0daurkmnrUA9mZTy2u/USkiqWGpexvPm0X4Va08NFiCk7PYn0cMX+sigeBolcdIrZvBgM8dNSLIm/VUHF1P31DzsRQVo+xxmoGk+LwxOfPJSo1PSLts+3aNrUEl5ybnaAnfGDcejkS78DzBBXogX2igHz1rVzoY8utG/qfeqSCzDr3XhuV9R0CtUFXvZOol/9uIBmPzwK1YOYzKhzQNoV4zCMZIXKQ3zuTrpykESw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QKnM09NBEwlP05TwXlsD+52zOBv6STmUjPPo4vaMuDg=;
- b=ClfKq0fv4zfh1w+9CeeizDeGfSABXIR0v2ghUHMSfG+esHRf08yIiPZmZBBVPC6eo3uKIOJRcV2ZNlu4cvr3rCo5iCsOMYpt6Z6ujAbNozZuDtFlJUn/qvVEJOpkW8XY/rdXiI4XCoNd1ySKeg1ebFnP2m6Z7rDn/XldkCI2yIc=
-Received: from PH7PR21MB3263.namprd21.prod.outlook.com (2603:10b6:510:1db::16)
- by BY5PR21MB1473.namprd21.prod.outlook.com (2603:10b6:a03:239::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6886.15; Fri, 6 Oct
- 2023 18:13:29 +0000
-Received: from PH7PR21MB3263.namprd21.prod.outlook.com
- ([fe80::bc89:f4fb:3df6:66d9]) by PH7PR21MB3263.namprd21.prod.outlook.com
- ([fe80::bc89:f4fb:3df6:66d9%4]) with mapi id 15.20.6886.015; Fri, 6 Oct 2023
- 18:13:28 +0000
-From: Long Li <longli@microsoft.com>
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>, Alex Ionescu
-	<aionescu@gmail.com>, Dexuan Cui <decui@microsoft.com>, "Michael Kelley
- (LINUX)" <mikelley@microsoft.com>
-CC: "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-arch@vger.kernel.org"
-	<linux-arch@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "Michael Kelley (LINUX)" <mikelley@microsoft.com>,
-	KY Srinivasan <kys@microsoft.com>, "wei.liu@kernel.org" <wei.liu@kernel.org>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, Haiyang Zhang
-	<haiyangz@microsoft.com>, Dexuan Cui <decui@microsoft.com>,
-	"apais@linux.microsoft.com" <apais@linux.microsoft.com>, Tianyu Lan
-	<Tianyu.Lan@microsoft.com>, "ssengar@linux.microsoft.com"
-	<ssengar@linux.microsoft.com>, MUKESH RATHOR <mukeshrathor@microsoft.com>,
-	"stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
-	"jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>, vkuznets
-	<vkuznets@redhat.com>, "tglx@linutronix.de" <tglx@linutronix.de>,
-	"mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "hpa@zytor.com"
-	<hpa@zytor.com>, "will@kernel.org" <will@kernel.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>
-Subject: RE: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in
- hv_common.c
-Thread-Topic: [PATCH v4 09/15] Drivers: hv: Introduce hv_output_arg_exists in
- hv_common.c
-Thread-Index: AQHZ8v8YYiojdoyEt0WH7hU8r776QrA253KAgAMTjACAAx694A==
-Date: Fri, 6 Oct 2023 18:13:28 +0000
-Message-ID:
- <PH7PR21MB3263F2F8507C8472DE00F546CEC9A@PH7PR21MB3263.namprd21.prod.outlook.com>
-References:
- <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1696010501-24584-10-git-send-email-nunodasneves@linux.microsoft.com>
- <CAJ-90N+A-wS-Uwrs_2WVL86Uo3qzQ1czxm-u9vDj3UuOwjhLdQ@mail.gmail.com>
- <c79ee00f-253d-40d5-9ed6-0f156dc4ebb1@linux.microsoft.com>
-In-Reply-To: <c79ee00f-253d-40d5-9ed6-0f156dc4ebb1@linux.microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=74c7efda-59dd-4030-9b77-812f90078a40;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2023-10-06T18:06:42Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH7PR21MB3263:EE_|BY5PR21MB1473:EE_
-x-ms-office365-filtering-correlation-id: baf89ef7-e06a-4bf1-a0ab-08dbc697f0ad
-x-ld-processed: 72f988bf-86f1-41af-91ab-2d7cd011db47,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- cr8bKvFAKND+unXiyyhJiaV4+PyAXnDJPO55FByUK49HzahqwE9TQrEbEdq5xSUVFk5HvJ147SlQMo5xHenEESI+IVwnKO8sAbQMfxBQAAMkarKuw/mf+9S8+425Ml6RlptgHZfeS/7ZsTggByYLPFpnnbGLcic3rmzZb9rPwhb0gWEy0CD9L/cmTBfD42dzARwcswThsOtQDHyPzSA3ahpAc0zPSG17GewVwaDPOTMJbEnRsHvhVKd2twHnaBKfR4Ly8+5XDL1zxtjiPE4rx9wnZaR+mTuevLsFN2ieyi8IjiQiRaJrl26jvSZjCRvSu0NKQq4cVNp4jbkOBsazGfcOcThYke4P2pLMq8mK4KB75VXfzrwuak/MRoc8ZZ+Sf2fiDiHM9xBt+EtVPyUeB6Le5i2CFk3qJyNlS90PSHkgSOM1X0/keLLy2NMbb9pKSeUJ81j+QzzrWOFB7SZcaQwrT637kx2fp5Aia6c91xEYCih/5WogX+HpbDt9OzD3MG6dKmRCSQNbfvFN15P7ARl39kC2hpo11/ZZz7LdC58Qe6QuensGYbk05PiNE8fWQgtyrpscZsgnfJDkmoDaaCJUor+PxST3e8E0JlIUaszlb3LkvcFKgaD0KgGK8RcXpj6P8FnNnK0MuQUswgMFzB+b1gg3JvKywNSqGuc9zGk=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR21MB3263.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(366004)(376002)(136003)(230922051799003)(1800799009)(186009)(451199024)(64100799003)(53546011)(6506007)(7696005)(71200400001)(478600001)(10290500003)(9686003)(26005)(7416002)(4744005)(316002)(2906002)(8990500004)(41300700001)(6636002)(76116006)(110136005)(66446008)(66476007)(66556008)(66946007)(5660300002)(64756008)(4326008)(52536014)(8676002)(8936002)(54906003)(33656002)(38100700002)(38070700005)(86362001)(122000001)(82960400001)(82950400001)(55016003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?M1kzbTlFblBPZGoxb0M3TWJFZXhVTHNmS3NkVFUzNGJJRENIVEFtOWJlN21h?=
- =?utf-8?B?OWpUYVZuSzQzRFIwV1I5NURiSUFNWXFQMlZST25xc3ExaS8yTksvRE9XTGVs?=
- =?utf-8?B?VStXdkFPWVJsVi9FVGRZU3N2cWV1SVRoL0ViWkorMEVHbms1b1RoNGV1bGd6?=
- =?utf-8?B?dEFCdi95OW5Jd0JUQjlmY29yK3lnK3V5Y056ZG9wV0NpbEp6OGFoK3IwT3Rw?=
- =?utf-8?B?c0tBbms1QlFlR3hIZkdvRkE1YkpDczJBUU9md1l0TlFuQ0kzSlBlTTNwYVJR?=
- =?utf-8?B?Smp1MVFBMUZxVmY5L0NCQTBOVTZyT3dzbWd0TUZWL1NnVjBSS1lBWjAycWQr?=
- =?utf-8?B?clJhNldVU2wxcVJoVmtZcDR1a214L1phNnN1WlVYMSsvbTRPbDBMRnV1RWZl?=
- =?utf-8?B?WVV0N0pxNnllOGUxdmFTSHNuV21nTWNWWm1Qc04wTmwxMVJsa2k2aW12UFFP?=
- =?utf-8?B?WE9mNUQzc2cxRklrREQxNUtvTXNta1BweVhCdFpqTkZYS2NDK1VwL3E5ODkx?=
- =?utf-8?B?ZDZMdzJkcEQrcFV2UjR4cnptVWUrV0JuWnErMGFPbm5pYlRmWXAxM0NUZ2Ni?=
- =?utf-8?B?RjRGMi9ycHZJNnZ1Vjc2MzFHM0xPbjZGWVJ5WUlDZUo0OU0zSHZuUVg3QUho?=
- =?utf-8?B?SHBWWVU3cGRXRzY1ZHB4cWFuU1BKc2NtNXJEbkdMbXMwdFI3aERERWtuUkZ6?=
- =?utf-8?B?NmNmSkthRmFMd3VBblR3SUlXUXZ1Qm4rd3N4ait2czhPQzZCM1JSS3p3SXp1?=
- =?utf-8?B?UHNxQlJpbDh2ZUFvYkF0S0pZblpiRHRHR2loZkFyaFEzV0h6QjJFRS9qOTJi?=
- =?utf-8?B?WGVNdmlrL0pvVG9HNEQ4Tzg2cTk2ankyODFoRjFtTm9hNW4rRXVocWhwYVg1?=
- =?utf-8?B?V0JPTUFMZWlaMk9NeWM1Y1BVenF3MlVQQ29KdFp4NTVEUmtMVjdEQzdDZnlY?=
- =?utf-8?B?cFovdmZLcVo5ZU13Y0MrODBLdUR2R00zbS96aEtFZ1gwdmR6SUVpMmEyZTVG?=
- =?utf-8?B?R0xPNVBwM0paSTBrZ2dzZ3FTTVVjSWFGSCtCeEFmT0RkdUFPc0N3YmVVb2Ja?=
- =?utf-8?B?MVl6SjhOODAxRlpGaVRoMG8wYWplZjFBUmxJNjVFM3ZxK1JydVlyWjl2c0FO?=
- =?utf-8?B?VVpFK2NOaDdEZFV5VHhwL2llYkd4ZDJNcTFrTGtZeHVNMTN0UUd4SFkvd2Np?=
- =?utf-8?B?SUlsZjJxQzQvMTd5cmtTdXFmZnE2L0U5Tm9hMVhBd3hYSXZFWFRCNDhLSGdU?=
- =?utf-8?B?MWtZTjNNanF0R0djWWl5V0xDY0FvSnNMZmVjckxtbHNjMDhBTWE2RStVTWV2?=
- =?utf-8?B?K1JzOFc0Q2M1UDNOMGYzQVd0dWMwRmJRNEY5aHdaRmdCVUdRZ0E4VTg1VjFs?=
- =?utf-8?B?N1dvOS9YVHlGRE5QbW80M0pYOHIyUUl1VnFZWStRM0kwbnpBU3VHVVVTQ1VX?=
- =?utf-8?B?Q0J3NkNLeTZNRjlCejhtb3hlaFBOR1gzNDU2Ny9xWWVmRFY5L3JnRE0yZHJP?=
- =?utf-8?B?NFVqNC9uTCtxaWZNckF2KzVlUy9vbGloMGdFOTQ4c0RvSFBGRFBiOXVHU3Vo?=
- =?utf-8?B?MjFXMi9mbjUrMG9haDMwV3BOVXpGZkVzUFdESW93TjN1MEE3U2o0WnhZQ3lE?=
- =?utf-8?B?ckFOUkRuYXowbTIvQjdyUmw1YkFpOGhxWWVSM2VRM2dYRG55WFdsRUV4U3JJ?=
- =?utf-8?B?NXg0djZnZ2w5Mi9BZy9iT1BQTTA2YWRhbGNYYmFqTGY0bXZFOTF2T1pSMTF1?=
- =?utf-8?B?WUxiaG9GWU9kNE1hczA5cVppenM4ckp3aExtZlVuT2VZSHRHNW9hWjZ1QlEv?=
- =?utf-8?B?SDhBTTRnQ2FwNU1CeHA0cFBvbUVobUVNVkxFR0kySjBNRCtvVlJMNlJUN2kx?=
- =?utf-8?B?cG9XWFNxVi81RTlmbHYvNVFiTzdBNVBKUms5d042MDJZSkUwU3l3dnVIQ2ls?=
- =?utf-8?B?NFhDRi9zS0JLajBLZEgrZ1ZYaEJTWm04Zzdrck8yTnE5ckRYOGVUbDI3WUY3?=
- =?utf-8?B?R0ZlcEJPenA1M2xpNjYyZVpJVjZOZ2liMzAxblZFK1JKenk2RHJxTDVuNVZ3?=
- =?utf-8?B?c3FyaTZEbkJGb0pOaXN5cnltc1NpZTBzNHJBREppelYra1o4WHB5OHU5WmQr?=
- =?utf-8?Q?DtdScc5rUb2aMjtANl5KD7L5U?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMddIapo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461EEC433C8;
+	Fri,  6 Oct 2023 18:20:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696616457;
+	bh=bW7xb8UcwfoF/vlsFYDPvx7RfEeNLXCBqnmUHKIXv6s=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=YMddIapoFKWjCnbNCVbFVs6w/jUVcZyHar1ZNtg6Lgm+t6RD67qeCCtrLrWZI5jkq
+	 vbITgAQs5Nw7mx2S+4/DzzvQexQitGyduWJELFYuVQ/uu1Gp7+uN+uHEKkXjWDBaZq
+	 bPnWkqW3PbyyacsIr6NL4c2xfJjl4iXbZsVcgxZ0wAi1b5bPrRJjm5XbqjJ+ZJRMd9
+	 TKcrzMx2IqyLoSppbG2Ca9nBFEywhE8bUv/odlLv/+PcxH6c4p5IVW9AacmrIEsHNl
+	 qc+Ue+oUUorDJpArpbgSAfj5CxXVedDY2lVwTiWxuqjCEO2XKk8AiBR0Msn+lXjI15
+	 RziamoxWQ9Tng==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id D5489CE0B6B; Fri,  6 Oct 2023 11:20:56 -0700 (PDT)
+Date: Fri, 6 Oct 2023 11:20:56 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, Chengming Zhou <zhouchengming@bytedance.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Ingo Molnar <mingo@kernel.org>, rcu <rcu@vger.kernel.org>
+Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
+Message-ID: <7652477c-a37c-4509-9dc9-7f9d1dc08291@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20231004175203.943277832@linuxfoundation.org>
+ <CA+G9fYunnEUT2evdabX1KOTiryP1heNHWDH4LWZCt2SVRmnKOA@mail.gmail.com>
+ <20231006162038.d3q7sl34b4ouvjxf@revolver>
+ <57c1ff4d-f138-4f89-8add-c96fb3ba6701@paulmck-laptop>
+ <20231006175714.begtgj6wrs46ukmo@revolver>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR21MB3263.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: baf89ef7-e06a-4bf1-a0ab-08dbc697f0ad
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Oct 2023 18:13:28.2883
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SWkF019aeUNL9ELTgkkkwLhdeCmb194QE/Uy7959Zggb0nHDacHECWtUq61lI69CURAv4SRI5WNptAxnpe1Lbw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR21MB1473
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231006175714.begtgj6wrs46ukmo@revolver>
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIIHY0IDA5LzE1XSBEcml2ZXJzOiBodjogSW50cm9kdWNlIGh2
-X291dHB1dF9hcmdfZXhpc3RzIGluDQo+IGh2X2NvbW1vbi5jDQo+IA0KPiBPbiAxMC8yLzIwMjMg
-MTI6MjkgUE0sIEFsZXggSW9uZXNjdSB3cm90ZToNCj4gPiBIaSBOdW5vLA0KPiA+DQo+ID4gSXMg
-aXQgcG9zc2libGUgdG8gc2ltcGx5IGNoYW5nZSB0byBhbHdheXMgYWxsb2NhdGluZyB0aGUgb3V0
-cHV0IHBhZ2U/DQo+ID4gRm9yIGV4YW1wbGUsIHRoZSBvdXRwdXQgcGFnZSBjb3VsZCBiZSBuZWVk
-ZWQgaW4gc2NlbmFyaW9zIHdoZXJlIExpbnV4DQo+ID4gaXMgbm90IHJ1bm5pbmcgYXMgdGhlIHJv
-b3QgcGFydGl0aW9uLCBzaW5jZSBjZXJ0YWluIGh5cGVyY2FsbHMgdGhhdCBhDQo+ID4gZ3Vlc3Qg
-Y2FuIG1ha2Ugd2lsbCBzdGlsbCByZXF1aXJlIG9uZSAoSSByZWFsaXplIHRoYXQncyBub3QgdGhl
-IGNhc2UNCj4gPiBfdG9kYXlfLCBidXQgSSBkb24ndCBiZWxpZXZlIHRoaXMgb3B0aW1pemF0aW9u
-IGJ1eXMgbXVjaCkuDQo+IA0KPiBJIGFncmVlIC0gaXQgd291bGQgaW5kZWVkIHNpbXBsaWZ5IHRo
-ZSBjb2RlLCBhbmQgZ3Vlc3RzIHdpbGwgcHJvYmFibHkgbWFrZSB1c2Ugb2YgaXQNCj4gc29vbmVy
-IG9yIGxhdGVyLg0KPiANCj4gSGFwcHkgdG8gbWFrZSB0aGF0IGNoYW5nZSBpZiBIeXBlci1WIGd1
-ZXN0IG1haW50YWluZXJzIGFncmVlLg0KPiBMb25nLCBEZXh1YW4sIE1pY2hhZWwsIHdoYXQgZG8g
-eW91IHRoaW5rPw0KDQpUaGVyZSBpcyBubyB1c2UgY2FzZSBhcyBvZiB0b2RheSBmb3IgZ3Vlc3Qg
-Vk1zLiBBbmQgaXQgYWxsb2NhdGVzIGV4dHJhIG1lbW9yeSB0aGF0IGFyZSBuZXZlciB1c2VkIHdo
-ZW4gcnVubmluZyBhcyBndWVzdCBWTXMuDQoNCkkgc3VnZ2VzdCBrZWVwIHRoaXMgY29kZSB1bmNo
-YW5nZWQgYXMgaXMuDQoNClRoYW5rcywNCkxvbmcNCg==
+On Fri, Oct 06, 2023 at 01:57:14PM -0400, Liam R. Howlett wrote:
+> * Paul E. McKenney <paulmck@kernel.org> [231006 12:47]:
+> > On Fri, Oct 06, 2023 at 12:20:38PM -0400, Liam R. Howlett wrote:
+> > > * Naresh Kamboju <naresh.kamboju@linaro.org> [231005 13:49]:
+> > > > On Wed, 4 Oct 2023 at 23:33, Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org> wrote:
+> > > > >
+> > > > > This is the start of the stable review cycle for the 5.15.134 release.
+> > > > > There are 183 patches in this series, all will be posted as a response
+> > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > let me know.
+> > > > >
+> > > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > > > > Anything received after that time might be too late.
+> > > > >
+> > > > > The whole patch series can be found in one patch at:
+> > > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.134-rc1.gz
+> > > > > or in the git tree and branch at:
+> > > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > > > and the diffstat can be found below.
+> > > > >
+> > > > > thanks,
+> > > > >
+> > > > > greg k-h
+> > > > 
+> > > > Results from Linaro’s test farm.
+> > > > Regressions on x86.
+> > > > 
+> > > > Following kernel warning noticed on x86 while booting stable-rc 5.15.134-rc1
+> > > > with selftest merge config built kernel.
+> > > > 
+> > > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > > > 
+> > > > Anyone noticed this kernel warning ?
+> > > > 
+> > > > This is always reproducible while booting x86 with a given config.
+> > > 
+> > > >From that config:
+> > > #
+> > > # RCU Subsystem
+> > > #
+> > > CONFIG_TREE_RCU=y
+> > > # CONFIG_RCU_EXPERT is not set
+> > > CONFIG_SRCU=y
+> > > CONFIG_TREE_SRCU=y
+> > > CONFIG_TASKS_RCU_GENERIC=y
+> > > CONFIG_TASKS_RUDE_RCU=y
+> > > CONFIG_TASKS_TRACE_RCU=y
+> > > CONFIG_RCU_STALL_COMMON=y
+> > > CONFIG_RCU_NEED_SEGCBLIST=y
+> > > # end of RCU Subsystem    
+> > > 
+> > > #
+> > > # RCU Debugging
+> > > #
+> > > CONFIG_PROVE_RCU=y
+> > > # CONFIG_RCU_SCALE_TEST is not set
+> > > # CONFIG_RCU_TORTURE_TEST is not set
+> > > # CONFIG_RCU_REF_SCALE_TEST is not set
+> > > CONFIG_RCU_CPU_STALL_TIMEOUT=21
+> > > CONFIG_RCU_TRACE=y
+> > > # CONFIG_RCU_EQS_DEBUG is not set
+> > > # end of RCU Debugging
+> > > 
+> > > 
+> > > > 
+> > > > x86 boot log:
+> > > > -----
+> > > > [    0.000000] Linux version 5.15.134-rc1 (tuxmake@tuxmake)
+> > > > (x86_64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils
+> > > > for Debian) 2.40) #1 SMP @1696443178
+> > > > ...
+> > > > [    1.480701] ------------[ cut here ]------------
+> > > > [    1.481296] WARNING: CPU: 0 PID: 13 at kernel/rcu/tasks.h:958
+> > > > trc_inspect_reader+0x80/0xb0
+> > > > [    1.481296] Modules linked in:
+> > > > [    1.481296] CPU: 0 PID: 13 Comm: rcu_tasks_trace Not tainted 5.15.134-rc1 #1
+> > > > [    1.481296] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
+> > > > 2.5 11/26/2020
+> > > > [    1.481296] RIP: 0010:trc_inspect_reader+0x80/0xb0
+> > > 
+> > > This function has changed a lot, including the dropping of this
+> > > WARN_ON_ONCE().  The warning was replaced in 897ba84dc5aa ("rcu-tasks:
+> > > Handle idle tasks for recently offlined CPUs") with something that looks
+> > > equivalent so I'm not sure why it would not trigger in newer revisions.
+> > > 
+> > > Obviously the behaviour I changed was the test for the task being idle.
+> > > I am not sure how best to short-circuit that test from happening during
+> > > boot as I am not familiar with the RCU code.
+> > 
+> > The usual test for RCU's notion of early boot being completed is
+> > (rcu_scheduler_active != RCU_SCHEDULER_INIT).
+> > 
+> > Except that "ofl" should always be false that early in boot, at least
+> > in mainline.
+> 
+> Is this still true in the final version of the patch where we set the
+> boot task as !idle until just before the early boot is finished?  I
+> wouldn't think of this as 'early in boot' anymore as much as the entire
+> kernel setup.  Maybe we need to shorten the time we stay in !idle mode
+> for earlier kernels?
+
+In mainline, the ofl variable is defined as cpu_is_offline(cpu), and
+during boot, the boot CPU is guaranteed to be online.  (As opposed to
+the boot CPU's idle-task state.)
+
+> How frequent is this function called?  We could check something for
+> early boot... or track down where the cpu is put online and restore idle
+> before that happens?
+
+Once per RCU Tasks Trace grace period per reader seen to be blocking
+that grace period.  Its performance is as issue, but not to anywhere
+near the same extent as (say) rcu_read_lock_trace().
+
+> > > It's also worth noting that the bug this fixes wasn't exposed until the
+> > > maple tree (added in v6.1) was used for the IRQ descriptors (added in
+> > > v6.5).
+> > 
+> > Lots of latent bugs, to be sure, even with rcutorture.  :-/
+> 
+> The Right Thing is to fix the bug all the way back to the introduction,
+> but what fallout makes the backport less desirable than living with the
+> unexposed bug?
+
+You are quite right that it is possible for the risk of a backport to
+exceed the risk of the original bug.
+
+I defer to Joel (CCed) on how best to resolve this in -stable.
+
+							Thanx, Paul
