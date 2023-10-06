@@ -1,73 +1,58 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC12317F2
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 06:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FD45CB5
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 07:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="RPqzfKv4";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="t5N6hNk5"
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B62D51F45F;
-	Fri,  6 Oct 2023 06:41:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1696574503;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AHPegFj7wYRBnWo4iJfVnNBssSPMttVzktBNWxsaxJY=;
-	b=RPqzfKv4gZGmUZdxYmP2RazsngprG/807/v2Of1+KBo5sUqo9JSFupq8mGvNz6LrSpyLHC
-	qoqJVH8IWZF4iVQ7uGKPcp2MOF2HAqeK2AYYUXY0Nn57WS3JfpE/hSCm86/po3CzryejT2
-	7T2n4g1+hMUPCYmGifNU1lOhdwZT6OE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1696574503;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AHPegFj7wYRBnWo4iJfVnNBssSPMttVzktBNWxsaxJY=;
-	b=t5N6hNk50AuI+4qPPg4glFprLLTrJyOMPg25eEz33RGUSTueo0on1yxzZmg9dTdscRqq9O
-	AZRSUM7ZJwsJjfDg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4608913A2E;
-	Fri,  6 Oct 2023 06:41:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 2t+vCCasH2UZWgAAMHmgww
-	(envelope-from <pvorel@suse.cz>); Fri, 06 Oct 2023 06:41:42 +0000
-Date: Fri, 6 Oct 2023 08:41:40 +0200
-From: Petr Vorel <pvorel@suse.cz>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-nfs@vger.kernel.org, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	LTP List <ltp@lists.linux.it>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Eryu Guan <eguan@redhat.com>, chrubis <chrubis@suse.cz>
-Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
-Message-ID: <20231006064140.GA178316@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20231004175217.404851126@linuxfoundation.org>
- <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
- <20231005172448.GA161140@pevik>
- <CA+G9fYuyXgWvsRhznP2x2VE5CvSyCCgcvxPz2J=dbvg6YW2iUA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v5M1tU6q"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-27760c31056so1248404a91.1
+        for <patches@lists.linux.dev>; Fri, 06 Oct 2023 00:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696576795; x=1697181595; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QLbD36lfGshKBD/IHq1uy+catxZoLx+hDosAbEWMfB8=;
+        b=v5M1tU6qtXSTOFJMcoaHJlxzFR92uACnn32sRcIE8sKerfEb3R+v69BjPrzpwOx+kh
+         OztZ1dVm6qLhscJ06X5hJYmQbSDh+tePYSm8sImPyJ7GkbIQLNp0JivKbKXfGz8nIiMv
+         X6q8LYOI59VG2ERr85i9yQnotWwvbYDmNEToWvQMU4dlmwyBFAv0r1aNX/QElw37FjVS
+         Sjs9lgUBfffUZqPlsZAN2VMzfUMlC0mjL9yxumM9+nKN8NQZTJM1atEQFUqGGrlu4wak
+         wm5kcozXFcDX7DN2NNM7h0LBsNPPlkcoTy8fYHCBtY9DgOcfjBPgG61zddGm8NJVzsC0
+         /0cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696576795; x=1697181595;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QLbD36lfGshKBD/IHq1uy+catxZoLx+hDosAbEWMfB8=;
+        b=xKRVtrxIp4G66A0h6ZWosaKsk4cijQ2lJqce/VaJV0cQPqPQp1eRo21hvWxoFo9kQp
+         rA7PefqSLbUKPg8b2cEwapTpxhQ2stHQrnQ6sYlOXSUAWXzprqO91ZlRFyhS3G0Pb2yT
+         /V2xL7Tb5BGwBwihbvzp+k5RdoXyQmEe/beFo84D8XVOwo/dVFJFd/1fXOVT2vN9apHZ
+         6y6BWhIkUHNTlOpjV8VSdr92LIC0A/QuV8ob4a66RtJEsBUwWLbfDgRIcpaxyy5cGM0w
+         o+0YlU0b2VHwSwgcWKYzjLKlBuPMc1AqFA0hsBU7vS1iJn3pljWsPrxgOt4xYAbqZq8a
+         01zg==
+X-Gm-Message-State: AOJu0Ywd3p7fOQwpediYpHnGU11QLZ9S77vdr9bPjIHD5I372aFptV5L
+	fm4DhmMznwFsNFgjUBXSsx6r3Q==
+X-Google-Smtp-Source: AGHT+IEnIZWIPATAMO46x1U1rXCCVIqKIMiKNxn+ZYVTiXHcvpjaRtDDpI08eGoBu+OpT0LvVnZPcQ==
+X-Received: by 2002:a17:90b:4c07:b0:262:d661:2963 with SMTP id na7-20020a17090b4c0700b00262d6612963mr7011516pjb.39.1696576794865;
+        Fri, 06 Oct 2023 00:19:54 -0700 (PDT)
+Received: from localhost ([122.172.81.92])
+        by smtp.gmail.com with ESMTPSA id 21-20020a17090a035500b002796494b98csm5132242pjf.37.2023.10.06.00.19.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 00:19:54 -0700 (PDT)
+Date: Fri, 6 Oct 2023 12:49:52 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, vireshk@kernel.org, nm@ti.com,
+	sboyd@kernel.org, ulf.hansson@linaro.org, trix@redhat.com,
+	linux-pm@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] OPP: Fix -Wunsequenced in _of_add_opp_table_v1()
+Message-ID: <20231006071952.b43vbnrhax7g6vta@vireshk-i7>
+References: <20231005-opp-of-wunsequenced-v1-1-778815980a8d@kernel.org>
+ <CAKwvOdmhtS6LAcckceXLftKeqxthdHEEi-zr8EiOW0hRYwsjEA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,61 +62,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYuyXgWvsRhznP2x2VE5CvSyCCgcvxPz2J=dbvg6YW2iUA@mail.gmail.com>
+In-Reply-To: <CAKwvOdmhtS6LAcckceXLftKeqxthdHEEi-zr8EiOW0hRYwsjEA@mail.gmail.com>
 
-> On Thu, 5 Oct 2023 at 22:54, Petr Vorel <pvorel@suse.cz> wrote:
+On 05-10-23, 11:31, Nick Desaulniers wrote:
+> On Thu, Oct 5, 2023 at 10:25 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > Clang warns (or errors with CONFIG_WERROR=y):
+> >
+> >   drivers/opp/of.c:1081:28: error: multiple unsequenced modifications to 'val' [-Werror,-Wunsequenced]
+> >    1081 |                         .freq = be32_to_cpup(val++) * 1000,
+> >         |                                                 ^
+> >    1082 |                         .u_volt = be32_to_cpup(val++),
+> >         |                                                   ~~
+> >   1 error generated.
+> >
+> > There is no sequence point in a designated initializer. Move back to
+> > separate variables for the creation of the values, so that there are
+> > sequence points between each evaluation and increment of val.
+> >
+> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1940
+> > Fixes: 75bbc92c09d8 ("OPP: Add dev_pm_opp_add_dynamic() to allow more flexibility")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Thanks for the patch!
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-> > Hi Naresh,
+Applied. Thanks.
 
-> > > On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-
-> > > > This is the start of the stable review cycle for the 6.1.56 release.
-> > > > There are 259 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-
-> > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > > > Anything received after that time might be too late.
-
-> > > > The whole patch series can be found in one patch at:
-> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-
-> > > > thanks,
-
-> > > > greg k-h
-
-> > > Results from Linaro’s test farm.
-> > > Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
-> > Could you please note in your reports also LTP version?
-
-> Sure.
-> We are running LTP Version: 20230516 for our testing.
-
-> We will update the latest LTP release (20230929) next week.
-
-Great, thank you.
-
-> > FYI the best LTP release is always the latest release or git master branch.
-
-> We have two threads here.
-> 1) LTP release tag testing on all stable-rc branches
-> 2) LTP master testing on a given specific kernel version [a]
-
-Great, this makes sense.
-
-BTW from looking in the log [b] ("INFO: ltp-pan reported some tests FAIL")
-I see you use runltp. We recommend to switch to kirk [c]. And we definitely
-appreciate your feedback from it.
-
-Kind regards,
-Petr
-
-> [a] https://qa-reports.linaro.org/lkft/ltp-master/
-[b] https://qa-reports.linaro.org/lkft/ltp-master/build/v6.5.3_20230929-2-g48a150bfd/testrun/20223790/suite/ltp-cve/test/cve-2017-8890/log
-[c] https://github.com/linux-test-project/kirk/#readme
-
-> - Naresh
+-- 
+viresh
