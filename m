@@ -1,93 +1,107 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FD45CB5
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 07:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A2863AC
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 07:30:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v5M1tU6q"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-27760c31056so1248404a91.1
-        for <patches@lists.linux.dev>; Fri, 06 Oct 2023 00:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696576795; x=1697181595; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QLbD36lfGshKBD/IHq1uy+catxZoLx+hDosAbEWMfB8=;
-        b=v5M1tU6qtXSTOFJMcoaHJlxzFR92uACnn32sRcIE8sKerfEb3R+v69BjPrzpwOx+kh
-         OztZ1dVm6qLhscJ06X5hJYmQbSDh+tePYSm8sImPyJ7GkbIQLNp0JivKbKXfGz8nIiMv
-         X6q8LYOI59VG2ERr85i9yQnotWwvbYDmNEToWvQMU4dlmwyBFAv0r1aNX/QElw37FjVS
-         Sjs9lgUBfffUZqPlsZAN2VMzfUMlC0mjL9yxumM9+nKN8NQZTJM1atEQFUqGGrlu4wak
-         wm5kcozXFcDX7DN2NNM7h0LBsNPPlkcoTy8fYHCBtY9DgOcfjBPgG61zddGm8NJVzsC0
-         /0cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696576795; x=1697181595;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QLbD36lfGshKBD/IHq1uy+catxZoLx+hDosAbEWMfB8=;
-        b=xKRVtrxIp4G66A0h6ZWosaKsk4cijQ2lJqce/VaJV0cQPqPQp1eRo21hvWxoFo9kQp
-         rA7PefqSLbUKPg8b2cEwapTpxhQ2stHQrnQ6sYlOXSUAWXzprqO91ZlRFyhS3G0Pb2yT
-         /V2xL7Tb5BGwBwihbvzp+k5RdoXyQmEe/beFo84D8XVOwo/dVFJFd/1fXOVT2vN9apHZ
-         6y6BWhIkUHNTlOpjV8VSdr92LIC0A/QuV8ob4a66RtJEsBUwWLbfDgRIcpaxyy5cGM0w
-         o+0YlU0b2VHwSwgcWKYzjLKlBuPMc1AqFA0hsBU7vS1iJn3pljWsPrxgOt4xYAbqZq8a
-         01zg==
-X-Gm-Message-State: AOJu0Ywd3p7fOQwpediYpHnGU11QLZ9S77vdr9bPjIHD5I372aFptV5L
-	fm4DhmMznwFsNFgjUBXSsx6r3Q==
-X-Google-Smtp-Source: AGHT+IEnIZWIPATAMO46x1U1rXCCVIqKIMiKNxn+ZYVTiXHcvpjaRtDDpI08eGoBu+OpT0LvVnZPcQ==
-X-Received: by 2002:a17:90b:4c07:b0:262:d661:2963 with SMTP id na7-20020a17090b4c0700b00262d6612963mr7011516pjb.39.1696576794865;
-        Fri, 06 Oct 2023 00:19:54 -0700 (PDT)
-Received: from localhost ([122.172.81.92])
-        by smtp.gmail.com with ESMTPSA id 21-20020a17090a035500b002796494b98csm5132242pjf.37.2023.10.06.00.19.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 00:19:54 -0700 (PDT)
-Date: Fri, 6 Oct 2023 12:49:52 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, vireshk@kernel.org, nm@ti.com,
-	sboyd@kernel.org, ulf.hansson@linaro.org, trix@redhat.com,
-	linux-pm@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] OPP: Fix -Wunsequenced in _of_add_opp_table_v1()
-Message-ID: <20231006071952.b43vbnrhax7g6vta@vireshk-i7>
-References: <20231005-opp-of-wunsequenced-v1-1-778815980a8d@kernel.org>
- <CAKwvOdmhtS6LAcckceXLftKeqxthdHEEi-zr8EiOW0hRYwsjEA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="xwGwU4uW"
+Received: from eig-obgw-5007a.ext.cloudfilter.net ([10.0.29.141])
+	by cmsmtp with ESMTP
+	id oVA0qiyo2NWIeofHzqcqkl; Fri, 06 Oct 2023 07:30:23 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id ofHyqw7m1485CofHzqwAVf; Fri, 06 Oct 2023 07:30:23 +0000
+X-Authority-Analysis: v=2.4 cv=bZB47cDB c=1 sm=1 tr=0 ts=651fb78f
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=bhdUkHdE2iEA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=A5QkMfMa83hlIVfJbuoPQz9Bz4EuJ8EJ7KUjP2cZSQI=; b=xwGwU4uWr5FOrcA/Et17O0qTfF
+	iDPlBS63T6FxmNNoguT8/wElXQe3As7fs1amVTUv7R0YDjIM1y51XTIRHuvmc44tR5FJ71vpnCVjf
+	Dr2aTm5uf9rzorgWF9OoSUjEmW2F3tm3Tc/xwPKmCJXsFb2TjeS8s46xNXIujJgQJh8R6kbcIKMSL
+	Vo9tFH1rMhOGk1W+ADBEFKVgfrAEOQvcbm9lY2jGG3Btb+MGV7TqLi7/mlJPl3FoC5meyXWv+A6uO
+	Gs4jquDJELp0VPPeOI7vT5AX7x+EDDRVv2p/VYd1RSswMtlX7Y8la1sBY8EdYYTU4LqxhI9vBrxLE
+	NRg8bYnQ==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:49382 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.1)
+	(envelope-from <re@w6rz.net>)
+	id 1qofHw-000eaD-1q;
+	Fri, 06 Oct 2023 01:30:20 -0600
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20231004175217.404851126@linuxfoundation.org>
+In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <7d475b2c-4a96-d1f3-32de-aa8f58cbf871@w6rz.net>
+Date: Fri, 6 Oct 2023 00:30:17 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKwvOdmhtS6LAcckceXLftKeqxthdHEEi-zr8EiOW0hRYwsjEA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1qofHw-000eaD-1q
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:49382
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKrtJqnLmXyBtlEREUT5yRb9O51KSQLs7I0t33z/MGBf7yCFLL/Z/xrhgaaVsDyZINoZBw/H+xvxoku5pxE4dQQ4aqbbOsMBZptn+tMojsyRaul0sC7B
+ lyzBPnMzhuOHP2imn0rGD5QuvJnUnevTPtL57CqCkO/xtAq88HPsa9wWPFLAJqVAIOqB1pzENj0xGg==
 
-On 05-10-23, 11:31, Nick Desaulniers wrote:
-> On Thu, Oct 5, 2023 at 10:25 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > Clang warns (or errors with CONFIG_WERROR=y):
-> >
-> >   drivers/opp/of.c:1081:28: error: multiple unsequenced modifications to 'val' [-Werror,-Wunsequenced]
-> >    1081 |                         .freq = be32_to_cpup(val++) * 1000,
-> >         |                                                 ^
-> >    1082 |                         .u_volt = be32_to_cpup(val++),
-> >         |                                                   ~~
-> >   1 error generated.
-> >
-> > There is no sequence point in a designated initializer. Move back to
-> > separate variables for the creation of the values, so that there are
-> > sequence points between each evaluation and increment of val.
-> >
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1940
-> > Fixes: 75bbc92c09d8 ("OPP: Add dev_pm_opp_add_dynamic() to allow more flexibility")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> Thanks for the patch!
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+On 10/4/23 10:52 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.56 release.
+> There are 259 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Applied. Thanks.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
--- 
-viresh
+Tested-by: Ron Economos <re@w6rz.net>
+
