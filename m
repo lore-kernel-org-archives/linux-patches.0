@@ -1,99 +1,112 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5201C296
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 10:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18AC125B7
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 11:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QJJ4JElM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696588258; x=1728124258;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=XqzqC3u6ICreoTyLjbtbD1a0rx/MReQVULfRZwZtusQ=;
-  b=QJJ4JElM2sFc0WJEZr9LHgPBGhfruFdbB7bZZrtrpSg55CXZ43D1ZbyD
-   xNsWC4IM1nL/1j/jpDRPruP8mX1aNGv3tXFmUJEAJYGSzoauLd2DILzhJ
-   /zBqmx6tvGher0IpEG4VkbitPyYgy/EfYx5853qfaEd+FcRv9pKD+3JMr
-   DTI+nXUHD5G0GaOblI51PVYOPXNTzTfSNM4U1InfCdbZ68I2tut1Fiz2D
-   NwT6CC2jSjYwFtgj5sMHxyP0gU/T5jjkOKNtWQ/uk6zS1w40Y1AxxE4tb
-   oFAp1y/38ryPNDdnzZvUfKW0k8S/8E78pNCX4Sp45wZySs7GOLYEVZN8F
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="469993913"
-X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
-   d="scan'208";a="469993913"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2023 03:30:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="822459341"
-X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
-   d="scan'208";a="822459341"
-Received: from srab-mobl1.ger.corp.intel.com ([10.252.43.69])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2023 03:30:37 -0700
-Date: Fri, 6 Oct 2023 13:30:33 +0300 (EEST)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: Jithu Joseph <jithu.joseph@intel.com>
-cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
-    tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-    dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, 
-    rostedt@goodmis.org, ashok.raj@intel.com, tony.luck@intel.com, 
-    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-    patches@lists.linux.dev, ravi.v.shankar@intel.com, pengfei.xu@intel.com
-Subject: Re: [PATCH v4 9/9] platform/x86/intel/ifs: ARRAY BIST for Sierra
- Forest
-In-Reply-To: <20231005195137.3117166-10-jithu.joseph@intel.com>
-Message-ID: <34d7c827-4437-93c6-4c72-8b9b0c5f988@linux.intel.com>
-References: <20230929202436.2850388-1-jithu.joseph@intel.com> <20231005195137.3117166-1-jithu.joseph@intel.com> <20231005195137.3117166-10-jithu.joseph@intel.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iap8k9+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79195C433C8;
+	Fri,  6 Oct 2023 11:03:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696590214;
+	bh=4dpi9ypq5NwCfCKs6ejpxDxyw5e1ui6rbvUNhVADCX8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iap8k9+2BfdKoxzManX2E7z7pwLNnFzFY/YTlIju+84XyKTpK/c70RDTn6S8Q/V/H
+	 tkxTI7v8YEi17QWcToU5386tE7p++NwPuUz3dKgqnt7yf8kKKj7LsFuSdXFWVo35ry
+	 kJYkDwEnps1gY7dEkn1j1rV8NtklDJ5bT68ZebHg=
+Date: Fri, 6 Oct 2023 13:03:30 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
+Message-ID: <2023100610-purge-pupil-b754@gregkh>
+References: <20231004175203.943277832@linuxfoundation.org>
+ <ec06c2fb-6737-489f-8439-307e0d84687b@gmail.com>
+ <2023100601-ending-prevalent-c8d4@gregkh>
+ <9fec75ba-a319-027c-6cf2-b65e703d3ce7@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9fec75ba-a319-027c-6cf2-b65e703d3ce7@oracle.com>
 
-On Thu, 5 Oct 2023, Jithu Joseph wrote:
-
-> Array BIST MSR addresses, bit definition and semantics are different for
-> Sierra Forest. Branch into a separate Array BIST flow on Sierra Forest
-> when user invokes Array Test.
+On Fri, Oct 06, 2023 at 04:07:14PM +0530, Harshit Mogalapalli wrote:
 > 
-> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> Reviewed-by: Tony Luck <tony.luck@intel.com>
-> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
-> ---
->  drivers/platform/x86/intel/ifs/ifs.h     |  7 +++++
->  drivers/platform/x86/intel/ifs/core.c    | 15 +++++-----
->  drivers/platform/x86/intel/ifs/runtest.c | 37 +++++++++++++++++++++++-
->  3 files changed, 51 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index f0dd849b3400..2dd5e3406dac 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -137,6 +137,8 @@
->  #define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
->  #define MSR_ACTIVATE_SCAN			0x000002c6
->  #define MSR_SCAN_STATUS				0x000002c7
-> +#define MSR_ARRAY_TRIGGER			0x000002d6
-> +#define MSR_ARRAY_STATUS			0x000002d7
->  #define MSR_SAF_CTRL				0x000004f0
->  
->  #define SCAN_NOT_TESTED				0
-> @@ -146,6 +148,9 @@
->  #define IFS_TYPE_SAF			0
->  #define IFS_TYPE_ARRAY_BIST		1
->  
-> +#define ARRAY_GEN_0			0
-> +#define ARRAY_GEN_1			1
+> On 06/10/23 3:55 pm, Greg Kroah-Hartman wrote:
+> > On Wed, Oct 04, 2023 at 11:43:46AM -0700, Florian Fainelli wrote:
+> > > On 10/4/23 10:53, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 5.15.134 release.
+> > > > There are 183 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > > The whole patch series can be found in one patch at:
+> > > > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.134-rc1.gz
+> > > > or in the git tree and branch at:
+> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > > and the diffstat can be found below.
+> > > > 
+> > > > thanks,
+> > > > 
+> > > > greg k-h
+> > > 
+> > > perf fails to build with:
+> > > 
+> > >    CC /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/metricgroup.o
+> > > util/metricgroup.c: In function 'metricgroup__parse_groups':
+> > > util/metricgroup.c:1261:7: error: 'table' undeclared (first use in this
+> > > function)
+> > >    if (!table)
+> > >         ^~~~~
+> > > util/metricgroup.c:1261:7: note: each undeclared identifier is reported only
+> > > once for each function it appears in
+> > > make[6]: *** [/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:97: /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/metricgroup.o]
+> > > Error 1
+> > > 
+> > > caused by c1ef510a0f2a879bf29ddebae766ec9f0790eb8f ("perf metric: Return
+> > > early if no CPU PMU table exists"). Dropping this commit allows the build to
+> > > continue.
+> > > 
+> > > I had reported in the previous cycle that 00facc760903be66 ("perf jevents:
+> > > Switch build to use jevents.py") was causing build failures:
+> > > 
+> > > https://lore.kernel.org/all/6a577578-8adb-aa70-1bf8-b1a4573152cf@gmail.com/
+> > > 
+> > > do we still want these commits to be included?
+> > 
+> > No, I'll go drop them now, thanks for the report.
+> 
+> Thought:
+> It's not the first time we see build failures in tools/perf -- would it make
+> sense to add this to your own build tests to reduce the round trip time for
+> these errors ?
 
-Thank you for your contribution. I've applied this series to my local 
-review-ilpo branch.
+Last time I tried to build perf, I couldn't do it at all so I just gave
+up trying to test for it :)
 
-I ended up renaming these defines ARRAY_GEN_* -> ARRAY_GEN* to make
-them more consistent.
+> Note: After reverting three patches in perf/ the build succeeds:
+> 
+> Patch 151: c1ef510a0f2a perf metric: Return early if no CPU PMU table exists
+> Patch 81: 40ddac4ffc75 perf build: Update build rule for generated files
+> Patch 80: 8df938ed8c8a perf jevents: Switch build to use jevents.py
 
--- 
- i.
+All of these are now dropped.
 
+thanks,
+
+greg k-h
