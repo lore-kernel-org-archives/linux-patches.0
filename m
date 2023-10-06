@@ -1,209 +1,140 @@
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2057.outbound.protection.outlook.com [40.107.220.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242263D62
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 09:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7102F9D9
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 09:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vbljkiNY"
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-9b65d7079faso145491466b.1
-        for <patches@lists.linux.dev>; Fri, 06 Oct 2023 02:08:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696583327; x=1697188127; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=By50B9iWyiri7G4mok67XeNGnVJ8i3ORWOZUIjkYfmU=;
-        b=vbljkiNY5vlxMYEMVSOx100kQht/bNZpoCNx718SbyBvsgxE3+vDhkxu4bbY/NlbbD
-         1MDo3A5VZkrqAY+ln1Lr+0v0h0FPCziot2yivKEtoldd6F4N67Q/Z41WwIL+YfpudFJh
-         duN+gy/0kk6jaQMdbdGevVnTjmmMFu3C+DKK+EUMV27a/KQWHelUvRdnM/RMF406B4k4
-         Mo0/M9TSrUf7zrN4DAk5v5hIuKphsfGb7XXPwrzZi7SMfVF+u8VvcguOM4OUAmFifAMr
-         kcTy5jMNTDL2wFcrKphs+RNOBaTQc/x0RYP2uN5vHjd65DLUboOYguSYkqz2HOlgrEmY
-         Hj6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696583327; x=1697188127;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=By50B9iWyiri7G4mok67XeNGnVJ8i3ORWOZUIjkYfmU=;
-        b=fc+NNkvWcahnYZfvq2YVMGHi4YO0JQnxsLFWLgBJqWvqAuH+AhrjNG40bMMihnNqtX
-         FlyC7NUn0grbGlgGe5Vt49ncoXalBtVXjdQl8fe7c+pM586JJfT/bo0L66jefdYztYf+
-         Bc1tYZsAsfZ8/ulmen3mnyMICAXeZrNFf7fIRpoVxKWNO2uKzYdLFovxQ9lkbwT7trsS
-         g22+KTasCAPObL1UfWKiErYOqhTCTCohCFLsRpCsyh4pwRm03bbdiC5mAzbo4R6IA1HA
-         +HSfQNZVb5iT38d/xgFDTRoX7g1Vbc4AzRamkh0M6Lz+J+GsBo3NKmZrHpCxV/ZLLwUw
-         6fSA==
-X-Gm-Message-State: AOJu0YwLeCMP5GOzi+wrQagejfYQVpKohugIVaR2Gkj8x6ul+Svotmrv
-	0OQOixe5MYDu7PUbZRZfKQ40c3yehvTK4fE=
-X-Google-Smtp-Source: AGHT+IHyTF+le1HnasoBIq26If2cGaxNtJZpJWqm6IaNqDoF43T8cgXKU59KxB3YywrAUrCwKcHUxIsepOPC0bU=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a50:aac5:0:b0:523:1f28:f648 with SMTP id
- r5-20020a50aac5000000b005231f28f648mr50382edc.4.1696583327266; Fri, 06 Oct
- 2023 02:08:47 -0700 (PDT)
-Date: Fri,  6 Oct 2023 09:08:35 +0000
-In-Reply-To: <20231005210556.466856-4-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="c9jZ48ef"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EP4a+/0j09WpgEQi670hxiuuAolA62YeWPS5H0MLmik0jYFb46JebstBcpjYSEIzjJ4rNPkpoGoqyTl/UrN0Hn5Htt+1mkLP+iyUt44SyBAubSbP38E/pUEQ6GSM0XtLs4W98IXJ6KxCic2NyTMYVlBhT9Um5BUyz5X4HitqroVJCHl1WVyFf1eMHY/Ab+Kr+fyAR8JGgZUeyr4Xt+0/MzgkWQ2EY2UZrCdh1nydL35w9lw/NLVcNNGiev3mBV7z4XvgcaQtxAai+/ILUstB0pX+PRhchDPxDN6MCZAU7zaHu/bHfRXWBGbnwhHpvkzhCnnUHlRjOi/6IUOSBfcG0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fo060JCu4P04mta6y2skXgk0sfLRaRnotU8k/LKVvyI=;
+ b=Pb79aHbz5ueqrf6CQi6YCMSxotaCnNA6XE1fziK+H5/BiOPpDZDexLM9+lymzVryoF4VDKWZrp9o69zkI/VPKwl0uH5M4+/9Bo/0PGxJRD0LGct6Ap7YLDRhorGzQKogeySh1DJQQhZvWxjU5Ca4gfecBqUNoyED9ShzJH1h9DxkKH6/5TmkNDEKKL6jz+NfBAdjMM808h2gRObasGi/UtmGycPfjvFQhVKFBmen1rRkIhEZUJ+8g80n3s9MTSED0Nzt7V0I3b92lBqmyhdDqGYhlysujI8E2g1wdWv2VHAmkZ1MICv8ANylH9c3U7vTSG9P4anfPAXKT3vnQ6d16g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fo060JCu4P04mta6y2skXgk0sfLRaRnotU8k/LKVvyI=;
+ b=c9jZ48efNgbl3mjKNm4UOGu2tnFSwiyhJnNgY7g+jJmw6KVitC7EYvfMcTa7vkrsnrouNZgvJJE2r7mP2OAKIORyKfRi6sVd+aFE0iuhcKJ4AspWpud6xBfFgIfExt5odDINEB76P3bUC40JWtb+eu2IzLjlwxMMduUNL98kOyx8wknxtJIhhiXubCauNm322pbg0gjjgMmst9yqEj2o2EaITPd4pI/kXJcLELsLWBrgc8PmG4RR9cKZdRtypEi+X/a10+e1f6V263hezaT0lNjRPIjQ1jrv9+uiIPQLhGUVEhzM2F7kYvr3/owTdq1J/VAU9/zgOtZd8bH9oPtwZQ==
+Received: from DM6PR05CA0060.namprd05.prod.outlook.com (2603:10b6:5:335::29)
+ by PH8PR12MB6818.namprd12.prod.outlook.com (2603:10b6:510:1c9::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.38; Fri, 6 Oct
+ 2023 09:32:34 +0000
+Received: from CY4PEPF0000E9D9.namprd05.prod.outlook.com
+ (2603:10b6:5:335:cafe::85) by DM6PR05CA0060.outlook.office365.com
+ (2603:10b6:5:335::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.29 via Frontend
+ Transport; Fri, 6 Oct 2023 09:32:34 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY4PEPF0000E9D9.mail.protection.outlook.com (10.167.241.77) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6838.22 via Frontend Transport; Fri, 6 Oct 2023 09:32:33 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 6 Oct 2023
+ 02:32:19 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 6 Oct 2023
+ 02:32:18 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Fri, 6 Oct 2023 02:32:18 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+In-Reply-To: <20231004175217.404851126@linuxfoundation.org>
+References: <20231004175217.404851126@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20231005210556.466856-4-ojeda@kernel.org>
-X-Mailer: git-send-email 2.42.0.609.gbb76f46606-goog
-Message-ID: <20231006090835.1141768-1-aliceryhl@google.com>
-Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.73.0
-From: Alice Ryhl <aliceryhl@google.com>
-To: ojeda@kernel.org
-Cc: a.hindborg@samsung.com, alex.gaynor@gmail.com, aliceryhl@google.com, 
-	benno.lossin@proton.me, bjorn3_gh@protonmail.com, boqun.feng@gmail.com, 
-	corbet@lwn.net, gary@garyguo.net, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	rust-for-linux@vger.kernel.org, wedsonaf@gmail.com, workflows@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Message-ID: <9c7c56e1-4498-464b-85ee-28878ac8e771@rnnvmail201.nvidia.com>
+Date: Fri, 6 Oct 2023 02:32:18 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D9:EE_|PH8PR12MB6818:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4a62f710-2be5-45e5-5b43-08dbc64f2bb0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	+FZ/Y59/2mQl9xsKy6ddW+DwdnU43jL3V75QwggTa0iH0FDGSTJYYIvaPxNmvpIYD1PJCJhooBs6vCC3L4gnDFbZ5rWv5WB3AZ4yRBcBYe8mSVLDRPVjqXD/wJvYZBU0tOkFGdd3lp3QmxHPBXbEPH+9Rzo/h+Q2+Xez+5wLcck/iFEVCg5JcynatMxBrc7ezXzm5TRFIbmupnnXHgr+UvefpqvL3j6J/Xz+SlUsLP1ZNuTus+WQtcS5GflGjQzU+nkUGgb0oKAUGAxz3zZzX8rr+L7e+eR47ylWw/qZjqiI8dojieqCivMmfI7CCC9vn0M44bOtkb5KEBPORS9dLzcxRziaTVYy6r88cjiJI1XU1tmv4FSz3euFYKu+KvD8utVzyda9y9gv9dUPHKIqPpkKeV7QNSnwlyb+WTEOlqo7mkn5+GgO/SpOSJsMklJYhY5g9aaSuLFAGzQH5BzvMQaUN47SJoamoUUPh+0swrO+D314zh3PCuS57FEwzo4bqq79aiqubYToEgkSuVTTGT722/SjC460oAzqYaoAMxbTj2n7jbasbJOZB7lRL9iZEz0c1Lb2C/yuWuSIrjtOR6Mxj1SZNIfM+eXfgQbya/LUS7bMJsoGrbcdOPVFBZwO+F3A/Mw8GYQGbdGzweL9FgJNlHUruwA/pQY0b8K6sSRa2cy/ljKAfgGLvFN2dK3YZcR2yqzpssekBwSkmf3z2KSXeVCI3RHGZ8cEYzi/7aLeMvO0zgoerZlUo/t+wa5BFNgD3IebybfeEQApF74hWvSupp1Iy73N9zWMXXmhgrM=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(376002)(136003)(39860400002)(396003)(346002)(230922051799003)(451199024)(1800799009)(186009)(82310400011)(64100799003)(46966006)(36840700001)(40470700004)(40460700003)(40480700001)(356005)(7636003)(82740400003)(26005)(36860700001)(336012)(426003)(316002)(54906003)(6916009)(478600001)(966005)(47076005)(70206006)(70586007)(31686004)(31696002)(86362001)(8676002)(2906002)(7416002)(4326008)(8936002)(41300700001)(5660300002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2023 09:32:33.9501
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a62f710-2be5-45e5-5b43-08dbc64f2bb0
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000E9D9.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6818
 
-Miguel Ojeda <ojeda@kernel.org> writes:
-> This is the next upgrade to the Rust toolchain, from 1.72.1 to 1.73.0
-> (i.e. the latest) [1].
+On Wed, 04 Oct 2023 19:52:53 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.56 release.
+> There are 259 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> See the upgrade policy [2] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> Anything received after that time might be too late.
 > 
-> # Unstable features
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> No unstable features (that we use) were stabilized.
+> thanks,
 > 
-> Therefore, the only unstable feature allowed to be used outside
-> the `kernel` crate is still `new_uninit`, though other code to be
-> upstreamed may increase the list.
-> 
-> Please see [3] for details.
-> 
-> # Required changes
-> 
-> For the upgrade, the following changes are required:
-> 
->   - Allow `internal_features` for `feature(compiler_builtins)` since
->     now Rust warns about using internal compiler and standard library
->     features (similar to how it also warns about incomplete ones) [4].
-> 
->   - A cleanup for a documentation link thanks to a new `rustdoc` lint.
->     See previous commits for details.
-> 
->   - A need to make an intra-doc link to a macro explicit, due to a
->     change in behavior in `rustdoc`. See previous commits for details.
-> 
-> # `alloc` upgrade and reviewing
-> 
-> The vast majority of changes are due to our `alloc` fork being upgraded
-> at once.
-> 
-> There are two kinds of changes to be aware of: the ones coming from
-> upstream, which we should follow as closely as possible, and the updates
-> needed in our added fallible APIs to keep them matching the newer
-> infallible APIs coming from upstream.
-> 
-> Instead of taking a look at the diff of this patch, an alternative
-> approach is reviewing a diff of the changes between upstream `alloc` and
-> the kernel's. This allows to easily inspect the kernel additions only,
-> especially to check if the fallible methods we already have still match
-> the infallible ones in the new version coming from upstream.
-> 
-> Another approach is reviewing the changes introduced in the additions in
-> the kernel fork between the two versions. This is useful to spot
-> potentially unintended changes to our additions.
-> 
-> To apply these approaches, one may follow steps similar to the following
-> to generate a pair of patches that show the differences between upstream
-> Rust and the kernel (for the subset of `alloc` we use) before and after
-> applying this patch:
-> 
->     # Get the difference with respect to the old version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > old.patch
->     git -C linux restore rust/alloc
-> 
->     # Apply this patch.
->     git -C linux am rust-upgrade.patch
-> 
->     # Get the difference with respect to the new version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > new.patch
->     git -C linux restore rust/alloc
-> 
-> Now one may check the `new.patch` to take a look at the additions (first
-> approach) or at the difference between those two patches (second
-> approach). For the latter, a side-by-side tool is recommended.
+> greg k-h
 
-I followed these instructions, and it looks good to me:
+All tests passing for Tegra ...
 
-    $ diff old.patch new.patch 
-    18c18
-    < index e24a0fe51bda..51821feb20b1 100644
-    ---
-    > index 5205ed9fb50a..8cb4a31cf6e5 100644
-    28c28
-    < index 8ef2bac9282c..bdab710f7737 100644
-    ---
-    > index 96b93830f960..9620eba17268 100644
-    60c60
-    < index 967ad3a0e690..115fcb053e73 100644
-    ---
-    > index ffe6d6373875..73b9ffd845d9 100644
-    69c69
-    < @@ -107,7 +109,7 @@
-    ---
-    > @@ -109,7 +111,7 @@
-    78c78
-    < @@ -217,6 +219,7 @@
-    ---
-    > @@ -218,6 +220,7 @@
-    86c86
-    < @@ -237,15 +240,19 @@
-    ---
-    > @@ -238,15 +241,19 @@
-    107c107
-    < index dfd30d99cf04..65d5ce15828e 100644
-    ---
-    > index 01b03de6acb5..a7425582a323 100644
-    238c238
-    < index 598ecf05e824..a4e9a5002a6d 100644
-    ---
-    > index e45ddc7896be..209a88cfe598 100644
-    679c679
-    < index 56065ce565bf..a6a735201e59 100644
-    ---
-    > index e2f865d0f716..ada919537446 100644
-    756c756
-    <  impl<'a, T: 'a, I, A: Allocator + 'a> SpecExtend<&'a T, I> for Vec<T, A>
-    ---
-    >  impl<'a, T: 'a, I, A: Allocator> SpecExtend<&'a T, I> for Vec<T, A>
-    759c759
-    < @@ -46,6 +87,17 @@ impl<'a, T: 'a, I, A: Allocator + 'a> SpecExtend<&'a T, I> for Vec<T, A>
-    ---
-    > @@ -46,6 +87,17 @@ impl<'a, T: 'a, I, A: Allocator> SpecExtend<&'a T, I> for Vec<T, A>
-    763c763
-    < +impl<'a, T: 'a, I, A: Allocator + 'a> TrySpecExtend<&'a T, I> for Vec<T, A>
-    ---
-    > +impl<'a, T: 'a, I, A: Allocator> TrySpecExtend<&'a T, I> for Vec<T, A>
-    774c774
-    <  impl<'a, T: 'a, A: Allocator + 'a> SpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
-    ---
-    >  impl<'a, T: 'a, A: Allocator> SpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
-    782c782
-    < +impl<'a, T: 'a, A: Allocator + 'a> TrySpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
-    ---
-    > +impl<'a, T: 'a, A: Allocator> TrySpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
 
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1730-2023-10-05 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
-> Link: https://github.com/rust-lang/compiler-team/issues/596 [4]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Linux version:	6.1.56-rc1-g0353a7bfd2b6
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
