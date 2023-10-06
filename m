@@ -1,86 +1,209 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75F79C3
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 08:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242263D62
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 09:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W7OIlyt6"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-452863742f3so894728137.1
-        for <patches@lists.linux.dev>; Fri, 06 Oct 2023 01:52:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vbljkiNY"
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-9b65d7079faso145491466b.1
+        for <patches@lists.linux.dev>; Fri, 06 Oct 2023 02:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696582375; x=1697187175; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qxeu+1oR48xD2Gd7sf1n3o5+xMOLz2MYkIZCLI1NQDM=;
-        b=W7OIlyt6Cs35jMST2E2hgeDsAB77jLaZ3XV4LunF9ZXanJ37vQZQ0KDQXhwPpATbf4
-         z+5OTdVJ4RKtjK0VTd/0AJRWCXYcU6afKMz5+cuEKT6kE4b/uZ26jfZzIlXFuLQYo6kE
-         6Lrdqq9SuC5sl3ADubPdvupENm3RlVJ8Yy2e4s8L0qwqpkVvzbX1OCYBMWJGlC/HjkI/
-         S7aCjHnL8/LtbOmtXf4wXqFRTGHxuUAFkSh8xHqsjPFyxSshANqyXd7dIqu7gSFj3Td+
-         EAO6Z45UWrCG+yCPxguZWvuxGGCB1UKlKmrw+419RNYf++4hbZM3QEmdiI96ztrzF9Dv
-         sppA==
+        d=google.com; s=20230601; t=1696583327; x=1697188127; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=By50B9iWyiri7G4mok67XeNGnVJ8i3ORWOZUIjkYfmU=;
+        b=vbljkiNY5vlxMYEMVSOx100kQht/bNZpoCNx718SbyBvsgxE3+vDhkxu4bbY/NlbbD
+         1MDo3A5VZkrqAY+ln1Lr+0v0h0FPCziot2yivKEtoldd6F4N67Q/Z41WwIL+YfpudFJh
+         duN+gy/0kk6jaQMdbdGevVnTjmmMFu3C+DKK+EUMV27a/KQWHelUvRdnM/RMF406B4k4
+         Mo0/M9TSrUf7zrN4DAk5v5hIuKphsfGb7XXPwrzZi7SMfVF+u8VvcguOM4OUAmFifAMr
+         kcTy5jMNTDL2wFcrKphs+RNOBaTQc/x0RYP2uN5vHjd65DLUboOYguSYkqz2HOlgrEmY
+         Hj6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696582375; x=1697187175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qxeu+1oR48xD2Gd7sf1n3o5+xMOLz2MYkIZCLI1NQDM=;
-        b=I2ah2BCQs9fGfLOo6X0N00xFuiZJMOlaWJZ3lKU5XsDfLMgLwL2jLS7qIr/30Fn6QG
-         Oci+WRw9GYYjDzLGtn4SaIJLua762WHwVHcZVAYcwN+IwAxeVkGr60I9Dh0ZEWfy2Jr9
-         bCjuHgnwR+09lT+V38yTEkAlvUOFNoCLlS2m3301UqeHixTrebs2zsdDAY8MXBltaHfY
-         p41TnuoiXPOVM5A0RD7Knq3K0G60ZkybyZwcHgK0gl+4/64fA/omUluETXpYDWluNLVT
-         J8iZz2NkSMXl6fMOXL62x0OyKcM+MiJaFoXqcMr3lD7B2DqZzvnsMYI/yOFBxzb3puyP
-         k4Bg==
-X-Gm-Message-State: AOJu0YxAaUlsNX//XKp1Tc7RR2yAuPTnG0PYG5eL4Wf8B+RTJYyZou9N
-	wXKxJVUiMJAX9rw/JQ3FZvnoj1ROSEStJVesnPkjPA==
-X-Google-Smtp-Source: AGHT+IGpa9oDupsxw07rqioIpfopJAPI0Ytv6CAxXQQ9ojG3965uvekx2SZ/ff+/vZJ9EI796i4mhJoVjm+u2xK7FaU=
-X-Received: by 2002:a67:bb06:0:b0:44e:9674:7781 with SMTP id
- m6-20020a67bb06000000b0044e96747781mr7243449vsn.15.1696582374867; Fri, 06 Oct
- 2023 01:52:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696583327; x=1697188127;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=By50B9iWyiri7G4mok67XeNGnVJ8i3ORWOZUIjkYfmU=;
+        b=fc+NNkvWcahnYZfvq2YVMGHi4YO0JQnxsLFWLgBJqWvqAuH+AhrjNG40bMMihnNqtX
+         FlyC7NUn0grbGlgGe5Vt49ncoXalBtVXjdQl8fe7c+pM586JJfT/bo0L66jefdYztYf+
+         Bc1tYZsAsfZ8/ulmen3mnyMICAXeZrNFf7fIRpoVxKWNO2uKzYdLFovxQ9lkbwT7trsS
+         g22+KTasCAPObL1UfWKiErYOqhTCTCohCFLsRpCsyh4pwRm03bbdiC5mAzbo4R6IA1HA
+         +HSfQNZVb5iT38d/xgFDTRoX7g1Vbc4AzRamkh0M6Lz+J+GsBo3NKmZrHpCxV/ZLLwUw
+         6fSA==
+X-Gm-Message-State: AOJu0YwLeCMP5GOzi+wrQagejfYQVpKohugIVaR2Gkj8x6ul+Svotmrv
+	0OQOixe5MYDu7PUbZRZfKQ40c3yehvTK4fE=
+X-Google-Smtp-Source: AGHT+IHyTF+le1HnasoBIq26If2cGaxNtJZpJWqm6IaNqDoF43T8cgXKU59KxB3YywrAUrCwKcHUxIsepOPC0bU=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a50:aac5:0:b0:523:1f28:f648 with SMTP id
+ r5-20020a50aac5000000b005231f28f648mr50382edc.4.1696583327266; Fri, 06 Oct
+ 2023 02:08:47 -0700 (PDT)
+Date: Fri,  6 Oct 2023 09:08:35 +0000
+In-Reply-To: <20231005210556.466856-4-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20231005210556.466856-1-ojeda@kernel.org> <20231005210556.466856-3-ojeda@kernel.org>
-In-Reply-To: <20231005210556.466856-3-ojeda@kernel.org>
+Mime-Version: 1.0
+References: <20231005210556.466856-4-ojeda@kernel.org>
+X-Mailer: git-send-email 2.42.0.609.gbb76f46606-goog
+Message-ID: <20231006090835.1141768-1-aliceryhl@google.com>
+Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.73.0
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Fri, 6 Oct 2023 10:52:44 +0200
-Message-ID: <CAH5fLgiqCyV3OJ_mvBrSH0rX+GhQ9f6EpY+eZ13g_ebmue1TNg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] rust: print: use explicit link in documentation
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: ojeda@kernel.org
+Cc: a.hindborg@samsung.com, alex.gaynor@gmail.com, aliceryhl@google.com, 
+	benno.lossin@proton.me, bjorn3_gh@protonmail.com, boqun.feng@gmail.com, 
+	corbet@lwn.net, gary@garyguo.net, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	rust-for-linux@vger.kernel.org, wedsonaf@gmail.com, workflows@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
 
-On Thu, Oct 5, 2023 at 11:06=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
-> The future `rustdoc` in the Rust 1.73.0 upgrade requires an explicit
-> link for `pr_info!`:
->
->     error: unresolved link to `pr_info`
->        --> rust/kernel/print.rs:395:63
->         |
->     395 | /// Use only when continuing a previous `pr_*!` macro (e.g. [`p=
-r_info!`]).
->         |                                                               ^=
-^^^^^^^ no item named `pr_info` in scope
->         |
->         =3D note: `macro_rules` named `pr_info` exists in this crate, but=
- it is not in scope at this link's location
->         =3D note: `-D rustdoc::broken-intra-doc-links` implied by `-D war=
-nings`
->
-> Thus do so to avoid a broken link while upgrading.
->
+Miguel Ojeda <ojeda@kernel.org> writes:
+> This is the next upgrade to the Rust toolchain, from 1.72.1 to 1.73.0
+> (i.e. the latest) [1].
+> 
+> See the upgrade policy [2] and the comments on the first upgrade in
+> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> 
+> # Unstable features
+> 
+> No unstable features (that we use) were stabilized.
+> 
+> Therefore, the only unstable feature allowed to be used outside
+> the `kernel` crate is still `new_uninit`, though other code to be
+> upstreamed may increase the list.
+> 
+> Please see [3] for details.
+> 
+> # Required changes
+> 
+> For the upgrade, the following changes are required:
+> 
+>   - Allow `internal_features` for `feature(compiler_builtins)` since
+>     now Rust warns about using internal compiler and standard library
+>     features (similar to how it also warns about incomplete ones) [4].
+> 
+>   - A cleanup for a documentation link thanks to a new `rustdoc` lint.
+>     See previous commits for details.
+> 
+>   - A need to make an intra-doc link to a macro explicit, due to a
+>     change in behavior in `rustdoc`. See previous commits for details.
+> 
+> # `alloc` upgrade and reviewing
+> 
+> The vast majority of changes are due to our `alloc` fork being upgraded
+> at once.
+> 
+> There are two kinds of changes to be aware of: the ones coming from
+> upstream, which we should follow as closely as possible, and the updates
+> needed in our added fallible APIs to keep them matching the newer
+> infallible APIs coming from upstream.
+> 
+> Instead of taking a look at the diff of this patch, an alternative
+> approach is reviewing a diff of the changes between upstream `alloc` and
+> the kernel's. This allows to easily inspect the kernel additions only,
+> especially to check if the fallible methods we already have still match
+> the infallible ones in the new version coming from upstream.
+> 
+> Another approach is reviewing the changes introduced in the additions in
+> the kernel fork between the two versions. This is useful to spot
+> potentially unintended changes to our additions.
+> 
+> To apply these approaches, one may follow steps similar to the following
+> to generate a pair of patches that show the differences between upstream
+> Rust and the kernel (for the subset of `alloc` we use) before and after
+> applying this patch:
+> 
+>     # Get the difference with respect to the old version.
+>     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>         cut -d/ -f3- |
+>         grep -Fv README.md |
+>         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>     git -C linux diff --patch-with-stat --summary -R > old.patch
+>     git -C linux restore rust/alloc
+> 
+>     # Apply this patch.
+>     git -C linux am rust-upgrade.patch
+> 
+>     # Get the difference with respect to the new version.
+>     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>         cut -d/ -f3- |
+>         grep -Fv README.md |
+>         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>     git -C linux diff --patch-with-stat --summary -R > new.patch
+>     git -C linux restore rust/alloc
+> 
+> Now one may check the `new.patch` to take a look at the additions (first
+> approach) or at the difference between those two patches (second
+> approach). For the latter, a side-by-side tool is recommended.
+
+I followed these instructions, and it looks good to me:
+
+    $ diff old.patch new.patch 
+    18c18
+    < index e24a0fe51bda..51821feb20b1 100644
+    ---
+    > index 5205ed9fb50a..8cb4a31cf6e5 100644
+    28c28
+    < index 8ef2bac9282c..bdab710f7737 100644
+    ---
+    > index 96b93830f960..9620eba17268 100644
+    60c60
+    < index 967ad3a0e690..115fcb053e73 100644
+    ---
+    > index ffe6d6373875..73b9ffd845d9 100644
+    69c69
+    < @@ -107,7 +109,7 @@
+    ---
+    > @@ -109,7 +111,7 @@
+    78c78
+    < @@ -217,6 +219,7 @@
+    ---
+    > @@ -218,6 +220,7 @@
+    86c86
+    < @@ -237,15 +240,19 @@
+    ---
+    > @@ -238,15 +241,19 @@
+    107c107
+    < index dfd30d99cf04..65d5ce15828e 100644
+    ---
+    > index 01b03de6acb5..a7425582a323 100644
+    238c238
+    < index 598ecf05e824..a4e9a5002a6d 100644
+    ---
+    > index e45ddc7896be..209a88cfe598 100644
+    679c679
+    < index 56065ce565bf..a6a735201e59 100644
+    ---
+    > index e2f865d0f716..ada919537446 100644
+    756c756
+    <  impl<'a, T: 'a, I, A: Allocator + 'a> SpecExtend<&'a T, I> for Vec<T, A>
+    ---
+    >  impl<'a, T: 'a, I, A: Allocator> SpecExtend<&'a T, I> for Vec<T, A>
+    759c759
+    < @@ -46,6 +87,17 @@ impl<'a, T: 'a, I, A: Allocator + 'a> SpecExtend<&'a T, I> for Vec<T, A>
+    ---
+    > @@ -46,6 +87,17 @@ impl<'a, T: 'a, I, A: Allocator> SpecExtend<&'a T, I> for Vec<T, A>
+    763c763
+    < +impl<'a, T: 'a, I, A: Allocator + 'a> TrySpecExtend<&'a T, I> for Vec<T, A>
+    ---
+    > +impl<'a, T: 'a, I, A: Allocator> TrySpecExtend<&'a T, I> for Vec<T, A>
+    774c774
+    <  impl<'a, T: 'a, A: Allocator + 'a> SpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
+    ---
+    >  impl<'a, T: 'a, A: Allocator> SpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
+    782c782
+    < +impl<'a, T: 'a, A: Allocator + 'a> TrySpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
+    ---
+    > +impl<'a, T: 'a, A: Allocator> TrySpecExtend<&'a T, slice::Iter<'a, T>> for Vec<T, A>
+
+> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1730-2023-10-05 [1]
+> Link: https://rust-for-linux.com/rust-version-policy [2]
+> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
+> Link: https://github.com/rust-lang/compiler-team/issues/596 [4]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
