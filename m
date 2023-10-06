@@ -1,99 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7163134A1;
-	Fri,  6 Oct 2023 09:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADCF15C2
+	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 10:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGTn51nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0376C433C7;
-	Fri,  6 Oct 2023 09:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIPL8ygW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D9EC433C9;
+	Fri,  6 Oct 2023 10:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696586050;
-	bh=1xkOaZgWTt8wM/d9FQ2QJPZz89Bgl30gT4xlvIoDSR4=;
+	s=korg; t=1696587163;
+	bh=tqWT7Uq0aNHn7XluN41BFW9l0r892T8bAdRPiNKUR0E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AGTn51ncWAoBhlIUu33RX+rKn2oQQgVhGVeCpcshlIqYB1rBwr5ngl/4+VJkeXiXf
-	 kLgJhsj74qQC1qhpAf76lusF2fBpNk4UIcY/XSIpEPBPtZoivBL+jmB1fie62e241P
-	 JD618flh3vleOkj5QJE5EyI04iXSTY/Q6PBdAe9o=
-Date: Fri, 6 Oct 2023 11:54:07 +0200
+	b=eIPL8ygWR+RzI/1EYbHZLarysPkndwEYRqZW4+dtYrQFvpHIMCQKbg6LYfDlEnYgv
+	 uoG6eXY/HQc5JOzKn8oe6duZGQH6BqsDDJjNaeH3dyapR/prEZQvaUdgny4mPcmtyZ
+	 KDXagIhR0Xnb6OKFrxm+6EQVBF3Io9bZg4CZO2WU=
+Date: Fri, 6 Oct 2023 12:12:39 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Alexei Starovoitov <ast@kernel.org>, Hou Tao <houtao1@huawei.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>, stable@vger.kernel.org,
+	Ian Rogers <irogers@google.com>, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, bpf <bpf@vger.kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	=?iso-8859-1?Q?Bj=F6rn_T=F6pel?= <bjorn@kernel.org>
-Subject: Re: [PATCH 6.5 000/321] 6.5.6-rc1 review
-Message-ID: <2023100643-unicycle-plenty-f4a3@gregkh>
-References: <20231004175229.211487444@linuxfoundation.org>
- <CA+G9fYuE9Pu3QCVDywA8Ss-41jVfiy2e2kpxjhpTe3CRgmZkBw@mail.gmail.com>
- <CA+G9fYvHPnba-0=uGS70EjcPgHht13j3s-_fmd2=srL0xyPjNg@mail.gmail.com>
+	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+Message-ID: <2023100629-moneybags-unwound-ab7f@gregkh>
+References: <20231004175217.404851126@linuxfoundation.org>
+ <f0115175-975e-4fde-aa69-666568ce5c6a@gmail.com>
+ <CAM9d7chUnxjPdOwZZ0imYs+i8+dd9GL=O3gqJXzaRd1VGZJxBg@mail.gmail.com>
+ <d2b80a6d-63c8-46ec-bf0f-83217a7c517d@gmail.com>
+ <CAM9d7cjf8uct-xMr0Sj8=3kdcH6mavx5pCCsg+G8v53d+kxWjA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYvHPnba-0=uGS70EjcPgHht13j3s-_fmd2=srL0xyPjNg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM9d7cjf8uct-xMr0Sj8=3kdcH6mavx5pCCsg+G8v53d+kxWjA@mail.gmail.com>
 
-On Thu, Oct 05, 2023 at 08:25:02PM +0530, Naresh Kamboju wrote:
-> On Thu, 5 Oct 2023 at 11:05, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+On Wed, Oct 04, 2023 at 10:15:16PM -0700, Namhyung Kim wrote:
+> On Wed, Oct 4, 2023 at 5:52 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
 > >
-> > On Wed, 4 Oct 2023 at 23:53, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
+> >
+> >
+> > On 10/4/2023 1:19 PM, Namhyung Kim wrote:
+> > > Hello,
 > > >
-> > > This is the start of the stable review cycle for the 6.5.6 release.
-> > > There are 321 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
+> > > On Wed, Oct 4, 2023 at 12:33 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
+> > >>
+> > >> +Namhyung, Ian,
+> > >>
+> > >> On 10/4/23 10:52, Greg Kroah-Hartman wrote:
+> > >>> This is the start of the stable review cycle for the 6.1.56 release.
+> > >>> There are 259 patches in this series, all will be posted as a response
+> > >>> to this one.  If anyone has any issues with these being applied, please
+> > >>> let me know.
+> > >>>
+> > >>> Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > >>> Anything received after that time might be too late.
+> > >>>
+> > >>> The whole patch series can be found in one patch at:
+> > >>>        https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> > >>> or in the git tree and branch at:
+> > >>>        git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > >>> and the diffstat can be found below.
+> > >>>
+> > >>> thanks,
+> > >>>
+> > >>> greg k-h
+> > >>
+> > >> perf fails to build with:
+> > >>
+> > >> fixdep: error opening depfile:
+> > >> /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/.pmu-events.o.d:
+> > >> No such file or directory
+> > >> make[5]: *** [pmu-events/Build:33:
+> > >> /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events.o]
+> > >> Error 2
+> > >> make[4]: *** [Makefile.perf:672:
+> > >> /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events-in.o]
+> > >> Error 2
+> > >> make[3]: *** [Makefile.perf:240: sub-make] Error 2
+> > >> make[2]: *** [Makefile:70: all] Error 2
+> > >> make[1]: *** [package/pkg-generic.mk:294:
+> > >> /local/users/fainelli/buildroot/output/arm/build/linux-tools/.stamp_built]
+> > >> Error 2
+> > >> make: *** [Makefile:27: _all] Error 2
+> > >>
+> > >> due a80fd00cb1a7793ead4d7c3fa7d3f1e898231c27 ("perf build: Update build
+> > >> rule for generated files"). Reverting that commit fixes the build for me
+> > >> and then all is good in terms of testing.
 > > >
-> > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.6-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
+> > > I think it's ok to drop the patches if it's not applied
+> > > cleanly.
 > >
-> > The following kernel warning was noticed on qemu-armv7 while booting
-> > with kselftest merge configs enabled build on stable-rc 6.5.6-rc1.
+> > AFAICT the patch applied cleanly. There was some bizarre interplay in
+> > stable kernels prior to < 6.1 as reported here:
 > >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > https://lore.kernel.org/all/dcb9997a-2e8a-5eb2-7a34-f8af418d4bf1@gmail.com/
+> > https://lore.kernel.org/all/6a577578-8adb-aa70-1bf8-b1a4573152cf@gmail.com/
 > >
-> > > Hou Tao <houtao1@huawei.com>
-> > >     bpf: Ensure unit_size is matched with slab cache object size
-> >
-> >
-> > bpf: Ensure unit_size is matched with slab cache object size
-> > [ Upstream commit c930472552022bd09aab3cd946ba3f243070d5c7 ]
-> >
-> > [    2.525383] ------------[ cut here ]------------
-> > [    2.525743] WARNING: CPU: 0 PID: 1 at kernel/bpf/memalloc.c:385
-> > bpf_mem_alloc_init+0x3b0/0x3b4
-> > [    2.527241] bpf_mem_cache[0]: unexpected object size 128, expect 96
+> > Does this make sense to you that on 6.1 which does have Ian's commit
+> > 00facc760903be6675870c2749e2cd72140e396e ("perf jevents: Switch build to
+> > use jevents.py") that we would still get this build error somehow?
 > 
-> 
-> Anders investigated this report and picked up the following patches to
-> solve the reported problem.
-> 
-> d52b59315bf5e bpf: Adjust size_index according to the value of KMALLOC_MIN_SIZE
-> b1d53958b6931 bpf: Don't prefill for unused bpf_mem_cache
-> c930472552022 bpf: Ensure unit_size is matched with slab cache object size
+> You can drop the pmu-events part of the change if possible.
+> If not, I'm ok to drop the entire patch as it's intended to fix a
+> corner case only.  Normal builds should be fine before and
+> after the change.
 
-Those do not all apply cleanly to the tree, so I've dropped the one
-offending commit instead for 6.5.y and 6.1.y.
-
-thanks,
+I'm going to just drop the patch now from all queues, thanks!
 
 greg k-h
