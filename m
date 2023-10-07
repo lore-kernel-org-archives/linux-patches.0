@@ -1,176 +1,104 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4048843ABF
-	for <patches@lists.linux.dev>; Fri,  6 Oct 2023 20:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CA114F84
+	for <patches@lists.linux.dev>; Sat,  7 Oct 2023 08:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SVvxKaja"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696624043; x=1728160043;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=762SEI842j6xbeCH//ya5BUk4IDS267eVf0ZCamnIvY=;
-  b=SVvxKajaYNdmfyWT1Sw5tyUJdWEhzmxVm81AqPJs48t/kPy4w4XPkIsu
-   u6tlehY+T59BV1r9qmV5gPpNbQsLQhjqmCd0eSwV3tNbt9w2+vEIp/zd5
-   G/v3ZEGThIEqUj83y2s5qdeySsSs4ABHld2PjbLQFxUanoW8Oeu7MHhNn
-   E7F9JRJQ8Ooblc6ZorLeP+GtR04NZlZnFjZDswXvZ+rJHETtnbqYJZ6Vg
-   1P7MzfGddsb9QPUQGjcOcCzxlJ6M5aNPhRwS1rwaFJEYattbP24Ch3nwT
-   DLnkZUcmHes8cUgHbTbduQlF8fqXu4HrJkd8aeb/JobZO5leZDYQPk1uG
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10855"; a="2434514"
-X-IronPort-AV: E=Sophos;i="6.03,204,1694761200"; 
-   d="scan'208";a="2434514"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2023 13:27:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10855"; a="926072468"
-X-IronPort-AV: E=Sophos;i="6.03,204,1694761200"; 
-   d="scan'208";a="926072468"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orsmga005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 06 Oct 2023 13:27:22 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Fri, 6 Oct 2023 13:27:21 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Fri, 6 Oct 2023 13:27:21 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.174)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Fri, 6 Oct 2023 13:27:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=asm49euV4sxiZ6Xca+OplvhI2t/XWG2t1xIISKE/wPb1lAkqqMTyNw3WXKnrkq96XV6MoGYCrw9NOb6NNYQ/OUhbRkbnRKIwkYwlasBQwdT9M2LyJocEwZ4wpfDzeXiv6BrWHARy6Rf227jzVsADBYA/cHy222m56lBYUrvCUi/5Lr5IqSJN8bQ0LqJXMmB90uE+1F3gF4bExVFJi00+VOwunLNnwz3Ln0eLrLVmvTliaKoqr3itQGSa8CziLGjX6Oh8fRWWiXUjX8YwAla6gAriYvZUJHhiQjIa2E3O3tYcXXEkLDgcFexEvM3fr3Ff3HmgL/1U/Jh5vm/PmPiVcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RKjxy4PEeywYOFtHgBBl6jsabNPI6ZvtZhbOORXijD0=;
- b=jq6gZBHgOCCZ7XWsQhgtvQzIJ+f/b/YWKU+FDKLUFFYGO1NulzFfd77akfMgk0QJhnnAObjfmqMJBr2Kg4qaEAaQQ+/qaEn+PpY3vIo1JlPyFNR/hBjYmaywGRpbmOhStwKS7UAHFXzjgGJBn987Ep0hOqqZx+DBZRHEsmES09jIi/423EA91HQybKfmsEAScMqWls1tvMQpO2T7j6G0D878C2MQyeMkiiUh84Ht+Xq9YxTUR5srCGYPuzDqoNZ6x6thVMjDaQFh+ZcAR58UL/oFkTBPw6VOQViTPOpTuqOXc0UxBIIvoZxqhcRhAT/kmWe8k7rzClPoT4fZRauZ1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH8PR11MB7144.namprd11.prod.outlook.com (2603:10b6:510:22c::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.33; Fri, 6 Oct
- 2023 20:27:19 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bd70:f215:4a97:c84e]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bd70:f215:4a97:c84e%6]) with mapi id 15.20.6838.033; Fri, 6 Oct 2023
- 20:27:18 +0000
-Message-ID: <de071fb6-116e-4650-8d8a-8474ed361c55@intel.com>
-Date: Fri, 6 Oct 2023 13:27:15 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/8] Add support for Sub-NUMA cluster (SNC) systems
-Content-Language: en-US
-To: "Luck, Tony" <tony.luck@intel.com>, "Shaopeng Tan (Fujitsu)"
-	<tan.shaopeng@fujitsu.com>, "Yu, Fenghua" <fenghua.yu@intel.com>, "Peter
- Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah
- Khan <skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
-CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20230928191350.205703-1-tony.luck@intel.com>
- <20231003213043.13565-1-tony.luck@intel.com>
- <TYAPR01MB6330625DB7B68BC63B4F67E38BCAA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
- <SJ1PR11MB6083188C577FD1067B6F7362FCCAA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <SJ1PR11MB6083188C577FD1067B6F7362FCCAA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4P221CA0001.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:303:8b::6) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1i/NIDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3BDC433C7;
+	Sat,  7 Oct 2023 08:58:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696669107;
+	bh=63/dX8Mo5xru8ooy9lCm1E4eme6V3fkD4TYeT7/GxT8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l1i/NIDAMmZft2wxUCk+uo6l9YM0hOIgb4Ksq3nEmXl7j8swBvb1Th5UI1cO+oYFi
+	 Mgc3JIhYrOjNZIIjl/JaMbWo7w5X+M7j/N9LdJ3OWL3toXnmtH2hC/t3/sP57Rit/R
+	 g7QNjJ1hxzMZrMDUM8TmaY7ZVatkHKPDyQsOCEAk=
+Date: Sat, 7 Oct 2023 10:58:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, linux-nfs@vger.kernel.org,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, Olga Kornievskaia <kolga@netapp.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	LTP List <ltp@lists.linux.it>, Petr Vorel <pvorel@suse.cz>,
+	Richard Palethorpe <rpalethorpe@suse.com>,
+	Eryu Guan <eguan@redhat.com>, chrubis <chrubis@suse.cz>
+Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
+Message-ID: <2023100755-livestock-barcode-fe41@gregkh>
+References: <20231004175217.404851126@linuxfoundation.org>
+ <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
+ <CAEUSe78O-Ho=22nTeioT4eqPRoDNfcWCpc=5O=B59eaMvOkzpg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH8PR11MB7144:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d692f1b-3c03-41ef-4519-08dbc6aaa31e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: nymXShHhOVqRmk84mpvWMX4NKE6sETZH8o4ywRFzbzaCyUGF/wcH6Gjn42X1Qs/SXFbuZ1mgcFrhuei4X4REY13YmsV890kxztZiWoIaEY89LS3QoE7uPrULGAwiW0AI704BrNQGeE3Nf8uL0y0x3550DsE6SVR1uy/0gfzZyO6lO1IxDqGZtlaQlTu5xIScTG7FGj6zmtpLCqGdOkrQvliPM/um3jx5u1fs/8mOGwCdOoBe9PJ/YLUS8LDYjdMWK/TbaFutIzPecVI7i5tmMXBIY5bm17kvxPud1T5ye6+s/YQQpXGgIYlOmC57TrGB7qX7y7QJ+pp7tNc4WatHZR7QfApJw3a2bDw78i+RTvoV0Ilsiul13tOL5zTpYKALWEfytyFIJxbC/TPhr8WlYC4eABV/poZ0XjlUt2DQBtHtL5oZA3N9EFgsKgVaPoi9zXYfZKd4teX9nzWkgly3Skl0fwulreHBO3FydaBXUqcSmgm9y5THGsLA8e6mu2oe4Ft52AzgXfq80VomvJahdqArx49RWpQ7GIlGEBCptN8RA8oVZlcpGwV1lV3A4jA7y2rRXWMaAptq7YtH6OpkPZqptFBPRfzToAzjP8zQ6H5nHfgvTMd4fa/xrK7p81UyTcLkfJivQfceJ9RzTotX/w==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(376002)(136003)(346002)(396003)(366004)(230922051799003)(451199024)(1800799009)(186009)(64100799003)(82960400001)(6666004)(5660300002)(26005)(8676002)(8936002)(4326008)(31686004)(478600001)(86362001)(2616005)(31696002)(6486002)(66556008)(66946007)(66476007)(54906003)(316002)(38100700002)(110136005)(2906002)(7416002)(6512007)(4744005)(6506007)(83380400001)(36756003)(41300700001)(53546011)(44832011)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TUZSQjlOcEF1cmpwK1NGUVJvTHdFankrN1RLWVNkeWhSandMcHZGeWVXSFJP?=
- =?utf-8?B?SkluMG5kNkFnRzBnUGk3SkFnb0RDWC9RZ0xUSzFhaWxlRkNQWGdPQ2pzYnpt?=
- =?utf-8?B?L0N3OXNzNHZhbzM0R1JKQytGZzdseXhhNDluRmVQMVR3SkVzeXZ2cmVtc0Zm?=
- =?utf-8?B?NXd1REw3R01vSFJsU3BZaXNKZjRBVmwvUzl0SkpBSXk5bVNpZDlieDM3SDB5?=
- =?utf-8?B?cS9abGEwZVhnQW1tY0lRWTBpSHMzSFluWVd6OVk0ZjJ0dUNML1NIWTBQSldk?=
- =?utf-8?B?a0MyeTdVVDJ1ZVFqUzBOTGRieTBiYTJuV1lWalZ1QlZlNXVQeE11bVFJM3A5?=
- =?utf-8?B?K1kzN2pqL0NkcHpnSTZLVXhqMFE3Y2pFTnVWeWY4bmpQQUYvRVBSMTZMVVI1?=
- =?utf-8?B?ck4wM3hTZ2lzZEdKVTN2VE5ZN3FoN0h2a2FqRHUxazRzSGFTY1lrM2lqYnRi?=
- =?utf-8?B?T0pCdkNCRFNWWkswZElxcXR2TnZ2UEhkb2xlQWNqRlZGSUdacWNxRU5FUEoy?=
- =?utf-8?B?ajY1N1gwc01waGwyZURsNmFRMHB3Wk1RTmRjY241Q1E0bHZ0ZVQ1NTlDWFlI?=
- =?utf-8?B?cFFWYmQ2UzhZZGl5dmtPUFpOczJCMkc2TEliR21UNk1OdGkzQUVFWFN4STZS?=
- =?utf-8?B?aUZueVZBS1l1dVhOYlRRditwdTV6ZW45cjdBcmVnRG5GbnArcGVONzVSR1BE?=
- =?utf-8?B?aWJjYWV5OG1UZVkvOVg2UGs5TmYzWHNrUlRtbmJneUhucXNQOEJ4Z3hrWFdx?=
- =?utf-8?B?dU1PRmJQZzlmb2xKZ1NrNTgxcHY1QTZrOTNaVkU5WlZpUmlhL0lDaVI3VS9Z?=
- =?utf-8?B?a3kxTnR0MXMwMmYzL0JTbTZsZ3lyOHQ4T3RRTU1JeldIYjFSV1Z5dlNrYjU4?=
- =?utf-8?B?SHhLL3I5Um1YNU1lamFNL2Q2L1ZrVUMzUVBjNVptQzFUVjVvOEhYc3c2dDNj?=
- =?utf-8?B?VlZYNlRqRFh2WCtES1FhZE1FVUNsSURuWWpHejVudHc0K3k0YUd6NndWekUr?=
- =?utf-8?B?TlNQTC92UTZhWkEzaWl5YlgxNWh0ZXl2QkFZWEJzWVVOQVZxL2xhY2ZmOE9F?=
- =?utf-8?B?M3A3MUpTQnRiM3pZWWxCWW42Z0dEYmpmOXcrNDRuUDQwWkhzTlYwZ3RzZFp0?=
- =?utf-8?B?M3hScm1NNkJEQysvUU43YTN1M05LNXphNGtvWit1Uk11eWJHdkkzMDJ5QTF6?=
- =?utf-8?B?WGtsdTNSdEhjUGI2TXJNK2dSNTlORU1CV2J1djFrUzlnOVNpMlUwWGpGNTFB?=
- =?utf-8?B?SnN5TzZSb1o4cjh1dUZDcXV4Sk9pT3ZJSE92MFFzcEMwalc3NXlZQjRwVDN1?=
- =?utf-8?B?T2VlOTBCYUFyMXBsWXB0MURiOTFScTlTcUxJamRvN3ZYQlhzbG9CR1F1a3ZK?=
- =?utf-8?B?OW9aN1RMSndpRmJyV1hHQkc1cTU4eDB6VmZQSXZqT1NzRktJaTg0cnh0N05G?=
- =?utf-8?B?Z2R4WWd1SERVR1lkYTQvRG9BWU9Ra1Joa0ZybEV6aU5xREYvTGVzdWI5S0po?=
- =?utf-8?B?WFp5aitRN292OGpzZXN0VDFXK3UxNmNjT2hwQVFHOER0UzJyYWpQWi9kQkUr?=
- =?utf-8?B?WEJ6L25pTVF1NEorc1VIWmozdE5SZmlaM2dQRUdSb3VobXdJaXU2YlpaQUxx?=
- =?utf-8?B?VGhlTDd0aWFvVkZrUVgvN1B2Vm9JS0ZFbmEvWkZobUJyYklDazcra3lrYnN4?=
- =?utf-8?B?b2pJVnQvMUQ4K1A0ZkJ1c2MwK2dQNzVvLzUzQUhvL0RyWlZXQ2FGTm9mS2tX?=
- =?utf-8?B?RFhJYzlwRWtNNk5rOHRuTEo1cTV5aTM5Z1RFbml0ZXI1c2hVdWpDZnkxYlR3?=
- =?utf-8?B?dUp0RXFibkxKWkVUcWcyblJESWJTQjFMMlZ4azJSOVpTS3FBb0FoQ2ZqNm5s?=
- =?utf-8?B?VVJpTUdpcS84KzVlR2xJNkNVWUlWVlcxZHhJYUtxWVVDb2FhWmljNHBoUGUy?=
- =?utf-8?B?ZzlMcFBaL1dldkJraWxVVHowTTJXMW1ZbitIbW5QYUdTbjA2bUExU0tUcW9M?=
- =?utf-8?B?U0VIM09EZ0dVS05QWktaV1ZqNzI0Y2tXc0hYRXR4bm5sVDJjaEtYbWhoQjVF?=
- =?utf-8?B?dVZndDlsRHoyZkxIVkFhMExEU0VKc2lHWXlCaVZ0TlM5RmV2NHBIdVZpWG9z?=
- =?utf-8?B?VWRFRlFqdzJmczBoeTQ4UEZEUjFrZjFxUDF3M0hHS0tBOHdHZFlZeG5Cc1Uw?=
- =?utf-8?B?Zmc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d692f1b-3c03-41ef-4519-08dbc6aaa31e
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2023 20:27:18.8403
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yI7h29pD2KUxG7gneUhMZRwzPQ9wosyWERHcmo0OEN7bX1ehn5IRguInmaPdxB9SCYbsMGTZz3e/scxV1zth5z87epEj+dGWHRAVJpmqk+Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB7144
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEUSe78O-Ho=22nTeioT4eqPRoDNfcWCpc=5O=B59eaMvOkzpg@mail.gmail.com>
 
-Hi Tony,
-
-On 10/5/2023 8:08 AM, Luck, Tony wrote:
->> I applied this patch series to kernel v6.5 and v6.6-rc4, but the kernel cannot be booted.
->> Could you tell me what kernel version this patch series is based on?
+On Fri, Oct 06, 2023 at 12:42:04PM -0600, Daniel Díaz wrote:
+> Hello!
 > 
-> Hi Shaopeng,
+> On Thu, 5 Oct 2023 at 10:40, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.1.56 release.
+> > > There are 259 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> >
+> > Results from Linaro’s test farm.
+> > Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
+> > NFS mounted rootfs.
+> > and LTP hugetlb hugemmap11 test case failed on x86 and arm64 bcm2711-rpi-4-b.
+> >
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> >
+> > LTP hugetlb tests failed log
+> >   tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
+> >   tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
+> >   hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
+> >
+> > LTP dio tests failed log
+> >   compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
+> > offset 4096: 0x00 .
+> >   diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
+> > infile and outfile
 > 
-> Patches are based on v6.6-rc3 (see the "base-commit" line at the end of the cover letter).
-> 
-> Which CPU family/model/stepping & microcode are you testing on?
-> 
-> Are there error or panic messages when it does not boot?
+> Bisection led to "NFS: Fix O_DIRECT locking issues" (upstream commit
+> 7c6339322ce0c6128acbe36aacc1eeb986dd7bf1). Reverting that patch and
+> "NFS: Fix error handling for O_DIRECT write scheduling" (upstream
+> commit 954998b60caa8f2a3bf3abe490de6f08d283687a) (not a clean revert
+> this one) made ltp-dio pass again.
 
-There is no need to ask Shaopeng for more information. If you test
-this series you will immediately learn that it is broken. 
-Reading the series I only made it to patch #3 where I realized that this
-has not been tested before posting. 
+So this is also an issue in Linus's tree?  Or is it only on the 6.1.y
+tree.
 
-Reinette
+thanks,
 
+greg k-h
