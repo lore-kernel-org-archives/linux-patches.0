@@ -1,104 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CA114F84
-	for <patches@lists.linux.dev>; Sat,  7 Oct 2023 08:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F6C18630
+	for <patches@lists.linux.dev>; Sat,  7 Oct 2023 11:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1i/NIDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3BDC433C7;
-	Sat,  7 Oct 2023 08:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+CdNouz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1295C433C8;
+	Sat,  7 Oct 2023 11:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696669107;
-	bh=63/dX8Mo5xru8ooy9lCm1E4eme6V3fkD4TYeT7/GxT8=;
+	s=korg; t=1696677782;
+	bh=oVut5drEvky7Iw6+ulamagFWRxF9tJ4Wqzj9wYreJNA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l1i/NIDAMmZft2wxUCk+uo6l9YM0hOIgb4Ksq3nEmXl7j8swBvb1Th5UI1cO+oYFi
-	 Mgc3JIhYrOjNZIIjl/JaMbWo7w5X+M7j/N9LdJ3OWL3toXnmtH2hC/t3/sP57Rit/R
-	 g7QNjJ1hxzMZrMDUM8TmaY7ZVatkHKPDyQsOCEAk=
-Date: Sat, 7 Oct 2023 10:58:24 +0200
+	b=s+CdNouzLYJrC2hyDn6HmZZ8Rx8I6vSMBbeHBycf0Q+GSgC2ct/Nb51BZpu1vc6YQ
+	 mF3TTNk9K/COaRWLx0JIJnkqvZ2QDGtCf/zQg5DiJpMr7LLAxzoAvktj8Tee6zT+Vb
+	 eRb1QRZLwwE/fFavy7+NrAwtjnK9VJlu9oqHGEp0=
+Date: Sat, 7 Oct 2023 13:22:59 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, linux-nfs@vger.kernel.org,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, Olga Kornievskaia <kolga@netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	LTP List <ltp@lists.linux.it>, Petr Vorel <pvorel@suse.cz>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Eryu Guan <eguan@redhat.com>, chrubis <chrubis@suse.cz>
-Subject: Re: [PATCH 6.1 000/259] 6.1.56-rc1 review
-Message-ID: <2023100755-livestock-barcode-fe41@gregkh>
-References: <20231004175217.404851126@linuxfoundation.org>
- <CA+G9fYsqbZhSQnEi-qSc7n+4d7nPap8HWcdbZGWLfo3mTH-L7A@mail.gmail.com>
- <CAEUSe78O-Ho=22nTeioT4eqPRoDNfcWCpc=5O=B59eaMvOkzpg@mail.gmail.com>
+To: Ben Hutchings <ben@decadent.org.uk>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Joe Perches <joe@perches.com>,
+	Brennan Lamoreaux <blamoreaux@vmware.com>
+Subject: Re: [PATCH 4.19 322/323] drivers core: Use sysfs_emit and
+ sysfs_emit_at for show(device *...) functions
+Message-ID: <2023100722-carload-district-f291@gregkh>
+References: <20230809103658.104386911@linuxfoundation.org>
+ <20230809103712.823902551@linuxfoundation.org>
+ <95831df76c41a53bc3e1ac8ece64915dd63763a1.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEUSe78O-Ho=22nTeioT4eqPRoDNfcWCpc=5O=B59eaMvOkzpg@mail.gmail.com>
+In-Reply-To: <95831df76c41a53bc3e1ac8ece64915dd63763a1.camel@decadent.org.uk>
 
-On Fri, Oct 06, 2023 at 12:42:04PM -0600, Daniel Díaz wrote:
-> Hello!
+On Mon, Sep 25, 2023 at 12:40:47AM +0200, Ben Hutchings wrote:
+> On Wed, 2023-08-09 at 12:42 +0200, Greg Kroah-Hartman wrote:
+> > From: Joe Perches <joe@perches.com>
+> > 
+> > commit aa838896d87af561a33ecefea1caa4c15a68bc47 upstream.
+> > 
+> > Convert the various sprintf fmaily calls in sysfs device show functions
+> > to sysfs_emit and sysfs_emit_at for PAGE_SIZE buffer safety.
 > 
-> On Thu, 5 Oct 2023 at 10:40, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > On Wed, 4 Oct 2023 at 23:41, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.1.56 release.
-> > > There are 259 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.56-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> >
-> > Results from Linaro’s test farm.
-> > Regressions on arm64 bcm2711-rpi-4-b device running LTP dio tests on
-> > NFS mounted rootfs.
-> > and LTP hugetlb hugemmap11 test case failed on x86 and arm64 bcm2711-rpi-4-b.
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> >
-> > LTP hugetlb tests failed log
-> >   tst_hugepage.c:83: TINFO: 1 hugepage(s) reserved
-> >   tst_test.c:1558: TINFO: Timeout per run is 0h 05m 00s
-> >   hugemmap11.c:47: TFAIL: Memory mismatch after Direct-IO write
-> >
-> > LTP dio tests failed log
-> >   compare_file: char mismatch: infile offset 4096: 0x01 .   outfile
-> > offset 4096: 0x00 .
-> >   diotest01    1  TFAIL  :  diotest1.c:158: file compare failed for
-> > infile and outfile
+> [...]
+> > Signed-off-by: Joe Perches <joe@perches.com>
+> > Link: https://lore.kernel.org/r/3d033c33056d88bbe34d4ddb62afd05ee166ab9a.1600285923.git.joe@perches.com
+> > [ Brennan : Regenerated for 4.19 to fix CVE-2022-20166 ]
 > 
-> Bisection led to "NFS: Fix O_DIRECT locking issues" (upstream commit
-> 7c6339322ce0c6128acbe36aacc1eeb986dd7bf1). Reverting that patch and
-> "NFS: Fix error handling for O_DIRECT write scheduling" (upstream
-> commit 954998b60caa8f2a3bf3abe490de6f08d283687a) (not a clean revert
-> this one) made ltp-dio pass again.
+> When I looked into the referenced security issue, it seemed to only be
+> exploitable through wakelock names, and in the upstream kernel only
+> after commit c8377adfa781 "PM / wakeup: Show wakeup sources stats in
+> sysfs" (first included in 5.4).  So I would be interested to know if
+> and why a fix was needed for 4.19.
 
-So this is also an issue in Linus's tree?  Or is it only on the 6.1.y
-tree.
+It should not be needed there.
 
-thanks,
+> More importantly, this backported version uniformly converts to
+> sysfs_emit(), but there are 3 places sysfs_emit_at() must be used
+> instead:
+
+Ick, ok, I'll go revert the commit, thanks.
 
 greg k-h
