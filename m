@@ -1,77 +1,237 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC6C1FD1
-	for <patches@lists.linux.dev>; Sat,  7 Oct 2023 11:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A362810E6
+	for <patches@lists.linux.dev>; Sun,  8 Oct 2023 01:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joelfernandes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelfernandes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBXwYLyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7471C433C9;
-	Sat,  7 Oct 2023 11:57:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696679833;
-	bh=0yt73kgAPYECXihzzq92WeV8qT2NdU3GEyERzOSit4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bBXwYLyCuthuf8wsye76/C/pOhMzc9i5GERBM0kM5HdbHS5h4JNN6YH7yaYQXFh7O
-	 XR2NzYF+Csj8TMjq5yJjmCFuVOpC2yX/UT1aMh609tNvtGl6wSr1RdQ4tImFfSYDdA
-	 cqx78vorYwmh/V7VKf50hTwYRh115cvoLHjMAD+E=
-Date: Sat, 7 Oct 2023 13:57:10 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ben Hutchings <ben@decadent.org.uk>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: Re: [PATCH 5.10 397/509] PCI: qcom: Disable write access to read
- only registers for IP v2.3.3
-Message-ID: <2023100736-enlarged-return-6dc0@gregkh>
-References: <20230725104553.588743331@linuxfoundation.org>
- <20230725104611.936185910@linuxfoundation.org>
- <f23affddab4d8b3cc07508f2d8735d88d823821d.camel@decadent.org.uk>
+	dkim=pass (1024-bit key) header.d=joelfernandes.org header.i=@joelfernandes.org header.b="MlvVm7gY"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2c038a1e2e6so39596021fa.2
+        for <patches@lists.linux.dev>; Sat, 07 Oct 2023 18:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=joelfernandes.org; s=google; t=1696728187; x=1697332987; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MlyDvruw1CzR+/DWXdCK/db4GFBghuxFJ/YniqZxK1o=;
+        b=MlvVm7gYpSfFOGR6pjGFcLLoemWX0168s+NVsh4T0lQE65tOdNSAXZBGNASGW8j3z5
+         Op1+mb/elX440+QAxhfImGJ02yEepfH8ARNVuQXnbxyFqA2GWgyUPWFlCN5MxJ81E0+3
+         4yw0zcLYngyaz1STGqXnNt6LfzAf2xB0lIezk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696728187; x=1697332987;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MlyDvruw1CzR+/DWXdCK/db4GFBghuxFJ/YniqZxK1o=;
+        b=kndNrC9NU93Dveo3BgmxeKN5pls/WBRkktaW34FMSdSwpO4l7Kcw+YCb+AoGEv1Z2s
+         LxFotIwgDffrg1GDRoGao6RcT5beA/SMfM8qJhN/dtYoJPLaB7k8uilMMg5LJCmLqcrD
+         3bfiPTvGjKOU7YN8yr/KfESRcGOkMO5QEb4CUow00GKSJvQQyndASSlf/oLpy+AFdiWv
+         g/X6GJ2q7W+umNVnRDI8yYEUt4PzxjE8RLhtx3LmeCPFzE4ZCKwvsHorM5BJ3uuBO8tD
+         VweTQjO9sPPtNS4eObqf3PVBijBMtpOdHsofI4uzJBogoY5Ynrv7L6cH9kG3VLtbM7Wm
+         B2bg==
+X-Gm-Message-State: AOJu0YxIVxqqp16Ls822O8UT4ExwBBUav/pkWEpXEXinp5eB93QHzMmf
+	iB+EnK3RKbh4M1Tz3LhIyU6mH28acBXz7Dfnxhdz0Q==
+X-Google-Smtp-Source: AGHT+IEnlbFVKdZeuEQoqLbV8MNgbqCbBhDTVndG2oYZLvU4ES8Bh9GBxjiE1DTDCXG6K06hMOLc3HVquFT2mqtG0uk=
+X-Received: by 2002:a2e:b301:0:b0:2b9:b27c:f727 with SMTP id
+ o1-20020a2eb301000000b002b9b27cf727mr8972506lja.8.1696728186717; Sat, 07 Oct
+ 2023 18:23:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f23affddab4d8b3cc07508f2d8735d88d823821d.camel@decadent.org.uk>
+References: <20231004175203.943277832@linuxfoundation.org> <CA+G9fYunnEUT2evdabX1KOTiryP1heNHWDH4LWZCt2SVRmnKOA@mail.gmail.com>
+ <20231006162038.d3q7sl34b4ouvjxf@revolver> <57c1ff4d-f138-4f89-8add-c96fb3ba6701@paulmck-laptop>
+ <20231006175714.begtgj6wrs46ukmo@revolver> <7652477c-a37c-4509-9dc9-7f9d1dc08291@paulmck-laptop>
+In-Reply-To: <7652477c-a37c-4509-9dc9-7f9d1dc08291@paulmck-laptop>
+From: Joel Fernandes <joel@joelfernandes.org>
+Date: Sat, 7 Oct 2023 21:22:55 -0400
+Message-ID: <CAEXW_YS16NxPxg52T=3FcyZ2qocj36zKyhPnEQL3nBTbD-qJ-A@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
+To: paulmck@kernel.org
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>, Naresh Kamboju <naresh.kamboju@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, Chengming Zhou <zhouchengming@bytedance.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Ovidiu Panait <ovidiu.panait@windriver.com>, 
+	Ingo Molnar <mingo@kernel.org>, rcu <rcu@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 24, 2023 at 11:15:35PM +0200, Ben Hutchings wrote:
-> On Tue, 2023-07-25 at 12:45 +0200, Greg Kroah-Hartman wrote:
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > commit a33d700e8eea76c62120cb3dbf5e01328f18319a upstream.
-> > 
-> > In the post init sequence of v2.9.0, write access to read only registers
-> > are not disabled after updating the registers. Fix it by disabling the
-> > access after register update.
-> > 
-> > Link: https://lore.kernel.org/r/20230619150408.8468-2-manivannan.sadhasivam@linaro.org
-> > Fixes: 5d76117f070d ("PCI: qcom: Add support for IPQ8074 PCIe controller")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-> > Cc: <stable@vger.kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c |    2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -771,6 +771,8 @@ static int qcom_pcie_get_resources_2_4_0
-> 
-> This fix was supposed to be for v2.3.3 of the hardware and originally
-> changed the function qcom_pcie_get_resources_2_3_3().
-> 
-> However, the backports to 4.19, 5.4, and 5.10 applied this change to
-> the similar function qcom_pcie_get_resources_2_4_0().
-> 
-> Please move the added function call into the correct function.
+On Fri, Oct 6, 2023 at 2:20=E2=80=AFPM Paul E. McKenney <paulmck@kernel.org=
+> wrote:
+>
+> On Fri, Oct 06, 2023 at 01:57:14PM -0400, Liam R. Howlett wrote:
+> > * Paul E. McKenney <paulmck@kernel.org> [231006 12:47]:
+> > > On Fri, Oct 06, 2023 at 12:20:38PM -0400, Liam R. Howlett wrote:
+> > > > * Naresh Kamboju <naresh.kamboju@linaro.org> [231005 13:49]:
+> > > > > On Wed, 4 Oct 2023 at 23:33, Greg Kroah-Hartman
+> > > > > <gregkh@linuxfoundation.org> wrote:
+> > > > > >
+> > > > > > This is the start of the stable review cycle for the 5.15.134 r=
+elease.
+> > > > > > There are 183 patches in this series, all will be posted as a r=
+esponse
+> > > > > > to this one.  If anyone has any issues with these being applied=
+, please
+> > > > > > let me know.
+> > > > > >
+> > > > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
+> > > > > > Anything received after that time might be too late.
+> > > > > >
+> > > > > > The whole patch series can be found in one patch at:
+> > > > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-rev=
+iew/patch-5.15.134-rc1.gz
+> > > > > > or in the git tree and branch at:
+> > > > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/li=
+nux-stable-rc.git linux-5.15.y
+> > > > > > and the diffstat can be found below.
+> > > > > >
+> > > > > > thanks,
+> > > > > >
+> > > > > > greg k-h
+> > > > >
+> > > > > Results from Linaro=E2=80=99s test farm.
+> > > > > Regressions on x86.
+> > > > >
+> > > > > Following kernel warning noticed on x86 while booting stable-rc 5=
+.15.134-rc1
+> > > > > with selftest merge config built kernel.
+> > > > >
+> > > > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > > > >
+> > > > > Anyone noticed this kernel warning ?
+> > > > >
+> > > > > This is always reproducible while booting x86 with a given config=
+.
+> > > >
+> > > > >From that config:
+> > > > #
+> > > > # RCU Subsystem
+> > > > #
+> > > > CONFIG_TREE_RCU=3Dy
+> > > > # CONFIG_RCU_EXPERT is not set
+> > > > CONFIG_SRCU=3Dy
+> > > > CONFIG_TREE_SRCU=3Dy
+> > > > CONFIG_TASKS_RCU_GENERIC=3Dy
+> > > > CONFIG_TASKS_RUDE_RCU=3Dy
+> > > > CONFIG_TASKS_TRACE_RCU=3Dy
+> > > > CONFIG_RCU_STALL_COMMON=3Dy
+> > > > CONFIG_RCU_NEED_SEGCBLIST=3Dy
+> > > > # end of RCU Subsystem
+> > > >
+> > > > #
+> > > > # RCU Debugging
+> > > > #
+> > > > CONFIG_PROVE_RCU=3Dy
+> > > > # CONFIG_RCU_SCALE_TEST is not set
+> > > > # CONFIG_RCU_TORTURE_TEST is not set
+> > > > # CONFIG_RCU_REF_SCALE_TEST is not set
+> > > > CONFIG_RCU_CPU_STALL_TIMEOUT=3D21
+> > > > CONFIG_RCU_TRACE=3Dy
+> > > > # CONFIG_RCU_EQS_DEBUG is not set
+> > > > # end of RCU Debugging
+> > > >
+> > > >
+> > > > >
+> > > > > x86 boot log:
+> > > > > -----
+> > > > > [    0.000000] Linux version 5.15.134-rc1 (tuxmake@tuxmake)
+> > > > > (x86_64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binu=
+tils
+> > > > > for Debian) 2.40) #1 SMP @1696443178
+> > > > > ...
+> > > > > [    1.480701] ------------[ cut here ]------------
+> > > > > [    1.481296] WARNING: CPU: 0 PID: 13 at kernel/rcu/tasks.h:958
+> > > > > trc_inspect_reader+0x80/0xb0
+> > > > > [    1.481296] Modules linked in:
+> > > > > [    1.481296] CPU: 0 PID: 13 Comm: rcu_tasks_trace Not tainted 5=
+.15.134-rc1 #1
+> > > > > [    1.481296] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, B=
+IOS
+> > > > > 2.5 11/26/2020
+> > > > > [    1.481296] RIP: 0010:trc_inspect_reader+0x80/0xb0
+> > > >
+> > > > This function has changed a lot, including the dropping of this
+> > > > WARN_ON_ONCE().  The warning was replaced in 897ba84dc5aa ("rcu-tas=
+ks:
+> > > > Handle idle tasks for recently offlined CPUs") with something that =
+looks
+> > > > equivalent so I'm not sure why it would not trigger in newer revisi=
+ons.
+> > > >
+> > > > Obviously the behaviour I changed was the test for the task being i=
+dle.
+> > > > I am not sure how best to short-circuit that test from happening du=
+ring
+> > > > boot as I am not familiar with the RCU code.
+> > >
+> > > The usual test for RCU's notion of early boot being completed is
+> > > (rcu_scheduler_active !=3D RCU_SCHEDULER_INIT).
+> > >
+> > > Except that "ofl" should always be false that early in boot, at least
+> > > in mainline.
+> >
+> > Is this still true in the final version of the patch where we set the
+> > boot task as !idle until just before the early boot is finished?  I
+> > wouldn't think of this as 'early in boot' anymore as much as the entire
+> > kernel setup.  Maybe we need to shorten the time we stay in !idle mode
+> > for earlier kernels?
+>
+> In mainline, the ofl variable is defined as cpu_is_offline(cpu), and
+> during boot, the boot CPU is guaranteed to be online.  (As opposed to
+> the boot CPU's idle-task state.)
+>
+> > How frequent is this function called?  We could check something for
+> > early boot... or track down where the cpu is put online and restore idl=
+e
+> > before that happens?
+>
+> Once per RCU Tasks Trace grace period per reader seen to be blocking
+> that grace period.  Its performance is as issue, but not to anywhere
+> near the same extent as (say) rcu_read_lock_trace().
+>
+> > > > It's also worth noting that the bug this fixes wasn't exposed until=
+ the
+> > > > maple tree (added in v6.1) was used for the IRQ descriptors (added =
+in
+> > > > v6.5).
+> > >
+> > > Lots of latent bugs, to be sure, even with rcutorture.  :-/
+> >
+> > The Right Thing is to fix the bug all the way back to the introduction,
+> > but what fallout makes the backport less desirable than living with the
+> > unexposed bug?
+>
+> You are quite right that it is possible for the risk of a backport to
+> exceed the risk of the original bug.
+>
+> I defer to Joel (CCed) on how best to resolve this in -stable.
 
-That function is not in those older kernels, which is why patch tried
-it's best and moved to the other function.
+Maybe I am missing something but this issue should also be happening
+in mainline right?
 
-I'll just go revert the offending commit from all of these branches,
-thanks for noticing!
+Even though mainline has 897ba84dc5aa ("rcu-tasks: Handle idle tasks
+for recently offlined CPUs") , the warning should still be happening
+due to Liam's "kernel/sched: Modify initial boot task idle setup"
+because the warning is just rearranged a bit but essentially the same.
 
-greg k-h
+IMHO, the right thing to do then is to drop Liam's patch from 5.15 and
+fix it in mainline (using the ideas described in this thread), then
+backport both that new fix and Liam's patch to 5.15.
+
+Or is there a reason this warning does not show up on the mainline?
+
+My impression is that dropping Liam's patch for the stable release and
+revisiting it later is a better approach since tiny RCU is used way
+less in the wild than tree/tasks RCU. Thoughts?
+
+thanks,
+
+ - Joel
