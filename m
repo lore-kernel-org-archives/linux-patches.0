@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B80339B5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07699339B5
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJgL19dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA470C433C7;
-	Mon,  9 Oct 2023 13:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4qu8iy7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F458C433C7;
+	Mon,  9 Oct 2023 13:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859372;
-	bh=1yMazPC8eVhKIwktMCEPDGt2zC7aQeF39krbfVTLys4=;
+	s=korg; t=1696859375;
+	bh=ragBUxza1GiAVa0LxyGIUCDZyL8zKSVRBtZl1hQYPE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJgL19dqfxXUL1VZipQLw0CAi9uiVxhJIqg6IVAO9euDW1yRp1uxCRHKnTUyePFFH
-	 MXyxuC1ieQ7Uea9haSFvXndXygdpvHnZiaUGrNXJm60eg6V8IjOzHSJT6CQunCUYGR
-	 04POcgqDp8ENkgyJ0YeGNei3ib7pXeZ2ZsS2SxVw=
+	b=u4qu8iy7NJdMRgA6j838Qpm8pVPt47yDyoWcLBP+lvcEd38Qz/JyTOXXt55hxIsIF
+	 Uv7wWj4ll/xlI+P80UxuQ/yWO+QivNg2uIkMB5syIHPAy/lLHoqIKZUecWFhD21WIf
+	 ANVdxevLcOtXtIySgQZUnop0X6yKPIdN5sD6Z5NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 46/55] net: usb: smsc75xx: Fix uninit-value access in __smsc75xx_read_reg
-Date: Mon,  9 Oct 2023 15:06:45 +0200
-Message-ID: <20231009130109.463932233@linuxfoundation.org>
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Guo <guoxin0309@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 47/55] tcp: fix delayed ACKs for MSS boundary condition
+Date: Mon,  9 Oct 2023 15:06:46 +0200
+Message-ID: <20231009130109.501654888@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -44,97 +45,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit e9c65989920f7c28775ec4e0c11b483910fb67b8 ]
+[ Upstream commit 4720852ed9afb1c5ab84e96135cb5b73d5afde6f ]
 
-syzbot reported the following uninit-value access issue:
+This commit fixes poor delayed ACK behavior that can cause poor TCP
+latency in a particular boundary condition: when an application makes
+a TCP socket write that is an exact multiple of the MSS size.
 
-=====================================================
-BUG: KMSAN: uninit-value in smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
-BUG: KMSAN: uninit-value in smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
-CPU: 0 PID: 8696 Comm: kworker/0:3 Not tainted 5.8.0-rc5-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: usb_hub_wq hub_event
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x21c/0x280 lib/dump_stack.c:118
- kmsan_report+0xf7/0x1e0 mm/kmsan/kmsan_report.c:121
- __msan_warning+0x58/0xa0 mm/kmsan/kmsan_instr.c:215
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
- smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
- usbnet_probe+0x1152/0x3f90 drivers/net/usb/usbnet.c:1737
- usb_probe_interface+0xece/0x1550 drivers/usb/core/driver.c:374
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_set_configuration+0x380f/0x3f10 drivers/usb/core/message.c:2032
- usb_generic_driver_probe+0x138/0x300 drivers/usb/core/generic.c:241
- usb_probe_device+0x311/0x490 drivers/usb/core/driver.c:272
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_new_device+0x1bd4/0x2a30 drivers/usb/core/hub.c:2554
- hub_port_connect drivers/usb/core/hub.c:5208 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5348 [inline]
- port_event drivers/usb/core/hub.c:5494 [inline]
- hub_event+0x5e7b/0x8a70 drivers/usb/core/hub.c:5576
- process_one_work+0x1688/0x2140 kernel/workqueue.c:2269
- worker_thread+0x10bc/0x2730 kernel/workqueue.c:2415
- kthread+0x551/0x590 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
+The problem is that there is painful boundary discontinuity in the
+current delayed ACK behavior. With the current delayed ACK behavior,
+we have:
 
-Local variable ----buf.i87@smsc75xx_bind created at:
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
+(1) If an app reads data when > 1*MSS is unacknowledged, then
+    tcp_cleanup_rbuf() ACKs immediately because of:
 
-This issue is caused because usbnet_read_cmd() reads less bytes than requested
-(zero byte in the reproducer). In this case, 'buf' is not properly filled.
+     tp->rcv_nxt - tp->rcv_wup > icsk->icsk_ack.rcv_mss ||
 
-This patch fixes the issue by returning -ENODATA if usbnet_read_cmd() reads
-less bytes than requested.
+(2) If an app reads all received data, and the packets were < 1*MSS,
+    and either (a) the app is not ping-pong or (b) we received two
+    packets < 1*MSS, then tcp_cleanup_rbuf() ACKs immediately beecause
+    of:
 
-Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
-Reported-and-tested-by: syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6966546b78d050bb0b5d
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230923173549.3284502-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+     ((icsk->icsk_ack.pending & ICSK_ACK_PUSHED2) ||
+      ((icsk->icsk_ack.pending & ICSK_ACK_PUSHED) &&
+       !inet_csk_in_pingpong_mode(sk))) &&
+
+(3) *However*: if an app reads exactly 1*MSS of data,
+    tcp_cleanup_rbuf() does not send an immediate ACK. This is true
+    even if the app is not ping-pong and the 1*MSS of data had the PSH
+    bit set, suggesting the sending application completed an
+    application write.
+
+Thus if the app is not ping-pong, we have this painful case where
+>1*MSS gets an immediate ACK, and <1*MSS gets an immediate ACK, but a
+write whose last skb is an exact multiple of 1*MSS can get a 40ms
+delayed ACK. This means that any app that transfers data in one
+direction and takes care to align write size or packet size with MSS
+can suffer this problem. With receive zero copy making 4KB MSS values
+more common, it is becoming more common to have application writes
+naturally align with MSS, and more applications are likely to
+encounter this delayed ACK problem.
+
+The fix in this commit is to refine the delayed ACK heuristics with a
+simple check: immediately ACK a received 1*MSS skb with PSH bit set if
+the app reads all data. Why? If an skb has a len of exactly 1*MSS and
+has the PSH bit set then it is likely the end of an application
+write. So more data may not be arriving soon, and yet the data sender
+may be waiting for an ACK if cwnd-bound or using TX zero copy. Thus we
+set ICSK_ACK_PUSHED in this case so that tcp_cleanup_rbuf() will send
+an ACK immediately if the app reads all of the data and is not
+ping-pong. Note that this logic is also executed for the case where
+len > MSS, but in that case this logic does not matter (and does not
+hurt) because tcp_cleanup_rbuf() will always ACK immediately if the
+app reads data and there is more than an MSS of unACKed data.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Guo <guoxin0309@gmail.com>
+Link: https://lore.kernel.org/r/20231001151239.1866845-2-ncardwell.sw@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index 313a4b0edc6b3..573d7ad2e7082 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -102,7 +102,9 @@ static int __must_check __smsc75xx_read_reg(struct usbnet *dev, u32 index,
- 	ret = fn(dev, USB_VENDOR_REQUEST_READ_REGISTER, USB_DIR_IN
- 		 | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 		 0, index, &buf, 4);
--	if (unlikely(ret < 0)) {
-+	if (unlikely(ret < 4)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net, "Failed to read reg index 0x%08x: %d\n",
- 			    index, ret);
- 		return ret;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 444ad17289277..491c16d8e9ddc 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -166,6 +166,19 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
+ 		if (unlikely(len > icsk->icsk_ack.rcv_mss +
+ 				   MAX_TCP_OPTION_SPACE))
+ 			tcp_gro_dev_warn(sk, skb, len);
++		/* If the skb has a len of exactly 1*MSS and has the PSH bit
++		 * set then it is likely the end of an application write. So
++		 * more data may not be arriving soon, and yet the data sender
++		 * may be waiting for an ACK if cwnd-bound or using TX zero
++		 * copy. So we set ICSK_ACK_PUSHED here so that
++		 * tcp_cleanup_rbuf() will send an ACK immediately if the app
++		 * reads all of the data and is not ping-pong. If len > MSS
++		 * then this logic does not matter (and does not hurt) because
++		 * tcp_cleanup_rbuf() will always ACK immediately if the app
++		 * reads data and there is more than an MSS of unACKed data.
++		 */
++		if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_PSH)
++			icsk->icsk_ack.pending |= ICSK_ACK_PUSHED;
+ 	} else {
+ 		/* Otherwise, we make more careful check taking into account,
+ 		 * that SACKs block is variable.
 -- 
 2.40.1
 
