@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0572A341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32452341AC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzvsCnng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F56C433C7;
-	Mon,  9 Oct 2023 13:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPzS8bym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BC2C433CD;
+	Mon,  9 Oct 2023 13:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859658;
-	bh=N+Xa6adxNTGTwSjUxqx5ZT733GuBwJvJotnXamaA8sE=;
+	s=korg; t=1696859662;
+	bh=4KFQTdTb3O/ww/t1IfSFoWPsvQIEliZOEcX5w11BncY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzvsCnngM/jAm1qefc1pGFNI3pAWf7gDqR/7ApJVYDki36O4scvrtBo5IhurqY0db
-	 +dR0Sudo97MIsBrjdhwR3qDp9bR/skO9hlHlMGuu05StzXpqpfsVyz9sz2WUndnGWA
-	 DV8oOjelpG5sG7wPZdgEuAxORhuvMpjhfrdvJ0n0=
+	b=CPzS8bymDH57uJ/5YsqR6KhXmnOwCfqmldmfQ6HnTBLjc2W0xkWUKraH+qw9OuKCn
+	 VFnVXybOmN0ruyGtEc8031iYoxS3C/bnr6plLitC2Z8zuRul827JeYgbApRx9vR3cb
+	 afL0IJ7+Uk0bF9UZSsPGsYPXt1L3EQn3tq+Ui9II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 90/91] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
-Date: Mon,  9 Oct 2023 15:07:02 +0200
-Message-ID: <20231009130114.673501805@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jann Horn <jannh@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 91/91] dccp: fix dccp_v4_err()/dccp_v6_err() again
+Date: Mon,  9 Oct 2023 15:07:03 +0200
+Message-ID: <20231009130114.706367075@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -41,114 +43,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
+commit 6af289746a636f71f4c0535a9801774118486c7a upstream.
 
-Back in 2005, Kyle McMartin removed the 16-byte alignment for
-ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
-spinlocks on pre PA8800 processors. The main symptom was random
-faults in mmap'd memory (e.g., gcc compilations, etc).
+dh->dccph_x is the 9th byte (offset 8) in "struct dccp_hdr",
+not in the "byte 7" as Jann claimed.
 
-Unfortunately, the errata for this ldcw change is lost.
+We need to make sure the ICMP messages are big enough,
+using more standard ways (no more assumptions).
 
-The issue is the 16-byte alignment required for ldcw semaphore
-instructions can only be reduced to natural alignment when the
-ldcw operation can be handled coherently in cache. Only PA8800
-and PA8900 processors actually support doing the operation in
-cache.
+syzbot reported:
+BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
+BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2681 [inline]
+BUG: KMSAN: uninit-value in dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
+pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
+pskb_may_pull include/linux/skbuff.h:2681 [inline]
+dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
+icmpv6_notify+0x4c7/0x880 net/ipv6/icmp.c:867
+icmpv6_rcv+0x19d5/0x30d0
+ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
+ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+NF_HOOK include/linux/netfilter.h:304 [inline]
+ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:304 [inline]
+ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
+__netif_receive_skb_one_core net/core/dev.c:5523 [inline]
+__netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
+netif_receive_skb_internal net/core/dev.c:5723 [inline]
+netif_receive_skb+0x58/0x660 net/core/dev.c:5782
+tun_rx_batched+0x83b/0x920
+tun_get_user+0x564c/0x6940 drivers/net/tun.c:2002
+tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+call_write_iter include/linux/fs.h:1985 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x8ef/0x15c0 fs/read_write.c:584
+ksys_write+0x20f/0x4c0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x93/0xd0 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Aligning the spinlock dynamically adds two integer instructions
-to each spinlock.
+Uninit was created at:
+slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+slab_alloc_node mm/slub.c:3478 [inline]
+kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:559
+__alloc_skb+0x318/0x740 net/core/skbuff.c:650
+alloc_skb include/linux/skbuff.h:1286 [inline]
+alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6313
+sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2795
+tun_alloc_skb drivers/net/tun.c:1531 [inline]
+tun_get_user+0x23cf/0x6940 drivers/net/tun.c:1846
+tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+call_write_iter include/linux/fs.h:1985 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x8ef/0x15c0 fs/read_write.c:584
+ksys_write+0x20f/0x4c0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x93/0xd0 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Tested on rp3440, c8000 and a500.
+CPU: 0 PID: 4995 Comm: syz-executor153 Not tainted 6.6.0-rc1-syzkaller-00014-ga747acc0b752 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
-Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 977ad86c2a1b ("dccp: Fix out of bounds access in DCCP error handler")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jann Horn <jannh@google.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/ldcw.h           |   36 +++++++++++++++++--------------
- arch/parisc/include/asm/spinlock_types.h |    5 ----
- 2 files changed, 20 insertions(+), 21 deletions(-)
+ net/dccp/ipv4.c |    9 ++-------
+ net/dccp/ipv6.c |    9 ++-------
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
---- a/arch/parisc/include/asm/ldcw.h
-+++ b/arch/parisc/include/asm/ldcw.h
-@@ -2,14 +2,28 @@
- #ifndef __PARISC_LDCW_H
- #define __PARISC_LDCW_H
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -247,13 +247,8 @@ static void dccp_v4_err(struct sk_buff *
+ 	int err;
+ 	struct net *net = dev_net(skb->dev);
  
--#ifndef CONFIG_PA20
- /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
-    and GCC only guarantees 8-byte alignment for stack locals, we can't
-    be assured of 16-byte alignment for atomic lock data even if we
-    specify "__attribute ((aligned(16)))" in the type declaration.  So,
-    we use a struct containing an array of four ints for the atomic lock
-    type and dynamically select the 16-byte aligned int from the array
--   for the semaphore.  */
-+   for the semaphore. */
-+
-+/* From: "Jim Hull" <jim.hull of hp.com>
-+   I've attached a summary of the change, but basically, for PA 2.0, as
-+   long as the ",CO" (coherent operation) completer is implemented, then the
-+   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
-+   they only require "natural" alignment (4-byte for ldcw, 8-byte for
-+   ldcd).
-+
-+   Although the cache control hint is accepted by all PA 2.0 processors,
-+   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
-+   require 16-byte alignment. If the address is unaligned, the operation
-+   of the instruction is undefined. The ldcw instruction does not generate
-+   unaligned data reference traps so misaligned accesses are not detected.
-+   This hid the problem for years. So, restore the 16-byte alignment dropped
-+   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
+-	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
+-	 * which is in byte 7 of the dccp header.
+-	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
+-	 *
+-	 * Later on, we want to access the sequence number fields, which are
+-	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+-	 */
++	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
++		return;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
+ 		return;
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -80,13 +80,8 @@ static void dccp_v6_err(struct sk_buff *
+ 	__u64 seq;
+ 	struct net *net = dev_net(skb->dev);
  
- #define __PA_LDCW_ALIGNMENT	16
- #define __PA_LDCW_ALIGN_ORDER	4
-@@ -19,22 +33,12 @@
- 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
- 	(volatile unsigned int *) __ret;			\
- })
--#define __LDCW	"ldcw"
- 
--#else /*CONFIG_PA20*/
--/* From: "Jim Hull" <jim.hull of hp.com>
--   I've attached a summary of the change, but basically, for PA 2.0, as
--   long as the ",CO" (coherent operation) completer is specified, then the
--   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
--   they only require "natural" alignment (4-byte for ldcw, 8-byte for
--   ldcd). */
--
--#define __PA_LDCW_ALIGNMENT	4
--#define __PA_LDCW_ALIGN_ORDER	2
--#define __ldcw_align(a) (&(a)->slock)
-+#ifdef CONFIG_PA20
- #define __LDCW	"ldcw,co"
--
--#endif /*!CONFIG_PA20*/
-+#else
-+#define __LDCW	"ldcw"
-+#endif
- 
- /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
-    We don't explicitly expose that "*a" may be written as reload
---- a/arch/parisc/include/asm/spinlock_types.h
-+++ b/arch/parisc/include/asm/spinlock_types.h
-@@ -3,13 +3,8 @@
- #define __ASM_SPINLOCK_TYPES_H
- 
- typedef struct {
--#ifdef CONFIG_PA20
--	volatile unsigned int slock;
--# define __ARCH_SPIN_LOCK_UNLOCKED { 1 }
--#else
- 	volatile unsigned int lock[4];
- # define __ARCH_SPIN_LOCK_UNLOCKED	{ { 1, 1, 1, 1 } }
--#endif
- } arch_spinlock_t;
- 
- typedef struct {
+-	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
+-	 * which is in byte 7 of the dccp header.
+-	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
+-	 *
+-	 * Later on, we want to access the sequence number fields, which are
+-	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+-	 */
++	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
++		return;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
+ 		return;
 
 
