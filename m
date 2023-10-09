@@ -1,46 +1,49 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46838B641
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 23:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAEF28E6
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 23:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdgYchBg"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-79fb8f60374so46792239f.1
-        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 16:03:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N9DZnIaC"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-d8a000f6a51so5467782276.3
+        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 16:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1696892618; x=1697497418; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1696893841; x=1697498641; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=isNibIDfjCBz+AxQha4Vz6XAmq4W2W0frOEb93LFaIw=;
-        b=BdgYchBgOCRXBLZqt3pENrPt7ZRfC8h+stD9at/KVq2O91S2LpRmpopWIE2fGrHeKC
-         9D6ptllxUdg0VuTQQFKkbUeWMEujyIli3UB1RcEZiAg1t/jhl9bJoFY4n8RQ1ZSK+QAw
-         h7Xryvk7CGIh+5QTyI8yIPHKWbBC/DmbzVcx8=
+        bh=Ey8nM6Nn9aQGlr1wJTzUAbOZq2jE15XKD/B2tE+waEo=;
+        b=N9DZnIaCCsUhp2Nh9/5OJrWC7spxwz/dmKZIH+/+ZW3fu8AT7+X67B+bwVlU/FSIwF
+         A9vaOcjtGtU220xptmydauVdY9f3ymQ+DLJ8Z6q/HuEJKw4J/VqRpinsEF4Dise2pgAE
+         5Muk0y3PLu9/bbR1PQckhWq1d81wiH/Dt2ecXGwS+13Agfp0queMjmBqO4Z7YDOi0iDu
+         bmKqtNtQmSv1J+W92Wd/RwCFkdRvNQj9T5kebPro8Z6xM7/0lwmACSORflKx1MuEWJP7
+         G3k7FvVXomSUuNTS5FW3W80UMTkftUyUN6CJVj0g2k82PW8SKAViH4wejr2YFrfJRG+i
+         YKQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696892618; x=1697497418;
+        d=1e100.net; s=20230601; t=1696893841; x=1697498641;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=isNibIDfjCBz+AxQha4Vz6XAmq4W2W0frOEb93LFaIw=;
-        b=gfq8zZdLXh5m1n94jebjJKjtFXfxoe30W9NSjqO8pmBLxuMNYqWhwDOZRdc9GG13sI
-         AibdhqD11GUdY3asNMOwlfOmJ4FPzDT317hicaL1wWD67GjLewjjKS7bChkLg6O4UOJr
-         G1Ge8aixCXW+L5/7XjwsBzBi+JUgcwosLcWkpFBIyq8KOEjEXOK6AnE1DTnOowMD9Rra
-         i37eclGilYm1Ud4UBnUv+EQ8nUceW3flABFiarsT6xoi0WLDJ6BEFn2rXl+nSUHaATYZ
-         yKrzw2EgROsURMLN985WN3ItC7d3PGIShDDwRSGHYgcfmDkH1OaV6SE4vUy/l3t6QI5o
-         FgGw==
-X-Gm-Message-State: AOJu0YwdPnrXgZ9/GGat05qEA5mNwvIT0QK3ZZoJYnG3aWrV6EWxMAW3
-	z4u+KeAulna8Sjo5gI1wjp4dyg==
-X-Google-Smtp-Source: AGHT+IFC7dB+rmhJK94YvLDte9VrWpF4MStdv3nT+6mBzwWpLQzXID6OdAsgCEfdl8dnfczLe/bLCQ==
-X-Received: by 2002:a92:dacc:0:b0:34f:b824:5844 with SMTP id o12-20020a92dacc000000b0034fb8245844mr16033525ilq.3.1696892618299;
-        Mon, 09 Oct 2023 16:03:38 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id c4-20020a92c8c4000000b0035134215863sm3150909ilq.55.2023.10.09.16.03.37
+        bh=Ey8nM6Nn9aQGlr1wJTzUAbOZq2jE15XKD/B2tE+waEo=;
+        b=o7tkkA6d4HnzQdhyaO/HwZC2wx0GzzvDHFSq7zZhm7YwMZGOjxni0yC7+NdkHjn9Nd
+         l4JLDb++KhhANc91Ewp8A5DdkmczgoTVLdJF13ZcHwXj8YIieE1qp7nRBJ4lOJyC10KG
+         b2YmZhRwtThBOO+JHTm0527b40MpbT8hwMmgt7OwuJWVl5tljYEFUswyEdG0LtfbCykS
+         zopuMYOTGz+ablKOLU0uT39AGq8sHS9Vk/ZiaVQy3f7zv2HTO2UplC7RNmmjQ0+duwZO
+         7AZRoNAXuyWcM4D+ZLvQmF8sDBCjdsq+AhyaQCYTzOXXzWOrqLDcT2syF8V+FcjQ5Q+F
+         +QxQ==
+X-Gm-Message-State: AOJu0Yz3cs73xJ1/goiWzuQa+I+wCLYe6CFo4SdG8zHLuxNwhejlQv3z
+	1yTb1zo0sMraFGzYgFVb5X4=
+X-Google-Smtp-Source: AGHT+IFZ6NjcILlhoL/fa4Ls67nKjcWAeUKBMb3C0lm+DoOQsAvLGSpfkgK+SC2Y326aFuGZOlpW8g==
+X-Received: by 2002:a25:b17:0:b0:d9a:5021:4f34 with SMTP id 23-20020a250b17000000b00d9a50214f34mr723745ybl.15.1696893841394;
+        Mon, 09 Oct 2023 16:24:01 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id e15-20020a0caa4f000000b0065afa589bbdsm4220141qvb.66.2023.10.09.16.23.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 16:03:38 -0700 (PDT)
-Message-ID: <e60e435c-892a-4d9a-ac46-feb7b49b7f18@linuxfoundation.org>
-Date: Mon, 9 Oct 2023 17:03:37 -0600
+        Mon, 09 Oct 2023 16:24:00 -0700 (PDT)
+Message-ID: <8ff4a55f-a4f2-48d6-af5c-3f39884a1730@gmail.com>
+Date: Mon, 9 Oct 2023 16:23:57 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,24 +51,24 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4.19 00/91] 4.19.296-rc1 review
+Subject: Re: [PATCH 6.5 000/163] 6.5.7-rc1 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <20231009130111.518916887@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231009130124.021290599@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/9/23 07:05, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.296 release.
-> There are 91 patches in this series, all will be posted as a response
+On 10/9/23 05:59, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.7 release.
+> There are 163 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -73,19 +76,19 @@ On 10/9/23 07:05, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.296-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.7-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-thanks,
--- Shuah
