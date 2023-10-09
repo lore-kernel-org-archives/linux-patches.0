@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0F2339B0
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D27A339B0
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJ9rMjdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B16C433C8;
-	Mon,  9 Oct 2023 13:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBhmvV4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF091C433C8;
+	Mon,  9 Oct 2023 13:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859039;
-	bh=69D7eTa8OR5A9MUu++p2AXIXjjyMbll0YvliUEKhWKY=;
+	s=korg; t=1696859042;
+	bh=/xq3RiYsriZPf5HSigLpB3QGTPR2YKQ4xk8YxV1/a+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJ9rMjdAM6nCEMv9QOJ5DCERALM3pAZd23uAr2S13CcI4lBLpT/vNt8GSR4mIPZ1f
-	 MWrXPWvAfggAnmM4Zn7FvxZbN3shZTMYzi2WUfwjeiCS+q26XLopTM+TfG0027Feiv
-	 Q+/3vsqp8s8/qX6WFLeYVJ8jSrsgUJx2HaLVMWvM=
+	b=bBhmvV4Y+fKkcSviPJDQfanIqhYx8al3CY+JxuS3dwhNHQzeFNAb43zbG1qGo5psV
+	 E4z+cI/aX/ZqrJoXQBOR3192T07xKAhiZR56ro7IFOoNJnI7JF9U/3gr4ydJdj6RzG
+	 w15gipj1OWVPf+Litk1runsB1EexUcCOxbdiEEIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 151/226] i2c: i801: unregister tco_pdev in i801_probe() error path
-Date: Mon,  9 Oct 2023 15:01:52 +0200
-Message-ID: <20231009130130.654396381@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.10 152/226] Revert "SUNRPC dont update timeout value on connection reset"
+Date: Mon,  9 Oct 2023 15:01:53 +0200
+Message-ID: <20231009130130.677528089@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,32 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 3914784553f68c931fc666dbe7e86fe881aada38 upstream.
+commit a275ab62606bcd894ddff09460f7d253828313dc upstream.
 
-We have to unregister tco_pdev also if i2c_add_adapter() fails.
+This reverts commit 88428cc4ae7abcc879295fbb19373dd76aad2bdd.
 
-Fixes: 9424693035a5 ("i2c: i801: Create iTCO device on newer Intel PCHs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+The problem this commit is intended to fix was comprehensively fixed
+in commit 7de62bc09fe6 ("SUNRPC dont update timeout value on connection
+reset").
+Since then, this commit has been preventing the correct timeout of soft
+mounted requests.
+
+Cc: stable@vger.kernel.org # 5.9.x: 09252177d5f9: SUNRPC: Handle major timeout in xprt_adjust_timeout()
+Cc: stable@vger.kernel.org # 5.9.x: 7de62bc09fe6: SUNRPC dont update timeout value on connection reset
+Cc: stable@vger.kernel.org # 5.9.x
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/clnt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1907,6 +1907,7 @@ static int i801_probe(struct pci_dev *de
- 		"SMBus I801 adapter at %04lx", priv->smba);
- 	err = i2c_add_adapter(&priv->adapter);
- 	if (err) {
-+		platform_device_unregister(priv->tco_pdev);
- 		i801_acpi_remove(priv);
- 		return err;
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2354,8 +2354,7 @@ call_status(struct rpc_task *task)
+ 		goto out_exit;
  	}
+ 	task->tk_action = call_encode;
+-	if (status != -ECONNRESET && status != -ECONNABORTED)
+-		rpc_check_timeout(task);
++	rpc_check_timeout(task);
+ 	return;
+ out_exit:
+ 	rpc_call_rpcerror(task, status);
 
 
