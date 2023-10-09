@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45D31A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80AB1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/rwBhYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACFDC433C7;
-	Mon,  9 Oct 2023 13:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZNb1RXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33122C433CA;
+	Mon,  9 Oct 2023 13:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857893;
-	bh=YT387D7VCDzQvju+afrxRSfeE+GzTEKMzJgibaSS2d0=;
+	s=korg; t=1696857896;
+	bh=F/r0nX1kn/94J5TpZ0mkj5h6DDmyMszMa9wxMyALQHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/rwBhYfc+pKTSiFEc2JIFEfp5usZXnn/fekvsPWhVk1ODDHmtp0XRbWh30B/AN3i
-	 3q/zix6GJc12yMvMEKlfpgZg955eUTF1h80AUSjn/OtjslAcjprinGrGee/p0M7MTX
-	 iulOEw8cOGfmkHgmFO12sTZF6bkkBoTcetwzRsIc=
+	b=vZNb1RXx8duVcggTejyHdcS4uAYBnZl6kH/MF0yKeqZaarRgcK61ad9KIMpGX/jc1
+	 4SKu29HX7VnlVpCqfteidlkTpaTQrmE3q/GhiMsZEfM69ZLNKwyHBJ5pP2Wr8kXHBu
+	 NqFni5nqA3Pa+DUSGPV0l9lb1spQKPAP3fCECv5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Ma <Jun.Ma2@amd.com>,
-	David Perry <David.Perry@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 26/75] drm/amd: Fix detection of _PR3 on the PCIe root port
-Date: Mon,  9 Oct 2023 15:01:48 +0200
-Message-ID: <20231009130112.153199323@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.15 27/75] arm64: Add Cortex-A520 CPU part definition
+Date: Mon,  9 Oct 2023 15:01:49 +0200
+Message-ID: <20231009130112.180136649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,41 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 134b8c5d8674e7cde380f82e9aedfd46dcdd16f7 upstream.
+commit a654a69b9f9c06b2e56387d0b99f0e3e6b0ff4ef upstream.
 
-On some systems with Navi3x dGPU will attempt to use BACO for runtime
-PM but fails to resume properly.  This is because on these systems
-the root port goes into D3cold which is incompatible with BACO.
-
-This happens because in this case dGPU is connected to a bridge between
-root port which causes BOCO detection logic to fail.  Fix the intent of
-the logic by looking at root port, not the immediate upstream bridge for
-_PR3.
+Add the CPU Part number for the new Arm design.
 
 Cc: stable@vger.kernel.org
-Suggested-by: Jun Ma <Jun.Ma2@amd.com>
-Tested-by: David Perry <David.Perry@amd.com>
-Fixes: b10c1c5b3a4e ("drm/amdgpu: add check for ACPI power resources")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230921194156.1050055-1-robh@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2225,7 +2225,7 @@ static int amdgpu_device_ip_early_init(s
- 		adev->flags |= AMD_IS_PX;
- 
- 	if (!(adev->flags & AMD_IS_APU)) {
--		parent = pci_upstream_bridge(adev->pdev);
-+		parent = pcie_find_root_port(adev->pdev);
- 		adev->has_pr3 = parent ? pci_pr3_present(parent) : false;
- 	}
- 
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -79,6 +79,7 @@
+ #define ARM_CPU_PART_CORTEX_A78AE	0xD42
+ #define ARM_CPU_PART_CORTEX_X1		0xD44
+ #define ARM_CPU_PART_CORTEX_A510	0xD46
++#define ARM_CPU_PART_CORTEX_A520	0xD80
+ #define ARM_CPU_PART_CORTEX_A710	0xD47
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+@@ -130,6 +131,7 @@
+ #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
+ #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
+ #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
++#define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
+ #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
 
 
