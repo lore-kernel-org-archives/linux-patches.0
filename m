@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A95B18E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA3118E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX/cnQ71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ECEC433C9;
-	Mon,  9 Oct 2023 13:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9hBntfB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD45C433C9;
+	Mon,  9 Oct 2023 13:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858255;
-	bh=SY4bmwYqYiULSmlCrEaYB8GN6Uz+huPGif9FayFboeY=;
+	s=korg; t=1696858258;
+	bh=VvlGHID/a8V441mVDYpeM6+nrKrqemDrJAtwpR762LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mX/cnQ71CWxGsF7/wEn9/NMBWteuY8cljiW8aFF4mT0C1KXqnsrbAu09YaMaRma0B
-	 IJVIRfvXIcyn0o3klh0ihIShVGsycVblcfLKsXmPdBY54GeD1rElqJNLd3fGIHqTF5
-	 hPY1eNTzrDI6iQlF8rDeMy3trVqqSeHAdLiJYbpY=
+	b=L9hBntfBfaSFLIdqer+CVg8H+psRF2J3tH6hlU7zvW8e2sDgDrOj/TRhbb/fkC9Kq
+	 DtMsRHRiwmaA7VP0x2GM/HWbEdabeHsBzGzoD1XvdJicSRuSPq0vo9FbdnMyUxyKyd
+	 6WbEywhxS0XEbQ9uwN6uMqYG89c2ZXrNNZ/h28IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <ptyadav@amazon.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Malin Jonsson <malin.jonsson@ericsson.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/131] nvme-pci: do not set the NUMA node of device if it has none
-Date: Mon,  9 Oct 2023 15:01:44 +0200
-Message-ID: <20231009130118.255685929@linuxfoundation.org>
+Subject: [PATCH 5.4 065/131] watchdog: iTCO_wdt: No need to stop the timer in probe
+Date: Mon,  9 Oct 2023 15:01:45 +0200
+Message-ID: <20231009130118.283221038@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,35 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <ptyadav@amazon.de>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit dad651b2a44eb6b201738f810254279dca29d30d ]
+commit 1ae3e78c08209ac657c59f6f7ea21bbbd7f6a1d4 upstream.
 
-If a device has no NUMA node information associated with it, the driver
-puts the device in node first_memory_node (say node 0). Not having a
-NUMA node and being associated with node 0 are completely different
-things and it makes little sense to mix the two.
+The watchdog core can handle pinging of the watchdog before userspace
+opens the device. For this reason instead of stopping the timer, just
+mark it as running and let the watchdog core take care of it.
 
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: Malin Jonsson <malin.jonsson@ericsson.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20210921102900.61586-1-mika.westerberg@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/watchdog/iTCO_wdt.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a58711c488509..486e44d20b430 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2841,8 +2841,6 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	size_t alloc_size;
+diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
+index e707c4797f76e..22091a775f49f 100644
+--- a/drivers/watchdog/iTCO_wdt.c
++++ b/drivers/watchdog/iTCO_wdt.c
+@@ -413,6 +413,16 @@ static unsigned int iTCO_wdt_get_timeleft(struct watchdog_device *wd_dev)
+ 	return time_left;
+ }
  
- 	node = dev_to_node(&pdev->dev);
--	if (node == NUMA_NO_NODE)
--		set_dev_node(&pdev->dev, first_memory_node);
++static void iTCO_wdt_set_running(struct iTCO_wdt_private *p)
++{
++	u16 val;
++
++	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is * enabled */
++	val = inw(TCO1_CNT(p));
++	if (!(val & BIT(11)))
++		set_bit(WDOG_HW_RUNNING, &p->wddev.status);
++}
++
+ /*
+  *	Kernel Interfaces
+  */
+@@ -555,8 +565,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
+ 	watchdog_set_drvdata(&p->wddev, p);
+ 	platform_set_drvdata(pdev, p);
  
- 	dev = kzalloc_node(sizeof(*dev), GFP_KERNEL, node);
- 	if (!dev)
+-	/* Make sure the watchdog is not running */
+-	iTCO_wdt_stop(&p->wddev);
++	iTCO_wdt_set_running(p);
+ 
+ 	/* Check that the heartbeat value is within it's range;
+ 	   if not reset to the default */
 -- 
 2.40.1
 
