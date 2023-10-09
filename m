@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D23199B7
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77ED199B7
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mETdM/R0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109BBC433C9;
-	Mon,  9 Oct 2023 13:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwBuWep6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F99FC433C8;
+	Mon,  9 Oct 2023 13:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858636;
-	bh=2BFyg5eXCKrf9utbr+238LIn5qmczSGrRiAv7GwmjeU=;
+	s=korg; t=1696858639;
+	bh=9Dplpl+tuyQAbP76THrL2+PxCxLgTe78//imrovYEXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mETdM/R0vEAGApBdrbKN6SuIqeRxqpD9BifmIUxR7VPlbxc31lAqAx6HKZcOUGqjL
-	 yInwxsh6vmkDvJ+WlG50EGwB5l9GfdlWVIT7qQZ/tQm6uYIKv2PP0cROcExYhxLjXV
-	 33PO3Q9669nG+h0WZ/xaB5UfN6+V0VPq/EwSkEgY=
+	b=BwBuWep6u+mBLJrS2D1+5s8007ro46+6OOFFOFqiNNX/KdrB3vWibG5no/PA80v0S
+	 9VX9JQBitjMyAd+M/p6tJfsg46y4smDuywGsV8QfQzF1XRyBSnaxReU5H51Abh8vhs
+	 N4P0FjC1glGANAv7SgoThutiPj2W5unjpingwPRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/226] team: fix null-ptr-deref when team device type is changed
-Date: Mon,  9 Oct 2023 15:00:13 +0200
-Message-ID: <20231009130128.149565392@linuxfoundation.org>
+Subject: [PATCH 5.10 053/226] netfilter: ipset: Fix race between IPSET_CMD_CREATE and IPSET_CMD_SWAP
+Date: Mon,  9 Oct 2023 15:00:14 +0200
+Message-ID: <20231009130128.177725189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -45,119 +43,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 492032760127251e5540a5716a70996bacf2a3fd ]
+[ Upstream commit 7433b6d2afd512d04398c73aa984d1e285be125b ]
 
-Get a null-ptr-deref bug as follows with reproducer [1].
+Kyle Zeng reported that there is a race between IPSET_CMD_ADD and IPSET_CMD_SWAP
+in netfilter/ip_set, which can lead to the invocation of `__ip_set_put` on a
+wrong `set`, triggering the `BUG_ON(set->ref == 0);` check in it.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000228
-...
-RIP: 0010:vlan_dev_hard_header+0x35/0x140 [8021q]
-...
-Call Trace:
- <TASK>
- ? __die+0x24/0x70
- ? page_fault_oops+0x82/0x150
- ? exc_page_fault+0x69/0x150
- ? asm_exc_page_fault+0x26/0x30
- ? vlan_dev_hard_header+0x35/0x140 [8021q]
- ? vlan_dev_hard_header+0x8e/0x140 [8021q]
- neigh_connected_output+0xb2/0x100
- ip6_finish_output2+0x1cb/0x520
- ? nf_hook_slow+0x43/0xc0
- ? ip6_mtu+0x46/0x80
- ip6_finish_output+0x2a/0xb0
- mld_sendpack+0x18f/0x250
- mld_ifc_work+0x39/0x160
- process_one_work+0x1e6/0x3f0
- worker_thread+0x4d/0x2f0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe5/0x120
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
+The race is caused by using the wrong reference counter, i.e. the ref counter instead
+of ref_netlink.
 
-[1]
-$ teamd -t team0 -d -c '{"runner": {"name": "loadbalance"}}'
-$ ip link add name t-dummy type dummy
-$ ip link add link t-dummy name t-dummy.100 type vlan id 100
-$ ip link add name t-nlmon type nlmon
-$ ip link set t-nlmon master team0
-$ ip link set t-nlmon nomaster
-$ ip link set t-dummy up
-$ ip link set team0 up
-$ ip link set t-dummy.100 down
-$ ip link set t-dummy.100 master team0
-
-When enslave a vlan device to team device and team device type is changed
-from non-ether to ether, header_ops of team device is changed to
-vlan_header_ops. That is incorrect and will trigger null-ptr-deref
-for vlan->real_dev in vlan_dev_hard_header() because team device is not
-a vlan device.
-
-Cache eth_header_ops in team_setup(), then assign cached header_ops to
-header_ops of team net device when its type is changed from non-ether
-to ether to fix the bug.
-
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Suggested-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230918123011.1884401-1-william.xuanziyang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 24e227896bbf ("netfilter: ipset: Add schedule point in call_ad().")
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Closes: https://lore.kernel.org/netfilter-devel/ZPZqetxOmH+w%2Fmyc@westworld/#r
+Tested-by: Kyle Zeng <zengyhkyle@gmail.com>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 10 +++++++++-
- include/linux/if_team.h |  2 ++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 721b536ce8861..97a77dabed64c 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2122,7 +2122,12 @@ static const struct ethtool_ops team_ethtool_ops = {
- static void team_setup_by_port(struct net_device *dev,
- 			       struct net_device *port_dev)
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index 55ac0cc12657c..26613e3731d02 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -682,6 +682,14 @@ __ip_set_put(struct ip_set *set)
+ /* set->ref can be swapped out by ip_set_swap, netlink events (like dump) need
+  * a separate reference counter
+  */
++static void
++__ip_set_get_netlink(struct ip_set *set)
++{
++	write_lock_bh(&ip_set_ref_lock);
++	set->ref_netlink++;
++	write_unlock_bh(&ip_set_ref_lock);
++}
++
+ static void
+ __ip_set_put_netlink(struct ip_set *set)
  {
--	dev->header_ops	= port_dev->header_ops;
-+	struct team *team = netdev_priv(dev);
-+
-+	if (port_dev->type == ARPHRD_ETHER)
-+		dev->header_ops	= team->header_ops_cache;
-+	else
-+		dev->header_ops	= port_dev->header_ops;
- 	dev->type = port_dev->type;
- 	dev->hard_header_len = port_dev->hard_header_len;
- 	dev->needed_headroom = port_dev->needed_headroom;
-@@ -2169,8 +2174,11 @@ static int team_dev_type_check_change(struct net_device *dev,
+@@ -1705,11 +1713,11 @@ call_ad(struct sock *ctnl, struct sk_buff *skb, struct ip_set *set,
  
- static void team_setup(struct net_device *dev)
- {
-+	struct team *team = netdev_priv(dev);
-+
- 	ether_setup(dev);
- 	dev->max_mtu = ETH_MAX_MTU;
-+	team->header_ops_cache = dev->header_ops;
+ 	do {
+ 		if (retried) {
+-			__ip_set_get(set);
++			__ip_set_get_netlink(set);
+ 			nfnl_unlock(NFNL_SUBSYS_IPSET);
+ 			cond_resched();
+ 			nfnl_lock(NFNL_SUBSYS_IPSET);
+-			__ip_set_put(set);
++			__ip_set_put_netlink(set);
+ 		}
  
- 	dev->netdev_ops = &team_netdev_ops;
- 	dev->ethtool_ops = &team_ethtool_ops;
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index 5dd1657947b75..762c77d13e7dd 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -189,6 +189,8 @@ struct team {
- 	struct net_device *dev; /* associated netdevice */
- 	struct team_pcpu_stats __percpu *pcpu_stats;
- 
-+	const struct header_ops *header_ops_cache;
-+
- 	struct mutex lock; /* used for overall locking, e.g. port lists write */
- 
- 	/*
+ 		ip_set_lock(set);
 -- 
 2.40.1
 
