@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D892E649
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DED1328DB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrJ3M93D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2045C433C9;
-	Mon,  9 Oct 2023 13:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy7Fd9gS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C318C433CA;
+	Mon,  9 Oct 2023 13:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858937;
-	bh=nBctEMYL1WSrfnIXsdnGuqTOW12Z/GDz8ce5kXMKtU0=;
+	s=korg; t=1696858940;
+	bh=TCTD6b24x8E2rK5heu9MbNW2lvOzv35cMhtt878g8Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrJ3M93DAJAYJWB1IzjGEr3TqhSS9yzoCQKdfHxaazG6x8iYhcWVAMdfQ87PsAROy
-	 Nc6cuSU8rnfSkc2eX/4eTpHzRb4R5tekFTjkBGp5d4QeL7n3h7vszuRhD06N0kvHH6
-	 HEfZEYrdF5gThQYGVPD4JGqo0DFYd1Gu25BfemRM=
+	b=yy7Fd9gSyuRJzazQjIU0c8jYyxp66OZzeiw3+WeBvHTdI/g9aSFDb6YKF7bSaGggW
+	 Qz4QAxLOFtEP2JCallWCfkR02wFsC6DDG1T13I8vOhU4SSeJysZOKltlwMrElnMSGh
+	 QT5QhdwlParLKJ865kH95gs1gp9fC9oqafX2t4+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.10 146/226] serial: 8250_port: Check IRQ data before use
-Date: Mon,  9 Oct 2023 15:01:47 +0200
-Message-ID: <20231009130130.536902968@linuxfoundation.org>
+	Michal Grzedzicki <mge@meta.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 120/226] scsi: pm80xx: Avoid leaking tags when processing OPC_INB_SET_CONTROLLER_CONFIG command
+Date: Mon,  9 Oct 2023 15:01:21 +0200
+Message-ID: <20231009130129.914144376@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,49 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Michal Grzedzicki <mge@meta.com>
 
-commit cce7fc8b29961b64fadb1ce398dc5ff32a79643b upstream.
+[ Upstream commit c13e7331745852d0dd7c35eabbe181cbd5b01172 ]
 
-In case the leaf driver wants to use IRQ polling (irq = 0) and
-IIR register shows that an interrupt happened in the 8250 hardware
-the IRQ data can be NULL. In such a case we need to skip the wake
-event as we came to this path from the timer interrupt and quite
-likely system is already awake.
+Tags allocated for OPC_INB_SET_CONTROLLER_CONFIG command need to be freed
+when we receive the response.
 
-Without this fix we have got an Oops:
-
-    serial8250: ttyS0 at I/O 0x3f8 (irq = 0, base_baud = 115200) is a 16550A
-    ...
-    BUG: kernel NULL pointer dereference, address: 0000000000000010
-    RIP: 0010:serial8250_handle_irq+0x7c/0x240
-    Call Trace:
-     ? serial8250_handle_irq+0x7c/0x240
-     ? __pfx_serial8250_timeout+0x10/0x10
-
-Fixes: 0ba9e3a13c6a ("serial: 8250: Add missing wakeup event reporting")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20230831222555.614426-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Michal Grzedzicki <mge@meta.com>
+Link: https://lore.kernel.org/r/20230911170340.699533-2-mge@meta.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/pm8001/pm80xx_hwi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1914,7 +1914,10 @@ int serial8250_handle_irq(struct uart_po
- 		skip_rx = true;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index ed01c93062091..89051722e04d6 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -3722,10 +3722,12 @@ static int mpi_set_controller_config_resp(struct pm8001_hba_info *pm8001_ha,
+ 			(struct set_ctrl_cfg_resp *)(piomb + 4);
+ 	u32 status = le32_to_cpu(pPayload->status);
+ 	u32 err_qlfr_pgcd = le32_to_cpu(pPayload->err_qlfr_pgcd);
++	u32 tag = le32_to_cpu(pPayload->tag);
  
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
--		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+		struct irq_data *d;
-+
-+		d = irq_get_irq_data(port->irq);
-+		if (d && irqd_is_wakeup_set(d))
- 			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
+ 	pm8001_dbg(pm8001_ha, MSG,
+ 		   "SET CONTROLLER RESP: status 0x%x qlfr_pgcd 0x%x\n",
+ 		   status, err_qlfr_pgcd);
++	pm8001_tag_free(pm8001_ha, tag);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
