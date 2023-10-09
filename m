@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB34339B0
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7851339B0
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcA01uEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BECC433C7;
-	Mon,  9 Oct 2023 13:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd752rXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218A8C433C7;
+	Mon,  9 Oct 2023 13:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859045;
-	bh=i6GSJHMGWSNr3uVC4MqQhX1BNSo0321HDQ7mNgCEbYo=;
+	s=korg; t=1696859048;
+	bh=3h8ERZ/VYULHA5vUmJa8xEcwzlJMIR9dwLSLcbjs0Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcA01uEaQROj+Phz+xe84BwJ0dHjS0gjdFEsJSgKIxsFe+0hFRSjcUCvyrQEuSVEd
-	 MJkWYC6nCmQbZHC1zBUyWy9+N7YOGHg3/8Eebt0izL8XXMAotTnJgeP4WIqUCns8Ql
-	 Kb1bZLQcz+/lAk9V0sCQV6YbNvrqn4oNglp2er7s=
+	b=zd752rXpXp7Et5yZeO4dhVOIxv5dTL305UGlmMKyXR2esdDYkNGig7C51eofUGOty
+	 BL5A1feyy/zAX2qSlXrsMBdqfo2sIJIAsuSvFWoF0OPlNJQjBCN9K5CaNKAlvRDUii
+	 LTQgFinoWR5yzvzraHrI0PHdUCeA3QhhPz3gtykc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Greg Ungerer <gerg@uclinux.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 153/226] proc: nommu: /proc/<pid>/maps: release mmap read lock
-Date: Mon,  9 Oct 2023 15:01:54 +0200
-Message-ID: <20231009130130.700707170@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 154/226] ring-buffer: Update "shortest_full" in polling
+Date: Mon,  9 Oct 2023 15:01:55 +0200
+Message-ID: <20231009130130.723624152@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -44,113 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Wolsieffer <Ben.Wolsieffer@hefring.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 578d7699e5c2add8c2e9549d9d75dfb56c460cb3 upstream.
+commit 1e0cb399c7653462d9dadf8ab9425337c355d358 upstream.
 
-The no-MMU implementation of /proc/<pid>/map doesn't normally release
-the mmap read lock, because it uses !IS_ERR_OR_NULL(_vml) to determine
-whether to release the lock.  Since _vml is NULL when the end of the
-mappings is reached, the lock is not released.
+It was discovered that the ring buffer polling was incorrectly stating
+that read would not block, but that's because polling did not take into
+account that reads will block if the "buffer-percent" was set. Instead,
+the ring buffer polling would say reads would not block if there was any
+data in the ring buffer. This was incorrect behavior from a user space
+point of view. This was fixed by commit 42fb0a1e84ff by having the polling
+code check if the ring buffer had more data than what the user specified
+"buffer percent" had.
 
-Reading /proc/1/maps twice doesn't cause a hang because it only
-takes the read lock, which can be taken multiple times and therefore
-doesn't show any problem if the lock isn't released. Instead, you need
-to perform some operation that attempts to take the write lock after
-reading /proc/<pid>/maps. To actually reproduce the bug, compile the
-following code as 'proc_maps_bug':
+The problem now is that the polling code did not register itself to the
+writer that it wanted to wait for a specific "full" value of the ring
+buffer. The result was that the writer would wake the polling waiter
+whenever there was a new event. The polling waiter would then wake up, see
+that there's not enough data in the ring buffer to notify user space and
+then go back to sleep. The next event would wake it up again.
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/mman.h>
+Before the polling fix was added, the code would wake up around 100 times
+for a hackbench 30 benchmark. After the "fix", due to the constant waking
+of the writer, it would wake up over 11,0000 times! It would never leave
+the kernel, so the user space behavior was still "correct", but this
+definitely is not the desired effect.
 
-int main(int argc, char *argv[]) {
-        void *buf;
-        sleep(1);
-        buf = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-        puts("mmap returned");
-        return 0;
-}
+To fix this, have the polling code add what it's waiting for to the
+"shortest_full" variable, to tell the writer not to wake it up if the
+buffer is not as full as it expects to be.
 
-Then, run:
+Note, after this fix, it appears that the waiter is now woken up around 2x
+the times it was before (~200). This is a tremendous improvement from the
+11,000 times, but I will need to spend some time to see why polling is
+more aggressive in its wakeups than the read blocking code.
 
-  ./proc_maps_bug &; cat /proc/$!/maps; fg
+Link: https://lore.kernel.org/linux-trace-kernel/20230929180113.01c2cae3@rorschach.local.home
 
-Without this patch, mmap() will hang and the command will never
-complete.
-
-This code was incorrectly adapted from the MMU implementation, which at
-the time released the lock in m_next() before returning the last entry.
-
-The MMU implementation has diverged further from the no-MMU version since
-then, so this patch brings their locking and error handling into sync,
-fixing the bug and hopefully avoiding similar issues in the future.
-
-Link: https://lkml.kernel.org/r/20230914163019.4050530-2-ben.wolsieffer@hefring.com
-Fixes: 47fecca15c09 ("fs/proc/task_nommu.c: don't use priv->task->mm")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Cc: Greg Ungerer <gerg@uclinux.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Fixes: 42fb0a1e84ff ("tracing/ring-buffer: Have polling block on watermark")
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Tested-by: Julia Lawall <julia.lawall@inria.fr>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_nommu.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ kernel/trace/ring_buffer.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/proc/task_nommu.c
-+++ b/fs/proc/task_nommu.c
-@@ -208,11 +208,16 @@ static void *m_start(struct seq_file *m,
- 		return ERR_PTR(-ESRCH);
- 
- 	mm = priv->mm;
--	if (!mm || !mmget_not_zero(mm))
-+	if (!mm || !mmget_not_zero(mm)) {
-+		put_task_struct(priv->task);
-+		priv->task = NULL;
- 		return NULL;
-+	}
- 
- 	if (mmap_read_lock_killable(mm)) {
- 		mmput(mm);
-+		put_task_struct(priv->task);
-+		priv->task = NULL;
- 		return ERR_PTR(-EINTR);
- 	}
- 
-@@ -221,23 +226,21 @@ static void *m_start(struct seq_file *m,
- 		if (n-- == 0)
- 			return p;
- 
--	mmap_read_unlock(mm);
--	mmput(mm);
- 	return NULL;
- }
- 
--static void m_stop(struct seq_file *m, void *_vml)
-+static void m_stop(struct seq_file *m, void *v)
- {
- 	struct proc_maps_private *priv = m->private;
-+	struct mm_struct *mm = priv->mm;
- 
--	if (!IS_ERR_OR_NULL(_vml)) {
--		mmap_read_unlock(priv->mm);
--		mmput(priv->mm);
--	}
--	if (priv->task) {
--		put_task_struct(priv->task);
--		priv->task = NULL;
--	}
-+	if (!priv->task)
-+		return;
-+
-+	mmap_read_unlock(mm);
-+	mmput(mm);
-+	put_task_struct(priv->task);
-+	priv->task = NULL;
- }
- 
- static void *m_next(struct seq_file *m, void *_p, loff_t *pos)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1008,6 +1008,9 @@ __poll_t ring_buffer_poll_wait(struct tr
+ 	if (full) {
+ 		poll_wait(filp, &work->full_waiters, poll_table);
+ 		work->full_waiters_pending = true;
++		if (!cpu_buffer->shortest_full ||
++		    cpu_buffer->shortest_full > full)
++			cpu_buffer->shortest_full = full;
+ 	} else {
+ 		poll_wait(filp, &work->waiters, poll_table);
+ 		work->waiters_pending = true;
 
 
