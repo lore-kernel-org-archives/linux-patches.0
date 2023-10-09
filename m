@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A84199B1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB39B199B1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KK4oYtd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC56C433C7;
-	Mon,  9 Oct 2023 13:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1fzoMBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B49C433C9;
+	Mon,  9 Oct 2023 13:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857931;
-	bh=twZfIK/qZfcRn4eNiogHNJxrAg8on6Vzx1M0qRgKPg0=;
+	s=korg; t=1696857934;
+	bh=CoxNfthRQEoOI6n+k70Ys41YYRohluc8AOWZn6MPqM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KK4oYtd8XCGZIn/c8OIetEwkAjG6CcfjaAsDzle1HdHPujNPr50/c7diPiS+5+lyc
-	 sWmC+ZVFzlyqaSRZ5I7jpvfc8dfuERyo1fXorsAg9IZCDHbJdfbWTcIa4nssOg9ntP
-	 6WH6ahVCqeGSuFDoi30ma3CKQRmrbadntPLhaZ+Y=
+	b=x1fzoMBAA7jalFW3Zatglumwzag0mR7LRni+OpPMXDjG0Bfo1uDtIkqac7/y+CAW7
+	 5GZseP+t5Zky6uUNIq45VboV8RlO+oGZurGuPm8XDQyvJBCGPrHsujRp625QsfkVu6
+	 Lz7Ag/4NRnMd+DrWBi8qP4e/oLpXnRuxO4DaE/Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/75] scsi: target: core: Fix deadlock due to recursive locking
-Date: Mon,  9 Oct 2023 15:02:01 +0200
-Message-ID: <20231009130112.600931608@linuxfoundation.org>
+Subject: [PATCH 5.15 40/75] ima: rework CONFIG_IMA dependency block
+Date: Mon,  9 Oct 2023 15:02:02 +0200
+Message-ID: <20231009130112.640368726@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,96 +42,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
+[ Upstream commit 91e326563ee34509c35267808a4b1b3ea3db62a8 ]
 
-The following call trace shows a deadlock issue due to recursive locking of
-mutex "device_mutex". First lock acquire is in target_for_each_device() and
-second in target_free_device().
+Changing the direct dependencies of IMA_BLACKLIST_KEYRING and
+IMA_LOAD_X509 caused them to no longer depend on IMA, but a
+a configuration without IMA results in link failures:
 
- PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
-  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
-  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
-  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
-  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
-  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
-  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
-  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
-  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
-  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
-  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
- #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
- #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
- #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
- #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
- #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
- #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
- #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
- #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
- #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
- #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
- #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
+arm-linux-gnueabi-ld: security/integrity/iint.o: in function `integrity_load_keys':
+iint.c:(.init.text+0xd8): undefined reference to `ima_load_x509'
 
-Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+aarch64-linux-ld: security/integrity/digsig_asymmetric.o: in function `asymmetric_verify':
+digsig_asymmetric.c:(.text+0x104): undefined reference to `ima_blacklist_keyring'
+
+Adding explicit dependencies on IMA would fix this, but a more reliable
+way to do this is to enclose the entire Kconfig file in an 'if IMA' block.
+This also allows removing the existing direct dependencies.
+
+Fixes: be210c6d3597f ("ima: Finish deprecation of IMA_TRUSTED_KEYRING Kconfig")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_device.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ security/integrity/ima/Kconfig | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
-index e18617371a9b2..813de805f815a 100644
---- a/drivers/target/target_core_device.c
-+++ b/drivers/target/target_core_device.c
-@@ -875,7 +875,6 @@ sector_t target_to_linux_sector(struct se_device *dev, sector_t lb)
- EXPORT_SYMBOL(target_to_linux_sector);
+diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
+index 2200262489103..17d1290c1b642 100644
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -29,9 +29,11 @@ config IMA
+ 	  to learn more about IMA.
+ 	  If unsure, say N.
  
- struct devices_idr_iter {
--	struct config_item *prev_item;
- 	int (*fn)(struct se_device *dev, void *data);
- 	void *data;
- };
-@@ -885,11 +884,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
- {
- 	struct devices_idr_iter *iter = data;
- 	struct se_device *dev = p;
-+	struct config_item *item;
- 	int ret;
++if IMA
++
+ config IMA_KEXEC
+ 	bool "Enable carrying the IMA measurement list across a soft boot"
+-	depends on IMA && TCG_TPM && HAVE_IMA_KEXEC
++	depends on TCG_TPM && HAVE_IMA_KEXEC
+ 	default n
+ 	help
+ 	   TPM PCRs are only reset on a hard reboot.  In order to validate
+@@ -43,7 +45,6 @@ config IMA_KEXEC
  
--	config_item_put(iter->prev_item);
--	iter->prev_item = NULL;
--
- 	/*
- 	 * We add the device early to the idr, so it can be used
- 	 * by backend modules during configuration. We do not want
-@@ -899,12 +896,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
- 	if (!target_dev_configured(dev))
- 		return 0;
+ config IMA_MEASURE_PCR_IDX
+ 	int
+-	depends on IMA
+ 	range 8 14
+ 	default 10
+ 	help
+@@ -53,7 +54,7 @@ config IMA_MEASURE_PCR_IDX
  
--	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
--	if (!iter->prev_item)
-+	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
-+	if (!item)
- 		return 0;
- 	mutex_unlock(&device_mutex);
+ config IMA_LSM_RULES
+ 	bool
+-	depends on IMA && AUDIT && (SECURITY_SELINUX || SECURITY_SMACK || SECURITY_APPARMOR)
++	depends on AUDIT && (SECURITY_SELINUX || SECURITY_SMACK || SECURITY_APPARMOR)
+ 	default y
+ 	help
+ 	  Disabling this option will disregard LSM based policy rules.
+@@ -61,7 +62,6 @@ config IMA_LSM_RULES
+ choice
+ 	prompt "Default template"
+ 	default IMA_NG_TEMPLATE
+-	depends on IMA
+ 	help
+ 	  Select the default IMA measurement template.
  
- 	ret = iter->fn(dev, iter->data);
-+	config_item_put(item);
+@@ -80,14 +80,12 @@ endchoice
  
- 	mutex_lock(&device_mutex);
- 	return ret;
-@@ -927,7 +925,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
- 	mutex_lock(&device_mutex);
- 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
- 	mutex_unlock(&device_mutex);
--	config_item_put(iter.prev_item);
- 	return ret;
- }
+ config IMA_DEFAULT_TEMPLATE
+ 	string
+-	depends on IMA
+ 	default "ima-ng" if IMA_NG_TEMPLATE
+ 	default "ima-sig" if IMA_SIG_TEMPLATE
  
+ choice
+ 	prompt "Default integrity hash algorithm"
+ 	default IMA_DEFAULT_HASH_SHA1
+-	depends on IMA
+ 	help
+ 	   Select the default hash algorithm used for the measurement
+ 	   list, integrity appraisal and audit log.  The compiled default
+@@ -117,7 +115,6 @@ endchoice
+ 
+ config IMA_DEFAULT_HASH
+ 	string
+-	depends on IMA
+ 	default "sha1" if IMA_DEFAULT_HASH_SHA1
+ 	default "sha256" if IMA_DEFAULT_HASH_SHA256
+ 	default "sha512" if IMA_DEFAULT_HASH_SHA512
+@@ -126,7 +123,6 @@ config IMA_DEFAULT_HASH
+ 
+ config IMA_WRITE_POLICY
+ 	bool "Enable multiple writes to the IMA policy"
+-	depends on IMA
+ 	default n
+ 	help
+ 	  IMA policy can now be updated multiple times.  The new rules get
+@@ -137,7 +133,6 @@ config IMA_WRITE_POLICY
+ 
+ config IMA_READ_POLICY
+ 	bool "Enable reading back the current IMA policy"
+-	depends on IMA
+ 	default y if IMA_WRITE_POLICY
+ 	default n if !IMA_WRITE_POLICY
+ 	help
+@@ -147,7 +142,6 @@ config IMA_READ_POLICY
+ 
+ config IMA_APPRAISE
+ 	bool "Appraise integrity measurements"
+-	depends on IMA
+ 	default n
+ 	help
+ 	  This option enables local measurement integrity appraisal.
+@@ -303,7 +297,6 @@ config IMA_APPRAISE_SIGNED_INIT
+ 
+ config IMA_MEASURE_ASYMMETRIC_KEYS
+ 	bool
+-	depends on IMA
+ 	depends on ASYMMETRIC_PUBLIC_KEY_SUBTYPE=y
+ 	default y
+ 
+@@ -322,7 +315,8 @@ config IMA_SECURE_AND_OR_TRUSTED_BOOT
+ 
+ config IMA_DISABLE_HTABLE
+ 	bool "Disable htable to allow measurement of duplicate records"
+-	depends on IMA
+ 	default n
+ 	help
+ 	   This option disables htable to allow measurement of duplicate records.
++
++endif
 -- 
 2.40.1
 
