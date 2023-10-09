@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E363010A3C
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDE8199AB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/8OXr8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3931C433C8;
-	Mon,  9 Oct 2023 13:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FB+EpSXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC29C433C9;
+	Mon,  9 Oct 2023 13:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858471;
-	bh=GlXlLYQife2gSuC3BSI14Zd5ALKgP7oZEZbIWEXq78k=;
+	s=korg; t=1696858474;
+	bh=f4kJrmKlKx5l56xo3CUWOFcRNa2HGRYb2n+6wtFYJws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/8OXr8w5KbaS/Q6NycqiJjyr910gQNILL0byaik1tN+LtJ42kBKXGsaE2nYNUkhl
-	 tXJ+wmwZMNg156T1+/qzYcVkn00tZv5q29rwHQUH25A09RRDUlfCaWiKJzOHCx34ap
-	 RGX1hI9w7E0GZK6Rlkm/sA81EcYr+wJfN9YR4d2c=
+	b=FB+EpSXuA3qZKY4o54S2ZjKo42m1wTMSJ5mdcxekr95ubop6K+tCzkck4Jxyp9iMW
+	 ZXvQPKfuTWa7o3JYcPC8HDAVaEEEKmKVqtXXQ/oj5QS7EtyGAJ4vx2VP2VN8X3Pa6z
+	 vlClX2w1Rjvhtj5NbnN/jdCJB+4saYN85XOfzLW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/131] NFS: Add a helper nfs_client_for_each_server()
-Date: Mon,  9 Oct 2023 15:02:26 +0200
-Message-ID: <20231009130119.663114676@linuxfoundation.org>
+Subject: [PATCH 5.4 107/131] NFSv4: Fix a nfs4_state_manager() race
+Date: Mon,  9 Oct 2023 15:02:27 +0200
+Message-ID: <20231009130119.693462275@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,81 +44,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 3c9e502b59fbd243cfac7cc6c875e432d285102a ]
+[ Upstream commit ed1cc05aa1f7fe8197d300e914afc28ab9818f89 ]
 
-Add a helper nfs_client_for_each_server() to iterate through all the
-filesystems that are attached to a struct nfs_client, and apply
-a function to all the active ones.
+If the NFS4CLNT_RUN_MANAGER flag got set just before we cleared
+NFS4CLNT_MANAGER_RUNNING, then we might have won the race against
+nfs4_schedule_state_manager(), and are responsible for handling the
+recovery situation.
 
+Fixes: aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: ed1cc05aa1f7 ("NFSv4: Fix a nfs4_state_manager() race")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h |  4 +++-
- fs/nfs/super.c    | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index a4dc182e8989b..fcd35c98a9377 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -411,7 +411,9 @@ extern int __init register_nfs_fs(void);
- extern void __exit unregister_nfs_fs(void);
- extern bool nfs_sb_active(struct super_block *sb);
- extern void nfs_sb_deactive(struct super_block *sb);
--
-+extern int nfs_client_for_each_server(struct nfs_client *clp,
-+				      int (*fn)(struct nfs_server *, void *),
-+				      void *data);
- /* io.c */
- extern void nfs_start_io_read(struct inode *inode);
- extern void nfs_end_io_read(struct inode *inode);
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index ecc7277b3eda4..1d3b681a6b279 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -436,6 +436,41 @@ void nfs_sb_deactive(struct super_block *sb)
- }
- EXPORT_SYMBOL_GPL(nfs_sb_deactive);
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 04aa8e34d1129..1aacb0aa07f0c 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2623,6 +2623,13 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 		nfs4_end_drain_session(clp);
+ 		nfs4_clear_state_manager_bit(clp);
  
-+static int __nfs_list_for_each_server(struct list_head *head,
-+		int (*fn)(struct nfs_server *, void *),
-+		void *data)
-+{
-+	struct nfs_server *server, *last = NULL;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(server, head, client_link) {
-+		if (!nfs_sb_active(server->super))
++		if (test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
++		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING,
++				      &clp->cl_state)) {
++			memflags = memalloc_nofs_save();
 +			continue;
-+		rcu_read_unlock();
-+		if (last)
-+			nfs_sb_deactive(last->super);
-+		last = server;
-+		ret = fn(server, data);
-+		if (ret)
-+			goto out;
-+		rcu_read_lock();
-+	}
-+	rcu_read_unlock();
-+out:
-+	if (last)
-+		nfs_sb_deactive(last->super);
-+	return ret;
-+}
++		}
 +
-+int nfs_client_for_each_server(struct nfs_client *clp,
-+		int (*fn)(struct nfs_server *, void *),
-+		void *data)
-+{
-+	return __nfs_list_for_each_server(&clp->cl_superblocks, fn, data);
-+}
-+EXPORT_SYMBOL_GPL(nfs_client_for_each_server);
-+
- /*
-  * Deliver file system statistics to userspace
-  */
+ 		if (!test_and_set_bit(NFS4CLNT_DELEGRETURN_RUNNING, &clp->cl_state)) {
+ 			if (test_and_clear_bit(NFS4CLNT_DELEGRETURN, &clp->cl_state)) {
+ 				nfs_client_return_marked_delegations(clp);
 -- 
 2.40.1
 
