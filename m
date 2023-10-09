@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B85182A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CC3182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdTL87mR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26555C433C9;
-	Mon,  9 Oct 2023 13:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSdxhVJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7F6C433C8;
+	Mon,  9 Oct 2023 13:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858617;
-	bh=TsE4Q7Hz7Y9neRmGhADLdP73sFqqmT2x01b94Szgu64=;
+	s=korg; t=1696858620;
+	bh=qag9GgpZDSITfqZq2+TP3bPn6GjEChsDQIfDi9cnxTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdTL87mRamsQz6CjWtM5dlTNGcUloUzvL2e2iJ+Co8LDGn3bytxrpD75xAIchSz+Z
-	 rULbdLUtLzBPNapcBKhA3ZNqrLctA68iLUMyICJIQ5TeD6FV++rTrnQNx6LIaswIoO
-	 QvsWhWEDXrivgxc7V9BbPWti+jLo6OJA5MI3G7jw=
+	b=eSdxhVJMteoNEWpkjVRH71K4jaJ+1/NdDyZY5b2U4YhEFrYbibh0I6npu1nJDz7M8
+	 /C5xHSEa7ys+wSPKUqVFC4J98Vns//YLig4OB282mbrCSsw6qu2ErN4Z+OTXwzcKPL
+	 yVxGWDhoU3wHii6Tov2ywMvjjg7x+eDiz1GVQ8ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Malani <pmalani@chromium.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikolay Borisov <nik.borisov@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/226] platform/x86: intel_scu_ipc: Fail IPC send if still busy
-Date: Mon,  9 Oct 2023 15:00:07 +0200
-Message-ID: <20231009130127.999078586@linuxfoundation.org>
+Subject: [PATCH 5.10 047/226] x86/srso: Fix srso_show_state() side effect
+Date: Mon,  9 Oct 2023 15:00:08 +0200
+Message-ID: <20231009130128.024675727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,125 +38,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 85e654c9f722853a595fa941dca60c157b707b86 ]
+[ Upstream commit a8cf700c17d9ca6cb8ee7dc5c9330dbac3948237 ]
 
-It's possible for interrupts to get significantly delayed to the point
-that callers of intel_scu_ipc_dev_command() and friends can call the
-function once, hit a timeout, and call it again while the interrupt
-still hasn't been processed. This driver will get seriously confused if
-the interrupt is finally processed after the second IPC has been sent
-with ipc_command(). It won't know which IPC has been completed. This
-could be quite disastrous if calling code assumes something has happened
-upon return from intel_scu_ipc_dev_simple_command() when it actually
-hasn't.
+Reading the 'spec_rstack_overflow' sysfs file can trigger an unnecessary
+MSR write, and possibly even a (handled) exception if the microcode
+hasn't been updated.
 
-Let's avoid this scenario by simply returning -EBUSY in this case.
-Hopefully higher layers will know to back off or fail gracefully when
-this happens. It's all highly unlikely anyway, but it's better to be
-correct here as we have no way to know which IPC the status register is
-telling us about if we send a second IPC while the previous IPC is still
-processing.
+Avoid all that by just checking X86_FEATURE_IBPB_BRTYPE instead, which
+gets set by srso_select_mitigation() if the updated microcode exists.
 
-Cc: Prashant Malani <pmalani@chromium.org>
-Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230913212723.3055315-5-swboyd@chromium.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/27d128899cb8aee9eb2b57ddc996742b0c1d776b.1693889988.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_scu_ipc.c | 40 +++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-index 60e7f95bc5554..84ed828694630 100644
---- a/drivers/platform/x86/intel_scu_ipc.c
-+++ b/drivers/platform/x86/intel_scu_ipc.c
-@@ -266,6 +266,24 @@ static int intel_scu_ipc_check_status(struct intel_scu_ipc_dev *scu)
- 	return scu->irq > 0 ? ipc_wait_for_interrupt(scu) : busy_loop(scu);
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 4d11a50089b27..4719089029f02 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2622,7 +2622,7 @@ static ssize_t srso_show_state(char *buf)
+ 
+ 	return sysfs_emit(buf, "%s%s\n",
+ 			  srso_strings[srso_mitigation],
+-			  (cpu_has_ibpb_brtype_microcode() ? "" : ", no microcode"));
++			  boot_cpu_has(X86_FEATURE_IBPB_BRTYPE) ? "" : ", no microcode");
  }
  
-+static struct intel_scu_ipc_dev *intel_scu_ipc_get(struct intel_scu_ipc_dev *scu)
-+{
-+	u8 status;
-+
-+	if (!scu)
-+		scu = ipcdev;
-+	if (!scu)
-+		return ERR_PTR(-ENODEV);
-+
-+	status = ipc_read_status(scu);
-+	if (status & IPC_STATUS_BUSY) {
-+		dev_dbg(&scu->dev, "device is busy\n");
-+		return ERR_PTR(-EBUSY);
-+	}
-+
-+	return scu;
-+}
-+
- /* Read/Write power control(PMIC in Langwell, MSIC in PenWell) registers */
- static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
- 			u32 count, u32 op, u32 id)
-@@ -279,11 +297,10 @@ static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
- 	memset(cbuf, 0, sizeof(cbuf));
- 
- 	mutex_lock(&ipclock);
--	if (!scu)
--		scu = ipcdev;
--	if (!scu) {
-+	scu = intel_scu_ipc_get(scu);
-+	if (IS_ERR(scu)) {
- 		mutex_unlock(&ipclock);
--		return -ENODEV;
-+		return PTR_ERR(scu);
- 	}
- 
- 	for (nc = 0; nc < count; nc++, offset += 2) {
-@@ -438,12 +455,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
- 	int err;
- 
- 	mutex_lock(&ipclock);
--	if (!scu)
--		scu = ipcdev;
--	if (!scu) {
-+	scu = intel_scu_ipc_get(scu);
-+	if (IS_ERR(scu)) {
- 		mutex_unlock(&ipclock);
--		return -ENODEV;
-+		return PTR_ERR(scu);
- 	}
-+
- 	cmdval = sub << 12 | cmd;
- 	ipc_command(scu, cmdval);
- 	err = intel_scu_ipc_check_status(scu);
-@@ -483,11 +500,10 @@ int intel_scu_ipc_dev_command_with_size(struct intel_scu_ipc_dev *scu, int cmd,
- 		return -EINVAL;
- 
- 	mutex_lock(&ipclock);
--	if (!scu)
--		scu = ipcdev;
--	if (!scu) {
-+	scu = intel_scu_ipc_get(scu);
-+	if (IS_ERR(scu)) {
- 		mutex_unlock(&ipclock);
--		return -ENODEV;
-+		return PTR_ERR(scu);
- 	}
- 
- 	memcpy(inbuf, in, inlen);
+ static ssize_t cpu_show_common(struct device *dev, struct device_attribute *attr,
 -- 
 2.40.1
 
