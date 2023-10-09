@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C363419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735D93419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3jcnfXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F1AC433C8;
-	Mon,  9 Oct 2023 13:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6VFNA6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED4EC433C9;
+	Mon,  9 Oct 2023 13:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859605;
-	bh=9sJFPhhssbi6pvcmooWEZboUKGE2AHEI97vHUt4uFCk=;
+	s=korg; t=1696859608;
+	bh=9LgOJEjhL6m7guTRKhGayopYgNC+U81psuZP/awRV58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3jcnfXwEItex2qy3yuPQ/iOzX/74tGo0NnvN/psO8wtilYAFOo78uugfP6Ji83X6
-	 QcfTRGt+cvmsTe5eP1aSh2ZW4yoLjf8puzxycVUApuuSWn5yCTOoMjFTIOCR3uMOcG
-	 DHYTgKZyWJ4bQ4gdOU+6jVynztuuQZYnAbdbb9Pg=
+	b=o6VFNA6CM9Eg0UbmpAta5t7WyINBW82F6I4dQLWTz9JoNHdrz3+lmop5QP6gk/ofc
+	 pIZR0IdBZcQttkiVJSg6qwar+eAwqUedVHCzmFn6769jYkCZ+iqSNj7xUHOItCAU2q
+	 aWoumEHQGLKTXgkN8c496NYfdNtkokH9kY/cWX7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 74/91] regmap: rbtree: Fix wrong register marked as in-cache when creating new node
-Date: Mon,  9 Oct 2023 15:06:46 +0200
-Message-ID: <20231009130114.097966682@linuxfoundation.org>
+Subject: [PATCH 4.19 75/91] scsi: target: core: Fix deadlock due to recursive locking
+Date: Mon,  9 Oct 2023 15:06:47 +0200
+Message-ID: <20231009130114.144285162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -42,47 +43,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-[ Upstream commit 7a795ac8d49e2433e1b97caf5e99129daf8e1b08 ]
+[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
 
-When regcache_rbtree_write() creates a new rbtree_node it was passing the
-wrong bit number to regcache_rbtree_set_register(). The bit number is the
-offset __in number of registers__, but in the case of creating a new block
-regcache_rbtree_write() was not dividing by the address stride to get the
-number of registers.
+The following call trace shows a deadlock issue due to recursive locking of
+mutex "device_mutex". First lock acquire is in target_for_each_device() and
+second in target_free_device().
 
-Fix this by dividing by map->reg_stride.
-Compare with regcache_rbtree_read() where the bit is checked.
+ PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
+  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
+  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
+  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
+  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
+  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
+  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
+  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
+  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
+  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
+  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
+ #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
+ #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
+ #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
+ #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
+ #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
+ #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
+ #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
+ #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
+ #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
+ #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
+ #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
 
-This bug meant that the wrong register was marked as present. The register
-that was written to the cache could not be read from the cache because it
-was not marked as cached. But a nearby register could be marked as having
-a cached value even if it was never written to the cache.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 3f4ff561bc88 ("regmap: rbtree: Make cache_present bitmap per node")
-Link: https://lore.kernel.org/r/20230922153711.28103-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-rbtree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/target/target_core_device.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
-index 7353c55270874..b6f8f4059e255 100644
---- a/drivers/base/regmap/regcache-rbtree.c
-+++ b/drivers/base/regmap/regcache-rbtree.c
-@@ -467,7 +467,8 @@ static int regcache_rbtree_write(struct regmap *map, unsigned int reg,
- 		if (!rbnode)
- 			return -ENOMEM;
- 		regcache_rbtree_set_register(map, rbnode,
--					     reg - rbnode->base_reg, value);
-+					     (reg - rbnode->base_reg) / map->reg_stride,
-+					     value);
- 		regcache_rbtree_insert(map, &rbtree_ctx->root, rbnode);
- 		rbtree_ctx->cached_rbnode = rbnode;
- 	}
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 1b381519c1649..a23dcbe79e14a 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -881,7 +881,6 @@ sector_t target_to_linux_sector(struct se_device *dev, sector_t lb)
+ EXPORT_SYMBOL(target_to_linux_sector);
+ 
+ struct devices_idr_iter {
+-	struct config_item *prev_item;
+ 	int (*fn)(struct se_device *dev, void *data);
+ 	void *data;
+ };
+@@ -891,11 +890,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ {
+ 	struct devices_idr_iter *iter = data;
+ 	struct se_device *dev = p;
++	struct config_item *item;
+ 	int ret;
+ 
+-	config_item_put(iter->prev_item);
+-	iter->prev_item = NULL;
+-
+ 	/*
+ 	 * We add the device early to the idr, so it can be used
+ 	 * by backend modules during configuration. We do not want
+@@ -905,12 +902,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ 	if (!target_dev_configured(dev))
+ 		return 0;
+ 
+-	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
+-	if (!iter->prev_item)
++	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
++	if (!item)
+ 		return 0;
+ 	mutex_unlock(&device_mutex);
+ 
+ 	ret = iter->fn(dev, iter->data);
++	config_item_put(item);
+ 
+ 	mutex_lock(&device_mutex);
+ 	return ret;
+@@ -933,7 +931,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
+ 	mutex_lock(&device_mutex);
+ 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
+ 	mutex_unlock(&device_mutex);
+-	config_item_put(iter.prev_item);
+ 	return ret;
+ }
+ 
 -- 
 2.40.1
 
