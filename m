@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476FA3419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631F63419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyTCqCtT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA392C433C8;
-	Mon,  9 Oct 2023 13:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCScPoBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41CDC433C8;
+	Mon,  9 Oct 2023 13:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859557;
-	bh=v1tiZGcOW6HTyY4lv9jHH27iZtuitS5gv+D4eWytK3M=;
+	s=korg; t=1696859560;
+	bh=O+gGCt0Ydms8Ubg6oz7aW757G99fO+vzgRbCsbOfzro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gyTCqCtTfClzP8dGJ92LtsVwhRceCILrRHMKX5uy4acut4CZaw+gJvt2LPB2SMbUC
-	 NJ4H5Pv7PL03dX2FJaPAtyPYKE8i+EzBPJqMq8ZROWWXi4s2L3hoaOsWnkUnd1n8Yk
-	 NguQ6hOOdVGLrXLtTX51BEiOvBhpJU2BPdCUmHc4=
+	b=rCScPoBn4qkctQL1xJcheYkouI2C4nR43tbPNS6uIneARuqkZYjrIoZQd0Kl2X2Be
+	 aQ5Z1NllkkVNLarOWr8JdzPpdG61z9QYeSNB2+lFto6PruGQmyBi1qM6VJdq2wGjcV
+	 Apc3DMwqk/9KTd7C6CDsVNc3UOEdaeB3n/TT1vYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 58/91] ata: libata-core: Do not register PM operations for SAS ports
-Date: Mon,  9 Oct 2023 15:06:30 +0200
-Message-ID: <20231009130113.523898882@linuxfoundation.org>
+	Matthias Schiffer <mschiffer@universe-factory.net>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 4.19 59/91] ata: libata-sata: increase PMP SRST timeout to 10s
+Date: Mon,  9 Oct 2023 15:06:31 +0200
+Message-ID: <20231009130113.558071955@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -45,82 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Matthias Schiffer <mschiffer@universe-factory.net>
 
-commit 75e2bd5f1ede42a2bc88aa34b431e1ace8e0bea0 upstream.
+commit 753a4d531bc518633ea88ac0ed02b25a16823d51 upstream.
 
-libsas does its own domain based power management of ports. For such
-ports, libata should not use a device type defining power management
-operations as executing these operations for suspend/resume in addition
-to libsas calls to ata_sas_port_suspend() and ata_sas_port_resume() is
-not necessary (and likely dangerous to do, even though problems are not
-seen currently).
+On certain SATA controllers, softreset fails after wakeup from S2RAM with
+the message "softreset failed (1st FIS failed)", sometimes resulting in
+drives not being detected again. With the increased timeout, this issue
+is avoided. Instead, "softreset failed (device not ready)" is now
+logged 1-2 times; this later failure seems to cause fewer problems
+however, and the drives are detected reliably once they've spun up and
+the probe is retried.
 
-Introduce the new ata_port_sas_type device_type for ports managed by
-libsas. This new device type is used in ata_tport_add() and is defined
-without power management operations.
+The issue was observed with the primary SATA controller of the QNAP
+TS-453B, which is an "Intel Corporation Celeron/Pentium Silver Processor
+SATA Controller [8086:31e3] (rev 06)" integrated in the Celeron J4125 CPU,
+and the following drives:
 
-Fixes: 2fcbdcb4c802 ("[SCSI] libata: export ata_port suspend/resume infrastructure for sas")
+- Seagate IronWolf ST12000VN0008
+- Seagate IronWolf ST8000NE0004
+
+The SATA controller seems to be more relevant to this issue than the
+drives, as the same drives are always detected reliably on the secondary
+SATA controller on the same board (an ASMedia 106x) without any "softreset
+failed" errors even without the increased timeout.
+
+Fixes: e7d3ef13d52a ("libata: change drive ready wait after hard reset to 5s")
 Cc: stable@vger.kernel.org
+Signed-off-by: Matthias Schiffer <mschiffer@universe-factory.net>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c      |    2 +-
- drivers/ata/libata-transport.c |    9 ++++++++-
- drivers/ata/libata.h           |    2 ++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ include/linux/libata.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5947,7 +5947,7 @@ void ata_host_resume(struct ata_host *ho
- #endif
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -311,7 +311,7 @@ enum {
+ 	 * advised to wait only for the following duration before
+ 	 * doing SRST.
+ 	 */
+-	ATA_TMOUT_PMP_SRST_WAIT	= 5000,
++	ATA_TMOUT_PMP_SRST_WAIT	= 10000,
  
- const struct device_type ata_port_type = {
--	.name = "ata_port",
-+	.name = ATA_PORT_TYPE_NAME,
- #ifdef CONFIG_PM
- 	.pm = &ata_port_pm_ops,
- #endif
---- a/drivers/ata/libata-transport.c
-+++ b/drivers/ata/libata-transport.c
-@@ -266,6 +266,10 @@ void ata_tport_delete(struct ata_port *a
- 	put_device(dev);
- }
- 
-+static const struct device_type ata_port_sas_type = {
-+	.name = ATA_PORT_TYPE_NAME,
-+};
-+
- /** ata_tport_add - initialize a transport ATA port structure
-  *
-  * @parent:	parent device
-@@ -283,7 +287,10 @@ int ata_tport_add(struct device *parent,
- 	struct device *dev = &ap->tdev;
- 
- 	device_initialize(dev);
--	dev->type = &ata_port_type;
-+	if (ap->flags & ATA_FLAG_SAS_HOST)
-+		dev->type = &ata_port_sas_type;
-+	else
-+		dev->type = &ata_port_type;
- 
- 	dev->parent = parent;
- 	ata_host_get(ap->host);
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -46,6 +46,8 @@ enum {
- 	ATA_DNXFER_QUIET	= (1 << 31),
- };
- 
-+#define ATA_PORT_TYPE_NAME	"ata_port"
-+
- extern atomic_t ata_print_id;
- extern int atapi_passthru16;
- extern int libata_fua;
+ 	/* When the LPM policy is set to ATA_LPM_MAX_POWER, there might
+ 	 * be a spurious PHY event, so ignore the first PHY event that
 
 
