@@ -1,86 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB32168BC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 14:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34184691
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 14:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eG7oVkJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F14C433CA;
-	Mon,  9 Oct 2023 14:25:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696861515;
-	bh=WOlnNGHMyydzvtJIBcYhAJgvZj7qinJUk2Gu0CNK4Ww=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eG7oVkJ3uGTek6paPwZnTq6ZPWlWPgP6h0LP5qi/hxeXRmRwfySaNr97Rcw1de+px
-	 0Sy00/pRGxriSD35VHsVrNOo2bBd3v5qZi22OP7MkxNJc+dG3I/EDduSKskEcxChE/
-	 9aV0CWgRIKsrxk/y9jjc3kZTf3at+KEQqBVQnaNviOX2wwPiKY2c0LYdqZOXbdb+Ii
-	 2AO8xiS5H06m4b/wvij6waXbDoPlxj8R+NJSgmPkqrrxJ2iLAwBrvpWGDF2d/qWSwt
-	 SOdGYEbJolW4kpIOlEGnknkSXkMHYl+0gpOmu1b4nySeppSX1Y0dXmwB9rlllQAIzE
-	 f80eMUS8CoSJg==
-Date: Mon, 9 Oct 2023 10:25:13 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Takashi Iwai <tiwai@suse.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Shenghao Ding <shenghao-ding@ti.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BQ9TDvcf";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8PzM8t/f"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0D1951F749;
+	Mon,  9 Oct 2023 14:29:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1696861779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Qu10x9rGONyB+Hq7z6ZfSi5iNpC7bIhRTsmGd6RFUOk=;
+	b=BQ9TDvcfIIw2RAwWiqZEtkaNB30H1a+nJg+UtKU8O7bYnW791NHoZ+tbBLoqptXrSAYV8G
+	BlGD7zkhkWDAysK48xB11FAP/Nsfn4rRWC6bdPW8SBBxCmJ6iiCWETKSebCG6al7f4vP4G
+	woZ6VrGQbp+0pxsMVEqU9A0ogFfHjHE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1696861779;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Qu10x9rGONyB+Hq7z6ZfSi5iNpC7bIhRTsmGd6RFUOk=;
+	b=8PzM8t/ftVvS4CAEU7AhI27wU67V/sS2e5cOHfc7Hf53RY8PPjgwzZBSn27erkyxdcaMBA
+	y5mAc4jJay8e3kBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D2DFF13905;
+	Mon,  9 Oct 2023 14:29:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id Gp9nMlIOJGXsDwAAMHmgww
+	(envelope-from <tiwai@suse.de>); Mon, 09 Oct 2023 14:29:38 +0000
+Date: Mon, 09 Oct 2023 16:29:38 +0200
+Message-ID: <87pm1nswbx.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Sasha Levin <sashal@kernel.org>
+Cc: Takashi Iwai <tiwai@suse.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Shenghao Ding <shenghao-ding@ti.com>
 Subject: Re: [PATCH 6.5 001/163] ALSA: hda/tas2781: Add tas2781 HDA driver
-Message-ID: <ZSQNSeJtY2WxedV3@sashalap>
+In-Reply-To: <ZSQNSeJtY2WxedV3@sashalap>
 References: <20231009130124.021290599@linuxfoundation.org>
- <20231009130124.064374662@linuxfoundation.org>
- <875y3gsznc.wl-tiwai@suse.de>
+	<20231009130124.064374662@linuxfoundation.org>
+	<875y3gsznc.wl-tiwai@suse.de>
+	<ZSQNSeJtY2WxedV3@sashalap>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <875y3gsznc.wl-tiwai@suse.de>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 
-On Mon, Oct 09, 2023 at 03:17:59PM +0200, Takashi Iwai wrote:
->On Mon, 09 Oct 2023 14:59:25 +0200,
->Greg Kroah-Hartman wrote:
->>
->> 6.5-stable review patch.  If anyone has any objections, please let me know.
->>
->> ------------------
->>
->> From: Shenghao Ding <shenghao-ding@ti.com>
->>
->> [ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
->>
->> Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
->> laptop will be aggregated as one audio device. The code support realtek
->> as the primary codec. Rename "struct cs35l41_dev_name" to
->> "struct scodec_dev_name" for all other side codecs instead of the certain
->> one.
->>
->> Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
->> Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
->> Signed-off-by: Takashi Iwai <tiwai@suse.de>
->> Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->
->This makes little sense without the backport of commit
->5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver").
->Confusingly, the patch subject is very same as this commit...
+On Mon, 09 Oct 2023 16:25:13 +0200,
+Sasha Levin wrote:
+> 
+> On Mon, Oct 09, 2023 at 03:17:59PM +0200, Takashi Iwai wrote:
+> > On Mon, 09 Oct 2023 14:59:25 +0200,
+> > Greg Kroah-Hartman wrote:
+> >> 
+> >> 6.5-stable review patch.  If anyone has any objections, please let me know.
+> >> 
+> >> ------------------
+> >> 
+> >> From: Shenghao Ding <shenghao-ding@ti.com>
+> >> 
+> >> [ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
+> >> 
+> >> Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
+> >> laptop will be aggregated as one audio device. The code support realtek
+> >> as the primary codec. Rename "struct cs35l41_dev_name" to
+> >> "struct scodec_dev_name" for all other side codecs instead of the certain
+> >> one.
+> >> 
+> >> Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+> >> Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
+> >> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> >> Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
+> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > 
+> > This makes little sense without the backport of commit
+> > 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver").
+> > Confusingly, the patch subject is very same as this commit...
+> 
+> This is a tricky one: 3babae915f4 really doesn't add a new driver but
+> rather just refactors some of the quirk handling which is needed for
+> later patches to apply. It's the following 5be27f1e3ec9 which actually
+> adds the driver (which we don't need here).
+> 
+> We don't actually want to bring in a new driver, so 5be27f1e3ec9 is
+> unnecessary.
 
-This is a tricky one: 3babae915f4 really doesn't add a new driver but
-rather just refactors some of the quirk handling which is needed for
-later patches to apply. It's the following 5be27f1e3ec9 which actually
-adds the driver (which we don't need here).
+If we don't want the backport of 5be27f1e3ec9, this commit
+(3babae915f4c) and other relevant ones must be dropped, too.
 
-We don't actually want to bring in a new driver, so 5be27f1e3ec9 is
-unnecessary.
 
->And the above commit has more follow-up fixes, too.
->1c80cc055b3f
->17a1eab7b70d
->ed81cb9e0517
-
-If we don't take 5be27f1e3ec9 then we don't need any of the follow-up
-fixes.
-
--- 
-Thanks,
-Sasha
+Takashi
