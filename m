@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3469B1A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60024347A9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAEGcMfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1684C433C7;
-	Mon,  9 Oct 2023 13:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANw6QRfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF59C433C8;
+	Mon,  9 Oct 2023 13:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859449;
-	bh=bpL+cw7yswjDJTxFDybmlF3/JPt0sLk6XhxRYO6tZDc=;
+	s=korg; t=1696859452;
+	bh=zy07NndBZg5j3oih7vrflQ0LvEnQqYu67I1Lsfh1xQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAEGcMfzs+vwQfDwzR2BGLVpZqAmjdN9jfMjFg5a9s7EMLnSb92Rfrgy/q5wjvAnL
-	 DbJFfxiuw4+MBGnQiqJU8XIEara8heLJGhOVf6ifl+WZ8k+SYwcDNf7niXQ05jA7oB
-	 ep9dh3xgEJrUxRilYKgP0eycTIjaJwE5Z6xavLp0=
+	b=ANw6QRfsrr93cD263mvhyS6pDu3TxCIctBf3LJMMxP0Qgv2LnANJLYbfx0YDdToc6
+	 qig3QAb/6t4ZYXEMEhr124A72QzJbRJJNibDxv9IfZtx1Y3oBegVtp7N/Ivs7dVOJi
+	 /O+HR7I2c0xOL9Am2JIHEV2UqIqAFe98ExInYJdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Stephen Suryaputra <ssuryaextr@gmail.com>,
-	Vadim Fedorenko <vfedorenko@novek.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 07/91] ipv4: fix null-deref in ipv4_link_failure
-Date: Mon,  9 Oct 2023 15:05:39 +0200
-Message-ID: <20231009130111.789358762@linuxfoundation.org>
+Subject: [PATCH 4.19 25/91] ext4: replace the traditional ternary conditional operator with with max()/min()
+Date: Mon,  9 Oct 2023 15:05:57 +0200
+Message-ID: <20231009130112.387458587@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -45,51 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <zengyhkyle@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 0113d9c9d1ccc07f5a3710dac4aa24b6d711278c ]
+[ Upstream commit de8bf0e5ee7482585450357c6d4eddec8efc5cb7 ]
 
-Currently, we assume the skb is associated with a device before calling
-__ip_options_compile, which is not always the case if it is re-routed by
-ipvs.
-When skb->dev is NULL, dev_net(skb->dev) will become null-dereference.
-This patch adds a check for the edge case and switch to use the net_device
-from the rtable when skb->dev is NULL.
+Replace the traditional ternary conditional operator with with max()/min()
 
-Fixes: ed0de45a1008 ("ipv4: recompile ip options in ipv4_link_failure")
-Suggested-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Kyle Zeng <zengyhkyle@gmail.com>
-Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
-Cc: Vadim Fedorenko <vfedorenko@novek.ru>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230801143204.2284343-7-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 57e2316529d00..9753d07bfc0bf 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1215,6 +1215,7 @@ static struct dst_entry *ipv4_dst_check(struct dst_entry *dst, u32 cookie)
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index e926b8c3ea893..22da6b1143e5d 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5192,8 +5192,7 @@ static int ext4_try_to_trim_range(struct super_block *sb,
+ 	void *bitmap;
  
- static void ipv4_send_dest_unreach(struct sk_buff *skb)
- {
-+	struct net_device *dev;
- 	struct ip_options opt;
- 	int res;
+ 	bitmap = e4b->bd_bitmap;
+-	start = (e4b->bd_info->bb_first_free > start) ?
+-		e4b->bd_info->bb_first_free : start;
++	start = max(e4b->bd_info->bb_first_free, start);
+ 	count = 0;
+ 	free_count = 0;
  
-@@ -1232,7 +1233,8 @@ static void ipv4_send_dest_unreach(struct sk_buff *skb)
- 		opt.optlen = ip_hdr(skb)->ihl * 4 - sizeof(struct iphdr);
+@@ -5413,8 +5412,7 @@ ext4_mballoc_query_range(
  
- 		rcu_read_lock();
--		res = __ip_options_compile(dev_net(skb->dev), &opt, skb, NULL);
-+		dev = skb->dev ? skb->dev : skb_rtable(skb)->dst.dev;
-+		res = __ip_options_compile(dev_net(dev), &opt, skb, NULL);
- 		rcu_read_unlock();
+ 	ext4_lock_group(sb, group);
  
- 		if (res)
+-	start = (e4b.bd_info->bb_first_free > start) ?
+-		e4b.bd_info->bb_first_free : start;
++	start = max(e4b.bd_info->bb_first_free, start);
+ 	if (end >= EXT4_CLUSTERS_PER_GROUP(sb))
+ 		end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
+ 
 -- 
 2.40.1
 
