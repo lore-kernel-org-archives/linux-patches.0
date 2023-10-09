@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201AA1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357261A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSpQsFjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B655C433C8;
-	Mon,  9 Oct 2023 13:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL5gXvrY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80EBC433C8;
+	Mon,  9 Oct 2023 13:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857824;
-	bh=AOBR5gMaGwwyLWPOTUrWjlVAGbDV7xosvXDE2FnBSnw=;
+	s=korg; t=1696857827;
+	bh=C8AQGxA+ABLirQjbxbb7VhpfvCTcG6O8xMWS/9C3T0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSpQsFjYPMi9Fdh6G0ZDVVLc6BaWF+TXp3tvnhpDCrSjCoyLgCIZnP/yJJm1gqqCr
-	 36+eR9er1+SkPtfGTJJXVbJry9rjOeSyQ7/92A5QnM+iCp56W11roZcbPw+Qi2cBo9
-	 Xj8CuvxgasZv/O1tO00gHCXsARN4+MB4+xiAMivU=
+	b=TL5gXvrYLw6Qymr5datnr9oHOSzBgQP5Q0ulPW1WQrqLwWnSO4AqeKNd5n+lRlVOB
+	 7I+nbnZlopBNqxp/8Im1i2HU3O9TSKXOaqLEVnIfuLUOJ1xybWhROq+Ka4nzqn+LWm
+	 DkX0YCgSU0JIsBhpIfTCGlHHbZ/qcA0J7SuNi6bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 160/162] btrfs: fix an error handling path in btrfs_rename()
-Date: Mon,  9 Oct 2023 15:02:21 +0200
-Message-ID: <20231009130127.342659173@linuxfoundation.org>
+Subject: [PATCH 6.1 161/162] btrfs: fix fscrypt name leak after failure to join log transaction
+Date: Mon,  9 Oct 2023 15:02:22 +0200
+Message-ID: <20231009130127.369953554@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,37 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit abe3bf7425fb695a9b37394af18b9ea58a800802 upstream.
+commit fee4c19937439693f2420a916169d08e88576e8e upstream.
 
-If new_whiteout_inode() fails, some resources need to be freed.
-Add the missing goto to the error handling path.
+When logging a new name, we don't expect to fail joining a log transaction
+since we know at least one of the inodes was logged before in the current
+transaction. However if we fail for some unexpected reason, we end up not
+freeing the fscrypt name we previously allocated. So fix that by freeing
+the name in case we failed to join a log transaction.
 
 Fixes: ab3c5c18e8fa ("btrfs: setup qstr from dentrys using fscrypt helper")
 Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/tree-log.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9400,8 +9400,10 @@ static int btrfs_rename(struct user_name
- 
- 	if (flags & RENAME_WHITEOUT) {
- 		whiteout_args.inode = new_whiteout_inode(mnt_userns, old_dir);
--		if (!whiteout_args.inode)
--			return -ENOMEM;
-+		if (!whiteout_args.inode) {
-+			ret = -ENOMEM;
-+			goto out_fscrypt_names;
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -7491,8 +7491,11 @@ void btrfs_log_new_name(struct btrfs_tra
+ 		 * not fail, but if it does, it's not serious, just bail out and
+ 		 * mark the log for a full commit.
+ 		 */
+-		if (WARN_ON_ONCE(ret < 0))
++		if (WARN_ON_ONCE(ret < 0)) {
++			fscrypt_free_filename(&fname);
+ 			goto out;
 +		}
- 		ret = btrfs_new_inode_prepare(&whiteout_args, &trans_num_items);
- 		if (ret)
- 			goto out_whiteout_inode;
++
+ 		log_pinned = true;
+ 
+ 		path = btrfs_alloc_path();
 
 
