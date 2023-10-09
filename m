@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D712130F85
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19341A5B6
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ket3O47t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D3CC433C7;
-	Mon,  9 Oct 2023 13:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ua8M8Sof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A77AC433C8;
+	Mon,  9 Oct 2023 13:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857915;
-	bh=AMCEHO14sZUlR3NJmdxCq/Trduzr+wp2jHb92uz7/eY=;
+	s=korg; t=1696857918;
+	bh=xsSG+IJfNctiGXWHB3p6BMIMMzNbcFJD7Qw0e2upHvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ket3O47tzPpyFcS2y+k5QAiFD1IY3AZB2iHMMFywVpJEcNubkpC107wNgShbcXPfb
-	 Cf9QdHPfOch+slaSkpnFDCKW7viC499je+Qeb0L5Yp1cejBnZSV8tHL20vHEjPcTev
-	 X2MIy2sivZ0nGa8InegqLKgyBbJRmb9PiBIhDwp0=
+	b=ua8M8Sof/epltwrGhZMJ/M8vRylpT96g3ZHT1C++RpIiUfmtFM3tgzmbNL5QGVqii
+	 uBkiuCLHPp2cvoioTp2hrFCpjh7EAtdkXqHgcVEfZP3u4baU2cXhyh8A+jKaPz+XBX
+	 +2M84fmldgpvEy2419cxdfqzOG/bL3SyVb8o4P5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ingo Molnar <mingo@elte.hu>,
+	Mike Rapoport <mike.rapoport@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/75] NFSv4: Fix a state manager thread deadlock regression
-Date: Mon,  9 Oct 2023 15:01:29 +0200
-Message-ID: <20231009130111.466670850@linuxfoundation.org>
+Subject: [PATCH 5.15 08/75] ring-buffer: remove obsolete comment for free_buffer_page()
+Date: Mon,  9 Oct 2023 15:01:30 +0200
+Message-ID: <20231009130111.505926156@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -42,115 +46,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 956fd46f97d238032cb5fa4771cdaccc6e760f9a ]
+[ Upstream commit a98151ad53b53f010ee364ec2fd06445b328578b ]
 
-Commit 4dc73c679114 reintroduces the deadlock that was fixed by commit
-aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock") because it
-prevents the setup of new threads to handle reboot recovery, while the
-older recovery thread is stuck returning delegations.
+The comment refers to mm/slob.c which is being removed. It comes from
+commit ed56829cb319 ("ring_buffer: reset buffer page when freeing") and
+according to Steven the borrowed code was a page mapcount and mapping
+reset, which was later removed by commit e4c2ce82ca27 ("ring_buffer:
+allocate buffer page pointer"). Thus the comment is not accurate anyway,
+remove it.
 
-Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Link: https://lore.kernel.org/linux-trace-kernel/20230315142446.27040-1-vbabka@suse.cz
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Ingo Molnar <mingo@elte.hu>
+Reported-by: Mike Rapoport <mike.rapoport@gmail.com>
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 45d99ea451d0 ("ring-buffer: Fix bytes info in per_cpu buffer stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c  |  4 +++-
- fs/nfs/nfs4state.c | 36 +++++++++++++++++++++++++-----------
- 2 files changed, 28 insertions(+), 12 deletions(-)
+ kernel/trace/ring_buffer.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 32204c0b3d098..3275763b78bc8 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10557,7 +10557,9 @@ static void nfs4_disable_swap(struct inode *inode)
- 	 */
- 	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
- 
--	nfs4_schedule_state_manager(clp);
-+	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
-+	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
-+	wake_up_var(&clp->cl_state);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 2e5f3de7bfb09..352a7de4fc458 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -346,10 +346,6 @@ static void rb_init_page(struct buffer_data_page *bpage)
+ 	local_set(&bpage->commit, 0);
  }
  
- static const struct inode_operations nfs4_dir_inode_operations = {
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index d0183a7b01a49..7590d059eb78e 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1213,13 +1213,23 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+-/*
+- * Also stolen from mm/slob.c. Thanks to Mathieu Desnoyers for pointing
+- * this issue out.
+- */
+ static void free_buffer_page(struct buffer_page *bpage)
  {
- 	struct task_struct *task;
- 	char buf[INET6_ADDRSTRLEN + sizeof("-manager") + 1];
-+	struct rpc_clnt *clnt = clp->cl_rpcclient;
-+	bool swapon = false;
- 
- 	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
--	if (test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) != 0) {
--		wake_up_var(&clp->cl_state);
--		return;
-+
-+	if (atomic_read(&clnt->cl_swapper)) {
-+		swapon = !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE,
-+					   &clp->cl_state);
-+		if (!swapon) {
-+			wake_up_var(&clp->cl_state);
-+			return;
-+		}
- 	}
--	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
-+
-+	if (test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state) != 0)
-+		return;
-+
- 	__module_get(THIS_MODULE);
- 	refcount_inc(&clp->cl_count);
- 
-@@ -1236,8 +1246,9 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
- 			__func__, PTR_ERR(task));
- 		if (!nfs_client_init_is_complete(clp))
- 			nfs_mark_client_ready(clp, PTR_ERR(task));
-+		if (swapon)
-+			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 		nfs4_clear_state_manager_bit(clp);
--		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 		nfs_put_client(clp);
- 		module_put(THIS_MODULE);
- 	}
-@@ -2726,22 +2737,25 @@ static int nfs4_run_state_manager(void *ptr)
- 
- 	allow_signal(SIGKILL);
- again:
--	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
- 	nfs4_state_manager(clp);
--	if (atomic_read(&cl->cl_swapper)) {
-+
-+	if (test_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) &&
-+	    !test_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state)) {
- 		wait_var_event_interruptible(&clp->cl_state,
- 					     test_bit(NFS4CLNT_RUN_MANAGER,
- 						      &clp->cl_state));
--		if (atomic_read(&cl->cl_swapper) &&
--		    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state))
-+		if (!atomic_read(&cl->cl_swapper))
-+			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
-+		if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
-+		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
- 			goto again;
- 		/* Either no longer a swapper, or were signalled */
-+		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 	}
--	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 
- 	if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
- 	    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
--	    !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state))
-+	    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
- 		goto again;
- 
- 	nfs_put_client(clp);
+ 	free_page((unsigned long)bpage->page);
 -- 
 2.40.1
 
