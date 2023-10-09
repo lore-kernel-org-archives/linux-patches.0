@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80323347B2
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC50D339B5
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6dqRSYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F378C433C7;
-	Mon,  9 Oct 2023 13:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGbx5XVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3468C433C8;
+	Mon,  9 Oct 2023 13:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859624;
-	bh=ynwmdPqIMT/vslazJzwrBPeK36kGDrRQtiLMXpv31OU=;
+	s=korg; t=1696859627;
+	bh=TB56I986yRyxH1HtqqSfVdzG4hY4uFxKyH/uMjzVcgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6dqRSYQxzjB5njmODSTZWrw9WwuAssPJH8qj6U1XUSvJNSV3LknpD7CxGSlrnteX
-	 sDShWJQ8I0iUnF2f1QqYlmCVCpFYZLCq7LkbPKLIYeUBUlEqCl42GFUCk1c8j5+w7J
-	 rDgvLeJmOP+bf4w3yCXFy5X7h0VwOP+2HkLag6rQ=
+	b=FGbx5XVXIWX7GiOqN0HtPjFbANpVbqUkLgDtYsHABb1TpVXNXacK3xb7pT6QUfby2
+	 34urgNtkaOBSledDz+AjLyarg8rxA49/7zoTeIHsMm46Jkb1JgdrWq2rbn+nm2Y+ZG
+	 3nepiNyQN82pGB17N3qnDnIWr3zI5uLyBoicoqFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,11 +21,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neal Cardwell <ncardwell@google.com>,
 	Yuchung Cheng <ycheng@google.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Xin Guo <guoxin0309@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 80/91] tcp: fix quick-ack counting to count actual ACKs of new data
-Date: Mon,  9 Oct 2023 15:06:52 +0200
-Message-ID: <20231009130114.323202685@linuxfoundation.org>
+Subject: [PATCH 4.19 81/91] tcp: fix delayed ACKs for MSS boundary condition
+Date: Mon,  9 Oct 2023 15:06:53 +0200
+Message-ID: <20231009130114.361204842@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -46,98 +47,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 059217c18be6757b95bfd77ba53fb50b48b8a816 ]
+[ Upstream commit 4720852ed9afb1c5ab84e96135cb5b73d5afde6f ]
 
-This commit fixes quick-ack counting so that it only considers that a
-quick-ack has been provided if we are sending an ACK that newly
-acknowledges data.
+This commit fixes poor delayed ACK behavior that can cause poor TCP
+latency in a particular boundary condition: when an application makes
+a TCP socket write that is an exact multiple of the MSS size.
 
-The code was erroneously using the number of data segments in outgoing
-skbs when deciding how many quick-ack credits to remove. This logic
-does not make sense, and could cause poor performance in
-request-response workloads, like RPC traffic, where requests or
-responses can be multi-segment skbs.
+The problem is that there is painful boundary discontinuity in the
+current delayed ACK behavior. With the current delayed ACK behavior,
+we have:
 
-When a TCP connection decides to send N quick-acks, that is to
-accelerate the cwnd growth of the congestion control module
-controlling the remote endpoint of the TCP connection. That quick-ack
-decision is purely about the incoming data and outgoing ACKs. It has
-nothing to do with the outgoing data or the size of outgoing data.
+(1) If an app reads data when > 1*MSS is unacknowledged, then
+    tcp_cleanup_rbuf() ACKs immediately because of:
 
-And in particular, an ACK only serves the intended purpose of allowing
-the remote congestion control to grow the congestion window quickly if
-the ACK is ACKing or SACKing new data.
+     tp->rcv_nxt - tp->rcv_wup > icsk->icsk_ack.rcv_mss ||
 
-The fix is simple: only count packets as serving the goal of the
-quickack mechanism if they are ACKing/SACKing new data. We can tell
-whether this is the case by checking inet_csk_ack_scheduled(), since
-we schedule an ACK exactly when we are ACKing/SACKing new data.
+(2) If an app reads all received data, and the packets were < 1*MSS,
+    and either (a) the app is not ping-pong or (b) we received two
+    packets < 1*MSS, then tcp_cleanup_rbuf() ACKs immediately beecause
+    of:
 
-Fixes: fc6415bcb0f5 ("[TCP]: Fix quick-ack decrementing with TSO.")
+     ((icsk->icsk_ack.pending & ICSK_ACK_PUSHED2) ||
+      ((icsk->icsk_ack.pending & ICSK_ACK_PUSHED) &&
+       !inet_csk_in_pingpong_mode(sk))) &&
+
+(3) *However*: if an app reads exactly 1*MSS of data,
+    tcp_cleanup_rbuf() does not send an immediate ACK. This is true
+    even if the app is not ping-pong and the 1*MSS of data had the PSH
+    bit set, suggesting the sending application completed an
+    application write.
+
+Thus if the app is not ping-pong, we have this painful case where
+>1*MSS gets an immediate ACK, and <1*MSS gets an immediate ACK, but a
+write whose last skb is an exact multiple of 1*MSS can get a 40ms
+delayed ACK. This means that any app that transfers data in one
+direction and takes care to align write size or packet size with MSS
+can suffer this problem. With receive zero copy making 4KB MSS values
+more common, it is becoming more common to have application writes
+naturally align with MSS, and more applications are likely to
+encounter this delayed ACK problem.
+
+The fix in this commit is to refine the delayed ACK heuristics with a
+simple check: immediately ACK a received 1*MSS skb with PSH bit set if
+the app reads all data. Why? If an skb has a len of exactly 1*MSS and
+has the PSH bit set then it is likely the end of an application
+write. So more data may not be arriving soon, and yet the data sender
+may be waiting for an ACK if cwnd-bound or using TX zero copy. Thus we
+set ICSK_ACK_PUSHED in this case so that tcp_cleanup_rbuf() will send
+an ACK immediately if the app reads all of the data and is not
+ping-pong. Note that this logic is also executed for the case where
+len > MSS, but in that case this logic does not matter (and does not
+hurt) because tcp_cleanup_rbuf() will always ACK immediately if the
+app reads data and there is more than an MSS of unACKed data.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Neal Cardwell <ncardwell@google.com>
 Reviewed-by: Yuchung Cheng <ycheng@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231001151239.1866845-1-ncardwell.sw@gmail.com
+Cc: Xin Guo <guoxin0309@gmail.com>
+Link: https://lore.kernel.org/r/20231001151239.1866845-2-ncardwell.sw@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h     | 6 ++++--
- net/ipv4/tcp_output.c | 7 +++----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ net/ipv4/tcp_input.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 9c43299ff8708..427553adf82c0 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -346,12 +346,14 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
- 			struct pipe_inode_info *pipe, size_t len,
- 			unsigned int flags);
- 
--static inline void tcp_dec_quickack_mode(struct sock *sk,
--					 const unsigned int pkts)
-+static inline void tcp_dec_quickack_mode(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 
- 	if (icsk->icsk_ack.quick) {
-+		/* How many ACKs S/ACKing new data have we sent? */
-+		const unsigned int pkts = inet_csk_ack_scheduled(sk) ? 1 : 0;
-+
- 		if (pkts >= icsk->icsk_ack.quick) {
- 			icsk->icsk_ack.quick = 0;
- 			/* Leaving quickack mode we deflate ATO. */
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 9299de0da3514..dcca9554071d1 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -164,8 +164,7 @@ static void tcp_event_data_sent(struct tcp_sock *tp,
- }
- 
- /* Account for an ACK we sent. */
--static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
--				      u32 rcv_nxt)
-+static inline void tcp_event_ack_sent(struct sock *sk, u32 rcv_nxt)
- {
- 	struct tcp_sock *tp = tcp_sk(sk);
- 
-@@ -179,7 +178,7 @@ static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
- 
- 	if (unlikely(rcv_nxt != tp->rcv_nxt))
- 		return;  /* Special ACK sent by DCTCP to reflect ECN */
--	tcp_dec_quickack_mode(sk, pkts);
-+	tcp_dec_quickack_mode(sk);
- 	inet_csk_clear_xmit_timer(sk, ICSK_TIME_DACK);
- }
- 
-@@ -1139,7 +1138,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
- 	icsk->icsk_af_ops->send_check(sk, skb);
- 
- 	if (likely(tcb->tcp_flags & TCPHDR_ACK))
--		tcp_event_ack_sent(sk, tcp_skb_pcount(skb), rcv_nxt);
-+		tcp_event_ack_sent(sk, rcv_nxt);
- 
- 	if (skb->len != tcp_header_size) {
- 		tcp_event_data_sent(tp, sk);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 9e1ec69fe5b46..0052a6194cc1a 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -172,6 +172,19 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
+ 		if (unlikely(len > icsk->icsk_ack.rcv_mss +
+ 				   MAX_TCP_OPTION_SPACE))
+ 			tcp_gro_dev_warn(sk, skb, len);
++		/* If the skb has a len of exactly 1*MSS and has the PSH bit
++		 * set then it is likely the end of an application write. So
++		 * more data may not be arriving soon, and yet the data sender
++		 * may be waiting for an ACK if cwnd-bound or using TX zero
++		 * copy. So we set ICSK_ACK_PUSHED here so that
++		 * tcp_cleanup_rbuf() will send an ACK immediately if the app
++		 * reads all of the data and is not ping-pong. If len > MSS
++		 * then this logic does not matter (and does not hurt) because
++		 * tcp_cleanup_rbuf() will always ACK immediately if the app
++		 * reads data and there is more than an MSS of unACKed data.
++		 */
++		if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_PSH)
++			icsk->icsk_ack.pending |= ICSK_ACK_PUSHED;
+ 	} else {
+ 		/* Otherwise, we make more careful check taking into account,
+ 		 * that SACKs block is variable.
 -- 
 2.40.1
 
