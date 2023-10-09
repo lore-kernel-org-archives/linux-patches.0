@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C44168D5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB56168D5
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F58JHSM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1D2C433CB;
-	Mon,  9 Oct 2023 13:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tg1x11hH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6BDC43391;
+	Mon,  9 Oct 2023 13:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857089;
-	bh=qqvxmQxI3Eb12Ank7Z/TtATJ3SgNQqZSzlmqccTLvIw=;
+	s=korg; t=1696857092;
+	bh=mOhGOTTrmTtXy/9QNLzz6Ydxe4WYwp2UU8OEqjeRpQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F58JHSM5dA9XBvta32OjmoBmbavQ39nCmh2IVH2NDrX83G5+oY23QSNPn+SxNWBD7
-	 XUBufPlK1YWD+GQ0tjJhrUG27tM8CMdFtTRM2kv/dTaOG9l+qrsGhgS9dHOYyNIprb
-	 lxdRCyfmyWVl5Hx+4dFIuCrqKShATK7ICeHDzydA=
+	b=tg1x11hH7kWSH8f9iYA11bY87wZR84m/ssEZITGukGzBBFoBp8Y407vZqQKBkFz0f
+	 vsPvlYXVo0tH9DbjpKv6O1wu/PK3RP5PmHoJ4gNVyV9GC5EBOxcbdTVq7/kHHb3ilF
+	 X/MrMNWPKqtUwvoysN9aKAKOPlu//wYExeWyrYRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Bristot de Oliveira <bristot@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 066/163] rtla/timerlat_aa: Fix negative IRQ delay
-Date: Mon,  9 Oct 2023 15:00:30 +0200
-Message-ID: <20231009130125.872123498@linuxfoundation.org>
+Subject: [PATCH 6.5 067/163] rtla/timerlat_aa: Fix previous IRQ delay for IRQs that happens after thread sample
+Date: Mon,  9 Oct 2023 15:00:31 +0200
+Message-ID: <20231009130125.899410092@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,59 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-[ Upstream commit 6c73daf26420b97fb8b4a620e4ffee5c1f9d44d1 ]
+[ Upstream commit 301deca09b254965661d3e971f1a60ac2ce41f5f ]
 
-When estimating the IRQ timer delay, we are dealing with two different
-clock sources: the external clock source that timerlat uses as a reference
-and the clock used by the tracer. There are also two moments: the time
-reading the clock and the timer in which the event is placed in the
-buffer (the trace event timestamp).
+timerlat auto-analysis takes note of all IRQs, before or after the
+execution of the timerlat thread.
 
-If the processor is slow or there is some hardware noise, the difference
-between the timestamp and the external clock, read can be longer than the
-IRQ handler delay, resulting in a negative time.
+Because we cannot go backward in the trace (we will fix it when
+moving to trace-cmd lib?), timerlat aa take note of the last IRQ
+execution in the waiting for the IRQ state, and then print it
+if it is executed after the expected timer IRQ starting time.
 
-If so, set IRQ to start delay as 0. In the end, it is less near-zero and relevant
-then the noise.
+After the thread sample, the timerlat starts recording the next IRQs as
+"previous" irq for the next occurrence.
 
-Link: https://lore.kernel.org/lkml/a066fb667c7136d86dcddb3c7ccd72587db3e7c7.1691162043.git.bristot@kernel.org
+However, if an IRQ happens after the thread measurement but before the
+tracing stops, it is classified as a previous IRQ. That is not
+wrong, as it can be "previous" for the subsequent activation. What is
+wrong is considering it as a potential source for the last activation.
+
+Ignore the IRQ interference that happens after the IRQ starting time for
+now. A future improvement for timerlat can be either keeping a list of
+previous IRQ execution or using the trace-cmd library. Still, it requires
+further investigation - it is a new feature.
+
+Link: https://lore.kernel.org/lkml/a44a3f5c801dcc697bacf7325b65d4a5b0460537.1691162043.git.bristot@kernel.org
 
 Fixes: 27e348b221f6 ("rtla/timerlat: Add auto-analysis core")
 Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/timerlat_aa.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ tools/tracing/rtla/src/timerlat_aa.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/tools/tracing/rtla/src/timerlat_aa.c b/tools/tracing/rtla/src/timerlat_aa.c
-index dec5b4c4511e1..baf1efda0581d 100644
+index baf1efda0581d..7093fd5333beb 100644
 --- a/tools/tracing/rtla/src/timerlat_aa.c
 +++ b/tools/tracing/rtla/src/timerlat_aa.c
-@@ -338,7 +338,23 @@ static int timerlat_aa_irq_handler(struct trace_seq *s, struct tep_record *recor
- 		taa_data->timer_irq_start_time = start;
- 		taa_data->timer_irq_duration = duration;
+@@ -545,7 +545,7 @@ static int timerlat_aa_kworker_start_handler(struct trace_seq *s, struct tep_rec
+ static void timerlat_thread_analysis(struct timerlat_aa_data *taa_data, int cpu,
+ 				     int irq_thresh, int thread_thresh)
+ {
+-	unsigned long long exp_irq_ts;
++	long long exp_irq_ts;
+ 	int total;
+ 	int irq;
  
--		taa_data->timer_irq_start_delay = taa_data->timer_irq_start_time - expected_start;
-+		/*
-+		 * We are dealing with two different clock sources: the
-+		 * external clock source that timerlat uses as a reference
-+		 * and the clock used by the tracer. There are also two
-+		 * moments: the time reading the clock and the timer in
-+		 * which the event is placed in the buffer (the trace
-+		 * event timestamp). If the processor is slow or there
-+		 * is some hardware noise, the difference between the
-+		 * timestamp and the external clock read can be longer
-+		 * than the IRQ handler delay, resulting in a negative
-+		 * time. If so, set IRQ start delay as 0. In the end,
-+		 * it is less relevant than the noise.
-+		 */
-+		if (expected_start < taa_data->timer_irq_start_time)
-+			taa_data->timer_irq_start_delay = taa_data->timer_irq_start_time - expected_start;
-+		else
-+			taa_data->timer_irq_start_delay = 0;
+@@ -562,12 +562,15 @@ static void timerlat_thread_analysis(struct timerlat_aa_data *taa_data, int cpu,
  
- 		/*
- 		 * not exit from idle.
+ 	/*
+ 	 * Expected IRQ arrival time using the trace clock as the base.
++	 *
++	 * TODO: Add a list of previous IRQ, and then run the list backwards.
+ 	 */
+ 	exp_irq_ts = taa_data->timer_irq_start_time - taa_data->timer_irq_start_delay;
+-
+-	if (exp_irq_ts < taa_data->prev_irq_timstamp + taa_data->prev_irq_duration)
+-		printf("  Previous IRQ interference:	\t\t up to  %9.2f us\n",
+-			ns_to_usf(taa_data->prev_irq_duration));
++	if (exp_irq_ts < taa_data->prev_irq_timstamp + taa_data->prev_irq_duration) {
++		if (taa_data->prev_irq_timstamp < taa_data->timer_irq_start_time)
++			printf("  Previous IRQ interference:	\t\t up to  %9.2f us\n",
++				ns_to_usf(taa_data->prev_irq_duration));
++	}
+ 
+ 	/*
+ 	 * The delay that the IRQ suffered before starting.
 -- 
 2.40.1
 
