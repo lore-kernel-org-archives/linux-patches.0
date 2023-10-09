@@ -1,145 +1,221 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD4A4692
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 08:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BC29CA7B
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlasvkMq"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50325ce89e9so5460064e87.0
-        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 01:49:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696841393; x=1697446193; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jo6aI4gZvvCpMFiUGs+gs/M6BlZphmb01wWlOsiDfrc=;
-        b=ZlasvkMqYb04eJKqoZzsz4Pwq5f7JW+9maZnNt0r3mVy7lWHwBIrT+rrr3A1tCEbxh
-         CvgyvmF156i/KJSGMS9Li1ZvqKXs3d58H7VVBGQPO7BQ6xHI8M7vDgHC94dTD8gNI7lq
-         zluLYAX96s4lUkusmJ8lwCqgC/VxjAtB6VgX2lZhzFI6KhPyqAwESW6nTExC2Y4aTPFf
-         BBr4uQ5/oim5qE90ZZxWKwgsXY/0LOrd1Y8Ya82FLMEBOmjxRdUJKUDeG6oh8KXpI6/O
-         TThJ95Imq1Uhy89rJM+AQotGvOSj1RDqQJQu56hflTDaTzF6c2lZf8t0+CbrIL7dAKqM
-         Jkqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696841393; x=1697446193;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jo6aI4gZvvCpMFiUGs+gs/M6BlZphmb01wWlOsiDfrc=;
-        b=HsdSL3meob25hY+O0Vf09yHFDIQWVVrDppNEl3f9cwr0yep4aB25Qv1+cyMnjqhMMB
-         0fwKH3yaD4VlWhTPsZcThiAYO5j2bsjeWXxz5AVTBw8se+5B0UIsOtK3bcABvv6fQeMw
-         AO0MuxFYVc6++ckLjbWdrVKAp4Nc2mXxfFacVlL/PLXJT3riHXPznAas5pwe/tjccZGK
-         PIse58hXKlExDjrdN9q777KTPh7i14As5BF4WUA9vl0uMsTMYREkdVnzOJ7DvYEBzfb7
-         eJhEuo/vRdH0EKKB5ItDw4wlQ9oOUwg+gp9rRkvSkS9xMe2SGjB6O0gIcjZ2Z325JGNP
-         oO2A==
-X-Gm-Message-State: AOJu0Yxa0Clkw7xr07SAvL6icigar0oa6unWE8XfHRPbGfazQIJZs9Wv
-	ezwGv3gdbjxs7Shp0Tls2eQ=
-X-Google-Smtp-Source: AGHT+IH1y1lLyCexGC0VNVkJhwZly2dg4RHXFhz+DgANrRNwfMwSA+OcjLwrQHPclRFcs+DB3BPN1g==
-X-Received: by 2002:a2e:97d2:0:b0:2bc:ed75:1ba with SMTP id m18-20020a2e97d2000000b002bced7501bamr12695953ljj.16.1696841393368;
-        Mon, 09 Oct 2023 01:49:53 -0700 (PDT)
-Received: from localhost ([146.70.182.19])
-        by smtp.gmail.com with ESMTPSA id u4-20020a2e9f04000000b002bcd94f9714sm1947547ljk.126.2023.10.09.01.49.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 01:49:53 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBDUJh9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7A0C433C8;
+	Mon,  9 Oct 2023 13:07:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696856841;
+	bh=NDBAaaWqqNLn1CtTj2xTnX09sAEbxlx6Mvkkei/FLHU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=uBDUJh9kn1yMm7/8tMeKGDxTlQjI0LVtCZrJuE/oMSU4kgxqxb2tqMw6An8tnKNxB
+	 a8mjWX2GH2Ya+7BqagyeI5sgNVYsn40ON54JGws6lECbZwZJkTvh6FuujCPc/edT9/
+	 Yh81hNc35O/Levb1I+QzDgTTRmeMz/6Qim9rBDmg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 001/163] ALSA: hda/tas2781: Add tas2781 HDA driver
+Date: Mon,  9 Oct 2023 14:59:25 +0200
+Message-ID: <20231009130124.064374662@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
+References: <20231009130124.021290599@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 09 Oct 2023 10:49:51 +0200
-Message-Id: <CW3S2LWWUVG7.2STK9HS3VBQFR@gmail.com>
-Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
- <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@samsung.com>,
- "Alice Ryhl" <aliceryhl@google.com>, <rust-for-linux@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, "Jonathan
- Corbet" <corbet@lwn.net>, <workflows@vger.kernel.org>,
- <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.73.0
-From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Wedson Almeida Filho"
- <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
-X-Mailer: aerc 0.15.2-211-g37d5fc691aff
-References: <20231005210556.466856-1-ojeda@kernel.org>
- <20231005210556.466856-4-ojeda@kernel.org>
-In-Reply-To: <20231005210556.466856-4-ojeda@kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> The vast majority of changes are due to our `alloc` fork being upgraded
-> at once.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
-Ah this is annoying sometimes :/
+------------------
 
->
-> There are two kinds of changes to be aware of: the ones coming from
-> upstream, which we should follow as closely as possible, and the updates
-> needed in our added fallible APIs to keep them matching the newer
-> infallible APIs coming from upstream.
->
-> Instead of taking a look at the diff of this patch, an alternative
-> approach is reviewing a diff of the changes between upstream `alloc` and
-> the kernel's. This allows to easily inspect the kernel additions only,
-> especially to check if the fallible methods we already have still match
-> the infallible ones in the new version coming from upstream.
->
-> Another approach is reviewing the changes introduced in the additions in
-> the kernel fork between the two versions. This is useful to spot
-> potentially unintended changes to our additions.
->
-> To apply these approaches, one may follow steps similar to the following
-> to generate a pair of patches that show the differences between upstream
-> Rust and the kernel (for the subset of `alloc` we use) before and after
-> applying this patch:
->
->     # Get the difference with respect to the old version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > old.patch
->     git -C linux restore rust/alloc
->
->     # Apply this patch.
->     git -C linux am rust-upgrade.patch
->
->     # Get the difference with respect to the new version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > new.patch
->     git -C linux restore rust/alloc
->
-> Now one may check the `new.patch` to take a look at the additions (first
-> approach) or at the difference between those two patches (second
-> approach). For the latter, a side-by-side tool is recommended.
->
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1=
-730-2023-10-05 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
-> Link: https://github.com/rust-lang/compiler-team/issues/596 [4]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  Documentation/process/changes.rst |  2 +-
->  rust/alloc/alloc.rs               | 22 --------------
->  rust/alloc/boxed.rs               | 48 ++++++++++++++++++++-----------
->  rust/alloc/lib.rs                 |  5 ++--
->  rust/alloc/raw_vec.rs             | 30 ++++++++++++-------
->  rust/alloc/vec/mod.rs             |  4 +--
->  rust/alloc/vec/spec_extend.rs     |  8 +++---
->  rust/compiler_builtins.rs         |  1 +
->  scripts/min-tool-version.sh       |  2 +-
->  9 files changed, 63 insertions(+), 59 deletions(-)
->
-> diff --git a/Documentation/process/changes.rst b/Documentation/process/ch=
-anges.rst
-> index 731cc104c56f..bb96ca0f774b 100644
-> --- a/Documentation/process/changes.rst
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+[ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
+
+Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
+laptop will be aggregated as one audio device. The code support realtek
+as the primary codec. Rename "struct cs35l41_dev_name" to
+"struct scodec_dev_name" for all other side codecs instead of the certain
+one.
+
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ sound/pci/hda/patch_realtek.c | 88 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 85 insertions(+), 3 deletions(-)
+
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4a13747b2b0f3..ccf99f881cc4f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6721,7 +6721,7 @@ static void comp_generic_playback_hook(struct hda_pcm_stream *hinfo, struct hda_
+ 	}
+ }
+ 
+-struct cs35l41_dev_name {
++struct scodec_dev_name {
+ 	const char *bus;
+ 	const char *hid;
+ 	int index;
+@@ -6730,7 +6730,7 @@ struct cs35l41_dev_name {
+ /* match the device name in a slightly relaxed manner */
+ static int comp_match_cs35l41_dev_name(struct device *dev, void *data)
+ {
+-	struct cs35l41_dev_name *p = data;
++	struct scodec_dev_name *p = data;
+ 	const char *d = dev_name(dev);
+ 	int n = strlen(p->bus);
+ 	char tmp[32];
+@@ -6746,12 +6746,32 @@ static int comp_match_cs35l41_dev_name(struct device *dev, void *data)
+ 	return !strcmp(d + n, tmp);
+ }
+ 
++static int comp_match_tas2781_dev_name(struct device *dev,
++	void *data)
++{
++	struct scodec_dev_name *p = data;
++	const char *d = dev_name(dev);
++	int n = strlen(p->bus);
++	char tmp[32];
++
++	/* check the bus name */
++	if (strncmp(d, p->bus, n))
++		return 0;
++	/* skip the bus number */
++	if (isdigit(d[n]))
++		n++;
++	/* the rest must be exact matching */
++	snprintf(tmp, sizeof(tmp), "-%s:00", p->hid);
++
++	return !strcmp(d + n, tmp);
++}
++
+ static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char *bus,
+ 				  const char *hid, int count)
+ {
+ 	struct device *dev = hda_codec_dev(cdc);
+ 	struct alc_spec *spec = cdc->spec;
+-	struct cs35l41_dev_name *rec;
++	struct scodec_dev_name *rec;
+ 	int ret, i;
+ 
+ 	switch (action) {
+@@ -6779,6 +6799,41 @@ static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char
+ 	}
+ }
+ 
++static void tas2781_generic_fixup(struct hda_codec *cdc, int action,
++	const char *bus, const char *hid)
++{
++	struct device *dev = hda_codec_dev(cdc);
++	struct alc_spec *spec = cdc->spec;
++	struct scodec_dev_name *rec;
++	int ret;
++
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		rec = devm_kmalloc(dev, sizeof(*rec), GFP_KERNEL);
++		if (!rec)
++			return;
++		rec->bus = bus;
++		rec->hid = hid;
++		rec->index = 0;
++		spec->comps[0].codec = cdc;
++		component_match_add(dev, &spec->match,
++			comp_match_tas2781_dev_name, rec);
++		ret = component_master_add_with_match(dev, &comp_master_ops,
++			spec->match);
++		if (ret)
++			codec_err(cdc,
++				"Fail to register component aggregator %d\n",
++				ret);
++		else
++			spec->gen.pcm_playback_hook =
++				comp_generic_playback_hook;
++		break;
++	case HDA_FIXUP_ACT_FREE:
++		component_master_del(dev, &comp_master_ops);
++		break;
++	}
++}
++
+ static void cs35l41_fixup_i2c_two(struct hda_codec *cdc, const struct hda_fixup *fix, int action)
+ {
+ 	cs35l41_generic_fixup(cdc, action, "i2c", "CSC3551", 2);
+@@ -6806,6 +6861,12 @@ static void alc287_fixup_legion_16ithg6_speakers(struct hda_codec *cdc, const st
+ 	cs35l41_generic_fixup(cdc, action, "i2c", "CLSA0101", 2);
+ }
+ 
++static void tas2781_fixup_i2c(struct hda_codec *cdc,
++	const struct hda_fixup *fix, int action)
++{
++	 tas2781_generic_fixup(cdc, action, "i2c", "TIAS2781");
++}
++
+ /* for alc295_fixup_hp_top_speakers */
+ #include "hp_x360_helper.c"
+ 
+@@ -7231,6 +7292,7 @@ enum {
+ 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
+ 	ALC236_FIXUP_DELL_DUAL_CODECS,
+ 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
++	ALC287_FIXUP_TAS2781_I2C,
+ };
+ 
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -9309,6 +9371,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
+ 	},
++	[ALC287_FIXUP_TAS2781_I2C] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = tas2781_fixup_i2c,
++		.chained = true,
++		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
++	},
+ };
+ 
+ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+@@ -9890,6 +9958,20 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual powe mode2 YC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38ba, "Yoga S780-14.5 Air AMD quad YC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38bb, "Yoga S780-14.5 Air AMD quad AAC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38be, "Yoga S980-14.5 proX YC Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38bf, "Yoga S980-14.5 proX LX Dual", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38c3, "Y980 DUAL", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38cb, "Y790 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x38cd, "Y790 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+-- 
+2.40.1
+
+
+
