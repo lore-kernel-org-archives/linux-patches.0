@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AAD341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8F4341AF;
+	Mon,  9 Oct 2023 13:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfeM5crV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6ACC433C9;
-	Mon,  9 Oct 2023 13:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sa0AABrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31C0C433C7;
+	Mon,  9 Oct 2023 13:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859366;
-	bh=SpNze+RHEhdHpTQmcqDrU+7x3qfFFj5wATzfBUT2d34=;
+	s=korg; t=1696859369;
+	bh=tHNdYnkLaupkJupYc5yp15hugFR+KY43UdPxvq7yPN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OfeM5crVkjzYIAirbKfK8L+gFyX8FP0MeELWnrR5ypjzGrpWh1nvjmpjuN8vfwLgz
-	 HJu3Z6MqxgcVMpf8R+oliuyhKTIThm5OKS0x8/urap92bSR9sC2ZQhMqKJv4o1GV1K
-	 WQhQ6v3Bp96FG3Aiwg9IiCktqYnV6rP4+//a61AE=
+	b=sa0AABrSbFKeKB+G+UKAgvhlQeH3/nF955As26aspALkhARH0avMIo7VDaV6tOCn6
+	 /lyRZDTbLS3xAz/gQq8pwwtCIGAN3a2u9T3/4Pnkikt70nadsIVzVJOpjf7mtaEmVs
+	 dECf2oCbnaZncpVVhErjuZ4x7dAxGpiyDSL133VU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 55/55] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
-Date: Mon,  9 Oct 2023 15:06:54 +0200
-Message-ID: <20231009130109.802418405@linuxfoundation.org>
+	syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org,
+	syzkaller-bugs@googlegroups.com,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 45/55] ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
+Date: Mon,  9 Oct 2023 15:06:44 +0200
+Message-ID: <20231009130109.423956294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -41,114 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: David Howells <dhowells@redhat.com>
 
-commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
+[ Upstream commit 9d4c75800f61e5d75c1659ba201b6c0c7ead3070 ]
 
-Back in 2005, Kyle McMartin removed the 16-byte alignment for
-ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
-spinlocks on pre PA8800 processors. The main symptom was random
-faults in mmap'd memory (e.g., gcc compilations, etc).
+Including the transhdrlen in length is a problem when the packet is
+partially filled (e.g. something like send(MSG_MORE) happened previously)
+when appending to an IPv4 or IPv6 packet as we don't want to repeat the
+transport header or account for it twice.  This can happen under some
+circumstances, such as splicing into an L2TP socket.
 
-Unfortunately, the errata for this ldcw change is lost.
+The symptom observed is a warning in __ip6_append_data():
 
-The issue is the 16-byte alignment required for ldcw semaphore
-instructions can only be reduced to natural alignment when the
-ldcw operation can be handled coherently in cache. Only PA8800
-and PA8900 processors actually support doing the operation in
-cache.
+    WARNING: CPU: 1 PID: 5042 at net/ipv6/ip6_output.c:1800 __ip6_append_data.isra.0+0x1be8/0x47f0 net/ipv6/ip6_output.c:1800
 
-Aligning the spinlock dynamically adds two integer instructions
-to each spinlock.
+that occurs when MSG_SPLICE_PAGES is used to append more data to an already
+partially occupied skbuff.  The warning occurs when 'copy' is larger than
+the amount of data in the message iterator.  This is because the requested
+length includes the transport header length when it shouldn't.  This can be
+triggered by, for example:
 
-Tested on rp3440, c8000 and a500.
+        sfd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_L2TP);
+        bind(sfd, ...); // ::1
+        connect(sfd, ...); // ::1 port 7
+        send(sfd, buffer, 4100, MSG_MORE);
+        sendfile(sfd, dfd, NULL, 1024);
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
-Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by only adding transhdrlen into the length if the write queue is
+empty in l2tp_ip6_sendmsg(), analogously to how UDP does things.
+
+l2tp_ip_sendmsg() looks like it won't suffer from this problem as it builds
+the UDP packet itself.
+
+Fixes: a32e0eec7042 ("l2tp: introduce L2TPv3 IP encapsulation support for IPv6")
+Reported-by: syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000001c12b30605378ce8@google.com/
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: David Ahern <dsahern@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: netdev@vger.kernel.org
+cc: bpf@vger.kernel.org
+cc: syzkaller-bugs@googlegroups.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/ldcw.h           |   36 +++++++++++++++++--------------
- arch/parisc/include/asm/spinlock_types.h |    5 ----
- 2 files changed, 20 insertions(+), 21 deletions(-)
+ net/l2tp/l2tp_ip6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/include/asm/ldcw.h
-+++ b/arch/parisc/include/asm/ldcw.h
-@@ -2,14 +2,28 @@
- #ifndef __PARISC_LDCW_H
- #define __PARISC_LDCW_H
+diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
+index a241ead3dd921..d797708a1a5ef 100644
+--- a/net/l2tp/l2tp_ip6.c
++++ b/net/l2tp/l2tp_ip6.c
+@@ -532,7 +532,6 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	 */
+ 	if (len > INT_MAX - transhdrlen)
+ 		return -EMSGSIZE;
+-	ulen = len + transhdrlen;
  
--#ifndef CONFIG_PA20
- /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
-    and GCC only guarantees 8-byte alignment for stack locals, we can't
-    be assured of 16-byte alignment for atomic lock data even if we
-    specify "__attribute ((aligned(16)))" in the type declaration.  So,
-    we use a struct containing an array of four ints for the atomic lock
-    type and dynamically select the 16-byte aligned int from the array
--   for the semaphore.  */
-+   for the semaphore. */
-+
-+/* From: "Jim Hull" <jim.hull of hp.com>
-+   I've attached a summary of the change, but basically, for PA 2.0, as
-+   long as the ",CO" (coherent operation) completer is implemented, then the
-+   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
-+   they only require "natural" alignment (4-byte for ldcw, 8-byte for
-+   ldcd).
-+
-+   Although the cache control hint is accepted by all PA 2.0 processors,
-+   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
-+   require 16-byte alignment. If the address is unaligned, the operation
-+   of the instruction is undefined. The ldcw instruction does not generate
-+   unaligned data reference traps so misaligned accesses are not detected.
-+   This hid the problem for years. So, restore the 16-byte alignment dropped
-+   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
+ 	/* Mirror BSD error message compatibility */
+ 	if (msg->msg_flags & MSG_OOB)
+@@ -659,6 +658,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
  
- #define __PA_LDCW_ALIGNMENT	16
- #define __PA_LDCW_ALIGN_ORDER	4
-@@ -19,22 +33,12 @@
- 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
- 	(volatile unsigned int *) __ret;			\
- })
--#define __LDCW	"ldcw"
- 
--#else /*CONFIG_PA20*/
--/* From: "Jim Hull" <jim.hull of hp.com>
--   I've attached a summary of the change, but basically, for PA 2.0, as
--   long as the ",CO" (coherent operation) completer is specified, then the
--   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
--   they only require "natural" alignment (4-byte for ldcw, 8-byte for
--   ldcd). */
--
--#define __PA_LDCW_ALIGNMENT	4
--#define __PA_LDCW_ALIGN_ORDER	2
--#define __ldcw_align(a) (&(a)->slock)
-+#ifdef CONFIG_PA20
- #define __LDCW	"ldcw,co"
--
--#endif /*!CONFIG_PA20*/
-+#else
-+#define __LDCW	"ldcw"
-+#endif
- 
- /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
-    We don't explicitly expose that "*a" may be written as reload
---- a/arch/parisc/include/asm/spinlock_types.h
-+++ b/arch/parisc/include/asm/spinlock_types.h
-@@ -3,13 +3,8 @@
- #define __ASM_SPINLOCK_TYPES_H
- 
- typedef struct {
--#ifdef CONFIG_PA20
--	volatile unsigned int slock;
--# define __ARCH_SPIN_LOCK_UNLOCKED { 1 }
--#else
- 	volatile unsigned int lock[4];
- # define __ARCH_SPIN_LOCK_UNLOCKED	{ { 1, 1, 1, 1 } }
--#endif
- } arch_spinlock_t;
- 
- typedef struct {
+ back_from_confirm:
+ 	lock_sock(sk);
++	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
+ 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
+ 			      ulen, transhdrlen, &ipc6,
+ 			      &fl6, (struct rt6_info *)dst,
+-- 
+2.40.1
+
 
 
