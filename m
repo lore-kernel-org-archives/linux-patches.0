@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DD7347AB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80323347B2
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqwEMg9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9BAC433C8;
-	Mon,  9 Oct 2023 13:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6dqRSYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F378C433C7;
+	Mon,  9 Oct 2023 13:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859621;
-	bh=BZvpAjNCV1H+5VEtX0EzYddGsZ5x0zdFtWNx/7DfczE=;
+	s=korg; t=1696859624;
+	bh=ynwmdPqIMT/vslazJzwrBPeK36kGDrRQtiLMXpv31OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqwEMg9vtTaNMUHWhqif6SO4+RIeM1FQoK6NDCWsZsvYrZYAL61nVzzuCSriln3iy
-	 lJXss6vFku3NKWnb4DQjNRUahzLTLrSmh/dL5MVFGTIdold2ta0Dj90dVGOrFpwysr
-	 1f3eaUvzh0oQnKGhnRiXp9XwBo5wyBghZuyEe6Zg=
+	b=X6dqRSYQxzjB5njmODSTZWrw9WwuAssPJH8qj6U1XUSvJNSV3LknpD7CxGSlrnteX
+	 sDShWJQ8I0iUnF2f1QqYlmCVCpFYZLCq7LkbPKLIYeUBUlEqCl42GFUCk1c8j5+w7J
+	 rDgvLeJmOP+bf4w3yCXFy5X7h0VwOP+2HkLag6rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 79/91] net: stmmac: dwmac-stm32: fix resume on STM32 MCU
-Date: Mon,  9 Oct 2023 15:06:51 +0200
-Message-ID: <20231009130114.287431567@linuxfoundation.org>
+Subject: [PATCH 4.19 80/91] tcp: fix quick-ack counting to count actual ACKs of new data
+Date: Mon,  9 Oct 2023 15:06:52 +0200
+Message-ID: <20231009130114.323202685@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,66 +44,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 6f195d6b0da3b689922ba9e302af2f49592fa9fc ]
+[ Upstream commit 059217c18be6757b95bfd77ba53fb50b48b8a816 ]
 
-The STM32MP1 keeps clk_rx enabled during suspend, and therefore the
-driver does not enable the clock in stm32_dwmac_init() if the device was
-suspended. The problem is that this same code runs on STM32 MCUs, which
-do disable clk_rx during suspend, causing the clock to never be
-re-enabled on resume.
+This commit fixes quick-ack counting so that it only considers that a
+quick-ack has been provided if we are sending an ACK that newly
+acknowledges data.
 
-This patch adds a variant flag to indicate that clk_rx remains enabled
-during suspend, and uses this to decide whether to enable the clock in
-stm32_dwmac_init() if the device was suspended.
+The code was erroneously using the number of data segments in outgoing
+skbs when deciding how many quick-ack credits to remove. This logic
+does not make sense, and could cause poor performance in
+request-response workloads, like RPC traffic, where requests or
+responses can be multi-segment skbs.
 
-This approach fixes this specific bug with limited opportunity for
-unintended side-effects, but I have a follow up patch that will refactor
-the clock configuration and hopefully make it less error prone.
+When a TCP connection decides to send N quick-acks, that is to
+accelerate the cwnd growth of the congestion control module
+controlling the remote endpoint of the TCP connection. That quick-ack
+decision is purely about the incoming data and outgoing ACKs. It has
+nothing to do with the outgoing data or the size of outgoing data.
 
-Fixes: 6528e02cc9ff ("net: ethernet: stmmac: add adaptation for stm32mp157c.")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20230927175749.1419774-1-ben.wolsieffer@hefring.com
+And in particular, an ACK only serves the intended purpose of allowing
+the remote congestion control to grow the congestion window quickly if
+the ACK is ACKing or SACKing new data.
+
+The fix is simple: only count packets as serving the goal of the
+quickack mechanism if they are ACKing/SACKing new data. We can tell
+whether this is the case by checking inet_csk_ack_scheduled(), since
+we schedule an ACK exactly when we are ACKing/SACKing new data.
+
+Fixes: fc6415bcb0f5 ("[TCP]: Fix quick-ack decrementing with TSO.")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20231001151239.1866845-1-ncardwell.sw@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/net/tcp.h     | 6 ++++--
+ net/ipv4/tcp_output.c | 7 +++----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
-index 7e2e79dedebf2..df7fc6b675a53 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
-@@ -57,6 +57,7 @@ struct stm32_ops {
- 	int (*parse_data)(struct stm32_dwmac *dwmac,
- 			  struct device *dev);
- 	u32 syscfg_eth_mask;
-+	bool clk_rx_enable_in_suspend;
- };
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 9c43299ff8708..427553adf82c0 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -346,12 +346,14 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
+ 			struct pipe_inode_info *pipe, size_t len,
+ 			unsigned int flags);
  
- static int stm32_dwmac_init(struct plat_stmmacenet_data *plat_dat)
-@@ -74,7 +75,8 @@ static int stm32_dwmac_init(struct plat_stmmacenet_data *plat_dat)
- 	if (ret)
- 		return ret;
+-static inline void tcp_dec_quickack_mode(struct sock *sk,
+-					 const unsigned int pkts)
++static inline void tcp_dec_quickack_mode(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
  
--	if (!dwmac->dev->power.is_suspended) {
-+	if (!dwmac->ops->clk_rx_enable_in_suspend ||
-+	    !dwmac->dev->power.is_suspended) {
- 		ret = clk_prepare_enable(dwmac->clk_rx);
- 		if (ret) {
- 			clk_disable_unprepare(dwmac->clk_tx);
-@@ -413,7 +415,8 @@ static struct stm32_ops stm32mp1_dwmac_data = {
- 	.suspend = stm32mp1_suspend,
- 	.resume = stm32mp1_resume,
- 	.parse_data = stm32mp1_parse_data,
--	.syscfg_eth_mask = SYSCFG_MP1_ETH_MASK
-+	.syscfg_eth_mask = SYSCFG_MP1_ETH_MASK,
-+	.clk_rx_enable_in_suspend = true
- };
+ 	if (icsk->icsk_ack.quick) {
++		/* How many ACKs S/ACKing new data have we sent? */
++		const unsigned int pkts = inet_csk_ack_scheduled(sk) ? 1 : 0;
++
+ 		if (pkts >= icsk->icsk_ack.quick) {
+ 			icsk->icsk_ack.quick = 0;
+ 			/* Leaving quickack mode we deflate ATO. */
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 9299de0da3514..dcca9554071d1 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -164,8 +164,7 @@ static void tcp_event_data_sent(struct tcp_sock *tp,
+ }
  
- static const struct of_device_id stm32_dwmac_match[] = {
+ /* Account for an ACK we sent. */
+-static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
+-				      u32 rcv_nxt)
++static inline void tcp_event_ack_sent(struct sock *sk, u32 rcv_nxt)
+ {
+ 	struct tcp_sock *tp = tcp_sk(sk);
+ 
+@@ -179,7 +178,7 @@ static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
+ 
+ 	if (unlikely(rcv_nxt != tp->rcv_nxt))
+ 		return;  /* Special ACK sent by DCTCP to reflect ECN */
+-	tcp_dec_quickack_mode(sk, pkts);
++	tcp_dec_quickack_mode(sk);
+ 	inet_csk_clear_xmit_timer(sk, ICSK_TIME_DACK);
+ }
+ 
+@@ -1139,7 +1138,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
+ 	icsk->icsk_af_ops->send_check(sk, skb);
+ 
+ 	if (likely(tcb->tcp_flags & TCPHDR_ACK))
+-		tcp_event_ack_sent(sk, tcp_skb_pcount(skb), rcv_nxt);
++		tcp_event_ack_sent(sk, rcv_nxt);
+ 
+ 	if (skb->len != tcp_header_size) {
+ 		tcp_event_data_sent(tp, sk);
 -- 
 2.40.1
 
