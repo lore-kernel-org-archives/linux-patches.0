@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF06D3398F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6644522F00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiL1pWz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF6C433C8;
-	Mon,  9 Oct 2023 13:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/TlmKCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD6BC433C7;
+	Mon,  9 Oct 2023 13:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858496;
-	bh=jZeaml/Tgwnw2Ng3344L77wT7HEF9QqmeD2/N/XFvIE=;
+	s=korg; t=1696858500;
+	bh=myjTd087PEDcspmEDK8zsDVD0x9aquioGykBL7UAJ9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iiL1pWz0Qb8Nf9RYY8KRYpx1anenJosVBh+sUG7TgpvTjkQ2OJNqbRSCv1Jh0U0cn
-	 pweC6+wMMZo/xtYXJvUQt9qqKy0rxghjCtQWN43wwJEFJnZNFtkszow3LRI994WwG4
-	 rjII3j40axLMkW8O3QpPaOI9haS5IIY3Lwyn+Ax8=
+	b=t/TlmKCX3o06OT6Mqzczqc3g3xZ6prFF+zQx3k3Nv2puJRQcbznZkCiKiT/pWt7k9
+	 WRvI5yd8hnTbguMoljJERRGlQpydNm0eh43TeR9V7rm+DGBh4NuNFbFug3UTwsfvfX
+	 //w59tDUkgA5nhjfEickO25zoCVFtxv4/ocj+PbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Lukas Czerner <lczerner@redhat.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/226] NFS: Use the correct commit info in nfs_join_page_group()
-Date: Mon,  9 Oct 2023 14:59:22 +0200
-Message-ID: <20231009130126.740753034@linuxfoundation.org>
+Subject: [PATCH 5.10 010/226] ext4: change s_last_trim_minblks type to unsigned long
+Date: Mon,  9 Oct 2023 14:59:31 +0200
+Message-ID: <20231009130126.993359466@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,148 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Lukas Czerner <lczerner@redhat.com>
 
-[ Upstream commit b193a78ddb5ee7dba074d3f28dc050069ba083c0 ]
+[ Upstream commit 2327fb2e23416cfb2795ccca2f77d4d65925be99 ]
 
-Ensure that nfs_clear_request_commit() updates the correct counters when
-it removes them from the commit list.
+There is no good reason for the s_last_trim_minblks to be atomic. There is
+no data integrity needed and there is no real danger in setting and
+reading it in a racy manner. Change it to be unsigned long, the same type
+as s_clusters_per_group which is the maximum that's allowed.
 
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Lukas Czerner <lczerner@redhat.com>
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://lore.kernel.org/r/20211103145122.17338-1-lczerner@redhat.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c          |  8 +++++---
- fs/nfs/write.c           | 23 ++++++++++++-----------
- include/linux/nfs_page.h |  4 +++-
- 3 files changed, 20 insertions(+), 15 deletions(-)
+ fs/ext4/ext4.h    | 2 +-
+ fs/ext4/mballoc.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 018af6ec97b40..5d86ffa72ceab 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -525,7 +525,9 @@ static void nfs_direct_add_page_head(struct list_head *list,
- 	kref_get(&head->wb_kref);
- }
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index c3e9cb5037631..fec021e6bb600 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1580,7 +1580,7 @@ struct ext4_sb_info {
+ 	struct task_struct *s_mmp_tsk;
  
--static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
-+static void nfs_direct_join_group(struct list_head *list,
-+				  struct nfs_commit_info *cinfo,
-+				  struct inode *inode)
- {
- 	struct nfs_page *req, *subreq;
+ 	/* record the last minlen when FITRIM is called. */
+-	atomic_t s_last_trim_minblks;
++	unsigned long s_last_trim_minblks;
  
-@@ -547,7 +549,7 @@ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- 				nfs_release_request(subreq);
- 			}
- 		} while ((subreq = subreq->wb_this_page) != req);
--		nfs_join_page_group(req, inode);
-+		nfs_join_page_group(req, cinfo, inode);
- 	}
- }
+ 	/* Reference to checksum algorithm driver via cryptoapi */
+ 	struct crypto_shash *s_chksum_driver;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index e0428cec6ff60..7bc17eb5ea74a 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5979,7 +5979,7 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+ 	ext4_lock_group(sb, group);
  
-@@ -573,7 +575,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
- 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
- 
--	nfs_direct_join_group(&reqs, dreq->inode);
-+	nfs_direct_join_group(&reqs, &cinfo, dreq->inode);
- 
- 	dreq->count = 0;
- 	dreq->max_count = 0;
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index dc08a0c02f095..d3cd099ffb6e1 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -58,7 +58,8 @@ static const struct nfs_pgio_completion_ops nfs_async_write_completion_ops;
- static const struct nfs_commit_completion_ops nfs_commit_completion_ops;
- static const struct nfs_rw_ops nfs_rw_write_ops;
- static void nfs_inode_remove_request(struct nfs_page *req);
--static void nfs_clear_request_commit(struct nfs_page *req);
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req);
- static void nfs_init_cinfo_from_inode(struct nfs_commit_info *cinfo,
- 				      struct inode *inode);
- static struct nfs_page *
-@@ -500,8 +501,8 @@ nfs_destroy_unlinked_subrequests(struct nfs_page *destroy_list,
-  * the (former) group.  All subrequests are removed from any write or commit
-  * lists, unlinked from the group and destroyed.
-  */
--void
--nfs_join_page_group(struct nfs_page *head, struct inode *inode)
-+void nfs_join_page_group(struct nfs_page *head, struct nfs_commit_info *cinfo,
-+			 struct inode *inode)
- {
- 	struct nfs_page *subreq;
- 	struct nfs_page *destroy_list = NULL;
-@@ -531,7 +532,7 @@ nfs_join_page_group(struct nfs_page *head, struct inode *inode)
- 	 * Commit list removal accounting is done after locks are dropped */
- 	subreq = head;
- 	do {
--		nfs_clear_request_commit(subreq);
-+		nfs_clear_request_commit(cinfo, subreq);
- 		subreq = subreq->wb_this_page;
- 	} while (subreq != head);
- 
-@@ -565,8 +566,10 @@ nfs_lock_and_join_requests(struct page *page)
- {
- 	struct inode *inode = page_file_mapping(page)->host;
- 	struct nfs_page *head;
-+	struct nfs_commit_info cinfo;
- 	int ret;
- 
-+	nfs_init_cinfo_from_inode(&cinfo, inode);
- 	/*
- 	 * A reference is taken only on the head request which acts as a
- 	 * reference to the whole page group - the group will not be destroyed
-@@ -583,7 +586,7 @@ nfs_lock_and_join_requests(struct page *page)
- 		return ERR_PTR(ret);
+ 	if (!EXT4_MB_GRP_WAS_TRIMMED(e4b.bd_info) ||
+-	    minblocks < atomic_read(&EXT4_SB(sb)->s_last_trim_minblks)) {
++	    minblocks < EXT4_SB(sb)->s_last_trim_minblks) {
+ 		ret = ext4_try_to_trim_range(sb, &e4b, start, max, minblocks);
+ 		if (ret >= 0)
+ 			EXT4_MB_GRP_SET_TRIMMED(e4b.bd_info);
+@@ -6090,7 +6090,7 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
  	}
  
--	nfs_join_page_group(head, inode);
-+	nfs_join_page_group(head, &cinfo, inode);
+ 	if (!ret)
+-		atomic_set(&EXT4_SB(sb)->s_last_trim_minblks, minlen);
++		EXT4_SB(sb)->s_last_trim_minblks = minlen;
  
- 	return head;
- }
-@@ -944,18 +947,16 @@ nfs_clear_page_commit(struct page *page)
- }
- 
- /* Called holding the request lock on @req */
--static void
--nfs_clear_request_commit(struct nfs_page *req)
-+static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
-+				     struct nfs_page *req)
- {
- 	if (test_bit(PG_CLEAN, &req->wb_flags)) {
- 		struct nfs_open_context *ctx = nfs_req_openctx(req);
- 		struct inode *inode = d_inode(ctx->dentry);
--		struct nfs_commit_info cinfo;
- 
--		nfs_init_cinfo_from_inode(&cinfo, inode);
- 		mutex_lock(&NFS_I(inode)->commit_mutex);
--		if (!pnfs_clear_request_commit(req, &cinfo)) {
--			nfs_request_remove_commit_list(req, &cinfo);
-+		if (!pnfs_clear_request_commit(req, cinfo)) {
-+			nfs_request_remove_commit_list(req, cinfo);
- 		}
- 		mutex_unlock(&NFS_I(inode)->commit_mutex);
- 		nfs_clear_page_commit(req->wb_page);
-diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
-index f0373a6cb5fb6..40aa09a21f75d 100644
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -145,7 +145,9 @@ extern	void nfs_unlock_request(struct nfs_page *req);
- extern	void nfs_unlock_and_release_request(struct nfs_page *);
- extern	struct nfs_page *nfs_page_group_lock_head(struct nfs_page *req);
- extern	int nfs_page_group_lock_subrequests(struct nfs_page *head);
--extern	void nfs_join_page_group(struct nfs_page *head, struct inode *inode);
-+extern void nfs_join_page_group(struct nfs_page *head,
-+				struct nfs_commit_info *cinfo,
-+				struct inode *inode);
- extern int nfs_page_group_lock(struct nfs_page *);
- extern void nfs_page_group_unlock(struct nfs_page *);
- extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
+ out:
+ 	range->len = EXT4_C2B(EXT4_SB(sb), trimmed) << sb->s_blocksize_bits;
 -- 
 2.40.1
 
