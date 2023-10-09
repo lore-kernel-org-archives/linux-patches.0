@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7D2E54D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE51A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cd+noYFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B43C433C7;
-	Mon,  9 Oct 2023 13:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKXhcQDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9CDC433C7;
+	Mon,  9 Oct 2023 13:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859484;
-	bh=5QMiAQdFl0PxNtmwo1geuhXI3BgzV7YqbIr21TTtuvM=;
+	s=korg; t=1696859487;
+	bh=+ui6RtB3LWhI/+B1hbbTMZJQR0BWco+o6F3DNZPvyzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd+noYFfR2dypDWZh68hT7XwxCjSH8kYr5M6LAsFp1Qno98xYUwS47S5BA10bBv5T
-	 kROTaRN7fotTLfbj8zKiPvFiBr1ScHGVW79RXnZu3bexI0w6GEDqKvEYqzFeidhWx8
-	 mD78GdF2VFDI1+FqIQh4PtXsxaEUQDqL9e0YgUFI=
+	b=DKXhcQDPv3e4viyxC5dZCaNOZ2JfdxTTB4Qa+KCju0dcL4My68qm6nfMFAJGfMLxL
+	 mfpCp8rlIC9x+XG3roo3ztc6hq+ASGgPGlPk3IBEKpDTL2gLytWo/0uU45quQhAa+A
+	 vOjJ/bRMG7co8D5Y2QmqGopocUp6jFLzT+Rgn7Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 08/91] powerpc/perf/hv-24x7: Update domain value check
-Date: Mon,  9 Oct 2023 15:05:40 +0200
-Message-ID: <20231009130111.826928091@linuxfoundation.org>
+Subject: [PATCH 4.19 09/91] net: hns3: add 5ms delay before clear firmware reset irq source
+Date: Mon,  9 Oct 2023 15:05:41 +0200
+Message-ID: <20231009130111.856960240@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -44,61 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
+[ Upstream commit 0770063096d5da4a8e467b6e73c1646a75589628 ]
 
-Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
-check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
-the check for domain value 0 is missing.
+Currently the reset process in hns3 and firmware watchdog init process is
+asynchronous. we think firmware watchdog initialization is completed
+before hns3 clear the firmware interrupt source. However, firmware
+initialization may not complete early.
 
-Fix this issue by adding check for domain value 0.
+so we add delay before hns3 clear firmware interrupt source and 5 ms delay
+is enough to avoid second firmware reset interrupt.
 
-Before:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Error:
-  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
-  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
-  /bin/dmesg | grep -i perf may provide additional information.
-
-  Result from dmesg:
-  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
-  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
-
-After:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Warning:
-  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
-  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
-
-Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
-Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
+Fixes: c1a81619d73a ("net: hns3: Add mailbox interrupt handling to PF driver")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/hv-24x7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
-index 2bb798918483d..e6eb2b4cf97ea 100644
---- a/arch/powerpc/perf/hv-24x7.c
-+++ b/arch/powerpc/perf/hv-24x7.c
-@@ -1326,7 +1326,7 @@ static int h_24x7_event_init(struct perf_event *event)
- 	}
- 
- 	domain = event_get_domain(event);
--	if (domain >= HV_PERF_DOMAIN_MAX) {
-+	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
- 		pr_devel("invalid domain %d\n", domain);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 2c334b56fd42c..d668d25ae7e76 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -2517,8 +2517,13 @@ static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
+ static void hclge_clear_event_cause(struct hclge_dev *hdev, u32 event_type,
+ 				    u32 regclr)
+ {
++#define HCLGE_IMP_RESET_DELAY		5
++
+ 	switch (event_type) {
+ 	case HCLGE_VECTOR0_EVENT_RST:
++		if (regclr == BIT(HCLGE_VECTOR0_IMPRESET_INT_B))
++			mdelay(HCLGE_IMP_RESET_DELAY);
++
+ 		hclge_write_dev(&hdev->hw, HCLGE_MISC_RESET_STS_REG, regclr);
+ 		break;
+ 	case HCLGE_VECTOR0_EVENT_MBX:
 -- 
 2.40.1
 
