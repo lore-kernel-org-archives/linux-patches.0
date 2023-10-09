@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE8B1A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281001A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cT5Zr3eK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C72CC433CC;
-	Mon,  9 Oct 2023 13:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFK4qjbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961DDC433C8;
+	Mon,  9 Oct 2023 13:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857497;
-	bh=ZDkULb42HxhX/ExruO2lSRDwCb08l/7iqNrvAW7xiM8=;
+	s=korg; t=1696857500;
+	bh=dIh3skZVyzPoMc/d74nI6fVYi3jtApQhiIO9lZi/4EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cT5Zr3eKV1n7Sz0cxI4GOE9MSCKFRDi71s2eMKf8f2xfnRo2NqCfdKUXeGOKpzrQI
-	 bjxs7qDSEyJtm00Z70VkDhHthbXCQtey7D58YVVfiaWad0s++6dTs1a5+pLKXRxZSw
-	 Tr/hwlySvCVIlcj2bUwCRJWaV5pWdURJabr6q+fI=
+	b=uFK4qjbnl+xuLuX6FQfQQ5HrPi0lgs+H1ABqagIyZuIMsjjfWQi+dPrpAXh1oOc0h
+	 y7JTdUeEnYgEClIWdxQJ1nomPn32xTGSodmBouDpcng4BdajI8NHVxTKx34TafVtmw
+	 4h9dR/yZsoN4bm6FhUkpALf39swFoUD41MiNg0d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 6.1 064/162] PCI: qcom: Fix IPQ8074 enumeration
-Date: Mon,  9 Oct 2023 15:00:45 +0200
-Message-ID: <20231009130124.694765431@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 065/162] net: replace calls to sock->ops->connect() with kernel_connect()
+Date: Mon,  9 Oct 2023 15:00:46 +0200
+Message-ID: <20231009130124.722852899@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,54 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+From: Jordan Rife <jrife@google.com>
 
-commit 6a878a54d0053ef21f3b829dc267487c2302b012 upstream.
+commit 26297b4ce1ce4ea40bc9a48ec99f45da3f64d2e2 upstream.
 
-PARF_SLV_ADDR_SPACE_SIZE_2_3_3 is used by qcom_pcie_post_init_2_3_3().
-This PCIe slave address space size register offset is 0x358 but was
-incorrectly changed to 0x16c by 39171b33f652 ("PCI: qcom: Remove PCIE20_
-prefix from register definitions").
+commit 0bdf399342c5 ("net: Avoid address overwrite in kernel_connect")
+ensured that kernel_connect() will not overwrite the address parameter
+in cases where BPF connect hooks perform an address rewrite. This change
+replaces direct calls to sock->ops->connect() in net with kernel_connect()
+to make these call safe.
 
-This prevented access to slave address space registers like iATU, etc.,
-so the IPQ8074 PCIe controller was not enumerated.
-
-Revert back to the correct 0x358 offset and remove the unused
-PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
-
-Fixes: 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from register definitions")
-Link: https://lore.kernel.org/r/20230919102948.1844909-1-quic_srichara@quicinc.com
-Tested-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: stable@vger.kernel.org	# v6.4+
+Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
+Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/netfilter/ipvs/ip_vs_sync.c |    4 ++--
+ net/rds/tcp_connect.c           |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -40,7 +40,6 @@
- #define PARF_PHY_REFCLK				0x4c
- #define PARF_CONFIG_BITS			0x50
- #define PARF_DBI_BASE_ADDR			0x168
--#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
- #define PARF_MHI_CLOCK_RESET_CTRL		0x174
- #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
- #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
-@@ -1148,8 +1147,7 @@ static int qcom_pcie_post_init_2_3_3(str
- 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	u32 val;
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -1507,8 +1507,8 @@ static int make_send_sock(struct netns_i
+ 	}
  
--	writel(SLV_ADDR_SPACE_SZ,
--		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_2_3_3);
-+	writel(SLV_ADDR_SPACE_SZ, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+ 	get_mcast_sockaddr(&mcast_addr, &salen, &ipvs->mcfg, id);
+-	result = sock->ops->connect(sock, (struct sockaddr *) &mcast_addr,
+-				    salen, 0);
++	result = kernel_connect(sock, (struct sockaddr *)&mcast_addr,
++				salen, 0);
+ 	if (result < 0) {
+ 		pr_err("Error connecting to the multicast addr\n");
+ 		goto error;
+--- a/net/rds/tcp_connect.c
++++ b/net/rds/tcp_connect.c
+@@ -173,7 +173,7 @@ int rds_tcp_conn_path_connect(struct rds
+ 	 * own the socket
+ 	 */
+ 	rds_tcp_set_callbacks(sock, cp);
+-	ret = sock->ops->connect(sock, addr, addrlen, O_NONBLOCK);
++	ret = kernel_connect(sock, addr, addrlen, O_NONBLOCK);
  
- 	val = readl(pcie->parf + PARF_PHY_CTRL);
- 	val &= ~BIT(0);
+ 	rdsdebug("connect to address %pI6c returned %d\n", &conn->c_faddr, ret);
+ 	if (ret == -EINPROGRESS)
 
 
