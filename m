@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E587223D1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E5423D1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saswrmp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBC5C433C8;
-	Mon,  9 Oct 2023 13:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbXV/DIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C62C433C8;
+	Mon,  9 Oct 2023 13:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857357;
-	bh=N/MWjWmFzVJRWLgctxQbz2015EbTNB0orRAByQLZceA=;
+	s=korg; t=1696857360;
+	bh=I9DDwXpS6VNGHvn5zBwSFuvkwmxr3muJWfGwsW/4I48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=saswrmp+tceGF6cUiohXuu6Q9VUr7qMKmLFLlvvFhStn/vRF5RKjR2901BLqVINWe
-	 imyHcvdeFGwDgBJNQ2jNdh5C0NC9YqBsrzEUZ/SiHwnn6x6Iy/qTrLVH8nnyKBEwp+
-	 EbBs2IefBAIqietGh4NcktML9/DRtpME9JrUvX3c=
+	b=EbXV/DIrNgBvzv4tGYZOom53OIK6kEMBceyu4ndx+FFVz4BYwU4tj8TW0wYGz7EbQ
+	 LK3XYmDdEwXe8gq0SOgpnFjXVZIqB0CKMocv+NJDEUQUG8uYkvfT4GeUKyueNCtSab
+	 4cVTcv6wkFEBHjI831EAaMgVxvCHAcqlK0SQy6Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sameer Pujar <spujar@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/162] ASoC: soc-utils: Export snd_soc_dai_is_dummy() symbol
-Date: Mon,  9 Oct 2023 14:59:49 +0200
-Message-ID: <20231009130123.179772993@linuxfoundation.org>
+Subject: [PATCH 6.1 009/162] ASoC: tegra: Fix redundant PLLA and PLLA_OUT0 updates
+Date: Mon,  9 Oct 2023 14:59:50 +0200
+Message-ID: <20231009130123.207558832@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,31 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Sameer Pujar <spujar@nvidia.com>
 
-[ Upstream commit f101583fa9f8c3f372d4feb61d67da0ccbf4d9a5 ]
+[ Upstream commit e765886249c533e1bb5cbc3cd741bad677417312 ]
 
-Export symbol snd_soc_dai_is_dummy() for usage outside core driver
-modules. This is required by Tegra ASoC machine driver.
+Tegra audio graph card has many DAI links which connects internal
+AHUB modules and external audio codecs. Since these are DPCM links,
+hw_params() call in the machine driver happens for each connected
+BE link and PLLA is updated every time. This is not really needed
+for all links as only I/O link DAIs derive respective clocks from
+PLLA_OUT0 and thus from PLLA. Hence add checks to limit the clock
+updates to DAIs over I/O links.
 
+This found to be fixing a DMIC clock discrepancy which is suspected
+to happen because of back to back quick PLLA and PLLA_OUT0 rate
+updates. This was observed on Jetson TX2 platform where DMIC clock
+ended up with unexpected value.
+
+Fixes: 202e2f774543 ("ASoC: tegra: Add audio graph based card driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://lore.kernel.org/r/1694098945-32760-2-git-send-email-spujar@nvidia.com
+Link: https://lore.kernel.org/r/1694098945-32760-3-git-send-email-spujar@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-utils.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/tegra/tegra_audio_graph_card.c | 30 ++++++++++++++----------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
-index a4dba0b751e76..1bbd1d077dfd9 100644
---- a/sound/soc/soc-utils.c
-+++ b/sound/soc/soc-utils.c
-@@ -217,6 +217,7 @@ int snd_soc_dai_is_dummy(struct snd_soc_dai *dai)
- 		return 1;
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(snd_soc_dai_is_dummy);
+diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
+index 1f2c5018bf5ac..4737e776d3837 100644
+--- a/sound/soc/tegra/tegra_audio_graph_card.c
++++ b/sound/soc/tegra/tegra_audio_graph_card.c
+@@ -10,6 +10,7 @@
+ #include <linux/platform_device.h>
+ #include <sound/graph_card.h>
+ #include <sound/pcm_params.h>
++#include <sound/soc-dai.h>
  
- int snd_soc_component_is_dummy(struct snd_soc_component *component)
- {
+ #define MAX_PLLA_OUT0_DIV 128
+ 
+@@ -44,6 +45,21 @@ struct tegra_audio_cdata {
+ 	unsigned int plla_out0_rates[NUM_RATE_TYPE];
+ };
+ 
++static bool need_clk_update(struct snd_soc_dai *dai)
++{
++	if (snd_soc_dai_is_dummy(dai) ||
++	    !dai->driver->ops ||
++	    !dai->driver->name)
++		return false;
++
++	if (strstr(dai->driver->name, "I2S") ||
++	    strstr(dai->driver->name, "DMIC") ||
++	    strstr(dai->driver->name, "DSPK"))
++		return true;
++
++	return false;
++}
++
+ /* Setup PLL clock as per the given sample rate */
+ static int tegra_audio_graph_update_pll(struct snd_pcm_substream *substream,
+ 					struct snd_pcm_hw_params *params)
+@@ -140,19 +156,7 @@ static int tegra_audio_graph_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+ 	int err;
+ 
+-	/*
+-	 * This gets called for each DAI link (FE or BE) when DPCM is used.
+-	 * We may not want to update PLLA rate for each call. So PLLA update
+-	 * must be restricted to external I/O links (I2S, DMIC or DSPK) since
+-	 * they actually depend on it. I/O modules update their clocks in
+-	 * hw_param() of their respective component driver and PLLA rate
+-	 * update here helps them to derive appropriate rates.
+-	 *
+-	 * TODO: When more HW accelerators get added (like sample rate
+-	 * converter, volume gain controller etc., which don't really
+-	 * depend on PLLA) we need a better way to filter here.
+-	 */
+-	if (cpu_dai->driver->ops && rtd->dai_link->no_pcm) {
++	if (need_clk_update(cpu_dai)) {
+ 		err = tegra_audio_graph_update_pll(substream, params);
+ 		if (err)
+ 			return err;
 -- 
 2.40.1
 
