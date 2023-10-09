@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB39B199B1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DEF1A592
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1fzoMBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B49C433C9;
-	Mon,  9 Oct 2023 13:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlbS9XcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FD1C433C8;
+	Mon,  9 Oct 2023 13:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857934;
-	bh=CoxNfthRQEoOI6n+k70Ys41YYRohluc8AOWZn6MPqM4=;
+	s=korg; t=1696857937;
+	bh=Oc7h8eGbnpiJJ+dk+KhcYNp94L/yoUbUVlq0lauEWxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1fzoMBAA7jalFW3Zatglumwzag0mR7LRni+OpPMXDjG0Bfo1uDtIkqac7/y+CAW7
-	 5GZseP+t5Zky6uUNIq45VboV8RlO+oGZurGuPm8XDQyvJBCGPrHsujRp625QsfkVu6
-	 Lz7Ag/4NRnMd+DrWBi8qP4e/oLpXnRuxO4DaE/Io=
+	b=KlbS9XcL/CXPHL+BCl9L2rAQ0y5YTF79d51bVbHJUhkJOuN84jqv2NjqFNnSGwNV/
+	 XxMVwXnbDF5hJO1O1e1LXSKNQPiRFanrdOQTQjL7leOoDRJ37ya6ASRZPb+5Vqbs5h
+	 lnw8GtoC9t0E6DWEKlGO0BQQ+mAJ2Yt7ZHpRbQRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/75] ima: rework CONFIG_IMA dependency block
-Date: Mon,  9 Oct 2023 15:02:02 +0200
-Message-ID: <20231009130112.640368726@linuxfoundation.org>
+Subject: [PATCH 5.15 41/75] NFSv4: Fix a nfs4_state_manager() race
+Date: Mon,  9 Oct 2023 15:02:03 +0200
+Message-ID: <20231009130112.673817240@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -42,139 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 91e326563ee34509c35267808a4b1b3ea3db62a8 ]
+[ Upstream commit ed1cc05aa1f7fe8197d300e914afc28ab9818f89 ]
 
-Changing the direct dependencies of IMA_BLACKLIST_KEYRING and
-IMA_LOAD_X509 caused them to no longer depend on IMA, but a
-a configuration without IMA results in link failures:
+If the NFS4CLNT_RUN_MANAGER flag got set just before we cleared
+NFS4CLNT_MANAGER_RUNNING, then we might have won the race against
+nfs4_schedule_state_manager(), and are responsible for handling the
+recovery situation.
 
-arm-linux-gnueabi-ld: security/integrity/iint.o: in function `integrity_load_keys':
-iint.c:(.init.text+0xd8): undefined reference to `ima_load_x509'
-
-aarch64-linux-ld: security/integrity/digsig_asymmetric.o: in function `asymmetric_verify':
-digsig_asymmetric.c:(.text+0x104): undefined reference to `ima_blacklist_keyring'
-
-Adding explicit dependencies on IMA would fix this, but a more reliable
-way to do this is to enclose the entire Kconfig file in an 'if IMA' block.
-This also allows removing the existing direct dependencies.
-
-Fixes: be210c6d3597f ("ima: Finish deprecation of IMA_TRUSTED_KEYRING Kconfig")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/Kconfig | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ fs/nfs/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
-index 2200262489103..17d1290c1b642 100644
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -29,9 +29,11 @@ config IMA
- 	  to learn more about IMA.
- 	  If unsure, say N.
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 7590d059eb78e..258e6b167285c 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2699,6 +2699,13 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 		nfs4_end_drain_session(clp);
+ 		nfs4_clear_state_manager_bit(clp);
  
-+if IMA
++		if (test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
++		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING,
++				      &clp->cl_state)) {
++			memflags = memalloc_nofs_save();
++			continue;
++		}
 +
- config IMA_KEXEC
- 	bool "Enable carrying the IMA measurement list across a soft boot"
--	depends on IMA && TCG_TPM && HAVE_IMA_KEXEC
-+	depends on TCG_TPM && HAVE_IMA_KEXEC
- 	default n
- 	help
- 	   TPM PCRs are only reset on a hard reboot.  In order to validate
-@@ -43,7 +45,6 @@ config IMA_KEXEC
- 
- config IMA_MEASURE_PCR_IDX
- 	int
--	depends on IMA
- 	range 8 14
- 	default 10
- 	help
-@@ -53,7 +54,7 @@ config IMA_MEASURE_PCR_IDX
- 
- config IMA_LSM_RULES
- 	bool
--	depends on IMA && AUDIT && (SECURITY_SELINUX || SECURITY_SMACK || SECURITY_APPARMOR)
-+	depends on AUDIT && (SECURITY_SELINUX || SECURITY_SMACK || SECURITY_APPARMOR)
- 	default y
- 	help
- 	  Disabling this option will disregard LSM based policy rules.
-@@ -61,7 +62,6 @@ config IMA_LSM_RULES
- choice
- 	prompt "Default template"
- 	default IMA_NG_TEMPLATE
--	depends on IMA
- 	help
- 	  Select the default IMA measurement template.
- 
-@@ -80,14 +80,12 @@ endchoice
- 
- config IMA_DEFAULT_TEMPLATE
- 	string
--	depends on IMA
- 	default "ima-ng" if IMA_NG_TEMPLATE
- 	default "ima-sig" if IMA_SIG_TEMPLATE
- 
- choice
- 	prompt "Default integrity hash algorithm"
- 	default IMA_DEFAULT_HASH_SHA1
--	depends on IMA
- 	help
- 	   Select the default hash algorithm used for the measurement
- 	   list, integrity appraisal and audit log.  The compiled default
-@@ -117,7 +115,6 @@ endchoice
- 
- config IMA_DEFAULT_HASH
- 	string
--	depends on IMA
- 	default "sha1" if IMA_DEFAULT_HASH_SHA1
- 	default "sha256" if IMA_DEFAULT_HASH_SHA256
- 	default "sha512" if IMA_DEFAULT_HASH_SHA512
-@@ -126,7 +123,6 @@ config IMA_DEFAULT_HASH
- 
- config IMA_WRITE_POLICY
- 	bool "Enable multiple writes to the IMA policy"
--	depends on IMA
- 	default n
- 	help
- 	  IMA policy can now be updated multiple times.  The new rules get
-@@ -137,7 +133,6 @@ config IMA_WRITE_POLICY
- 
- config IMA_READ_POLICY
- 	bool "Enable reading back the current IMA policy"
--	depends on IMA
- 	default y if IMA_WRITE_POLICY
- 	default n if !IMA_WRITE_POLICY
- 	help
-@@ -147,7 +142,6 @@ config IMA_READ_POLICY
- 
- config IMA_APPRAISE
- 	bool "Appraise integrity measurements"
--	depends on IMA
- 	default n
- 	help
- 	  This option enables local measurement integrity appraisal.
-@@ -303,7 +297,6 @@ config IMA_APPRAISE_SIGNED_INIT
- 
- config IMA_MEASURE_ASYMMETRIC_KEYS
- 	bool
--	depends on IMA
- 	depends on ASYMMETRIC_PUBLIC_KEY_SUBTYPE=y
- 	default y
- 
-@@ -322,7 +315,8 @@ config IMA_SECURE_AND_OR_TRUSTED_BOOT
- 
- config IMA_DISABLE_HTABLE
- 	bool "Disable htable to allow measurement of duplicate records"
--	depends on IMA
- 	default n
- 	help
- 	   This option disables htable to allow measurement of duplicate records.
-+
-+endif
+ 		if (!test_and_set_bit(NFS4CLNT_RECALL_RUNNING, &clp->cl_state)) {
+ 			if (test_and_clear_bit(NFS4CLNT_DELEGRETURN, &clp->cl_state)) {
+ 				nfs_client_return_marked_delegations(clp);
 -- 
 2.40.1
 
