@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD592E63E
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9166A2E63E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXm6zMNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B2BC433C7;
-	Mon,  9 Oct 2023 13:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1rYO1Me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FF3C433C7;
+	Mon,  9 Oct 2023 13:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858182;
-	bh=7T0C9GJetIV0Osyo8dafQ27MqvNtbaz9NPbr+iHyL/g=;
+	s=korg; t=1696858186;
+	bh=tf3drTAHvw0ZXXtLi7ScIfxNchNEeBFgfRg0dGWGbGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXm6zMNYEYLC9qV0DeEH8rIw04TT5yV9hpngxIlF0Pbv8ViSXZtanqzescx5YMUEi
-	 OklGuhBVcpVnLjSXly6KWCPjn9zGoPX+/Jrmf7fmCl5euWhBcMwYXIZibFf29Fsq5J
-	 R0CwgkWOGBqqKb2VZ1sdphH8kmq81sMxx9BKFUaM=
+	b=S1rYO1MeHZLN/pMvIKoZRRtxItUjTsGOMMbY64llzM38KQ7uFOsv5+wxiuLD8dt9O
+	 FVAiPzRMMpX+HSMR1OtZWRASBQPwdHCQyI0/sspAKERJBNVSj6oECO0nGYJn6uMlsb
+	 VcvEYfn+n+vqVwhmYYRCbeCp7vRfM6uJJ/U65kog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Kees Cook <keescook@chromium.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/131] drm/amd/display: prevent potential division by zero errors
-Date: Mon,  9 Oct 2023 15:01:21 +0200
-Message-ID: <20231009130117.566299510@linuxfoundation.org>
+Subject: [PATCH 5.4 016/131] selftests/tls: Add {} to avoid static checker warning
+Date: Mon,  9 Oct 2023 15:00:56 +0200
+Message-ID: <20231009130116.815713656@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,53 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 07e388aab042774f284a2ad75a70a194517cdad4 ]
+[ Upstream commit f50688b47c5858d2ff315d020332bf4cb6710837 ]
 
-There are two places in apply_below_the_range() where it's possible for
-a divide by zero error to occur. So, to fix this make sure the divisor
-is non-zero before attempting the computation in both cases.
+This silences a static checker warning due to the unusual macro
+construction of EXPECT_*() by adding explicit {}s around the enclosing
+while loop.
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2637
-Fixes: a463b263032f ("drm/amd/display: Fix frames_to_insert math")
-Fixes: ded6119e825a ("drm/amd/display: Reinstate LFC optimization")
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: c326ca98446e ("selftests: tls: swap the TX and RX sockets in some tests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/freesync/freesync.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/tls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-index 5835b968cac5d..ed5c9edfdcc56 100644
---- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-+++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-@@ -323,7 +323,9 @@ static void apply_below_the_range(struct core_freesync *core_freesync,
- 		 *  - Delta for CEIL: delta_from_mid_point_in_us_1
- 		 *  - Delta for FLOOR: delta_from_mid_point_in_us_2
- 		 */
--		if ((last_render_time_in_us / mid_point_frames_ceil) < in_out_vrr->min_duration_in_us) {
-+		if (mid_point_frames_ceil &&
-+		    (last_render_time_in_us / mid_point_frames_ceil) <
-+		    in_out_vrr->min_duration_in_us) {
- 			/* Check for out of range.
- 			 * If using CEIL produces a value that is out of range,
- 			 * then we are forced to use FLOOR.
-@@ -370,8 +372,9 @@ static void apply_below_the_range(struct core_freesync *core_freesync,
- 		/* Either we've calculated the number of frames to insert,
- 		 * or we need to insert min duration frames
- 		 */
--		if (last_render_time_in_us / frames_to_insert <
--				in_out_vrr->min_duration_in_us){
-+		if (frames_to_insert &&
-+		    (last_render_time_in_us / frames_to_insert) <
-+		    in_out_vrr->min_duration_in_us){
- 			frames_to_insert -= (frames_to_insert > 1) ?
- 					1 : 0;
- 		}
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index 0ea44d975b6c1..032e08e8ce016 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -314,8 +314,9 @@ TEST_F(tls, sendmsg_large)
+ 		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
+ 	}
+ 
+-	while (recvs++ < sends)
++	while (recvs++ < sends) {
+ 		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
++	}
+ 
+ 	free(mem);
+ }
 -- 
 2.40.1
 
