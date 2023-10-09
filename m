@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7609D19464
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661E319464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnrBWyon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E140AC433C9;
-	Mon,  9 Oct 2023 13:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZLCn6e1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE552C433C7;
+	Mon,  9 Oct 2023 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857199;
-	bh=iqyQ3fthpqtzIKss3Iqo5j2P/1Q9N0wAAFIB2fN18eg=;
+	s=korg; t=1696857202;
+	bh=Fwhy3Rs/JdAY9GmGIzPhfU5Gks9mvFmZtl0Gf0h/il4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnrBWyonTC3gGHQxqDHqQ4FicmS1tve0R45b3ksAZ/WTdM9CNQ3bgbAzDzxOgAvS+
-	 xWTgtNv1QQxTtKeV03XnmBeAkeFwjPRcq2FvIYDS11gXTnD/sI9H4VRFQj7WkK1bme
-	 A3CCM67MVPdBKpObnIPa3+jV+S4BG1y8kDd2An+0=
+	b=RZLCn6e1NWfHOxwwMl8zLasNi+jv0A7ubYPIvvXXS92x8XLLuxPtLIouZqq7Jwbax
+	 UFAOIF3zkvgDWIwsAccqlCA1obx+CrK7VXKqoYQGa30NGsXKoHytpRDKHTTkpBfbzb
+	 of8h9oyFPGir4bHAro4VYZpGcqD1BNlyPgkuri6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 130/163] netlink: annotate data-races around sk->sk_err
-Date: Mon,  9 Oct 2023 15:01:34 +0200
-Message-ID: <20231009130127.632807236@linuxfoundation.org>
+Subject: [PATCH 6.5 131/163] net: mana: Fix the tso_bytes calculation
+Date: Mon,  9 Oct 2023 15:01:35 +0200
+Message-ID: <20231009130127.659991056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -44,100 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-[ Upstream commit d0f95894fda7d4f895b29c1097f92d7fee278cb2 ]
+commit 7a54de92657455210d0ca71d4176b553952c871a upstream.
 
-syzbot caught another data-race in netlink when
-setting sk->sk_err.
+sizeof(struct hop_jumbo_hdr) is not part of tso_bytes, so remove
+the subtraction from header size.
 
-Annotate all of them for good measure.
-
-BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
-
-write to 0xffff8881613bb220 of 4 bytes by task 28147 on cpu 0:
-netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
-sock_recvmsg_nosec net/socket.c:1027 [inline]
-sock_recvmsg net/socket.c:1049 [inline]
-__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
-__do_sys_recvfrom net/socket.c:2247 [inline]
-__se_sys_recvfrom net/socket.c:2243 [inline]
-__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-write to 0xffff8881613bb220 of 4 bytes by task 28146 on cpu 1:
-netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
-sock_recvmsg_nosec net/socket.c:1027 [inline]
-sock_recvmsg net/socket.c:1049 [inline]
-__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
-__do_sys_recvfrom net/socket.c:2247 [inline]
-__se_sys_recvfrom net/socket.c:2243 [inline]
-__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00000000 -> 0x00000016
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 28146 Comm: syz-executor.0 Not tainted 6.6.0-rc3-syzkaller-00055-g9ed22ae6be81 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
+Cc: stable@vger.kernel.org
+Fixes: bd7fc6e1957c ("net: mana: Add new MANA VF performance counters for easier troubleshooting")
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231003183455.3410550-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: a43e8e9ffa0d ("net: mana: Fix oversized sge0 for GSO packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 20082171f24a3..9c6bc47bc7f7b 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -352,7 +352,7 @@ static void netlink_overrun(struct sock *sk)
- 	if (!nlk_test_bit(RECV_NO_ENOBUFS, sk)) {
- 		if (!test_and_set_bit(NETLINK_S_CONGESTED,
- 				      &nlk_sk(sk)->state)) {
--			sk->sk_err = ENOBUFS;
-+			WRITE_ONCE(sk->sk_err, ENOBUFS);
- 			sk_error_report(sk);
- 		}
- 	}
-@@ -1577,7 +1577,7 @@ static int do_one_set_err(struct sock *sk, struct netlink_set_err_data *p)
- 		goto out;
- 	}
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -262,8 +262,6 @@ netdev_tx_t mana_start_xmit(struct sk_bu
+ 				ihs = skb_transport_offset(skb) + sizeof(struct udphdr);
+ 			} else {
+ 				ihs = skb_tcp_all_headers(skb);
+-				if (ipv6_has_hopopt_jumbo(skb))
+-					ihs -= sizeof(struct hop_jumbo_hdr);
+ 			}
  
--	sk->sk_err = p->code;
-+	WRITE_ONCE(sk->sk_err, p->code);
- 	sk_error_report(sk);
- out:
- 	return ret;
-@@ -1966,7 +1966,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
- 		ret = netlink_dump(sk);
- 		if (ret) {
--			sk->sk_err = -ret;
-+			WRITE_ONCE(sk->sk_err, -ret);
- 			sk_error_report(sk);
- 		}
- 	}
-@@ -2485,7 +2485,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
- err_bad_put:
- 	nlmsg_free(skb);
- err_skb:
--	NETLINK_CB(in_skb).sk->sk_err = ENOBUFS;
-+	WRITE_ONCE(NETLINK_CB(in_skb).sk->sk_err, ENOBUFS);
- 	sk_error_report(NETLINK_CB(in_skb).sk);
- }
- EXPORT_SYMBOL(netlink_ack);
--- 
-2.40.1
-
+ 			u64_stats_update_begin(&tx_stats->syncp);
 
 
