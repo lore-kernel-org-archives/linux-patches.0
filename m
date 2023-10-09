@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24FF1A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7FB1A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NV+nVDwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D37FC433C7;
-	Mon,  9 Oct 2023 13:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svp7+lsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78035C433C7;
+	Mon,  9 Oct 2023 13:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858426;
-	bh=XwkDIvwh4oQHqI+n9FhMPOBrrjlHKaZZufiaBkwVFOI=;
+	s=korg; t=1696858429;
+	bh=Pu+JITH6cba+/EFHyqtoFCfPajzifns90ZUUD+YY5SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NV+nVDwLI7Sw3GxmJ/wNEcTpyZQROhT0kxGJ1BVKdZhbsE6o5iLyPaMKGabT+PX2J
-	 H+50/lM4oA7Ev9hQAvaE2nwtwnhC1rCkiTKzgYC70inOV+A6yR2plVcUiK5gwv2Uo6
-	 3deO4qSv6dDRzVfWf1L12I8l82rw+Y07JmOj0/ac=
+	b=svp7+lsxyAS3+YrjqEgYG+wTSkCNMlSKczJzZiwS4zJvnEMsJ0fvdqH6Zv6VtSyUn
+	 3Svjy3+YyTnpn/x7vyeF7UX0DcnImoLnhYlBCMT9u6Xatz104DtRvLPtXtym9W79T+
+	 0BZfThDCdojrUFxe/M/AW/p7jqQFBNC+DUbtACtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/131] sctp: update hb timer immediately after users change hb_interval
-Date: Mon,  9 Oct 2023 15:02:39 +0200
-Message-ID: <20231009130120.069331397@linuxfoundation.org>
+	Ivan Babrou <ivan@cloudflare.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 5.4 120/131] cpupower: add Makefile dependencies for install targets
+Date: Mon,  9 Oct 2023 15:02:40 +0200
+Message-ID: <20231009130120.100166252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,48 +42,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Ivan Babrou <ivan@cloudflare.com>
 
-[ Upstream commit 1f4e803cd9c9166eb8b6c8b0b8e4124f7499fc07 ]
+commit fb7791e213a64495ec2336869b868fcd8af14346 upstream.
 
-Currently, when hb_interval is changed by users, it won't take effect
-until the next expiry of hb timer. As the default value is 30s, users
-have to wait up to 30s to wait its hb_interval update to work.
+This allows building cpupower in parallel rather than serially.
 
-This becomes pretty bad in containers where a much smaller value is
-usually set on hb_interval. This patch improves it by resetting the
-hb timer immediately once the value of hb_interval is updated by users.
-
-Note that we don't address the already existing 'problem' when sending
-a heartbeat 'on demand' if one hb has just been sent(from the timer)
-mentioned in:
-
-  https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg590224.html
-
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/75465785f8ee5df2fb3acdca9b8fafdc18984098.1696172660.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ivan Babrou <ivan@cloudflare.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/power/cpupower/Makefile       |    8 ++++----
+ tools/power/cpupower/bench/Makefile |    2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index d1dd261e8b010..cbcbc92748ba9 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2486,6 +2486,7 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
- 			if (trans) {
- 				trans->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
-+				sctp_transport_reset_hb_timer(trans);
- 			} else if (asoc) {
- 				asoc->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
--- 
-2.40.1
-
+--- a/tools/power/cpupower/Makefile
++++ b/tools/power/cpupower/Makefile
+@@ -270,14 +270,14 @@ clean:
+ 	$(MAKE) -C bench O=$(OUTPUT) clean
+ 
+ 
+-install-lib:
++install-lib: libcpupower
+ 	$(INSTALL) -d $(DESTDIR)${libdir}
+ 	$(CP) $(OUTPUT)libcpupower.so* $(DESTDIR)${libdir}/
+ 	$(INSTALL) -d $(DESTDIR)${includedir}
+ 	$(INSTALL_DATA) lib/cpufreq.h $(DESTDIR)${includedir}/cpufreq.h
+ 	$(INSTALL_DATA) lib/cpuidle.h $(DESTDIR)${includedir}/cpuidle.h
+ 
+-install-tools:
++install-tools: $(OUTPUT)cpupower
+ 	$(INSTALL) -d $(DESTDIR)${bindir}
+ 	$(INSTALL_PROGRAM) $(OUTPUT)cpupower $(DESTDIR)${bindir}
+ 	$(INSTALL) -d $(DESTDIR)${bash_completion_dir}
+@@ -293,14 +293,14 @@ install-man:
+ 	$(INSTALL_DATA) -D man/cpupower-info.1 $(DESTDIR)${mandir}/man1/cpupower-info.1
+ 	$(INSTALL_DATA) -D man/cpupower-monitor.1 $(DESTDIR)${mandir}/man1/cpupower-monitor.1
+ 
+-install-gmo:
++install-gmo: create-gmo
+ 	$(INSTALL) -d $(DESTDIR)${localedir}
+ 	for HLANG in $(LANGUAGES); do \
+ 		echo '$(INSTALL_DATA) -D $(OUTPUT)po/$$HLANG.gmo $(DESTDIR)${localedir}/$$HLANG/LC_MESSAGES/cpupower.mo'; \
+ 		$(INSTALL_DATA) -D $(OUTPUT)po/$$HLANG.gmo $(DESTDIR)${localedir}/$$HLANG/LC_MESSAGES/cpupower.mo; \
+ 	done;
+ 
+-install-bench:
++install-bench: compile-bench
+ 	@#DESTDIR must be set from outside to survive
+ 	@sbindir=$(sbindir) bindir=$(bindir) docdir=$(docdir) confdir=$(confdir) $(MAKE) -C bench O=$(OUTPUT) install
+ 
+--- a/tools/power/cpupower/bench/Makefile
++++ b/tools/power/cpupower/bench/Makefile
+@@ -27,7 +27,7 @@ $(OUTPUT)cpufreq-bench: $(OBJS)
+ 
+ all: $(OUTPUT)cpufreq-bench
+ 
+-install:
++install: $(OUTPUT)cpufreq-bench
+ 	mkdir -p $(DESTDIR)/$(sbindir)
+ 	mkdir -p $(DESTDIR)/$(bindir)
+ 	mkdir -p $(DESTDIR)/$(docdir)
 
 
