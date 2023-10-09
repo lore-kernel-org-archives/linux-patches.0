@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F5D2E63E
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1B52E63E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kG237Qxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15CCC433C8;
-	Mon,  9 Oct 2023 13:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b27KV2ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE539C433C7;
+	Mon,  9 Oct 2023 13:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858208;
-	bh=wHgqPtVQfPAQIl6Drs8Ax9ZQX88et2NkxFgOTObXBwk=;
+	s=korg; t=1696858211;
+	bh=6Ji8HmQ4BKVW84OW31OFI4LTZI5uNlfQ4fI+7eZENpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kG237QxmsTgR/62aEd7yyfrKfKjyMZIsxzA3kmTE1xH+gt9DorUzECzYRzGxNE+8/
-	 Lt8Oipv+FczRG1mgoGHwHt+Dks+8ZomG4vsC07kVGtxzAp7NuhWJNdTCcU2pExUwx6
-	 tXXvjebW9Qe+wqLdlwQ7TLf1EUTCKUWomJf9WPuU=
+	b=b27KV2ulSQrtiCNNo0KBHmZuKo7Z5NFrV2iTxLy85IyrAivttGxpEhK8YTNMKnaLi
+	 1cXOc8efTh4e39ObyQVqWhx+8mYUUwPS7VjaFXV/l2aYU2uOKsmLt3fPJoWIREq0Rg
+	 pum3oKBAdEYGnFf+26kmSNa4IbN5u/h4bpYg2VIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 013/131] ASoC: meson: spdifin: start hw on dai probe
-Date: Mon,  9 Oct 2023 15:00:53 +0200
-Message-ID: <20231009130116.727594474@linuxfoundation.org>
+Subject: [PATCH 5.4 043/131] MIPS: Alchemy: only build mmc support helpers if au1xmmc is enabled
+Date: Mon,  9 Oct 2023 15:01:23 +0200
+Message-ID: <20231009130117.629550008@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,105 +44,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit aedf323b66b2b875137422ecb7d2525179759076 ]
+[ Upstream commit ef8f8f04a0b25e8f294b24350e8463a8d6a9ba0b ]
 
-For spdif input to report the locked rate correctly, even when no capture
-is running, the HW and reference clock must be started as soon as
-the dai is probed.
+While commit d4a5c59a955b ("mmc: au1xmmc: force non-modular build and
+remove symbol_get usage") to be built in, it can still build a kernel
+without MMC support and thuse no mmc_detect_change symbol at all.
 
-Fixes: 5ce5658375e6 ("ASoC: meson: add axg spdif input")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20230907090504.12700-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add ifdefs to build the mmc support code in the alchemy arch code
+conditional on mmc support.
+
+Fixes: d4a5c59a955b ("mmc: au1xmmc: force non-modular build and remove symbol_get usage")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-spdifin.c | 49 ++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 32 deletions(-)
+ arch/mips/alchemy/devboards/db1000.c | 4 ++++
+ arch/mips/alchemy/devboards/db1200.c | 6 ++++++
+ arch/mips/alchemy/devboards/db1300.c | 4 ++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/sound/soc/meson/axg-spdifin.c b/sound/soc/meson/axg-spdifin.c
-index d0d09f945b489..7aaded1fc376b 100644
---- a/sound/soc/meson/axg-spdifin.c
-+++ b/sound/soc/meson/axg-spdifin.c
-@@ -112,34 +112,6 @@ static int axg_spdifin_prepare(struct snd_pcm_substream *substream,
- 	return 0;
- }
+diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
+index 50de86eb8784c..3183df60ad337 100644
+--- a/arch/mips/alchemy/devboards/db1000.c
++++ b/arch/mips/alchemy/devboards/db1000.c
+@@ -164,6 +164,7 @@ static struct platform_device db1x00_audio_dev = {
  
--static int axg_spdifin_startup(struct snd_pcm_substream *substream,
--			       struct snd_soc_dai *dai)
--{
--	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
--	int ret;
--
--	ret = clk_prepare_enable(priv->refclk);
--	if (ret) {
--		dev_err(dai->dev,
--			"failed to enable spdifin reference clock\n");
--		return ret;
--	}
--
--	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
--			   SPDIFIN_CTRL0_EN);
--
--	return 0;
--}
--
--static void axg_spdifin_shutdown(struct snd_pcm_substream *substream,
--				 struct snd_soc_dai *dai)
--{
--	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
--
--	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
--	clk_disable_unprepare(priv->refclk);
--}
--
- static void axg_spdifin_write_mode_param(struct regmap *map, int mode,
- 					 unsigned int val,
- 					 unsigned int num_per_reg,
-@@ -251,25 +223,38 @@ static int axg_spdifin_dai_probe(struct snd_soc_dai *dai)
- 	ret = axg_spdifin_sample_mode_config(dai, priv);
- 	if (ret) {
- 		dev_err(dai->dev, "mode configuration failed\n");
--		clk_disable_unprepare(priv->pclk);
--		return ret;
-+		goto pclk_err;
- 	}
+ /******************************************************************************/
  
-+	ret = clk_prepare_enable(priv->refclk);
-+	if (ret) {
-+		dev_err(dai->dev,
-+			"failed to enable spdifin reference clock\n");
-+		goto pclk_err;
-+	}
-+
-+	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
-+			   SPDIFIN_CTRL0_EN);
-+
- 	return 0;
-+
-+pclk_err:
-+	clk_disable_unprepare(priv->pclk);
-+	return ret;
- }
- 
- static int axg_spdifin_dai_remove(struct snd_soc_dai *dai)
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
  {
- 	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+ 	mmc_detect_change(ptr, msecs_to_jiffies(500));
+@@ -369,6 +370,7 @@ static struct platform_device db1100_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1100_mmc1_res),
+ 	.resource	= au1100_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
  
-+	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
-+	clk_disable_unprepare(priv->refclk);
- 	clk_disable_unprepare(priv->pclk);
- 	return 0;
- }
+ /******************************************************************************/
  
- static const struct snd_soc_dai_ops axg_spdifin_ops = {
- 	.prepare	= axg_spdifin_prepare,
--	.startup	= axg_spdifin_startup,
--	.shutdown	= axg_spdifin_shutdown,
+@@ -432,8 +434,10 @@ static struct platform_device *db1x00_devs[] = {
+ 
+ static struct platform_device *db1100_devs[] = {
+ 	&au1100_lcd_device,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1100_mmc0_dev,
+ 	&db1100_mmc1_dev,
++#endif
  };
  
- static int axg_spdifin_iec958_info(struct snd_kcontrol *kcontrol,
+ int __init db1000_dev_setup(void)
+diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
+index b70e2cf8a27bc..414f92eacb5e5 100644
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -326,6 +326,7 @@ static struct platform_device db1200_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ /* SD carddetects:  they're supposed to be edge-triggered, but ack
+  * doesn't seem to work (CPLD Rev 2).  Instead, the screaming one
+  * is disabled and its counterpart enabled.  The 200ms timeout is
+@@ -584,6 +585,7 @@ static struct platform_device pb1200_mmc1_dev = {
+ 	.num_resources	= ARRAY_SIZE(au1200_mmc1_res),
+ 	.resource	= au1200_mmc1_res,
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -751,7 +753,9 @@ static struct platform_device db1200_audiodma_dev = {
+ static struct platform_device *db1200_devs[] __initdata = {
+ 	NULL,		/* PSC0, selected by S6.8 */
+ 	&db1200_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1200_mmc0_dev,
++#endif
+ 	&au1200_lcd_dev,
+ 	&db1200_eth_dev,
+ 	&db1200_nand_dev,
+@@ -762,7 +766,9 @@ static struct platform_device *db1200_devs[] __initdata = {
+ };
+ 
+ static struct platform_device *pb1200_devs[] __initdata = {
++#ifdef CONFIG_MMC_AU1X
+ 	&pb1200_mmc1_dev,
++#endif
+ };
+ 
+ /* Some peripheral base addresses differ on the PB1200 */
+diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
+index 6f16543c16fc5..fcfefa48d2608 100644
+--- a/arch/mips/alchemy/devboards/db1300.c
++++ b/arch/mips/alchemy/devboards/db1300.c
+@@ -450,6 +450,7 @@ static struct platform_device db1300_ide_dev = {
+ 
+ /**********************************************************************/
+ 
++#ifdef CONFIG_MMC_AU1X
+ static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
+ {
+ 	disable_irq_nosync(irq);
+@@ -632,6 +633,7 @@ static struct platform_device db1300_sd0_dev = {
+ 	.resource	= au1300_sd0_res,
+ 	.num_resources	= ARRAY_SIZE(au1300_sd0_res),
+ };
++#endif /* CONFIG_MMC_AU1X */
+ 
+ /**********************************************************************/
+ 
+@@ -769,8 +771,10 @@ static struct platform_device *db1300_dev[] __initdata = {
+ 	&db1300_5waysw_dev,
+ 	&db1300_nand_dev,
+ 	&db1300_ide_dev,
++#ifdef CONFIG_MMC_AU1X
+ 	&db1300_sd0_dev,
+ 	&db1300_sd1_dev,
++#endif
+ 	&db1300_lcd_dev,
+ 	&db1300_ac97_dev,
+ 	&db1300_i2s_dev,
 -- 
 2.40.1
 
