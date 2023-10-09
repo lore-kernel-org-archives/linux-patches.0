@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013BD199B7
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D70199B7
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeyPaqIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B766C433C7;
-	Mon,  9 Oct 2023 13:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Us8pl45D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E726C433C8;
+	Mon,  9 Oct 2023 13:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858642;
-	bh=UIEaVgMhHs5QHFmjWg3+w0uuDW93SlL4MR0IVr1o7xg=;
+	s=korg; t=1696858646;
+	bh=HWef5KBdnZsGhroqY8B0s9f1fNlJ3gjv9zeboL9XnpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeyPaqIskpjoxn0bLRTnrcHIy6heB6zE+9rHjcNv9qabNMS5j0FkUP5iayp4MhyBa
-	 YP0lZ8jLqRtiGlYmFJ8o5LWcziHccalgbrXpgckBxDQ93vy4sJDUl9kmj8nYwKHonF
-	 DDeqcI/aXh9nbQhOnRud/yyT/xpq6bIdVcZHNVW0=
+	b=Us8pl45DWcqFMc0KAbbGcJHYXrcpTOMbg+rdz4jiMl402di6LEfDbej/KJOZCk4KF
+	 U/TfGH6Un58Qq49pbTpxHn+WUBaVxF+EUWHzTBtgeCwvpYclMpxL1zoXdxPWzU1Kif
+	 c0UWljG8r/jGFyFNh7WjdHn8r8gBb3aiFgI6d7CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/226] seqlock: avoid -Wshadow warnings
-Date: Mon,  9 Oct 2023 15:00:15 +0200
-Message-ID: <20231009130128.203362509@linuxfoundation.org>
+Subject: [PATCH 5.10 028/226] netfilter: nft_set_rbtree: skip sync GC for new elements in this transaction
+Date: Mon,  9 Oct 2023 14:59:49 +0200
+Message-ID: <20231009130127.499570294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,77 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a07c45312f06e288417049208c344ad76074627d ]
+commit 2ee52ae94baabf7ee09cf2a8d854b990dac5d0e4 upstream.
 
-When building with W=2, there is a flood of warnings about the seqlock
-macros shadowing local variables:
+New elements in this transaction might expired before such transaction
+ends. Skip sync GC for such elements otherwise commit path might walk
+over an already released object. Once transaction is finished, async GC
+will collect such expired element.
 
-  19806 linux/seqlock.h:331:11: warning: declaration of 'seq' shadows a previous local [-Wshadow]
-     48 linux/seqlock.h:348:11: warning: declaration of 'seq' shadows a previous local [-Wshadow]
-      8 linux/seqlock.h:379:11: warning: declaration of 'seq' shadows a previous local [-Wshadow]
-
-Prefix the local variables to make the warning useful elsewhere again.
-
-Fixes: 52ac39e5db51 ("seqlock: seqcount_t: Implement all read APIs as statement expressions")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20201026165044.3722931-1-arnd@kernel.org
-Stable-dep-of: 41b43b6c6e30 ("locking/seqlock: Do the lockdep annotation before locking in do_write_seqcount_begin_nested()")
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index 1ac20d75b0618..fb89b05066f43 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -328,13 +328,13 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  */
- #define __read_seqcount_begin(s)					\
- ({									\
--	unsigned seq;							\
-+	unsigned __seq;							\
- 									\
--	while ((seq = __seqcount_sequence(s)) & 1)			\
-+	while ((__seq = __seqcount_sequence(s)) & 1)			\
- 		cpu_relax();						\
- 									\
- 	kcsan_atomic_next(KCSAN_SEQLOCK_REGION_MAX);			\
--	seq;								\
-+	__seq;								\
- })
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 9b0bdd4216152..535076b4de53d 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -314,6 +314,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
+ 	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
++	u8 cur_genmask = nft_genmask_cur(net);
+ 	u8 genmask = nft_genmask_next(net);
+ 	int d, err;
  
- /**
-@@ -345,10 +345,10 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  */
- #define raw_read_seqcount_begin(s)					\
- ({									\
--	unsigned seq = __read_seqcount_begin(s);			\
-+	unsigned _seq = __read_seqcount_begin(s);			\
- 									\
- 	smp_rmb();							\
--	seq;								\
-+	_seq;								\
- })
+@@ -359,8 +360,11 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		if (!nft_set_elem_active(&rbe->ext, genmask))
+ 			continue;
  
- /**
-@@ -376,11 +376,11 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  */
- #define raw_read_seqcount(s)						\
- ({									\
--	unsigned seq = __seqcount_sequence(s);				\
-+	unsigned __seq = __seqcount_sequence(s);			\
- 									\
- 	smp_rmb();							\
- 	kcsan_atomic_next(KCSAN_SEQLOCK_REGION_MAX);			\
--	seq;								\
-+	__seq;								\
- })
- 
- /**
+-		/* perform garbage collection to avoid bogus overlap reports. */
+-		if (nft_set_elem_expired(&rbe->ext)) {
++		/* perform garbage collection to avoid bogus overlap reports
++		 * but skip new elements in this transaction.
++		 */
++		if (nft_set_elem_expired(&rbe->ext) &&
++		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
+ 			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
+ 			if (err < 0)
+ 				return err;
 -- 
 2.40.1
 
