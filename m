@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69218339B4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BCC339BC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbLD2Be5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B3CC433C7;
-	Mon,  9 Oct 2023 13:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjPUosFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D21BC433C9;
+	Mon,  9 Oct 2023 13:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858899;
-	bh=gLqudXEzJtMF08SF7/anXHMlH9eZ8Xumqj6ol1aY9Q4=;
+	s=korg; t=1696858902;
+	bh=fYBUdu+weEcWuuLlxuatkuYVnvz4mfeu3d1Xuolck00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbLD2Be5DqFO7kiFreKZU0K//+vnclyL4l+QKOsYntyc9vHUv6r8YT+goC16JTDay
-	 5gOP4RmqNGS3K7Dawan9ZN9Yf45nj034GQJvzxrjdRKmp1Kb26AaG1wI8kQ3SVKL1J
-	 z9Uu2oydWWR6kdw7vIzlCXkZSO8ILYxju5KLQHrA=
+	b=RjPUosFUFlpoTJ7v96brDIqsdpY95+ksSr5TFM+SthpYTXontMAdCuJEtKS4YRT7a
+	 l872qqSybtUWnLlwRenvM0YX10sFsFjR8FTEMyentHOOlN1irSqvlxMvoRWHOTNc4J
+	 jly4eS2Ko2jJbVcXfp+mIAfRe/9SrKAXGUQUxsAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	David Thompson <davthompson@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Pratyush Yadav <ptyadav@amazon.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/226] platform/mellanox: mlxbf-bootctl: add NET dependency into Kconfig
-Date: Mon,  9 Oct 2023 15:01:19 +0200
-Message-ID: <20231009130129.861096418@linuxfoundation.org>
+Subject: [PATCH 5.10 136/226] nvme-pci: do not set the NUMA node of device if it has none
+Date: Mon,  9 Oct 2023 15:01:37 +0200
+Message-ID: <20231009130130.303193008@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -44,38 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Pratyush Yadav <ptyadav@amazon.de>
 
-[ Upstream commit c2dffda1d8f7511505bbbf16ba282f2079b30089 ]
+[ Upstream commit dad651b2a44eb6b201738f810254279dca29d30d ]
 
-The latest version of the mlxbf_bootctl driver utilizes
-"sysfs_format_mac", and this API is only available if
-NET is defined in the kernel configuration. This patch
-changes the mlxbf_bootctl Kconfig to depend on NET.
+If a device has no NUMA node information associated with it, the driver
+puts the device in node first_memory_node (say node 0). Not having a
+NUMA node and being associated with node 0 are completely different
+things and it makes little sense to mix the two.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309031058.JvwNDBKt-lkp@intel.com/
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20230905133243.31550-1-davthompson@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/pci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/platform/mellanox/Kconfig b/drivers/platform/mellanox/Kconfig
-index 916b39dc11bc6..1a11d1a441b53 100644
---- a/drivers/platform/mellanox/Kconfig
-+++ b/drivers/platform/mellanox/Kconfig
-@@ -48,6 +48,7 @@ config MLXBF_BOOTCTL
- 	tristate "Mellanox BlueField Firmware Boot Control driver"
- 	depends on ARM64
- 	depends on ACPI
-+	depends on NET
- 	help
- 	  The Mellanox BlueField firmware implements functionality to
- 	  request swapping the primary and alternate eMMC boot partition,
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index c329f73dbbf38..7bb42d0e087af 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2866,9 +2866,6 @@ static struct nvme_dev *nvme_pci_alloc_dev(struct pci_dev *pdev,
+ 	struct nvme_dev *dev;
+ 	int ret = -ENOMEM;
+ 
+-	if (node == NUMA_NO_NODE)
+-		set_dev_node(&pdev->dev, first_memory_node);
+-
+ 	dev = kzalloc_node(sizeof(*dev), GFP_KERNEL, node);
+ 	if (!dev)
+ 		return NULL;
 -- 
 2.40.1
 
