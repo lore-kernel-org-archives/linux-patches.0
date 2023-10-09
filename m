@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BC18B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FC218B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuSIiA5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB69FC433C9;
-	Mon,  9 Oct 2023 13:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fubnozmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65BEC433C8;
+	Mon,  9 Oct 2023 13:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856934;
-	bh=iQngd4J7yINUWxaNiWC0m1RX2lchhpP/glpuAJ2YQwY=;
+	s=korg; t=1696856937;
+	bh=V8k+XCkyYALXfFZIleB3o2ktVfhef9/bBfb4UVUUu7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuSIiA5QKrpXGXc5B0OgkMdJhsn2k4pJqeemjenMLmqV9TuXzdKMSi0iRfniScaSJ
-	 UvDQDjC+eVTDFb+JtxVVhYkzGcQrYdiEZ+8Hd1aPUv/dobOzr8upf7DCNvO/4w0SZb
-	 Ve54M7m2xkISAwOxxnC4y1lhvxNBTJmM9hedIIBY=
+	b=fubnozmtu4Djz7Ig++hvwhXpazHOn8/wV6UMGVFAe96irQlvifMdbL9XhgadQOVUr
+	 jZCDTu3Tka7icv13eBnKgqCA5kTS18q43rUexoY2ManpnclMrBG1+QnAidu9QYvxt3
+	 W3pFEy5OKY91FxJT2vlK+Bk3oyV1u450I8/2rMco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabian Vogt <fabian@ritter-vogt.de>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 003/163] ALSA: hda/realtek: Add quirk for mute LEDs on HP ENVY x360 15-eu0xxx
-Date: Mon,  9 Oct 2023 14:59:27 +0200
-Message-ID: <20231009130124.118004625@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Geliang Tang <geliang.tang@suse.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 033/163] mptcp: userspace pm allow creating id 0 subflow
+Date: Mon,  9 Oct 2023 14:59:57 +0200
+Message-ID: <20231009130124.918008449@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,58 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabian Vogt <fabian@ritter-vogt.de>
+From: Geliang Tang <geliang.tang@suse.com>
 
-[ Upstream commit c99c26b16c1544534ebd6a5f27a034f3e44d2597 ]
+commit e5ed101a602873d65d2d64edaba93e8c73ec1b0f upstream.
 
-The LED for the mic mute button is controlled by GPIO2.
-The mute button LED is slightly more complex, it's controlled by two bits
-in coeff 0x0b.
+This patch drops id 0 limitation in mptcp_nl_cmd_sf_create() to allow
+creating additional subflows with the local addr ID 0.
 
-Signed-off-by: Fabian Vogt <fabian@ritter-vogt.de>
-Link: https://lore.kernel.org/r/2693091.mvXUDI8C0e@fabians-envy
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+There is no reason not to allow additional subflows from this local
+address: we should be able to create new subflows from the initial
+endpoint. This limitation was breaking fullmesh support from userspace.
+
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/391
+Cc: stable@vger.kernel.org
+Suggested-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231004-send-net-20231004-v1-2-28de4ac663ae@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/mptcp/pm_userspace.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 00051c14e263a..57bd11c6057d5 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7310,6 +7310,7 @@ enum {
- 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
- 	ALC287_FIXUP_TAS2781_I2C,
- 	ALC245_FIXUP_HP_MUTE_LED_COEFBIT,
-+	ALC245_FIXUP_HP_X360_MUTE_LEDS,
- };
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -307,12 +307,6 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
+ 		goto create_err;
+ 	}
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -9398,6 +9399,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc245_fixup_hp_mute_led_coefbit,
- 	},
-+	[ALC245_FIXUP_HP_X360_MUTE_LEDS] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc245_fixup_hp_mute_led_coefbit,
-+		.chained = true,
-+		.chain_id = ALC245_FIXUP_HP_GPIO_LED
-+	},
- };
- 
- static const struct snd_pci_quirk alc269_fixup_tbl[] = {
-@@ -9640,6 +9647,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x887a, "HP Laptop 15s-eq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
-+	SND_PCI_QUIRK(0x103c, 0x888a, "HP ENVY x360 Convertible 15-eu0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
--- 
-2.40.1
-
+-	if (addr_l.id == 0) {
+-		NL_SET_ERR_MSG_ATTR(info->extack, laddr, "missing local addr id");
+-		err = -EINVAL;
+-		goto create_err;
+-	}
+-
+ 	err = mptcp_pm_parse_addr(raddr, info, &addr_r);
+ 	if (err < 0) {
+ 		NL_SET_ERR_MSG_ATTR(info->extack, raddr, "error parsing remote addr");
 
 
