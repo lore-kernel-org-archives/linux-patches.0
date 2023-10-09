@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726473419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A002C3419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="086rpFwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AC5C433C7;
-	Mon,  9 Oct 2023 13:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2rxO3OP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5EBC433C8;
+	Mon,  9 Oct 2023 13:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859541;
-	bh=2Lhr20GyeDSS67iGenFmOdc9m870WsyNPyo9pDI/jU0=;
+	s=korg; t=1696859544;
+	bh=xkBv8x1uVWv5XW3CGAbQT0MF/FyjjN+CBj/D54XZiFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=086rpFwIAflWbxxDQ8XXb703kdXAfQF7gI+0rkYThgQ9Y2bk6yJBsfGd2ahCsglxD
-	 aMqxXVV9Z6r9qAM17cTNt2zDDBe31DiyLPH4Qt+kPNYBIqEcdMdiVOm5aAAbVOnn4p
-	 n0M6DMAosytDGAf18YJJ3UTcpa7KzxoSpOrwV6KM=
+	b=b2rxO3OP57krjrFuarHc0UQnDnIjiJpA6m+ZenYCx6LkU5VHMY63VTW01nue/f33j
+	 qVmrXCoAPlLN6BdkJMVmG2wYQ6NdMAJlyD9rSMp8P8hIU+pRNkNPXY4wlOvSl8m6cC
+	 hmC3DbJdSgDmPfVGUZsJr8k9LeCOrhlhToWNl8bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 4.19 54/91] btrfs: properly report 0 avail for very full file systems
-Date: Mon,  9 Oct 2023 15:06:26 +0200
-Message-ID: <20231009130113.390623657@linuxfoundation.org>
+	mhiramat@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 37/91] ring-buffer: Avoid softlockup in ring_buffer_resize()
+Date: Mon,  9 Oct 2023 15:06:09 +0200
+Message-ID: <20231009130112.816856260@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -41,43 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 58bfe2ccec5f9f137b41dd38f335290dcc13cd5c upstream.
+[ Upstream commit f6bd2c92488c30ef53b5bd80c52f0a7eee9d545a ]
 
-A user reported some issues with smaller file systems that get very
-full.  While investigating this issue I noticed that df wasn't showing
-100% full, despite having 0 chunk space and having < 1MiB of available
-metadata space.
+When user resize all trace ring buffer through file 'buffer_size_kb',
+then in ring_buffer_resize(), kernel allocates buffer pages for each
+cpu in a loop.
 
-This turns out to be an overflow issue, we're doing:
+If the kernel preemption model is PREEMPT_NONE and there are many cpus
+and there are many buffer pages to be allocated, it may not give up cpu
+for a long time and finally cause a softlockup.
 
-  total_available_metadata_space - SZ_4M < global_block_rsv_size
+To avoid it, call cond_resched() after each cpu buffer allocation.
 
-to determine if there's not enough space to make metadata allocations,
-which overflows if total_available_metadata_space is < 4M.  Fix this by
-checking to see if our available space is greater than the 4M threshold.
-This makes df properly report 100% usage on the file system.
+Link: https://lore.kernel.org/linux-trace-kernel/20230906081930.3939106-1-zhengyejian1@huawei.com
 
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <mhiramat@kernel.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2196,7 +2196,7 @@ static int btrfs_statfs(struct dentry *d
- 	 * calculated f_bavail.
- 	 */
- 	if (!mixed && block_rsv->space_info->full &&
--	    total_free_meta - thresh < block_rsv->size)
-+	    (total_free_meta < thresh || total_free_meta - thresh < block_rsv->size))
- 		buf->f_bavail = 0;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index c8a7de7a1d635..320aa60664dc9 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1753,6 +1753,8 @@ int ring_buffer_resize(struct ring_buffer *buffer, unsigned long size,
+ 				err = -ENOMEM;
+ 				goto out_err;
+ 			}
++
++			cond_resched();
+ 		}
  
- 	buf->f_type = BTRFS_SUPER_MAGIC;
+ 		get_online_cpus();
+-- 
+2.40.1
+
 
 
