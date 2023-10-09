@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFA01A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECA61A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXAhVuKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119F8C433C7;
-	Mon,  9 Oct 2023 13:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScFjjkUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B98BC433C7;
+	Mon,  9 Oct 2023 13:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857868;
-	bh=Vq4i7G52bOZ2sde8rfuv6QuQDNt8s7Uf5EkwS0qgVNc=;
+	s=korg; t=1696857871;
+	bh=xpty1qB+oqQgkF/GtOdOaN3L/Ultl47whFoXQeAKpTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXAhVuKxganoj+sXWy7uWlbrWlBzZxi/O2IsgEaoY1ri28CepSPgkBaq4jjUt91GN
-	 w8EcwRY+tJQD0bX2hOEWxA0nYOXxlYLRpiu+/xoB/h4ZqlzSM5UjauxwOxFuuKfMSe
-	 hInW4/XqFZrpMxaNMXhG8zz4DaIxg1A12iniKXSw=
+	b=ScFjjkUK0pXu7PKMAn2+TxP9Gy6jMbsfvbd8CUjWP+kOuaJNdmCyydynjY1Co1vM6
+	 RywLVz1E2HHUXCKGbEPmQqqwZ+Tm/6KfLBDNElccAm2PFpUqNdsYT5CUHLpM4KQdsy
+	 gIC3j+mUOBjq60P1v09hizSPqE2LRI/9IprXLq/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 19/75] scsi: zfcp: Fix a double put in zfcp_port_enqueue()
-Date: Mon,  9 Oct 2023 15:01:41 +0200
-Message-ID: <20231009130111.906499457@linuxfoundation.org>
+	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 02/75] spi: zynqmp-gqspi: fix clock imbalance on probe failure
+Date: Mon,  9 Oct 2023 15:01:24 +0200
+Message-ID: <20231009130111.278540280@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -42,63 +44,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit b481f644d9174670b385c3a699617052cd2a79d3 upstream.
+[ Upstream commit 1527b076ae2cb6a9c590a02725ed39399fcad1cf ]
 
-When device_register() fails, zfcp_port_release() will be called after
-put_device(). As a result, zfcp_ccw_adapter_put() will be called twice: one
-in zfcp_port_release() and one in the error path after device_register().
-So the reference on the adapter object is doubly put, which may lead to a
-premature free. Fix this by adjusting the error tag after
-device_register().
+Make sure that the device is not runtime suspended before explicitly
+disabling the clocks on probe failure and on driver unbind to avoid a
+clock enable-count imbalance.
 
-Fixes: f3450c7b9172 ("[SCSI] zfcp: Replace local reference counting with common kref")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230923103723.10320-1-dinghao.liu@zju.edu.cn
-Acked-by: Benjamin Block <bblock@linux.ibm.com>
-Cc: stable@vger.kernel.org # v2.6.33+
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9e3a000362ae ("spi: zynqmp: Add pm runtime support")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/Message-Id: <20230622082435.7873-1-johan+linaro@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_aux.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_aux.c
-+++ b/drivers/s390/scsi/zfcp_aux.c
-@@ -518,12 +518,12 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 	if (port) {
- 		put_device(&port->dev);
- 		retval = -EEXIST;
--		goto err_out;
-+		goto err_put;
- 	}
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index b0c2855093cc9..237979daf9e67 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1199,9 +1199,9 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	port = kzalloc(sizeof(struct zfcp_port), GFP_KERNEL);
- 	if (!port)
--		goto err_out;
-+		goto err_put;
+ clk_dis_all:
+-	pm_runtime_put_sync(&pdev->dev);
+-	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+ clk_dis_pclk:
+ 	clk_disable_unprepare(xqspi->pclk);
+@@ -1225,11 +1225,15 @@ static void zynqmp_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
  
- 	rwlock_init(&port->unit_list_lock);
- 	INIT_LIST_HEAD(&port->unit_list);
-@@ -546,7 +546,7 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 
- 	if (dev_set_name(&port->dev, "0x%016llx", (unsigned long long)wwpn)) {
- 		kfree(port);
--		goto err_out;
-+		goto err_put;
- 	}
- 	retval = -EINVAL;
- 
-@@ -563,7 +563,8 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 
- 	return port;
- 
--err_out:
-+err_put:
- 	zfcp_ccw_adapter_put(adapter);
-+err_out:
- 	return ERR_PTR(retval);
++	pm_runtime_get_sync(&pdev->dev);
++
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+ 	clk_disable_unprepare(xqspi->pclk);
+-	pm_runtime_set_suspended(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
  }
+ 
+ static const struct of_device_id zynqmp_qspi_of_match[] = {
+-- 
+2.40.1
+
 
 
