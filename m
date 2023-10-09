@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A1F339B5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0512347AB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bR3WBZra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0311DC433C7;
-	Mon,  9 Oct 2023 13:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgh/PkqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFC8C433C7;
+	Mon,  9 Oct 2023 13:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859630;
-	bh=xi4DNL5XEWL4SkWJZIOqWPTreZvdEBJu0hjsTd+EIBc=;
+	s=korg; t=1696859633;
+	bh=RTQkYVQX0tPoEgYXRsuOwyIcCPjR6oPWmNFDPp0LDbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bR3WBZrad3H1Ua0GLABq3KgLdnRG1WB0TK5FXMu3gUUvGrg1Qw0fpG9hVxuIvgk09
-	 sr9fWk7tK/qL9SoBDdeeBrSU9Imf/Sg8SBCl42ghUrSzmBsbA8fCAEVB613J5Wbkl/
-	 CST+deHeac8ACFvBjhLdhCONZQ4FMAcAa0zDOQI8=
+	b=sgh/PkqLzPo9eCpt6fwaCBpCnWu2yTTpCxH51SDb49dkjF09JdnyWKF+Fy3F0zSXK
+	 10/kqCnJk9Dq87Ps1qzCeVdtmPfvXrX3SbVTVP9XWxN9/GMiTk24NnINa/WzsrrrVJ
+	 cCquDFz2SY/72daecsvkzgYOhRBhIHkBHFvGpOLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 82/91] sctp: update transport state when processing a dupcook packet
-Date: Mon,  9 Oct 2023 15:06:54 +0200
-Message-ID: <20231009130114.391699545@linuxfoundation.org>
+Subject: [PATCH 4.19 83/91] sctp: update hb timer immediately after users change hb_interval
+Date: Mon,  9 Oct 2023 15:06:55 +0200
+Message-ID: <20231009130114.427857385@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -45,63 +45,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 2222a78075f0c19ca18db53fd6623afb4aff602d ]
+[ Upstream commit 1f4e803cd9c9166eb8b6c8b0b8e4124f7499fc07 ]
 
-During the 4-way handshake, the transport's state is set to ACTIVE in
-sctp_process_init() when processing INIT_ACK chunk on client or
-COOKIE_ECHO chunk on server.
+Currently, when hb_interval is changed by users, it won't take effect
+until the next expiry of hb timer. As the default value is 30s, users
+have to wait up to 30s to wait its hb_interval update to work.
 
-In the collision scenario below:
+This becomes pretty bad in containers where a much smaller value is
+usually set on hb_interval. This patch improves it by resetting the
+hb timer immediately once the value of hb_interval is updated by users.
 
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
-    192.168.1.2 > 192.168.1.1: sctp (1) [INIT ACK] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [COOKIE ECHO]
-    192.168.1.2 > 192.168.1.1: sctp (1) [COOKIE ACK]
-  192.168.1.1 > 192.168.1.2: sctp (1) [INIT ACK] [init tag: 3914796021]
+Note that we don't address the already existing 'problem' when sending
+a heartbeat 'on demand' if one hb has just been sent(from the timer)
+mentioned in:
 
-when processing COOKIE_ECHO on 192.168.1.2, as it's in COOKIE_WAIT state,
-sctp_sf_do_dupcook_b() is called by sctp_sf_do_5_2_4_dupcook() where it
-creates a new association and sets its transport to ACTIVE then updates
-to the old association in sctp_assoc_update().
-
-However, in sctp_assoc_update(), it will skip the transport update if it
-finds a transport with the same ipaddr already existing in the old asoc,
-and this causes the old asoc's transport state not to move to ACTIVE
-after the handshake.
-
-This means if DATA retransmission happens at this moment, it won't be able
-to enter PF state because of the check 'transport->state == SCTP_ACTIVE'
-in sctp_do_8_2_transport_strike().
-
-This patch fixes it by updating the transport in sctp_assoc_update() with
-sctp_assoc_add_peer() where it updates the transport state if there is
-already a transport with the same ipaddr exists in the old asoc.
+  https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg590224.html
 
 Signed-off-by: Xin Long <lucien.xin@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/fd17356abe49713ded425250cc1ae51e9f5846c6.1696172325.git.lucien.xin@gmail.com
+Link: https://lore.kernel.org/r/75465785f8ee5df2fb3acdca9b8fafdc18984098.1696172660.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sctp/socket.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index d17708800652a..78c1429d1301c 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -1181,8 +1181,7 @@ int sctp_assoc_update(struct sctp_association *asoc,
- 		/* Add any peer addresses from the new association. */
- 		list_for_each_entry(trans, &new->peer.transport_addr_list,
- 				    transports)
--			if (!sctp_assoc_lookup_paddr(asoc, &trans->ipaddr) &&
--			    !sctp_assoc_add_peer(asoc, &trans->ipaddr,
-+			if (!sctp_assoc_add_peer(asoc, &trans->ipaddr,
- 						 GFP_ATOMIC, trans->state))
- 				return -ENOMEM;
- 
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 432dccd375064..f954d3c8876db 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -2578,6 +2578,7 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
+ 			if (trans) {
+ 				trans->hbinterval =
+ 				    msecs_to_jiffies(params->spp_hbinterval);
++				sctp_transport_reset_hb_timer(trans);
+ 			} else if (asoc) {
+ 				asoc->hbinterval =
+ 				    msecs_to_jiffies(params->spp_hbinterval);
 -- 
 2.40.1
 
