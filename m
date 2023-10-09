@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D771F199B7
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DA728DD9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Crpo3QfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55975C433C9;
-	Mon,  9 Oct 2023 13:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZntzkKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718A3C433C9;
+	Mon,  9 Oct 2023 13:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858658;
-	bh=jD1vH9+3WX+0A+gfjHqu2MB/jqLikYlc+/Ic3v3XpYU=;
+	s=korg; t=1696858661;
+	bh=BKHOm0nmlmcjFSQ++LNGh4iRYRqum7NDHVWlMjS2pI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Crpo3QfUrW6w4Y8mSNXxDEDJQWli4VZFHn/8a28gDydnBZTySQdOS4Q71481BWves
-	 61kgw+ajt5hChqJ69G5zukBR9pY3Psglo+nRU5SzqD7kQbQq+xJvzK49BTICbmUmji
-	 yxteATUBRlBC5xanUQUYubeuMcUVxsP+dDLvLjVY=
+	b=fZntzkKE9yDwb+dyeNSPxn4Wq5heAi3gdJCdlcTpaiXRHWPamzv1lNlzZkOm+UNwD
+	 zI0EJXY2Y7rXiCQuz5+8n7Ir9rOJ/6bLBM4qRfs1r2doddhyp5eh3r5D4LHUG2qY8m
+	 u+RGsYuq+5ofbjaqdrsm/q0kxGgNa17oHMuqtcnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/226] netfilter: nf_tables: fix memleak when more than 255 elements expired
-Date: Mon,  9 Oct 2023 14:59:53 +0200
-Message-ID: <20231009130127.615913286@linuxfoundation.org>
+Subject: [PATCH 5.10 033/226] ASoC: meson: spdifin: start hw on dai probe
+Date: Mon,  9 Oct 2023 14:59:54 +0200
+Message-ID: <20231009130127.642211791@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,85 +42,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-commit cf5000a7787cbc10341091d37245a42c119d26c5 upstream.
+[ Upstream commit aedf323b66b2b875137422ecb7d2525179759076 ]
 
-When more than 255 elements expired we're supposed to switch to a new gc
-container structure.
+For spdif input to report the locked rate correctly, even when no capture
+is running, the HW and reference clock must be started as soon as
+the dai is probed.
 
-This never happens: u8 type will wrap before reaching the boundary
-and nft_trans_gc_space() always returns true.
-
-This means we recycle the initial gc container structure and
-lose track of the elements that came before.
-
-While at it, don't deref 'gc' after we've passed it to call_rcu.
-
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5ce5658375e6 ("ASoC: meson: add axg spdif input")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20230907090504.12700-1-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 +-
- net/netfilter/nf_tables_api.c     | 10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/meson/axg-spdifin.c | 49 ++++++++++++-----------------------
+ 1 file changed, 17 insertions(+), 32 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index bbe472c07d07e..5619642b9ad47 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1525,7 +1525,7 @@ struct nft_trans_gc {
- 	struct net		*net;
- 	struct nft_set		*set;
- 	u32			seq;
--	u8			count;
-+	u16			count;
- 	void			*priv[NFT_TRANS_GC_BATCHCOUNT];
- 	struct rcu_head		rcu;
+diff --git a/sound/soc/meson/axg-spdifin.c b/sound/soc/meson/axg-spdifin.c
+index d0d09f945b489..7aaded1fc376b 100644
+--- a/sound/soc/meson/axg-spdifin.c
++++ b/sound/soc/meson/axg-spdifin.c
+@@ -112,34 +112,6 @@ static int axg_spdifin_prepare(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-static int axg_spdifin_startup(struct snd_pcm_substream *substream,
+-			       struct snd_soc_dai *dai)
+-{
+-	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+-	int ret;
+-
+-	ret = clk_prepare_enable(priv->refclk);
+-	if (ret) {
+-		dev_err(dai->dev,
+-			"failed to enable spdifin reference clock\n");
+-		return ret;
+-	}
+-
+-	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
+-			   SPDIFIN_CTRL0_EN);
+-
+-	return 0;
+-}
+-
+-static void axg_spdifin_shutdown(struct snd_pcm_substream *substream,
+-				 struct snd_soc_dai *dai)
+-{
+-	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+-
+-	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
+-	clk_disable_unprepare(priv->refclk);
+-}
+-
+ static void axg_spdifin_write_mode_param(struct regmap *map, int mode,
+ 					 unsigned int val,
+ 					 unsigned int num_per_reg,
+@@ -251,25 +223,38 @@ static int axg_spdifin_dai_probe(struct snd_soc_dai *dai)
+ 	ret = axg_spdifin_sample_mode_config(dai, priv);
+ 	if (ret) {
+ 		dev_err(dai->dev, "mode configuration failed\n");
+-		clk_disable_unprepare(priv->pclk);
+-		return ret;
++		goto pclk_err;
+ 	}
+ 
++	ret = clk_prepare_enable(priv->refclk);
++	if (ret) {
++		dev_err(dai->dev,
++			"failed to enable spdifin reference clock\n");
++		goto pclk_err;
++	}
++
++	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN,
++			   SPDIFIN_CTRL0_EN);
++
+ 	return 0;
++
++pclk_err:
++	clk_disable_unprepare(priv->pclk);
++	return ret;
+ }
+ 
+ static int axg_spdifin_dai_remove(struct snd_soc_dai *dai)
+ {
+ 	struct axg_spdifin *priv = snd_soc_dai_get_drvdata(dai);
+ 
++	regmap_update_bits(priv->map, SPDIFIN_CTRL0, SPDIFIN_CTRL0_EN, 0);
++	clk_disable_unprepare(priv->refclk);
+ 	clk_disable_unprepare(priv->pclk);
+ 	return 0;
+ }
+ 
+ static const struct snd_soc_dai_ops axg_spdifin_ops = {
+ 	.prepare	= axg_spdifin_prepare,
+-	.startup	= axg_spdifin_startup,
+-	.shutdown	= axg_spdifin_shutdown,
  };
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 9fc302a6836ba..32c97cc87ddc2 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8124,12 +8124,15 @@ static int nft_trans_gc_space(struct nft_trans_gc *trans)
- struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
- 					      unsigned int gc_seq, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (nft_trans_gc_space(gc))
- 		return gc;
  
-+	set = gc->set;
- 	nft_trans_gc_queue_work(gc);
- 
--	return nft_trans_gc_alloc(gc->set, gc_seq, gfp);
-+	return nft_trans_gc_alloc(set, gc_seq, gfp);
- }
- 
- void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
-@@ -8144,15 +8147,18 @@ void nft_trans_gc_queue_async_done(struct nft_trans_gc *trans)
- 
- struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net)))
- 		return NULL;
- 
- 	if (nft_trans_gc_space(gc))
- 		return gc;
- 
-+	set = gc->set;
- 	call_rcu(&gc->rcu, nft_trans_gc_trans_free);
- 
--	return nft_trans_gc_alloc(gc->set, 0, gfp);
-+	return nft_trans_gc_alloc(set, 0, gfp);
- }
- 
- void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
+ static int axg_spdifin_iec958_info(struct snd_kcontrol *kcontrol,
 -- 
 2.40.1
 
