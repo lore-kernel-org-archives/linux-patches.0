@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF081A592
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26781A592
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDE7oNJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09556C433C8;
-	Mon,  9 Oct 2023 13:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvyXPwmW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E3C433C7;
+	Mon,  9 Oct 2023 13:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858744;
-	bh=T5aJqd73KS955GrmWNXhqQUpAwvpR3gPyAG5/Dw7b4s=;
+	s=korg; t=1696858747;
+	bh=vZauGHObljjEEP1RCeSBVVMMLXRyC6LBpjTSGwJr/ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDE7oNJeTXe1rmfcCo77CbnBy/aEF0+fmPvMUOJ+tWvlqzLB6f/vx7fG8r+5h7ZPi
-	 CkZ3RH0Vtz/MOCYLYX7HP3RSjbkvQABFUyt1TivkdcKOXqOMPsbsmbRffjEgr57d4S
-	 ZFuMEHx2Cq48wEg73oMUFCTKyU3gPaG3eevoxkIk=
+	b=WvyXPwmWjvkrN/P3eD+7y37dsxxs9zXn4Twdv5WRK0LcllevzBY+SaMOsoaXHb6sv
+	 7+RKYQZMby3yOXFzayKMCgsQzviK0xfMrpT9a0aEemEaC96RTpOmj7kC8XS0/HLG4s
+	 lwdseT+zZ9da81RRs2OuA/k0PHq6qoSQgI9nZxNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/226] net: rds: Fix possible NULL-pointer dereference
-Date: Mon,  9 Oct 2023 15:00:20 +0200
-Message-ID: <20231009130128.330313680@linuxfoundation.org>
+Subject: [PATCH 5.10 060/226] gpio: tb10x: Fix an error handling path in tb10x_gpio_probe()
+Date: Mon,  9 Oct 2023 15:00:21 +0200
+Message-ID: <20231009130128.355701093@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,43 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit f1d95df0f31048f1c59092648997686e3f7d9478 ]
+[ Upstream commit b547b5e52a0587e6b25ea520bf2f9e03d00cbcb6 ]
 
-In rds_rdma_cm_event_handler_cmn() check, if conn pointer exists
-before dereferencing it as rdma_set_service_type() argument
+If an error occurs after a successful irq_domain_add_linear() call, it
+should be undone by a corresponding irq_domain_remove(), as already done
+in the remove function.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: fd261ce6a30e ("rds: rdma: update rdma transport for tos")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c6ce2b6bffe5 ("gpio: add TB10x GPIO driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-tb10x.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index 5f741e51b4baa..bb38124a5d3db 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -86,10 +86,12 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
- 		break;
+diff --git a/drivers/gpio/gpio-tb10x.c b/drivers/gpio/gpio-tb10x.c
+index 866201cf5f65e..4a9dcaad4a6cb 100644
+--- a/drivers/gpio/gpio-tb10x.c
++++ b/drivers/gpio/gpio-tb10x.c
+@@ -195,7 +195,7 @@ static int tb10x_gpio_probe(struct platform_device *pdev)
+ 				handle_edge_irq, IRQ_NOREQUEST, IRQ_NOPROBE,
+ 				IRQ_GC_INIT_MASK_CACHE);
+ 		if (ret)
+-			return ret;
++			goto err_remove_domain;
  
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
--		rdma_set_service_type(cm_id, conn->c_tos);
--		/* XXX do we need to clean up if this fails? */
--		ret = rdma_resolve_route(cm_id,
-+		if (conn) {
-+			rdma_set_service_type(cm_id, conn->c_tos);
-+			/* XXX do we need to clean up if this fails? */
-+			ret = rdma_resolve_route(cm_id,
- 					 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+		}
- 		break;
+ 		gc = tb10x_gpio->domain->gc->gc[0];
+ 		gc->reg_base                         = tb10x_gpio->base;
+@@ -209,6 +209,10 @@ static int tb10x_gpio_probe(struct platform_device *pdev)
+ 	}
  
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
+ 	return 0;
++
++err_remove_domain:
++	irq_domain_remove(tb10x_gpio->domain);
++	return ret;
+ }
+ 
+ static int tb10x_gpio_remove(struct platform_device *pdev)
 -- 
 2.40.1
 
