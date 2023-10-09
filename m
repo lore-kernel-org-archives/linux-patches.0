@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F083419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00E33419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+i0b08e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAC3C433C8;
-	Mon,  9 Oct 2023 13:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6TR8JX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DB1C433C8;
+	Mon,  9 Oct 2023 13:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859579;
-	bh=Ea/Q146n3WDinjUjPWuwaOUeg2wR4ALlpr7u5zE162M=;
+	s=korg; t=1696859582;
+	bh=Li/NMcO3IFAecjF+ouIUwWldQIWvi+4XaaHBBhS1ULk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+i0b08ehj6KyNNSIiRhk5sC8RYcVyRd1gi+BuXodOeQWvQFCDwg1yMrhyIUW9jKm
-	 mNpEXXrBzcUap8e4pSIB1dlew3w0GgQ60ehuoLVvoANeP7puIm3qtlUejDj3r8yHHj
-	 VAL2VNE9PLSgYjgIYzqICdsmXW/X/Br+GjpPrIzA=
+	b=P6TR8JX/XLEoTeVf2KnV7W3frItSx14j6LVOSI8hDBm9M7p1kZK28Qy4DUcGBHky2
+	 KChhLWKMQ9MmRZcKIiMr9ho9zYn/DIhS4PMKqPmf08amDAliRd3kFfGsRWGtited+2
+	 Ck/R1yfWKLjBbtIC2MTLvcn63chUz+oQUaWmljrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 39/91] bpf: Clarify error expectations from bpf_clone_redirect
-Date: Mon,  9 Oct 2023 15:06:11 +0200
-Message-ID: <20231009130112.878726875@linuxfoundation.org>
+Subject: [PATCH 4.19 40/91] fbdev/sh7760fb: Depend on FB=y
+Date: Mon,  9 Oct 2023 15:06:12 +0200
+Message-ID: <20231009130112.909755401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -42,61 +45,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 7cb779a6867fea00b4209bcf6de2f178a743247d ]
+[ Upstream commit f75f71b2c418a27a7c05139bb27a0c83adf88d19 ]
 
-Commit 151e887d8ff9 ("veth: Fixing transmit return status for dropped
-packets") exposed the fact that bpf_clone_redirect is capable of
-returning raw NET_XMIT_XXX return codes.
+Fix linker error if FB=m about missing fb_io_read and fb_io_write. The
+linker's error message suggests that this config setting has already
+been broken for other symbols.
 
-This is in the conflict with its UAPI doc which says the following:
-"0 on success, or a negative error in case of failure."
+  All errors (new ones prefixed by >>):
 
-Update the UAPI to reflect the fact that bpf_clone_redirect can
-return positive error numbers, but don't explicitly define
-their meaning.
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_probe':
+     sh7760fb.c:(.text+0x374): undefined reference to `framebuffer_alloc'
+     sh4-linux-ld: sh7760fb.c:(.text+0x394): undefined reference to `fb_videomode_to_var'
+     sh4-linux-ld: sh7760fb.c:(.text+0x39c): undefined reference to `fb_alloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3a4): undefined reference to `register_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3ac): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x434): undefined reference to `framebuffer_release'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_remove':
+     sh7760fb.c:(.text+0x800): undefined reference to `unregister_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x804): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x814): undefined reference to `framebuffer_release'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0xc): undefined reference to `fb_io_read'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x10): undefined reference to `fb_io_write'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x2c): undefined reference to `cfb_fillrect'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x30): undefined reference to `cfb_copyarea'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x34): undefined reference to `cfb_imageblit'
 
-Reported-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230911194731.286342-1-sdf@google.com
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309130632.LS04CPWu-lkp@intel.com/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230918090400.13264-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       | 4 +++-
- tools/include/uapi/linux/bpf.h | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index 6334aede67fc2..91c43f3756123 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -693,7 +693,9 @@ union bpf_attr {
-  * 		performed again, if the helper is used in combination with
-  * 		direct packet access.
-  * 	Return
-- * 		0 on success, or a negative error in case of failure.
-+ * 		0 on success, or a negative error in case of failure. Positive
-+ * 		error indicates a potential drop or congestion in the target
-+ * 		device. The particular positive error codes are not defined.
-  *
-  * u64 bpf_get_current_pid_tgid(void)
-  * 	Return
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index 0c30ab898e2a5..37259bae15010 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -691,7 +691,9 @@ union bpf_attr {
-  * 		performed again, if the helper is used in combination with
-  * 		direct packet access.
-  * 	Return
-- * 		0 on success, or a negative error in case of failure.
-+ * 		0 on success, or a negative error in case of failure. Positive
-+ * 		error indicates a potential drop or congestion in the target
-+ * 		device. The particular positive error codes are not defined.
-  *
-  * u64 bpf_get_current_pid_tgid(void)
-  * 	Return
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index afb0c9e4d7382..8e224ee27ade9 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2085,7 +2085,7 @@ config FB_COBALT
+ 
+ config FB_SH7760
+ 	bool "SH7760/SH7763/SH7720/SH7721 LCDC support"
+-	depends on FB && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
++	depends on FB=y && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
+ 		|| CPU_SUBTYPE_SH7720 || CPU_SUBTYPE_SH7721)
+ 	select FB_CFB_FILLRECT
+ 	select FB_CFB_COPYAREA
 -- 
 2.40.1
 
