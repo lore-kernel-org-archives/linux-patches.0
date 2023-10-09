@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F279B19469
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09F719464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7NCdOOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B81C433C8;
-	Mon,  9 Oct 2023 13:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEW5BvTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61325C433CA;
+	Mon,  9 Oct 2023 13:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857219;
-	bh=+RnOo12wrl1I0feDyrsJ1jQTrrpwpWverXEySU6V90A=;
+	s=korg; t=1696857222;
+	bh=DgSxvAG+N9ivN8KxrHJwtVDM+0fdQHrPPP52LBep420=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7NCdOOk1U7WVzR1wpGU8c4BnqcZ4SmAyeFrHQbXZzO2eFFS3lxwj53tMJTYisdLP
-	 FFkwZFf4MBQiopsjXZPqvyQLSr7BioW57E9J9vuy2k/mR97k2nM+wvj9LtLb0pgP03
-	 Bgk0qtzP66LYBzqP2F6r4/8yL5VC3hhg46oxeKRE=
+	b=MEW5BvTdhgkhYawBwZE4oIVdYBULm3wZkeTx2rwkIYZ6LaY4B9uC6TfUVTjaAwBqG
+	 g4A/v9OhSCfmaaJmr1RQGscI+SjE6CtFSHPQe7uhFp/uXP60r287A4QEntlAlKh6b/
+	 VFgBizlbBiLS2kRJRdW4rosUcE9MbGRFsC5YbgJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 137/163] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
-Date: Mon,  9 Oct 2023 15:01:41 +0200
-Message-ID: <20231009130127.830600934@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 120/163] selftests: netfilter: Extend nft_audit.sh
+Date: Mon,  9 Oct 2023 15:01:24 +0200
+Message-ID: <20231009130127.350354705@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -41,118 +42,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Phil Sutter <phil@nwl.cc>
 
-commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
+[ Upstream commit 203bb9d39866d3c5a8135433ce3742fe4f9d5741 ]
 
-Back in 2005, Kyle McMartin removed the 16-byte alignment for
-ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
-spinlocks on pre PA8800 processors. The main symptom was random
-faults in mmap'd memory (e.g., gcc compilations, etc).
+Add tests for sets and elements and deletion of all kinds. Also
+reorder rule reset tests: By moving the bulk rule add command up, the
+two 'reset rules' tests become identical.
 
-Unfortunately, the errata for this ldcw change is lost.
+While at it, fix for a failing bulk rule add test's error status getting
+lost due to its use in a pipe. Avoid this by using a temporary file.
 
-The issue is the 16-byte alignment required for ldcw semaphore
-instructions can only be reduced to natural alignment when the
-ldcw operation can be handled coherently in cache. Only PA8800
-and PA8900 processors actually support doing the operation in
-cache.
+Headings in diff output for failing tests contain no useful data, strip
+them.
 
-Aligning the spinlock dynamically adds two integer instructions
-to each spinlock.
-
-Tested on rp3440, c8000 and a500.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
-Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 0d880dc6f032 ("netfilter: nf_tables: Deduplicate nft_register_obj audit logs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/ldcw.h           |   37 ++++++++++++++++---------------
- arch/parisc/include/asm/spinlock_types.h |    5 ----
- 2 files changed, 20 insertions(+), 22 deletions(-)
+ .../testing/selftests/netfilter/nft_audit.sh  | 97 ++++++++++++++++---
+ 1 file changed, 81 insertions(+), 16 deletions(-)
 
---- a/arch/parisc/include/asm/ldcw.h
-+++ b/arch/parisc/include/asm/ldcw.h
-@@ -2,39 +2,42 @@
- #ifndef __PARISC_LDCW_H
- #define __PARISC_LDCW_H
+diff --git a/tools/testing/selftests/netfilter/nft_audit.sh b/tools/testing/selftests/netfilter/nft_audit.sh
+index 83c271b1c7352..0b3255e7b3538 100755
+--- a/tools/testing/selftests/netfilter/nft_audit.sh
++++ b/tools/testing/selftests/netfilter/nft_audit.sh
+@@ -12,10 +12,11 @@ nft --version >/dev/null 2>&1 || {
+ }
  
--#ifndef CONFIG_PA20
- /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
-    and GCC only guarantees 8-byte alignment for stack locals, we can't
-    be assured of 16-byte alignment for atomic lock data even if we
-    specify "__attribute ((aligned(16)))" in the type declaration.  So,
-    we use a struct containing an array of four ints for the atomic lock
-    type and dynamically select the 16-byte aligned int from the array
--   for the semaphore.  */
-+   for the semaphore. */
+ logfile=$(mktemp)
++rulefile=$(mktemp)
+ echo "logging into $logfile"
+ ./audit_logread >"$logfile" &
+ logread_pid=$!
+-trap 'kill $logread_pid; rm -f $logfile' EXIT
++trap 'kill $logread_pid; rm -f $logfile $rulefile' EXIT
+ exec 3<"$logfile"
+ 
+ do_test() { # (cmd, log)
+@@ -26,12 +27,14 @@ do_test() { # (cmd, log)
+ 	res=$(diff -a -u <(echo "$2") - <&3)
+ 	[ $? -eq 0 ] && { echo "OK"; return; }
+ 	echo "FAIL"
+-	echo "$res"
+-	((RC++))
++	grep -v '^\(---\|+++\|@@\)' <<< "$res"
++	((RC--))
+ }
+ 
+ nft flush ruleset
+ 
++# adding tables, chains and rules
 +
-+/* From: "Jim Hull" <jim.hull of hp.com>
-+   I've attached a summary of the change, but basically, for PA 2.0, as
-+   long as the ",CO" (coherent operation) completer is implemented, then the
-+   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
-+   they only require "natural" alignment (4-byte for ldcw, 8-byte for
-+   ldcd).
+ for table in t1 t2; do
+ 	do_test "nft add table $table" \
+ 	"table=$table family=2 entries=1 op=nft_register_table"
+@@ -62,6 +65,28 @@ for table in t1 t2; do
+ 	"table=$table family=2 entries=6 op=nft_register_rule"
+ done
+ 
++for ((i = 0; i < 500; i++)); do
++	echo "add rule t2 c3 counter accept comment \"rule $i\""
++done >$rulefile
++do_test "nft -f $rulefile" \
++'table=t2 family=2 entries=500 op=nft_register_rule'
 +
-+   Although the cache control hint is accepted by all PA 2.0 processors,
-+   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
-+   require 16-byte alignment. If the address is unaligned, the operation
-+   of the instruction is undefined. The ldcw instruction does not generate
-+   unaligned data reference traps so misaligned accesses are not detected.
-+   This hid the problem for years. So, restore the 16-byte alignment dropped
-+   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
++# adding sets and elements
++
++settype='type inet_service; counter'
++setelem='{ 22, 80, 443 }'
++setblock="{ $settype; elements = $setelem; }"
++do_test "nft add set t1 s $setblock" \
++"table=t1 family=2 entries=4 op=nft_register_set"
++
++do_test "nft add set t1 s2 $setblock; add set t1 s3 { $settype; }" \
++"table=t1 family=2 entries=5 op=nft_register_set"
++
++do_test "nft add element t1 s3 $setelem" \
++"table=t1 family=2 entries=3 op=nft_register_setelem"
++
++# resetting rules
++
+ do_test 'nft reset rules t1 c2' \
+ 'table=t1 family=2 entries=3 op=nft_reset_rule'
  
- #define __PA_LDCW_ALIGNMENT	16
--#define __PA_LDCW_ALIGN_ORDER	4
- #define __ldcw_align(a) ({					\
- 	unsigned long __ret = (unsigned long) &(a)->lock[0];	\
- 	__ret = (__ret + __PA_LDCW_ALIGNMENT - 1)		\
- 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
- 	(volatile unsigned int *) __ret;			\
- })
--#define __LDCW	"ldcw"
+@@ -70,19 +95,6 @@ do_test 'nft reset rules table t1' \
+ table=t1 family=2 entries=3 op=nft_reset_rule
+ table=t1 family=2 entries=3 op=nft_reset_rule'
  
--#else /*CONFIG_PA20*/
--/* From: "Jim Hull" <jim.hull of hp.com>
--   I've attached a summary of the change, but basically, for PA 2.0, as
--   long as the ",CO" (coherent operation) completer is specified, then the
--   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
--   they only require "natural" alignment (4-byte for ldcw, 8-byte for
--   ldcd). */
+-do_test 'nft reset rules' \
+-'table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule'
 -
--#define __PA_LDCW_ALIGNMENT	4
--#define __PA_LDCW_ALIGN_ORDER	2
--#define __ldcw_align(a) (&(a)->slock)
-+#ifdef CONFIG_PA20
- #define __LDCW	"ldcw,co"
+-for ((i = 0; i < 500; i++)); do
+-	echo "add rule t2 c3 counter accept comment \"rule $i\""
+-done | do_test 'nft -f -' \
+-'table=t2 family=2 entries=500 op=nft_register_rule'
 -
--#endif /*!CONFIG_PA20*/
-+#else
-+#define __LDCW	"ldcw"
-+#endif
+ do_test 'nft reset rules t2 c3' \
+ 'table=t2 family=2 entries=189 op=nft_reset_rule
+ table=t2 family=2 entries=188 op=nft_reset_rule
+@@ -105,4 +117,57 @@ table=t2 family=2 entries=180 op=nft_reset_rule
+ table=t2 family=2 entries=188 op=nft_reset_rule
+ table=t2 family=2 entries=135 op=nft_reset_rule'
  
- /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
-    We don't explicitly expose that "*a" may be written as reload
---- a/arch/parisc/include/asm/spinlock_types.h
-+++ b/arch/parisc/include/asm/spinlock_types.h
-@@ -9,15 +9,10 @@
- #ifndef __ASSEMBLY__
- 
- typedef struct {
--#ifdef CONFIG_PA20
--	volatile unsigned int slock;
--# define __ARCH_SPIN_LOCK_UNLOCKED { __ARCH_SPIN_LOCK_UNLOCKED_VAL }
--#else
- 	volatile unsigned int lock[4];
- # define __ARCH_SPIN_LOCK_UNLOCKED	\
- 	{ { __ARCH_SPIN_LOCK_UNLOCKED_VAL, __ARCH_SPIN_LOCK_UNLOCKED_VAL, \
- 	    __ARCH_SPIN_LOCK_UNLOCKED_VAL, __ARCH_SPIN_LOCK_UNLOCKED_VAL } }
--#endif
- } arch_spinlock_t;
- 
- 
++# resetting sets and elements
++
++elem=(22 ,80 ,443)
++relem=""
++for i in {1..3}; do
++	relem+="${elem[((i - 1))]}"
++	do_test "nft reset element t1 s { $relem }" \
++	"table=t1 family=2 entries=$i op=nft_reset_setelem"
++done
++
++do_test 'nft reset set t1 s' \
++'table=t1 family=2 entries=3 op=nft_reset_setelem'
++
++# deleting rules
++
++readarray -t handles < <(nft -a list chain t1 c1 | \
++			 sed -n 's/.*counter.* handle \(.*\)$/\1/p')
++
++do_test "nft delete rule t1 c1 handle ${handles[0]}" \
++'table=t1 family=2 entries=1 op=nft_unregister_rule'
++
++cmd='delete rule t1 c1 handle'
++do_test "nft $cmd ${handles[1]}; $cmd ${handles[2]}" \
++'table=t1 family=2 entries=2 op=nft_unregister_rule'
++
++do_test 'nft flush chain t1 c2' \
++'table=t1 family=2 entries=3 op=nft_unregister_rule'
++
++do_test 'nft flush table t2' \
++'table=t2 family=2 entries=509 op=nft_unregister_rule'
++
++# deleting chains
++
++do_test 'nft delete chain t2 c2' \
++'table=t2 family=2 entries=1 op=nft_unregister_chain'
++
++# deleting sets and elements
++
++do_test 'nft delete element t1 s { 22 }' \
++'table=t1 family=2 entries=1 op=nft_unregister_setelem'
++
++do_test 'nft delete element t1 s { 80, 443 }' \
++'table=t1 family=2 entries=2 op=nft_unregister_setelem'
++
++do_test 'nft flush set t1 s2' \
++'table=t1 family=2 entries=3 op=nft_unregister_setelem'
++
++do_test 'nft delete set t1 s2' \
++'table=t1 family=2 entries=1 op=nft_unregister_set'
++
++do_test 'nft delete set t1 s3' \
++'table=t1 family=2 entries=1 op=nft_unregister_set'
++
+ exit $RC
+-- 
+2.40.1
+
 
 
