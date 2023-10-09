@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9534D30F85
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05D0328A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOT9rRTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF2DC433CA;
-	Mon,  9 Oct 2023 13:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF1jsoQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500A4C433C7;
+	Mon,  9 Oct 2023 13:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858668;
-	bh=FE7vC6EVsMKOrG6q7YkR61idSPqFvLWcuoRwoB1fkrI=;
+	s=korg; t=1696858671;
+	bh=QSPCAUUw5md9GL2X0eMPxbr276C3zUIZTR00Pf+K51o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOT9rRTHu7+ki7QlgtWqyEl75vjdL5cph/xtZw57biwHq2FpMBkTdr5w8Pe37mqoB
-	 067VhfSiPCXGSOI8O+NOT1oq2Q3okoqYKivJHcF90WemOIGYHyzSRpQyQOWfYeUdM7
-	 EK49fa/ioS7fJYPeLpixNTLvvZPXLHOQLDWgpe5w=
+	b=vF1jsoQ26MmGspe3SmjNp+vJFj8vxGRam5YMV+On1mjw9s4p47Wgx/oXMEsrr6vxn
+	 pLuh80QKuTEcj6Hz1ODf6O/I2ppmv9Pv5OuFvh9EMsHI/mb8Md/3Z7Agh4rGMf95DN
+	 EmngQ+BbPR0ZCAXgv5R6ZgED5wluBpyJcjrbHgGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Ahmed S. Darwish" <a.darwish@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/226] netfilter: nf_tables: GC transaction race with abort path
-Date: Mon,  9 Oct 2023 14:59:46 +0200
-Message-ID: <20231009130127.410234967@linuxfoundation.org>
+Subject: [PATCH 5.10 056/226] seqlock: Prefix internal seqcount_t-only macros with a "do_"
+Date: Mon,  9 Oct 2023 15:00:17 +0200
+Message-ID: <20231009130128.253941942@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,38 +42,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ahmed S. Darwish <a.darwish@linutronix.de>
 
-commit 720344340fb9be2765bbaab7b292ece0a4570eae upstream.
+[ Upstream commit 66bcfcdf89d00f2409f4b5da0f8c20c08318dc72 ]
 
-Abort path is missing a synchronization point with GC transactions. Add
-GC sequence number hence any GC transaction losing race will be
-discarded.
+When the seqcount_LOCKNAME_t group of data types were introduced, two
+classes of seqlock.h sequence counter macros were added:
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  - An external public API which can either take a plain seqcount_t or
+    any of the seqcount_LOCKNAME_t variants.
+
+  - An internal API which takes only a plain seqcount_t.
+
+To distinguish between the two groups, the "*_seqcount_t_*" pattern was
+used for the latter. This confused a number of mm/ call-site developers,
+and Linus also commented that it was not a standard practice for marking
+seqlock.h internal APIs.
+
+Distinguish the latter group of macros by prefixing a "do_".
+
+Signed-off-by: Ahmed S. Darwish <a.darwish@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/CAHk-=wikhGExmprXgaW+MVXG1zsGpztBbVwOb23vetk41EtTBQ@mail.gmail.com
+Stable-dep-of: 41b43b6c6e30 ("locking/seqlock: Do the lockdep annotation before locking in do_write_seqcount_begin_nested()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/seqlock.h | 66 ++++++++++++++++++++---------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 78bf82f89ecd8..1f67931b86d8e 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8844,7 +8844,12 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
- 			   enum nfnl_abort_action action)
- {
- 	struct nftables_pernet *nft_net = net_generic(net, nf_tables_net_id);
--	int ret = __nf_tables_abort(net, action);
-+	unsigned int gc_seq;
-+	int ret;
-+
-+	gc_seq = nft_gc_seq_begin(nft_net);
-+	ret = __nf_tables_abort(net, action);
-+	nft_gc_seq_end(nft_net, gc_seq);
+diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
+index 66993e9ef90d9..008fa88ad58e7 100644
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -425,9 +425,9 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
+  * Return: true if a read section retry is required, else false
+  */
+ #define __read_seqcount_retry(s, start)					\
+-	__read_seqcount_t_retry(seqprop_ptr(s), start)
++	do___read_seqcount_retry(seqprop_ptr(s), start)
  
- 	mutex_unlock(&nft_net->commit_mutex);
+-static inline int __read_seqcount_t_retry(const seqcount_t *s, unsigned start)
++static inline int do___read_seqcount_retry(const seqcount_t *s, unsigned start)
+ {
+ 	kcsan_atomic_next(0);
+ 	return unlikely(READ_ONCE(s->sequence) != start);
+@@ -445,12 +445,12 @@ static inline int __read_seqcount_t_retry(const seqcount_t *s, unsigned start)
+  * Return: true if a read section retry is required, else false
+  */
+ #define read_seqcount_retry(s, start)					\
+-	read_seqcount_t_retry(seqprop_ptr(s), start)
++	do_read_seqcount_retry(seqprop_ptr(s), start)
+ 
+-static inline int read_seqcount_t_retry(const seqcount_t *s, unsigned start)
++static inline int do_read_seqcount_retry(const seqcount_t *s, unsigned start)
+ {
+ 	smp_rmb();
+-	return __read_seqcount_t_retry(s, start);
++	return do___read_seqcount_retry(s, start);
+ }
+ 
+ /**
+@@ -462,10 +462,10 @@ do {									\
+ 	if (seqprop_preemptible(s))					\
+ 		preempt_disable();					\
+ 									\
+-	raw_write_seqcount_t_begin(seqprop_ptr(s));			\
++	do_raw_write_seqcount_begin(seqprop_ptr(s));			\
+ } while (0)
+ 
+-static inline void raw_write_seqcount_t_begin(seqcount_t *s)
++static inline void do_raw_write_seqcount_begin(seqcount_t *s)
+ {
+ 	kcsan_nestable_atomic_begin();
+ 	s->sequence++;
+@@ -478,13 +478,13 @@ static inline void raw_write_seqcount_t_begin(seqcount_t *s)
+  */
+ #define raw_write_seqcount_end(s)					\
+ do {									\
+-	raw_write_seqcount_t_end(seqprop_ptr(s));			\
++	do_raw_write_seqcount_end(seqprop_ptr(s));			\
+ 									\
+ 	if (seqprop_preemptible(s))					\
+ 		preempt_enable();					\
+ } while (0)
+ 
+-static inline void raw_write_seqcount_t_end(seqcount_t *s)
++static inline void do_raw_write_seqcount_end(seqcount_t *s)
+ {
+ 	smp_wmb();
+ 	s->sequence++;
+@@ -506,12 +506,12 @@ do {									\
+ 	if (seqprop_preemptible(s))					\
+ 		preempt_disable();					\
+ 									\
+-	write_seqcount_t_begin_nested(seqprop_ptr(s), subclass);	\
++	do_write_seqcount_begin_nested(seqprop_ptr(s), subclass);	\
+ } while (0)
+ 
+-static inline void write_seqcount_t_begin_nested(seqcount_t *s, int subclass)
++static inline void do_write_seqcount_begin_nested(seqcount_t *s, int subclass)
+ {
+-	raw_write_seqcount_t_begin(s);
++	do_raw_write_seqcount_begin(s);
+ 	seqcount_acquire(&s->dep_map, subclass, 0, _RET_IP_);
+ }
+ 
+@@ -533,12 +533,12 @@ do {									\
+ 	if (seqprop_preemptible(s))					\
+ 		preempt_disable();					\
+ 									\
+-	write_seqcount_t_begin(seqprop_ptr(s));				\
++	do_write_seqcount_begin(seqprop_ptr(s));			\
+ } while (0)
+ 
+-static inline void write_seqcount_t_begin(seqcount_t *s)
++static inline void do_write_seqcount_begin(seqcount_t *s)
+ {
+-	write_seqcount_t_begin_nested(s, 0);
++	do_write_seqcount_begin_nested(s, 0);
+ }
+ 
+ /**
+@@ -549,16 +549,16 @@ static inline void write_seqcount_t_begin(seqcount_t *s)
+  */
+ #define write_seqcount_end(s)						\
+ do {									\
+-	write_seqcount_t_end(seqprop_ptr(s));				\
++	do_write_seqcount_end(seqprop_ptr(s));				\
+ 									\
+ 	if (seqprop_preemptible(s))					\
+ 		preempt_enable();					\
+ } while (0)
+ 
+-static inline void write_seqcount_t_end(seqcount_t *s)
++static inline void do_write_seqcount_end(seqcount_t *s)
+ {
+ 	seqcount_release(&s->dep_map, _RET_IP_);
+-	raw_write_seqcount_t_end(s);
++	do_raw_write_seqcount_end(s);
+ }
+ 
+ /**
+@@ -603,9 +603,9 @@ static inline void write_seqcount_t_end(seqcount_t *s)
+  *      }
+  */
+ #define raw_write_seqcount_barrier(s)					\
+-	raw_write_seqcount_t_barrier(seqprop_ptr(s))
++	do_raw_write_seqcount_barrier(seqprop_ptr(s))
+ 
+-static inline void raw_write_seqcount_t_barrier(seqcount_t *s)
++static inline void do_raw_write_seqcount_barrier(seqcount_t *s)
+ {
+ 	kcsan_nestable_atomic_begin();
+ 	s->sequence++;
+@@ -623,9 +623,9 @@ static inline void raw_write_seqcount_t_barrier(seqcount_t *s)
+  * will complete successfully and see data older than this.
+  */
+ #define write_seqcount_invalidate(s)					\
+-	write_seqcount_t_invalidate(seqprop_ptr(s))
++	do_write_seqcount_invalidate(seqprop_ptr(s))
+ 
+-static inline void write_seqcount_t_invalidate(seqcount_t *s)
++static inline void do_write_seqcount_invalidate(seqcount_t *s)
+ {
+ 	smp_wmb();
+ 	kcsan_nestable_atomic_begin();
+@@ -862,9 +862,9 @@ static inline unsigned read_seqretry(const seqlock_t *sl, unsigned start)
+ }
+ 
+ /*
+- * For all seqlock_t write side functions, use write_seqcount_*t*_begin()
+- * instead of the generic write_seqcount_begin(). This way, no redundant
+- * lockdep_assert_held() checks are added.
++ * For all seqlock_t write side functions, use the the internal
++ * do_write_seqcount_begin() instead of generic write_seqcount_begin().
++ * This way, no redundant lockdep_assert_held() checks are added.
+  */
+ 
+ /**
+@@ -883,7 +883,7 @@ static inline unsigned read_seqretry(const seqlock_t *sl, unsigned start)
+ static inline void write_seqlock(seqlock_t *sl)
+ {
+ 	spin_lock(&sl->lock);
+-	write_seqcount_t_begin(&sl->seqcount.seqcount);
++	do_write_seqcount_begin(&sl->seqcount.seqcount);
+ }
+ 
+ /**
+@@ -895,7 +895,7 @@ static inline void write_seqlock(seqlock_t *sl)
+  */
+ static inline void write_sequnlock(seqlock_t *sl)
+ {
+-	write_seqcount_t_end(&sl->seqcount.seqcount);
++	do_write_seqcount_end(&sl->seqcount.seqcount);
+ 	spin_unlock(&sl->lock);
+ }
+ 
+@@ -909,7 +909,7 @@ static inline void write_sequnlock(seqlock_t *sl)
+ static inline void write_seqlock_bh(seqlock_t *sl)
+ {
+ 	spin_lock_bh(&sl->lock);
+-	write_seqcount_t_begin(&sl->seqcount.seqcount);
++	do_write_seqcount_begin(&sl->seqcount.seqcount);
+ }
+ 
+ /**
+@@ -922,7 +922,7 @@ static inline void write_seqlock_bh(seqlock_t *sl)
+  */
+ static inline void write_sequnlock_bh(seqlock_t *sl)
+ {
+-	write_seqcount_t_end(&sl->seqcount.seqcount);
++	do_write_seqcount_end(&sl->seqcount.seqcount);
+ 	spin_unlock_bh(&sl->lock);
+ }
+ 
+@@ -936,7 +936,7 @@ static inline void write_sequnlock_bh(seqlock_t *sl)
+ static inline void write_seqlock_irq(seqlock_t *sl)
+ {
+ 	spin_lock_irq(&sl->lock);
+-	write_seqcount_t_begin(&sl->seqcount.seqcount);
++	do_write_seqcount_begin(&sl->seqcount.seqcount);
+ }
+ 
+ /**
+@@ -948,7 +948,7 @@ static inline void write_seqlock_irq(seqlock_t *sl)
+  */
+ static inline void write_sequnlock_irq(seqlock_t *sl)
+ {
+-	write_seqcount_t_end(&sl->seqcount.seqcount);
++	do_write_seqcount_end(&sl->seqcount.seqcount);
+ 	spin_unlock_irq(&sl->lock);
+ }
+ 
+@@ -957,7 +957,7 @@ static inline unsigned long __write_seqlock_irqsave(seqlock_t *sl)
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&sl->lock, flags);
+-	write_seqcount_t_begin(&sl->seqcount.seqcount);
++	do_write_seqcount_begin(&sl->seqcount.seqcount);
+ 	return flags;
+ }
+ 
+@@ -986,7 +986,7 @@ static inline unsigned long __write_seqlock_irqsave(seqlock_t *sl)
+ static inline void
+ write_sequnlock_irqrestore(seqlock_t *sl, unsigned long flags)
+ {
+-	write_seqcount_t_end(&sl->seqcount.seqcount);
++	do_write_seqcount_end(&sl->seqcount.seqcount);
+ 	spin_unlock_irqrestore(&sl->lock, flags);
+ }
  
 -- 
 2.40.1
