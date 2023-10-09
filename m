@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05A1328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD615328DB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0XTbiMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB31C433C8;
-	Mon,  9 Oct 2023 13:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3POc8So"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B67EC433C9;
+	Mon,  9 Oct 2023 13:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858956;
-	bh=sIgrf7WlLwyaljrUuTMJv7Y5vKj7NOEHUmeWK5/OBys=;
+	s=korg; t=1696858959;
+	bh=CWzsC9lJcB50J1KiKL0ARlBnnbfERfFD2MrwCj4GfVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0XTbiMbxEpxNbzjng52J40MxN9hW7YKTlzmIWw3wEdI1K5gOwwmM5Wk7DalKg+nY
-	 DZp7NNfo0yT+M4liyRi0vbhXXrIfrSZmUyRryT0RIBLByy3a+wYpRE8H7Jvr0c9lqU
-	 B2gWvgb2hPmLdmUA22F4KdZgXh8tcE3YfUWr7B5Y=
+	b=H3POc8So91zvyXm8vlpuEdfBalXgAbfHRYs0I5YDk5Lf5iNZ1SsN/+OM2hgtWZw87
+	 smaWNEIDGZ9pKe7XjFb/4iQCqnb6WC3Y511ahl41rroOEu2JFO+FwCDWFOOheqMe45
+	 +MzrMWODSylj3lav953q9DkXcr9FpES63nT5DIQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	"Ricardo B. Marliere" <rbmarliere@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/226] powerpc/watchpoints: Disable preemption in thread_change_pc()
-Date: Mon,  9 Oct 2023 15:01:26 +0200
-Message-ID: <20231009130130.041988192@linuxfoundation.org>
+Subject: [PATCH 5.10 116/226] selftests: fix dependency checker script
+Date: Mon,  9 Oct 2023 15:01:17 +0200
+Message-ID: <20231009130129.808510331@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,56 +42,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Ricardo B. Marliere <rbmarliere@gmail.com>
 
-[ Upstream commit cc879ab3ce39bc39f9b1d238b283f43a5f6f957d ]
+[ Upstream commit 5f9dd2e896a91bfca90f8463eb6808c03d535d8a ]
 
-thread_change_pc() uses CPU local data, so must be protected from
-swapping CPUs while it is reading the breakpoint struct.
+This patch fixes inconsistencies in the parsing rules of the levels 1
+and 2 of the kselftest_deps.sh.  It was added the levels 4 and 5 to
+account for a few edge cases that are present in some tests, also some
+minor identation styling have been fixed (s/    /\t/g).
 
-The error is more noticeable after 1e60f3564bad ("powerpc/watchpoints:
-Track perf single step directly on the breakpoint"), which added an
-unconditional __this_cpu_read() call in thread_change_pc(). However the
-existing __this_cpu_read() that runs if a breakpoint does need to be
-re-inserted has the same issue.
-
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230829063457.54157-2-bgray@linux.ibm.com
+Signed-off-by: Ricardo B. Marliere <rbmarliere@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/hw_breakpoint.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/testing/selftests/kselftest_deps.sh | 77 +++++++++++++++++++----
+ 1 file changed, 65 insertions(+), 12 deletions(-)
 
-diff --git a/arch/powerpc/kernel/hw_breakpoint.c b/arch/powerpc/kernel/hw_breakpoint.c
-index f4e8f21046f54..6e5bed50c3578 100644
---- a/arch/powerpc/kernel/hw_breakpoint.c
-+++ b/arch/powerpc/kernel/hw_breakpoint.c
-@@ -479,11 +479,13 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
- 	struct arch_hw_breakpoint *info;
- 	int i;
+diff --git a/tools/testing/selftests/kselftest_deps.sh b/tools/testing/selftests/kselftest_deps.sh
+index bbc04646346b2..e6010de678200 100755
+--- a/tools/testing/selftests/kselftest_deps.sh
++++ b/tools/testing/selftests/kselftest_deps.sh
+@@ -46,11 +46,11 @@ fi
+ print_targets=0
  
-+	preempt_disable();
-+
- 	for (i = 0; i < nr_wp_slots(); i++) {
- 		if (unlikely(tsk->thread.last_hit_ubp[i]))
- 			goto reset;
- 	}
--	return;
-+	goto out;
+ while getopts "p" arg; do
+-    case $arg in
+-        p)
++	case $arg in
++		p)
+ 		print_targets=1
+ 	shift;;
+-    esac
++	esac
+ done
  
- reset:
- 	regs->msr &= ~MSR_SE;
-@@ -492,6 +494,9 @@ void thread_change_pc(struct task_struct *tsk, struct pt_regs *regs)
- 		__set_breakpoint(i, info);
- 		tsk->thread.last_hit_ubp[i] = NULL;
- 	}
+ if [ $# -eq 0 ]
+@@ -92,6 +92,10 @@ pass_cnt=0
+ # Get all TARGETS from selftests Makefile
+ targets=$(egrep "^TARGETS +|^TARGETS =" Makefile | cut -d "=" -f2)
+ 
++# Initially, in LDLIBS related lines, the dep checker needs
++# to ignore lines containing the following strings:
++filter="\$(VAR_LDLIBS)\|pkg-config\|PKG_CONFIG\|IOURING_EXTRA_LIBS"
 +
-+out:
-+	preempt_enable();
+ # Single test case
+ if [ $# -eq 2 ]
+ then
+@@ -100,6 +104,8 @@ then
+ 	l1_test $test
+ 	l2_test $test
+ 	l3_test $test
++	l4_test $test
++	l5_test $test
+ 
+ 	print_results $1 $2
+ 	exit $?
+@@ -113,7 +119,7 @@ fi
+ # Append space at the end of the list to append more tests.
+ 
+ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
+-		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
++		grep -v "$filter" | awk -F: '{print $1}' | uniq)
+ 
+ # Level 2: LDLIBS set dynamically.
+ #
+@@ -126,7 +132,7 @@ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
+ # Append space at the end of the list to append more tests.
+ 
+ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
+-		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
++		grep -v "$filter" | awk -F: '{print $1}' | uniq)
+ 
+ # Level 3
+ # gpio,  memfd and others use pkg-config to find mount and fuse libs
+@@ -140,11 +146,32 @@ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
+ #	VAR_LDLIBS := $(shell pkg-config fuse --libs 2>/dev/null)
+ 
+ l3_tests=$(grep -r --include=Makefile "^VAR_LDLIBS" | \
+-		grep -v "pkg-config" | awk -F: '{print $1}')
++		grep -v "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
+ 
+-#echo $l1_tests
+-#echo $l2_1_tests
+-#echo $l3_tests
++# Level 4
++# some tests may fall back to default using `|| echo -l<libname>`
++# if pkg-config doesn't find the libs, instead of using VAR_LDLIBS
++# as per level 3 checks.
++# e.g:
++# netfilter/Makefile
++#	LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
++l4_tests=$(grep -r --include=Makefile "^LDLIBS" | \
++		grep "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
++
++# Level 5
++# some tests may use IOURING_EXTRA_LIBS to add extra libs to LDLIBS,
++# which in turn may be defined in a sub-Makefile
++# e.g.:
++# mm/Makefile
++#	$(OUTPUT)/gup_longterm: LDLIBS += $(IOURING_EXTRA_LIBS)
++l5_tests=$(grep -r --include=Makefile "LDLIBS +=.*\$(IOURING_EXTRA_LIBS)" | \
++	awk -F: '{print $1}' | uniq)
++
++#echo l1_tests $l1_tests
++#echo l2_tests $l2_tests
++#echo l3_tests $l3_tests
++#echo l4_tests $l4_tests
++#echo l5_tests $l5_tests
+ 
+ all_tests
+ print_results $1 $2
+@@ -166,24 +193,32 @@ all_tests()
+ 	for test in $l3_tests; do
+ 		l3_test $test
+ 	done
++
++	for test in $l4_tests; do
++		l4_test $test
++	done
++
++	for test in $l5_tests; do
++		l5_test $test
++	done
  }
  
- static bool is_larx_stcx_instr(int type)
+ # Use same parsing used for l1_tests and pick libraries this time.
+ l1_test()
+ {
+ 	test_libs=$(grep --include=Makefile "^LDLIBS" $test | \
+-			grep -v "VAR_LDLIBS" | \
++			grep -v "$filter" | \
+ 			sed -e 's/\:/ /' | \
+ 			sed -e 's/+/ /' | cut -d "=" -f 2)
+ 
+ 	check_libs $test $test_libs
+ }
+ 
+-# Use same parsing used for l2__tests and pick libraries this time.
++# Use same parsing used for l2_tests and pick libraries this time.
+ l2_test()
+ {
+ 	test_libs=$(grep --include=Makefile ": LDLIBS" $test | \
+-			grep -v "VAR_LDLIBS" | \
++			grep -v "$filter" | \
+ 			sed -e 's/\:/ /' | sed -e 's/+/ /' | \
+ 			cut -d "=" -f 2)
+ 
+@@ -199,6 +234,24 @@ l3_test()
+ 	check_libs $test $test_libs
+ }
+ 
++l4_test()
++{
++	test_libs=$(grep --include=Makefile "^VAR_LDLIBS\|^LDLIBS" $test | \
++			grep "\(pkg-config\|PKG_CONFIG\).*|| echo " | \
++			sed -e 's/.*|| echo //' | sed -e 's/)$//')
++
++	check_libs $test $test_libs
++}
++
++l5_test()
++{
++	tests=$(find $(dirname "$test") -type f -name "*.mk")
++	test_libs=$(grep "^IOURING_EXTRA_LIBS +\?=" $tests | \
++			cut -d "=" -f 2)
++
++	check_libs $test $test_libs
++}
++
+ check_libs()
+ {
+ 
 -- 
 2.40.1
 
