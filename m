@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E80E1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5321A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oflpAccC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E44CC433C7;
-	Mon,  9 Oct 2023 13:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihWQYQjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B076C433C9;
+	Mon,  9 Oct 2023 13:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857874;
-	bh=Z5FvQI2vuTqA/RoEMcgqyz2cM6c9JkQhxkt7w8/o7ug=;
+	s=korg; t=1696857877;
+	bh=+t8eQFvO0EKUUYcWO1Wcr3d1l/imhCoVvufHSbo+Ds4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oflpAccC++c9KFY7nAejPaK0rHKg1vz7kSoriEl70C2Hta06ypUBLmeSbm4j/87X1
-	 Ld7fGkZ4O7YrzbRcw9DMNvIrrLBNGQs/sVqlnEquSWYli+6HJtf9gPAejBGastf4xl
-	 JgOBfiQwPOz2it5woXo9EtFzdomDMMP6qKGZr0ks=
+	b=ihWQYQjWrinzP0xAXb6+a8COZk4EGXsak2d5ZoT+fGtCAi+uWDlXzvhF6fgiVgOVS
+	 Q/H07PEn/xeHq0WWwecGokVl3cLp7wS25Rrl+7ys6bcwLklglG3tuerTXGCzjMj+f1
+	 XbM8qKWJBBf/TtA2bLUD8Ah2YF2Ous4PwdpkTWPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 20/75] vringh: dont use vringh_kiov_advance() in vringh_iov_xfer()
-Date: Mon,  9 Oct 2023 15:01:42 +0200
-Message-ID: <20231009130111.943515044@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 21/75] qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
+Date: Mon,  9 Oct 2023 15:01:43 +0200
+Message-ID: <20231009130111.983579549@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -42,52 +43,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 7aed44babc7f97e82b38e9a68515e699692cc100 upstream.
+commit eea03d18af9c44235865a4bc9bec4d780ef6cf21 upstream.
 
-In the while loop of vringh_iov_xfer(), `partlen` could be 0 if one of
-the `iov` has 0 lenght.
-In this case, we should skip the iov and go to the next one.
-But calling vringh_kiov_advance() with 0 lenght does not cause the
-advancement, since it returns immediately if asked to advance by 0 bytes.
+The flexible structure (a structure that contains a flexible-array member
+at the end) `qed_ll2_tx_packet` is nested within the second layer of
+`struct qed_ll2_info`:
 
-Let's restore the code that was there before commit b8c06ad4d67d
-("vringh: implement vringh_kiov_advance()"), avoiding using
-vringh_kiov_advance().
+struct qed_ll2_tx_packet {
+	...
+        /* Flexible Array of bds_set determined by max_bds_per_packet */
+        struct {
+                struct core_tx_bd *txq_bd;
+                dma_addr_t tx_frag;
+                u16 frag_len;
+        } bds_set[];
+};
 
-Fixes: b8c06ad4d67d ("vringh: implement vringh_kiov_advance()")
+struct qed_ll2_tx_queue {
+	...
+	struct qed_ll2_tx_packet cur_completing_packet;
+};
+
+struct qed_ll2_info {
+	...
+	struct qed_ll2_tx_queue tx_queue;
+        struct qed_ll2_cbs cbs;
+};
+
+The problem is that member `cbs` in `struct qed_ll2_info` is placed just
+after an object of type `struct qed_ll2_tx_queue`, which is in itself
+an implicit flexible structure, which by definition ends in a flexible
+array member, in this case `bds_set`. This causes an undefined behavior
+bug at run-time when dynamic memory is allocated for `bds_set`, which
+could lead to a serious issue if `cbs` in `struct qed_ll2_info` is
+overwritten by the contents of `bds_set`. Notice that the type of `cbs`
+is a structure full of function pointers (and a cookie :) ):
+
+include/linux/qed/qed_ll2_if.h:
+107 typedef
+108 void (*qed_ll2_complete_rx_packet_cb)(void *cxt,
+109                                       struct qed_ll2_comp_rx_data *data);
+110
+111 typedef
+112 void (*qed_ll2_release_rx_packet_cb)(void *cxt,
+113                                      u8 connection_handle,
+114                                      void *cookie,
+115                                      dma_addr_t rx_buf_addr,
+116                                      bool b_last_packet);
+117
+118 typedef
+119 void (*qed_ll2_complete_tx_packet_cb)(void *cxt,
+120                                       u8 connection_handle,
+121                                       void *cookie,
+122                                       dma_addr_t first_frag_addr,
+123                                       bool b_last_fragment,
+124                                       bool b_last_packet);
+125
+126 typedef
+127 void (*qed_ll2_release_tx_packet_cb)(void *cxt,
+128                                      u8 connection_handle,
+129                                      void *cookie,
+130                                      dma_addr_t first_frag_addr,
+131                                      bool b_last_fragment, bool b_last_packet);
+132
+133 typedef
+134 void (*qed_ll2_slowpath_cb)(void *cxt, u8 connection_handle,
+135                             u32 opaque_data_0, u32 opaque_data_1);
+136
+137 struct qed_ll2_cbs {
+138         qed_ll2_complete_rx_packet_cb rx_comp_cb;
+139         qed_ll2_release_rx_packet_cb rx_release_cb;
+140         qed_ll2_complete_tx_packet_cb tx_comp_cb;
+141         qed_ll2_release_tx_packet_cb tx_release_cb;
+142         qed_ll2_slowpath_cb slowpath_cb;
+143         void *cookie;
+144 };
+
+Fix this by moving the declaration of `cbs` to the  middle of its
+containing structure `qed_ll2_info`, preventing it from being
+overwritten by the contents of `bds_set` at run-time.
+
+This bug was introduced in 2017, when `bds_set` was converted to a
+one-element array, and started to be used as a Variable Length Object
+(VLO) at run-time.
+
+Fixes: f5823fe6897c ("qed: Add ll2 option to limit the number of bds per packet")
 Cc: stable@vger.kernel.org
-Reported-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/ZQ+Nz8DfPg56pIzr@work
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vringh.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -123,8 +123,18 @@ static inline ssize_t vringh_iov_xfer(st
- 		done += partlen;
- 		len -= partlen;
- 		ptr += partlen;
-+		iov->consumed += partlen;
-+		iov->iov[iov->i].iov_len -= partlen;
-+		iov->iov[iov->i].iov_base += partlen;
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.h
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.h
+@@ -111,9 +111,9 @@ struct qed_ll2_info {
+ 	enum core_tx_dest tx_dest;
+ 	u8 tx_stats_en;
+ 	bool main_func_queue;
++	struct qed_ll2_cbs cbs;
+ 	struct qed_ll2_rx_queue rx_queue;
+ 	struct qed_ll2_tx_queue tx_queue;
+-	struct qed_ll2_cbs cbs;
+ };
  
--		vringh_kiov_advance(iov, partlen);
-+		if (!iov->iov[iov->i].iov_len) {
-+			/* Fix up old iov element then increment. */
-+			iov->iov[iov->i].iov_len = iov->consumed;
-+			iov->iov[iov->i].iov_base -= iov->consumed;
-+
-+			iov->consumed = 0;
-+			iov->i++;
-+		}
- 	}
- 	return done;
- }
+ extern const struct qed_ll2_ops qed_ll2_ops_pass;
 
 
