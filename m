@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B01A5B6
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B1E199B3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9valaHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1ADC433C7;
-	Mon,  9 Oct 2023 13:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOle2lMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EA0C433C7;
+	Mon,  9 Oct 2023 13:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857972;
-	bh=JnYqDURCnZyKxIdr7F3nquaZ6HDar0sG8lNexXASHvQ=;
+	s=korg; t=1696857975;
+	bh=1wlh+Ksn7J4wpqCMf5/xWDanwclaONqSg6jMhJooHws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9valaHKsTPk2VQU70GTw5YSRE2UdGf09Y/+zFqgIEjxQrVKD2oBSUPZId6HxS5rQ
-	 XBg9OcLjzrZ2sdFsQWybcVaAQix/Lx1pu5ehmK+r3jRtA2wTHi+0sLOsuQcXIvMVh0
-	 lKjJsrTHpyUf/BDJUrKXikg50CQrDtUmNuYa2WmE=
+	b=yOle2lMYaWHF9y92hxHw4t6mwS5g/10FT86mJWTtdJweKeuKZSWAEEbiIQnHhmb+u
+	 T7thJYD9ohJNlPZu99DepGZS196tSzGarPxrJcWdKKq7acRgTk9xJd6VjrSKjHXyYm
+	 vQvwVjJ79OyMuChemzkQDiNb2JnKVcxhX4HloiT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wilder <dwilder@us.ibm.com>,
-	Nick Child <nnac123@linux.ibm.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xin Long <lucien.xin@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 51/75] ibmveth: Remove condition to recompute TCP header checksum.
-Date: Mon,  9 Oct 2023 15:02:13 +0200
-Message-ID: <20231009130113.024501579@linuxfoundation.org>
+Subject: [PATCH 5.15 52/75] netfilter: handle the connecting collision properly in nf_conntrack_proto_sctp
+Date: Mon,  9 Oct 2023 15:02:14 +0200
+Message-ID: <20231009130113.061708587@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -44,70 +42,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wilder <dwilder@us.ibm.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 51e7a66666e0ca9642c59464ef8359f0ac604d41 ]
+[ Upstream commit 8e56b063c86569e51eed1c5681ce6361fa97fc7a ]
 
-In some OVS environments the TCP pseudo header checksum may need to be
-recomputed. Currently this is only done when the interface instance is
-configured for "Trunk Mode". We found the issue also occurs in some
-Kubernetes environments, these environments do not use "Trunk Mode",
-therefor the condition is removed.
+In Scenario A and B below, as the delayed INIT_ACK always changes the peer
+vtag, SCTP ct with the incorrect vtag may cause packet loss.
 
-Performance tests with this change show only a fractional decrease in
-throughput (< 0.2%).
+Scenario A: INIT_ACK is delayed until the peer receives its own INIT_ACK
 
-Fixes: 7525de2516fb ("ibmveth: Set CHECKSUM_PARTIAL if NULL TCP CSUM.")
-Signed-off-by: David Wilder <dwilder@us.ibm.com>
-Reviewed-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  192.168.1.2 > 192.168.1.1: [INIT] [init tag: 1328086772]
+    192.168.1.1 > 192.168.1.2: [INIT] [init tag: 1414468151]
+    192.168.1.2 > 192.168.1.1: [INIT ACK] [init tag: 1328086772]
+  192.168.1.1 > 192.168.1.2: [INIT ACK] [init tag: 1650211246] *
+  192.168.1.2 > 192.168.1.1: [COOKIE ECHO]
+    192.168.1.1 > 192.168.1.2: [COOKIE ECHO]
+    192.168.1.2 > 192.168.1.1: [COOKIE ACK]
+
+Scenario B: INIT_ACK is delayed until the peer completes its own handshake
+
+  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
+    192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
+    192.168.1.2 > 192.168.1.1: sctp (1) [INIT ACK] [init tag: 3922216408]
+    192.168.1.1 > 192.168.1.2: sctp (1) [COOKIE ECHO]
+    192.168.1.2 > 192.168.1.1: sctp (1) [COOKIE ACK]
+  192.168.1.1 > 192.168.1.2: sctp (1) [INIT ACK] [init tag: 3914796021] *
+
+This patch fixes it as below:
+
+In SCTP_CID_INIT processing:
+- clear ct->proto.sctp.init[!dir] if ct->proto.sctp.init[dir] &&
+  ct->proto.sctp.init[!dir]. (Scenario E)
+- set ct->proto.sctp.init[dir].
+
+In SCTP_CID_INIT_ACK processing:
+- drop it if !ct->proto.sctp.init[!dir] && ct->proto.sctp.vtag[!dir] &&
+  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario B, Scenario C)
+- drop it if ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
+  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario A)
+
+In SCTP_CID_COOKIE_ACK processing:
+- clear ct->proto.sctp.init[dir] and ct->proto.sctp.init[!dir].
+  (Scenario D)
+
+Also, it's important to allow the ct state to move forward with cookie_echo
+and cookie_ack from the opposite dir for the collision scenarios.
+
+There are also other Scenarios where it should allow the packet through,
+addressed by the processing above:
+
+Scenario C: new CT is created by INIT_ACK.
+
+Scenario D: start INIT on the existing ESTABLISHED ct.
+
+Scenario E: start INIT after the old collision on the existing ESTABLISHED
+ct.
+
+  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
+  192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
+  (both side are stopped, then start new connection again in hours)
+  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 242308742]
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ include/linux/netfilter/nf_conntrack_sctp.h |  1 +
+ net/netfilter/nf_conntrack_proto_sctp.c     | 43 ++++++++++++++++-----
+ 2 files changed, 34 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 05759f690e1fd..67ea2cb21e849 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1297,24 +1297,23 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 	 * the user space for finding a flow. During this process, OVS computes
- 	 * checksum on the first packet when CHECKSUM_PARTIAL flag is set.
- 	 *
--	 * So, re-compute TCP pseudo header checksum when configured for
--	 * trunk mode.
-+	 * So, re-compute TCP pseudo header checksum.
- 	 */
+diff --git a/include/linux/netfilter/nf_conntrack_sctp.h b/include/linux/netfilter/nf_conntrack_sctp.h
+index 625f491b95de8..fb31312825ae5 100644
+--- a/include/linux/netfilter/nf_conntrack_sctp.h
++++ b/include/linux/netfilter/nf_conntrack_sctp.h
+@@ -9,6 +9,7 @@ struct ip_ct_sctp {
+ 	enum sctp_conntrack state;
+ 
+ 	__be32 vtag[IP_CT_DIR_MAX];
++	u8 init[IP_CT_DIR_MAX];
+ 	u8 last_dir;
+ 	u8 flags;
+ };
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index 7247af51bdfc4..c94a9971d790c 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -112,7 +112,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
+ /* shutdown_ack */ {sSA, sCL, sCW, sCE, sES, sSA, sSA, sSA, sSA},
+ /* error        */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't have Stale cookie*/
+ /* cookie_echo  */ {sCL, sCL, sCE, sCE, sES, sSS, sSR, sSA, sCL},/* 5.2.4 - Big TODO */
+-/* cookie_ack   */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
++/* cookie_ack   */ {sCL, sCL, sCW, sES, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
+ /* shutdown_comp*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sCL, sCL},
+ /* heartbeat    */ {sHS, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
+ /* heartbeat_ack*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
+@@ -126,7 +126,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
+ /* shutdown     */ {sIV, sCL, sCW, sCE, sSR, sSS, sSR, sSA, sIV},
+ /* shutdown_ack */ {sIV, sCL, sCW, sCE, sES, sSA, sSA, sSA, sIV},
+ /* error        */ {sIV, sCL, sCW, sCL, sES, sSS, sSR, sSA, sIV},
+-/* cookie_echo  */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
++/* cookie_echo  */ {sIV, sCL, sCE, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
+ /* cookie_ack   */ {sIV, sCL, sCW, sES, sES, sSS, sSR, sSA, sIV},
+ /* shutdown_comp*/ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sCL, sIV},
+ /* heartbeat    */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
+@@ -426,6 +426,9 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
+ 			/* (D) vtag must be same as init_vtag as found in INIT_ACK */
+ 			if (sh->vtag != ct->proto.sctp.vtag[dir])
+ 				goto out_unlock;
++		} else if (sch->type == SCTP_CID_COOKIE_ACK) {
++			ct->proto.sctp.init[dir] = 0;
++			ct->proto.sctp.init[!dir] = 0;
+ 		} else if (sch->type == SCTP_CID_HEARTBEAT) {
+ 			if (ct->proto.sctp.vtag[dir] == 0) {
+ 				pr_debug("Setting %d vtag %x for dir %d\n", sch->type, sh->vtag, dir);
+@@ -474,16 +477,18 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
+ 		}
+ 
+ 		/* If it is an INIT or an INIT ACK note down the vtag */
+-		if (sch->type == SCTP_CID_INIT ||
+-		    sch->type == SCTP_CID_INIT_ACK) {
+-			struct sctp_inithdr _inithdr, *ih;
++		if (sch->type == SCTP_CID_INIT) {
++			struct sctp_inithdr _ih, *ih;
+ 
+-			ih = skb_header_pointer(skb, offset + sizeof(_sch),
+-						sizeof(_inithdr), &_inithdr);
+-			if (ih == NULL)
++			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
++			if (!ih)
+ 				goto out_unlock;
+-			pr_debug("Setting vtag %x for dir %d\n",
+-				 ih->init_tag, !dir);
 +
- 	if (iph_proto == IPPROTO_TCP) {
- 		struct tcphdr *tcph = (struct tcphdr *)(skb->data + iphlen);
++			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir])
++				ct->proto.sctp.init[!dir] = 0;
++			ct->proto.sctp.init[dir] = 1;
 +
- 		if (tcph->check == 0x0000) {
- 			/* Recompute TCP pseudo header checksum  */
--			if (adapter->is_active_trunk) {
--				tcphdrlen = skb->len - iphlen;
--				if (skb_proto == ETH_P_IP)
--					tcph->check =
--					 ~csum_tcpudp_magic(iph->saddr,
--					iph->daddr, tcphdrlen, iph_proto, 0);
--				else if (skb_proto == ETH_P_IPV6)
--					tcph->check =
--					 ~csum_ipv6_magic(&iph6->saddr,
--					&iph6->daddr, tcphdrlen, iph_proto, 0);
--			}
-+			tcphdrlen = skb->len - iphlen;
-+			if (skb_proto == ETH_P_IP)
-+				tcph->check =
-+				 ~csum_tcpudp_magic(iph->saddr,
-+				iph->daddr, tcphdrlen, iph_proto, 0);
-+			else if (skb_proto == ETH_P_IPV6)
-+				tcph->check =
-+				 ~csum_ipv6_magic(&iph6->saddr,
-+				&iph6->daddr, tcphdrlen, iph_proto, 0);
- 			/* Setup SKB fields for checksum offload */
- 			skb_partial_csum_set(skb, iphlen,
- 					     offsetof(struct tcphdr, check));
++			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
+ 			ct->proto.sctp.vtag[!dir] = ih->init_tag;
+ 
+ 			/* don't renew timeout on init retransmit so
+@@ -494,6 +499,24 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
+ 			    old_state == SCTP_CONNTRACK_CLOSED &&
+ 			    nf_ct_is_confirmed(ct))
+ 				ignore = true;
++		} else if (sch->type == SCTP_CID_INIT_ACK) {
++			struct sctp_inithdr _ih, *ih;
++			__be32 vtag;
++
++			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
++			if (!ih)
++				goto out_unlock;
++
++			vtag = ct->proto.sctp.vtag[!dir];
++			if (!ct->proto.sctp.init[!dir] && vtag && vtag != ih->init_tag)
++				goto out_unlock;
++			/* collision */
++			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
++			    vtag != ih->init_tag)
++				goto out_unlock;
++
++			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
++			ct->proto.sctp.vtag[!dir] = ih->init_tag;
+ 		}
+ 
+ 		ct->proto.sctp.state = new_state;
 -- 
 2.40.1
 
