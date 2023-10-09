@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B622E649
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C332E649
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4IiIUTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020CEC433C9;
-	Mon,  9 Oct 2023 13:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woEX//xQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247FBC433C8;
+	Mon,  9 Oct 2023 13:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858918;
-	bh=L92vWIw7RMY336w4OqoWJsF7PpqF/1oPFTzm09x3dpo=;
+	s=korg; t=1696858921;
+	bh=XpgpNN+usouE1Z3w+s5NHobsvjg/dyptNbRzN1tmVRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4IiIUTRcQhO14HcEAimG4o96Ka91BBklmLqLadeN+qTc1KMTNteEjxhh5sjAsyYY
-	 6YecBsF2Vp5mgFuDSd4NkzhAi4H1PHLOvMiY08fmTQCzd2HtKJJ2EHChRGJkpC4AF1
-	 pUX57e64Wsy8TBrwSqVy6IfTAfbE6Bzp0u17GI/E=
+	b=woEX//xQC9q9N0PVEdJDsDB3TKPxLadi72sx6qN6t2Mdk9Cj2SFsLo830S6AcXk4Z
+	 rZZyBrAqOYk8XdY+dNuCLx1FJ4xa5e16ax3F5crieI4LWIr5UqV5gwRFLeFwFX2rCE
+	 N+hZmaY07za+2Kw/kvM+jbqeOHG3mYWmNQ7HLnw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Irvin Cote <irvin.cote@insa-lyon.fr>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/226] nvme-pci: always return an ERR_PTR from nvme_pci_alloc_dev
-Date: Mon,  9 Oct 2023 15:01:42 +0200
-Message-ID: <20231009130130.420530709@linuxfoundation.org>
+Subject: [PATCH 5.10 142/226] smack: Record transmuting in smk_transmuted
+Date: Mon,  9 Oct 2023 15:01:43 +0200
+Message-ID: <20231009130130.444104557@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,45 +42,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Irvin Cote <irvin.cote@insa-lyon.fr>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit dc785d69d753a3894c93afc23b91404652382ead ]
+[ Upstream commit 2c085f3a8f23c9b444e8b99d93c15d7ce870fc4e ]
 
-Don't mix NULL and ERR_PTR returns.
+smack_dentry_create_files_as() determines whether transmuting should occur
+based on the label of the parent directory the new inode will be added to,
+and not the label of the directory where it is created.
 
-Fixes: 2e87570be9d2 ("nvme-pci: factor out a nvme_pci_alloc_dev helper")
-Signed-off-by: Irvin Cote <irvin.cote@insa-lyon.fr>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+This helps for example to do transmuting on overlayfs, since the latter
+first creates the inode in the working directory, and then moves it to the
+correct destination.
+
+However, despite smack_dentry_create_files_as() provides the correct label,
+smack_inode_init_security() does not know from passed information whether
+or not transmuting occurred. Without this information,
+smack_inode_init_security() cannot set SMK_INODE_CHANGED in smk_flags,
+which will result in the SMACK64TRANSMUTE xattr not being set in
+smack_d_instantiate().
+
+Thus, add the smk_transmuted field to the task_smack structure, and set it
+in smack_dentry_create_files_as() to smk_task if transmuting occurred. If
+smk_task is equal to smk_transmuted in smack_inode_init_security(), act as
+if transmuting was successful but without taking the label from the parent
+directory (the inode label was already set correctly from the current
+credentials in smack_inode_alloc_security()).
+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/smack/smack.h     |  1 +
+ security/smack/smack_lsm.c | 41 +++++++++++++++++++++++++++-----------
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7bb42d0e087af..9c67ebd4eac38 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2868,7 +2868,7 @@ static struct nvme_dev *nvme_pci_alloc_dev(struct pci_dev *pdev,
+diff --git a/security/smack/smack.h b/security/smack/smack.h
+index a9768b12716bf..b5187915e074e 100644
+--- a/security/smack/smack.h
++++ b/security/smack/smack.h
+@@ -120,6 +120,7 @@ struct inode_smack {
+ struct task_smack {
+ 	struct smack_known	*smk_task;	/* label for access control */
+ 	struct smack_known	*smk_forked;	/* label when forked */
++	struct smack_known	*smk_transmuted;/* label when transmuted */
+ 	struct list_head	smk_rules;	/* per task access rules */
+ 	struct mutex		smk_rules_lock;	/* lock for the rules */
+ 	struct list_head	smk_relabel;	/* transit allowed labels */
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index b36b8668f1f4a..e7f6f55bbae24 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -972,8 +972,9 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 				     const struct qstr *qstr, const char **name,
+ 				     void **value, size_t *len)
+ {
++	struct task_smack *tsp = smack_cred(current_cred());
+ 	struct inode_smack *issp = smack_inode(inode);
+-	struct smack_known *skp = smk_of_current();
++	struct smack_known *skp = smk_of_task(tsp);
+ 	struct smack_known *isp = smk_of_inode(inode);
+ 	struct smack_known *dsp = smk_of_inode(dir);
+ 	int may;
+@@ -982,20 +983,34 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 		*name = XATTR_SMACK_SUFFIX;
  
- 	dev = kzalloc_node(sizeof(*dev), GFP_KERNEL, node);
- 	if (!dev)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 	INIT_WORK(&dev->ctrl.reset_work, nvme_reset_work);
- 	INIT_WORK(&dev->remove_work, nvme_remove_dead_ctrl_work);
- 	mutex_init(&dev->shutdown_lock);
-@@ -2913,8 +2913,8 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	int result = -ENOMEM;
+ 	if (value && len) {
+-		rcu_read_lock();
+-		may = smk_access_entry(skp->smk_known, dsp->smk_known,
+-				       &skp->smk_rules);
+-		rcu_read_unlock();
++		/*
++		 * If equal, transmuting already occurred in
++		 * smack_dentry_create_files_as(). No need to check again.
++		 */
++		if (tsp->smk_task != tsp->smk_transmuted) {
++			rcu_read_lock();
++			may = smk_access_entry(skp->smk_known, dsp->smk_known,
++					       &skp->smk_rules);
++			rcu_read_unlock();
++		}
  
- 	dev = nvme_pci_alloc_dev(pdev, id);
--	if (!dev)
--		return -ENOMEM;
-+	if (IS_ERR(dev))
-+		return PTR_ERR(dev);
+ 		/*
+-		 * If the access rule allows transmutation and
+-		 * the directory requests transmutation then
+-		 * by all means transmute.
++		 * In addition to having smk_task equal to smk_transmuted,
++		 * if the access rule allows transmutation and the directory
++		 * requests transmutation then by all means transmute.
+ 		 * Mark the inode as changed.
+ 		 */
+-		if (may > 0 && ((may & MAY_TRANSMUTE) != 0) &&
+-		    smk_inode_transmutable(dir)) {
+-			isp = dsp;
++		if ((tsp->smk_task == tsp->smk_transmuted) ||
++		    (may > 0 && ((may & MAY_TRANSMUTE) != 0) &&
++		     smk_inode_transmutable(dir))) {
++			/*
++			 * The caller of smack_dentry_create_files_as()
++			 * should have overridden the current cred, so the
++			 * inode label was already set correctly in
++			 * smack_inode_alloc_security().
++			 */
++			if (tsp->smk_task != tsp->smk_transmuted)
++				isp = dsp;
+ 			issp->smk_flags |= SMK_INODE_CHANGED;
+ 		}
  
- 	result = nvme_dev_map(dev);
- 	if (result)
+@@ -4685,8 +4700,10 @@ static int smack_dentry_create_files_as(struct dentry *dentry, int mode,
+ 		 * providing access is transmuting use the containing
+ 		 * directory label instead of the process label.
+ 		 */
+-		if (may > 0 && (may & MAY_TRANSMUTE))
++		if (may > 0 && (may & MAY_TRANSMUTE)) {
+ 			ntsp->smk_task = isp->smk_inode;
++			ntsp->smk_transmuted = ntsp->smk_task;
++		}
+ 	}
+ 	return 0;
+ }
 -- 
 2.40.1
 
