@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8891A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B931A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLw2g9cb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5999CC433C8;
-	Mon,  9 Oct 2023 13:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jt5fdYi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EDDC433CB;
+	Mon,  9 Oct 2023 13:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857725;
-	bh=sGH/67FV1O1bHQfIyIlCve0vpbnjAls8V4P0zKasMJM=;
+	s=korg; t=1696857728;
+	bh=ABTlEW+FEprEl9xW6muexYlc81B4dUiW2Fsbv7HbJz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLw2g9cb07TY5KOsRJI8I6pDAvXSu66nNfNzY1Zi+H8a9xF0ezveGfVmvXhaqeu0F
-	 3WSFC5az8sUTdb1cvp2AWCu/4tRF9llQNlx9rqrOIrWT1RotLrQ7ENykt63dyg9lEC
-	 wnqV+jSXwl5+EhTUxAum7muPNocQ6GMi8WZxfw2s=
+	b=Jt5fdYi/MZhvgAmGf2mt2rR1jxPQVnfH14s3qU/bYxWQCMudB0fR2v1jSWCbRarE8
+	 aGUDp8xAsQOt9QQjyujfgpDpgIVTLo82duF1bUpjQPCCG+n6lnvmGpB34MHAt3DAC6
+	 mcSj8SgPG95datBvSq94vIC7tckVWYCkg1wvSBns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/162] neighbour: fix data-races around n->output
-Date: Mon,  9 Oct 2023 15:01:31 +0200
-Message-ID: <20231009130125.963150186@linuxfoundation.org>
+Subject: [PATCH 6.1 101/162] NFSv4: Fix a nfs4_state_manager() race
+Date: Mon,  9 Oct 2023 15:01:22 +0200
+Message-ID: <20231009130125.712978911@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,101 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5baa0433a15eadd729625004c37463acb982eca7 ]
+[ Upstream commit ed1cc05aa1f7fe8197d300e914afc28ab9818f89 ]
 
-n->output field can be read locklessly, while a writer
-might change the pointer concurrently.
+If the NFS4CLNT_RUN_MANAGER flag got set just before we cleared
+NFS4CLNT_MANAGER_RUNNING, then we might have won the race against
+nfs4_schedule_state_manager(), and are responsible for handling the
+recovery situation.
 
-Add missing annotations to prevent load-store tearing.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/neighbour.h         |  2 +-
- net/bridge/br_netfilter_hooks.c |  2 +-
- net/core/neighbour.c            | 10 +++++-----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ fs/nfs/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/net/neighbour.h b/include/net/neighbour.h
-index f6a8ecc6b1fa7..ccc4a0f8b4ad8 100644
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -541,7 +541,7 @@ static inline int neigh_output(struct neighbour *n, struct sk_buff *skb,
- 	    READ_ONCE(hh->hh_len))
- 		return neigh_hh_output(hh, skb);
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index ed789e0cb9431..457b2b2f804ab 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2710,6 +2710,13 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 		nfs4_end_drain_session(clp);
+ 		nfs4_clear_state_manager_bit(clp);
  
--	return n->output(n, skb);
-+	return READ_ONCE(n->output)(n, skb);
- }
- 
- static inline struct neighbour *
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 442198cb83909..01d690d9fe5f8 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -294,7 +294,7 @@ int br_nf_pre_routing_finish_bridge(struct net *net, struct sock *sk, struct sk_
- 			/* tell br_dev_xmit to continue with forwarding */
- 			nf_bridge->bridged_dnat = 1;
- 			/* FIXME Need to refragment */
--			ret = neigh->output(neigh, skb);
-+			ret = READ_ONCE(neigh->output)(neigh, skb);
- 		}
- 		neigh_release(neigh);
- 		return ret;
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index bafd72e5f5886..b20c9768d9f3f 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -410,7 +410,7 @@ static void neigh_flush_dev(struct neigh_table *tbl, struct net_device *dev,
- 				 */
- 				__skb_queue_purge(&n->arp_queue);
- 				n->arp_queue_len_bytes = 0;
--				n->output = neigh_blackhole;
-+				WRITE_ONCE(n->output, neigh_blackhole);
- 				if (n->nud_state & NUD_VALID)
- 					n->nud_state = NUD_NOARP;
- 				else
-@@ -920,7 +920,7 @@ static void neigh_suspect(struct neighbour *neigh)
- {
- 	neigh_dbg(2, "neigh %p is suspected\n", neigh);
- 
--	neigh->output = neigh->ops->output;
-+	WRITE_ONCE(neigh->output, neigh->ops->output);
- }
- 
- /* Neighbour state is OK;
-@@ -932,7 +932,7 @@ static void neigh_connect(struct neighbour *neigh)
- {
- 	neigh_dbg(2, "neigh %p is connected\n", neigh);
- 
--	neigh->output = neigh->ops->connected_output;
-+	WRITE_ONCE(neigh->output, neigh->ops->connected_output);
- }
- 
- static void neigh_periodic_work(struct work_struct *work)
-@@ -1449,7 +1449,7 @@ static int __neigh_update(struct neighbour *neigh, const u8 *lladdr,
- 				if (n2)
- 					n1 = n2;
- 			}
--			n1->output(n1, skb);
-+			READ_ONCE(n1->output)(n1, skb);
- 			if (n2)
- 				neigh_release(n2);
- 			rcu_read_unlock();
-@@ -3145,7 +3145,7 @@ int neigh_xmit(int index, struct net_device *dev,
- 			rcu_read_unlock();
- 			goto out_kfree_skb;
- 		}
--		err = neigh->output(neigh, skb);
-+		err = READ_ONCE(neigh->output)(neigh, skb);
- 		rcu_read_unlock();
- 	}
- 	else if (index == NEIGH_LINK_TABLE) {
++		if (test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
++		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING,
++				      &clp->cl_state)) {
++			memflags = memalloc_nofs_save();
++			continue;
++		}
++
+ 		if (!test_and_set_bit(NFS4CLNT_RECALL_RUNNING, &clp->cl_state)) {
+ 			if (test_and_clear_bit(NFS4CLNT_DELEGRETURN, &clp->cl_state)) {
+ 				nfs_client_return_marked_delegations(clp);
 -- 
 2.40.1
 
