@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1A1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214D11A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzZh3hwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DFAC433C8;
-	Mon,  9 Oct 2023 13:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l6oETzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920A1C433C7;
+	Mon,  9 Oct 2023 13:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857839;
-	bh=OkiWVlhSD3ntepjnI8qRu8zE0O42s8h7cobuLc5uamw=;
+	s=korg; t=1696857843;
+	bh=tZ9maNSqMzJyVW0Ml0y4qXaLS9h3uqVuPs6DUz0OgFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzZh3hwuFY4/vCcwt7Sji/qivkKRZSvKmeUbg0VxMbevTs6jUA/Ov/j/cfRKJuuuL
-	 ClMYvsQeMj0Zd3/HrANbjetZ71X4fNvdLJQjS1qmVuGtlpzFGMujQRm0H0q/Woid5a
-	 LgMYpIU1D6YW20zumX8xzhvGyHBIZs+77qeRJPgc=
+	b=1l6oETzGVVf/b4JnfCLeyYF05it/IBO/wY0gnJblkA7aWYkyxbnFgGPxwwE7fOh67
+	 kNVF+bsgoU1z6T6NNtOvAoEeCwIWojbngXbMD1nkGn5yTbcb6C3DjxWCI1ndERrqqE
+	 mv4eGaJADjkZwWdszsnFVkLJIBXd25ke1COwlP6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/75] arm64: Avoid repeated AA64MMFR1_EL1 register read on pagefault path
-Date: Mon,  9 Oct 2023 15:01:32 +0200
-Message-ID: <20231009130111.586283945@linuxfoundation.org>
+Subject: [PATCH 5.15 11/75] iommu/arm-smmu-v3: Set TTL invalidation hint better
+Date: Mon,  9 Oct 2023 15:01:33 +0200
+Message-ID: <20231009130111.623359861@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -44,58 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit a89c6bcdac22bec1bfbe6e64060b4cf5838d4f47 ]
+[ Upstream commit 6833b8f2e19945a41e4d5efd8c6d9f4cae9a5b7d ]
 
-Accessing AA64MMFR1_EL1 is expensive in KVM guests, since it is emulated
-in the hypervisor.  In fact, ARM documentation mentions some feature
-registers are not supposed to be accessed frequently by the OS, and
-therefore should be emulated for guests [1].
+When io-pgtable unmaps a whole table, rather than waste time walking it
+to find the leaf entries to invalidate exactly, it simply expects
+.tlb_flush_walk with nominal last-level granularity to invalidate any
+leaf entries at higher intermediate levels as well. This works fine with
+page-based invalidation, but with range commands we need to be careful
+with the TTL hint - unconditionally setting it based on the given level
+3 granule means that an invalidation for a level 1 table would strictly
+not be required to affect level 2 block entries. It's easy to comply
+with the expected behaviour by simply not setting the TTL hint for
+non-leaf invalidations, so let's do that.
 
-Commit 0388f9c74330 ("arm64: mm: Implement
-arch_wants_old_prefaulted_pte()") introduced a read of this register in
-the page fault path.  But, even when the feature of setting faultaround
-pages with the old flag is disabled for a given cpu, we are still paying
-the cost of checking the register on every pagefault. This results in an
-explosion of vmexit events in KVM guests, which directly impacts the
-performance of virtualized workloads.  For instance, running kernbench
-yields a 15% increase in system time solely due to the increased vmexit
-cycles.
-
-This patch avoids the extra cost by using the sanitized cached value.
-It should be safe to do so, since this register mustn't change for a
-given cpu.
-
-[1] https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Learn%20the%20Architecture/Armv8-A%20virtualization.pdf?revision=a765a7df-1a00-434d-b241-357bfda2dd31
-
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20230109151955.8292-1-krisman@suse.de
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/b409d9a17c52dc0db51faee91d92737bb7975f5b.1685637456.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cpufeature.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-index a77b5f49b3a6c..135f4b0bf3967 100644
---- a/arch/arm64/include/asm/cpufeature.h
-+++ b/arch/arm64/include/asm/cpufeature.h
-@@ -839,7 +839,11 @@ static inline bool cpu_has_hw_af(void)
- 	if (!IS_ENABLED(CONFIG_ARM64_HW_AFDBM))
- 		return false;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 340ef116d574a..67845f8e1df9f 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1884,8 +1884,13 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
+ 		/* Convert page size of 12,14,16 (log2) to 1,2,3 */
+ 		cmd->tlbi.tg = (tg - 10) / 2;
  
--	mmfr1 = read_cpuid(ID_AA64MMFR1_EL1);
-+	/*
-+	 * Use cached version to avoid emulated msr operation on KVM
-+	 * guests.
-+	 */
-+	mmfr1 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
- 	return cpuid_feature_extract_unsigned_field(mmfr1,
- 						ID_AA64MMFR1_HADBS_SHIFT);
- }
+-		/* Determine what level the granule is at */
+-		cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
++		/*
++		 * Determine what level the granule is at. For non-leaf, io-pgtable
++		 * assumes .tlb_flush_walk can invalidate multiple levels at once,
++		 * so ignore the nominal last-level granule and leave TTL=0.
++		 */
++		if (cmd->tlbi.leaf)
++			cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
+ 
+ 		num_pages = size >> tg;
+ 	}
 -- 
 2.40.1
 
