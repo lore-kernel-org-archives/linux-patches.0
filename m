@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F613341A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7395341A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prJPZ3U6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4CBC433C9;
-	Mon,  9 Oct 2023 13:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vA1jSDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465E9C433C8;
+	Mon,  9 Oct 2023 13:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859302;
-	bh=IHO2gGPJrUePJTk6V8kSOgjZJSZgyrzD8IzRGSX6d/E=;
+	s=korg; t=1696859305;
+	bh=XJBR/yx5iTtFXJpYJPi5UJSueuXGt9Onl1Lj/E5lPxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prJPZ3U6DePBV930jfqpt6AswtKdEhAYFZfRCQ4nN2Hs5tJQaxX2pPCvVdC5zK2Nu
-	 u5o7JBuXhyKUF8i1hu8cwfTSZ+wfIbFrB6bfAU2iH3SS8VT7nYK9Hb2AYgZK8VUHxv
-	 mK78YoqqymnCgJywlQ41m2shnLwdVprSmLI2y9+c=
+	b=0vA1jSDv4V5nXYtRFKmd3Nf0RBnvIKqHfgQ0mbh0bvk/Ynhhzver2Ix+J+rNEnFtj
+	 8t/8el1N4e5tUIhcGVa5eSi2+SZ/7FQYq2d+rMCR3nfAstWa/QLVPwuZj3ZJJq59vl
+	 eIkskcaVmjP3XpZ03yfGh+GSgj3rRscahuw0LlSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 4.14 34/55] ata: libata: disallow dev-initiated LPM transitions to unsupported states
-Date: Mon,  9 Oct 2023 15:06:33 +0200
-Message-ID: <20231009130108.996470435@linuxfoundation.org>
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 4.14 35/55] media: dvb: symbol fixup for dvb_attach() - again
+Date: Mon,  9 Oct 2023 15:06:34 +0200
+Message-ID: <20231009130109.029377692@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -35,117 +34,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 24e0e61db3cb86a66824531989f1df80e0939f26 upstream.
+In commit cd98086a7d9d ("media: dvb: symbol fixup for dvb_attach()") in
+the 4.14.y tree, a few symbols were missed due to files being renamed in
+newer kernel versions.  Fix this up by properly marking up the
+sp8870_attach and xc2028_attach symbols.
 
-In AHCI 1.3.1, the register description for CAP.SSC:
-"When cleared to ‘0’, software must not allow the HBA to initiate
-transitions to the Slumber state via agressive link power management nor
-the PxCMD.ICC field in each port, and the PxSCTL.IPM field in each port
-must be programmed to disallow device initiated Slumber requests."
-
-In AHCI 1.3.1, the register description for CAP.PSC:
-"When cleared to ‘0’, software must not allow the HBA to initiate
-transitions to the Partial state via agressive link power management nor
-the PxCMD.ICC field in each port, and the PxSCTL.IPM field in each port
-must be programmed to disallow device initiated Partial requests."
-
-Ensure that we always set the corresponding bits in PxSCTL.IPM, such that
-a device is not allowed to initiate transitions to power states which are
-unsupported by the HBA.
-
-DevSleep is always initiated by the HBA, however, for completeness, set the
-corresponding bit in PxSCTL.IPM such that agressive link power management
-cannot transition to DevSleep if DevSleep is not supported.
-
-sata_link_scr_lpm() is used by libahci, ata_piix and libata-pmp.
-However, only libahci has the ability to read the CAP/CAP2 register to see
-if these features are supported. Therefore, in order to not introduce any
-regressions on ata_piix or libata-pmp, create flags that indicate that the
-respective feature is NOT supported. This way, the behavior for ata_piix
-and libata-pmp should remain unchanged.
-
-This change is based on a patch originally submitted by Runa Guo-oc.
-
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Fixes: 1152b2617a6e ("libata: implement sata_link_scr_lpm() and make ata_dev_set_feature() global")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Link: https://lore.kernel.org/r/b12435b2311ada131db05d3cf195b4b5d87708eb.camel@decadent.org.uk
+Fixes: cd98086a7d9d ("media: dvb: symbol fixup for dvb_attach()")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c        |    9 +++++++++
- drivers/ata/libata-core.c |   19 ++++++++++++++++---
- include/linux/libata.h    |    4 ++++
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ drivers/media/dvb-frontends/sp8870.c |    2 +-
+ drivers/media/tuners/tuner-xc2028.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1775,6 +1775,15 @@ static int ahci_init_one(struct pci_dev
- 	else
- 		dev_info(&pdev->dev, "SSS flag set, parallel bus scan disabled\n");
+--- a/drivers/media/dvb-frontends/sp8870.c
++++ b/drivers/media/dvb-frontends/sp8870.c
+@@ -619,4 +619,4 @@ MODULE_DESCRIPTION("Spase SP8870 DVB-T D
+ MODULE_AUTHOR("Juergen Peitz");
+ MODULE_LICENSE("GPL");
  
-+	if (!(hpriv->cap & HOST_CAP_PART))
-+		host->flags |= ATA_HOST_NO_PART;
-+
-+	if (!(hpriv->cap & HOST_CAP_SSC))
-+		host->flags |= ATA_HOST_NO_SSC;
-+
-+	if (!(hpriv->cap2 & HOST_CAP2_SDS))
-+		host->flags |= ATA_HOST_NO_DEVSLP;
-+
- 	if (pi.flags & ATA_FLAG_EM)
- 		ahci_reset_em(host);
+-EXPORT_SYMBOL(sp8870_attach);
++EXPORT_SYMBOL_GPL(sp8870_attach);
+--- a/drivers/media/tuners/tuner-xc2028.c
++++ b/drivers/media/tuners/tuner-xc2028.c
+@@ -1516,7 +1516,7 @@ fail:
+ 	return NULL;
+ }
  
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -3993,10 +3993,23 @@ int sata_link_scr_lpm(struct ata_link *l
- 		scontrol |= (0x6 << 8);
- 		break;
- 	case ATA_LPM_MIN_POWER:
--		if (ata_link_nr_enabled(link) > 0)
--			/* no restrictions on LPM transitions */
-+		if (ata_link_nr_enabled(link) > 0) {
-+			/* assume no restrictions on LPM transitions */
- 			scontrol &= ~(0x7 << 8);
--		else {
-+
-+			/*
-+			 * If the controller does not support partial, slumber,
-+			 * or devsleep, then disallow these transitions.
-+			 */
-+			if (link->ap->host->flags & ATA_HOST_NO_PART)
-+				scontrol |= (0x1 << 8);
-+
-+			if (link->ap->host->flags & ATA_HOST_NO_SSC)
-+				scontrol |= (0x2 << 8);
-+
-+			if (link->ap->host->flags & ATA_HOST_NO_DEVSLP)
-+				scontrol |= (0x4 << 8);
-+		} else {
- 			/* empty port, power off */
- 			scontrol &= ~0xf;
- 			scontrol |= (0x1 << 2);
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -279,6 +279,10 @@ enum {
- 	ATA_HOST_PARALLEL_SCAN	= (1 << 2),	/* Ports on this host can be scanned in parallel */
- 	ATA_HOST_IGNORE_ATA	= (1 << 3),	/* Ignore ATA devices on this host. */
+-EXPORT_SYMBOL(xc2028_attach);
++EXPORT_SYMBOL_GPL(xc2028_attach);
  
-+	ATA_HOST_NO_PART	= (1 << 4), /* Host does not support partial */
-+	ATA_HOST_NO_SSC		= (1 << 5), /* Host does not support slumber */
-+	ATA_HOST_NO_DEVSLP	= (1 << 6), /* Host does not support devslp */
-+
- 	/* bits 24:31 of host->flags are reserved for LLD specific flags */
- 
- 	/* various lengths of time */
+ MODULE_DESCRIPTION("Xceive xc2028/xc3028 tuner driver");
+ MODULE_AUTHOR("Michel Ludwig <michel.ludwig@gmail.com>");
 
 
