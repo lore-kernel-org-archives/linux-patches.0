@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CD118E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDB719448
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MytGULXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D73C433C7;
-	Mon,  9 Oct 2023 13:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYwh+jl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36983C433D9;
+	Mon,  9 Oct 2023 13:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857010;
-	bh=3/0nhwg9qMpNJRYqBDSIfTplR/m7vrxnVVrQ2Nn8s18=;
+	s=korg; t=1696857013;
+	bh=U9wp2ydfRlmd5RmcTVGSjXOFug/S45Qn+x6dxwpQcIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MytGULXhnQYNRUZ4i8jCd5ZnMDRw1HilId8olbeL3YUZdyjxSxZbdFfXo/czpRs2h
-	 UVekp3O6iX8UgXCRJ2mcZ50mMaLIqVwnefeo3UYKGsFLmXrLmRg2kRAqg/jiLJYrmP
-	 RNEErlrNENarhouxPqtq69hh2o6z+GIGs/lFVkT0=
+	b=oYwh+jl9hMkz3e/66XzqBay/c45mqDlw1KM0h52nm36dNYQkY4r4vLimHUb1MGxhB
+	 khncGdNMTO4XsOd9Sjf8uD5xo2/qdT7HNwkHptV4pn7nUXdxqzoZ5JxxWfLEGqEcNh
+	 gOuXlsucTVrmjodE8kvc8hpeYtlRyClWro6H1aXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.5 039/163] wifi: mwifiex: Fix tlv_buf_left calculation
-Date: Mon,  9 Oct 2023 15:00:03 +0200
-Message-ID: <20231009130125.086105932@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 040/163] io_uring: dont allow IORING_SETUP_NO_MMAP rings on highmem pages
+Date: Mon,  9 Oct 2023 15:00:04 +0200
+Message-ID: <20231009130125.112943803@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,103 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
+commit 223ef474316466e9f61f6e0064f3a6fe4923a2c5 upstream.
 
-In a TLV encoding scheme, the Length part represents the length after
-the header containing the values for type and length. In this case,
-`tlv_len` should be:
+On at least arm32, but presumably any arch with highmem, if the
+application passes in memory that resides in highmem for the rings,
+then we should fail that ring creation. We fail it with -EINVAL, which
+is what kernels that don't support IORING_SETUP_NO_MMAP will do as well.
 
-tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
-
-Notice that the `- 1` accounts for the one-element array `bitmap`, which
-1-byte size is already included in `sizeof(*tlv_rxba)`.
-
-So, if the above is correct, there is a double-counting of some members
-in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
-are calculated:
-
-968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
-969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
-
-in specific, members:
-
-drivers/net/wireless/marvell/mwifiex/fw.h:777
- 777         u8 mac[ETH_ALEN];
- 778         u8 tid;
- 779         u8 reserved;
- 780         __le16 seq_num;
- 781         __le16 bitmap_len;
-
-This is clearly wrong, and affects the subsequent decoding of data in
-`event_buf` through `tlv_rxba`:
-
-970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
-
-Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
-in the calculation of `tlv_buf_left` and `tmp`.
-
-This results in the following binary differences before/after changes:
-
-| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-| @@ -4698,11 +4698,11 @@
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
-|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-| -    1da7:      lea    -0x11(%rbx),%edx
-| +    1da7:      lea    -0x4(%rbx),%edx
-|      1daa:      movzwl %bp,%eax
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
-|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
-| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
-| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
-
-The above reflects the desired change: avoid counting 13 too many bytes;
-which is the total size of the double-counted members in
-`struct mwifiex_ie_types_rxba_sync`:
-
-$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-struct mwifiex_ie_types_rxba_sync {
-	struct mwifiex_ie_types_header header;           /*     0     4 */
-
-     |-----------------------------------------------------------------------
-     |  u8                         mac[6];               /*     4     6 */  |
-     |	u8                         tid;                  /*    10     1 */  |
-     |  u8                         reserved;             /*    11     1 */  |
-     | 	__le16                     seq_num;              /*    12     2 */  |
-     | 	__le16                     bitmap_len;           /*    14     2 */  |
-     |  u8                         bitmap[1];            /*    16     1 */  |
-     |----------------------------------------------------------------------|
-								  | 13 bytes|
-								  -----------
-
-	/* size: 17, cachelines: 1, members: 7 */
-	/* last cacheline: 17 bytes */
-} __attribute__((__packed__));
-
-Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
+Fixes: 03d89a2de25b ("io_uring: support for user allocated memory for rings/sqes")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -965,8 +965,8 @@ void mwifiex_11n_rxba_sync_event(struct
- 			}
- 		}
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2678,7 +2678,7 @@ static void *__io_uaddr_map(struct page
+ {
+ 	struct page **page_array;
+ 	unsigned int nr_pages;
+-	int ret;
++	int ret, i;
  
--		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
--		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
-+		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-+		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
- 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
- 	}
- }
+ 	*npages = 0;
+ 
+@@ -2708,6 +2708,20 @@ err:
+ 	 */
+ 	if (page_array[0] != page_array[ret - 1])
+ 		goto err;
++
++	/*
++	 * Can't support mapping user allocated ring memory on 32-bit archs
++	 * where it could potentially reside in highmem. Just fail those with
++	 * -EINVAL, just like we did on kernels that didn't support this
++	 * feature.
++	 */
++	for (i = 0; i < nr_pages; i++) {
++		if (PageHighMem(page_array[i])) {
++			ret = -EINVAL;
++			goto err;
++		}
++	}
++
+ 	*pages = page_array;
+ 	*npages = nr_pages;
+ 	return page_to_virt(page_array[0]);
 
 
