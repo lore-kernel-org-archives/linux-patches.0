@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945D21A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA6E1A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7OsY5Ab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A94C433C9;
-	Mon,  9 Oct 2023 13:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxdrQdk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FEDC433C7;
+	Mon,  9 Oct 2023 13:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857668;
-	bh=k4/FRHAxoZSgWqKqBEZ08qxIoMXM7WlQzRQVAC+M8vU=;
+	s=korg; t=1696857671;
+	bh=9zCr2ucCK7FhVhj5G7aGfYpL4lNqlhlROhV8xxv+z8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7OsY5AbH6p17zeO2Wa7HDsyMb4KKwbuYDxgzrAlR5TMhAJnEgN+srTGnNOr4lIba
-	 PAy/Wq+waMdQk//9ZcKWBxDnHUbOFta7Po1NpyXDYwUeumxNXWFZSMZDXa5tt7nh0A
-	 JYmqf2ftH8/hSdyhoIQrq7+vBbPc0WkLV80rITfs=
+	b=lxdrQdk+PN5BD1td/sMyjRcVKyhYerXV7CB+XOVV/gxDJPa2bbQwWfuphG5vsJQvF
+	 MCJK3V3rVfjKIsFp9sJSin9BppbWtyflbauZiuMNXUJRTRekTIMEPCmlybK81e1M5k
+	 1xhBfNpSaF4QItBwjXmMvKVkJnUk64bpenVF4zxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/162] netfilter: handle the connecting collision properly in nf_conntrack_proto_sctp
-Date: Mon,  9 Oct 2023 15:01:40 +0200
-Message-ID: <20231009130126.215516958@linuxfoundation.org>
+Subject: [PATCH 6.1 120/162] selftests: netfilter: Test nf_tables audit logging
+Date: Mon,  9 Oct 2023 15:01:41 +0200
+Message-ID: <20231009130126.243261173@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,172 +42,350 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 8e56b063c86569e51eed1c5681ce6361fa97fc7a ]
+[ Upstream commit e8dbde59ca3fe925d0105bfb380e8429928b16dd ]
 
-In Scenario A and B below, as the delayed INIT_ACK always changes the peer
-vtag, SCTP ct with the incorrect vtag may cause packet loss.
+Compare NETFILTER_CFG type audit logs emitted from kernel upon ruleset
+modifications against expected output.
 
-Scenario A: INIT_ACK is delayed until the peer receives its own INIT_ACK
-
-  192.168.1.2 > 192.168.1.1: [INIT] [init tag: 1328086772]
-    192.168.1.1 > 192.168.1.2: [INIT] [init tag: 1414468151]
-    192.168.1.2 > 192.168.1.1: [INIT ACK] [init tag: 1328086772]
-  192.168.1.1 > 192.168.1.2: [INIT ACK] [init tag: 1650211246] *
-  192.168.1.2 > 192.168.1.1: [COOKIE ECHO]
-    192.168.1.1 > 192.168.1.2: [COOKIE ECHO]
-    192.168.1.2 > 192.168.1.1: [COOKIE ACK]
-
-Scenario B: INIT_ACK is delayed until the peer completes its own handshake
-
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
-    192.168.1.2 > 192.168.1.1: sctp (1) [INIT ACK] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [COOKIE ECHO]
-    192.168.1.2 > 192.168.1.1: sctp (1) [COOKIE ACK]
-  192.168.1.1 > 192.168.1.2: sctp (1) [INIT ACK] [init tag: 3914796021] *
-
-This patch fixes it as below:
-
-In SCTP_CID_INIT processing:
-- clear ct->proto.sctp.init[!dir] if ct->proto.sctp.init[dir] &&
-  ct->proto.sctp.init[!dir]. (Scenario E)
-- set ct->proto.sctp.init[dir].
-
-In SCTP_CID_INIT_ACK processing:
-- drop it if !ct->proto.sctp.init[!dir] && ct->proto.sctp.vtag[!dir] &&
-  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario B, Scenario C)
-- drop it if ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
-  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario A)
-
-In SCTP_CID_COOKIE_ACK processing:
-- clear ct->proto.sctp.init[dir] and ct->proto.sctp.init[!dir].
-  (Scenario D)
-
-Also, it's important to allow the ct state to move forward with cookie_echo
-and cookie_ack from the opposite dir for the collision scenarios.
-
-There are also other Scenarios where it should allow the packet through,
-addressed by the processing above:
-
-Scenario C: new CT is created by INIT_ACK.
-
-Scenario D: start INIT on the existing ESTABLISHED ct.
-
-Scenario E: start INIT after the old collision on the existing ESTABLISHED
-ct.
-
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
-  192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
-  (both side are stopped, then start new connection again in hours)
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 242308742]
-
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 0d880dc6f032 ("netfilter: nf_tables: Deduplicate nft_register_obj audit logs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/nf_conntrack_sctp.h |  1 +
- net/netfilter/nf_conntrack_proto_sctp.c     | 43 ++++++++++++++++-----
- 2 files changed, 34 insertions(+), 10 deletions(-)
+ tools/testing/selftests/netfilter/.gitignore  |   1 +
+ tools/testing/selftests/netfilter/Makefile    |   4 +-
+ .../selftests/netfilter/audit_logread.c       | 165 ++++++++++++++++++
+ tools/testing/selftests/netfilter/config      |   1 +
+ .../testing/selftests/netfilter/nft_audit.sh  | 108 ++++++++++++
+ 5 files changed, 277 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/netfilter/audit_logread.c
+ create mode 100755 tools/testing/selftests/netfilter/nft_audit.sh
 
-diff --git a/include/linux/netfilter/nf_conntrack_sctp.h b/include/linux/netfilter/nf_conntrack_sctp.h
-index 625f491b95de8..fb31312825ae5 100644
---- a/include/linux/netfilter/nf_conntrack_sctp.h
-+++ b/include/linux/netfilter/nf_conntrack_sctp.h
-@@ -9,6 +9,7 @@ struct ip_ct_sctp {
- 	enum sctp_conntrack state;
+diff --git a/tools/testing/selftests/netfilter/.gitignore b/tools/testing/selftests/netfilter/.gitignore
+index 4cb887b574138..4b2928e1c19d8 100644
+--- a/tools/testing/selftests/netfilter/.gitignore
++++ b/tools/testing/selftests/netfilter/.gitignore
+@@ -1,3 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ nf-queue
+ connect_close
++audit_logread
+diff --git a/tools/testing/selftests/netfilter/Makefile b/tools/testing/selftests/netfilter/Makefile
+index 3686bfa6c58d7..321db8850da00 100644
+--- a/tools/testing/selftests/netfilter/Makefile
++++ b/tools/testing/selftests/netfilter/Makefile
+@@ -6,13 +6,13 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
+ 	nft_concat_range.sh nft_conntrack_helper.sh \
+ 	nft_queue.sh nft_meta.sh nf_nat_edemux.sh \
+ 	ipip-conntrack-mtu.sh conntrack_tcp_unreplied.sh \
+-	conntrack_vrf.sh nft_synproxy.sh rpath.sh
++	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh
  
- 	__be32 vtag[IP_CT_DIR_MAX];
-+	u8 init[IP_CT_DIR_MAX];
- 	u8 last_dir;
- 	u8 flags;
- };
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 7247af51bdfc4..c94a9971d790c 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -112,7 +112,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
- /* shutdown_ack */ {sSA, sCL, sCW, sCE, sES, sSA, sSA, sSA, sSA},
- /* error        */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't have Stale cookie*/
- /* cookie_echo  */ {sCL, sCL, sCE, sCE, sES, sSS, sSR, sSA, sCL},/* 5.2.4 - Big TODO */
--/* cookie_ack   */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
-+/* cookie_ack   */ {sCL, sCL, sCW, sES, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
- /* shutdown_comp*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sCL, sCL},
- /* heartbeat    */ {sHS, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
- /* heartbeat_ack*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
-@@ -126,7 +126,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
- /* shutdown     */ {sIV, sCL, sCW, sCE, sSR, sSS, sSR, sSA, sIV},
- /* shutdown_ack */ {sIV, sCL, sCW, sCE, sES, sSA, sSA, sSA, sIV},
- /* error        */ {sIV, sCL, sCW, sCL, sES, sSS, sSR, sSA, sIV},
--/* cookie_echo  */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
-+/* cookie_echo  */ {sIV, sCL, sCE, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
- /* cookie_ack   */ {sIV, sCL, sCW, sES, sES, sSS, sSR, sSA, sIV},
- /* shutdown_comp*/ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sCL, sIV},
- /* heartbeat    */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
-@@ -426,6 +426,9 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 			/* (D) vtag must be same as init_vtag as found in INIT_ACK */
- 			if (sh->vtag != ct->proto.sctp.vtag[dir])
- 				goto out_unlock;
-+		} else if (sch->type == SCTP_CID_COOKIE_ACK) {
-+			ct->proto.sctp.init[dir] = 0;
-+			ct->proto.sctp.init[!dir] = 0;
- 		} else if (sch->type == SCTP_CID_HEARTBEAT) {
- 			if (ct->proto.sctp.vtag[dir] == 0) {
- 				pr_debug("Setting %d vtag %x for dir %d\n", sch->type, sh->vtag, dir);
-@@ -474,16 +477,18 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 		}
+ HOSTPKG_CONFIG := pkg-config
  
- 		/* If it is an INIT or an INIT ACK note down the vtag */
--		if (sch->type == SCTP_CID_INIT ||
--		    sch->type == SCTP_CID_INIT_ACK) {
--			struct sctp_inithdr _inithdr, *ih;
-+		if (sch->type == SCTP_CID_INIT) {
-+			struct sctp_inithdr _ih, *ih;
+ CFLAGS += $(shell $(HOSTPKG_CONFIG) --cflags libmnl 2>/dev/null)
+ LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
  
--			ih = skb_header_pointer(skb, offset + sizeof(_sch),
--						sizeof(_inithdr), &_inithdr);
--			if (ih == NULL)
-+			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
-+			if (!ih)
- 				goto out_unlock;
--			pr_debug("Setting vtag %x for dir %d\n",
--				 ih->init_tag, !dir);
-+
-+			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir])
-+				ct->proto.sctp.init[!dir] = 0;
-+			ct->proto.sctp.init[dir] = 1;
-+
-+			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
- 			ct->proto.sctp.vtag[!dir] = ih->init_tag;
+-TEST_GEN_FILES =  nf-queue connect_close
++TEST_GEN_FILES =  nf-queue connect_close audit_logread
  
- 			/* don't renew timeout on init retransmit so
-@@ -494,6 +499,24 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 			    old_state == SCTP_CONNTRACK_CLOSED &&
- 			    nf_ct_is_confirmed(ct))
- 				ignore = true;
-+		} else if (sch->type == SCTP_CID_INIT_ACK) {
-+			struct sctp_inithdr _ih, *ih;
-+			__be32 vtag;
+ include ../lib.mk
+diff --git a/tools/testing/selftests/netfilter/audit_logread.c b/tools/testing/selftests/netfilter/audit_logread.c
+new file mode 100644
+index 0000000000000..a0a880fc2d9de
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/audit_logread.c
+@@ -0,0 +1,165 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
-+			if (!ih)
-+				goto out_unlock;
++#define _GNU_SOURCE
++#include <errno.h>
++#include <fcntl.h>
++#include <poll.h>
++#include <signal.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/socket.h>
++#include <unistd.h>
++#include <linux/audit.h>
++#include <linux/netlink.h>
 +
-+			vtag = ct->proto.sctp.vtag[!dir];
-+			if (!ct->proto.sctp.init[!dir] && vtag && vtag != ih->init_tag)
-+				goto out_unlock;
-+			/* collision */
-+			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
-+			    vtag != ih->init_tag)
-+				goto out_unlock;
++static int fd;
 +
-+			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
-+			ct->proto.sctp.vtag[!dir] = ih->init_tag;
- 		}
- 
- 		ct->proto.sctp.state = new_state;
++#define MAX_AUDIT_MESSAGE_LENGTH	8970
++struct audit_message {
++	struct nlmsghdr nlh;
++	union {
++		struct audit_status s;
++		char data[MAX_AUDIT_MESSAGE_LENGTH];
++	} u;
++};
++
++int audit_recv(int fd, struct audit_message *rep)
++{
++	struct sockaddr_nl addr;
++	socklen_t addrlen = sizeof(addr);
++	int ret;
++
++	do {
++		ret = recvfrom(fd, rep, sizeof(*rep), 0,
++			       (struct sockaddr *)&addr, &addrlen);
++	} while (ret < 0 && errno == EINTR);
++
++	if (ret < 0 ||
++	    addrlen != sizeof(addr) ||
++	    addr.nl_pid != 0 ||
++	    rep->nlh.nlmsg_type == NLMSG_ERROR) /* short-cut for now */
++		return -1;
++
++	return ret;
++}
++
++int audit_send(int fd, uint16_t type, uint32_t key, uint32_t val)
++{
++	static int seq = 0;
++	struct audit_message msg = {
++		.nlh = {
++			.nlmsg_len   = NLMSG_SPACE(sizeof(msg.u.s)),
++			.nlmsg_type  = type,
++			.nlmsg_flags = NLM_F_REQUEST | NLM_F_ACK,
++			.nlmsg_seq   = ++seq,
++		},
++		.u.s = {
++			.mask    = key,
++			.enabled = key == AUDIT_STATUS_ENABLED ? val : 0,
++			.pid     = key == AUDIT_STATUS_PID ? val : 0,
++		}
++	};
++	struct sockaddr_nl addr = {
++		.nl_family = AF_NETLINK,
++	};
++	int ret;
++
++	do {
++		ret = sendto(fd, &msg, msg.nlh.nlmsg_len, 0,
++			     (struct sockaddr *)&addr, sizeof(addr));
++	} while (ret < 0 && errno == EINTR);
++
++	if (ret != (int)msg.nlh.nlmsg_len)
++		return -1;
++	return 0;
++}
++
++int audit_set(int fd, uint32_t key, uint32_t val)
++{
++	struct audit_message rep = { 0 };
++	int ret;
++
++	ret = audit_send(fd, AUDIT_SET, key, val);
++	if (ret)
++		return ret;
++
++	ret = audit_recv(fd, &rep);
++	if (ret < 0)
++		return ret;
++	return 0;
++}
++
++int readlog(int fd)
++{
++	struct audit_message rep = { 0 };
++	int ret = audit_recv(fd, &rep);
++	const char *sep = "";
++	char *k, *v;
++
++	if (ret < 0)
++		return ret;
++
++	if (rep.nlh.nlmsg_type != AUDIT_NETFILTER_CFG)
++		return 0;
++
++	/* skip the initial "audit(...): " part */
++	strtok(rep.u.data, " ");
++
++	while ((k = strtok(NULL, "="))) {
++		v = strtok(NULL, " ");
++
++		/* these vary and/or are uninteresting, ignore */
++		if (!strcmp(k, "pid") ||
++		    !strcmp(k, "comm") ||
++		    !strcmp(k, "subj"))
++			continue;
++
++		/* strip the varying sequence number */
++		if (!strcmp(k, "table"))
++			*strchrnul(v, ':') = '\0';
++
++		printf("%s%s=%s", sep, k, v);
++		sep = " ";
++	}
++	if (*sep) {
++		printf("\n");
++		fflush(stdout);
++	}
++	return 0;
++}
++
++void cleanup(int sig)
++{
++	audit_set(fd, AUDIT_STATUS_ENABLED, 0);
++	close(fd);
++	if (sig)
++		exit(0);
++}
++
++int main(int argc, char **argv)
++{
++	struct sigaction act = {
++		.sa_handler = cleanup,
++	};
++
++	fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_AUDIT);
++	if (fd < 0) {
++		perror("Can't open netlink socket");
++		return -1;
++	}
++
++	if (sigaction(SIGTERM, &act, NULL) < 0 ||
++	    sigaction(SIGINT, &act, NULL) < 0) {
++		perror("Can't set signal handler");
++		close(fd);
++		return -1;
++	}
++
++	audit_set(fd, AUDIT_STATUS_ENABLED, 1);
++	audit_set(fd, AUDIT_STATUS_PID, getpid());
++
++	while (1)
++		readlog(fd);
++}
+diff --git a/tools/testing/selftests/netfilter/config b/tools/testing/selftests/netfilter/config
+index 4faf2ce021d90..7c42b1b2c69b4 100644
+--- a/tools/testing/selftests/netfilter/config
++++ b/tools/testing/selftests/netfilter/config
+@@ -6,3 +6,4 @@ CONFIG_NFT_REDIR=m
+ CONFIG_NFT_MASQ=m
+ CONFIG_NFT_FLOW_OFFLOAD=m
+ CONFIG_NF_CT_NETLINK=m
++CONFIG_AUDIT=y
+diff --git a/tools/testing/selftests/netfilter/nft_audit.sh b/tools/testing/selftests/netfilter/nft_audit.sh
+new file mode 100755
+index 0000000000000..83c271b1c7352
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/nft_audit.sh
+@@ -0,0 +1,108 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Check that audit logs generated for nft commands are as expected.
++
++SKIP_RC=4
++RC=0
++
++nft --version >/dev/null 2>&1 || {
++	echo "SKIP: missing nft tool"
++	exit $SKIP_RC
++}
++
++logfile=$(mktemp)
++echo "logging into $logfile"
++./audit_logread >"$logfile" &
++logread_pid=$!
++trap 'kill $logread_pid; rm -f $logfile' EXIT
++exec 3<"$logfile"
++
++do_test() { # (cmd, log)
++	echo -n "testing for cmd: $1 ... "
++	cat <&3 >/dev/null
++	$1 >/dev/null || exit 1
++	sleep 0.1
++	res=$(diff -a -u <(echo "$2") - <&3)
++	[ $? -eq 0 ] && { echo "OK"; return; }
++	echo "FAIL"
++	echo "$res"
++	((RC++))
++}
++
++nft flush ruleset
++
++for table in t1 t2; do
++	do_test "nft add table $table" \
++	"table=$table family=2 entries=1 op=nft_register_table"
++
++	do_test "nft add chain $table c1" \
++	"table=$table family=2 entries=1 op=nft_register_chain"
++
++	do_test "nft add chain $table c2; add chain $table c3" \
++	"table=$table family=2 entries=2 op=nft_register_chain"
++
++	cmd="add rule $table c1 counter"
++
++	do_test "nft $cmd" \
++	"table=$table family=2 entries=1 op=nft_register_rule"
++
++	do_test "nft $cmd; $cmd" \
++	"table=$table family=2 entries=2 op=nft_register_rule"
++
++	cmd=""
++	sep=""
++	for chain in c2 c3; do
++		for i in {1..3}; do
++			cmd+="$sep add rule $table $chain counter"
++			sep=";"
++		done
++	done
++	do_test "nft $cmd" \
++	"table=$table family=2 entries=6 op=nft_register_rule"
++done
++
++do_test 'nft reset rules t1 c2' \
++'table=t1 family=2 entries=3 op=nft_reset_rule'
++
++do_test 'nft reset rules table t1' \
++'table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule'
++
++do_test 'nft reset rules' \
++'table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule'
++
++for ((i = 0; i < 500; i++)); do
++	echo "add rule t2 c3 counter accept comment \"rule $i\""
++done | do_test 'nft -f -' \
++'table=t2 family=2 entries=500 op=nft_register_rule'
++
++do_test 'nft reset rules t2 c3' \
++'table=t2 family=2 entries=189 op=nft_reset_rule
++table=t2 family=2 entries=188 op=nft_reset_rule
++table=t2 family=2 entries=126 op=nft_reset_rule'
++
++do_test 'nft reset rules t2' \
++'table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=186 op=nft_reset_rule
++table=t2 family=2 entries=188 op=nft_reset_rule
++table=t2 family=2 entries=129 op=nft_reset_rule'
++
++do_test 'nft reset rules' \
++'table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule
++table=t1 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=3 op=nft_reset_rule
++table=t2 family=2 entries=180 op=nft_reset_rule
++table=t2 family=2 entries=188 op=nft_reset_rule
++table=t2 family=2 entries=135 op=nft_reset_rule'
++
++exit $RC
 -- 
 2.40.1
 
