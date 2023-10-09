@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B87D18B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000118B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaNf6SEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412FFC433C8;
-	Mon,  9 Oct 2023 13:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxrRxRpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38847C433C9;
+	Mon,  9 Oct 2023 13:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856960;
-	bh=AhAKsyZXCfHh6x2zu6J8fzzO8738qSBYnoWkXQUUxt0=;
+	s=korg; t=1696856963;
+	bh=LodxO+67nhNBEcTXqTV5K5VHqPMjdyd10dha69B/X9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaNf6SEv8I7eKTubbUBMd0HXVRj/iUvqo0Yop1awyAGVkTNGH0FUw1gUyttkMSU+P
-	 MHR4MWkQAqRF5Gc8+HuD8o5JKU6TUg8L0O1p+5mYiDhi8hkPvUkdh7mbHBr6MOvl5c
-	 AejTwLuhrN4gRqT74JSLafTSYTXJlHexkQjl9BB4=
+	b=ZxrRxRpfCFZ7sjxSCIfb+QwwgLxMZbyusDtneGoXqOlr3knbLYsM/G+bXtJ4S9wZ9
+	 sVMmSUu/l0PFGQdvwNiQm5+Jifi43yltczC9HrTGJVugqvu/CvLks2LyYN87tnhLMi
+	 WwhkskEqNXZ9kxOxTq61z1ppmR115GQh1Sl+m+lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 049/163] btrfs: reject unknown mount options early
-Date: Mon,  9 Oct 2023 15:00:13 +0200
-Message-ID: <20231009130125.385480581@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 050/163] net: prevent rewrite of msg_name in sock_sendmsg()
+Date: Mon,  9 Oct 2023 15:00:14 +0200
+Message-ID: <20231009130125.417863762@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,55 +43,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Jordan Rife <jrife@google.com>
 
-commit 5f521494cc73520ffac18ede0758883b9aedd018 upstream.
+commit 86a7e0b69bd5b812e48a20c66c2161744f3caa16 upstream.
 
-[BUG]
-The following script would allow invalid mount options to be specified
-(although such invalid options would just be ignored):
+Callers of sock_sendmsg(), and similarly kernel_sendmsg(), in kernel
+space may observe their value of msg_name change in cases where BPF
+sendmsg hooks rewrite the send address. This has been confirmed to break
+NFS mounts running in UDP mode and has the potential to break other
+systems.
 
-  # mkfs.btrfs -f $dev
-  # mount $dev $mnt1		<<< Successful mount expected
-  # mount $dev $mnt2 -o junk	<<< Failed mount expected
-  # echo $?
-  0
+This patch:
 
-[CAUSE]
-For the 2nd mount, since the fs is already mounted, we won't go through
-open_ctree() thus no btrfs_parse_options(), but only through
-btrfs_parse_subvol_options().
+1) Creates a new function called __sock_sendmsg() with same logic as the
+   old sock_sendmsg() function.
+2) Replaces calls to sock_sendmsg() made by __sys_sendto() and
+   __sys_sendmsg() with __sock_sendmsg() to avoid an unnecessary copy,
+   as these system calls are already protected.
+3) Modifies sock_sendmsg() so that it makes a copy of msg_name if
+   present before passing it down the stack to insulate callers from
+   changes to the send address.
 
-However we do not treat unrecognized options from valid but irrelevant
-options, thus those invalid options would just be ignored by
-btrfs_parse_subvol_options().
-
-[FIX]
-Add the handling for Opt_err to handle invalid options and error out,
-while still ignore other valid options inside btrfs_parse_subvol_options().
-
-Reported-by: Anand Jain <anand.jain@oracle.com>
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
+Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/socket.c |   29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -948,6 +948,10 @@ static int btrfs_parse_subvol_options(co
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -732,6 +732,14 @@ static inline int sock_sendmsg_nosec(str
+ 	return ret;
+ }
  
- 			*subvol_objectid = subvolid;
- 			break;
-+		case Opt_err:
-+			btrfs_err(NULL, "unrecognized mount option '%s'", p);
-+			error = -EINVAL;
-+			goto out;
- 		default:
- 			break;
- 		}
++static int __sock_sendmsg(struct socket *sock, struct msghdr *msg)
++{
++	int err = security_socket_sendmsg(sock, msg,
++					  msg_data_left(msg));
++
++	return err ?: sock_sendmsg_nosec(sock, msg);
++}
++
+ /**
+  *	sock_sendmsg - send a message through @sock
+  *	@sock: socket
+@@ -742,10 +750,19 @@ static inline int sock_sendmsg_nosec(str
+  */
+ int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+ {
+-	int err = security_socket_sendmsg(sock, msg,
+-					  msg_data_left(msg));
++	struct sockaddr_storage *save_addr = (struct sockaddr_storage *)msg->msg_name;
++	struct sockaddr_storage address;
++	int ret;
+ 
+-	return err ?: sock_sendmsg_nosec(sock, msg);
++	if (msg->msg_name) {
++		memcpy(&address, msg->msg_name, msg->msg_namelen);
++		msg->msg_name = &address;
++	}
++
++	ret = __sock_sendmsg(sock, msg);
++	msg->msg_name = save_addr;
++
++	return ret;
+ }
+ EXPORT_SYMBOL(sock_sendmsg);
+ 
+@@ -1127,7 +1144,7 @@ static ssize_t sock_write_iter(struct ki
+ 	if (sock->type == SOCK_SEQPACKET)
+ 		msg.msg_flags |= MSG_EOR;
+ 
+-	res = sock_sendmsg(sock, &msg);
++	res = __sock_sendmsg(sock, &msg);
+ 	*from = msg.msg_iter;
+ 	return res;
+ }
+@@ -2132,7 +2149,7 @@ int __sys_sendto(int fd, void __user *bu
+ 	if (sock->file->f_flags & O_NONBLOCK)
+ 		flags |= MSG_DONTWAIT;
+ 	msg.msg_flags = flags;
+-	err = sock_sendmsg(sock, &msg);
++	err = __sock_sendmsg(sock, &msg);
+ 
+ out_put:
+ 	fput_light(sock->file, fput_needed);
+@@ -2492,7 +2509,7 @@ static int ____sys_sendmsg(struct socket
+ 		err = sock_sendmsg_nosec(sock, msg_sys);
+ 		goto out_freectl;
+ 	}
+-	err = sock_sendmsg(sock, msg_sys);
++	err = __sock_sendmsg(sock, msg_sys);
+ 	/*
+ 	 * If this is sendmmsg() and sending to current destination address was
+ 	 * successful, remember it.
 
 
