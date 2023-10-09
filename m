@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF4A18035
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41B418035
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7R0rzvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AD9C433C9;
-	Mon,  9 Oct 2023 13:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhK+IC5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72BAC433C8;
+	Mon,  9 Oct 2023 13:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858801;
-	bh=MhMNGkNX0LYJTwIA8+myPWprkMNQj21SwZr8Sk85pb8=;
+	s=korg; t=1696858804;
+	bh=RhOLeK6RerTYMfQMp4g2qljTIIAW2SJ/vA/ftcqrKiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7R0rzvFrKHoz5TOzDotY7g/ts8DJ9z/GQpopGME1sEwmVTgXwTnLOa7nGI7jPo7x
-	 a57zUK8ORuSHWb9mJ9eONnMkIdnDF/ZaDlxcEB9Oib4P4ZKjWSHqGpMsXm9bmHF19N
-	 t9L9aBbi9MqHd+owClnBDZvhgwnvqLvHQlnGzePc=
+	b=GhK+IC5JS+oIbxMnYcV6Jv8ecsvRNCUu7GV1YU5BG0EkRlJrXW94C9PnOdw0t4U9F
+	 +cdIDfniTPp8Qa85SsIAXSU6HSU2ZRWOKt+oZ2u4GIu9D5yjKrsfzHU5iw9QUXbJr4
+	 hWkD3qYjEB0SVkKmXh+D38o3O5x0al3+qrMVENsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Max Filippov <jcmvbkbc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/226] btrfs: reset destination buffer when read_extent_buffer() gets invalid range
-Date: Mon,  9 Oct 2023 15:00:48 +0200
-Message-ID: <20231009130129.051418904@linuxfoundation.org>
+Subject: [PATCH 5.10 105/226] xtensa: boot/lib: fix function prototypes
+Date: Mon,  9 Oct 2023 15:01:06 +0200
+Message-ID: <20231009130129.524576468@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,59 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-[ Upstream commit 74ee79142c0a344d4eae2eb7012ebc4e82254109 ]
+[ Upstream commit f54d02c8f2cc4b46ba2a3bd8252a6750453b6f2b ]
 
-Commit f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer
-read write functions") changed how we handle invalid extent buffer range
-for read_extent_buffer().
+Add function prototype for gunzip() to the boot library code and make
+exit() and zalloc() static.
 
-Previously if the range is invalid we just set the destination to zero,
-but after the patch we do nothing and error out.
+arch/xtensa/boot/lib/zmem.c:8:6: warning: no previous prototype for 'exit' [-Wmissing-prototypes]
+    8 | void exit (void)
+arch/xtensa/boot/lib/zmem.c:13:7: warning: no previous prototype for 'zalloc' [-Wmissing-prototypes]
+   13 | void *zalloc(unsigned size)
+arch/xtensa/boot/lib/zmem.c:35:6: warning: no previous prototype for 'gunzip' [-Wmissing-prototypes]
+   35 | void gunzip (void *dst, int dstlen, unsigned char *src, int *lenp)
 
-This can lead to smatch static checker errors like:
-
-  fs/btrfs/print-tree.c:186 print_uuid_item() error: uninitialized symbol 'subvol_id'.
-  fs/btrfs/tests/extent-io-tests.c:338 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/tests/extent-io-tests.c:353 check_eb_bitmap() error: uninitialized symbol 'has'.
-  fs/btrfs/uuid-tree.c:203 btrfs_uuid_tree_remove() error: uninitialized symbol 'read_subid'.
-  fs/btrfs/uuid-tree.c:353 btrfs_uuid_tree_iterate() error: uninitialized symbol 'subid_le'.
-  fs/btrfs/uuid-tree.c:72 btrfs_uuid_tree_lookup() error: uninitialized symbol 'data'.
-  fs/btrfs/volumes.c:7415 btrfs_dev_stats_value() error: uninitialized symbol 'val'.
-
-Fix those warnings by reverting back to the old memset() behavior.
-By this we keep the static checker happy and would still make a lot of
-noise when such invalid ranges are passed in.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: f98b6215d7d1 ("btrfs: extent_io: do extra check for extent buffer read write functions")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
+Fixes: e7d163f76665 ("xtensa: Removed local copy of zlib and fixed O= support")
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/xtensa/boot/lib/zmem.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 0e266772beaef..685a375bb6af5 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -5634,8 +5634,14 @@ void read_extent_buffer(const struct extent_buffer *eb, void *dstv,
- 	char *dst = (char *)dstv;
- 	unsigned long i = start >> PAGE_SHIFT;
+diff --git a/arch/xtensa/boot/lib/zmem.c b/arch/xtensa/boot/lib/zmem.c
+index e3ecd743c5153..b89189355122a 100644
+--- a/arch/xtensa/boot/lib/zmem.c
++++ b/arch/xtensa/boot/lib/zmem.c
+@@ -4,13 +4,14 @@
+ /* bits taken from ppc */
  
--	if (check_eb_range(eb, start, len))
-+	if (check_eb_range(eb, start, len)) {
-+		/*
-+		 * Invalid range hit, reset the memory, so callers won't get
-+		 * some random garbage for their uninitialzed memory.
-+		 */
-+		memset(dstv, 0, len);
- 		return;
-+	}
+ extern void *avail_ram, *end_avail;
++void gunzip(void *dst, int dstlen, unsigned char *src, int *lenp);
  
- 	offset = offset_in_page(start);
+-void exit (void)
++static void exit(void)
+ {
+   for (;;);
+ }
+ 
+-void *zalloc(unsigned size)
++static void *zalloc(unsigned int size)
+ {
+         void *p = avail_ram;
  
 -- 
 2.40.1
