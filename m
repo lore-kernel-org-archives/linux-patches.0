@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD441A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB11199AB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzOn1Cie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F2FC433CA;
-	Mon,  9 Oct 2023 13:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maZMXcjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36002C433CA;
+	Mon,  9 Oct 2023 13:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858452;
-	bh=IRdLXW6uTg+ujRIqye0wdO6MyhRWi7K4KHfq7piC0/A=;
+	s=korg; t=1696858455;
+	bh=wVs9kkjnTTvQrDrjmZk2Ol8gsgTnSfUtlyZwICv5hE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzOn1Cie8Le/0uQwHrcLLkkWMglL3t75dfOAmFRweppI0ocSDLUZA+Vous2UiN9JS
-	 wAkt+pawmWk4MkyUoeV6SPHmU8LBHG+NdA8KQvhmEaciQsi8S4z1bG74q0ZDBxt5W5
-	 ri3c34DvXFbtDsmcJ1b4+QbRqvvFY2pDvjw2VYYI=
+	b=maZMXcjlhUnR2pfYZrAHFwNBd7XQYv7cCAaHhxURqN2cbE/m6ihQdz8GB7CBzaaC7
+	 PsRs/gaWsq20Bw52gmOHpBxxMR5febgWM7mM3JnqlfO4HsIv8pmzjWEti2AiV9cYdv
+	 ptJx7M2ul5rVGVvx9u20qSNaMZ7xT5JHPD3vE6nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
 	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.4 126/131] RDMA/uverbs: Fix typo of sizeof argument
-Date: Mon,  9 Oct 2023 15:02:46 +0200
-Message-ID: <20231009130120.277769924@linuxfoundation.org>
+Subject: [PATCH 5.4 127/131] RDMA/siw: Fix connection failure handling
+Date: Mon,  9 Oct 2023 15:02:47 +0200
+Message-ID: <20231009130120.307007624@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,35 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Bernard Metzler <bmt@zurich.ibm.com>
 
-commit c489800e0d48097fc6afebd862c6afa039110a36 upstream.
+commit 53a3f777049771496f791504e7dc8ef017cba590 upstream.
 
-Since size of 'hdr' pointer and '*hdr' structure is equal on 64-bit
-machines issue probably didn't cause any wrong behavior. But anyway,
-fixing of typo is required.
+In case immediate MPA request processing fails, the newly
+created endpoint unlinks the listening endpoint and is
+ready to be dropped. This special case was not handled
+correctly by the code handling the later TCP socket close,
+causing a NULL dereference crash in siw_cm_work_handler()
+when dereferencing a NULL listener. We now also cancel
+the useless MPA timeout, if immediate MPA request
+processing fails.
 
-Fixes: da0f60df7bd5 ("RDMA/uverbs: Prohibit write() calls with too small buffers")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Link: https://lore.kernel.org/r/20230905103258.1738246-1-konstantin.meskhidze@huawei.com
+This patch furthermore simplifies MPA processing in general:
+Scheduling a useless TCP socket read in sk_data_ready() upcall
+is now surpressed, if the socket is already moved out of
+TCP_ESTABLISHED state.
+
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
+Link: https://lore.kernel.org/r/20230905145822.446263-1-bmt@zurich.ibm.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_cm.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/core/uverbs_main.c
-+++ b/drivers/infiniband/core/uverbs_main.c
-@@ -633,7 +633,7 @@ static ssize_t verify_hdr(struct ib_uver
- 	if (hdr->in_words * 4 != count)
- 		return -EINVAL;
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -981,6 +981,7 @@ static void siw_accept_newconn(struct si
+ 			siw_cep_put(cep);
+ 			new_cep->listen_cep = NULL;
+ 			if (rv) {
++				siw_cancel_mpatimer(new_cep);
+ 				siw_cep_set_free(new_cep);
+ 				goto error;
+ 			}
+@@ -1105,9 +1106,12 @@ static void siw_cm_work_handler(struct w
+ 				/*
+ 				 * Socket close before MPA request received.
+ 				 */
+-				siw_dbg_cep(cep, "no mpareq: drop listener\n");
+-				siw_cep_put(cep->listen_cep);
+-				cep->listen_cep = NULL;
++				if (cep->listen_cep) {
++					siw_dbg_cep(cep,
++						"no mpareq: drop listener\n");
++					siw_cep_put(cep->listen_cep);
++					cep->listen_cep = NULL;
++				}
+ 			}
+ 		}
+ 		release_cep = 1;
+@@ -1230,7 +1234,11 @@ static void siw_cm_llp_data_ready(struct
+ 	if (!cep)
+ 		goto out;
  
--	if (count < method_elm->req_size + sizeof(hdr)) {
-+	if (count < method_elm->req_size + sizeof(*hdr)) {
- 		/*
- 		 * rdma-core v18 and v19 have a bug where they send DESTROY_CQ
- 		 * with a 16 byte write instead of 24. Old kernels didn't
+-	siw_dbg_cep(cep, "state: %d\n", cep->state);
++	siw_dbg_cep(cep, "cep state: %d, socket state %d\n",
++		    cep->state, sk->sk_state);
++
++	if (sk->sk_state != TCP_ESTABLISHED)
++		goto out;
+ 
+ 	switch (cep->state) {
+ 	case SIW_EPSTATE_RDMA_MODE:
 
 
