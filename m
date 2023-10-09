@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F414418035
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5115D18035
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+79NWhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE6CC433C7;
-	Mon,  9 Oct 2023 13:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaQmvQMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B77C433C8;
+	Mon,  9 Oct 2023 13:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858873;
-	bh=xVf1poW2Vns6eGjR8b/Pih6RrD0lZfn+7NGgDYWLsYE=;
+	s=korg; t=1696858877;
+	bh=psKwbz4SHNf0L7aHN14NfUzQZTvWoRNYn0uRGiV0/Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+79NWhRiCaboz/nrCfGTckpvCFnJTlZKyvIAELrpwnHOmDSB5esF2jGBchg4DsLT
-	 cc1fTH0nzNFNl345toWatJiCXsONJjwSxDiTzi4LjOcEgsPl/7/KrDoUXNWpXYmZtE
-	 5OlGSSXhOyD7lhx36is/1gIoJuXkL2/4coS10dPE=
+	b=qaQmvQMlsVeRy4Kh21JGL8i7Gy9jRUiLteVr4PV7WmwWI4mkutBYZO6cq4bmYVFPx
+	 GeV2rwD1Maik812OI9SCMXuCxoV636T65Xmosb7Uv1NRmpwUV6bKQA/tb02jRxr9P7
+	 y0Dl4Bm3QMXodLJhWSBX/Op4ckyf+6j/8B3mIrx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Andrey Ryabinin <arbn@yandex-team.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Tejun Heo <tj@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/226] perf build: Define YYNOMEM as YYNOABORT for bison < 3.81
-Date: Mon,  9 Oct 2023 15:01:29 +0200
-Message-ID: <20231009130130.115254228@linuxfoundation.org>
+Subject: [PATCH 5.10 129/226] sched/cpuacct: Fix user/system in shown cpuacct.usage*
+Date: Mon,  9 Oct 2023 15:01:30 +0200
+Message-ID: <20231009130130.139499179@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -45,40 +45,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Andrey Ryabinin <arbn@yandex-team.com>
 
-[ Upstream commit 88cc47e24597971b05b6e94c28a2fc81d2a8d61a ]
+commit dd02d4234c9a2214a81c57a16484304a1a51872a upstream.
 
-YYNOMEM was introduced in bison 3.81, so define it as YYABORT for older
-versions, which should provide the previous perf behaviour.
+cpuacct has 2 different ways of accounting and showing user
+and system times.
 
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The first one uses cpuacct_account_field() to account times
+and cpuacct.stat file to expose them. And this one seems to work ok.
+
+The second one is uses cpuacct_charge() function for accounting and
+set of cpuacct.usage* files to show times. Despite some attempts to
+fix it in the past it still doesn't work. Sometimes while running KVM
+guest the cpuacct_charge() accounts most of the guest time as
+system time. This doesn't match with user&system times shown in
+cpuacct.stat or proc/<pid>/stat.
+
+Demonstration:
+ # git clone https://github.com/aryabinin/kvmsample
+ # make
+ # mkdir /sys/fs/cgroup/cpuacct/test
+ # echo $$ > /sys/fs/cgroup/cpuacct/test/tasks
+ # ./kvmsample &
+ # for i in {1..5}; do cat /sys/fs/cgroup/cpuacct/test/cpuacct.usage_sys; sleep 1; done
+ 1976535645
+ 2979839428
+ 3979832704
+ 4983603153
+ 5983604157
+
+Use cpustats accounted in cpuacct_account_field() as the source
+of user/sys times for cpuacct.usage* files. Make cpuacct_charge()
+to account only summary execution time.
+
+Fixes: d740037fac70 ("sched/cpuacct: Split usage accounting into user_usage and sys_usage")
+Signed-off-by: Andrey Ryabinin <arbn@yandex-team.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20211115164607.23784-3-arbn@yandex-team.com
+[OP: adjusted context for v5.10]
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/Build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/cpuacct.c | 79 +++++++++++++++++-------------------------
+ 1 file changed, 32 insertions(+), 47 deletions(-)
 
-diff --git a/tools/perf/util/Build b/tools/perf/util/Build
-index 0cf27354aa451..0f9732d5452e6 100644
---- a/tools/perf/util/Build
-+++ b/tools/perf/util/Build
-@@ -253,6 +253,12 @@ ifeq ($(BISON_GE_35),1)
- else
-   bison_flags += -w
- endif
+diff --git a/kernel/sched/cpuacct.c b/kernel/sched/cpuacct.c
+index 941c28cf97384..8a260115a137b 100644
+--- a/kernel/sched/cpuacct.c
++++ b/kernel/sched/cpuacct.c
+@@ -21,15 +21,11 @@ static const char * const cpuacct_stat_desc[] = {
+ 	[CPUACCT_STAT_SYSTEM] = "system",
+ };
+ 
+-struct cpuacct_usage {
+-	u64	usages[CPUACCT_STAT_NSTATS];
+-};
+-
+ /* track CPU usage of a group of tasks and its child groups */
+ struct cpuacct {
+ 	struct cgroup_subsys_state	css;
+ 	/* cpuusage holds pointer to a u64-type object on every CPU */
+-	struct cpuacct_usage __percpu	*cpuusage;
++	u64 __percpu	*cpuusage;
+ 	struct kernel_cpustat __percpu	*cpustat;
+ };
+ 
+@@ -49,7 +45,7 @@ static inline struct cpuacct *parent_ca(struct cpuacct *ca)
+ 	return css_ca(ca->css.parent);
+ }
+ 
+-static DEFINE_PER_CPU(struct cpuacct_usage, root_cpuacct_cpuusage);
++static DEFINE_PER_CPU(u64, root_cpuacct_cpuusage);
+ static struct cpuacct root_cpuacct = {
+ 	.cpustat	= &kernel_cpustat,
+ 	.cpuusage	= &root_cpuacct_cpuusage,
+@@ -68,7 +64,7 @@ cpuacct_css_alloc(struct cgroup_subsys_state *parent_css)
+ 	if (!ca)
+ 		goto out;
+ 
+-	ca->cpuusage = alloc_percpu(struct cpuacct_usage);
++	ca->cpuusage = alloc_percpu(u64);
+ 	if (!ca->cpuusage)
+ 		goto out_free_ca;
+ 
+@@ -99,7 +95,8 @@ static void cpuacct_css_free(struct cgroup_subsys_state *css)
+ static u64 cpuacct_cpuusage_read(struct cpuacct *ca, int cpu,
+ 				 enum cpuacct_stat_index index)
+ {
+-	struct cpuacct_usage *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
++	u64 *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
++	u64 *cpustat = per_cpu_ptr(ca->cpustat, cpu)->cpustat;
+ 	u64 data;
+ 
+ 	/*
+@@ -115,14 +112,17 @@ static u64 cpuacct_cpuusage_read(struct cpuacct *ca, int cpu,
+ 	raw_spin_lock_irq(&cpu_rq(cpu)->lock);
+ #endif
+ 
+-	if (index == CPUACCT_STAT_NSTATS) {
+-		int i = 0;
+-
+-		data = 0;
+-		for (i = 0; i < CPUACCT_STAT_NSTATS; i++)
+-			data += cpuusage->usages[i];
+-	} else {
+-		data = cpuusage->usages[index];
++	switch (index) {
++	case CPUACCT_STAT_USER:
++		data = cpustat[CPUTIME_USER] + cpustat[CPUTIME_NICE];
++		break;
++	case CPUACCT_STAT_SYSTEM:
++		data = cpustat[CPUTIME_SYSTEM] + cpustat[CPUTIME_IRQ] +
++			cpustat[CPUTIME_SOFTIRQ];
++		break;
++	case CPUACCT_STAT_NSTATS:
++		data = *cpuusage;
++		break;
+ 	}
+ 
+ #ifndef CONFIG_64BIT
+@@ -132,10 +132,14 @@ static u64 cpuacct_cpuusage_read(struct cpuacct *ca, int cpu,
+ 	return data;
+ }
+ 
+-static void cpuacct_cpuusage_write(struct cpuacct *ca, int cpu, u64 val)
++static void cpuacct_cpuusage_write(struct cpuacct *ca, int cpu)
+ {
+-	struct cpuacct_usage *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
+-	int i;
++	u64 *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
++	u64 *cpustat = per_cpu_ptr(ca->cpustat, cpu)->cpustat;
 +
-+BISON_LT_381 := $(shell expr $(shell $(BISON) --version | grep bison | sed -e 's/.\+ \([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/\1\2\3/g') \< 381)
-+ifeq ($(BISON_LT_381),1)
-+  bison_flags += -DYYNOMEM=YYABORT
-+endif
-+
- CFLAGS_parse-events-bison.o += $(bison_flags)
- CFLAGS_pmu-bison.o          += -DYYLTYPE_IS_TRIVIAL=0 $(bison_flags)
- CFLAGS_expr-bison.o         += -DYYLTYPE_IS_TRIVIAL=0 $(bison_flags)
++	/* Don't allow to reset global kernel_cpustat */
++	if (ca == &root_cpuacct)
++		return;
+ 
+ #ifndef CONFIG_64BIT
+ 	/*
+@@ -143,9 +147,10 @@ static void cpuacct_cpuusage_write(struct cpuacct *ca, int cpu, u64 val)
+ 	 */
+ 	raw_spin_lock_irq(&cpu_rq(cpu)->lock);
+ #endif
+-
+-	for (i = 0; i < CPUACCT_STAT_NSTATS; i++)
+-		cpuusage->usages[i] = val;
++	*cpuusage = 0;
++	cpustat[CPUTIME_USER] = cpustat[CPUTIME_NICE] = 0;
++	cpustat[CPUTIME_SYSTEM] = cpustat[CPUTIME_IRQ] = 0;
++	cpustat[CPUTIME_SOFTIRQ] = 0;
+ 
+ #ifndef CONFIG_64BIT
+ 	raw_spin_unlock_irq(&cpu_rq(cpu)->lock);
+@@ -196,7 +201,7 @@ static int cpuusage_write(struct cgroup_subsys_state *css, struct cftype *cft,
+ 		return -EINVAL;
+ 
+ 	for_each_possible_cpu(cpu)
+-		cpuacct_cpuusage_write(ca, cpu, 0);
++		cpuacct_cpuusage_write(ca, cpu);
+ 
+ 	return 0;
+ }
+@@ -243,25 +248,10 @@ static int cpuacct_all_seq_show(struct seq_file *m, void *V)
+ 	seq_puts(m, "\n");
+ 
+ 	for_each_possible_cpu(cpu) {
+-		struct cpuacct_usage *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
+-
+ 		seq_printf(m, "%d", cpu);
+-
+-		for (index = 0; index < CPUACCT_STAT_NSTATS; index++) {
+-#ifndef CONFIG_64BIT
+-			/*
+-			 * Take rq->lock to make 64-bit read safe on 32-bit
+-			 * platforms.
+-			 */
+-			raw_spin_lock_irq(&cpu_rq(cpu)->lock);
+-#endif
+-
+-			seq_printf(m, " %llu", cpuusage->usages[index]);
+-
+-#ifndef CONFIG_64BIT
+-			raw_spin_unlock_irq(&cpu_rq(cpu)->lock);
+-#endif
+-		}
++		for (index = 0; index < CPUACCT_STAT_NSTATS; index++)
++			seq_printf(m, " %llu",
++				   cpuacct_cpuusage_read(ca, cpu, index));
+ 		seq_puts(m, "\n");
+ 	}
+ 	return 0;
+@@ -339,16 +329,11 @@ static struct cftype files[] = {
+ void cpuacct_charge(struct task_struct *tsk, u64 cputime)
+ {
+ 	struct cpuacct *ca;
+-	int index = CPUACCT_STAT_SYSTEM;
+-	struct pt_regs *regs = get_irq_regs() ? : task_pt_regs(tsk);
+-
+-	if (regs && user_mode(regs))
+-		index = CPUACCT_STAT_USER;
+ 
+ 	rcu_read_lock();
+ 
+ 	for (ca = task_ca(tsk); ca; ca = parent_ca(ca))
+-		__this_cpu_add(ca->cpuusage->usages[index], cputime);
++		__this_cpu_add(*ca->cpuusage, cputime);
+ 
+ 	rcu_read_unlock();
+ }
 -- 
 2.40.1
 
