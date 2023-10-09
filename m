@@ -1,94 +1,188 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AA6FBE3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 19:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WAh3zVsq"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-690fa0eea3cso4368182b3a.0
-        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 12:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696878551; x=1697483351; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2WB2O+ZBzB4ZMkeQ2reQ4/yBz+9uB3jIVkq0VzlaCUY=;
-        b=WAh3zVsq3r0uFoWHEKn0teyv9c32Djao+MYdzYw+nYmr0ckxC6iVJhZzJxJkR/YkcD
-         SZPTVN4zsjnoI0JssdNm8l0X3GZkQYKSlCtFACtg9dgdhHPmsvvu+8W4VML/XhlQZLlS
-         atfgwvK8LJ2bxsf5KKKiBYpOMCBFYW2P6i1XKd8wd5fz99RfQpluQu09EN9Evelx5kWX
-         S/r9YGFag7bMbwOYPB2ZEFId2zuQXhn7L157nnqPNHCQZhGb3s8sPeZbe756y2TZ+Bou
-         pYdVjQZ9WO7eZf1A/OvT+BGmAZUQ9cl7s16Tr20cGHpd64JiEWD5YF+dc0FkXIOVJ3Fe
-         tlOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696878551; x=1697483351;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2WB2O+ZBzB4ZMkeQ2reQ4/yBz+9uB3jIVkq0VzlaCUY=;
-        b=YDlPobG5roHJ0/gGvNGGoamo382BHWKivXBR9wZMO6OxOjVvDk0GoCcicFK15npXKx
-         fzxItHmkhQk33Z/bh4trMXAMktpI/Ukw+XkFlGJ5xWtZnSVRSbP6dWUxQsnVXV6bzC4J
-         k30Zo1JOFHGTOKB3hyP8TgB40yfTLgfy2x45wo5Ehwh0UY9B3afIfvisNd9FMdoLzaCp
-         6mC9el05FvyMPcTtA4woe9+/FrLgWuHJ5VYYNfDD94mzX8Ny5hQC4yerE+DnmzS5hLTR
-         OVXgKiYgnbbf6M1f+mSz0MFKtR4E8pe+6fTkg94MGodwhxW6wXj4iD7fW3ephCIY4Ypk
-         UxEg==
-X-Gm-Message-State: AOJu0YxKGhFLRhFycmu6QWmfMryLctgTZBRwuPaJ81ypSRgXGX/EnIlm
-	YuRM5e+NeFqkr6H+qnKAHMI=
-X-Google-Smtp-Source: AGHT+IHqi/Arp5jO9UE8mGcTD2ZBtMrBThOiTbPkKB2cIKERsnzlL7P8eOjGCjenBXvVB4E+NMPaQQ==
-X-Received: by 2002:a05:6a00:2394:b0:690:2ad9:1454 with SMTP id f20-20020a056a00239400b006902ad91454mr20897163pfc.33.1696878551009;
-        Mon, 09 Oct 2023 12:09:11 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id gx9-20020a056a001e0900b00692b2a63cccsm6729012pfb.210.2023.10.09.12.09.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 12:09:10 -0700 (PDT)
-Message-ID: <cb16ada8-4c7a-4134-aca9-41983521e388@gmail.com>
-Date: Mon, 9 Oct 2023 12:09:08 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A783A37C8C
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 19:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id DCAD41C006C; Mon,  9 Oct 2023 21:33:22 +0200 (CEST)
+Date: Mon, 9 Oct 2023 21:33:22 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chris.Paterson2@renesas.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 5.10 000/226] 5.10.198-rc1 review
+Message-ID: <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+References: <20231009130126.697995596@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/131] 5.4.258-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231009130116.329529591@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+7JMdyyWGl6EnF8R"
+Content-Disposition: inline
+In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 
-On 10/9/23 06:00, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.258 release.
-> There are 131 patches in this series, all will be posted as a response
+
+--+7JMdyyWGl6EnF8R
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
+> This is the start of the stable review cycle for the 5.10.198 release.
+> There are 226 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>=20
 > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.258-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+4.14, 4.19 and 6.1 tests ok, 5.10 seems to have problems:
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
+030540843
 
+Lets see arm64_defconfig:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/525461=
+0954
+
+=2E..and this seems  to be real failure:
+
+https://lava.ciplatform.org/scheduler/job/1018088
+
+[   62.871632] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
+[   62.874253] rcar-dmac e6700000.dma-controller: deferred probe timeout, i=
+gnoring dependency
+[   62.889345] rcar-dmac e7300000.dma-controller: deferred probe timeout, i=
+gnoring dependency
+[   62.892139] Unable to handle kernel NULL pointer dereference at virtual =
+address 0000000000000018
+[   62.901256] rcar-dmac e7310000.dma-controller: deferred probe timeout, i=
+gnoring dependency
+[   62.906431] Mem abort info:
+[   62.906438]   ESR =3D 0x96000004
+[   62.917751] rcar-dmac ec700000.dma-controller: deferred probe timeout, i=
+gnoring dependency
+[   62.920548]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+[   62.920551]   SET =3D 0, FnV =3D 0
+[   62.920554]   EA =3D 0, S1PTW =3D 0
+[   62.920559] Data abort info:
+[   62.927031] renesas_sdhi_internal_dmac ee100000.mmc: mmc1 base at 0x0000=
+0000ee100000, max clock rate 200 MHz
+[   62.931976] rcar-dmac ec720000.dma-controller: deferred probe timeout, i=
+gnoring dependency
+[   62.934138]   ISV =3D 0, ISS =3D 0x00000004
+[   62.934145]   CM =3D 0, WnR =3D 0
+[   62.940844] ravb e6800000.ethernet: deferred probe timeout, ignoring dep=
+endency
+[   62.943210] [0000000000000018] user address but active_mm is swapper
+[   62.943221] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+[   62.954866] ravb e6800000.ethernet eth0: Base address at 0xe6800000, fc:=
+28:99:92:7b:e0, IRQ 118.
+[   62.961296] Modules linked in:
+[   62.961313] CPU: 5 PID: 135 Comm: kworker/u12:2 Not tainted 5.10.198-rc1=
+-g18c65c1b4996 #1
+[   63.007289] Hardware name: HopeRun HiHope RZ/G2M with sub board (DT)
+[   63.013658] Workqueue: events_unbound async_run_entry_fn
+[   63.018971] pstate: 20000005 (nzCv daif -PAN -UAO -TCO BTYPE=3D--)
+[   63.024982] pc : renesas_sdhi_reset_scc+0x94/0xe0
+[   63.029681] lr : renesas_sdhi_reset_scc+0x60/0xe0
+[   63.034379] sp : ffff800012353ab0
+[   63.037688] x29: ffff800012353ab0 x28: ffff80001110b2c0=20
+[   63.042998] x27: 0000000000000000 x26: ffff0005c03f6e80=20
+[   63.048308] x25: ffff0005c11c7a90 x24: ffff0005c0822010=20
+[   63.053618] x23: ffff0005c0822000 x22: ffff0005c08221d0=20
+[   63.058928] x21: ffff0005c11c7a80 x20: 0000000000000020
+
+Let's see bbb_defconfig:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/525461=
+1119
+
+Fails:
+
+https://lava.ciplatform.org/scheduler/job/1018083
+
+bootz 0x82000000 - 0x88000000
+zimage: Bad magic!
+bootloader-commands timed out after 281 seconds
+end: 2.4.3 bootloader-commands (duration 00:04:41) [common]
+
+Not sure about this one.
+
+Lets see arm_shmobile_defconfig:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/525461=
+1233
+
+That's:
+
+https://lava.ciplatform.org/scheduler/job/1018084
+
+Seems similar to previous failure:
+
+2.092944] usbcore: registered new interface driver usbhid
+[    2.098710] sh_mobile_sdhi ee140000.mmc: Got CD GPIO
+[    2.103206] usbhid: USB HID core driver
+[    2.108224] sh_mobile_sdhi ee140000.mmc: Got WP GPIO
+[    2.124168] 8<--- cut here ---
+[    2.124476] sgtl5000 0-000a: sgtl5000 revision 0x11
+[    2.127222] Unable to handle kernel NULL pointer dereference at virtual =
+address 0000000c
+[    2.127228] pgd =3D (ptrval)
+[    2.140755] rcar_sound ec500000.sound: probed
+[    2.142917] [0000000c] *pgd=3D00000000
+[    2.147915] NET: Registered protocol family 10
+[    2.150849] Internal error: Oops: 5 [#1] SMP ARM
+[    2.155700] sh_mmcif ee200000.mmc: Chip version 0x0003, clock rate 12MHz
+[    2.159894] CPU: 1 PID: 7 Comm: kworker/u4:0 Not tainted 5.10.198-rc1-g1=
+8c65c1b4996 #1
+[    2.174486] Hardware name: Generic RZ/G1 (Flattened Device Tree)
+[    2.174540] Segment Routing with IPv6
+[    2.180501] Workqueue: events_unbound async_run_entry_fn
+[    2.184234] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    2.189455] PC is at renesas_sdhi_reset_scc+0x34/0x50
+[    2.189462] LR is at sd_ctrl_write16+0x30/0x48
+[    2.195810] NET: Registered protocol family 17
+[    2.200409] pc : [<c05da960>]    lr : [<c05da754>]    psr: 60000013
+[    2.200415] sp : c10a9e30  ip : 00000024  fp : c11b3cc0
+[    2.204877] can: controller area network core
+[    2.209282] r10: c11ae410  r9 : c11ae400  r8 : c18e9d48
+[    2.209288] r7 : fffffe00  r6 : c18e9d48  r5 : c18e9d40  r4 : c1970b80
+[    2.215590] NET: Registered protocol family 29
+[    2.220759] r3 : 0000000c  r2 : 00000006  r1 : 00000001  r0 : 00000000
+[    2.225117] can: raw protocol
+[    2.230322] Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment=
+ none
+[    2.236848] can: broadcast manager protocol
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--+7JMdyyWGl6EnF8R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZSRVggAKCRAw5/Bqldv6
+8iUSAJ4zccITOyGdlz5sQNJNYGO6ftZ4TACeKDAlNWbmdERfrC9VmYPkwfBkrMk=
+=xitt
+-----END PGP SIGNATURE-----
+
+--+7JMdyyWGl6EnF8R--
