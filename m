@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF0F1A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F0E1A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogh2zxWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CFFC433C7;
-	Mon,  9 Oct 2023 13:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7yI4Fs2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D951CC433C8;
+	Mon,  9 Oct 2023 13:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858433;
-	bh=ZJ1YkOzQJEmc1JwRDOvKzd2QQ6dN5KsHFajMYvYzL7Y=;
+	s=korg; t=1696858436;
+	bh=mUjTfHe0zAKVNENl8tgHQJlE4gOfbx71XPSxhpSm9lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ogh2zxWmkgdp2M1KEY8Su/Ss438gFQrbnKvy0C/QkqRCoFzTpZK/qY3RIn9B1jhRV
-	 CsNahU1sDLBn3ahn3IPCNjpBACVLEsZlG6G+dMti7/2YU01YqgX8BZVECbn8yQPC6l
-	 y3yxpNeYyeQ7ZdkTiQMjIKZ40MkGNbSx5VyKiPq8=
+	b=K7yI4Fs2XMQWZX1TW8t0Xb9xgan8nH405Y9MZIuoYPNJxTIjJbnOt2A2sfXmOH46F
+	 YXEZhTkfhsqLeOqye95AaRu2O3lgEYwDLgCvSMP0BgMaUdO6UEFyMD+eGPzVRoymlO
+	 zGQomGMi1hEgjSTFv5MCszbq49LKhWfOJoQyZ0sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Tymoshenko <ovt@google.com>,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 103/131] ima: Finish deprecation of IMA_TRUSTED_KEYRING Kconfig
-Date: Mon,  9 Oct 2023 15:02:23 +0200
-Message-ID: <20231009130119.568586587@linuxfoundation.org>
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>
+Subject: [PATCH 5.4 121/131] RDMA/core: Require admin capabilities to set system parameters
+Date: Mon,  9 Oct 2023 15:02:41 +0200
+Message-ID: <20231009130120.129393212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,50 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Tymoshenko <ovt@google.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit be210c6d3597faf330cb9af33b9f1591d7b2a983 ]
+commit c38d23a54445f9a8aa6831fafc9af0496ba02f9e upstream.
 
-The removal of IMA_TRUSTED_KEYRING made IMA_LOAD_X509
-and IMA_BLACKLIST_KEYRING unavailable because the latter
-two depend on the former. Since IMA_TRUSTED_KEYRING was
-deprecated in favor of INTEGRITY_TRUSTED_KEYRING use it
-as a dependency for the two Kconfigs affected by the
-deprecation.
+Like any other set command, require admin permissions to do it.
 
-Fixes: 5087fd9e80e5 ("ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig")
-Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
-Reviewed-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 2b34c5580226 ("RDMA/core: Add command to set ib_core device net namspace sharing mode")
+Link: https://lore.kernel.org/r/75d329fdd7381b52cbdf87910bef16c9965abb1f.1696443438.git.leon@kernel.org
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/nldev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
-index c97ce6265fc6b..a7e38d72fb4ba 100644
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -263,7 +263,7 @@ config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
- config IMA_BLACKLIST_KEYRING
- 	bool "Create IMA machine owner blacklist keyrings (EXPERIMENTAL)"
- 	depends on SYSTEM_TRUSTED_KEYRING
--	depends on IMA_TRUSTED_KEYRING
-+	depends on INTEGRITY_TRUSTED_KEYRING
- 	default n
- 	help
- 	   This option creates an IMA blacklist keyring, which contains all
-@@ -273,7 +273,7 @@ config IMA_BLACKLIST_KEYRING
- 
- config IMA_LOAD_X509
- 	bool "Load X509 certificate onto the '.ima' trusted keyring"
--	depends on IMA_TRUSTED_KEYRING
-+	depends on INTEGRITY_TRUSTED_KEYRING
- 	default n
- 	help
- 	   File signature verification is based on the public keys
--- 
-2.40.1
-
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -2080,6 +2080,7 @@ static const struct rdma_nl_cbs nldev_cb
+ 	},
+ 	[RDMA_NLDEV_CMD_SYS_SET] = {
+ 		.doit = nldev_set_sys_set_doit,
++		.flags = RDMA_NL_ADMIN_PERM,
+ 	},
+ 	[RDMA_NLDEV_CMD_STAT_SET] = {
+ 		.doit = nldev_stat_set_doit,
 
 
