@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8987199BB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3B8199BB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQcmRTkP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E6C433C7;
-	Mon,  9 Oct 2023 13:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFtKsVKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3D5C433C7;
+	Mon,  9 Oct 2023 13:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858248;
-	bh=+V70Qp7qUzj3F5kD71r0DZfe+YQdNsCnDrV4xOMAIxs=;
+	s=korg; t=1696858251;
+	bh=RPlyTWp0WHd6kyFFgJW5ImNIMM4oKpQDxrW011vID48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQcmRTkP1QYfMsw8pZ1CYqMDvy5FWcf0UR4WxBNZa6wr2gPF8z6J7Njd5YO1JeHpH
-	 6Vea/RhwsoLTRBrGmnx0oY+jIBXPfBL5o0BBrsf2UB9RhsIg8m3qMQlTN05o1wc1AL
-	 NorqmtABFD1l7tmobtr9y0zSUIBVo+iUeLBfys4o=
+	b=dFtKsVKzXragUnr/niWUZzjSluCsvJ/ayWTg4GfrbXTZF8p/xvMwfEfSEn3FWX4If
+	 nL/iqArLzfoF9KH83TnLT6sp6mPnOyNYnAjx+moxyXxYjUq95r1sOlGWqrDIoZ7b0v
+	 SfnZLdnmEKTqhyONOMhD9zVGTsh85VvjfR2oXtos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johnathan Mantey <johnathanx.mantey@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 062/131] ncsi: Propagate carrier gain/loss events to the NCSI controller
-Date: Mon,  9 Oct 2023 15:01:42 +0200
-Message-ID: <20231009130118.189922269@linuxfoundation.org>
+Subject: [PATCH 5.4 063/131] fbdev/sh7760fb: Depend on FB=y
+Date: Mon,  9 Oct 2023 15:01:43 +0200
+Message-ID: <20231009130118.223707163@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,38 +45,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 3780bb29311eccb7a1c9641032a112eed237f7e3 ]
+[ Upstream commit f75f71b2c418a27a7c05139bb27a0c83adf88d19 ]
 
-Report the carrier/no-carrier state for the network interface
-shared between the BMC and the passthrough channel. Without this
-functionality the BMC is unable to reconfigure the NIC in the event
-of a re-cabling to a different subnet.
+Fix linker error if FB=m about missing fb_io_read and fb_io_write. The
+linker's error message suggests that this config setting has already
+been broken for other symbols.
 
-Signed-off-by: Johnathan Mantey <johnathanx.mantey@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  All errors (new ones prefixed by >>):
+
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_probe':
+     sh7760fb.c:(.text+0x374): undefined reference to `framebuffer_alloc'
+     sh4-linux-ld: sh7760fb.c:(.text+0x394): undefined reference to `fb_videomode_to_var'
+     sh4-linux-ld: sh7760fb.c:(.text+0x39c): undefined reference to `fb_alloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3a4): undefined reference to `register_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x3ac): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x434): undefined reference to `framebuffer_release'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o: in function `sh7760fb_remove':
+     sh7760fb.c:(.text+0x800): undefined reference to `unregister_framebuffer'
+     sh4-linux-ld: sh7760fb.c:(.text+0x804): undefined reference to `fb_dealloc_cmap'
+     sh4-linux-ld: sh7760fb.c:(.text+0x814): undefined reference to `framebuffer_release'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0xc): undefined reference to `fb_io_read'
+  >> sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x10): undefined reference to `fb_io_write'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x2c): undefined reference to `cfb_fillrect'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x30): undefined reference to `cfb_copyarea'
+     sh4-linux-ld: drivers/video/fbdev/sh7760fb.o:(.rodata+0x34): undefined reference to `cfb_imageblit'
+
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309130632.LS04CPWu-lkp@intel.com/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230918090400.13264-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-aen.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/video/fbdev/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
-index 62fb1031763d1..f8854bff286cb 100644
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -89,6 +89,11 @@ static int ncsi_aen_handler_lsc(struct ncsi_dev_priv *ndp,
- 	if ((had_link == has_link) || chained)
- 		return 0;
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index 124ed0e8454e9..0396df868bc79 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2032,7 +2032,7 @@ config FB_COBALT
  
-+	if (had_link)
-+		netif_carrier_off(ndp->ndev.dev);
-+	else
-+		netif_carrier_on(ndp->ndev.dev);
-+
- 	if (!ndp->multi_package && !nc->package->multi_channel) {
- 		if (had_link) {
- 			ndp->flags |= NCSI_DEV_RESHUFFLE;
+ config FB_SH7760
+ 	bool "SH7760/SH7763/SH7720/SH7721 LCDC support"
+-	depends on FB && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
++	depends on FB=y && (CPU_SUBTYPE_SH7760 || CPU_SUBTYPE_SH7763 \
+ 		|| CPU_SUBTYPE_SH7720 || CPU_SUBTYPE_SH7721)
+ 	select FB_CFB_FILLRECT
+ 	select FB_CFB_COPYAREA
 -- 
 2.40.1
 
