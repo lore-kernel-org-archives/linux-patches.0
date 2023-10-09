@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F5F341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440E341AC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW0Zzo8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA19AC433C7;
-	Mon,  9 Oct 2023 13:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vDsqwWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AB4C433C9;
+	Mon,  9 Oct 2023 13:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859391;
-	bh=VAM/Q+6ZdtUhU07tM3fgr+nXuQLTvHRgZXFAh9mRxWc=;
+	s=korg; t=1696859394;
+	bh=t4u20W3xhNPq+zYzCztTOlmCY4tu/E8eoC6NA5oDc+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RW0Zzo8hywcItwV76hkokoiPt/I0kaC5Vwn4UnOWRq6kwuCgWv36FowI2iYeTgG+H
-	 sibugOgCBiBaY71KA06Df5qfHCoMq1Uob87rcmu9qoJlUGwnS/2sFLcDRLMxrSeSJw
-	 HaPlBVQ+Kr/TMZhC33nnM1pPHQBvi1huWJRuszns=
+	b=2vDsqwWi6txLbOFaAiPxyeWwCuPJ20yx6ulR93IrLI3bh0fOHem9au1OgBrlrQjPl
+	 7ilrblZQDedi92crPWV0cu6f4aa6IjzOOEAkvNWt5iMAumvg+FFrAbjBqiwCXO3F3z
+	 zarGBFwia4c/qNPhX0iWYOmanzQNp/wlrvyQC2rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PATCH 4.14 52/55] gpio: aspeed: fix the GPIO number passed to pinctrl_gpio_set_config()
-Date: Mon,  9 Oct 2023 15:06:51 +0200
-Message-ID: <20231009130109.682799960@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 43/55] scsi: target: core: Fix deadlock due to recursive locking
+Date: Mon,  9 Oct 2023 15:06:42 +0200
+Message-ID: <20231009130109.341244730@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,33 +43,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit f9315f17bf778cb8079a29639419fcc8a41a3c84 upstream.
+[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
 
-pinctrl_gpio_set_config() expects the GPIO number from the global GPIO
-numberspace, not the controller-relative offset, which needs to be added
-to the chip base.
+The following call trace shows a deadlock issue due to recursive locking of
+mutex "device_mutex". First lock acquire is in target_for_each_device() and
+second in target_free_device().
 
-Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
+  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
+  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
+  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
+  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
+  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
+  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
+  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
+  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
+  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
+  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
+ #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
+ #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
+ #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
+ #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
+ #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
+ #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
+ #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
+ #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
+ #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
+ #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
+ #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
+
+Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/target_core_device.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -763,7 +763,7 @@ static int aspeed_gpio_set_config(struct
- 	else if (param == PIN_CONFIG_BIAS_DISABLE ||
- 			param == PIN_CONFIG_BIAS_PULL_DOWN ||
- 			param == PIN_CONFIG_DRIVE_STRENGTH)
--		return pinctrl_gpio_set_config(offset, config);
-+		return pinctrl_gpio_set_config(chip->base + offset, config);
- 	else if (param == PIN_CONFIG_DRIVE_OPEN_DRAIN ||
- 			param == PIN_CONFIG_DRIVE_OPEN_SOURCE)
- 		/* Return -ENOTSUPP to trigger emulation, as per datasheet */
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 68b2fa562201c..907b06056f029 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -906,7 +906,6 @@ struct se_device *target_find_device(int id, bool do_depend)
+ EXPORT_SYMBOL(target_find_device);
+ 
+ struct devices_idr_iter {
+-	struct config_item *prev_item;
+ 	int (*fn)(struct se_device *dev, void *data);
+ 	void *data;
+ };
+@@ -916,11 +915,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ {
+ 	struct devices_idr_iter *iter = data;
+ 	struct se_device *dev = p;
++	struct config_item *item;
+ 	int ret;
+ 
+-	config_item_put(iter->prev_item);
+-	iter->prev_item = NULL;
+-
+ 	/*
+ 	 * We add the device early to the idr, so it can be used
+ 	 * by backend modules during configuration. We do not want
+@@ -930,12 +927,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ 	if (!(dev->dev_flags & DF_CONFIGURED))
+ 		return 0;
+ 
+-	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
+-	if (!iter->prev_item)
++	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
++	if (!item)
+ 		return 0;
+ 	mutex_unlock(&device_mutex);
+ 
+ 	ret = iter->fn(dev, iter->data);
++	config_item_put(item);
+ 
+ 	mutex_lock(&device_mutex);
+ 	return ret;
+@@ -958,7 +956,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
+ 	mutex_lock(&device_mutex);
+ 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
+ 	mutex_unlock(&device_mutex);
+-	config_item_put(iter.prev_item);
+ 	return ret;
+ }
+ 
+-- 
+2.40.1
+
 
 
