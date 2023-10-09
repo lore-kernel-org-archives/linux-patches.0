@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C7018E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A1519463
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5m2aDEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD43C433D9;
-	Mon,  9 Oct 2023 13:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb2Gzfqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312CDC433C7;
+	Mon,  9 Oct 2023 13:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857098;
-	bh=29+J4yeKJgHbt9jWocVrtge4slbNkv3Uusrcds9+1ks=;
+	s=korg; t=1696857101;
+	bh=rEkXxamPqvkpTucq175ADuTguaCehTFvmmkHLgv04cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5m2aDEblflbDylooWFQ+79X5bmcRCMFd3rH7/B8iQqx0Oou5OVM6EhrrOKSLhfW4
-	 /+LXufYB24Y2R7xrl5xumqttH8U7UxNrqPpn8MWjRiPidLuCtZtHATxyH49Y+493eO
-	 wWkjGKgL/FUlwcjgXVhggwVuKKnwbmy55OJ5h0QE=
+	b=mb2GzfqsanGZf08CQN1eXZmUtdbsUEq19FZ3QfCYCUb0fCLZS9oGvR6QqeJNos6Cu
+	 jiguEmXOecM7E/aks/AYqKLIuV4EhIdP1c2m2S39crRcDA8O2CAUYK206S/Mg+S8Ed
+	 uOWs79QfUIrVYq5/0mF8ts/blFCNbkQW6hjQuhco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20H=C3=BChn?= <thomas.huehn@hs-nordhausen.de>,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Matthew Wang <matthewmwang@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 069/163] wifi: mac80211: fix mesh id corruption on 32 bit systems
-Date: Mon,  9 Oct 2023 15:00:33 +0200
-Message-ID: <20231009130125.955644247@linuxfoundation.org>
+Subject: [PATCH 6.5 070/163] wifi: mwifiex: Fix oob check condition in mwifiex_process_rx_packet
+Date: Mon,  9 Oct 2023 15:00:34 +0200
+Message-ID: <20231009130125.983417905@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -37,82 +38,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 6e48ebffc2db5419b3a51cfc509bde442252b356 ]
+[ Upstream commit aef7a0300047e7b4707ea0411dc9597cba108fc8 ]
 
-Since the changed field size was increased to u64, mesh_bss_info_changed
-pulls invalid bits from the first 3 bytes of the mesh id, clears them, and
-passes them on to ieee80211_link_info_change_notify, because
-ifmsh->mbss_changed was not updated to match its size.
-Fix this by turning into ifmsh->mbss_changed into an unsigned long array with
-64 bit size.
+Only skip the code path trying to access the rfc1042 headers when the
+buffer is too small, so the driver can still process packets without
+rfc1042 headers.
 
-Fixes: 15ddba5f4311 ("wifi: mac80211: consistently use u64 for BSS changes")
-Reported-by: Thomas Hühn <thomas.huehn@hs-nordhausen.de>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20230913050134.53536-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230908104308.1546501-1-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 2 +-
- net/mac80211/mesh.c        | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sta_rx.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 91633a0b723e0..f8cd94ba55ccc 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -676,7 +676,7 @@ struct ieee80211_if_mesh {
- 	struct timer_list mesh_path_root_timer;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+index 65420ad674167..257737137cd70 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+@@ -86,7 +86,8 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
+ 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
  
- 	unsigned long wrkq_flags;
--	unsigned long mbss_changed;
-+	unsigned long mbss_changed[64 / BITS_PER_LONG];
- 
- 	bool userspace_handles_dfs;
- 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index af8c5fc2db149..e31c312c124a1 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -1175,7 +1175,7 @@ void ieee80211_mbss_info_change_notify(struct ieee80211_sub_if_data *sdata,
- 
- 	/* if we race with running work, worst case this work becomes a noop */
- 	for_each_set_bit(bit, &bits, sizeof(changed) * BITS_PER_BYTE)
--		set_bit(bit, &ifmsh->mbss_changed);
-+		set_bit(bit, ifmsh->mbss_changed);
- 	set_bit(MESH_WORK_MBSS_CHANGED, &ifmsh->wrkq_flags);
- 	wiphy_work_queue(sdata->local->hw.wiphy, &sdata->work);
- }
-@@ -1257,7 +1257,7 @@ void ieee80211_stop_mesh(struct ieee80211_sub_if_data *sdata)
- 
- 	/* clear any mesh work (for next join) we may have accrued */
- 	ifmsh->wrkq_flags = 0;
--	ifmsh->mbss_changed = 0;
-+	memset(ifmsh->mbss_changed, 0, sizeof(ifmsh->mbss_changed));
- 
- 	local->fif_other_bss--;
- 	atomic_dec(&local->iff_allmultis);
-@@ -1724,9 +1724,9 @@ static void mesh_bss_info_changed(struct ieee80211_sub_if_data *sdata)
- 	u32 bit;
- 	u64 changed = 0;
- 
--	for_each_set_bit(bit, &ifmsh->mbss_changed,
-+	for_each_set_bit(bit, ifmsh->mbss_changed,
- 			 sizeof(changed) * BITS_PER_BYTE) {
--		clear_bit(bit, &ifmsh->mbss_changed);
-+		clear_bit(bit, ifmsh->mbss_changed);
- 		changed |= BIT(bit);
+-	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
++	if (sizeof(rx_pkt_hdr->eth803_hdr) + sizeof(rfc1042_header) +
++	    rx_pkt_off > skb->len) {
+ 		mwifiex_dbg(priv->adapter, ERROR,
+ 			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
+ 			    skb->len, rx_pkt_off);
+@@ -95,12 +96,13 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 		return -1;
  	}
  
+-	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+-		     sizeof(bridge_tunnel_header))) ||
+-	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
+-		     sizeof(rfc1042_header)) &&
+-	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
+-	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX)) {
++	if (sizeof(*rx_pkt_hdr) + rx_pkt_off <= skb->len &&
++	    ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
++		      sizeof(bridge_tunnel_header))) ||
++	     (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
++		      sizeof(rfc1042_header)) &&
++	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
++	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX))) {
+ 		/*
+ 		 *  Replace the 803 header and rfc1042 header (llc/snap) with an
+ 		 *    EthernetII header, keep the src/dst and snap_type
 -- 
 2.40.1
 
