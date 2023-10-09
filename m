@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2471A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5241A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7Dhd8WU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1788C433C9;
-	Mon,  9 Oct 2023 13:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f6Pec+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2635C433C7;
+	Mon,  9 Oct 2023 13:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857707;
-	bh=xAG5TTWs7T2jh2T/DG9fu0IyjGNcp07pVsKEUIf9sVc=;
+	s=korg; t=1696857710;
+	bh=cVMNvs7Fe2NX/9BpiGCjnXL09FvI3ptIEWRHM1IP0fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7Dhd8WUbLb0cjQPiYp75VwhgoD4DS4iMNNv5IVHPV21xt/+OILI/0USprdvrYxja
-	 HPs26mXG/lkyWcJBP4YdOvai4Lb65m6hWC0JaGW0izXuFQXTKujASVsAod5pOYxSlC
-	 dZX1ZkNQQIjfdVMI3IV2vy8Bu9gvLjQENgyf/jJg=
+	b=1f6Pec+pd8xqm/YFCgwQb8OKjqOeUT9MsfN5DU4Zio/FxT/eF8Nt75Q5aWdtro5uM
+	 gkwDl/A/uMAHovNwnVDgpwMLJ3KNiffUFpb/eMa0m+Zq9mTHkgdDMalNjysi+DMPlD
+	 lDBoMNi8VU8zg9SYFcgm0o6PpOlQG7Hd/HOylqlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Mauricio Faria de Oliveira <mfo@canonical.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/162] bpf, sockmap: Reject sk_msg egress redirects to non-TCP sockets
-Date: Mon,  9 Oct 2023 15:01:25 +0200
-Message-ID: <20231009130125.793547017@linuxfoundation.org>
+Subject: [PATCH 6.1 105/162] modpost: add missing else to the "of" check
+Date: Mon,  9 Oct 2023 15:01:26 +0200
+Message-ID: <20231009130125.820181115@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,100 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Mauricio Faria de Oliveira <mfo@canonical.com>
 
-[ Upstream commit b80e31baa43614e086a9d29dc1151932b1bd7fc5 ]
+[ Upstream commit cbc3d00cf88fda95dbcafee3b38655b7a8f2650a ]
 
-With a SOCKMAP/SOCKHASH map and an sk_msg program user can steer messages
-sent from one TCP socket (s1) to actually egress from another TCP
-socket (s2):
+Without this 'else' statement, an "usb" name goes into two handlers:
+the first/previous 'if' statement _AND_ the for-loop over 'devtable',
+but the latter is useless as it has no 'usb' device_id entry anyway.
 
-tcp_bpf_sendmsg(s1)		// = sk_prot->sendmsg
-  tcp_bpf_send_verdict(s1)	// __SK_REDIRECT case
-    tcp_bpf_sendmsg_redir(s2)
-      tcp_bpf_push_locked(s2)
-	tcp_bpf_push(s2)
-	  tcp_rate_check_app_limited(s2) // expects tcp_sock
-	  tcp_sendmsg_locked(s2)	 // ditto
+Tested with allmodconfig before/after patch; no changes to *.mod.c:
 
-There is a hard-coded assumption in the call-chain, that the egress
-socket (s2) is a TCP socket.
+    git checkout v6.6-rc3
+    make -j$(nproc) allmodconfig
+    make -j$(nproc) olddefconfig
 
-However in commit 122e6c79efe1 ("sock_map: Update sock type checks for
-UDP") we have enabled redirects to non-TCP sockets. This was done for the
-sake of BPF sk_skb programs. There was no indention to support sk_msg
-send-to-egress use case.
+    make -j$(nproc)
+    find . -name '*.mod.c' | cpio -pd /tmp/before
 
-As a result, attempts to send-to-egress through a non-TCP socket lead to a
-crash due to invalid downcast from sock to tcp_sock:
+    # apply patch
 
- BUG: kernel NULL pointer dereference, address: 000000000000002f
- ...
- Call Trace:
-  <TASK>
-  ? show_regs+0x60/0x70
-  ? __die+0x1f/0x70
-  ? page_fault_oops+0x80/0x160
-  ? do_user_addr_fault+0x2d7/0x800
-  ? rcu_is_watching+0x11/0x50
-  ? exc_page_fault+0x70/0x1c0
-  ? asm_exc_page_fault+0x27/0x30
-  ? tcp_tso_segs+0x14/0xa0
-  tcp_write_xmit+0x67/0xce0
-  __tcp_push_pending_frames+0x32/0xf0
-  tcp_push+0x107/0x140
-  tcp_sendmsg_locked+0x99f/0xbb0
-  tcp_bpf_push+0x19d/0x3a0
-  tcp_bpf_sendmsg_redir+0x55/0xd0
-  tcp_bpf_send_verdict+0x407/0x550
-  tcp_bpf_sendmsg+0x1a1/0x390
-  inet_sendmsg+0x6a/0x70
-  sock_sendmsg+0x9d/0xc0
-  ? sockfd_lookup_light+0x12/0x80
-  __sys_sendto+0x10e/0x160
-  ? syscall_enter_from_user_mode+0x20/0x60
-  ? __this_cpu_preempt_check+0x13/0x20
-  ? lockdep_hardirqs_on+0x82/0x110
-  __x64_sys_sendto+0x1f/0x30
-  do_syscall_64+0x38/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+    make -j$(nproc)
+    find . -name '*.mod.c' | cpio -pd /tmp/after
 
-Reject selecting a non-TCP sockets as redirect target from a BPF sk_msg
-program to prevent the crash. When attempted, user will receive an EACCES
-error from send/sendto/sendmsg() syscall.
+    diff -r /tmp/before/ /tmp/after/
+    # no difference
 
-Fixes: 122e6c79efe1 ("sock_map: Update sock type checks for UDP")
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20230920102055.42662-1-jakub@cloudflare.com
+Fixes: acbef7b76629 ("modpost: fix module autoloading for OF devices with generic compatible property")
+Signed-off-by: Mauricio Faria de Oliveira <mfo@canonical.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ scripts/mod/file2alias.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 96db7409baa12..38e01f82f2ef3 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -670,6 +670,8 @@ BPF_CALL_4(bpf_msg_redirect_map, struct sk_msg *, msg,
- 	sk = __sock_map_lookup_elem(map, key);
- 	if (unlikely(!sk || !sock_map_redirect_allowed(sk)))
- 		return SK_DROP;
-+	if (!(flags & BPF_F_INGRESS) && !sk_is_tcp(sk))
-+		return SK_DROP;
- 
- 	msg->flags = flags;
- 	msg->sk_redir = sk;
-@@ -1262,6 +1264,8 @@ BPF_CALL_4(bpf_msg_redirect_hash, struct sk_msg *, msg,
- 	sk = __sock_hash_lookup_elem(map, key);
- 	if (unlikely(!sk || !sock_map_redirect_allowed(sk)))
- 		return SK_DROP;
-+	if (!(flags & BPF_F_INGRESS) && !sk_is_tcp(sk))
-+		return SK_DROP;
- 
- 	msg->flags = flags;
- 	msg->sk_redir = sk;
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 80d973144fded..111d5464c12df 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -1577,7 +1577,7 @@ void handle_moddevtable(struct module *mod, struct elf_info *info,
+ 	/* First handle the "special" cases */
+ 	if (sym_is(name, namelen, "usb"))
+ 		do_usb_table(symval, sym->st_size, mod);
+-	if (sym_is(name, namelen, "of"))
++	else if (sym_is(name, namelen, "of"))
+ 		do_of_table(symval, sym->st_size, mod);
+ 	else if (sym_is(name, namelen, "pnp"))
+ 		do_pnp_device_entry(symval, sym->st_size, mod);
 -- 
 2.40.1
 
