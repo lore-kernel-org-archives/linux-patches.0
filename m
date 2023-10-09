@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AF61946D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2C01946D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk+B/tTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82237C433B9;
-	Mon,  9 Oct 2023 13:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQOJvUJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BA4C433C8;
+	Mon,  9 Oct 2023 13:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857319;
-	bh=sA7deC6FFx0xv0coxly/8wYcJfGB6ADuHMwJCx4zfBE=;
+	s=korg; t=1696857322;
+	bh=XG10VfbpPAt7j2YAaBzccykJOMpkkNfsfkbnVwftzlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tk+B/tTHA9++r9NiMiWFY0hUN6z5vhbMMoZdBzbitesrdbieZvdi7wRMukrAQEPYB
-	 8b1o3BcLoNxFH8uB4F8z4aDMo9KBjzYduKBFYnPZIy5fWSlC+UlS2dkVGg+mhowxGo
-	 67UETyjaxDdr8h9lXeii5oa6ABGw+MJXbKko4dys=
+	b=lQOJvUJcyzVa1n4d5nmc41KJ7ZdsoV32NdBAvdlOSu6nmxS30DI2utXT92feC6dDa
+	 +bJwDvhtWrW2hyGyHMn9YqiQf+T6oJshKjqdYfz+Nq9Y5I1IxC7qEteGoXLxuuiR6A
+	 RJA2F5bdKiFHjLixpipRYVGHxGorCGWkDQaZVGr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 156/163] ALSA: hda/realtek: Fix spelling mistake "powe" -> "power"
-Date: Mon,  9 Oct 2023 15:02:00 +0200
-Message-ID: <20231009130128.322048556@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>
+Subject: [PATCH 6.5 147/163] RDMA/cma: Fix truncation compilation warning in make_cma_ports
+Date: Mon,  9 Oct 2023 15:01:51 +0200
+Message-ID: <20231009130128.091354149@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -35,37 +34,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit f286620b5dc974fe281d8feed6e228fd2f39d013 upstream.
+commit 18126c767658ae8a831257c6cb7776c5ba5e7249 upstream.
 
-There is a spelling mistake in a quirk entry. Fix it.
+The following compilation error is false alarm as RDMA devices don't
+have such large amount of ports to actually cause to format truncation.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Fixes: 3babae915f4c ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-Link: https://lore.kernel.org/r/20230821080003.16678-1-colin.i.king@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+drivers/infiniband/core/cma_configfs.c: In function ‘make_cma_ports’:
+drivers/infiniband/core/cma_configfs.c:223:57: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  223 |                 snprintf(port_str, sizeof(port_str), "%u", i + 1);
+      |                                                         ^
+drivers/infiniband/core/cma_configfs.c:223:17: note: ‘snprintf’ output between 2 and 11 bytes into a destination of size 10
+  223 |                 snprintf(port_str, sizeof(port_str), "%u", i + 1);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[5]: *** [scripts/Makefile.build:243: drivers/infiniband/core/cma_configfs.o] Error 1
+
+Fixes: 045959db65c6 ("IB/cma: Add configfs for rdma_cm")
+Link: https://lore.kernel.org/r/a7e3b347ee134167fa6a3787c56ef231a04bc8c2.1694434639.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 +-
+ drivers/infiniband/core/cma_configfs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10016,7 +10016,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual powe mode2 YC", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual power mode2 YC", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
+--- a/drivers/infiniband/core/cma_configfs.c
++++ b/drivers/infiniband/core/cma_configfs.c
+@@ -217,7 +217,7 @@ static int make_cma_ports(struct cma_dev
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < ports_num; i++) {
+-		char port_str[10];
++		char port_str[11];
+ 
+ 		ports[i].port_num = i + 1;
+ 		snprintf(port_str, sizeof(port_str), "%u", i + 1);
 
 
