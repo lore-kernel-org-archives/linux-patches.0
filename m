@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214D11A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AAC1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l6oETzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920A1C433C7;
-	Mon,  9 Oct 2023 13:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyxh2wa6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF54EC433C8;
+	Mon,  9 Oct 2023 13:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857843;
-	bh=tZ9maNSqMzJyVW0Ml0y4qXaLS9h3uqVuPs6DUz0OgFE=;
+	s=korg; t=1696857846;
+	bh=YW9u96L2VP/EAWFvtNbWz70bjN7XwxUGejt5430Ruo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1l6oETzGVVf/b4JnfCLeyYF05it/IBO/wY0gnJblkA7aWYkyxbnFgGPxwwE7fOh67
-	 kNVF+bsgoU1z6T6NNtOvAoEeCwIWojbngXbMD1nkGn5yTbcb6C3DjxWCI1ndERrqqE
-	 mv4eGaJADjkZwWdszsnFVkLJIBXd25ke1COwlP6Y=
+	b=dyxh2wa65buCY8gDY0ndXbXOnoNwKUY9VVepX00yvRoAFMP9qw4qx4z0Lf9QoPSBO
+	 6458gu3RZWo/1HJztbgo8+bqehmnL32Oyn57MXtD5zciRP5nQDLcMjr7qOWMwVHomT
+	 NtzM1fxeTaoH21SObHf7DmAK4Wj9ZeC4NAgDiFU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rui Zhu <zhurui3@huawei.com>,
 	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 11/75] iommu/arm-smmu-v3: Set TTL invalidation hint better
-Date: Mon,  9 Oct 2023 15:01:33 +0200
-Message-ID: <20231009130111.623359861@linuxfoundation.org>
+Subject: [PATCH 5.15 12/75] iommu/arm-smmu-v3: Avoid constructing invalid range commands
+Date: Mon,  9 Oct 2023 15:01:34 +0200
+Message-ID: <20231009130111.666072912@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -44,47 +45,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 6833b8f2e19945a41e4d5efd8c6d9f4cae9a5b7d ]
+[ Upstream commit eb6c97647be227822c7ce23655482b05e348fba5 ]
 
-When io-pgtable unmaps a whole table, rather than waste time walking it
-to find the leaf entries to invalidate exactly, it simply expects
-.tlb_flush_walk with nominal last-level granularity to invalidate any
-leaf entries at higher intermediate levels as well. This works fine with
-page-based invalidation, but with range commands we need to be careful
-with the TTL hint - unconditionally setting it based on the given level
-3 granule means that an invalidation for a level 1 table would strictly
-not be required to affect level 2 block entries. It's easy to comply
-with the expected behaviour by simply not setting the TTL hint for
-non-leaf invalidations, so let's do that.
+Although io-pgtable's non-leaf invalidations are always for full tables,
+I missed that SVA also uses non-leaf invalidations, while being at the
+mercy of whatever range the MMU notifier throws at it. This means it
+definitely wants the previous TTL fix as well, since it also doesn't
+know exactly which leaf level(s) may need invalidating, but it can also
+give us less-aligned ranges wherein certain corners may lead to building
+an invalid command where TTL, Num and Scale are all 0. It should be fine
+to handle this by over-invalidating an extra page, since falling back to
+a non-range command opens up a whole can of errata-flavoured worms.
 
+Fixes: 6833b8f2e199 ("iommu/arm-smmu-v3: Set TTL invalidation hint better")
+Reported-by: Rui Zhu <zhurui3@huawei.com>
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/b409d9a17c52dc0db51faee91d92737bb7975f5b.1685637456.git.robin.murphy@arm.com
+Link: https://lore.kernel.org/r/b99cfe71af2bd93a8a2930f20967fb2a4f7748dd.1694432734.git.robin.murphy@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 340ef116d574a..67845f8e1df9f 100644
+index 67845f8e1df9f..761cb657f2561 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1884,8 +1884,13 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
+@@ -1881,18 +1881,23 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
+ 		/* Get the leaf page size */
+ 		tg = __ffs(smmu_domain->domain.pgsize_bitmap);
+ 
++		num_pages = size >> tg;
++
  		/* Convert page size of 12,14,16 (log2) to 1,2,3 */
  		cmd->tlbi.tg = (tg - 10) / 2;
  
--		/* Determine what level the granule is at */
--		cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
-+		/*
-+		 * Determine what level the granule is at. For non-leaf, io-pgtable
-+		 * assumes .tlb_flush_walk can invalidate multiple levels at once,
-+		 * so ignore the nominal last-level granule and leave TTL=0.
-+		 */
-+		if (cmd->tlbi.leaf)
-+			cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
- 
- 		num_pages = size >> tg;
+ 		/*
+-		 * Determine what level the granule is at. For non-leaf, io-pgtable
+-		 * assumes .tlb_flush_walk can invalidate multiple levels at once,
+-		 * so ignore the nominal last-level granule and leave TTL=0.
++		 * Determine what level the granule is at. For non-leaf, both
++		 * io-pgtable and SVA pass a nominal last-level granule because
++		 * they don't know what level(s) actually apply, so ignore that
++		 * and leave TTL=0. However for various errata reasons we still
++		 * want to use a range command, so avoid the SVA corner case
++		 * where both scale and num could be 0 as well.
+ 		 */
+ 		if (cmd->tlbi.leaf)
+ 			cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
+-
+-		num_pages = size >> tg;
++		else if ((num_pages & CMDQ_TLBI_RANGE_NUM_MAX) == 1)
++			num_pages++;
  	}
+ 
+ 	cmds.num = 0;
 -- 
 2.40.1
 
