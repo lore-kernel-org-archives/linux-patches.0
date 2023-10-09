@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A522A1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED91A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/EkgiYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D15C433C9;
-	Mon,  9 Oct 2023 13:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTGbC80a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369EEC433CB;
+	Mon,  9 Oct 2023 13:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857566;
-	bh=lwY/UhnW6dXxkZv0QzH9A+0K3JhYZmbsdbu33FLkGc8=;
+	s=korg; t=1696857569;
+	bh=MB9J7nd3O7gX0LG7cx2c15shubYHPS22Zx08CebNJYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/EkgiYwUsStZs4AH909DdTIPrBqYqWtLc/2JI3FNdsGJ+bafKCpoEQa1NS16bmB+
-	 eBePExKjcGtFORndRaQoQvV+jvE2GzN6nkj1/v1dK6oXn7/4KhX9JUmcQLQPVsVinT
-	 8wr4nL2wG6re7quqIX1aVFALc5VD+2A5XGDeZOvs=
+	b=DTGbC80aeGOZATs2LCT6BY6BGFFQwEURYsQhVNlOwsFy+bgCLTTvmCsOM6ULzgWP8
+	 6B8lVuFd0Euq6Tx4o2DJLRyh/eiO9TLqjmQ5za/LjwWB13FB42b9S2KlsNO1DKElxe
+	 GJAnDRbj9NB8TII7E9XVQmP7JSgn9GlLi5TD5aK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Yao Xiao <xiaoyao@rock-chips.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/162] regulator: mt6358: split ops for buck and linear range LDO regulators
-Date: Mon,  9 Oct 2023 15:01:08 +0200
-Message-ID: <20231009130125.322108027@linuxfoundation.org>
+Subject: [PATCH 6.1 088/162] Bluetooth: Delete unused hci_req_prepare_suspend() declaration
+Date: Mon,  9 Oct 2023 15:01:09 +0200
+Message-ID: <20231009130125.349909918@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,79 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Yao Xiao <xiaoyao@rock-chips.com>
 
-[ Upstream commit 7e37c851374eca2d1f6128de03195c9f7b4baaf2 ]
+[ Upstream commit cbaabbcdcbd355f0a1ccc09a925575c51c270750 ]
 
-The buck and linear range LDO (VSRAM_*) regulators share one set of ops.
-This set includes support for get/set mode. However this only makes
-sense for buck regulators, not LDOs. The callbacks were not checking
-whether the register offset and/or mask for mode setting was valid or
-not. This ends up making the kernel report "normal" mode operation for
-the LDOs.
+hci_req_prepare_suspend() has been deprecated in favor of
+hci_suspend_sync().
 
-Create a new set of ops without the get/set mode callbacks for the
-linear range LDO regulators.
-
-Fixes: f67ff1bd58f0 ("regulator: mt6358: Add support for MT6358 regulator")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20230920085336.136238-1-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Signed-off-by: Yao Xiao <xiaoyao@rock-chips.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mt6358-regulator.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_request.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/regulator/mt6358-regulator.c b/drivers/regulator/mt6358-regulator.c
-index 56b5fc9f62c94..a0441b8086712 100644
---- a/drivers/regulator/mt6358-regulator.c
-+++ b/drivers/regulator/mt6358-regulator.c
-@@ -41,7 +41,7 @@ struct mt6358_regulator_info {
- 	.desc = {	\
- 		.name = #vreg,	\
- 		.of_match = of_match_ptr(match),	\
--		.ops = &mt6358_volt_range_ops,	\
-+		.ops = &mt6358_buck_ops,	\
- 		.type = REGULATOR_VOLTAGE,	\
- 		.id = MT6358_ID_##vreg,		\
- 		.owner = THIS_MODULE,		\
-@@ -137,7 +137,7 @@ struct mt6358_regulator_info {
- 	.desc = {	\
- 		.name = #vreg,	\
- 		.of_match = of_match_ptr(match),	\
--		.ops = &mt6358_volt_range_ops,	\
-+		.ops = &mt6358_buck_ops,	\
- 		.type = REGULATOR_VOLTAGE,	\
- 		.id = MT6366_ID_##vreg,		\
- 		.owner = THIS_MODULE,		\
-@@ -448,7 +448,7 @@ static unsigned int mt6358_regulator_get_mode(struct regulator_dev *rdev)
- 	}
- }
+diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
+index b9c5a98238374..0be75cf0efed8 100644
+--- a/net/bluetooth/hci_request.h
++++ b/net/bluetooth/hci_request.h
+@@ -71,7 +71,5 @@ struct sk_buff *hci_prepare_cmd(struct hci_dev *hdev, u16 opcode, u32 plen,
+ void hci_req_add_le_scan_disable(struct hci_request *req, bool rpa_le_conn);
+ void hci_req_add_le_passive_scan(struct hci_request *req);
  
--static const struct regulator_ops mt6358_volt_range_ops = {
-+static const struct regulator_ops mt6358_buck_ops = {
- 	.list_voltage = regulator_list_voltage_linear,
- 	.map_voltage = regulator_map_voltage_linear,
- 	.set_voltage_sel = regulator_set_voltage_sel_regmap,
-@@ -462,6 +462,18 @@ static const struct regulator_ops mt6358_volt_range_ops = {
- 	.get_mode = mt6358_regulator_get_mode,
- };
- 
-+static const struct regulator_ops mt6358_volt_range_ops = {
-+	.list_voltage = regulator_list_voltage_linear,
-+	.map_voltage = regulator_map_voltage_linear,
-+	.set_voltage_sel = regulator_set_voltage_sel_regmap,
-+	.get_voltage_sel = mt6358_get_buck_voltage_sel,
-+	.set_voltage_time_sel = regulator_set_voltage_time_sel,
-+	.enable = regulator_enable_regmap,
-+	.disable = regulator_disable_regmap,
-+	.is_enabled = regulator_is_enabled_regmap,
-+	.get_status = mt6358_get_status,
-+};
-+
- static const struct regulator_ops mt6358_volt_table_ops = {
- 	.list_voltage = regulator_list_voltage_table,
- 	.map_voltage = regulator_map_voltage_iterate,
+-void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next);
+-
+ void hci_request_setup(struct hci_dev *hdev);
+ void hci_request_cancel_all(struct hci_dev *hdev);
 -- 
 2.40.1
 
