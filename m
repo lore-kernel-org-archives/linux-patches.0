@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C231A19463
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE8B19464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xl30b69w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8C8C433CB;
-	Mon,  9 Oct 2023 13:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziFo/SZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1680AC433CD;
+	Mon,  9 Oct 2023 13:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857113;
-	bh=xyYj8aQhQj27LvL6jDPqTv2i1tZLCMXTQmRN/PWwyJM=;
+	s=korg; t=1696857116;
+	bh=zrvGML7J33AOGo32p60FVf5SURyxoyU8e3upnXHpDKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xl30b69wtHg0GNBNVIeNqsJ2rKIXQLiI9ZJCqaeV6kzZ70VTByoyfc0CWxv0zC/Jy
-	 4aZVEaFz1F+wLDZqGHVnPCbfqF+6eJ1J2XqVAUYCbiyNbxJtv3wSWx077DGZqOdSTz
-	 GYqe2L0k/iEqI85fShkT9mM/Vesm9gCg4rHcGFgc=
+	b=ziFo/SZrAfgLkb0I4nm6ipwWLXf6e3vHXa060C8bKFlBn2jfnZVPYIhX5P9dfxCuC
+	 zgDQDvnlRN9yqk/D8WhP6YHSdqqP6qo3q678N/p3JNB7+2awMKSgOaaI3+j8QIfOsK
+	 gWrDu+aJHa7sxv5Cwp423jiZQc1AH+YbQhXXaNKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 101/163] net: stmmac: platform: fix the incorrect parameter
-Date: Mon,  9 Oct 2023 15:01:05 +0200
-Message-ID: <20231009130126.820249043@linuxfoundation.org>
+Subject: [PATCH 6.5 102/163] net: fix possible store tearing in neigh_periodic_work()
+Date: Mon,  9 Oct 2023 15:01:06 +0200
+Message-ID: <20231009130126.846794667@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -44,82 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6b09edc1b31762af58d3d95754354ca6a92d39c0 ]
+[ Upstream commit 25563b581ba3a1f263a00e8c9a97f5e7363be6fd ]
 
-The second parameter of stmmac_pltfr_init() needs the pointer of
-"struct plat_stmmacenet_data". So, correct the parameter typo when calling the
-function.
+While looking at a related syzbot report involving neigh_periodic_work(),
+I found that I forgot to add an annotation when deleting an
+RCU protected item from a list.
 
-Otherwise, it may cause this alignment exception when doing suspend/resume.
-[   49.067201] CPU1 is up
-[   49.135258] Internal error: SP/PC alignment exception: 000000008a000000 [#1] PREEMPT SMP
-[   49.143346] Modules linked in: soc_imx9 crct10dif_ce polyval_ce nvmem_imx_ocotp_fsb_s400 polyval_generic layerscape_edac_mod snd_soc_fsl_asoc_card snd_soc_imx_audmux snd_soc_imx_card snd_soc_wm8962 el_enclave snd_soc_fsl_micfil rtc_pcf2127 rtc_pcf2131 flexcan can_dev snd_soc_fsl_xcvr snd_soc_fsl_sai imx8_media_dev(C) snd_soc_fsl_utils fuse
-[   49.173393] CPU: 0 PID: 565 Comm: sh Tainted: G         C         6.5.0-rc4-next-20230804-05047-g5781a6249dae #677
-[   49.183721] Hardware name: NXP i.MX93 11X11 EVK board (DT)
-[   49.189190] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   49.196140] pc : 0x80800052
-[   49.198931] lr : stmmac_pltfr_resume+0x34/0x50
-[   49.203368] sp : ffff800082f8bab0
-[   49.206670] x29: ffff800082f8bab0 x28: ffff0000047d0ec0 x27: ffff80008186c170
-[   49.213794] x26: 0000000b5e4ff1ba x25: ffff800081e5fa74 x24: 0000000000000010
-[   49.220918] x23: ffff800081fe0000 x22: 0000000000000000 x21: 0000000000000000
-[   49.228042] x20: ffff0000001b4010 x19: ffff0000001b4010 x18: 0000000000000006
-[   49.235166] x17: ffff7ffffe007000 x16: ffff800080000000 x15: 0000000000000000
-[   49.242290] x14: 00000000000000fc x13: 0000000000000000 x12: 0000000000000000
-[   49.249414] x11: 0000000000000001 x10: 0000000000000a60 x9 : ffff800082f8b8c0
-[   49.256538] x8 : 0000000000000008 x7 : 0000000000000001 x6 : 000000005f54a200
-[   49.263662] x5 : 0000000001000000 x4 : ffff800081b93680 x3 : ffff800081519be0
-[   49.270786] x2 : 0000000080800052 x1 : 0000000000000000 x0 : ffff0000001b4000
-[   49.277911] Call trace:
-[   49.280346]  0x80800052
-[   49.282781]  platform_pm_resume+0x2c/0x68
-[   49.286785]  dpm_run_callback.constprop.0+0x74/0x134
-[   49.291742]  device_resume+0x88/0x194
-[   49.295391]  dpm_resume+0x10c/0x230
-[   49.298866]  dpm_resume_end+0x18/0x30
-[   49.302515]  suspend_devices_and_enter+0x2b8/0x624
-[   49.307299]  pm_suspend+0x1fc/0x348
-[   49.310774]  state_store+0x80/0x104
-[   49.314258]  kobj_attr_store+0x18/0x2c
-[   49.318002]  sysfs_kf_write+0x44/0x54
-[   49.321659]  kernfs_fop_write_iter+0x120/0x1ec
-[   49.326088]  vfs_write+0x1bc/0x300
-[   49.329485]  ksys_write+0x70/0x104
-[   49.332874]  __arm64_sys_write+0x1c/0x28
-[   49.336783]  invoke_syscall+0x48/0x114
-[   49.340527]  el0_svc_common.constprop.0+0xc4/0xe4
-[   49.345224]  do_el0_svc+0x38/0x98
-[   49.348526]  el0_svc+0x2c/0x84
-[   49.351568]  el0t_64_sync_handler+0x100/0x12c
-[   49.355910]  el0t_64_sync+0x190/0x194
-[   49.359567] Code: ???????? ???????? ???????? ???????? (????????)
-[   49.365644] ---[ end trace 0000000000000000 ]---
+Readers use rcu_deference(*np), we need to use either
+rcu_assign_pointer() or WRITE_ONCE() on writer side
+to prevent store tearing.
 
-Fixes: 97117eb51ec8 ("net: stmmac: platform: provide stmmac_pltfr_init()")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+I use rcu_assign_pointer() to have lockdep support,
+this was the choice made in neigh_flush_dev().
+
+Fixes: 767e97e1e0db ("neigh: RCU conversion of struct neighbour")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/neighbour.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 231152ee5a323..5a3bd30d6c220 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -901,7 +901,7 @@ static int __maybe_unused stmmac_pltfr_resume(struct device *dev)
- 	struct platform_device *pdev = to_platform_device(dev);
- 	int ret;
- 
--	ret = stmmac_pltfr_init(pdev, priv->plat->bsp_priv);
-+	ret = stmmac_pltfr_init(pdev, priv->plat);
- 	if (ret)
- 		return ret;
- 
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index ddd0f32de20ef..b57d3ea3ccc9e 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -988,7 +988,9 @@ static void neigh_periodic_work(struct work_struct *work)
+ 			    (state == NUD_FAILED ||
+ 			     !time_in_range_open(jiffies, n->used,
+ 						 n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
+-				*np = n->next;
++				rcu_assign_pointer(*np,
++					rcu_dereference_protected(n->next,
++						lockdep_is_held(&tbl->lock)));
+ 				neigh_mark_dead(n);
+ 				write_unlock(&n->lock);
+ 				neigh_cleanup_and_release(n);
 -- 
 2.40.1
 
