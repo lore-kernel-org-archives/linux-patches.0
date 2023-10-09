@@ -1,62 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B2036B0E;
-	Mon,  9 Oct 2023 18:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AA6FBE3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 19:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="usotOXlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0489DC433C7;
-	Mon,  9 Oct 2023 18:45:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696877135;
-	bh=oxL0pIQeXgp/udAU9snOzPIc9ECHIbLmdsXSzEt/Py8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usotOXlSP3FliBXBBlbbYPvt9TxoDAMOmA/7aEW3Mx5hSlbdyy+BWakSIQ5zvLT7r
-	 9lXHsRDVJXyh+WoKoVKsUqqTeicW7XWGULnb1hIpRLEzHTS87aFU5Duj+pV0rErpQd
-	 LMG0VOwpi+sMBGYeSkGzfyjK/hE7q9Vb5ZoGjMRZGlOv9bHPVe91GrBEgzCVqmGfSv
-	 9elqXv22Hlr4X8cA9DVQ2lDPpMSqNhxM6SQ7+u6xdfnYi5I+3jBpMIgMbcVclbUy8B
-	 7Hq7DviVIWpNCPLvBerNL3MbVf/F/0WSZd8/1nQmfNW9vRQU7FiQWebKTEtaxR5Dbl
-	 zvPSoYFDK/I9A==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 000/163] 6.5.7-rc1 review
-Date: Mon,  9 Oct 2023 18:45:32 +0000
-Message-Id: <20231009184532.8281-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WAh3zVsq"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-690fa0eea3cso4368182b3a.0
+        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 12:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696878551; x=1697483351; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2WB2O+ZBzB4ZMkeQ2reQ4/yBz+9uB3jIVkq0VzlaCUY=;
+        b=WAh3zVsq3r0uFoWHEKn0teyv9c32Djao+MYdzYw+nYmr0ckxC6iVJhZzJxJkR/YkcD
+         SZPTVN4zsjnoI0JssdNm8l0X3GZkQYKSlCtFACtg9dgdhHPmsvvu+8W4VML/XhlQZLlS
+         atfgwvK8LJ2bxsf5KKKiBYpOMCBFYW2P6i1XKd8wd5fz99RfQpluQu09EN9Evelx5kWX
+         S/r9YGFag7bMbwOYPB2ZEFId2zuQXhn7L157nnqPNHCQZhGb3s8sPeZbe756y2TZ+Bou
+         pYdVjQZ9WO7eZf1A/OvT+BGmAZUQ9cl7s16Tr20cGHpd64JiEWD5YF+dc0FkXIOVJ3Fe
+         tlOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696878551; x=1697483351;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2WB2O+ZBzB4ZMkeQ2reQ4/yBz+9uB3jIVkq0VzlaCUY=;
+        b=YDlPobG5roHJ0/gGvNGGoamo382BHWKivXBR9wZMO6OxOjVvDk0GoCcicFK15npXKx
+         fzxItHmkhQk33Z/bh4trMXAMktpI/Ukw+XkFlGJ5xWtZnSVRSbP6dWUxQsnVXV6bzC4J
+         k30Zo1JOFHGTOKB3hyP8TgB40yfTLgfy2x45wo5Ehwh0UY9B3afIfvisNd9FMdoLzaCp
+         6mC9el05FvyMPcTtA4woe9+/FrLgWuHJ5VYYNfDD94mzX8Ny5hQC4yerE+DnmzS5hLTR
+         OVXgKiYgnbbf6M1f+mSz0MFKtR4E8pe+6fTkg94MGodwhxW6wXj4iD7fW3ephCIY4Ypk
+         UxEg==
+X-Gm-Message-State: AOJu0YxKGhFLRhFycmu6QWmfMryLctgTZBRwuPaJ81ypSRgXGX/EnIlm
+	YuRM5e+NeFqkr6H+qnKAHMI=
+X-Google-Smtp-Source: AGHT+IHqi/Arp5jO9UE8mGcTD2ZBtMrBThOiTbPkKB2cIKERsnzlL7P8eOjGCjenBXvVB4E+NMPaQQ==
+X-Received: by 2002:a05:6a00:2394:b0:690:2ad9:1454 with SMTP id f20-20020a056a00239400b006902ad91454mr20897163pfc.33.1696878551009;
+        Mon, 09 Oct 2023 12:09:11 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id gx9-20020a056a001e0900b00692b2a63cccsm6729012pfb.210.2023.10.09.12.09.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Oct 2023 12:09:10 -0700 (PDT)
+Message-ID: <cb16ada8-4c7a-4134-aca9-41983521e388@gmail.com>
+Date: Mon, 9 Oct 2023 12:09:08 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 000/131] 5.4.258-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231009130116.329529591@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On Mon, 9 Oct 2023 14:59:24 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.5.7 release.
-> There are 163 patches in this series, all will be posted as a response
+On 10/9/23 06:00, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.258 release.
+> There are 131 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -64,52 +76,19 @@ On Mon, 9 Oct 2023 14:59:24 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.7-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.258-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] e640325b3c9a ("Linux 6.5.7-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
