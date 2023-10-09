@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7251F19463;
-	Mon,  9 Oct 2023 13:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ED71A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIFaVFFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F56C433D9;
-	Mon,  9 Oct 2023 13:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPnuqjlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D20C433C8;
+	Mon,  9 Oct 2023 13:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857122;
-	bh=9L3hKRzI/P3uNpl0DlP2vKfh8GtpCVeavauyfqVfjVk=;
+	s=korg; t=1696857125;
+	bh=Vsl2icVuKSfobVfvwl1xzRYnrXZafKMLNVCVYcxZrsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIFaVFFQjVT/5n2CNTT5rHpC3vHbHMz70E0vPR9sjnwP3RxmWNAKv4gX/HHf4v1JV
-	 R+Z4+Al3e13JjktRPKqsKVG5YrsX2gJMfB1bLJG8pEpjS+KHt5WjPB6yYZiFkAiI+d
-	 J6bfBvohJ/cqOFy8I0o7HH4oSF5tPFWpjZlDFWy4=
+	b=rPnuqjlY9CiFMVRdprZnC90wNMtSr7gPbhxsfNTflEdKMk5KjXN+fA7ueWkCfluGn
+	 rIbk217I/g1czDHPF2Oth5cmXxWyy7ZK6tYnjieUUxmRHHmpAT8sMrztxuQpM9vAoa
+	 cqzyhCj8SlXpWDLvKS86daCLxthq4PgGbnrRg0rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Vadim Feodrenko <vadim.fedorenko@linux.dev>,
 	"David S. Miller" <davem@davemloft.net>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org,
-	syzkaller-bugs@googlegroups.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 104/163] ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
-Date: Mon,  9 Oct 2023 15:01:08 +0200
-Message-ID: <20231009130126.900091583@linuxfoundation.org>
+Subject: [PATCH 6.5 105/163] ptp: ocp: Fix error handling in ptp_ocp_device_init
+Date: Mon,  9 Oct 2023 15:01:09 +0200
+Message-ID: <20231009130126.928612025@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -51,79 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 9d4c75800f61e5d75c1659ba201b6c0c7ead3070 ]
+[ Upstream commit caa0578c1d487d39e4bb947a1b4965417053b409 ]
 
-Including the transhdrlen in length is a problem when the packet is
-partially filled (e.g. something like send(MSG_MORE) happened previously)
-when appending to an IPv4 or IPv6 packet as we don't want to repeat the
-transport header or account for it twice.  This can happen under some
-circumstances, such as splicing into an L2TP socket.
+When device_add() fails, ptp_ocp_dev_release() will be called
+after put_device(). Therefore, it seems that the
+ptp_ocp_dev_release() before put_device() is redundant.
 
-The symptom observed is a warning in __ip6_append_data():
-
-    WARNING: CPU: 1 PID: 5042 at net/ipv6/ip6_output.c:1800 __ip6_append_data.isra.0+0x1be8/0x47f0 net/ipv6/ip6_output.c:1800
-
-that occurs when MSG_SPLICE_PAGES is used to append more data to an already
-partially occupied skbuff.  The warning occurs when 'copy' is larger than
-the amount of data in the message iterator.  This is because the requested
-length includes the transport header length when it shouldn't.  This can be
-triggered by, for example:
-
-        sfd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_L2TP);
-        bind(sfd, ...); // ::1
-        connect(sfd, ...); // ::1 port 7
-        send(sfd, buffer, 4100, MSG_MORE);
-        sendfile(sfd, dfd, NULL, 1024);
-
-Fix this by only adding transhdrlen into the length if the write queue is
-empty in l2tp_ip6_sendmsg(), analogously to how UDP does things.
-
-l2tp_ip_sendmsg() looks like it won't suffer from this problem as it builds
-the UDP packet itself.
-
-Fixes: a32e0eec7042 ("l2tp: introduce L2TPv3 IP encapsulation support for IPv6")
-Reported-by: syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/0000000000001c12b30605378ce8@google.com/
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: David Ahern <dsahern@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: netdev@vger.kernel.org
-cc: bpf@vger.kernel.org
-cc: syzkaller-bugs@googlegroups.com
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 773bda964921 ("ptp: ocp: Expose various resources on the timecard.")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Vadim Feodrenko <vadim.fedorenko@linux.dev>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_ip6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ptp/ptp_ocp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
-index ed8ebb6f59097..11f3d375cec00 100644
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -507,7 +507,6 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	 */
- 	if (len > INT_MAX - transhdrlen)
- 		return -EMSGSIZE;
--	ulen = len + transhdrlen;
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index 20a974ced8d6c..a7a6947ab4bc5 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -3998,7 +3998,6 @@ ptp_ocp_device_init(struct ptp_ocp *bp, struct pci_dev *pdev)
+ 	return 0;
  
- 	/* Mirror BSD error message compatibility */
- 	if (msg->msg_flags & MSG_OOB)
-@@ -628,6 +627,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 
- back_from_confirm:
- 	lock_sock(sk);
-+	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
- 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
- 			      ulen, transhdrlen, &ipc6,
- 			      &fl6, (struct rt6_info *)dst,
+ out:
+-	ptp_ocp_dev_release(&bp->dev);
+ 	put_device(&bp->dev);
+ 	return err;
+ }
 -- 
 2.40.1
 
