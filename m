@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAB518B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E84618B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yclg1+uF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB96DC433C9;
-	Mon,  9 Oct 2023 13:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTp+zK8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD25C433C8;
+	Mon,  9 Oct 2023 13:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856922;
-	bh=0UxndBLhQUyFwqfmebc67WESfsLSPqgFo1SyiDVVMIQ=;
+	s=korg; t=1696856925;
+	bh=12eWUA1S8vmKDS2isfhP9Rjt6edTUaGMIHV8fV7wknc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yclg1+uFrZ6o4+5htVg7CivC+bDUj2n32NcbV4G0UB0+FldaLuBiFCqM2XbMuh8Hn
-	 kO1Qu0WwXFA8XJVhfTdgb3PYcT4sgSnwPSGKJLV/yFzbOJ8VCmjuJIu4UYv2473tz2
-	 cXQe7SuE31NuzKfVP1+Zx9B5goMT4P2J9I8t1pVE=
+	b=dTp+zK8ukL/A/hSRfzf70ie4Vd+xsar2sWhnp0TLdwWBqz6yBvPMZRvakScwqO7Ee
+	 SqUnQKtPk/jo6m5TrSExBf/8hWHJNyIvojUFpRgjXyK7/zG7uoNbCQN8Ci+6DtSeFy
+	 ueB6eiPEGNad3HVIdDS+lsq2BHdeIoW3UWaxZwNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Mat Martineau <martineau@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 009/163] mptcp: Remove unnecessary test for __mptcp_init_sock()
-Date: Mon,  9 Oct 2023 14:59:33 +0200
-Message-ID: <20231009130124.277557269@linuxfoundation.org>
+Subject: [PATCH 6.5 010/163] mptcp: rename timer related helper to less confusing names
+Date: Mon,  9 Oct 2023 14:59:34 +0200
+Message-ID: <20231009130124.303404878@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,64 +44,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit e263691773cd67d7c824eeee8b802f50c6e0c118 ]
+[ Upstream commit f6909dc1c1f4452879278128012da6c76bc186a5 ]
 
-__mptcp_init_sock() always returns 0 because mptcp_init_sock() used
-to return the value directly.
+The msk socket uses to different timeout to track close related
+events and retransmissions. The existing helpers do not indicate
+clearly which timer they actually touch, making the related code
+quite confusing.
 
-But after commit 18b683bff89d ("mptcp: queue data for mptcp level
-retransmission"), __mptcp_init_sock() need not return value anymore.
+Change the existing helpers name to avoid such confusion. No
+functional change intended.
 
-Let's remove the unnecessary test for __mptcp_init_sock() and make
-it return void.
+This patch is linked to the next one ("mptcp: fix dangling connection
+hang-up"). The two patches are supposed to be backported together.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: stable@vger.kernel.org # v5.11+
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 27e5ccc2d5a5 ("mptcp: fix dangling connection hang-up")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ net/mptcp/protocol.c | 42 +++++++++++++++++++++---------------------
+ net/mptcp/protocol.h |  2 +-
+ net/mptcp/subflow.c  |  2 +-
+ 3 files changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 6947b4b2519c9..0aae76f1465b8 100644
+index 0aae76f1465b8..3c85b4c107b2a 100644
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -2710,7 +2710,7 @@ static void mptcp_worker(struct work_struct *work)
+@@ -407,7 +407,7 @@ static bool __mptcp_move_skb(struct mptcp_sock *msk, struct sock *ssk,
+ 	return false;
+ }
+ 
+-static void mptcp_stop_timer(struct sock *sk)
++static void mptcp_stop_rtx_timer(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+@@ -913,12 +913,12 @@ static void __mptcp_flush_join_list(struct sock *sk, struct list_head *join_list
+ 	}
+ }
+ 
+-static bool mptcp_timer_pending(struct sock *sk)
++static bool mptcp_rtx_timer_pending(struct sock *sk)
+ {
+ 	return timer_pending(&inet_csk(sk)->icsk_retransmit_timer);
+ }
+ 
+-static void mptcp_reset_timer(struct sock *sk)
++static void mptcp_reset_rtx_timer(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	unsigned long tout;
+@@ -1052,10 +1052,10 @@ static void __mptcp_clean_una(struct sock *sk)
+ out:
+ 	if (snd_una == READ_ONCE(msk->snd_nxt) &&
+ 	    snd_una == READ_ONCE(msk->write_seq)) {
+-		if (mptcp_timer_pending(sk) && !mptcp_data_fin_enabled(msk))
+-			mptcp_stop_timer(sk);
++		if (mptcp_rtx_timer_pending(sk) && !mptcp_data_fin_enabled(msk))
++			mptcp_stop_rtx_timer(sk);
+ 	} else {
+-		mptcp_reset_timer(sk);
++		mptcp_reset_rtx_timer(sk);
+ 	}
+ }
+ 
+@@ -1606,8 +1606,8 @@ void __mptcp_push_pending(struct sock *sk, unsigned int flags)
+ 
+ out:
+ 	/* ensure the rtx timer is running */
+-	if (!mptcp_timer_pending(sk))
+-		mptcp_reset_timer(sk);
++	if (!mptcp_rtx_timer_pending(sk))
++		mptcp_reset_rtx_timer(sk);
+ 	if (do_check_data_fin)
+ 		mptcp_check_send_data_fin(sk);
+ }
+@@ -1663,8 +1663,8 @@ static void __mptcp_subflow_push_pending(struct sock *sk, struct sock *ssk, bool
+ 	if (copied) {
+ 		tcp_push(ssk, 0, info.mss_now, tcp_sk(ssk)->nonagle,
+ 			 info.size_goal);
+-		if (!mptcp_timer_pending(sk))
+-			mptcp_reset_timer(sk);
++		if (!mptcp_rtx_timer_pending(sk))
++			mptcp_reset_rtx_timer(sk);
+ 
+ 		if (msk->snd_data_fin_enable &&
+ 		    msk->snd_nxt + 1 == msk->write_seq)
+@@ -2235,7 +2235,7 @@ static void mptcp_retransmit_timer(struct timer_list *t)
  	sock_put(sk);
  }
  
--static int __mptcp_init_sock(struct sock *sk)
-+static void __mptcp_init_sock(struct sock *sk)
+-static void mptcp_timeout_timer(struct timer_list *t)
++static void mptcp_tout_timer(struct timer_list *t)
  {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
  
-@@ -2737,8 +2737,6 @@ static int __mptcp_init_sock(struct sock *sk)
+@@ -2607,14 +2607,14 @@ static void __mptcp_retrans(struct sock *sk)
+ reset_timer:
+ 	mptcp_check_and_set_pending(sk);
+ 
+-	if (!mptcp_timer_pending(sk))
+-		mptcp_reset_timer(sk);
++	if (!mptcp_rtx_timer_pending(sk))
++		mptcp_reset_rtx_timer(sk);
+ }
+ 
+ /* schedule the timeout timer for the relevant event: either close timeout
+  * or mp_fail timeout. The close timeout takes precedence on the mp_fail one
+  */
+-void mptcp_reset_timeout(struct mptcp_sock *msk, unsigned long fail_tout)
++void mptcp_reset_tout_timer(struct mptcp_sock *msk, unsigned long fail_tout)
+ {
+ 	struct sock *sk = (struct sock *)msk;
+ 	unsigned long timeout, close_timeout;
+@@ -2647,7 +2647,7 @@ static void mptcp_mp_fail_no_response(struct mptcp_sock *msk)
+ 	WRITE_ONCE(mptcp_subflow_ctx(ssk)->fail_tout, 0);
+ 	unlock_sock_fast(ssk, slow);
+ 
+-	mptcp_reset_timeout(msk, 0);
++	mptcp_reset_tout_timer(msk, 0);
+ }
+ 
+ static void mptcp_do_fastclose(struct sock *sk)
+@@ -2736,7 +2736,7 @@ static void __mptcp_init_sock(struct sock *sk)
+ 
  	/* re-use the csk retrans timer for MPTCP-level retrans */
  	timer_setup(&msk->sk.icsk_retransmit_timer, mptcp_retransmit_timer, 0);
- 	timer_setup(&sk->sk_timer, mptcp_timeout_timer, 0);
--
--	return 0;
+-	timer_setup(&sk->sk_timer, mptcp_timeout_timer, 0);
++	timer_setup(&sk->sk_timer, mptcp_tout_timer, 0);
  }
  
  static void mptcp_ca_reset(struct sock *sk)
-@@ -2756,11 +2754,8 @@ static void mptcp_ca_reset(struct sock *sk)
- static int mptcp_init_sock(struct sock *sk)
+@@ -2821,8 +2821,8 @@ void mptcp_subflow_shutdown(struct sock *sk, struct sock *ssk, int how)
+ 		} else {
+ 			pr_debug("Sending DATA_FIN on subflow %p", ssk);
+ 			tcp_send_ack(ssk);
+-			if (!mptcp_timer_pending(sk))
+-				mptcp_reset_timer(sk);
++			if (!mptcp_rtx_timer_pending(sk))
++				mptcp_reset_rtx_timer(sk);
+ 		}
+ 		break;
+ 	}
+@@ -2905,7 +2905,7 @@ static void __mptcp_destroy_sock(struct sock *sk)
+ 
+ 	might_sleep();
+ 
+-	mptcp_stop_timer(sk);
++	mptcp_stop_rtx_timer(sk);
+ 	sk_stop_timer(sk, &sk->sk_timer);
+ 	msk->pm.status = 0;
+ 
+@@ -3024,7 +3024,7 @@ bool __mptcp_close(struct sock *sk, long timeout)
+ 		__mptcp_destroy_sock(sk);
+ 		do_cancel_work = true;
+ 	} else {
+-		mptcp_reset_timeout(msk, 0);
++		mptcp_reset_tout_timer(msk, 0);
+ 	}
+ 
+ 	return do_cancel_work;
+@@ -3087,7 +3087,7 @@ static int mptcp_disconnect(struct sock *sk, int flags)
+ 	mptcp_check_listen_stop(sk);
+ 	inet_sk_state_store(sk, TCP_CLOSE);
+ 
+-	mptcp_stop_timer(sk);
++	mptcp_stop_rtx_timer(sk);
+ 	sk_stop_timer(sk, &sk->sk_timer);
+ 
+ 	if (msk->token)
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index ba2a873a4d2e6..4e31b5cf48299 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -699,7 +699,7 @@ void mptcp_get_options(const struct sk_buff *skb,
+ 
+ void mptcp_finish_connect(struct sock *sk);
+ void __mptcp_set_connected(struct sock *sk);
+-void mptcp_reset_timeout(struct mptcp_sock *msk, unsigned long fail_tout);
++void mptcp_reset_tout_timer(struct mptcp_sock *msk, unsigned long fail_tout);
+ static inline bool mptcp_is_fully_established(struct sock *sk)
  {
- 	struct net *net = sock_net(sk);
--	int ret;
+ 	return inet_sk_state_load(sk) == TCP_ESTABLISHED &&
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index c7bd99b8e7b7a..0506d33177f3d 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1226,7 +1226,7 @@ static void mptcp_subflow_fail(struct mptcp_sock *msk, struct sock *ssk)
+ 	WRITE_ONCE(subflow->fail_tout, fail_tout);
+ 	tcp_send_ack(ssk);
  
--	ret = __mptcp_init_sock(sk);
--	if (ret)
--		return ret;
-+	__mptcp_init_sock(sk);
+-	mptcp_reset_timeout(msk, subflow->fail_tout);
++	mptcp_reset_tout_timer(msk, subflow->fail_tout);
+ }
  
- 	if (!mptcp_is_enabled(net))
- 		return -ENOPROTOOPT;
+ static bool subflow_check_data_avail(struct sock *ssk)
 -- 
 2.40.1
 
