@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DB01A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8BD1A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKlwYImA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C2CC433C7;
-	Mon,  9 Oct 2023 13:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9h5TY6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED975C433C9;
+	Mon,  9 Oct 2023 13:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858306;
-	bh=u4Zl/J3Xh1v2Y3jrwyqy8rGqj7d/tUcnIhQ2TdyJNuo=;
+	s=korg; t=1696858309;
+	bh=oGa4bhPMHINuk0v1H+MeHTveowJUOa4iCvoVBhDTeKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKlwYImAbCZhSKGbOJYcTyfHbo6hsB3CUh9p/7t8xp/fbjPRjyWIr4v5HollNwgkV
-	 R/3iHd7kc1YuU4HFSqBLhlfF23PHnpuT/qGyYcvIWw5XLrstNfmyryBnKuD2QIbTdG
-	 zEkweFSJ7JaLeKwKGXU6ckKSkwOBbOteaXE56mAE=
+	b=n9h5TY6VlqcFk9uryf69E9H5OAcnCvw+HBWAwwacYgxOx87kn8KctUPT7c6VAG78H
+	 CvsG4CvTpe9HlHWJ7ubgZJu946yXfMMK8B4VYxNpKY8N5vM8K/fEpNDgL77jEVIL/O
+	 8gd7RB5diiymRvIIzijsF00x68gkbI+gWDZyDXoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.4 073/131] serial: 8250_port: Check IRQ data before use
-Date: Mon,  9 Oct 2023 15:01:53 +0200
-Message-ID: <20231009130118.547988471@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 082/131] ata: libata-core: Fix port and device removal
+Date: Mon,  9 Oct 2023 15:02:02 +0200
+Message-ID: <20231009130118.858117179@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,49 +45,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit cce7fc8b29961b64fadb1ce398dc5ff32a79643b upstream.
+commit 84d76529c650f887f1e18caee72d6f0589e1baf9 upstream.
 
-In case the leaf driver wants to use IRQ polling (irq = 0) and
-IIR register shows that an interrupt happened in the 8250 hardware
-the IRQ data can be NULL. In such a case we need to skip the wake
-event as we came to this path from the timer interrupt and quite
-likely system is already awake.
+Whenever an ATA adapter driver is removed (e.g. rmmod),
+ata_port_detach() is called repeatedly for all the adapter ports to
+remove (unload) the devices attached to the port and delete the port
+device itself. Removing of devices is done using libata EH with the
+ATA_PFLAG_UNLOADING port flag set. This causes libata EH to execute
+ata_eh_unload() which disables all devices attached to the port.
 
-Without this fix we have got an Oops:
+ata_port_detach() finishes by calling scsi_remove_host() to remove the
+scsi host associated with the port. This function will trigger the
+removal of all scsi devices attached to the host and in the case of
+disks, calls to sd_shutdown() which will flush the device write cache
+and stop the device. However, given that the devices were already
+disabled by ata_eh_unload(), the synchronize write cache command and
+start stop unit commands fail. E.g. running "rmmod ahci" with first
+removing sd_mod results in error messages like:
 
-    serial8250: ttyS0 at I/O 0x3f8 (irq = 0, base_baud = 115200) is a 16550A
-    ...
-    BUG: kernel NULL pointer dereference, address: 0000000000000010
-    RIP: 0010:serial8250_handle_irq+0x7c/0x240
-    Call Trace:
-     ? serial8250_handle_irq+0x7c/0x240
-     ? __pfx_serial8250_timeout+0x10/0x10
+ata13.00: disable device
+sd 0:0:0:0: [sda] Synchronizing SCSI cache
+sd 0:0:0:0: [sda] Synchronize Cache(10) failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
+sd 0:0:0:0: [sda] Stopping disk
+sd 0:0:0:0: [sda] Start/Stop Unit failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
 
-Fixes: 0ba9e3a13c6a ("serial: 8250: Add missing wakeup event reporting")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20230831222555.614426-1-andriy.shevchenko@linux.intel.com
+Fix this by removing all scsi devices of the ata devices connected to
+the port before scheduling libata EH to disable the ATA devices.
+
+Fixes: 720ba12620ee ("[PATCH] libata-hp: update unload-unplug")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/ata/libata-core.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1865,7 +1865,10 @@ int serial8250_handle_irq(struct uart_po
- 		skip_rx = true;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -6745,11 +6745,30 @@ static void ata_port_detach(struct ata_p
+ 	if (!ap->ops->error_handler)
+ 		goto skip_eh;
  
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
--		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+		struct irq_data *d;
+-	/* tell EH we're leaving & flush EH */
++	/* Wait for any ongoing EH */
++	ata_port_wait_eh(ap);
 +
-+		d = irq_get_irq_data(port->irq);
-+		if (d && irqd_is_wakeup_set(d))
- 			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
++	mutex_lock(&ap->scsi_scan_mutex);
+ 	spin_lock_irqsave(ap->lock, flags);
++
++	/* Remove scsi devices */
++	ata_for_each_link(link, ap, HOST_FIRST) {
++		ata_for_each_dev(dev, link, ALL) {
++			if (dev->sdev) {
++				spin_unlock_irqrestore(ap->lock, flags);
++				scsi_remove_device(dev->sdev);
++				spin_lock_irqsave(ap->lock, flags);
++				dev->sdev = NULL;
++			}
++		}
++	}
++
++	/* Tell EH to disable all devices */
+ 	ap->pflags |= ATA_PFLAG_UNLOADING;
+ 	ata_port_schedule_eh(ap);
++
+ 	spin_unlock_irqrestore(ap->lock, flags);
++	mutex_unlock(&ap->scsi_scan_mutex);
+ 
+ 	/* wait till EH commits suicide */
+ 	ata_port_wait_eh(ap);
 
 
