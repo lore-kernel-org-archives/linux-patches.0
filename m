@@ -1,110 +1,146 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34184691
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 14:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BQ9TDvcf";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8PzM8t/f"
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0D1951F749;
-	Mon,  9 Oct 2023 14:29:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1696861779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Qu10x9rGONyB+Hq7z6ZfSi5iNpC7bIhRTsmGd6RFUOk=;
-	b=BQ9TDvcfIIw2RAwWiqZEtkaNB30H1a+nJg+UtKU8O7bYnW791NHoZ+tbBLoqptXrSAYV8G
-	BlGD7zkhkWDAysK48xB11FAP/Nsfn4rRWC6bdPW8SBBxCmJ6iiCWETKSebCG6al7f4vP4G
-	woZ6VrGQbp+0pxsMVEqU9A0ogFfHjHE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1696861779;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Qu10x9rGONyB+Hq7z6ZfSi5iNpC7bIhRTsmGd6RFUOk=;
-	b=8PzM8t/ftVvS4CAEU7AhI27wU67V/sS2e5cOHfc7Hf53RY8PPjgwzZBSn27erkyxdcaMBA
-	y5mAc4jJay8e3kBQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D2DFF13905;
-	Mon,  9 Oct 2023 14:29:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id Gp9nMlIOJGXsDwAAMHmgww
-	(envelope-from <tiwai@suse.de>); Mon, 09 Oct 2023 14:29:38 +0000
-Date: Mon, 09 Oct 2023 16:29:38 +0200
-Message-ID: <87pm1nswbx.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>
-Subject: Re: [PATCH 6.5 001/163] ALSA: hda/tas2781: Add tas2781 HDA driver
-In-Reply-To: <ZSQNSeJtY2WxedV3@sashalap>
-References: <20231009130124.021290599@linuxfoundation.org>
-	<20231009130124.064374662@linuxfoundation.org>
-	<875y3gsznc.wl-tiwai@suse.de>
-	<ZSQNSeJtY2WxedV3@sashalap>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31A019463
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 15:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qpsVy-0008QE-BH; Mon, 09 Oct 2023 17:49:50 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qpsVx-000S0Z-PT; Mon, 09 Oct 2023 17:49:49 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qpsVx-00CO8J-GD; Mon, 09 Oct 2023 17:49:49 +0200
+Date: Mon, 9 Oct 2023 17:49:49 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>,
+	kernel@pengutronix.de
+Subject: Re: [PATCH 6.1 001/162] spi: zynqmp-gqspi: Convert to platform
+ remove callback returning void
+Message-ID: <20231009154949.33tpn4fsbacllhme@pengutronix.de>
+References: <20231009130122.946357448@linuxfoundation.org>
+ <20231009130122.990256512@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-
-On Mon, 09 Oct 2023 16:25:13 +0200,
-Sasha Levin wrote:
-> 
-> On Mon, Oct 09, 2023 at 03:17:59PM +0200, Takashi Iwai wrote:
-> > On Mon, 09 Oct 2023 14:59:25 +0200,
-> > Greg Kroah-Hartman wrote:
-> >> 
-> >> 6.5-stable review patch.  If anyone has any objections, please let me know.
-> >> 
-> >> ------------------
-> >> 
-> >> From: Shenghao Ding <shenghao-ding@ti.com>
-> >> 
-> >> [ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
-> >> 
-> >> Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
-> >> laptop will be aggregated as one audio device. The code support realtek
-> >> as the primary codec. Rename "struct cs35l41_dev_name" to
-> >> "struct scodec_dev_name" for all other side codecs instead of the certain
-> >> one.
-> >> 
-> >> Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-> >> Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
-> >> Signed-off-by: Takashi Iwai <tiwai@suse.de>
-> >> Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
-> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > 
-> > This makes little sense without the backport of commit
-> > 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver").
-> > Confusingly, the patch subject is very same as this commit...
-> 
-> This is a tricky one: 3babae915f4 really doesn't add a new driver but
-> rather just refactors some of the quirk handling which is needed for
-> later patches to apply. It's the following 5be27f1e3ec9 which actually
-> adds the driver (which we don't need here).
-> 
-> We don't actually want to bring in a new driver, so 5be27f1e3ec9 is
-> unnecessary.
-
-If we don't want the backport of 5be27f1e3ec9, this commit
-(3babae915f4c) and other relevant ones must be dropped, too.
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="c2qh7h5mmh3kzvla"
+Content-Disposition: inline
+In-Reply-To: <20231009130122.990256512@linuxfoundation.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
 
 
-Takashi
+--c2qh7h5mmh3kzvla
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+On Mon, Oct 09, 2023 at 02:59:42PM +0200, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>=20
+> ------------------
+>=20
+> From: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+>=20
+> [ Upstream commit 3ffefa1d9c9eba60c7f8b4a9ce2df3e4c7f4a88e ]
+>=20
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is (mostly) ignored
+> and this typically results in resource leaks. To improve here there is a
+> quest to make the remove callback return void. In the first step of this
+> quest all drivers are converted to .remove_new() which already returns
+> void.
+>=20
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+>=20
+> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> Link: https://lore.kernel.org/r/20230303172041.2103336-88-u.kleine-koenig=
+@pengutronix.de
+> Signed-off-by: Mark Brown <broonie@kernel.org>
+> Stable-dep-of: 1527b076ae2c ("spi: zynqmp-gqspi: fix clock imbalance on p=
+robe failure")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+
+While I don't think this patch is dangerous to backport, the more
+conservative option of directly applying 1527b076ae2c would have been
+the one I'd chosen.
+
+The simple(?) conflict resolution for picking 1527b076ae2c on top of
+v6.1.56 looks as follows:
+
+diff --cc drivers/spi/spi-zynqmp-gqspi.c
+index c760aac070e5,c309dedfd602..000000000000
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@@ -1244,20 -1368,17 +1244,24 @@@ static int zynqmp_qspi_remove(struct pl
+  {
+  	struct zynqmp_qspi *xqspi =3D platform_get_drvdata(pdev);
+ =20
++ 	pm_runtime_get_sync(&pdev->dev);
++=20
+  	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++=20
++ 	pm_runtime_disable(&pdev->dev);
++ 	pm_runtime_put_noidle(&pdev->dev);
++ 	pm_runtime_set_suspended(&pdev->dev);
+  	clk_disable_unprepare(xqspi->refclk);
+  	clk_disable_unprepare(xqspi->pclk);
+- 	pm_runtime_set_suspended(&pdev->dev);
+- 	pm_runtime_disable(&pdev->dev);
+ +
+ +	return 0;
+  }
+ =20
+ +static const struct of_device_id zynqmp_qspi_of_match[] =3D {
+ +	{ .compatible =3D "xlnx,zynqmp-qspi-1.0", },
+ +	{ /* End of table */ }
+ +};
+ +
+  MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+ =20
+  static struct platform_driver zynqmp_qspi_driver =3D {
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--c2qh7h5mmh3kzvla
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUkIRwACgkQj4D7WH0S
+/k6ZoAf+J5Ks/FEz56QUy2KWUuBj1HOmD2SlzwXqKNcXPrDK5m/rmyt67+TPkTgL
+kO3rYuByLUjtoM0hSRAuhgomQQ4h3ZrNpxn2W3fOKTtVzNGQZF526zjy3gvCY78E
+aUKf9oFiPF8XCbCAJjUkg9qfyNd99SofzzXkbZxFmRpKSRvmcz9cAJ5Peso6DPu7
+ECXC0Yudkerjaziav6mkFXqJrVfyI3YcZ0kFd5B42bBA4RXSKUF/R+eLtQLatrA6
+JtCcmCP8w3+HY+fsXJUesh79nuPEJwT3vOqX9akIHJJV5mzbXdlIKZkymE6ty7NN
+eUp9aRWhDeGCtchw2kIGXcQSnVgWrg==
+=GO02
+-----END PGP SIGNATURE-----
+
+--c2qh7h5mmh3kzvla--
