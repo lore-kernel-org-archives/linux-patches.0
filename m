@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6D5341A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8769D341BA
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9rg+iDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18B2C433C9;
-	Mon,  9 Oct 2023 13:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTpDfKZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CC1C433C9;
+	Mon,  9 Oct 2023 13:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859312;
-	bh=0l62WHnfTDBd9YTKLwX5ZIB50XrJ+a707snm7VL3YVo=;
+	s=korg; t=1696859315;
+	bh=uka54SjBYlauVedB11gk2b/+8TtBocR0CAgZHo6RSPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9rg+iDHxL0NnJLyhez5TMYyZwEML3APLxqmjP1GGkTC0IS7d0Qcb3W6zB0V0/bvE
-	 rzMp/MgyU0ydedrNPqVCxhsc/WkhEzcml1nOzJHvRvaOghvUJivjTzHMigaGj/N2Pi
-	 RPcov1Ap5gQKsZU/E+FKhXCBjqnUClBE3X5KJdUM=
+	b=vTpDfKZkNyGFEOvsrXLCDvmIbtP7wwJwOxXTX4a8DBjoKNlIV16eug2QDnj+YoOp8
+	 JWHRys77Uu4MQ3/n2QQrWoXESbwpoqd8w9uVT/zBVtxT+5GT7bXlBBtK/eCJiMFcb2
+	 l7eDoaG0LiEevEDVNU7gDErlIBHVYydoifExYzOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.14 37/55] wifi: mwifiex: Fix tlv_buf_left calculation
-Date: Mon,  9 Oct 2023 15:06:36 +0200
-Message-ID: <20231009130109.106734395@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 38/55] btrfs: reject unknown mount options early
+Date: Mon,  9 Oct 2023 15:06:37 +0200
+Message-ID: <20231009130109.152850430@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,103 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
+commit 5f521494cc73520ffac18ede0758883b9aedd018 upstream.
 
-In a TLV encoding scheme, the Length part represents the length after
-the header containing the values for type and length. In this case,
-`tlv_len` should be:
+[BUG]
+The following script would allow invalid mount options to be specified
+(although such invalid options would just be ignored):
 
-tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
+  # mkfs.btrfs -f $dev
+  # mount $dev $mnt1		<<< Successful mount expected
+  # mount $dev $mnt2 -o junk	<<< Failed mount expected
+  # echo $?
+  0
 
-Notice that the `- 1` accounts for the one-element array `bitmap`, which
-1-byte size is already included in `sizeof(*tlv_rxba)`.
+[CAUSE]
+For the 2nd mount, since the fs is already mounted, we won't go through
+open_ctree() thus no btrfs_parse_options(), but only through
+btrfs_parse_subvol_options().
 
-So, if the above is correct, there is a double-counting of some members
-in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
-are calculated:
+However we do not treat unrecognized options from valid but irrelevant
+options, thus those invalid options would just be ignored by
+btrfs_parse_subvol_options().
 
-968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
-969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
+[FIX]
+Add the handling for Opt_err to handle invalid options and error out,
+while still ignore other valid options inside btrfs_parse_subvol_options().
 
-in specific, members:
-
-drivers/net/wireless/marvell/mwifiex/fw.h:777
- 777         u8 mac[ETH_ALEN];
- 778         u8 tid;
- 779         u8 reserved;
- 780         __le16 seq_num;
- 781         __le16 bitmap_len;
-
-This is clearly wrong, and affects the subsequent decoding of data in
-`event_buf` through `tlv_rxba`:
-
-970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
-
-Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
-in the calculation of `tlv_buf_left` and `tmp`.
-
-This results in the following binary differences before/after changes:
-
-| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-| @@ -4698,11 +4698,11 @@
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
-|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-| -    1da7:      lea    -0x11(%rbx),%edx
-| +    1da7:      lea    -0x4(%rbx),%edx
-|      1daa:      movzwl %bp,%eax
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
-|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
-| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
-| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
-
-The above reflects the desired change: avoid counting 13 too many bytes;
-which is the total size of the double-counted members in
-`struct mwifiex_ie_types_rxba_sync`:
-
-$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-struct mwifiex_ie_types_rxba_sync {
-	struct mwifiex_ie_types_header header;           /*     0     4 */
-
-     |-----------------------------------------------------------------------
-     |  u8                         mac[6];               /*     4     6 */  |
-     |	u8                         tid;                  /*    10     1 */  |
-     |  u8                         reserved;             /*    11     1 */  |
-     | 	__le16                     seq_num;              /*    12     2 */  |
-     | 	__le16                     bitmap_len;           /*    14     2 */  |
-     |  u8                         bitmap[1];            /*    16     1 */  |
-     |----------------------------------------------------------------------|
-								  | 13 bytes|
-								  -----------
-
-	/* size: 17, cachelines: 1, members: 7 */
-	/* last cacheline: 17 bytes */
-} __attribute__((__packed__));
-
-Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
+Reported-by: Anand Jain <anand.jain@oracle.com>
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/super.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -992,8 +992,8 @@ void mwifiex_11n_rxba_sync_event(struct
- 			}
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -929,6 +929,10 @@ static int btrfs_parse_early_options(con
+ 			if (error)
+ 				goto out;
+ 			break;
++		case Opt_err:
++			btrfs_err(NULL, "unrecognized mount option '%s'", p);
++			error = -EINVAL;
++			goto out;
+ 		default:
+ 			break;
  		}
- 
--		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
--		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
-+		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-+		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
- 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
- 	}
- }
 
 
