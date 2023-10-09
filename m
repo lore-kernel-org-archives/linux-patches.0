@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C411A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00B31A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhhbago1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A82C433C7;
-	Mon,  9 Oct 2023 13:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxXQmo+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5814AC433C7;
+	Mon,  9 Oct 2023 13:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857798;
-	bh=KwZMJzdIOz+sopvzsBCRA62zDuyxYxXbUvt8Z/4Mkkk=;
+	s=korg; t=1696857801;
+	bh=coihKcqwiyuGHtuTu4BlHycKWS8vg/P5F13kDCThYnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhhbago1rYQG1DYc0ZwbFzNv7x8eY9IOWkenv3DpgIaZa+blDThMHhVuVJXzM8nn5
-	 ngfHSVioDOJCyl8O35qABUduVX/Q4O0guJAfwj9TpvIwsl+wplxEyUW2YI6zJvLT3R
-	 hXdRNO3J5Hva7YG/20RrYtf4H5S+YV+D4V2ZWlII=
+	b=nxXQmo+CB/Ja0te+CgdcVOsnjQNIZLwjMQpBOm7r8V/MYyggdUDLIPOuD2MQ9PSTA
+	 df5Y7RcgDSwHLBrjnZFMEgZ5ol1tVppmt9Skx+oODTWNU27fKeN+JuRWFck1Cy2w5Y
+	 lwi0WD8M8g9T1b7ZPj5Nhgp89xHvi46zSN/JogDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/162] netlink: annotate data-races around sk->sk_err
-Date: Mon,  9 Oct 2023 15:01:54 +0200
-Message-ID: <20231009130126.585707577@linuxfoundation.org>
+Subject: [PATCH 6.1 134/162] HID: sony: remove duplicate NULL check before calling usb_free_urb()
+Date: Mon,  9 Oct 2023 15:01:55 +0200
+Message-ID: <20231009130126.611625239@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,98 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-[ Upstream commit d0f95894fda7d4f895b29c1097f92d7fee278cb2 ]
+[ Upstream commit b328dd02e19cb9d3b35de4322f5363516a20ac8c ]
 
-syzbot caught another data-race in netlink when
-setting sk->sk_err.
+usb_free_urb() does the NULL check itself, so there is no need to duplicate
+it prior to calling.
 
-Annotate all of them for good measure.
-
-BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
-
-write to 0xffff8881613bb220 of 4 bytes by task 28147 on cpu 0:
-netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
-sock_recvmsg_nosec net/socket.c:1027 [inline]
-sock_recvmsg net/socket.c:1049 [inline]
-__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
-__do_sys_recvfrom net/socket.c:2247 [inline]
-__se_sys_recvfrom net/socket.c:2243 [inline]
-__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-write to 0xffff8881613bb220 of 4 bytes by task 28146 on cpu 1:
-netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
-sock_recvmsg_nosec net/socket.c:1027 [inline]
-sock_recvmsg net/socket.c:1049 [inline]
-__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
-__do_sys_recvfrom net/socket.c:2247 [inline]
-__se_sys_recvfrom net/socket.c:2243 [inline]
-__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00000000 -> 0x00000016
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 28146 Comm: syz-executor.0 Not tainted 6.6.0-rc3-syzkaller-00055-g9ed22ae6be81 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231003183455.3410550-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: e1cd4004cde7c9 ("HID: sony: Fix a potential memory leak in sony_probe()")
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hid/hid-sony.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 845ac56a3ac2e..a572a30dfd98d 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -352,7 +352,7 @@ static void netlink_overrun(struct sock *sk)
- 	if (!nlk_test_bit(RECV_NO_ENOBUFS, sk)) {
- 		if (!test_and_set_bit(NETLINK_S_CONGESTED,
- 				      &nlk_sk(sk)->state)) {
--			sk->sk_err = ENOBUFS;
-+			WRITE_ONCE(sk->sk_err, ENOBUFS);
- 			sk_error_report(sk);
- 		}
- 	}
-@@ -1566,7 +1566,7 @@ static int do_one_set_err(struct sock *sk, struct netlink_set_err_data *p)
- 		goto out;
- 	}
- 
--	sk->sk_err = p->code;
-+	WRITE_ONCE(sk->sk_err, p->code);
- 	sk_error_report(sk);
- out:
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index 5b3f58e068807..f7f7252d839ee 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -3074,8 +3074,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
  	return ret;
-@@ -1955,7 +1955,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
- 		ret = netlink_dump(sk);
- 		if (ret) {
--			sk->sk_err = -ret;
-+			WRITE_ONCE(sk->sk_err, -ret);
- 			sk_error_report(sk);
- 		}
- 	}
-@@ -2474,7 +2474,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
- err_bad_put:
- 	nlmsg_free(skb);
- err_skb:
--	NETLINK_CB(in_skb).sk->sk_err = ENOBUFS;
-+	WRITE_ONCE(NETLINK_CB(in_skb).sk->sk_err, ENOBUFS);
- 	sk_error_report(NETLINK_CB(in_skb).sk);
- }
- EXPORT_SYMBOL(netlink_ack);
+ 
+ err:
+-	if (sc->ghl_urb)
+-		usb_free_urb(sc->ghl_urb);
++	usb_free_urb(sc->ghl_urb);
+ 
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.40.1
 
