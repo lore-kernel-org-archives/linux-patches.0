@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC491A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4111A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBPs6nMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEACC433C7;
-	Mon,  9 Oct 2023 13:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8IABE+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB49C433C7;
+	Mon,  9 Oct 2023 13:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859430;
-	bh=BZW0EIlpHrN4TwyvxYDtW8qZtrvBNTAbHl0vMB8xHoQ=;
+	s=korg; t=1696859433;
+	bh=p040UTFxSY4qML5XDqt3gG2lIOQLXpFWvTCpjNMzkfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBPs6nMMZAgrWLOfCIhkjXQ79kJ6CHfylREBXfhf5749IjAb9Wy6ElX17i1jOH8Pr
-	 slCWBbxCE4P7xzDQYFHbqjMCiseXsTiGp28popc5XFLCyh/ZyKUQ2rt+4h619a6IGP
-	 HFPDVKzDzaOQ6kd9XSwrNf26FFxZYF/bFV3tROVk=
+	b=x8IABE+Msm/4Z+1uZ1Wr/sPeHkTNC8mQY7z7nTPk7dCPuGd/V5FTyC6JM/dJoHKTP
+	 GWSMLXDgfE4XeENFAoz/7tYyC2jTxEISPQMtDZSDalVyIEWCNm7o3A9L+57UdSE0MI
+	 dyeXoctIh9XRApmR2ayxKWLffkVMn9ujLg7nuSIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Wang Jianchao <wangjianchao@kuaishou.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/91] scsi: megaraid_sas: Fix deadlock on firmware crashdump
-Date: Mon,  9 Oct 2023 15:05:51 +0200
-Message-ID: <20231009130112.193432364@linuxfoundation.org>
+Subject: [PATCH 4.19 20/91] ext4: remove the group parameter of ext4_trim_extent
+Date: Mon,  9 Oct 2023 15:05:52 +0200
+Message-ID: <20231009130112.230241072@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,181 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Wang Jianchao <wangjianchao@kuaishou.com>
 
-[ Upstream commit 0b0747d507bffb827e40fc0f9fb5883fffc23477 ]
+[ Upstream commit bd2eea8d0a6b6a9aca22f20bf74f73b71d8808af ]
 
-The following processes run into a deadlock. CPU 41 was waiting for CPU 29
-to handle a CSD request while holding spinlock "crashdump_lock", but CPU 29
-was hung by that spinlock with IRQs disabled.
+Get rid of the 'group' parameter of ext4_trim_extent as we can get
+it from the 'e4b'.
 
-  PID: 17360    TASK: ffff95c1090c5c40  CPU: 41  COMMAND: "mrdiagd"
-  !# 0 [ffffb80edbf37b58] __read_once_size at ffffffff9b871a40 include/linux/compiler.h:185:0
-  !# 1 [ffffb80edbf37b58] atomic_read at ffffffff9b871a40 arch/x86/include/asm/atomic.h:27:0
-  !# 2 [ffffb80edbf37b58] dump_stack at ffffffff9b871a40 lib/dump_stack.c:54:0
-   # 3 [ffffb80edbf37b78] csd_lock_wait_toolong at ffffffff9b131ad5 kernel/smp.c:364:0
-   # 4 [ffffb80edbf37b78] __csd_lock_wait at ffffffff9b131ad5 kernel/smp.c:384:0
-   # 5 [ffffb80edbf37bf8] csd_lock_wait at ffffffff9b13267a kernel/smp.c:394:0
-   # 6 [ffffb80edbf37bf8] smp_call_function_many at ffffffff9b13267a kernel/smp.c:843:0
-   # 7 [ffffb80edbf37c50] smp_call_function at ffffffff9b13279d kernel/smp.c:867:0
-   # 8 [ffffb80edbf37c50] on_each_cpu at ffffffff9b13279d kernel/smp.c:976:0
-   # 9 [ffffb80edbf37c78] flush_tlb_kernel_range at ffffffff9b085c4b arch/x86/mm/tlb.c:742:0
-   #10 [ffffb80edbf37cb8] __purge_vmap_area_lazy at ffffffff9b23a1e0 mm/vmalloc.c:701:0
-   #11 [ffffb80edbf37ce0] try_purge_vmap_area_lazy at ffffffff9b23a2cc mm/vmalloc.c:722:0
-   #12 [ffffb80edbf37ce0] free_vmap_area_noflush at ffffffff9b23a2cc mm/vmalloc.c:754:0
-   #13 [ffffb80edbf37cf8] free_unmap_vmap_area at ffffffff9b23bb3b mm/vmalloc.c:764:0
-   #14 [ffffb80edbf37cf8] remove_vm_area at ffffffff9b23bb3b mm/vmalloc.c:1509:0
-   #15 [ffffb80edbf37d18] __vunmap at ffffffff9b23bb8a mm/vmalloc.c:1537:0
-   #16 [ffffb80edbf37d40] vfree at ffffffff9b23bc85 mm/vmalloc.c:1612:0
-   #17 [ffffb80edbf37d58] megasas_free_host_crash_buffer [megaraid_sas] at ffffffffc020b7f2 drivers/scsi/megaraid/megaraid_sas_fusion.c:3932:0
-   #18 [ffffb80edbf37d80] fw_crash_state_store [megaraid_sas] at ffffffffc01f804d drivers/scsi/megaraid/megaraid_sas_base.c:3291:0
-   #19 [ffffb80edbf37dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #20 [ffffb80edbf37dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #21 [ffffb80edbf37de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #22 [ffffb80edbf37e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #23 [ffffb80edbf37ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #24 [ffffb80edbf37ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #25 [ffffb80edbf37ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #26 [ffffb80edbf37f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #27 [ffffb80edbf37f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
-
-  PID: 17355    TASK: ffff95c1090c3d80  CPU: 29  COMMAND: "mrdiagd"
-  !# 0 [ffffb80f2d3c7d30] __read_once_size at ffffffff9b0f2ab0 include/linux/compiler.h:185:0
-  !# 1 [ffffb80f2d3c7d30] native_queued_spin_lock_slowpath at ffffffff9b0f2ab0 kernel/locking/qspinlock.c:368:0
-   # 2 [ffffb80f2d3c7d58] pv_queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/paravirt.h:674:0
-   # 3 [ffffb80f2d3c7d58] queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/qspinlock.h:53:0
-   # 4 [ffffb80f2d3c7d68] queued_spin_lock at ffffffff9b8961a6 include/asm-generic/qspinlock.h:90:0
-   # 5 [ffffb80f2d3c7d68] do_raw_spin_lock_flags at ffffffff9b8961a6 include/linux/spinlock.h:173:0
-   # 6 [ffffb80f2d3c7d68] __raw_spin_lock_irqsave at ffffffff9b8961a6 include/linux/spinlock_api_smp.h:122:0
-   # 7 [ffffb80f2d3c7d68] _raw_spin_lock_irqsave at ffffffff9b8961a6 kernel/locking/spinlock.c:160:0
-   # 8 [ffffb80f2d3c7d88] fw_crash_buffer_store [megaraid_sas] at ffffffffc01f8129 drivers/scsi/megaraid/megaraid_sas_base.c:3205:0
-   # 9 [ffffb80f2d3c7dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
-   #10 [ffffb80f2d3c7dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
-   #11 [ffffb80f2d3c7de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
-   #12 [ffffb80f2d3c7e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
-   #13 [ffffb80f2d3c7ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
-   #14 [ffffb80f2d3c7ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
-   #15 [ffffb80f2d3c7ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
-   #16 [ffffb80f2d3c7f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
-   #17 [ffffb80f2d3c7f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
-
-The lock is used to synchronize different sysfs operations, it doesn't
-protect any resource that will be touched by an interrupt. Consequently
-it's not required to disable IRQs. Replace the spinlock with a mutex to fix
-the deadlock.
-
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Link: https://lore.kernel.org/r/20230828221018.19471-1-junxiao.bi@oracle.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Signed-off-by: Wang Jianchao <wangjianchao@kuaishou.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20210724074124.25731-2-jianchao.wan9@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h      |  2 +-
- drivers/scsi/megaraid/megaraid_sas_base.c | 21 +++++++++------------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ fs/ext4/mballoc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas.h b/drivers/scsi/megaraid/megaraid_sas.h
-index 80ae48b65b608..0d7cca9365aac 100644
---- a/drivers/scsi/megaraid/megaraid_sas.h
-+++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -2194,7 +2194,7 @@ struct megasas_instance {
- 	u32 support_morethan256jbod; /* FW support for more than 256 PD/JBOD */
- 	bool use_seqnum_jbod_fp;   /* Added for PD sequence */
- 	bool smp_affinity_enable;
--	spinlock_t crashdump_lock;
-+	struct mutex crashdump_lock;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 7692c12b85285..7b81094831754 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5149,19 +5149,19 @@ int ext4_group_add_blocks(handle_t *handle, struct super_block *sb,
+  * @sb:		super block for the file system
+  * @start:	starting block of the free extent in the alloc. group
+  * @count:	number of blocks to TRIM
+- * @group:	alloc. group we are working with
+  * @e4b:	ext4 buddy for the group
+  *
+  * Trim "count" blocks starting at "start" in the "group". To assure that no
+  * one will allocate those blocks, mark it as used in buddy bitmap. This must
+  * be called with under the group lock.
+  */
+-static int ext4_trim_extent(struct super_block *sb, int start, int count,
+-			     ext4_group_t group, struct ext4_buddy *e4b)
++static int ext4_trim_extent(struct super_block *sb,
++		int start, int count, struct ext4_buddy *e4b)
+ __releases(bitlock)
+ __acquires(bitlock)
+ {
+ 	struct ext4_free_extent ex;
++	ext4_group_t group = e4b->bd_group;
+ 	int ret = 0;
  
- 	struct megasas_register_set __iomem *reg_set;
- 	u32 __iomem *reply_post_host_index_addr[MR_MAX_MSIX_REG_ARRAY];
-diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
-index 2b6b6d3deba86..bdfa36712fcc4 100644
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -3004,14 +3004,13 @@ megasas_fw_crash_buffer_store(struct device *cdev,
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
+ 	trace_ext4_trim_extent(sb, group, start, count);
+@@ -5237,8 +5237,7 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+ 		next = mb_find_next_bit(bitmap, max + 1, start);
  
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
- 
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	instance->fw_crash_buffer_offset = val;
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 	return strlen(buf);
- }
- 
-@@ -3027,17 +3026,16 @@ megasas_fw_crash_buffer_show(struct device *cdev,
- 	unsigned long dmachunk = CRASH_DMA_BUF_SIZE;
- 	unsigned long chunk_left_bytes;
- 	unsigned long src_addr;
--	unsigned long flags;
- 	u32 buff_offset;
- 
--	spin_lock_irqsave(&instance->crashdump_lock, flags);
-+	mutex_lock(&instance->crashdump_lock);
- 	buff_offset = instance->fw_crash_buffer_offset;
- 	if (!instance->crash_dump_buf ||
- 		!((instance->fw_crash_state == AVAILABLE) ||
- 		(instance->fw_crash_state == COPYING))) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump is not available\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return -EINVAL;
- 	}
- 
-@@ -3046,7 +3044,7 @@ megasas_fw_crash_buffer_show(struct device *cdev,
- 	if (buff_offset > (instance->fw_crash_buffer_size * dmachunk)) {
- 		dev_err(&instance->pdev->dev,
- 			"Firmware crash dump offset is out of range\n");
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		return 0;
- 	}
- 
-@@ -3058,7 +3056,7 @@ megasas_fw_crash_buffer_show(struct device *cdev,
- 	src_addr = (unsigned long)instance->crash_buf[buff_offset / dmachunk] +
- 		(buff_offset % dmachunk);
- 	memcpy(buf, (void *)src_addr, size);
--	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+	mutex_unlock(&instance->crashdump_lock);
- 
- 	return size;
- }
-@@ -3083,7 +3081,6 @@ megasas_fw_crash_state_store(struct device *cdev,
- 	struct megasas_instance *instance =
- 		(struct megasas_instance *) shost->hostdata;
- 	int val = 0;
--	unsigned long flags;
- 
- 	if (kstrtoint(buf, 0, &val) != 0)
- 		return -EINVAL;
-@@ -3097,9 +3094,9 @@ megasas_fw_crash_state_store(struct device *cdev,
- 	instance->fw_crash_state = val;
- 
- 	if ((val == COPIED) || (val == COPY_ERROR)) {
--		spin_lock_irqsave(&instance->crashdump_lock, flags);
-+		mutex_lock(&instance->crashdump_lock);
- 		megasas_free_host_crash_buffer(instance);
--		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
-+		mutex_unlock(&instance->crashdump_lock);
- 		if (val == COPY_ERROR)
- 			dev_info(&instance->pdev->dev, "application failed to "
- 				"copy Firmware crash dump\n");
-@@ -6463,7 +6460,7 @@ static inline void megasas_init_ctrl_params(struct megasas_instance *instance)
- 	init_waitqueue_head(&instance->int_cmd_wait_q);
- 	init_waitqueue_head(&instance->abort_cmd_wait_q);
- 
--	spin_lock_init(&instance->crashdump_lock);
-+	mutex_init(&instance->crashdump_lock);
- 	spin_lock_init(&instance->mfi_pool_lock);
- 	spin_lock_init(&instance->hba_lock);
- 	spin_lock_init(&instance->stream_lock);
+ 		if ((next - start) >= minblocks) {
+-			ret = ext4_trim_extent(sb, start,
+-					       next - start, group, &e4b);
++			ret = ext4_trim_extent(sb, start, next - start, &e4b);
+ 			if (ret && ret != -EOPNOTSUPP)
+ 				break;
+ 			ret = 0;
 -- 
 2.40.1
 
