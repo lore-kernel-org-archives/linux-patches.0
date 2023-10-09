@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720AE328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91382328DB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbP6EUZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAF5C433C9;
-	Mon,  9 Oct 2023 13:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V30M6YHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8CCC433CA;
+	Mon,  9 Oct 2023 13:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859118;
-	bh=vRyOCZRSdpqS1sU/8Fa8wlWcGnwqUrUJU7dejn2n5sQ=;
+	s=korg; t=1696859121;
+	bh=7w0PTO5q3pw+dqfGhSJ9F7JyeK7WfmQUU7CCbBnRwTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbP6EUZB7rPB+jJcRiVkexL3PgFVC8szv2OD7GzyrehzekhLckdcNtrhLgd+2rCis
-	 WQcqQc2DlChuWw+ECILBVao4sqPZW1voB9SKDn5OzUfwZw7KxwiBA8g1P02jwodowR
-	 Et1vVaIyarJS1/vPGG/2Z3fnnY522zcjYqXKbZsA=
+	b=V30M6YHuALuZPOXoWfXWmNsrpzBaeDwIVurUS2xNbTrhkcOHfu5KUWsJtyrrXgWru
+	 gBunhknEe9sY5hrjennN2H2yU1kR/iwaRiP9F3hgHmrqyHakvvh5HfcIBSQd9DomUO
+	 rKLx5k3y3O++IC5NLQnpr8zbiGQptDW3iP3cQfBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/226] netfilter: handle the connecting collision properly in nf_conntrack_proto_sctp
-Date: Mon,  9 Oct 2023 15:02:45 +0200
-Message-ID: <20231009130131.902973484@linuxfoundation.org>
+Subject: [PATCH 5.10 205/226] netfilter: nf_tables: nft_set_rbtree: fix spurious insertion failure
+Date: Mon,  9 Oct 2023 15:02:46 +0200
+Message-ID: <20231009130131.926302115@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,172 +41,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8e56b063c86569e51eed1c5681ce6361fa97fc7a ]
+[ Upstream commit 087388278e0f301f4c61ddffb1911d3a180f84b8 ]
 
-In Scenario A and B below, as the delayed INIT_ACK always changes the peer
-vtag, SCTP ct with the incorrect vtag may cause packet loss.
+nft_rbtree_gc_elem() walks back and removes the end interval element that
+comes before the expired element.
 
-Scenario A: INIT_ACK is delayed until the peer receives its own INIT_ACK
+There is a small chance that we've cached this element as 'rbe_ge'.
+If this happens, we hold and test a pointer that has been queued for
+freeing.
 
-  192.168.1.2 > 192.168.1.1: [INIT] [init tag: 1328086772]
-    192.168.1.1 > 192.168.1.2: [INIT] [init tag: 1414468151]
-    192.168.1.2 > 192.168.1.1: [INIT ACK] [init tag: 1328086772]
-  192.168.1.1 > 192.168.1.2: [INIT ACK] [init tag: 1650211246] *
-  192.168.1.2 > 192.168.1.1: [COOKIE ECHO]
-    192.168.1.1 > 192.168.1.2: [COOKIE ECHO]
-    192.168.1.2 > 192.168.1.1: [COOKIE ACK]
+It also causes spurious insertion failures:
 
-Scenario B: INIT_ACK is delayed until the peer completes its own handshake
+$ cat test-testcases-sets-0044interval_overlap_0.1/testout.log
+Error: Could not process rule: File exists
+add element t s {  0 -  2 }
+                   ^^^^^^
+Failed to insert  0 -  2 given:
+table ip t {
+        set s {
+                type inet_service
+                flags interval,timeout
+                timeout 2s
+                gc-interval 2s
+        }
+}
 
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
-    192.168.1.2 > 192.168.1.1: sctp (1) [INIT ACK] [init tag: 3922216408]
-    192.168.1.1 > 192.168.1.2: sctp (1) [COOKIE ECHO]
-    192.168.1.2 > 192.168.1.1: sctp (1) [COOKIE ACK]
-  192.168.1.1 > 192.168.1.2: sctp (1) [INIT ACK] [init tag: 3914796021] *
+The set (rbtree) is empty. The 'failure' doesn't happen on next attempt.
 
-This patch fixes it as below:
+Reason is that when we try to insert, the tree may hold an expired
+element that collides with the range we're adding.
+While we do evict/erase this element, we can trip over this check:
 
-In SCTP_CID_INIT processing:
-- clear ct->proto.sctp.init[!dir] if ct->proto.sctp.init[dir] &&
-  ct->proto.sctp.init[!dir]. (Scenario E)
-- set ct->proto.sctp.init[dir].
+if (rbe_ge && nft_rbtree_interval_end(rbe_ge) && nft_rbtree_interval_end(new))
+      return -ENOTEMPTY;
 
-In SCTP_CID_INIT_ACK processing:
-- drop it if !ct->proto.sctp.init[!dir] && ct->proto.sctp.vtag[!dir] &&
-  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario B, Scenario C)
-- drop it if ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
-  ct->proto.sctp.vtag[!dir] != ih->init_tag. (Scenario A)
+rbe_ge was erased by the synchronous gc, we should not have done this
+check.  Next attempt won't find it, so retry results in successful
+insertion.
 
-In SCTP_CID_COOKIE_ACK processing:
-- clear ct->proto.sctp.init[dir] and ct->proto.sctp.init[!dir].
-  (Scenario D)
+Restart in-kernel to avoid such spurious errors.
 
-Also, it's important to allow the ct state to move forward with cookie_echo
-and cookie_ack from the opposite dir for the collision scenarios.
+Such restart are rare, unless userspace intentionally adds very large
+numbers of elements with very short timeouts while setting a huge
+gc interval.
 
-There are also other Scenarios where it should allow the packet through,
-addressed by the processing above:
+Even in this case, this cannot loop forever, on each retry an existing
+element has been removed.
 
-Scenario C: new CT is created by INIT_ACK.
+As the caller is holding the transaction mutex, its impossible
+for a second entity to add more expiring elements to the tree.
 
-Scenario D: start INIT on the existing ESTABLISHED ct.
+After this it also becomes feasible to remove the async gc worker
+and perform all garbage collection from the commit path.
 
-Scenario E: start INIT after the old collision on the existing ESTABLISHED
-ct.
-
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 3922216408]
-  192.168.1.1 > 192.168.1.2: sctp (1) [INIT] [init tag: 144230885]
-  (both side are stopped, then start new connection again in hours)
-  192.168.1.2 > 192.168.1.1: sctp (1) [INIT] [init tag: 242308742]
-
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/nf_conntrack_sctp.h |  1 +
- net/netfilter/nf_conntrack_proto_sctp.c     | 43 ++++++++++++++++-----
- 2 files changed, 34 insertions(+), 10 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 46 +++++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/include/linux/netfilter/nf_conntrack_sctp.h b/include/linux/netfilter/nf_conntrack_sctp.h
-index 625f491b95de8..fb31312825ae5 100644
---- a/include/linux/netfilter/nf_conntrack_sctp.h
-+++ b/include/linux/netfilter/nf_conntrack_sctp.h
-@@ -9,6 +9,7 @@ struct ip_ct_sctp {
- 	enum sctp_conntrack state;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index cc32e19b4041a..17abf17b673e2 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -235,10 +235,9 @@ static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
+ 	rb_erase(&rbe->node, &priv->root);
+ }
  
- 	__be32 vtag[IP_CT_DIR_MAX];
-+	u8 init[IP_CT_DIR_MAX];
- 	u8 last_dir;
- 	u8 flags;
- };
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 21cbaf6dac331..e7545bcca805e 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -112,7 +112,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
- /* shutdown_ack */ {sSA, sCL, sCW, sCE, sES, sSA, sSA, sSA, sSA},
- /* error        */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't have Stale cookie*/
- /* cookie_echo  */ {sCL, sCL, sCE, sCE, sES, sSS, sSR, sSA, sCL},/* 5.2.4 - Big TODO */
--/* cookie_ack   */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
-+/* cookie_ack   */ {sCL, sCL, sCW, sES, sES, sSS, sSR, sSA, sCL},/* Can't come in orig dir */
- /* shutdown_comp*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sCL, sCL},
- /* heartbeat    */ {sHS, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
- /* heartbeat_ack*/ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
-@@ -126,7 +126,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
- /* shutdown     */ {sIV, sCL, sCW, sCE, sSR, sSS, sSR, sSA, sIV},
- /* shutdown_ack */ {sIV, sCL, sCW, sCE, sES, sSA, sSA, sSA, sIV},
- /* error        */ {sIV, sCL, sCW, sCL, sES, sSS, sSR, sSA, sIV},
--/* cookie_echo  */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
-+/* cookie_echo  */ {sIV, sCL, sCE, sCE, sES, sSS, sSR, sSA, sIV},/* Can't come in reply dir */
- /* cookie_ack   */ {sIV, sCL, sCW, sES, sES, sSS, sSR, sSA, sIV},
- /* shutdown_comp*/ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sCL, sIV},
- /* heartbeat    */ {sIV, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS},
-@@ -426,6 +426,9 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 			/* (D) vtag must be same as init_vtag as found in INIT_ACK */
- 			if (sh->vtag != ct->proto.sctp.vtag[dir])
- 				goto out_unlock;
-+		} else if (sch->type == SCTP_CID_COOKIE_ACK) {
-+			ct->proto.sctp.init[dir] = 0;
-+			ct->proto.sctp.init[!dir] = 0;
- 		} else if (sch->type == SCTP_CID_HEARTBEAT) {
- 			if (ct->proto.sctp.vtag[dir] == 0) {
- 				pr_debug("Setting %d vtag %x for dir %d\n", sch->type, sh->vtag, dir);
-@@ -474,16 +477,18 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
+-static int nft_rbtree_gc_elem(const struct nft_set *__set,
+-			      struct nft_rbtree *priv,
+-			      struct nft_rbtree_elem *rbe,
+-			      u8 genmask)
++static const struct nft_rbtree_elem *
++nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
++		   struct nft_rbtree_elem *rbe, u8 genmask)
+ {
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+@@ -248,7 +247,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 
+ 	gc = nft_trans_gc_alloc(set, 0, GFP_ATOMIC);
+ 	if (!gc)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	/* search for end interval coming before this element.
+ 	 * end intervals don't carry a timeout extension, they
+@@ -263,6 +262,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 		prev = rb_prev(prev);
+ 	}
+ 
++	rbe_prev = NULL;
+ 	if (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+ 		nft_rbtree_gc_remove(net, set, priv, rbe_prev);
+@@ -274,7 +274,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 		 */
+ 		gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+ 		if (WARN_ON_ONCE(!gc))
+-			return -ENOMEM;
++			return ERR_PTR(-ENOMEM);
+ 
+ 		nft_trans_gc_elem_add(gc, rbe_prev);
+ 	}
+@@ -282,13 +282,13 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 	nft_rbtree_gc_remove(net, set, priv, rbe);
+ 	gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+ 	if (WARN_ON_ONCE(!gc))
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	nft_trans_gc_elem_add(gc, rbe);
+ 
+ 	nft_trans_gc_queue_sync_done(gc);
+ 
+-	return 0;
++	return rbe_prev;
+ }
+ 
+ static bool nft_rbtree_update_first(const struct nft_set *set,
+@@ -316,7 +316,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u8 cur_genmask = nft_genmask_cur(net);
+ 	u8 genmask = nft_genmask_next(net);
+-	int d, err;
++	int d;
+ 
+ 	/* Descend the tree to search for an existing element greater than the
+ 	 * key value to insert that is greater than the new element. This is the
+@@ -365,9 +365,14 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		 */
+ 		if (nft_set_elem_expired(&rbe->ext) &&
+ 		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
+-			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
+-			if (err < 0)
+-				return err;
++			const struct nft_rbtree_elem *removed_end;
++
++			removed_end = nft_rbtree_gc_elem(set, priv, rbe, genmask);
++			if (IS_ERR(removed_end))
++				return PTR_ERR(removed_end);
++
++			if (removed_end == rbe_le || removed_end == rbe_ge)
++				return -EAGAIN;
+ 
+ 			continue;
  		}
+@@ -488,11 +493,18 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	struct nft_rbtree_elem *rbe = elem->priv;
+ 	int err;
  
- 		/* If it is an INIT or an INIT ACK note down the vtag */
--		if (sch->type == SCTP_CID_INIT ||
--		    sch->type == SCTP_CID_INIT_ACK) {
--			struct sctp_inithdr _inithdr, *ih;
-+		if (sch->type == SCTP_CID_INIT) {
-+			struct sctp_inithdr _ih, *ih;
+-	write_lock_bh(&priv->lock);
+-	write_seqcount_begin(&priv->count);
+-	err = __nft_rbtree_insert(net, set, rbe, ext);
+-	write_seqcount_end(&priv->count);
+-	write_unlock_bh(&priv->lock);
++	do {
++		if (fatal_signal_pending(current))
++			return -EINTR;
++
++		cond_resched();
++
++		write_lock_bh(&priv->lock);
++		write_seqcount_begin(&priv->count);
++		err = __nft_rbtree_insert(net, set, rbe, ext);
++		write_seqcount_end(&priv->count);
++		write_unlock_bh(&priv->lock);
++	} while (err == -EAGAIN);
  
--			ih = skb_header_pointer(skb, offset + sizeof(_sch),
--						sizeof(_inithdr), &_inithdr);
--			if (ih == NULL)
-+			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
-+			if (!ih)
- 				goto out_unlock;
--			pr_debug("Setting vtag %x for dir %d\n",
--				 ih->init_tag, !dir);
-+
-+			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir])
-+				ct->proto.sctp.init[!dir] = 0;
-+			ct->proto.sctp.init[dir] = 1;
-+
-+			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
- 			ct->proto.sctp.vtag[!dir] = ih->init_tag;
- 
- 			/* don't renew timeout on init retransmit so
-@@ -494,6 +499,24 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 			    old_state == SCTP_CONNTRACK_CLOSED &&
- 			    nf_ct_is_confirmed(ct))
- 				ignore = true;
-+		} else if (sch->type == SCTP_CID_INIT_ACK) {
-+			struct sctp_inithdr _ih, *ih;
-+			__be32 vtag;
-+
-+			ih = skb_header_pointer(skb, offset + sizeof(_sch), sizeof(*ih), &_ih);
-+			if (!ih)
-+				goto out_unlock;
-+
-+			vtag = ct->proto.sctp.vtag[!dir];
-+			if (!ct->proto.sctp.init[!dir] && vtag && vtag != ih->init_tag)
-+				goto out_unlock;
-+			/* collision */
-+			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir] &&
-+			    vtag != ih->init_tag)
-+				goto out_unlock;
-+
-+			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
-+			ct->proto.sctp.vtag[!dir] = ih->init_tag;
- 		}
- 
- 		ct->proto.sctp.state = new_state;
+ 	return err;
+ }
 -- 
 2.40.1
 
