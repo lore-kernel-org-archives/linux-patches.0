@@ -1,76 +1,256 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6F01A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7732C1A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK6sJocA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6FEC433C8;
-	Mon,  9 Oct 2023 13:20:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857632;
-	bh=5iSrYpB9lS1D0u0QCwhaKELnIA1Hyp9vjJl5QfYdKks=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qK6sJocAdW166h0fa8wO+Q9RBcEujbS3AnYG1aRfzYzo3u4l8ISogyl2Ko7HVtiyj
-	 x7W00ii/21cjNsA7xDuF2Xw9KuFrDXnv6UtOxw1d4fiMa5+6cZWPMOQzFU0/FnBfJP
-	 t61RF9Zem4aZ/v87f66qqcWodJIQ2P0FCwxm1zpQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="V2S/rVUb";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="L3c7Dk11"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 6A7972186E;
+	Mon,  9 Oct 2023 13:20:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1696857625; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z2ZXXEqP2O4NuijRsnKWuAkXvo2OUCcCuxMdEaTwpMw=;
+	b=V2S/rVUb6qrBtWegxgpQyRv642Ie45bLj72Xk23J12slOpqm4WKn6G3dDdleMaetbfoYQe
+	59KzYdzIBHq9EvF3HxFKYYcXVPht91zFjRnoHZIIT5NyoZvhc+qM29/WhrkpltP0q8J8Lw
+	b5mzRXRlcyyC5LkjcC2/Of1X5TAbhA0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1696857625;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z2ZXXEqP2O4NuijRsnKWuAkXvo2OUCcCuxMdEaTwpMw=;
+	b=L3c7Dk112CDHU5zhv5CJQzvdSScgOhhhFPaiYFNA8AGxh3hApqRkSvAKU7SQj/Z/Q9FmmD
+	tgHBIOvF9yj9HECQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 34A9F13586;
+	Mon,  9 Oct 2023 13:20:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id CxenCxn+I2VNZQAAMHmgww
+	(envelope-from <tiwai@suse.de>); Mon, 09 Oct 2023 13:20:25 +0000
+Date: Mon, 09 Oct 2023 15:20:24 +0200
+Message-ID: <874jj0szjb.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/162] wifi: cfg80211: add missing kernel-doc for cqm_rssi_work
-Date: Mon,  9 Oct 2023 15:01:02 +0200
-Message-ID: <20231009130125.149612418@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 003/162] ALSA: hda/tas2781: Add tas2781 HDA driver
+In-Reply-To: <20231009130123.043880540@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	<20231009130123.043880540@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Mon, 09 Oct 2023 14:59:44 +0200,
+Greg Kroah-Hartman wrote:
+> 
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Shenghao Ding <shenghao-ding@ti.com>
+> 
+> [ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
+> 
+> Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
+> laptop will be aggregated as one audio device. The code support realtek
+> as the primary codec. Rename "struct cs35l41_dev_name" to
+> "struct scodec_dev_name" for all other side codecs instead of the certain
+> one.
+> 
+> Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+> Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-------------------
-
-From: Johannes Berg <johannes.berg@intel.com>
-
-[ Upstream commit d1383077c225ceb87ac7a3b56b2c505193f77ed7 ]
-
-As reported by Stephen, I neglected to add the kernel-doc
-for the new struct member. Fix that.
-
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Fixes: 37c20b2effe9 ("wifi: cfg80211: fix cqm_config access race")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/net/cfg80211.h | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index ab64bb94c92fd..7a6c3059d50b5 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -5805,6 +5805,7 @@ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
-  * @event_lock: (private) lock for event list
-  * @owner_nlportid: (private) owner socket port ID
-  * @nl_owner_dead: (private) owner socket went away
-+ * @cqm_rssi_work: (private) CQM RSSI reporting work
-  * @cqm_config: (private) nl80211 RSSI monitor state
-  * @pmsr_list: (private) peer measurement requests
-  * @pmsr_lock: (private) peer measurements requests/results lock
--- 
-2.40.1
+I'm afraid this and related stuff doesn't fit with 6.1.y.
 
 
+thanks,
 
+Takashi
+
+> ---
+>  sound/pci/hda/patch_realtek.c | 88 +++++++++++++++++++++++++++++++++--
+>  1 file changed, 85 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+> index 57e07aa4e136c..7d549229d0b95 100644
+> --- a/sound/pci/hda/patch_realtek.c
+> +++ b/sound/pci/hda/patch_realtek.c
+> @@ -6721,7 +6721,7 @@ static void comp_generic_playback_hook(struct hda_pcm_stream *hinfo, struct hda_
+>  	}
+>  }
+>  
+> -struct cs35l41_dev_name {
+> +struct scodec_dev_name {
+>  	const char *bus;
+>  	const char *hid;
+>  	int index;
+> @@ -6730,7 +6730,7 @@ struct cs35l41_dev_name {
+>  /* match the device name in a slightly relaxed manner */
+>  static int comp_match_cs35l41_dev_name(struct device *dev, void *data)
+>  {
+> -	struct cs35l41_dev_name *p = data;
+> +	struct scodec_dev_name *p = data;
+>  	const char *d = dev_name(dev);
+>  	int n = strlen(p->bus);
+>  	char tmp[32];
+> @@ -6746,12 +6746,32 @@ static int comp_match_cs35l41_dev_name(struct device *dev, void *data)
+>  	return !strcmp(d + n, tmp);
+>  }
+>  
+> +static int comp_match_tas2781_dev_name(struct device *dev,
+> +	void *data)
+> +{
+> +	struct scodec_dev_name *p = data;
+> +	const char *d = dev_name(dev);
+> +	int n = strlen(p->bus);
+> +	char tmp[32];
+> +
+> +	/* check the bus name */
+> +	if (strncmp(d, p->bus, n))
+> +		return 0;
+> +	/* skip the bus number */
+> +	if (isdigit(d[n]))
+> +		n++;
+> +	/* the rest must be exact matching */
+> +	snprintf(tmp, sizeof(tmp), "-%s:00", p->hid);
+> +
+> +	return !strcmp(d + n, tmp);
+> +}
+> +
+>  static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char *bus,
+>  				  const char *hid, int count)
+>  {
+>  	struct device *dev = hda_codec_dev(cdc);
+>  	struct alc_spec *spec = cdc->spec;
+> -	struct cs35l41_dev_name *rec;
+> +	struct scodec_dev_name *rec;
+>  	int ret, i;
+>  
+>  	switch (action) {
+> @@ -6776,6 +6796,41 @@ static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char
+>  	}
+>  }
+>  
+> +static void tas2781_generic_fixup(struct hda_codec *cdc, int action,
+> +	const char *bus, const char *hid)
+> +{
+> +	struct device *dev = hda_codec_dev(cdc);
+> +	struct alc_spec *spec = cdc->spec;
+> +	struct scodec_dev_name *rec;
+> +	int ret;
+> +
+> +	switch (action) {
+> +	case HDA_FIXUP_ACT_PRE_PROBE:
+> +		rec = devm_kmalloc(dev, sizeof(*rec), GFP_KERNEL);
+> +		if (!rec)
+> +			return;
+> +		rec->bus = bus;
+> +		rec->hid = hid;
+> +		rec->index = 0;
+> +		spec->comps[0].codec = cdc;
+> +		component_match_add(dev, &spec->match,
+> +			comp_match_tas2781_dev_name, rec);
+> +		ret = component_master_add_with_match(dev, &comp_master_ops,
+> +			spec->match);
+> +		if (ret)
+> +			codec_err(cdc,
+> +				"Fail to register component aggregator %d\n",
+> +				ret);
+> +		else
+> +			spec->gen.pcm_playback_hook =
+> +				comp_generic_playback_hook;
+> +		break;
+> +	case HDA_FIXUP_ACT_FREE:
+> +		component_master_del(dev, &comp_master_ops);
+> +		break;
+> +	}
+> +}
+> +
+>  static void cs35l41_fixup_i2c_two(struct hda_codec *cdc, const struct hda_fixup *fix, int action)
+>  {
+>  	cs35l41_generic_fixup(cdc, action, "i2c", "CSC3551", 2);
+> @@ -6803,6 +6858,12 @@ static void alc287_fixup_legion_16ithg6_speakers(struct hda_codec *cdc, const st
+>  	cs35l41_generic_fixup(cdc, action, "i2c", "CLSA0101", 2);
+>  }
+>  
+> +static void tas2781_fixup_i2c(struct hda_codec *cdc,
+> +	const struct hda_fixup *fix, int action)
+> +{
+> +	 tas2781_generic_fixup(cdc, action, "i2c", "TIAS2781");
+> +}
+> +
+>  /* for alc295_fixup_hp_top_speakers */
+>  #include "hp_x360_helper.c"
+>  
+> @@ -7227,6 +7288,7 @@ enum {
+>  	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
+>  	ALC236_FIXUP_DELL_DUAL_CODECS,
+>  	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
+> +	ALC287_FIXUP_TAS2781_I2C,
+>  };
+>  
+>  /* A special fixup for Lenovo C940 and Yoga Duet 7;
+> @@ -9296,6 +9358,12 @@ static const struct hda_fixup alc269_fixups[] = {
+>  		.chained = true,
+>  		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
+>  	},
+> +	[ALC287_FIXUP_TAS2781_I2C] = {
+> +		.type = HDA_FIXUP_FUNC,
+> +		.v.func = tas2781_fixup_i2c,
+> +		.chained = true,
+> +		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
+> +	},
+>  };
+>  
+>  static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+> @@ -9867,6 +9935,20 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+>  	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+>  	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
+>  	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+> +	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual powe mode2 YC", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38ba, "Yoga S780-14.5 Air AMD quad YC", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38bb, "Yoga S780-14.5 Air AMD quad AAC", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38be, "Yoga S980-14.5 proX YC Dual", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38bf, "Yoga S980-14.5 proX LX Dual", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38c3, "Y980 DUAL", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38cb, "Y790 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+> +	SND_PCI_QUIRK(0x17aa, 0x38cd, "Y790 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+>  	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+>  	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+>  	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+> -- 
+> 2.40.1
+> 
+> 
+> 
