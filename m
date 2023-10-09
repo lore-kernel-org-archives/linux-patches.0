@@ -1,30 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE5A1A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4408D199B3;
+	Mon,  9 Oct 2023 13:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrqGho+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A01C433CA;
-	Mon,  9 Oct 2023 13:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU18+69z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20AA8C433C7;
+	Mon,  9 Oct 2023 13:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857639;
-	bh=pXHh0Uvx01GffeQvkxSL6qdhp1r1zNXjfuqXnaNjZQc=;
+	s=korg; t=1696857642;
+	bh=UnyjlSvQVB3DGfpI/beuXUaZ3xYBsdrP9S0xsRnnsUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrqGho+6iscXClEvoMQ0ALAFRkxQvCkwl9OcTl5lVXo8T8yoNCvoc/CN3eMSW1xH1
-	 TpI7FmMRrEJbu8hqqbBWKHCv3vQGPXRq3bTgnOREdrTqKPJcaBQB4dBEQBOtocdBq7
-	 ytYcDCkGlW9ubwpt6qEra6hMRmn3+cdBf6aYJDGE=
+	b=AU18+69zHVakMjncr65+jWfobSHl3zTQMXnru2oiKQrslOZedEiG4YbpMPj9qHRvz
+	 yt0/OGR4po2SH0Q0ZWHbpoBWi7ztK5ImhX14W4hH6Mt3mzt8gdXQOipYUHgRVUgrNh
+	 5f4I6MfiysEnVCwzIo0flZKkiOe8bjWMMjnSy0io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org,
+	syzkaller-bugs@googlegroups.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/162] bpf: tcp_read_skb needs to pop skb regardless of seq
-Date: Mon,  9 Oct 2023 15:01:23 +0200
-Message-ID: <20231009130125.740199791@linuxfoundation.org>
+Subject: [PATCH 6.1 111/162] ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
+Date: Mon,  9 Oct 2023 15:01:32 +0200
+Message-ID: <20231009130125.993798269@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,97 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9b7177b1df64b8d7f85700027c324aadd6aded00 ]
+[ Upstream commit 9d4c75800f61e5d75c1659ba201b6c0c7ead3070 ]
 
-Before fix e5c6de5fa0258 tcp_read_skb() would increment the tp->copied-seq
-value. This (as described in the commit) would cause an error for apps
-because once that is incremented the application might believe there is no
-data to be read. Then some apps would stall or abort believing no data is
-available.
+Including the transhdrlen in length is a problem when the packet is
+partially filled (e.g. something like send(MSG_MORE) happened previously)
+when appending to an IPv4 or IPv6 packet as we don't want to repeat the
+transport header or account for it twice.  This can happen under some
+circumstances, such as splicing into an L2TP socket.
 
-However, the fix is incomplete because it introduces another issue in
-the skb dequeue. The loop does tcp_recv_skb() in a while loop to consume
-as many skbs as possible. The problem is the call is ...
+The symptom observed is a warning in __ip6_append_data():
 
-  tcp_recv_skb(sk, seq, &offset)
+    WARNING: CPU: 1 PID: 5042 at net/ipv6/ip6_output.c:1800 __ip6_append_data.isra.0+0x1be8/0x47f0 net/ipv6/ip6_output.c:1800
 
-... where 'seq' is:
+that occurs when MSG_SPLICE_PAGES is used to append more data to an already
+partially occupied skbuff.  The warning occurs when 'copy' is larger than
+the amount of data in the message iterator.  This is because the requested
+length includes the transport header length when it shouldn't.  This can be
+triggered by, for example:
 
-  u32 seq = tp->copied_seq;
+        sfd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_L2TP);
+        bind(sfd, ...); // ::1
+        connect(sfd, ...); // ::1 port 7
+        send(sfd, buffer, 4100, MSG_MORE);
+        sendfile(sfd, dfd, NULL, 1024);
 
-Now we can hit a case where we've yet incremented copied_seq from BPF side,
-but then tcp_recv_skb() fails this test ...
+Fix this by only adding transhdrlen into the length if the write queue is
+empty in l2tp_ip6_sendmsg(), analogously to how UDP does things.
 
- if (offset < skb->len || (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN))
+l2tp_ip_sendmsg() looks like it won't suffer from this problem as it builds
+the UDP packet itself.
 
-... so that instead of returning the skb we call tcp_eat_recv_skb() which
-frees the skb. This is because the routine believes the SKB has been collapsed
-per comment:
-
- /* This looks weird, but this can happen if TCP collapsing
-  * splitted a fat GRO packet, while we released socket lock
-  * in skb_splice_bits()
-  */
-
-This can't happen here we've unlinked the full SKB and orphaned it. Anyways
-it would confuse any BPF programs if the data were suddenly moved underneath
-it.
-
-To fix this situation do simpler operation and just skb_peek() the data
-of the queue followed by the unlink. It shouldn't need to check this
-condition and tcp_read_skb() reads entire skbs so there is no need to
-handle the 'offset!=0' case as we would see in tcp_read_sock().
-
-Fixes: e5c6de5fa0258 ("bpf, sockmap: Incorrectly handling copied_seq")
-Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20230926035300.135096-2-john.fastabend@gmail.com
+Fixes: a32e0eec7042 ("l2tp: introduce L2TPv3 IP encapsulation support for IPv6")
+Reported-by: syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000001c12b30605378ce8@google.com/
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: David Ahern <dsahern@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: netdev@vger.kernel.org
+cc: bpf@vger.kernel.org
+cc: syzkaller-bugs@googlegroups.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ net/l2tp/l2tp_ip6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index fab25d4f3a6f1..96fdde6e42b1b 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1755,16 +1755,13 @@ EXPORT_SYMBOL(tcp_read_sock);
+diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
+index bce4132b0a5c8..314ec3a51e8de 100644
+--- a/net/l2tp/l2tp_ip6.c
++++ b/net/l2tp/l2tp_ip6.c
+@@ -510,7 +510,6 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	 */
+ 	if (len > INT_MAX - transhdrlen)
+ 		return -EMSGSIZE;
+-	ulen = len + transhdrlen;
  
- int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- {
--	struct tcp_sock *tp = tcp_sk(sk);
--	u32 seq = tp->copied_seq;
- 	struct sk_buff *skb;
- 	int copied = 0;
--	u32 offset;
+ 	/* Mirror BSD error message compatibility */
+ 	if (msg->msg_flags & MSG_OOB)
+@@ -631,6 +630,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
  
- 	if (sk->sk_state == TCP_LISTEN)
- 		return -ENOTCONN;
- 
--	while ((skb = tcp_recv_skb(sk, seq, &offset)) != NULL) {
-+	while ((skb = skb_peek(&sk->sk_receive_queue)) != NULL) {
- 		u8 tcp_flags;
- 		int used;
- 
-@@ -1777,13 +1774,10 @@ int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 				copied = used;
- 			break;
- 		}
--		seq += used;
- 		copied += used;
- 
--		if (tcp_flags & TCPHDR_FIN) {
--			++seq;
-+		if (tcp_flags & TCPHDR_FIN)
- 			break;
--		}
- 	}
- 	return copied;
- }
+ back_from_confirm:
+ 	lock_sock(sk);
++	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
+ 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
+ 			      ulen, transhdrlen, &ipc6,
+ 			      &fl6, (struct rt6_info *)dst,
 -- 
 2.40.1
 
